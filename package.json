@@ -1,0 +1,45 @@
+{
+  "name": "wagmi",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "dependencies": {
+    "ethers": "^5.5.1"
+  },
+  "devDependencies": {
+    "@types/eslint": "^7",
+    "@types/events": "^3",
+    "@types/node": "^16.11.9",
+    "@types/prettier": "^2",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vitejs/plugin-react": "^1.1.0",
+    "@walletconnect/ethereum-provider": "^1.6.6",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^25.2.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.27.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "events": "^3.3.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.0.3",
+    "prettier": "^2.4.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.6.4"
+  }
+}

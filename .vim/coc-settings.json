@@ -1,0 +1,20 @@
+{
+  "eslint.autoFixOnSave": true,
+  "eslint.options": {
+    "extensions": [
+      ".js",
+      ".json",
+      ".md",
+      ".ts",
+      ".tsx"
+    ]
+  },
+  "eslint.validate": [
+    "javascript",
+    "json",
+    "markdown",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.packageManager": "yarn"
+}

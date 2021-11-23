@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.options": {
+    "extensions": [".js", ".json", ".md", ".ts", ".tsx"]
+  },
+  "eslint.validate": [
+    "javascript",
+    "json",
+    "markdown",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.packageManager": "yarn"
+}
