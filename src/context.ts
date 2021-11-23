@@ -44,14 +44,17 @@ export const Provider = ({
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     const maybeConnect = async () => {
-      const connector = new InjectedConnector()
-      const isAuthorized = await connector.isAuthorized()
-      if (!isAuthorized) return
-      try {
-        const data = await connector.connect()
-        setState((x) => ({ ...x, connector, data }))
-      } catch (error) {
-        console.log(error)
+      for (const connector of connectors) {
+        try {
+          if (!connector.isAuthorized) continue
+          const isAuthorized = await connector.isAuthorized()
+          if (!isAuthorized) continue
+
+          const data = await connector.connect()
+          setState((x) => ({ ...x, connector, data }))
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
 

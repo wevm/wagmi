@@ -9,15 +9,22 @@ export const App = () => {
 
   return (
     <div>
-      {connectors.map((x) => (
-        <button key={x.name} onClick={() => connect(x)}>
-          {x.name}
-          {connecting && x.name === connector?.name && '…'}
-        </button>
-      ))}
-      {account}
-      <button onClick={() => disconnect()}>Disconnect</button>
-      {error && (error?.message ?? 'Failed to connect')}
+      <div>
+        {connectors.map((x) => (
+          <button key={x.name} onClick={() => connect(x)}>
+            {x.name}
+            {connecting && x.name === connector?.name && '…'}
+          </button>
+        ))}
+        {error && (error?.message ?? 'Failed to connect')}
+      </div>
+
+      {account && (
+        <div>
+          {account}
+          <button onClick={() => disconnect()}>Disconnect</button>
+        </div>
+      )}
     </div>
   )
 }

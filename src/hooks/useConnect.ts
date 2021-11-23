@@ -9,7 +9,7 @@ type State = {
 }
 
 const initialState: State = {
-  connecting: true,
+  connecting: false,
 }
 
 export const useConnect = () => {

@@ -51,13 +51,17 @@ export abstract class Emitter implements IEmitter<EventMap> {
   }
 }
 
+// Use declaration merging for optional methods
+export interface Connector {
+  isAuthorized?(): Promise<boolean>
+}
 export abstract class Connector extends Emitter {
   abstract name: string
   disabled = false
 
   abstract connect(): Promise<Data>
   abstract disconnect(): void
-  abstract getAccount(): Promise<string>
+  abstract getAccount(): Promise<Account>
   abstract getChainId(): Promise<Network>
   abstract getProvider(): Promise<unknown>
 }

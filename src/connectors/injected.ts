@@ -86,6 +86,15 @@ export class InjectedConnector extends Connector {
     }
   }
 
+  async isAuthorized() {
+    try {
+      const account = await this.getAccount()
+      return !!account
+    } catch {
+      return false
+    }
+  }
+
   async getProvider() {
     return window.ethereum
   }
@@ -101,14 +110,5 @@ export class InjectedConnector extends Connector {
 
   private handleDisconnect() {
     this.emit('disconnect')
-  }
-
-  public async isAuthorized(): Promise<boolean> {
-    try {
-      const account = await this.getAccount()
-      return !!account
-    } catch {
-      return false
-    }
   }
 }
