@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Connector } from '../connectors'
+import { Connector, WalletConnectConnector } from '../connectors'
 import { useContext } from './useContext'
 
 type State = {
@@ -21,13 +21,21 @@ export const useConnect = () => {
       try {
         if (connector === globalState.connector) return
 
-        setGlobalState((x) => ({ ...x, connector }))
         setState((x) => ({ ...x, connecting: true, error: undefined }))
-        const data = await connector.activate()
+        setGlobalState((x) => ({ ...x, connector }))
+
+        // Manually reset connector if user already tried WalletConnect
+        if (
+          connector instanceof WalletConnectConnector &&
+          connector.provider?.isWalletConnect
+        )
+          connector.provider = undefined
+
+        const data = await connector.connect()
         setGlobalState((x) => ({ ...x, data }))
-      } catch (err) {
-        console.log(err)
-        setState((x) => ({ ...x, error: err as Error }))
+      } catch (error) {
+        setState((x) => ({ ...x, error: error as Error }))
+        setGlobalState((x) => ({ ...x, connector: undefined }))
       } finally {
         setState((x) => ({ ...x, connecting: false }))
       }

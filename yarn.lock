@@ -1689,6 +1689,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"buffer@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "buffer@npm:6.0.3"
+  dependencies:
+    base64-js: ^1.3.1
+    ieee754: ^1.2.1
+  checksum: 5ad23293d9a731e4318e420025800b42bf0d264004c0286c8cc010af7a270c7a0f6522e84f54b9ad65cbd6db20b8badbfd8d2ebf4f80fa03dab093b89e68c3f9
+  languageName: node
+  linkType: hard
+
 "cacache@npm:^15.2.0":
   version: 15.3.0
   resolution: "cacache@npm:15.3.0"
@@ -2085,9 +2095,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.3.896":
-  version: 1.3.905
-  resolution: "electron-to-chromium@npm:1.3.905"
-  checksum: 45c8a751f530ab556189050fbcaf374754a7503fb2f1e96cf73e5ee83bf92ec6a15755e3e920550d4ac296fe0be4d91462307ed0e3d4c957b976921f7e6fe2cd
+  version: 1.3.906
+  resolution: "electron-to-chromium@npm:1.3.906"
+  checksum: 087330249a424066cbdb882890164b3cb944f0ea293838a1445274428549e5b6c5edd25c353fed733d20d055ba276d4e3b069554b5e06ebfe511134c4f68cf87
   languageName: node
   linkType: hard
 
@@ -3210,7 +3220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ieee754@npm:^1.1.13":
+"ieee754@npm:^1.1.13, ieee754@npm:^1.2.1":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
   checksum: 5144c0c9815e54ada181d80a0b810221a253562422e7c6c3a60b1901154184f49326ec239d618c416c1c5945a2e197107aee8d986a3dd836b53dffefd99b5e7e
@@ -5257,6 +5267,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.4.0
     "@vitejs/plugin-react": ^1.1.0
     "@walletconnect/ethereum-provider": ^1.6.6
+    buffer: ^6.0.3
     eslint: 7.32.0
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-typescript: ^2.5.0

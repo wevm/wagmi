@@ -5,29 +5,30 @@ import { Network } from '../types'
 import { Connector } from './types'
 
 export class WalletConnectConnector extends Connector {
-  name = 'walletConnect'
+  name = 'WalletConnect'
 
   config: IWCEthRpcConnectionOptions
-  provider: WalletConnectProvider
+  provider?: WalletConnectProvider
 
   constructor(config: IWCEthRpcConnectionOptions) {
     super()
 
     this.config = config
-    this.provider = new WalletConnectProvider(config)
 
     this.handleAccountsChanged = this.handleAccountsChanged.bind(this)
     this.handleChainChanged = this.handleChainChanged.bind(this)
     this.handleDisconnect = this.handleDisconnect.bind(this)
   }
 
-  async activate() {
-    this.provider.on('accountsChanged', this.handleAccountsChanged)
-    this.provider.on('chainChanged', this.handleChainChanged)
-    this.provider.on('disconnect', this.handleDisconnect)
-
+  async connect() {
     try {
-      const accounts = <string[]>(<unknown>this.provider.enable())
+      if (!this.provider) this.provider = new WalletConnectProvider(this.config)
+
+      this.provider.on('accountsChanged', this.handleAccountsChanged)
+      this.provider.on('chainChanged', this.handleChainChanged)
+      this.provider.on('disconnect', this.handleDisconnect)
+
+      const accounts = await this.provider.enable()
       const account = accounts[0]
       return { account, provider: this.provider }
     } catch (error) {
@@ -37,7 +38,7 @@ export class WalletConnectConnector extends Connector {
     }
   }
 
-  deactivate() {
+  disconnect() {
     if (!this.provider) return
 
     this.provider.removeListener('accountsChanged', this.handleAccountsChanged)
@@ -47,11 +48,13 @@ export class WalletConnectConnector extends Connector {
   }
 
   async getAccount() {
+    if (!this.provider) this.provider = new WalletConnectProvider(this.config)
     const accounts = this.provider.accounts
     return accounts[0]
   }
 
   async getChainId() {
+    if (!this.provider) this.provider = new WalletConnectProvider(this.config)
     return this.provider.chainId
   }
 

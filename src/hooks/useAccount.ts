@@ -1,6 +1,13 @@
+import * as React from 'react'
+
 import { useContext } from './useContext'
 
 export const useAccount = () => {
-  const [state] = useContext()
-  return state.data?.account
+  const [state, setState] = useContext()
+
+  const disconnect = React.useCallback(() => {
+    setState({})
+  }, [setState])
+
+  return [state.data?.account, disconnect] as const
 }

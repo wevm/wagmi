@@ -25,11 +25,14 @@ export const Context = React.createContext<ContextValue | null>(null)
 type Props = {
   /** Connectors used for linking accounts */
   connectors?: Connector[]
+  /** Whether provider should attempt to connect on mount */
+  eagerConnect?: boolean
 }
 
 export const Provider = ({
   children,
   connectors = [new InjectedConnector()],
+  eagerConnect,
 }: React.PropsWithChildren<Props>) => {
   const [state, setState] = React.useState<{
     connector?: Connector
@@ -37,11 +40,31 @@ export const Provider = ({
     error?: Error
   }>({})
 
+  // Attempt to connect on mount
+  /* eslint-disable react-hooks/exhaustive-deps */
+  React.useEffect(() => {
+    const maybeConnect = async () => {
+      const connector = new InjectedConnector()
+      const isAuthorized = await connector.isAuthorized()
+      if (!isAuthorized) return
+      try {
+        const data = await connector.connect()
+        setState((x) => ({ ...x, connector, data }))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (!eagerConnect) return
+    maybeConnect()
+  }, [])
+  /* eslint-enable react-hooks/exhaustive-deps */
+
   // Make sure connectors close
   React.useEffect(() => {
     return () => {
       if (!state.connector) return
-      state.connector.deactivate()
+      state.connector.disconnect()
     }
   }, [state.connector])
 

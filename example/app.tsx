@@ -5,15 +5,7 @@ import { useAccount } from '../src/hooks'
 
 export const App = () => {
   const [{ connecting, connector, connectors, error }, connect] = useConnect()
-  const account = useAccount()
-
-  if (account)
-    return (
-      <>
-        {account}
-        <button onClick={() => console.log(account)}>Disconnect</button>
-      </>
-    )
+  const [account, disconnect] = useAccount()
 
   return (
     <div>
@@ -23,7 +15,9 @@ export const App = () => {
           {connecting && x.name === connector?.name && '…'}
         </button>
       ))}
-      {error && 'Failed to connect'}
+      {account}
+      <button onClick={() => disconnect()}>Disconnect</button>
+      {error && (error?.message ?? 'Failed to connect')}
     </div>
   )
 }

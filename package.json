@@ -24,6 +24,7 @@
     "@typescript-eslint/parser": "^5.4.0",
     "@vitejs/plugin-react": "^1.1.0",
     "@walletconnect/ethereum-provider": "^1.6.6",
+    "buffer": "^6.0.3",
     "eslint": "7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",

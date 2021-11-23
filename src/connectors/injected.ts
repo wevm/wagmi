@@ -1,11 +1,13 @@
 import { Network } from '../types'
+import { hasInjected, isMetaMask } from '../utils'
 import { Connector } from './types'
 
 const unwrap = (response: { result: any } | any) =>
   response?.result ? response.result : response
 
 export class InjectedConnector extends Connector {
-  name = 'injected'
+  name = isMetaMask() ? 'MetaMask' : 'injected'
+  disabled = !hasInjected()
 
   constructor() {
     super()
@@ -15,19 +17,19 @@ export class InjectedConnector extends Connector {
     this.handleDisconnect = this.handleDisconnect.bind(this)
   }
 
-  async activate() {
-    if (!window.ethereum) throw Error('window.ethereum not found')
-
-    if (window.ethereum.on) {
-      window.ethereum.on('accountsChanged', this.handleAccountsChanged)
-      window.ethereum.on('chainChanged', this.handleChainChanged)
-      window.ethereum.on('disconnect', this.handleDisconnect)
-    }
-
-    if (window.ethereum.isMetaMask)
-      window.ethereum.autoRefreshOnNetworkChange = false
-
+  async connect() {
     try {
+      if (!window.ethereum) throw Error('window.ethereum not found')
+
+      if (window.ethereum.on) {
+        window.ethereum.on('accountsChanged', this.handleAccountsChanged)
+        window.ethereum.on('chainChanged', this.handleChainChanged)
+        window.ethereum.on('disconnect', this.handleDisconnect)
+      }
+
+      if (window.ethereum.isMetaMask)
+        window.ethereum.autoRefreshOnNetworkChange = false
+
       const accounts = await window.ethereum
         .request({
           method: 'eth_requestAccounts',
@@ -42,7 +44,7 @@ export class InjectedConnector extends Connector {
     }
   }
 
-  deactivate() {
+  disconnect() {
     if (!window?.ethereum?.removeListener) return
 
     window.ethereum.removeListener(
@@ -99,5 +101,14 @@ export class InjectedConnector extends Connector {
 
   private handleDisconnect() {
     this.emit('disconnect')
+  }
+
+  public async isAuthorized(): Promise<boolean> {
+    try {
+      const account = await this.getAccount()
+      return !!account
+    } catch {
+      return false
+    }
   }
 }

@@ -53,9 +53,10 @@ export abstract class Emitter implements IEmitter<EventMap> {
 
 export abstract class Connector extends Emitter {
   abstract name: string
+  disabled = false
 
-  abstract activate(): Promise<Data>
-  abstract deactivate(): void
+  abstract connect(): Promise<Data>
+  abstract disconnect(): void
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<Network>
   abstract getProvider(): Promise<unknown>
