@@ -1,5 +1,20 @@
-type RequestArguments = {
-  method: 'eth_requestAccounts' | 'eth_chainId' | 'net_version' | 'eth_accounts'
+type RequestArguments =
+  | {
+      method:
+        | 'eth_requestAccounts'
+        | 'eth_chainId'
+        | 'net_version'
+        | 'eth_accounts'
+    }
+  | {
+      method: 'wallet_switchEthereumChain' | 'wallet_addEthereumChain'
+      params: [{ chainId: string }]
+    }
+
+interface ProviderRpcError extends Error {
+  message: string
+  code: number
+  data?: unknown
 }
 
 interface Window {

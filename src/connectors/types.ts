@@ -46,7 +46,6 @@ export abstract class Emitter implements IEmitter<EventMap> {
     eventName: K,
     ...params: EventMap[K] extends undefined ? [undefined?] : [EventMap[K]]
   ) {
-    // TODO: Why is params an array
     this.emitter.emit(eventName, params[0])
   }
 }
@@ -54,6 +53,7 @@ export abstract class Emitter implements IEmitter<EventMap> {
 // Use declaration merging for optional methods
 export interface Connector {
   isAuthorized?(): Promise<boolean>
+  switchChain?(chainId: string): Promise<void>
 }
 export abstract class Connector extends Emitter {
   abstract name: string

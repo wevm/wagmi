@@ -1,11 +1,12 @@
 import * as React from 'react'
 
 import { useConnect } from '../src'
-import { useAccount } from '../src/hooks'
+import { useAccount, useNetwork } from '../src/hooks'
 
 export const App = () => {
   const [{ connecting, connector, connectors, error }, connect] = useConnect()
   const [account, disconnect] = useAccount()
+  const [network, switchNetwork] = useNetwork()
 
   return (
     <div>
@@ -20,10 +21,16 @@ export const App = () => {
       </div>
 
       {account && (
-        <div>
-          {account}
-          <button onClick={() => disconnect()}>Disconnect</button>
-        </div>
+        <>
+          <div>
+            {account}
+            <button onClick={() => disconnect()}>Disconnect</button>
+          </div>
+          <div>
+            {network}
+            <button onClick={() => switchNetwork('0x4')}>Switch Network</button>
+          </div>
+        </>
       )}
     </div>
   )

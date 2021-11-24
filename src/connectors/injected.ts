@@ -36,9 +36,12 @@ export class InjectedConnector extends Connector {
         })
         .then(unwrap)
       const account = accounts[0]
-      return { account, provider: window.ethereum }
+      const chainId = await window.ethereum
+        .request({ method: 'eth_chainId' })
+        .then(unwrap)
+      return { account, chainId, provider: window.ethereum }
     } catch (error) {
-      if ((<any>error).code === 4001)
+      if ((<ProviderRpcError>error).code === 4001)
         throw Error('eth_requestAccounts rejected')
       throw error
     }
@@ -92,6 +95,30 @@ export class InjectedConnector extends Connector {
       return !!account
     } catch {
       return false
+    }
+  }
+
+  async switchChain(chainId: string) {
+    if (!window.ethereum) throw Error('window.ethereum not found')
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId }],
+      })
+    } catch (error) {
+      // This error code indicates the chain has not been added
+      if ((<ProviderRpcError>error).code === 4902) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{ chainId: '0xf00' }],
+          })
+        } catch (addError) {
+          // handle "add" error
+        }
+      }
+      // handle other "switch" errors
     }
   }
 

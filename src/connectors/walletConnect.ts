@@ -30,9 +30,10 @@ export class WalletConnectConnector extends Connector {
 
       const accounts = await this.provider.enable()
       const account = accounts[0]
-      return { account, provider: this.provider }
+      const chainId = this.provider.chainId
+      return { account, chainId, provider: this.provider }
     } catch (error) {
-      if ((<any>error).message === 'User closed modal')
+      if ((<ProviderRpcError>error).message === 'User closed modal')
         throw Error('eth_requestAccounts rejected')
       throw error
     }
@@ -60,6 +61,15 @@ export class WalletConnectConnector extends Connector {
 
   async getProvider() {
     return this.provider
+  }
+
+  async isAuthorized() {
+    try {
+      const account = await this.getAccount()
+      return !!account
+    } catch {
+      return false
+    }
   }
 
   private handleAccountsChanged(accounts: string[]) {

@@ -52,6 +52,7 @@ export const Provider = ({
 
           const data = await connector.connect()
           setState((x) => ({ ...x, connector, data }))
+          break
         } catch (error) {
           console.log(error)
         }
@@ -75,18 +76,10 @@ export const Provider = ({
   React.useEffect(() => {
     if (!state.connector) return
 
-    const handleChange = (data: Data) => {
-      console.log('handleChange', data)
-      setState((x) => ({ ...x, data }))
-    }
-    const handleDisconnect = () => {
-      console.log('handleDisconnect')
-      setState({})
-    }
-    const handleError = (error: Error) => {
-      console.log('handleError')
-      setState((x) => ({ ...x, error }))
-    }
+    const handleChange = (data: Data) =>
+      setState((x) => ({ ...x, data: { ...x.data, ...data } }))
+    const handleDisconnect = () => setState({})
+    const handleError = (error: Error) => setState((x) => ({ ...x, error }))
 
     state.connector.on('change', handleChange)
     state.connector.on('disconnect', handleDisconnect)

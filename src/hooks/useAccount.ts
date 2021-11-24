@@ -6,7 +6,10 @@ export const useAccount = () => {
   const [state, setState] = useContext()
 
   const disconnect = React.useCallback(() => {
-    setState({})
+    setState((x) => {
+      x.connector?.disconnect()
+      return {}
+    })
   }, [setState])
 
   return [state.data?.account, disconnect] as const
