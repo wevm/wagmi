@@ -1,2 +1,1 @@
-export { hasInjected } from './hasInjected'
-export { isMetaMask } from './isMetaMask'
+export { normalizeChainId } from './normalizeChainId'

@@ -1,21 +1,30 @@
 import * as React from 'react'
 
+import { defaultChains } from '../constants'
 import { useContext } from './useContext'
-
-// https://ethereum-magicians.org/t/eip-3326-wallet-switchethereumchain/5471/3
-// wallet_switchEthereumChain
-// https://docs.metamask.io/guide/rpc-api.html#other-rpc-methods
 
 export const useNetwork = () => {
   const [state] = useContext()
+  const chainId = state.data?.chainId
+  const activeChains = state.connector?.chains ?? []
+  const activeChain = [...activeChains, ...defaultChains].find(
+    (x) => x.id === chainId,
+  )
 
   const switchNetwork = React.useCallback(
-    (chainId: string) => {
+    (chainId: number) => {
       if (!state.connector?.switchChain) return
       state.connector.switchChain(chainId)
     },
     [state.connector],
   )
 
-  return [state.data?.chainId, switchNetwork] as const
+  return [
+    {
+      chainId,
+      data: activeChain,
+      chains: activeChains,
+    },
+    switchNetwork,
+  ] as const
 }

@@ -1,12 +1,11 @@
 import * as React from 'react'
 
-import { useConnect } from '../src'
-import { useAccount, useNetwork } from '../src/hooks'
+import { useAccount, useConnect, useNetwork } from '../src'
 
 export const App = () => {
   const [{ connecting, connector, connectors, error }, connect] = useConnect()
   const [account, disconnect] = useAccount()
-  const [network, switchNetwork] = useNetwork()
+  const [{ chainId, data, chains }, switchNetwork] = useNetwork()
 
   return (
     <div>
@@ -27,8 +26,14 @@ export const App = () => {
             <button onClick={() => disconnect()}>Disconnect</button>
           </div>
           <div>
-            {network}
-            <button onClick={() => switchNetwork('0x4')}>Switch Network</button>
+            {data?.name ?? chainId}
+            {chains.map((x) =>
+              x.id === chainId ? null : (
+                <button key={x.id} onClick={() => switchNetwork(x.id)}>
+                  Switch to {x.name}
+                </button>
+              ),
+            )}
           </div>
         </>
       )}

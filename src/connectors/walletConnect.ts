@@ -1,87 +1,89 @@
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 
-import { Network } from '../types'
-import { Connector } from './types'
+import { normalizeChainId } from '../utils'
+import { BaseConnector } from './base'
+import { UserRejectedRequestError } from './errors'
 
-export class WalletConnectConnector extends Connector {
-  name = 'WalletConnect'
-
-  config: IWCEthRpcConnectionOptions
-  provider?: WalletConnectProvider
+export class WalletConnectConnector extends BaseConnector {
+  private _config: IWCEthRpcConnectionOptions
+  private _provider?: WalletConnectProvider
 
   constructor(config: IWCEthRpcConnectionOptions) {
     super()
+    this._config = config
+  }
 
-    this.config = config
+  get name() {
+    return 'WalletConnect'
+  }
 
-    this.handleAccountsChanged = this.handleAccountsChanged.bind(this)
-    this.handleChainChanged = this.handleChainChanged.bind(this)
-    this.handleDisconnect = this.handleDisconnect.bind(this)
+  get provider() {
+    return this._provider
+  }
+
+  get ready() {
+    return true
   }
 
   async connect() {
     try {
-      if (!this.provider) this.provider = new WalletConnectProvider(this.config)
+      if (!this._provider)
+        this._provider = new WalletConnectProvider(this._config)
 
-      this.provider.on('accountsChanged', this.handleAccountsChanged)
-      this.provider.on('chainChanged', this.handleChainChanged)
-      this.provider.on('disconnect', this.handleDisconnect)
+      this._provider.on('accountsChanged', this.onAccountsChanged)
+      this._provider.on('chainChanged', this.onChainChanged)
+      this._provider.on('disconnect', this.onDisconnect)
 
-      const accounts = await this.provider.enable()
+      const accounts = await this._provider.enable()
       const account = accounts[0]
-      const chainId = this.provider.chainId
-      return { account, chainId, provider: this.provider }
+      const chainId = normalizeChainId(this._provider.chainId)
+      return { account, chainId, provider: this._provider }
     } catch (error) {
       if ((<ProviderRpcError>error).message === 'User closed modal')
-        throw Error('eth_requestAccounts rejected')
+        throw new UserRejectedRequestError()
       throw error
     }
   }
 
-  disconnect() {
-    if (!this.provider) return
+  async disconnect() {
+    if (!this._provider) return
 
-    this.provider.removeListener('accountsChanged', this.handleAccountsChanged)
-    this.provider.removeListener('chainChanged', this.handleChainChanged)
-    this.provider.removeListener('disconnect', this.handleDisconnect)
-    this.provider.disconnect()
-  }
-
-  async getAccount() {
-    if (!this.provider) this.provider = new WalletConnectProvider(this.config)
-    const accounts = this.provider.accounts
-    return accounts[0]
-  }
-
-  async getChainId() {
-    if (!this.provider) this.provider = new WalletConnectProvider(this.config)
-    return this.provider.chainId
-  }
-
-  async getProvider() {
-    return this.provider
+    this._provider.removeListener('accountsChanged', this.onAccountsChanged)
+    this._provider.removeListener('chainChanged', this.onChainChanged)
+    this._provider.removeListener('disconnect', this.onDisconnect)
+    this._provider.disconnect()
   }
 
   async isAuthorized() {
     try {
-      const account = await this.getAccount()
+      if (!this._provider)
+        this._provider = new WalletConnectProvider(this._config)
+      const accounts = this._provider.accounts
+      const account = accounts[0]
+
       return !!account
     } catch {
       return false
     }
   }
 
-  private handleAccountsChanged(accounts: string[]) {
+  async isConnected() {
+    if (!this._provider)
+      this._provider = new WalletConnectProvider(this._config)
+    return this._provider.connected
+  }
+
+  private onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })
   }
 
-  private handleChainChanged(chainId: Network) {
-    this.emit('change', { chainId })
+  private onChainChanged = (chainId: number | string) => {
+    this.emit('change', { chainId: normalizeChainId(chainId) })
   }
 
-  private handleDisconnect() {
+  private onDisconnect = () => {
     this.emit('disconnect')
   }
 }

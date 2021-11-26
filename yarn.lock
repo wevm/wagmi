@@ -2773,7 +2773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eventemitter3@npm:4.0.7":
+"eventemitter3@npm:4.0.7, eventemitter3@npm:^4.0.7":
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374
@@ -5278,6 +5278,7 @@ __metadata:
     eslint-plugin-react: ^7.27.1
     eslint-plugin-react-hooks: ^4.3.0
     ethers: ^5.5.1
+    eventemitter3: ^4.0.7
     events: ^3.3.0
     husky: ^7.0.4
     lint-staged: ^12.0.3

@@ -12,11 +12,11 @@ const infuraId = import.meta.env.VITE_INFURA_ID
 ReactDOM.render(
   <React.StrictMode>
     <Provider
+      autoConnect
       connectors={[
         new InjectedConnector(),
         new WalletConnectConnector({ infuraId, qrcode: true }),
       ]}
-      eagerConnect
     >
       <App />
     </Provider>

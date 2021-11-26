@@ -1,3 +1,3 @@
 export { InjectedConnector } from './injected'
 export { WalletConnectConnector } from './walletConnect'
-export type { Connector, Data } from './types'
+export type { Chain, Connector, Data } from './base'

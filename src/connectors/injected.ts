@@ -1,141 +1,148 @@
-import { Network } from '../types'
-import { hasInjected, isMetaMask } from '../utils'
-import { Connector } from './types'
+import { hexValue } from 'ethers/lib/utils'
 
-const unwrap = (response: { result: any } | any) =>
-  response?.result ? response.result : response
+import { defaultChains } from '../constants'
+import { normalizeChainId } from '../utils'
+import { BaseConnector, Chain } from './base'
+import {
+  AddChainError,
+  ChainNotConfiguredError,
+  ConnectorNotFoundError,
+  SwitchChainError,
+  UserRejectedRequestError,
+} from './errors'
 
-export class InjectedConnector extends Connector {
-  name = isMetaMask() ? 'MetaMask' : 'injected'
-  disabled = !hasInjected()
+export class InjectedConnector extends BaseConnector {
+  private _chains: Chain[]
 
-  constructor() {
+  constructor(
+    config: { chains: Chain[] } = {
+      chains: defaultChains,
+    },
+  ) {
     super()
+    this._chains = config.chains
+  }
 
-    this.handleAccountsChanged = this.handleAccountsChanged.bind(this)
-    this.handleChainChanged = this.handleChainChanged.bind(this)
-    this.handleDisconnect = this.handleDisconnect.bind(this)
+  get chains() {
+    return this._chains
+  }
+
+  get name() {
+    return typeof window !== 'undefined' && window.ethereum?.isMetaMask
+      ? 'MetaMask'
+      : 'injected'
+  }
+
+  get provider() {
+    return window.ethereum
+  }
+
+  get ready() {
+    return typeof window !== 'undefined' && !!window.ethereum
   }
 
   async connect() {
     try {
-      if (!window.ethereum) throw Error('window.ethereum not found')
+      if (!window.ethereum) throw new ConnectorNotFoundError()
 
       if (window.ethereum.on) {
-        window.ethereum.on('accountsChanged', this.handleAccountsChanged)
-        window.ethereum.on('chainChanged', this.handleChainChanged)
-        window.ethereum.on('disconnect', this.handleDisconnect)
+        window.ethereum.on('accountsChanged', this.onAccountsChanged)
+        window.ethereum.on('chainChanged', this.onChainChanged)
+        window.ethereum.on('disconnect', this.onDisconnect)
       }
 
-      if (window.ethereum.isMetaMask)
-        window.ethereum.autoRefreshOnNetworkChange = false
-
-      const accounts = await window.ethereum
-        .request({
-          method: 'eth_requestAccounts',
-        })
-        .then(unwrap)
+      const accounts = await window.ethereum.request<string[]>({
+        method: 'eth_requestAccounts',
+      })
       const account = accounts[0]
       const chainId = await window.ethereum
-        .request({ method: 'eth_chainId' })
-        .then(unwrap)
+        .request<string>({
+          method: 'eth_chainId',
+        })
+        .then(normalizeChainId)
+
       return { account, chainId, provider: window.ethereum }
     } catch (error) {
       if ((<ProviderRpcError>error).code === 4001)
-        throw Error('eth_requestAccounts rejected')
+        throw new UserRejectedRequestError()
       throw error
     }
   }
 
-  disconnect() {
+  async disconnect() {
     if (!window?.ethereum?.removeListener) return
 
-    window.ethereum.removeListener(
-      'accountsChanged',
-      this.handleAccountsChanged,
-    )
-    window.ethereum.removeListener('chainChanged', this.handleChainChanged)
-    window.ethereum.removeListener('disconnect', this.handleDisconnect)
-  }
-
-  async getAccount() {
-    if (!window.ethereum) throw Error('window.ethereum not found')
-
-    try {
-      const accounts = await window.ethereum
-        .request({ method: 'eth_accounts' })
-        .then(unwrap)
-      return accounts[0]
-    } catch {
-      throw Error('eth_accounts failed')
-    }
-  }
-
-  async getChainId() {
-    if (!window.ethereum) throw Error('window.ethereum not found')
-
-    try {
-      return await window.ethereum
-        .request({ method: 'eth_chainId' })
-        .then(unwrap)
-    } catch {
-      try {
-        return await window.ethereum
-          .request({ method: 'net_version' })
-          .then(unwrap)
-      } catch {
-        throw Error('chain id not detected')
-      }
-    }
+    window.ethereum.removeListener('accountsChanged', this.onAccountsChanged)
+    window.ethereum.removeListener('chainChanged', this.onChainChanged)
+    window.ethereum.removeListener('disconnect', this.onDisconnect)
   }
 
   async isAuthorized() {
+    if (!window.ethereum) throw new ConnectorNotFoundError()
+
     try {
-      const account = await this.getAccount()
+      const accounts = await window.ethereum.request<string[]>({
+        method: 'eth_accounts',
+      })
+      const account = accounts[0]
       return !!account
     } catch {
       return false
     }
   }
 
-  async switchChain(chainId: string) {
-    if (!window.ethereum) throw Error('window.ethereum not found')
+  async isConnected() {
+    return await this.isAuthorized()
+  }
+
+  async switchChain(chainId: number) {
+    if (!window.ethereum) throw new ConnectorNotFoundError()
+    const id = hexValue(chainId)
 
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId }],
+        params: [{ chainId: id }],
       })
     } catch (error) {
-      // This error code indicates the chain has not been added
+      // Indicates chain is not added to MetaMask
       if ((<ProviderRpcError>error).code === 4902) {
         try {
+          const chain = this._chains.find((x) => x.id === chainId)
+          if (!chain) throw new ChainNotConfiguredError()
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
-            params: [{ chainId: '0xf00' }],
+            params: [
+              {
+                chainId: id,
+                chainName: chain.name,
+                nativeCurrency: chain.nativeCurrency,
+                rpcUrls: chain.rpcUrls,
+                blockExplorerUrls: chain.blockExplorerUrls,
+              },
+            ],
           })
         } catch (addError) {
-          // handle "add" error
+          throw new AddChainError()
         }
+      } else if ((<ProviderRpcError>error).code === 4001) {
+        throw new UserRejectedRequestError()
+      } else {
+        throw new SwitchChainError()
       }
-      // handle other "switch" errors
     }
   }
 
-  async getProvider() {
-    return window.ethereum
-  }
-
-  private handleAccountsChanged(accounts: string[]) {
+  private onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })
   }
 
-  private handleChainChanged(chainId: Network) {
-    this.emit('change', { chainId, provider: window.ethereum })
+  private onChainChanged = (chainId: number | string) => {
+    this.emit('change', { chainId: normalizeChainId(chainId) })
   }
 
-  private handleDisconnect() {
+  private onDisconnect = () => {
     this.emit('disconnect')
   }
 }

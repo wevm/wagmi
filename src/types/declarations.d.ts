@@ -1,29 +1,34 @@
-type RequestArguments =
-  | {
-      method:
-        | 'eth_requestAccounts'
-        | 'eth_chainId'
-        | 'net_version'
-        | 'eth_accounts'
-    }
-  | {
-      method: 'wallet_switchEthereumChain' | 'wallet_addEthereumChain'
-      params: [{ chainId: string }]
-    }
-
-interface ProviderRpcError extends Error {
-  message: string
-  code: number
-  data?: unknown
+type AddEthereumChainParameter = {
+  chainId: string // A 0x-prefixed hexadecimal string
+  chainName: string
+  nativeCurrency: {
+    name: string
+    symbol: string // 2-6 characters long
+    decimals: 18
+  }
+  rpcUrls: string[]
+  blockExplorerUrls?: string[]
+  iconUrls?: string[] // Currently ignored.
 }
+
+type RequestArguments =
+  | { method: 'eth_accounts' }
+  | { method: 'eth_chainId' }
+  | { method: 'eth_requestAccounts' }
+  | { method: 'wallet_addEthereumChain'; params: AddEthereumChainParameter[] }
+  | { method: 'wallet_switchEthereumChain'; params: [{ chainId: string }] }
 
 interface Window {
   ethereum?: {
-    autoRefreshOnNetworkChange?: boolean
     isMetaMask?: true
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void
-    request(args: RequestArguments): Promise<unknown>
+    request<T = any>(args: RequestArguments): Promise<T>
   }
-  web3?: Record<string, unknown>
+}
+
+interface ProviderRpcError extends Error {
+  code: 4001 | 4902
+  data?: unknown
+  message: string
 }
