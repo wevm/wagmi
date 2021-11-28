@@ -55,11 +55,7 @@ export class InjectedConnector extends BaseConnector {
         method: 'eth_requestAccounts',
       })
       const account = accounts[0]
-      const chainId = await window.ethereum
-        .request<string>({
-          method: 'eth_chainId',
-        })
-        .then(normalizeChainId)
+      const chainId = await this.getChainId()
 
       return { account, chainId, provider: window.ethereum }
     } catch (error) {
@@ -75,6 +71,13 @@ export class InjectedConnector extends BaseConnector {
     window.ethereum.removeListener('accountsChanged', this.onAccountsChanged)
     window.ethereum.removeListener('chainChanged', this.onChainChanged)
     window.ethereum.removeListener('disconnect', this.onDisconnect)
+  }
+
+  async getChainId() {
+    if (!window.ethereum) throw new ConnectorNotFoundError()
+    return await window.ethereum
+      .request<string>({ method: 'eth_chainId' })
+      .then(normalizeChainId)
   }
 
   async isAuthorized() {
@@ -116,7 +119,10 @@ export class InjectedConnector extends BaseConnector {
               {
                 chainId: id,
                 chainName: chain.name,
-                nativeCurrency: chain.nativeCurrency,
+                nativeCurrency: {
+                  ...chain.nativeCurrency,
+                  decimals: 18,
+                },
                 rpcUrls: chain.rpcUrls,
                 blockExplorerUrls: chain.blockExplorerUrls,
               },

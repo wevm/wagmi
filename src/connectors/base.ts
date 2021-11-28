@@ -5,7 +5,7 @@ import { ConnectorError } from './errors'
 export type Chain = {
   id: number
   name: AddEthereumChainParameter['chainName']
-  nativeCurrency: AddEthereumChainParameter['nativeCurrency']
+  nativeCurrency: Omit<AddEthereumChainParameter['nativeCurrency'], 'decimals'>
   rpcUrls: AddEthereumChainParameter['rpcUrls']
   blockExplorerUrls?: AddEthereumChainParameter['blockExplorerUrls']
   testnet?: boolean
@@ -32,6 +32,7 @@ export interface ConnectorProps {
 
   connect(): Promise<Data>
   disconnect(): Promise<void>
+  getChainId(): Promise<number>
   isAuthorized(): Promise<boolean>
   isConnected(): Promise<boolean>
   switchChain?(chainId: number): Promise<void>
@@ -49,6 +50,7 @@ export abstract class BaseConnector
 
   abstract connect(): Promise<Data>
   abstract disconnect(): Promise<void>
+  abstract getChainId(): Promise<number>
   abstract isAuthorized(): Promise<boolean>
   abstract isConnected(): Promise<boolean>
 }

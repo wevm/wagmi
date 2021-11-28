@@ -21,6 +21,9 @@ export class WalletConnectConnector extends BaseConnector {
   get provider() {
     return this._provider
   }
+  set provider(provider: WalletConnectProvider | undefined) {
+    this._provider = provider
+  }
 
   get ready() {
     return true

@@ -4,25 +4,24 @@ import { Connector, WalletConnectConnector } from '../connectors'
 import { useContext } from './useContext'
 
 type State = {
-  connecting: boolean
+  connector?: Connector
   error?: Error
+  loading: boolean
 }
 
 const initialState: State = {
-  connecting: false,
+  loading: false,
 }
 
 export const useConnect = () => {
-  const [globalState, setGlobalState] = useContext()
+  const [globalState, setGlobalState, setLastUsedConnector] = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
   const connect = React.useCallback(
     async (connector: Connector) => {
       try {
-        if (connector === globalState.connector) return
-
-        setState((x) => ({ ...x, connecting: true, error: undefined }))
-        setGlobalState((x) => ({ ...x, connector }))
+        const activeConnector = globalState?.connector
+        if (connector === activeConnector) return
 
         // Manually reset connector if user already tried WalletConnect
         if (
@@ -31,24 +30,40 @@ export const useConnect = () => {
         )
           connector.provider = undefined
 
+        setState((x) => ({
+          ...x,
+          loading: true,
+          connector,
+          error: undefined,
+        }))
         const data = await connector.connect()
-        setGlobalState((x) => ({ ...x, data }))
+        // Update connector globally only after successful connection
+        setGlobalState((x) => ({ ...x, connector, data }))
+        setLastUsedConnector(connector.name)
       } catch (error) {
-        setState((x) => ({ ...x, error: error as Error }))
-        setGlobalState((x) => ({ ...x, connector: undefined }))
+        setState((x) => ({ ...x, connector: undefined, error: error as Error }))
       } finally {
-        setState((x) => ({ ...x, connecting: false }))
+        setState((x) => ({ ...x, loading: false }))
       }
     },
-    [globalState.connector, setGlobalState],
+    [globalState.connector, setGlobalState, setLastUsedConnector],
   )
+
+  // Keep connector in sync with global connector
+  React.useEffect(() => {
+    setState((x) => ({
+      ...x,
+      connector: globalState.connector,
+      error: undefined,
+    }))
+  }, [globalState.connector])
 
   return [
     {
-      connecting: state.connecting,
       connector: globalState.connector,
       connectors: globalState.connectors,
       error: state.error,
+      loading: state.loading,
     },
     connect,
   ] as const

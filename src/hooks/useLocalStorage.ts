@@ -34,5 +34,5 @@ export const useLocalStorage = <T>(key: string, defaultState: T) => {
     [value, setValue, key],
   )
 
-  return [value, setLocalStorage]
+  return [value, setLocalStorage] as const
 }

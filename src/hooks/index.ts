@@ -1,4 +1,7 @@
 export { useAccount } from './useAccount'
 export { useConnect } from './useConnect'
+export { useContext } from './useContext'
+export { useENSLookUp } from './useENSLookup'
 export { useLocalStorage } from './useLocalStorage'
 export { useNetwork } from './useNetwork'
+export { useProvider } from './useProvider'

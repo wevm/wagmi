@@ -1,9 +1,13 @@
 import * as React from 'react'
 
 import { useContext } from './useContext'
+import { useENSLookUp } from './useENSLookup'
 
 export const useAccount = () => {
-  const [state, setState] = useContext()
+  const [{ connector, data }, setState] = useContext()
+  const address = data?.account
+  const [{ ens }] = useENSLookUp({ address })
+  console.log({ ens })
 
   const disconnect = React.useCallback(() => {
     setState((x) => {
@@ -12,5 +16,11 @@ export const useAccount = () => {
     })
   }, [setState])
 
-  return [state.data?.account, disconnect] as const
+  return [
+    {
+      address,
+      connector: connector,
+    },
+    disconnect,
+  ] as const
 }

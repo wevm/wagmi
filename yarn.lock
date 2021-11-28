@@ -372,7 +372,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/abstract-provider@npm:5.5.1, @ethersproject/abstract-provider@npm:^5.5.0":
+"@ethersproject/abstract-provider@npm:5.5.1, @ethersproject/abstract-provider@npm:^5.5.0, @ethersproject/abstract-provider@npm:^5.5.1":
   version: 5.5.1
   resolution: "@ethersproject/abstract-provider@npm:5.5.1"
   dependencies:
@@ -5257,6 +5257,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "wagmi@workspace:."
   dependencies:
+    "@ethersproject/abstract-provider": ^5.5.1
     "@types/eslint": ^7
     "@types/events": ^3
     "@types/node": ^16.11.9
@@ -5288,6 +5289,7 @@ __metadata:
     typescript: ^4.3.2
     vite: ^2.6.4
   peerDependencies:
+    ethers: ^5.5.1
     react: ^17.0.0
     react-dom: ^17.0.0
   languageName: unknown
