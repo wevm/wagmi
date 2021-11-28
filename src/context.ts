@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Provider as EthersProvider } from '@ethersproject/abstract-provider'
+import { providers } from 'ethers'
 
 import { Connector, Data, InjectedConnector } from './connectors'
 import { useLocalStorage } from './hooks'
@@ -19,7 +19,7 @@ type ContextValue = [
     /** Active data */
     data?: State['data']
     /** Interface for connecting to network */
-    provider: EthersProvider
+    provider: providers.BaseProvider
   },
   React.Dispatch<React.SetStateAction<State>>,
   (newValue: string | null) => void,
@@ -35,7 +35,12 @@ type Props = {
   /** Connectors used for linking accounts */
   connectors?: Connector[]
   /** Interface for connecting to network */
-  provider: EthersProvider | ((connector?: Connector) => EthersProvider)
+  provider:
+    | providers.BaseProvider
+    | ((config: {
+        chainId?: number
+        connector?: Connector
+      }) => providers.BaseProvider)
 }
 
 export const Provider = ({
@@ -55,9 +60,13 @@ export const Provider = ({
   }>({})
 
   const provider = React.useMemo(() => {
-    if (typeof _provider === 'function') return _provider(state.connector)
+    if (typeof _provider === 'function')
+      return _provider({
+        chainId: state.data?.chainId,
+        connector: state.connector,
+      })
     return _provider
-  }, [_provider, state.connector])
+  }, [_provider, state.data?.chainId, state.connector])
 
   // Attempt to connect on mount
   /* eslint-disable react-hooks/exhaustive-deps */

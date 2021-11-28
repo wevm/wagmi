@@ -1,11 +1,12 @@
 import * as React from 'react'
+import { providers } from 'ethers'
 
 import { useProvider } from './useProvider'
 
 type State = {
   loading: boolean
-  ens?: string | null
   error?: Error
+  resolver?: providers.EnsResolver | null
 }
 
 const initialState: State = {
@@ -13,25 +14,24 @@ const initialState: State = {
 }
 
 type Config = {
-  address?: string
+  name?: string | null
   skip?: boolean
 }
 
-export const useEnsLookup = ({ address, skip }: Config = {}) => {
+export const useEnsResolver = ({ name, skip }: Config = {}) => {
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
-  const lookupAddress = React.useCallback(
-    async (address: string) => {
+  const getResolver = React.useCallback(
+    async (name: string) => {
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const ens = await provider.lookupAddress(address)
-        setState((x) => ({ ...x, ens, loading: false }))
-        return ens
+        const resolver = await provider.getResolver(name)
+        setState((x) => ({ ...x, loading: false, resolver }))
+        return resolver
       } catch (_error) {
         const error = _error as Error
         setState((x) => ({ ...x, error, loading: false }))
-        return error
       }
     },
     [provider],
@@ -39,13 +39,13 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!address || skip) return
-    lookupAddress(address)
-  }, [address])
+    if (!name || skip) return
+    getResolver(name)
+  }, [name])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
-    { ens: state.ens, loading: state.loading, error: state.error },
-    lookupAddress,
+    { resolver: state.resolver, loading: state.loading, error: state.error },
+    getResolver,
   ] as const
 }

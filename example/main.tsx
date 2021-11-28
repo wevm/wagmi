@@ -19,10 +19,10 @@ ReactDOM.render(
         new InjectedConnector(),
         new WalletConnectConnector({ infuraId, qrcode: true }),
       ]}
-      provider={(connector) =>
+      provider={({ connector, chainId }) =>
         connector
-          ? new providers.InfuraProvider()
-          : getDefaultProvider(1, {
+          ? new providers.InfuraProvider(chainId, infuraId)
+          : getDefaultProvider(chainId, {
               infuraId,
             })
       }

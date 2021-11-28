@@ -4,7 +4,7 @@ import { useProvider } from './useProvider'
 
 type State = {
   loading: boolean
-  ens?: string | null
+  avatar?: string | null
   error?: Error
 }
 
@@ -13,21 +13,21 @@ const initialState: State = {
 }
 
 type Config = {
-  address?: string
+  name?: string | null
   skip?: boolean
 }
 
-export const useEnsLookup = ({ address, skip }: Config = {}) => {
+export const useEnsAvatar = ({ name, skip }: Config = {}) => {
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
-  const lookupAddress = React.useCallback(
-    async (address: string) => {
+  const getAvatar = React.useCallback(
+    async (name: string) => {
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const ens = await provider.lookupAddress(address)
-        setState((x) => ({ ...x, ens, loading: false }))
-        return ens
+        const avatar = await provider.getAvatar(name)
+        setState((x) => ({ ...x, avatar, loading: false }))
+        return avatar
       } catch (_error) {
         const error = _error as Error
         setState((x) => ({ ...x, error, loading: false }))
@@ -39,13 +39,13 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!address || skip) return
-    lookupAddress(address)
-  }, [address])
+    if (!name || skip) return
+    getAvatar(name)
+  }, [name])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
-    { ens: state.ens, loading: state.loading, error: state.error },
-    lookupAddress,
+    { avatar: state.avatar, loading: state.loading, error: state.error },
+    getAvatar,
   ] as const
 }

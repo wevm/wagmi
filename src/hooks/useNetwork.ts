@@ -13,8 +13,14 @@ export const useNetwork = () => {
 
   const switchNetwork = React.useCallback(
     (chainId: number) => {
-      if (!state.connector?.switchChain) return
-      state.connector.switchChain(chainId)
+      if (!state.connector?.switchChain) return false
+      try {
+        state.connector.switchChain(chainId)
+        return true
+      } catch (_error) {
+        const error = _error as Error
+        return error
+      }
     },
     [state.connector],
   )

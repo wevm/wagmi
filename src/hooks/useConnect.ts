@@ -40,10 +40,12 @@ export const useConnect = () => {
         // Update connector globally only after successful connection
         setGlobalState((x) => ({ ...x, connector, data }))
         setLastUsedConnector(connector.name)
-      } catch (error) {
-        setState((x) => ({ ...x, connector: undefined, error: error as Error }))
-      } finally {
         setState((x) => ({ ...x, loading: false }))
+        return { connector, data }
+      } catch (_error) {
+        const error = _error as Error
+        setState((x) => ({ ...x, connector: undefined, error, loading: false }))
+        return error
       }
     },
     [globalState.connector, setGlobalState, setLastUsedConnector],
@@ -60,7 +62,7 @@ export const useConnect = () => {
 
   return [
     {
-      connector: globalState.connector,
+      connector: state.connector,
       connectors: globalState.connectors,
       error: state.error,
       loading: state.loading,

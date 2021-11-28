@@ -5,7 +5,9 @@ export {
   useAccount,
   useConnect,
   useContext,
-  useENSLookUp,
+  useEnsAvatar,
+  useEnsLookup,
+  useEnsResolver,
   useNetwork,
   useProvider,
 } from './hooks'

@@ -3,22 +3,23 @@ import * as React from 'react'
 import { useAccount, useConnect, useNetwork } from '../src'
 
 export const App = () => {
-  const [{ connectors, error, loading }, connect] = useConnect()
-  const [{ address, connector: activeConnector }, disconnect] = useAccount()
-  const [{ chainId, data, chains }, switchNetwork] = useNetwork()
+  const [{ connector, connectors, error, loading }, connect] = useConnect()
+  const [
+    { address, connector: activeConnector, data: accountData },
+    disconnect,
+  ] = useAccount()
+  const [{ chainId, data: networkData, chains }, switchNetwork] = useNetwork()
 
   return (
     <div>
       <div>
         {connectors.map((x) =>
           x.name === activeConnector?.name ? (
-            <span key={x.name}>
-              {x.name}
-              {loading && '…'}
-            </span>
+            <span key={x.name}>{x.name}</span>
           ) : (
             <button key={x.name} onClick={() => connect(x)}>
               {x.name}
+              {loading && x.name === connector?.name && '…'}
             </button>
           ),
         )}
@@ -31,14 +32,20 @@ export const App = () => {
       {address && (
         <>
           <div>
-            {address}
+            <span>{accountData?.ens ?? address}</span>
+            {accountData?.avatar && (
+              <img
+                src={accountData?.avatar}
+                style={{ height: 20, width: 20 }}
+              />
+            )}
             <button onClick={() => disconnect()}>Disconnect</button>
           </div>
 
           <br />
 
           <div>
-            <span>{data?.name ?? chainId}</span>
+            <span>{networkData?.name ?? chainId}</span>
             {chains.map((x) =>
               x.id === chainId ? null : (
                 <button key={x.id} onClick={() => switchNetwork(x.id)}>
