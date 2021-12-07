@@ -20,6 +20,8 @@ type ContextValue = [
     data?: State['data']
     /** Interface for connecting to network */
     provider: providers.BaseProvider
+    /** Interface for connecting to network */
+    webSocketProvider?: providers.WebSocketProvider
   },
   React.Dispatch<React.SetStateAction<State>>,
   (newValue: string | null) => void,
@@ -41,6 +43,13 @@ type Props = {
         chainId?: number
         connector?: Connector
       }) => providers.BaseProvider)
+  /** WebSocket interface for connecting to network */
+  webSocketProvider?:
+    | providers.WebSocketProvider
+    | ((config: {
+        chainId?: number
+        connector?: Connector
+      }) => providers.WebSocketProvider)
 }
 
 export const Provider = ({
@@ -49,6 +58,7 @@ export const Provider = ({
   connectors = [new InjectedConnector()],
   connectorStorageKey = 'wagmiWallet',
   provider: _provider,
+  webSocketProvider: _webSocketProvider,
 }: React.PropsWithChildren<Props>) => {
   const [lastUsedConnector, setLastUsedConnector] = useLocalStorage<
     string | null
@@ -60,13 +70,21 @@ export const Provider = ({
   }>({})
 
   const provider = React.useMemo(() => {
-    if (typeof _provider === 'function')
-      return _provider({
-        chainId: state.data?.chainId,
-        connector: state.connector,
-      })
-    return _provider
+    if (typeof _provider !== 'function') return _provider
+    return _provider({
+      chainId: state.data?.chainId,
+      connector: state.connector,
+    })
   }, [_provider, state.data?.chainId, state.connector])
+
+  const webSocketProvider = React.useMemo(() => {
+    if (!_webSocketProvider) return undefined
+    if (typeof _webSocketProvider !== 'function') return _webSocketProvider
+    return _webSocketProvider({
+      chainId: state.data?.chainId,
+      connector: state.connector,
+    })
+  }, [_webSocketProvider, state.data?.chainId, state.connector])
 
   // Attempt to connect on mount
   /* eslint-disable react-hooks/exhaustive-deps */
@@ -124,6 +142,7 @@ export const Provider = ({
       connector: state.connector,
       data: state.data,
       provider,
+      webSocketProvider,
     },
     setState,
     setLastUsedConnector,

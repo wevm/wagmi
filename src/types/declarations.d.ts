@@ -1,7 +1,7 @@
 type AddEthereumChainParameter = {
   chainId: string // A 0x-prefixed hexadecimal string
   chainName: string
-  nativeCurrency: {
+  nativeCurrency?: {
     name: string
     symbol: string // 2-6 characters long
     decimals: 18
@@ -20,6 +20,7 @@ type RequestArguments =
 
 interface Window {
   ethereum?: {
+    isCoinbaseWallet?: true
     isMetaMask?: true
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void

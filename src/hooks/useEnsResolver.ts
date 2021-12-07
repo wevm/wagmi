@@ -4,8 +4,8 @@ import { providers } from 'ethers'
 import { useProvider } from './useProvider'
 
 type State = {
-  loading: boolean
   error?: Error
+  loading: boolean
   resolver?: providers.EnsResolver | null
 }
 

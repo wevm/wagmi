@@ -2,11 +2,15 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { getDefaultProvider, providers } from 'ethers'
 
-import { InjectedConnector, Provider, WalletConnectConnector } from '../src'
+import {
+  InjectedConnector,
+  Provider,
+  WalletConnectConnector,
+  defaultChains,
+  defaultL2Chains,
+  developmentChains,
+} from '../src'
 import { App } from './app'
-
-import { Buffer } from 'buffer'
-globalThis.Buffer = Buffer
 
 const infuraId = import.meta.env.VITE_INFURA_ID
 
@@ -16,7 +20,9 @@ ReactDOM.render(
       autoConnect
       connectorStorageKey="wagmiWallet"
       connectors={[
-        new InjectedConnector(),
+        new InjectedConnector({
+          chains: [...defaultChains, ...defaultL2Chains, ...developmentChains],
+        }),
         new WalletConnectConnector({ infuraId, qrcode: true }),
       ]}
       provider={({ connector, chainId }) =>
@@ -25,6 +31,9 @@ ReactDOM.render(
           : getDefaultProvider(chainId, {
               infuraId,
             })
+      }
+      webSocketProvider={({ chainId }) =>
+        new providers.InfuraWebSocketProvider(chainId, infuraId)
       }
     >
       <App />

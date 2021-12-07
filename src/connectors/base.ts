@@ -5,7 +5,7 @@ import { ConnectorError } from './errors'
 export type Chain = {
   id: number
   name: AddEthereumChainParameter['chainName']
-  nativeCurrency: Omit<AddEthereumChainParameter['nativeCurrency'], 'decimals'>
+  nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
   rpcUrls: AddEthereumChainParameter['rpcUrls']
   blockExplorerUrls?: AddEthereumChainParameter['blockExplorerUrls']
   testnet?: boolean

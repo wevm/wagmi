@@ -6,5 +6,11 @@ export default defineConfig({
   define: {
     global: 'globalThis',
   },
+  resolve: {
+    alias: {
+      process: 'process/browser',
+      util: 'util',
+    },
+  },
   plugins: [react()],
 })

@@ -1,1 +1,1 @@
-export { defaultChains } from './chains'
+export { defaultChains, defaultL2Chains, developmentChains } from './chains'

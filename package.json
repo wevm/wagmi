@@ -1,6 +1,12 @@
 {
-  "name": "wagmi",
-  "version": "0.0.0",
+  "name": "root",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "components",
+    "docs",
+    "playroom"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,8 +18,7 @@
     "react-dom": "^17.0.0"
   },
   "dependencies": {
-    "eventemitter3": "^4.0.7",
-    "events": "^3.3.0"
+    "eventemitter3": "^4.0.7"
   },
   "devDependencies": {
     "@ethersproject/abstract-provider": "^5.5.1",
@@ -38,12 +43,16 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "ethers": "^5.5.1",
+    "events": "^3.3.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.0.3",
     "prettier": "^2.4.1",
+    "process": "^0.11.10",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
     "typescript": "^4.3.2",
-    "vite": "^2.6.4"
+    "util": "^0.12.4",
+    "vite": "^2.6.4",
+    "walletlink": "^2.2.8"
   }
 }

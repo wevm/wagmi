@@ -3,9 +3,9 @@ import * as React from 'react'
 import { useProvider } from './useProvider'
 
 type State = {
-  loading: boolean
   avatar?: string | null
   error?: Error
+  loading: boolean
 }
 
 const initialState: State = {
@@ -13,11 +13,11 @@ const initialState: State = {
 }
 
 type Config = {
-  name?: string | null
+  nameOrAddress?: string | null
   skip?: boolean
 }
 
-export const useEnsAvatar = ({ name, skip }: Config = {}) => {
+export const useEnsAvatar = ({ nameOrAddress, skip }: Config = {}) => {
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
@@ -39,9 +39,9 @@ export const useEnsAvatar = ({ name, skip }: Config = {}) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!name || skip) return
-    getAvatar(name)
-  }, [name])
+    if (!nameOrAddress || skip) return
+    getAvatar(nameOrAddress)
+  }, [nameOrAddress])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

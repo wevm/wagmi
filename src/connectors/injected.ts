@@ -28,9 +28,11 @@ export class InjectedConnector extends BaseConnector {
   }
 
   get name() {
-    return typeof window !== 'undefined' && window.ethereum?.isMetaMask
-      ? 'MetaMask'
-      : 'injected'
+    if (typeof window !== 'undefined' && window.ethereum?.isMetaMask)
+      return 'MetaMask'
+    if (typeof window !== 'undefined' && window.ethereum?.isCoinbaseWallet)
+      return 'Coinbase Wallet'
+    return 'Injected'
   }
 
   get provider() {
@@ -81,9 +83,8 @@ export class InjectedConnector extends BaseConnector {
   }
 
   async isAuthorized() {
-    if (!window.ethereum) throw new ConnectorNotFoundError()
-
     try {
+      if (!window.ethereum) throw new ConnectorNotFoundError()
       const accounts = await window.ethereum.request<string[]>({
         method: 'eth_accounts',
       })
@@ -119,10 +120,9 @@ export class InjectedConnector extends BaseConnector {
               {
                 chainId: id,
                 chainName: chain.name,
-                nativeCurrency: {
-                  ...chain.nativeCurrency,
-                  decimals: 18,
-                },
+                nativeCurrency: chain.nativeCurrency
+                  ? chain.nativeCurrency
+                  : undefined,
                 rpcUrls: chain.rpcUrls,
                 blockExplorerUrls: chain.blockExplorerUrls,
               },

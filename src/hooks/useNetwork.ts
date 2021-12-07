@@ -3,33 +3,44 @@ import * as React from 'react'
 import { defaultChains } from '../constants'
 import { useContext } from './useContext'
 
+type State = {
+  error?: Error
+}
+
+const initialState: State = {}
+
 export const useNetwork = () => {
-  const [state] = useContext()
-  const chainId = state.data?.chainId
-  const activeChains = state.connector?.chains ?? []
+  const [{ connector, data }] = useContext()
+  const [state, setState] = React.useState<State>(initialState)
+
+  const chainId = data?.chainId
+  const activeChains = connector?.chains ?? []
   const activeChain = [...activeChains, ...defaultChains].find(
     (x) => x.id === chainId,
   )
 
   const switchNetwork = React.useCallback(
     (chainId: number) => {
-      if (!state.connector?.switchChain) return false
+      if (!connector?.switchChain) return false
       try {
-        state.connector.switchChain(chainId)
+        setState((x) => ({ ...x, error: undefined }))
+        connector.switchChain(chainId)
         return true
       } catch (_error) {
         const error = _error as Error
+        setState((x) => ({ ...x, error }))
         return error
       }
     },
-    [state.connector],
+    [connector],
   )
 
   return [
     {
       chainId,
-      data: activeChain,
       chains: activeChains,
+      data: activeChain,
+      error: state.error,
     },
     switchNetwork,
   ] as const

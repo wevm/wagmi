@@ -3,9 +3,9 @@ import * as React from 'react'
 import { useProvider } from './useProvider'
 
 type State = {
-  loading: boolean
   ens?: string | null
   error?: Error
+  loading: boolean
 }
 
 const initialState: State = {

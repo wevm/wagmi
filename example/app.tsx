@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useAccount, useConnect, useNetwork } from '../src'
+import { useAccount, useBlockNumber, useConnect, useNetwork } from '../src'
 
 export const App = () => {
   const [{ connector, connectors, error, loading }, connect] = useConnect()
@@ -8,10 +8,18 @@ export const App = () => {
     { address, connector: activeConnector, data: accountData },
     disconnect,
   ] = useAccount()
-  const [{ chainId, data: networkData, chains }, switchNetwork] = useNetwork()
+  const [
+    { chainId, data: networkData, error: switchNetworkError, chains },
+    switchNetwork,
+  ] = useNetwork()
+  const [{ blockNumber }] = useBlockNumber({ subscribe: true })
 
   return (
     <div>
+      <div>Block #{blockNumber}</div>
+
+      <br />
+
       <div>
         {connectors.map((x) =>
           x.name === activeConnector?.name ? (
@@ -53,6 +61,8 @@ export const App = () => {
                 </button>
               ),
             )}
+
+            {switchNetworkError && switchNetworkError?.message}
           </div>
         </>
       )}

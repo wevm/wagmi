@@ -16,7 +16,7 @@ export const useAccount = ({ skipEns }: Config = {}) => {
     skip: skipEns,
   })
   const [{ avatar, loading: resolverLoading }] = useEnsAvatar({
-    name: ens,
+    nameOrAddress: ens,
     skip: skipEns || !ens,
   })
 

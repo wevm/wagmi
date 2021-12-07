@@ -1,28 +1,25 @@
-import WalletConnectProvider from '@walletconnect/ethereum-provider'
-import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
+import { WalletLink, WalletLinkProvider } from 'walletlink'
+import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
 import { normalizeChainId } from '../utils'
 import { BaseConnector } from './base'
 import { UserRejectedRequestError } from './errors'
 
-export class WalletConnectConnector extends BaseConnector {
-  private _config: IWCEthRpcConnectionOptions
-  private _provider?: WalletConnectProvider
+export class WalletLinkConnector extends BaseConnector {
+  private _client: WalletLink
+  private _provider?: WalletLinkProvider
 
-  constructor(config: IWCEthRpcConnectionOptions) {
+  constructor(config: WalletLinkOptions) {
     super()
-    this._config = config
+    this._client = new WalletLink(config)
   }
 
   get name() {
-    return 'WalletConnect'
+    return 'WalletLink'
   }
 
   get provider() {
     return this._provider
-  }
-  set provider(provider: WalletConnectProvider | undefined) {
-    this._provider = provider
   }
 
   get ready() {
@@ -31,8 +28,7 @@ export class WalletConnectConnector extends BaseConnector {
 
   async connect() {
     try {
-      if (!this._provider)
-        this._provider = new WalletConnectProvider(this._config)
+      if (!this._provider) this._provider = this._client.makeWeb3Provider()
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
@@ -59,28 +55,22 @@ export class WalletConnectConnector extends BaseConnector {
   }
 
   async getChainId() {
-    if (!this._provider)
-      this._provider = new WalletConnectProvider(this._config)
+    if (!this._provider) this._provider = this._client.makeWeb3Provider()
     const chainId = normalizeChainId(this._provider.chainId)
     return chainId
   }
 
   async isAuthorized() {
     try {
-      if (!this._provider)
-        this._provider = new WalletConnectProvider(this._config)
-      const accounts = this._provider.accounts
-      const account = accounts[0]
-
-      return !!account
+      if (!this._provider) this._provider = this._client.makeWeb3Provider()
+      return this._provider.connected
     } catch {
       return false
     }
   }
 
   async isConnected() {
-    if (!this._provider)
-      this._provider = new WalletConnectProvider(this._config)
+    if (!this._provider) this._provider = this._client.makeWeb3Provider()
     return this._provider.connected
   }
 
