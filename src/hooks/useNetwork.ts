@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { defaultChains } from '../constants'
+import { defaultChains, defaultL2Chains } from '../constants'
 import { useContext } from './useContext'
 
 type State = {
@@ -15,9 +15,11 @@ export const useNetwork = () => {
 
   const chainId = data?.chainId
   const activeChains = connector?.chains ?? []
-  const activeChain = [...activeChains, ...defaultChains].find(
-    (x) => x.id === chainId,
-  )
+  const activeChain = [
+    ...activeChains,
+    ...defaultChains,
+    ...defaultL2Chains,
+  ].find((x) => x.id === chainId)
 
   const switchNetwork = React.useCallback(
     (chainId: number) => {

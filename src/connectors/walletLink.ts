@@ -7,10 +7,12 @@ import { UserRejectedRequestError } from './errors'
 
 export class WalletLinkConnector extends BaseConnector {
   private _client: WalletLink
+  private _config: WalletLinkOptions & { jsonRpcUrl?: string }
   private _provider?: WalletLinkProvider
 
-  constructor(config: WalletLinkOptions) {
+  constructor(config: WalletLinkOptions & { jsonRpcUrl?: string }) {
     super()
+    this._config = config
     this._client = new WalletLink(config)
   }
 
@@ -28,7 +30,8 @@ export class WalletLinkConnector extends BaseConnector {
 
   async connect() {
     try {
-      if (!this._provider) this._provider = this._client.makeWeb3Provider()
+      if (!this._provider)
+        this._provider = this._client.makeWeb3Provider(this._config.jsonRpcUrl)
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
@@ -52,6 +55,18 @@ export class WalletLinkConnector extends BaseConnector {
     this._provider.removeListener('chainChanged', this.onChainChanged)
     this._provider.removeListener('disconnect', this.onDisconnect)
     this._provider.disconnect()
+
+    if (typeof localStorage !== 'undefined') {
+      let n = localStorage.length
+      while (n--) {
+        console.log(n)
+        const key = localStorage.key(n)
+        console.log(key)
+        if (!key) continue
+        if (!/-walletlink/.test(key)) continue
+        localStorage.removeItem(key)
+      }
+    }
   }
 
   async getChainId() {

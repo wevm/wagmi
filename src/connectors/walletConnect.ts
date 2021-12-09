@@ -56,6 +56,9 @@ export class WalletConnectConnector extends BaseConnector {
     this._provider.removeListener('chainChanged', this.onChainChanged)
     this._provider.removeListener('disconnect', this.onDisconnect)
     this._provider.disconnect()
+
+    typeof localStorage !== 'undefined' &&
+      localStorage.removeItem('walletconnect')
   }
 
   async getChainId() {

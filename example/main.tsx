@@ -6,6 +6,7 @@ import {
   InjectedConnector,
   Provider,
   WalletConnectConnector,
+  WalletLinkConnector,
   defaultChains,
   defaultL2Chains,
   developmentChains,
@@ -24,6 +25,10 @@ ReactDOM.render(
           chains: [...defaultChains, ...defaultL2Chains, ...developmentChains],
         }),
         new WalletConnectConnector({ infuraId, qrcode: true }),
+        new WalletLinkConnector({
+          appName: 'wagmi',
+          jsonRpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
+        }),
       ]}
       provider={({ connector, chainId }) =>
         connector
