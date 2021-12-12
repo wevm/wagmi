@@ -40,8 +40,8 @@ export class WalletConnectConnector extends BaseConnector {
 
   async connect() {
     try {
-      if (!this._provider)
-        this._provider = new WalletConnectProvider(this._options)
+      // Use new provider instance for every connect
+      this._provider = new WalletConnectProvider(this._options)
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
