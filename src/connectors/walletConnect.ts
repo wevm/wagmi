@@ -2,16 +2,25 @@ import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 
 import { normalizeChainId } from '../utils'
-import { BaseConnector } from './base'
+import { BaseConnector, Chain } from './base'
 import { UserRejectedRequestError } from './errors'
 
 export class WalletConnectConnector extends BaseConnector {
-  private _config: IWCEthRpcConnectionOptions
+  private _chains: Chain[]
+  private _options: IWCEthRpcConnectionOptions
   private _provider?: WalletConnectProvider
 
-  constructor(config: IWCEthRpcConnectionOptions) {
+  constructor(config: {
+    chains: Chain[]
+    options: IWCEthRpcConnectionOptions
+  }) {
     super()
-    this._config = config
+    this._options = config.options
+    this._chains = config.chains
+  }
+
+  get chains() {
+    return this._chains
   }
 
   get name() {
@@ -32,7 +41,7 @@ export class WalletConnectConnector extends BaseConnector {
   async connect() {
     try {
       if (!this._provider)
-        this._provider = new WalletConnectProvider(this._config)
+        this._provider = new WalletConnectProvider(this._options)
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
@@ -63,7 +72,7 @@ export class WalletConnectConnector extends BaseConnector {
 
   async getChainId() {
     if (!this._provider)
-      this._provider = new WalletConnectProvider(this._config)
+      this._provider = new WalletConnectProvider(this._options)
     const chainId = normalizeChainId(this._provider.chainId)
     return chainId
   }
@@ -71,7 +80,7 @@ export class WalletConnectConnector extends BaseConnector {
   async isAuthorized() {
     try {
       if (!this._provider)
-        this._provider = new WalletConnectProvider(this._config)
+        this._provider = new WalletConnectProvider(this._options)
       const accounts = this._provider.accounts
       const account = accounts[0]
 
@@ -83,7 +92,7 @@ export class WalletConnectConnector extends BaseConnector {
 
   async isConnected() {
     if (!this._provider)
-      this._provider = new WalletConnectProvider(this._config)
+      this._provider = new WalletConnectProvider(this._options)
     return this._provider.connected
   }
 

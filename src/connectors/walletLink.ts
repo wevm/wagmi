@@ -2,18 +2,27 @@ import { WalletLink, WalletLinkProvider } from 'walletlink'
 import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
 import { normalizeChainId } from '../utils'
-import { BaseConnector } from './base'
+import { BaseConnector, Chain } from './base'
 import { UserRejectedRequestError } from './errors'
 
 export class WalletLinkConnector extends BaseConnector {
+  private _chains: Chain[]
   private _client: WalletLink
-  private _config: WalletLinkOptions & { jsonRpcUrl?: string }
+  private _options: WalletLinkOptions & { jsonRpcUrl?: string }
   private _provider?: WalletLinkProvider
 
-  constructor(config: WalletLinkOptions & { jsonRpcUrl?: string }) {
+  constructor(config: {
+    chains: Chain[]
+    options: WalletLinkOptions & { jsonRpcUrl?: string }
+  }) {
     super()
-    this._config = config
-    this._client = new WalletLink(config)
+    this._chains = config.chains
+    this._options = config.options
+    this._client = new WalletLink(config.options)
+  }
+
+  get chains() {
+    return this._chains
   }
 
   get name() {
@@ -31,7 +40,7 @@ export class WalletLinkConnector extends BaseConnector {
   async connect() {
     try {
       if (!this._provider)
-        this._provider = this._client.makeWeb3Provider(this._config.jsonRpcUrl)
+        this._provider = this._client.makeWeb3Provider(this._options.jsonRpcUrl)
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
@@ -59,9 +68,7 @@ export class WalletLinkConnector extends BaseConnector {
     if (typeof localStorage !== 'undefined') {
       let n = localStorage.length
       while (n--) {
-        console.log(n)
         const key = localStorage.key(n)
-        console.log(key)
         if (!key) continue
         if (!/-walletlink/.test(key)) continue
         localStorage.removeItem(key)

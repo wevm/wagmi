@@ -7,7 +7,7 @@ export type Chain = {
   name: AddEthereumChainParameter['chainName']
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
   rpcUrls: AddEthereumChainParameter['rpcUrls']
-  blockExplorerUrls?: AddEthereumChainParameter['blockExplorerUrls']
+  blockExplorers?: { name: string; url: string }[]
   testnet?: boolean
 }
 
@@ -25,9 +25,13 @@ export interface ConnectorEvents {
 }
 
 export interface ConnectorProps {
+  /** Connector name */
   name: string
+  /** Chains connector supports */
   chains?: Chain[]
+  /** Provider associated with connector */
   provider: any
+  /** Whether connector is usable */
   ready: boolean
 
   connect(): Promise<Data>

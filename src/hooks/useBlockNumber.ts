@@ -49,10 +49,11 @@ export const useBlockNumber = ({ skip, subscribe }: Config = {}) => {
 
     const listener = (blockNumber: number) =>
       setState((x) => ({ ...x, blockNumber }))
+    const _provider = webSocketProvider ?? provider
 
-    ;(webSocketProvider ?? provider).on('block', listener)
+    _provider.on('block', listener)
     return () => {
-      ;(webSocketProvider ?? provider).off('block', listener)
+      _provider.off('block', listener)
     }
   }, [])
   /* eslint-enable react-hooks/exhaustive-deps */

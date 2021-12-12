@@ -13,7 +13,7 @@ body:
   - type: input
     attributes:
       label: Package Version
-      description: What version of degen are you using?
+      description: What version of wagmi are you using?
       placeholder: 1.0.0
     validations:
       required: true

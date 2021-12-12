@@ -120,11 +120,9 @@ export class InjectedConnector extends BaseConnector {
               {
                 chainId: id,
                 chainName: chain.name,
-                nativeCurrency: chain.nativeCurrency
-                  ? chain.nativeCurrency
-                  : undefined,
+                nativeCurrency: chain.nativeCurrency,
                 rpcUrls: chain.rpcUrls,
-                blockExplorerUrls: chain.blockExplorerUrls,
+                blockExplorerUrls: chain.blockExplorers?.map((x) => x.url),
               },
             ],
           })

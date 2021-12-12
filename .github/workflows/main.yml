@@ -6,25 +6,6 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    needs: lint
-    strategy:
-      matrix:
-        node-version: [14]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          cache: 'yarn'
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: yarn install
-      - name: Build
-        run: yarn setup && yarn workspace degen build
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -44,22 +25,3 @@ jobs:
         run: yarn lint
       - name: Check types
         run: yarn lint:types
-
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    needs: lint
-    strategy:
-      matrix:
-        node-version: [14]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          cache: 'yarn'
-          node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: yarn install
-      - name: Test
-        run: yarn test --coverage

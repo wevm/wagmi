@@ -12,11 +12,13 @@ export const App = () => {
     { chainId, data: networkData, error: switchNetworkError, chains },
     switchNetwork,
   ] = useNetwork()
-  const [{ blockNumber }] = useBlockNumber({ subscribe: true })
+  const [{ blockNumber, loading: blockNumberLoading }] = useBlockNumber({
+    subscribe: true,
+  })
 
   return (
     <div>
-      <div>Block #{blockNumber}</div>
+      <div>Block #{blockNumberLoading ? '…' : blockNumber}</div>
 
       <br />
 
@@ -53,14 +55,18 @@ export const App = () => {
           <br />
 
           <div>
-            <span>{networkData?.name ?? chainId}</span>
-            {chains.map((x) =>
-              x.id === chainId ? null : (
-                <button key={x.id} onClick={() => switchNetwork(x.id)}>
-                  Switch to {x.name}
-                </button>
-              ),
-            )}
+            <span>
+              {networkData?.name ?? chainId}{' '}
+              {networkData?.unsupported && '(unsupported)'}
+            </span>
+            {switchNetwork &&
+              chains.map((x) =>
+                x.id === chainId ? null : (
+                  <button key={x.id} onClick={() => switchNetwork(x.id)}>
+                    Switch to {x.name}
+                  </button>
+                ),
+              )}
 
             {switchNetworkError && switchNetworkError?.message}
           </div>

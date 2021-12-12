@@ -20,13 +20,14 @@ export const useNetwork = () => {
     ...defaultChains,
     ...defaultL2Chains,
   ].find((x) => x.id === chainId)
+  const supported = activeChains.some((x) => x.id === chainId)
 
   const switchNetwork = React.useCallback(
-    (chainId: number) => {
+    async (chainId: number) => {
       if (!connector?.switchChain) return false
       try {
         setState((x) => ({ ...x, error: undefined }))
-        connector.switchChain(chainId)
+        await connector.switchChain(chainId)
         return true
       } catch (_error) {
         const error = _error as Error
@@ -41,9 +42,12 @@ export const useNetwork = () => {
     {
       chainId,
       chains: activeChains,
-      data: activeChain,
+      data: {
+        ...activeChain,
+        unsupported: !supported,
+      },
       error: state.error,
     },
-    switchNetwork,
+    connector?.switchChain ? switchNetwork : undefined,
   ] as const
 }

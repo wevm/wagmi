@@ -14,22 +14,31 @@ import {
 import { App } from './app'
 
 const infuraId = import.meta.env.VITE_INFURA_ID
+const chains = [...defaultChains, ...defaultL2Chains, ...developmentChains]
+const connectors = [
+  new InjectedConnector({ chains }),
+  new WalletConnectConnector({
+    chains,
+    options: {
+      infuraId,
+      qrcode: true,
+    },
+  }),
+  new WalletLinkConnector({
+    chains,
+    options: {
+      appName: 'wagmi',
+      jsonRpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
+    },
+  }),
+]
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider
       autoConnect
       connectorStorageKey="wagmiWallet"
-      connectors={[
-        new InjectedConnector({
-          chains: [...defaultChains, ...defaultL2Chains, ...developmentChains],
-        }),
-        new WalletConnectConnector({ infuraId, qrcode: true }),
-        new WalletLinkConnector({
-          appName: 'wagmi',
-          jsonRpcUrl: `https://rinkeby.infura.io/v3/${infuraId}`,
-        }),
-      ]}
+      connectors={connectors}
       provider={({ connector, chainId }) =>
         connector
           ? new providers.InfuraProvider(chainId, infuraId)

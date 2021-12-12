@@ -2,15 +2,25 @@
   "name": "root",
   "private": true,
   "license": "MIT",
-  "workspaces": [
-    "components",
-    "docs",
-    "playroom"
-  ],
   "scripts": {
+    "build": "vite build",
+    "clean": "rimraf dist",
     "dev": "vite",
-    "build": "tsc && vite build",
-    "serve": "vite preview"
+    "lint": "eslint --cache",
+    "lint:fix": "yarn lint --fix",
+    "lint:format": "prettier --write",
+    "lint:types": "tsc --noEmit",
+    "postinstall": "husky install",
+    "publish": "yarn npm publish",
+    "test": "jest"
+  },
+  "lint-staged": {
+    "*.{js,mdx,ts,tsx}": [
+      "yarn lint:fix"
+    ],
+    "*.{json,md,yml}": [
+      "yarn lint:format"
+    ]
   },
   "peerDependencies": {
     "ethers": "^5.5.1",
