@@ -1,48 +1,39 @@
 {
   "name": "root",
-  "private": true,
-  "license": "MIT",
   "scripts": {
-    "build": "vite build",
-    "clean": "rimraf dist",
-    "dev": "vite",
+    "dev": "preconstruct dev",
+    "build": "preconstruct build",
+    "watch": "preconstruct watch",
     "lint": "eslint --cache",
-    "lint:fix": "yarn lint --fix",
+    "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
     "lint:types": "tsc --noEmit",
-    "postinstall": "husky install",
-    "publish": "yarn npm publish",
-    "test": "jest"
+    "postinstall": "husky install && preconstruct dev",
+    "preinstall": "npx only-allow pnpm"
   },
   "lint-staged": {
-    "*.{js,mdx,ts,tsx}": [
+    "*.{js,ts,tsx}": [
       "yarn lint:fix"
     ],
     "*.{json,md,yml}": [
       "yarn lint:format"
     ]
   },
-  "peerDependencies": {
-    "ethers": "^5.5.1",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0"
-  },
-  "dependencies": {
-    "eventemitter3": "^4.0.7"
+  "preconstruct": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "devDependencies": {
-    "@ethersproject/abstract-provider": "^5.5.1",
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-react": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "@preconstruct/cli": "^2.1.5",
     "@types/eslint": "^7",
-    "@types/events": "^3",
-    "@types/node": "^16.11.9",
     "@types/prettier": "^2",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "@vitejs/plugin-react": "^1.1.0",
-    "@walletconnect/ethereum-provider": "^1.6.6",
-    "buffer": "^6.0.3",
     "eslint": "7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.5.0",
@@ -50,19 +41,10 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.2.4",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "ethers": "^5.5.1",
-    "events": "^3.3.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.0.3",
     "prettier": "^2.4.1",
-    "process": "^0.11.10",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "typescript": "^4.3.2",
-    "util": "^0.12.4",
-    "vite": "^2.6.4",
-    "walletlink": "^2.2.8"
+    "typescript": "^4.5.4"
   }
 }

@@ -1,21 +1,23 @@
 {
   "compilerOptions": {
-    "allowJs": false,
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": false,
-    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "incremental": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "lib": ["es2019", "es2017", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
     "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "resolveJsonModule": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "strict": true,
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "types": ["node"]
+    "target": "ESNEXT"
   },
-  "include": ["./example", "./src"]
+  "exclude": ["node_modules", "**/dist/**"],
+  "include": ["packages/**/*"]
 }

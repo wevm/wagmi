@@ -1,0 +1,47 @@
+{
+  "name": "wagmi",
+  "sideEffects": false,
+  "main": "dist/wagmi.cjs.js",
+  "module": "dist/wagmi.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/wagmi.esm.js",
+      "default": "./dist/wagmi.cjs.js"
+    },
+    "./chains": {
+      "module": "./chains/dist/wagmi-chains.esm.js",
+      "default": "./chains/dist/wagmi-chains.cjs.js"
+    },
+    "./connectors": {
+      "module": "./connectors/dist/wagmi-connectors.esm.js",
+      "default": "./connectors/dist/wagmi-connectors.cjs.js"
+    }
+  },
+  "files": [
+    "/chains",
+    "/connectors",
+    "/dist"
+  ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "chains.ts",
+      "connectors.ts"
+    ]
+  },
+  "peerDependencies": {
+    "ethers": "^5.5.1",
+    "react": "^17.0.0"
+  },
+  "dependencies": {
+    "@ethersproject/providers": "^5.5.1",
+    "@wagmi/private": "0.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@wagmi/private": "*",
+    "ethers": "^5.5.1",
+    "react": "^17.0.0"
+  }
+}

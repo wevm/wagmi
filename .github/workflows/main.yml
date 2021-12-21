@@ -1,27 +1,51 @@
 name: Main
 
-on:
-  pull_request:
-  push:
-    branches: [main]
+on: [push, pull_request]
 
 jobs:
+  build:
+    name: Build
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
+        pnpm-version: [6.24.2]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: ${{ matrix.pnpm-version }}
+      - name: Set up Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          cache: 'pnpm'
+          node-version: ${{ matrix.node-version }}
+      - name: Install Dependencies
+        run: pnpm i
+      - name: Build
+        run: pnpm build
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14]
+        pnpm-version: [6.24.2]
     steps:
       - uses: actions/checkout@v2
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: ${{ matrix.pnpm-version }}
       - name: Set up Node ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
-          cache: 'yarn'
+          cache: 'pnpm'
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
-        run: yarn install
-      - name: Lint
-        run: yarn lint
+      - name: Install Dependencies
+        run: pnpm i
+      - name: Lint code
+        run: pnpm lint
       - name: Check types
-        run: yarn lint:types
+        run: pnpm lint:types

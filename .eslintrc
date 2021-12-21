@@ -10,7 +10,7 @@
     },
     "allowImportExportEverywhere": true
   },
-  "plugins": ["@typescript-eslint", "import", "react", "jest"],
+  "plugins": ["@typescript-eslint", "import", "jest"],
   "extends": [
     "eslint:recommended",
     "plugin:eslint-comments/recommended",
@@ -18,7 +18,6 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
     "prettier"
@@ -51,26 +50,7 @@
         "ignoreDeclarationSort": true,
         "ignoreMemberSort": false
       }
-    ],
-    // `eslint-plugin-react`
-    // https://github.com/yannickcr/eslint-plugin-react
-    "react/display-name": "off",
-    "react/jsx-boolean-value": ["warn", "never"],
-    "react/jsx-curly-brace-presence": [
-      "error",
-      { "props": "never", "children": "ignore" }
-    ],
-    "react/jsx-sort-props": [
-      "error",
-      {
-        "callbacksLast": true
-      }
-    ],
-    "react/jsx-wrap-multilines": "error",
-    "react/no-array-index-key": "error",
-    "react/no-multi-comp": "off",
-    "react/prop-types": "off",
-    "react/self-closing-comp": "warn"
+    ]
   },
   "settings": {
     "import/parsers": {

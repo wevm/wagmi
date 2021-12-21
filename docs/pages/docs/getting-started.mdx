@@ -1,0 +1,50 @@
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# Getting Started
+
+## Installation
+
+Inside your React project directory, run the following:
+
+```plaintext
+yarn add swr
+```
+
+Or with npm:
+
+```plaintext
+npm install swr
+```
+
+## Quick Start
+
+For normal RESTful APIs with JSON data, first you need to create a `fetcher` function, which is just a wrapper of the native `fetch`:
+
+```jsx
+const fetcher = (...args) => fetch(...args).then(res => res.json())
+```
+
+<Callout emoji="💡">
+  If you want to use GraphQL API or libs like Axios, you can create your own fetcher function. 
+  Check <Link href="/docs/data-fetching"><a href="/docs/data-fetching">here</a></Link> for more examples.
+</Callout>
+
+Then you can import `useSWR` and start using it inside any function components:
+
+```jsx
+import useSWR from 'swr'
+
+function Profile () {
+  const { data, error } = useSWR('/api/user/123', fetcher)
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+
+  // render data
+  return <div>hello {data.name}!</div>
+}
+```
+
+Normally, there're 3 possible states of a request: "loading", "ready", or "error". You can use the value of `data` and `error` to
+determine the current state of the request, and return the corresponding UI.
