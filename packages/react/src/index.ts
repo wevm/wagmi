@@ -1,10 +1,10 @@
-export { Provider } from './context'
+export { Provider, useContext } from './context'
 
 export {
   useAccount,
   useBlockNumber,
   useConnect,
-  useContext,
+  useContract,
   useEnsAvatar,
   useEnsLookup,
   useEnsResolver,

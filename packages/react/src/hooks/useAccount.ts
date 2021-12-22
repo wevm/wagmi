@@ -1,22 +1,24 @@
 import * as React from 'react'
 
-import { useContext } from './useContext'
-import { useEnsLookup } from './useEnsLookup'
-import { useEnsAvatar } from './useEnsAvatar'
+import { useContext } from '../context'
+import { useEnsAvatar, useEnsLookup } from './ens'
 
 type Config = {
   skipEns?: boolean
 }
 
 export const useAccount = ({ skipEns }: Config = {}) => {
-  const { state: { connector, data }, setState } = useContext()
+  const {
+    state: { connector, data },
+    setState,
+  } = useContext()
   const address = data?.account
   const [{ ens, loading: ensLoading }] = useEnsLookup({
     address,
     skip: skipEns,
   })
   const [{ avatar, loading: resolverLoading }] = useEnsAvatar({
-    nameOrAddress: ens,
+    addressOrName: ens,
     skip: skipEns || !ens,
   })
 

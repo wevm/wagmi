@@ -1,77 +1,18 @@
-import { useAccount, useBlockNumber, useConnect, useNetwork } from 'wagmi'
+import { useAccount, useContract } from 'wagmi'
+
+import { Account, Connect } from './components'
+import { default as ENSRegistryWithFallbackABI } from './generated/contracts/ENSRegistryWithFallback.json'
+import { ENSRegistryWithFallback } from './generated/contracts/ENSRegistryWithFallback'
 
 export const App = () => {
-  const [{ connector, connectors, error, loading }, connect] = useConnect()
-  const [
-    { address, connector: activeConnector, data: accountData },
-    disconnect,
-  ] = useAccount()
-  const [
-    { chainId, data: networkData, error: switchNetworkError, chains },
-    switchNetwork,
-  ] = useNetwork()
-  const [{ blockNumber, loading: blockNumberLoading }] = useBlockNumber({
-    subscribe: true,
+  const [{ address }] = useAccount({ skipEns: true })
+  const { contract } = useContract<ENSRegistryWithFallback>({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ENSRegistryWithFallbackABI,
   })
+  console.log(contract)
 
-  return (
-    <div>
-      <div>Block #{blockNumberLoading ? '…' : blockNumber}</div>
+  if (address) return <Account />
 
-      <br />
-
-      <div>
-        {connectors.map((x) =>
-          x.name === activeConnector?.name ? (
-            <span key={x.name}>{x.name}</span>
-          ) : (
-            <button key={x.name} onClick={() => connect(x)}>
-              {x.name}
-              {loading && x.name === connector?.name && '…'}
-            </button>
-          ),
-        )}
-
-        {error && (error?.message ?? 'Failed to connect')}
-      </div>
-
-      <hr />
-
-      {address && (
-        <>
-          <div>
-            <span>{accountData?.ens ?? address}</span>
-            {accountData?.avatar ? (
-              <img
-                src={accountData?.avatar}
-                style={{ height: 40, width: 40 }}
-              />
-            ) : (
-              <div style={{ height: 40, width: 40 }} />
-            )}
-            <button onClick={() => disconnect()}>Disconnect</button>
-          </div>
-
-          <br />
-
-          <div>
-            <span>
-              {networkData?.name ?? chainId}{' '}
-              {networkData?.unsupported && '(unsupported)'}
-            </span>
-            {switchNetwork &&
-              chains.map((x) =>
-                x.id === chainId ? null : (
-                  <button key={x.id} onClick={() => switchNetwork(x.id)}>
-                    Switch to {x.name}
-                  </button>
-                ),
-              )}
-
-            {switchNetworkError && switchNetworkError?.message}
-          </div>
-        </>
-      )}
-    </div>
-  )
+  return <Connect />
 }

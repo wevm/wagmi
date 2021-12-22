@@ -1,17 +1,18 @@
 {
   "name": "root",
   "scripts": {
-    "dev": "preconstruct dev",
-    "dev:docs": "manypkg run docs dev",
-    "example:vite-react": "manypkg run vite-react dev",
     "build": "preconstruct build",
-    "watch": "preconstruct watch",
+    "dev": "preconstruct dev && pnpm gen:abis",
+    "dev:docs": "manypkg run docs dev",
+    "dev:example:vite-react": "manypkg run vite-react dev",
+    "gen:abis": "pnpm node scripts/generateTypesForAbis.js",
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
     "lint:types": "tsc --noEmit",
     "postinstall": "husky install && preconstruct dev",
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "watch": "preconstruct watch"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
@@ -45,6 +46,9 @@
     "eslint-plugin-jest": "^25.2.4",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "ethereum-abi-types-generator": "^1.3.2",
+    "fs-extra": "^10.0.0",
+    "glob": "^7.2.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.0.3",
     "prettier": "^2.4.1",

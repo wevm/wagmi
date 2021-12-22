@@ -1,7 +1,6 @@
 import * as React from 'react'
 
-import { useProvider } from './useProvider'
-import { useWebSocketProvider } from './useWebSocketProvider'
+import { useProvider, useWebSocketProvider } from './provider'
 
 type State = {
   blockNumber?: number

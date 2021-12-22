@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Connector } from '@wagmi/private'
 
-import { useContext } from './useContext'
+import { useContext } from '../context'
 
 type State = {
   connector?: Connector
@@ -14,7 +14,11 @@ const initialState: State = {
 }
 
 export const useConnect = () => {
-  const { state: globalState, setState: setGlobalState, setLastUsedConnector } = useContext()
+  const {
+    state: globalState,
+    setState: setGlobalState,
+    setLastUsedConnector,
+  } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
   const connect = React.useCallback(

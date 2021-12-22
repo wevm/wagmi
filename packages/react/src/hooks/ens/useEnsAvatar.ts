@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useProvider } from './useProvider'
+import { useProvider } from '../provider'
 
 type State = {
   avatar?: string | null
@@ -13,19 +13,19 @@ const initialState: State = {
 }
 
 type Config = {
-  nameOrAddress?: string | null
+  addressOrName?: string | null
   skip?: boolean
 }
 
-export const useEnsAvatar = ({ nameOrAddress, skip }: Config = {}) => {
+export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
   const getAvatar = React.useCallback(
-    async (name: string) => {
+    async (addressOrName: string) => {
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const avatar = await provider.getAvatar(name)
+        const avatar = await provider.getAvatar(addressOrName)
         setState((x) => ({ ...x, avatar, loading: false }))
         return avatar
       } catch (_error) {
@@ -39,9 +39,9 @@ export const useEnsAvatar = ({ nameOrAddress, skip }: Config = {}) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!nameOrAddress || skip) return
-    getAvatar(nameOrAddress)
-  }, [nameOrAddress])
+    if (!addressOrName || skip) return
+    getAvatar(addressOrName)
+  }, [addressOrName])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

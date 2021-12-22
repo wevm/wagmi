@@ -1,12 +1,11 @@
 import * as React from 'react'
-import { providers } from 'ethers'
 
-import { useProvider } from './useProvider'
+import { useProvider } from '../provider'
 
 type State = {
+  ens?: string | null
   error?: Error
   loading: boolean
-  resolver?: providers.EnsResolver | null
 }
 
 const initialState: State = {
@@ -14,24 +13,25 @@ const initialState: State = {
 }
 
 type Config = {
-  name?: string | null
+  address?: string
   skip?: boolean
 }
 
-export const useEnsResolver = ({ name, skip }: Config = {}) => {
+export const useEnsLookup = ({ address, skip }: Config = {}) => {
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
-  const getResolver = React.useCallback(
-    async (name: string) => {
+  const lookupAddress = React.useCallback(
+    async (address: string) => {
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const resolver = await provider.getResolver(name)
-        setState((x) => ({ ...x, loading: false, resolver }))
-        return resolver
+        const ens = await provider.lookupAddress(address)
+        setState((x) => ({ ...x, ens, loading: false }))
+        return ens
       } catch (_error) {
         const error = _error as Error
         setState((x) => ({ ...x, error, loading: false }))
+        return error
       }
     },
     [provider],
@@ -39,13 +39,13 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!name || skip) return
-    getResolver(name)
-  }, [name])
+    if (!address || skip) return
+    lookupAddress(address)
+  }, [address])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
-    { resolver: state.resolver, loading: state.loading, error: state.error },
-    getResolver,
+    { ens: state.ens, loading: state.loading, error: state.error },
+    lookupAddress,
   ] as const
 }

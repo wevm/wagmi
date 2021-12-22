@@ -151,3 +151,9 @@ export const Provider = ({
 
   return React.createElement(Context.Provider, { value }, children)
 }
+
+export const useContext = () => {
+  const context = React.useContext(Context)
+  if (!context) throw Error('Must be used within Provider')
+  return context
+}

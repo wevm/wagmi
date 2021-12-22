@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { defaultChains, defaultL2Chains } from '@wagmi/private'
 
-import { useContext } from './useContext'
+import { useContext } from '../context'
 
 type State = {
   error?: Error
@@ -10,7 +10,9 @@ type State = {
 const initialState: State = {}
 
 export const useNetwork = () => {
-  const { state: { connector, data } } = useContext()
+  const {
+    state: { connector, data },
+  } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
   const chainId = data?.chainId

@@ -1,4 +1,4 @@
-import { useContext } from './useContext'
+import { useContext } from '../../context'
 
 export const useProvider = () => {
   const { state } = useContext()
