@@ -90,12 +90,6 @@ export class WalletConnectConnector extends BaseConnector {
     }
   }
 
-  async isConnected() {
-    if (!this._provider)
-      this._provider = new WalletConnectProvider(this._options)
-    return this._provider.connected
-  }
-
   private onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })

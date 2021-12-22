@@ -1,5 +1,9 @@
 import * as React from 'react'
-import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
+import {
+  BaseProvider,
+  WebSocketProvider,
+  getDefaultProvider,
+} from '@ethersproject/providers'
 import { Connector, Data, InjectedConnector } from '@wagmi/private'
 
 import { useLocalStorage } from './hooks'
@@ -54,7 +58,7 @@ export const Provider = ({
   children,
   connectors = [new InjectedConnector()],
   connectorStorageKey = 'wagmiWallet',
-  provider: _provider,
+  provider: _provider = getDefaultProvider(),
   webSocketProvider: _webSocketProvider,
 }: React.PropsWithChildren<Props>) => {
   const [lastUsedConnector, setLastUsedConnector] = useLocalStorage<
@@ -92,7 +96,7 @@ export const Provider = ({
         ? [...connectors].sort((x) => (x.name === lastUsedConnector ? -1 : 1))
         : connectors
       for (const connector of sorted) {
-        if (!connector.isAuthorized) continue
+        if (!connector.ready || !connector.isAuthorized) continue
         const isAuthorized = await connector.isAuthorized()
         if (!isAuthorized) continue
 

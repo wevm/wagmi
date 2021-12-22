@@ -30,8 +30,6 @@ export class InjectedConnector extends BaseConnector {
   get name() {
     if (typeof window !== 'undefined' && window.ethereum?.isMetaMask)
       return 'MetaMask'
-    if (typeof window !== 'undefined' && window.ethereum?.isCoinbaseWallet)
-      return 'Coinbase Wallet'
     return 'Injected'
   }
 
@@ -93,10 +91,6 @@ export class InjectedConnector extends BaseConnector {
     } catch {
       return false
     }
-  }
-
-  async isConnected() {
-    return await this.isAuthorized()
   }
 
   async switchChain(chainId: number) {

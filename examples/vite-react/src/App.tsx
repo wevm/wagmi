@@ -41,11 +41,13 @@ export const App = () => {
         <>
           <div>
             <span>{accountData?.ens ?? address}</span>
-            {accountData?.avatar && (
+            {accountData?.avatar ? (
               <img
                 src={accountData?.avatar}
                 style={{ height: 40, width: 40 }}
               />
+            ) : (
+              <div style={{ height: 40, width: 40 }} />
             )}
             <button onClick={() => disconnect()}>Disconnect</button>
           </div>

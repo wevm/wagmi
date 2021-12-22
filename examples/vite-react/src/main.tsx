@@ -2,19 +2,21 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { getDefaultProvider, providers } from 'ethers'
 
-import { Provider } from 'wagmi'
 import {
   InjectedConnector,
+  Provider,
   WalletConnectConnector,
   WalletLinkConnector,
-} from 'wagmi/connectors'
-import { defaultChains, defaultL2Chains, developmentChains } from 'wagmi/chains'
+  defaultChains,
+  defaultL2Chains,
+  developmentChains,
+} from 'wagmi'
 
 import { App } from './App'
 
-const infuraId =
-  (import.meta.env.VITE_INFURA_ID as string) ??
-  '23bce5b5375c42a5862b30df36c2839a'
+const etherscan = import.meta.env.VITE_ETHERSCAN as string
+const infuraId = import.meta.env.VITE_INFURA_ID as string
+
 const chains = [...defaultChains, ...defaultL2Chains, ...developmentChains]
 const connectors = [
   new InjectedConnector({ chains }),
@@ -43,9 +45,7 @@ ReactDOM.render(
       provider={({ connector, chainId }) =>
         connector
           ? new providers.InfuraProvider(chainId, infuraId)
-          : getDefaultProvider(chainId, {
-              infuraId,
-            })
+          : getDefaultProvider(chainId, { etherscan, infuraId })
       }
       webSocketProvider={({ chainId }) =>
         new providers.InfuraWebSocketProvider(chainId, infuraId)

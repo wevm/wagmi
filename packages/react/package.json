@@ -1,5 +1,7 @@
 {
   "name": "wagmi",
+  "license": "MIT",
+  "version": "0.0.1",
   "sideEffects": false,
   "main": "dist/wagmi.cjs.js",
   "module": "dist/wagmi.esm.js",
@@ -8,26 +10,14 @@
     ".": {
       "module": "./dist/wagmi.esm.js",
       "default": "./dist/wagmi.cjs.js"
-    },
-    "./chains": {
-      "module": "./chains/dist/wagmi-chains.esm.js",
-      "default": "./chains/dist/wagmi-chains.cjs.js"
-    },
-    "./connectors": {
-      "module": "./connectors/dist/wagmi-connectors.esm.js",
-      "default": "./connectors/dist/wagmi-connectors.cjs.js"
     }
   },
   "files": [
-    "/chains",
-    "/connectors",
     "/dist"
   ],
   "preconstruct": {
     "entrypoints": [
-      "index.ts",
-      "chains.ts",
-      "connectors.ts"
+      "index.ts"
     ]
   },
   "peerDependencies": {
@@ -40,7 +30,6 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
-    "@wagmi/private": "*",
     "ethers": "^5.5.1",
     "react": "^17.0.0"
   }

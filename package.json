@@ -2,6 +2,8 @@
   "name": "root",
   "scripts": {
     "dev": "preconstruct dev",
+    "dev:docs": "manypkg run docs dev",
+    "example:vite-react": "manypkg run vite-react dev",
     "build": "preconstruct build",
     "watch": "preconstruct watch",
     "lint": "eslint --cache",
@@ -29,6 +31,7 @@
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
+    "@manypkg/cli": "^0.19.1",
     "@preconstruct/cli": "^2.1.5",
     "@types/eslint": "^7",
     "@types/prettier": "^2",

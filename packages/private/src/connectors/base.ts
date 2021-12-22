@@ -38,7 +38,6 @@ export interface ConnectorProps {
   disconnect(): Promise<void>
   getChainId(): Promise<number>
   isAuthorized(): Promise<boolean>
-  isConnected(): Promise<boolean>
   switchChain?(chainId: number): Promise<void>
 }
 
@@ -56,5 +55,4 @@ export abstract class BaseConnector
   abstract disconnect(): Promise<void>
   abstract getChainId(): Promise<number>
   abstract isAuthorized(): Promise<boolean>
-  abstract isConnected(): Promise<boolean>
 }

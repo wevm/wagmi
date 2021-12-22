@@ -26,7 +26,7 @@ export class WalletLinkConnector extends BaseConnector {
   }
 
   get name() {
-    return 'WalletLink'
+    return 'Coinbase Wallet'
   }
 
   get provider() {
@@ -86,15 +86,14 @@ export class WalletLinkConnector extends BaseConnector {
   async isAuthorized() {
     try {
       if (!this._provider) this._provider = this._client.makeWeb3Provider()
-      return this._provider.connected
+      const accounts = await this._provider.request<string[]>({
+        method: 'eth_accounts',
+      })
+      const account = accounts[0]
+      return !!account
     } catch {
       return false
     }
-  }
-
-  async isConnected() {
-    if (!this._provider) this._provider = this._client.makeWeb3Provider()
-    return this._provider.connected
   }
 
   private onAccountsChanged = (accounts: string[]) => {

@@ -13,6 +13,6 @@ pnpm add wagmi
 ```bash
 brew bundle
 fnm install
-yarn
-yarn dev
+pnpm i
+pnpm dev
 ```

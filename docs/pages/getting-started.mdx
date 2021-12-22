@@ -1,0 +1,94 @@
+---
+title: Getting Started
+---
+
+import Callout from 'nextra-theme-docs/callout'
+import Link from 'next/link'
+
+# Getting Started
+
+## Installation
+
+```bash
+yarn add wagmi ethers
+# or
+npm install --save wagmi ethers
+```
+
+<Callout emoji="💡">
+  If you want to use GraphQL API or libs like Axios, you can create your own fetcher function. 
+  Check <Link href="/docs/data-fetching"><a href="/docs/data-fetching">here</a></Link> for more examples.
+</Callout>
+
+## Quick Start
+
+Wrap your app inside the `Provider`:
+
+```tsx
+import { Provider } from 'wagmi'
+
+const App = () => (
+  <Provider>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+Now every component inside and under the `Provider` can use hooks:
+
+```tsx
+import { useAccount, useConnect, useNetwork } from 'wagmi'
+
+export const App = () => {
+  const [{ connector, connectors, error, loading }, connect] = useConnect()
+  const [
+    { address, connector: activeConnector, data: accountData },
+    disconnect,
+  ] = useAccount()
+  const [
+    { chainId, data: networkData, error: switchNetworkError, chains },
+    switchNetwork,
+  ] = useNetwork()
+
+  if (address)
+    return (
+      <div>
+        <div>
+          <span>{accountData?.ens ?? address} ({activeConnector.name})</span>
+          {accountData?.avatar && <img src={accountData?.avatar} />}
+          <button onClick={() => disconnect()}>Disconnect</button>
+        </div>
+
+        <div>
+          <span>
+            {networkData?.name ?? chainId}{' '}
+            {networkData?.unsupported && '(unsupported)'}
+          </span>
+          {switchNetwork &&
+            chains.map((x) =>
+              x.id === chainId ? null : (
+                <button key={x.id} onClick={() => switchNetwork(x.id)}>
+                  Switch to {x.name}
+                </button>
+              ),
+            )}
+
+          {switchNetworkError && switchNetworkError?.message}
+        </div>
+      </div>
+    )
+
+  return (
+    <div>
+      {connectors.map((x) =>
+        <button key={x.name} onClick={() => connect(x)}>
+          {x.name}
+          {loading && x.name === connector?.name && '…'}
+        </button>
+      )}
+
+      {error && (error?.message ?? 'Failed to connect')}
+    </div>
+  )
+}
+```

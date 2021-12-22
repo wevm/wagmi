@@ -1,5 +1,6 @@
 {
-  "name": "vite",
+  "name": "vite-react",
+  "license": "MIT",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -13,7 +14,8 @@
     "process": "^0.11.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "wagmi": "workspace:wagmi"
+    "util": "^0.12.4",
+    "wagmi": "0.0.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",
