@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Contract, ContractInterface, Signer } from 'ethers'
+import { BaseContract, Contract, ContractInterface, Signer } from 'ethers'
 import { Provider } from '@ethersproject/providers'
 
 type Config = {
@@ -14,7 +14,7 @@ export const useContract = <T = any>({
   signerOrProvider,
 }: Config) => {
   const contract = React.useMemo(() => {
-    return <T>(
+    return <T & BaseContract>(
       (<unknown>(
         new Contract(addressOrName, contractInterface, signerOrProvider)
       ))

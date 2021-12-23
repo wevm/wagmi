@@ -11,8 +11,6 @@ pnpm add wagmi
 ## Development
 
 ```bash
-brew bundle
-fnm install
 pnpm i
 pnpm dev
 ```

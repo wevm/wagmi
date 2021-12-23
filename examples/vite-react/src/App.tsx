@@ -1,16 +1,33 @@
-import { useAccount, useContract } from 'wagmi'
+import * as React from 'react'
+import { useAccount, useContract, useProvider } from 'wagmi'
 
 import { Account, Connect } from './components'
-import { default as ENSRegistryWithFallbackABI } from './generated/contracts/ENSRegistryWithFallback.json'
-import { ENSRegistryWithFallback } from './generated/contracts/ENSRegistryWithFallback'
+import {
+  ENSRegistryWithFallback,
+  ENSRegistryWithFallbackContract,
+  MirrorWriteToken,
+  MirrorWriteTokenContract,
+} from './generated/contracts'
 
 export const App = () => {
-  const [{ address }] = useAccount({ skipEns: true })
-  const { contract } = useContract<ENSRegistryWithFallback>({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ENSRegistryWithFallbackABI,
+  const provider = useProvider()
+  const [{ address }] = useAccount()
+  const { contract: ensContract } = useContract<ENSRegistryWithFallback>({
+    addressOrName: ENSRegistryWithFallbackContract.address,
+    contractInterface: ENSRegistryWithFallbackContract.abi,
   })
-  console.log(contract)
+  console.log(ensContract)
+
+  const { contract: writeTokenContract } = useContract<MirrorWriteToken>({
+    addressOrName: MirrorWriteTokenContract.address,
+    contractInterface: MirrorWriteTokenContract.abi,
+    signerOrProvider: provider,
+  })
+  console.log(writeTokenContract)
+
+  React.useEffect(() => {
+    writeTokenContract.symbol().then(console.log).catch(console.error)
+  }, [writeTokenContract])
 
   if (address) return <Account />
 

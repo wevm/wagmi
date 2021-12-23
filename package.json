@@ -5,7 +5,7 @@
     "dev": "preconstruct dev && pnpm gen:abis",
     "dev:docs": "manypkg run docs dev",
     "dev:example:vite-react": "manypkg run vite-react dev",
-    "gen:abis": "pnpm node scripts/generateTypesForAbis.js",
+    "gen:abis": "pnpm node scripts/generateABIs.js",
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
@@ -51,6 +51,7 @@
     "glob": "^7.2.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.0.3",
+    "node-fetch": "2",
     "prettier": "^2.4.1",
     "typescript": "^4.5.4"
   }

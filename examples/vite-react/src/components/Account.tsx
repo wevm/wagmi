@@ -4,7 +4,7 @@ export const Account = () => {
   const [
     { address, connector: activeConnector, data: accountData },
     disconnect,
-  ] = useAccount()
+  ] = useAccount({ fetchEns: true })
   const [
     { chainId, data: networkData, error: switchNetworkError, chains },
     switchNetwork,

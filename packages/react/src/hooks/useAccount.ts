@@ -4,10 +4,10 @@ import { useContext } from '../context'
 import { useEnsAvatar, useEnsLookup } from './ens'
 
 type Config = {
-  skipEns?: boolean
+  fetchEns?: boolean
 }
 
-export const useAccount = ({ skipEns }: Config = {}) => {
+export const useAccount = ({ fetchEns }: Config = {}) => {
   const {
     state: { connector, data },
     setState,
@@ -15,11 +15,11 @@ export const useAccount = ({ skipEns }: Config = {}) => {
   const address = data?.account
   const [{ ens, loading: ensLoading }] = useEnsLookup({
     address,
-    skip: skipEns,
+    skip: !fetchEns,
   })
   const [{ avatar, loading: resolverLoading }] = useEnsAvatar({
     addressOrName: ens,
-    skip: skipEns || !ens,
+    skip: !fetchEns || !ens,
   })
 
   const disconnect = React.useCallback(() => {
