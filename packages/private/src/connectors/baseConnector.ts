@@ -48,6 +48,7 @@ export abstract class BaseConnector
   implements Connector
 {
   abstract name: string
+  abstract chains: Chain[]
   abstract provider: any
   abstract ready: boolean
 

@@ -29,6 +29,7 @@
     "@wagmi/private": "0.0.1"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/react": "^17.0.0",
     "ethers": "^5.5.1",
     "react": "^17.0.0"

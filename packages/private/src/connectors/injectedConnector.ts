@@ -1,6 +1,6 @@
 import { defaultChains } from '../constants'
 import { hexValue, normalizeChainId } from '../utils'
-import { BaseConnector, Chain } from './base'
+import { BaseConnector, Chain } from './baseConnector'
 import {
   AddChainError,
   ChainNotConfiguredError,

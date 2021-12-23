@@ -1,15 +1,15 @@
-import { MockProvider } from '@ethereum-waffle/provider'
+import { MockProvider } from 'ethereum-waffle'
 import type Ganache from 'ganache-core'
 
 import { hexValue, normalizeChainId } from '../utils'
 import { defaultChains } from '../constants'
-import { BaseConnector, Chain } from './base'
+import { BaseConnector, Chain } from '../connectors'
 import {
   AddChainError,
   ChainNotConfiguredError,
   SwitchChainError,
   UserRejectedRequestError,
-} from './errors'
+} from '../connectors/errors'
 
 type MockProviderOptions = {
   ganacheOptions: Ganache.IProviderOptions

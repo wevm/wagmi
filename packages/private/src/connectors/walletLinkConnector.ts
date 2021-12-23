@@ -2,7 +2,7 @@ import { WalletLink, WalletLinkProvider } from 'walletlink'
 import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
 import { normalizeChainId } from '../utils'
-import { BaseConnector, Chain } from './base'
+import { BaseConnector, Chain } from './baseConnector'
 import { UserRejectedRequestError } from './errors'
 
 export class WalletLinkConnector extends BaseConnector {
