@@ -1,25 +1,33 @@
-import { hexValue } from 'ethers/lib/utils'
+import { MockProvider } from '@ethereum-waffle/provider'
+import type Ganache from 'ganache-core'
 
+import { hexValue, normalizeChainId } from '../utils'
 import { defaultChains } from '../constants'
-import { normalizeChainId } from '../utils'
 import { BaseConnector, Chain } from './base'
 import {
   AddChainError,
   ChainNotConfiguredError,
-  ConnectorNotFoundError,
   SwitchChainError,
   UserRejectedRequestError,
 } from './errors'
 
-export class InjectedConnector extends BaseConnector {
+type MockProviderOptions = {
+  ganacheOptions: Ganache.IProviderOptions
+}
+
+export class MockConnector extends BaseConnector {
   private _chains: Chain[]
+  private _options: MockProviderOptions
+  private _provider?: MockProvider
 
   constructor(
-    config: { chains: Chain[] } = {
+    config: { chains: Chain[]; options: MockProviderOptions } = {
       chains: defaultChains,
+      options: { ganacheOptions: {} },
     },
   ) {
     super()
+    this._options = config.options
     this._chains = config.chains
   }
 
@@ -28,65 +36,51 @@ export class InjectedConnector extends BaseConnector {
   }
 
   get name() {
-    if (typeof window !== 'undefined' && window.ethereum?.isMetaMask)
-      return 'MetaMask'
-    return 'Injected'
+    return 'Mock'
   }
 
   get provider() {
-    return window.ethereum
+    return this._provider
   }
 
   get ready() {
-    return typeof window !== 'undefined' && !!window.ethereum
+    return true
   }
 
   async connect() {
-    try {
-      if (!window.ethereum) throw new ConnectorNotFoundError()
+    // Use new provider instance for every connect
+    this._provider = new MockProvider(this._options)
 
-      if (window.ethereum.on) {
-        window.ethereum.on('accountsChanged', this.onAccountsChanged)
-        window.ethereum.on('chainChanged', this.onChainChanged)
-        window.ethereum.on('disconnect', this.onDisconnect)
-      }
+    this._provider.on('accountsChanged', this.onAccountsChanged)
+    this._provider.on('chainChanged', this.onChainChanged)
+    this._provider.on('disconnect', this.onDisconnect)
 
-      const accounts = await window.ethereum.request<string[]>({
-        method: 'eth_requestAccounts',
-      })
-      const account = accounts[0]
-      const chainId = await this.getChainId()
-
-      return { account, chainId, provider: window.ethereum }
-    } catch (error) {
-      if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
-      throw error
-    }
+    const accounts = this._provider.getWallets()
+    const account = await accounts[0].getAddress()
+    const chainId = normalizeChainId(this._provider.network.chainId)
+    return { account, chainId, provider: this._provider }
   }
 
   async disconnect() {
-    if (!window?.ethereum?.removeListener) return
+    if (!this._provider) return
 
-    window.ethereum.removeListener('accountsChanged', this.onAccountsChanged)
-    window.ethereum.removeListener('chainChanged', this.onChainChanged)
-    window.ethereum.removeListener('disconnect', this.onDisconnect)
+    this._provider.removeListener('accountsChanged', this.onAccountsChanged)
+    this._provider.removeListener('chainChanged', this.onChainChanged)
+    this._provider.removeListener('disconnect', this.onDisconnect)
   }
 
   async getChainId() {
-    if (!window.ethereum) throw new ConnectorNotFoundError()
-    return await window.ethereum
-      .request<string>({ method: 'eth_chainId' })
-      .then(normalizeChainId)
+    if (!this._provider) this._provider = new MockProvider(this._options)
+    const chainId = normalizeChainId(this._provider.network.chainId)
+    return chainId
   }
 
   async isAuthorized() {
     try {
-      if (!window.ethereum) throw new ConnectorNotFoundError()
-      const accounts = await window.ethereum.request<string[]>({
-        method: 'eth_accounts',
-      })
-      const account = accounts[0]
+      if (!this._provider) this._provider = new MockProvider(this._options)
+      const accounts = this._provider.getWallets()
+      const account = accounts[0].getAddress()
+
       return !!account
     } catch {
       return false
@@ -94,11 +88,12 @@ export class InjectedConnector extends BaseConnector {
   }
 
   async switchChain(chainId: number) {
-    if (!window.ethereum) throw new ConnectorNotFoundError()
+    if (!this._provider) this._provider = new MockProvider(this._options)
+    if (!this._provider.provider?.request) return
     const id = hexValue(chainId)
 
     try {
-      await window.ethereum.request({
+      await this._provider.provider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
@@ -108,7 +103,7 @@ export class InjectedConnector extends BaseConnector {
         try {
           const chain = this._chains.find((x) => x.id === chainId)
           if (!chain) throw new ChainNotConfiguredError()
-          await window.ethereum.request({
+          await this._provider.provider.request({
             method: 'wallet_addEthereumChain',
             params: [
               {

@@ -13,19 +13,25 @@
     }
   },
   "files": [
-    "/dist"
+    "/dist",
+    "/testing"
   ],
   "preconstruct": {
     "entrypoints": [
-      "index.ts"
+      "index.ts",
+      "testing.ts"
     ]
   },
   "peerDependencies": {
+    "@ethereum-waffle/provider": "^3.4.0",
     "@walletconnect/ethereum-provider": "^1.6.6",
     "ethers": "^5.5.1",
     "walletlink": "^2.2.8"
   },
   "peerDependenciesMeta": {
+    "@ethereum-waffle/provider": {
+      "optional": true
+    },
     "@walletconnect/ethereum-provider": {
       "optional": true
     },
@@ -37,6 +43,7 @@
     "eventemitter3": "^4.0.7"
   },
   "devDependencies": {
+    "@ethereum-waffle/provider": "^3.4.0",
     "@walletconnect/ethereum-provider": "^1.6.6",
     "ethers": "^5.5.1",
     "walletlink": "^2.2.8"
