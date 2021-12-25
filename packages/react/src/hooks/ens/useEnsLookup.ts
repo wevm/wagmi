@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useProvider } from '../provider'
+import { useProvider } from '../providers'
 
 type State = {
   ens?: string | null

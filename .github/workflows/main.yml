@@ -52,6 +52,7 @@ jobs:
 
   test:
     name: Test
+    needs: lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -69,5 +70,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Dependencies
         run: pnpm i
-      - name: test
+      - name: Test
         run: pnpm test

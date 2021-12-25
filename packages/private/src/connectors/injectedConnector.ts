@@ -1,6 +1,6 @@
 import { defaultChains } from '../constants'
 import { hexValue, normalizeChainId } from '../utils'
-import { BaseConnector, Chain } from './baseConnector'
+import { Chain, Connector } from './base'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -9,20 +9,16 @@ import {
   UserRejectedRequestError,
 } from './errors'
 
-export class InjectedConnector extends BaseConnector {
-  private _chains: Chain[]
-
+export class InjectedConnector extends Connector<
+  Window['ethereum'],
+  undefined
+> {
   constructor(
     config: { chains: Chain[] } = {
       chains: defaultChains,
     },
   ) {
-    super()
-    this._chains = config.chains
-  }
-
-  get chains() {
-    return this._chains
+    super({ ...config, options: undefined })
   }
 
   get name() {
@@ -104,7 +100,7 @@ export class InjectedConnector extends BaseConnector {
       // Indicates chain is not added to MetaMask
       if ((<ProviderRpcError>error).code === 4902) {
         try {
-          const chain = this._chains.find((x) => x.id === chainId)
+          const chain = this.chains.find((x) => x.id === chainId)
           if (!chain) throw new ChainNotConfiguredError()
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
@@ -129,16 +125,16 @@ export class InjectedConnector extends BaseConnector {
     }
   }
 
-  private onAccountsChanged = (accounts: string[]) => {
+  protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })
   }
 
-  private onChainChanged = (chainId: number | string) => {
+  protected onChainChanged = (chainId: number | string) => {
     this.emit('change', { chainId: normalizeChainId(chainId) })
   }
 
-  private onDisconnect = () => {
+  protected onDisconnect = () => {
     this.emit('disconnect')
   }
 }

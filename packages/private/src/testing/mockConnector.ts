@@ -3,7 +3,7 @@ import type Ganache from 'ganache-core'
 
 import { hexValue, normalizeChainId } from '../utils'
 import { defaultChains } from '../constants'
-import { BaseConnector, Chain } from '../connectors'
+import { Chain, Connector } from '../connectors'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -15,9 +15,13 @@ type MockProviderOptions = {
   ganacheOptions: Ganache.IProviderOptions
 }
 
-export class MockConnector extends BaseConnector {
-  private _chains: Chain[]
-  private _options: MockProviderOptions
+export class MockConnector extends Connector<
+  MockProvider,
+  MockProviderOptions
+> {
+  readonly name = 'Mock'
+  readonly ready = true
+
   private _provider?: MockProvider
 
   constructor(
@@ -26,30 +30,16 @@ export class MockConnector extends BaseConnector {
       options: { ganacheOptions: {} },
     },
   ) {
-    super()
-    this._options = config.options
-    this._chains = config.chains
-  }
-
-  get chains() {
-    return this._chains
-  }
-
-  get name() {
-    return 'Mock'
+    super(config)
   }
 
   get provider() {
     return this._provider
   }
 
-  get ready() {
-    return true
-  }
-
   async connect() {
     // Use new provider instance for every connect
-    this._provider = new MockProvider(this._options)
+    this._provider = new MockProvider(this.options)
 
     this._provider.on('accountsChanged', this.onAccountsChanged)
     this._provider.on('chainChanged', this.onChainChanged)
@@ -70,14 +60,14 @@ export class MockConnector extends BaseConnector {
   }
 
   async getChainId() {
-    if (!this._provider) this._provider = new MockProvider(this._options)
+    if (!this._provider) this._provider = new MockProvider(this.options)
     const chainId = normalizeChainId(this._provider.network.chainId)
     return chainId
   }
 
   async isAuthorized() {
     try {
-      if (!this._provider) this._provider = new MockProvider(this._options)
+      if (!this._provider) this._provider = new MockProvider(this.options)
       const accounts = this._provider.getWallets()
       const account = accounts[0].getAddress()
 
@@ -88,7 +78,7 @@ export class MockConnector extends BaseConnector {
   }
 
   async switchChain(chainId: number) {
-    if (!this._provider) this._provider = new MockProvider(this._options)
+    if (!this._provider) this._provider = new MockProvider(this.options)
     if (!this._provider.provider?.request) return
     const id = hexValue(chainId)
 
@@ -101,7 +91,7 @@ export class MockConnector extends BaseConnector {
       // Indicates chain is not added to MetaMask
       if ((<ProviderRpcError>error).code === 4902) {
         try {
-          const chain = this._chains.find((x) => x.id === chainId)
+          const chain = this.chains.find((x) => x.id === chainId)
           if (!chain) throw new ChainNotConfiguredError()
           await this._provider.provider.request({
             method: 'wallet_addEthereumChain',
@@ -126,16 +116,16 @@ export class MockConnector extends BaseConnector {
     }
   }
 
-  private onAccountsChanged = (accounts: string[]) => {
+  protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })
   }
 
-  private onChainChanged = (chainId: number | string) => {
+  protected onChainChanged = (chainId: number | string) => {
     this.emit('change', { chainId: normalizeChainId(chainId) })
   }
 
-  private onDisconnect = () => {
+  protected onDisconnect = () => {
     this.emit('disconnect')
   }
 }

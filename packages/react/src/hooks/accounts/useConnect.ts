@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Connector } from '@wagmi/private'
 
-import { useContext } from '../context'
+import { useContext } from '../../context'
 
 type State = {
   connector?: Connector

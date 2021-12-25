@@ -2,45 +2,34 @@ import { WalletLink, WalletLinkProvider } from 'walletlink'
 import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
 import { normalizeChainId } from '../utils'
-import { BaseConnector, Chain } from './baseConnector'
+import { Chain, Connector } from './base'
 import { UserRejectedRequestError } from './errors'
 
-export class WalletLinkConnector extends BaseConnector {
-  private _chains: Chain[]
+type Options = WalletLinkOptions & { jsonRpcUrl?: string }
+
+export class WalletLinkConnector extends Connector<
+  WalletLinkProvider,
+  Options
+> {
+  readonly name = 'Coinbase Wallet'
+  readonly ready = true
+
   private _client: WalletLink
-  private _options: WalletLinkOptions & { jsonRpcUrl?: string }
   private _provider?: WalletLinkProvider
 
-  constructor(config: {
-    chains: Chain[]
-    options: WalletLinkOptions & { jsonRpcUrl?: string }
-  }) {
-    super()
-    this._chains = config.chains
-    this._options = config.options
+  constructor(config: { chains: Chain[]; options: Options }) {
+    super(config)
     this._client = new WalletLink(config.options)
-  }
-
-  get chains() {
-    return this._chains
-  }
-
-  get name() {
-    return 'Coinbase Wallet'
   }
 
   get provider() {
     return this._provider
   }
 
-  get ready() {
-    return true
-  }
-
   async connect() {
     try {
       if (!this._provider)
-        this._provider = this._client.makeWeb3Provider(this._options.jsonRpcUrl)
+        this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
@@ -96,16 +85,16 @@ export class WalletLinkConnector extends BaseConnector {
     }
   }
 
-  private onAccountsChanged = (accounts: string[]) => {
+  protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })
   }
 
-  private onChainChanged = (chainId: number | string) => {
+  protected onChainChanged = (chainId: number | string) => {
     this.emit('change', { chainId: normalizeChainId(chainId) })
   }
 
-  private onDisconnect = () => {
+  protected onDisconnect = () => {
     this.emit('disconnect')
   }
 }

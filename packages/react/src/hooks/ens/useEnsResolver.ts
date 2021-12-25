@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { EnsResolver } from '@ethersproject/providers'
 
-import { useProvider } from '../provider'
+import { useProvider } from '../providers'
 
 type State = {
   error?: Error

@@ -1,10 +1,12 @@
 export { Provider, useContext } from './context'
+export type { Props as ProviderProps } from './context'
 
 export {
   useAccount,
   useBlockNumber,
   useConnect,
   useContract,
+  useContractEvent,
   useEnsAvatar,
   useEnsLookup,
   useEnsResolver,
@@ -14,6 +16,7 @@ export {
 } from './hooks'
 
 export {
+  Connector,
   InjectedConnector,
   WalletConnectConnector,
   WalletLinkConnector,
@@ -21,3 +24,4 @@ export {
   defaultL2Chains,
   developmentChains,
 } from '@wagmi/private'
+export type { Chain, Data } from '@wagmi/private'

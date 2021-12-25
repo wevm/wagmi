@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { defaultChains, defaultL2Chains } from '@wagmi/private'
 
-import { useContext } from '../context'
+import { useContext } from '../../context'
 
 type State = {
   error?: Error

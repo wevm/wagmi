@@ -33,7 +33,7 @@ type ContextValue = {
 
 export const Context = React.createContext<ContextValue | null>(null)
 
-type Props = {
+export type Props = {
   /** Enables reconnecting to last used connector on mount */
   autoConnect?: boolean
   /** Key for saving connector preference to browser */
@@ -41,7 +41,7 @@ type Props = {
   /** Connectors used for linking accounts */
   connectors?: Connector[]
   /** Interface for connecting to network */
-  provider:
+  provider?:
     | BaseProvider
     | ((config: { chainId?: number; connector?: Connector }) => BaseProvider)
   /** WebSocket interface for connecting to network */
@@ -63,7 +63,7 @@ export const Provider = ({
 }: React.PropsWithChildren<Props>) => {
   const [lastUsedConnector, setLastUsedConnector] = useLocalStorage<
     string | null
-  >(connectorStorageKey, null)
+  >(connectorStorageKey)
   const [state, setState] = React.useState<{
     connector?: Connector
     data?: Data

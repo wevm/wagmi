@@ -1,7 +1,10 @@
 import * as React from 'react'
 
-export const useLocalStorage = <T>(key: string, defaultState: T) => {
-  const [value, setValue] = React.useState<T>(() => {
+export const useLocalStorage = <T>(
+  key: string,
+  defaultState: T | null = null,
+) => {
+  const [value, setValue] = React.useState<T | null>(() => {
     if (typeof localStorage === 'undefined') return defaultState
 
     const value = localStorage.getItem(key)
@@ -14,7 +17,7 @@ export const useLocalStorage = <T>(key: string, defaultState: T) => {
   })
 
   const setLocalStorage = React.useCallback(
-    (newValue: T) => {
+    (newValue: T | null) => {
       if (newValue === value) return
       setValue(newValue)
 

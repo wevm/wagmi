@@ -55,7 +55,7 @@ const contracts = [
         const fileName = path.basename(x, extension)
         if (extension === '.json')
           return `export { default as ${fileName}Contract } from './${fileName}.json'`
-        return `export type { ${fileName} } from './${fileName}'`
+        return `export type { ContractContext as ${fileName} } from './${fileName}'`
       })
       .join('\n')
       .concat('\n')

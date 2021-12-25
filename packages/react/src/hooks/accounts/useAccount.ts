@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { useContext } from '../context'
-import { useEnsAvatar, useEnsLookup } from './ens'
+import { useContext } from '../../context'
+import { useEnsAvatar, useEnsLookup } from '../ens'
 
 type Config = {
   fetchEns?: boolean

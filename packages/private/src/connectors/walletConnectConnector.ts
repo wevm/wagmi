@@ -2,43 +2,33 @@ import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 
 import { normalizeChainId } from '../utils'
-import { BaseConnector, Chain } from './baseConnector'
+import { Chain, Connector } from './base'
 import { UserRejectedRequestError } from './errors'
 
-export class WalletConnectConnector extends BaseConnector {
-  private _chains: Chain[]
-  private _options: IWCEthRpcConnectionOptions
+export class WalletConnectConnector extends Connector<
+  WalletConnectProvider,
+  IWCEthRpcConnectionOptions
+> {
+  readonly name = 'WalletConnect'
+  readonly ready = true
+
   private _provider?: WalletConnectProvider
 
   constructor(config: {
     chains: Chain[]
     options: IWCEthRpcConnectionOptions
   }) {
-    super()
-    this._options = config.options
-    this._chains = config.chains
-  }
-
-  get chains() {
-    return this._chains
-  }
-
-  get name() {
-    return 'WalletConnect'
+    super(config)
   }
 
   get provider() {
     return this._provider
   }
 
-  get ready() {
-    return true
-  }
-
   async connect() {
     try {
       // Use new provider instance for every connect
-      this._provider = new WalletConnectProvider(this._options)
+      this._provider = new WalletConnectProvider(this.options)
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
@@ -69,7 +59,7 @@ export class WalletConnectConnector extends BaseConnector {
 
   async getChainId() {
     if (!this._provider)
-      this._provider = new WalletConnectProvider(this._options)
+      this._provider = new WalletConnectProvider(this.options)
     const chainId = normalizeChainId(this._provider.chainId)
     return chainId
   }
@@ -77,7 +67,7 @@ export class WalletConnectConnector extends BaseConnector {
   async isAuthorized() {
     try {
       if (!this._provider)
-        this._provider = new WalletConnectProvider(this._options)
+        this._provider = new WalletConnectProvider(this.options)
       const accounts = this._provider.accounts
       const account = accounts[0]
 
@@ -87,16 +77,16 @@ export class WalletConnectConnector extends BaseConnector {
     }
   }
 
-  private onAccountsChanged = (accounts: string[]) => {
+  protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })
   }
 
-  private onChainChanged = (chainId: number | string) => {
+  protected onChainChanged = (chainId: number | string) => {
     this.emit('change', { chainId: normalizeChainId(chainId) })
   }
 
-  private onDisconnect = () => {
+  protected onDisconnect = () => {
     this.emit('disconnect')
   }
 }
