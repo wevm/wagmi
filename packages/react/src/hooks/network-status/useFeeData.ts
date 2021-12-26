@@ -6,6 +6,12 @@ import { Unit } from '@wagmi/private'
 import { useProvider } from '../providers'
 import { useBlockNumber } from './useBlockNumber'
 
+type Config = {
+  formatUnits?: Unit | number
+  skip?: boolean
+  watch?: boolean
+}
+
 type State = {
   feeData?: FeeData
   error?: Error
@@ -16,19 +22,13 @@ const initialState: State = {
   loading: false,
 }
 
-type Config = {
-  formatUnits?: Unit | number
-  once?: boolean
-  skip?: boolean
-}
-
 export const useFeeData = ({
   formatUnits = 'wei',
-  once,
   skip,
+  watch,
 }: Config = {}) => {
   const provider = useProvider()
-  const [{ data: blockNumber }] = useBlockNumber({ once, skip: true })
+  const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
   const [state, setState] = React.useState<State>(initialState)
 
   const getFeeData = React.useCallback(async () => {
@@ -53,7 +53,7 @@ export const useFeeData = ({
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (once) return
+    if (!watch) return
     if (!blockNumber) return
     getFeeData()
   }, [blockNumber])

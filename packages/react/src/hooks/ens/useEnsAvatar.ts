@@ -22,10 +22,11 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const getAvatar = React.useCallback(
-    async (addressOrName: string) => {
+    async (config: Pick<Config, 'addressOrName'>) => {
       try {
+        if (!config.addressOrName) return
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const avatar = await provider.getAvatar(addressOrName)
+        const avatar = await provider.getAvatar(config.addressOrName)
         setState((x) => ({ ...x, avatar, loading: false }))
         return avatar
       } catch (_error) {
@@ -40,7 +41,7 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!addressOrName || skip) return
-    getAvatar(addressOrName)
+    getAvatar({ addressOrName })
   }, [addressOrName])
   /* eslint-enable react-hooks/exhaustive-deps */
 

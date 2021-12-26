@@ -20,7 +20,7 @@ Visit https://wagmi-xyz.vercel.app to view the full documentation.
 ## Usage
 
 ```bash
-pnpm add wagmi
+pnpm add wagmi ethers
 ```
 
 ## Development

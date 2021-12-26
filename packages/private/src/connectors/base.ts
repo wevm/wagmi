@@ -1,15 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
 
+import { Chain } from '../types'
 import { ConnectorError } from './errors'
-
-export type Chain = {
-  id: number
-  name: AddEthereumChainParameter['chainName']
-  nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
-  rpcUrls: AddEthereumChainParameter['rpcUrls']
-  blockExplorers?: { name: string; url: string }[]
-  testnet?: boolean
-}
 
 export type Data<Provider = any> = {
   account?: string
@@ -50,6 +42,11 @@ export abstract class Connector<
   abstract getChainId(): Promise<number>
   abstract isAuthorized(): Promise<boolean>
   switchChain?(chainId: number): Promise<void>
+  watchAsset?(asset: {
+    address: string
+    image?: string
+    symbol: string
+  }): Promise<void>
 
   protected abstract onAccountsChanged(accounts: string[]): void
   protected abstract onChainChanged(chain: number | string): void

@@ -23,10 +23,11 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const getResolver = React.useCallback(
-    async (name: string) => {
+    async (config: Pick<Config, 'name'>) => {
       try {
+        if (!config.name) return
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const resolver = await provider.getResolver(name)
+        const resolver = await provider.getResolver(config.name)
         setState((x) => ({ ...x, loading: false, resolver }))
         return resolver
       } catch (_error) {
@@ -40,7 +41,7 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!name || skip) return
-    getResolver(name)
+    getResolver({ name })
   }, [name])
   /* eslint-enable react-hooks/exhaustive-deps */
 

@@ -12,6 +12,7 @@ it('should expose correct exports', () => {
     'developmentChains',
     // hooks
     'useAccount',
+    'useBalance',
     'useBlockNumber',
     'useConnect',
     'useContext',
@@ -23,7 +24,7 @@ it('should expose correct exports', () => {
     'useFeeData',
     'useNetwork',
     'useProvider',
-    'useTransaction',
+    'useToken',
     'useWebSocketProvider',
   ])
 })

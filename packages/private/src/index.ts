@@ -4,9 +4,10 @@ export {
   WalletConnectConnector,
   WalletLinkConnector,
 } from './connectors'
-export type { Chain, ConnectorEvents, Data } from './connectors'
+export type { ConnectorEvents, Data } from './connectors'
 
 export {
+  erc20ABI,
   defaultChains,
   defaultL2Chains,
   developmentChains,
@@ -14,4 +15,4 @@ export {
   unitDecimalsByName,
 } from './constants'
 
-export type { Unit } from './types'
+export type { Chain, Unit } from './types'

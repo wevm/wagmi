@@ -1,8 +1,9 @@
 import { WalletLink, WalletLinkProvider } from 'walletlink'
 import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
+import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
-import { Chain, Connector } from './base'
+import { Connector } from './base'
 import { UserRejectedRequestError } from './errors'
 
 type Options = WalletLinkOptions & { jsonRpcUrl?: string }

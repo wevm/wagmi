@@ -1,6 +1,7 @@
 import { defaultChains } from '../constants'
+import { Chain } from '../types'
 import { hexValue, normalizeChainId } from '../utils'
-import { Chain, Connector } from './base'
+import { Connector } from './base'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -117,12 +118,37 @@ export class InjectedConnector extends Connector<
         } catch (addError) {
           throw new AddChainError()
         }
-      } else if ((<ProviderRpcError>error).code === 4001) {
+      } else if ((<ProviderRpcError>error).code === 4001)
         throw new UserRejectedRequestError()
-      } else {
-        throw new SwitchChainError()
-      }
+      else throw new SwitchChainError()
     }
+  }
+
+  async watchAsset({
+    address,
+    decimals = 18,
+    image,
+    symbol,
+  }: {
+    address: string
+    decimals?: number
+    image?: string
+    symbol: string
+  }) {
+    if (!window.ethereum) throw new ConnectorNotFoundError()
+
+    await window.ethereum.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address,
+          decimals,
+          image,
+          symbol,
+        },
+      },
+    })
   }
 
   protected onAccountsChanged = (accounts: string[]) => {

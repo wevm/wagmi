@@ -9,6 +9,7 @@ it('should expose correct exports', () => {
     'defaultChains',
     'defaultL2Chains',
     'developmentChains',
+    'erc20ABI',
     'unitDecimalsByName',
     'units',
   ])

@@ -11,12 +11,23 @@ type AddEthereumChainParameter = {
   iconUrls?: string[] // Currently ignored.
 }
 
+type WatchAssetParams = {
+  type: 'ERC20' // In the future, other standards will be supported
+  options: {
+    address: string // The address of the token contract
+    decimals: number // The number of token decimals
+    image?: string // A string url of the token logo
+    symbol: string // A ticker symbol or shorthand, up to 5 characters
+  }
+}
+
 type RequestArguments =
   | { method: 'eth_accounts' }
   | { method: 'eth_chainId' }
   | { method: 'eth_requestAccounts' }
   | { method: 'wallet_addEthereumChain'; params: AddEthereumChainParameter[] }
   | { method: 'wallet_switchEthereumChain'; params: [{ chainId: string }] }
+  | { method: 'wallet_watchAsset'; params: WatchAssetParams }
 
 interface Window {
   ethereum?: {

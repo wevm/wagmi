@@ -3,6 +3,7 @@ export type { Props as ProviderProps } from './context'
 
 export {
   useAccount,
+  useBalance,
   useBlockNumber,
   useConnect,
   useContract,
@@ -13,7 +14,7 @@ export {
   useFeeData,
   useNetwork,
   useProvider,
-  useTransaction,
+  useToken,
   useWebSocketProvider,
 } from './hooks'
 

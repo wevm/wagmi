@@ -5,7 +5,7 @@ import { useProvider, useWebSocketProvider } from '../providers'
 import { Config as UseContractConfig, useContract } from './useContract'
 
 type Config = {
-  once?: boolean
+  watch?: boolean
 }
 
 export const useContractEvent = <
@@ -14,7 +14,7 @@ export const useContractEvent = <
   contractConfig: UseContractConfig,
   type: Parameters<Contract['on']>[0],
   listener: Parameters<Contract['on']>[1],
-  { once }: Config = {},
+  { watch }: Config = {},
 ) => {
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
@@ -34,7 +34,7 @@ export const useContractEvent = <
     ) => listenerRef.current(event)
 
     const _contract = <ethers.Contract>(<unknown>ethers.Contract)
-    if (once) _contract.once(type, handler)
+    if (!watch) _contract.once(type, handler)
     else _contract.on(type, handler)
     return () => {
       _contract.off(type, handler)

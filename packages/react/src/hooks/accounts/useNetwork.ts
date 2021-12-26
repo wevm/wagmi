@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { defaultChains, defaultL2Chains } from '@wagmi/private'
+import { Chain, defaultChains, defaultL2Chains } from '@wagmi/private'
 
 import { useContext } from '../../context'
 
@@ -17,7 +17,7 @@ export const useNetwork = () => {
 
   const chainId = data?.chainId
   const activeChains = connector?.chains ?? []
-  const activeChain = [
+  const activeChain: Chain = [
     ...activeChains,
     ...defaultChains,
     ...defaultL2Chains,
@@ -43,8 +43,12 @@ export const useNetwork = () => {
   return [
     {
       data: {
-        ...activeChain,
-        chainId,
+        chain: chainId
+          ? {
+              ...activeChain,
+              id: chainId,
+            }
+          : undefined,
         chains: activeChains,
         unsupported: !supported,
       },

@@ -15,13 +15,17 @@ const getContract = <T = Contract>({
 }: Config) =>
   <T>(<unknown>new Contract(addressOrName, contractInterface, signerOrProvider))
 
-export const useContract = <T = any>({
+export const useContract = <Contract = any>({
   addressOrName,
   contractInterface,
   signerOrProvider,
 }: Config) => {
   const contractRef = React.useRef(
-    getContract<T>({ addressOrName, contractInterface, signerOrProvider }),
+    getContract<Contract>({
+      addressOrName,
+      contractInterface,
+      signerOrProvider,
+    }),
   )
 
   React.useEffect(() => {

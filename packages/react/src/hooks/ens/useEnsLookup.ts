@@ -22,10 +22,11 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const lookupAddress = React.useCallback(
-    async (address: string) => {
+    async (config: Pick<Config, 'address'>) => {
       try {
+        if (!config.address) return
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const ens = await provider.lookupAddress(address)
+        const ens = await provider.lookupAddress(config.address)
         setState((x) => ({ ...x, ens, loading: false }))
         return ens
       } catch (_error) {
@@ -40,7 +41,7 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!address || skip) return
-    lookupAddress(address)
+    lookupAddress({ address })
   }, [address])
   /* eslint-enable react-hooks/exhaustive-deps */
 

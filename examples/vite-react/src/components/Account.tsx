@@ -1,4 +1,4 @@
-import { useAccount, useFeeData, useNetwork, useTransaction } from 'wagmi'
+import { useAccount, useBalance, useFeeData, useNetwork, useToken } from 'wagmi'
 
 export const Account = () => {
   const [{ connector: activeConnector, data: accountData }, disconnect] =
@@ -7,11 +7,14 @@ export const Account = () => {
     useNetwork()
 
   const formatUnits = 'gwei'
-  const [{ data: feeData, loading }] = useFeeData({
-    formatUnits,
-    once: true,
+  const [{ data: feeData }] = useFeeData({ formatUnits, watch: true })
+  const [{ data: balanceData }] = useBalance({
+    address: accountData?.address,
+    watch: true,
   })
-  useTransaction()
+  const [{ data: tokenData, error: tokenError }, watchToken] = useToken({
+    address: '0x622236bb180256b6ae1a935dae08dc0356141632',
+  })
 
   return (
     <>
@@ -30,18 +33,21 @@ export const Account = () => {
 
       <div>
         <div>
-          {networkData.name ?? networkData.chainId}{' '}
+          {networkData.chain?.name ?? networkData.chain?.id}{' '}
           {networkData.unsupported && '(unsupported)'}
         </div>
 
         <div>
+          Balance: {balanceData?.formatted} {balanceData?.symbol}{' '}
+        </div>
+
+        <div>
           Gas Price: {feeData?.formatted?.gasPrice} {formatUnits}{' '}
-          {loading && '(updating…)'}
         </div>
 
         {switchNetwork &&
           networkData.chains.map((x) =>
-            x.id === networkData.chainId ? null : (
+            x.id === networkData.chain?.id ? null : (
               <button key={x.id} onClick={() => switchNetwork(x.id)}>
                 Switch to {x.name}
               </button>
@@ -49,6 +55,18 @@ export const Account = () => {
           )}
 
         {switchNetworkError && switchNetworkError?.message}
+      </div>
+
+      <br />
+
+      <div>
+        {tokenData?.symbol && (
+          <button onClick={async (_event) => await watchToken(tokenData)}>
+            Add ${tokenData.symbol} to wallet
+          </button>
+        )}
+        Total supply: {tokenData?.totalSupply?.formatted}
+        {tokenError && tokenError}
       </div>
     </>
   )

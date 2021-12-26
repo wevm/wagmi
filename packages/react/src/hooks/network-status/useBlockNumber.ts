@@ -2,6 +2,11 @@ import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
 
+type Config = {
+  skip?: boolean
+  watch?: boolean
+}
+
 type State = {
   blockNumber?: number
   error?: Error
@@ -12,12 +17,7 @@ const initialState: State = {
   loading: false,
 }
 
-type Config = {
-  once?: boolean
-  skip?: boolean
-}
-
-export const useBlockNumber = ({ once, skip }: Config = {}) => {
+export const useBlockNumber = ({ skip, watch }: Config = {}) => {
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const [state, setState] = React.useState<State>(initialState)
@@ -44,7 +44,7 @@ export const useBlockNumber = ({ once, skip }: Config = {}) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (once) return
+    if (!watch) return
 
     const listener = (blockNumber: State['blockNumber']) =>
       setState((x) => ({ ...x, blockNumber }))

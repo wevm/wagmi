@@ -1,8 +1,9 @@
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 
+import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
-import { Chain, Connector } from './base'
+import { Connector } from './base'
 import { UserRejectedRequestError } from './errors'
 
 export class WalletConnectConnector extends Connector<
