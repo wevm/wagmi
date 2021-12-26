@@ -1,4 +1,4 @@
-import { Chain } from '../connectors'
+import { Chain } from '../types'
 
 type ChainName =
   | 'arbitrumOne'

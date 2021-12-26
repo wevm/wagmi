@@ -14,6 +14,7 @@ export const Account = () => {
   })
   const [{ data: tokenData, error: tokenError }, watchToken] = useToken({
     address: '0x622236bb180256b6ae1a935dae08dc0356141632',
+    skip: networkData?.chain?.id !== 1,
   })
 
   return (
@@ -59,15 +60,17 @@ export const Account = () => {
 
       <br />
 
-      <div>
-        {tokenData?.symbol && (
-          <button onClick={async (_event) => await watchToken(tokenData)}>
-            Add ${tokenData.symbol} to wallet
-          </button>
-        )}
-        Total supply: {tokenData?.totalSupply?.formatted}
-        {tokenError && tokenError}
-      </div>
+      {tokenData && (
+        <div>
+          {tokenData?.symbol && (
+            <button onClick={async (_event) => await watchToken(tokenData)}>
+              Add ${tokenData.symbol} to wallet
+            </button>
+          )}
+          Total supply: {tokenData?.totalSupply?.formatted}
+          {tokenError && tokenError}
+        </div>
+      )}
     </>
   )
 }
