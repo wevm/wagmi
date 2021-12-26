@@ -14,7 +14,7 @@ describe('useContext', () => {
     )
   })
 
-  it('has initial state', () => {
+  it('inits', () => {
     const { result } = renderHook(() => useContext())
     const state = result.current.state
     expect(state.connector).toEqual(undefined)

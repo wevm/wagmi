@@ -9,7 +9,7 @@ import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 
 describe('useConnect', () => {
-  it('initial values', async () => {
+  it('inits', async () => {
     const { result } = renderHook(() => useConnect())
     const state = result.current[0]
     const connect = result.current[1]
@@ -30,6 +30,7 @@ describe('useConnect', () => {
       const connect = result.current[1]
       const mockConnector = state.connectors[0]
 
+      expect(state.connected).toEqual(false)
       const res = await connect(mockConnector)
       if (!res) throw Error('Something went wrong')
       if (res instanceof Error) throw res

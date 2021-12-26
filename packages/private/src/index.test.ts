@@ -8,7 +8,6 @@ it('should expose correct exports', () => {
     'WalletLinkConnector',
     'defaultChains',
     'defaultL2Chains',
-    'defaultMnemonic',
     'developmentChains',
   ])
 })

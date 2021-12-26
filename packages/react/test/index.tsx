@@ -43,7 +43,7 @@ export const renderHook = <TProps, TResult>(
     ...options
   }: RenderHookOptions<TProps & ProviderProps> | undefined = {},
 ) => {
-  if (!_wrapper) _wrapper = wrapper as WrapperComponent<TProps>
+  if (_wrapper == undefined) _wrapper = wrapper as WrapperComponent<TProps>
   return defaultRenderHook<TProps, TResult>(hook, {
     wrapper: _wrapper,
     ...options,

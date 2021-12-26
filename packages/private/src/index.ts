@@ -6,9 +6,4 @@ export {
 } from './connectors'
 export type { Chain, ConnectorEvents, Data } from './connectors'
 
-export {
-  defaultChains,
-  defaultL2Chains,
-  developmentChains,
-  defaultMnemonic,
-} from './constants'
+export { defaultChains, defaultL2Chains, developmentChains } from './constants'
