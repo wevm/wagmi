@@ -45,7 +45,7 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
-    { ens: state.ens, loading: state.loading, error: state.error },
+    { data: state.ens, loading: state.loading, error: state.error },
     lookupAddress,
   ] as const
 }

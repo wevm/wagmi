@@ -13,11 +13,11 @@ export const useAccount = ({ fetchEns }: Config = {}) => {
     setState,
   } = useContext()
   const address = data?.account
-  const [{ ens, loading: ensLoading }] = useEnsLookup({
+  const [{ data: ens, loading: ensLoading }] = useEnsLookup({
     address,
     skip: !fetchEns,
   })
-  const [{ avatar, loading: resolverLoading }] = useEnsAvatar({
+  const [{ data: avatar, loading: resolverLoading }] = useEnsAvatar({
     addressOrName: ens,
     skip: !fetchEns || !ens,
   })
@@ -33,8 +33,7 @@ export const useAccount = ({ fetchEns }: Config = {}) => {
 
   return [
     {
-      address,
-      data: ens ? { ens, avatar } : undefined,
+      data: address ? { address, ens, avatar } : undefined,
       loading,
       connector,
     },

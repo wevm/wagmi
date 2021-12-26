@@ -9,5 +9,7 @@ it('should expose correct exports', () => {
     'defaultChains',
     'defaultL2Chains',
     'developmentChains',
+    'unitDecimalsByName',
+    'units',
   ])
 })

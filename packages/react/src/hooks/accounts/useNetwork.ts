@@ -42,10 +42,10 @@ export const useNetwork = () => {
 
   return [
     {
-      chainId,
-      chains: activeChains,
       data: {
         ...activeChain,
+        chainId,
+        chains: activeChains,
         unsupported: !supported,
       },
       error: state.error,

@@ -45,7 +45,7 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
-    { resolver: state.resolver, loading: state.loading, error: state.error },
+    { data: state.resolver, loading: state.loading, error: state.error },
     getResolver,
   ] as const
 }

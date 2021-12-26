@@ -10,6 +10,7 @@ it('should expose correct exports', () => {
     'defaultChains',
     'defaultL2Chains',
     'developmentChains',
+    // hooks
     'useAccount',
     'useBlockNumber',
     'useConnect',
@@ -19,8 +20,10 @@ it('should expose correct exports', () => {
     'useEnsAvatar',
     'useEnsLookup',
     'useEnsResolver',
+    'useFeeData',
     'useNetwork',
     'useProvider',
+    'useTransaction',
     'useWebSocketProvider',
   ])
 })

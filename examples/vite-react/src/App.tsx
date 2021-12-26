@@ -3,9 +3,9 @@ import { useAccount } from 'wagmi'
 import { Account, Connect } from './components'
 
 export const App = () => {
-  const [{ address }] = useAccount()
+  const [{ data }] = useAccount()
 
-  if (address) return <Account />
+  if (data?.address) return <Account />
 
   return <Connect />
 }

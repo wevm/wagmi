@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useProvider, useWebSocketProvider } from './providers'
+import { useProvider, useWebSocketProvider } from '../providers'
 
 type State = {
   blockNumber?: number
@@ -46,7 +46,7 @@ export const useBlockNumber = ({ once, skip }: Config = {}) => {
   React.useEffect(() => {
     if (once) return
 
-    const listener = (blockNumber: number) =>
+    const listener = (blockNumber: State['blockNumber']) =>
       setState((x) => ({ ...x, blockNumber }))
     const _provider = webSocketProvider ?? provider
 
@@ -59,9 +59,9 @@ export const useBlockNumber = ({ once, skip }: Config = {}) => {
 
   return [
     {
-      blockNumber: state.blockNumber,
-      loading: state.loading,
+      data: state.blockNumber,
       error: state.error,
+      loading: state.loading,
     },
     getBlockNumber,
   ] as const

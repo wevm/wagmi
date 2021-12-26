@@ -45,7 +45,7 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
-    { avatar: state.avatar, loading: state.loading, error: state.error },
+    { data: state.avatar, loading: state.loading, error: state.error },
     getAvatar,
   ] as const
 }

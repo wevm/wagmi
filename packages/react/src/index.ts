@@ -10,8 +10,10 @@ export {
   useEnsAvatar,
   useEnsLookup,
   useEnsResolver,
+  useFeeData,
   useNetwork,
   useProvider,
+  useTransaction,
   useWebSocketProvider,
 } from './hooks'
 

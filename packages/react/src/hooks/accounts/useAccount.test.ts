@@ -32,21 +32,19 @@ describe('useAccount', () => {
     await actHook(async () => {
       const useConnectState = result.current.connect[0]
       const connect = result.current.connect[1]
-      const mockConnector = useConnectState.connectors[0]
+      const mockConnector = useConnectState.data.connectors[0]
       await connect(mockConnector)
     })
 
     let useAccountState = result.current.account[0]
     const address = await wallet.getAddress()
-    expect(useAccountState.address).toEqual(address)
-    expect(useAccountState.data).toEqual(undefined)
+    expect(useAccountState.data).toEqual({ address })
     expect(useAccountState.loading).toEqual(false)
     expect(useAccountState.connector?.name).toEqual('Mock')
 
     const disconnect = result.current.account[1]
     actHook(disconnect)
     useAccountState = result.current.account[0]
-    expect(useAccountState.address).toEqual(undefined)
     expect(useAccountState.data).toEqual(undefined)
     expect(useAccountState.loading).toEqual(false)
     expect(useAccountState.connector).toEqual(undefined)

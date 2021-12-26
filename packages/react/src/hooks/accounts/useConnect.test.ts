@@ -13,9 +13,9 @@ describe('useConnect', () => {
     const { result } = renderHook(() => useConnect())
     const state = result.current[0]
     const connect = result.current[1]
-    expect(state.connected).toEqual(false)
-    expect(state.connector).toEqual(undefined)
-    expect(state.connectors.length).toEqual(1)
+    expect(state.data.connected).toEqual(false)
+    expect(state.data.connector).toEqual(undefined)
+    expect(state.data.connectors.length).toEqual(1)
     expect(state.error).toEqual(undefined)
     expect(state.loading).toEqual(false)
     expect(connect).toBeDefined()
@@ -28,9 +28,9 @@ describe('useConnect', () => {
     await actHook(async () => {
       const state = result.current[0]
       const connect = result.current[1]
-      const mockConnector = state.connectors[0]
+      const mockConnector = state.data.connectors[0]
 
-      expect(state.connected).toEqual(false)
+      expect(state.data.connected).toEqual(false)
       const res = await connect(mockConnector)
       if (!res) throw Error('Something went wrong')
       if (res instanceof Error) throw res
@@ -40,14 +40,14 @@ describe('useConnect', () => {
     })
 
     const state = result.current[0]
-    expect(state.connected).toEqual(true)
-    expect(state.connector?.name).toEqual('Mock')
+    expect(state.data.connected).toEqual(true)
+    expect(state.data.connector?.name).toEqual('Mock')
 
     // Already connected
     await actHook(async () => {
       const state = result.current[0]
       const connect = result.current[1]
-      const mockConnector = state.connectors[0]
+      const mockConnector = state.data.connectors[0]
       const res = await connect(mockConnector)
       expect(res).toEqual(undefined)
     })
@@ -74,14 +74,14 @@ describe('useConnect', () => {
     await actHook(async () => {
       const state = result.current[0]
       const connect = result.current[1]
-      const mockConnector = state.connectors[0]
+      const mockConnector = state.data.connectors[0]
       const res = await connect(mockConnector)
       if (!res) throw Error('Something went wrong')
       expect((<Error>res).message).toEqual('User rejected request')
     })
 
     const state = result.current[0]
-    expect(state.connected).toEqual(false)
+    expect(state.data.connected).toEqual(false)
     expect(state.error?.message).toEqual('User rejected request')
   })
 })

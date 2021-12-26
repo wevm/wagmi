@@ -1,7 +1,14 @@
 import { useConnect } from 'wagmi'
 
 export const Connect = () => {
-  const [{ connector, connectors, error, loading }, connect] = useConnect()
+  const [
+    {
+      data: { connector, connectors },
+      error,
+      loading,
+    },
+    connect,
+  ] = useConnect()
 
   return (
     <>
