@@ -4,35 +4,50 @@ import {
   WrapperComponent,
   renderHook as defaultRenderHook,
 } from '@testing-library/react-hooks'
-import { MockConnector } from '@wagmi/private/testing'
+import {
+  MockConnector,
+  defaultChains,
+  defaultMnemonic,
+} from '@wagmi/private/testing'
 
 import { Provider, ProviderProps } from '../src'
 
 import '@testing-library/jest-dom/extend-expect'
 
-type Props = {
-  children:
+type Props = ProviderProps & {
+  children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
-  providerProps?: ProviderProps
 }
-export const Providers = ({ children, providerProps }: Props) => {
+export const wrapper = (props: Props) => {
   return (
-    <Provider connectors={[new MockConnector()]} {...providerProps}>
-      {children}
-    </Provider>
+    <Provider
+      connectors={[
+        new MockConnector({
+          chains: defaultChains,
+          options: {
+            mnemonic: defaultMnemonic,
+            network: 1,
+          },
+        }),
+      ]}
+      {...props}
+    />
   )
 }
 
 export const renderHook = <TProps, TResult>(
   hook: (props: TProps) => TResult,
   {
-    wrapper,
+    wrapper: _wrapper,
     ...options
   }: RenderHookOptions<TProps & ProviderProps> | undefined = {},
 ) => {
-  if (!wrapper) wrapper = Providers as WrapperComponent<TProps>
-  return defaultRenderHook<TProps, TResult>(hook, { wrapper, ...options })
+  if (!_wrapper) _wrapper = wrapper as WrapperComponent<TProps>
+  return defaultRenderHook<TProps, TResult>(hook, {
+    wrapper: _wrapper,
+    ...options,
+  })
 }
 
 export { act as actHook } from '@testing-library/react-hooks'

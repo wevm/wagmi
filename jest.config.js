@@ -32,6 +32,9 @@ module.exports = {
       testRegex: 'packages/react/.*\\.test\\.ts(x)?$',
     },
   ],
+  snapshotFormat: {
+    printBasicPrototype: false,
+  },
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',

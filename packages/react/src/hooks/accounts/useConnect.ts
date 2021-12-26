@@ -60,6 +60,7 @@ export const useConnect = () => {
 
   return [
     {
+      connected: globalState.data?.account !== undefined,
       connector: state.connector,
       connectors: globalState.connectors,
       error: state.error,

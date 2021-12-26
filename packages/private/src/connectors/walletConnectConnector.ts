@@ -47,11 +47,11 @@ export class WalletConnectConnector extends Connector<
 
   async disconnect() {
     if (!this._provider) return
+    await this._provider.disconnect()
 
     this._provider.removeListener('accountsChanged', this.onAccountsChanged)
     this._provider.removeListener('chainChanged', this.onChainChanged)
     this._provider.removeListener('disconnect', this.onDisconnect)
-    this._provider.disconnect()
 
     typeof localStorage !== 'undefined' &&
       localStorage.removeItem('walletconnect')
