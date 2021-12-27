@@ -31,12 +31,12 @@ const App = () => (
 ```
 
 <Callout emoji="💡">
-  Provider has multiple configuration options: setting up available connectors
-  (i.e. WalletConnect), auto connecting to wallets, etc. Check
-  [here](/docs/provider#options) for more examples.
+  **Provider** has multiple configuration options: connectors (i.e.
+  WalletConnect), auto connect, websockets, etc. Check
+  [here](/docs/provider#options) for more info.
 </Callout>
 
-Now every component inside and under the **Provider** is set up to use hooks:
+Now every component inside and under the **Provider** is set up with the default [**InjectedConnector**](/docs/connectors) and can use hooks for getting account information, switching networks, fetching token balances, etc:
 
 ```tsx
 import { useAccount, useConnect } from 'wagmi'
@@ -50,3 +50,5 @@ export const App = () => {
   return ...
 }
 ```
+
+wagmi!

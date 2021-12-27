@@ -1,0 +1,39 @@
+# useNetwork
+
+Hook for accessing information about connected network.
+
+```tsx
+import { useNetwork } from 'wagmi'
+```
+
+## Usage
+
+Some connectors do not support programmatic network switching (i.e. WalletConnect) and `switchNetwork` will be `undefined`. For those situations, you can typically switch networks in the wallet app (i.e. Rainbow) and wagmi will stay up-to-date.
+
+```tsx live
+import { useNetwork } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, switchNetwork] = useNetwork()
+
+  return (
+    <>
+      <div>
+        {data.chain?.name ?? networkData.chain?.id}{' '}
+        {data.unsupported && '(unsupported)'}
+      </div>
+
+      {switchNetwork &&
+        data.chains.map((x) =>
+          x.id === data.chain?.id ? null : (
+            <button key={x.id} onClick={() => switchNetwork(x.id)}>
+              Switch to {x.name}
+            </button>
+          ),
+        )}
+
+      {error && <div>{error?.message}</div>}
+    </>
+  )
+}
+```

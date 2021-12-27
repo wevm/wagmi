@@ -12,7 +12,7 @@ import { useAccount } from 'wagmi'
 import { useAccount } from 'wagmi'
 
 const App = () => {
-  const [{ data }, disconnect] = useAccount()
+  const [{ data, error, loading }, disconnect] = useAccount()
 
   return (
     <>

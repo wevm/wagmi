@@ -1,7 +1,6 @@
 {
   "provider": "Provider",
+  "hooks": "Hooks",
   "connectors": "Connectors",
-  "constants": "Constants",
-  "useConnect": "useConnect",
-  "useAccount": "useAccount"
+  "constants": "Constants"
 }

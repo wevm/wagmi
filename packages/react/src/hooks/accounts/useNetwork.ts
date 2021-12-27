@@ -5,9 +5,12 @@ import { useContext } from '../../context'
 
 type State = {
   error?: Error
+  loading?: boolean
 }
 
-const initialState: State = {}
+const initialState: State = {
+  loading: false,
+}
 
 export const useNetwork = () => {
   const {
@@ -28,12 +31,13 @@ export const useNetwork = () => {
     async (chainId: number) => {
       if (!connector?.switchChain) return false
       try {
-        setState((x) => ({ ...x, error: undefined }))
+        setState((x) => ({ ...x, error: undefined, loading: true }))
         await connector.switchChain(chainId)
+        setState((x) => ({ ...x, loading: false }))
         return true
       } catch (_error) {
         const error = _error as Error
-        setState((x) => ({ ...x, error }))
+        setState((x) => ({ ...x, error, loading: false }))
         return error
       }
     },
@@ -53,6 +57,7 @@ export const useNetwork = () => {
         unsupported: !supported,
       },
       error: state.error,
+      loading: state.loading,
     },
     connector?.switchChain ? switchNetwork : undefined,
   ] as const
