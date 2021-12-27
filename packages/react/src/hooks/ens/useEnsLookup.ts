@@ -2,6 +2,11 @@ import * as React from 'react'
 
 import { useProvider } from '../providers'
 
+type Config = {
+  address?: string
+  skip?: boolean
+}
+
 type State = {
   ens?: string | null
   error?: Error
@@ -10,11 +15,6 @@ type State = {
 
 const initialState: State = {
   loading: false,
-}
-
-type Config = {
-  address?: string
-  skip?: boolean
 }
 
 export const useEnsLookup = ({ address, skip }: Config = {}) => {

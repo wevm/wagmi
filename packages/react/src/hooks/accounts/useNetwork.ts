@@ -17,7 +17,7 @@ export const useNetwork = () => {
 
   const chainId = data?.chainId
   const activeChains = connector?.chains ?? []
-  const activeChain: Chain = [
+  const activeChain: Chain | undefined = [
     ...activeChains,
     ...defaultChains,
     ...defaultL2Chains,

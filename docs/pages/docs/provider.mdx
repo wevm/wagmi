@@ -1,0 +1,122 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Provider
+
+The **Provider** sets up global configuration for all wagmi hooks using [React Context](https://reactjs.org/docs/context.html).
+
+```tsx
+import { Provider } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { Provider } from 'wagmi'
+
+const App = () => (
+  <Provider>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+## Configuration
+
+### autoConnect (optional)
+
+Enables reconnecting to last used connector on mount. Defaults to `false`.
+
+```tsx highlight='4'
+import { Provider } from 'wagmi'
+
+const App = () => (
+  <Provider autoConnect>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+### connectorStorageKey (optional)
+
+Key for saving connector preference to browser. Defaults to `wagmiWallet`. Should be unique so it doesn't get overwritten by other libraries.
+
+```tsx highlight='4'
+import { Provider } from 'wagmi'
+
+const App = () => (
+  <Provider connectorStorageKey="mirrorWagmiWallet">
+    <YourRoutes />
+  </Provider>
+)
+```
+
+### connectors (optional)
+
+Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
+
+```tsx highlight='8-17,20'
+import {
+  InjectedConnector,
+  Provider,
+  WalletConnectConnector,
+  defaultChains,
+} from 'wagmi'
+
+const connectors = [
+  new InjectedConnector({ chains: defaultChains }),
+  new WalletConnectConnector({
+    chains: defaultChains,
+    options: {
+      infuraId: 'Your infura id',
+      qrcode: true,
+    },
+  }),
+]
+
+const App = () => (
+  <Provider connectors={connectors}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+<Callout emoji="💡">
+  Learn more about wagmi's built-in connectors or how to create a custom
+  connector [here](/docs/connectors).
+</Callout>
+
+### provider (optional)
+
+**ethers.js** [interface](https://docs.ethers.io/v5/api/providers/) for connecting to network. Defaults to `getDefaultProvider()`.
+
+```tsx highlight='4-5,8'
+import { providers } from 'ethers'
+import { Provider } from 'wagmi'
+
+const provider = ({ chainId }) =>
+  new providers.InfuraProvider(chainId, 'Your infura id')
+
+const App = () => (
+  <Provider provider={provider}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+### webSocketProvider (optional)
+
+WebSocket interface for connecting to network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+
+```tsx highlight='4-5,8'
+import { providers } from 'ethers'
+import { Provider } from 'wagmi'
+
+const provider = ({ chainId }) =>
+  new providers.InfuraWebSocketProvider(chainId, 'Your infura id')
+
+const App = () => (
+  <Provider provider={provider}>
+    <YourRoutes />
+  </Provider>
+)
+```

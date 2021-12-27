@@ -1,0 +1,34 @@
+---
+title: useConnect
+---
+
+# useConnect
+
+```tsx
+import { useConnect } from 'wagmi'
+```
+
+```tsx live
+;() => {
+  const [{ data, error, loading }, connect] = useConnect()
+
+  return (
+    <Box>
+      <Text>Connected {data.connected.toString()}</Text>
+      {data.connectors.map((x) => (
+        <Button
+          key={x.name}
+          loading={
+            loading && data.connector && x.name === data.connector.name && '…'
+          }
+          onClick={() => connect(x)}
+          size="small"
+          variant="tertiary"
+        >
+          {x.name}
+        </Button>
+      ))}
+    </Box>
+  )
+}
+```

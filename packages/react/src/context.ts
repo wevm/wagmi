@@ -39,7 +39,7 @@ export type Props = {
   /** Key for saving connector preference to browser */
   connectorStorageKey?: string
   /** Connectors used for linking accounts */
-  connectors?: Connector[]
+  connectors?: Connector[] | ((config: { chainId?: number }) => Connector[])
   /** Interface for connecting to network */
   provider?:
     | BaseProvider
@@ -56,7 +56,7 @@ export type Props = {
 export const Provider = ({
   autoConnect,
   children,
-  connectors = [new InjectedConnector()],
+  connectors: _connectors = [new InjectedConnector()],
   connectorStorageKey = 'wagmiWallet',
   provider: _provider = getDefaultProvider(),
   webSocketProvider: _webSocketProvider,
@@ -69,6 +69,11 @@ export const Provider = ({
     data?: Data
     error?: Error
   }>({})
+
+  const connectors = React.useMemo(() => {
+    if (typeof _connectors !== 'function') return _connectors
+    return _connectors({ chainId: state.data?.chainId })
+  }, [_connectors, state.data?.chainId])
 
   const provider = React.useMemo(() => {
     if (typeof _provider !== 'function') return _provider

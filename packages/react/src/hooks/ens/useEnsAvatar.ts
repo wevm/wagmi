@@ -2,6 +2,11 @@ import * as React from 'react'
 
 import { useProvider } from '../providers'
 
+type Config = {
+  addressOrName?: string | null
+  skip?: boolean
+}
+
 type State = {
   avatar?: string | null
   error?: Error
@@ -10,11 +15,6 @@ type State = {
 
 const initialState: State = {
   loading: false,
-}
-
-type Config = {
-  addressOrName?: string | null
-  skip?: boolean
 }
 
 export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {

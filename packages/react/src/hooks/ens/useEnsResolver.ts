@@ -3,6 +3,11 @@ import { EnsResolver } from '@ethersproject/providers'
 
 import { useProvider } from '../providers'
 
+type Config = {
+  name?: string | null
+  skip?: boolean
+}
+
 type State = {
   error?: Error
   loading: boolean
@@ -11,11 +16,6 @@ type State = {
 
 const initialState: State = {
   loading: false,
-}
-
-type Config = {
-  name?: string | null
-  skip?: boolean
 }
 
 export const useEnsResolver = ({ name, skip }: Config = {}) => {

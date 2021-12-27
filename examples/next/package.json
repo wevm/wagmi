@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "next",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,21 +8,20 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@reach/skip-nav": "^0.16.0",
+    "@walletconnect/ethereum-provider": "^1.6.6",
+    "ethers": "^5.5.1",
     "next": "12.0.7",
-    "nextra": "v2.0.0-beta.5",
-    "nextra-theme-docs": "2.0.0-beta.5",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "wagmi": "0.0.1",
+    "walletlink": "^2.2.8"
   },
   "devDependencies": {
+    "@preconstruct/next": "^3.0.1",
     "@types/node": "17.0.5",
     "@types/react": "17.0.38",
-    "autoprefixer": "^10.4.0",
     "eslint": "8.5.0",
     "eslint-config-next": "12.0.7",
-    "postcss": "^8.4.5",
-    "tailwindcss": "^3.0.7",
     "typescript": "4.5.4"
   }
 }

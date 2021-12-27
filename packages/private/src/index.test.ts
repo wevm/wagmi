@@ -6,11 +6,11 @@ it('should expose correct exports', () => {
     'InjectedConnector',
     'WalletConnectConnector',
     'WalletLinkConnector',
+    'chain',
     'defaultChains',
     'defaultL2Chains',
     'developmentChains',
     'erc20ABI',
-    'unitDecimalsByName',
     'units',
   ])
 })

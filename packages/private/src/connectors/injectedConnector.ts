@@ -1,4 +1,3 @@
-import { defaultChains } from '../constants'
 import { Chain } from '../types'
 import { hexValue, normalizeChainId } from '../utils'
 import { Connector } from './base'
@@ -14,11 +13,7 @@ export class InjectedConnector extends Connector<
   Window['ethereum'],
   undefined
 > {
-  constructor(
-    config: { chains: Chain[] } = {
-      chains: defaultChains,
-    },
-  ) {
+  constructor(config: { chains: Chain[] }) {
     super({ ...config, options: undefined })
   }
 

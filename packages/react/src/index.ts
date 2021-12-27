@@ -23,8 +23,10 @@ export {
   InjectedConnector,
   WalletConnectConnector,
   WalletLinkConnector,
+  chain,
   defaultChains,
   defaultL2Chains,
   developmentChains,
+  erc20ABI,
 } from '@wagmi/private'
 export type { Chain, Data } from '@wagmi/private'

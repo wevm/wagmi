@@ -1,6 +1,7 @@
+import * as React from 'react'
 import { useAccount, useConnect, useNetwork } from 'wagmi'
 
-export const App = () => {
+const Page = () => {
   const [{ connector: activeConnector, data: accountData }, disconnect] =
     useAccount({ fetchBalance: true, fetchEns: true })
   const [{ data: networkData, error: switchNetworkError }, switchNetwork] =
@@ -73,3 +74,5 @@ export const App = () => {
     </main>
   )
 }
+
+export default Page

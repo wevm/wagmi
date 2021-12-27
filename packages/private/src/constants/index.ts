@@ -7,6 +7,6 @@ export {
 
 export { erc20ABI } from './erc20'
 
-export { units, unitDecimalsByName } from './units'
+export { units } from './units'
 
 export { defaultMnemonic } from './wallets'

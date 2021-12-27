@@ -1,7 +1,7 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import type { AppProps } from 'next/app'
 import { providers } from 'ethers'
-
+import NextHead from 'next/head'
 import {
   InjectedConnector,
   Provider,
@@ -13,9 +13,7 @@ import {
   developmentChains,
 } from 'wagmi'
 
-import { App } from './App'
-
-const infuraId = import.meta.env.VITE_INFURA_ID as string
+const infuraId = process.env.NEXT_PUBLIC_INFURA_ID
 
 const chains = [...defaultChains, ...defaultL2Chains, ...developmentChains]
 
@@ -47,8 +45,8 @@ const provider = ({ chainId }: Config) =>
 const webSocketProvider = ({ chainId }: Config) =>
   new providers.InfuraWebSocketProvider(chainId, infuraId)
 
-ReactDOM.render(
-  <React.StrictMode>
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
     <Provider
       autoConnect
       connectorStorageKey="wagmiWallet"
@@ -56,8 +54,13 @@ ReactDOM.render(
       provider={provider}
       webSocketProvider={webSocketProvider}
     >
-      <App />
+      <NextHead>
+        <title>wagmi</title>
+      </NextHead>
+
+      <Component {...pageProps} />
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-)
+  )
+}
+
+export default App

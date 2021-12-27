@@ -5,9 +5,8 @@ import { useContext } from './context'
 
 describe('useContext', () => {
   it('should throw when not inside Provider', () => {
-    const wrapper = ({ children }: { children: React.ReactElement }) => (
-      <>{children}</>
-    )
+    const wrapper = ({ children }: { children: React.ReactElement }) =>
+      React.createElement('div', { children })
     const { result } = renderHook(() => useContext(), { wrapper })
     expect(() => result.current).toThrowErrorMatchingInlineSnapshot(
       `"Must be used within Provider"`,

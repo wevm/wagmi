@@ -16,7 +16,7 @@ export class WalletConnectConnector extends Connector<
   private _provider?: WalletConnectProvider
 
   constructor(config: {
-    chains: Chain[]
+    chains?: Chain[]
     options: IWCEthRpcConnectionOptions
   }) {
     super(config)

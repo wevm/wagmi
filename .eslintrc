@@ -54,6 +54,21 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["*.mdx"],
+      "extends": ["plugin:mdx/recommended"],
+      "rules": {
+        "import/no-anonymous-default-export": "off",
+        "react/display-name": "off",
+        "react/jsx-no-undef": "off",
+        "no-undef": "off"
+      },
+      "settings": {
+        "mdx/code-blocks": true
+      }
+    }
+  ],
   "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx", ".d.ts"]

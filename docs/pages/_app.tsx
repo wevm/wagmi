@@ -1,7 +1,10 @@
-import { AppProps } from 'next/app'
-
+import type { AppProps } from 'next/app'
 import 'nextra-theme-docs/style.css'
 
-export default function Nextra({ Component, pageProps }: AppProps) {
+import '../styles/globals.css'
+
+const App = ({ Component, pageProps }: AppProps) => {
   return <Component {...pageProps} />
 }
+
+export default App

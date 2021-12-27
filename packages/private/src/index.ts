@@ -8,11 +8,11 @@ export type { ConnectorEvents, Data } from './connectors'
 
 export {
   erc20ABI,
+  chain,
   defaultChains,
   defaultL2Chains,
   developmentChains,
   units,
-  unitDecimalsByName,
 } from './constants'
 
 export type { Chain, Unit } from './types'

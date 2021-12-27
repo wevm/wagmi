@@ -1,5 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
 
+import { defaultChains } from '..'
+
 import { Chain } from '../types'
 import { ConnectorError } from './errors'
 
@@ -31,10 +33,16 @@ export abstract class Connector<
   /** Whether connector is usable */
   abstract readonly ready: boolean
 
-  constructor(config: { chains: Chain[]; options: Options }) {
+  constructor({
+    chains = defaultChains,
+    options,
+  }: {
+    chains?: Chain[]
+    options: Options
+  }) {
     super()
-    this.chains = config.chains
-    this.options = config.options
+    this.chains = chains
+    this.options = options
   }
 
   abstract connect(): Promise<Data>

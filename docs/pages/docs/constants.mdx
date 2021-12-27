@@ -1,0 +1,55 @@
+# Constants
+
+wagmi exposes some helpful **Constants** to help standardize frequently used values and objects.
+
+## Networks/Chains
+
+### Chain
+
+Object containing chains by name. Useful for creating lists of specific chains, like `defaultL2Chains`.
+
+```ts
+import { chain } from 'wagmi'
+
+chain.mainnet
+chain.rinkeby
+chain.polygonMainnet
+// ...
+```
+
+Chains conform to the following type:
+
+```ts
+export type Chain = {
+  id: number
+  name: string
+  nativeCurrency?: {
+    decimals: 18
+    name: string
+    symbol: string
+  }
+  rpcUrls: string[]
+  blockExplorers?: { name: string; url: string }[]
+  testnet?: boolean
+}
+```
+
+### Default Groups
+
+wagmi has a few built-in chain groups for convenience:
+
+```ts
+import {
+  defaultChains, // mainnet, rinkeby, etc.
+  defaultL2Chains, // optimism, polygon, etc.
+  developmentChains, // localhost
+} from 'wagmi'
+```
+
+## ABIs
+
+### ERC-20
+
+```ts
+import { erc20ABI } from 'wagmi'
+```

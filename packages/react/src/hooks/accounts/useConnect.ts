@@ -61,7 +61,7 @@ export const useConnect = () => {
   return [
     {
       data: {
-        connected: globalState.data?.account !== undefined,
+        connected: !!globalState.data?.account,
         connector: state.connector,
         connectors: globalState.connectors,
       },

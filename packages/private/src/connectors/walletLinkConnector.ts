@@ -15,12 +15,11 @@ export class WalletLinkConnector extends Connector<
   readonly name = 'Coinbase Wallet'
   readonly ready = true
 
-  private _client: WalletLink
+  private _client?: WalletLink
   private _provider?: WalletLinkProvider
 
-  constructor(config: { chains: Chain[]; options: Options }) {
+  constructor(config: { chains?: Chain[]; options: Options }) {
     super(config)
-    this._client = new WalletLink(config.options)
   }
 
   get provider() {
@@ -29,8 +28,10 @@ export class WalletLinkConnector extends Connector<
 
   async connect() {
     try {
-      if (!this._provider)
+      if (!this._provider) {
+        this._client = new WalletLink(this.options)
         this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+      }
 
       this._provider.on('accountsChanged', this.onAccountsChanged)
       this._provider.on('chainChanged', this.onChainChanged)
@@ -68,14 +69,20 @@ export class WalletLinkConnector extends Connector<
   }
 
   async getChainId() {
-    if (!this._provider) this._provider = this._client.makeWeb3Provider()
+    if (!this._provider) {
+      this._client = new WalletLink(this.options)
+      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+    }
     const chainId = normalizeChainId(this._provider.chainId)
     return chainId
   }
 
   async isAuthorized() {
     try {
-      if (!this._provider) this._provider = this._client.makeWeb3Provider()
+      if (!this._provider) {
+        this._client = new WalletLink(this.options)
+        this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+      }
       const accounts = await this._provider.request<string[]>({
         method: 'eth_accounts',
       })

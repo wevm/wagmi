@@ -16,3 +16,8 @@ tsconfig.tsbuildinfo
 .envrc
 
 examples/**/generated/
+
+# docs/
+# Generated files
+.docusaurus
+.cache-loader
