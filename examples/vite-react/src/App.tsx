@@ -1,8 +1,10 @@
 import { useAccount, useConnect, useNetwork } from 'wagmi'
 
 export const App = () => {
-  const [{ connector: activeConnector, data: accountData }, disconnect] =
-    useAccount({ fetchBalance: true, fetchEns: true })
+  const [{ data: accountData }, disconnect] = useAccount({
+    fetchBalance: true,
+    fetchEns: true,
+  })
   const [{ data: networkData, error: switchNetworkError }, switchNetwork] =
     useNetwork()
 
@@ -20,16 +22,16 @@ export const App = () => {
       <main>
         <div>
           <button onClick={() => disconnect()}>
-            Disconnect from {activeConnector?.name}
+            Disconnect from {accountData?.connector?.name}
           </button>
         </div>
 
         <div>
-          {accountData?.ens ?? accountData?.address}
+          {accountData?.ens?.name ?? accountData?.address}
           {accountData?.ens ? ` (${accountData?.address})` : null}
         </div>
-        {accountData?.avatar ? (
-          <img src={accountData?.avatar} style={{ height: 40, width: 40 }} />
+        {accountData?.ens?.avatar ? (
+          <img src={accountData.ens.avatar} style={{ height: 40, width: 40 }} />
         ) : (
           <div style={{ height: 40, width: 40 }} />
         )}

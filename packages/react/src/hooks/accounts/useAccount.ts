@@ -15,18 +15,20 @@ export const useAccount = ({ fetchBalance, fetchEns }: Config = {}) => {
     setState,
   } = useContext()
   const address = data?.account
-  const [{ data: ens, loading: ensLoading }] = useEnsLookup({
+  const [{ data: ens, error: ensError, loading: ensLoading }] = useEnsLookup({
     address,
     skip: !fetchEns,
   })
-  const [{ data: avatar, loading: resolverLoading }] = useEnsAvatar({
-    addressOrName: ens,
-    skip: !fetchEns || !ens,
-  })
-  const [{ data: balance, loading: balanceLoading }] = useBalance({
-    address,
-    skip: !fetchBalance,
-  })
+  const [{ data: avatar, error: avatarError, loading: avatarLoading }] =
+    useEnsAvatar({
+      addressOrName: ens,
+      skip: !fetchEns || !ens,
+    })
+  const [{ data: balance, error: balanceError, loading: balanceLoading }] =
+    useBalance({
+      address,
+      skip: !fetchBalance,
+    })
 
   const disconnect = React.useCallback(() => {
     setState((x) => {
@@ -35,13 +37,21 @@ export const useAccount = ({ fetchBalance, fetchEns }: Config = {}) => {
     })
   }, [setState])
 
-  const loading = ensLoading || resolverLoading || balanceLoading
+  const error = ensError || avatarError || balanceError
+  const loading = ensLoading || avatarLoading || balanceLoading
 
   return [
     {
-      data: address ? { address, ens, avatar, balance } : undefined,
+      data: address
+        ? {
+            address,
+            balance,
+            connector,
+            ens: ens ? { avatar, name: ens } : undefined,
+          }
+        : undefined,
+      error,
       loading,
-      connector,
     },
     disconnect,
   ] as const

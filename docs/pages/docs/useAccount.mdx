@@ -1,0 +1,70 @@
+# useAccount
+
+Hook for accessing information (address, ens, balance, etc.) about connected account.
+
+```tsx
+import { useAccount } from 'wagmi'
+```
+
+## Usage
+
+```tsx live
+import { useAccount } from 'wagmi'
+
+const App = () => {
+  const [{ data }, disconnect] = useAccount()
+
+  return (
+    <>
+      <div>{data?.address}</div>
+
+      <button onClick={disconnect}>
+        Disconnect from {data?.connector?.name}
+      </button>
+    </>
+  )
+}
+```
+
+## Configuration
+
+### fetchBalance (optional)
+
+Fetches Ethereum balance for connected account. Defaults to `false`.
+
+```tsx highlight='5'
+import { useAccount } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }] = useAccount({
+    fetchBalance: true,
+  })
+
+  if (error) return <div>Error fetching balance</div>
+  if (loading) return <div>Fetching balance…</div>
+  return <div>{data?.balance?.formatted}</div>
+}
+```
+
+### fetchEns (optional)
+
+Fetches ENS name and avatar for connected account. Defaults to `false`.
+
+```tsx highlight='5'
+import { useAccount } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }] = useAccount({
+    fetchEns: true,
+  })
+
+  if (error) return <div>Error fetching ENS</div>
+  if (loading) return <div>Fetching ENS…</div>
+  return (
+    <>
+      <div>{data?.ens?.name}</div>
+      <div>{data?.ens?.avatar}</div>
+    </>
+  )
+}
+```

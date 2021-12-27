@@ -1,0 +1,66 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Comparisons With Other Libraries
+
+There are a few different options of React libraries for Ethereum that help manage wallet connections, provide utility methods/hooks, etc.
+
+<Callout emoji="👀">
+  If you have any thoughts about this section, [please
+  contribute](https://github.com/tmm/wagmi)! The goal is for these comparisons
+  to be as unbiased and informative.
+</Callout>
+
+## [wagmi](https://github.com/tmm/wagmi)
+
+### Pros
+
+- Hooks for connecting wallets, signing messages, sending transactions, etc.
+- TypeScript ready
+- Zero-dependencies (besides **ethers.js** peer dependency)
+- Growing test suite
+
+### Cons
+
+- Not as many connectors as `web3-react`
+
+## [web3-react](https://github.com/NoahZinsmeister/web3-react)
+
+### Pros
+
+- Supports many different connectors (conceptually similar to wagmi's connectors)
+- Used by [Uniswap](https://uniswap.org), [Foundation](https://foundation.app)
+
+### Cons
+
+- Need to set up connectors and method for connecting wallet on your own
+- Need to install connectors separately
+- No hooks for interacting with Ethereum, fetching information, etc.
+- Almost no tests and infrequent updates
+
+## [useDApp](https://github.com/EthWorks/useDApp)
+
+### Pros
+
+- Auto-refresh on new blocks and wallet changes
+- Multicall support
+- Transaction notifications
+- Chrome extension and Firefox add-on
+
+### Cons
+
+- Uses `web3-react`
+- Non-standard hook API
+- Lack of TypeScript generics support
+- Almost no tests
+
+## [web3modal](https://github.com/Web3Modal/web3modal)
+
+### Pros
+
+- UI component for connecting wallet
+
+### Cons
+
+- Cannot be used headlessly
+- No hooks for interacting with Ethereum, fetching information, etc.
+- Almost no tests and infrequent updates

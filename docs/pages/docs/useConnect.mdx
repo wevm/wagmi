@@ -1,34 +1,29 @@
----
-title: useConnect
----
-
 # useConnect
+
+Hook for connecting to configured connectors.
 
 ```tsx
 import { useConnect } from 'wagmi'
 ```
 
+## Usage
+
 ```tsx live
-;() => {
+import { useConnect } from 'wagmi'
+
+const App = () => {
   const [{ data, error, loading }, connect] = useConnect()
 
   return (
-    <Box>
-      <Text>Connected {data.connected.toString()}</Text>
+    <>
+      <div>Connected: {data.connected.toString()}</div>
+
       {data.connectors.map((x) => (
-        <Button
-          key={x.name}
-          loading={
-            loading && data.connector && x.name === data.connector.name && '…'
-          }
-          onClick={() => connect(x)}
-          size="small"
-          variant="tertiary"
-        >
+        <button key={x.name} onClick={() => connect(x)}>
           {x.name}
-        </Button>
+        </button>
       ))}
-    </Box>
+    </>
   )
 }
 ```

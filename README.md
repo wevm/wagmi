@@ -29,3 +29,23 @@ pnpm add wagmi ethers
 pnpm i
 pnpm dev
 ```
+
+### Docs
+
+```bash
+pnpm dev:docs
+```
+
+### Examples
+
+```bash
+pnpm dev:example:vite-react
+pnpm dev:example:next
+```
+
+### Testing
+
+```bash
+pnpm test
+pnpm test:watch
+```

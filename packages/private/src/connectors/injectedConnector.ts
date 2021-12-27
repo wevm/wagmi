@@ -13,7 +13,7 @@ export class InjectedConnector extends Connector<
   Window['ethereum'],
   undefined
 > {
-  constructor(config: { chains: Chain[] }) {
+  constructor(config?: { chains?: Chain[] }) {
     super({ ...config, options: undefined })
   }
 
