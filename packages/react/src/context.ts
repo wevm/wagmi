@@ -9,6 +9,7 @@ import { Connector, Data, InjectedConnector } from '@wagmi/private'
 import { useLocalStorage } from './hooks'
 
 type State = {
+  cacheBuster: number
   connector?: Connector
   data?: Data
   error?: Error
@@ -16,6 +17,8 @@ type State = {
 
 type ContextValue = {
   state: {
+    /** Flag for triggering refetch */
+    cacheBuster: State['cacheBuster']
     /** Active connector */
     connector?: State['connector']
     /** Connectors used for linking accounts */
@@ -64,11 +67,9 @@ export const Provider = ({
   const [lastUsedConnector, setLastUsedConnector] = useLocalStorage<
     string | null
   >(connectorStorageKey)
-  const [state, setState] = React.useState<{
-    connector?: Connector
-    data?: Data
-    error?: Error
-  }>({})
+  const [state, setState] = React.useState<State>({
+    cacheBuster: 1,
+  })
 
   const connectors = React.useMemo(() => {
     if (typeof _connectors !== 'function') return _connectors
@@ -126,8 +127,12 @@ export const Provider = ({
     if (!state.connector) return
 
     const onChange = (data: Data) =>
-      setState((x) => ({ ...x, data: { ...x.data, ...data } }))
-    const onDisconnect = () => setState({})
+      setState((x) => ({
+        ...x,
+        cacheBuster: x.cacheBuster + 1,
+        data: { ...x.data, ...data },
+      }))
+    const onDisconnect = () => setState({ cacheBuster: 1 })
     const onError = (error: Error) => setState((x) => ({ ...x, error }))
 
     state.connector.on('change', onChange)
@@ -144,6 +149,7 @@ export const Provider = ({
 
   const value = {
     state: {
+      cacheBuster: state.cacheBuster,
       connectors,
       connector: state.connector,
       data: state.data,

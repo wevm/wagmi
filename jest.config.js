@@ -1,6 +1,5 @@
 module.exports = {
-  modulePathIgnorePatterns: ['<rootDir>/examples/'],
-  setupFilesAfterEnv: ['<rootDir>/scripts/jestSetup.ts'],
+  modulePathIgnorePatterns: ['<rootDir>/docs/', '<rootDir>/examples/'],
   transform: {
     '^.+\\.(t|j)sx?$': [
       '@swc-node/jest',
@@ -23,18 +22,19 @@ module.exports = {
   projects: [
     {
       displayName: 'private',
-      testEnvironment: 'jsdom',
+      testEnvironment: 'node',
       testRegex: 'packages/private/.*\\.test\\.ts(x)?$',
     },
     {
       displayName: 'react',
+      setupFilesAfterEnv: ['<rootDir>/packages/react/test/setup.ts'],
       testEnvironment: 'jsdom',
       testRegex: 'packages/react/.*\\.test\\.ts(x)?$',
+      snapshotFormat: {
+        printBasicPrototype: false,
+      },
     },
   ],
-  snapshotFormat: {
-    printBasicPrototype: false,
-  },
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',

@@ -1,9 +1,9 @@
-import { actHook, renderHook } from '../../test'
+import { actHook, renderHook } from '../../../test'
 import { useLocalStorage } from './useLocalStorage'
 
 const connectorStorageKey = 'key'
 
-describe('useContext', () => {
+describe('useLocalStorage', () => {
   beforeEach(() => {
     window.localStorage.clear()
   })

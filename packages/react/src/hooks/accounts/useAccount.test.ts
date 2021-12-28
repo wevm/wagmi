@@ -16,12 +16,13 @@ describe('useAccount', () => {
     const { result } = renderHook(() => useAccount())
     const state = result.current[0]
     const disconnect = result.current[1]
-    expect(state).toEqual({
-      address: undefined,
-      data: undefined,
-      loading: false,
-      connector: undefined,
-    })
+    expect(state).toMatchInlineSnapshot(`
+      {
+        "data": undefined,
+        "error": undefined,
+        "loading": false,
+      }
+    `)
     expect(disconnect).toBeDefined()
   })
 

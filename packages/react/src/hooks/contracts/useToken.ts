@@ -6,7 +6,7 @@ import { useContext } from '../../context'
 import { useProvider } from '../providers'
 
 type Config = {
-  address: string
+  address?: string
   formatUnits?: Unit | number
   skip?: boolean
 }
@@ -32,7 +32,6 @@ export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
   const {
     state: { connector },
   } = useContext()
-
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
@@ -40,7 +39,10 @@ export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
     async ({
       address,
       formatUnits = 'ether',
-    }: Pick<Config, 'address' | 'formatUnits'>) => {
+    }: {
+      address: string
+      formatUnits?: Config['formatUnits']
+    }) => {
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }))
         const contract = new ethers.Contract(address, erc20ABI, provider)
@@ -90,8 +92,15 @@ export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (skip) return
+    if (skip || !address) return
+
+    let didCancel = false
+    if (didCancel) return
     getToken({ address, formatUnits })
+
+    return () => {
+      didCancel = true
+    }
   }, [address])
   /* eslint-enable react-hooks/exhaustive-deps */
 

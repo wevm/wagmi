@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { useContext } from '../../context'
 import { useProvider } from '../providers'
+import { useCacheBuster } from '../utils'
 
 type Config = {
   address?: string
@@ -19,16 +19,13 @@ const initialState: State = {
 }
 
 export const useEnsLookup = ({ address, skip }: Config = {}) => {
-  const {
-    state: { data },
-  } = useContext()
+  const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
   const lookupAddress = React.useCallback(
-    async (config: Pick<Config, 'address'>) => {
+    async (config: { address: string }) => {
       try {
-        if (!config.address) return
         setState((x) => ({ ...x, error: undefined, loading: true }))
         const ens = await provider.lookupAddress(config.address)
         setState((x) => ({ ...x, ens, loading: false }))
@@ -42,12 +39,18 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
     [provider],
   )
 
-  // Look up name when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!address || skip) return
+    if (skip || !address) return
+
+    let didCancel = false
+    if (didCancel) return
     lookupAddress({ address })
-  }, [address, data?.chainId])
+
+    return () => {
+      didCancel = true
+    }
+  }, [address, cacheBuster])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

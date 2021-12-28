@@ -64,6 +64,15 @@ export class MockConnector extends Connector<
     }
   }
 
+  async watchAsset(_asset: {
+    address: string
+    decimals?: number
+    image?: string
+    symbol: string
+  }) {
+    true
+  }
+
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
     else this.emit('change', { account: accounts[0] })

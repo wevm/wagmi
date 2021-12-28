@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { EnsResolver } from '@ethersproject/providers'
 
-import { useContext } from '../../context'
 import { useProvider } from '../providers'
+import { useCacheBuster } from '../utils'
 
 type Config = {
   name?: string | null
@@ -20,9 +20,7 @@ const initialState: State = {
 }
 
 export const useEnsResolver = ({ name, skip }: Config = {}) => {
-  const {
-    state: { data },
-  } = useContext()
+  const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
@@ -45,9 +43,16 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
   // Fetch avatar when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!name || skip) return
+    if (skip || !name) return
+
+    let didCancel = false
+    if (didCancel) return
     getEnsResolver({ name })
-  }, [name, data?.chainId])
+
+    return () => {
+      didCancel = true
+    }
+  }, [name, cacheBuster])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

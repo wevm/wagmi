@@ -66,8 +66,8 @@ const App = () => {
     fetchBalance: true,
   })
 
-  if (error) return <div>Error fetching balance</div>
   if (loading) return <div>Fetching balance…</div>
+  if (error) return <div>Error fetching balance</div>
   return <div>{data?.balance?.formatted}</div>
 }
 ```
@@ -84,12 +84,12 @@ const App = () => {
     fetchEns: true,
   })
 
-  if (error) return <div>Error fetching ENS</div>
   if (loading) return <div>Fetching ENS…</div>
+  if (error) return <div>Error fetching ENS</div>
   return (
     <>
       <div>{data?.ens?.name}</div>
-      <div>{data?.ens?.avatar}</div>
+      <img src={data?.ens?.avatar} />
     </>
   )
 }

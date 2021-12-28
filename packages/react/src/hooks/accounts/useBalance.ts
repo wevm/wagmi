@@ -2,9 +2,9 @@ import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
 import { Unit, erc20ABI } from '@wagmi/private'
 
-import { useContext } from '../../context'
 import { useProvider } from '../providers'
 import { useBlockNumber } from '../network-status'
+import { useCacheBuster } from '../utils'
 
 type Config = {
   address?: string
@@ -31,9 +31,7 @@ export const useBalance = ({
   token,
   watch,
 }: Config) => {
-  const {
-    state: { data },
-  } = useContext()
+  const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
   const [state, setState] = React.useState<State>(initialState)
@@ -43,9 +41,12 @@ export const useBalance = ({
       address,
       formatUnits = 'ether',
       token,
-    }: Pick<Config, 'address' | 'formatUnits' | 'token'>) => {
+    }: {
+      address: string
+      formatUnits: Config['formatUnits']
+      token: Config['token']
+    }) => {
       try {
-        if (!address) return
         setState((x) => ({ ...x, error: undefined, loading: true }))
 
         let balance: State['balance']
@@ -81,15 +82,23 @@ export const useBalance = ({
   // Fetch balance when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (skip) return
+    if (skip || !address) return
+
+    let didCancel = false
+    if (didCancel) return
     getBalance({ address, formatUnits, token })
-  }, [address, token, data?.chainId])
+
+    return () => {
+      didCancel = true
+    }
+  }, [address, token, cacheBuster])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!watch) return
     if (!blockNumber) return
+    if (!address) return
     getBalance({ address, formatUnits, token })
   }, [blockNumber])
   /* eslint-enable react-hooks/exhaustive-deps */

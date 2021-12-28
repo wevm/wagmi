@@ -33,7 +33,7 @@ export const useAccount = ({ fetchBalance, fetchEns }: Config = {}) => {
   const disconnect = React.useCallback(() => {
     setState((x) => {
       x.connector?.disconnect()
-      return {}
+      return { cacheBuster: x.cacheBuster + 1 }
     })
   }, [setState])
 
