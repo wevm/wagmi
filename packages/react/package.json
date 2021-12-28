@@ -2,6 +2,8 @@
   "name": "wagmi",
   "license": "MIT",
   "version": "0.0.1",
+  "repository": "tmm/wagmi",
+  "homepage": "https://wagmi-xyz.vercel.app",
   "sideEffects": false,
   "main": "dist/wagmi.cjs.js",
   "module": "dist/wagmi.esm.js",
