@@ -30,7 +30,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
 
-      - name: Publish to npm
+      - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:

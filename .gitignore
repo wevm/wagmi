@@ -2,9 +2,9 @@
 .DS_Store
 .eslintcache
 .next
+.pnpm-debug.log*
 dist
 node_modules
-.pnpm-debug.log*
 tsconfig.tsbuildinfo
 
 # local env files
@@ -16,8 +16,4 @@ tsconfig.tsbuildinfo
 .envrc
 
 examples/**/generated/
-
-# docs/
-# Generated files
-.docusaurus
-.cache-loader
+packages/**/README.md
