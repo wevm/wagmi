@@ -14,7 +14,6 @@ module.exports = {
     '/node_modules/',
     '/dist/',
     '/test/',
-    '/testing/',
     'index.ts',
   ],
   coverageProvider: 'v8',
@@ -28,11 +27,11 @@ module.exports = {
     {
       displayName: 'react',
       setupFilesAfterEnv: ['<rootDir>/packages/react/test/setup.ts'],
-      testEnvironment: 'jsdom',
-      testRegex: 'packages/react/.*\\.test\\.ts(x)?$',
       snapshotFormat: {
         printBasicPrototype: false,
       },
+      testEnvironment: 'jsdom',
+      testRegex: 'packages/react/.*\\.test\\.ts(x)?$',
     },
   ],
   watchPlugins: [

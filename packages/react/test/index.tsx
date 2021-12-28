@@ -12,19 +12,9 @@ import {
 } from '@wagmi/private/testing'
 
 import { Provider, ProviderProps } from '../src'
+import { infuraApiKey } from './constants'
 
 import '@testing-library/jest-dom/extend-expect'
-
-export const infuraApiKey = 'mockApiKey'
-
-export const addressLookup = {
-  ensDefaultReverseResolver: '0xa2c122be93b0074270ebee7f6b7292c7deb45047',
-  ensPublicResolver: '0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41',
-  ensRegistryWithFallback: '0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e',
-  uniToken: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-  addressWithEns: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-  addressWithoutEns: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
-}
 
 type Props = ProviderProps & {
   children?:
@@ -64,3 +54,4 @@ export const renderHook = <TProps, TResult>(
 }
 
 export { act as actHook } from '@testing-library/react-hooks'
+export { addressLookup } from './constants'
