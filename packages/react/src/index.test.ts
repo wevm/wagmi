@@ -13,7 +13,10 @@ it('should expose correct exports', () => {
     'defaultChains',
     'defaultL2Chains',
     'developmentChains',
+    'erc1155ABI',
     'erc20ABI',
+    'erc721ABI',
+    'isAddress',
     // hooks
     'useAccount',
     'useBalance',

@@ -27,6 +27,9 @@ export {
   defaultChains,
   defaultL2Chains,
   developmentChains,
+  erc1155ABI,
   erc20ABI,
+  erc721ABI,
+  isAddress,
 } from '@wagmi/private'
 export type { Chain, Data } from '@wagmi/private'

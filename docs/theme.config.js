@@ -36,7 +36,7 @@ export default {
   },
   logo: (
     <>
-      <span className="mr-2 font-extrabold hidden md:inline">wagmi</span>
+      <span className="mr-2 font-extrabold">wagmi</span>
       <span className="text-gray-600 font-normal hidden md:inline">
         React Hooks library for Ethereum
       </span>

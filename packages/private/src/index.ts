@@ -7,7 +7,9 @@ export {
 export type { ConnectorEvents, Data } from './connectors'
 
 export {
+  erc1155ABI,
   erc20ABI,
+  erc721ABI,
   chain,
   defaultChains,
   defaultL2Chains,
@@ -16,3 +18,5 @@ export {
 } from './constants'
 
 export type { Chain, Unit } from './types'
+
+export { isAddress } from './utils'
