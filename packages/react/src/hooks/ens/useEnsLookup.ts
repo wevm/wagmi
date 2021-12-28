@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { useContext } from '../../context'
 import { useProvider } from '../providers'
 
 type Config = {
@@ -18,6 +19,9 @@ const initialState: State = {
 }
 
 export const useEnsLookup = ({ address, skip }: Config = {}) => {
+  const {
+    state: { data },
+  } = useContext()
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
@@ -38,11 +42,12 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
     [provider],
   )
 
+  // Look up name when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!address || skip) return
     lookupAddress({ address })
-  }, [address])
+  }, [address, data?.chainId])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

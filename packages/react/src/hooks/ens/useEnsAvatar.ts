@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { useContext } from '../../context'
 import { useProvider } from '../providers'
 
 type Config = {
@@ -18,6 +19,9 @@ const initialState: State = {
 }
 
 export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
+  const {
+    state: { data },
+  } = useContext()
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
@@ -38,11 +42,12 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
     [provider],
   )
 
+  // Fetch avatar when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!addressOrName || skip) return
     getEnsAvatar({ addressOrName })
-  }, [addressOrName])
+  }, [addressOrName, data?.chainId])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
