@@ -8,6 +8,7 @@ importers:
       '@babel/preset-env': ^7.16.5
       '@babel/preset-react': ^7.16.5
       '@babel/preset-typescript': ^7.16.5
+      '@changesets/changelog-github': ^0.4.2
       '@changesets/cli': ^2.19.0
       '@manypkg/cli': ^0.19.1
       '@preconstruct/cli': ^2.1.5
@@ -48,6 +49,7 @@ importers:
       '@babel/preset-env': 7.16.5_@babel+core@7.16.5
       '@babel/preset-react': 7.16.5_@babel+core@7.16.5
       '@babel/preset-typescript': 7.16.5_@babel+core@7.16.5
+      '@changesets/changelog-github': 0.4.2
       '@changesets/cli': 2.19.0
       '@manypkg/cli': 0.19.1
       '@preconstruct/cli': 2.1.5
@@ -1623,6 +1625,14 @@ packages:
       semver: 5.7.1
     dev: true
 
+  /@changesets/changelog-github/0.4.2:
+    resolution: {integrity: sha512-qq8lJcq91ki7UT0fIfIcn5Yy7GJj19TmkLmGZ24/wEfxcD/nHHoTNRoi6nPt+Htf7qEudKxXLzQLi41B7Mt2vg==}
+    dependencies:
+      '@changesets/get-github-info': 0.5.0
+      '@changesets/types': 4.0.2
+      dotenv: 8.6.0
+    dev: true
+
   /@changesets/cli/2.19.0:
     resolution: {integrity: sha512-AqtWiarNSUD42pv7ldTAFMU7pa/39t78VDAWFy78RgUJQyFmXktOG8fzjMhksJ+G5+pWLVSXaLSj6cCbpeWivg==}
     hasBin: true
@@ -1686,6 +1696,13 @@ packages:
       chalk: 2.4.2
       fs-extra: 7.0.1
       semver: 5.7.1
+    dev: true
+
+  /@changesets/get-github-info/0.5.0:
+    resolution: {integrity: sha512-vm5VgHwrxkMkUjFyn3UVNKLbDp9YMHd3vMf1IyJoa/7B+6VpqmtAaXyDS0zBLfN5bhzVCHrRnj4GcZXXcqrFTw==}
+    dependencies:
+      dataloader: 1.4.0
+      node-fetch: 2.6.6
     dev: true
 
   /@changesets/get-release-plan/3.0.4:
@@ -5498,6 +5515,10 @@ packages:
       abab: 2.0.5
       whatwg-mimetype: 2.3.0
       whatwg-url: 8.7.0
+    dev: true
+
+  /dataloader/1.4.0:
+    resolution: {integrity: sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==}
     dev: true
 
   /dataloader/2.0.0:

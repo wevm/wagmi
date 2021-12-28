@@ -2,11 +2,12 @@
   "name": "root",
   "scripts": {
     "build": "preconstruct build",
-    "change": "pnpm dlx changeset",
+    "changeset:release": "pnpm build && changeset publish",
+    "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "preconstruct dev && pnpm gen:abis",
     "dev:docs": "manypkg run docs dev",
-    "dev:example:next": "manypkg run next dev",
-    "dev:example:vite-react": "manypkg run vite-react dev",
+    "dev:example:next": "manypkg run example-next dev",
+    "dev:example:vite-react": "manypkg run example-vite-react dev",
     "gen:abis": "pnpm node scripts/generateABIs.js",
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
@@ -21,10 +22,10 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn lint:fix"
+      "pnpm lint:fix"
     ],
     "*.{json,md,mdx,yml}": [
-      "yarn lint:format"
+      "pnpm lint:format"
     ]
   },
   "preconstruct": {
@@ -37,6 +38,7 @@
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
+    "@changesets/changelog-github": "^0.4.2",
     "@changesets/cli": "^2.19.0",
     "@manypkg/cli": "^0.19.1",
     "@preconstruct/cli": "^2.1.5",

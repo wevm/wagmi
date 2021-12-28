@@ -49,3 +49,11 @@ pnpm dev:example:next
 pnpm test
 pnpm test:watch
 ```
+
+### CI
+
+[Add secrets](https://github.com/tmm/wagmi/settings/secrets/actions) to GitHub:
+
+```
+NPM_TOKEN
+```
