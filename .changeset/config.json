@@ -7,5 +7,6 @@
   "updateInternalDependencies": "patch",
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
-  }
+  },
+  "ignore": ["docs", "example-next", "example-vite-react"]
 }
