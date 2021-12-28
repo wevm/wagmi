@@ -3,7 +3,7 @@ import {
   MockConnector,
   defaultChains,
   defaultMnemonic,
-} from '@wagmi/private/testing'
+} from 'wagmi-private/testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'

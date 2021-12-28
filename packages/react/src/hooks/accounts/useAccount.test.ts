@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { defaultMnemonic } from '@wagmi/private/testing'
+import { defaultMnemonic } from 'wagmi-private/testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useAccount } from './useAccount'

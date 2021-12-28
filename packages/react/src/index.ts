@@ -31,5 +31,5 @@ export {
   erc20ABI,
   erc721ABI,
   isAddress,
-} from '@wagmi/private'
-export type { Chain, Data } from '@wagmi/private'
+} from 'wagmi-private'
+export type { Chain, Data } from 'wagmi-private'

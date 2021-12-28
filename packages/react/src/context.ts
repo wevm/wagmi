@@ -4,7 +4,7 @@ import {
   WebSocketProvider,
   getDefaultProvider,
 } from '@ethersproject/providers'
-import { Connector, Data, InjectedConnector } from '@wagmi/private'
+import { Connector, Data, InjectedConnector } from 'wagmi-private'
 
 import { useLocalStorage } from './hooks'
 

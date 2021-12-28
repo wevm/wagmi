@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Chain, defaultChains, defaultL2Chains } from '@wagmi/private'
+import { Chain, defaultChains, defaultL2Chains } from 'wagmi-private'
 
 import { useContext } from '../../context'
 

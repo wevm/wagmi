@@ -9,7 +9,7 @@ import {
   MockConnector,
   defaultChains,
   defaultMnemonic,
-} from '@wagmi/private/testing'
+} from 'wagmi-private/testing'
 
 import { Provider, ProviderProps } from '../src'
 import { infuraApiKey } from './constants'

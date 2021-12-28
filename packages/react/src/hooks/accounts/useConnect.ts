@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Connector } from '@wagmi/private'
+import { Connector } from 'wagmi-private'
 
 import { useContext } from '../../context'
 

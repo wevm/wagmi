@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
-import { Unit, erc20ABI } from '@wagmi/private'
+import { Unit, erc20ABI } from 'wagmi-private'
 
 import { useProvider } from '../providers'
 import { useBlockNumber } from '../network-status'
