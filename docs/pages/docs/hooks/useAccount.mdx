@@ -8,7 +8,7 @@ import { useAccount } from 'wagmi'
 
 ## Usage
 
-```tsx live
+```tsx
 import { useAccount } from 'wagmi'
 
 const App = () => {
@@ -24,6 +24,32 @@ const App = () => {
     </>
   )
 }
+```
+
+## Return Values
+
+### state
+
+```ts
+{
+  data?: {
+    address: string
+    balance: Balance
+    connector: Connector
+    ens?: {
+      avatar?: string
+      name: string
+    }
+  }
+  error?: Error
+  loading?: boolean
+}
+```
+
+### disconnect
+
+```ts
+() => void
 ```
 
 ## Configuration

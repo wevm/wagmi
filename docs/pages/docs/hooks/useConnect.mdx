@@ -8,7 +8,7 @@ import { useConnect } from 'wagmi'
 
 ## Usage
 
-```tsx live
+```tsx
 import { useConnect } from 'wagmi'
 
 const App = () => {
@@ -26,4 +26,36 @@ const App = () => {
     </>
   )
 }
+```
+
+## Return Values
+
+### state
+
+```ts
+{
+  data?: {
+    connected: boolean
+    connector: Connector
+    connectors: Connector[]
+  }
+  error?: Error
+  loading?: boolean
+}
+```
+
+### connect
+
+```ts
+(connector: Connector) => Promise<
+  | {
+      connector: Connector
+      data: {
+        account?: string
+        chainId?: number
+        provider?: Provider
+      }
+    }
+  | Error
+>
 ```

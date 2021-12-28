@@ -1,10 +1,9 @@
 import * as React from 'react'
-import { BigNumber, utils } from 'ethers'
+import { BigNumber, ethers, utils } from 'ethers'
 import { Unit, erc20ABI } from '@wagmi/private'
 
 import { useContext } from '../../context'
 import { useProvider } from '../providers'
-import { useContract } from './useContract'
 
 type Config = {
   address: string
@@ -29,55 +28,43 @@ const initialState: State = {
   loading: false,
 }
 
-export const useToken = <
-  Token extends {
-    decimals(): Promise<number>
-    symbol(): Promise<string>
-    totalSupply(): Promise<BigNumber>
-  },
->({
-  address,
-  formatUnits = 'ether',
-  skip,
-}: Config) => {
+export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
   const {
     state: { connector },
   } = useContext()
 
   const provider = useProvider()
-  const contract = useContract<Token>({
-    addressOrName: address,
-    contractInterface: erc20ABI,
-    signerOrProvider: provider,
-  })
   const [state, setState] = React.useState<State>(initialState)
 
   const getToken = React.useCallback(
-    async (config: Pick<Config, 'address' | 'formatUnits'>) => {
+    async ({
+      address,
+      formatUnits = 'ether',
+    }: Pick<Config, 'address' | 'formatUnits'>) => {
       try {
-        if (!config.address) return
         setState((x) => ({ ...x, error: undefined, loading: true }))
+        const contract = new ethers.Contract(address, erc20ABI, provider)
         const decimals = await contract.decimals()
         const totalSupply = await contract.totalSupply()
         const symbol = await contract.symbol()
         const token = {
+          address,
           decimals,
           symbol,
           totalSupply: {
-            formatted: utils.formatUnits(totalSupply, config.formatUnits),
+            formatted: utils.formatUnits(totalSupply, formatUnits),
             value: totalSupply,
           },
         }
         setState((x) => ({ ...x, token, loading: false }))
         return token
       } catch (_error) {
-        console.log(_error)
         const error = _error as Error
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }
     },
-    [contract],
+    [provider],
   )
 
   const watchToken = React.useCallback(

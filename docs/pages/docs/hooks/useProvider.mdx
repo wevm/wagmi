@@ -1,0 +1,25 @@
+# useProvider
+
+Hook for accessing [**ethers.js** Provider](https://docs.ethers.io/v5/api/providers/provider/#Provider) from [global configuration](/docs/provider#provider-optional).
+
+```tsx
+import { useProvider } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useProvider } from 'wagmi'
+
+const App = () => {
+  const provider = useProvider()
+
+  return ...
+}
+```
+
+## Return Values
+
+```ts
+ethers.Provider
+```

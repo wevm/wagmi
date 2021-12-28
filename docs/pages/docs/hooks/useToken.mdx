@@ -1,0 +1,129 @@
+# useToken
+
+Hook for fetching ERC-20 token information.
+
+```tsx
+import { useToken } from 'wagmi'
+```
+
+## Usage
+
+The following examples use [$UNI](https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984).
+
+```tsx
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, getToken] = useToken({
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+  })
+
+  if (loading) return <div>Fetching token…</div>
+  if (error) return <div>Error fetching token</div>
+  return (
+    <div>
+      {data?.totalSupply?.formatted} {data?.symbol}
+    </div>
+  )
+}
+```
+
+## Return Values
+
+### state
+
+```ts
+{
+  data?: {
+    address: string
+    decimals: number
+    symbol: string
+    totalSupply: {
+      formatted: string
+      value: BigNumber
+    }
+  }
+  error?: Error
+  loading?: boolean
+}
+```
+
+### watchToken
+
+```ts
+(token: {
+  address: string
+  decimals?: number
+  image?: string
+  symbol: string
+}) => Promise<boolean | Error>
+```
+
+### getToken
+
+```ts
+(config: { address: string; formatUnits?: string } = {}) => Promise<
+  | {
+      address: string
+      decimals: number
+      symbol: string
+      totalSupply: {
+        formatted: string
+        value: BigNumber
+      }
+    }
+  | Error
+>
+```
+
+## Configuration
+
+### address
+
+Address of token.
+
+```tsx highlight='5'
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, getToken] = useToken({
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+  })
+
+  return ...
+}
+```
+
+### formatUnits (optional)
+
+Formats balance using [**ethers.js** units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+
+```tsx highlight='6'
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, getToken] = useToken({
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    formatUnits: 'gwei',
+  })
+
+  return ...
+}
+```
+
+### skip (optional)
+
+Skips automatically fetching data on mount. Defaults to `false`. Useful if you want to call `getToken` manually at some other point.
+
+```tsx highlight='6'
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, getToken] = useToken({
+    address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    skip: true,
+  })
+
+  return ...
+}
+```

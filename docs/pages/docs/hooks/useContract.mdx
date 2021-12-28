@@ -1,0 +1,85 @@
+# useContract
+
+Hook for creating declarative [**ethers.js** Contract](https://docs.ethers.io/v5/api/contract/contract).
+
+```tsx
+import { useContract } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [ENS Registry Contract](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code).
+
+```tsx
+import { useNetwork } from 'wagmi'
+
+const App = () => {
+  const contract = useContract({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+  })
+
+  return ...
+}
+```
+
+## Return Values
+
+```ts
+ethers.Contract
+```
+
+## Configuration
+
+### addressOrName
+
+Contract address or ENS name.
+
+```tsx highlight='5'
+import { useNetwork } from 'wagmi'
+
+const App = () => {
+  const contract = useContract({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+  })
+
+  return ...
+}
+```
+
+### contractInterface
+
+Contract ABI in JSON or JS object format. An [**ethers.js** Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+
+```tsx highlight='6'
+import { useNetwork } from 'wagmi'
+
+const App = () => {
+  const contract = useContract({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+  })
+
+  return ...
+}
+```
+
+### signerOrProvider (optional)
+
+An [**ethers.js** Provider](https://docs.ethers.io/v5/api/providers/provider/#Provider) or [Signer](https://docs.ethers.io/v5/api/signer/#Signer).
+
+```tsx highlight='8'
+import { useContract, useProvider } from 'wagmi'
+
+const App = () => {
+  const provider = useProvider()
+  const contract = useContract({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    signerOrProvider: provider,
+  })
+
+  return ...
+}
+```

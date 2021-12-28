@@ -10,7 +10,7 @@ import { useNetwork } from 'wagmi'
 
 Some connectors do not support programmatic network switching (i.e. WalletConnect) and `switchNetwork` will be `undefined`. For those situations, you can typically switch networks in the wallet app (i.e. Rainbow) and wagmi will stay up-to-date.
 
-```tsx live
+```tsx
 import { useNetwork } from 'wagmi'
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
     <>
       <div>
         {data.chain?.name ?? networkData.chain?.id}{' '}
-        {data.unsupported && '(unsupported)'}
+        {data.chain?.unsupported && '(unsupported)'}
       </div>
 
       {switchNetwork &&
@@ -36,4 +36,25 @@ const App = () => {
     </>
   )
 }
+```
+
+## Return Values
+
+### state
+
+```ts
+{
+  data?: {
+    chain?: Chain & { unsupported: boolean }
+    chains: Chain[]
+  }
+  error?: Error
+  loading?: boolean
+}
+```
+
+### switchNetwork
+
+```ts
+(chainId: number) => Promise<boolean | Error>
 ```

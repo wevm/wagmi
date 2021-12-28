@@ -1,6 +1,6 @@
 {
   "provider": "Provider",
-  "hooks": "Hooks",
   "connectors": "Connectors",
+  "hooks": "Hooks",
   "constants": "Constants"
 }

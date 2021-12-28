@@ -2,6 +2,7 @@
   "name": "root",
   "scripts": {
     "build": "preconstruct build",
+    "change": "pnpm dlx changeset",
     "dev": "preconstruct dev && pnpm gen:abis",
     "dev:docs": "manypkg run docs dev",
     "dev:example:next": "manypkg run next dev",
@@ -36,6 +37,7 @@
     "@babel/preset-env": "^7.16.5",
     "@babel/preset-react": "^7.16.5",
     "@babel/preset-typescript": "^7.16.5",
+    "@changesets/cli": "^2.19.0",
     "@manypkg/cli": "^0.19.1",
     "@preconstruct/cli": "^2.1.5",
     "@size-limit/preset-big-lib": "^7.0.5",

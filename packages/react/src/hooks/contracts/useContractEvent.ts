@@ -12,9 +12,9 @@ export const useContractEvent = <
   Contract extends ethers.Contract = ethers.Contract,
 >(
   contractConfig: UseContractConfig,
-  type: Parameters<Contract['on']>[0],
+  eventName: Parameters<Contract['on']>[0],
   listener: Parameters<Contract['on']>[1],
-  { watch }: Config = {},
+  { watch }: Config = { watch: true },
 ) => {
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
@@ -34,12 +34,12 @@ export const useContractEvent = <
     ) => listenerRef.current(event)
 
     const _contract = <ethers.Contract>(<unknown>ethers.Contract)
-    if (!watch) _contract.once(type, handler)
-    else _contract.on(type, handler)
+    if (!watch) _contract.once(eventName, handler)
+    else _contract.on(eventName, handler)
     return () => {
-      _contract.off(type, handler)
+      _contract.off(eventName, handler)
       return
     }
-  }, [contract, type])
+  }, [contract, eventName])
   /* eslint-enable react-hooks/exhaustive-deps */
 }

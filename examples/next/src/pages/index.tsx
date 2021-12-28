@@ -40,7 +40,7 @@ const Page = () => {
         <div>
           <div>
             {networkData.chain?.name ?? networkData.chain?.id}{' '}
-            {networkData.unsupported && '(unsupported)'}
+            {networkData.chain?.unsupported && '(unsupported)'}
           </div>
 
           <div>

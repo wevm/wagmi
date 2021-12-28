@@ -1,6 +1,6 @@
 # useBalance
 
-Hook for accessing balance information for Ethereum or ERC-20 tokens.
+Hook for fetching balance information for Ethereum or ERC-20 tokens.
 
 ```tsx
 import { useBalance } from 'wagmi'
@@ -8,7 +8,7 @@ import { useBalance } from 'wagmi'
 
 ## Usage
 
-```tsx live
+```tsx
 import { useBalance } from 'wagmi'
 
 const App = () => {
@@ -16,14 +16,47 @@ const App = () => {
     address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
   })
 
-  if (error) return <div>Error fetching balance</div>
   if (loading) return <div>Fetching balance…</div>
+  if (error) return <div>Error fetching balance</div>
   return (
     <div>
       {data?.formatted} {data?.symbol}
     </div>
   )
 }
+```
+
+## Return Values
+
+### state
+
+```ts
+{
+  data?: {
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }
+  error?: Error
+  loading?: boolean
+}
+```
+
+### getBalance
+
+```ts
+(config: {
+  address: string
+  formatUnits?: Unit | number
+  token?: string
+}) => Promise<
+  | {
+      formatted: string
+      symbol: string
+      value: BigNumber
+    }
+  | Error
+>
 ```
 
 ## Configuration

@@ -3,6 +3,7 @@ import { BigNumberish, utils } from 'ethers'
 import { FeeData } from '@ethersproject/providers'
 import { Unit } from '@wagmi/private'
 
+import { useContext } from '../../context'
 import { useProvider } from '../providers'
 import { useBlockNumber } from './useBlockNumber'
 
@@ -29,6 +30,9 @@ export const useFeeData = ({
 }: Config = {}) => {
   const provider = useProvider()
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
+  const {
+    state: { data },
+  } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
   const getFeeData = React.useCallback(async () => {
@@ -44,11 +48,12 @@ export const useFeeData = ({
     }
   }, [provider])
 
+  // Fetch feeData on mount or when chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip) return
     getFeeData()
-  }, [])
+  }, [data?.chainId])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */

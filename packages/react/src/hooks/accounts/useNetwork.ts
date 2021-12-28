@@ -51,10 +51,10 @@ export const useNetwork = () => {
           ? {
               ...activeChain,
               id: chainId,
+              unsupported: !supported,
             }
           : undefined,
         chains: activeChains,
-        unsupported: !supported,
       },
       error: state.error,
       loading: state.loading,

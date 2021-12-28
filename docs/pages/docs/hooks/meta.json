@@ -1,6 +1,16 @@
 {
-  "useConnect": "useConnect",
   "useAccount": "useAccount",
+  "useBalance": "useBalance",
+  "useBlockNumber": "useBlockNumber",
+  "useConnect": "useConnect",
+  "useContract": "useContract",
+  "useContractEvent": "useContractEvent",
+  "useEnsAvatar": "useEnsAvatar",
+  "useEnsLookup": "useEnsLookup",
+  "useEnsResolver": "useEnsResolver",
+  "useFeeData": "useFeeData",
   "useNetwork": "useNetwork",
-  "useBalance": "useBalance"
+  "useProvider": "useProvider",
+  "useToken": "useToken",
+  "useWebSocketProvider": "useWebSocketProvider"
 }

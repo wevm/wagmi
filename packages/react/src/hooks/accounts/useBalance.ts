@@ -2,6 +2,7 @@ import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
 import { Unit, erc20ABI } from '@wagmi/private'
 
+import { useContext } from '../../context'
 import { useProvider } from '../providers'
 import { useBlockNumber } from '../network-status'
 
@@ -14,7 +15,7 @@ type Config = {
 }
 
 type State = {
-  balance?: { formatted?: string; symbol?: string; value: BigNumber }
+  balance?: { formatted: string; symbol: string; value: BigNumber }
   error?: Error
   loading?: boolean
 }
@@ -30,33 +31,42 @@ export const useBalance = ({
   token,
   watch,
 }: Config) => {
+  const {
+    state: { data },
+  } = useContext()
   const provider = useProvider()
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
   const [state, setState] = React.useState<State>(initialState)
 
   const getBalance = React.useCallback(
-    async (config: Pick<Config, 'address' | 'formatUnits' | 'token'>) => {
+    async ({
+      address,
+      formatUnits = 'ether',
+      token,
+    }: Pick<Config, 'address' | 'formatUnits' | 'token'>) => {
       try {
-        if (!config.address) return
+        if (!address) return
         setState((x) => ({ ...x, error: undefined, loading: true }))
+
         let balance: State['balance']
-        if (config.token) {
-          const contract = new ethers.Contract(config.token, erc20ABI, provider)
-          const value = await contract.balanceOf(config.address)
+        if (token) {
+          const contract = new ethers.Contract(token, erc20ABI, provider)
+          const value = await contract.balanceOf(address)
           const symbol = await contract.symbol()
           balance = {
-            formatted: utils.formatUnits(value, config.formatUnits),
+            formatted: utils.formatUnits(value, formatUnits),
             symbol,
             value,
           }
         } else {
-          const value = await provider.getBalance(config.address)
+          const value = await provider.getBalance(address)
           balance = {
-            formatted: utils.formatUnits(value, config.formatUnits),
+            formatted: utils.formatUnits(value, formatUnits),
             symbol: 'ETH',
             value,
           }
         }
+
         setState((x) => ({ ...x, balance, loading: false }))
         return balance
       } catch (_error) {
@@ -68,11 +78,12 @@ export const useBalance = ({
     [provider],
   )
 
+  // Fetch balance when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip) return
     getBalance({ address, formatUnits, token })
-  }, [address, token])
+  }, [address, token, data?.chainId])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */

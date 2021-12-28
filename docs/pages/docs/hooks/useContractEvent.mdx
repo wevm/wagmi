@@ -1,0 +1,98 @@
+# useContractEvent
+
+Hook for subscribing to Contract events.
+
+```tsx
+import { useContractEvent } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [ENS Registry Contract](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code).
+
+```tsx
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+  )
+
+  return ...
+}
+```
+
+## Configuration
+
+### contractConfig
+
+See [`useContract`](/docs/hooks/useContract) for more info.
+
+### eventName
+
+Name of event to listen to.
+
+```tsx highlight='9'
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+  )
+
+  return ...
+}
+```
+
+### listener
+
+Callback that receives event.
+
+```tsx highlight='10'
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+  )
+
+  return ...
+}
+```
+
+### config (optional)
+
+Configuration object. Defaults to `{ watch: true }`.
+
+```tsx highlight='11'
+import { useContractEvent } from 'wagmi'
+
+const App = () => {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+    { watch: true },
+  )
+
+  return ...
+}
+```
