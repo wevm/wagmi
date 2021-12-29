@@ -1,7 +1,7 @@
 {
   "name": "wagmi",
   "license": "MIT",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": "tmm/wagmi",
   "homepage": "https://wagmi-xyz.vercel.app",
   "sideEffects": false,
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
-    "wagmi-private": "0.0.2"
+    "wagmi-private": "0.0.3"
   },
   "peerDependenciesMeta": {
     "@walletconnect/ethereum-provider": {
