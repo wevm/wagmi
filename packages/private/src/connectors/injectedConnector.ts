@@ -13,22 +13,18 @@ export class InjectedConnector extends Connector<
   Window['ethereum'],
   undefined
 > {
+  readonly name =
+    typeof window !== 'undefined' && window.ethereum?.isMetaMask
+      ? 'MetaMask'
+      : 'Injected'
+  readonly ready = typeof window !== 'undefined' && !!window.ethereum
+
   constructor(config?: { chains?: Chain[] }) {
     super({ ...config, options: undefined })
   }
 
-  get name() {
-    if (typeof window !== 'undefined' && window.ethereum?.isMetaMask)
-      return 'MetaMask'
-    return 'Injected'
-  }
-
   get provider() {
     return window.ethereum
-  }
-
-  get ready() {
-    return typeof window !== 'undefined' && !!window.ethereum
   }
 
   async connect() {
