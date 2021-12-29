@@ -210,14 +210,14 @@ importers:
       walletlink: ^2.2.8
     dependencies:
       '@ethersproject/providers': 5.5.1
-      '@walletconnect/ethereum-provider': 1.7.0
       wagmi-private: link:../private
-      walletlink: 2.3.0_@babel+core@7.16.5
     devDependencies:
       '@testing-library/react-hooks': 7.0.2_react@17.0.2
       '@types/react': 17.0.37
+      '@walletconnect/ethereum-provider': 1.7.0
       ethers: 5.5.2
       react: 17.0.2
+      walletlink: 2.3.0_@babel+core@7.16.5
 
 packages:
 
