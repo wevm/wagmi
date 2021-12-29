@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.0.5
+
+### Patch Changes
+
+- [`d7d94f0`](https://github.com/tmm/wagmi/commit/d7d94f06f7d30468e5e39d64db63124c6315cf82) Thanks [@tmm](https://github.com/tmm)! - fix injected connector name
+
 ## 0.0.4
 
 ### Patch Changes
