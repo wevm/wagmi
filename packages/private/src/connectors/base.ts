@@ -1,9 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
 
-import { defaultChains } from '..'
-
+import { defaultChains } from '../constants'
 import { Chain } from '../types'
-import { ConnectorError } from './errors'
 
 export type Data<Provider = any> = {
   account?: string
@@ -15,7 +13,7 @@ export interface ConnectorEvents<Provider = any> {
   change(data: Data<Provider>): void
   connect(data: Data<Provider>): void
   disconnect(): void
-  error(error: ConnectorError): void
+  error(error: Error): void
 }
 
 export abstract class Connector<

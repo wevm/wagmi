@@ -1,14 +1,14 @@
 import { addressLookup } from 'wagmi-private/testing'
 
 import { actHook, renderHook } from '../../../test'
-import { useEnsAvatar } from './useEnsAvatar'
+import { useEnsResolver } from './useEnsResolver'
 
-describe('useEnsAvatar', () => {
+describe('useEnsResolver', () => {
   describe('on mount', () => {
-    it('has ens', async () => {
+    it('has resolver', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsAvatar({
-          addressOrName: addressLookup.ensNameWithAvatar,
+        useEnsResolver({
+          name: addressLookup.ensName,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -19,19 +19,20 @@ describe('useEnsAvatar', () => {
         }
       `)
       await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      const { data, ...rest } = result.current[0]
+      expect(data?.name).toEqual(addressLookup.ensName)
+      expect(rest).toMatchInlineSnapshot(`
         {
-          "data": "https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg",
           "error": undefined,
           "loading": false,
         }
       `)
     })
 
-    it('does not have avatar', async () => {
+    it('does not have resolver', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsAvatar({
-          addressOrName: addressLookup.ensNameWithoutAvatar,
+        useEnsResolver({
+          name: addressLookup.ensNameDoesNotExist,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -53,7 +54,7 @@ describe('useEnsAvatar', () => {
   })
 
   it('skip', async () => {
-    const { result } = renderHook(() => useEnsAvatar({ skip: true }))
+    const { result } = renderHook(() => useEnsResolver({ skip: true }))
     expect(result.current[0]).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -63,39 +64,35 @@ describe('useEnsAvatar', () => {
     `)
   })
 
-  describe('getEnsAvatar', () => {
+  describe('getEnsResolver', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
-        useEnsAvatar({
-          addressOrName: addressLookup.ensNameWithAvatar,
+        useEnsResolver({
+          name: addressLookup.ensName,
           skip: true,
         }),
       )
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(
-          `"https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg"`,
-        )
+        expect(res?.name).toEqual(addressLookup.ensName)
       })
     })
 
     it('uses params', async () => {
-      const { result } = renderHook(() => useEnsAvatar({ skip: true }))
+      const { result } = renderHook(() => useEnsResolver({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]({
-          addressOrName: addressLookup.ensNameWithAvatar,
+          name: addressLookup.ensName,
         })
-        expect(res).toMatchInlineSnapshot(
-          `"https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg"`,
-        )
+        expect(res?.name).toEqual(addressLookup.ensName)
       })
     })
 
     it('has error', async () => {
-      const { result } = renderHook(() => useEnsAvatar({ skip: true }))
+      const { result } = renderHook(() => useEnsResolver({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`[Error: addressOrName is required]`)
+        expect(res).toMatchInlineSnapshot(`undefined`)
       })
     })
   })

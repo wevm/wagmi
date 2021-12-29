@@ -24,10 +24,13 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const getEnsAvatar = React.useCallback(
-    async (config: { addressOrName: string }) => {
+    async (config?: { addressOrName: string }) => {
       try {
+        const _config = config ?? { addressOrName }
+        if (!_config.addressOrName) throw new Error('addressOrName is required')
+
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const avatar = await provider.getAvatar(config.addressOrName)
+        const avatar = await provider.getAvatar(_config.addressOrName)
         setState((x) => ({ ...x, avatar, loading: false }))
         return avatar
       } catch (_error) {
@@ -36,7 +39,7 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
         return error
       }
     },
-    [provider],
+    [addressOrName, provider],
   )
 
   // Fetch avatar when deps or chain changes

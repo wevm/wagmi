@@ -36,25 +36,33 @@ export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const getToken = React.useCallback(
-    async ({
-      address,
-      formatUnits = 'ether',
-    }: {
+    async (config?: {
       address: string
       formatUnits?: Config['formatUnits']
     }) => {
       try {
+        const _config = config ?? {
+          address,
+          formatUnits,
+        }
+        if (!_config.address) throw new Error('address is required')
+
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const contract = new ethers.Contract(address, erc20ABI, provider)
+        const contract = new ethers.Contract(
+          _config.address,
+          erc20ABI,
+          provider,
+        )
         const decimals = await contract.decimals()
         const totalSupply = await contract.totalSupply()
         const symbol = await contract.symbol()
+        const _formatUnits = _config.formatUnits ?? 'ether'
         const token = {
-          address,
+          address: _config.address,
           decimals,
           symbol,
           totalSupply: {
-            formatted: utils.formatUnits(totalSupply, formatUnits),
+            formatted: utils.formatUnits(totalSupply, _formatUnits),
             value: totalSupply,
           },
         }
@@ -66,7 +74,7 @@ export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
         return error
       }
     },
-    [provider],
+    [address, formatUnits, provider],
   )
 
   const watchToken = React.useCallback(

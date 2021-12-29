@@ -1,13 +1,13 @@
 import { Chain } from '../types'
 import { hexValue, normalizeChainId } from '../utils'
-import { Connector } from './base'
 import {
   AddChainError,
   ChainNotConfiguredError,
   ConnectorNotFoundError,
   SwitchChainError,
   UserRejectedRequestError,
-} from './errors'
+} from '../errors'
+import { Connector } from './base'
 
 export class InjectedConnector extends Connector<
   Window['ethereum'],

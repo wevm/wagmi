@@ -8,11 +8,6 @@ export class ChainNotConfiguredError extends Error {
   message = 'Chain not configured'
 }
 
-export class UserRejectedRequestError extends Error {
-  name = 'UserRejectedRequestError'
-  message = 'User rejected request'
-}
-
 export class ConnectorNotFoundError extends Error {
   name = 'ConnectorNotFoundError'
   message = 'Connector not found'
@@ -21,4 +16,9 @@ export class ConnectorNotFoundError extends Error {
 export class SwitchChainError extends Error {
   name = 'SwitchChainError'
   message = 'Error switching chain'
+}
+
+export class UserRejectedRequestError extends Error {
+  name = 'UserRejectedRequestError'
+  message = 'User rejected request'
 }

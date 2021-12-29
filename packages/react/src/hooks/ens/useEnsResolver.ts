@@ -25,11 +25,13 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const getEnsResolver = React.useCallback(
-    async (config: Pick<Config, 'name'>) => {
+    async (config?: { name: Config['name'] }) => {
       try {
-        if (!config.name) return
+        const _config = config ?? { name }
+        if (!_config.name) throw new Error('name is required')
+
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const resolver = await provider.getResolver(config.name)
+        const resolver = await provider.getResolver(_config.name)
         setState((x) => ({ ...x, loading: false, resolver }))
         return resolver
       } catch (_error) {
@@ -37,7 +39,7 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
         setState((x) => ({ ...x, error, loading: false }))
       }
     },
-    [provider],
+    [name, provider],
   )
 
   // Fetch avatar when deps or chain changes

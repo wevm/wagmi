@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 
-import { UserRejectedRequestError } from '../connectors'
-import { defaultMnemonic } from './constants'
+import { UserRejectedRequestError } from '../../errors'
+import { defaultMnemonic } from '../constants'
 import { MockProvider } from './mockProvider'
 
 describe('MockProvider', () => {

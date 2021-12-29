@@ -4,7 +4,7 @@ import { useContext } from '../../context'
 import { useEnsAvatar, useEnsLookup } from '../ens'
 import { useBalance } from './useBalance'
 
-type Config = {
+export type Config = {
   fetchBalance?: boolean
   fetchEns?: boolean
 }

@@ -24,10 +24,13 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const lookupAddress = React.useCallback(
-    async (config: { address: string }) => {
+    async (config?: { address: string }) => {
       try {
+        const _config = config ?? { address }
+        if (!_config.address) throw new Error('address is required')
+
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const ens = await provider.lookupAddress(config.address)
+        const ens = await provider.lookupAddress(_config.address)
         setState((x) => ({ ...x, ens, loading: false }))
         return ens
       } catch (_error) {
@@ -36,7 +39,7 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
         return error
       }
     },
-    [provider],
+    [address, provider],
   )
 
   /* eslint-disable react-hooks/exhaustive-deps */

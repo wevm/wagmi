@@ -1,4 +1,3 @@
-import { ethers } from 'ethers'
 import {
   MockConnector,
   defaultChains,
@@ -9,79 +8,96 @@ import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 
 describe('useConnect', () => {
-  it('inits', async () => {
-    const { result } = renderHook(() => useConnect())
-    const state = result.current[0]
-    const connect = result.current[1]
-    expect(state.data.connected).toEqual(false)
-    expect(state.data.connector).toEqual(undefined)
-    expect(state.data.connectors.length).toEqual(1)
-    expect(state.error).toEqual(undefined)
-    expect(state.loading).toEqual(false)
-    expect(connect).toBeDefined()
-  })
-
-  it('connects', async () => {
-    const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
-    const { result } = renderHook(() => useConnect())
-
-    await actHook(async () => {
-      const state = result.current[0]
-      const connect = result.current[1]
-      const mockConnector = state.data.connectors[0]
-
-      expect(state.data.connected).toEqual(false)
-      const res = await connect(mockConnector)
-      if (!res) throw Error('Something went wrong')
-      if (res instanceof Error) throw res
-
-      expect(res.data.account).toEqual(wallet.address)
-      expect(state.loading).toEqual(false)
+  describe('on mount', () => {
+    it('is not connected', async () => {
+      const { result } = renderHook(() => useConnect())
+      const { data: { connectors, ...restData } = {}, ...rest } =
+        result.current[0]
+      expect(connectors?.length).toEqual(1)
+      expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "connected": false,
+            "connector": undefined,
+          },
+          "error": undefined,
+          "loading": false,
+        }
+      `)
     })
 
-    const state = result.current[0]
-    expect(state.data.connected).toEqual(true)
-    expect(state.data.connector?.name).toEqual('Mock')
+    it('is connected', async () => {
+      const { result } = renderHook(() => useConnect())
 
-    // Already connected
-    await actHook(async () => {
-      const state = result.current[0]
-      const connect = result.current[1]
-      const mockConnector = state.data.connectors[0]
-      const res = await connect(mockConnector)
-      expect(res).toEqual(undefined)
+      await actHook(async () => {
+        const mockConnector = result.current[0].data.connectors[0]
+        await result.current[1](mockConnector)
+      })
+
+      const { data: { connector, connectors, ...restData } = {}, ...rest } =
+        result.current[0]
+      expect(connectors?.length).toEqual(1)
+      expect(connector).toBeDefined()
+      expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "connected": true,
+          },
+          "error": undefined,
+          "loading": false,
+        }
+      `)
     })
   })
 
-  it('fails connect', async () => {
-    const { result } = renderHook(() => useConnect(), {
-      initialProps: {
-        connectors: [
-          new MockConnector({
-            chains: defaultChains,
-            options: {
-              flags: {
-                failConnect: true,
+  describe('connect', () => {
+    it('success', async () => {
+      const { result } = renderHook(() => useConnect())
+
+      await actHook(async () => {
+        const mockConnector = result.current[0].data.connectors[0]
+        const res = await result.current[1](mockConnector)
+
+        const {
+          connector,
+          data: { provider, ...rest },
+        } = <any>res
+        expect(connector).toBeDefined()
+        expect(provider).toBeDefined()
+        expect(rest).toMatchInlineSnapshot(`
+          {
+            "account": "0x71CB05EE1b1F506fF321Da3dac38f25c0c9ce6E1",
+            "chainId": 1,
+          }
+        `)
+      })
+    })
+
+    it('fails', async () => {
+      const { result } = renderHook(() => useConnect(), {
+        initialProps: {
+          connectors: [
+            new MockConnector({
+              chains: defaultChains,
+              options: {
+                flags: {
+                  failConnect: true,
+                },
+                mnemonic: defaultMnemonic,
+                network: 1,
               },
-              mnemonic: defaultMnemonic,
-              network: 1,
-            },
-          }),
-        ],
-      },
-    })
+            }),
+          ],
+        },
+      })
 
-    await actHook(async () => {
-      const state = result.current[0]
-      const connect = result.current[1]
-      const mockConnector = state.data.connectors[0]
-      const res = await connect(mockConnector)
-      if (!res) throw Error('Something went wrong')
-      expect((<Error>res).message).toEqual('User rejected request')
+      await actHook(async () => {
+        const mockConnector = result.current[0].data.connectors[0]
+        const res = await result.current[1](mockConnector)
+        expect(res).toMatchInlineSnapshot(
+          `[UserRejectedRequestError: User rejected request]`,
+        )
+      })
     })
-
-    const state = result.current[0]
-    expect(state.data.connected).toEqual(false)
-    expect(state.error?.message).toEqual('User rejected request')
   })
 })

@@ -86,13 +86,33 @@ describe('useEnsLookup', () => {
     `)
   })
 
-  it('lookupAddress', async () => {
-    const { result } = renderHook(() => useEnsLookup({ skip: true }))
-    await actHook(async () => {
-      const res = await result.current[1]({
-        address: addressLookup.addressWithEns,
+  describe('lookupAddress', () => {
+    it('uses config', async () => {
+      const { result } = renderHook(() =>
+        useEnsLookup({ address: addressLookup.addressWithEns, skip: true }),
+      )
+      await actHook(async () => {
+        const res = await result.current[1]()
+        expect(res).toMatchInlineSnapshot(`"meagher.eth"`)
       })
-      expect(res).toMatchInlineSnapshot(`"meagher.eth"`)
+    })
+
+    it('uses params', async () => {
+      const { result } = renderHook(() => useEnsLookup({ skip: true }))
+      await actHook(async () => {
+        const res = await result.current[1]({
+          address: addressLookup.addressWithEns,
+        })
+        expect(res).toMatchInlineSnapshot(`"meagher.eth"`)
+      })
+    })
+
+    it('has error', async () => {
+      const { result } = renderHook(() => useEnsLookup({ skip: true }))
+      await actHook(async () => {
+        const res = await result.current[1]()
+        expect(res).toMatchInlineSnapshot(`[Error: address is required]`)
+      })
     })
   })
 })

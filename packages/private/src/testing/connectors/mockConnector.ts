@@ -1,8 +1,8 @@
-import { normalizeChainId } from '../utils'
-import { Chain } from '../types'
-import { defaultChains } from '../constants'
-import { Connector } from '../connectors'
-import { defaultMnemonic } from './constants'
+import { Connector } from '../../connectors'
+import { defaultChains } from '../../constants'
+import { normalizeChainId } from '../../utils'
+import { Chain } from '../../types'
+import { defaultMnemonic } from '../constants'
 import { MockProvider, MockProviderOptions } from './mockProvider'
 
 export class MockConnector extends Connector<

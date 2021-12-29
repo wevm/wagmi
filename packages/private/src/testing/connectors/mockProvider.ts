@@ -1,7 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
 import { ethers } from 'ethers'
 
-import { UserRejectedRequestError } from '../connectors'
+import { UserRejectedRequestError } from '../../errors'
 
 export type MockProviderOptions = {
   flags?: {

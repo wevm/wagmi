@@ -37,32 +37,36 @@ export const useBalance = ({
   const [state, setState] = React.useState<State>(initialState)
 
   const getBalance = React.useCallback(
-    async ({
-      address,
-      formatUnits = 'ether',
-      token,
-    }: {
+    async (config: {
       address: string
       formatUnits: Config['formatUnits']
       token: Config['token']
     }) => {
       try {
+        const _config = config ?? { address, formatUnits, token }
+        if (!_config.address) throw new Error('address is required')
+
         setState((x) => ({ ...x, error: undefined, loading: true }))
+        const _formatUnits = _config.formatUnits ?? 'ether'
 
         let balance: State['balance']
-        if (token) {
-          const contract = new ethers.Contract(token, erc20ABI, provider)
-          const value = await contract.balanceOf(address)
+        if (_config.token) {
+          const contract = new ethers.Contract(
+            _config.token,
+            erc20ABI,
+            provider,
+          )
+          const value = await contract.balanceOf(_config.address)
           const symbol = await contract.symbol()
           balance = {
-            formatted: utils.formatUnits(value, formatUnits),
+            formatted: utils.formatUnits(value, _formatUnits),
             symbol,
             value,
           }
         } else {
-          const value = await provider.getBalance(address)
+          const value = await provider.getBalance(_config.address)
           balance = {
-            formatted: utils.formatUnits(value, formatUnits),
+            formatted: utils.formatUnits(value, _formatUnits),
             symbol: 'ETH',
             value,
           }
@@ -76,7 +80,7 @@ export const useBalance = ({
         return error
       }
     },
-    [provider],
+    [address, formatUnits, provider, token],
   )
 
   // Fetch balance when deps or chain changes
