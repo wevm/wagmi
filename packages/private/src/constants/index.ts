@@ -8,5 +8,3 @@ export {
 } from './chains'
 
 export { units } from './units'
-
-export { defaultMnemonic } from './wallets'

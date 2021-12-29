@@ -1,4 +1,6 @@
-import { actHook, addressLookup, renderHook } from '../../../test'
+import { addressLookup } from 'wagmi-private/testing'
+
+import { actHook, renderHook } from '../../../test'
 import { useToken } from './useToken'
 
 describe('useToken', () => {

@@ -9,10 +9,10 @@ import {
   MockConnector,
   defaultChains,
   defaultMnemonic,
+  infuraApiKey,
 } from 'wagmi-private/testing'
 
 import { Provider, ProviderProps } from '../src'
-import { infuraApiKey } from './constants'
 
 import '@testing-library/jest-dom/extend-expect'
 
@@ -54,4 +54,3 @@ export const renderHook = <TProps, TResult>(
 }
 
 export { act as actHook } from '@testing-library/react-hooks'
-export { addressLookup } from './constants'

@@ -1,2 +1,4 @@
+export { defaultChains } from '../constants'
+
 export { MockConnector } from './mockConnector'
-export { defaultChains, defaultMnemonic } from '../constants'
+export { addressLookup, defaultMnemonic, infuraApiKey } from './constants'
