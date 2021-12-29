@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.0.4
+
+### Patch Changes
+
+- [`29fbe29`](https://github.com/tmm/wagmi/commit/29fbe2920046b9e87a34faa04500ccf3c4f83748) Thanks [@tmm](https://github.com/tmm)! - fix external deps
+
 ## 0.0.3
 
 ### Patch Changes
