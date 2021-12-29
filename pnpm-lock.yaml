@@ -132,7 +132,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       typescript: 4.5.4
-      wagmi: 0.0.4
+      wagmi: 0.0.5
       walletlink: ^2.2.8
     dependencies:
       '@walletconnect/ethereum-provider': 1.7.0
@@ -165,7 +165,7 @@ importers:
       typescript: ^4.4.4
       util: ^0.12.4
       vite: ^2.7.2
-      wagmi: 0.0.4
+      wagmi: 0.0.5
       walletlink: ^2.2.8
     dependencies:
       '@walletconnect/ethereum-provider': 1.7.0
@@ -206,7 +206,7 @@ importers:
       '@walletconnect/ethereum-provider': ^1.6.6
       ethers: ^5.5.1
       react: ^17.0.0
-      wagmi-private: 0.0.4
+      wagmi-private: 0.0.5
       walletlink: ^2.2.8
     dependencies:
       '@ethersproject/providers': 5.5.1
