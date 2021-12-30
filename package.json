@@ -2,6 +2,7 @@
   "name": "root",
   "scripts": {
     "build": "preconstruct build",
+    "build:docs": "manypkg run docs build",
     "changeset:release": "pnpm gen:readme && pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "preconstruct dev",
