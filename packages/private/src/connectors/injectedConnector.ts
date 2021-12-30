@@ -14,16 +14,16 @@ import {
 } from '../errors'
 import { Connector } from './base'
 
+const isClient = typeof window !== 'undefined'
+
 export class InjectedConnector extends Connector<
   Window['ethereum'],
   undefined
 > {
   readonly name =
-    typeof window !== 'undefined' && window.ethereum?.isMetaMask
-      ? 'MetaMask'
-      : 'Injected'
-  readonly provider = window?.ethereum
-  readonly ready = typeof window !== 'undefined' && !!window.ethereum
+    isClient && window.ethereum?.isMetaMask ? 'MetaMask' : 'Injected'
+  readonly provider = isClient ? window?.ethereum : undefined
+  readonly ready = isClient && !!window.ethereum
 
   constructor(config?: { chains?: Chain[] }) {
     super({ ...config, options: undefined })

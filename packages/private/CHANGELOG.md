@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.0.6
+
+### Patch Changes
+
+- [`37d39d1`](https://github.com/tmm/wagmi/commit/37d39d174ddfa122462bbe2d02141cd61eb9db4a) Thanks [@tmm](https://github.com/tmm)! - add message signing
+
 ## 0.0.5
 
 ### Patch Changes
