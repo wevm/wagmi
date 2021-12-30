@@ -2,5 +2,6 @@
   "provider": "Provider",
   "connectors": "Connectors",
   "hooks": "Hooks",
-  "constants": "Constants"
+  "constants": "Constants",
+  "utils": "Utils"
 }

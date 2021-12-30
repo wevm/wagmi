@@ -1,4 +1,5 @@
 {
-  "connect": "Connect Wallet",
-  "sign": "Sign Message"
+  "connect-wallet": "Connect Wallet",
+  "sign-message": "Sign Message",
+  "token-gated-content": "Token-Gated Content"
 }

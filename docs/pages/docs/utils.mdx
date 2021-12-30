@@ -1,0 +1,42 @@
+# Utils
+
+wagmi exposes some **utilities** to help work with various values in the library.
+
+### normalizeChainId
+
+Converts a chain id in number or string (including hex) format to number.
+
+```tsx
+normalizeChainId(1)
+// result: 1
+
+normalizeChainId('1')
+// result: 1
+
+normalizeChainId('0x1')
+// result: 1
+```
+
+### normalizeMessage
+
+Converts string or bytes message to hex string.
+
+```tsx
+normalizeMessage('The quick brown fox jumped over the lazy dogs.')
+// result: 54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e
+
+normalizeMessage([
+  84, 104, 101, 32, 113, 117, 105, 99, 107, 32, 98, 114, 111, 119, 110, 32, 102,
+  111, 120, 32, 106, 117, 109, 112, 101, 100, 32, 111, 118, 101, 114, 32, 116,
+  104, 101, 32, 108, 97, 122, 121, 32, 100, 111, 103, 115, 46,
+])
+// result: 54686520717569636b2062726f776e20666f78206a756d706564206f76657220746865206c617a7920646f67732e
+```
+
+### verifyNormalizedMessage
+
+Wraps **ethers.js** [verifyMessage](https://docs.ethers.io/v5/api/utils/signing-key/#utils-verifyMessage) and normalizes message input using [normalizeMessage](/docs/utils#normalizemessage-1). Useful for verifying the signature result of [useSignMessage](/docs/hooks/useSignMessage) server-side or elsewhere.
+
+```tsx
+verifyNormalizedMessage(message, signature)
+```
