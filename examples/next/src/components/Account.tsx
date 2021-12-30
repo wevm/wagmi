@@ -3,7 +3,6 @@ import { useAccount } from 'wagmi'
 
 export const Account = () => {
   const [{ data: accountData }, disconnect] = useAccount({
-    fetchBalance: true,
     fetchEns: true,
   })
 
@@ -21,14 +20,9 @@ export const Account = () => {
         {accountData?.ens?.name ?? accountData?.address}
         {accountData?.ens ? ` (${accountData?.address})` : null}
       </div>
-      <div>
-        {accountData?.balance?.formatted} {accountData?.balance?.symbol}{' '}
-      </div>
 
-      {accountData?.ens?.avatar ? (
+      {accountData?.ens?.avatar && (
         <img src={accountData.ens.avatar} style={{ height: 40, width: 40 }} />
-      ) : (
-        <div style={{ height: 40, width: 40 }} />
       )}
     </>
   )

@@ -32,6 +32,5 @@ it('should expose correct exports', () => {
     'useSignMessage',
     'useToken',
     'useWebSocketProvider',
-    'verifyNormalizedMessage',
   ])
 })

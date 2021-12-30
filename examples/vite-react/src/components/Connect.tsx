@@ -12,7 +12,7 @@ export const Connect = () => {
   ] = useConnect()
 
   return (
-    <>
+    <div>
       <div>
         {connectors.map((x) => (
           <button key={x.name} onClick={() => connect(x)}>
@@ -22,6 +22,6 @@ export const Connect = () => {
         ))}
       </div>
       <div>{error && (error?.message ?? 'Failed to connect')}</div>
-    </>
+    </div>
   )
 }

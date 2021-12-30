@@ -1,4 +1,5 @@
-import { verifyNormalizedMessage } from 'wagmi-private'
+import { verifyMessage } from 'ethers/lib/utils'
+import { normalizeMessage } from 'wagmi-private'
 import { messageLookup } from 'wagmi-private/testing'
 
 import { actHook, renderHook } from '../../../test'
@@ -54,21 +55,24 @@ describe('useSignMessage', () => {
         if (typeof res !== 'string') throw new Error('No signature')
         const account =
           await result.current.connect[0].data.connector?.getAccount()
-        const recovered = verifyNormalizedMessage(messageLookup.basic, res)
+        const recovered = verifyMessage(
+          normalizeMessage(messageLookup.basic),
+          res,
+        )
         expect(account).toEqual(recovered)
       })
 
       expect(result.current.signMessage[0]).toMatchInlineSnapshot(`
         {
-          "data": "0x8a34db89a19ddef2fa8c5ee1922437598724e92c41dd5ecf2440b94ae8f6aaad31f51d078910e438ee88952ae2b1429a6b9770d8d85ce9eb4f8e19c84ee5bde01b",
+          "data": "0xb900ae5a07c093e7e5f66ff9d30f336023aa30c1b5cfcb64d8e7e2bf4d75bac9153c8092afcbf7493d4ef267efe9d01d36ede8905336dddf8d21b5ecd8d4a6381b",
           "error": undefined,
           "loading": false,
         }
       `)
       const account =
         await result.current.connect[0].data.connector?.getAccount()
-      const recovered = verifyNormalizedMessage(
-        messageLookup.basic,
+      const recovered = verifyMessage(
+        normalizeMessage(messageLookup.basic),
         <any>result.current.signMessage[0]?.data,
       )
       expect(account).toEqual(recovered)
@@ -87,7 +91,10 @@ describe('useSignMessage', () => {
         if (typeof res !== 'string') throw new Error('No signature')
         const account =
           await result.current.connect[0].data.connector?.getAccount()
-        const recovered = verifyNormalizedMessage(messageLookup.basic, res)
+        const recovered = verifyMessage(
+          normalizeMessage(messageLookup.basic),
+          res,
+        )
         expect(account).toEqual(recovered)
       })
     })

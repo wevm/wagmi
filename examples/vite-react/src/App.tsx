@@ -1,8 +1,8 @@
 import { useAccount } from 'wagmi'
 
-import { Account, Connect, NetworkSwitcher } from './components'
+import { Account, Connect, NetworkSwitcher, SignMessage } from './components'
 
-const Page = () => {
+export const App = () => {
   const [{ data: accountData }] = useAccount()
 
   if (accountData?.address)
@@ -10,6 +10,7 @@ const Page = () => {
       <main>
         <Account />
         <NetworkSwitcher />
+        <SignMessage />
       </main>
     )
 
@@ -19,5 +20,3 @@ const Page = () => {
     </main>
   )
 }
-
-export default Page

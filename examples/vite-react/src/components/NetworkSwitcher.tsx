@@ -6,7 +6,7 @@ export const NetworkSwitcher = () => {
     useNetwork()
 
   return (
-    <>
+    <div>
       <div>
         Connected to {networkData.chain?.name ?? networkData.chain?.id}{' '}
         {networkData.chain?.unsupported && '(unsupported)'}
@@ -22,6 +22,6 @@ export const NetworkSwitcher = () => {
         )}
 
       {switchNetworkError && switchNetworkError?.message}
-    </>
+    </div>
   )
 }

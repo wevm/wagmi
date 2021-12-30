@@ -23,24 +23,25 @@ export class WalletLinkConnector extends Connector<
   }
 
   get provider() {
+    if (!this._provider) {
+      this._client = new WalletLink(this.options)
+      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+      return this._provider
+    }
     return this._provider
   }
 
   async connect() {
     try {
-      if (!this._provider) {
-        this._client = new WalletLink(this.options)
-        this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
-      }
+      const provider = this.provider
+      provider.on('accountsChanged', this.onAccountsChanged)
+      provider.on('chainChanged', this.onChainChanged)
+      provider.on('disconnect', this.onDisconnect)
 
-      this._provider.on('accountsChanged', this.onAccountsChanged)
-      this._provider.on('chainChanged', this.onChainChanged)
-      this._provider.on('disconnect', this.onDisconnect)
-
-      const accounts = await this._provider.enable()
+      const accounts = await provider.enable()
       const account = getAddress(accounts[0])
       const chainId = await this.getChainId()
-      return { account, chainId, provider: this._provider }
+      return { account, chainId, provider }
     } catch (error) {
       if ((<ProviderRpcError>error).message === 'User closed modal')
         throw new UserRejectedRequestError()
@@ -51,11 +52,12 @@ export class WalletLinkConnector extends Connector<
   async disconnect() {
     if (!this._provider) return
 
-    this._provider.removeListener('accountsChanged', this.onAccountsChanged)
-    this._provider.removeListener('chainChanged', this.onChainChanged)
-    this._provider.removeListener('disconnect', this.onDisconnect)
-    this._provider.disconnect()
-    this._provider.close()
+    const provider = this.provider
+    provider.removeListener('accountsChanged', this.onAccountsChanged)
+    provider.removeListener('chainChanged', this.onChainChanged)
+    provider.removeListener('disconnect', this.onDisconnect)
+    provider.disconnect()
+    provider.close()
 
     if (typeof localStorage !== 'undefined') {
       let n = localStorage.length
@@ -69,11 +71,8 @@ export class WalletLinkConnector extends Connector<
   }
 
   async getAccount() {
-    if (!this._provider) {
-      this._client = new WalletLink(this.options)
-      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
-    }
-    const accounts = await this._provider.request<string[]>({
+    const provider = this.provider
+    const accounts = await provider.request<string[]>({
       method: 'eth_accounts',
     })
     // return checksum address
@@ -81,20 +80,13 @@ export class WalletLinkConnector extends Connector<
   }
 
   async getChainId() {
-    if (!this._provider) {
-      this._client = new WalletLink(this.options)
-      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
-    }
-    const chainId = normalizeChainId(this._provider.chainId)
+    const provider = this.provider
+    const chainId = normalizeChainId(provider.chainId)
     return chainId
   }
 
   async isAuthorized() {
     try {
-      if (!this._provider) {
-        this._client = new WalletLink(this.options)
-        this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
-      }
       const account = await this.getAccount()
       return !!account
     } catch {
@@ -104,16 +96,11 @@ export class WalletLinkConnector extends Connector<
 
   async signMessage({ message }: { message: string }) {
     try {
-      if (!this._provider) {
-        this._client = new WalletLink(this.options)
-        this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
-      }
-
+      const provider = this.provider
       const account = await this.getAccount()
-      const _message = normalizeMessage(message)
-      const signature = await this._provider.request<string>({
+      const signature = await provider.request<string>({
         method: 'personal_sign',
-        params: [_message, account],
+        params: [normalizeMessage(message), account],
       })
       return signature
     } catch (error) {

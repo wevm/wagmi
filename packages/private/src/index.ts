@@ -19,8 +19,4 @@ export {
 
 export type { Chain, Message, Unit } from './types'
 
-export {
-  normalizeChainId,
-  normalizeMessage,
-  verifyNormalizedMessage,
-} from './utils'
+export { normalizeChainId, normalizeMessage } from './utils'

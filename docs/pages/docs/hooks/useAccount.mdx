@@ -1,6 +1,6 @@
 # useAccount
 
-Hook for accessing information (address, ens, balance, etc.) about connected account.
+Hook for accessing the connected account.
 
 ```tsx
 import { useAccount } from 'wagmi'
@@ -34,7 +34,6 @@ const App = () => {
 {
   data?: {
     address: string
-    balance: Balance
     connector: Connector
     ens?: {
       avatar?: string
@@ -53,24 +52,6 @@ const App = () => {
 ```
 
 ## Configuration
-
-### fetchBalance (optional)
-
-Fetches Ethereum balance for connected account. Defaults to `false`.
-
-```tsx highlight='5'
-import { useAccount } from 'wagmi'
-
-const App = () => {
-  const [{ data, error, loading }] = useAccount({
-    fetchBalance: true,
-  })
-
-  if (loading) return <div>Fetching balance…</div>
-  if (error) return <div>Error fetching balance</div>
-  return <div>{data?.balance?.formatted}</div>
-}
-```
 
 ### fetchEns (optional)
 

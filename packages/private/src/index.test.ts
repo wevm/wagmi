@@ -16,6 +16,5 @@ it('should expose correct exports', () => {
     'normalizeChainId',
     'normalizeMessage',
     'units',
-    'verifyNormalizedMessage',
   ])
 })

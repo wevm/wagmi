@@ -1,7 +1,8 @@
 import { ethers } from 'ethers'
+import { verifyMessage } from 'ethers/lib/utils'
 
 import { defaultChains } from '../../constants'
-import { verifyNormalizedMessage } from '../../utils'
+import { normalizeMessage } from '../../utils'
 import { addressLookup, defaultMnemonic, messageLookup } from '../constants'
 import { MockConnector } from './mockConnector'
 
@@ -81,7 +82,10 @@ describe('MockConnector', () => {
       const signature = await connector.signMessage({
         message: messageLookup.basic,
       })
-      const recovered = verifyNormalizedMessage(messageLookup.basic, signature)
+      const recovered = verifyMessage(
+        normalizeMessage(messageLookup.basic),
+        signature,
+      )
       expect(data.account).toEqual(recovered)
     })
 

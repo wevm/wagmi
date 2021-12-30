@@ -14,34 +14,41 @@ import {
 } from '../errors'
 import { Connector } from './base'
 
-const isClient = typeof window !== 'undefined'
-
 export class InjectedConnector extends Connector<
   Window['ethereum'],
   undefined
 > {
   readonly name =
-    !isClient && window.ethereum?.isMetaMask ? 'MetaMask' : 'Injected'
-  readonly provider = isClient ? window?.ethereum : undefined
-  readonly ready = isClient && !!window.ethereum
+    typeof window !== 'undefined' && window.ethereum?.isMetaMask
+      ? 'MetaMask'
+      : 'Injected'
+  readonly ready = typeof window !== 'undefined' && !!window.ethereum
+
+  private _provider?: Window['ethereum']
 
   constructor(config?: { chains?: Chain[] }) {
     super({ ...config, options: undefined })
   }
 
+  get provider() {
+    if (!this._provider) this._provider = window.ethereum
+    return this._provider
+  }
+
   async connect() {
     try {
-      if (!this.provider) throw new ConnectorNotFoundError()
+      const provider = this.provider
+      if (!provider) throw new ConnectorNotFoundError()
 
-      if (this.provider.on) {
-        this.provider.on('accountsChanged', this.onAccountsChanged)
-        this.provider.on('chainChanged', this.onChainChanged)
-        this.provider.on('disconnect', this.onDisconnect)
+      if (provider.on) {
+        provider.on('accountsChanged', this.onAccountsChanged)
+        provider.on('chainChanged', this.onChainChanged)
+        provider.on('disconnect', this.onDisconnect)
       }
 
       const account = await this.getAccount()
       const chainId = await this.getChainId()
-      return { account, chainId, provider: this.provider }
+      return { account, chainId, provider }
     } catch (error) {
       if ((<ProviderRpcError>error).code === 4001)
         throw new UserRejectedRequestError()
@@ -50,16 +57,18 @@ export class InjectedConnector extends Connector<
   }
 
   async disconnect() {
-    if (!this.provider?.removeListener) return
+    const provider = this.provider
+    if (!provider?.removeListener) return
 
-    this.provider.removeListener('accountsChanged', this.onAccountsChanged)
-    this.provider.removeListener('chainChanged', this.onChainChanged)
-    this.provider.removeListener('disconnect', this.onDisconnect)
+    provider.removeListener('accountsChanged', this.onAccountsChanged)
+    provider.removeListener('chainChanged', this.onChainChanged)
+    provider.removeListener('disconnect', this.onDisconnect)
   }
 
   async getAccount() {
-    if (!this.provider) throw new ConnectorNotFoundError()
-    const accounts = await this.provider.request<string[]>({
+    const provider = this.provider
+    if (!provider) throw new ConnectorNotFoundError()
+    const accounts = await provider.request<string[]>({
       method: 'eth_requestAccounts',
     })
     // return checksum address
@@ -67,16 +76,18 @@ export class InjectedConnector extends Connector<
   }
 
   async getChainId() {
-    if (!this.provider) throw new ConnectorNotFoundError()
-    return await this.provider
+    const provider = this.provider
+    if (!provider) throw new ConnectorNotFoundError()
+    return await provider
       .request<string>({ method: 'eth_chainId' })
       .then(normalizeChainId)
   }
 
   async isAuthorized() {
     try {
-      if (!this.provider) throw new ConnectorNotFoundError()
-      const accounts = await this.provider.request<string[]>({
+      const provider = this.provider
+      if (!provider) throw new ConnectorNotFoundError()
+      const accounts = await provider.request<string[]>({
         method: 'eth_accounts',
       })
       const account = accounts[0]
@@ -88,13 +99,13 @@ export class InjectedConnector extends Connector<
 
   async signMessage({ message }: { message: Message }) {
     try {
-      if (!this.provider) throw new ConnectorNotFoundError()
+      const provider = this.provider
+      if (!provider) throw new ConnectorNotFoundError()
 
       const account = await this.getAccount()
-      const _message = normalizeMessage(message)
-      const signature = await this.provider.request<string>({
+      const signature = await provider.request<string>({
         method: 'personal_sign',
-        params: [_message, account],
+        params: [normalizeMessage(message), account],
       })
       return signature
     } catch (error) {
@@ -105,11 +116,12 @@ export class InjectedConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
-    if (!this.provider) throw new ConnectorNotFoundError()
+    const provider = this.provider
+    if (!provider) throw new ConnectorNotFoundError()
     const id = hexValue(chainId)
 
     try {
-      await this.provider.request({
+      await provider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
@@ -119,7 +131,7 @@ export class InjectedConnector extends Connector<
         try {
           const chain = this.chains.find((x) => x.id === chainId)
           if (!chain) throw new ChainNotConfiguredError()
-          await this.provider.request({
+          await provider.request({
             method: 'wallet_addEthereumChain',
             params: [
               {
@@ -151,9 +163,9 @@ export class InjectedConnector extends Connector<
     image?: string
     symbol: string
   }) {
-    if (!this.provider) throw new ConnectorNotFoundError()
-
-    await this.provider.request({
+    const provider = this.provider
+    if (!provider) throw new ConnectorNotFoundError()
+    await provider.request({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',

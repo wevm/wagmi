@@ -33,6 +33,5 @@ export {
   erc721ABI,
   normalizeChainId,
   normalizeMessage,
-  verifyNormalizedMessage,
 } from 'wagmi-private'
 export type { Chain, Data, Message } from 'wagmi-private'

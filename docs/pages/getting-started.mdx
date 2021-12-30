@@ -43,7 +43,6 @@ import { useAccount, useConnect } from 'wagmi'
 
 export const App = () => {
   const [{ data, error, loading }, disconnect] = useAccount({
-    fetchBalance: true,
     fetchEns: true,
   })
 

@@ -23,22 +23,27 @@ export class WalletConnectConnector extends Connector<
   }
 
   get provider() {
+    if (!this._provider) {
+      this._provider = new WalletConnectProvider(this.options)
+      return this._provider
+    }
     return this._provider
   }
 
   async connect() {
     try {
       // Use new provider instance for every connect
-      this._provider = new WalletConnectProvider(this.options)
+      const provider = new WalletConnectProvider(this.options)
+      this._provider = provider
 
-      this._provider.on('accountsChanged', this.onAccountsChanged)
-      this._provider.on('chainChanged', this.onChainChanged)
-      this._provider.on('disconnect', this.onDisconnect)
+      provider.on('accountsChanged', this.onAccountsChanged)
+      provider.on('chainChanged', this.onChainChanged)
+      provider.on('disconnect', this.onDisconnect)
 
-      const accounts = await this._provider.enable()
+      const accounts = await provider.enable()
       const account = getAddress(accounts[0])
       const chainId = await this.getChainId()
-      return { account, chainId, provider: this._provider }
+      return { account, chainId, provider }
     } catch (error) {
       if ((<ProviderRpcError>error).message === 'User closed modal')
         throw new UserRejectedRequestError()
@@ -47,36 +52,32 @@ export class WalletConnectConnector extends Connector<
   }
 
   async disconnect() {
-    if (!this._provider) return
-    await this._provider.disconnect()
+    const provider = this.provider
+    await provider.disconnect()
 
-    this._provider.removeListener('accountsChanged', this.onAccountsChanged)
-    this._provider.removeListener('chainChanged', this.onChainChanged)
-    this._provider.removeListener('disconnect', this.onDisconnect)
+    provider.removeListener('accountsChanged', this.onAccountsChanged)
+    provider.removeListener('chainChanged', this.onChainChanged)
+    provider.removeListener('disconnect', this.onDisconnect)
 
     typeof localStorage !== 'undefined' &&
       localStorage.removeItem('walletconnect')
   }
 
   async getAccount() {
-    if (!this._provider)
-      this._provider = new WalletConnectProvider(this.options)
-    const accounts = this._provider.accounts
+    const provider = this.provider
+    const accounts = provider.accounts
     // return checksum address
     return getAddress(accounts[0])
   }
 
   async getChainId() {
-    if (!this._provider)
-      this._provider = new WalletConnectProvider(this.options)
-    const chainId = normalizeChainId(this._provider.chainId)
+    const provider = this.provider
+    const chainId = normalizeChainId(provider.chainId)
     return chainId
   }
 
   async isAuthorized() {
     try {
-      if (!this._provider)
-        this._provider = new WalletConnectProvider(this.options)
       const account = await this.getAccount()
       return !!account
     } catch {
@@ -86,14 +87,11 @@ export class WalletConnectConnector extends Connector<
 
   async signMessage({ message }: { message: string }) {
     try {
-      if (!this._provider)
-        this._provider = new WalletConnectProvider(this.options)
-
+      const provider = this.provider
       const account = await this.getAccount()
-      const _message = normalizeMessage(message)
-      const signature = await this._provider.request<string>({
+      const signature = await provider.request<string>({
         method: 'personal_sign',
-        params: [_message, account],
+        params: [normalizeMessage(message), account],
       })
       return signature
     } catch (error) {

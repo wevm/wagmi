@@ -51,11 +51,18 @@ export const useConnect = () => {
 
   // Keep connector in sync with global connector
   React.useEffect(() => {
+    let didCancel = false
+    if (didCancel) return
+
     setState((x) => ({
       ...x,
       connector: globalState.connector,
       error: undefined,
     }))
+
+    return () => {
+      didCancel = true
+    }
   }, [globalState.connector])
 
   return [

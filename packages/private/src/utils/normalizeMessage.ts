@@ -6,6 +6,5 @@ export const normalizeMessage = (message: Message) => {
   if (typeof message === 'string') {
     message = toUtf8Bytes(message)
   }
-  const messageHex = hexlify(message).substring(2)
-  return messageHex
+  return hexlify(message)
 }

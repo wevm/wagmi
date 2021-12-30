@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { Message } from 'wagmi-private'
 
 import { useContext } from '../../context'
 
 export type Config = {
-  message?: string
+  message?: Message
 }
 
 type State = {
@@ -23,7 +24,7 @@ export const useSignMessage = ({ message }: Config = {}) => {
   const [state, setState] = React.useState<State>(initialState)
 
   const signMessage = React.useCallback(
-    async (config?: { message?: string }) => {
+    async (config?: { message?: Message }) => {
       try {
         const _config = config ?? { message }
         if (!_config.message) throw new Error('message is required')
