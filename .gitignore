@@ -15,5 +15,5 @@ tsconfig.tsbuildinfo
 .env.production.local
 .envrc
 
-examples/**/generated/
+**/generated/
 packages/**/README.md

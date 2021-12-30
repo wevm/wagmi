@@ -8,7 +8,7 @@
   <a aria-label="License" href="/LICENSE">
     <img
       alt=""
-      src="https://img.shields.io/npm/l/degen.svg?style=for-the-badge&labelColor=161c22"
+      src="https://img.shields.io/npm/l/wagmi.svg?style=for-the-badge&labelColor=161c22"
     />
   </a>
 </p>
