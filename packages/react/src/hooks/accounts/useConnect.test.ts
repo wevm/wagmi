@@ -51,7 +51,7 @@ describe('useConnect', () => {
   })
 
   describe('connect', () => {
-    it('success', async () => {
+    it('succeeds', async () => {
       const { result } = renderHook(() => useConnect())
 
       await actHook(async () => {

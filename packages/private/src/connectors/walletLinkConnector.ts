@@ -3,7 +3,7 @@ import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
 import { UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { normalizeChainId } from '../utils'
+import { getAddress, normalizeChainId, normalizeMessage } from '../utils'
 import { Connector } from './base'
 
 type Options = WalletLinkOptions & { jsonRpcUrl?: string }
@@ -38,8 +38,8 @@ export class WalletLinkConnector extends Connector<
       this._provider.on('disconnect', this.onDisconnect)
 
       const accounts = await this._provider.enable()
-      const account = accounts[0]
-      const chainId = normalizeChainId(this._provider.chainId)
+      const account = getAddress(accounts[0])
+      const chainId = await this.getChainId()
       return { account, chainId, provider: this._provider }
     } catch (error) {
       if ((<ProviderRpcError>error).message === 'User closed modal')
@@ -68,6 +68,18 @@ export class WalletLinkConnector extends Connector<
     }
   }
 
+  async getAccount() {
+    if (!this._provider) {
+      this._client = new WalletLink(this.options)
+      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+    }
+    const accounts = await this._provider.request<string[]>({
+      method: 'eth_accounts',
+    })
+    // return checksum address
+    return getAddress(accounts[0])
+  }
+
   async getChainId() {
     if (!this._provider) {
       this._client = new WalletLink(this.options)
@@ -83,13 +95,31 @@ export class WalletLinkConnector extends Connector<
         this._client = new WalletLink(this.options)
         this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
       }
-      const accounts = await this._provider.request<string[]>({
-        method: 'eth_accounts',
-      })
-      const account = accounts[0]
+      const account = await this.getAccount()
       return !!account
     } catch {
       return false
+    }
+  }
+
+  async signMessage({ message }: { message: string }) {
+    try {
+      if (!this._provider) {
+        this._client = new WalletLink(this.options)
+        this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+      }
+
+      const account = await this.getAccount()
+      const _message = normalizeMessage(message)
+      const signature = await this._provider.request<string>({
+        method: 'personal_sign',
+        params: [_message, account],
+      })
+      return signature
+    } catch (error) {
+      if ((<ProviderRpcError>error).code === 4001)
+        throw new UserRejectedRequestError()
+      throw error
     }
   }
 

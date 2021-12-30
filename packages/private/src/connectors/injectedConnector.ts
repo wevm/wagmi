@@ -1,5 +1,10 @@
-import { Chain } from '../types'
-import { hexValue, normalizeChainId } from '../utils'
+import { Chain, Message } from '../types'
+import {
+  getAddress,
+  hexValue,
+  normalizeChainId,
+  normalizeMessage,
+} from '../utils'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -24,26 +29,22 @@ export class InjectedConnector extends Connector<
   }
 
   get provider() {
-    return window.ethereum
+    return window?.ethereum
   }
 
   async connect() {
     try {
-      if (!window.ethereum) throw new ConnectorNotFoundError()
+      if (!this.provider) throw new ConnectorNotFoundError()
 
-      if (window.ethereum.on) {
-        window.ethereum.on('accountsChanged', this.onAccountsChanged)
-        window.ethereum.on('chainChanged', this.onChainChanged)
-        window.ethereum.on('disconnect', this.onDisconnect)
+      if (this.provider.on) {
+        this.provider.on('accountsChanged', this.onAccountsChanged)
+        this.provider.on('chainChanged', this.onChainChanged)
+        this.provider.on('disconnect', this.onDisconnect)
       }
 
-      const accounts = await window.ethereum.request<string[]>({
-        method: 'eth_requestAccounts',
-      })
-      const account = accounts[0]
+      const account = await this.getAccount()
       const chainId = await this.getChainId()
-
-      return { account, chainId, provider: window.ethereum }
+      return { account, chainId, provider: this.provider }
     } catch (error) {
       if ((<ProviderRpcError>error).code === 4001)
         throw new UserRejectedRequestError()
@@ -52,24 +53,33 @@ export class InjectedConnector extends Connector<
   }
 
   async disconnect() {
-    if (!window?.ethereum?.removeListener) return
+    if (!this.provider?.removeListener) return
 
-    window.ethereum.removeListener('accountsChanged', this.onAccountsChanged)
-    window.ethereum.removeListener('chainChanged', this.onChainChanged)
-    window.ethereum.removeListener('disconnect', this.onDisconnect)
+    this.provider.removeListener('accountsChanged', this.onAccountsChanged)
+    this.provider.removeListener('chainChanged', this.onChainChanged)
+    this.provider.removeListener('disconnect', this.onDisconnect)
+  }
+
+  async getAccount() {
+    if (!this.provider) throw new ConnectorNotFoundError()
+    const accounts = await this.provider.request<string[]>({
+      method: 'eth_requestAccounts',
+    })
+    // return checksum address
+    return getAddress(accounts[0])
   }
 
   async getChainId() {
-    if (!window.ethereum) throw new ConnectorNotFoundError()
-    return await window.ethereum
+    if (!this.provider) throw new ConnectorNotFoundError()
+    return await this.provider
       .request<string>({ method: 'eth_chainId' })
       .then(normalizeChainId)
   }
 
   async isAuthorized() {
     try {
-      if (!window.ethereum) throw new ConnectorNotFoundError()
-      const accounts = await window.ethereum.request<string[]>({
+      if (!this.provider) throw new ConnectorNotFoundError()
+      const accounts = await this.provider.request<string[]>({
         method: 'eth_accounts',
       })
       const account = accounts[0]
@@ -79,12 +89,30 @@ export class InjectedConnector extends Connector<
     }
   }
 
+  async signMessage({ message }: { message: Message }) {
+    try {
+      if (!this.provider) throw new ConnectorNotFoundError()
+
+      const account = await this.getAccount()
+      const _message = normalizeMessage(message)
+      const signature = await this.provider.request<string>({
+        method: 'personal_sign',
+        params: [_message, account],
+      })
+      return signature
+    } catch (error) {
+      if ((<ProviderRpcError>error).code === 4001)
+        throw new UserRejectedRequestError()
+      throw error
+    }
+  }
+
   async switchChain(chainId: number) {
-    if (!window.ethereum) throw new ConnectorNotFoundError()
+    if (!this.provider) throw new ConnectorNotFoundError()
     const id = hexValue(chainId)
 
     try {
-      await window.ethereum.request({
+      await this.provider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
@@ -94,7 +122,7 @@ export class InjectedConnector extends Connector<
         try {
           const chain = this.chains.find((x) => x.id === chainId)
           if (!chain) throw new ChainNotConfiguredError()
-          await window.ethereum.request({
+          await this.provider.request({
             method: 'wallet_addEthereumChain',
             params: [
               {
@@ -126,9 +154,9 @@ export class InjectedConnector extends Connector<
     image?: string
     symbol: string
   }) {
-    if (!window.ethereum) throw new ConnectorNotFoundError()
+    if (!this.provider) throw new ConnectorNotFoundError()
 
-    await window.ethereum.request({
+    await this.provider.request({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',

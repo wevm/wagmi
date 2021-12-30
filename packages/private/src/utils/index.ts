@@ -1,4 +1,5 @@
-export { hexValue } from 'ethers/lib/utils'
+export { hexValue, getAddress } from 'ethers/lib/utils'
 
-export { isAddress } from './isAddress'
 export { normalizeChainId } from './normalizeChainId'
+export { normalizeMessage } from './normalizeMessage'
+export { verifyNormalizedMessage } from './verifyNormalizedMessage'

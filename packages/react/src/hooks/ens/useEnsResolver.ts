@@ -37,6 +37,7 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
       } catch (_error) {
         const error = _error as Error
         setState((x) => ({ ...x, error, loading: false }))
+        return error
       }
     },
     [name, provider],

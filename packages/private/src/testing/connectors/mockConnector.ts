@@ -1,7 +1,7 @@
 import { Connector } from '../../connectors'
 import { defaultChains } from '../../constants'
-import { normalizeChainId } from '../../utils'
-import { Chain } from '../../types'
+import { getAddress, normalizeChainId, normalizeMessage } from '../../utils'
+import { Chain, Message } from '../../types'
 import { defaultMnemonic } from '../constants'
 import { MockProvider, MockProviderOptions } from './mockProvider'
 
@@ -37,7 +37,7 @@ export class MockConnector extends Connector<
     this._provider.on('disconnect', this.onDisconnect)
 
     const accounts = await this._provider.enable()
-    const account = accounts[0]
+    const account = getAddress(accounts[0])
     const chainId = normalizeChainId(this._provider._network.chainId)
     const data = { account, chainId, provider: this._provider }
     return data
@@ -49,6 +49,14 @@ export class MockConnector extends Connector<
     this._provider.removeListener('accountsChanged', this.onAccountsChanged)
     this._provider.removeListener('chainChanged', this.onChainChanged)
     this._provider.removeListener('disconnect', this.onDisconnect)
+  }
+
+  async getAccount() {
+    const accounts = await this._provider.getAccounts()
+    const account = accounts[0]
+    if (!account) throw new Error('Failed to get account')
+    // return checksum address
+    return getAddress(account)
   }
 
   async getChainId() {
@@ -63,6 +71,16 @@ export class MockConnector extends Connector<
     } catch {
       return false
     }
+  }
+
+  async signMessage({ message }: { message: Message }) {
+    const _message = normalizeMessage(message)
+    const signature = await this._provider.signMessage(_message)
+    return signature
+  }
+
+  async switchChain(_chainId: number) {
+    true
   }
 
   async watchAsset(_asset: {

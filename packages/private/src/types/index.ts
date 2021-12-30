@@ -1,3 +1,5 @@
+import { Bytes } from 'ethers/lib/utils'
+
 import { units } from '../constants'
 
 export type Chain = {
@@ -8,5 +10,7 @@ export type Chain = {
   blockExplorers?: { name: string; url: string }[]
   testnet?: boolean
 }
+
+export type Message = Bytes | string
 
 export type Unit = typeof units[number]

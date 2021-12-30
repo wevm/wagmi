@@ -13,7 +13,9 @@ it('should expose correct exports', () => {
     'erc1155ABI',
     'erc20ABI',
     'erc721ABI',
-    'isAddress',
+    'normalizeChainId',
+    'normalizeMessage',
     'units',
+    'verifyNormalizedMessage',
   ])
 })

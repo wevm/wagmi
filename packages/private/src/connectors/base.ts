@@ -1,7 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
 
 import { defaultChains } from '../constants'
-import { Chain } from '../types'
+import { Chain, Message } from '../types'
 
 export type Data<Provider = any> = {
   account?: string
@@ -45,8 +45,10 @@ export abstract class Connector<
 
   abstract connect(): Promise<Data>
   abstract disconnect(): Promise<void>
+  abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
   abstract isAuthorized(): Promise<boolean>
+  abstract signMessage(config: { message: Message }): Promise<string>
   switchChain?(chainId: number): Promise<void>
   watchAsset?(asset: {
     address: string

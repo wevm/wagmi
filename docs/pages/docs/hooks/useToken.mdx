@@ -11,7 +11,7 @@ import { useToken } from 'wagmi'
 The following examples use [$UNI](https://etherscan.io/token/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984).
 
 ```tsx
-import { useContractEvent } from 'wagmi'
+import { useToken } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getToken] = useToken({
@@ -51,7 +51,7 @@ const App = () => {
 ### watchToken
 
 ```ts
-(token: {
+(token?: {
   address: string
   decimals?: number
   image?: string

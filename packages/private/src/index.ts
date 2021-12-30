@@ -17,6 +17,10 @@ export {
   units,
 } from './constants'
 
-export type { Chain, Unit } from './types'
+export type { Chain, Message, Unit } from './types'
 
-export { isAddress } from './utils'
+export {
+  normalizeChainId,
+  normalizeMessage,
+  verifyNormalizedMessage,
+} from './utils'

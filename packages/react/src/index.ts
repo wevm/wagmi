@@ -14,6 +14,7 @@ export {
   useFeeData,
   useNetwork,
   useProvider,
+  useSignMessage,
   useToken,
   useWebSocketProvider,
 } from './hooks'
@@ -30,6 +31,8 @@ export {
   erc1155ABI,
   erc20ABI,
   erc721ABI,
-  isAddress,
+  normalizeChainId,
+  normalizeMessage,
+  verifyNormalizedMessage,
 } from 'wagmi-private'
-export type { Chain, Data } from 'wagmi-private'
+export type { Chain, Data, Message } from 'wagmi-private'

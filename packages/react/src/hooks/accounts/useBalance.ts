@@ -37,7 +37,7 @@ export const useBalance = ({
   const [state, setState] = React.useState<State>(initialState)
 
   const getBalance = React.useCallback(
-    async (config: {
+    async (config?: {
       address: string
       formatUnits: Config['formatUnits']
       token: Config['token']

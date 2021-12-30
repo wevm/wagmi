@@ -22,7 +22,7 @@ describe('useAccount', () => {
       expect(result.current[1]).toBeDefined()
     })
 
-    it('connects', async () => {
+    it('connected', async () => {
       const { result } = renderHook(() => useAccountWithConnect())
 
       await actHook(async () => {

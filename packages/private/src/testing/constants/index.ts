@@ -1,3 +1,5 @@
+import { toUtf8Bytes } from 'ethers/lib/utils'
+
 const ensName = 'meagher.eth'
 
 export const addressLookup = {
@@ -17,3 +19,8 @@ export const infuraApiKey = 'mockApiKey'
 
 export const defaultMnemonic =
   'announce room limb pattern dry unit scale effort smooth jazz weasel alcohol'
+
+export const messageLookup = {
+  basic: 'The quick brown fox jumped over the lazy dogs.',
+  bytes: toUtf8Bytes('The quick brown fox jumped over the lazy dogs.'),
+}

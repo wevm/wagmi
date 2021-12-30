@@ -1,11 +1,14 @@
 import { default as EventEmitter } from 'eventemitter3'
 import { ethers } from 'ethers'
 
+import { getAddress } from 'ethers/lib/utils'
+
 import { UserRejectedRequestError } from '../../errors'
 
 export type MockProviderOptions = {
   flags?: {
     failConnect?: boolean
+    failSign?: boolean
   }
   mnemonic: string
   network: number | string
@@ -45,7 +48,16 @@ export class MockProvider extends ethers.providers.BaseProvider {
 
   async getAccounts() {
     const address = await this._wallet?.getAddress()
-    return [address]
+    if (!address) return []
+    return [getAddress(address)]
+  }
+
+  async signMessage(message: string) {
+    if (this._options.flags?.failSign) throw new UserRejectedRequestError()
+    if (!this._wallet)
+      this._wallet = ethers.Wallet.fromMnemonic(this._options.mnemonic)
+    const signature = await this._wallet.signMessage(message)
+    return signature
   }
 
   on(event: Event, listener: ethers.providers.Listener) {

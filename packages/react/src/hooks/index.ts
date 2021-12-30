@@ -1,4 +1,10 @@
-export { useAccount, useBalance, useConnect, useNetwork } from './accounts'
+export {
+  useAccount,
+  useBalance,
+  useConnect,
+  useNetwork,
+  useSignMessage,
+} from './accounts'
 export { useContract, useContractEvent, useToken } from './contracts'
 export { useEnsAvatar, useEnsLookup, useEnsResolver } from './ens'
 export { useBlockNumber, useFeeData } from './network-status'

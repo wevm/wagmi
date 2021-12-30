@@ -92,7 +92,7 @@ describe('useEnsResolver', () => {
       const { result } = renderHook(() => useEnsResolver({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`undefined`)
+        expect(res).toMatchInlineSnapshot(`[Error: name is required]`)
       })
     })
   })

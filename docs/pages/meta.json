@@ -1,6 +1,7 @@
 {
   "index": "Introduction",
   "getting-started": "Getting Started",
-  "docs": "API",
-  "comparison": "Library Comparison"
+  "guides": "Guides",
+  "comparison": "Library Comparison",
+  "docs": "API"
 }

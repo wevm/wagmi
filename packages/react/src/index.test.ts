@@ -2,13 +2,11 @@ import * as Exports from './'
 
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toEqual([
-    // connectors
     'Connector',
     'InjectedConnector',
     'Provider',
     'WalletConnectConnector',
     'WalletLinkConnector',
-    // constants
     'chain',
     'defaultChains',
     'defaultL2Chains',
@@ -16,8 +14,8 @@ it('should expose correct exports', () => {
     'erc1155ABI',
     'erc20ABI',
     'erc721ABI',
-    'isAddress',
-    // hooks
+    'normalizeChainId',
+    'normalizeMessage',
     'useAccount',
     'useBalance',
     'useBlockNumber',
@@ -31,7 +29,9 @@ it('should expose correct exports', () => {
     'useFeeData',
     'useNetwork',
     'useProvider',
+    'useSignMessage',
     'useToken',
     'useWebSocketProvider',
+    'verifyNormalizedMessage',
   ])
 })

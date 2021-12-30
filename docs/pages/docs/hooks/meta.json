@@ -11,6 +11,7 @@
   "useFeeData": "useFeeData",
   "useNetwork": "useNetwork",
   "useProvider": "useProvider",
+  "useSignMessage": "useSignMessage",
   "useToken": "useToken",
   "useWebSocketProvider": "useWebSocketProvider"
 }

@@ -1,8 +1,8 @@
 import { ethers } from 'ethers'
 
-import { UserRejectedRequestError } from '../../errors'
 import { defaultChains } from '../../constants'
-import { defaultMnemonic } from '../constants'
+import { verifyNormalizedMessage } from '../../utils'
+import { defaultMnemonic, messageLookup } from '../constants'
 import { MockConnector } from './mockConnector'
 
 describe('MockConnector', () => {
@@ -22,48 +22,90 @@ describe('MockConnector', () => {
     expect(connector.ready).toEqual(true)
   })
 
-  it('connects and disconnects', async () => {
+  describe('connect', () => {
+    it('succeeds', async () => {
+      const onChange = jest.fn()
+      connector.on('change', onChange)
+      const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
+      const data = await connector.connect()
+      expect(onChange).toBeCalledTimes(1)
+      expect(data.account).toEqual(wallet.address)
+      expect(data.chainId).toEqual(1)
+      connector.isAuthorized().then((x) => expect(x).toEqual(true))
+    })
+
+    it('fails', async () => {
+      const connector = new MockConnector({
+        chains: defaultChains,
+        options: {
+          flags: {
+            failConnect: true,
+          },
+          mnemonic: defaultMnemonic,
+          network: 1,
+        },
+      })
+      try {
+        await connector.connect()
+      } catch (error) {
+        expect(error).toMatchInlineSnapshot(
+          `[UserRejectedRequestError: User rejected request]`,
+        )
+      }
+    })
+  })
+
+  it('disconnect', async () => {
     const onDisconnect = jest.fn()
-    const onChange = jest.fn()
-    const onError = jest.fn()
-    connector.on('change', onChange)
     connector.on('disconnect', onDisconnect)
-    connector.on('error', onError)
-
-    const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
-    const data = await connector.connect()
-    expect(onChange).toBeCalledTimes(1)
-    expect(data.account).toEqual(wallet.address)
-    expect(data.chainId).toEqual(1)
-
-    connector.isAuthorized().then((x) => expect(x).toEqual(true))
+    await connector.connect()
     await connector.disconnect()
-    // connector.isAuthorized().then((x) => expect(x).toEqual(false))
     expect(onDisconnect).toBeCalledTimes(1)
   })
 
-  it('fails connect', async () => {
-    const connector = new MockConnector({
-      chains: defaultChains,
-      options: {
-        flags: {
-          failConnect: true,
-        },
-        mnemonic: defaultMnemonic,
-        network: 1,
-      },
-    })
-    try {
-      await connector.connect()
-    } catch (error) {
-      expect((<UserRejectedRequestError>error).message).toEqual(
-        'User rejected request',
-      )
-    }
+  it('getAccount', async () => {
+    await connector.connect()
+    const account = await connector.getAccount()
+    const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
+    expect(account).toEqual(wallet.address)
   })
 
   it('getChainId', async () => {
     const chainId = await connector.getChainId()
     expect(chainId).toEqual(1)
+  })
+
+  describe('signMessage', () => {
+    it('succeeds', async () => {
+      const data = await connector.connect()
+      const signature = await connector.signMessage({
+        message: messageLookup.basic,
+      })
+      const recovered = verifyNormalizedMessage(messageLookup.basic, signature)
+      expect(data.account).toEqual(recovered)
+    })
+
+    it('fails', async () => {
+      const connector = new MockConnector({
+        chains: defaultChains,
+        options: {
+          flags: {
+            failSign: true,
+          },
+          mnemonic: defaultMnemonic,
+          network: 1,
+        },
+      })
+      try {
+        await connector.connect()
+        await connector.signMessage({
+          message: messageLookup.basic,
+        })
+      } catch (error) {
+        expect(error).toMatchInlineSnapshot(
+          `[UserRejectedRequestError: User rejected request]`,
+        )
+      }
+    })
   })
 })

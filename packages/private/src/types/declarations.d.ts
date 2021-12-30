@@ -25,6 +25,7 @@ type RequestArguments =
   | { method: 'eth_accounts' }
   | { method: 'eth_chainId' }
   | { method: 'eth_requestAccounts' }
+  | { method: 'personal_sign'; params: [string, string] }
   | { method: 'wallet_addEthereumChain'; params: AddEthereumChainParameter[] }
   | { method: 'wallet_switchEthereumChain'; params: [{ chainId: string }] }
   | { method: 'wallet_watchAsset'; params: WatchAssetParams }

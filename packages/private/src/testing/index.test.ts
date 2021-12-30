@@ -7,5 +7,6 @@ it('should expose correct exports', () => {
     'defaultChains',
     'defaultMnemonic',
     'infuraApiKey',
+    'messageLookup',
   ])
 })
