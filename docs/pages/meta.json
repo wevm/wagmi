@@ -1,7 +1,7 @@
 {
   "index": "Introduction",
   "getting-started": "Getting Started",
-  "guides": "Guides",
+  "examples": "Examples",
   "comparison": "Library Comparison",
-  "docs": "API"
+  "docs": "Documentation"
 }

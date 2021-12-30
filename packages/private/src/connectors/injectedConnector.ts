@@ -21,7 +21,7 @@ export class InjectedConnector extends Connector<
   undefined
 > {
   readonly name =
-    isClient && window.ethereum?.isMetaMask ? 'MetaMask' : 'Injected'
+    !isClient && window.ethereum?.isMetaMask ? 'MetaMask' : 'Injected'
   readonly provider = isClient ? window?.ethereum : undefined
   readonly ready = isClient && !!window.ethereum
 
