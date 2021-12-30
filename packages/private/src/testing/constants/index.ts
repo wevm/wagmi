@@ -24,5 +24,3 @@ export const messageLookup = {
   basic: 'The quick brown fox jumped over the lazy dogs.',
   bytes: toUtf8Bytes('The quick brown fox jumped over the lazy dogs.'),
 }
-
-console.log(messageLookup.bytes)

@@ -60,6 +60,21 @@ export class MockProvider extends ethers.providers.BaseProvider {
     return signature
   }
 
+  async switchChain(chainId: number) {
+    this._options.network = chainId
+    this.network.chainId = chainId
+    this.events.emit('chainChanged', chainId)
+  }
+
+  async watchAsset(_asset: {
+    address: string
+    decimals?: number
+    image?: string
+    symbol: string
+  }) {
+    true
+  }
+
   on(event: Event, listener: ethers.providers.Listener) {
     this.events.on(event, listener)
     return this

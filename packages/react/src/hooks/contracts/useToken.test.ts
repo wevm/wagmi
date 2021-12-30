@@ -1,7 +1,14 @@
 import { addressLookup } from 'wagmi-private/testing'
 
 import { actHook, renderHook } from '../../../test'
-import { useToken } from './useToken'
+import { useConnect } from '../accounts'
+import { Config, useToken } from './useToken'
+
+const useTokenWithConnect = (config: { token?: Config } = {}) => {
+  const connect = useConnect()
+  const token = useToken(config.token)
+  return { connect, token } as const
+}
 
 describe('useToken', () => {
   describe('on mount', () => {
@@ -76,15 +83,34 @@ describe('useToken', () => {
     `)
   })
 
-  it('watchToken', async () => {
-    const { result } = renderHook(() => useToken({ skip: true }))
-    await actHook(async () => {
-      await result.current[1]({
-        address: addressLookup.uniToken,
-        decimals: 18,
-        symbol: 'UNI',
+  describe('watchAsset', () => {
+    it('succeeds', async () => {
+      const { result } = renderHook(() =>
+        useTokenWithConnect({ token: { skip: true } }),
+      )
+      await actHook(async () => {
+        const mockConnector = result.current.connect[0].data.connectors[0]
+        await result.current.connect[1](mockConnector)
+
+        const res = await result.current.token[1]({
+          address: addressLookup.uniToken,
+          decimals: 18,
+          symbol: 'UNI',
+        })
+        expect(res).toMatchInlineSnapshot(`true`)
       })
-      expect(true).toEqual(true)
+    })
+
+    it('not connected', async () => {
+      const { result } = renderHook(() => useToken({ skip: true }))
+      await actHook(async () => {
+        const res = await result.current[1]({
+          address: addressLookup.uniToken,
+          decimals: 18,
+          symbol: 'UNI',
+        })
+        expect(res).toMatchInlineSnapshot(`false`)
+      })
     })
   })
 
@@ -136,13 +162,13 @@ describe('useToken', () => {
         `)
       })
     })
-  })
 
-  it('has error', async () => {
-    const { result } = renderHook(() => useToken({ skip: true }))
-    await actHook(async () => {
-      const res = await result.current[2]()
-      expect(res).toMatchInlineSnapshot(`[Error: address is required]`)
+    it('has error', async () => {
+      const { result } = renderHook(() => useToken({ skip: true }))
+      await actHook(async () => {
+        const res = await result.current[2]()
+        expect(res).toMatchInlineSnapshot(`[Error: address is required]`)
+      })
     })
   })
 })

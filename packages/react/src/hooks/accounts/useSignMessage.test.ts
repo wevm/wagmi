@@ -5,11 +5,9 @@ import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 import { Config, useSignMessage } from './useSignMessage'
 
-const useSignMessageWithConnect = (
-  config: { useSignMessageProps?: Config } = {},
-) => {
-  const signMessage = useSignMessage(config.useSignMessageProps)
+const useSignMessageWithConnect = (config: { message?: Config } = {}) => {
   const connect = useConnect()
+  const signMessage = useSignMessage(config.message)
   return { connect, signMessage } as const
 }
 
@@ -34,7 +32,7 @@ describe('useSignMessage', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
         useSignMessageWithConnect({
-          useSignMessageProps: {
+          message: {
             message: messageLookup.basic,
           },
         }),

@@ -2,7 +2,7 @@ import { ethers } from 'ethers'
 
 import { defaultChains } from '../../constants'
 import { verifyNormalizedMessage } from '../../utils'
-import { defaultMnemonic, messageLookup } from '../constants'
+import { addressLookup, defaultMnemonic, messageLookup } from '../constants'
 import { MockConnector } from './mockConnector'
 
 describe('MockConnector', () => {
@@ -107,5 +107,27 @@ describe('MockConnector', () => {
         )
       }
     })
+  })
+
+  it('switchChain', async () => {
+    const onChange = jest.fn()
+    connector.on('change', onChange)
+    const chainIdBefore = await connector.getChainId()
+    expect(chainIdBefore).toEqual(1)
+    await connector.connect()
+    await connector.switchChain(4)
+    expect(onChange).toBeCalledTimes(2)
+    const chainIdAfter = await connector.getChainId()
+    expect(chainIdAfter).toEqual(4)
+  })
+
+  it('watchAsset', async () => {
+    await connector.connect()
+    await connector.watchAsset({
+      address: addressLookup.uniToken,
+      decimals: 18,
+      symbol: 'UNI',
+    })
+    expect(true).toEqual(true)
   })
 })

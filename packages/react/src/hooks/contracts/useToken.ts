@@ -5,7 +5,7 @@ import { Unit, erc20ABI } from 'wagmi-private'
 import { useContext } from '../../context'
 import { useProvider } from '../providers'
 
-type Config = {
+export type Config = {
   address?: string
   formatUnits?: Unit | number
   skip?: boolean
@@ -28,7 +28,11 @@ const initialState: State = {
   loading: false,
 }
 
-export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
+export const useToken = ({
+  address,
+  formatUnits = 'ether',
+  skip,
+}: Config = {}) => {
   const {
     state: { connector },
   } = useContext()
@@ -86,13 +90,10 @@ export const useToken = ({ address, formatUnits = 'ether', skip }: Config) => {
     }) => {
       if (!connector?.watchAsset) return false
       try {
-        setState((x) => ({ ...x, error: undefined }))
         await connector.watchAsset(token)
         return true
       } catch (_error) {
-        const error = _error as Error
-        setState((x) => ({ ...x, error }))
-        return error
+        return _error as Error
       }
     },
     [connector],

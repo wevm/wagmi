@@ -2,8 +2,8 @@ import { actHook, renderHook } from '../../../test'
 import { Config, useAccount } from './useAccount'
 import { useConnect } from './useConnect'
 
-const useAccountWithConnect = (config: { useAccountProps?: Config } = {}) => {
-  const account = useAccount(config.useAccountProps)
+const useAccountWithConnect = (config: { account?: Config } = {}) => {
+  const account = useAccount(config.account)
   const connect = useConnect()
   return { account, connect } as const
 }
@@ -48,7 +48,7 @@ describe('useAccount', () => {
 
     it('fetches balance', async () => {
       const { result } = renderHook(() =>
-        useAccountWithConnect({ useAccountProps: { fetchBalance: true } }),
+        useAccountWithConnect({ account: { fetchBalance: true } }),
       )
 
       await actHook(async () => {
@@ -74,7 +74,7 @@ describe('useAccount', () => {
 
     it('fetches ens', async () => {
       const { result } = renderHook(() =>
-        useAccountWithConnect({ useAccountProps: { fetchEns: true } }),
+        useAccountWithConnect({ account: { fetchEns: true } }),
       )
 
       await actHook(async () => {

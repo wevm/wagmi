@@ -79,17 +79,17 @@ export class MockConnector extends Connector<
     return signature
   }
 
-  async switchChain(_chainId: number) {
-    true
+  async switchChain(chainId: number) {
+    await this._provider.switchChain(chainId)
   }
 
-  async watchAsset(_asset: {
+  async watchAsset(asset: {
     address: string
     decimals?: number
     image?: string
     symbol: string
   }) {
-    true
+    await this._provider.watchAsset(asset)
   }
 
   protected onAccountsChanged = (accounts: string[]) => {

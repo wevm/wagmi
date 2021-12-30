@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { verifyMessage } from 'ethers/lib/utils'
 
-import { defaultMnemonic, messageLookup } from '../constants'
+import { addressLookup, defaultMnemonic, messageLookup } from '../constants'
 import { MockProvider } from './mockProvider'
 
 describe('MockProvider', () => {
@@ -91,5 +91,19 @@ describe('MockProvider', () => {
         )
       }
     })
+  })
+
+  it('switchChain', async () => {
+    await provider.switchChain(4)
+    expect(provider.network.chainId).toEqual(4)
+  })
+
+  it('watchAsset', async () => {
+    await provider.watchAsset({
+      address: addressLookup.uniToken,
+      decimals: 18,
+      symbol: 'UNI',
+    })
+    expect(true).toEqual(true)
   })
 })

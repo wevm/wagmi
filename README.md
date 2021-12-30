@@ -39,8 +39,8 @@ pnpm dev:docs
 ### Examples
 
 ```bash
-pnpm dev:example:vite-react
 pnpm dev:example:next
+pnpm dev:example:vite-react
 ```
 
 ### Testing

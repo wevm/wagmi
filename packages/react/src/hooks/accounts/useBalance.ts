@@ -6,7 +6,7 @@ import { useProvider } from '../providers'
 import { useBlockNumber } from '../network-status'
 import { useCacheBuster } from '../utils'
 
-type Config = {
+export type Config = {
   address?: string
   formatUnits?: Unit | number
   skip?: boolean
@@ -30,7 +30,7 @@ export const useBalance = ({
   skip,
   token,
   watch,
-}: Config) => {
+}: Config = {}) => {
   const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
@@ -39,8 +39,8 @@ export const useBalance = ({
   const getBalance = React.useCallback(
     async (config?: {
       address: string
-      formatUnits: Config['formatUnits']
-      token: Config['token']
+      formatUnits?: Config['formatUnits']
+      token?: Config['token']
     }) => {
       try {
         const _config = config ?? { address, formatUnits, token }
