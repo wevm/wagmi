@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.0.7
+
+### Patch Changes
+
+- [`0bff89a`](https://github.com/tmm/wagmi/commit/0bff89ab2ad28b2cb9b346d1ac870e859d9278bc) Thanks [@tmm](https://github.com/tmm)! - update injected connector
+
+- Updated dependencies [[`0bff89a`](https://github.com/tmm/wagmi/commit/0bff89ab2ad28b2cb9b346d1ac870e859d9278bc)]:
+  - wagmi-private@0.0.7
+
 ## 0.0.6
 
 ### Patch Changes
