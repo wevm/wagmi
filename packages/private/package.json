@@ -1,7 +1,7 @@
 {
   "name": "wagmi-private",
   "license": "MIT",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "sideEffects": false,
   "main": "dist/wagmi-private.cjs.js",
   "module": "dist/wagmi-private.esm.js",
