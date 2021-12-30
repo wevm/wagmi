@@ -52,9 +52,9 @@ describe('useSignMessage', () => {
 
         const res = await result.current.signMessage[1]()
         if (typeof res !== 'string') throw new Error('No signature')
-        const recovered = verifyNormalizedMessage(messageLookup.basic, res)
         const account =
           await result.current.connect[0].data.connector?.getAccount()
+        const recovered = verifyNormalizedMessage(messageLookup.basic, res)
         expect(account).toEqual(recovered)
       })
 
@@ -65,12 +65,12 @@ describe('useSignMessage', () => {
           "loading": false,
         }
       `)
+      const account =
+        await result.current.connect[0].data.connector?.getAccount()
       const recovered = verifyNormalizedMessage(
         messageLookup.basic,
         <any>result.current.signMessage[0]?.data,
       )
-      const account =
-        await result.current.connect[0].data.connector?.getAccount()
       expect(account).toEqual(recovered)
     })
 
@@ -85,9 +85,9 @@ describe('useSignMessage', () => {
           message: messageLookup.basic,
         })
         if (typeof res !== 'string') throw new Error('No signature')
-        const recovered = verifyNormalizedMessage(messageLookup.basic, res)
         const account =
           await result.current.connect[0].data.connector?.getAccount()
+        const recovered = verifyNormalizedMessage(messageLookup.basic, res)
         expect(account).toEqual(recovered)
       })
     })

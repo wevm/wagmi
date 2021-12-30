@@ -20,7 +20,7 @@ const App = () => {
 
   if (!data)
     return (
-      <button disabled={loading} onClick={() => await signMessage()}>
+      <button disabled={loading} onClick={async () => await signMessage()}>
         Sign message
       </button>
     )
