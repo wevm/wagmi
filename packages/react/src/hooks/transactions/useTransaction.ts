@@ -1,15 +1,18 @@
 import * as React from 'react'
-import { Bytes } from 'ethers/lib/utils'
+import {
+  TransactionRequest,
+  TransactionResponse,
+} from '@ethersproject/providers'
 import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
 
 import { useContext } from '../../context'
 
 export type Config = {
-  message?: Bytes | string
+  request?: TransactionRequest
 }
 
 type State = {
-  signature?: string
+  transaction?: TransactionResponse
   error?: Error
   loading?: boolean
 }
@@ -18,24 +21,24 @@ const initialState: State = {
   loading: false,
 }
 
-export const useSignMessage = ({ message }: Config = {}) => {
+export const useTransaction = ({ request }: Config = {}) => {
   const {
     state: { connector },
   } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
-  const signMessage = React.useCallback(
-    async (config?: { message?: Config['message'] }) => {
+  const sendTransaction = React.useCallback(
+    async (config?: { request: Config['request'] }) => {
       try {
-        const _config = config ?? { message }
-        if (!_config.message) throw new Error('message is required')
+        const _config = config ?? { request }
+        if (!_config.request) throw new Error('request is required')
         if (!connector) throw new ConnectorNotFoundError()
 
-        setState((x) => ({ ...x, error: undefined, loading: true }))
+        setState((x) => ({ ...x, loading: true }))
         const signer = await connector.getSigner()
-        const signature = await signer.signMessage(_config.message)
-        setState((x) => ({ ...x, signature, loading: false }))
-        return signature
+        const transaction = await signer.sendTransaction(_config.request)
+        setState((x) => ({ ...x, loading: false, transaction }))
+        return transaction
       } catch (err) {
         let error: Error = <Error>err
         if ((<ProviderRpcError>err).code === 4001)
@@ -44,15 +47,15 @@ export const useSignMessage = ({ message }: Config = {}) => {
         return error
       }
     },
-    [connector, message],
+    [connector, request],
   )
 
   return [
     {
-      data: state.signature,
+      data: state.transaction,
       error: state.error,
       loading: state.loading,
     },
-    signMessage,
+    sendTransaction,
   ] as const
 }

@@ -66,8 +66,11 @@ describe('MockProvider', () => {
 
   describe('getSigner', () => {
     it('disconnected', () => {
-      const signer = provider.getSigner()
-      expect(signer).toEqual(undefined)
+      try {
+        provider.getSigner()
+      } catch (error) {
+        expect(error).toMatchInlineSnapshot(`[Error: Signer not found]`)
+      }
     })
 
     it('connected', async () => {
