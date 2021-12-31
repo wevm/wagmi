@@ -21,6 +21,8 @@ export class InjectedConnector extends Connector<
   readonly name =
     typeof window !== 'undefined' && window.ethereum?.isMetaMask
       ? 'MetaMask'
+      : window.ethereum?.isCoinbaseWallet
+      ? 'Coinbase Wallet'
       : 'Injected'
   readonly ready = typeof window !== 'undefined' && !!window.ethereum
 
