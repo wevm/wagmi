@@ -82,28 +82,18 @@ export class WalletConnectConnector extends Connector<
     return chainId
   }
 
+  async getSigner() {
+    const provider = this.provider
+    const account = await this.getAccount()
+    return new Web3Provider(<ExternalProvider>provider).getSigner(account)
+  }
+
   async isAuthorized() {
     try {
       const account = await this.getAccount()
       return !!account
     } catch {
       return false
-    }
-  }
-
-  async signMessage({ message }: { message: string }) {
-    try {
-      const provider = this.provider
-      const account = await this.getAccount()
-      const signer = new Web3Provider(<ExternalProvider>provider).getSigner(
-        account,
-      )
-      const signature = await signer.signMessage(message)
-      return signature
-    } catch (error) {
-      if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
-      throw error
     }
   }
 

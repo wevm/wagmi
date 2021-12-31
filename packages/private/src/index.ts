@@ -25,6 +25,6 @@ export {
   UserRejectedRequestError,
 } from './errors'
 
-export type { Chain, Message, Unit } from './types'
+export type { Chain, Unit } from './types'
 
 export { normalizeChainId } from './utils'

@@ -1,6 +1,6 @@
 import { default as EventEmitter } from 'eventemitter3'
 import { ethers } from 'ethers'
-import { Message, UserRejectedRequestError } from 'wagmi-private'
+import { UserRejectedRequestError } from 'wagmi-private'
 import { getAddress } from 'ethers/lib/utils'
 
 export type MockProviderOptions = {
@@ -50,12 +50,10 @@ export class MockProvider extends ethers.providers.BaseProvider {
     return [getAddress(address)]
   }
 
-  async signMessage(message: Message) {
-    if (this._options.flags?.failSign) throw new UserRejectedRequestError()
-    if (!this._wallet)
-      this._wallet = ethers.Wallet.fromMnemonic(this._options.mnemonic)
-    const signature = await this._wallet.signMessage(message)
-    return signature
+  getSigner() {
+    const signer = this._wallet
+    if (!signer) throw new Error('Signer not found')
+    return signer
   }
 
   async switchChain(chainId: number) {

@@ -40,8 +40,8 @@ export const useConnect = () => {
         setLastUsedConnector(connector.name)
         setState((x) => ({ ...x, loading: false }))
         return { connector, data }
-      } catch (_error) {
-        const error = _error as Error
+      } catch (err) {
+        const error = <Error>err
         setState((x) => ({ ...x, connector: undefined, error, loading: false }))
         return error
       }

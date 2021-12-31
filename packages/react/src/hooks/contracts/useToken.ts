@@ -72,8 +72,8 @@ export const useToken = ({
         }
         setState((x) => ({ ...x, token, loading: false }))
         return token
-      } catch (_error) {
-        const error = _error as Error
+      } catch (err) {
+        const error = <Error>err
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }
@@ -92,8 +92,8 @@ export const useToken = ({
       try {
         await connector.watchAsset(token)
         return true
-      } catch (_error) {
-        return _error as Error
+      } catch (error) {
+        return <Error>error
       }
     },
     [connector],

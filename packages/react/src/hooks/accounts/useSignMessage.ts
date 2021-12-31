@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { Bytes } from 'ethers/lib/utils'
 
+import { UserRejectedRequestError } from 'wagmi-private'
+
 import { useContext } from '../../context'
 
 export type Message = Bytes | string
@@ -33,13 +35,14 @@ export const useSignMessage = ({ message }: Config = {}) => {
         if (!connector) throw new Error('No wallet connected')
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const signature = await connector.signMessage({
-          message: _config.message,
-        })
+        const signer = await connector.getSigner()
+        const signature = await signer.signMessage(_config.message)
         setState((x) => ({ ...x, signature, loading: false }))
         return signature
-      } catch (_error) {
-        const error = _error as Error
+      } catch (err) {
+        let error: Error = <Error>err
+        if ((<ProviderRpcError>err).code === 4001)
+          error = new UserRejectedRequestError()
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }

@@ -1,6 +1,6 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 
-import { Chain, Message } from '../types'
+import { Chain } from '../types'
 import { getAddress, hexValue, normalizeChainId } from '../utils'
 import {
   AddChainError,
@@ -83,6 +83,12 @@ export class InjectedConnector extends Connector<
       .then(normalizeChainId)
   }
 
+  async getSigner() {
+    const provider = this.provider
+    const account = await this.getAccount()
+    return new Web3Provider(<ExternalProvider>provider).getSigner(account)
+  }
+
   async isAuthorized() {
     try {
       const provider = this.provider
@@ -94,24 +100,6 @@ export class InjectedConnector extends Connector<
       return !!account
     } catch {
       return false
-    }
-  }
-
-  async signMessage({ message }: { message: Message }) {
-    try {
-      const provider = this.provider
-      if (!provider) throw new ConnectorNotFoundError()
-
-      const account = await this.getAccount()
-      const signer = new Web3Provider(<ExternalProvider>provider).getSigner(
-        account,
-      )
-      const signature = await signer.signMessage(message)
-      return signature
-    } catch (error) {
-      if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
-      throw error
     }
   }
 

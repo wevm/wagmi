@@ -28,8 +28,8 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
       const blockNumber = await provider.getBlockNumber()
       setState((x) => ({ ...x, blockNumber, loading: false }))
       return blockNumber
-    } catch (_error) {
-      const error = _error as Error
+    } catch (err) {
+      const error = <Error>err
       setState((x) => ({ ...x, error, loading: false }))
       return error
     }

@@ -2,7 +2,6 @@ import { getAddress } from 'ethers/lib/utils'
 import {
   Chain,
   Connector,
-  Message,
   defaultChains,
   normalizeChainId,
 } from 'wagmi-private'
@@ -74,6 +73,12 @@ export class MockConnector extends Connector<
     return chainId
   }
 
+  async getSigner() {
+    const provider = this.provider
+    const signer = provider.getSigner()
+    return signer
+  }
+
   async isAuthorized() {
     try {
       const provider = this.provider
@@ -82,11 +87,6 @@ export class MockConnector extends Connector<
     } catch {
       return false
     }
-  }
-
-  async signMessage({ message }: { message: Message }) {
-    const signature = await this._provider.signMessage(message)
-    return signature
   }
 
   async switchChain(chainId: number) {

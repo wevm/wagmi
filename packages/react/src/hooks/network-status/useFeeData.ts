@@ -39,8 +39,8 @@ export const useFeeData = ({
       const feeData = await provider.getFeeData()
       setState((x) => ({ ...x, feeData, loading: false }))
       return feeData
-    } catch (_error) {
-      const error = _error as Error
+    } catch (err) {
+      const error = <Error>err
       setState((x) => ({ ...x, error, loading: false }))
       return error
     }

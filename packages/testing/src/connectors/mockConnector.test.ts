@@ -1,8 +1,7 @@
 import { ethers } from 'ethers'
-import { verifyMessage } from 'ethers/lib/utils'
 import { defaultChains } from 'wagmi-private'
 
-import { addressLookup, defaultMnemonic, messageLookup } from '../constants'
+import { addressLookup, defaultMnemonic } from '../constants'
 import { MockConnector } from './mockConnector'
 
 describe('MockConnector', () => {
@@ -26,6 +25,7 @@ describe('MockConnector', () => {
     it('succeeds', async () => {
       const onChange = jest.fn()
       connector.on('change', onChange)
+
       const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
       const data = await connector.connect()
       expect(onChange).toBeCalledTimes(1)
@@ -58,6 +58,7 @@ describe('MockConnector', () => {
   it('disconnect', async () => {
     const onDisconnect = jest.fn()
     connector.on('disconnect', onDisconnect)
+
     await connector.connect()
     await connector.disconnect()
     expect(onDisconnect).toBeCalledTimes(1)
@@ -75,43 +76,16 @@ describe('MockConnector', () => {
     expect(chainId).toEqual(1)
   })
 
-  describe('signMessage', () => {
-    it('succeeds', async () => {
-      const data = await connector.connect()
-      const signature = await connector.signMessage({
-        message: messageLookup.basic,
-      })
-      const recovered = verifyMessage(messageLookup.basic, signature)
-      expect(data.account).toEqual(recovered)
-    })
-
-    it('fails', async () => {
-      const connector = new MockConnector({
-        chains: defaultChains,
-        options: {
-          flags: {
-            failSign: true,
-          },
-          mnemonic: defaultMnemonic,
-          network: 1,
-        },
-      })
-      try {
-        await connector.connect()
-        await connector.signMessage({
-          message: messageLookup.basic,
-        })
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(
-          `[UserRejectedRequestError: User rejected request]`,
-        )
-      }
-    })
+  it('getSigner', async () => {
+    await connector.connect()
+    const signer = await connector.getSigner()
+    expect(signer).toBeDefined()
   })
 
   it('switchChain', async () => {
     const onChange = jest.fn()
     connector.on('change', onChange)
+
     const chainIdBefore = await connector.getChainId()
     expect(chainIdBefore).toEqual(1)
     await connector.connect()

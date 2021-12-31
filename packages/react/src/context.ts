@@ -61,7 +61,7 @@ export const Provider = ({
   autoConnect,
   children,
   connectors: _connectors = [new InjectedConnector()],
-  connectorStorageKey = 'wagmiWallet',
+  connectorStorageKey = 'wagmi.wallet',
   provider: _provider = getDefaultProvider(),
   webSocketProvider: _webSocketProvider,
 }: React.PropsWithChildren<Props>) => {
