@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
   BaseProvider,
+  Web3Provider,
   WebSocketProvider,
   getDefaultProvider,
 } from '@ethersproject/providers'
@@ -11,7 +12,7 @@ import { useLocalStorage } from './hooks'
 type State = {
   cacheBuster: number
   connector?: Connector
-  data?: Data
+  data?: Data<Web3Provider>
   error?: Error
 }
 

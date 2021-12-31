@@ -39,6 +39,7 @@
     "@walletconnect/ethereum-provider": "^1.6.6",
     "ethers": "^5.5.1",
     "react": "^17.0.0",
-    "walletlink": "^2.2.8"
+    "walletlink": "^2.2.8",
+    "wagmi-testing": "0.0.7"
   }
 }

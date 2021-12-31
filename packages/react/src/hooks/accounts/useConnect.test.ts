@@ -1,8 +1,4 @@
-import {
-  MockConnector,
-  defaultChains,
-  defaultMnemonic,
-} from 'wagmi-private/testing'
+import { MockConnector, defaultChains, defaultMnemonic } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'

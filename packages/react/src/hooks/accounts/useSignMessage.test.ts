@@ -1,6 +1,5 @@
 import { verifyMessage } from 'ethers/lib/utils'
-import { normalizeMessage } from 'wagmi-private'
-import { messageLookup } from 'wagmi-private/testing'
+import { messageLookup } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
@@ -55,16 +54,13 @@ describe('useSignMessage', () => {
         if (typeof res !== 'string') throw new Error('No signature')
         const account =
           await result.current.connect[0].data.connector?.getAccount()
-        const recovered = verifyMessage(
-          normalizeMessage(messageLookup.basic),
-          res,
-        )
+        const recovered = verifyMessage(messageLookup.basic, res)
         expect(account).toEqual(recovered)
       })
 
       expect(result.current.signMessage[0]).toMatchInlineSnapshot(`
         {
-          "data": "0xb900ae5a07c093e7e5f66ff9d30f336023aa30c1b5cfcb64d8e7e2bf4d75bac9153c8092afcbf7493d4ef267efe9d01d36ede8905336dddf8d21b5ecd8d4a6381b",
+          "data": "0x223300220dc60762ff5bda6168f3810e5f01ed354ae0bafc129bbe6c425e9d3d4f3da02d19239765a3fe4b383d6f76e605643844f06faf163fabe38babee46e01b",
           "error": undefined,
           "loading": false,
         }
@@ -72,7 +68,7 @@ describe('useSignMessage', () => {
       const account =
         await result.current.connect[0].data.connector?.getAccount()
       const recovered = verifyMessage(
-        normalizeMessage(messageLookup.basic),
+        messageLookup.basic,
         <any>result.current.signMessage[0]?.data,
       )
       expect(account).toEqual(recovered)
@@ -91,10 +87,7 @@ describe('useSignMessage', () => {
         if (typeof res !== 'string') throw new Error('No signature')
         const account =
           await result.current.connect[0].data.connector?.getAccount()
-        const recovered = verifyMessage(
-          normalizeMessage(messageLookup.basic),
-          res,
-        )
+        const recovered = verifyMessage(messageLookup.basic, res)
         expect(account).toEqual(recovered)
       })
     })

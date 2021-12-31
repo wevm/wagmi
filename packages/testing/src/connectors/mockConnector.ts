@@ -1,7 +1,12 @@
-import { Connector } from '../../connectors'
-import { defaultChains } from '../../constants'
-import { getAddress, normalizeChainId, normalizeMessage } from '../../utils'
-import { Chain, Message } from '../../types'
+import { getAddress } from 'ethers/lib/utils'
+import {
+  Chain,
+  Connector,
+  Message,
+  defaultChains,
+  normalizeChainId,
+} from 'wagmi-private'
+
 import { defaultMnemonic } from '../constants'
 import { MockProvider, MockProviderOptions } from './mockProvider'
 
@@ -9,6 +14,7 @@ export class MockConnector extends Connector<
   MockProvider,
   MockProviderOptions
 > {
+  readonly id = 'mock'
   readonly name = 'Mock'
   readonly ready = true
 
@@ -32,27 +38,30 @@ export class MockConnector extends Connector<
   }
 
   async connect() {
-    this._provider.on('accountsChanged', this.onAccountsChanged)
-    this._provider.on('chainChanged', this.onChainChanged)
-    this._provider.on('disconnect', this.onDisconnect)
+    const provider = this.provider
+    provider.on('accountsChanged', this.onAccountsChanged)
+    provider.on('chainChanged', this.onChainChanged)
+    provider.on('disconnect', this.onDisconnect)
 
-    const accounts = await this._provider.enable()
+    const accounts = await provider.enable()
     const account = getAddress(accounts[0])
-    const chainId = normalizeChainId(this._provider._network.chainId)
-    const data = { account, chainId, provider: this._provider }
+    const chainId = normalizeChainId(provider._network.chainId)
+    const data = { account, chainId, provider }
     return data
   }
 
   async disconnect() {
-    await this._provider.disconnect()
+    const provider = this.provider
+    await provider.disconnect()
 
-    this._provider.removeListener('accountsChanged', this.onAccountsChanged)
-    this._provider.removeListener('chainChanged', this.onChainChanged)
-    this._provider.removeListener('disconnect', this.onDisconnect)
+    provider.removeListener('accountsChanged', this.onAccountsChanged)
+    provider.removeListener('chainChanged', this.onChainChanged)
+    provider.removeListener('disconnect', this.onDisconnect)
   }
 
   async getAccount() {
-    const accounts = await this._provider.getAccounts()
+    const provider = this.provider
+    const accounts = await provider.getAccounts()
     const account = accounts[0]
     if (!account) throw new Error('Failed to get account')
     // return checksum address
@@ -60,13 +69,15 @@ export class MockConnector extends Connector<
   }
 
   async getChainId() {
-    const chainId = normalizeChainId(this._provider.network.chainId)
+    const provider = this.provider
+    const chainId = normalizeChainId(provider.network.chainId)
     return chainId
   }
 
   async isAuthorized() {
     try {
-      const account = await this._provider.getAccounts()
+      const provider = this.provider
+      const account = await provider.getAccounts()
       return !!account
     } catch {
       return false
@@ -74,13 +85,13 @@ export class MockConnector extends Connector<
   }
 
   async signMessage({ message }: { message: Message }) {
-    const _message = normalizeMessage(message)
-    const signature = await this._provider.signMessage(_message)
+    const signature = await this._provider.signMessage(message)
     return signature
   }
 
   async switchChain(chainId: number) {
-    await this._provider.switchChain(chainId)
+    const provider = this.provider
+    await provider.switchChain(chainId)
   }
 
   async watchAsset(asset: {
@@ -89,7 +100,8 @@ export class MockConnector extends Connector<
     image?: string
     symbol: string
   }) {
-    await this._provider.watchAsset(asset)
+    const provider = this.provider
+    await provider.watchAsset(asset)
   }
 
   protected onAccountsChanged = (accounts: string[]) => {

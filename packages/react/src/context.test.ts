@@ -16,10 +16,16 @@ describe('useContext', () => {
   it('inits', () => {
     const { result } = renderHook(() => useContext())
     const state = result.current.state
-    expect(state.cacheBuster).toEqual(1)
-    expect(state.connector).toEqual(undefined)
-    expect(state.data).toEqual(undefined)
-    expect(state.provider).toBeDefined()
-    expect(state.webSocketProvider).toEqual(undefined)
+    const { connectors, provider, ...rest } = state
+    expect(rest).toMatchInlineSnapshot(`
+      {
+        "cacheBuster": 1,
+        "connector": undefined,
+        "data": undefined,
+        "webSocketProvider": undefined,
+      }
+    `)
+    expect(connectors).toBeDefined()
+    expect(provider).toBeDefined()
   })
 })

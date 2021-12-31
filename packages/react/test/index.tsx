@@ -10,7 +10,7 @@ import {
   defaultChains,
   defaultMnemonic,
   infuraApiKey,
-} from 'wagmi-private/testing'
+} from 'wagmi-testing'
 
 import { Provider, ProviderProps } from '../src'
 

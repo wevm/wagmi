@@ -1,5 +1,5 @@
 import { erc20ABI } from 'wagmi-private'
-import { addressLookup } from 'wagmi-private/testing'
+import { addressLookup } from 'wagmi-testing'
 
 import { renderHook } from '../../../test'
 import { useContractEvent } from './useContractEvent'

@@ -1,7 +1,9 @@
 import * as React from 'react'
-import { Message } from 'wagmi-private'
+import { Bytes } from 'ethers/lib/utils'
 
 import { useContext } from '../../context'
+
+export type Message = Bytes | string
 
 export type Config = {
   message?: Message
@@ -42,7 +44,7 @@ export const useSignMessage = ({ message }: Config = {}) => {
         return error
       }
     },
-    [message, connector],
+    [connector, message],
   )
 
   return [

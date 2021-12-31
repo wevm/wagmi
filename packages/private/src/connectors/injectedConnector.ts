@@ -1,10 +1,7 @@
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+
 import { Chain, Message } from '../types'
-import {
-  getAddress,
-  hexValue,
-  normalizeChainId,
-  normalizeMessage,
-} from '../utils'
+import { getAddress, hexValue, normalizeChainId } from '../utils'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -18,6 +15,7 @@ export class InjectedConnector extends Connector<
   Window['ethereum'],
   undefined
 > {
+  readonly id = 'injected'
   readonly name =
     typeof window !== 'undefined' && window.ethereum?.isMetaMask
       ? 'MetaMask'
@@ -105,10 +103,10 @@ export class InjectedConnector extends Connector<
       if (!provider) throw new ConnectorNotFoundError()
 
       const account = await this.getAccount()
-      const signature = await provider.request<string>({
-        method: 'personal_sign',
-        params: [normalizeMessage(message), account],
-      })
+      const signer = new Web3Provider(<ExternalProvider>provider).getSigner(
+        account,
+      )
+      const signature = await signer.signMessage(message)
       return signature
     } catch (error) {
       if ((<ProviderRpcError>error).code === 4001)

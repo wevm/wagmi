@@ -1,6 +1,7 @@
 import { rest } from 'msw'
 import { match, select } from 'ts-pattern'
-import { addressLookup, infuraApiKey } from 'wagmi-private/testing'
+
+import { addressLookup, infuraApiKey } from '../constants'
 
 type EthRequest<Params = any> = {
   id: number

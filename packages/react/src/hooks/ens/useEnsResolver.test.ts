@@ -1,4 +1,4 @@
-import { addressLookup } from 'wagmi-private/testing'
+import { addressLookup } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useEnsResolver } from './useEnsResolver'

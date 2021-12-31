@@ -20,6 +20,8 @@ export abstract class Connector<
   Provider = any,
   Options = any,
 > extends EventEmitter<ConnectorEvents<Provider>> {
+  /** Unique connector id */
+  abstract readonly id: string
   /** Connector name */
   abstract readonly name: string
   /** Chains connector supports */

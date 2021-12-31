@@ -1,8 +1,7 @@
 import { ethers } from 'ethers'
 import { verifyMessage } from 'ethers/lib/utils'
+import { defaultChains } from 'wagmi-private'
 
-import { defaultChains } from '../../constants'
-import { normalizeMessage } from '../../utils'
 import { addressLookup, defaultMnemonic, messageLookup } from '../constants'
 import { MockConnector } from './mockConnector'
 
@@ -82,10 +81,7 @@ describe('MockConnector', () => {
       const signature = await connector.signMessage({
         message: messageLookup.basic,
       })
-      const recovered = verifyMessage(
-        normalizeMessage(messageLookup.basic),
-        signature,
-      )
+      const recovered = verifyMessage(messageLookup.basic, signature)
       expect(data.account).toEqual(recovered)
     })
 

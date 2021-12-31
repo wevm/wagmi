@@ -1,9 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
 import { ethers } from 'ethers'
-
+import { Message, UserRejectedRequestError } from 'wagmi-private'
 import { getAddress } from 'ethers/lib/utils'
-
-import { UserRejectedRequestError } from '../../errors'
 
 export type MockProviderOptions = {
   flags?: {
@@ -52,7 +50,7 @@ export class MockProvider extends ethers.providers.BaseProvider {
     return [getAddress(address)]
   }
 
-  async signMessage(message: string) {
+  async signMessage(message: Message) {
     if (this._options.flags?.failSign) throw new UserRejectedRequestError()
     if (!this._wallet)
       this._wallet = ethers.Wallet.fromMnemonic(this._options.mnemonic)

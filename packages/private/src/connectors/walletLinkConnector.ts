@@ -1,9 +1,10 @@
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { WalletLink, WalletLinkProvider } from 'walletlink'
 import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
 import { UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, normalizeChainId, normalizeMessage } from '../utils'
+import { getAddress, normalizeChainId } from '../utils'
 import { Connector } from './base'
 
 type Options = WalletLinkOptions & { jsonRpcUrl?: string }
@@ -12,6 +13,7 @@ export class WalletLinkConnector extends Connector<
   WalletLinkProvider,
   Options
 > {
+  readonly id = 'walletLink'
   readonly name = 'Coinbase Wallet'
   readonly ready =
     typeof window !== 'undefined' && !window.ethereum?.isCoinbaseWallet
@@ -42,7 +44,11 @@ export class WalletLinkConnector extends Connector<
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
       const chainId = await this.getChainId()
-      return { account, chainId, provider }
+      return {
+        account,
+        chainId,
+        provider: new Web3Provider(<ExternalProvider>(<unknown>provider)),
+      }
     } catch (error) {
       if ((<ProviderRpcError>error).message === 'User closed modal')
         throw new UserRejectedRequestError()
@@ -99,10 +105,10 @@ export class WalletLinkConnector extends Connector<
     try {
       const provider = this.provider
       const account = await this.getAccount()
-      const signature = await provider.request<string>({
-        method: 'personal_sign',
-        params: [normalizeMessage(message), account],
-      })
+      const signer = new Web3Provider(
+        <ExternalProvider>(<unknown>provider),
+      ).getSigner(account)
+      const signature = await signer.signMessage(message)
       return signature
     } catch (error) {
       if ((<ProviderRpcError>error).code === 4001)
