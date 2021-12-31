@@ -29,7 +29,6 @@ export class WalletLinkConnector extends Connector<
     if (!this._provider) {
       this._client = new WalletLink(this.options)
       this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
-      return this._provider
     }
     return this._provider
   }

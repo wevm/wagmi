@@ -1,0 +1,73 @@
+# useWaitForTransaction
+
+Hook for declaratively waiting until transaction is processed. Pairs well with [**useTransaction**](/docs/hooks/useTransaction).
+
+```tsx
+import { useWaitForTransaction } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useTransaction } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, wait] = useWaitForTransaction({
+    hash: '0x7be10a9c3440cdc09f7e9b36b7b162e0a377cae104742f6ee43e8f2fea6cfdcf',
+  })
+
+  if (loading) return <div>Processing…</div>
+  if (error) return <div>Transaction error</div>
+  return <div>Transaction: {JSON.stringify(data)}</div>
+}
+```
+
+## Return Values
+
+### result
+
+```ts
+{
+  data?: TransactionReceipt
+  error?: Error
+  loading?: boolean
+}
+```
+
+### wait
+
+```ts
+(config?: {
+  confirmations?: number
+  hash?: string
+  timeout?: number
+  wait?: TransactionResponse['wait']
+}) => Promise<TransactionReceipt | Error>
+```
+
+## Configuration
+
+### confirmations (optional)
+
+Message to sign with wallet.
+
+```tsx highlight='5'
+import { useWaitForTransaction } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, sendTransaction] = useWaitForTransaction({
+    confirmations: 1,
+    hash: '0x7be10a9c3440cdc09f7e9b36b7b162e0a377cae104742f6ee43e8f2fea6cfdcf'
+  })
+
+  return ...
+}
+```
+
+### hash (optional)
+
+### skip (optional)
+
+### timeout (optional)
+
+### wait (optional)

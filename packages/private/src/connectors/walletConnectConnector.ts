@@ -25,10 +25,8 @@ export class WalletConnectConnector extends Connector<
   }
 
   get provider() {
-    if (!this._provider) {
+    if (!this._provider)
       this._provider = new WalletConnectProvider(this.options)
-      return this._provider
-    }
     return this._provider
   }
 

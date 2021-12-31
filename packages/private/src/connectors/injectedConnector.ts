@@ -37,8 +37,9 @@ export class InjectedConnector extends Connector<
 
   async connect() {
     try {
-      const provider = this.provider
+      const provider = window.ethereum
       if (!provider) throw new ConnectorNotFoundError()
+      this._provider = provider
 
       if (provider.on) {
         provider.on('accountsChanged', this.onAccountsChanged)

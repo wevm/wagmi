@@ -13,5 +13,7 @@
   "useProvider": "useProvider",
   "useSignMessage": "useSignMessage",
   "useToken": "useToken",
+  "useTransaction": "useTransaction",
+  "useWaitForTransaction": "useWaitForTransaction",
   "useWebSocketProvider": "useWebSocketProvider"
 }
