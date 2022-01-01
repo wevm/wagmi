@@ -1,7 +1,7 @@
 {
   "name": "wagmi-testing",
   "license": "MIT",
-  "version": "0.0.7",
+  "version": "0.0.6",
   "ethereum": "awkweb.eth",
   "sideEffects": false,
   "main": "dist/wagmi-testing.cjs.js",
