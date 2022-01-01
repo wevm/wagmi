@@ -1,0 +1,132 @@
+# useWaitForTransaction
+
+Hook for declaratively waiting until transaction is processed. Pairs well with [**useTransaction**](/docs/hooks/useTransaction).
+
+```tsx
+import { useWaitForTransaction } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useTransaction } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, wait] = useWaitForTransaction({
+    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  })
+
+  if (loading) return <div>Processing…</div>
+  if (error) return <div>Transaction error</div>
+  return <div>Transaction: {JSON.stringify(data)}</div>
+}
+```
+
+## Return Values
+
+### result
+
+```ts
+{
+  data?: TransactionReceipt
+  error?: Error
+  loading?: boolean
+}
+```
+
+### wait
+
+```ts
+(config?: {
+  confirmations?: number
+  hash?: string
+  timeout?: number
+  wait?: TransactionResponse['wait']
+}) => Promise<TransactionReceipt | Error>
+```
+
+## Configuration
+
+### confirmations (optional)
+
+Waits until _confirmations_ number of blocks are mined on top of block transaction was mined. Defaults to `1`. If _confirmations_ is `0`, hook will not wait and return immediately without blocking, likely resulting in `data` being `null`.
+
+```tsx highlight='5'
+import { useWaitForTransaction } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, wait] = useWaitForTransaction({
+    confirmations: 1,
+    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  })
+
+  return ...
+}
+```
+
+### hash (optional)
+
+Hash of transaction to wait for.
+
+```tsx highlight='5'
+import { useWaitForTransaction } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, wait] = useWaitForTransaction({
+    hash: '0x7be10a9c3440cdc09f7e9b36b7b162e0a377cae104742f6ee43e8f2fea6cfdcf',
+  })
+
+  return ...
+}
+```
+
+### skip (optional)
+
+Skips automatically waiting for transaction to process on mount. Defaults to `false`. Useful if you want to call `wait` manually at some other point.
+
+```tsx highlight='6'
+import { useWaitForTransaction } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, wait] = useWaitForTransaction({
+    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+    skip: true,
+  })
+
+  return ...
+}
+```
+
+### timeout (optional)
+
+Maximum amount of time to wait before timing out in milliseconds. Defaults to `0` (will wait until transaction processes).
+
+```tsx highlight='5'
+import { useWaitForTransaction } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, wait] = useWaitForTransaction({
+    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+    timeout: 2000, // 2 seconds
+  })
+
+  return ...
+}
+```
+
+### wait (optional)
+
+Function that resolves to processed transaction receipt. Works well with [**useTransaction**](/docs/hooks/useTransaction) result.
+
+```tsx highlight='6'
+import { useTransaction, useWaitForTransaction } from 'wagmi'
+
+const App = () => {
+  const [result, sendTransaction] = useTransaction()
+  const [{ data, error, loading }, wait] = useWaitForTransaction({
+    wait: result.data?.wait
+  })
+
+  return ...
+}
+```

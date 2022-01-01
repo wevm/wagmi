@@ -1,4 +1,4 @@
-import { addressLookup } from 'wagmi-private/testing'
+import { contracts } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
@@ -15,7 +15,7 @@ describe('useToken', () => {
     it('has token', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useToken({
-          address: addressLookup.uniToken,
+          address: contracts.uniToken,
         }),
       )
 
@@ -50,7 +50,7 @@ describe('useToken', () => {
     it('bogus token', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useToken({
-          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address: contracts.bogusToken,
         }),
       )
 
@@ -65,7 +65,7 @@ describe('useToken', () => {
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": [Error: missing revert data in call exception (error={"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\\"method\\":\\"eth_call\\",\\"params\\":[{\\"to\\":\\"0xa0cf798816d4b9b9866b5330eea46a18382f251e\\",\\"data\\":\\"0x313ce567\\"},\\"latest\\"],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.infura.io/v3/mockApiKey"}, data="0x", code=CALL_EXCEPTION, version=providers/5.5.1)],
+          "error": [Error: call revert exception (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.5.0)],
           "loading": false,
         }
       `)
@@ -93,7 +93,7 @@ describe('useToken', () => {
         await result.current.connect[1](mockConnector)
 
         const res = await result.current.token[1]({
-          address: addressLookup.uniToken,
+          address: contracts.uniToken,
           decimals: 18,
           symbol: 'UNI',
         })
@@ -105,7 +105,7 @@ describe('useToken', () => {
       const { result } = renderHook(() => useToken({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]({
-          address: addressLookup.uniToken,
+          address: contracts.uniToken,
           decimals: 18,
           symbol: 'UNI',
         })
@@ -117,7 +117,7 @@ describe('useToken', () => {
   describe('getToken', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
-        useToken({ address: addressLookup.uniToken, skip: true }),
+        useToken({ address: contracts.uniToken, skip: true }),
       )
 
       await actHook(async () => {
@@ -144,7 +144,7 @@ describe('useToken', () => {
 
       await actHook(async () => {
         const res = await result.current[2]({
-          address: addressLookup.uniToken,
+          address: contracts.uniToken,
         })
         expect(res).toMatchInlineSnapshot(`
           {

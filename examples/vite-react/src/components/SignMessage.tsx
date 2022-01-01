@@ -13,7 +13,13 @@ export const SignMessage = () => {
   }, [data, previousMessage])
 
   return (
-    <div>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault()
+        previousMessage.current = message
+        signMessage({ message })
+      }}
+    >
       <div>
         <label htmlFor="message">Enter Message to Sign</label>
       </div>
@@ -23,15 +29,7 @@ export const SignMessage = () => {
         value={message}
         onChange={(event) => setMessage(event.target.value)}
       />
-      <button
-        disabled={loading || !message.length}
-        onClick={async () => {
-          previousMessage.current = message
-          await signMessage({ message })
-        }}
-      >
-        Sign message
-      </button>
+      <button disabled={loading || !message.length}>Sign message</button>
 
       {data && (
         <div>
@@ -40,6 +38,6 @@ export const SignMessage = () => {
         </div>
       )}
       {error && <div>Error signing message</div>}
-    </div>
+    </form>
   )
 }

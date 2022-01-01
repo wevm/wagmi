@@ -17,6 +17,14 @@ export {
   units,
 } from './constants'
 
-export type { Chain, Message, Unit } from './types'
+export {
+  AddChainError,
+  ChainNotConfiguredError,
+  ConnectorNotFoundError,
+  SwitchChainError,
+  UserRejectedRequestError,
+} from './errors'
 
-export { normalizeChainId, normalizeMessage } from './utils'
+export type { Chain, Unit } from './types'
+
+export { normalizeChainId } from './utils'

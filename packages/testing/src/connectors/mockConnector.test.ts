@@ -1,21 +1,21 @@
 import { ethers } from 'ethers'
-import { verifyMessage } from 'ethers/lib/utils'
+import { defaultChains } from 'wagmi-private'
 
-import { defaultChains } from '../../constants'
-import { normalizeMessage } from '../../utils'
-import { addressLookup, defaultMnemonic, messageLookup } from '../constants'
+import { contracts, wallets } from '../constants'
 import { MockConnector } from './mockConnector'
 
 describe('MockConnector', () => {
   let connector: MockConnector
+  let wallet: ethers.Wallet
   beforeEach(() => {
     connector = new MockConnector({
       chains: defaultChains,
       options: {
-        mnemonic: defaultMnemonic,
         network: 1,
+        privateKey: wallets.ethers1.privateKey,
       },
     })
+    wallet = new ethers.Wallet(wallets.ethers1.privateKey)
   })
 
   it('inits', () => {
@@ -27,7 +27,7 @@ describe('MockConnector', () => {
     it('succeeds', async () => {
       const onChange = jest.fn()
       connector.on('change', onChange)
-      const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
+
       const data = await connector.connect()
       expect(onChange).toBeCalledTimes(1)
       expect(data.account).toEqual(wallet.address)
@@ -42,8 +42,8 @@ describe('MockConnector', () => {
           flags: {
             failConnect: true,
           },
-          mnemonic: defaultMnemonic,
           network: 1,
+          privateKey: wallets.ethers1.privateKey,
         },
       })
       try {
@@ -59,6 +59,7 @@ describe('MockConnector', () => {
   it('disconnect', async () => {
     const onDisconnect = jest.fn()
     connector.on('disconnect', onDisconnect)
+
     await connector.connect()
     await connector.disconnect()
     expect(onDisconnect).toBeCalledTimes(1)
@@ -67,7 +68,6 @@ describe('MockConnector', () => {
   it('getAccount', async () => {
     await connector.connect()
     const account = await connector.getAccount()
-    const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
     expect(account).toEqual(wallet.address)
   })
 
@@ -76,46 +76,16 @@ describe('MockConnector', () => {
     expect(chainId).toEqual(1)
   })
 
-  describe('signMessage', () => {
-    it('succeeds', async () => {
-      const data = await connector.connect()
-      const signature = await connector.signMessage({
-        message: messageLookup.basic,
-      })
-      const recovered = verifyMessage(
-        normalizeMessage(messageLookup.basic),
-        signature,
-      )
-      expect(data.account).toEqual(recovered)
-    })
-
-    it('fails', async () => {
-      const connector = new MockConnector({
-        chains: defaultChains,
-        options: {
-          flags: {
-            failSign: true,
-          },
-          mnemonic: defaultMnemonic,
-          network: 1,
-        },
-      })
-      try {
-        await connector.connect()
-        await connector.signMessage({
-          message: messageLookup.basic,
-        })
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(
-          `[UserRejectedRequestError: User rejected request]`,
-        )
-      }
-    })
+  it('getSigner', async () => {
+    await connector.connect()
+    const signer = await connector.getSigner()
+    expect(signer).toBeDefined()
   })
 
   it('switchChain', async () => {
     const onChange = jest.fn()
     connector.on('change', onChange)
+
     const chainIdBefore = await connector.getChainId()
     expect(chainIdBefore).toEqual(1)
     await connector.connect()
@@ -128,7 +98,7 @@ describe('MockConnector', () => {
   it('watchAsset', async () => {
     await connector.connect()
     await connector.watchAsset({
-      address: addressLookup.uniToken,
+      address: contracts.uniToken,
       decimals: 18,
       symbol: 'UNI',
     })

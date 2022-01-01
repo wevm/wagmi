@@ -38,7 +38,7 @@ const App = () => (
 
 ### connectorStorageKey (optional)
 
-Key for saving connector preference to browser. Defaults to `wagmiWallet`. Should be unique so it doesn't get overwritten by other libraries.
+Key for saving connector preference to browser. Defaults to `wagmi.connector`. Should be unique so it doesn't get overwritten by other libraries.
 
 ```tsx highlight='4'
 import { Provider } from 'wagmi'
@@ -87,7 +87,7 @@ const App = () => (
 
 ### provider (optional)
 
-**ethers.js** [interface](https://docs.ethers.io/v5/api/providers/) for connecting to network. Defaults to `getDefaultProvider()`.
+[**Interface**](https://docs.ethers.io/v5/api/providers/) for connecting to network. Defaults to `getDefaultProvider()`.
 
 ```tsx highlight='4-5,8'
 import { providers } from 'ethers'

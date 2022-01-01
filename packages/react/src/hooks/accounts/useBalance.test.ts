@@ -1,4 +1,4 @@
-import { addressLookup } from 'wagmi-private/testing'
+import { wallets } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
@@ -58,7 +58,7 @@ describe('useBalance', () => {
       const { result } = renderHook(() =>
         useBalanceWithConnect({
           balance: {
-            address: addressLookup.addressWithEns,
+            address: wallets.ethers1.address,
             skip: true,
           },
         }),
@@ -69,9 +69,16 @@ describe('useBalance', () => {
         await result.current.connect[1](mockConnector)
 
         const res = await result.current.balance[1]()
-        expect(res).toMatchInlineSnapshot(
-          `[Error: missing response (requestBody="{\\"method\\":\\"eth_getBalance\\",\\"params\\":[\\"0xa0cf798816d4b9b9866b5330eea46a18382f251e\\",\\"latest\\"],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}", requestMethod="POST", serverError={}, url="https://mainnet.infura.io/v3/mockApiKey", code=SERVER_ERROR, version=web/5.5.1)]`,
-        )
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "formatted": "0.193861344139087225",
+            "symbol": "ETH",
+            "value": {
+              "hex": "0x02b0bbdd89170d79",
+              "type": "BigNumber",
+            },
+          }
+        `)
       })
     })
 
@@ -85,11 +92,18 @@ describe('useBalance', () => {
         await result.current.connect[1](mockConnector)
 
         const res = await result.current.balance[1]({
-          address: addressLookup.addressWithEns,
+          address: wallets.ethers1.address,
         })
-        expect(res).toMatchInlineSnapshot(
-          `[Error: missing response (requestBody="{\\"method\\":\\"eth_getBalance\\",\\"params\\":[\\"0xa0cf798816d4b9b9866b5330eea46a18382f251e\\",\\"latest\\"],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}", requestMethod="POST", serverError={}, url="https://mainnet.infura.io/v3/mockApiKey", code=SERVER_ERROR, version=web/5.5.1)]`,
-        )
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "formatted": "0.193861344139087225",
+            "symbol": "ETH",
+            "value": {
+              "hex": "0x02b0bbdd89170d79",
+              "type": "BigNumber",
+            },
+          }
+        `)
       })
     })
 

@@ -33,8 +33,8 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
         const avatar = await provider.getAvatar(_config.addressOrName)
         setState((x) => ({ ...x, avatar, loading: false }))
         return avatar
-      } catch (_error) {
-        const error = _error as Error
+      } catch (err) {
+        const error = <Error>err
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }
@@ -54,7 +54,7 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
     return () => {
       didCancel = true
     }
-  }, [addressOrName, cacheBuster])
+  }, [addressOrName, cacheBuster, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

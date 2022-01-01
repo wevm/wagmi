@@ -1,7 +1,8 @@
 import { default as EventEmitter } from 'eventemitter3'
+import { Signer } from 'ethers'
 
 import { defaultChains } from '../constants'
-import { Chain, Message } from '../types'
+import { Chain } from '../types'
 
 export type Data<Provider = any> = {
   account?: string
@@ -20,6 +21,8 @@ export abstract class Connector<
   Provider = any,
   Options = any,
 > extends EventEmitter<ConnectorEvents<Provider>> {
+  /** Unique connector id */
+  abstract readonly id: string
   /** Connector name */
   abstract readonly name: string
   /** Chains connector supports */
@@ -47,8 +50,8 @@ export abstract class Connector<
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
+  abstract getSigner(): Promise<Signer>
   abstract isAuthorized(): Promise<boolean>
-  abstract signMessage(config: { message: Message }): Promise<string>
   switchChain?(chainId: number): Promise<void>
   watchAsset?(asset: {
     address: string

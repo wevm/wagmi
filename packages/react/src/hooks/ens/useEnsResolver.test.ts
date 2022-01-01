@@ -1,4 +1,4 @@
-import { addressLookup } from 'wagmi-private/testing'
+import { wallets } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useEnsResolver } from './useEnsResolver'
@@ -8,7 +8,7 @@ describe('useEnsResolver', () => {
     it('has resolver', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsResolver({
-          name: addressLookup.ensName,
+          name: wallets.ethers3.ensName,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -20,7 +20,7 @@ describe('useEnsResolver', () => {
       `)
       await waitForNextUpdate()
       const { data, ...rest } = result.current[0]
-      expect(data?.name).toEqual(addressLookup.ensName)
+      expect(data?.name).toEqual(wallets.ethers3.ensName)
       expect(rest).toMatchInlineSnapshot(`
         {
           "error": undefined,
@@ -32,7 +32,7 @@ describe('useEnsResolver', () => {
     it('does not have resolver', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsResolver({
-          name: addressLookup.ensNameDoesNotExist,
+          name: 'foobar.eth',
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -68,13 +68,13 @@ describe('useEnsResolver', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
         useEnsResolver({
-          name: addressLookup.ensName,
+          name: wallets.ethers3.ensName,
           skip: true,
         }),
       )
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res?.name).toEqual(addressLookup.ensName)
+        expect(res?.name).toEqual(wallets.ethers3.ensName)
       })
     })
 
@@ -82,9 +82,9 @@ describe('useEnsResolver', () => {
       const { result } = renderHook(() => useEnsResolver({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]({
-          name: addressLookup.ensName,
+          name: wallets.ethers3.ensName,
         })
-        expect(res?.name).toEqual(addressLookup.ensName)
+        expect(res?.name).toEqual(wallets.ethers3.ensName)
       })
     })
 

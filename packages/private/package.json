@@ -2,6 +2,7 @@
   "name": "wagmi-private",
   "license": "MIT",
   "version": "0.0.8",
+  "ethereum": "awkweb.eth",
   "sideEffects": false,
   "main": "dist/wagmi-private.cjs.js",
   "module": "dist/wagmi-private.esm.js",
@@ -13,13 +14,11 @@
     }
   },
   "files": [
-    "/dist",
-    "/testing"
+    "/dist"
   ],
   "preconstruct": {
     "entrypoints": [
-      "index.ts",
-      "testing/index.ts"
+      "index.ts"
     ]
   },
   "peerDependencies": {
@@ -36,6 +35,7 @@
     }
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.5.1",
     "eventemitter3": "^4.0.7"
   },
   "devDependencies": {

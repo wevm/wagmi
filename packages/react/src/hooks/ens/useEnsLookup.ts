@@ -33,8 +33,8 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
         const ens = await provider.lookupAddress(_config.address)
         setState((x) => ({ ...x, ens, loading: false }))
         return ens
-      } catch (_error) {
-        const error = _error as Error
+      } catch (err) {
+        const error = <Error>err
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }
@@ -53,7 +53,7 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
     return () => {
       didCancel = true
     }
-  }, [address, cacheBuster])
+  }, [address, cacheBuster, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

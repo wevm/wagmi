@@ -1,15 +1,17 @@
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 
 import { UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, normalizeChainId, normalizeMessage } from '../utils'
+import { getAddress, normalizeChainId } from '../utils'
 import { Connector } from './base'
 
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider,
   IWCEthRpcConnectionOptions
 > {
+  readonly id = 'walletConnect'
   readonly name = 'WalletConnect'
   readonly ready = true
 
@@ -23,10 +25,8 @@ export class WalletConnectConnector extends Connector<
   }
 
   get provider() {
-    if (!this._provider) {
+    if (!this._provider)
       this._provider = new WalletConnectProvider(this.options)
-      return this._provider
-    }
     return this._provider
   }
 
@@ -43,7 +43,11 @@ export class WalletConnectConnector extends Connector<
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
       const chainId = await this.getChainId()
-      return { account, chainId, provider }
+      return {
+        account,
+        chainId,
+        provider: new Web3Provider(<ExternalProvider>provider),
+      }
     } catch (error) {
       if ((<ProviderRpcError>error).message === 'User closed modal')
         throw new UserRejectedRequestError()
@@ -76,28 +80,18 @@ export class WalletConnectConnector extends Connector<
     return chainId
   }
 
+  async getSigner() {
+    const provider = this.provider
+    const account = await this.getAccount()
+    return new Web3Provider(<ExternalProvider>provider).getSigner(account)
+  }
+
   async isAuthorized() {
     try {
       const account = await this.getAccount()
       return !!account
     } catch {
       return false
-    }
-  }
-
-  async signMessage({ message }: { message: string }) {
-    try {
-      const provider = this.provider
-      const account = await this.getAccount()
-      const signature = await provider.request<string>({
-        method: 'personal_sign',
-        params: [normalizeMessage(message), account],
-      })
-      return signature
-    } catch (error) {
-      if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
-      throw error
     }
   }
 

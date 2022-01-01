@@ -57,9 +57,9 @@ export const useToken = ({
           erc20ABI,
           provider,
         )
+        const symbol = await contract.symbol()
         const decimals = await contract.decimals()
         const totalSupply = await contract.totalSupply()
-        const symbol = await contract.symbol()
         const _formatUnits = _config.formatUnits ?? 'ether'
         const token = {
           address: _config.address,
@@ -72,8 +72,8 @@ export const useToken = ({
         }
         setState((x) => ({ ...x, token, loading: false }))
         return token
-      } catch (_error) {
-        const error = _error as Error
+      } catch (err) {
+        const error = <Error>err
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }
@@ -92,8 +92,8 @@ export const useToken = ({
       try {
         await connector.watchAsset(token)
         return true
-      } catch (_error) {
-        return _error as Error
+      } catch (error) {
+        return <Error>error
       }
     },
     [connector],
@@ -110,7 +110,7 @@ export const useToken = ({
     return () => {
       didCancel = true
     }
-  }, [address])
+  }, [address, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

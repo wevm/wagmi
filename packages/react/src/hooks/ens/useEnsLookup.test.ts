@@ -1,4 +1,4 @@
-import { addressLookup } from 'wagmi-private/testing'
+import { wallets } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useEnsLookup } from './useEnsLookup'
@@ -8,30 +8,7 @@ describe('useEnsLookup', () => {
     it('has ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsLookup({
-          address: addressLookup.addressWithEns,
-        }),
-      )
-      expect(result.current[0]).toMatchInlineSnapshot(`
-              {
-                "data": undefined,
-                "error": undefined,
-                "loading": true,
-              }
-          `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
-              {
-                "data": "meagher.eth",
-                "error": undefined,
-                "loading": false,
-              }
-          `)
-    })
-
-    it('does not have ens', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsLookup({
-          address: addressLookup.addressWithoutEns,
+          address: wallets.ethers3.address,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -44,7 +21,30 @@ describe('useEnsLookup', () => {
       await waitForNextUpdate()
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
-          "data": null,
+          "data": "meagher.eth",
+          "error": undefined,
+          "loading": false,
+        }
+      `)
+    })
+
+    it('does not have ens', async () => {
+      const { result, waitForNextUpdate } = renderHook(() =>
+        useEnsLookup({
+          address: wallets.ethers3.address,
+        }),
+      )
+      expect(result.current[0]).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": undefined,
+          "loading": true,
+        }
+      `)
+      await waitForNextUpdate()
+      expect(result.current[0]).toMatchInlineSnapshot(`
+        {
+          "data": "meagher.eth",
           "error": undefined,
           "loading": false,
         }
@@ -89,7 +89,10 @@ describe('useEnsLookup', () => {
   describe('lookupAddress', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
-        useEnsLookup({ address: addressLookup.addressWithEns, skip: true }),
+        useEnsLookup({
+          address: wallets.ethers3.address,
+          skip: true,
+        }),
       )
       await actHook(async () => {
         const res = await result.current[1]()
@@ -101,7 +104,7 @@ describe('useEnsLookup', () => {
       const { result } = renderHook(() => useEnsLookup({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]({
-          address: addressLookup.addressWithEns,
+          address: wallets.ethers3.address,
         })
         expect(res).toMatchInlineSnapshot(`"meagher.eth"`)
       })

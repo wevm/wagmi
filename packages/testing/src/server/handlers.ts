@@ -1,6 +1,7 @@
 import { rest } from 'msw'
 import { match, select } from 'ts-pattern'
-import { addressLookup, infuraApiKey } from 'wagmi-private/testing'
+
+import { contracts, infuraApiKey } from '../constants'
 
 type EthRequest<Params = any> = {
   id: number
@@ -9,6 +10,7 @@ type EthRequest<Params = any> = {
     | 'eth_blockNumber'
     | 'eth_call'
     | 'eth_gasPrice'
+    | 'eth_getBalance'
     | 'eth_getBlockByNumber'
   params: Array<Params>
 }
@@ -34,8 +36,15 @@ const getResponse = ({ method, params }: EthRequest) => {
     }))
     .with('eth_call', () =>
       match<{ to: string; data: string }>(params[0])
+        .with({ to: contracts.bogusToken, data: select() }, (data) =>
+          match(data)
+            .with('0x95d89b41', () => ({
+              result: '0x',
+            }))
+            .run(),
+        )
         .with(
-          { to: addressLookup.ensRegistryWithFallback, data: select() },
+          { to: contracts.ensRegistryWithFallback, data: select() },
           (data) =>
             match(data)
               .with(
@@ -55,7 +64,7 @@ const getResponse = ({ method, params }: EthRequest) => {
               .run(),
         )
         .with(
-          { to: addressLookup.ensDefaultReverseResolver, data: select() },
+          { to: contracts.ensDefaultReverseResolver, data: select() },
           (data) =>
             match(data)
               .with(
@@ -67,7 +76,7 @@ const getResponse = ({ method, params }: EthRequest) => {
               )
               .run(),
         )
-        .with({ to: addressLookup.ensPublicResolver, data: select() }, (data) =>
+        .with({ to: contracts.ensPublicResolver, data: select() }, (data) =>
           match(data)
             .with(
               '0x3b3b57dec31baf175750b79a7dd0e718cb0de8f4694da8cad0e68d5f64503df46d24c298',
@@ -85,7 +94,7 @@ const getResponse = ({ method, params }: EthRequest) => {
             )
             .run(),
         )
-        .with({ to: addressLookup.uniToken, data: select() }, (data) =>
+        .with({ to: contracts.uniToken, data: select() }, (data) =>
           match(data)
             .with('0x313ce567', () => ({
               result:
@@ -101,6 +110,13 @@ const getResponse = ({ method, params }: EthRequest) => {
             }))
             .run(),
         )
+        .run(),
+    )
+    .with('eth_getBalance', () =>
+      match<[string, string]>(<[string, string]>params)
+        .with(['0x012363d61bdc53d0290a0f25e9c89f8257550fb8', 'latest'], () => ({
+          result: '0x2b0bbdd89170d79',
+        }))
         .run(),
     )
     .with('eth_gasPrice', () => ({
@@ -144,6 +160,7 @@ const getResponse = ({ method, params }: EthRequest) => {
             uncles: [],
           },
         }))
+
         .run(),
     )
     .run()

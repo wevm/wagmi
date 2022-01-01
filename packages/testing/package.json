@@ -1,0 +1,37 @@
+{
+  "name": "wagmi-testing",
+  "license": "MIT",
+  "version": "0.0.8",
+  "ethereum": "awkweb.eth",
+  "sideEffects": false,
+  "main": "dist/wagmi-testing.cjs.js",
+  "module": "dist/wagmi-testing.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/wagmi-testing.esm.js",
+      "default": "./dist/wagmi-testing.cjs.js"
+    }
+  },
+  "files": [
+    "/dist"
+  ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "ethers": "^5.5.1"
+  },
+  "dependencies": {
+    "@ethersproject/providers": "^5.5.1",
+    "eventemitter3": "^4.0.7",
+    "msw": "^0.36.3",
+    "ts-pattern": "^3.3.4",
+    "wagmi-private": "0.0.8"
+  },
+  "devDependencies": {
+    "ethers": "^5.5.1"
+  }
+}

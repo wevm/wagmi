@@ -1,7 +1,6 @@
 import { ethers } from 'ethers'
-import { verifyMessage } from 'ethers/lib/utils'
 
-import { addressLookup, defaultMnemonic, messageLookup } from '../constants'
+import { contracts, wallets } from '../constants'
 import { MockProvider } from './mockProvider'
 
 describe('MockProvider', () => {
@@ -9,10 +8,10 @@ describe('MockProvider', () => {
   let wallet: ethers.Wallet
   beforeEach(() => {
     provider = new MockProvider({
-      mnemonic: defaultMnemonic,
       network: 1,
+      privateKey: wallets.ethers1.privateKey,
     })
-    wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
+    wallet = new ethers.Wallet(wallets.ethers1.privateKey)
   })
 
   it('inits', () => {
@@ -31,8 +30,8 @@ describe('MockProvider', () => {
         flags: {
           failConnect: true,
         },
-        mnemonic: defaultMnemonic,
         network: 1,
+        privateKey: wallets.ethers1.privateKey,
       })
       try {
         await provider.enable()
@@ -52,12 +51,12 @@ describe('MockProvider', () => {
   })
 
   describe('getAccounts', () => {
-    it('getAccounts', async () => {
+    it('disconnected', async () => {
       const disconnected = await provider.getAccounts()
       expect(disconnected[0]).toEqual(undefined)
     })
 
-    it('getAccounts', async () => {
+    it('connected', async () => {
       await provider.enable()
       const account = await wallet.getAddress()
       const connected = await provider.getAccounts()
@@ -65,31 +64,19 @@ describe('MockProvider', () => {
     })
   })
 
-  describe('signMessage', () => {
-    it('succeeds', async () => {
-      const accounts = await provider.enable()
-      const signature = await provider.signMessage(messageLookup.basic)
-      const recovered = verifyMessage(messageLookup.basic, signature)
-      const account = accounts[0]
-      expect(account).toEqual(recovered)
+  describe('getSigner', () => {
+    it('disconnected', () => {
+      try {
+        provider.getSigner()
+      } catch (error) {
+        expect(error).toMatchInlineSnapshot(`[Error: Signer not found]`)
+      }
     })
 
-    it('fails', async () => {
-      const provider = new MockProvider({
-        flags: {
-          failSign: true,
-        },
-        mnemonic: defaultMnemonic,
-        network: 1,
-      })
-      try {
-        await provider.enable()
-        await provider.signMessage(messageLookup.basic)
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(
-          `[UserRejectedRequestError: User rejected request]`,
-        )
-      }
+    it('connected', async () => {
+      await provider.enable()
+      const signer = provider.getSigner()
+      expect(signer).toBeDefined()
     })
   })
 
@@ -100,7 +87,7 @@ describe('MockProvider', () => {
 
   it('watchAsset', async () => {
     await provider.watchAsset({
-      address: addressLookup.uniToken,
+      address: contracts.uniToken,
       decimals: 18,
       symbol: 'UNI',
     })

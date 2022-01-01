@@ -74,8 +74,8 @@ export const useBalance = ({
 
         setState((x) => ({ ...x, balance, loading: false }))
         return balance
-      } catch (_error) {
-        const error = _error as Error
+      } catch (err) {
+        const error = <Error>err
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }
@@ -95,7 +95,7 @@ export const useBalance = ({
     return () => {
       didCancel = true
     }
-  }, [address, token, cacheBuster])
+  }, [address, cacheBuster, skip, token])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */

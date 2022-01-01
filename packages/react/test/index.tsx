@@ -8,9 +8,9 @@ import { providers } from 'ethers'
 import {
   MockConnector,
   defaultChains,
-  defaultMnemonic,
   infuraApiKey,
-} from 'wagmi-private/testing'
+  wallets,
+} from 'wagmi-testing'
 
 import { Provider, ProviderProps } from '../src'
 
@@ -28,8 +28,8 @@ export const wrapper = (props: Props) => {
         new MockConnector({
           chains: defaultChains,
           options: {
-            mnemonic: defaultMnemonic,
             network: 1,
+            privateKey: wallets.ethers1.privateKey,
           },
         }),
       ]}

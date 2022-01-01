@@ -36,7 +36,7 @@ describe('useAccount', () => {
       expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
         {
           "data": {
-            "address": "0x71CB05EE1b1F506fF321Da3dac38f25c0c9ce6E1",
+            "address": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
             "ens": undefined,
           },
           "error": undefined,
@@ -61,7 +61,7 @@ describe('useAccount', () => {
       expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
         {
           "data": {
-            "address": "0x71CB05EE1b1F506fF321Da3dac38f25c0c9ce6E1",
+            "address": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
             "ens": undefined,
           },
           "error": undefined,
@@ -83,15 +83,15 @@ describe('useAccount', () => {
       result.current.account[0]
     expect(connector).toBeDefined()
     expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
-        {
-          "data": {
-            "address": "0x71CB05EE1b1F506fF321Da3dac38f25c0c9ce6E1",
-            "ens": undefined,
-          },
-          "error": undefined,
-          "loading": false,
-        }
-      `)
+      {
+        "data": {
+          "address": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
+          "ens": undefined,
+        },
+        "error": undefined,
+        "loading": false,
+      }
+    `)
 
     actHook(() => {
       result.current.account[1]()

@@ -1,7 +1,10 @@
-module.exports = {
-  modulePathIgnorePatterns: ['<rootDir>/docs/', '<rootDir>/examples/'],
+const config = {
+  coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/test/'],
+  snapshotFormat: {
+    printBasicPrototype: false,
+  },
   transform: {
-    '^.+\\.(t|j)sx?$': [
+    '^.+\\.ts(x)?$': [
       '@swc-node/jest',
       {
         jsc: {
@@ -10,28 +13,31 @@ module.exports = {
       },
     ],
   },
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    '/dist/',
-    '/test/',
-    'index.ts',
-  ],
+}
+
+module.exports = {
+  modulePathIgnorePatterns: ['<rootDir>/docs/', '<rootDir>/examples/'],
   coverageProvider: 'v8',
   coverageReporters: ['text'],
   projects: [
     {
+      ...config,
       displayName: 'private',
       testEnvironment: 'node',
-      testRegex: 'packages/private/.*\\.test\\.ts(x)?$',
+      testRegex: 'packages/private/.*\\.test\\.ts$',
     },
     {
+      ...config,
       displayName: 'react',
       setupFilesAfterEnv: ['<rootDir>/packages/react/test/setup.ts'],
-      snapshotFormat: {
-        printBasicPrototype: false,
-      },
       testEnvironment: 'jsdom',
       testRegex: 'packages/react/.*\\.test\\.ts(x)?$',
+    },
+    {
+      ...config,
+      displayName: 'testing',
+      testEnvironment: 'node',
+      testRegex: 'packages/testing/.*\\.test\\.ts$',
     },
   ],
   watchPlugins: [

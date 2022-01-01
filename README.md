@@ -57,3 +57,7 @@ pnpm test:watch
 ```
 NPM_TOKEN
 ```
+
+## Thanks
+
+- [ricmoo.eth](https://twitter.com/ricmoo) for creating and continued work on [ethers.js](https://github.com/ethers-io/ethers.js)

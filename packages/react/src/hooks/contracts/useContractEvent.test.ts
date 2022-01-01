@@ -1,5 +1,5 @@
 import { erc20ABI } from 'wagmi-private'
-import { addressLookup } from 'wagmi-private/testing'
+import { contracts } from 'wagmi-testing'
 
 import { renderHook } from '../../../test'
 import { useContractEvent } from './useContractEvent'
@@ -11,7 +11,7 @@ describe('useContractEvent', () => {
       renderHook(() =>
         useContractEvent(
           {
-            addressOrName: addressLookup.uniToken,
+            addressOrName: contracts.uniToken,
             contractInterface: erc20ABI,
           },
           'Transfer',

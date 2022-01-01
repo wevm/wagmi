@@ -1,8 +1,4 @@
-import {
-  MockConnector,
-  defaultChains,
-  defaultMnemonic,
-} from 'wagmi-private/testing'
+import { MockConnector, defaultChains, wallets } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
@@ -66,7 +62,7 @@ describe('useConnect', () => {
         expect(provider).toBeDefined()
         expect(rest).toMatchInlineSnapshot(`
           {
-            "account": "0x71CB05EE1b1F506fF321Da3dac38f25c0c9ce6E1",
+            "account": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
             "chainId": 1,
           }
         `)
@@ -83,7 +79,7 @@ describe('useConnect', () => {
                 flags: {
                   failConnect: true,
                 },
-                mnemonic: defaultMnemonic,
+                privateKey: wallets.ethers1.privateKey,
                 network: 1,
               },
             }),

@@ -49,7 +49,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <Provider
       autoConnect
-      connectorStorageKey="wagmiWallet"
+      connectorStorageKey="wagmi.wallet"
       connectors={connectors}
       provider={provider}
       webSocketProvider={webSocketProvider}

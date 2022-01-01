@@ -1,4 +1,4 @@
-import { addressLookup } from 'wagmi-private/testing'
+import { wallets } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useEnsAvatar } from './useEnsAvatar'
@@ -8,7 +8,7 @@ describe('useEnsAvatar', () => {
     it('has ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: addressLookup.ensNameWithAvatar,
+          addressOrName: wallets.ethers3.ensName,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -31,7 +31,7 @@ describe('useEnsAvatar', () => {
     it('does not have avatar', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: addressLookup.ensNameWithoutAvatar,
+          addressOrName: wallets.ethers1.address,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -67,7 +67,7 @@ describe('useEnsAvatar', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: addressLookup.ensNameWithAvatar,
+          addressOrName: wallets.ethers3.ensName,
           skip: true,
         }),
       )
@@ -83,7 +83,7 @@ describe('useEnsAvatar', () => {
       const { result } = renderHook(() => useEnsAvatar({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]({
-          addressOrName: addressLookup.ensNameWithAvatar,
+          addressOrName: wallets.ethers3.ensName,
         })
         expect(res).toMatchInlineSnapshot(
           `"https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg"`,
