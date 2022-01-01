@@ -83,7 +83,7 @@ export const useWaitForTransaction = ({
     return () => {
       didCancel = true
     }
-  }, [_wait, hash])
+  }, [_wait, hash, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

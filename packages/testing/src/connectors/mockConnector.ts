@@ -6,7 +6,7 @@ import {
   normalizeChainId,
 } from 'wagmi-private'
 
-import { defaultMnemonic } from '../constants'
+import { wallets } from '../constants'
 import { MockProvider, MockProviderOptions } from './mockProvider'
 
 export class MockConnector extends Connector<
@@ -23,8 +23,8 @@ export class MockConnector extends Connector<
     config: { chains: Chain[]; options: MockProviderOptions } = {
       chains: defaultChains,
       options: {
-        mnemonic: defaultMnemonic,
         network: 1,
+        privateKey: wallets.ethers1.privateKey,
       },
     },
   ) {

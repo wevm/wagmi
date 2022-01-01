@@ -55,7 +55,7 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
     return () => {
       didCancel = true
     }
-  }, [name, cacheBuster])
+  }, [name, cacheBuster, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

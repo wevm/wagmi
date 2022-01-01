@@ -1,19 +1,21 @@
 import { ethers } from 'ethers'
 import { defaultChains } from 'wagmi-private'
 
-import { addressLookup, defaultMnemonic } from '../constants'
+import { contracts, wallets } from '../constants'
 import { MockConnector } from './mockConnector'
 
 describe('MockConnector', () => {
   let connector: MockConnector
+  let wallet: ethers.Wallet
   beforeEach(() => {
     connector = new MockConnector({
       chains: defaultChains,
       options: {
-        mnemonic: defaultMnemonic,
         network: 1,
+        privateKey: wallets.ethers1.privateKey,
       },
     })
+    wallet = new ethers.Wallet(wallets.ethers1.privateKey)
   })
 
   it('inits', () => {
@@ -26,7 +28,6 @@ describe('MockConnector', () => {
       const onChange = jest.fn()
       connector.on('change', onChange)
 
-      const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
       const data = await connector.connect()
       expect(onChange).toBeCalledTimes(1)
       expect(data.account).toEqual(wallet.address)
@@ -41,8 +42,8 @@ describe('MockConnector', () => {
           flags: {
             failConnect: true,
           },
-          mnemonic: defaultMnemonic,
           network: 1,
+          privateKey: wallets.ethers1.privateKey,
         },
       })
       try {
@@ -67,7 +68,6 @@ describe('MockConnector', () => {
   it('getAccount', async () => {
     await connector.connect()
     const account = await connector.getAccount()
-    const wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
     expect(account).toEqual(wallet.address)
   })
 
@@ -98,7 +98,7 @@ describe('MockConnector', () => {
   it('watchAsset', async () => {
     await connector.connect()
     await connector.watchAsset({
-      address: addressLookup.uniToken,
+      address: contracts.uniToken,
       decimals: 18,
       symbol: 'UNI',
     })

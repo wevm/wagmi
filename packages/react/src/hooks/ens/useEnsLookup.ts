@@ -53,7 +53,7 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
     return () => {
       didCancel = true
     }
-  }, [address, cacheBuster])
+  }, [address, cacheBuster, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

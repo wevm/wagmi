@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 
-import { addressLookup, defaultMnemonic } from '../constants'
+import { contracts, wallets } from '../constants'
 import { MockProvider } from './mockProvider'
 
 describe('MockProvider', () => {
@@ -8,10 +8,10 @@ describe('MockProvider', () => {
   let wallet: ethers.Wallet
   beforeEach(() => {
     provider = new MockProvider({
-      mnemonic: defaultMnemonic,
       network: 1,
+      privateKey: wallets.ethers1.privateKey,
     })
-    wallet = ethers.Wallet.fromMnemonic(defaultMnemonic)
+    wallet = new ethers.Wallet(wallets.ethers1.privateKey)
   })
 
   it('inits', () => {
@@ -30,8 +30,8 @@ describe('MockProvider', () => {
         flags: {
           failConnect: true,
         },
-        mnemonic: defaultMnemonic,
         network: 1,
+        privateKey: wallets.ethers1.privateKey,
       })
       try {
         await provider.enable()
@@ -87,7 +87,7 @@ describe('MockProvider', () => {
 
   it('watchAsset', async () => {
     await provider.watchAsset({
-      address: addressLookup.uniToken,
+      address: contracts.uniToken,
       decimals: 18,
       symbol: 'UNI',
     })

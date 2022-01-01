@@ -46,7 +46,7 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
     return () => {
       didCancel = true
     }
-  }, [])
+  }, [skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */

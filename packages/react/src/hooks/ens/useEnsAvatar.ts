@@ -54,7 +54,7 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
     return () => {
       didCancel = true
     }
-  }, [addressOrName, cacheBuster])
+  }, [addressOrName, cacheBuster, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

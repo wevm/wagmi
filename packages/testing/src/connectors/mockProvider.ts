@@ -8,7 +8,7 @@ export type MockProviderOptions = {
     failConnect?: boolean
     failSign?: boolean
   }
-  mnemonic: string
+  privateKey: string
   network: number | string
 }
 
@@ -33,7 +33,7 @@ export class MockProvider extends ethers.providers.BaseProvider {
   async enable() {
     if (this._options.flags?.failConnect) throw new UserRejectedRequestError()
     if (!this._wallet)
-      this._wallet = ethers.Wallet.fromMnemonic(this._options.mnemonic)
+      this._wallet = new ethers.Wallet(this._options.privateKey)
     const address = await this._wallet.getAddress()
     this.events.emit('accountsChanged', [address])
     return [address]

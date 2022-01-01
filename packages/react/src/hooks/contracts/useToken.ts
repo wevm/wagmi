@@ -57,9 +57,9 @@ export const useToken = ({
           erc20ABI,
           provider,
         )
+        const symbol = await contract.symbol()
         const decimals = await contract.decimals()
         const totalSupply = await contract.totalSupply()
-        const symbol = await contract.symbol()
         const _formatUnits = _config.formatUnits ?? 'ether'
         const token = {
           address: _config.address,
@@ -110,7 +110,7 @@ export const useToken = ({
     return () => {
       didCancel = true
     }
-  }, [address])
+  }, [address, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

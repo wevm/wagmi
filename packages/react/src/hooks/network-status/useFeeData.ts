@@ -58,7 +58,7 @@ export const useFeeData = ({
     return () => {
       didCancel = true
     }
-  }, [cacheBuster])
+  }, [cacheBuster, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */

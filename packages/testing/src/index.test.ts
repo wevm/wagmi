@@ -5,10 +5,9 @@ it('should expose correct exports', () => {
     [
       "defaultChains",
       "MockConnector",
-      "addressLookup",
-      "defaultMnemonic",
+      "contracts",
       "infuraApiKey",
-      "messageLookup",
+      "wallets",
       "server",
     ]
   `)

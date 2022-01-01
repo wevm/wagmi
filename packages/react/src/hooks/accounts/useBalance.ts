@@ -95,7 +95,7 @@ export const useBalance = ({
     return () => {
       didCancel = true
     }
-  }, [address, token, cacheBuster])
+  }, [address, cacheBuster, skip, token])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */

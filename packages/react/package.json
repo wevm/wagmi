@@ -3,6 +3,7 @@
   "description": "React Hooks library for Ethereum",
   "license": "MIT",
   "version": "0.0.7",
+  "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "homepage": "https://wagmi-xyz.vercel.app",
   "sideEffects": false,
