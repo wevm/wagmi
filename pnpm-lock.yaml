@@ -196,8 +196,8 @@ importers:
       '@walletconnect/ethereum-provider': ^1.6.6
       ethers: ^5.5.1
       react: ^17.0.0
-      wagmi-testing: 0.0.7
       wagmi-private: 0.0.8
+      wagmi-testing: 0.0.8
       walletlink: ^2.2.8
     dependencies:
       '@ethersproject/providers': 5.5.1
@@ -218,7 +218,7 @@ importers:
       eventemitter3: ^4.0.7
       msw: ^0.36.3
       ts-pattern: ^3.3.4
-      wagmi-private: 0.0.7
+      wagmi-private: 0.0.8
     dependencies:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7
