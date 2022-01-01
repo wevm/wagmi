@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.0.8
+
+### Patch Changes
+
+- [`5332500`](https://github.com/tmm/wagmi/commit/5332500918ac240d29ffe4d2aed8566a8ac001e4) Thanks [@tmm](https://github.com/tmm)! - update signing
+
+- Updated dependencies [[`5332500`](https://github.com/tmm/wagmi/commit/5332500918ac240d29ffe4d2aed8566a8ac001e4)]:
+  - wagmi-private@0.0.8
+
 ## 0.0.7
 
 ### Patch Changes
