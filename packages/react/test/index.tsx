@@ -42,13 +42,13 @@ export const wrapper = (props: Props) => {
 export const renderHook = <TProps, TResult>(
   hook: (props: TProps) => TResult,
   {
-    wrapper: _wrapper,
+    wrapper: wrapper_,
     ...options
   }: RenderHookOptions<TProps & ProviderProps> | undefined = {},
 ) => {
-  if (_wrapper == undefined) _wrapper = wrapper as WrapperComponent<TProps>
+  if (wrapper_ == undefined) wrapper_ = wrapper as WrapperComponent<TProps>
   return defaultRenderHook<TProps, TResult>(hook, {
-    wrapper: _wrapper,
+    wrapper: wrapper_,
     ...options,
   })
 }

@@ -1,3 +1,5 @@
 export { useContract } from './useContract'
 export { useContractEvent } from './useContractEvent'
+export { useContractRead } from './useContractRead'
+export { useContractWrite as useContractWrite } from './useContractWrite'
 export { useToken } from './useToken'

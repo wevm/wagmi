@@ -20,6 +20,15 @@ const contracts = [
     name: 'NounsDescriptor',
     address: '0x0Cfdb3Ba1694c2bb2CFACB0339ad7b1Ae5932B63',
   },
+  {
+    name: 'WAGMIGOTCHI',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  },
+  {
+    name: 'MirrorERC20Factory',
+    address: '0x3fb485d4dB89623ca6420E4BCaE25D55f5bB6878',
+    network: 'rinkeby',
+  },
 ]
 
 ;(async () => {
@@ -30,8 +39,13 @@ const contracts = [
 
     console.log('Fetching contracts from Etherscan…')
     for (const contract of contracts) {
-      const url = `https://api.etherscan.io/api?module=contract&action=getabi&address=${contract.address}&apikey=${process.env.ETHERSCAN_API_KEY}`
-      console.log(contract.name)
+      const baseUrl = `api${contract.network ? '-' : ''}${
+        contract.network ?? ''
+      }.etherscan.io`
+      const url = `https://${baseUrl}/api?module=contract&action=getabi&address=${contract.address}&apikey=${process.env.ETHERSCAN_API_KEY}`
+      console.log(
+        `${contract.name}${contract.network ? ` (${contract.network})` : ''}`,
+      )
       const res = await fetch(url)
       if (res.err) throw res.err
       const json = await res.json()

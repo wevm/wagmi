@@ -26,15 +26,15 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
   const getEnsAvatar = React.useCallback(
     async (config?: { addressOrName: string }) => {
       try {
-        const _config = config ?? { addressOrName }
-        if (!_config.addressOrName) throw new Error('addressOrName is required')
+        const config_ = config ?? { addressOrName }
+        if (!config_.addressOrName) throw new Error('addressOrName is required')
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const avatar = await provider.getAvatar(_config.addressOrName)
+        const avatar = await provider.getAvatar(config_.addressOrName)
         setState((x) => ({ ...x, avatar, loading: false }))
         return avatar
-      } catch (err) {
-        const error = <Error>err
+      } catch (error_) {
+        const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }

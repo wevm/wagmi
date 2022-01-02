@@ -45,35 +45,36 @@ export const useToken = ({
       formatUnits?: Config['formatUnits']
     }) => {
       try {
-        const _config = config ?? {
+        const config_ = config ?? {
           address,
           formatUnits,
         }
-        if (!_config.address) throw new Error('address is required')
+        if (!config_.address) throw new Error('address is required')
 
-        setState((x) => ({ ...x, error: undefined, loading: true }))
         const contract = new ethers.Contract(
-          _config.address,
+          config_.address,
           erc20ABI,
           provider,
         )
+        const formatUnits_ = config_.formatUnits ?? 'ether'
+
+        setState((x) => ({ ...x, error: undefined, loading: true }))
         const symbol = await contract.symbol()
         const decimals = await contract.decimals()
         const totalSupply = await contract.totalSupply()
-        const _formatUnits = _config.formatUnits ?? 'ether'
         const token = {
-          address: _config.address,
+          address: config_.address,
           decimals,
           symbol,
           totalSupply: {
-            formatted: utils.formatUnits(totalSupply, _formatUnits),
+            formatted: utils.formatUnits(totalSupply, formatUnits_),
             value: totalSupply,
           },
         }
         setState((x) => ({ ...x, token, loading: false }))
         return token
-      } catch (err) {
-        const error = <Error>err
+      } catch (error_) {
+        const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }

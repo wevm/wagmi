@@ -27,15 +27,15 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
   const getEnsResolver = React.useCallback(
     async (config?: { name: Config['name'] }) => {
       try {
-        const _config = config ?? { name }
-        if (!_config.name) throw new Error('name is required')
+        const config_ = config ?? { name }
+        if (!config_.name) throw new Error('name is required')
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const resolver = await provider.getResolver(_config.name)
+        const resolver = await provider.getResolver(config_.name)
         setState((x) => ({ ...x, loading: false, resolver }))
         return resolver
-      } catch (err) {
-        const error = <Error>err
+      } catch (error_) {
+        const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }

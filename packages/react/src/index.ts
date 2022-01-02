@@ -8,6 +8,8 @@ export {
   useConnect,
   useContract,
   useContractEvent,
+  useContractRead,
+  useContractWrite,
   useEnsAvatar,
   useEnsLookup,
   useEnsResolver,

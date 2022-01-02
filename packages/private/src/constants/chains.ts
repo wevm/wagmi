@@ -30,7 +30,7 @@ export const chain: Record<ChainName, Chain> = {
   ropsten: {
     id: 3,
     name: 'Ropsten',
-    nativeCurrency: { name: 'Ropsten Ether', symbol: 'ROP', decimals: 18 },
+    nativeCurrency: { name: 'Ropsten Ether', symbol: 'ropETH', decimals: 18 },
     rpcUrls: ['https://ropsten.infura.io/v3'],
     blockExplorers: [
       {
@@ -43,7 +43,7 @@ export const chain: Record<ChainName, Chain> = {
   rinkeby: {
     id: 4,
     name: 'Rinkeby',
-    nativeCurrency: { name: 'Rinkeby Ether', symbol: 'RIN', decimals: 18 },
+    nativeCurrency: { name: 'Rinkeby Ether', symbol: 'rETH', decimals: 18 },
     rpcUrls: ['https://rinkeby.infura.io/v3'],
     blockExplorers: [
       {
@@ -56,7 +56,7 @@ export const chain: Record<ChainName, Chain> = {
   goerli: {
     id: 5,
     name: 'Goerli',
-    nativeCurrency: { name: 'Goerli Ether', symbol: 'GOR', decimals: 18 },
+    nativeCurrency: { name: 'Goerli Ether', symbol: 'gETH', decimals: 18 },
     rpcUrls: ['https://rinkeby.infura.io/v3'],
     blockExplorers: [
       {
@@ -69,7 +69,7 @@ export const chain: Record<ChainName, Chain> = {
   kovan: {
     id: 42,
     name: 'Kovan',
-    nativeCurrency: { name: 'Kovan Ether', symbol: 'KOV', decimals: 18 },
+    nativeCurrency: { name: 'Kovan Ether', symbol: 'kETH', decimals: 18 },
     rpcUrls: ['https://kovan.infura.io/v3'],
     blockExplorers: [
       {

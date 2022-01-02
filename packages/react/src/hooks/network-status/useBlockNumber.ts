@@ -28,8 +28,8 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
       const blockNumber = await provider.getBlockNumber()
       setState((x) => ({ ...x, blockNumber, loading: false }))
       return blockNumber
-    } catch (err) {
-      const error = <Error>err
+    } catch (error_) {
+      const error = <Error>error_
       setState((x) => ({ ...x, error, loading: false }))
       return error
     }
@@ -55,11 +55,12 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
 
     const listener = (blockNumber: State['blockNumber']) =>
       setState((x) => ({ ...x, blockNumber }))
-    const _provider = webSocketProvider ?? provider
 
-    _provider.on('block', listener)
+    const provider_ = webSocketProvider ?? provider
+    provider_.on('block', listener)
+
     return () => {
-      _provider.off('block', listener)
+      provider_.off('block', listener)
     }
   }, [])
   /* eslint-enable react-hooks/exhaustive-deps */
