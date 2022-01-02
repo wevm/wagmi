@@ -11,7 +11,8 @@ export const PreviewWrapper = ({ children }: Props) => {
   const { setMode } = useTheme()
 
   React.useEffect(() => {
-    setMode(theme)
+    if (!theme) return
+    setMode(theme as any)
   }, [theme, setMode])
 
   return (
