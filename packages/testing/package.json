@@ -1,7 +1,7 @@
 {
   "name": "wagmi-testing",
   "license": "MIT",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "ethereum": "awkweb.eth",
   "sideEffects": false,
   "main": "dist/wagmi-testing.cjs.js",
@@ -29,7 +29,7 @@
     "eventemitter3": "^4.0.7",
     "msw": "^0.36.3",
     "ts-pattern": "^3.3.4",
-    "wagmi-private": "0.0.9"
+    "wagmi-private": "0.0.10"
   },
   "devDependencies": {
     "ethers": "^5.5.1"
