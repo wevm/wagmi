@@ -92,7 +92,7 @@ describe('useBalance', () => {
         await result.current.connect[1](mockConnector)
 
         const res = await result.current.balance[1]({
-          address: wallets.ethers1.address,
+          addressOrName: wallets.ethers1.address,
         })
         expect(res).toMatchInlineSnapshot(`
           {

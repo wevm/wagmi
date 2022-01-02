@@ -28,7 +28,6 @@ export class WalletLinkConnector extends Connector<
   async connect() {
     try {
       const provider = this.getProvider()
-      console.log({ provider })
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
