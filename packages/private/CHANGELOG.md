@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.0.12
+
+### Patch Changes
+
+- [#19](https://github.com/tmm/wagmi/pull/19) [`7bc1c47`](https://github.com/tmm/wagmi/commit/7bc1c47875e9ef24e9c79cfafc6b23e7a838b5bc) Thanks [@tmm](https://github.com/tmm)! - remove console log from walletlink connector
+
 ## 0.0.11
 
 ### Patch Changes
