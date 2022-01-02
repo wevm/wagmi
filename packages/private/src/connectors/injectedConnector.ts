@@ -17,7 +17,7 @@ export class InjectedConnector extends Connector<
 > {
   readonly id = 'injected'
   readonly name: string
-  readonly ready: boolean
+  readonly ready = typeof window != 'undefined' && !!window.ethereum
 
   private _provider?: Window['ethereum']
 
@@ -25,14 +25,11 @@ export class InjectedConnector extends Connector<
     super({ ...config, options: undefined })
 
     let name = 'Injected'
-    let ready = false
-    if (typeof window !== 'undefined' && !!window.ethereum) {
+    if (typeof window !== 'undefined' && window.ethereum) {
       if (window.ethereum.isMetaMask) name = 'MetaMask'
       if (window.ethereum.isCoinbaseWallet) name = 'Coinbase Wallet'
-      ready = true
     }
     this.name = name
-    this.ready = ready
   }
 
   async connect() {
