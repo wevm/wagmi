@@ -16,30 +16,26 @@ export class InjectedConnector extends Connector<
   undefined
 > {
   readonly id = 'injected'
-  readonly name =
-    typeof window !== 'undefined' && window.ethereum?.isMetaMask
-      ? 'MetaMask'
-      : window.ethereum?.isCoinbaseWallet
-      ? 'Coinbase Wallet'
-      : 'Injected'
-  readonly ready = typeof window !== 'undefined' && !!window.ethereum
+  readonly name: string
+  readonly ready = typeof window != 'undefined' && !!window.ethereum
 
   private _provider?: Window['ethereum']
 
   constructor(config?: { chains?: Chain[] }) {
     super({ ...config, options: undefined })
-  }
 
-  get provider() {
-    if (!this._provider) this._provider = window.ethereum
-    return this._provider
+    let name = 'Injected'
+    if (typeof window !== 'undefined' && window.ethereum) {
+      if (window.ethereum.isMetaMask) name = 'MetaMask'
+      if (window.ethereum.isCoinbaseWallet) name = 'Coinbase Wallet'
+    }
+    this.name = name
   }
 
   async connect() {
     try {
-      const provider = window.ethereum
+      const provider = this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
-      this._provider = provider
 
       if (provider.on) {
         provider.on('accountsChanged', this.onAccountsChanged)
@@ -58,7 +54,7 @@ export class InjectedConnector extends Connector<
   }
 
   async disconnect() {
-    const provider = this.provider
+    const provider = this.getProvider()
     if (!provider?.removeListener) return
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
@@ -67,7 +63,7 @@ export class InjectedConnector extends Connector<
   }
 
   async getAccount() {
-    const provider = this.provider
+    const provider = this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     const accounts = await provider.request<string[]>({
       method: 'eth_requestAccounts',
@@ -77,22 +73,28 @@ export class InjectedConnector extends Connector<
   }
 
   async getChainId() {
-    const provider = this.provider
+    const provider = this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     return await provider
       .request<string>({ method: 'eth_chainId' })
       .then(normalizeChainId)
   }
 
+  getProvider() {
+    if (typeof window !== 'undefined' && !!window.ethereum)
+      this._provider = window.ethereum
+    return this._provider
+  }
+
   async getSigner() {
-    const provider = this.provider
+    const provider = this.getProvider()
     const account = await this.getAccount()
     return new Web3Provider(<ExternalProvider>provider).getSigner(account)
   }
 
   async isAuthorized() {
     try {
-      const provider = this.provider
+      const provider = this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
       const accounts = await provider.request<string[]>({
         method: 'eth_accounts',
@@ -105,7 +107,7 @@ export class InjectedConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
-    const provider = this.provider
+    const provider = this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     const id = hexValue(chainId)
 
@@ -152,7 +154,7 @@ export class InjectedConnector extends Connector<
     image?: string
     symbol: string
   }) {
-    const provider = this.provider
+    const provider = this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     await provider.request({
       method: 'wallet_watchAsset',

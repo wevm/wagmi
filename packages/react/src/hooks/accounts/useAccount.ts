@@ -4,6 +4,7 @@ import { useContext } from '../../context'
 import { useEnsAvatar, useEnsLookup } from '../ens'
 
 export type Config = {
+  /** Fetches ENS for connected account */
   fetchEns?: boolean
 }
 

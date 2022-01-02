@@ -8,8 +8,11 @@ import { useCacheBuster } from '../utils'
 import { useBlockNumber } from './useBlockNumber'
 
 type Config = {
+  /** Units for formatting output */
   formatUnits?: Unit | number
+  /** Disables fetching */
   skip?: boolean
+  /** Subscribe to changes */
   watch?: boolean
 }
 

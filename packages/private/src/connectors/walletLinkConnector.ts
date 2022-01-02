@@ -25,17 +25,10 @@ export class WalletLinkConnector extends Connector<
     super(config)
   }
 
-  get provider() {
-    if (!this._provider) {
-      this._client = new WalletLink(this.options)
-      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
-    }
-    return this._provider
-  }
-
   async connect() {
     try {
-      const provider = this.provider
+      const provider = this.getProvider()
+      console.log({ provider })
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -58,7 +51,7 @@ export class WalletLinkConnector extends Connector<
   async disconnect() {
     if (!this._provider) return
 
-    const provider = this.provider
+    const provider = this.getProvider()
     provider.removeListener('accountsChanged', this.onAccountsChanged)
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
@@ -77,7 +70,7 @@ export class WalletLinkConnector extends Connector<
   }
 
   async getAccount() {
-    const provider = this.provider
+    const provider = this.getProvider()
     const accounts = await provider.request<string[]>({
       method: 'eth_accounts',
     })
@@ -86,13 +79,21 @@ export class WalletLinkConnector extends Connector<
   }
 
   async getChainId() {
-    const provider = this.provider
+    const provider = this.getProvider()
     const chainId = normalizeChainId(provider.chainId)
     return chainId
   }
 
+  getProvider() {
+    if (!this._provider) {
+      this._client = new WalletLink(this.options)
+      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+    }
+    return this._provider
+  }
+
   async getSigner() {
-    const provider = this.provider
+    const provider = this.getProvider()
     const account = await this.getAccount()
     return new Web3Provider(<ExternalProvider>(<unknown>provider)).getSigner(
       account,

@@ -58,7 +58,7 @@ describe('useBalance', () => {
       const { result } = renderHook(() =>
         useBalanceWithConnect({
           balance: {
-            address: wallets.ethers1.address,
+            addressOrName: wallets.ethers1.address,
             skip: true,
           },
         }),

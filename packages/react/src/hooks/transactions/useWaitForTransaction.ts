@@ -7,10 +7,21 @@ import {
 import { useProvider } from '../providers'
 
 export type Config = {
+  /**
+   * Number of blocks to wait for after transaction is mined
+   * @default 1
+   */
   confirmations?: number
+  /** Transaction hash to monitor */
   hash?: string
+  /** Disables fetching */
   skip?: boolean
+  /*
+   * Maximum amount of time to wait before timing out in milliseconds
+   * @default 0
+   */
   timeout?: number
+  /** Function resolving to transaction receipt */
   wait?: TransactionResponse['wait']
 }
 

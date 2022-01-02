@@ -19,7 +19,7 @@
 
 🚀 &nbsp; Hooks for connecting wallets, signing messages, sending transactions, etc.
 
-💼 &nbsp; Built-in wallet connectors: MetaMask, WalletConnect, Coinbase Wallet
+💼 &nbsp; Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
 
 🌀 &nbsp; Auto-refresh data on wallet and network changes
 

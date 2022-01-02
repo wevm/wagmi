@@ -3,7 +3,9 @@ import * as React from 'react'
 import { useProvider, useWebSocketProvider } from '../providers'
 
 type Config = {
+  /** Disables fetching */
   skip?: boolean
+  /** Subscribe to changes */
   watch?: boolean
 }
 

@@ -5,6 +5,7 @@ import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
 import { useContext } from '../../context'
 
 export type Config = {
+  /** Message to sign with wallet */
   message?: Bytes | string
 }
 

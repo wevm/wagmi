@@ -1,18 +1,87 @@
----
-title: Sign Message
-full: true
----
+import { SignMessage } from '../../components'
 
-<iframe
-  src="https://codesandbox.io/embed/black-pine-s5mby?codemirror=1&fontsize=14&hidenavigation=1&initialpath=%2Fsign&module=%2Fpages%2Fsign.tsx&theme=dark"
-  style={{
-    width: '100%',
-    height: '100%',
-    border: 0,
-    overflow: 'hidden',
-    background: 'rgb(21, 21, 21)',
-  }}
-  title="Connect Wallet"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-autoplay allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-/>
+# Sign Message
+
+Signing messages is a great way to securely prove control of a specific address. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`useSignMessage`](/docs/hooks/useSignMessage) hook.
+
+<SignMessage />
+
+## Step 1: Add SignMessage Component
+
+Add the `useSignMessage` hook and set up a basic form:
+
+```tsx
+import { verifyMessage } from 'ethers/lib/utils'
+import { useSignMessage } from 'wagmi'
+
+export const SignMessage = () => {
+  const previousMessage = React.useRef<string>()
+  const [message, setMessage] = React.useState('')
+  const [{ data, error, loading }, signMessage] = useSignMessage()
+
+  const recoveredAddress = React.useMemo(() => {
+    if (!data || !previousMessage.current) return undefined
+    return verifyMessage(previousMessage.current, data)
+  }, [data, previousMessage])
+
+  return (
+    <div
+      onSubmit={(event) => {
+        event.preventDefault()
+        previousMessage.current = message
+        signMessage({ message })
+      }}
+    >
+      <label htmlFor="message">Enter a message to sign</label>
+      <textarea
+        id="message"
+        placeholder="The quick brown fox…"
+        onChange={(event) => setMessage(event.target.value)}
+      />
+      <button disabled={loading || !message.length}>
+        {loading ? 'Check Wallet' : 'Sign Message'}
+      </button>
+
+      {data && (
+        <div>
+          <div>Recovered Address: {recoveredAddress}</div>
+          <div>Signature: {data}</div>
+        </div>
+      )}
+      {error && <div>{error?.message ?? 'Error signing message'}</div>}
+    </div>
+  )
+}
+```
+
+## Step 2: Add To App
+
+Import the `SignMessage` component and add to for when account is connected.
+
+```tsx
+import { useAccount, useConnect } from 'wagmi'
+
+import { SignMessage } from './SignMessage'
+
+export const Example = () => {
+  const [{ data: connectData, error: connectError }, connect] = useConnect()
+  const [{ data: accountData }, disconnect] = useAccount({
+    fetchEns: true,
+  })
+
+  if (accountData) {
+    return (
+      <div>
+        ...
+        <SignMessage />
+      </div>
+    )
+  }
+
+  return ...
+}
+```
+
+## Wrap Up
+
+That's it! You now have a way for users to sign messages and securly prove control over a wallet address.

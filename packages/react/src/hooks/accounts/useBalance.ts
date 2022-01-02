@@ -7,10 +7,15 @@ import { useBlockNumber } from '../network-status'
 import { useCacheBuster } from '../utils'
 
 export type Config = {
-  address?: string
+  /** Address or ENS name */
+  addressOrName?: string
+  /** Units for formatting output */
   formatUnits?: Unit | number
+  /** Disables fetching */
   skip?: boolean
+  /** ERC-20 address */
   token?: string
+  /** Subscribe to changes */
   watch?: boolean
 }
 
@@ -25,7 +30,7 @@ const initialState: State = {
 }
 
 export const useBalance = ({
-  address,
+  addressOrName: address,
   formatUnits = 'ether',
   skip,
   token,

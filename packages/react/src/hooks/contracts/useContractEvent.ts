@@ -5,14 +5,18 @@ import { useProvider, useWebSocketProvider } from '../providers'
 import { Config as UseContractConfig, useContract } from './useContract'
 
 type Config = {
+  /** Subscribe to changes */
   watch?: boolean
 }
 
 export const useContractEvent = <
   Contract extends ethers.Contract = ethers.Contract,
 >(
+  /** Contract configuration */
   contractConfig: UseContractConfig,
+  /** Event name to listen to */
   eventName: Parameters<Contract['on']>[0],
+  /** Callback function when event is called */
   listener: Parameters<Contract['on']>[1],
   { watch }: Config = { watch: true },
 ) => {
@@ -27,15 +31,13 @@ export const useContractEvent = <
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    const handler = (
-      ...event: Array<
-        Contract extends ethers.Contract ? Parameters<Contract['on']>[1] : any
-      >
-    ) => listenerRef.current(event)
+    const handler = (...event: Array<Parameters<Contract['on']>[1]>) =>
+      listenerRef.current(event)
 
     const contract_ = <ethers.Contract>(<unknown>ethers.Contract)
     if (!watch) contract_.once(eventName, handler)
     else contract_.on(eventName, handler)
+
     return () => {
       contract_.off(eventName, handler)
       return

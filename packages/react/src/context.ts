@@ -40,11 +40,20 @@ export const Context = React.createContext<ContextValue | null>(null)
 export type Props = {
   /** Enables reconnecting to last used connector on mount */
   autoConnect?: boolean
-  /** Key for saving connector preference to browser */
+  /**
+   * Key for saving connector preference to browser
+   * @default 'wagmi.wallet'
+   */
   connectorStorageKey?: string
-  /** Connectors used for linking accounts */
+  /**
+   * Connectors used for linking accounts
+   * @default [new InjectedConnector()]
+   */
   connectors?: Connector[] | ((config: { chainId?: number }) => Connector[])
-  /** Interface for connecting to network */
+  /**
+   * Interface for connecting to network
+   * @default getDefaultProvider()
+   */
   provider?:
     | BaseProvider
     | ((config: { chainId?: number; connector?: Connector }) => BaseProvider)
