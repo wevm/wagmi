@@ -4,7 +4,9 @@ import { useProvider } from '../providers'
 import { useCacheBuster } from '../utils'
 
 type Config = {
+  /** Address to look up */
   address?: string
+  /** Disables fetching */
   skip?: boolean
 }
 

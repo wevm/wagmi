@@ -8,6 +8,7 @@ import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
 import { useContext } from '../../context'
 
 export type Config = {
+  /** Object to use when creating transaction */
   request?: TransactionRequest
 }
 

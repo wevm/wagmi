@@ -3,8 +3,11 @@ import { Contract, ContractInterface, Signer } from 'ethers'
 import { Provider } from '@ethersproject/providers'
 
 export type Config = {
+  /** Contract address or ENS name */
   addressOrName: string
+  /** Contract interface or ABI */
   contractInterface: ContractInterface
+  /** Signer or provider to attach to contract */
   signerOrProvider?: Signer | Provider
 }
 

@@ -5,7 +5,9 @@ import { useProvider } from '../providers'
 import { useCacheBuster } from '../utils'
 
 type Config = {
+  /** ENS name */
   name?: string | null
+  /** Disables fetching */
   skip?: boolean
 }
 
