@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.0.11
+
+### Patch Changes
+
+- [#17](https://github.com/tmm/wagmi/pull/17) [`571648b`](https://github.com/tmm/wagmi/commit/571648b754f7f538536bafc9387bd3104657ea49) Thanks [@tmm](https://github.com/tmm)! - standardize connector provider
+
+- Updated dependencies [[`571648b`](https://github.com/tmm/wagmi/commit/571648b754f7f538536bafc9387bd3104657ea49)]:
+  - wagmi-private@0.0.11
+
 ## 0.0.10
 
 ### Patch Changes
