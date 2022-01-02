@@ -126,7 +126,7 @@ describe('useNetwork', () => {
             "nativeCurrency": {
               "decimals": 18,
               "name": "Rinkeby Ether",
-              "symbol": "RIN",
+              "symbol": "rETH",
             },
             "rpcUrls": [
               "https://rinkeby.infura.io/v3",
