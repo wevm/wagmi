@@ -18,7 +18,7 @@ npm install wagmi ethers
 
 ## Quick Start
 
-Wrap your app with the [**Provider**](/docs/provider) component:
+Wrap your app with the [`Provider`](/docs/provider) component:
 
 ```tsx
 import { Provider } from 'wagmi'
@@ -31,12 +31,12 @@ const App = () => (
 ```
 
 <Callout emoji="💡">
-  **Provider** has multiple configuration options: connectors (i.e.
+  `Provider` has multiple configuration options: connectors (i.e.
   WalletConnect), auto connect, websockets, etc. Check
   [here](/docs/provider#options) for more info.
 </Callout>
 
-Now every component inside and under the **Provider** is set up with the default [**InjectedConnector**](/docs/connectors) and can use hooks for connecting wallets, signing messages, sending transactions, etc:
+Now every component inside and under the `Provider` is set up with the default [`InjectedConnector`](/docs/connectors) and can use hooks for connecting wallets, signing messages, sending transactions, etc:
 
 ```tsx
 import { useAccount } from 'wagmi'
@@ -49,5 +49,7 @@ export const App = () => {
   return ...
 }
 ```
+
+Continue on to check out the Examples or skip to the [API Documentation](/docs/provider)
 
 wagmi!

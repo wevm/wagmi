@@ -29,8 +29,6 @@ export abstract class Connector<
   readonly chains: Chain[]
   /** Options to use with connector */
   readonly options: Options
-  /** Provider associated with connector */
-  abstract readonly provider?: Provider
   /** Whether connector is usable */
   abstract readonly ready: boolean
 
@@ -50,6 +48,7 @@ export abstract class Connector<
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
+  abstract getProvider(create?: boolean): Provider
   abstract getSigner(): Promise<Signer>
   abstract isAuthorized(): Promise<boolean>
   switchChain?(chainId: number): Promise<void>

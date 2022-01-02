@@ -1,18 +1,122 @@
----
-title: Connect Wallet
-full: true
----
+import { ConnectWallet } from '../../components'
 
-<iframe
-  src="https://codesandbox.io/embed/black-pine-s5mby?codemirror=1&fontsize=14&hidenavigation=1&initialpath=%2Fconnect&module=%2Fpages%2Fconnect.tsx&theme=dark"
-  style={{
-    width: '100%',
-    height: '100%',
-    border: 0,
-    overflow: 'hidden',
-    background: 'rgb(21, 21, 21)',
-  }}
-  title="Connect Wallet"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-autoplay allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-/>
+# Connect Wallet
+
+Connecting wallets to your app is extremely simple when you use wagmi. It takes less than five minutes to get up and running with MetaMask, WalletConnect, and Coinbase Wallet!
+
+The example below uses [`useConnect`](/docs/hooks/useConnect) and [`useAccount`](/docs/hooks/useAccount) to allow you to connect a wallet and view ENS information for the connected account. Test it out before moving on.
+
+<ConnectWallet />
+
+## Step 1: Configuring Connectors
+
+First, we want to set up our [`Provider`](/docs/provider) with the Injected (MetaMask), WalletConnect, and WalletLink (Coinbase Wallet) connectors:
+
+```tsx
+import {
+  InjectedConnector,
+  Provider,
+  WalletConnectConnector,
+  WalletLinkConnector,
+  chain,
+  defaultChains,
+} from 'wagmi'
+
+import { Example } from './components'
+
+// API key for Ethereum node
+// Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
+const infuraId = process.env.INFURA_ID
+
+// Chains for connectors to support
+const chains = defaultChains
+
+// Set up connectors
+const connectors = ({ chainId }) => {
+  const rpcUrl =
+    chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
+    chain.mainnet.rpcUrls[0]
+  return [
+    new InjectedConnector({ chains }),
+    new WalletConnectConnector({
+      options: {
+        infuraId,
+        qrcode: true,
+      },
+    }),
+    new WalletLinkConnector({
+      options: {
+        appName: 'My wagmi app',
+        jsonRpcUrl: `${rpcUrl}/${infuraId}`,
+      },
+    }),
+  ]
+}
+
+const App = () => (
+  <Provider autoConnect connectors={connectors}>
+    <Example />
+  </Provider>
+)
+```
+
+## Step 2: Display Wallet Options
+
+Now that our connectors are set up, we want users to be able to choose a connector to connect their wallets using `useConnect`.
+
+```tsx
+import { useConnect } from 'wagmi'
+
+export const Example = () => {
+  const [{ data, error }, connect] = useConnect()
+
+  return (
+    <div>
+      {data.connectors.map((x) => (
+        <button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>
+          {x.name}
+          {!x.ready && ' (unsupported)'}
+        </button>
+      ))}
+
+      {error && <div>{error?.message ?? 'Failed to connect'}</div>}
+    </div>
+  )
+}
+```
+
+## Step 3: Display Connected Account
+
+Lastly, if an account is connected, we want to show some basic information, like the ENS name and avatar, using `useAccount`.
+
+```tsx
+import { useAccount, useConnect } from 'wagmi'
+
+export const Example = () => {
+  const [{ data: connectData, error: connectError }, connect] = useConnect()
+  const [{ data: accountData }, disconnect] = useAccount({
+    fetchEns: true,
+  })
+
+  if (accountData) {
+    return (
+      <div>
+        <img src={accountData.ens?.avatar} alt="ENS Avatar" />
+        <div>
+          {accountData.ens?.name
+            ? `${accountData.ens?.name} (${accountData.address})`
+            : accountData.address}
+        </div>
+        <div>Connected to {accountData.connector.name}</div>
+        <button onClick={disconnect}>Disconnect</button>
+      </div>
+    )
+  }
+
+  return ...
+}
+```
+
+## Wrap Up
+
+That's it! You now have a way for users to connect wallets and view information about the connected account. Bonus: wagmi also listens for account (and chain changes) to keep connections and information up-to-date.

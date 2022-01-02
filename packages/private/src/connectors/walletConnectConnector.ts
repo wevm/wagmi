@@ -24,18 +24,9 @@ export class WalletConnectConnector extends Connector<
     super(config)
   }
 
-  get provider() {
-    if (!this._provider)
-      this._provider = new WalletConnectProvider(this.options)
-    return this._provider
-  }
-
   async connect() {
     try {
-      // Use new provider instance for every connect
-      const provider = new WalletConnectProvider(this.options)
-      this._provider = provider
-
+      const provider = this.getProvider(true)
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -56,7 +47,7 @@ export class WalletConnectConnector extends Connector<
   }
 
   async disconnect() {
-    const provider = this.provider
+    const provider = this.getProvider()
     await provider.disconnect()
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
@@ -68,20 +59,26 @@ export class WalletConnectConnector extends Connector<
   }
 
   async getAccount() {
-    const provider = this.provider
+    const provider = this.getProvider()
     const accounts = provider.accounts
     // return checksum address
     return getAddress(accounts[0])
   }
 
   async getChainId() {
-    const provider = this.provider
+    const provider = this.getProvider()
     const chainId = normalizeChainId(provider.chainId)
     return chainId
   }
 
+  getProvider(create?: boolean) {
+    if (!this._provider || create)
+      this._provider = new WalletConnectProvider(this.options)
+    return this._provider
+  }
+
   async getSigner() {
-    const provider = this.provider
+    const provider = this.getProvider()
     const account = await this.getAccount()
     return new Web3Provider(<ExternalProvider>provider).getSigner(account)
   }
