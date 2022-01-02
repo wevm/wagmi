@@ -36,10 +36,10 @@ const App = () => (
   [here](/docs/provider#options) for more info.
 </Callout>
 
-Now every component inside and under the **Provider** is set up with the default [**InjectedConnector**](/docs/connectors) and can use hooks for getting account information, switching networks, fetching token balances, etc:
+Now every component inside and under the **Provider** is set up with the default [**InjectedConnector**](/docs/connectors) and can use hooks for connecting wallets, signing messages, sending transactions, etc:
 
 ```tsx
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 export const App = () => {
   const [{ data, error, loading }, disconnect] = useAccount({

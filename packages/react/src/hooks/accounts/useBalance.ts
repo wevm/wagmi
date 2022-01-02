@@ -43,30 +43,30 @@ export const useBalance = ({
       token?: Config['token']
     }) => {
       try {
-        const _config = config ?? { address, formatUnits, token }
-        if (!_config.address) throw new Error('address is required')
+        const config_ = config ?? { address, formatUnits, token }
+        if (!config_.address) throw new Error('address is required')
+
+        const formatUnits_ = config_.formatUnits ?? 'ether'
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const _formatUnits = _config.formatUnits ?? 'ether'
-
         let balance: State['balance']
-        if (_config.token) {
+        if (config_.token) {
           const contract = new ethers.Contract(
-            _config.token,
+            config_.token,
             erc20ABI,
             provider,
           )
-          const value = await contract.balanceOf(_config.address)
+          const value = await contract.balanceOf(config_.address)
           const symbol = await contract.symbol()
           balance = {
-            formatted: utils.formatUnits(value, _formatUnits),
+            formatted: utils.formatUnits(value, formatUnits_),
             symbol,
             value,
           }
         } else {
-          const value = await provider.getBalance(_config.address)
+          const value = await provider.getBalance(config_.address)
           balance = {
-            formatted: utils.formatUnits(value, _formatUnits),
+            formatted: utils.formatUnits(value, formatUnits_),
             symbol: 'ETH',
             value,
           }
@@ -74,8 +74,8 @@ export const useBalance = ({
 
         setState((x) => ({ ...x, balance, loading: false }))
         return balance
-      } catch (err) {
-        const error = <Error>err
+      } catch (error_) {
+        const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }

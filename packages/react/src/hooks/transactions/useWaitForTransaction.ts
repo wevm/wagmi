@@ -29,7 +29,7 @@ export const useWaitForTransaction = ({
   hash,
   skip,
   timeout,
-  wait: _wait,
+  wait: wait_,
 }: Config = {}) => {
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
@@ -42,18 +42,18 @@ export const useWaitForTransaction = ({
       wait?: Config['wait']
     }) => {
       try {
-        const _config = config ?? { confirmations, hash, timeout, wait: _wait }
-        if (!_config.hash && !_config.wait)
+        const config_ = config ?? { confirmations, hash, timeout, wait: wait_ }
+        if (!config_.hash && !config_.wait)
           throw new Error('hash or wait is required')
 
         let promise
         // eslint-disable-next-line testing-library/await-async-utils
-        if (_config.wait) promise = _config.wait(_config.confirmations)
-        else if (_config.hash)
+        if (config_.wait) promise = config_.wait(config_.confirmations)
+        else if (config_.hash)
           promise = provider.waitForTransaction(
-            _config.hash,
-            _config.confirmations,
-            _config.timeout,
+            config_.hash,
+            config_.confirmations,
+            config_.timeout,
           )
         else throw new Error('hash or wait is required')
 
@@ -61,29 +61,29 @@ export const useWaitForTransaction = ({
         const receipt = await promise
         setState((x) => ({ ...x, loading: false, receipt }))
         return receipt
-      } catch (err) {
-        const error = <Error>err
+      } catch (error_) {
+        const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
         return error
       }
     },
-    [_wait, confirmations, hash, timeout, provider],
+    [wait_, confirmations, hash, timeout, provider],
   )
 
   // Fetch balance when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (skip || (!hash && !_wait)) return
+    if (skip || (!hash && !wait_)) return
 
     let didCancel = false
     if (didCancel) return
     // eslint-disable-next-line testing-library/await-async-utils
-    wait({ confirmations, hash, timeout, wait: _wait })
+    wait({ confirmations, hash, timeout, wait: wait_ })
 
     return () => {
       didCancel = true
     }
-  }, [_wait, hash, skip])
+  }, [wait_, hash, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [

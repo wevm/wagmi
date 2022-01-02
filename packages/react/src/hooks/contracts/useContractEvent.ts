@@ -33,11 +33,11 @@ export const useContractEvent = <
       >
     ) => listenerRef.current(event)
 
-    const _contract = <ethers.Contract>(<unknown>ethers.Contract)
-    if (!watch) _contract.once(eventName, handler)
-    else _contract.on(eventName, handler)
+    const contract_ = <ethers.Contract>(<unknown>ethers.Contract)
+    if (!watch) contract_.once(eventName, handler)
+    else contract_.on(eventName, handler)
     return () => {
-      _contract.off(eventName, handler)
+      contract_.off(eventName, handler)
       return
     }
   }, [contract, eventName])

@@ -1,0 +1,124 @@
+# useContractWrite
+
+Hook for calling a Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) or [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method.
+
+```tsx
+import { useContractWrite } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [WAGMIGOTCHI Contract](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1).
+
+```tsx
+import { useContractWrite } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, execute] = useContractWrite(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'feed',
+  )
+
+  return ...
+}
+```
+
+## Return Values
+
+### result
+
+```ts
+{
+  data?: TransactionResponse
+  error?: Error
+  loading?: boolean
+}
+```
+
+### write
+
+```ts
+(
+  config: {
+    args: any | any[]
+    overrides?: Overrides
+  } = {},
+) => Promise<TransactionResponse | Error>
+```
+
+## Arguments
+
+### contractConfig
+
+See [`useContract`](/docs/hooks/useContract) for more info.
+
+### functionName
+
+Name of function to call.
+
+```tsx highlight='9'
+import { useContractWrite } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, execute] = useContractWrite(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'sleep',
+  )
+
+  return ...
+}
+```
+
+### Configuration
+
+#### args (optional)
+
+Arguments to pass to function call. Accepts `any | any[]`.
+
+```tsx highlight='11'
+import { useContractWrite } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, execute] = useContractWrite(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'feed',
+    {
+      args: [],
+    }
+  )
+
+  return ...
+}
+```
+
+#### overrides (optional)
+
+[Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
+
+```tsx highlight='11'
+import { useContractWrite } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, read] = useContracWrite(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'feed',
+    {
+      overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' }
+    }
+  )
+
+  return ...
+}
+```

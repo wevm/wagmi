@@ -2,7 +2,7 @@ import * as React from 'react'
 import { BigNumber } from 'ethers/lib/ethers'
 import { useNetwork, useTransaction, useWaitForTransaction } from 'wagmi'
 
-export const SendTransaction = () => {
+export const Transaction = () => {
   const [{ data: networkData }] = useNetwork()
   const [state, setState] = React.useState<{
     addressOrName: string

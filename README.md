@@ -13,6 +13,24 @@
   </a>
 </p>
 
+# wagmi
+
+**React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).**
+
+🚀 &nbsp; Hooks for connecting wallets, signing messages, sending transactions, etc.
+
+💼 &nbsp; Built-in wallet connectors: MetaMask, WalletConnect, Coinbase Wallet
+
+🌀 &nbsp; Auto-refresh data on wallet and network changes
+
+🦄 &nbsp; TypeScript ready
+
+💨 &nbsp; Zero-dependencies (besides ethers.js peer dependency)
+
+🌳 &nbsp; Test suite and documentation
+
+📖 &nbsp; MIT License
+
 ## Documentation
 
 Visit https://wagmi-xyz.vercel.app to view the full documentation.
@@ -61,3 +79,7 @@ NPM_TOKEN
 ## Thanks
 
 - [ricmoo.eth](https://twitter.com/ricmoo) for creating and continued work on [ethers.js](https://github.com/ethers-io/ethers.js)
+
+<br />
+
+wagmi

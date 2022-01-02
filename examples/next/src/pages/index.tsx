@@ -5,8 +5,8 @@ import {
   Account,
   Connect,
   NetworkSwitcher,
-  SendTransaction,
   SignMessage,
+  Transaction,
 } from '../components'
 
 const Page = () => {
@@ -17,7 +17,7 @@ const Page = () => {
       <main>
         <Account />
         <NetworkSwitcher />
-        <SendTransaction />
+        <Transaction />
         <SignMessage />
       </main>
     )

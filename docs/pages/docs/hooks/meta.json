@@ -5,6 +5,8 @@
   "useConnect": "useConnect",
   "useContract": "useContract",
   "useContractEvent": "useContractEvent",
+  "useContractRead": "useContractRead",
+  "useContractWrite": "useContractWrite",
   "useEnsAvatar": "useEnsAvatar",
   "useEnsLookup": "useEnsLookup",
   "useEnsResolver": "useEnsResolver",

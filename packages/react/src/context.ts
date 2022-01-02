@@ -60,10 +60,10 @@ export type Props = {
 export const Provider = ({
   autoConnect,
   children,
-  connectors: _connectors = [new InjectedConnector()],
+  connectors: connectors_ = [new InjectedConnector()],
   connectorStorageKey = 'wagmi.wallet',
-  provider: _provider = getDefaultProvider(),
-  webSocketProvider: _webSocketProvider,
+  provider: provider_ = getDefaultProvider(),
+  webSocketProvider: webSocketProvider_,
 }: React.PropsWithChildren<Props>) => {
   const [lastUsedConnector, setLastUsedConnector] = useLocalStorage<
     string | null
@@ -73,26 +73,26 @@ export const Provider = ({
   })
 
   const connectors = React.useMemo(() => {
-    if (typeof _connectors !== 'function') return _connectors
-    return _connectors({ chainId: state.data?.chainId })
-  }, [_connectors, state.data?.chainId])
+    if (typeof connectors_ !== 'function') return connectors_
+    return connectors_({ chainId: state.data?.chainId })
+  }, [connectors_, state.data?.chainId])
 
   const provider = React.useMemo(() => {
-    if (typeof _provider !== 'function') return _provider
-    return _provider({
+    if (typeof provider_ !== 'function') return provider_
+    return provider_({
       chainId: state.data?.chainId,
       connector: state.connector,
     })
-  }, [_provider, state.data?.chainId, state.connector])
+  }, [provider_, state.data?.chainId, state.connector])
 
   const webSocketProvider = React.useMemo(() => {
-    if (!_webSocketProvider) return undefined
-    if (typeof _webSocketProvider !== 'function') return _webSocketProvider
-    return _webSocketProvider({
+    if (!webSocketProvider_) return undefined
+    if (typeof webSocketProvider_ !== 'function') return webSocketProvider_
+    return webSocketProvider_({
       chainId: state.data?.chainId,
       connector: state.connector,
     })
-  }, [_webSocketProvider, state.data?.chainId, state.connector])
+  }, [webSocketProvider_, state.data?.chainId, state.connector])
 
   // Attempt to connect on mount
   /* eslint-disable react-hooks/exhaustive-deps */

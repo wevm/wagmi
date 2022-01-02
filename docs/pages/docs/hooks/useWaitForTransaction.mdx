@@ -1,6 +1,6 @@
 # useWaitForTransaction
 
-Hook for declaratively waiting until transaction is processed. Pairs well with [**useTransaction**](/docs/hooks/useTransaction).
+Hook for declaratively waiting until transaction is processed. Pairs well with [**useContracWrite**](/docs/hooks/useContracWrite) and [**useTransaction**](/docs/hooks/useTransaction).
 
 ```tsx
 import { useWaitForTransaction } from 'wagmi'
@@ -116,7 +116,7 @@ const App = () => {
 
 ### wait (optional)
 
-Function that resolves to processed transaction receipt. Works well with [**useTransaction**](/docs/hooks/useTransaction) result.
+Function that resolves to processed transaction receipt. Works well with [**useContracWrite**](/docs/hooks/useContracWrite) and [**useTransaction**](/docs/hooks/useTransaction) results `hash` or `wait`.
 
 ```tsx highlight='6'
 import { useTransaction, useWaitForTransaction } from 'wagmi'

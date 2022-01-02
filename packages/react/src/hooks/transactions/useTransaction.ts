@@ -30,18 +30,18 @@ export const useTransaction = ({ request }: Config = {}) => {
   const sendTransaction = React.useCallback(
     async (config?: { request: Config['request'] }) => {
       try {
-        const _config = config ?? { request }
-        if (!_config.request) throw new Error('request is required')
+        const config_ = config ?? { request }
+        if (!config_.request) throw new Error('request is required')
         if (!connector) throw new ConnectorNotFoundError()
 
         setState((x) => ({ ...x, loading: true }))
         const signer = await connector.getSigner()
-        const transaction = await signer.sendTransaction(_config.request)
+        const transaction = await signer.sendTransaction(config_.request)
         setState((x) => ({ ...x, loading: false, transaction }))
         return transaction
-      } catch (err) {
-        let error: Error = <Error>err
-        if ((<ProviderRpcError>err).code === 4001)
+      } catch (error_) {
+        let error: Error = <Error>error_
+        if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
         setState((x) => ({ ...x, error, loading: false }))
         return error

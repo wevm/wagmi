@@ -27,18 +27,18 @@ export const useSignMessage = ({ message }: Config = {}) => {
   const signMessage = React.useCallback(
     async (config?: { message?: Config['message'] }) => {
       try {
-        const _config = config ?? { message }
-        if (!_config.message) throw new Error('message is required')
+        const config_ = config ?? { message }
+        if (!config_.message) throw new Error('message is required')
         if (!connector) throw new ConnectorNotFoundError()
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
         const signer = await connector.getSigner()
-        const signature = await signer.signMessage(_config.message)
+        const signature = await signer.signMessage(config_.message)
         setState((x) => ({ ...x, signature, loading: false }))
         return signature
-      } catch (err) {
-        let error: Error = <Error>err
-        if ((<ProviderRpcError>err).code === 4001)
+      } catch (error_) {
+        let error: Error = <Error>error_
+        if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
         setState((x) => ({ ...x, error, loading: false }))
         return error

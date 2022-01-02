@@ -3,9 +3,10 @@ import { useAccount } from 'wagmi'
 import {
   Account,
   Connect,
+  ContractFunction,
   NetworkSwitcher,
-  SendTransaction,
   SignMessage,
+  Transaction,
 } from './components'
 
 export const App = () => {
@@ -16,8 +17,9 @@ export const App = () => {
       <main style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <Account />
         <NetworkSwitcher />
-        <SendTransaction />
+        <Transaction />
         <SignMessage />
+        <ContractFunction />
       </main>
     )
 
