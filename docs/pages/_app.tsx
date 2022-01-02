@@ -24,13 +24,15 @@ const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
 
 const chains = [...defaultChains, ...defaultL2Chains]
 
+const isClient = typeof window !== 'undefined'
+
 type Config = { chainId?: number }
 const connectors = ({ chainId }: Config) => {
   const rpcUrl =
     chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
     chain.mainnet.rpcUrls[0]
   return [
-    new InjectedConnector({ chains }),
+    ...(isClient ? [new InjectedConnector({ chains })] : []),
     new WalletConnectConnector({
       options: {
         infuraId,
