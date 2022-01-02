@@ -30,7 +30,7 @@ const initialState: State = {
 }
 
 export const useBalance = ({
-  addressOrName: address,
+  addressOrName,
   formatUnits = 'ether',
   skip,
   token,
@@ -43,13 +43,17 @@ export const useBalance = ({
 
   const getBalance = React.useCallback(
     async (config?: {
-      address: string
+      addressOrName: string
       formatUnits?: Config['formatUnits']
       token?: Config['token']
     }) => {
       try {
-        const config_ = config ?? { address, formatUnits, token }
-        if (!config_.address) throw new Error('address is required')
+        const config_ = config ?? {
+          addressOrName,
+          formatUnits,
+          token,
+        }
+        if (!config_.addressOrName) throw new Error('address is required')
 
         const formatUnits_ = config_.formatUnits ?? 'ether'
 
@@ -61,7 +65,7 @@ export const useBalance = ({
             erc20ABI,
             provider,
           )
-          const value = await contract.balanceOf(config_.address)
+          const value = await contract.balanceOf(config_.addressOrName)
           const symbol = await contract.symbol()
           balance = {
             formatted: utils.formatUnits(value, formatUnits_),
@@ -69,7 +73,7 @@ export const useBalance = ({
             value,
           }
         } else {
-          const value = await provider.getBalance(config_.address)
+          const value = await provider.getBalance(config_.addressOrName)
           balance = {
             formatted: utils.formatUnits(value, formatUnits_),
             symbol: 'ETH',
@@ -85,30 +89,30 @@ export const useBalance = ({
         return error
       }
     },
-    [address, formatUnits, provider, token],
+    [addressOrName, formatUnits, provider, token],
   )
 
   // Fetch balance when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (skip || !address) return
+    if (skip || !addressOrName) return
 
     let didCancel = false
     if (didCancel) return
-    getBalance({ address, formatUnits, token })
+    getBalance({ addressOrName, formatUnits, token })
 
     return () => {
       didCancel = true
     }
-  }, [address, cacheBuster, skip, token])
+  }, [addressOrName, cacheBuster, skip, token])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!watch) return
     if (!blockNumber) return
-    if (!address) return
-    getBalance({ address, formatUnits, token })
+    if (!addressOrName) return
+    getBalance({ addressOrName, formatUnits, token })
   }, [blockNumber])
   /* eslint-enable react-hooks/exhaustive-deps */
 

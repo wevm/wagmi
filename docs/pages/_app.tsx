@@ -9,7 +9,6 @@ import {
   WalletLinkConnector,
   chain,
   defaultChains,
-  defaultL2Chains,
 } from 'wagmi'
 
 import 'nextra-theme-docs/style.css'
@@ -21,8 +20,7 @@ import 'degen/styles'
 /* eslint-enable import/no-unresolved */
 
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
-
-const chains = [...defaultChains, ...defaultL2Chains]
+const chains = defaultChains
 
 type Config = { chainId?: number }
 const connectors = ({ chainId }: Config) => {

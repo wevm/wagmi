@@ -111,11 +111,11 @@ WebSocket interface for connecting to network. If you provide a WebSocket provid
 import { providers } from 'ethers'
 import { Provider } from 'wagmi'
 
-const provider = ({ chainId }) =>
+const webSocketProvider = ({ chainId }) =>
   new providers.InfuraWebSocketProvider(chainId, 'Your infura id')
 
 const App = () => (
-  <Provider provider={provider}>
+  <Provider webSocketProvider={webSocketProvider}>
     <YourRoutes />
   </Provider>
 )
