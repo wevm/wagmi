@@ -5,7 +5,7 @@
     "build:docs": "manypkg run docs build",
     "changeset:release": "pnpm gen:readme && pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
-    "dev": "preconstruct dev && pnpm gen:abis",
+    "dev": "preconstruct dev",
     "dev:docs": "pnpm build && manypkg run docs dev",
     "dev:example:next": "manypkg run example-next dev",
     "dev:example:vite-react": "manypkg run example-vite-react dev",
