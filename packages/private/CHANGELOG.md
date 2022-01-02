@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.0.10
+
+### Patch Changes
+
+- [#15](https://github.com/tmm/wagmi/pull/15) [`5f7675c`](https://github.com/tmm/wagmi/commit/5f7675c3ffd848522d4117c07c1f62b17dfc6616) Thanks [@tmm](https://github.com/tmm)! - read and write contract functions
+
 ## 0.0.9
 
 ### Patch Changes
