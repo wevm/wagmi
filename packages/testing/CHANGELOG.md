@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.0.14
+
+### Patch Changes
+
+- [`63312e2`](https://github.com/tmm/wagmi/commit/63312e2b06b8d835abc2908cba399d941ca79408) Thanks [@tmm](https://github.com/tmm)! - add once to contract event
+
+- Updated dependencies [[`63312e2`](https://github.com/tmm/wagmi/commit/63312e2b06b8d835abc2908cba399d941ca79408)]:
+  - wagmi-private@0.0.14
+
 ## 0.0.13
 
 ### Patch Changes
