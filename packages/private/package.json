@@ -1,7 +1,7 @@
 {
   "name": "wagmi-private",
   "license": "MIT",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "ethereum": "awkweb.eth",
   "sideEffects": false,
   "main": "dist/wagmi-private.cjs.js",
