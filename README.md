@@ -37,48 +37,50 @@ Visit https://wagmi-xyz.vercel.app to view the full documentation.
 
 ## Usage
 
+1. Install the dependencies.
+
 ```bash
 pnpm add wagmi ethers
 ```
 
-## Development
+2. Wrap your app with the `Provider` component.
 
-```bash
-pnpm i
-pnpm dev
+```tsx
+import { Provider } from 'wagmi'
+
+const App = () => (
+  <Provider>
+    <YourRoutes />
+  </Provider>
+)
 ```
 
-### Docs
+3. Use hooks.
 
-```bash
-pnpm dev:docs
+```tsx
+import { useAccount } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, disconnect] = useAccount({
+    fetchEns: true,
+  })
+
+  return ...
+}
 ```
 
-### Examples
+Every component inside the `Provider` is set up with the default `InjectedConnector` for connecting wallets and ethers.js [Default Provider](https://docs.ethers.io/v5/api/providers/#providers-getDefaultProvider) for fetching data.
 
-```bash
-pnpm dev:example:next
-pnpm dev:example:vite-react
-```
-
-### Testing
-
-```bash
-pnpm test
-pnpm test:watch
-```
-
-### CI
-
-[Add secrets](https://github.com/tmm/wagmi/settings/secrets/actions) to GitHub:
-
-```
-NPM_TOKEN
-```
+Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/connect-wallet) or browse the [API docs](https://wagmi-xyz.vercel.app/docs/provider).
 
 ## Thanks
 
 - [ricmoo.eth](https://twitter.com/ricmoo) for creating and continued work on [ethers.js](https://github.com/ethers-io/ethers.js)
+- [Mirror](https://mirror.xyz) for creating space to do good work
+
+## License
+
+MIT.
 
 <br />
 
