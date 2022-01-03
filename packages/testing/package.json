@@ -1,5 +1,6 @@
 {
   "name": "wagmi-testing",
+  "description": "Testing utils for wagmi",
   "license": "MIT",
   "version": "0.0.12",
   "ethereum": "awkweb.eth",

@@ -17,3 +17,6 @@ tsconfig.tsbuildinfo
 
 **/generated/
 packages/**/README.md
+
+docs/public/*.st
+docs/public/*.toml
