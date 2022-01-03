@@ -17,7 +17,7 @@
 
 **React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).**
 
-🚀 &nbsp; Hooks for connecting wallets, signing messages, sending transactions, etc.
+🚀 &nbsp; 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
 
 💼 &nbsp; Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
 
