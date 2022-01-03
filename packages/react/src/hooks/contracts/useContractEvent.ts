@@ -5,8 +5,8 @@ import { useProvider, useWebSocketProvider } from '../providers'
 import { Config as UseContractConfig, useContract } from './useContract'
 
 type Config = {
-  /** Subscribe to changes */
-  watch?: boolean
+  /** Receive only a single event */
+  once?: boolean
 }
 
 export const useContractEvent = <
@@ -18,7 +18,7 @@ export const useContractEvent = <
   eventName: Parameters<Contract['on']>[0],
   /** Callback function when event is called */
   listener: Parameters<Contract['on']>[1],
-  { watch }: Config = { watch: true },
+  { once }: Config = {},
 ) => {
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
@@ -35,7 +35,7 @@ export const useContractEvent = <
       listenerRef.current(event)
 
     const contract_ = <ethers.Contract>(<unknown>ethers.Contract)
-    if (!watch) contract_.once(eventName, handler)
+    if (once) contract_.once(eventName, handler)
     else contract_.on(eventName, handler)
 
     return () => {

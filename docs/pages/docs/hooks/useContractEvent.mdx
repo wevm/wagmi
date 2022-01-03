@@ -75,11 +75,13 @@ const App = () => {
 }
 ```
 
-### config (optional)
+### Configuration
 
-Configuration object. Defaults to `{ watch: true }`.
+#### once (optional)
 
-```tsx highlight='11'
+Receive only a single event. Defaults to `false`.
+
+```tsx highlight='12'
 import { useContractEvent } from 'wagmi'
 
 const App = () => {
@@ -90,7 +92,9 @@ const App = () => {
     },
     'NewOwner',
     (event) => console.log(event),
-    { watch: true },
+    {
+      once: true,
+    },
   )
 
   return ...

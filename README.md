@@ -60,7 +60,7 @@ const App = () => (
 ```tsx
 import { useAccount } from 'wagmi'
 
-const App = () => {
+const Page = () => {
   const [{ data, error, loading }, disconnect] = useAccount({
     fetchEns: true,
   })

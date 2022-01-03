@@ -61,7 +61,7 @@ const App = () => {
 
 ## Configuration
 
-### address (optional)
+### addressOrName (optional)
 
 Fetches Ethereum balance for address or ENS name.
 
@@ -86,7 +86,7 @@ import { useBalance } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getBalance] = useBalance({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
     formatUnits: 'gwei',
   })
 
@@ -103,7 +103,7 @@ import { useBalance } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getBalance] = useBalance({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
     skip: true,
   })
 
@@ -120,7 +120,7 @@ import { useBalance } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getBalance] = useBalance({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
     token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
   })
 
@@ -137,7 +137,7 @@ import { useBalance } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getBalance] = useBalance({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
     watch: true
   })
 
