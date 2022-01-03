@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.0.13
+
+### Patch Changes
+
+- [`6f890b0`](https://github.com/tmm/wagmi/commit/6f890b0dabbdbea913ec91cb8bfc970c05ed0a93) Thanks [@tmm](https://github.com/tmm)! - update readme
+
 ## 0.0.12
 
 ### Patch Changes
