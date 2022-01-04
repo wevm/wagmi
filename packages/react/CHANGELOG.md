@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.0.15
+
+### Patch Changes
+
+- [`3909624`](https://github.com/tmm/wagmi/commit/39096249c1fa9516beabb11735beb67c94032879) Thanks [@tmm](https://github.com/tmm)! - make contract read and write execute overrides param optional
+
+- Updated dependencies [[`3909624`](https://github.com/tmm/wagmi/commit/39096249c1fa9516beabb11735beb67c94032879)]:
+  - wagmi-private@0.0.15
+
 ## 0.0.14
 
 ### Patch Changes
