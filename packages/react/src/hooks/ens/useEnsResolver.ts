@@ -35,11 +35,11 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
         setState((x) => ({ ...x, error: undefined, loading: true }))
         const resolver = await provider.getResolver(config_.name)
         setState((x) => ({ ...x, loading: false, resolver }))
-        return resolver
+        return { data: resolver, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [name, provider],

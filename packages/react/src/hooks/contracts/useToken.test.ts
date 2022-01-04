@@ -124,16 +124,19 @@ describe('useToken', () => {
         const res = await result.current[2]()
         expect(res).toMatchInlineSnapshot(`
           {
-            "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-            "decimals": 18,
-            "symbol": "UNI",
-            "totalSupply": {
-              "formatted": "1000000000.0",
-              "value": {
-                "hex": "0x033b2e3c9fd0803ce8000000",
-                "type": "BigNumber",
+            "data": {
+              "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+              "decimals": 18,
+              "symbol": "UNI",
+              "totalSupply": {
+                "formatted": "1000000000.0",
+                "value": {
+                  "hex": "0x033b2e3c9fd0803ce8000000",
+                  "type": "BigNumber",
+                },
               },
             },
+            "error": undefined,
           }
         `)
       })
@@ -148,16 +151,19 @@ describe('useToken', () => {
         })
         expect(res).toMatchInlineSnapshot(`
           {
-            "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-            "decimals": 18,
-            "symbol": "UNI",
-            "totalSupply": {
-              "formatted": "1000000000.0",
-              "value": {
-                "hex": "0x033b2e3c9fd0803ce8000000",
-                "type": "BigNumber",
+            "data": {
+              "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+              "decimals": 18,
+              "symbol": "UNI",
+              "totalSupply": {
+                "formatted": "1000000000.0",
+                "value": {
+                  "hex": "0x033b2e3c9fd0803ce8000000",
+                  "type": "BigNumber",
+                },
               },
             },
+            "error": undefined,
           }
         `)
       })
@@ -167,7 +173,12 @@ describe('useToken', () => {
       const { result } = renderHook(() => useToken({ skip: true }))
       await actHook(async () => {
         const res = await result.current[2]()
-        expect(res).toMatchInlineSnapshot(`[Error: address is required]`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: address is required],
+          }
+        `)
       })
     })
   })

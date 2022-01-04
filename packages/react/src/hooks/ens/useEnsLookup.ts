@@ -34,11 +34,11 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
         setState((x) => ({ ...x, error: undefined, loading: true }))
         const ens = await provider.lookupAddress(config_.address)
         setState((x) => ({ ...x, ens, loading: false }))
-        return ens
+        return { data: ens, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [address, provider],

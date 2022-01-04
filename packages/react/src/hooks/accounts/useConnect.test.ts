@@ -53,13 +53,11 @@ describe('useConnect', () => {
       await actHook(async () => {
         const mockConnector = result.current[0].data.connectors[0]
         const res = await result.current[1](mockConnector)
+        if (!res) throw new Error('Never returned')
 
-        const {
-          connector,
-          data: { provider, ...rest },
-        } = <any>res
-        expect(connector).toBeDefined()
+        const { data: { provider, ...rest } = {}, error } = res
         expect(provider).toBeDefined()
+        expect(error).toBeUndefined()
         expect(rest).toMatchInlineSnapshot(`
           {
             "account": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
@@ -90,9 +88,12 @@ describe('useConnect', () => {
       await actHook(async () => {
         const mockConnector = result.current[0].data.connectors[0]
         const res = await result.current[1](mockConnector)
-        expect(res).toMatchInlineSnapshot(
-          `[UserRejectedRequestError: User rejected request]`,
-        )
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [UserRejectedRequestError: User rejected request],
+          }
+        `)
       })
     })
   })

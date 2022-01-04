@@ -39,7 +39,12 @@ describe('useBlockNumber', () => {
 
     await actHook(async () => {
       const res = await result.current[1]()
-      expect(res).toMatchInlineSnapshot(`13897897`)
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": 13897897,
+          "error": undefined,
+        }
+      `)
     })
   })
 })

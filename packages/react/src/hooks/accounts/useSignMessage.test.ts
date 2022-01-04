@@ -55,10 +55,10 @@ describe('useSignMessage', () => {
         await result.current.connect[1](mockConnector)
 
         const res = await result.current.signMessage[1]()
-        if (typeof res !== 'string') throw new Error('No signature')
+        if (res.error) throw new Error('No signature')
         const account =
           await result.current.connect[0].data.connector?.getAccount()
-        const recoveredAccount = verifyMessage(messages.basic, res)
+        const recoveredAccount = verifyMessage(messages.basic, res.data)
         expect(account).toEqual(recoveredAccount)
       })
 
@@ -88,10 +88,10 @@ describe('useSignMessage', () => {
         const res = await result.current.signMessage[1]({
           message: messages.basic,
         })
-        if (typeof res !== 'string') throw new Error('No signature')
+        if (res.error) throw new Error('No signature')
         const account =
           await result.current.connect[0].data.connector?.getAccount()
-        const recoveredAccount = verifyMessage(messages.basic, res)
+        const recoveredAccount = verifyMessage(messages.basic, res.data)
         expect(account).toEqual(recoveredAccount)
       })
     })
@@ -104,7 +104,12 @@ describe('useSignMessage', () => {
         await result.current.connect[1](mockConnector)
 
         const res = await result.current.signMessage[1]()
-        expect(res).toMatchInlineSnapshot(`[Error: message is required]`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: message is required],
+          }
+        `)
       })
     })
   })
