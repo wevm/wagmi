@@ -41,7 +41,7 @@ export const useContractRead = <
   const read = React.useCallback(
     async (config?: {
       args?: Config['args']
-      overrides: Config['overrides']
+      overrides?: Config['overrides']
     }) => {
       try {
         const config_ = config ?? { args, overrides }
