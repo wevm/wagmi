@@ -47,15 +47,12 @@ const App = () => {
 ### connect
 
 ```ts
-(connector: Connector) => Promise<
-  | {
-      connector: Connector
-      data: {
-        account?: string
-        chainId?: number
-        provider?: Provider
-      }
-    }
-  | Error
->
+(connector: Connector) => Promise<{
+  data?: {
+    account?: string
+    chainId?: number
+    provider?: Provider
+  }
+  error?: Error
+}>
 ```

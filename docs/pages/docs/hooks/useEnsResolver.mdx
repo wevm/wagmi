@@ -37,7 +37,9 @@ const App = () => {
 ### getEnsResolver
 
 ```ts
-(config?: { name: string }) => Promise<EnsResolver | Error>
+(config?: {
+  name: string
+}) => Promise<{ data?: EnsResolver; error?: Error }>
 ```
 
 ## Configuration

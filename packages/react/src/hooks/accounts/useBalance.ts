@@ -80,13 +80,13 @@ export const useBalance = ({
             value,
           }
         }
-
         setState((x) => ({ ...x, balance, loading: false }))
-        return balance
+
+        return { data: balance, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [addressOrName, formatUnits, provider, token],

@@ -34,11 +34,11 @@ export const useNetwork = () => {
         setState((x) => ({ ...x, error: undefined, loading: true }))
         await connector.switchChain(chainId)
         setState((x) => ({ ...x, loading: false }))
-        return true
+        return { data: true, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [connector],

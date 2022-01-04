@@ -55,15 +55,17 @@ export const useContractWrite = <
         setState((x) => ({ ...x, loading: true }))
         const signer = await connector.getSigner()
         const contract_ = contract.connect(signer)
-        const response = await contract_[functionName](...params)
+        const response = (await contract_[functionName](
+          ...params,
+        )) as TransactionResponse
         setState((x) => ({ ...x, loading: false, response }))
-        return response as TransactionResponse
+        return { data: response, error: undefined }
       } catch (error_) {
         let error: Error = <Error>error_
         if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [args, connector, contract, functionName, overrides],

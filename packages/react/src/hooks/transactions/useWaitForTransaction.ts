@@ -71,11 +71,11 @@ export const useWaitForTransaction = ({
         setState((x) => ({ ...x, loading: true }))
         const receipt = await promise
         setState((x) => ({ ...x, loading: false, receipt }))
-        return receipt
+        return { data: receipt, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [wait_, confirmations, hash, timeout, provider],

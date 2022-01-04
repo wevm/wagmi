@@ -96,7 +96,12 @@ describe('useEnsLookup', () => {
       )
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`"meagher.eth"`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": "meagher.eth",
+            "error": undefined,
+          }
+        `)
       })
     })
 
@@ -106,7 +111,12 @@ describe('useEnsLookup', () => {
         const res = await result.current[1]({
           address: wallets.ethers3.address,
         })
-        expect(res).toMatchInlineSnapshot(`"meagher.eth"`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": "meagher.eth",
+            "error": undefined,
+          }
+        `)
       })
     })
 
@@ -114,7 +124,12 @@ describe('useEnsLookup', () => {
       const { result } = renderHook(() => useEnsLookup({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`[Error: address is required]`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: address is required],
+          }
+        `)
       })
     })
   })

@@ -59,18 +59,21 @@ describe('useFeeData', () => {
       const res = await result.current[1]()
       expect(res).toMatchInlineSnapshot(`
         {
-          "gasPrice": {
-            "hex": "0x113816c015",
-            "type": "BigNumber",
+          "data": {
+            "gasPrice": {
+              "hex": "0x113816c015",
+              "type": "BigNumber",
+            },
+            "maxFeePerGas": {
+              "hex": "0x2252601b2a",
+              "type": "BigNumber",
+            },
+            "maxPriorityFeePerGas": {
+              "hex": "0x9502f900",
+              "type": "BigNumber",
+            },
           },
-          "maxFeePerGas": {
-            "hex": "0x2252601b2a",
-            "type": "BigNumber",
-          },
-          "maxPriorityFeePerGas": {
-            "hex": "0x9502f900",
-            "type": "BigNumber",
-          },
+          "error": undefined,
         }
       `)
     })

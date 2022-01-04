@@ -36,13 +36,13 @@ export const useSignMessage = ({ message }: Config = {}) => {
         const signer = await connector.getSigner()
         const signature = await signer.signMessage(config_.message)
         setState((x) => ({ ...x, signature, loading: false }))
-        return signature
+        return { data: signature, error: undefined }
       } catch (error_) {
         let error: Error = <Error>error_
         if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [connector, message],

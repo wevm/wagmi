@@ -39,13 +39,13 @@ export const useTransaction = ({ request }: Config = {}) => {
         const signer = await connector.getSigner()
         const transaction = await signer.sendTransaction(config_.request)
         setState((x) => ({ ...x, loading: false, transaction }))
-        return transaction
+        return { data: transaction, error: undefined }
       } catch (error_) {
         let error: Error = <Error>error_
         if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [connector, request],

@@ -37,7 +37,9 @@ const App = () => {
 ### lookupAddress
 
 ```ts
-(config?: { address: string }) => Promise<string | Error>
+(config?: {
+  address: string
+}) => Promise<{ data?: string; error?: Error }>
 ```
 
 ## Configuration

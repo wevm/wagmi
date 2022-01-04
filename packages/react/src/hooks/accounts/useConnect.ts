@@ -39,11 +39,11 @@ export const useConnect = () => {
         setGlobalState((x) => ({ ...x, connector, data }))
         setLastUsedConnector(connector.name)
         setState((x) => ({ ...x, loading: false }))
-        return { connector, data }
+        return { data, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, connector: undefined, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [globalState.connector, setGlobalState, setLastUsedConnector],

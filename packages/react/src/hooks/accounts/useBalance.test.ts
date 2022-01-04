@@ -71,12 +71,15 @@ describe('useBalance', () => {
         const res = await result.current.balance[1]()
         expect(res).toMatchInlineSnapshot(`
           {
-            "formatted": "0.193861344139087225",
-            "symbol": "ETH",
-            "value": {
-              "hex": "0x02b0bbdd89170d79",
-              "type": "BigNumber",
+            "data": {
+              "formatted": "0.193861344139087225",
+              "symbol": "ETH",
+              "value": {
+                "hex": "0x02b0bbdd89170d79",
+                "type": "BigNumber",
+              },
             },
+            "error": undefined,
           }
         `)
       })
@@ -96,12 +99,15 @@ describe('useBalance', () => {
         })
         expect(res).toMatchInlineSnapshot(`
           {
-            "formatted": "0.193861344139087225",
-            "symbol": "ETH",
-            "value": {
-              "hex": "0x02b0bbdd89170d79",
-              "type": "BigNumber",
+            "data": {
+              "formatted": "0.193861344139087225",
+              "symbol": "ETH",
+              "value": {
+                "hex": "0x02b0bbdd89170d79",
+                "type": "BigNumber",
+              },
             },
+            "error": undefined,
           }
         `)
       })
@@ -117,7 +123,12 @@ describe('useBalance', () => {
         await result.current.connect[1](mockConnector)
 
         const res = await result.current.balance[1]()
-        expect(res).toMatchInlineSnapshot(`[Error: address is required]`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: address is required],
+          }
+        `)
       })
     })
   })

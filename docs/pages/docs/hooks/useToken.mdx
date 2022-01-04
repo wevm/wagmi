@@ -56,7 +56,7 @@ const App = () => {
   decimals?: number
   image?: string
   symbol: string
-}) => Promise<boolean | Error>
+}) => Promise<{ data?: boolean; error?: Error }>
 ```
 
 ### getToken

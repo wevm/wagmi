@@ -42,7 +42,7 @@ const App = () => {
   hash?: string
   timeout?: number
   wait?: TransactionResponse['wait']
-}) => Promise<TransactionReceipt | Error>
+}) => Promise<{ data?: TransactionReceipt; error?: Error }>
 ```
 
 ## Configuration

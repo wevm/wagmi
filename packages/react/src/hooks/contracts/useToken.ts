@@ -72,11 +72,11 @@ export const useToken = ({
           },
         }
         setState((x) => ({ ...x, token, loading: false }))
-        return token
+        return { data: token, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
-        return error
+        return { data: undefined, error }
       }
     },
     [address, formatUnits, provider],

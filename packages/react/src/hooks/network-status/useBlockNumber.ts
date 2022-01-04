@@ -29,11 +29,11 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
       setState((x) => ({ ...x, error: undefined, loading: true }))
       const blockNumber = await provider.getBlockNumber()
       setState((x) => ({ ...x, blockNumber, loading: false }))
-      return blockNumber
+      return { data: blockNumber, error: undefined }
     } catch (error_) {
       const error = <Error>error_
       setState((x) => ({ ...x, error, loading: false }))
-      return error
+      return { data: undefined, error }
     }
   }, [provider])
 

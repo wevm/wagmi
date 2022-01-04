@@ -41,11 +41,11 @@ export const useFeeData = ({
       setState((x) => ({ ...x, error: undefined, loading: true }))
       const feeData = await provider.getFeeData()
       setState((x) => ({ ...x, feeData, loading: false }))
-      return feeData
+      return { data: feeData, error: undefined }
     } catch (error_) {
       const error = <Error>error_
       setState((x) => ({ ...x, error, loading: false }))
-      return error
+      return { data: undefined, error }
     }
   }, [provider])
 

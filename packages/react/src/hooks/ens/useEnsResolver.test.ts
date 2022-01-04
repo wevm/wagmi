@@ -74,7 +74,7 @@ describe('useEnsResolver', () => {
       )
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res?.name).toEqual(wallets.ethers3.ensName)
+        expect(res?.data?.name).toEqual(wallets.ethers3.ensName)
       })
     })
 
@@ -84,7 +84,7 @@ describe('useEnsResolver', () => {
         const res = await result.current[1]({
           name: wallets.ethers3.ensName,
         })
-        expect(res?.name).toEqual(wallets.ethers3.ensName)
+        expect(res?.data?.name).toEqual(wallets.ethers3.ensName)
       })
     })
 
@@ -92,7 +92,12 @@ describe('useEnsResolver', () => {
       const { result } = renderHook(() => useEnsResolver({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`[Error: name is required]`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: name is required],
+          }
+        `)
       })
     })
   })
