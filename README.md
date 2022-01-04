@@ -73,6 +73,16 @@ Every component inside the `Provider` is set up with the default `InjectedConnec
 
 Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/connect-wallet) or browse the [API docs](https://wagmi-xyz.vercel.app/docs/provider).
 
+## Community
+
+Feel free to join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb)!
+
+## Support
+
+- awkweb.eth
+- [GitHub Sponsors](https://github.com/sponsors/tmm)
+- [Sign the guestbook](https://github.com/tmm/wagmi/discussions/2)
+
 ## Thanks
 
 - [ricmoo.eth](https://twitter.com/ricmoo) for creating and continued work on [ethers.js](https://github.com/ethers-io/ethers.js)
