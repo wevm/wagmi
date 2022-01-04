@@ -19,6 +19,8 @@ import '../styles/globals.css'
 import 'degen/styles'
 /* eslint-enable import/no-unresolved */
 
+const alchemy = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
+const etherscan = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY as string
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
 const chains = defaultChains
 
@@ -47,9 +49,9 @@ const connectors = ({ chainId }: Config) => {
 const isChainSupported = (chainId?: number) =>
   chains.some((x) => x.id === chainId)
 const provider = ({ chainId }: Config) =>
-  new providers.InfuraProvider(
+  providers.getDefaultProvider(
     isChainSupported(chainId) ? chainId : chain.mainnet.id,
-    infuraId,
+    { alchemy, etherscan, infuraId },
   )
 const webSocketProvider = ({ chainId }: Config) =>
   new providers.InfuraWebSocketProvider(
