@@ -57,7 +57,7 @@ export const useContractWrite = <
         const contract_ = contract.connect(signer)
         const response = await contract_[functionName](...params)
         setState((x) => ({ ...x, loading: false, response }))
-        return response
+        return response as TransactionResponse
       } catch (error_) {
         let error: Error = <Error>error_
         if ((<ProviderRpcError>error_).code === 4001)

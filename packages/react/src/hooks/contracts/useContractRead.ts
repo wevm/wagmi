@@ -57,7 +57,7 @@ export const useContractRead = <
         setState((x) => ({ ...x, loading: true }))
         const response = await contract[functionName](...params)
         setState((x) => ({ ...x, loading: false, response }))
-        return response
+        return response as Result
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))
