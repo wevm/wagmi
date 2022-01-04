@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.0.16
+
+### Patch Changes
+
+- [`d1574cf`](https://github.com/tmm/wagmi/commit/d1574cf5f7a578ccd480889c2e375134145a4aba) Thanks [@tmm](https://github.com/tmm)! - add better type information for contract results
+
+- Updated dependencies [[`d1574cf`](https://github.com/tmm/wagmi/commit/d1574cf5f7a578ccd480889c2e375134145a4aba)]:
+  - wagmi-private@0.0.16
+
 ## 0.0.15
 
 ### Patch Changes
