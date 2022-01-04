@@ -13,7 +13,7 @@ import { useEnsResolver } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getEnsResolver] = useEnsResolver({
-    address: 'awkweb.eth',
+    name: 'awkweb.eth',
   })
 
   if (loading) return <div>Fetching resolver…</div>
