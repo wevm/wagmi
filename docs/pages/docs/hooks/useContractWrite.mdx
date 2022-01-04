@@ -46,7 +46,7 @@ const App = () => {
     args: any | any[]
     overrides?: Overrides
   } = {},
-) => Promise<TransactionResponse | Error>
+) => Promise<{ data?: TransactionResponse; error?: Error }>
 ```
 
 ## Arguments

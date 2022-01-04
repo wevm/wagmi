@@ -49,7 +49,9 @@ const App = () => {
 ### signMessage
 
 ```ts
-(config?: { message: string }) => Promise<string | Error>
+(config?: {
+  message: string
+}) => Promise<{ data?: string; error?: Error }>
 ```
 
 ## Configuration

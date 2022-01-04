@@ -37,7 +37,9 @@ const App = () => {
 ### getEnsAvatar
 
 ```ts
-(config?: { addressOrName: string }) => Promise<string | Error>
+(config?: {
+  addressOrName: string
+}) => Promise<{ data?: string; error?: Error }>
 ```
 
 ## Configuration

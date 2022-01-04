@@ -44,14 +44,14 @@ const App = () => {
 ### getFeeData
 
 ```ts
-() => Promise<
-  | {
-      gasPrice: BigNumber
-      maxFeePerGas: BigNumber
-      maxPriorityFeePerGas: BigNumber
-    }
-  | Error
->
+() => Promise<{
+  data?: {
+    gasPrice: BigNumber
+    maxFeePerGas: BigNumber
+    maxPriorityFeePerGas: BigNumber
+  }
+  error?: Error
+}>
 ```
 
 ## Configuration

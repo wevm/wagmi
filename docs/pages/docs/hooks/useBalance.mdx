@@ -49,14 +49,14 @@ const App = () => {
   addressOrName: string
   formatUnits?: Unit | number
   token?: string
-}) => Promise<
-  | {
-      formatted: string
-      symbol: string
-      value: BigNumber
-    }
-  | Error
->
+}) => Promise<{
+  data?: {
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }
+  error?: Error
+}>
 ```
 
 ## Configuration

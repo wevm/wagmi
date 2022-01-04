@@ -51,7 +51,9 @@ const App = () => {
 ### sendTransaction
 
 ```ts
-(config?: { request: TransactionRequest }) => Promise<string | Error>
+(config?: {
+  request: TransactionRequest
+}) => Promise<{ data?: string; error?: Error }>
 ```
 
 ## Configuration
