@@ -43,10 +43,19 @@ const connectors = ({ chainId }: Config) => {
     }),
   ]
 }
+
+const isChainSupported = (chainId?: number) =>
+  chains.some((x) => x.id === chainId)
 const provider = ({ chainId }: Config) =>
-  new providers.InfuraProvider(chainId, infuraId)
+  new providers.InfuraProvider(
+    isChainSupported(chainId) ? chainId : chain.mainnet.id,
+    infuraId,
+  )
 const webSocketProvider = ({ chainId }: Config) =>
-  new providers.InfuraWebSocketProvider(chainId, infuraId)
+  new providers.InfuraWebSocketProvider(
+    isChainSupported(chainId) ? chainId : chain.mainnet.id,
+    infuraId,
+  )
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
