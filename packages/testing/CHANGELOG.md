@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.0.17
+
+### Patch Changes
+
+- [#25](https://github.com/tmm/wagmi/pull/25) [`9a7dab7`](https://github.com/tmm/wagmi/commit/9a7dab78b3518658bc7d85dc397990f0d28da175) Thanks [@tmm](https://github.com/tmm)! - update response types
+
+- Updated dependencies [[`9a7dab7`](https://github.com/tmm/wagmi/commit/9a7dab78b3518658bc7d85dc397990f0d28da175)]:
+  - wagmi-private@0.0.17
+
 ## 0.0.16
 
 ### Patch Changes
