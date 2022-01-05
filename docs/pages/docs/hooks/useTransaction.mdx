@@ -22,7 +22,7 @@ const App = () => {
   if (loading) return <div>Check Wallet</div>
   if (!data)
     return (
-      <button disabled={loading} onClick={async () => await signMessage()}>
+      <button disabled={loading} onClick={async () => await sendTransaction()}>
         Send Transaction
       </button>
     )
