@@ -15,8 +15,7 @@ export class WalletLinkConnector extends Connector<
 > {
   readonly id = 'walletLink'
   readonly name = 'Coinbase Wallet'
-  readonly ready =
-    typeof window !== 'undefined' && !window.ethereum?.isCoinbaseWallet
+  readonly ready = !window.ethereum?.isCoinbaseWallet
 
   private _client?: WalletLink
   private _provider?: WalletLinkProvider
