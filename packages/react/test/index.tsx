@@ -17,23 +17,25 @@ import { Provider, ProviderProps } from '../src'
 import '@testing-library/jest-dom/extend-expect'
 
 type Props = ProviderProps & {
+  chainId?: number
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
 export const wrapper = (props: Props) => {
+  const network = props.chainId ?? 1
   return (
     <Provider
       connectors={[
         new MockConnector({
           chains: defaultChains,
           options: {
-            network: 1,
+            network,
             privateKey: wallets.ethers1.privateKey,
           },
         }),
       ]}
-      provider={new providers.InfuraProvider(1, infuraApiKey)}
+      provider={new providers.InfuraProvider(network, infuraApiKey)}
       {...props}
     />
   )

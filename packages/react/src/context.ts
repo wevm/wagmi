@@ -83,25 +83,25 @@ export const Provider = ({
 
   const connectors = React.useMemo(() => {
     if (typeof connectors_ !== 'function') return connectors_
-    return connectors_({ chainId: state.data?.chainId })
-  }, [connectors_, state.data?.chainId])
+    return connectors_({ chainId: state.data?.chain?.id })
+  }, [connectors_, state.data?.chain?.id])
 
   const provider = React.useMemo(() => {
     if (typeof provider_ !== 'function') return provider_
     return provider_({
-      chainId: state.data?.chainId,
+      chainId: state.data?.chain?.id,
       connector: state.connector,
     })
-  }, [provider_, state.data?.chainId, state.connector])
+  }, [provider_, state.data?.chain?.id, state.connector])
 
   const webSocketProvider = React.useMemo(() => {
     if (!webSocketProvider_) return undefined
     if (typeof webSocketProvider_ !== 'function') return webSocketProvider_
     return webSocketProvider_({
-      chainId: state.data?.chainId,
+      chainId: state.data?.chain?.id,
       connector: state.connector,
     })
-  }, [webSocketProvider_, state.data?.chainId, state.connector])
+  }, [webSocketProvider_, state.data?.chain?.id, state.connector])
 
   // Attempt to connect on mount
   /* eslint-disable react-hooks/exhaustive-deps */

@@ -33,10 +33,11 @@ export class WalletConnectConnector extends Connector<
 
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
-      const chainId = await this.getChainId()
+      const id = await this.getChainId()
+      const unsupported = this.isChainUnsupported(id)
       return {
         account,
-        chainId,
+        chain: { id, unsupported },
         provider: new Web3Provider(<ExternalProvider>provider),
       }
     } catch (error) {
@@ -98,7 +99,9 @@ export class WalletConnectConnector extends Connector<
   }
 
   protected onChainChanged = (chainId: number | string) => {
-    this.emit('change', { chainId: normalizeChainId(chainId) })
+    const id = normalizeChainId(chainId)
+    const unsupported = this.isChainUnsupported(id)
+    this.emit('change', { chain: { id, unsupported } })
   }
 
   protected onDisconnect = () => {

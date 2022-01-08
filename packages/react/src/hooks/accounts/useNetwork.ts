@@ -18,14 +18,14 @@ export const useNetwork = () => {
   } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
-  const chainId = data?.chainId
+  const chainId = data?.chain?.id
+  const unsupported = data?.chain?.unsupported
   const activeChains = connector?.chains ?? []
   const activeChain: Chain | undefined = [
     ...activeChains,
     ...defaultChains,
     ...defaultL2Chains,
   ].find((x) => x.id === chainId)
-  const supported = activeChains.some((x) => x.id === chainId)
 
   const switchNetwork = React.useCallback(
     async (chainId: number) => {
@@ -51,7 +51,7 @@ export const useNetwork = () => {
           ? {
               ...activeChain,
               id: chainId,
-              unsupported: !supported,
+              unsupported,
             }
           : undefined,
         chains: activeChains,
