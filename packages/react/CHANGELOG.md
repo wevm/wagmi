@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.1.1
+
+### Patch Changes
+
+- [#54](https://github.com/tmm/wagmi/pull/54) [`25acd3d`](https://github.com/tmm/wagmi/commit/25acd3dfbb4498af5e1139ae9c892f5013404cbc) Thanks [@tmm](https://github.com/tmm)! - Stale contract object when useContract hook arguments change @zakangelle
+
 ## 0.1.0
 
 ### Minor Changes
