@@ -1,5 +1,25 @@
 # wagmi
 
+## 0.1.0
+
+### Minor Changes
+
+- [#52](https://github.com/tmm/wagmi/pull/52) [`da7a3a6`](https://github.com/tmm/wagmi/commit/da7a3a615def2443f65c041999100ce35e9774cc) Thanks [@tmm](https://github.com/tmm)! - Moves connectors to their own entrypoints to reduce bundle size.
+
+  ```ts
+  // old - WalletLinkConnector unused, but still in final bundle
+  import { InjectedConnector, WalletConnectConnector } from 'wagmi'
+
+  // new - WalletLinkConnector not in final bundle
+  import { InjectedConnector } from 'wagmi/connectors/injected'
+  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`da7a3a6`](https://github.com/tmm/wagmi/commit/da7a3a615def2443f65c041999100ce35e9774cc)]:
+  - wagmi-private@0.1.0
+
 ## 0.0.17
 
 ### Patch Changes
