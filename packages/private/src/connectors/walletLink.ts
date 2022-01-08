@@ -35,7 +35,7 @@ export class WalletLinkConnector extends Connector<
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
       const id = await this.getChainId()
-      const unsupported = this.isChainSupported(id)
+      const unsupported = this.isChainUnsupported(id)
       return {
         account,
         chain: { id, unsupported },
@@ -116,7 +116,7 @@ export class WalletLinkConnector extends Connector<
 
   protected onChainChanged = (chainId: number | string) => {
     const id = normalizeChainId(chainId)
-    const unsupported = this.isChainSupported(id)
+    const unsupported = this.isChainUnsupported(id)
     this.emit('change', { chain: { id, unsupported } })
   }
 
