@@ -23,21 +23,11 @@ export const useContract = <Contract = any>({
   contractInterface,
   signerOrProvider,
 }: Config) => {
-  const contractRef = React.useRef(
-    getContract<Contract>({
-      addressOrName,
-      contractInterface,
-      signerOrProvider,
-    }),
-  )
-
-  React.useEffect(() => {
-    contractRef.current = getContract({
+  return React.useMemo(() => {
+    return getContract<Contract>({
       addressOrName,
       contractInterface,
       signerOrProvider,
     })
   }, [addressOrName, contractInterface, signerOrProvider])
-
-  return contractRef.current
 }

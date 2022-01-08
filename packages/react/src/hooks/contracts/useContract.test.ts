@@ -1,5 +1,7 @@
+import { Signer, providers } from 'ethers'
+import { Provider } from '@ethersproject/providers'
 import { erc20ABI } from 'wagmi-private'
-import { contracts } from 'wagmi-testing'
+import { contracts, infuraApiKey } from 'wagmi-testing'
 
 import { renderHook } from '../../../test'
 import { useContract } from './useContract'
@@ -13,5 +15,21 @@ describe('useContract', () => {
       }),
     )
     expect(result.current).toBeDefined()
+  })
+
+  it.only('changes config', async () => {
+    let signerOrProvider: Signer | Provider | undefined = undefined
+    const { result, rerender } = renderHook(() =>
+      useContract({
+        addressOrName: contracts.uniToken,
+        contractInterface: erc20ABI,
+        signerOrProvider,
+      }),
+    )
+    expect(result.current.provider).toBeNull()
+
+    signerOrProvider = new providers.InfuraProvider(1, infuraApiKey)
+    rerender()
+    expect(result.current.provider).not.toBeNull()
   })
 })
