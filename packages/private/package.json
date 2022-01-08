@@ -11,14 +11,26 @@
     ".": {
       "module": "./dist/wagmi-private.esm.js",
       "default": "./dist/wagmi-private.cjs.js"
+    },
+    "./connectors/walletConnect": {
+      "module": "./connectors/walletConnect/dist/wagmi-private-connectors-walletConnect.esm.js",
+      "default": "./connectors/walletConnect/dist/wagmi-private-connectors-walletConnect.cjs.js"
+    },
+    "./connectors/walletLink": {
+      "module": "./connectors/walletLink/dist/wagmi-private-connectors-walletLink.esm.js",
+      "default": "./connectors/walletLink/dist/wagmi-private-connectors-walletLink.cjs.js"
     }
   },
   "files": [
-    "/dist"
+    "/dist",
+    "/connectors/walletConnect/",
+    "/connectors/walletLink/"
   ],
   "preconstruct": {
     "entrypoints": [
-      "index.ts"
+      "index.ts",
+      "connectors/walletConnect.ts",
+      "connectors/walletLink.ts"
     ]
   },
   "peerDependencies": {

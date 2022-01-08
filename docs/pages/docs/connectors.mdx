@@ -13,13 +13,13 @@ The following built-in connectors are part of wagmi's core and support most wall
 The **InjectedConnector** supports wallets that _inject_ an Ethereum provider into the browser or window. The [MetaMask](https://metamask.io) browser extension is the most popular example of this.
 
 ```tsx
-import { InjectedConnector } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 ```
 
 #### Usage
 
 ```tsx
-import { InjectedConnector } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 
 const connector = new InjectedConnector()
 ```
@@ -31,7 +31,8 @@ const connector = new InjectedConnector()
 Chains supported by app. Defaults to `defaultChains`.
 
 ```tsx highlight='4'
-import { InjectedConnector, defaultChains, defaultL2Chains } from 'wagmi'
+import { defaultChains, defaultL2Chains } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
 
 const connector = new InjectedConnector({
   chains: [...defaultChains, ...defaultL2Chains],
@@ -43,13 +44,13 @@ const connector = new InjectedConnector({
 The **WalletConnectConnector** wraps the [WalletConnect](https://walletconnect.com) Ethereum provider and supports its configuration options. This is a great option for adding support for many wallets to your app.
 
 ```tsx
-import { WalletConnectConnector } from 'wagmi'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 ```
 
 #### Usage
 
 ```tsx
-import { WalletConnectConnector } from 'wagmi'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
   options: {
@@ -65,7 +66,8 @@ const connector = new WalletConnectConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```tsx highlight='4'
-import { WalletConnectConnector, defaultChains, defaultL2Chains } from 'wagmi'
+import { defaultChains, defaultL2Chains } from 'wagmi'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
   chains: [...defaultChains, ...defaultL2Chains],
@@ -77,7 +79,7 @@ const connector = new WalletConnectConnector({
 Options to pass to the WalletConnect [Ethereum Provider](https://docs.walletconnect.com/quick-start/dapps/ethereum-provider).
 
 ```tsx highlight='4-6'
-import { WalletConnectConnector } from 'wagmi'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
   options: {
@@ -91,13 +93,13 @@ const connector = new WalletConnectConnector({
 The **WalletLinkConnector** wraps the [WalletLink](https://docs.cloud.coinbase.com/walletlink/docs) provider and supports connecting with Coinbase Wallet.
 
 ```tsx
-import { WalletLinkConnector } from 'wagmi'
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 ```
 
 #### Usage
 
 ```tsx
-import { WalletLinkConnector } from 'wagmi'
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 
 const connector = new WalletLinkConnector({
   options: {
@@ -114,7 +116,8 @@ const connector = new WalletLinkConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```tsx highlight='4'
-import { WalletLinkConnector, defaultChains, defaultL2Chains } from 'wagmi'
+import { defaultChains, defaultL2Chains } from 'wagmi'
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 
 const connector = new WalletLinkConnector({
   chains: [...defaultChains, ...defaultL2Chains],
@@ -126,7 +129,7 @@ const connector = new WalletLinkConnector({
 Options to pass to the WalletConnect [Ethereum Provider](https://docs.walletconnect.com/quick-start/dapps/ethereum-provider).
 
 ```tsx highlight='4-7'
-import { WalletLinkConnector } from 'wagmi'
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 
 const connector = new WalletLinkConnector({
   options: {

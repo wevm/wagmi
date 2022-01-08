@@ -1,9 +1,4 @@
-export {
-  Connector,
-  InjectedConnector,
-  WalletConnectConnector,
-  WalletLinkConnector,
-} from './connectors'
+export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorEvents, Data } from './connectors'
 
 export {

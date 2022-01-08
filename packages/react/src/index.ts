@@ -26,8 +26,6 @@ export {
 export {
   Connector,
   InjectedConnector,
-  WalletConnectConnector,
-  WalletLinkConnector,
   chain,
   defaultChains,
   defaultL2Chains,

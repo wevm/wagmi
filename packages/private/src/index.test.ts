@@ -5,8 +5,6 @@ it('should expose correct exports', () => {
     [
       "Connector",
       "InjectedConnector",
-      "WalletConnectConnector",
-      "WalletLinkConnector",
       "erc1155ABI",
       "erc20ABI",
       "erc721ABI",

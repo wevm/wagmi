@@ -55,12 +55,9 @@ const App = () => (
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
 ```tsx highlight='8-17,20'
-import {
-  InjectedConnector,
-  Provider,
-  WalletConnectConnector,
-  defaultChains,
-} from 'wagmi'
+import { Provider, defaultChains } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const connectors = [
   new InjectedConnector({ chains: defaultChains }),

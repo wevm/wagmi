@@ -63,7 +63,7 @@ export type Props = {
     | ((config: {
         chainId?: number
         connector?: Connector
-      }) => WebSocketProvider)
+      }) => WebSocketProvider | undefined)
 }
 
 export const Provider = ({
