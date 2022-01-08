@@ -39,8 +39,9 @@ export class MockConnector extends Connector<
 
     const accounts = await provider.enable()
     const account = getAddress(accounts[0])
-    const chainId = normalizeChainId(provider._network.chainId)
-    const data = { account, chainId, provider }
+    const id = normalizeChainId(provider._network.chainId)
+    const unsupported = this.isChainUnsupported(id)
+    const data = { account, chain: { id, unsupported }, provider }
     return data
   }
 
@@ -110,7 +111,9 @@ export class MockConnector extends Connector<
   }
 
   protected onChainChanged = (chainId: number | string) => {
-    this.emit('change', { chainId: normalizeChainId(chainId) })
+    const id = normalizeChainId(chainId)
+    const unsupported = this.isChainUnsupported(id)
+    this.emit('change', { chain: { id, unsupported } })
   }
 
   protected onDisconnect = () => {

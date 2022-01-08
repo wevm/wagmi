@@ -1,6 +1,6 @@
 import { MockConnector, defaultChains, wallets } from 'wagmi-testing'
 
-import { actHook, renderHook } from '../../../test'
+import { actHook, renderHook, wrapper } from '../../../test'
 import { useConnect } from './useConnect'
 
 describe('useConnect', () => {
@@ -61,7 +61,36 @@ describe('useConnect', () => {
         expect(rest).toMatchInlineSnapshot(`
           {
             "account": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
-            "chainId": 1,
+            "chain": {
+              "id": 1,
+              "unsupported": false,
+            },
+          }
+        `)
+      })
+    })
+
+    it('succeeds (unsupported chain)', async () => {
+      const { result } = renderHook(() => useConnect(), {
+        wrapper,
+        initialProps: { chainId: 69 },
+      })
+
+      await actHook(async () => {
+        const mockConnector = result.current[0].data.connectors[0]
+        const res = await result.current[1](mockConnector)
+        if (!res) throw new Error('Never returned')
+
+        const { data: { provider, ...rest } = {}, error } = res
+        expect(provider).toBeDefined()
+        expect(error).toBeUndefined()
+        expect(rest).toMatchInlineSnapshot(`
+          {
+            "account": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
+            "chain": {
+              "id": 69,
+              "unsupported": true,
+            },
           }
         `)
       })

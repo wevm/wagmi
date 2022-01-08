@@ -31,7 +31,8 @@ describe('MockConnector', () => {
       const data = await connector.connect()
       expect(onChange).toBeCalledTimes(1)
       expect(data.account).toEqual(wallet.address)
-      expect(data.chainId).toEqual(1)
+      expect(data.chain.id).toEqual(1)
+      expect(data.chain.unsupported).toEqual(false)
       connector.isAuthorized().then((x) => expect(x).toEqual(true))
     })
 

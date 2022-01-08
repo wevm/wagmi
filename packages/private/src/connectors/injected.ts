@@ -44,8 +44,9 @@ export class InjectedConnector extends Connector<
       }
 
       const account = await this.getAccount()
-      const chainId = await this.getChainId()
-      return { account, chainId, provider }
+      const id = await this.getChainId()
+      const unsupported = this.isChainUnsupported(id)
+      return { account, chain: { id, unsupported }, provider }
     } catch (error) {
       if ((<ProviderRpcError>error).code === 4001)
         throw new UserRejectedRequestError()
@@ -176,7 +177,9 @@ export class InjectedConnector extends Connector<
   }
 
   protected onChainChanged = (chainId: number | string) => {
-    this.emit('change', { chainId: normalizeChainId(chainId) })
+    const id = normalizeChainId(chainId)
+    const unsupported = this.isChainUnsupported(id)
+    this.emit('change', { chain: { id, unsupported } })
   }
 
   protected onDisconnect = () => {

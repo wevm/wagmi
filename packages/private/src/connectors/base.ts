@@ -6,7 +6,7 @@ import { Chain } from '../types'
 
 export type Data<Provider = any> = {
   account?: string
-  chainId?: number
+  chain?: { id: number; unsupported: boolean }
   provider?: Provider
 }
 
@@ -61,4 +61,8 @@ export abstract class Connector<
   protected abstract onAccountsChanged(accounts: string[]): void
   protected abstract onChainChanged(chain: number | string): void
   protected abstract onDisconnect(): void
+
+  protected isChainUnsupported(chainId: number) {
+    return !this.chains.some((x) => x.id === chainId)
+  }
 }
