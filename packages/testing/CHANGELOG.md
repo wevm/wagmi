@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.1.1
+
+### Patch Changes
+
+- [#56](https://github.com/tmm/wagmi/pull/56) [`2ebfd8e`](https://github.com/tmm/wagmi/commit/2ebfd8e85b560f25cd46cff04619c84643cab297) Thanks [@tmm](https://github.com/tmm)! - add chain support status
+
+- Updated dependencies [[`2ebfd8e`](https://github.com/tmm/wagmi/commit/2ebfd8e85b560f25cd46cff04619c84643cab297)]:
+  - wagmi-private@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
