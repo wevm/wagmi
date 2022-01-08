@@ -2,14 +2,6 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'degen'
 import { providers } from 'ethers'
 import Head from 'next/head'
-import {
-  InjectedConnector,
-  Provider,
-  WalletConnectConnector,
-  WalletLinkConnector,
-  chain,
-  defaultChains,
-} from 'wagmi'
 
 import 'nextra-theme-docs/style.css'
 import '../styles/globals.css'
@@ -19,16 +11,27 @@ import '../styles/globals.css'
 import 'degen/styles'
 /* eslint-enable import/no-unresolved */
 
+// Imports
+import { Connector, Provider, chain, defaultChains } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
+
+// Get environment variables
 const alchemy = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
 const etherscan = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY as string
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
-const chains = defaultChains
 
-type Config = { chainId?: number }
-const connectors = ({ chainId }: Config) => {
+// Pick chains
+const chains = defaultChains
+const defaultChain = chain.mainnet
+
+// Set up connectors
+type ConnectorsConfig = { chainId?: number }
+const connectors = ({ chainId }: ConnectorsConfig) => {
   const rpcUrl =
     chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-    chain.mainnet.rpcUrls[0]
+    defaultChain.rpcUrls[0]
   return [
     new InjectedConnector({ chains }),
     new WalletConnectConnector({
@@ -46,25 +49,30 @@ const connectors = ({ chainId }: Config) => {
   ]
 }
 
+// Set up providers
+type ProviderConfig = { chainId?: number; connector?: Connector }
 const isChainSupported = (chainId?: number) =>
   chains.some((x) => x.id === chainId)
-const provider = ({ chainId }: Config) =>
+
+const provider = ({ chainId }: ProviderConfig) =>
   providers.getDefaultProvider(
-    isChainSupported(chainId) ? chainId : chain.mainnet.id,
-    { alchemy, etherscan, infuraId },
+    isChainSupported(chainId) ? chainId : defaultChain.id,
+    {
+      alchemy,
+      etherscan,
+      infuraId,
+    },
   )
-const webSocketProvider = ({ chainId }: Config) =>
-  new providers.InfuraWebSocketProvider(
-    isChainSupported(chainId) ? chainId : chain.mainnet.id,
-    infuraId,
-  )
+const webSocketProvider = ({ chainId }: ProviderConfig) =>
+  isChainSupported(chainId)
+    ? new providers.InfuraWebSocketProvider(chainId, infuraId)
+    : undefined
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Provider
         autoConnect
-        connectorStorageKey="wagmi.wallet"
         connectors={connectors}
         provider={provider}
         webSocketProvider={webSocketProvider}

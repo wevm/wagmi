@@ -81,7 +81,7 @@ Feel free to join the [discussions on GitHub](https://github.com/tmm/wagmi/discu
 
 - awkweb.eth
 - [GitHub Sponsors](https://github.com/sponsors/tmm)
-- [Sign the guestbook](https://github.com/tmm/wagmi/discussions/2)
+- Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
 
 ## Thanks
 

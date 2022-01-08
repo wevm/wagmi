@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-private-connectors-walletLink.cjs.js",
+  "module": "dist/wagmi-private-connectors-walletLink.esm.js"
+}

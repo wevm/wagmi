@@ -26,8 +26,6 @@ it('should expose correct exports', () => {
       "useWebSocketProvider",
       "Connector",
       "InjectedConnector",
-      "WalletConnectConnector",
-      "WalletLinkConnector",
       "chain",
       "defaultChains",
       "defaultL2Chains",
