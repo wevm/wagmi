@@ -11,6 +11,12 @@
       src="https://img.shields.io/npm/l/wagmi.svg?style=for-the-badge&labelColor=161c22"
     />
   </a>
+  <a aria-label="Sponsors" href="https://github.com/sponsors/tmm">
+    <img
+      alt=""
+      src="https://img.shields.io/github/sponsors/tmm.svg?style=for-the-badge&labelColor=161c22"
+    />
+  </a>
 </p>
 
 # wagmi
