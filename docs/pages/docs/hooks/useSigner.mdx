@@ -1,0 +1,43 @@
+# useSigner
+
+Hook for accessing the `signer` object of the connected account.
+
+```tsx
+import { useSigner } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useContract, useSigner } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, getSigner] = useSigner()
+
+  const contract = useContract({
+    addressOrName: '0xa50f703771d04d9e76e03b20720539fc014aaa40',
+    contractInterface: ERC20ABI,
+    signerOrProvider: signer,
+  })
+
+  return null
+}
+```
+
+## Return Values
+
+### result
+
+```ts
+{
+  data?: ethers.Wallet
+  error?: Error
+  loading?: boolean
+}
+```
+
+### getSigner
+
+```ts
+() => Promise<ethers.Wallet>
+```

@@ -13,6 +13,7 @@
   "useFeeData": "useFeeData",
   "useNetwork": "useNetwork",
   "useProvider": "useProvider",
+  "useSigner": "useSigner",
   "useSignMessage": "useSignMessage",
   "useToken": "useToken",
   "useTransaction": "useTransaction",

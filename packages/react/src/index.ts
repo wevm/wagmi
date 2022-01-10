@@ -16,6 +16,7 @@ export {
   useFeeData,
   useNetwork,
   useProvider,
+  useSigner,
   useSignMessage,
   useToken,
   useTransaction,
