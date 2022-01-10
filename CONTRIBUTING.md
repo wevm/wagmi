@@ -1,5 +1,8 @@
 If you want to contribute, but aren't sure where to start, you can create a [new discussion topic](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).
 
+### Prerequisites
+This project uses [PnpM](https://pnpm.io/) as a package manager.
+
 ### Development
 
 ```bash
