@@ -49,7 +49,7 @@ const App = () => {
 
 ### confirmations (optional)
 
-Waits until _confirmations_ number of blocks are mined on top of block transaction was mined. Defaults to `1`. If _confirmations_ is `0`, hook will not wait and return immediately without blocking, likely resulting in `data` being `null`.
+Waits until _confirmations_ number of blocks are mined on top of the block containing the transaction. Defaults to `1`. If _confirmations_ is `0`, hook will not wait and return immediately without blocking, likely resulting in `data` being `null`.
 
 ```tsx highlight='5'
 import { useWaitForTransaction } from 'wagmi'
