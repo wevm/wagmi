@@ -1,4 +1,5 @@
 import { units } from '../constants'
+import './declarations'
 
 export type Chain = {
   id: number
