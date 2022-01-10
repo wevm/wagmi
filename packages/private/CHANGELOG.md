@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.1.2
+
+### Patch Changes
+
+- [`78bade9`](https://github.com/tmm/wagmi/commit/78bade9d0da97ab38a7e6594c34e3841ec1c8fe6) Thanks [@tmm](https://github.com/tmm)! - add type definitions
+
 ## 0.1.1
 
 ### Patch Changes
