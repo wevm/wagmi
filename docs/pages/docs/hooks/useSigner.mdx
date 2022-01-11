@@ -12,7 +12,7 @@ import { useSigner } from 'wagmi'
 import { useContract, useSigner } from 'wagmi'
 
 const App = () => {
-  const [{ data, error, loading }, getSigner] = useSigner()
+  const [{ data: signer, error, loading }, getSigner] = useSigner()
 
   const contract = useContract({
     addressOrName: '0xa50f703771d04d9e76e03b20720539fc014aaa40',
