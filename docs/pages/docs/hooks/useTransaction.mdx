@@ -62,13 +62,15 @@ const App = () => {
 
 Object to use when creating transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
 
-```tsx highlight='5'
+```tsx highlight='5-8'
 import { useTransaction } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, sendTransaction] = useTransaction({
-    to: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    value: BigNumber.from('1000000000000000000')
+    request: {
+      to: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      value: BigNumber.from('1000000000000000000')
+    }
   })
 
   return ...
