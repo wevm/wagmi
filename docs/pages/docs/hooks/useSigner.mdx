@@ -1,6 +1,6 @@
 # useSigner
 
-Hook for accessing the `signer` object of the connected account.
+Hook for accessing [`Signer`](https://docs.ethers.io/v5/api/signer) object for connected account.
 
 ```tsx
 import { useSigner } from 'wagmi'
@@ -20,7 +20,7 @@ const App = () => {
     signerOrProvider: signer,
   })
 
-  return null
+  return ...
 }
 ```
 
@@ -30,7 +30,7 @@ const App = () => {
 
 ```ts
 {
-  data?: ethers.Wallet
+  data?: ethers.Signer
   error?: Error
   loading?: boolean
 }
@@ -39,5 +39,5 @@ const App = () => {
 ### getSigner
 
 ```ts
-() => Promise<ethers.Wallet>
+() => Promise<ethers.Signer>
 ```

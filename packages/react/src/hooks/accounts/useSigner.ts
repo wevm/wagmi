@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Signer } from 'ethers'
 
 import { useAccount } from '../accounts'
+import { useCacheBuster } from '../utils'
 
 type State = {
   data?: Signer
@@ -18,12 +19,11 @@ const initialState: State = {
 export const useSigner = () => {
   const [{ data: account }] = useAccount()
   const [state, setState] = React.useState<State>(initialState)
+  const cacheBuster = useCacheBuster()
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   const getSigner = React.useCallback(async () => {
-    setState((x) => ({ ...x, error: undefined, loading: true }))
-
     try {
+      setState((x) => ({ ...x, error: undefined, loading: true }))
       const signer = await account?.connector?.getSigner()
       setState((x) => ({ ...x, data: signer, loading: false }))
 
@@ -32,12 +32,11 @@ export const useSigner = () => {
       const error = <Error>error_
       setState((x) => ({ ...x, data: undefined, error, loading: false }))
     }
-  }, [account?.address, account?.connector])
-  /* eslint-enable react-hooks/exhaustive-deps */
+  }, [account?.connector])
 
   React.useEffect(() => {
     getSigner()
-  }, [getSigner])
+  }, [cacheBuster, getSigner])
 
   return [state, getSigner] as const
 }
