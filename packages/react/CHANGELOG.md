@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.1.4
+
+### Patch Changes
+
+- [#73](https://github.com/tmm/wagmi/pull/73) [`0c78ccc`](https://github.com/tmm/wagmi/commit/0c78ccc4e7f311525d4ea712b79cf532899e2006) Thanks [@tmm](https://github.com/tmm)! - fix module exports
+
 ## 0.1.3
 
 ### Patch Changes

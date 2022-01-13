@@ -97,7 +97,7 @@ importers:
       react-dom: 17.0.2
       tailwindcss: 2.2.4
       typescript: 4.5.4
-      wagmi: 0.1.3
+      wagmi: 0.1.4
     dependencies:
       '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
       degen: 0.0.49_react-dom@17.0.2+react@17.0.2
@@ -130,10 +130,10 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       typescript: 4.5.4
-      wagmi: 0.1.3
+      wagmi: 0.1.4
     dependencies:
       ethers: 5.5.2
-      next: 12.0.7_react-dom@17.0.2+react@17.0.2
+      next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       wagmi: link:../../packages/react
@@ -158,7 +158,7 @@ importers:
       typescript: ^4.4.4
       util: ^0.12.4
       vite: ^2.7.2
-      wagmi: 0.1.3
+      wagmi: 0.1.4
     dependencies:
       buffer: 6.0.3
       ethers: 5.5.2
@@ -837,15 +837,6 @@ packages:
       '@babel/core': 7.12.9
       '@babel/helper-plugin-utils': 7.16.5
     dev: true
-
-  /@babel/plugin-syntax-jsx/7.14.5:
-    resolution: {integrity: sha512-ohuFIsOMXJnbOMRfX7/w7LocdR6R7whhuRD4ax8IipLcLPlZGJKkBxgHp++U4N/vKyU16/YDQr2f5seajD3jIw==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/helper-plugin-utils': 7.16.5
-    dev: false
 
   /@babel/plugin-syntax-jsx/7.14.5_@babel+core@7.16.5:
     resolution: {integrity: sha512-ohuFIsOMXJnbOMRfX7/w7LocdR6R7whhuRD4ax8IipLcLPlZGJKkBxgHp++U4N/vKyU16/YDQr2f5seajD3jIw==}
@@ -6291,7 +6282,7 @@ packages:
       eslint-plugin-jsx-a11y: 6.5.1_eslint@8.5.0
       eslint-plugin-react: 7.27.1_eslint@8.5.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.5.0
-      next: 12.0.7_react-dom@17.0.2+react@17.0.2
+      next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
       typescript: 4.5.4
     transitivePeerDependencies:
       - supports-color
@@ -10399,92 +10390,6 @@ packages:
       - webpack
     dev: false
 
-  /next/12.0.7_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-sKO8GJJYfuk9c+q+zHSNumvff+wP7ufmOlwT6BuzwiYfFJ61VTTkfTcDLSJ+95ErQJiC54uS4Yg5JEE8H6jXRA==}
-    engines: {node: '>=12.22.0'}
-    hasBin: true
-    peerDependencies:
-      fibers: '>= 3.1.0'
-      node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0
-      react: ^17.0.2 || ^18.0.0-0
-      react-dom: ^17.0.2 || ^18.0.0-0
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      fibers:
-        optional: true
-      node-sass:
-        optional: true
-      sass:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.15.4
-      '@hapi/accept': 5.0.2
-      '@napi-rs/triples': 1.0.3
-      '@next/env': 12.0.7
-      '@next/polyfill-module': 12.0.7
-      '@next/react-dev-overlay': 12.0.7_react-dom@17.0.2+react@17.0.2
-      '@next/react-refresh-utils': 12.0.7_react-refresh@0.8.3
-      acorn: 8.5.0
-      assert: 2.0.0
-      browserify-zlib: 0.2.0
-      browserslist: 4.16.6
-      buffer: 5.6.0
-      caniuse-lite: 1.0.30001292
-      chalk: 2.4.2
-      chokidar: 3.5.1
-      constants-browserify: 1.0.0
-      crypto-browserify: 3.12.0
-      cssnano-simple: 3.0.0_postcss@8.2.15
-      domain-browser: 4.19.0
-      encoding: 0.1.13
-      etag: 1.8.1
-      events: 3.3.0
-      find-cache-dir: 3.3.1
-      get-orientation: 1.1.2
-      https-browserify: 1.0.0
-      image-size: 1.0.0
-      jest-worker: 27.0.0-next.5
-      node-fetch: 2.6.1
-      node-html-parser: 1.4.9
-      os-browserify: 0.3.0
-      p-limit: 3.1.0
-      path-browserify: 1.0.1
-      postcss: 8.2.15
-      process: 0.11.10
-      querystring-es3: 0.2.1
-      raw-body: 2.4.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-      react-is: 17.0.2
-      react-refresh: 0.8.3
-      regenerator-runtime: 0.13.4
-      stream-browserify: 3.0.0
-      stream-http: 3.1.1
-      string_decoder: 1.3.0
-      styled-jsx: 5.0.0-beta.3_react@17.0.2
-      timers-browserify: 2.0.12
-      tty-browserify: 0.0.1
-      use-subscription: 1.5.1_react@17.0.2
-      util: 0.12.4
-      vm-browserify: 1.1.2
-      watchpack: 2.3.0
-    optionalDependencies:
-      '@next/swc-android-arm64': 12.0.7
-      '@next/swc-darwin-arm64': 12.0.7
-      '@next/swc-darwin-x64': 12.0.7
-      '@next/swc-linux-arm-gnueabihf': 12.0.7
-      '@next/swc-linux-arm64-gnu': 12.0.7
-      '@next/swc-linux-arm64-musl': 12.0.7
-      '@next/swc-linux-x64-gnu': 12.0.7
-      '@next/swc-linux-x64-musl': 12.0.7
-      '@next/swc-win32-arm64-msvc': 12.0.7
-      '@next/swc-win32-ia32-msvc': 12.0.7
-      '@next/swc-win32-x64-msvc': 12.0.7
-    transitivePeerDependencies:
-      - '@babel/core'
-      - webpack
-    dev: false
-
   /nextra-theme-docs/2.0.0-beta.5_676434e83a07d0ba4ed04d5ca6a47005:
     resolution: {integrity: sha512-VUNdcyTBK5REuQNocWOeXaFY88RyZq9wsym4So0+6yQVJSpf8eYCLHKozQOC2v6cyqBP5zGFcaFq6rDRp3Zt9w==}
     peerDependencies:
@@ -12650,27 +12555,6 @@ packages:
     dependencies:
       '@babel/core': 7.16.5
       '@babel/plugin-syntax-jsx': 7.14.5_@babel+core@7.16.5
-      '@babel/types': 7.15.0
-      convert-source-map: 1.7.0
-      loader-utils: 1.2.3
-      react: 17.0.2
-      source-map: 0.7.3
-      string-hash: 1.1.3
-      stylis: 3.5.4
-      stylis-rule-sheet: 0.0.10_stylis@3.5.4
-    dev: false
-
-  /styled-jsx/5.0.0-beta.3_react@17.0.2:
-    resolution: {integrity: sha512-HtDDGSFPvmjHIqWf9n8Oo54tAoY/DTplvlyOH2+YOtD80Sp31Ap8ffSmxhgk5EkUoJ7xepdXMGT650mSffWuRA==}
-    engines: {node: '>= 12.0.0'}
-    peerDependencies:
-      '@babel/core': '*'
-      react: '>= 16.8.0 || 17.x.x || 18.x.x'
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-    dependencies:
-      '@babel/plugin-syntax-jsx': 7.14.5
       '@babel/types': 7.15.0
       convert-source-map: 1.7.0
       loader-utils: 1.2.3
