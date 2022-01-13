@@ -3,6 +3,8 @@
   "scripts": {
     "build": "preconstruct build",
     "build:docs": "manypkg run docs build",
+    "changeset:release": "pnpm gen:readme && pnpm build && changeset publish",
+    "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "preconstruct dev",
     "dev:docs": "pnpm build && manypkg run docs dev",
     "dev:example:next": "pnpm build && manypkg run example-next dev",
@@ -60,7 +62,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-testing-library": "^5.0.1",
-    "ethereum-abi-types-generator": "^1.3.2",
     "fs-extra": "^10.0.0",
     "glob": "^7.2.0",
     "husky": "^7.0.4",
