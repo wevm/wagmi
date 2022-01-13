@@ -17,7 +17,7 @@ describe('useContract', () => {
     expect(result.current).toBeDefined()
   })
 
-  it.only('changes config', async () => {
+  it('changes config', async () => {
     let signerOrProvider: Signer | Provider | undefined = undefined
     const { result, rerender } = renderHook(() =>
       useContract({

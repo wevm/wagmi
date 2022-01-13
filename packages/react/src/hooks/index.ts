@@ -3,6 +3,7 @@ export {
   useBalance,
   useConnect,
   useNetwork,
+  useSigner,
   useSignMessage,
 } from './accounts'
 export {
