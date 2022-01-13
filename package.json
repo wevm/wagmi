@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "wagmi",
   "scripts": {
     "build": "preconstruct build",
     "build:docs": "manypkg run docs build",
