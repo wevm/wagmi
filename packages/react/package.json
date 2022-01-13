@@ -16,16 +16,16 @@
       "default": "./dist/wagmi.cjs.js"
     },
     "./connectors/injected": {
-      "main": "./connectors/injected/dist/wagmi-connectors-injected.cjs.js",
-      "module": "./connectors/injected/dist/wagmi-connectors-injected.esm.js"
+      "module": "./connectors/injected/dist/wagmi-connectors-injected.esm.js",
+      "default": "./connectors/injected/dist/wagmi-connectors-injected.cjs.js"
     },
     "./connectors/walletConnect": {
-      "main": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.cjs.js",
-      "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js"
+      "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js",
+      "default": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.cjs.js"
     },
     "./connectors/walletLink": {
-      "main": "./connectors/walletLink/dist/wagmi-connectors-walletLink.cjs.js",
-      "module": "./connectors/walletLink/dist/wagmi-connectors-walletLink.esm.js"
+      "module": "./connectors/walletLink/dist/wagmi-connectors-walletLink.esm.js",
+      "default": "./connectors/walletLink/dist/wagmi-connectors-walletLink.cjs.js"
     }
   },
   "files": [
