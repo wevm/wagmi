@@ -1,6 +1,6 @@
 # useSigner
 
-Hook for accessing [`Signer`](https://docs.ethers.io/v5/api/signer) object for connected account.
+Hook for accessing ethers.js [Signer](https://docs.ethers.io/v5/api/signer) object for connected account.
 
 ```tsx
 import { useSigner } from 'wagmi'
@@ -8,16 +8,18 @@ import { useSigner } from 'wagmi'
 
 ## Usage
 
+The following examples use the [ENS Registry Contract](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code).
+
 ```tsx
 import { useContract, useSigner } from 'wagmi'
 
 const App = () => {
-  const [{ data: signer, error, loading }, getSigner] = useSigner()
+  const [{ data, error, loading }, getSigner] = useSigner()
 
   const contract = useContract({
-    addressOrName: '0xa50f703771d04d9e76e03b20720539fc014aaa40',
-    contractInterface: ERC20ABI,
-    signerOrProvider: signer,
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    signerOrProvider: data,
   })
 
   return ...
@@ -40,4 +42,22 @@ const App = () => {
 
 ```ts
 () => Promise<ethers.Signer>
+```
+
+## Configuration
+
+### skip (optional)
+
+Skips automatically loading signer on mount. Defaults to `false`. Useful if you want to call `getSigner` manually at some other point.
+
+```tsx highlight='5'
+import { useSigner } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, getSigner] = useSigner({
+    skip: true,
+  })
+
+  return ...
+}
 ```
