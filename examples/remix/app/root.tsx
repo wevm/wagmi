@@ -41,20 +41,20 @@ function WagmiProvider({ children }) {
       defaultChain.rpcUrls[0]
     return [
       new InjectedConnector({ chains }),
-      // new WalletConnectConnector({
-      //   chains,
-      //   options: {
-      //     infuraId,
-      //     qrcode: true,
-      //   },
-      // }),
-      // new WalletLinkConnector({
-      //   chains,
-      //   options: {
-      //     appName: 'wagmi',
-      //     jsonRpcUrl: `${rpcUrl}/${infuraId}`,
-      //   },
-      // }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          infuraId,
+          qrcode: true,
+        },
+      }),
+      new WalletLinkConnector({
+        chains,
+        options: {
+          appName: 'wagmi',
+          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
+        },
+      }),
     ]
   }
 
