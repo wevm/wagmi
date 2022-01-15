@@ -30,10 +30,14 @@ type RequestArguments =
   | { method: 'wallet_switchEthereumChain'; params: [{ chainId: string }] }
   | { method: 'wallet_watchAsset'; params: WatchAssetParams }
 
+type InjectedProviders = {
+  isCoinbaseWallet?: true
+  isMetaMask?: true
+  isTally?: true
+}
+
 interface Window {
-  ethereum?: {
-    isCoinbaseWallet?: true
-    isMetaMask?: true
+  ethereum?: InjectedProviders & {
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void
     request<T = any>(args: RequestArguments): Promise<T>

@@ -1,7 +1,12 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 
 import { Chain } from '../types'
-import { getAddress, hexValue, normalizeChainId } from '../utils'
+import {
+  getAddress,
+  getInjectedName,
+  hexValue,
+  normalizeChainId,
+} from '../utils'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -25,10 +30,7 @@ export class InjectedConnector extends Connector<
     super({ ...config, options: undefined })
 
     let name = 'Injected'
-    if (typeof window !== 'undefined' && window.ethereum) {
-      if (window.ethereum.isMetaMask) name = 'MetaMask'
-      if (window.ethereum.isCoinbaseWallet) name = 'Coinbase Wallet'
-    }
+    if (typeof window !== 'undefined') name = getInjectedName(window.ethereum)
     this.name = name
   }
 
