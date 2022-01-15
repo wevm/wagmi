@@ -1,5 +1,12 @@
 # wagmi
 
+## 0.1.5
+
+### Patch Changes
+
+- [`db4d869`](https://github.com/tmm/wagmi/commit/db4d869fd9380b26a1f3f96ab34abd14ca73d068) Thanks [@tmm](https://github.com/tmm)! - - add global connecting property for `Provider` `autoConnect` (h/t @sammdec)
+  - fix `useContractEvent` error (h/t @math-marcellino)
+
 ## 0.1.4
 
 ### Patch Changes
