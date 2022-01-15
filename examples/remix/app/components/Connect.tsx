@@ -1,6 +1,9 @@
 import { useConnect } from 'wagmi'
 
+import { useIsMounted } from '../hooks'
+
 export const Connect = () => {
+  const isMounted = useIsMounted()
   const [
     {
       data: { connector, connectors },
@@ -14,9 +17,13 @@ export const Connect = () => {
     <div>
       <div>
         {connectors.map((x) => (
-          <button disabled={!x.ready} key={x.name} onClick={() => connect(x)}>
-            {x.name}
-            {!x.ready && ' (unsupported)'}
+          <button
+            disabled={isMounted && !x.ready}
+            key={x.name}
+            onClick={() => connect(x)}
+          >
+            {x.id === 'injected' ? (isMounted ? x.name : x.id) : x.name}
+            {isMounted && !x.ready && ' (unsupported)'}
             {loading && x.name === connector?.name && '…'}
           </button>
         ))}
