@@ -11,6 +11,7 @@ import { useLocalStorage } from './hooks'
 
 type State = {
   cacheBuster: number
+  connecting?: boolean
   connector?: Connector
   data?: Data<Web3Provider>
   error?: Error
@@ -20,6 +21,8 @@ type ContextValue = {
   state: {
     /** Flag for triggering refetch */
     cacheBuster: State['cacheBuster']
+    /** Flag for when connection is in progress */
+    connecting?: State['connecting']
     /** Active connector */
     connector?: State['connector']
     /** Connectors used for linking accounts */
@@ -67,7 +70,7 @@ export type Props = {
 }
 
 export const Provider = ({
-  autoConnect,
+  autoConnect = false,
   children,
   connectors: connectors_ = [new InjectedConnector()],
   connectorStorageKey = 'wagmi.wallet',
@@ -79,6 +82,7 @@ export const Provider = ({
   >(connectorStorageKey)
   const [state, setState] = React.useState<State>({
     cacheBuster: 1,
+    connecting: autoConnect,
   })
 
   const connectors = React.useMemo(() => {
@@ -108,6 +112,7 @@ export const Provider = ({
   React.useEffect(() => {
     if (!autoConnect) return
     ;(async () => {
+      setState((x) => ({ ...x, connecting: true }))
       const sorted = lastUsedConnector
         ? [...connectors].sort((x) => (x.name === lastUsedConnector ? -1 : 1))
         : connectors
@@ -120,6 +125,7 @@ export const Provider = ({
         setState((x) => ({ ...x, connector, data }))
         break
       }
+      setState((x) => ({ ...x, connecting: false }))
     })()
   }, [])
   /* eslint-enable react-hooks/exhaustive-deps */
@@ -160,6 +166,7 @@ export const Provider = ({
   const value = {
     state: {
       cacheBuster: state.cacheBuster,
+      connecting: state.connecting,
       connectors,
       connector: state.connector,
       data: state.data,

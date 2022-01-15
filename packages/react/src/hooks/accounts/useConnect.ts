@@ -73,7 +73,7 @@ export const useConnect = () => {
         connectors: globalState.connectors,
       },
       error: state.error,
-      loading: state.loading,
+      loading: state.loading || globalState.connecting,
     },
     connect,
   ] as const

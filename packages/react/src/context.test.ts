@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { renderHook } from '../test'
+import { renderHook, wrapper } from '../test'
 import { useContext } from './context'
 
 describe('useContext', () => {
@@ -20,6 +20,7 @@ describe('useContext', () => {
     expect(rest).toMatchInlineSnapshot(`
       {
         "cacheBuster": 1,
+        "connecting": false,
         "connector": undefined,
         "data": undefined,
         "webSocketProvider": undefined,
@@ -27,5 +28,17 @@ describe('useContext', () => {
     `)
     expect(connectors).toBeDefined()
     expect(provider).toBeDefined()
+  })
+
+  it('autoConnect', async () => {
+    const { result, waitForNextUpdate } = renderHook(() => useContext(), {
+      wrapper,
+      initialProps: {
+        autoConnect: true,
+      },
+    })
+    expect(result.current.state.connecting).toMatchInlineSnapshot(`true`)
+    await waitForNextUpdate()
+    expect(result.current.state.connecting).toMatchInlineSnapshot(`false`)
   })
 })
