@@ -13,8 +13,6 @@ import type { MetaFunction } from 'remix'
 // Imports
 import { Connector, Provider, chain, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 
 export function loader() {
   require('dotenv').config()
@@ -25,7 +23,11 @@ export function loader() {
   }
 }
 
-function WagmiProvider({ children }) {
+export const meta: MetaFunction = () => {
+  return { title: 'wagmi' }
+}
+
+export default function App() {
   // Get environment variables
   const { alchemy, etherscan, infuraId } = useLoaderData()
 
@@ -34,28 +36,8 @@ function WagmiProvider({ children }) {
   const defaultChain = chain.mainnet
 
   // Set up connectors
-  type ConnectorsConfig = { chainId?: number }
-  const connectors = ({ chainId }: ConnectorsConfig) => {
-    const rpcUrl =
-      chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-      defaultChain.rpcUrls[0]
-    return [
-      new InjectedConnector({ chains }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          infuraId,
-          qrcode: true,
-        },
-      }),
-      new WalletLinkConnector({
-        chains,
-        options: {
-          appName: 'wagmi',
-          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
-        },
-      }),
-    ]
+  const connectors = () => {
+    return [new InjectedConnector({ chains })]
   }
 
   // Set up providers
@@ -78,23 +60,6 @@ function WagmiProvider({ children }) {
       : undefined
 
   return (
-    <Provider
-      autoConnect
-      connectors={connectors}
-      provider={provider}
-      webSocketProvider={webSocketProvider}
-    >
-      {children}
-    </Provider>
-  )
-}
-
-export const meta: MetaFunction = () => {
-  return { title: 'wagmi' }
-}
-
-export default function App() {
-  return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
@@ -103,9 +68,14 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <WagmiProvider>
+        <Provider
+          autoConnect
+          connectors={connectors}
+          provider={provider}
+          webSocketProvider={webSocketProvider}
+        >
           <Outlet />
-        </WagmiProvider>
+        </Provider>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
