@@ -151,6 +151,7 @@ importers:
       '@remix-run/serve': ^1.1.1
       '@types/react': ^17.0.24
       '@types/react-dom': ^17.0.9
+      dotenv: ^11.0.0
       ethers: ^5.5.1
       react: ^17.0.2
       react-dom: ^17.0.2
@@ -160,6 +161,7 @@ importers:
     dependencies:
       '@remix-run/react': 1.1.1_react-dom@17.0.2+react@17.0.2
       '@remix-run/serve': 1.1.1_react-dom@17.0.2+react@17.0.2
+      dotenv: 11.0.0
       ethers: 5.5.2
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -6318,6 +6320,11 @@ packages:
     dependencies:
       webidl-conversions: 5.0.0
     dev: true
+
+  /dotenv/11.0.0:
+    resolution: {integrity: sha512-Fp/b504Y5W+e+FpCxTFMUZ7ZEQkQYF0rx+KZtmwixJxGQbLHrhCwo3FjZgNC8vIfrSi29PABNbMoCGD9YoiXbQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dotenv/8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
