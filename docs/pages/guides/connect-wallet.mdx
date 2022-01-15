@@ -2,7 +2,7 @@ import { ConnectWallet } from '../../components'
 
 # Connect Wallet
 
-Connecting wallets to your app is extremely simple when you use wagmi. It takes less than five minutes to get up and running with MetaMask, WalletConnect, and Coinbase Wallet!
+Connecting wallets to your app is extremely simple when you use wagmi. It takes less than five minutes to get up and running with MetaMask, Tally, WalletConnect, and Coinbase Wallet!
 
 The example below uses [`useConnect`](/docs/hooks/useConnect) and [`useAccount`](/docs/hooks/useAccount) to allow you to connect a wallet and view ENS information for the connected account. Test it out before moving on.
 
@@ -10,7 +10,7 @@ The example below uses [`useConnect`](/docs/hooks/useConnect) and [`useAccount`]
 
 ## Step 1: Configuring Connectors
 
-First, we want to set up our [`Provider`](/docs/provider) with the Injected (MetaMask), WalletConnect, and WalletLink (Coinbase Wallet) connectors:
+First, we want to set up our [`Provider`](/docs/provider) with the Injected (MetaMask, Tally), WalletConnect, and WalletLink (Coinbase Wallet) connectors:
 
 ```tsx
 import { Provider, chain, defaultChains } from 'wagmi'

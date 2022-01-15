@@ -25,7 +25,7 @@
 
 🚀 &nbsp; 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
 
-💼 &nbsp; Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
+💼 &nbsp; Built-in wallet connectors for MetaMask, Tally, WalletConnect, and Coinbase Wallet
 
 🌀 &nbsp; Auto-refresh data on wallet and network changes
 

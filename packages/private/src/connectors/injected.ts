@@ -27,6 +27,7 @@ export class InjectedConnector extends Connector<
     let name = 'Injected'
     if (typeof window !== 'undefined' && window.ethereum) {
       if (window.ethereum.isMetaMask) name = 'MetaMask'
+      if (window.ethereum.isTally) name = 'Tally'
       if (window.ethereum.isCoinbaseWallet) name = 'Coinbase Wallet'
     }
     this.name = name
