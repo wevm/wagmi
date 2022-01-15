@@ -44,7 +44,7 @@ Key for saving connector preference to browser. Defaults to `wagmi.connector`. S
 import { Provider } from 'wagmi'
 
 const App = () => (
-  <Provider connectorStorageKey="mirrorWagmiWallet">
+  <Provider connectorStorageKey="mirror.wallet">
     <YourRoutes />
   </Provider>
 )
@@ -54,7 +54,7 @@ const App = () => (
 
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
-```tsx highlight='8-17,20'
+```tsx highlight='5-14,17'
 import { Provider, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
@@ -99,6 +99,14 @@ const App = () => (
   </Provider>
 )
 ```
+
+<Callout emoji="💡">
+  When using `getDefaultProvider()`, you likely want to [provide an API key for
+  each
+  service](https://docs.ethers.io/v5/api-keys/#api-keys--getDefaultProvider) to
+  minimize disruptions. (By default `getDefaultProvider` falls back to ethers.js
+  shared API keys.)
+</Callout>
 
 ### webSocketProvider (optional)
 
