@@ -9,11 +9,8 @@ export type Config = {
 }
 
 export const useAccount = ({ fetchEns }: Config = {}) => {
-  const {
-    state: { connector, data },
-    setState,
-  } = useContext()
-  const address = data?.account
+  const { state: globalState, setState } = useContext()
+  const address = globalState.data?.account
   const [{ data: ens, error: ensError, loading: ensLoading }] = useEnsLookup({
     address,
     skip: !fetchEns,
@@ -39,7 +36,7 @@ export const useAccount = ({ fetchEns }: Config = {}) => {
       data: address
         ? {
             address,
-            connector,
+            connector: globalState.connector,
             ens: ens ? { avatar, name: ens } : undefined,
           }
         : undefined,
