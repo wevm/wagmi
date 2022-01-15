@@ -34,7 +34,7 @@ export const useContractEvent = <
     const handler = (...event: Array<Parameters<Contract['on']>[1]>) =>
       listenerRef.current(event)
 
-    const contract_ = <ethers.Contract>(<unknown>ethers.Contract)
+    const contract_ = <ethers.Contract>(<unknown>contract)
     if (once) contract_.once(eventName, handler)
     else contract_.on(eventName, handler)
 
