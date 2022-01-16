@@ -1,7 +1,8 @@
 If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).
 
 ### Prerequisites
-This project uses [pnpm](https://pnpm.io/) as a package manager.
+
+This project uses [pnpm](https://pnpm.io) as a package manager.
 
 ### Development
 
@@ -27,6 +28,7 @@ pnpm dev:docs
 
 ```bash
 pnpm dev:example:next
+pnpm dev:example:remix
 pnpm dev:example:vite-react
 ```
 

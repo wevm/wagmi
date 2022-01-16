@@ -38,7 +38,7 @@ body:
       description: |
         Steps to reproduce the behavior.
 
-        Tip: Share your steps or code snippet. A [StackBlitz](https://stackblitz.com) link is also appreciated!
+        Tip: Share your steps or code snippet. A [CodeSandbox](https://codesandbox.io) or [StackBlitz](https://stackblitz.com) link is also appreciated!
     validations:
       required: false
 
