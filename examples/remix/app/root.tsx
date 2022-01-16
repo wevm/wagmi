@@ -14,6 +14,7 @@ import type { MetaFunction } from 'remix'
 import { Connector, Provider, chain, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 
 export function loader() {
   require('dotenv').config()
@@ -37,7 +38,11 @@ export default function App() {
   const defaultChain = chain.mainnet
 
   // Set up connectors
-  const connectors = () => {
+  type ConnectorsConfig = { chainId?: number }
+  const connectors = ({ chainId }: ConnectorsConfig) => {
+    const rpcUrl =
+      chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
+      defaultChain.rpcUrls[0]
     return [
       new InjectedConnector({ chains }),
       new WalletConnectConnector({
@@ -45,6 +50,13 @@ export default function App() {
         options: {
           infuraId,
           qrcode: true,
+        },
+      }),
+      new WalletLinkConnector({
+        chains,
+        options: {
+          appName: 'wagmi',
+          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
         },
       }),
     ]
