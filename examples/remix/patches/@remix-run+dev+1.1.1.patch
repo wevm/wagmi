@@ -1,0 +1,22 @@
+diff --git a/node_modules/@remix-run/dev/compiler.js b/node_modules/@remix-run/dev/compiler.js
+index 5dc3ee5..b9cbfa9 100644
+--- a/node_modules/@remix-run/dev/compiler.js
++++ b/node_modules/@remix-run/dev/compiler.js
+@@ -21,6 +21,8 @@ var chokidar = require('chokidar');
+ var build$1 = require('./build.js');
+ var config = require('./config.js');
+ var invariant = require('./invariant.js');
++var NodeGlobalsPolyfillPlugin = require('@esbuild-plugins/node-globals-polyfill').NodeGlobalsPolyfillPlugin;
++var NodeModulesPolyfillPlugin = require('@esbuild-plugins/node-modules-polyfill').NodeModulesPolyfillPlugin;
+ var warnings = require('./warnings.js');
+ var assets = require('./compiler/assets.js');
+ var dependencies = require('./compiler/dependencies.js');
+@@ -313,7 +315,7 @@ async function createBrowserBuild(config, options) {
+     define: {
+       "process.env.NODE_ENV": JSON.stringify(options.mode)
+     },
+-    plugins: [mdx.mdxPlugin(config), browserRouteModulesPlugin(config, /\?browser$/), emptyModulesPlugin(config, /\.server(\.[jt]sx?)?$/)]
++    plugins: [NodeGlobalsPolyfillPlugin({buffer: true, process: true}), NodeModulesPolyfillPlugin(), mdx.mdxPlugin(config), browserRouteModulesPlugin(config, /\?browser$/), emptyModulesPlugin(config, /\.server(\.[jt]sx?)?$/)]
+   });
+ }
+ 

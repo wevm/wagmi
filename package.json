@@ -8,6 +8,7 @@
     "dev": "preconstruct dev",
     "dev:docs": "pnpm build && manypkg run docs dev",
     "dev:example:next": "pnpm build && manypkg run example-next dev",
+    "dev:example:remix": "pnpm build && manypkg run example-remix dev",
     "dev:example:vite-react": "pnpm build && manypkg run example-vite-react dev",
     "gen:readme": "pnpm node scripts/copyReadme.js",
     "lint": "eslint --cache",
