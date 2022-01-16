@@ -4,6 +4,7 @@ type ChainName =
   | 'arbitrumOne'
   | 'arbitrumRinkeby'
   | 'goerli'
+  | 'hardhat'
   | 'kovan'
   | 'localhost'
   | 'mainnet'
@@ -183,6 +184,11 @@ export const chain: Record<ChainName, Chain> = {
     name: 'Localhost',
     rpcUrls: ['https://127.0.0.1:8545'],
   },
+  hardhat: {
+    id: 31337,
+    name: 'hardhat',
+    rpcUrls: ['http://127.0.0.1:8545'],
+  },
 }
 
 export const defaultChains: Chain[] = [
@@ -202,4 +208,4 @@ export const defaultL2Chains: Chain[] = [
   chain.arbitrumRinkeby,
 ]
 
-export const developmentChains: Chain[] = [chain.localhost]
+export const developmentChains: Chain[] = [chain.localhost, chain.hardhat]
