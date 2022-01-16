@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.1.3
+
+### Patch Changes
+
+- [`071d7fb`](https://github.com/tmm/wagmi/commit/071d7fbca35ec4832700b5343661ceb2dae20598) Thanks [@tmm](https://github.com/tmm)! - add hardhat chain
+
+- Updated dependencies [[`071d7fb`](https://github.com/tmm/wagmi/commit/071d7fbca35ec4832700b5343661ceb2dae20598)]:
+  - wagmi-private@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes
