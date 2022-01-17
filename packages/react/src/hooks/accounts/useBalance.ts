@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
-import { Unit, erc20ABI } from 'wagmi-private'
+import { Unit, defaultChains, defaultL2Chains, erc20ABI } from 'wagmi-private'
 
+import { useContext } from '../../context'
 import { useProvider } from '../providers'
 import { useBlockNumber } from '../network-status'
 import { useCacheBuster } from '../utils'
@@ -36,6 +37,9 @@ export const useBalance = ({
   token,
   watch,
 }: Config = {}) => {
+  const {
+    state: { connector },
+  } = useContext()
   const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
@@ -74,9 +78,14 @@ export const useBalance = ({
           }
         } else {
           const value = await provider.getBalance(config_.addressOrName)
+          const chain = [
+            ...(connector?.chains ?? []),
+            ...defaultChains,
+            ...defaultL2Chains,
+          ].find((x) => x.id === provider.network.chainId)
           balance = {
             formatted: utils.formatUnits(value, formatUnits_),
-            symbol: 'ETH',
+            symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
             value,
           }
         }
@@ -89,7 +98,7 @@ export const useBalance = ({
         return { data: undefined, error }
       }
     },
-    [addressOrName, formatUnits, provider, token],
+    [addressOrName, connector, formatUnits, provider, token],
   )
 
   // Fetch balance when deps or chain changes
