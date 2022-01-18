@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.1.7
+
+### Patch Changes
+
+- [`d965757`](https://github.com/tmm/wagmi/commit/d9657578bc17648716c4671b8cc35ad295bc71d2) Thanks [@tmm](https://github.com/tmm)! - use balance eth symbol
+
 ## 0.1.6
 
 ### Patch Changes
