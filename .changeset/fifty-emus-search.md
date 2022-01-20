@@ -1,0 +1,5 @@
+---
+'wagmi': minor
+---
+
+Exported Context
