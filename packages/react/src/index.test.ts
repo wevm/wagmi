@@ -35,6 +35,7 @@ it('should expose correct exports', () => {
       "erc20ABI",
       "erc721ABI",
       "normalizeChainId",
+      "Context",
     ]
   `)
 })

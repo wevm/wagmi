@@ -36,4 +36,7 @@ export {
   erc721ABI,
   normalizeChainId,
 } from 'wagmi-private'
+
+export { Context } from './context'
+
 export type { Chain, Data } from 'wagmi-private'
