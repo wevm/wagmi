@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.0
+
+### Minor Changes
+
+- [#98](https://github.com/tmm/wagmi/pull/98) [`b2ec758`](https://github.com/tmm/wagmi/commit/b2ec7580436f52fd35005c6dd3f4472650a14d02) Thanks [@oveddan](https://github.com/oveddan)! - Exported Context
+
 ## 0.1.7
 
 ### Patch Changes
