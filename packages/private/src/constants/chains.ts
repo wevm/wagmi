@@ -58,11 +58,11 @@ export const chain: Record<ChainName, Chain> = {
     id: 5,
     name: 'Goerli',
     nativeCurrency: { name: 'Goerli Ether', symbol: 'gETH', decimals: 18 },
-    rpcUrls: ['https://rinkeby.infura.io/v3'],
+    rpcUrls: ['https://goerli.infura.io/v3'],
     blockExplorers: [
       {
         name: 'Etherscan',
-        url: 'https://rinkeby.etherscan.io',
+        url: 'https://goerli.etherscan.io',
       },
     ],
     testnet: true,
