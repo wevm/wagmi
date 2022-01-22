@@ -108,7 +108,7 @@ const App = () => {
 import { useContractWrite } from 'wagmi'
 
 const App = () => {
-  const [{ data, error, loading }, read] = useContracWrite(
+  const [{ data, error, loading }, write] = useContracWrite(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
