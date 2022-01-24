@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Overrides, ethers } from 'ethers'
+import { CallOverrides, ethers } from 'ethers'
 import { TransactionResponse } from '@ethersproject/providers'
 import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
 
@@ -8,7 +8,7 @@ import { Config as UseContractConfig, useContract } from './useContract'
 
 type Config = {
   args?: any | any[]
-  overrides?: Overrides
+  overrides?: CallOverrides
 }
 
 type State = {
