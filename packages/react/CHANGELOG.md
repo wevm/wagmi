@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.1
+
+### Patch Changes
+
+- [`f12d9cc`](https://github.com/tmm/wagmi/commit/f12d9ccfdf87a2f75299b53a7dd6b1ad046a49d8) Thanks [@tmm](https://github.com/tmm)! - fixes overrides type
+
 ## 0.2.0
 
 ### Minor Changes
