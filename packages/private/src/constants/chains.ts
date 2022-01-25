@@ -3,6 +3,8 @@ import { Chain } from '../types'
 type ChainName =
   | 'arbitrumOne'
   | 'arbitrumRinkeby'
+  | 'avalanche'
+  | 'avalancheFuji'
   | 'goerli'
   | 'hardhat'
   | 'kovan'
@@ -179,6 +181,32 @@ export const chain: Record<ChainName, Chain> = {
     ],
     testnet: true,
   },
+  avalanche: {
+    id: 43114,
+    name: 'Avalanche',
+    nativeCurrency: {
+      name: 'AVAX',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+    blockExplorers: [{ name: 'SnowTrace', url: 'https://snowtrace.io/' }],
+    testnet: false,
+  },
+  avalancheFuji: {
+    id: 43113,
+    name: 'Avalanche FUJI',
+    nativeCurrency: {
+      name: 'AVAX',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+    blockExplorers: [
+      { name: 'SnowTrace', url: 'https://testnet.snowtrace.io/' },
+    ],
+    testnet: true,
+  },
   localhost: {
     id: 1337,
     name: 'Localhost',
@@ -206,6 +234,8 @@ export const defaultL2Chains: Chain[] = [
   chain.polygonTestnetMumbai,
   chain.arbitrumOne,
   chain.arbitrumRinkeby,
+  chain.avalanche,
+  chain.avalancheFuji,
 ]
 
 export const developmentChains: Chain[] = [chain.localhost, chain.hardhat]
