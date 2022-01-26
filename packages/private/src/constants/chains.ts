@@ -3,6 +3,8 @@ import { Chain } from '../types'
 type ChainName =
   | 'arbitrumOne'
   | 'arbitrumRinkeby'
+  | 'avalanche'
+  | 'avalancheFuji'
   | 'goerli'
   | 'hardhat'
   | 'kovan'
@@ -129,7 +131,7 @@ export const chain: Record<ChainName, Chain> = {
     ],
   },
   polygonTestnetMumbai: {
-    id: 80001,
+    id: 80_001,
     name: 'Polygon Testnet Mumbai',
     nativeCurrency: {
       name: 'Matic',
@@ -150,7 +152,7 @@ export const chain: Record<ChainName, Chain> = {
     testnet: true,
   },
   arbitrumOne: {
-    id: 42161,
+    id: 42_161,
     name: 'Arbitrum One',
     nativeCurrency: { name: 'Ether', symbol: 'AETH', decimals: 18 },
     rpcUrls: ['https://arb1.arbitrum.io/rpc'],
@@ -163,7 +165,7 @@ export const chain: Record<ChainName, Chain> = {
     ],
   },
   arbitrumRinkeby: {
-    id: 421611,
+    id: 421_611,
     name: 'Rinkeby Arbitrum',
     nativeCurrency: {
       name: 'Rinkeby ArbEther',
@@ -179,13 +181,39 @@ export const chain: Record<ChainName, Chain> = {
     ],
     testnet: true,
   },
+  avalanche: {
+    id: 43_114,
+    name: 'Avalanche',
+    nativeCurrency: {
+      name: 'AVAX',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
+    blockExplorers: [{ name: 'SnowTrace', url: 'https://snowtrace.io/' }],
+    testnet: false,
+  },
+  avalancheFuji: {
+    id: 43_113,
+    name: 'Avalanche FUJI',
+    nativeCurrency: {
+      name: 'AVAX',
+      symbol: 'AVAX',
+      decimals: 18,
+    },
+    rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+    blockExplorers: [
+      { name: 'SnowTrace', url: 'https://testnet.snowtrace.io/' },
+    ],
+    testnet: true,
+  },
   localhost: {
-    id: 1337,
+    id: 1_337,
     name: 'Localhost',
     rpcUrls: ['https://127.0.0.1:8545'],
   },
   hardhat: {
-    id: 31337,
+    id: 31_337,
     name: 'hardhat',
     rpcUrls: ['http://127.0.0.1:8545'],
   },
