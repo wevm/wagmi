@@ -131,7 +131,7 @@ export const chain: Record<ChainName, Chain> = {
     ],
   },
   polygonTestnetMumbai: {
-    id: 80001,
+    id: 80_001,
     name: 'Polygon Testnet Mumbai',
     nativeCurrency: {
       name: 'Matic',
@@ -152,7 +152,7 @@ export const chain: Record<ChainName, Chain> = {
     testnet: true,
   },
   arbitrumOne: {
-    id: 42161,
+    id: 42_161,
     name: 'Arbitrum One',
     nativeCurrency: { name: 'Ether', symbol: 'AETH', decimals: 18 },
     rpcUrls: ['https://arb1.arbitrum.io/rpc'],
@@ -165,7 +165,7 @@ export const chain: Record<ChainName, Chain> = {
     ],
   },
   arbitrumRinkeby: {
-    id: 421611,
+    id: 421_611,
     name: 'Rinkeby Arbitrum',
     nativeCurrency: {
       name: 'Rinkeby ArbEther',
@@ -182,7 +182,7 @@ export const chain: Record<ChainName, Chain> = {
     testnet: true,
   },
   avalanche: {
-    id: 43114,
+    id: 43_114,
     name: 'Avalanche',
     nativeCurrency: {
       name: 'AVAX',
@@ -194,7 +194,7 @@ export const chain: Record<ChainName, Chain> = {
     testnet: false,
   },
   avalancheFuji: {
-    id: 43113,
+    id: 43_113,
     name: 'Avalanche FUJI',
     nativeCurrency: {
       name: 'AVAX',
@@ -208,12 +208,12 @@ export const chain: Record<ChainName, Chain> = {
     testnet: true,
   },
   localhost: {
-    id: 1337,
+    id: 1_337,
     name: 'Localhost',
     rpcUrls: ['https://127.0.0.1:8545'],
   },
   hardhat: {
-    id: 31337,
+    id: 31_337,
     name: 'hardhat',
     rpcUrls: ['http://127.0.0.1:8545'],
   },
@@ -234,8 +234,6 @@ export const defaultL2Chains: Chain[] = [
   chain.polygonTestnetMumbai,
   chain.arbitrumOne,
   chain.arbitrumRinkeby,
-  chain.avalanche,
-  chain.avalancheFuji,
 ]
 
 export const developmentChains: Chain[] = [chain.localhost, chain.hardhat]
