@@ -2,9 +2,9 @@ import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { WalletLink, WalletLinkProvider } from 'walletlink'
 import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
 
-import { UserRejectedRequestError } from '../errors'
+import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, normalizeChainId } from '../utils'
+import { getAddress, hexValue, normalizeChainId } from '../utils'
 import { Connector } from './base'
 
 type Options = WalletLinkOptions & { jsonRpcUrl?: string }
@@ -42,7 +42,7 @@ export class WalletLinkConnector extends Connector<
         provider: new Web3Provider(<ExternalProvider>(<unknown>provider)),
       }
     } catch (error) {
-      if ((<ProviderRpcError>error).message === 'User closed modal')
+      if (/user closed modal/i.test((<ProviderRpcError>error).message))
         throw new UserRejectedRequestError()
       throw error
     }
@@ -106,6 +106,26 @@ export class WalletLinkConnector extends Connector<
       return !!account
     } catch {
       return false
+    }
+  }
+
+  async switchChain(chainId: number) {
+    const provider = this.getProvider()
+    const id = hexValue(chainId)
+
+    try {
+      await provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: id }],
+      })
+    } catch (error) {
+      if (
+        /user rejected signature request/i.test(
+          (<ProviderRpcError>error).message,
+        )
+      )
+        throw new UserRejectedRequestError()
+      else throw new SwitchChainError()
     }
   }
 

@@ -2,10 +2,12 @@ import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 
-import { UserRejectedRequestError } from '../errors'
+import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, normalizeChainId } from '../utils'
+import { getAddress, hexValue, normalizeChainId } from '../utils'
 import { Connector } from './base'
+
+const switchChainAllowedRegex = /(rainbow)/i
 
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider,
@@ -35,13 +37,20 @@ export class WalletConnectConnector extends Connector<
       const account = getAddress(accounts[0])
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
+
+      // Not all WalletConnect options support programmatic chain switching
+      // Only enable for wallet options that do
+      const walletName = provider.connector?.peerMeta?.name ?? ''
+      if (switchChainAllowedRegex.test(walletName))
+        this.switchChain = this._switchChain
+
       return {
         account,
         chain: { id, unsupported },
         provider: new Web3Provider(<ExternalProvider>provider),
       }
     } catch (error) {
-      if ((<ProviderRpcError>error).message === 'User closed modal')
+      if (/user closed modal/i.test((<ProviderRpcError>error).message))
         throw new UserRejectedRequestError()
       throw error
     }
@@ -90,6 +99,24 @@ export class WalletConnectConnector extends Connector<
       return !!account
     } catch {
       return false
+    }
+  }
+
+  protected async _switchChain(chainId: number) {
+    const provider = this.getProvider()
+    const id = hexValue(chainId)
+
+    try {
+      await provider.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: id }],
+      })
+    } catch (error) {
+      const message =
+        typeof error === 'string' ? error : (<ProviderRpcError>error)?.message
+      if (/user rejected request/i.test(message))
+        throw new UserRejectedRequestError()
+      else throw new SwitchChainError()
     }
   }
 
