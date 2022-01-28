@@ -17,7 +17,7 @@ export class WalletConnectConnector extends Connector<
   readonly name = 'WalletConnect'
   readonly ready = true
 
-  private _provider?: WalletConnectProvider
+  #provider?: WalletConnectProvider
 
   constructor(config: {
     chains?: Chain[]
@@ -42,7 +42,7 @@ export class WalletConnectConnector extends Connector<
       // Only enable for wallet options that do
       const walletName = provider.connector?.peerMeta?.name ?? ''
       if (switchChainAllowedRegex.test(walletName))
-        this.switchChain = this._switchChain
+        this.switchChain = this.#switchChain
 
       return {
         account,
@@ -82,9 +82,9 @@ export class WalletConnectConnector extends Connector<
   }
 
   getProvider(create?: boolean) {
-    if (!this._provider || create)
-      this._provider = new WalletConnectProvider(this.options)
-    return this._provider
+    if (!this.#provider || create)
+      this.#provider = new WalletConnectProvider(this.options)
+    return this.#provider
   }
 
   async getSigner() {
@@ -102,7 +102,7 @@ export class WalletConnectConnector extends Connector<
     }
   }
 
-  protected async _switchChain(chainId: number) {
+  async #switchChain(chainId: number) {
     const provider = this.getProvider()
     const id = hexValue(chainId)
 

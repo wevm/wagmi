@@ -24,7 +24,7 @@ export class InjectedConnector extends Connector<
   readonly name: string
   readonly ready = typeof window != 'undefined' && !!window.ethereum
 
-  private _provider?: Window['ethereum']
+  #provider?: Window['ethereum']
 
   constructor(config?: { chains?: Chain[] }) {
     super({ ...config, options: undefined })
@@ -85,8 +85,8 @@ export class InjectedConnector extends Connector<
 
   getProvider() {
     if (typeof window !== 'undefined' && !!window.ethereum)
-      this._provider = window.ethereum
-    return this._provider
+      this.#provider = window.ethereum
+    return this.#provider
   }
 
   async getSigner() {

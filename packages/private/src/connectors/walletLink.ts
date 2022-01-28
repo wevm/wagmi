@@ -18,8 +18,8 @@ export class WalletLinkConnector extends Connector<
   readonly ready =
     typeof window !== 'undefined' && !window.ethereum?.isCoinbaseWallet
 
-  private _client?: WalletLink
-  private _provider?: WalletLinkProvider
+  #client?: WalletLink
+  #provider?: WalletLinkProvider
 
   constructor(config: { chains?: Chain[]; options: Options }) {
     super(config)
@@ -49,7 +49,7 @@ export class WalletLinkConnector extends Connector<
   }
 
   async disconnect() {
-    if (!this._provider) return
+    if (!this.#provider) return
 
     const provider = this.getProvider()
     provider.removeListener('accountsChanged', this.onAccountsChanged)
@@ -85,11 +85,11 @@ export class WalletLinkConnector extends Connector<
   }
 
   getProvider() {
-    if (!this._provider) {
-      this._client = new WalletLink(this.options)
-      this._provider = this._client.makeWeb3Provider(this.options.jsonRpcUrl)
+    if (!this.#provider) {
+      this.#client = new WalletLink(this.options)
+      this.#provider = this.#client.makeWeb3Provider(this.options.jsonRpcUrl)
     }
-    return this._provider
+    return this.#provider
   }
 
   async getSigner() {

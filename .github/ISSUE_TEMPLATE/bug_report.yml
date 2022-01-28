@@ -35,10 +35,18 @@ body:
   - type: textarea
     attributes:
       label: Steps To Reproduce
-      description: |
-        Steps to reproduce the behavior.
+      description: Steps or code snippets to reproduce the behavior.
+    validations:
+      required: false
 
-        Tip: Share your steps or code snippet. A [CodeSandbox](https://codesandbox.io) or [StackBlitz](https://stackblitz.com) link is also appreciated!
+  - type: input
+    attributes:
+      label: Link to Minimal Reproducible Example (CodeSandbox, StackBlitz, etc.)
+      description: |
+        This makes investigating issues and helping you out significantly easier! For most issues, you will likely get asked to provide one so why not add one now :)
+
+        Tip: Use the [`wagmi` CodeSandbox template](https://codesandbox.io/s/wagmi-template-d2ct0) to get started quickly.
+      placeholder: https://codesandbox.io/s/wagmi-template-d2ct0
     validations:
       required: false
 
