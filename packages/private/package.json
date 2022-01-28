@@ -34,7 +34,7 @@
     ]
   },
   "peerDependencies": {
-    "@walletconnect/ethereum-provider": "^1.6.6",
+    "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
     "walletlink": "^2.2.8"
   },
@@ -51,7 +51,7 @@
     "eventemitter3": "^4.0.7"
   },
   "devDependencies": {
-    "@walletconnect/ethereum-provider": "^1.6.6",
+    "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
     "walletlink": "^2.2.8"
   }
