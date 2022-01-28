@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.1.4
+
+### Patch Changes
+
+- [`0176c4e`](https://github.com/tmm/wagmi/commit/0176c4e83fb0c5f159c3c802a1da3d6deb2184ae) Thanks [@tmm](https://github.com/tmm)! - added switchChain to WalletConnect and WalletLink connectors
+
 ## 0.1.3
 
 ### Patch Changes
