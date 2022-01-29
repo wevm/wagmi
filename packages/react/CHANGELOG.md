@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.2.3
+
+### Patch Changes
+
+- [`e338c3b`](https://github.com/tmm/wagmi/commit/e338c3b6cc255742be6a67593aa5da6c17e90fbd) Thanks [@tmm](https://github.com/tmm)! - checksum connector address on change events
+
+  add shim to injected connector for simulating disconnect
+
+- Updated dependencies [[`e338c3b`](https://github.com/tmm/wagmi/commit/e338c3b6cc255742be6a67593aa5da6c17e90fbd)]:
+  - wagmi-private@0.1.5
+
 ## 0.2.2
 
 ### Patch Changes
