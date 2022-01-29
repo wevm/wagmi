@@ -21,7 +21,12 @@ export type Config = {
 }
 
 type State = {
-  balance?: { formatted: string; symbol: string; value: BigNumber }
+  balance?: {
+    decimals: number
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }
   error?: Error
   loading?: boolean
 }
@@ -70,8 +75,10 @@ export const useBalance = ({
             provider,
           )
           const value = await contract.balanceOf(config_.addressOrName)
+          const decimals = await contract.decimals()
           const symbol = await contract.symbol()
           balance = {
+            decimals,
             formatted: utils.formatUnits(value, formatUnits_),
             symbol,
             value,
@@ -84,6 +91,7 @@ export const useBalance = ({
             ...defaultL2Chains,
           ].find((x) => x.id === provider.network.chainId)
           balance = {
+            decimals: chain?.nativeCurrency?.decimals ?? 18,
             formatted: utils.formatUnits(value, formatUnits_),
             symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
             value,
