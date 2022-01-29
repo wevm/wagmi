@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.4
+
+### Patch Changes
+
+- [#122](https://github.com/tmm/wagmi/pull/122) [`94f599c`](https://github.com/tmm/wagmi/commit/94f599cc1de74a977956d4118d85ab0d36915471) Thanks [@tmm](https://github.com/tmm)! - add decimals to useBalance
+
 ## 0.2.3
 
 ### Patch Changes
