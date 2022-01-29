@@ -107,7 +107,7 @@ export class MockConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: accounts[0] })
+    else this.emit('change', { account: getAddress(accounts[0]) })
   }
 
   protected onChainChanged = (chainId: number | string) => {
