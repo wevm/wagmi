@@ -1,0 +1,47 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Connectors
+
+Connectors allow users to securly connect their wallet to your app. When using wagmi, you configure whatever connectors you want to use and wagmi handles the rest!
+
+## Built-in Connectors
+
+wagmi has built-in wallet connectors for [Injected](/docs/connectors/injected) (i.e. MetaMask), [WalletConnect](/docs/connectors/walletConnect) (i.e. Rainbow), and [WalletLink](/docs/connectors/walletLink) (Coinbase Wallet). Tens of millions of users are supported by these options and they are very fast to set up!
+
+## Creating A Custom Connector
+
+If none of the built-in connectors work for your app, you can create a custom connector by extending the `Connector` class:
+
+```ts
+import { Connector } from 'wagmi'
+
+export class CoolL2CustomConnector extends Connector {
+  name = 'My Cool Custom Connector for L2s'
+
+  constructor(config) {
+    super(config)
+  }
+
+  // Implement other methods
+}
+```
+
+<Callout emoji="🚀">
+  If you create a custom connector, consider creating a [pull
+  request](https://github.com/tmm/wagmi/pulls) to make it a built-in.
+</Callout>
+
+Then, use it just like any other connector:
+
+```ts
+import { defaultL2Chains } from 'wagmi'
+
+import { CoolL2CustomConnector } from './CoolL2CustomConnector'
+
+const connector = new CoolL2CustomConnector({
+  chains: defaultL2Chains,
+  options: {
+    // Custom connector options
+  },
+})
+```

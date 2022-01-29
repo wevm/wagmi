@@ -16,9 +16,20 @@ import {
 } from '../errors'
 import { Connector } from './base'
 
+type InjectedConnectorOptions = {
+  /**
+   * MetaMask and other injected providers do not support programmatic disconnect.
+   * This flag simulates the disconnect behavior by keeping track of connection status in localStorage.
+   * @see https://github.com/MetaMask/metamask-extension/issues/10353
+   */
+  shimDisconnect?: boolean
+}
+
+const shimKey = 'wagmi.shimDisconnect'
+
 export class InjectedConnector extends Connector<
   Window['ethereum'],
-  undefined
+  InjectedConnectorOptions | undefined
 > {
   readonly id = 'injected'
   readonly name: string
@@ -26,8 +37,11 @@ export class InjectedConnector extends Connector<
 
   #provider?: Window['ethereum']
 
-  constructor(config?: { chains?: Chain[] }) {
-    super({ ...config, options: undefined })
+  constructor(config?: {
+    chains?: Chain[]
+    options?: InjectedConnectorOptions
+  }) {
+    super({ ...config, options: config?.options })
 
     let name = 'Injected'
     if (typeof window !== 'undefined') name = getInjectedName(window.ethereum)
@@ -48,6 +62,11 @@ export class InjectedConnector extends Connector<
       const account = await this.getAccount()
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
+
+      if (this.options?.shimDisconnect)
+        typeof localStorage !== 'undefined' &&
+          localStorage.setItem(shimKey, 'true')
+
       return { account, chain: { id, unsupported }, provider }
     } catch (error) {
       if ((<ProviderRpcError>error).code === 4001)
@@ -63,6 +82,9 @@ export class InjectedConnector extends Connector<
     provider.removeListener('accountsChanged', this.onAccountsChanged)
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
+
+    if (this.options?.shimDisconnect)
+      typeof localStorage !== 'undefined' && localStorage.removeItem(shimKey)
   }
 
   async getAccount() {
@@ -97,6 +119,14 @@ export class InjectedConnector extends Connector<
 
   async isAuthorized() {
     try {
+      console.log(localStorage.getItem(shimKey))
+      if (
+        this.options?.shimDisconnect &&
+        typeof localStorage !== 'undefined' &&
+        !localStorage.getItem(shimKey)
+      )
+        return false
+
       const provider = this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
       const accounts = await provider.request<string[]>({
@@ -186,5 +216,8 @@ export class InjectedConnector extends Connector<
 
   protected onDisconnect = () => {
     this.emit('disconnect')
+
+    if (this.options?.shimDisconnect)
+      typeof localStorage !== 'undefined' && localStorage.removeItem(shimKey)
   }
 }

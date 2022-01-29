@@ -1,0 +1,48 @@
+# WalletConnect (Rainbow, etc.)
+
+The **WalletConnectConnector** wraps the [WalletConnect](https://walletconnect.com) Ethereum provider and supports its configuration options. This is a great option for adding support for many wallets to your app.
+
+```tsx
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+```
+
+## Usage
+
+```tsx
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+  },
+})
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```tsx highlight='5'
+import { defaultChains, defaultL2Chains } from 'wagmi'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  chains: [...defaultChains, ...defaultL2Chains],
+})
+```
+
+### options
+
+Options to pass to the WalletConnect [Ethereum Provider](https://docs.walletconnect.com/quick-start/dapps/web3-provider).
+
+```tsx highlight='4-6'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+  },
+})
+```
