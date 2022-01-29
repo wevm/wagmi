@@ -72,6 +72,7 @@ describe('useBalance', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": {
+              "decimals": 18,
               "formatted": "0.193861344139087225",
               "symbol": "ETH",
               "value": {
@@ -100,6 +101,7 @@ describe('useBalance', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": {
+              "decimals": 18,
               "formatted": "0.193861344139087225",
               "symbol": "ETH",
               "value": {
