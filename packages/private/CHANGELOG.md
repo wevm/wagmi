@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.1.7
+
+### Patch Changes
+
+- [#127](https://github.com/tmm/wagmi/pull/127) [`f05b031`](https://github.com/tmm/wagmi/commit/f05b0310f7f7e6447e9b6c81cedbb27dcf2f3649) Thanks [@tmm](https://github.com/tmm)! - update switch chain return type
+
 ## 0.1.6
 
 ### Patch Changes
