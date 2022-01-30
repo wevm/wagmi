@@ -2,6 +2,7 @@ import { getAddress } from 'ethers/lib/utils'
 import {
   Chain,
   Connector,
+  allChains,
   defaultChains,
   normalizeChainId,
 } from 'wagmi-private'
@@ -93,6 +94,8 @@ export class MockConnector extends Connector<
   async switchChain(chainId: number) {
     const provider = this.getProvider()
     await provider.switchChain(chainId)
+    const chains = [...this.chains, ...allChains]
+    return chains.find((x) => x.id === chainId)
   }
 
   async watchAsset(asset: {

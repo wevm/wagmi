@@ -6,6 +6,7 @@ export {
   erc20ABI,
   erc721ABI,
   chain,
+  allChains,
   defaultChains,
   defaultL2Chains,
   developmentChains,

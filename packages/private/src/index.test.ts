@@ -9,6 +9,7 @@ it('should expose correct exports', () => {
       "erc20ABI",
       "erc721ABI",
       "chain",
+      "allChains",
       "defaultChains",
       "defaultL2Chains",
       "developmentChains",
