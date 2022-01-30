@@ -32,6 +32,7 @@ type RequestArguments =
 
 type InjectedProviders = {
   isCoinbaseWallet?: true
+  isFrame?: true
   isMetaMask?: true
   isTally?: true
 }

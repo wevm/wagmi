@@ -119,7 +119,6 @@ export class InjectedConnector extends Connector<
 
   async isAuthorized() {
     try {
-      console.log(localStorage.getItem(shimKey))
       if (
         this.options?.shimDisconnect &&
         typeof localStorage !== 'undefined' &&

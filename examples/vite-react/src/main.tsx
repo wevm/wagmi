@@ -26,7 +26,7 @@ const connectors = ({ chainId }: ConnectorsConfig) => {
     chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
     defaultChain.rpcUrls[0]
   return [
-    new InjectedConnector({ chains }),
+    new InjectedConnector({ chains, options: { shimDisconnect: true } }),
     new WalletConnectConnector({
       chains,
       options: {
