@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.1.6
+
+### Patch Changes
+
+- [`1412eed`](https://github.com/tmm/wagmi/commit/1412eed0d1494bb4f8c6845a0e890f79e4e68e03) Thanks [@tmm](https://github.com/tmm)! - add frame to injected
+
 ## 0.1.5
 
 ### Patch Changes
