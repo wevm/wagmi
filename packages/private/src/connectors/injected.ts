@@ -1,6 +1,7 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 
 import { Chain } from '../types'
+import { allChains } from '../constants'
 import {
   getAddress,
   getInjectedName,
@@ -148,6 +149,8 @@ export class InjectedConnector extends Connector<
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
+      const chains = [...this.chains, ...allChains]
+      return chains.find((x) => x.id === chainId)
     } catch (error) {
       // Indicates chain is not added to MetaMask
       if ((<ProviderRpcError>error).code === 4902) {

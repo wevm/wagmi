@@ -2,6 +2,7 @@ import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 
+import { allChains } from '../constants'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
 import { getAddress, hexValue, normalizeChainId } from '../utils'
@@ -111,6 +112,8 @@ export class WalletConnectConnector extends Connector<
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
+      const chains = [...this.chains, ...allChains]
+      return chains.find((x) => x.id === chainId)
     } catch (error) {
       const message =
         typeof error === 'string' ? error : (<ProviderRpcError>error)?.message

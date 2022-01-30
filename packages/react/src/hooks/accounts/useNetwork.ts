@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Chain, defaultChains, defaultL2Chains } from 'wagmi-private'
+import { Chain, SwitchChainError, allChains } from 'wagmi-private'
 
 import { useContext } from '../../context'
 
@@ -21,20 +21,19 @@ export const useNetwork = () => {
   const chainId = data?.chain?.id
   const unsupported = data?.chain?.unsupported
   const activeChains = connector?.chains ?? []
-  const activeChain: Chain | undefined = [
-    ...activeChains,
-    ...defaultChains,
-    ...defaultL2Chains,
-  ].find((x) => x.id === chainId)
+  const activeChain: Chain | undefined = [...activeChains, ...allChains].find(
+    (x) => x.id === chainId,
+  )
 
   const switchNetwork = React.useCallback(
     async (chainId: number) => {
-      if (!connector?.switchChain) return false
+      if (!connector?.switchChain)
+        return { data: undefined, error: new SwitchChainError() }
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        await connector.switchChain(chainId)
+        const chain = await connector.switchChain(chainId)
         setState((x) => ({ ...x, loading: false }))
-        return { data: true, error: undefined }
+        return { data: chain, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         setState((x) => ({ ...x, error, loading: false }))

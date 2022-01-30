@@ -219,6 +219,8 @@ export const chain: Record<ChainName, Chain> = {
   },
 }
 
+export const allChains: Chain[] = Object.values(chain)
+
 export const defaultChains: Chain[] = [
   chain.mainnet,
   chain.ropsten,

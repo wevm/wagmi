@@ -2,6 +2,7 @@ export { erc1155ABI, erc20ABI, erc721ABI } from './abis'
 
 export {
   chain,
+  allChains,
   defaultChains,
   defaultL2Chains,
   developmentChains,

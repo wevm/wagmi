@@ -149,7 +149,31 @@ describe('useNetwork', () => {
     `)
 
     await actHook(async () => {
-      await result.current.network[1]?.(4)
+      const res = await result.current.network[1]?.(4)
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "blockExplorers": [
+              {
+                "name": "Etherscan",
+                "url": "https://rinkeby.etherscan.io",
+              },
+            ],
+            "id": 4,
+            "name": "Rinkeby",
+            "nativeCurrency": {
+              "decimals": 18,
+              "name": "Rinkeby Ether",
+              "symbol": "rETH",
+            },
+            "rpcUrls": [
+              "https://rinkeby.infura.io/v3",
+            ],
+            "testnet": true,
+          },
+          "error": undefined,
+        }
+      `)
     })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
