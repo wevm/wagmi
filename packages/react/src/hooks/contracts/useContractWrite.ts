@@ -52,7 +52,7 @@ export const useContractWrite = <
           ...(config_.overrides ? [config_.overrides] : []),
         ]
 
-        setState((x) => ({ ...x, loading: true }))
+        setState((x) => ({ ...x, error: undefined, loading: true }))
         const signer = await connector.getSigner()
         const contract_ = contract.connect(signer)
         const response = (await contract_[functionName](

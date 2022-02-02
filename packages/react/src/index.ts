@@ -28,6 +28,7 @@ export {
   Connector,
   InjectedConnector,
   chain,
+  allChains,
   defaultChains,
   defaultL2Chains,
   developmentChains,

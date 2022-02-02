@@ -28,6 +28,7 @@ it('should expose correct exports', () => {
       "Connector",
       "InjectedConnector",
       "chain",
+      "allChains",
       "defaultChains",
       "defaultL2Chains",
       "developmentChains",
