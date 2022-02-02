@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.7
+
+### Patch Changes
+
+- [`7132631`](https://github.com/tmm/wagmi/commit/713263159899feb257c11614716f0af4f6b06a14) Thanks [@tmm](https://github.com/tmm)! - update contract read and write state
+
 ## 0.2.6
 
 ### Patch Changes
