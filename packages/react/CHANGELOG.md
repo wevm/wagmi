@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.8
+
+### Patch Changes
+
+- [`b49cb89`](https://github.com/tmm/wagmi/commit/b49cb89ef59289ee1185eafab427d3ab55c17c25) Thanks [@tmm](https://github.com/tmm)! - refactor contract read/write hook state
+
 ## 0.2.7
 
 ### Patch Changes
