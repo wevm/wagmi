@@ -54,7 +54,12 @@ export const useContractRead = <
           ...(config_.overrides ? [config_.overrides] : []),
         ]
 
-        setState((x) => ({ ...x, error: undefined, loading: true }))
+        setState((x) => ({
+          ...x,
+          error: undefined,
+          loading: true,
+          response: undefined,
+        }))
         const response = (await contract[functionName](...params)) as Result
         setState((x) => ({ ...x, loading: false, response }))
         return { data: response, error: undefined }
