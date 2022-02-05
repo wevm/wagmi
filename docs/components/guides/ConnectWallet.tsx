@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 
-import { PreviewWrapper } from './PreviewWrapper'
-import { Account } from './Account'
-import { WalletSelector } from './WalletSelector'
+import { PreviewWrapper } from '../core'
+import { Account, WalletSelector } from '../web3'
 
 export const ConnectWallet = () => {
   const [{ data }] = useAccount()

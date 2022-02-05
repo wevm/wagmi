@@ -3,6 +3,7 @@
   "license": "MIT",
   "version": "0.1.7",
   "ethereum": "awkweb.eth",
+  "repository": "tmm/wagmi",
   "sideEffects": false,
   "main": "dist/wagmi-private.cjs.js",
   "module": "dist/wagmi-private.esm.js",

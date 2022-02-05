@@ -1,4 +1,6 @@
 {
   "connect-wallet": "Connect Wallet",
-  "sign-message": "Sign Message"
+  "sign-message": "Sign Message",
+  "sign-in-with-ethereum": "Sign-In with Ethereum",
+  "connectors": "Connectors"
 }

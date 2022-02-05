@@ -2,6 +2,8 @@ import * as React from 'react'
 import { Avatar, Box, Button, Stack } from 'degen'
 import { useAccount } from 'wagmi'
 
+import { formatAddress } from '../../lib/address'
+
 export const Account = () => {
   const [{ data: accountData }, disconnect] = useAccount({
     fetchEns: true,
@@ -9,10 +11,7 @@ export const Account = () => {
 
   if (!accountData) return null
 
-  const formattedAddress = `${accountData.address.slice(
-    0,
-    6,
-  )}…${accountData.address.slice(38, 42)}`
+  const formattedAddress = formatAddress(accountData.address)
   return (
     <Stack
       align="center"

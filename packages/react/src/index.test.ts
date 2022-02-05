@@ -5,6 +5,7 @@ it('should expose correct exports', () => {
     [
       "Provider",
       "useContext",
+      "Context",
       "useAccount",
       "useBalance",
       "useBlockNumber",
@@ -36,7 +37,12 @@ it('should expose correct exports', () => {
       "erc20ABI",
       "erc721ABI",
       "normalizeChainId",
-      "Context",
+      "AddChainError",
+      "ChainNotConfiguredError",
+      "ConnectorAlreadyConnectedError",
+      "ConnectorNotFoundError",
+      "SwitchChainError",
+      "UserRejectedRequestError",
     ]
   `)
 })

@@ -5,7 +5,7 @@ import {
   WebSocketProvider,
   getDefaultProvider,
 } from '@ethersproject/providers'
-import { Connector, Data, InjectedConnector } from 'wagmi-private'
+import { Connector, ConnectorData, InjectedConnector } from 'wagmi-private'
 
 import { useLocalStorage } from './hooks'
 
@@ -13,7 +13,7 @@ type State = {
   cacheBuster: number
   connecting?: boolean
   connector?: Connector
-  data?: Data<Web3Provider>
+  data?: ConnectorData<Web3Provider>
   error?: Error
 }
 
@@ -142,7 +142,7 @@ export const Provider = ({
   React.useEffect(() => {
     if (!state.connector) return
 
-    const onChange = (data: Data) =>
+    const onChange = (data: ConnectorData) =>
       setState((x) => ({
         ...x,
         cacheBuster: x.cacheBuster + 1,

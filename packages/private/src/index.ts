@@ -1,5 +1,5 @@
 export { Connector, InjectedConnector } from './connectors'
-export type { ConnectorEvents, Data } from './connectors'
+export type { ConnectorData, ConnectorEvents } from './connectors'
 
 export {
   erc1155ABI,
@@ -16,6 +16,7 @@ export {
 export {
   AddChainError,
   ChainNotConfiguredError,
+  ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
   SwitchChainError,
   UserRejectedRequestError,

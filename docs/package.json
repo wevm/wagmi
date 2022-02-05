@@ -12,12 +12,14 @@
     "@reach/skip-nav": "^0.16.0",
     "degen": "^0.0.49",
     "ethers": "^5.5.1",
+    "iron-session": "^6.0.5",
     "next": "12.0.7",
     "next-themes": "0.0.8",
     "nextra": "v2.0.0-beta.5",
     "nextra-theme-docs": "2.0.0-beta.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "siwe": "^1.1.0",
     "wagmi": "0.2.8"
   },
   "devDependencies": {

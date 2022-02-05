@@ -53,8 +53,6 @@ describe('useConnect', () => {
       await actHook(async () => {
         const mockConnector = result.current[0].data.connectors[0]
         const res = await result.current[1](mockConnector)
-        if (!res) throw new Error('Never returned')
-
         const { data: { provider, ...rest } = {}, error } = res
         expect(provider).toBeDefined()
         expect(error).toBeUndefined()
@@ -79,8 +77,6 @@ describe('useConnect', () => {
       await actHook(async () => {
         const mockConnector = result.current[0].data.connectors[0]
         const res = await result.current[1](mockConnector)
-        if (!res) throw new Error('Never returned')
-
         const { data: { provider, ...rest } = {}, error } = res
         expect(provider).toBeDefined()
         expect(error).toBeUndefined()
@@ -121,6 +117,22 @@ describe('useConnect', () => {
           {
             "data": undefined,
             "error": [UserRejectedRequestError: User rejected request],
+          }
+        `)
+      })
+    })
+
+    it('already connected', async () => {
+      const { result } = renderHook(() => useConnect())
+
+      await actHook(async () => {
+        const mockConnector = result.current[0].data.connectors[0]
+        await result.current[1](mockConnector)
+        const res = await result.current[1](mockConnector)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [ConnectorAlreadyConnectedError: Connector already connected],
           }
         `)
       })

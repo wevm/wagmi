@@ -1,4 +1,3 @@
-export { Account } from './Account'
 export { ConnectWallet } from './ConnectWallet'
-export { PreviewWrapper } from './PreviewWrapper'
+export { SignInWithEthereum } from './SignInWithEthereum'
 export { SignMessage } from './SignMessage'
