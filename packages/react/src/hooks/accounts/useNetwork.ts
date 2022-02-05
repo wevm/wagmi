@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Chain, SwitchChainError, allChains } from 'wagmi-private'
 
 import { useContext } from '../../context'
+import { useCancel } from '../utils'
 
 type State = {
   error?: Error
@@ -25,22 +26,33 @@ export const useNetwork = () => {
     (x) => x.id === chainId,
   )
 
+  const cancelQuery = useCancel()
   const switchNetwork = React.useCallback(
     async (chainId: number) => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       if (!connector?.switchChain)
         return { data: undefined, error: new SwitchChainError() }
+
       try {
         setState((x) => ({ ...x, error: undefined, loading: true }))
         const chain = await connector.switchChain(chainId)
-        setState((x) => ({ ...x, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, loading: false }))
+        }
         return { data: chain, error: undefined }
       } catch (error_) {
         const error = <Error>error_
-        setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },
-    [connector],
+    [cancelQuery, connector],
   )
 
   return [

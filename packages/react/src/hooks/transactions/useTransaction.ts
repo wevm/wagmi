@@ -6,6 +6,7 @@ import {
 import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
 
 import { useContext } from '../../context'
+import { useCancel } from '../utils'
 
 export type Config = {
   /** Object to use when creating transaction */
@@ -28,8 +29,14 @@ export const useTransaction = ({ request }: Config = {}) => {
   } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const sendTransaction = React.useCallback(
     async (config?: { request: Config['request'] }) => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       try {
         const config_ = config ?? { request }
         if (!config_.request) throw new Error('request is required')
@@ -38,17 +45,21 @@ export const useTransaction = ({ request }: Config = {}) => {
         setState((x) => ({ ...x, loading: true }))
         const signer = await connector.getSigner()
         const transaction = await signer.sendTransaction(config_.request)
-        setState((x) => ({ ...x, loading: false, transaction }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, loading: false, transaction }))
+        }
         return { data: transaction, error: undefined }
       } catch (error_) {
         let error: Error = <Error>error_
         if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
-        setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },
-    [connector, request],
+    [cancelQuery, connector, request],
   )
 
   return [

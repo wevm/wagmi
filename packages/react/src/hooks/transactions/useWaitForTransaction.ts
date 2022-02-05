@@ -5,6 +5,7 @@ import {
 } from '@ethersproject/providers'
 
 import { useProvider } from '../providers'
+import { useCancel } from '../utils'
 
 export type Config = {
   /**
@@ -45,6 +46,7 @@ export const useWaitForTransaction = ({
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const wait = React.useCallback(
     async (config?: {
       confirmations?: Config['confirmations']
@@ -52,6 +54,11 @@ export const useWaitForTransaction = ({
       timeout?: Config['timeout']
       wait?: Config['wait']
     }) => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       try {
         const config_ = config ?? { confirmations, hash, timeout, wait: wait_ }
         if (!config_.hash && !config_.wait)
@@ -70,32 +77,32 @@ export const useWaitForTransaction = ({
 
         setState((x) => ({ ...x, loading: true }))
         const receipt = await promise
-        setState((x) => ({ ...x, loading: false, receipt }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, loading: false, receipt }))
+        }
         return { data: receipt, error: undefined }
       } catch (error_) {
         const error = <Error>error_
-        setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },
-    [wait_, confirmations, hash, timeout, provider],
+    [cancelQuery, confirmations, hash, provider, timeout, wait_],
   )
 
   // Fetch balance when deps or chain changes
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || (!hash && !wait_)) return
 
-    let didCancel = false
-    if (didCancel) return
     // eslint-disable-next-line testing-library/await-async-utils
     wait({ confirmations, hash, timeout, wait: wait_ })
 
-    return () => {
-      didCancel = true
-    }
-  }, [wait_, hash, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
+    return cancelQuery
+
+    // eslint-disable-next-line testing-library/await-async-utils
+  }, [cancelQuery, confirmations, hash, skip, timeout, wait, wait_])
 
   return [
     {

@@ -3,6 +3,7 @@ import { Bytes } from 'ethers/lib/utils'
 import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
 
 import { useContext } from '../../context'
+import { useCancel } from '../utils'
 
 export type Config = {
   /** Message to sign with wallet */
@@ -25,8 +26,14 @@ export const useSignMessage = ({ message }: Config = {}) => {
   } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const signMessage = React.useCallback(
     async (config?: { message?: Config['message'] }) => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       try {
         const config_ = config ?? { message }
         if (!config_.message) throw new Error('message is required')
@@ -35,17 +42,21 @@ export const useSignMessage = ({ message }: Config = {}) => {
         setState((x) => ({ ...x, error: undefined, loading: true }))
         const signer = await connector.getSigner()
         const signature = await signer.signMessage(config_.message)
-        setState((x) => ({ ...x, signature, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, signature, loading: false }))
+        }
         return { data: signature, error: undefined }
       } catch (error_) {
         let error: Error = <Error>error_
         if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
-        setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },
-    [connector, message],
+    [cancelQuery, connector, message],
   )
 
   return [
