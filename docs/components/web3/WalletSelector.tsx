@@ -1,10 +1,15 @@
 import * as React from 'react'
 import { Button, Stack, Text } from 'degen'
-import { useConnect } from 'wagmi'
+import { Connector, ConnectorData, useConnect } from 'wagmi'
 
-import { useIsMounted } from '../hooks'
+import { useIsMounted } from '../../hooks'
 
-export const WalletSelector = () => {
+type Props = {
+  onError?(error: Error): void
+  onSuccess?(data: ConnectorData): void
+}
+
+export const WalletSelector = ({ onError, onSuccess }: Props) => {
   const isMounted = useIsMounted()
   const [
     {
@@ -14,6 +19,15 @@ export const WalletSelector = () => {
     },
     connect,
   ] = useConnect()
+
+  const handleConnect = React.useCallback(
+    async (connector: Connector) => {
+      const { data, error } = await connect(connector)
+      if (error) onError?.(error)
+      if (data) onSuccess?.(data)
+    },
+    [connect, onError, onSuccess],
+  )
 
   return (
     <Stack space="4">
@@ -25,7 +39,7 @@ export const WalletSelector = () => {
           loading={loading && x.name === connector?.name}
           disabled={isMounted ? !x.ready : false}
           key={x.id}
-          onClick={() => connect(x)}
+          onClick={() => handleConnect(x)}
         >
           {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
           {isMounted ? !x.ready && ' (unsupported)' : ''}

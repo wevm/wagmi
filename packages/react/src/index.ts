@@ -1,4 +1,4 @@
-export { Provider, useContext } from './context'
+export { Provider, useContext, Context } from './context'
 export type { Props as ProviderProps } from './context'
 
 export {
@@ -36,8 +36,12 @@ export {
   erc20ABI,
   erc721ABI,
   normalizeChainId,
+  AddChainError,
+  ChainNotConfiguredError,
+  ConnectorAlreadyConnectedError,
+  ConnectorNotFoundError,
+  SwitchChainError,
+  UserRejectedRequestError,
 } from 'wagmi-private'
 
-export { Context } from './context'
-
-export type { Chain, Data } from 'wagmi-private'
+export type { Chain, ConnectorData } from 'wagmi-private'

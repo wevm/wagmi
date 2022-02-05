@@ -16,6 +16,7 @@ it('should expose correct exports', () => {
       "units",
       "AddChainError",
       "ChainNotConfiguredError",
+      "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
       "SwitchChainError",
       "UserRejectedRequestError",

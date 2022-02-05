@@ -8,6 +8,11 @@ export class ChainNotConfiguredError extends Error {
   message = 'Chain not configured'
 }
 
+export class ConnectorAlreadyConnectedError extends Error {
+  name = 'ConnectorAlreadyConnectedError'
+  message = 'Connector already connected'
+}
+
 export class ConnectorNotFoundError extends Error {
   name = 'ConnectorNotFoundError'
   message = 'Connector not found'
