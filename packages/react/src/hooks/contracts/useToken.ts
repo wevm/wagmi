@@ -59,9 +59,11 @@ export const useToken = ({
         const formatUnits_ = config_.formatUnits ?? 'ether'
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const symbol = await contract.symbol()
-        const decimals = await contract.decimals()
-        const totalSupply = await contract.totalSupply()
+        const [symbol, decimals, totalSupply] = await Promise.all([
+          contract.symbol(),
+          contract.decimals(),
+          contract.totalSupply(),
+        ])
         const token = {
           address: config_.address,
           decimals,
