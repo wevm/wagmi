@@ -74,9 +74,11 @@ export const useBalance = ({
             erc20ABI,
             provider,
           )
-          const value = await contract.balanceOf(config_.addressOrName)
-          const decimals = await contract.decimals()
-          const symbol = await contract.symbol()
+          const [value, decimals, symbol] = await Promise.all([
+            contract.balanceOf(config_.addressOrName),
+            contract.decimals(),
+            contract.symbol(),
+          ])
           balance = {
             decimals,
             formatted: utils.formatUnits(value, formatUnits_),
