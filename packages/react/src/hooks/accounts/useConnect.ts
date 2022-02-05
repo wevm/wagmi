@@ -1,5 +1,9 @@
 import * as React from 'react'
-import { Connector } from 'wagmi-private'
+import {
+  Connector,
+  ConnectorAlreadyConnectedError,
+  ConnectorData,
+} from 'wagmi-private'
 
 import { useContext } from '../../context'
 
@@ -22,10 +26,16 @@ export const useConnect = () => {
   const [state, setState] = React.useState<State>(initialState)
 
   const connect = React.useCallback(
-    async (connector: Connector) => {
+    async (
+      connector: Connector,
+    ): Promise<{
+      data?: ConnectorData
+      error?: Error
+    }> => {
       try {
         const activeConnector = globalState?.connector
-        if (connector === activeConnector) return
+        if (connector === activeConnector)
+          throw new ConnectorAlreadyConnectedError()
 
         setState((x) => ({
           ...x,

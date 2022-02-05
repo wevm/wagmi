@@ -3,9 +3,8 @@ import { Box, Button, Text, Textarea } from 'degen'
 import { verifyMessage } from 'ethers/lib/utils'
 import { useAccount, useSignMessage } from 'wagmi'
 
-import { PreviewWrapper } from './PreviewWrapper'
-import { Account } from './Account'
-import { WalletSelector } from './WalletSelector'
+import { PreviewWrapper } from '../core'
+import { Account, WalletSelector } from '../web3'
 
 export const SignMessage = () => {
   const previousMessage = React.useRef<string>()
