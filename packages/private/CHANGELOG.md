@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.1.8
+
+### Patch Changes
+
+- [#137](https://github.com/tmm/wagmi/pull/137) [`dceeb43`](https://github.com/tmm/wagmi/commit/dceeb430d9021fbf98366859cb1cd0149e80c55c) Thanks [@tmm](https://github.com/tmm)! - add siwe guide
+
 ## 0.1.7
 
 ### Patch Changes

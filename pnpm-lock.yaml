@@ -99,7 +99,7 @@ importers:
       siwe: ^1.1.0
       tailwindcss: 2.2.4
       typescript: 4.5.4
-      wagmi: 0.2.8
+      wagmi: 0.2.9
     dependencies:
       '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
       degen: 0.0.49_react-dom@17.0.2+react@17.0.2
@@ -134,7 +134,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       typescript: 4.5.4
-      wagmi: 0.2.8
+      wagmi: 0.2.9
     dependencies:
       ethers: 5.5.2
       next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
@@ -165,7 +165,7 @@ importers:
       remix: ^1.1.1
       safe-event-emitter: ^1.0.1
       typescript: ^4.1.2
-      wagmi: 0.2.8
+      wagmi: 0.2.9
     dependencies:
       '@esbuild-plugins/node-globals-polyfill': 0.1.1
       '@esbuild-plugins/node-modules-polyfill': 0.1.4
@@ -199,7 +199,7 @@ importers:
       typescript: ^4.4.4
       util: ^0.12.4
       vite: ^2.7.2
-      wagmi: 0.2.8
+      wagmi: 0.2.9
     dependencies:
       buffer: 6.0.3
       ethers: 5.5.2
@@ -239,8 +239,8 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       react: ^17.0.0
-      wagmi-private: 0.1.7
-      wagmi-testing: 0.1.7
+      wagmi-private: 0.1.8
+      wagmi-testing: 0.1.8
       walletlink: ^2.2.8
     dependencies:
       '@ethersproject/providers': 5.5.1
@@ -261,7 +261,7 @@ importers:
       eventemitter3: ^4.0.7
       msw: ^0.36.3
       ts-pattern: ^3.3.4
-      wagmi-private: 0.1.7
+      wagmi-private: 0.1.8
     dependencies:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7

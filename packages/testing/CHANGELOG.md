@@ -1,5 +1,12 @@
 # wagmi-testing
 
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [[`dceeb43`](https://github.com/tmm/wagmi/commit/dceeb430d9021fbf98366859cb1cd0149e80c55c)]:
+  - wagmi-private@0.1.8
+
 ## 0.1.7
 
 ### Patch Changes
