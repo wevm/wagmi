@@ -193,6 +193,7 @@ The following set of **optional** arguments will be added to the read hooks:
 
 The `loading` flag will be removed in favour of the following set of deterministic states:
 
+- `isIdle`: A flag to indicate that the async function has not yet been invoked, and data has not been loaded yet.
 - `isLoading`: A flag to indicate that the data is loading for the first time
 - `isReloading`: A flag to indicate that the data is loading in the background, and showing cached success/error data in the meantime (meaining this flag can be truthy when isSuccess/isError is truthy).
 - `isSuccess`: A flag to indicate the data has been fetched successfully.
