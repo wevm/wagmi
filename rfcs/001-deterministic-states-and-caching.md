@@ -193,7 +193,7 @@ The following set of **optional** arguments will be added to the read hooks:
 
 The `loading` flag will be removed in favour of the following set of deterministic states:
 
-- `isIdle`: A flag to indicate that the async function has not yet been invoked, and data has not been loaded yet.
+- `isIdle`: A flag to indicate that the promise has not yet been invoked, and data has not been loaded yet.
 - `isLoading`: A flag to indicate that the data is loading for the first time
 - `isReloading`: A flag to indicate that the data is loading in the background, and showing cached success/error data in the meantime (meaining this flag can be truthy when isSuccess/isError is truthy).
 - `isSuccess`: A flag to indicate the data has been fetched successfully.
@@ -593,8 +593,9 @@ The following set of **optional** arguments will be added to the read hooks:
 
 The `loading` flag will be removed in favour of the following set of deterministic states:
 
-- `isLoading`: A flag to indicate that the mutation is loading
-- `isSuccess`: A flag to indicate the data has been mutated successfully.
+- `isIdle`: A flag to indicate that the promise has not yet been invoked.
+- `isLoading`: A flag to indicate that the promise is loading
+- `isSuccess`: A flag to indicate the data has been promise has been resolved.
 - `isError`: A flag to indicate that an error was thrown
 
 ### `useConnect`
@@ -624,7 +625,8 @@ The new `useContractWrite` API will look like such:
 ```tsx
 const [{
   data,         
-  error,        
+  error,      
+  isIdle,  
   isLoading,    
   isSuccess,    
   isError       
@@ -652,7 +654,8 @@ The new `useSignMessage` API will look like such:
 ```tsx
 const [{
   data,         
-  error,        
+  error, 
+  isIdle,       
   isLoading,    
   isSuccess,    
   isError       
@@ -674,7 +677,8 @@ The new `useTransaction` API will look like such:
 ```tsx
 const [{
   data,         
-  error,        
+  error,    
+  isIdle,    
   isLoading,    
   isSuccess,    
   isError       
