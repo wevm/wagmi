@@ -10,8 +10,8 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 
 // Get environment variables
-const alchemy = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
-const etherscan = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY as string
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
+const etherscanApiKey = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY as string
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
 
 // Pick chains
@@ -52,8 +52,8 @@ const provider = ({ chainId }: ProviderConfig) =>
   providers.getDefaultProvider(
     isChainSupported(chainId) ? chainId : defaultChain.id,
     {
-      alchemy: alchemy,
-      etherscan: etherscan,
+      alchemy: alchemyId,
+      etherscan: etherscanApiKey,
       infura: infuraId,
     },
   )

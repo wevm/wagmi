@@ -19,8 +19,8 @@ import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 export function loader() {
   require('dotenv').config()
   return {
-    alchemy: process.env.REMIX_ALCHEMY_ID as string,
-    etherscan: process.env.REMIX_ETHERSCAN_API_KEY as string,
+    alchemyId: process.env.REMIX_ALCHEMY_ID as string,
+    etherscanApiKey: process.env.REMIX_ETHERSCAN_API_KEY as string,
     infuraId: process.env.REMIX_INFURA_ID as string,
   }
 }
@@ -31,7 +31,7 @@ export const meta: MetaFunction = () => {
 
 export default function App() {
   // Get environment variables
-  const { alchemy, etherscan, infuraId } = useLoaderData()
+  const { alchemyId, etherscanApiKey, infuraId } = useLoaderData()
 
   // Pick chains
   const chains = defaultChains
@@ -71,8 +71,8 @@ export default function App() {
     providers.getDefaultProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
       {
-        alchemy: alchemy,
-        etherscan: etherscan,
+        alchemy: alchemyId,
+        etherscan: etherscanApiKey,
         infura: infuraId,
       },
     )
