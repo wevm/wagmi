@@ -545,7 +545,7 @@ By default, caching on `useToken` will:
 - be enabled,
 - cached in local storage,
 - have garbage collection disabled (`cacheTime = Infinity`),
-- be stale after 60 minutes (`staleTime = 60 * 60 * 1000`)
+- have its data always stale (`staleTime = 0`)
 
 ### `useWaitForTransaction`
 
