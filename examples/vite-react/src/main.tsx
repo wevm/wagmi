@@ -54,9 +54,9 @@ const provider = ({ chainId }: ProviderConfig) =>
   providers.getDefaultProvider(
     isChainSupported(chainId) ? chainId : defaultChain.id,
     {
-      alchemy,
-      etherscan,
-      infuraId,
+      alchemy: alchemy,
+      etherscan: etherscan,
+      infura: infuraId,
     },
   )
 const webSocketProvider = ({ chainId }: ConnectorsConfig) =>
