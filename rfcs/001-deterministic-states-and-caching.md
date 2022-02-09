@@ -576,7 +576,7 @@ const [{
 By default, caching on `useWaitForTransaction` will be disabled.
 
 
-### Action hooks
+## Action hooks
 
 The following hooks will see a common set of changes to their APIs:
 
