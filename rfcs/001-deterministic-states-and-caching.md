@@ -92,9 +92,15 @@ const [...] = useAccount({ cacheTime: 0 });
 
 # Motivation
 
+The motivation of this RFC can be seen in the below discussion:
+
 https://github.com/tmm/wagmi/discussions/85
 
-TODO
+TLDR; 
+
+- Non-deterministic & implicit states can lead to "impossible" states, which can cause UX bugs quite easily,
+- No idle state & implicit states lead to a confusing DX,
+- Most dapps experience a "flash of loading wallet/resolving ens" experience.
 
 # Detailed design
 
@@ -145,6 +151,28 @@ const [{ data, error, loading }, getBalance] = useBalance({
 ```
 
 By default, if `enabled` is not provided, then it is truthy & it still fetches on mount.
+
+## React Query & `Provider`
+
+This implementation will use [React Query](https://react-query.tanstack.com/), which means we will need to provide a query client (via react-query's `QueryClientProvider`) within wagmi's `Provider`.
+
+## Storage persistence
+
+I think maybe we should have storage persistence an opt-in feature, that people can toggle on from the `Provider`. Storage persistence is available via [react-query's `persistQueryClient`](https://react-query.tanstack.com/plugins/persistQueryClient)
+
+### Usage
+
+```tsx
+import { Provider, createPersistor } from 'wagmi';
+
+const localStoragePersistor = createPersistor({ storage: window.localStorage })
+
+const App = () => (
+  <Provider persistor={localStoragePersistor}>
+    <YourRoutes />
+  </Provider>
+)
+```
 
 ## Read hooks
 
@@ -663,38 +691,21 @@ const [{
 
 # Drawbacks
 
-Why should we *not* do this? Please consider:
+There are 2 immediate drawbacks:
 
-- implementation cost, both in term of code size and complexity
-- whether the proposed feature can be implemented in user space
-- the impact on teaching people React
-- integration of this feature with other existing and planned features
-- cost of migrating existing React applications (is it a breaking change?)
-
-There are tradeoffs to choosing any path. Attempt to identify them here.
+- Bundle size
+  - Adding `react-query` could [add up to 13kB](https://bundlephobia.com/package/react-query@3.34.14) to the bundle size. However, `react-query` is tree-shakable, so it is possible that this could be lower.
+- Increased API surface
+  - With the addition of new async state variables, and caching options, this will increase the API surface layer. But I don't think it's too much of a concern.
 
 # Alternatives
 
-What other designs have been considered? What is the impact of not doing this?
+There are a few alternatives that were mentioned in the [precurser discussion thread](https://github.com/tmm/wagmi/discussions/85). They were:
 
-# Adoption strategy
-
-If we implement this proposal, how will existing React developers adopt it? Is
-this a breaking change? Can we write a codemod? Should we coordinate with
-other projects or libraries?
+- [Rolling our own states & cache](https://github.com/tmm/wagmi/discussions/85#discussioncomment-1977448),
+- Use an alternate async state lib such as SWR,
+- [Have separate entries for async state libraries](https://github.com/tmm/wagmi/discussions/85#discussioncomment-1978779)
 
 # How we teach this
 
-What names and terminology work best for these concepts and why? How is this
-idea best presented? As a continuation of existing React patterns?
-
-Would the acceptance of this proposal mean the React documentation must be
-re-organized or altered? Does it change how React is taught to new developers
-at any level?
-
-How should this feature be taught to existing React developers?
-
-# Unresolved questions
-
-Optional, but suggested for first drafts. What parts of the design are still
-TBD?
+Will need to add the new API to the docs, and think about the structure of the docs if we want to separate hooks by "action hooks" & "read hooks".
