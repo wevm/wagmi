@@ -15,8 +15,8 @@
     "iron-session": "^6.0.5",
     "next": "12.0.7",
     "next-themes": "0.0.8",
-    "nextra": "v2.0.0-beta.5",
-    "nextra-theme-docs": "2.0.0-beta.5",
+    "nextra": "v2.0.0-alpha.24",
+    "nextra-theme-docs": "v2.0.0-alpha.23",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "siwe": "^1.1.0",
@@ -25,11 +25,11 @@
   "devDependencies": {
     "@types/node": "17.0.5",
     "@types/react": "17.0.38",
-    "autoprefixer": "^10.4.0",
+    "autoprefixer": "^10.4.2",
     "eslint": "8.5.0",
     "eslint-config-next": "12.0.7",
-    "postcss": "8.2.1",
-    "tailwindcss": "2.2.4",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.19",
     "typescript": "4.5.4"
   }
 }
