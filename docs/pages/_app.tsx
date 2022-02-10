@@ -1,10 +1,10 @@
-import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'degen'
 import { providers } from 'ethers'
 import Head from 'next/head'
+import type { AppProps } from 'next/app'
 
-import 'nextra-theme-docs/style.css'
 import '../styles/globals.css'
+import 'nextra-theme-docs/style.css'
 
 /* eslint-disable import/no-unresolved */
 // https://github.com/import-js/eslint-plugin-import/issues/1868

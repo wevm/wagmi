@@ -22,42 +22,42 @@ type Event = keyof Events
 export class MockProvider extends ethers.providers.BaseProvider {
   events = new EventEmitter<Events>()
 
-  private _options: MockProviderOptions
-  private _wallet?: ethers.Wallet
+  #options: MockProviderOptions
+  #wallet?: ethers.Wallet
 
   constructor(options: MockProviderOptions) {
     super(options.network)
-    this._options = options
+    this.#options = options
   }
 
   async enable() {
-    if (this._options.flags?.failConnect) throw new UserRejectedRequestError()
-    if (!this._wallet)
-      this._wallet = new ethers.Wallet(this._options.privateKey)
-    const address = await this._wallet.getAddress()
+    if (this.#options.flags?.failConnect) throw new UserRejectedRequestError()
+    if (!this.#wallet)
+      this.#wallet = new ethers.Wallet(this.#options.privateKey)
+    const address = await this.#wallet.getAddress()
     this.events.emit('accountsChanged', [address])
     return [address]
   }
 
   async disconnect() {
     this.events.emit('disconnect')
-    this._wallet = undefined
+    this.#wallet = undefined
   }
 
   async getAccounts() {
-    const address = await this._wallet?.getAddress()
+    const address = await this.#wallet?.getAddress()
     if (!address) return []
     return [getAddress(address)]
   }
 
   getSigner() {
-    const signer = this._wallet
+    const signer = this.#wallet
     if (!signer) throw new Error('Signer not found')
     return signer
   }
 
   async switchChain(chainId: number) {
-    this._options.network = chainId
+    this.#options.network = chainId
     this.network.chainId = chainId
     this.events.emit('chainChanged', chainId)
   }

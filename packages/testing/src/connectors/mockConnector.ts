@@ -18,7 +18,7 @@ export class MockConnector extends Connector<
   readonly name = 'Mock'
   readonly ready = true
 
-  private _provider?: MockProvider
+  #provider?: MockProvider
 
   constructor(
     config: { chains: Chain[]; options: MockProviderOptions } = {
@@ -71,8 +71,8 @@ export class MockConnector extends Connector<
   }
 
   getProvider() {
-    if (!this._provider) this._provider = new MockProvider(this.options)
-    return this._provider
+    if (!this.#provider) this.#provider = new MockProvider(this.options)
+    return this.#provider
   }
 
   async getSigner() {
