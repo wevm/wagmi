@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "STORK_PATH=$(pwd)/bin/stork.bin next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

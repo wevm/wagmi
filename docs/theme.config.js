@@ -68,5 +68,5 @@ export default {
   projectLink: github,
   search: true,
   titleSuffix: ' – wagmi',
-  unstable_stork: true,
+  unstable_flexsearch: true,
 }
