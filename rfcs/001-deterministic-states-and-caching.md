@@ -198,6 +198,7 @@ The `loading` flag will be removed in favour of the following set of determinist
 - `isReloading`: A flag to indicate that the data is loading in the background, and showing cached success/error data in the meantime (meaining this flag can be truthy when isSuccess/isError is truthy).
 - `isSuccess`: A flag to indicate the data has been fetched successfully.
 - `isError`: A flag to indicate that an error was thrown upon fetching the account
+- `status`: A string indicating the current status of the request (can be either: `"idle"`, `"loading"`, `"error"` or `"success"`)
 
 ### `useAccount` 
 
@@ -597,6 +598,7 @@ The `loading` flag will be removed in favour of the following set of determinist
 - `isLoading`: A flag to indicate that the promise is loading
 - `isSuccess`: A flag to indicate the data has been promise has been resolved.
 - `isError`: A flag to indicate that an error was thrown
+- `status`: A string indicating the current status of the request (can be either: `"idle"`, `"loading"`, `"error"` or `"success"`)
 
 ### `useConnect`
 
