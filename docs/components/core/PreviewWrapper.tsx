@@ -7,13 +7,14 @@ type Props = {
 }
 
 export const PreviewWrapper = ({ children }: Props) => {
-  const { theme } = useNextThemes()
+  const { resolvedTheme } = useNextThemes()
   const { setMode } = useTheme()
 
   React.useEffect(() => {
-    if (!theme) return
-    setMode(theme as any)
-  }, [theme, setMode])
+    if (!resolvedTheme) return
+    if (resolvedTheme === 'system') return
+    setMode(resolvedTheme as any)
+  }, [resolvedTheme, setMode])
 
   return (
     <Box

@@ -15,11 +15,8 @@ export default {
   feedbackLabels: 'feedback',
   feedbackLink: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { locale, defaultLocale } = useRouter()
-    return (
-      FEEDBACK_LINK_WITH_TRANSLATIONS[locale] ||
-      FEEDBACK_LINK_WITH_TRANSLATIONS[defaultLocale]
-    )
+    const { locale } = useRouter()
+    return FEEDBACK_LINK_WITH_TRANSLATIONS[locale || 'en-US']
   },
   floatTOC: true,
   footerEditLink: `Edit this page on GitHub`,
@@ -53,14 +50,15 @@ export default {
       </>
     )
   },
+  // i18n: [{ locale: 'en-US', text: 'English' }],
   logo: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { locale, defaultLocale } = useRouter()
+    const { locale } = useRouter()
     return (
       <>
         <span className="mr-2 font-extrabold">wagmi</span>
         <span className="text-gray-600 font-normal hidden md:inline">
-          {TITLE_WITH_TRANSLATIONS[locale || defaultLocale]}
+          {TITLE_WITH_TRANSLATIONS[locale || 'en-US']}
         </span>
       </>
     )

@@ -90,7 +90,7 @@ importers:
       ethers: ^5.5.1
       iron-session: ^6.0.5
       next: 12.0.7
-      next-themes: 0.0.8
+      next-themes: ^0.0.15
       nextra: v2.0.0-alpha.24
       nextra-theme-docs: v2.0.0-alpha.23
       postcss: ^8.4.5
@@ -106,7 +106,7 @@ importers:
       ethers: 5.5.2
       iron-session: 6.0.5_next@12.0.7
       next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
-      next-themes: 0.0.8_d837ce8f3acb2f60f8b7454672a9bcea
+      next-themes: 0.0.15_d837ce8f3acb2f60f8b7454672a9bcea
       nextra: 2.0.0-alpha.24_react@17.0.2
       nextra-theme-docs: 2.0.0-alpha.23_676434e83a07d0ba4ed04d5ca6a47005
       react: 17.0.2
@@ -11081,18 +11081,6 @@ packages:
       next: '*'
       react: '*'
       react-dom: '*'
-    dependencies:
-      next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
-    dev: false
-
-  /next-themes/0.0.8_d837ce8f3acb2f60f8b7454672a9bcea:
-    resolution: {integrity: sha512-dyrh+/bZW4hkecFEg2rfwOLLzU2UnE7KfiwcV0mIwkPrO+1n1WvwkC8nabgKA5Eoi8stkYfjmA72FxTaWEOHtg==}
-    peerDependencies:
-      next: ^9.5.5
-      react: ^16.13.1
-      react-dom: ^16.13.1
     dependencies:
       next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
       react: 17.0.2

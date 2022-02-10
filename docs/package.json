@@ -14,7 +14,7 @@
     "ethers": "^5.5.1",
     "iron-session": "^6.0.5",
     "next": "12.0.7",
-    "next-themes": "0.0.8",
+    "next-themes": "^0.0.15",
     "nextra": "v2.0.0-alpha.24",
     "nextra-theme-docs": "v2.0.0-alpha.23",
     "react": "17.0.2",
