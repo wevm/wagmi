@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.10
+
+### Patch Changes
+
+- [#159](https://github.com/tmm/wagmi/pull/159) [`981438d`](https://github.com/tmm/wagmi/commit/981438d527fb6b5f025dd9bb405fa9e7a2751597) Thanks [@markdalgleish](https://github.com/markdalgleish)! - add `WagmiProvider` alias for `Provider`
+
 ## 0.2.9
 
 ### Patch Changes
