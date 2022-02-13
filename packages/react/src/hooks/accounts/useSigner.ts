@@ -51,9 +51,8 @@ export const useSigner = ({ skip }: Config = {}) => {
   }, [cancelQuery, connector])
 
   React.useEffect(() => {
-    if (!skip && cacheBuster) {
-      getSigner()
-    }
+    if (skip) return
+    getSigner()
     return cancelQuery
   }, [cacheBuster, cancelQuery, getSigner, skip])
 

@@ -57,9 +57,8 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
 
   // Fetch avatar when deps or chain changes
   React.useEffect(() => {
-    if (!skip && name && cacheBuster) {
-      getEnsResolver({ name })
-    }
+    if (skip || !name) return
+    getEnsResolver({ name })
     return cancelQuery
   }, [cacheBuster, cancelQuery, getEnsResolver, name, skip])
 

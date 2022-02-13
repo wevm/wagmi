@@ -1,5 +1,13 @@
-export { Provider, useContext, Context } from './context'
-export type { Props as ProviderProps } from './context'
+export {
+  Provider,
+  Provider as WagmiProvider,
+  useContext,
+  Context,
+} from './context'
+export type {
+  Props as ProviderProps,
+  Props as WagmiProviderProps,
+} from './context'
 
 export {
   useAccount,

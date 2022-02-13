@@ -48,9 +48,8 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
   }, [cancelQuery, provider])
 
   React.useEffect(() => {
-    if (!skip) {
-      getBlockNumber()
-    }
+    if (skip) return
+    getBlockNumber()
     return cancelQuery
   }, [cancelQuery, getBlockNumber, skip])
 

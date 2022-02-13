@@ -8,6 +8,7 @@ import { Config as UseContractConfig, useContract } from './useContract'
 import { useCancel } from '../utils'
 
 type Config = {
+  /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
 }

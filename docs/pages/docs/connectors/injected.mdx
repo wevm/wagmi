@@ -36,7 +36,7 @@ Options for configuring the connector.
 ```tsx highlight='4-6'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
-const connector = new WalletConnectConnector({
+const connector = new InjectedConnector({
   options: {
     shimDisconnect: true,
   },

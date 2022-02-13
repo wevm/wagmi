@@ -55,9 +55,8 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
   )
 
   React.useEffect(() => {
-    if (!skip && address && cacheBuster) {
-      lookupAddress({ address })
-    }
+    if (skip || !address) return
+    lookupAddress({ address })
     return cancelQuery
   }, [address, cacheBuster, cancelQuery, lookupAddress, skip])
 

@@ -60,7 +60,7 @@ export const useFeeData = ({
 
   // Fetch feeData on mount or when chain changes
   React.useEffect(() => {
-    if (skip || !cacheBuster) return
+    if (skip) return
     getFeeData()
     return cancelQuery
   }, [cacheBuster, cancelQuery, getFeeData, skip])

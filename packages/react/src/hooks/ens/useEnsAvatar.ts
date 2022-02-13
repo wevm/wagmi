@@ -56,9 +56,8 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
 
   // Fetch avatar when deps or chain changes
   React.useEffect(() => {
-    if (!skip && addressOrName && cacheBuster) {
-      getEnsAvatar({ addressOrName })
-    }
+    if (skip || !addressOrName) return
+    getEnsAvatar({ addressOrName })
     return cancelQuery
   }, [addressOrName, cacheBuster, cancelQuery, getEnsAvatar, skip])
 

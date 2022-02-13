@@ -1,15 +1,17 @@
 import * as React from 'react'
 
-export function useCancel() {
-  const cancelCb = React.useRef<null | (() => void)>(null)
+type Callback = () => void
+
+export const useCancel = () => {
+  const cancelCallback = React.useRef<Callback | null>(null)
 
   React.useEffect(() => {
-    return () => cancelCb.current?.()
+    return () => cancelCallback.current?.()
   }, [])
 
-  const cancel = React.useCallback((cb?: () => void) => {
-    cancelCb.current?.()
-    if (cb) cancelCb.current = cb
+  const cancel = React.useCallback((callback?: Callback) => {
+    cancelCallback.current?.()
+    if (callback) cancelCallback.current = callback
   }, [])
 
   return cancel
