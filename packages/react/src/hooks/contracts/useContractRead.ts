@@ -5,11 +5,15 @@ import { Result } from 'ethers/lib/utils'
 import { useBlockNumber } from '../network-status'
 import { useProvider } from '../providers'
 import { Config as UseContractConfig, useContract } from './useContract'
+import { useCancel } from '../utils'
 
 type Config = {
+  /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
+  /** Disables fetching */
   skip?: boolean
+  /** Subscribe to changes */
   watch?: boolean
 }
 
@@ -38,11 +42,17 @@ export const useContractRead = <
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const read = React.useCallback(
     async (config?: {
       args?: Config['args']
       overrides?: Config['overrides']
     }) => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       try {
         const config_ = config ?? { args, overrides }
         const params = [
@@ -61,38 +71,33 @@ export const useContractRead = <
           response: undefined,
         }))
         const response = (await contract[functionName](...params)) as Result
-        setState((x) => ({ ...x, loading: false, response }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, loading: false, response }))
+        }
         return { data: response, error: undefined }
       } catch (error_) {
         const error = <Error>error_
-        setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },
-    [args, contract, functionName, overrides],
+    [args, cancelQuery, contract, functionName, overrides],
   )
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (skip) return
+    if (!skip) return
+    read()
+    return cancelQuery
+  }, [cancelQuery, read, skip])
 
-    let didCancel = false
-    if (didCancel) return
-    read({ args, overrides })
-
-    return () => {
-      didCancel = true
-    }
-  }, [args, overrides, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!watch) return
     if (!blockNumber) return
-    read({ args, overrides })
-  }, [blockNumber])
-  /* eslint-enable react-hooks/exhaustive-deps */
+    read()
+    return cancelQuery
+  }, [blockNumber, cancelQuery, read, watch])
 
   return [
     {

@@ -6,6 +6,7 @@ import {
 } from 'wagmi-private'
 
 import { useContext } from '../../context'
+import { useCancel } from '../utils'
 
 type State = {
   connector?: Connector
@@ -25,6 +26,7 @@ export const useConnect = () => {
   } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const connect = React.useCallback(
     async (
       connector: Connector,
@@ -32,6 +34,11 @@ export const useConnect = () => {
       data?: ConnectorData
       error?: Error
     }> => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       try {
         const activeConnector = globalState?.connector
         if (connector === activeConnector)
@@ -45,35 +52,38 @@ export const useConnect = () => {
         }))
         const data = await connector.connect()
 
-        // Update connector globally only after successful connection
-        setGlobalState((x) => ({ ...x, connector, data }))
-        setLastUsedConnector(connector.name)
-        setState((x) => ({ ...x, loading: false }))
+        if (!didCancel) {
+          // Update connector globally only after successful connection
+          setGlobalState((x) => ({ ...x, connector, data }))
+          setLastUsedConnector(connector.name)
+          setState((x) => ({ ...x, loading: false }))
+        }
         return { data, error: undefined }
       } catch (error_) {
         const error = <Error>error_
-        setState((x) => ({ ...x, connector: undefined, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({
+            ...x,
+            connector: undefined,
+            error,
+            loading: false,
+          }))
+        }
         return { data: undefined, error }
       }
     },
-    [globalState.connector, setGlobalState, setLastUsedConnector],
+    [cancelQuery, globalState.connector, setGlobalState, setLastUsedConnector],
   )
 
   // Keep connector in sync with global connector
   React.useEffect(() => {
-    let didCancel = false
-    if (didCancel) return
-
     setState((x) => ({
       ...x,
       connector: globalState.connector,
       error: undefined,
     }))
-
-    return () => {
-      didCancel = true
-    }
-  }, [globalState.connector])
+    return cancelQuery
+  }, [cancelQuery, globalState.connector])
 
   return [
     {

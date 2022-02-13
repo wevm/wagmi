@@ -4,6 +4,7 @@ import { Unit, erc20ABI } from 'wagmi-private'
 
 import { useContext } from '../../context'
 import { useProvider } from '../providers'
+import { useCancel } from '../utils'
 
 export type Config = {
   address?: string
@@ -39,11 +40,17 @@ export const useToken = ({
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const getToken = React.useCallback(
     async (config?: {
       address: string
       formatUnits?: Config['formatUnits']
     }) => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       try {
         const config_ = config ?? {
           address,
@@ -73,15 +80,19 @@ export const useToken = ({
             value: totalSupply,
           },
         }
-        setState((x) => ({ ...x, token, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, token, loading: false }))
+        }
         return { data: token, error: undefined }
       } catch (error_) {
         const error = <Error>error_
-        setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },
-    [address, formatUnits, provider],
+    [address, cancelQuery, formatUnits, provider],
   )
 
   const watchToken = React.useCallback(
@@ -102,19 +113,11 @@ export const useToken = ({
     [connector],
   )
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || !address) return
-
-    let didCancel = false
-    if (didCancel) return
     getToken({ address, formatUnits })
-
-    return () => {
-      didCancel = true
-    }
-  }, [address, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
+    return cancelQuery
+  }, [address, cancelQuery, formatUnits, getToken, skip])
 
   return [
     {
