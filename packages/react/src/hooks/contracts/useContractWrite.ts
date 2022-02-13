@@ -5,8 +5,10 @@ import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
 
 import { useContext } from '../../context'
 import { Config as UseContractConfig, useContract } from './useContract'
+import { useCancel } from '../utils'
 
 type Config = {
+  /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
 }
@@ -35,11 +37,17 @@ export const useContractWrite = <
   const contract = useContract<Contract>(contractConfig)
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const write = React.useCallback(
     async (config?: {
       args?: Config['args']
       overrides?: Config['overrides']
     }) => {
+      let didCancel = false
+      cancelQuery(() => {
+        didCancel = true
+      })
+
       try {
         const config_ = config ?? { args, overrides }
         if (!connector) throw new ConnectorNotFoundError()
@@ -63,17 +71,21 @@ export const useContractWrite = <
         const response = (await contract_[functionName](
           ...params,
         )) as TransactionResponse
-        setState((x) => ({ ...x, loading: false, response }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, loading: false, response }))
+        }
         return { data: response, error: undefined }
       } catch (error_) {
         let error: Error = <Error>error_
         if ((<ProviderRpcError>error_).code === 4001)
           error = new UserRejectedRequestError()
-        setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },
-    [args, connector, contract, functionName, overrides],
+    [args, cancelQuery, connector, contract, functionName, overrides],
   )
 
   return [

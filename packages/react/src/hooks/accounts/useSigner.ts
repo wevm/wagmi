@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Signer } from 'ethers'
 
 import { useContext } from '../../context'
-import { useCacheBuster } from '../utils'
+import { useCacheBuster, useCancel } from '../utils'
 
 type Config = {
   /** Disables fetching */
@@ -28,29 +28,33 @@ export const useSigner = ({ skip }: Config = {}) => {
   } = useContext()
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const getSigner = React.useCallback(async () => {
+    let didCancel = false
+    cancelQuery(() => {
+      didCancel = true
+    })
+
     try {
       setState((x) => ({ ...x, error: undefined, loading: true }))
       const signer = await connector?.getSigner()
-      setState((x) => ({ ...x, data: signer, loading: false }))
+      if (!didCancel) {
+        setState((x) => ({ ...x, data: signer, loading: false }))
+      }
       return signer
     } catch (error_) {
       const error = <Error>error_
-      setState((x) => ({ ...x, data: undefined, error, loading: false }))
+      if (!didCancel) {
+        setState((x) => ({ ...x, data: undefined, error, loading: false }))
+      }
     }
-  }, [connector])
+  }, [cancelQuery, connector])
 
   React.useEffect(() => {
     if (skip) return
-
-    let didCancel = false
-    if (didCancel) return
     getSigner()
-
-    return () => {
-      didCancel = true
-    }
-  }, [cacheBuster, connector, getSigner, skip])
+    return cancelQuery
+  }, [cacheBuster, cancelQuery, getSigner, skip])
 
   return [state, getSigner] as const
 }

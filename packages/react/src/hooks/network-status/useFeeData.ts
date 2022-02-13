@@ -4,7 +4,7 @@ import { FeeData } from '@ethersproject/providers'
 import { Unit } from 'wagmi-private'
 
 import { useProvider } from '../providers'
-import { useCacheBuster } from '../utils'
+import { useCacheBuster, useCancel } from '../utils'
 import { useBlockNumber } from './useBlockNumber'
 
 type Config = {
@@ -36,41 +36,40 @@ export const useFeeData = ({
   const cacheBuster = useCacheBuster()
   const [state, setState] = React.useState<State>(initialState)
 
+  const cancelQuery = useCancel()
   const getFeeData = React.useCallback(async () => {
+    let didCancel = false
+    cancelQuery(() => {
+      didCancel = true
+    })
     try {
       setState((x) => ({ ...x, error: undefined, loading: true }))
       const feeData = await provider.getFeeData()
-      setState((x) => ({ ...x, feeData, loading: false }))
+      if (!didCancel) {
+        setState((x) => ({ ...x, feeData, loading: false }))
+      }
       return { data: feeData, error: undefined }
     } catch (error_) {
       const error = <Error>error_
-      setState((x) => ({ ...x, error, loading: false }))
+      if (!didCancel) {
+        setState((x) => ({ ...x, error, loading: false }))
+      }
       return { data: undefined, error }
     }
-  }, [provider])
+  }, [cancelQuery, provider])
 
   // Fetch feeData on mount or when chain changes
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip) return
-
-    let didCancel = false
-    if (didCancel) return
     getFeeData()
+    return cancelQuery
+  }, [cacheBuster, cancelQuery, getFeeData, skip])
 
-    return () => {
-      didCancel = true
-    }
-  }, [cacheBuster, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!watch) return
-    if (!blockNumber) return
+    if (!watch || !blockNumber) return
     getFeeData()
-  }, [blockNumber])
-  /* eslint-enable react-hooks/exhaustive-deps */
+    return cancelQuery
+  }, [blockNumber, cancelQuery, getFeeData, watch])
 
   const formatted = state.feeData
     ? {
