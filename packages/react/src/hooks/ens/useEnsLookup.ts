@@ -54,11 +54,14 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
     [address, cancelQuery, provider],
   )
 
+  // Resolve name when deps or chain changes
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || !address) return
     lookupAddress({ address })
     return cancelQuery
-  }, [address, cacheBuster, cancelQuery, lookupAddress, skip])
+  }, [address, cacheBuster, cancelQuery, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
     { data: state.ens, loading: state.loading, error: state.error },

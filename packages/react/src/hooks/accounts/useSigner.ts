@@ -50,11 +50,13 @@ export const useSigner = ({ skip }: Config = {}) => {
     }
   }, [cancelQuery, connector])
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip) return
     getSigner()
     return cancelQuery
-  }, [cacheBuster, cancelQuery, getSigner, skip])
+  }, [cacheBuster, connector, cancelQuery, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return [state, getSigner] as const
 }

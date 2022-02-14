@@ -31,7 +31,7 @@ describe('useEnsLookup', () => {
     it('does not have ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsLookup({
-          address: wallets.ethers3.address,
+          address: wallets.ethers2.address,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -44,7 +44,7 @@ describe('useEnsLookup', () => {
       await waitForNextUpdate()
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
-          "data": "meagher.eth",
+          "data": null,
           "error": undefined,
           "loading": false,
         }

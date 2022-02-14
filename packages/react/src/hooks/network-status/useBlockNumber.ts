@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
-import { useCancel } from '../utils'
+import { useCacheBuster, useCancel } from '../utils'
 
 type Config = {
   /** Disables fetching */
@@ -21,6 +21,7 @@ const initialState: State = {
 }
 
 export const useBlockNumber = ({ skip, watch }: Config = {}) => {
+  const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const [state, setState] = React.useState<State>(initialState)
@@ -47,11 +48,13 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
     }
   }, [cancelQuery, provider])
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip) return
     getBlockNumber()
     return cancelQuery
-  }, [cancelQuery, getBlockNumber, skip])
+  }, [cacheBuster, cancelQuery, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   React.useEffect(() => {
     if (!watch) return

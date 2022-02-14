@@ -126,15 +126,9 @@ export const useBalance = ({
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || !addressOrName) return
-
-    let didCancel = false
-    if (didCancel) return
     getBalance({ addressOrName, formatUnits, token })
-
-    return () => {
-      didCancel = true
-    }
-  }, [addressOrName, cacheBuster, skip, token])
+    return cancelQuery
+  }, [addressOrName, cacheBuster, cancelQuery, skip, token])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   /* eslint-disable react-hooks/exhaustive-deps */

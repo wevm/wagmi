@@ -113,11 +113,13 @@ export const useToken = ({
     [connector],
   )
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || !address) return
     getToken({ address, formatUnits })
     return cancelQuery
-  }, [address, cancelQuery, formatUnits, getToken, skip])
+  }, [address, cancelQuery, formatUnits, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
     {

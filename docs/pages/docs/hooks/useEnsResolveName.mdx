@@ -1,6 +1,6 @@
 # useEnsResolveName
 
-Hook for looking up ENS name for address.
+Hook for looking up address for ENS name.
 
 ```tsx
 import { useEnsResolveName } from 'wagmi'
@@ -12,12 +12,12 @@ import { useEnsResolveName } from 'wagmi'
 import { useEnsResolveName } from 'wagmi'
 
 const App = () => {
-  const [{ data, error, loading }, lookupAddress] = useEnsResolveName({
+  const [{ data, error, loading }, resolveName] = useEnsResolveName({
     name: 'meagher.eth',
   })
 
-  if (loading) return <div>Fetching name…</div>
-  if (error || !data) return <div>Error fetching name</div>
+  if (loading) return <div>Fetching address…</div>
+  if (error || !data) return <div>Error fetching address</div>
   return <div>{data}</div>
 }
 ```
@@ -34,7 +34,7 @@ const App = () => {
 }
 ```
 
-### lookupAddress
+### resolveName
 
 ```ts
 (config?: {
@@ -44,9 +44,9 @@ const App = () => {
 
 ## Configuration
 
-### address (optional)
+### name (optional)
 
-Address to look up.
+Name to look up.
 
 ```tsx highlight='5'
 import { useEnsResolveName } from 'wagmi'
@@ -62,13 +62,13 @@ const App = () => {
 
 ### skip (optional)
 
-Skips automatically fetching data on mount. Defaults to `false`. Useful if you want to call `lookupAddress` manually at some other point.
+Skips automatically fetching data on mount. Defaults to `false`. Useful if you want to call `resolveName` manually at some other point.
 
 ```tsx highlight='5'
 import { useEnsResolveName } from 'wagmi'
 
 const App = () => {
-  const [{ data, error, loading }, lookupAddress] = useEnsResolveName({
+  const [{ data, error, loading }, resolveName] = useEnsResolveName({
     skip: true,
   })
 

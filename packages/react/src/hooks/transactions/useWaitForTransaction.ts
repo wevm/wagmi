@@ -64,7 +64,7 @@ export const useWaitForTransaction = ({
         if (!config_.hash && !config_.wait)
           throw new Error('hash or wait is required')
 
-        let promise
+        let promise: Promise<TransactionReceipt>
         // eslint-disable-next-line testing-library/await-async-utils
         if (config_.wait) promise = config_.wait(config_.confirmations)
         else if (config_.hash)
@@ -93,16 +93,15 @@ export const useWaitForTransaction = ({
   )
 
   // Fetch balance when deps or chain changes
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || (!hash && !wait_)) return
-
-    // eslint-disable-next-line testing-library/await-async-utils
+    /* eslint-disable testing-library/await-async-utils */
     wait({ confirmations, hash, timeout, wait: wait_ })
-
+    /* eslint-enable testing-library/await-async-utils */
     return cancelQuery
-
-    // eslint-disable-next-line testing-library/await-async-utils
-  }, [cancelQuery, confirmations, hash, skip, timeout, wait, wait_])
+  }, [cancelQuery, hash, skip, wait_])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
     {

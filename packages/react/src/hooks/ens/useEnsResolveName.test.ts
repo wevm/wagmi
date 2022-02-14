@@ -8,7 +8,7 @@ describe('useEnsResolveName', () => {
     it('has ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsResolveName({
-          name: wallets.ethers3.name,
+          name: wallets.ethers3.ensName,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -21,7 +21,7 @@ describe('useEnsResolveName', () => {
       await waitForNextUpdate()
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
-          "data": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
+          "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
           "error": undefined,
           "loading": false,
         }
@@ -31,7 +31,7 @@ describe('useEnsResolveName', () => {
     it('does not have ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsResolveName({
-          name: wallets.ethers3.name,
+          name: 'foo.eth',
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -44,7 +44,7 @@ describe('useEnsResolveName', () => {
       await waitForNextUpdate()
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
-          "data": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
+          "data": null,
           "error": undefined,
           "loading": false,
         }
@@ -54,7 +54,7 @@ describe('useEnsResolveName', () => {
     it('has error', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsResolveName({
-          name: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
+          name: '0x',
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -68,7 +68,7 @@ describe('useEnsResolveName', () => {
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": [Error: invalid name (argument="name", value="0xa0cf798816d4b9b9866b5330eea46a18382f251e", code=INVALID_ARGUMENT, version=name/5.5.0)],
+          "error": [Error: invalid address (argument="address", value="0x", code=INVALID_ARGUMENT, version=address/5.5.0)],
           "loading": false,
         }
       `)
@@ -90,7 +90,7 @@ describe('useEnsResolveName', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
         useEnsResolveName({
-          name: wallets.ethers3.name,
+          name: wallets.ethers3.ensName,
           skip: true,
         }),
       )
@@ -98,7 +98,7 @@ describe('useEnsResolveName', () => {
         const res = await result.current[1]()
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
+            "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
             "error": undefined,
           }
         `)
@@ -109,11 +109,11 @@ describe('useEnsResolveName', () => {
       const { result } = renderHook(() => useEnsResolveName({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]({
-          name: wallets.ethers3.name,
+          name: wallets.ethers3.ensName,
         })
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
+            "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
             "error": undefined,
           }
         `)

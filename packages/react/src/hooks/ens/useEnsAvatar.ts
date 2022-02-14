@@ -55,11 +55,13 @@ export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
   )
 
   // Fetch avatar when deps or chain changes
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || !addressOrName) return
     getEnsAvatar({ addressOrName })
     return cancelQuery
-  }, [addressOrName, cacheBuster, cancelQuery, getEnsAvatar, skip])
+  }, [addressOrName, cacheBuster, cancelQuery, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
     { data: state.avatar, loading: state.loading, error: state.error },
