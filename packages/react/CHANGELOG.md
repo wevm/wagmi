@@ -1,5 +1,12 @@
 # wagmi
 
+## 0.2.11
+
+### Patch Changes
+
+- [`09f0719`](https://github.com/tmm/wagmi/commit/09f071947012e3133362a7eb80c0f39356899190) Thanks [@tmm](https://github.com/tmm)! - - safe state updates h/t @bpierre
+  - add useEnsResolveName hook h/t @shunkakinoki
+
 ## 0.2.10
 
 ### Patch Changes
