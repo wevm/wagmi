@@ -52,7 +52,7 @@ Visit https://wagmi-xyz.vercel.app to view the full documentation.
 1. Install the dependencies.
 
 ```bash
-pnpm add wagmi ethers
+npm add wagmi ethers
 ```
 
 2. Wrap your app with the `Provider` component.
