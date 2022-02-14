@@ -89,7 +89,7 @@ export const useContractRead = <
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (!skip) return
+    if (skip) return
     read()
     return cancelQuery
   }, [cacheBuster, cancelQuery, skip])
