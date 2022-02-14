@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.12
+
+### Patch Changes
+
+- [`566b47f`](https://github.com/tmm/wagmi/commit/566b47f53c80e1cdcc368d43c53b1772eeb5be20) Thanks [@tmm](https://github.com/tmm)! - fix contract read skip option
+
 ## 0.2.11
 
 ### Patch Changes
