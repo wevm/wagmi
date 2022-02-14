@@ -11,7 +11,7 @@ const FEEDBACK_LINK_WITH_TRANSLATIONS = {
 }
 
 export default {
-  docsRepositoryBase: `${github}/tree/main/docs`,
+  docsRepositoryBase: `${github}/tree/main/docs/pages`,
   feedbackLabels: 'feedback',
   feedbackLink: () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -31,15 +31,11 @@ export default {
         <meta httpEquiv="Content-Language" content="en" />
         <meta
           name="description"
-          content={
-            meta.description || 'wagmi is a React Hooks library for Ethereum.'
-          }
+          content={meta.description || 'React Hooks library for Ethereum.'}
         />
         <meta
           name="og:description"
-          content={
-            meta.description || 'wagmi is a React Hooks library for Ethereum.'
-          }
+          content={meta.description || 'React Hooks library for Ethereum.'}
         />
         <meta
           name="og:title"

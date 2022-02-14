@@ -31,20 +31,21 @@ export const WalletSelector = ({ onError, onSuccess }: Props) => {
 
   return (
     <Stack space="4">
-      {connectors.map((x) => (
-        <Button
-          width="full"
-          variant="tertiary"
-          center
-          loading={loading && x.name === connector?.name}
-          disabled={isMounted ? !x.ready : false}
-          key={x.id}
-          onClick={() => handleConnect(x)}
-        >
-          {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
-          {isMounted ? !x.ready && ' (unsupported)' : ''}
-        </Button>
-      ))}
+      {connectors
+        .filter((x) => x.ready)
+        .map((x) => (
+          <Button
+            width="full"
+            variant="tertiary"
+            center
+            loading={loading && x.name === connector?.name}
+            disabled={isMounted ? !x.ready : false}
+            key={x.id}
+            onClick={() => handleConnect(x)}
+          >
+            {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
+          </Button>
+        ))}
 
       {error && (
         <Text color="red">{error?.message ?? 'Failed to connect'}</Text>
