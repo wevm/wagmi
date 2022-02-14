@@ -1,14 +1,14 @@
 import { wallets } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
-import { useEnsLookup } from './useEnsLookup'
+import { useEnsResolveName } from './useEnsResolveName'
 
-describe('useEnsLookup', () => {
+describe('useEnsResolveName', () => {
   describe('on mount', () => {
     it('has ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsLookup({
-          address: wallets.ethers3.address,
+        useEnsResolveName({
+          name: wallets.ethers3.ensName,
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -21,7 +21,7 @@ describe('useEnsLookup', () => {
       await waitForNextUpdate()
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
-          "data": "meagher.eth",
+          "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
           "error": undefined,
           "loading": false,
         }
@@ -30,8 +30,8 @@ describe('useEnsLookup', () => {
 
     it('does not have ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsLookup({
-          address: wallets.ethers2.address,
+        useEnsResolveName({
+          name: 'foo.eth',
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -53,8 +53,8 @@ describe('useEnsLookup', () => {
 
     it('has error', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsLookup({
-          address: 'meagher.eth',
+        useEnsResolveName({
+          name: '0x',
         }),
       )
       expect(result.current[0]).toMatchInlineSnapshot(`
@@ -68,7 +68,7 @@ describe('useEnsLookup', () => {
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": [Error: invalid address (argument="address", value="meagher.eth", code=INVALID_ARGUMENT, version=address/5.5.0)],
+          "error": [Error: invalid address (argument="address", value="0x", code=INVALID_ARGUMENT, version=address/5.5.0)],
           "loading": false,
         }
       `)
@@ -76,7 +76,7 @@ describe('useEnsLookup', () => {
   })
 
   it('skip', async () => {
-    const { result } = renderHook(() => useEnsLookup({ skip: true }))
+    const { result } = renderHook(() => useEnsResolveName({ skip: true }))
     expect(result.current[0]).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -86,11 +86,11 @@ describe('useEnsLookup', () => {
     `)
   })
 
-  describe('lookupAddress', () => {
+  describe('resolveName', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
-        useEnsLookup({
-          address: wallets.ethers3.address,
+        useEnsResolveName({
+          name: wallets.ethers3.ensName,
           skip: true,
         }),
       )
@@ -98,7 +98,7 @@ describe('useEnsLookup', () => {
         const res = await result.current[1]()
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": "meagher.eth",
+            "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
             "error": undefined,
           }
         `)
@@ -106,14 +106,14 @@ describe('useEnsLookup', () => {
     })
 
     it('uses params', async () => {
-      const { result } = renderHook(() => useEnsLookup({ skip: true }))
+      const { result } = renderHook(() => useEnsResolveName({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]({
-          address: wallets.ethers3.address,
+          name: wallets.ethers3.ensName,
         })
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": "meagher.eth",
+            "data": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
             "error": undefined,
           }
         `)
@@ -121,13 +121,13 @@ describe('useEnsLookup', () => {
     })
 
     it('has error', async () => {
-      const { result } = renderHook(() => useEnsLookup({ skip: true }))
+      const { result } = renderHook(() => useEnsResolveName({ skip: true }))
       await actHook(async () => {
         const res = await result.current[1]()
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: address is required],
+            "error": [Error: name is required],
           }
         `)
       })

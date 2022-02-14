@@ -20,6 +20,7 @@ export {
   useContractWrite,
   useEnsAvatar,
   useEnsLookup,
+  useEnsResolveName,
   useEnsResolver,
   useFeeData,
   useNetwork,

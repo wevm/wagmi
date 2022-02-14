@@ -4,14 +4,14 @@ import { useProvider } from '../providers'
 import { useCacheBuster, useCancel } from '../utils'
 
 type Config = {
-  /** Address to look up */
-  address?: string
+  /** Name to look up */
+  name?: string
   /** Disables fetching */
   skip?: boolean
 }
 
 type State = {
-  ens?: string | null
+  address?: string | null
   error?: Error
   loading: boolean
 }
@@ -20,29 +20,29 @@ const initialState: State = {
   loading: false,
 }
 
-export const useEnsLookup = ({ address, skip }: Config = {}) => {
+export const useEnsResolveName = ({ name, skip }: Config = {}) => {
   const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 
   const cancelQuery = useCancel()
-  const lookupAddress = React.useCallback(
-    async (config?: { address: string }) => {
+  const resolveName = React.useCallback(
+    async (config?: { name: string }) => {
       let didCancel = false
       cancelQuery(() => {
         didCancel = true
       })
 
       try {
-        const config_ = config ?? { address }
-        if (!config_.address) throw new Error('address is required')
+        const config_ = config ?? { name }
+        if (!config_.name) throw new Error('name is required')
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const ens = await provider.lookupAddress(config_.address)
+        const address = await provider.resolveName(config_.name)
         if (!didCancel) {
-          setState((x) => ({ ...x, ens, loading: false }))
+          setState((x) => ({ ...x, address, loading: false }))
         }
-        return { data: ens, error: undefined }
+        return { data: address, error: undefined }
       } catch (error_) {
         const error = <Error>error_
         if (!didCancel) {
@@ -51,20 +51,20 @@ export const useEnsLookup = ({ address, skip }: Config = {}) => {
         return { data: undefined, error }
       }
     },
-    [address, cancelQuery, provider],
+    [name, cancelQuery, provider],
   )
 
   // Resolve name when deps or chain changes
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (skip || !address) return
-    lookupAddress({ address })
+    if (skip || !name) return
+    resolveName({ name })
     return cancelQuery
-  }, [address, cacheBuster, cancelQuery, skip])
+  }, [name, cacheBuster, cancelQuery, skip])
   /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
-    { data: state.ens, loading: state.loading, error: state.error },
-    lookupAddress,
+    { data: state.address, loading: state.loading, error: state.error },
+    resolveName,
   ] as const
 }

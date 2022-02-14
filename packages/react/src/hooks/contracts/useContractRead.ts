@@ -5,7 +5,7 @@ import { Result } from 'ethers/lib/utils'
 import { useBlockNumber } from '../network-status'
 import { useProvider } from '../providers'
 import { Config as UseContractConfig, useContract } from './useContract'
-import { useCancel } from '../utils'
+import { useCacheBuster, useCancel } from '../utils'
 
 type Config = {
   /** Arguments to pass contract method */
@@ -34,6 +34,7 @@ export const useContractRead = <
   functionName: string,
   { args, overrides, skip, watch }: Config = {},
 ) => {
+  const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const contract = useContract<Contract>({
     signerOrProvider: provider,
@@ -86,18 +87,22 @@ export const useContractRead = <
     [args, cancelQuery, contract, functionName, overrides],
   )
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!skip) return
     read()
     return cancelQuery
-  }, [cancelQuery, read, skip])
+  }, [cacheBuster, cancelQuery, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (!watch) return
     if (!blockNumber) return
     read()
     return cancelQuery
-  }, [blockNumber, cancelQuery, read, watch])
+  }, [blockNumber, cancelQuery, watch])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
     {

@@ -56,11 +56,13 @@ export const useEnsResolver = ({ name, skip }: Config = {}) => {
   )
 
   // Fetch avatar when deps or chain changes
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip || !name) return
     getEnsResolver({ name })
     return cancelQuery
-  }, [cacheBuster, cancelQuery, getEnsResolver, name, skip])
+  }, [cacheBuster, cancelQuery, name, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return [
     { data: state.resolver, loading: state.loading, error: state.error },

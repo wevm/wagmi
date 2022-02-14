@@ -59,11 +59,13 @@ export const useFeeData = ({
   }, [cancelQuery, provider])
 
   // Fetch feeData on mount or when chain changes
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     if (skip) return
     getFeeData()
     return cancelQuery
-  }, [cacheBuster, cancelQuery, getFeeData, skip])
+  }, [cacheBuster, cancelQuery, skip])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   React.useEffect(() => {
     if (!watch || !blockNumber) return

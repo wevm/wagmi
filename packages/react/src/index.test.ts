@@ -17,6 +17,7 @@ it('should expose correct exports', () => {
       "useContractWrite",
       "useEnsAvatar",
       "useEnsLookup",
+      "useEnsResolveName",
       "useEnsResolver",
       "useFeeData",
       "useNetwork",
