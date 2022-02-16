@@ -166,7 +166,8 @@ Now that the connect wallet logic and API routes are set up, we can sign in the 
 
 ```tsx highlight="23-33,37-43,56,82"
 import * as React from 'react'
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount, useNetwork, useSignMessage } from 'wagmi'
+import { SiweMessage } from 'siwe';
 
 export const Example = () => {
   const [{ data: accountData }] = useAccount()
