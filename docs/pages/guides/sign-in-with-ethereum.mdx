@@ -56,8 +56,9 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req
   switch (method) {
     case 'GET':
+      req.session.nonce = generateNonce();
       res.setHeader('Content-Type', 'text/plain')
-      res.send(generateNonce())
+      res.send(req.session.nonce)
       break
     default:
       res.setHeader('Allow', ['GET'])
@@ -85,6 +86,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const { message, signature } = req.body
         const siweMessage = new SiweMessage(message)
         const fields = await siweMessage.validate(signature)
+
+        if (fields.nonce !== req.session.nonce) {
+          res.status(422).json({
+            message: `Invalid nonce.`,
+          });
+          return;
+        }
+
         req.session.siwe = fields
         await req.session.save()
         res.json({ ok: true })
