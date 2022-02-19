@@ -49,6 +49,7 @@ First, create an API route for generating a random nonce. This is used to identi
 ```ts highlight='11'
 # pages/api/nonce.ts
 
+import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { generateNonce } from 'siwe'
 
@@ -67,7 +68,7 @@ const handler = (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default handler
+export default withIronSessionApiRoute(handler, ironOptions)
 ```
 
 Next, add an API route for verifying a SIWE message and creating the user session.
