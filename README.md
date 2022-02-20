@@ -87,13 +87,16 @@ Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/c
 
 ## Community
 
-Feel free to join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb)!
+- Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
+- Follow [@awkweb](https://twitter.com/awkweb) on Twitter for future project updates
+- Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
+- [Share your project/organization](https://github.com/tmm/wagmi/discussions/201) that uses wagmi
 
 ## Support
 
 - awkweb.eth
 - [GitHub Sponsors](https://github.com/sponsors/tmm)
-- Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
+- [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
 
 ## Thanks
 
