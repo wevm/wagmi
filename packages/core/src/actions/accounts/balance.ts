@@ -40,15 +40,15 @@ export const balanceAction = async ({
       unit,
       value,
     }
-  } else {
-    const value = await provider.getBalance(config.addressOrName)
-    const chain = chains.find((x) => x.id === provider.network.chainId)
-    return {
-      decimals: chain?.nativeCurrency?.decimals ?? 18,
-      formatted: utils.formatUnits(value, unit),
-      symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
-      unit,
-      value,
-    }
+  }
+
+  const value = await provider.getBalance(config.addressOrName)
+  const chain = chains.find((x) => x.id === provider.network.chainId)
+  return {
+    decimals: chain?.nativeCurrency?.decimals ?? 18,
+    formatted: utils.formatUnits(value, unit),
+    symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
+    unit,
+    value,
   }
 }

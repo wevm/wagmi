@@ -17,7 +17,7 @@ export type Config = {
   skip?: boolean
   /** Subscribe to changes */
   watch?: boolean
-} & BalanceActionArgs['config']
+} & Partial<BalanceActionArgs['config']>
 
 type State = {
   balance?: {
@@ -76,7 +76,7 @@ export const useBalance = ({
             ...defaultChains,
             ...defaultL2Chains,
           ],
-          config: config_,
+          config: <BalanceActionArgs['config']>config_,
           provider,
         })
         if (!didCancel) setState((x) => ({ ...x, balance, loading: false }))
