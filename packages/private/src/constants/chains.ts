@@ -169,7 +169,7 @@ export const chain: Record<ChainName, Chain> = {
     name: 'Rinkeby Arbitrum',
     nativeCurrency: {
       name: 'Rinkeby ArbEther',
-      symbol: 'rinkArbETH',
+      symbol: 'ARETH',
       decimals: 18,
     },
     rpcUrls: ['https://rinkeby.arbitrum.io/rpc'],
@@ -214,7 +214,7 @@ export const chain: Record<ChainName, Chain> = {
   },
   hardhat: {
     id: 31_337,
-    name: 'hardhat',
+    name: 'Hardhat',
     rpcUrls: ['http://127.0.0.1:8545'],
   },
 }
