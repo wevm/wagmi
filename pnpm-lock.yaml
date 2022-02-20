@@ -236,38 +236,38 @@ importers:
       '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
-      '@wagmi/core': 0.1.10
-      '@wagmi/testing': 0.1.10
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       react: ^17.0.0
+      wagmi-core: 0.1.10
+      wagmi-testing: 0.1.10
       walletlink: ^2.2.8
     dependencies:
       '@ethersproject/providers': 5.5.1
-      '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.1
+      wagmi-core: link:../core
       walletlink: 2.3.0_@babel+core@7.16.5
     devDependencies:
       '@testing-library/react-hooks': 7.0.2_react@17.0.2
       '@types/react': 17.0.37
-      '@wagmi/testing': link:../testing
       ethers: 5.5.2
       react: 17.0.2
+      wagmi-testing: link:../testing
 
   packages/testing:
     specifiers:
       '@ethersproject/providers': ^5.5.1
-      '@wagmi/core': 0.1.10
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
       msw: ^0.36.3
       ts-pattern: ^3.3.4
+      wagmi-core: 0.1.10
     dependencies:
       '@ethersproject/providers': 5.5.1
-      '@wagmi/core': link:../core
       eventemitter3: 4.0.7
       msw: 0.36.3
       ts-pattern: 3.3.4
+      wagmi-core: link:../core
     devDependencies:
       ethers: 5.5.2
 

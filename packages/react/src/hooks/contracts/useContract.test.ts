@@ -1,7 +1,7 @@
 import { Signer, providers } from 'ethers'
 import { Provider } from '@ethersproject/providers'
-import { erc20ABI } from '@wagmi/core'
-import { contracts, infuraApiKey } from '@wagmi/testing'
+import { erc20ABI } from 'wagmi-core'
+import { contracts, infuraApiKey } from 'wagmi-testing'
 
 import { renderHook } from '../../../test'
 import { useContract } from './useContract'

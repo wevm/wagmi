@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { BigNumberish, utils } from 'ethers'
 import { FeeData } from '@ethersproject/providers'
-import { Unit } from '@wagmi/core'
+import { Unit } from 'wagmi-core'
 
 import { useProvider } from '../providers'
 import { useCacheBuster, useCancel } from '../utils'

@@ -1,5 +1,5 @@
-import { erc20ABI } from '@wagmi/core'
-import { contracts } from '@wagmi/testing'
+import { erc20ABI } from 'wagmi-core'
+import { contracts } from 'wagmi-testing'
 
 import { renderHook } from '../../../test'
 import { useContractEvent } from './useContractEvent'

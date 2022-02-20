@@ -51,6 +51,6 @@ export {
   ConnectorNotFoundError,
   SwitchChainError,
   UserRejectedRequestError,
-} from '@wagmi/core'
+} from 'wagmi-core'
 
-export type { Chain, ConnectorData } from '@wagmi/core'
+export type { Chain, ConnectorData } from 'wagmi-core'

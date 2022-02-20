@@ -10,7 +10,7 @@ import {
   defaultChains,
   infuraApiKey,
   wallets,
-} from '@wagmi/testing'
+} from 'wagmi-testing'
 
 import { Provider, ProviderProps } from '../src'
 

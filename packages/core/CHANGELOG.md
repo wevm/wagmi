@@ -1,4 +1,4 @@
-# @wagmi/core
+# wagmi-core
 
 ## 0.1.10
 

@@ -1,5 +1,5 @@
 {
-  "name": "@wagmi/core",
+  "name": "wagmi-core",
   "license": "MIT",
   "version": "0.1.10",
   "ethereum": "awkweb.eth",

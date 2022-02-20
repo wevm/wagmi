@@ -1,4 +1,4 @@
-# @wagmi/testing
+# wagmi-testing
 
 ## 0.1.10
 
@@ -7,7 +7,7 @@
 - [#192](https://github.com/tmm/wagmi/pull/192) [`428cedb`](https://github.com/tmm/wagmi/commit/428cedb3dec4e3e4b9f4559c8e65932e05f94e05) Thanks [@tmm](https://github.com/tmm)! - rename core and testing packages
 
 - Updated dependencies [[`428cedb`](https://github.com/tmm/wagmi/commit/428cedb3dec4e3e4b9f4559c8e65932e05f94e05)]:
-  - @wagmi/core@0.1.10
+  - wagmi-core@0.1.10
 
 ## 0.1.9
 
