@@ -1,7 +1,7 @@
 {
   "name": "wagmi-core",
   "license": "MIT",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "sideEffects": false,
