@@ -1,5 +1,11 @@
 # wagmi-private
 
+## 0.1.9
+
+### Patch Changes
+
+- [#190](https://github.com/tmm/wagmi/pull/190) [`7034bb8`](https://github.com/tmm/wagmi/commit/7034bb868412b9f481b206371280e84c2d52706d) Thanks [@tmm](https://github.com/tmm)! - add shim for metamask chain changed to prevent disconnect
+
 ## 0.1.8
 
 ### Patch Changes
