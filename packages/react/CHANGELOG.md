@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.2.15
+
+### Patch Changes
+
+- [#195](https://github.com/tmm/wagmi/pull/195) [`25b6083`](https://github.com/tmm/wagmi/commit/25b6083a662a0236794d1765343467691421c14b) Thanks [@tmm](https://github.com/tmm)! - rename wagmi-private to wagmi-core
+
+- Updated dependencies [[`25b6083`](https://github.com/tmm/wagmi/commit/25b6083a662a0236794d1765343467691421c14b)]:
+  - wagmi-core@0.1.11
+
 ## 0.2.14
 
 ### Patch Changes
