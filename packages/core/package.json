@@ -54,6 +54,7 @@
   "devDependencies": {
     "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
+    "wagmi-testing": "0.1.11",
     "walletlink": "^2.2.8"
   }
 }

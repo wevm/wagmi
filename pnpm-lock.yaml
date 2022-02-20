@@ -222,6 +222,7 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
+      wagmi-testing: 0.1.11
       walletlink: ^2.2.8
     dependencies:
       '@ethersproject/providers': 5.5.1
@@ -229,6 +230,7 @@ importers:
     devDependencies:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: 5.5.2
+      wagmi-testing: link:../testing
       walletlink: 2.3.0_@babel+core@7.16.5
 
   packages/react:

@@ -75,6 +75,7 @@ describe('useBalance', () => {
               "decimals": 18,
               "formatted": "0.193861344139087225",
               "symbol": "ETH",
+              "unit": "ether",
               "value": {
                 "hex": "0x02b0bbdd89170d79",
                 "type": "BigNumber",
@@ -104,6 +105,7 @@ describe('useBalance', () => {
               "decimals": 18,
               "formatted": "0.193861344139087225",
               "symbol": "ETH",
+              "unit": "ether",
               "value": {
                 "hex": "0x02b0bbdd89170d79",
                 "type": "BigNumber",
