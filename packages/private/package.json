@@ -1,7 +1,7 @@
 {
   "name": "wagmi-private",
   "license": "MIT",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "sideEffects": false,
