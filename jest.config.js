@@ -23,6 +23,7 @@ module.exports = {
     {
       ...config,
       displayName: 'core',
+      setupFilesAfterEnv: ['<rootDir>/packages/core/test/setup.ts'],
       testEnvironment: 'node',
       testRegex: 'packages/core/.*\\.test\\.ts$',
     },

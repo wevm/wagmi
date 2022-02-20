@@ -1,6 +1,9 @@
 export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
 
+export type { BalanceActionArgs, BalanceActionResult } from './actions'
+export { balanceAction } from './actions'
+
 export {
   erc1155ABI,
   erc20ABI,
@@ -22,6 +25,6 @@ export {
   UserRejectedRequestError,
 } from './errors'
 
-export type { Chain, Unit } from './types'
+export type { Balance, Chain, Unit } from './types'
 
 export { normalizeChainId } from './utils'

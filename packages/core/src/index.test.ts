@@ -5,6 +5,7 @@ it('should expose correct exports', () => {
     [
       "Connector",
       "InjectedConnector",
+      "balanceAction",
       "erc1155ABI",
       "erc20ABI",
       "erc721ABI",

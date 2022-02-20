@@ -1,5 +1,17 @@
+import { BigNumber } from 'ethers'
+
 import { units } from '../constants'
 import './declarations'
+
+export type { WithProvider } from './actions'
+
+export type Balance = {
+  decimals: number
+  formatted: string
+  symbol: string
+  unit: Unit | number
+  value: BigNumber
+}
 
 export type Chain = {
   id: number
