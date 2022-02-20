@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Chain, SwitchChainError, allChains } from 'wagmi-private'
+import { Chain, SwitchChainError, allChains } from '@wagmi/core'
 
 import { useContext } from '../../context'
 import { useCancel } from '../utils'

@@ -1,4 +1,4 @@
-export { defaultChains } from 'wagmi-private'
+export { defaultChains } from '@wagmi/core'
 
 export { MockConnector } from './connectors'
 

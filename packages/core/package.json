@@ -1,25 +1,25 @@
 {
-  "name": "wagmi-private",
+  "name": "@wagmi/core",
   "license": "MIT",
   "version": "0.1.9",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "sideEffects": false,
-  "main": "dist/wagmi-private.cjs.js",
-  "module": "dist/wagmi-private.esm.js",
+  "main": "dist/wagmi-core.cjs.js",
+  "module": "dist/wagmi-core.esm.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/wagmi-private.esm.js",
-      "default": "./dist/wagmi-private.cjs.js"
+      "module": "./dist/wagmi-core.esm.js",
+      "default": "./dist/wagmi-core.cjs.js"
     },
     "./connectors/walletConnect": {
-      "module": "./connectors/walletConnect/dist/wagmi-private-connectors-walletConnect.esm.js",
-      "default": "./connectors/walletConnect/dist/wagmi-private-connectors-walletConnect.cjs.js"
+      "module": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
+      "default": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js"
     },
     "./connectors/walletLink": {
-      "module": "./connectors/walletLink/dist/wagmi-private-connectors-walletLink.esm.js",
-      "default": "./connectors/walletLink/dist/wagmi-private-connectors-walletLink.cjs.js"
+      "module": "./connectors/walletLink/dist/wagmi-core-connectors-walletLink.esm.js",
+      "default": "./connectors/walletLink/dist/wagmi-core-connectors-walletLink.cjs.js"
     }
   },
   "files": [

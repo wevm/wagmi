@@ -1,1 +1,1 @@
-export { WalletConnectConnector } from 'wagmi-private/connectors/walletConnect'
+export { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'

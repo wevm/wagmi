@@ -1,4 +1,4 @@
-import { wallets } from 'wagmi-testing'
+import { wallets } from '@wagmi/testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useEnsResolver } from './useEnsResolver'

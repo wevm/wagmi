@@ -1,1 +1,1 @@
-export { InjectedConnector } from 'wagmi-private'
+export { InjectedConnector } from '@wagmi/core'

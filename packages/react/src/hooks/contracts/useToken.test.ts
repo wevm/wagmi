@@ -1,4 +1,4 @@
-import { contracts } from 'wagmi-testing'
+import { contracts } from '@wagmi/testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from '../accounts'

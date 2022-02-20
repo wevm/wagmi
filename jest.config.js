@@ -22,9 +22,9 @@ module.exports = {
   projects: [
     {
       ...config,
-      displayName: 'private',
+      displayName: 'core',
       testEnvironment: 'node',
-      testRegex: 'packages/private/.*\\.test\\.ts$',
+      testRegex: 'packages/core/.*\\.test\\.ts$',
     },
     {
       ...config,

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Bytes } from 'ethers/lib/utils'
-import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
+import { ConnectorNotFoundError, UserRejectedRequestError } from '@wagmi/core'
 
 import { useContext } from '../../context'
 import { useCancel } from '../utils'

@@ -3,7 +3,7 @@ import {
   Connector,
   ConnectorAlreadyConnectedError,
   ConnectorData,
-} from 'wagmi-private'
+} from '@wagmi/core'
 
 import { useContext } from '../../context'
 import { useCancel } from '../utils'
