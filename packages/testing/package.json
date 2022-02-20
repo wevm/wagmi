@@ -2,7 +2,7 @@
   "name": "@wagmi/testing",
   "description": "Testing utils for wagmi",
   "license": "MIT",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "sideEffects": false,
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
-    "@wagmi/core": "0.1.9",
+    "@wagmi/core": "0.1.10",
     "eventemitter3": "^4.0.7",
     "msw": "^0.36.3",
     "ts-pattern": "^3.3.4"

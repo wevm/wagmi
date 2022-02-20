@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.1.10
+
+### Patch Changes
+
+- [#192](https://github.com/tmm/wagmi/pull/192) [`428cedb`](https://github.com/tmm/wagmi/commit/428cedb3dec4e3e4b9f4559c8e65932e05f94e05) Thanks [@tmm](https://github.com/tmm)! - rename core and testing packages
+
 ## 0.1.9
 
 ### Patch Changes
