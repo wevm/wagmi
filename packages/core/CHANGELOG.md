@@ -1,4 +1,4 @@
-# wagmi-private
+# @wagmi/core
 
 ## 0.1.9
 

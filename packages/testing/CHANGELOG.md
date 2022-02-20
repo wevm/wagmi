@@ -1,4 +1,4 @@
-# wagmi-testing
+# @wagmi/testing
 
 ## 0.1.9
 

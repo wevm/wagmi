@@ -1,4 +1,4 @@
-import { MockConnector, defaultChains, wallets } from 'wagmi-testing'
+import { MockConnector, defaultChains, wallets } from '@wagmi/testing'
 
 import { actHook, renderHook, wrapper } from '../../../test'
 import { useConnect } from './useConnect'

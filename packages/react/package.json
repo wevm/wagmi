@@ -46,17 +46,17 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
+    "@wagmi/core": "0.1.9",
     "@walletconnect/ethereum-provider": "1.7.1",
-    "wagmi-private": "0.1.9",
     "walletlink": "^2.2.8"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^7.0.2",
     "@types/react": "^17.0.0",
+    "@wagmi/testing": "0.1.9",
     "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
     "react": "^17.0.0",
-    "walletlink": "^2.2.8",
-    "wagmi-testing": "0.1.9"
+    "walletlink": "^2.2.8"
   }
 }
