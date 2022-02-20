@@ -1,3 +1,4 @@
 export { Account } from './Account'
+export { SiweButton } from './SiweButton'
 export { WalletSelector } from './WalletSelector'
-export { SignInWithEthereumButton } from './SignInWithEthereumButton'
+export { WalletSelectorWithSiwe } from './WalletSelectorWithSiwe'

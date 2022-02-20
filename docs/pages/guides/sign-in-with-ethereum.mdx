@@ -277,3 +277,41 @@ export const Example = () => {
 ## Wrap Up
 
 That's it! You now have a way for users to securely sign in to an app using Ethereum wallets. You can start building rich web apps that use persistent user sessions while still letting users control their login identity (and so much more). Check out the [Sign-In with Ethereum](https://login.xyz) website for more info.
+
+### Combine "Connect Wallet" and "Sign & Verify Message" Steps
+
+This guide splits SIWE into two steps: Connect wallet and sign SIWE message. If you want to combine both steps, sign and verify the SIWE message using the connector, immediately after connecting.
+
+```ts
+try {
+  const res = await connect(connector) // connect from useConnect
+  if (!res.data) throw res.error ?? new Error('Something went wrong')
+
+  const nonceRes = await fetch('/api/nonce')
+  const message = new SiweMessage({
+    domain: window.location.host,
+    address: res.data.account,
+    statement: 'Sign in with Ethereum to the app.',
+    uri: window.location.origin,
+    version: '1',
+    chainId: res.data.chain?.id,
+    nonce: await nonceRes.text(),
+  })
+
+  const signer = await connector.getSigner()
+  const signature = await signer.signMessage(message.prepareMessage())
+
+  const verifyRes = await fetch('/api/verify', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ message, signature }),
+  })
+  if (!verifyRes.ok) throw new Error('Error verifying message')
+
+  // It worked! User is signed in with Ethereum
+} catch (error) {
+  // Do something with the error
+}
+```

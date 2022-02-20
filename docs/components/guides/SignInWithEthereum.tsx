@@ -3,7 +3,7 @@ import { Box, Button, Skeleton, Stack } from 'degen'
 import { chain, useAccount, useNetwork } from 'wagmi'
 
 import { PreviewWrapper } from '../core'
-import { Account, SignInWithEthereumButton, WalletSelector } from '../web3'
+import { Account, SiweButton, WalletSelector } from '../web3'
 import { formatAddress } from '../../lib/address'
 
 export const SignInWithEthereum = () => {
@@ -56,7 +56,7 @@ export const SignInWithEthereum = () => {
             signedInContent
           ) : (
             <Skeleton loading={state.loading} width="full" radius="2xLarge">
-              <SignInWithEthereumButton
+              <SiweButton
                 address={accountData.address}
                 chainId={networkData.chain?.id ?? chain.mainnet.id}
                 onSuccess={({ address }) =>

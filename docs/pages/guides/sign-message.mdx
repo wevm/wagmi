@@ -6,7 +6,11 @@ Signing messages is a great way to securely prove control of a specific address.
 
 <SignMessage />
 
-## Step 1: Add SignMessage Component
+## Step 1: Connect Wallet
+
+Follow the [Connect Wallet](/guides/connect-wallet#step-1-configuring-connectors) guide to get this set up.
+
+## Step 2: Add SignMessage Component
 
 Add the `useSignMessage` hook and set up a basic form:
 
@@ -54,7 +58,7 @@ export const SignMessage = () => {
 }
 ```
 
-## Step 2: Add To App
+## Step 3: Add To App
 
 Import the `SignMessage` component and display it when the account is connected.
 

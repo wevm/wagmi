@@ -29,19 +29,15 @@
 
 **React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).**
 
-🚀 &nbsp; 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
+## Features
 
-💼 &nbsp; Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
-
-🌀 &nbsp; Auto-refresh data on wallet and network changes
-
-🦄 &nbsp; TypeScript ready
-
-💨 &nbsp; Zero-dependencies (besides ethers.js peer dependency)
-
-🌳 &nbsp; Test suite and documentation
-
-📖 &nbsp; MIT License
+- 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
+- 💼 Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
+- 🌀 Auto-refresh data on wallet and network changes
+- 🦄 TypeScript ready
+- 💨 Zero-dependencies (besides ethers.js peer dependency)
+- 🌳 Test suite and documentation
+- 📖 MIT License
 
 ## Documentation
 
@@ -88,9 +84,9 @@ Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/c
 ## Community
 
 - Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
-- Follow [@awkweb](https://twitter.com/awkweb) on Twitter for future project updates
+- Follow [@awkweb](https://twitter.com/awkweb) on Twitter for project updates
 - Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
-- [Share your project/organization](https://github.com/tmm/wagmi/discussions/201) that uses wagmi
+- Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) that uses wagmi
 
 ## Support
 

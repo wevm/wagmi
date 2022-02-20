@@ -9,11 +9,7 @@ type Props = {
   onSuccess?(data: { address: string }): void
 }
 
-export const SignInWithEthereumButton = ({
-  address,
-  chainId,
-  onSuccess,
-}: Props) => {
+export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
   const [state, setState] = React.useState<{
     error?: Error
     loading?: boolean
