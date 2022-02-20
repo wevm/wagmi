@@ -3,7 +3,7 @@ import {
   TransactionRequest,
   TransactionResponse,
 } from '@ethersproject/providers'
-import { ConnectorNotFoundError, UserRejectedRequestError } from '@wagmi/core'
+import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-core'
 
 import { useContext } from '../../context'
 import { useCancel } from '../utils'

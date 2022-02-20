@@ -1,5 +1,5 @@
 import { ethers } from 'ethers'
-import { defaultChains } from '@wagmi/core'
+import { defaultChains } from 'wagmi-core'
 
 import { contracts, wallets } from '../constants'
 import { MockConnector } from './mockConnector'

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
-import { Unit, defaultChains, defaultL2Chains, erc20ABI } from '@wagmi/core'
+import { Unit, defaultChains, defaultL2Chains, erc20ABI } from 'wagmi-core'
 
 import { useContext } from '../../context'
 import { useProvider } from '../providers'

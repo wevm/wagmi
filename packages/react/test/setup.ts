@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 
-import { server } from '@wagmi/testing'
+import { server } from 'wagmi-testing'
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen())
