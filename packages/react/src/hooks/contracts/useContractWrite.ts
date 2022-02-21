@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { CallOverrides, ethers } from 'ethers'
 import { TransactionResponse } from '@ethersproject/providers'
-import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-private'
+import { ConnectorNotFoundError, UserRejectedRequestError } from '@wagmi/core'
 
 import { useContext } from '../../context'
 import { Config as UseContractConfig, useContract } from './useContract'

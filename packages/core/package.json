@@ -1,0 +1,66 @@
+{
+  "name": "@wagmi/core",
+  "license": "MIT",
+  "version": "0.1.7",
+  "ethereum": "awkweb.eth",
+  "sideEffects": false,
+  "main": "dist/wagmi-core.cjs.js",
+  "module": "dist/wagmi-core.esm.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "module": "./dist/wagmi-core.esm.js",
+      "default": "./dist/wagmi-core.cjs.js"
+    },
+    "./connectors/walletConnect": {
+      "module": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
+      "default": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js"
+    },
+    "./connectors/walletLink": {
+      "module": "./connectors/walletLink/dist/wagmi-core-connectors-walletLink.esm.js",
+      "default": "./connectors/walletLink/dist/wagmi-core-connectors-walletLink.cjs.js"
+    },
+    "./connectors/injected": {
+      "module": "./connectors/injected/dist/wagmi-core-connectors-injected.esm.js",
+      "default": "./connectors/injected/dist/wagmi-core-connectors-injected.cjs.js"
+    }
+  },
+  "files": [
+    "/dist",
+    "/connectors/walletConnect/",
+    "/connectors/walletLink/",
+    "/connectors/injected/"
+  ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "connectors/walletConnect.ts",
+      "connectors/walletLink.ts",
+      "connectors/injected.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@walletconnect/ethereum-provider": "1.7.1",
+    "ethers": "^5.5.1",
+    "walletlink": "^2.2.8"
+  },
+  "peerDependenciesMeta": {
+    "@walletconnect/ethereum-provider": {
+      "optional": true
+    },
+    "walletlink": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@ethersproject/providers": "^5.5.1",
+    "eventemitter3": "^4.0.7",
+    "valtio": "^1.3.0"
+  },
+  "devDependencies": {
+    "@walletconnect/ethereum-provider": "1.7.1",
+    "ethers": "^5.5.1",
+    "wagmi-testing": "0.1.7",
+    "walletlink": "^2.2.8"
+  }
+}

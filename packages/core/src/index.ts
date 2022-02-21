@@ -2,6 +2,15 @@ export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorEvents, Data } from './connectors'
 
 export {
+  connect,
+  disconnect,
+  getAccount,
+  watchAccount,
+  getNetwork,
+  watchNetwork,
+} from './actions'
+
+export {
   erc1155ABI,
   erc20ABI,
   erc721ABI,
@@ -20,6 +29,8 @@ export {
   SwitchChainError,
   UserRejectedRequestError,
 } from './errors'
+
+export { createWagmiClient } from './client'
 
 export type { Chain, Unit } from './types'
 

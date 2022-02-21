@@ -60,7 +60,7 @@ export abstract class Connector<
 
   protected abstract onAccountsChanged(accounts: string[]): void
   protected abstract onChainChanged(chain: number | string): void
-  protected abstract onDisconnect(): void
+  protected abstract onDisconnect(error: Error): void
 
   protected isChainUnsupported(chainId: number) {
     return !this.chains.some((x) => x.id === chainId)

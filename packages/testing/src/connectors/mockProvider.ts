@@ -1,6 +1,6 @@
 import { default as EventEmitter } from 'eventemitter3'
 import { ethers } from 'ethers'
-import { UserRejectedRequestError } from 'wagmi-private'
+import { UserRejectedRequestError } from '@wagmi/core'
 import { getAddress } from 'ethers/lib/utils'
 
 export type MockProviderOptions = {

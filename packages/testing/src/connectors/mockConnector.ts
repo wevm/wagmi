@@ -5,7 +5,7 @@ import {
   allChains,
   defaultChains,
   normalizeChainId,
-} from 'wagmi-private'
+} from '@wagmi/core'
 
 import { wallets } from '../constants'
 import { MockProvider, MockProviderOptions } from './mockProvider'

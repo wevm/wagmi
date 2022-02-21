@@ -36,8 +36,8 @@ export {
   erc20ABI,
   erc721ABI,
   normalizeChainId,
-} from 'wagmi-private'
+} from '@wagmi/core'
 
 export { Context } from './context'
 
-export type { Chain, Data } from 'wagmi-private'
+export type { Chain, Data } from '@wagmi/core'

@@ -1,0 +1,6 @@
+export { connect } from './connect'
+export { disconnect } from './disconnect'
+export { getAccount } from './getAccount'
+export { getNetwork } from './getNetwork'
+export { watchAccount } from './watchAccount'
+export { watchNetwork } from './watchNetwork'

@@ -5,6 +5,12 @@ it('should expose correct exports', () => {
     [
       "Connector",
       "InjectedConnector",
+      "connect",
+      "disconnect",
+      "getAccount",
+      "watchAccount",
+      "getNetwork",
+      "watchNetwork",
       "erc1155ABI",
       "erc20ABI",
       "erc721ABI",
@@ -19,6 +25,7 @@ it('should expose correct exports', () => {
       "ConnectorNotFoundError",
       "SwitchChainError",
       "UserRejectedRequestError",
+      "createWagmiClient",
       "normalizeChainId",
     ]
   `)

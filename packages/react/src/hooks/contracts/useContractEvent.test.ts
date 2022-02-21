@@ -1,4 +1,4 @@
-import { erc20ABI } from 'wagmi-private'
+import { erc20ABI } from '@wagmi/core'
 import { contracts } from 'wagmi-testing'
 
 import { renderHook } from '../../../test'
