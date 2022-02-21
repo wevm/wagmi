@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { blockNumberAction } from 'wagmi-core'
 
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useCacheBuster, useCancel } from '../utils'
@@ -34,7 +35,7 @@ export const useBlockNumber = ({ skip, watch }: Config = {}) => {
     })
     try {
       setState((x) => ({ ...x, error: undefined, loading: true }))
-      const blockNumber = await provider.getBlockNumber()
+      const blockNumber = await blockNumberAction({ provider })
       if (!didCancel) {
         setState((x) => ({ ...x, blockNumber, loading: false }))
       }

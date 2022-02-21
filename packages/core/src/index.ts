@@ -1,8 +1,13 @@
 export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
 
-export type { BalanceActionArgs, BalanceActionResult } from './actions'
-export { balanceAction } from './actions'
+export type {
+  BalanceActionArgs,
+  BalanceActionResult,
+  BlockNumberActionArgs,
+  BlockNumberActionResult,
+} from './actions'
+export { balanceAction, blockNumberAction } from './actions'
 
 export {
   erc1155ABI,
