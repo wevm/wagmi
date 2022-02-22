@@ -1,7 +1,13 @@
 export { balanceAction } from './balance'
 export { getAccount } from './getAccount'
+export { getNetwork } from './getNetwork'
+export { switchNetwork } from './switchNetwork'
 export { watchAccount } from './watchAccount'
+export { watchNetwork } from './watchNetwork'
 
 export type { AccountResult } from './getAccount'
 export type { BalanceActionArgs, BalanceActionResult } from './balance'
+export type { NetworkResult } from './getNetwork'
+export type { SwitchNetworkArgs } from './switchNetwork'
 export type { WatchAccountCallback } from './watchAccount'
+export type { WatchNetworkCallback } from './watchNetwork'

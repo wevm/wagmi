@@ -17,6 +17,7 @@ export const Account = () => {
           Disconnect from {accountData?.connector?.name}
         </button>
       </div>
+      <div>{accountData?.address}</div>
       {/* <div>
         {accountData?.ens?.name ?? accountData?.address}
         {accountData?.ens ? ` (${accountData?.address})` : null}
