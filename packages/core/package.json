@@ -55,7 +55,7 @@
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
     "eventemitter3": "^4.0.7",
-    "valtio": "^1.3.0"
+    "zustand": "^3.7.0"
   },
   "devDependencies": {
     "@walletconnect/ethereum-provider": "1.7.1",

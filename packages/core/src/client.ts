@@ -3,7 +3,8 @@ import {
   WebSocketProvider,
   getDefaultProvider,
 } from '@ethersproject/providers'
-import { EventEmitter } from 'eventemitter3'
+import create from 'zustand/vanilla'
+import { subscribeWithSelector } from 'zustand/middleware'
 
 import {
   InjectedConnector,
@@ -48,10 +49,14 @@ export type WagmiClientConfig = {
 
 export type Connector = TConnector
 export type Data = TData<BaseProvider>
-export type State = {
+export type Store = {
+  connecting?: boolean
   connector?: Connector
   data?: Data
   error?: Error
+  connectors?: Connector[]
+  provider?: BaseProvider
+  webSocketProvider?: WebSocketProvider
 }
 
 export type AutoConnectionChangedArgs = {
@@ -60,18 +65,10 @@ export type AutoConnectionChangedArgs = {
   connector: Connector | undefined
 }
 
-export interface ClientEvents {
-  autoConnectionChanged(data: AutoConnectionChangedArgs): void
-  stateChanged(state: State): void
-}
-
-export class WagmiClient extends EventEmitter<ClientEvents> {
+export class WagmiClient {
   config: Partial<WagmiClientConfig>
-  connectors?: Connector[]
-  provider?: BaseProvider
-  webSocketProvider?: WebSocketProvider
+  store
 
-  #state: State
   #storage?: WagmiStorage
   #lastUsedConnector?: string | null
 
@@ -84,77 +81,48 @@ export class WagmiClient extends EventEmitter<ClientEvents> {
     }),
     webSocketProvider,
   }: WagmiClientConfig) {
-    super()
-
     this.config = {
       connectors,
       provider,
       webSocketProvider,
     }
-    this.#state = {}
+    this.store = create(subscribeWithSelector<Store>(() => ({})))
 
     this.setStorage(storage)
     this.setConnectors(connectors)
     this.setProvider(provider)
     this.setWebSocketProvider(webSocketProvider)
     this.setLastUsedConnector()
+
+    this.addEffects()
   }
 
-  set connector(connector: State['connector']) {
-    const onChange = (data: Data) =>
-      this.setState((x) => ({ ...x, data: { ...x.data, ...data } }))
-    const onDisconnect = () => {
-      this.setState({})
-    }
-    const onError = (error: Error) => this.setState((x) => ({ ...x, error }))
-
-    this.#state.connector?.off('change', onChange)
-    this.#state.connector?.off('disconnect', onDisconnect)
-    this.#state.connector?.off('error', onError)
-
-    this.#state.connector = connector
-
-    this.#state.connector?.on('change', onChange)
-    this.#state.connector?.on('disconnect', onDisconnect)
-    this.#state.connector?.on('error', onError)
-
-    const { provider, webSocketProvider } = this.config
-    this.setProvider(provider)
-    this.setWebSocketProvider(webSocketProvider)
+  get connectors() {
+    return this.store.getState().connectors
   }
   get connector() {
-    return this.#state.connector
-  }
-
-  set data(data: State['data']) {
-    const prevData = this.#state.data
-    this.#state.data = data
-
-    if (prevData?.chain?.id !== data?.chain?.id) {
-      const { connectors, provider, webSocketProvider } = this.config
-      if (connectors) this.setConnectors(connectors)
-      this.setProvider(provider)
-      this.setWebSocketProvider(webSocketProvider)
-    }
+    return this.store.getState().connector
   }
   get data() {
-    return this.#state.data
-  }
-
-  set error(error: State['error']) {
-    this.#state.error = error
+    return this.store.getState().data
   }
   get error() {
-    return this.#state.error
+    return this.store.getState().error
+  }
+  get provider() {
+    return this.store.getState().provider
+  }
+  get webSocketProvider() {
+    return this.store.getState().webSocketProvider
+  }
+  get subscribe() {
+    return this.store.subscribe
   }
 
-  setState(updater: State | (({ error, data, connector }: State) => State)) {
+  setState(updater: Store | ((store: Store) => Store)) {
     const newState =
-      typeof updater === 'function' ? updater(this.#state) : updater
-    this.connector = newState.connector
-    this.data = newState.data
-    this.error = newState.error
-    this.emit('stateChanged', newState)
+      typeof updater === 'function' ? updater(this.store.getState()) : updater
+    this.store.setState(newState)
   }
 
   async autoConnect() {
@@ -165,12 +133,10 @@ export class WagmiClient extends EventEmitter<ClientEvents> {
           )
         : this.connectors
 
-      this.emit('autoConnectionChanged', {
+      this.setState((x) => ({
+        ...x,
         connecting: true,
-        data: this.data,
-        connector: this.connector,
-      })
-
+      }))
       for (const connector of sorted) {
         if (!connector.ready || !connector.isAuthorized) continue
         const isAuthorized = await connector.isAuthorized()
@@ -180,11 +146,10 @@ export class WagmiClient extends EventEmitter<ClientEvents> {
         this.setState((x) => ({ ...x, data, connector }))
         break
       }
-      this.emit('autoConnectionChanged', {
+      this.setState((x) => ({
+        ...x,
         connecting: false,
-        data: this.data,
-        connector: this.connector,
-      })
+      }))
     }
     return
   }
@@ -206,23 +171,58 @@ export class WagmiClient extends EventEmitter<ClientEvents> {
     this.setState({})
   }
 
-  private setConnectors(connectors: WagmiClientConfig['connectors']) {
-    if (typeof connectors !== 'function') {
-      this.connectors = connectors
-      return
+  private setConnectors(connectors_: WagmiClientConfig['connectors']) {
+    let connectors: Connector[] | undefined
+    if (typeof connectors_ === 'function') {
+      connectors = connectors_({ chainId: this.data?.chain?.id })
+
+      // Subscribe to changes that should update `connectors`
+      this.store.subscribe(
+        (store) => store.data?.chain?.id,
+        () => {
+          this.setState((x) => ({
+            ...x,
+            connectors: connectors_({ chainId: this.data?.chain?.id }),
+          }))
+        },
+      )
+    } else {
+      connectors = connectors_
     }
-    this.connectors = connectors({ chainId: this.data?.chain?.id })
+
+    this.setState((x) => ({ ...x, connectors }))
   }
 
-  private setProvider(provider: WagmiClientConfig['provider']) {
-    if (typeof provider !== 'function') {
-      this.provider = provider
-      return
+  private setProvider(provider_: WagmiClientConfig['provider']) {
+    let provider: BaseProvider | undefined
+    if (typeof provider_ === 'function') {
+      provider = provider_({
+        chainId: this.data?.chain?.id,
+        connector: this.connector,
+      })
+
+      // Subscribe to changes that should update `provider`
+      this.store.subscribe(
+        // @ts-expect-error TODO
+        (store) => [store.data?.chain?.id, store.connector],
+        ([chainId, connector]: [number | undefined, Connector | undefined]) => {
+          this.setState((x) => ({
+            ...x,
+            provider: provider_({
+              chainId,
+              connector,
+            }),
+          }))
+        },
+        {
+          equalityFn: ([chainId], [newChainId]) => chainId === newChainId,
+        },
+      )
+    } else {
+      provider = provider_
     }
-    this.provider = provider({
-      chainId: this.data?.chain?.id,
-      connector: this.connector,
-    })
+
+    this.setState((x) => ({ ...x, provider }))
   }
 
   private setStorage(storage: WagmiClientConfig['storage']) {
@@ -231,17 +231,60 @@ export class WagmiClient extends EventEmitter<ClientEvents> {
   }
 
   private setWebSocketProvider(
-    webSocketProvider: WagmiClientConfig['webSocketProvider'],
+    webSocketProvider_: WagmiClientConfig['webSocketProvider'],
   ) {
-    if (!webSocketProvider) return
-    if (typeof webSocketProvider !== 'function') {
-      this.webSocketProvider = webSocketProvider
-      return
+    let webSocketProvider: WebSocketProvider | undefined
+    if (typeof webSocketProvider === 'function') {
+      // @ts-expect-error TODO
+      webSocketProvider = webSocketProvider_({
+        chainId: this.data?.chain?.id,
+        connector: this.connector,
+      })
+
+      // Subscribe to changes that should update `webSocketProvider`
+      this.store.subscribe(
+        (store) => [store.data?.chain?.id, store.connector],
+        () => {
+          this.setState((x) => ({
+            ...x,
+            // @ts-expect-error TODO
+            provider: webSocketProvider_({
+              chainId: this.data?.chain?.id,
+              connector: this.connector,
+            }),
+          }))
+        },
+      )
+    } else {
+      // @ts-expect-error TODO
+      webSocketProvider = webSocketProvider_
     }
-    this.webSocketProvider = webSocketProvider({
-      chainId: this.data?.chain?.id,
-      connector: this.connector,
-    })
+
+    this.setState((x) => ({ ...x, webSocketProvider }))
+  }
+
+  private addEffects() {
+    const onChange = (data: Data) =>
+      this.setState((x) => ({
+        ...x,
+        data: { ...x.data, ...data },
+      }))
+    const onDisconnect = () => this.setState({})
+    const onError = (error: Error) => this.setState((x) => ({ ...x, error }))
+
+    this.store.subscribe(
+      (store) => store.connector,
+      (connector, prevConnector) => {
+        prevConnector?.off('change', onChange)
+        prevConnector?.off('disconnect', onDisconnect)
+        prevConnector?.off('error', onError)
+
+        if (!connector) return
+        connector.on('change', onChange)
+        connector.on('disconnect', onDisconnect)
+        connector.on('error', onError)
+      },
+    )
   }
 }
 

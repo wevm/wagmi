@@ -30,16 +30,16 @@ export const Connect = () => {
 
   React.useEffect(() => {
     // @ts-expect-error TODO
-    const handleConnectionChanged = ({ connecting, connector }) =>
+    const handleConnectionChanged = ([connecting, connector]) =>
       setState((x) => ({ ...x, loading: connecting, connector }))
 
-    wagmiClient.addListener('autoConnectionChanged', handleConnectionChanged)
-    return () => {
-      wagmiClient.removeListener(
-        'autoConnectionChanged',
-        handleConnectionChanged,
-      )
-    }
+    const unsubscribe = wagmiClient.subscribe(
+      // @ts-expect-error TODO
+      (store) => [store.connecting, store.connector],
+      handleConnectionChanged,
+    )
+
+    return unsubscribe
   }, [])
 
   return (

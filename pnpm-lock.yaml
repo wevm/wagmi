@@ -247,13 +247,13 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
-      valtio: ^1.3.0
       wagmi-testing: 0.1.7
       walletlink: ^2.2.8
+      zustand: ^3.7.0
     dependencies:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7
-      valtio: 1.3.0
+      zustand: 3.7.0
     devDependencies:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: 5.5.2
@@ -12213,10 +12213,6 @@ packages:
       ipaddr.js: 1.9.1
     dev: false
 
-  /proxy-compare/2.0.2:
-    resolution: {integrity: sha512-3qUXJBariEj3eO90M3Rgqq3+/P5Efl0t/dl9g/1uVzIQmO3M+ql4hvNH3mYdu8H+1zcKv07YvL55tsY74jmH1A==}
-    dev: false
-
   /proxy-from-env/1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: true
@@ -14554,27 +14550,6 @@ packages:
       builtins: 1.0.3
     dev: true
 
-  /valtio/1.3.0:
-    resolution: {integrity: sha512-wsE6EDIkt+CNZPNHOxNVzoi026Fyt6ZRT750etZCAvrndcdT3N7Z+SSV4kJQdCwl5gNxsnU4BhP1wFS7cu21oA==}
-    engines: {node: '>=12.7.0'}
-    peerDependencies:
-      '@babel/helper-module-imports': '>=7.12'
-      '@babel/types': '>=7.13'
-      babel-plugin-macros: '>=3.0'
-      react: '>=16.8'
-    peerDependenciesMeta:
-      '@babel/helper-module-imports':
-        optional: true
-      '@babel/types':
-        optional: true
-      babel-plugin-macros:
-        optional: true
-      react:
-        optional: true
-    dependencies:
-      proxy-compare: 2.0.2
-    dev: false
-
   /vary/1.1.2:
     resolution: {integrity: sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=}
     engines: {node: '>= 0.8'}
@@ -15112,6 +15087,16 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /zustand/3.7.0:
+    resolution: {integrity: sha512-USzVzLGrvZ8VK1/sEsOAmeqa8N7D3OBdZskVaL7DL89Q4QLTYD053iIlZ5KDidyZ+Od80Dttin/f8ZulOLFFDQ==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dev: false
 
   /zwitch/1.0.5:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
