@@ -182,7 +182,7 @@ export class WagmiClient {
 
       // Subscribe to changes that should update `connectors`
       this.store.subscribe(
-        (store) => store.data?.chain?.id,
+        ({ data }) => data?.chain?.id,
         () => {
           this.setState((x) => ({
             ...x,
@@ -207,7 +207,7 @@ export class WagmiClient {
 
       // Subscribe to changes that should update `provider`
       this.store.subscribe(
-        (store) => [store.data?.chain?.id, store.connector],
+        ({ data, connector }) => [data?.chain?.id, connector],
         () => {
           this.setState((x) => ({
             ...x,
@@ -250,7 +250,7 @@ export class WagmiClient {
 
       // Subscribe to changes that should update `webSocketProvider`
       this.store.subscribe(
-        (store) => [store.data?.chain?.id, store.connector],
+        ({ data, connector }) => [data?.chain?.id, connector],
         () => {
           this.setState((x) => ({
             ...x,
@@ -283,7 +283,7 @@ export class WagmiClient {
     const onError = (error: Error) => this.setState((x) => ({ ...x, error }))
 
     this.store.subscribe(
-      (store) => store.connector,
+      ({ connector }) => connector,
       (connector, prevConnector) => {
         prevConnector?.off('change', onChange)
         prevConnector?.off('disconnect', onDisconnect)
