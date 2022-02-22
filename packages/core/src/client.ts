@@ -9,7 +9,7 @@ import { subscribeWithSelector } from 'zustand/middleware'
 import {
   InjectedConnector,
   Connector as TConnector,
-  Data as TData,
+  ConnectorData as TData,
 } from './connectors'
 import { WagmiStorage, createStorage, noopStorage } from './utils/storage'
 
