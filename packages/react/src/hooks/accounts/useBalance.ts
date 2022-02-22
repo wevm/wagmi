@@ -5,7 +5,7 @@ import {
   balanceAction,
   defaultChains,
   defaultL2Chains,
-} from 'wagmi-core'
+} from '@wagmi/core'
 
 import { useContext } from '../../context'
 import { useProvider } from '../providers'

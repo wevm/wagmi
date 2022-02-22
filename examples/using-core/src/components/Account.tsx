@@ -1,4 +1,4 @@
-import { disconnect, getAccount, watchAccount } from 'wagmi-core'
+import { disconnect, getAccount, watchAccount } from '@wagmi/core'
 import * as React from 'react'
 
 export const Account = () => {

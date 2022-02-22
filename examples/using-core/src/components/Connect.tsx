@@ -1,4 +1,4 @@
-import { Connector, connect } from 'wagmi-core'
+import { Connector, connect } from '@wagmi/core'
 import * as React from 'react'
 
 import { useIsMounted } from '../hooks'

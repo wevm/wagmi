@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { getAccount, watchAccount } from 'wagmi-core'
+import { getAccount, watchAccount } from '@wagmi/core'
 
 import { Account, Connect, NetworkSwitcher } from '../components'
 

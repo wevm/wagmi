@@ -5,9 +5,9 @@ import {
   chain,
   createWagmiClient,
   defaultChains,
-} from 'wagmi-core'
-import { WalletConnectConnector } from 'wagmi-core/connectors/walletConnect'
-import { WalletLinkConnector } from 'wagmi-core/connectors/walletLink'
+} from '@wagmi/core'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+import { WalletLinkConnector } from '@wagmi/core/connectors/walletLink'
 import { providers } from 'ethers'
 
 // Get environment variables
