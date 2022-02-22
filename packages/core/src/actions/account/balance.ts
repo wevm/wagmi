@@ -1,3 +1,5 @@
+// TODO: Migrate this to new action implementation
+
 import { ethers, utils } from 'ethers'
 
 import { defaultChains, defaultL2Chains, erc20ABI } from '../../constants'

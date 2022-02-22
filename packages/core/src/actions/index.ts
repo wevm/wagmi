@@ -1,10 +1,13 @@
-export { getAccount, watchAccount } from './account'
-export { balanceAction } from './balance'
+export { balanceAction, getAccount, watchAccount } from './account'
 export { connect, disconnect } from './connect'
 export { getNetwork, switchNetwork, watchNetwork } from './network'
 
-export type { AccountResult, WatchAccountCallback } from './account'
-export type { BalanceActionArgs, BalanceActionResult } from './balance'
+export type {
+  AccountResult,
+  WatchAccountCallback,
+  BalanceActionArgs,
+  BalanceActionResult,
+} from './account'
 export type { ConnectResult } from './connect'
 export type {
   NetworkResult,
