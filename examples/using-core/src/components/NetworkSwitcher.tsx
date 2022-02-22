@@ -1,4 +1,4 @@
-import { getNetwork, watchNetwork } from '@wagmi/core'
+import { getNetwork, watchNetwork } from 'wagmi-core'
 import * as React from 'react'
 
 export const NetworkSwitcher = () => {

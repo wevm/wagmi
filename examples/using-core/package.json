@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@wagmi/core": "0.1.7",
+    "wagmi-core": "0.1.11",
     "ethers": "^5.5.1",
     "next": "12.0.7",
     "react": "17.0.2",

@@ -9,6 +9,7 @@
   "useContractWrite": "useContractWrite",
   "useEnsAvatar": "useEnsAvatar",
   "useEnsLookup": "useEnsLookup",
+  "useEnsResolveName": "useEnsResolveName",
   "useEnsResolver": "useEnsResolver",
   "useFeeData": "useFeeData",
   "useNetwork": "useNetwork",

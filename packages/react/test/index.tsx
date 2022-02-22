@@ -11,6 +11,7 @@ import {
   infuraApiKey,
   wallets,
 } from 'wagmi-testing'
+import { chain } from 'wagmi-core'
 
 import { Provider, ProviderProps } from '../src'
 
@@ -23,7 +24,7 @@ type Props = ProviderProps & {
     | React.ReactNode
 }
 export const wrapper = (props: Props) => {
-  const network = props.chainId ?? 1
+  const network = props.chainId ?? chain.mainnet.id
   return (
     <Provider
       connectors={[

@@ -1,0 +1,77 @@
+# useEnsResolveName
+
+Hook for looking up address for ENS name.
+
+```tsx
+import { useEnsResolveName } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useEnsResolveName } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, resolveName] = useEnsResolveName({
+    name: 'meagher.eth',
+  })
+
+  if (loading) return <div>Fetching address…</div>
+  if (error || !data) return <div>Error fetching address</div>
+  return <div>{data}</div>
+}
+```
+
+## Return Values
+
+### result
+
+```ts
+{
+  data?: string
+  error?: Error
+  loading?: boolean
+}
+```
+
+### resolveName
+
+```ts
+(config?: {
+  name: string
+}) => Promise<{ data?: string; error?: Error }>
+```
+
+## Configuration
+
+### name (optional)
+
+Name to look up.
+
+```tsx highlight='5'
+import { useEnsResolveName } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, lookupAddress] = useEnsResolveName({
+    name: 'meagher.eth',
+  })
+
+  return ...
+}
+```
+
+### skip (optional)
+
+Skips automatically fetching data on mount. Defaults to `false`. Useful if you want to call `resolveName` manually at some other point.
+
+```tsx highlight='5'
+import { useEnsResolveName } from 'wagmi'
+
+const App = () => {
+  const [{ data, error, loading }, resolveName] = useEnsResolveName({
+    skip: true,
+  })
+
+  return ...
+}
+```

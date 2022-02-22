@@ -1,5 +1,13 @@
-export { Provider, useContext } from './context'
-export type { Props as ProviderProps } from './context'
+export {
+  Provider,
+  Provider as WagmiProvider,
+  useContext,
+  Context,
+} from './context'
+export type {
+  Props as ProviderProps,
+  Props as WagmiProviderProps,
+} from './context'
 
 export {
   useAccount,
@@ -12,6 +20,7 @@ export {
   useContractWrite,
   useEnsAvatar,
   useEnsLookup,
+  useEnsResolveName,
   useEnsResolver,
   useFeeData,
   useNetwork,
@@ -36,8 +45,12 @@ export {
   erc20ABI,
   erc721ABI,
   normalizeChainId,
-} from '@wagmi/core'
+  AddChainError,
+  ChainNotConfiguredError,
+  ConnectorAlreadyConnectedError,
+  ConnectorNotFoundError,
+  SwitchChainError,
+  UserRejectedRequestError,
+} from 'wagmi-core'
 
-export { Context } from './context'
-
-export type { Chain, Data } from '@wagmi/core'
+export type { Chain, ConnectorData } from 'wagmi-core'

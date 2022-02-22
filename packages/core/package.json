@@ -1,8 +1,9 @@
 {
-  "name": "@wagmi/core",
+  "name": "wagmi-core",
   "license": "MIT",
-  "version": "0.1.7",
+  "version": "0.1.11",
   "ethereum": "awkweb.eth",
+  "repository": "tmm/wagmi",
   "sideEffects": false,
   "main": "dist/wagmi-core.cjs.js",
   "module": "dist/wagmi-core.esm.js",
@@ -19,24 +20,18 @@
     "./connectors/walletLink": {
       "module": "./connectors/walletLink/dist/wagmi-core-connectors-walletLink.esm.js",
       "default": "./connectors/walletLink/dist/wagmi-core-connectors-walletLink.cjs.js"
-    },
-    "./connectors/injected": {
-      "module": "./connectors/injected/dist/wagmi-core-connectors-injected.esm.js",
-      "default": "./connectors/injected/dist/wagmi-core-connectors-injected.cjs.js"
     }
   },
   "files": [
     "/dist",
     "/connectors/walletConnect/",
-    "/connectors/walletLink/",
-    "/connectors/injected/"
+    "/connectors/walletLink/"
   ],
   "preconstruct": {
     "entrypoints": [
       "index.ts",
       "connectors/walletConnect.ts",
-      "connectors/walletLink.ts",
-      "connectors/injected.ts"
+      "connectors/walletLink.ts"
     ]
   },
   "peerDependencies": {
@@ -60,7 +55,7 @@
   "devDependencies": {
     "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
-    "wagmi-testing": "0.1.7",
+    "wagmi-testing": "0.1.11",
     "walletlink": "^2.2.8"
   }
 }

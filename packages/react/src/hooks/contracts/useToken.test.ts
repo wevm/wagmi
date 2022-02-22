@@ -65,7 +65,7 @@ describe('useToken', () => {
       expect(result.current[0]).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": [Error: call revert exception (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.5.0)],
+          "error": [Error: missing revert data in call exception (error={"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\\"method\\":\\"eth_call\\",\\"params\\":[{\\"to\\":\\"0xa0cf798816d4b9b9866b5330eea46a18382f251e\\",\\"data\\":\\"0x313ce567\\"},\\"latest\\"],\\"id\\":43,\\"jsonrpc\\":\\"2.0\\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.infura.io/v3/mockApiKey"}, data="0x", code=CALL_EXCEPTION, version=providers/5.5.1)],
           "loading": false,
         }
       `)

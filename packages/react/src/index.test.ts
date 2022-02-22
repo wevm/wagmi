@@ -4,7 +4,9 @@ it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
       "Provider",
+      "WagmiProvider",
       "useContext",
+      "Context",
       "useAccount",
       "useBalance",
       "useBlockNumber",
@@ -15,6 +17,7 @@ it('should expose correct exports', () => {
       "useContractWrite",
       "useEnsAvatar",
       "useEnsLookup",
+      "useEnsResolveName",
       "useEnsResolver",
       "useFeeData",
       "useNetwork",
@@ -36,7 +39,16 @@ it('should expose correct exports', () => {
       "erc20ABI",
       "erc721ABI",
       "normalizeChainId",
-      "Context",
+      "AddChainError",
+      "ChainNotConfiguredError",
+      "ConnectorAlreadyConnectedError",
+      "ConnectorNotFoundError",
+      "SwitchChainError",
+      "UserRejectedRequestError",
     ]
   `)
+})
+
+it('should alias Provider as WagmiProvider', () => {
+  expect(Exports.Provider).toBe(Exports.WagmiProvider)
 })

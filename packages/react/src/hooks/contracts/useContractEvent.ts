@@ -40,7 +40,6 @@ export const useContractEvent = <
 
     return () => {
       contract_.off(eventName, handler)
-      return
     }
   }, [contract, eventName])
   /* eslint-enable react-hooks/exhaustive-deps */

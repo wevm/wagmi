@@ -1,5 +1,8 @@
 export { Connector, InjectedConnector } from './connectors'
-export type { ConnectorEvents, Data } from './connectors'
+export type { ConnectorData, ConnectorEvents } from './connectors'
+
+export type { BalanceActionArgs, BalanceActionResult } from './actions'
+export { balanceAction } from './actions'
 
 export {
   connect,
@@ -25,6 +28,7 @@ export {
 export {
   AddChainError,
   ChainNotConfiguredError,
+  ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
   SwitchChainError,
   UserRejectedRequestError,
@@ -32,6 +36,6 @@ export {
 
 export { createWagmiClient } from './client'
 
-export type { Chain, Unit } from './types'
+export type { Balance, Chain, Unit } from './types'
 
 export { normalizeChainId } from './utils'

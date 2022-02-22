@@ -29,19 +29,15 @@
 
 **React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).**
 
-🚀 &nbsp; 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
+## Features
 
-💼 &nbsp; Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
-
-🌀 &nbsp; Auto-refresh data on wallet and network changes
-
-🦄 &nbsp; TypeScript ready
-
-💨 &nbsp; Zero-dependencies (besides ethers.js peer dependency)
-
-🌳 &nbsp; Test suite and documentation
-
-📖 &nbsp; MIT License
+- 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
+- 💼 Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
+- 🌀 Auto-refresh data on wallet and network changes
+- 🦄 TypeScript ready
+- 💨 Zero-dependencies (besides ethers.js peer dependency)
+- 🌳 Test suite and documentation
+- 📖 MIT License
 
 ## Documentation
 
@@ -52,7 +48,7 @@ Visit https://wagmi-xyz.vercel.app to view the full documentation.
 1. Install the dependencies.
 
 ```bash
-pnpm add wagmi ethers
+npm add wagmi ethers
 ```
 
 2. Wrap your app with the `Provider` component.
@@ -87,13 +83,16 @@ Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/c
 
 ## Community
 
-Feel free to join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb)!
+- Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
+- Follow [@awkweb](https://twitter.com/awkweb) on Twitter for project updates
+- Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
+- Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) that uses wagmi
 
 ## Support
 
 - awkweb.eth
 - [GitHub Sponsors](https://github.com/sponsors/tmm)
-- Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
+- [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
 
 ## Thanks
 

@@ -1,5 +1,39 @@
 # wagmi-testing
 
+## 0.1.11
+
+### Patch Changes
+
+- [#195](https://github.com/tmm/wagmi/pull/195) [`25b6083`](https://github.com/tmm/wagmi/commit/25b6083a662a0236794d1765343467691421c14b) Thanks [@tmm](https://github.com/tmm)! - rename wagmi-private to wagmi-core
+
+- Updated dependencies [[`25b6083`](https://github.com/tmm/wagmi/commit/25b6083a662a0236794d1765343467691421c14b)]:
+  - wagmi-core@0.1.11
+
+## 0.1.10
+
+### Patch Changes
+
+- [#192](https://github.com/tmm/wagmi/pull/192) [`428cedb`](https://github.com/tmm/wagmi/commit/428cedb3dec4e3e4b9f4559c8e65932e05f94e05) Thanks [@tmm](https://github.com/tmm)! - rename core and testing packages
+
+- Updated dependencies [[`428cedb`](https://github.com/tmm/wagmi/commit/428cedb3dec4e3e4b9f4559c8e65932e05f94e05)]:
+  - wagmi-core@0.1.10
+
+## 0.1.9
+
+### Patch Changes
+
+- [#190](https://github.com/tmm/wagmi/pull/190) [`7034bb8`](https://github.com/tmm/wagmi/commit/7034bb868412b9f481b206371280e84c2d52706d) Thanks [@tmm](https://github.com/tmm)! - add shim for metamask chain changed to prevent disconnect
+
+- Updated dependencies [[`7034bb8`](https://github.com/tmm/wagmi/commit/7034bb868412b9f481b206371280e84c2d52706d)]:
+  - wagmi-private@0.1.9
+
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [[`dceeb43`](https://github.com/tmm/wagmi/commit/dceeb430d9021fbf98366859cb1cd0149e80c55c)]:
+  - wagmi-private@0.1.8
+
 ## 0.1.7
 
 ### Patch Changes

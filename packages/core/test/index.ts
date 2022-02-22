@@ -29,3 +29,6 @@ export const setupWagmiClient = (config?: Config) => {
     ...config,
   })
 }
+
+export const getProvider = ({ chainId }: { chainId?: number } = {}) =>
+  new providers.InfuraProvider(chainId ?? 1, infuraApiKey)

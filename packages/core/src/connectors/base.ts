@@ -4,15 +4,15 @@ import { Signer } from 'ethers'
 import { defaultChains } from '../constants'
 import { Chain } from '../types'
 
-export type Data<Provider = any> = {
+export type ConnectorData<Provider = any> = {
   account?: string
   chain?: { id: number; unsupported: boolean }
   provider?: Provider
 }
 
 export interface ConnectorEvents<Provider = any> {
-  change(data: Data<Provider>): void
-  connect(data: Data<Provider>): void
+  change(data: ConnectorData<Provider>): void
+  connect(data: ConnectorData<Provider>): void
   disconnect(): void
   error(error: Error): void
 }
@@ -44,7 +44,7 @@ export abstract class Connector<
     this.options = options
   }
 
-  abstract connect(): Promise<Data>
+  abstract connect(): Promise<ConnectorData>
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
