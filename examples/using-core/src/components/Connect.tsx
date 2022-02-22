@@ -7,7 +7,7 @@ import { wagmiClient } from '../wagmi'
 type State = {
   connector?: Connector
   error?: Error
-  loading: boolean
+  loading?: boolean
 }
 
 export const Connect = () => {
@@ -29,16 +29,15 @@ export const Connect = () => {
   )
 
   React.useEffect(() => {
-    // @ts-expect-error TODO
-    const handleConnectionChanged = ([connecting, connector]) =>
-      setState((x) => ({ ...x, loading: connecting, connector }))
-
     const unsubscribe = wagmiClient.subscribe(
-      // @ts-expect-error TODO
-      (store) => [store.connecting, store.connector],
-      handleConnectionChanged,
+      ({ connecting, connector }) => [connecting, connector],
+      () =>
+        setState((x) => ({
+          ...x,
+          loading: wagmiClient.connecting,
+          connector: wagmiClient.connector,
+        })),
     )
-
     return unsubscribe
   }, [])
 

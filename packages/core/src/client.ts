@@ -97,6 +97,9 @@ export class WagmiClient {
     this.addEffects()
   }
 
+  get connecting() {
+    return this.store.getState().connecting
+  }
   get connectors() {
     return this.store.getState().connectors
   }
@@ -204,14 +207,13 @@ export class WagmiClient {
 
       // Subscribe to changes that should update `provider`
       this.store.subscribe(
-        // @ts-expect-error TODO
         (store) => [store.data?.chain?.id, store.connector],
-        ([chainId, connector]: [number | undefined, Connector | undefined]) => {
+        () => {
           this.setState((x) => ({
             ...x,
             provider: provider_({
-              chainId,
-              connector,
+              chainId: this.data?.chain?.id,
+              connector: this.connector,
             }),
           }))
         },
@@ -235,9 +237,13 @@ export class WagmiClient {
     webSocketProvider_: WagmiClientConfig['webSocketProvider'],
   ) {
     let webSocketProvider: WebSocketProvider | undefined
-    if (typeof webSocketProvider === 'function') {
-      // @ts-expect-error TODO
-      webSocketProvider = webSocketProvider_({
+    if (webSocketProvider_ && typeof webSocketProvider === 'function') {
+      webSocketProvider = (
+        webSocketProvider_ as (config: {
+          chainId?: number
+          connector?: Connector
+        }) => WebSocketProvider | undefined
+      )({
         chainId: this.data?.chain?.id,
         connector: this.connector,
       })
@@ -248,8 +254,12 @@ export class WagmiClient {
         () => {
           this.setState((x) => ({
             ...x,
-            // @ts-expect-error TODO
-            provider: webSocketProvider_({
+            provider: (
+              webSocketProvider_ as (config: {
+                chainId?: number
+                connector?: Connector
+              }) => WebSocketProvider | undefined
+            )({
               chainId: this.data?.chain?.id,
               connector: this.connector,
             }),
@@ -257,8 +267,7 @@ export class WagmiClient {
         },
       )
     } else {
-      // @ts-expect-error TODO
-      webSocketProvider = webSocketProvider_
+      webSocketProvider = webSocketProvider_ as WebSocketProvider
     }
 
     this.setState((x) => ({ ...x, webSocketProvider }))
