@@ -1,5 +1,5 @@
-import { WagmiClient, wagmiClient } from '../client'
-import { Connector } from '../connectors'
+import { WagmiClient, wagmiClient } from '../../client'
+import { Connector } from '../../connectors'
 
 type ConnectReturnData = {
   data: WagmiClient['data']

@@ -1,4 +1,4 @@
-import { wagmiClient } from '../client'
+import { wagmiClient } from '../../client'
 import { AccountReturnData, getAccount } from './getAccount'
 
 export function watchAccount(callback: (account: AccountReturnData) => void) {

@@ -1,4 +1,4 @@
-import { Data, WagmiClient, wagmiClient } from '../client'
+import { Data, WagmiClient, wagmiClient } from '../../client'
 
 export type AccountReturnData = {
   address?: Data['account']

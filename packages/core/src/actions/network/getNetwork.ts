@@ -1,6 +1,6 @@
-import { wagmiClient } from '../client'
-import { allChains } from '../constants'
-import { Chain } from '../types'
+import { wagmiClient } from '../../client'
+import { allChains } from '../../constants'
+import { Chain } from '../../types'
 
 export type NetworkReturnData = {
   chain?: Chain & {

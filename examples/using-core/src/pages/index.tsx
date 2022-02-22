@@ -4,7 +4,7 @@ import { getAccount, watchAccount } from '@wagmi/core'
 import { Account, Connect, NetworkSwitcher } from '../components'
 
 const Page = () => {
-  const [accountData, setAccountData] = React.useState(getAccount)
+  const [accountData, setAccountData] = React.useState(getAccount())
   React.useEffect(() => {
     const unwatch = watchAccount(setAccountData)
     return unwatch
