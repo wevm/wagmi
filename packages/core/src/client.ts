@@ -122,7 +122,7 @@ export class WagmiClient {
   setState(updater: Store | ((store: Store) => Store)) {
     const newState =
       typeof updater === 'function' ? updater(this.store.getState()) : updater
-    this.store.setState(newState)
+    this.store.setState(newState, true)
   }
 
   async autoConnect() {
@@ -164,11 +164,12 @@ export class WagmiClient {
     }
   }
 
-  async disconnect() {
+  async destroy() {
     if (this.connector) {
       await this.connector.disconnect()
     }
     this.setState({})
+    this.store.destroy()
   }
 
   private setConnectors(connectors_: WagmiClientConfig['connectors']) {

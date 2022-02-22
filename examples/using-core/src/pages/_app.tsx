@@ -12,7 +12,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     autoConnect()
 
     return () => {
-      wagmiClient.disconnect()
+      wagmiClient.destroy()
     }
   }, [])
 
