@@ -2,7 +2,7 @@ import { wagmiClient } from '../../client'
 import { allChains } from '../../constants'
 import { Chain } from '../../types'
 
-export type NetworkReturnData = {
+export type NetworkResult = {
   chain?: Chain & {
     id: number
     unsupported?: boolean
@@ -10,7 +10,7 @@ export type NetworkReturnData = {
   chains?: Chain[]
 }
 
-export function getNetwork(): NetworkReturnData {
+export function getNetwork(): NetworkResult {
   const { connector, data } = wagmiClient
 
   const chainId = data?.chain?.id

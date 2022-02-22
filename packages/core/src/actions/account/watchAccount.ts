@@ -1,7 +1,9 @@
 import { wagmiClient } from '../../client'
-import { AccountReturnData, getAccount } from './getAccount'
+import { AccountResult, getAccount } from './getAccount'
 
-export function watchAccount(callback: (account: AccountReturnData) => void) {
+export type WatchAccountCallback = (account: AccountResult) => void
+
+export function watchAccount(callback: WatchAccountCallback) {
   const handleChange = () => callback(getAccount())
   const unsubscribe = wagmiClient.subscribe(
     ({ data, connector }) => [data?.account, connector],

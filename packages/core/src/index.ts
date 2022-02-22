@@ -1,16 +1,25 @@
 export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
 
-export type { BalanceActionArgs, BalanceActionResult } from './actions'
-export { balanceAction } from './actions'
-
 export {
+  balanceAction,
   connect,
   disconnect,
   getAccount,
   watchAccount,
   getNetwork,
+  switchNetwork,
   watchNetwork,
+} from './actions'
+export type {
+  AccountResult,
+  WatchAccountCallback,
+  BalanceActionArgs,
+  BalanceActionResult,
+  ConnectResult,
+  NetworkResult,
+  SwitchNetworkArgs,
+  WatchNetworkCallback,
 } from './actions'
 
 export {

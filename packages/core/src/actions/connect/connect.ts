@@ -1,14 +1,12 @@
 import { WagmiClient, wagmiClient } from '../../client'
 import { Connector } from '../../connectors'
 
-type ConnectReturnData = {
+export type ConnectResult = {
   data: WagmiClient['data']
   connector: WagmiClient['connector']
 }
 
-export async function connect(
-  connector: Connector,
-): Promise<ConnectReturnData> {
+export async function connect(connector: Connector): Promise<ConnectResult> {
   const activeConnector = wagmiClient?.connector
   if (connector === activeConnector)
     return { data: wagmiClient.data, connector }

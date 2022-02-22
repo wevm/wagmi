@@ -7,8 +7,6 @@ describe('WagmiClient', () => {
     const { connectors, provider, ...rest } = wagmiClient
     expect(rest).toMatchInlineSnapshot(`
       {
-        "_events": {},
-        "_eventsCount": 0,
         "config": {
           "connectors": [
             MockConnector {
@@ -264,6 +262,12 @@ describe('WagmiClient', () => {
             "projectSecret": null,
           },
           "webSocketProvider": undefined,
+        },
+        "store": {
+          "destroy": [Function],
+          "getState": [Function],
+          "setState": [Function],
+          "subscribe": [Function],
         },
       }
     `)
