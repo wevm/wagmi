@@ -17,6 +17,10 @@ type ChainName =
   | 'rinkeby'
   | 'ropsten'
 
+/**
+ * Data from Chainlist
+ * @see https://chainlist.org
+ */
 export const chain: Record<ChainName, Chain> = {
   mainnet: {
     id: 1,
