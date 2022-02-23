@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.1.12
+
+### Patch Changes
+
+- [#210](https://github.com/tmm/wagmi/pull/210) [`684468a`](https://github.com/tmm/wagmi/commit/684468aee3e42a1ce2b4b599f3f17d1819213de8) Thanks [@tmm](https://github.com/tmm)! - update chains to match chainslist.org
+
+- Updated dependencies [[`684468a`](https://github.com/tmm/wagmi/commit/684468aee3e42a1ce2b4b599f3f17d1819213de8)]:
+  - wagmi-core@0.1.12
+
 ## 0.1.11
 
 ### Patch Changes
