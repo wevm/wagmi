@@ -54,7 +54,7 @@ export type Store = {
   connector?: Connector
   data?: Data
   error?: Error
-  connectors?: Connector[]
+  connectors: Connector[]
   provider?: BaseProvider
   webSocketProvider?: WebSocketProvider
 }
@@ -64,6 +64,8 @@ export type AutoConnectionChangedArgs = {
   data: Data | undefined
   connector: Connector | undefined
 }
+
+const initialStore = { connectors: [] }
 
 export class WagmiClient {
   config: Partial<WagmiClientConfig>
@@ -86,7 +88,7 @@ export class WagmiClient {
       provider,
       webSocketProvider,
     }
-    this.store = create(subscribeWithSelector<Store>(() => ({})))
+    this.store = create(subscribeWithSelector<Store>(() => initialStore))
 
     this.setStorage(storage)
     this.setConnectors(connectors)
@@ -126,6 +128,10 @@ export class WagmiClient {
     const newState =
       typeof updater === 'function' ? updater(this.store.getState()) : updater
     this.store.setState(newState, true)
+  }
+
+  clearState() {
+    this.store.setState(initialStore, true)
   }
 
   async autoConnect() {
@@ -171,12 +177,12 @@ export class WagmiClient {
     if (this.connector) {
       await this.connector.disconnect()
     }
-    this.setState({})
+    this.clearState()
     this.store.destroy()
   }
 
   private setConnectors(connectors_: WagmiClientConfig['connectors']) {
-    let connectors: Connector[] | undefined
+    let connectors: Connector[]
     if (typeof connectors_ === 'function') {
       connectors = connectors_({ chainId: this.data?.chain?.id })
 
@@ -279,7 +285,7 @@ export class WagmiClient {
         ...x,
         data: { ...x.data, ...data },
       }))
-    const onDisconnect = () => this.setState({})
+    const onDisconnect = () => this.clearState()
     const onError = (error: Error) => this.setState((x) => ({ ...x, error }))
 
     this.store.subscribe(

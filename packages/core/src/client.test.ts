@@ -1,10 +1,8 @@
 import { setupWagmiClient } from '../test'
-import { wagmiClient } from './client'
 
 describe('WagmiClient', () => {
   it('inits', () => {
-    setupWagmiClient()
-    const { connectors, provider, ...rest } = wagmiClient
+    const { connectors, provider, ...rest } = setupWagmiClient()
     expect(rest).toMatchInlineSnapshot(`
       {
         "config": {
