@@ -65,8 +65,6 @@ export type AutoConnectionChangedArgs = {
   connector: Connector | undefined
 }
 
-const initialStore = { connectors: [] }
-
 export class WagmiClient {
   config: Partial<WagmiClientConfig>
   store
@@ -88,7 +86,9 @@ export class WagmiClient {
       provider,
       webSocketProvider,
     }
-    this.store = create(subscribeWithSelector<Store>(() => initialStore))
+    this.store = create(
+      subscribeWithSelector<Store>(() => ({ connectors: [] })),
+    )
 
     this.setStorage(storage)
     this.setConnectors(connectors)
@@ -131,7 +131,13 @@ export class WagmiClient {
   }
 
   clearState() {
-    this.store.setState(initialStore, true)
+    this.setState((x) => ({
+      ...x,
+      connecting: false,
+      data: undefined,
+      error: undefined,
+      connector: undefined,
+    }))
   }
 
   async autoConnect() {
