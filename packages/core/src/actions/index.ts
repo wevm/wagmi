@@ -23,5 +23,8 @@ export type {
   WatchNetworkCallback,
 } from './accounts'
 
+export { getContract } from './contracts'
+export type { GetContractArgs } from './contracts'
+
 export { fetchEnsName } from './ens'
 export type { FetchEnsNameResult, FetchEnsNameArgs } from './ens'
