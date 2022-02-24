@@ -3,8 +3,11 @@ import {
   WebSocketProvider,
   getDefaultProvider,
 } from '@ethersproject/providers'
-import create from 'zustand/vanilla'
-import { subscribeWithSelector } from 'zustand/middleware'
+import { GetState, SetState, default as create } from 'zustand/vanilla'
+import {
+  StoreApiWithSubscribeWithSelector,
+  subscribeWithSelector,
+} from 'zustand/middleware'
 
 import {
   InjectedConnector,
@@ -67,7 +70,7 @@ export type AutoConnectionChangedArgs = {
 
 export class WagmiClient {
   config: Partial<WagmiClientConfig>
-  store
+  store: StoreApiWithSubscribeWithSelector<Store>
 
   #storage?: WagmiStorage
   #lastUsedConnector?: string | null
@@ -86,9 +89,12 @@ export class WagmiClient {
       provider,
       webSocketProvider,
     }
-    this.store = create(
-      subscribeWithSelector<Store>(() => ({ connectors: [] })),
-    )
+    this.store = create<
+      Store,
+      SetState<Store>,
+      GetState<Store>,
+      StoreApiWithSubscribeWithSelector<Store>
+    >(subscribeWithSelector<Store>(() => ({ connectors: [] })))
 
     this.setStorage(storage)
     this.setConnectors(connectors)

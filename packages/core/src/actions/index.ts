@@ -8,7 +8,6 @@ export {
   switchNetwork,
   watchNetwork,
 } from './account'
-
 export type {
   AccountResult,
   ConnectResult,
@@ -19,3 +18,6 @@ export type {
   SwitchNetworkArgs,
   WatchNetworkCallback,
 } from './account'
+
+export { fetchEnsName } from './ens'
+export type { FetchEnsNameResult, FetchEnsNameArgs } from './ens'
