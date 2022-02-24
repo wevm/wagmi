@@ -13,13 +13,13 @@ export {
   watchNetwork,
 } from './actions'
 export type {
-  AccountResult,
+  GetAccountResult,
   BalanceActionArgs,
   BalanceActionResult,
   ConnectResult,
   FetchEnsNameArgs,
   FetchEnsNameResult,
-  NetworkResult,
+  GetNetworkResult,
   SwitchNetworkArgs,
   WatchAccountCallback,
   WatchNetworkCallback,

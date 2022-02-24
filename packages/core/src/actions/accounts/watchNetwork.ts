@@ -1,7 +1,7 @@
 import { wagmiClient } from '../../client'
-import { NetworkResult, getNetwork } from './getNetwork'
+import { GetNetworkResult, getNetwork } from './getNetwork'
 
-export type WatchNetworkCallback = (Network: NetworkResult) => void
+export type WatchNetworkCallback = (Network: GetNetworkResult) => void
 
 export function watchNetwork(callback: WatchNetworkCallback) {
   const handleChange = () => callback(getNetwork())

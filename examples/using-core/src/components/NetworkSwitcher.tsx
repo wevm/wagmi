@@ -2,7 +2,7 @@ import { getNetwork, switchNetwork, watchNetwork } from '@wagmi/core'
 import * as React from 'react'
 
 export const NetworkSwitcher = () => {
-  const [networkData, setNetworkData] = React.useState(getNetwork)
+  const [networkData, setNetworkData] = React.useState(getNetwork())
   React.useEffect(() => {
     const unwatch = watchNetwork(setNetworkData)
     return unwatch

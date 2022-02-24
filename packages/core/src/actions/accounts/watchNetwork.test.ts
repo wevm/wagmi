@@ -1,7 +1,7 @@
 import { setupWagmiClient } from '../../../test'
 import { wagmiClient } from '../../client'
 import { connect } from './connect'
-import { NetworkResult } from './getNetwork'
+import { GetNetworkResult } from './getNetwork'
 import { switchNetwork } from './switchNetwork'
 import { watchNetwork } from './watchNetwork'
 
@@ -11,7 +11,7 @@ describe('watchNetwork', () => {
 
     await connect(wagmiClient.connectors[0])
 
-    const networks: NetworkResult[] = []
+    const networks: GetNetworkResult[] = []
     watchNetwork((network) => networks.push(network))
 
     await switchNetwork({ chainId: 4 })
