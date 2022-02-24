@@ -7,6 +7,7 @@ export {
   getNetwork,
   switchNetwork,
   watchNetwork,
+  fetchSigner,
 } from './account'
 export type {
   GetAccountResult,
@@ -16,6 +17,7 @@ export type {
   BalanceActionResult,
   FetchBalanceArgs,
   FetchBalanceResult,
+  FetchSignerResult,
   GetNetworkResult,
   SwitchNetworkArgs,
   WatchNetworkCallback,
