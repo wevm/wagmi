@@ -1,4 +1,4 @@
-// TODO: Migrate this to new action implementation
+// TODO: Migrate this to new action implementation (fetchBalance.ts)
 
 import { ethers, utils } from 'ethers'
 

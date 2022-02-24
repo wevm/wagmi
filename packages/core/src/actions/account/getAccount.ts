@@ -1,11 +1,11 @@
 import { Data, WagmiClient, wagmiClient } from '../../client'
 
-export type AccountResult = {
+export type GetAccountResult = {
   address?: Data['account']
   connector?: WagmiClient['connector']
 }
 
-export function getAccount(): AccountResult {
+export function getAccount(): GetAccountResult {
   const { data, connector } = wagmiClient
   return {
     address: data?.account,

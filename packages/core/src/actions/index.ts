@@ -9,12 +9,14 @@ export {
   watchNetwork,
 } from './account'
 export type {
-  AccountResult,
+  GetAccountResult,
   ConnectResult,
   WatchAccountCallback,
   BalanceActionArgs,
   BalanceActionResult,
-  NetworkResult,
+  FetchBalanceArgs,
+  FetchBalanceResult,
+  GetNetworkResult,
   SwitchNetworkArgs,
   WatchNetworkCallback,
 } from './account'
