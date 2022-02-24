@@ -20,6 +20,8 @@ import {
 import { WagmiStorage, createStorage, noopStorage } from './utils/storage'
 
 export type WagmiClientConfig = {
+  /** Enables reconnecting to last used connector on init */
+  autoConnect?: boolean
   /**
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
@@ -45,16 +47,25 @@ export type WagmiClientConfig = {
         connector?: Connector
       }) => WebSocketProvider | undefined)
 }
+const defaultConfig: Required<
+  Pick<WagmiClientConfig, 'connectors' | 'provider' | 'storage'>
+> = {
+  connectors: [new InjectedConnector()],
+  provider: getDefaultProvider(),
+  storage: createStorage({
+    storage: typeof window !== 'undefined' ? window.localStorage : noopStorage,
+  }),
+}
 
 export type Connector = TConnector
 export type Data = TData<BaseProvider>
-export type Store = {
+export type State = {
   connecting?: boolean
   connector?: Connector
   data?: Data
   error?: Error
   connectors: Connector[]
-  provider?: BaseProvider
+  provider: BaseProvider
   webSocketProvider?: WebSocketProvider
 }
 
@@ -66,39 +77,49 @@ export type AutoConnectionChangedArgs = {
 
 export class WagmiClient {
   config: Partial<WagmiClientConfig>
-  store: Mutate<StoreApi<Store>, [['zustand/subscribeWithSelector', never]]>
+  store: Mutate<StoreApi<State>, [['zustand/subscribeWithSelector', never]]>
 
   #storage?: WagmiStorage
   #lastUsedConnector?: string | null
 
   constructor({
-    connectors = [new InjectedConnector()],
-    provider = getDefaultProvider(),
-    storage = createStorage({
-      storage:
-        typeof window !== 'undefined' ? window.localStorage : noopStorage,
-    }),
+    autoConnect = false,
+    connectors = defaultConfig.connectors,
+    provider = defaultConfig.provider,
+    storage = defaultConfig.storage,
     webSocketProvider,
-  }: WagmiClientConfig) {
+  }: WagmiClientConfig = defaultConfig) {
     this.config = {
       connectors,
       provider,
       webSocketProvider,
     }
+
+    const connectors_ =
+      typeof connectors === 'function' ? connectors({}) : connectors
+    const provider_ = typeof provider === 'function' ? provider({}) : provider
+    const webSocketProvider_ =
+      typeof webSocketProvider === 'function'
+        ? webSocketProvider({})
+        : webSocketProvider
+
     this.store = create<
-      Store,
-      SetState<Store>,
-      GetState<Store>,
+      State,
+      SetState<State>,
+      GetState<State>,
       WagmiClient['store']
-    >(subscribeWithSelector<Store>(() => ({ connectors: [] })))
+    >(
+      subscribeWithSelector<State>(() => ({
+        connecting: autoConnect,
+        connectors: connectors_,
+        provider: provider_,
+        webSocketProvider: webSocketProvider_,
+      })),
+    )
 
-    this.setStorage(storage)
-    this.setConnectors(connectors)
-    this.setProvider(provider)
-    this.setWebSocketProvider(webSocketProvider)
-    this.setLastUsedConnector()
-
-    this.addEffects()
+    this.#storage = storage
+    this.#lastUsedConnector = storage?.getItem('wallet')
+    this.#addEffects()
   }
 
   get connecting() {
@@ -126,7 +147,7 @@ export class WagmiClient {
     return this.store.subscribe
   }
 
-  setState(updater: Store | ((store: Store) => Store)) {
+  setState(updater: State | ((state: State) => State)) {
     const newState =
       typeof updater === 'function' ? updater(this.store.getState()) : updater
     this.store.setState(newState, true)
@@ -136,49 +157,10 @@ export class WagmiClient {
     this.setState((x) => ({
       ...x,
       connecting: false,
+      connector: undefined,
       data: undefined,
       error: undefined,
-      connector: undefined,
     }))
-  }
-
-  async autoConnect() {
-    if (this.connectors) {
-      const sorted = this.#lastUsedConnector
-        ? [...this.connectors].sort((x) =>
-            x.name === this.#lastUsedConnector ? -1 : 1,
-          )
-        : this.connectors
-
-      this.setState((x) => ({
-        ...x,
-        connecting: true,
-      }))
-      for (const connector of sorted) {
-        if (!connector.ready || !connector.isAuthorized) continue
-        const isAuthorized = await connector.isAuthorized()
-        if (!isAuthorized) continue
-
-        const data = await connector.connect()
-        this.setState((x) => ({ ...x, data, connector }))
-        break
-      }
-      this.setState((x) => ({
-        ...x,
-        connecting: false,
-      }))
-    }
-    return
-  }
-
-  setLastUsedConnector(lastUsedConnector: string | null = null) {
-    this.#lastUsedConnector = this.#storage?.getItem(
-      'wallet',
-      lastUsedConnector,
-    )
-    if (lastUsedConnector) {
-      this.#storage?.setItem('wallet', lastUsedConnector)
-    }
   }
 
   async destroy() {
@@ -189,105 +171,33 @@ export class WagmiClient {
     this.store.destroy()
   }
 
-  private setConnectors(connectors_: WagmiClientConfig['connectors']) {
-    let connectors: Connector[]
-    if (typeof connectors_ === 'function') {
-      connectors = connectors_({ chainId: this.data?.chain?.id })
+  async autoConnect() {
+    if (!this.connectors) return
 
-      // Subscribe to changes that should update `connectors`
-      this.store.subscribe(
-        ({ data }) => data?.chain?.id,
-        () => {
-          this.setState((x) => ({
-            ...x,
-            connectors: connectors_({ chainId: this.data?.chain?.id }),
-          }))
-        },
-      )
-    } else {
-      connectors = connectors_
+    const sorted = this.#lastUsedConnector
+      ? [...this.connectors].sort((x) =>
+          x.name === this.#lastUsedConnector ? -1 : 1,
+        )
+      : this.connectors
+
+    this.setState((x) => ({ ...x, connecting: true }))
+    for (const connector of sorted) {
+      if (!connector.ready || !connector.isAuthorized) continue
+      const isAuthorized = await connector.isAuthorized()
+      if (!isAuthorized) continue
+
+      const data = await connector.connect()
+      this.setState((x) => ({ ...x, data, connector }))
+      break
     }
-
-    this.setState((x) => ({ ...x, connectors }))
+    this.setState((x) => ({ ...x, connecting: false }))
   }
 
-  private setProvider(provider_: WagmiClientConfig['provider']) {
-    let provider: BaseProvider | undefined
-    if (typeof provider_ === 'function') {
-      provider = provider_({
-        chainId: this.data?.chain?.id,
-        connector: this.connector,
-      })
-
-      // Subscribe to changes that should update `provider`
-      this.store.subscribe(
-        ({ data, connector }) => [data?.chain?.id, connector],
-        () => {
-          this.setState((x) => ({
-            ...x,
-            provider: provider_({
-              chainId: this.data?.chain?.id,
-              connector: this.connector,
-            }),
-          }))
-        },
-        {
-          equalityFn: ([chainId], [newChainId]) => chainId === newChainId,
-        },
-      )
-    } else {
-      provider = provider_
-    }
-
-    this.setState((x) => ({ ...x, provider }))
+  setLastUsedConnector(lastUsedConnector: string | null = null) {
+    this.#storage?.setItem('wallet', lastUsedConnector)
   }
 
-  private setStorage(storage: WagmiClientConfig['storage']) {
-    if (!storage) return
-    this.#storage = storage
-  }
-
-  private setWebSocketProvider(
-    webSocketProvider_: WagmiClientConfig['webSocketProvider'],
-  ) {
-    let webSocketProvider: WebSocketProvider | undefined
-    if (webSocketProvider_ && typeof webSocketProvider === 'function') {
-      webSocketProvider = (
-        webSocketProvider_ as (config: {
-          chainId?: number
-          connector?: Connector
-        }) => WebSocketProvider | undefined
-      )({
-        chainId: this.data?.chain?.id,
-        connector: this.connector,
-      })
-
-      // Subscribe to changes that should update `webSocketProvider`
-      this.store.subscribe(
-        ({ data, connector }) => [data?.chain?.id, connector],
-        () => {
-          this.setState((x) => ({
-            ...x,
-            provider: (
-              webSocketProvider_ as (config: {
-                chainId?: number
-                connector?: Connector
-              }) => WebSocketProvider | undefined
-            )({
-              chainId: this.data?.chain?.id,
-              connector: this.connector,
-            }),
-          }))
-        },
-      )
-    } else {
-      webSocketProvider = webSocketProvider_ as WebSocketProvider
-    }
-
-    this.setState((x) => ({ ...x, webSocketProvider }))
-  }
-
-  private addEffects() {
+  #addEffects() {
     const onChange = (data: Data) =>
       this.setState((x) => ({
         ...x,
@@ -309,13 +219,53 @@ export class WagmiClient {
         connector.on('error', onError)
       },
     )
+
+    const { connectors, provider, webSocketProvider } = this.config
+
+    // Subscribe to changes that should update `connectors`
+    if (typeof connectors === 'function')
+      this.store.subscribe(
+        ({ data }) => data?.chain?.id,
+        () => {
+          this.setState((x) => ({
+            ...x,
+            connectors: connectors({ chainId: this.data?.chain?.id }),
+          }))
+        },
+      )
+
+    // Subscribe to changes that should update `provider` or `webSocketProvider`
+    const subscribeProvider = typeof provider === 'function'
+    const subscribeWebSocketProvider =
+      !(webSocketProvider instanceof WebSocketProvider) && webSocketProvider
+    if (subscribeProvider || subscribeWebSocketProvider)
+      this.store.subscribe(
+        ({ data, connector }) => [data?.chain?.id, connector],
+        () => {
+          this.setState((x) => ({
+            ...x,
+            provider: subscribeProvider
+              ? provider({
+                  chainId: this.data?.chain?.id,
+                  connector: this.connector,
+                })
+              : x.provider,
+            webSocketProvider: subscribeWebSocketProvider
+              ? webSocketProvider({
+                  chainId: this.data?.chain?.id,
+                  connector: this.connector,
+                })
+              : x.webSocketProvider,
+          }))
+        },
+        {
+          equalityFn: ([chainId], [newChainId]) => chainId === newChainId,
+        },
+      )
   }
 }
 
-export let wagmiClient = new WagmiClient({
-  connectors: [],
-  provider: getDefaultProvider(),
-})
+export let wagmiClient = new WagmiClient()
 
 export function createWagmiClient(config: WagmiClientConfig) {
   const client = new WagmiClient(config)

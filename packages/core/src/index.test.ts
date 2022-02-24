@@ -8,10 +8,11 @@ it('should expose correct exports', () => {
       "balanceAction",
       "connect",
       "disconnect",
+      "fetchEnsName",
       "getAccount",
-      "watchAccount",
       "getNetwork",
       "switchNetwork",
+      "watchAccount",
       "watchNetwork",
       "erc1155ABI",
       "erc20ABI",
@@ -30,6 +31,7 @@ it('should expose correct exports', () => {
       "UserRejectedRequestError",
       "createWagmiClient",
       "normalizeChainId",
+      "createStorage",
     ]
   `)
 })

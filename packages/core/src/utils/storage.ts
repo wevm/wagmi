@@ -2,7 +2,7 @@ export type WagmiStorage = Omit<
   Storage,
   'getItem' | 'setItem' | 'removeItem'
 > & {
-  getItem: <T>(key: string, defaultState: T | null) => T | null
+  getItem: <T>(key: string, defaultState?: T | null) => T | null
   setItem: <T>(key: string, value: T | null) => void
   removeItem: (key: string) => void
 }

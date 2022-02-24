@@ -5,13 +5,13 @@ export type FetchEnsNameArgs = {
 }
 
 export type FetchEnsNameResult = {
-  ensName?: string | null
+  ensName: string | null
 }
 
 export async function fetchEnsName({
   address,
 }: FetchEnsNameArgs): Promise<FetchEnsNameResult> {
-  const ensName = await wagmiClient.provider?.lookupAddress(address)
+  const ensName = await wagmiClient.provider.lookupAddress(address)
 
   return {
     ensName,

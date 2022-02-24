@@ -5,20 +5,23 @@ export {
   balanceAction,
   connect,
   disconnect,
+  fetchEnsName,
   getAccount,
-  watchAccount,
   getNetwork,
   switchNetwork,
+  watchAccount,
   watchNetwork,
 } from './actions'
 export type {
   AccountResult,
-  WatchAccountCallback,
   BalanceActionArgs,
   BalanceActionResult,
   ConnectResult,
+  FetchEnsNameArgs,
+  FetchEnsNameResult,
   NetworkResult,
   SwitchNetworkArgs,
+  WatchAccountCallback,
   WatchNetworkCallback,
 } from './actions'
 
@@ -44,7 +47,9 @@ export {
 } from './errors'
 
 export { createWagmiClient } from './client'
+export type { WagmiClient, WagmiClientConfig } from './client'
 
 export type { Balance, Chain, Unit } from './types'
 
-export { normalizeChainId } from './utils'
+export { normalizeChainId, createStorage } from './utils'
+export type { WagmiStorage } from './utils'
