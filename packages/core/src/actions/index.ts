@@ -8,7 +8,7 @@ export {
   switchNetwork,
   watchNetwork,
   fetchSigner,
-} from './account'
+} from './accounts'
 export type {
   GetAccountResult,
   ConnectResult,
@@ -21,7 +21,7 @@ export type {
   GetNetworkResult,
   SwitchNetworkArgs,
   WatchNetworkCallback,
-} from './account'
+} from './accounts'
 
 export { fetchEnsName } from './ens'
 export type { FetchEnsNameResult, FetchEnsNameArgs } from './ens'
