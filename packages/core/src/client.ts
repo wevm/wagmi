@@ -3,11 +3,14 @@ import {
   WebSocketProvider,
   getDefaultProvider,
 } from '@ethersproject/providers'
-import { GetState, SetState, default as create } from 'zustand/vanilla'
 import {
-  StoreApiWithSubscribeWithSelector,
-  subscribeWithSelector,
-} from 'zustand/middleware'
+  GetState,
+  Mutate,
+  SetState,
+  StoreApi,
+  default as create,
+} from 'zustand/vanilla'
+import { subscribeWithSelector } from 'zustand/middleware'
 
 import {
   InjectedConnector,
@@ -17,13 +20,6 @@ import {
 import { WagmiStorage, createStorage, noopStorage } from './utils/storage'
 
 export type WagmiClientConfig = {
-  /** Enables reconnecting to last used connector on mount */
-  autoConnect?: boolean
-  /**
-   * Key for saving connector preference to browser
-   * @default 'wagmi.wallet'
-   */
-  connectorStorageKey?: string
   /**
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
@@ -70,7 +66,7 @@ export type AutoConnectionChangedArgs = {
 
 export class WagmiClient {
   config: Partial<WagmiClientConfig>
-  store: StoreApiWithSubscribeWithSelector<Store>
+  store: Mutate<StoreApi<Store>, [['zustand/subscribeWithSelector', never]]>
 
   #storage?: WagmiStorage
   #lastUsedConnector?: string | null
@@ -93,7 +89,7 @@ export class WagmiClient {
       Store,
       SetState<Store>,
       GetState<Store>,
-      StoreApiWithSubscribeWithSelector<Store>
+      WagmiClient['store']
     >(subscribeWithSelector<Store>(() => ({ connectors: [] })))
 
     this.setStorage(storage)
