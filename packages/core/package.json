@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
-    "walletlink": "^2.2.8"
+    "walletlink": "^2.5.0"
   },
   "peerDependenciesMeta": {
     "@walletconnect/ethereum-provider": {
@@ -55,6 +55,6 @@
     "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
     "wagmi-testing": "0.1.12",
-    "walletlink": "^2.2.8"
+    "walletlink": "^2.5.0"
   }
 }
