@@ -10,6 +10,7 @@ export {
   getNetwork,
   signMessage,
   switchNetwork,
+  writeContract,
   watchAccount,
   watchContractEvent,
   watchNetwork,
