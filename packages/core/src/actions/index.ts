@@ -36,3 +36,9 @@ export type { GetContractArgs } from './contracts'
 
 export { fetchEnsName } from './ens'
 export type { FetchEnsNameResult, FetchEnsNameArgs } from './ens'
+
+export { sendTransaction, waitForTransaction } from './transactions'
+export type {
+  SendTransactionArgs,
+  WaitForTransactionArgs,
+} from './transactions'
