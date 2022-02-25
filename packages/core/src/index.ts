@@ -10,6 +10,7 @@ export {
   getNetwork,
   switchNetwork,
   watchAccount,
+  watchContractEvent,
   watchNetwork,
 } from './actions'
 export type {

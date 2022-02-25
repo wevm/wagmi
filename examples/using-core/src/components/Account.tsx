@@ -1,6 +1,8 @@
 import { disconnect, getAccount, watchAccount } from '@wagmi/core'
 import * as React from 'react'
 
+import Contract from './Contract'
+
 export const Account = () => {
   const [accountData, setAccountData] = React.useState(getAccount())
   React.useEffect(() => {
@@ -18,6 +20,7 @@ export const Account = () => {
         </button>
       </div>
       <div>{accountData?.address}</div>
+      <Contract />
       {/* <div>
         {accountData?.ens?.name ?? accountData?.address}
         {accountData?.ens ? ` (${accountData?.address})` : null}
