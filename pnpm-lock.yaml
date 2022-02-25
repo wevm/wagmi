@@ -223,7 +223,7 @@ importers:
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
       wagmi-testing: 0.1.12
-      walletlink: ^2.2.8
+      walletlink: ^2.5.0
     dependencies:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7
@@ -231,7 +231,7 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: 5.5.2
       wagmi-testing: link:../testing
-      walletlink: 2.3.0_@babel+core@7.16.5
+      walletlink: 2.5.0_@babel+core@7.16.5
 
   packages/react:
     specifiers:
@@ -243,12 +243,12 @@ importers:
       react: ^17.0.0
       wagmi-core: 0.1.12
       wagmi-testing: 0.1.12
-      walletlink: ^2.2.8
+      walletlink: ^2.5.0
     dependencies:
       '@ethersproject/providers': 5.5.1
       '@walletconnect/ethereum-provider': 1.7.1
       wagmi-core: link:../core
-      walletlink: 2.3.0_@babel+core@7.16.5
+      walletlink: 2.5.0_@babel+core@7.16.5
     devDependencies:
       '@testing-library/react-hooks': 7.0.2_react@17.0.2
       '@types/react': 17.0.37
@@ -14357,8 +14357,8 @@ packages:
       makeerror: 1.0.12
     dev: true
 
-  /walletlink/2.3.0_@babel+core@7.16.5:
-    resolution: {integrity: sha512-CXPYFnWFN/2Xgf62LBhApAiqQIazH7MeRw+Y/TB6oKpdBLQSLzL6k4sqZ6VBKb7wU5HDk+ErXY0QZ9OIFB+Ifw==}
+  /walletlink/2.5.0_@babel+core@7.16.5:
+    resolution: {integrity: sha512-PBJmK5tZmonwKPABBI2/optaZ11O4kKmkmnU5eLKhk4XRlal5qJ1igZ4U5j3w6w8wxxdhCWpLMHzGWt3n/p7mw==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
