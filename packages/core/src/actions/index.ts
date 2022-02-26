@@ -34,8 +34,13 @@ export type {
 export { getContract, writeContract, watchContractEvent } from './contracts'
 export type { GetContractArgs } from './contracts'
 
-export { fetchEnsName } from './ens'
-export type { FetchEnsNameResult, FetchEnsNameArgs } from './ens'
+export { fetchEnsAddress, fetchEnsName } from './ens'
+export type {
+  FetchEnsAddressArgs,
+  FetchEnsAddressResult,
+  FetchEnsNameResult,
+  FetchEnsNameArgs,
+} from './ens'
 
 export { sendTransaction, waitForTransaction } from './transactions'
 export type {

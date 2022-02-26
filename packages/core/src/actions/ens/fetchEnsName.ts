@@ -1,6 +1,7 @@
 import { wagmiClient } from '../../client'
 
 export type FetchEnsNameArgs = {
+  /** Address to lookup */
   address: string
 }
 
