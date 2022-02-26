@@ -1,8 +1,14 @@
 export {
   type FetchEnsAddressArgs,
   type FetchEnsAddressResult,
-  fetchEnsAddress,
+  fetchEnsAddress as fetchEnsAddress,
 } from './fetchEnsAddress'
+
+export {
+  type FetchEnsAvatarArgs,
+  type FetchEnsAvatarResult,
+  fetchEnsAvatar,
+} from './fetchEnsAvatar'
 
 export {
   type FetchEnsNameArgs,
@@ -20,6 +26,8 @@ export {
   type WatchEnsAddressCallback,
   watchEnsAddress,
 } from './watchEnsAddress'
+
+export { type WatchEnsAvatarCallback, watchEnsAvatar } from './watchEnsAvatar'
 
 export { type WatchEnsNameCallback, watchEnsName } from './watchEnsName'
 

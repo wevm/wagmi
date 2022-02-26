@@ -6,10 +6,9 @@ import { wagmiClient } from '../wagmi'
 
 const App = ({ Component, pageProps }: AppProps) => {
   React.useEffect(() => {
-    const autoConnect = async () => {
+    ;(async () => {
       await wagmiClient.autoConnect()
-    }
-    autoConnect()
+    })()
 
     return () => {
       wagmiClient.destroy()

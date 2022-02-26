@@ -33,20 +33,25 @@ export type { GetContractArgs } from './contracts'
 
 export {
   fetchEnsAddress,
+  fetchEnsAvatar,
   fetchEnsName,
   fetchEnsResolver,
   watchEnsAddress,
+  watchEnsAvatar,
   watchEnsName,
   watchEnsResolver,
 } from './ens'
 export type {
   FetchEnsAddressArgs,
   FetchEnsAddressResult,
+  FetchEnsAvatarArgs,
+  FetchEnsAvatarResult,
   FetchEnsNameResult,
   FetchEnsNameArgs,
   FetchEnsResolverArgs,
   FetchEnsResolverResult,
   WatchEnsAddressCallback,
+  WatchEnsAvatarCallback,
   WatchEnsNameCallback,
   WatchEnsResolverCallback,
 } from './ens'

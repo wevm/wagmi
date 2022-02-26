@@ -10,7 +10,7 @@ describe('fetchEnsResolver', () => {
     expect(result).toMatchInlineSnapshot(`null`)
   })
 
-  it('has ens resolver', async () => {
+  it('has resolver', async () => {
     setupWagmiClient()
     const result = await fetchEnsResolver({ name: wallets.ethers3.ensName })
     expect(result).toMatchInlineSnapshot(`
