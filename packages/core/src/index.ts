@@ -2,7 +2,6 @@ export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
 
 export {
-  balanceAction,
   connect,
   disconnect,
   fetchBalance,
@@ -19,13 +18,13 @@ export {
   watchAccount,
   watchBalance,
   watchContractEvent,
+  watchEnsAddress,
+  watchEnsName,
   watchNetwork,
   watchSigner,
   writeContract,
 } from './actions'
 export type {
-  BalanceActionArgs,
-  BalanceActionResult,
   ConnectResult,
   FetchBalanceArgs,
   FetchBalanceResult,
@@ -44,6 +43,8 @@ export type {
   WaitForTransactionArgs,
   WatchAccountCallback,
   WatchBalanceCallback,
+  WatchEnsAddressCallback,
+  WatchEnsNameCallback,
   WatchNetworkCallback,
   WatchSignerCallback,
 } from './actions'

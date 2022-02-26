@@ -5,7 +5,6 @@ it('should expose correct exports', () => {
     [
       "Connector",
       "InjectedConnector",
-      "balanceAction",
       "connect",
       "disconnect",
       "fetchBalance",
@@ -22,6 +21,8 @@ it('should expose correct exports', () => {
       "watchAccount",
       "watchBalance",
       "watchContractEvent",
+      "watchEnsAddress",
+      "watchEnsName",
       "watchNetwork",
       "watchSigner",
       "writeContract",

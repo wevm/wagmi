@@ -1,5 +1,4 @@
 export {
-  balanceAction,
   connect,
   disconnect,
   fetchBalance,
@@ -14,8 +13,6 @@ export {
   watchSigner,
 } from './accounts'
 export type {
-  BalanceActionArgs,
-  BalanceActionResult,
   ConnectResult,
   FetchBalanceArgs,
   FetchBalanceResult,
@@ -34,12 +31,19 @@ export type {
 export { getContract, writeContract, watchContractEvent } from './contracts'
 export type { GetContractArgs } from './contracts'
 
-export { fetchEnsAddress, fetchEnsName } from './ens'
+export {
+  fetchEnsAddress,
+  fetchEnsName,
+  watchEnsAddress,
+  watchEnsName,
+} from './ens'
 export type {
   FetchEnsAddressArgs,
   FetchEnsAddressResult,
   FetchEnsNameResult,
   FetchEnsNameArgs,
+  WatchEnsAddressCallback,
+  WatchEnsNameCallback,
 } from './ens'
 
 export { sendTransaction, waitForTransaction } from './transactions'

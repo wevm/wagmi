@@ -1,14 +1,7 @@
 import * as React from 'react'
 import { BigNumber } from 'ethers'
-import {
-  BalanceActionArgs,
-  balanceAction,
-  defaultChains,
-  defaultL2Chains,
-} from '@wagmi/core'
+import { FetchBalanceArgs, fetchBalance } from '@wagmi/core'
 
-import { useContext } from '../../context'
-import { useProvider } from '../providers'
 import { useBlockNumber } from '../network-status'
 import { useCacheBuster, useCancel } from '../utils'
 
@@ -17,7 +10,7 @@ export type Config = {
   skip?: boolean
   /** Subscribe to changes */
   watch?: boolean
-} & Partial<BalanceActionArgs['config']>
+} & Partial<FetchBalanceArgs>
 
 type State = {
   balance?: {
@@ -41,11 +34,7 @@ export const useBalance = ({
   token,
   watch,
 }: Config = {}) => {
-  const {
-    state: { connector },
-  } = useContext()
   const cacheBuster = useCacheBuster()
-  const provider = useProvider()
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
   const [state, setState] = React.useState<State>(initialState)
 
@@ -70,15 +59,7 @@ export const useBalance = ({
         if (!config_.addressOrName) throw new Error('address is required')
 
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const balance = await balanceAction({
-          chains: [
-            ...(connector?.chains ?? []),
-            ...defaultChains,
-            ...defaultL2Chains,
-          ],
-          config: <BalanceActionArgs['config']>config_,
-          provider,
-        })
+        const balance = await fetchBalance(config_)
         if (!didCancel) setState((x) => ({ ...x, balance, loading: false }))
 
         return { data: balance, error: undefined }
@@ -88,7 +69,7 @@ export const useBalance = ({
         return { data: undefined, error }
       }
     },
-    [addressOrName, cancelQuery, connector, formatUnits, provider, token],
+    [addressOrName, cancelQuery, formatUnits, token],
   )
 
   // Fetch balance when deps or chain changes

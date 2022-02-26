@@ -7,23 +7,19 @@ export type FetchEnsAddressArgs = {
   name: string
 }
 
-export type FetchEnsAddressResult = {
-  address: string | null
-}
+export type FetchEnsAddressResult = string | null
 
 export async function fetchEnsAddress({
   name,
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
   const address = await wagmiClient.provider.resolveName(name)
 
-  let checksumAddress: FetchEnsAddressResult['address']
+  let checksumAddress: FetchEnsAddressResult
   try {
     checksumAddress = address ? getAddress(address) : null
   } catch (_error) {
     checksumAddress = null
   }
 
-  return {
-    address: checksumAddress,
-  }
+  return checksumAddress
 }

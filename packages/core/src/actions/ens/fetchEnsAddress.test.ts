@@ -7,20 +7,14 @@ describe('fetchEnsAddress', () => {
   it('no result', async () => {
     setupWagmiClient()
     const result = await fetchEnsAddress({ name: 'foo.eth' })
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "address": null,
-      }
-    `)
+    expect(result).toMatchInlineSnapshot(`null`)
   })
 
   it('has ens name', async () => {
     setupWagmiClient()
     const result = await fetchEnsAddress({ name: wallets.ethers3.ensName })
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
-      }
-    `)
+    expect(result).toMatchInlineSnapshot(
+      `"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`,
+    )
   })
 })
