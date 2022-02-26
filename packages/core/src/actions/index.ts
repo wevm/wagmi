@@ -34,16 +34,21 @@ export type { GetContractArgs } from './contracts'
 export {
   fetchEnsAddress,
   fetchEnsName,
+  fetchEnsResolver,
   watchEnsAddress,
   watchEnsName,
+  watchEnsResolver,
 } from './ens'
 export type {
   FetchEnsAddressArgs,
   FetchEnsAddressResult,
   FetchEnsNameResult,
   FetchEnsNameArgs,
+  FetchEnsResolverArgs,
+  FetchEnsResolverResult,
   WatchEnsAddressCallback,
   WatchEnsNameCallback,
+  WatchEnsResolverCallback,
 } from './ens'
 
 export { sendTransaction, waitForTransaction } from './transactions'

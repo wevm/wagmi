@@ -6,8 +6,7 @@ import {
   wallets,
 } from 'wagmi-testing'
 
-import { createWagmiClient } from '../src'
-import { WagmiClientConfig } from '../src/client'
+import { WagmiClientConfig, createWagmiClient } from '../src'
 
 type Config = Partial<WagmiClientConfig> & {
   chainId?: number
@@ -23,12 +22,9 @@ export const setupWagmiClient = (config?: Config) => {
           network,
           privateKey: wallets.ethers1.privateKey,
         },
-      }) as any,
+      }),
     ],
     provider: new providers.InfuraProvider(network, infuraApiKey),
     ...config,
   })
 }
-
-export const getProvider = ({ chainId }: { chainId?: number } = {}) =>
-  new providers.InfuraProvider(chainId ?? 1, infuraApiKey)

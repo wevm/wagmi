@@ -5,7 +5,7 @@ import {
   fetchEnsName,
 } from './fetchEnsName'
 
-export type WatchEnsNameCallback = (address: FetchEnsNameResult) => void
+export type WatchEnsNameCallback = (name: FetchEnsNameResult) => void
 
 export function watchEnsName(
   args: FetchEnsNameArgs,
