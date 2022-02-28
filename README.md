@@ -1,33 +1,33 @@
+# wagmi
+
+React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).
+
 <p>
   <a aria-label="Version" href="https://www.npmjs.com/package/wagmi">
     <img
       alt=""
-      src="https://img.shields.io/npm/v/wagmi.svg?style=for-the-badge&labelColor=161c22"
+      src="https://img.shields.io/npm/v/wagmi?color=%23161b22&label=%20npm"
     />
   </a>
   <a aria-label="License" href="/LICENSE">
     <img
       alt=""
-      src="https://img.shields.io/npm/l/wagmi.svg?style=for-the-badge&labelColor=161c22"
+      src="https://img.shields.io/npm/l/wagmi?color=%23161b22"
     />
   </a>
   <a aria-label="Sponsors" href="https://github.com/sponsors/tmm">
     <img
       alt=""
-      src="https://img.shields.io/github/sponsors/tmm.svg?style=for-the-badge&labelColor=161c22"
+      src="https://img.shields.io/github/sponsors/tmm?color=%23161b22"
     />
   </a>
   <a aria-label="Downloads" href="https://www.npmjs.com/package/wagmi">
     <img
       alt=""
-      src="https://img.shields.io/npm/dm/wagmi.svg?style=for-the-badge&labelColor=161c22"
+      src="https://img.shields.io/npm/dm/wagmi?color=%23161b22"
     />
   </a>
 </p>
-
-# wagmi
-
-**React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).**
 
 ## Features
 
