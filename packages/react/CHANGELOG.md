@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.2.17
+
+### Patch Changes
+
+- [`8e9412a`](https://github.com/tmm/wagmi/commit/8e9412af71958301ae2f9748febb936e79900aa0) Thanks [@tmm](https://github.com/tmm)! - bump walletlink
+
+- Updated dependencies [[`8e9412a`](https://github.com/tmm/wagmi/commit/8e9412af71958301ae2f9748febb936e79900aa0)]:
+  - wagmi-core@0.1.13
+
 ## 0.2.16
 
 ### Patch Changes
