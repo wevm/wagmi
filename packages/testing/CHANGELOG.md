@@ -1,5 +1,23 @@
 # wagmi-testing
 
+## 0.1.13
+
+### Patch Changes
+
+- [`8e9412a`](https://github.com/tmm/wagmi/commit/8e9412af71958301ae2f9748febb936e79900aa0) Thanks [@tmm](https://github.com/tmm)! - bump walletlink
+
+- Updated dependencies [[`8e9412a`](https://github.com/tmm/wagmi/commit/8e9412af71958301ae2f9748febb936e79900aa0)]:
+  - wagmi-core@0.1.13
+
+## 0.1.12
+
+### Patch Changes
+
+- [#210](https://github.com/tmm/wagmi/pull/210) [`684468a`](https://github.com/tmm/wagmi/commit/684468aee3e42a1ce2b4b599f3f17d1819213de8) Thanks [@tmm](https://github.com/tmm)! - update chains to match chainslist.org
+
+- Updated dependencies [[`684468a`](https://github.com/tmm/wagmi/commit/684468aee3e42a1ce2b4b599f3f17d1819213de8)]:
+  - wagmi-core@0.1.12
+
 ## 0.1.11
 
 ### Patch Changes

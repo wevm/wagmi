@@ -10,13 +10,17 @@ type ChainName =
   | 'kovan'
   | 'localhost'
   | 'mainnet'
-  | 'optimisticEthereum'
-  | 'optimisticKovan'
+  | 'optimism'
+  | 'optimismKovan'
   | 'polygonMainnet'
   | 'polygonTestnetMumbai'
   | 'rinkeby'
   | 'ropsten'
 
+/**
+ * Data from Chainlist
+ * @see https://chainlist.org
+ */
 export const chain: Record<ChainName, Chain> = {
   mainnet: {
     id: 1,
@@ -82,10 +86,10 @@ export const chain: Record<ChainName, Chain> = {
     ],
     testnet: true,
   },
-  optimisticEthereum: {
+  optimism: {
     id: 10,
-    name: 'Optimistic Ethereum',
-    nativeCurrency: { name: 'Optimistic Ether', symbol: 'OETH', decimals: 18 },
+    name: 'Optimism',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.optimism.io'],
     blockExplorers: [
       {
@@ -94,9 +98,9 @@ export const chain: Record<ChainName, Chain> = {
       },
     ],
   },
-  optimisticKovan: {
+  optimismKovan: {
     id: 69,
-    name: 'Optimistic Kovan',
+    name: 'Optimism Kovan',
     nativeCurrency: {
       name: 'Kovan Ether',
       symbol: 'KOR',
@@ -106,7 +110,7 @@ export const chain: Record<ChainName, Chain> = {
     blockExplorers: [
       {
         name: 'Etherscan',
-        url: 'https://optimistic.etherscan.io',
+        url: 'https://kovan-optimistic.etherscan.io',
       },
     ],
     testnet: true,
@@ -114,7 +118,7 @@ export const chain: Record<ChainName, Chain> = {
   polygonMainnet: {
     id: 137,
     name: 'Polygon Mainnet',
-    nativeCurrency: { name: 'Matic', symbol: 'MATIC', decimals: 18 },
+    nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
     rpcUrls: [
       'https://polygon-rpc.com',
       'https://rpc-mainnet.matic.network',
@@ -132,9 +136,9 @@ export const chain: Record<ChainName, Chain> = {
   },
   polygonTestnetMumbai: {
     id: 80_001,
-    name: 'Polygon Testnet Mumbai',
+    name: 'Mumbai',
     nativeCurrency: {
-      name: 'Matic',
+      name: 'MATIC',
       symbol: 'MATIC',
       decimals: 18,
     },
@@ -166,9 +170,9 @@ export const chain: Record<ChainName, Chain> = {
   },
   arbitrumRinkeby: {
     id: 421_611,
-    name: 'Rinkeby Arbitrum',
+    name: 'Arbitrum Rinkeby',
     nativeCurrency: {
-      name: 'Rinkeby ArbEther',
+      name: 'Arbitrum Rinkeby Ether',
       symbol: 'ARETH',
       decimals: 18,
     },
@@ -183,27 +187,27 @@ export const chain: Record<ChainName, Chain> = {
   },
   avalanche: {
     id: 43_114,
-    name: 'Avalanche',
+    name: 'Avalanche Mainnet',
     nativeCurrency: {
-      name: 'AVAX',
+      name: 'Avalanche',
       symbol: 'AVAX',
       decimals: 18,
     },
     rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-    blockExplorers: [{ name: 'SnowTrace', url: 'https://snowtrace.io/' }],
+    blockExplorers: [{ name: 'SnowTrace', url: 'https://snowtrace.io' }],
     testnet: false,
   },
   avalancheFuji: {
     id: 43_113,
-    name: 'Avalanche FUJI',
+    name: 'Avalanche Fuji Testnet',
     nativeCurrency: {
-      name: 'AVAX',
+      name: 'Avalanche',
       symbol: 'AVAX',
       decimals: 18,
     },
     rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
     blockExplorers: [
-      { name: 'SnowTrace', url: 'https://testnet.snowtrace.io/' },
+      { name: 'SnowTrace', url: 'https://testnet.snowtrace.io' },
     ],
     testnet: true,
   },
@@ -230,8 +234,8 @@ export const defaultChains: Chain[] = [
 ]
 
 export const defaultL2Chains: Chain[] = [
-  chain.optimisticEthereum,
-  chain.optimisticKovan,
+  chain.optimism,
+  chain.optimismKovan,
   chain.polygonMainnet,
   chain.polygonTestnetMumbai,
   chain.arbitrumOne,

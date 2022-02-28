@@ -99,7 +99,7 @@ importers:
       siwe: ^1.1.0
       tailwindcss: ^3.0.19
       typescript: 4.5.4
-      wagmi: 0.2.15
+      wagmi: 0.2.17
     dependencies:
       '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
       degen: 0.0.49_react-dom@17.0.2+react@17.0.2
@@ -135,7 +135,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       typescript: 4.5.4
-      wagmi: 0.2.15
+      wagmi: 0.2.17
     dependencies:
       ethers: 5.5.2
       next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
@@ -167,7 +167,7 @@ importers:
       remix: ^1.1.1
       safe-event-emitter: ^1.0.1
       typescript: ^4.1.2
-      wagmi: 0.2.15
+      wagmi: 0.2.17
     dependencies:
       '@esbuild-plugins/node-globals-polyfill': 0.1.1
       '@esbuild-plugins/node-modules-polyfill': 0.1.4
@@ -228,7 +228,7 @@ importers:
       typescript: ^4.4.4
       util: ^0.12.4
       vite: ^2.7.2
-      wagmi: 0.2.15
+      wagmi: 0.2.17
     dependencies:
       buffer: 6.0.3
       ethers: 5.5.2
@@ -251,8 +251,8 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
-      wagmi-testing: 0.1.11
-      walletlink: ^2.2.8
+      wagmi-testing: 0.1.13
+      walletlink: ^2.5.0
       zustand: ^3.7.0
     dependencies:
       '@ethersproject/providers': 5.5.1
@@ -262,7 +262,7 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: 5.5.2
       wagmi-testing: link:../testing
-      walletlink: 2.3.0_@babel+core@7.16.5
+      walletlink: 2.5.0_@babel+core@7.16.5
 
   packages/react:
     specifiers:
@@ -273,13 +273,13 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       react: ^17.0.0
-      wagmi-testing: 0.1.11
-      walletlink: ^2.2.8
+      wagmi-testing: 0.1.13
+      walletlink: ^2.5.0
     dependencies:
       '@ethersproject/providers': 5.5.1
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.1
-      walletlink: 2.3.0_@babel+core@7.16.5
+      walletlink: 2.5.0_@babel+core@7.16.5
     devDependencies:
       '@testing-library/react-hooks': 7.0.2_react@17.0.2
       '@types/react': 17.0.37
@@ -14392,8 +14392,8 @@ packages:
       makeerror: 1.0.12
     dev: true
 
-  /walletlink/2.3.0_@babel+core@7.16.5:
-    resolution: {integrity: sha512-CXPYFnWFN/2Xgf62LBhApAiqQIazH7MeRw+Y/TB6oKpdBLQSLzL6k4sqZ6VBKb7wU5HDk+ErXY0QZ9OIFB+Ifw==}
+  /walletlink/2.5.0_@babel+core@7.16.5:
+    resolution: {integrity: sha512-PBJmK5tZmonwKPABBI2/optaZ11O4kKmkmnU5eLKhk4XRlal5qJ1igZ4U5j3w6w8wxxdhCWpLMHzGWt3n/p7mw==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
