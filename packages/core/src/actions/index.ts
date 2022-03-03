@@ -56,6 +56,8 @@ export type {
   WatchEnsResolverCallback,
 } from './ens'
 
+export { fetchBlockNumber, watchBlockNumber } from './network-status'
+
 export { sendTransaction, waitForTransaction } from './transactions'
 export type {
   SendTransactionArgs,

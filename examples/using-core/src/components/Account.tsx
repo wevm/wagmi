@@ -1,7 +1,15 @@
-import { disconnect, getAccount, watchAccount } from '@wagmi/core'
+import {
+  disconnect,
+  fetchEnsAvatar,
+  fetchEnsName,
+  getAccount,
+  watchAccount,
+  watchEnsAvatar,
+  watchEnsName,
+} from '@wagmi/core'
 import * as React from 'react'
 
-import Contract from './Contract'
+import BlockNumber from './BlockNumber'
 
 export const Account = () => {
   const [accountData, setAccountData] = React.useState(getAccount())
@@ -9,6 +17,35 @@ export const Account = () => {
     const unwatch = watchAccount(setAccountData)
     return unwatch
   }, [])
+
+  const [ensName, setEnsName] = React.useState('')
+  React.useEffect(() => {
+    ;(async () => {
+      const ensName = await fetchEnsName({ address: accountData.address })
+      setEnsName(ensName)
+    })()
+
+    const unwatch = watchEnsName({ address: accountData.address }, setEnsName)
+    return unwatch
+  }, [accountData.address])
+
+  const [ensAvatar, setEnsAvatar] = React.useState('')
+  React.useEffect(() => {
+    ;(async () => {
+      const ensAvatar = await fetchEnsAvatar({
+        addressOrName: ensName,
+      })
+      setEnsAvatar(ensAvatar)
+    })()
+
+    const unwatch = watchEnsAvatar(
+      {
+        addressOrName: ensName,
+      },
+      setEnsAvatar,
+    )
+    return unwatch
+  }, [ensName])
 
   if (!accountData) return <div>No account connected</div>
 
@@ -20,14 +57,12 @@ export const Account = () => {
         </button>
       </div>
       <div>{accountData?.address}</div>
-      <Contract />
-      {/* <div>
-        {accountData?.ens?.name ?? accountData?.address}
-        {accountData?.ens ? ` (${accountData?.address})` : null}
+      <div>
+        {ensName ?? accountData?.address}
+        {ensName ? ` (${accountData?.address})` : null}
       </div>
-      {accountData?.ens?.avatar && (
-        <img src={accountData.ens.avatar} style={{ height: 40, width: 40 }} />
-      )} */}
+      {ensAvatar && <img src={ensAvatar} style={{ height: 40, width: 40 }} />}
+      <BlockNumber />
     </div>
   )
 }

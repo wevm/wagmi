@@ -147,11 +147,11 @@ describe('getNetwork', () => {
           "blockExplorers": [
             {
               "name": "Etherscan",
-              "url": "https://optimistic.etherscan.io",
+              "url": "https://kovan-optimistic.etherscan.io",
             },
           ],
           "id": 69,
-          "name": "Optimistic Kovan",
+          "name": "Optimism Kovan",
           "nativeCurrency": {
             "decimals": 18,
             "name": "Kovan Ether",

@@ -192,7 +192,7 @@ importers:
       '@preconstruct/next': ^3.0.1
       '@types/node': 17.0.5
       '@types/react': 17.0.38
-      '@wagmi/core': 0.1.11
+      '@wagmi/core': 0.1.13
       eslint: 8.5.0
       eslint-config-next: 12.0.7
       ethers: ^5.5.1
@@ -269,7 +269,7 @@ importers:
       '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
-      '@wagmi/core': 0.1.11
+      '@wagmi/core': 0.1.13
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       react: ^17.0.0
@@ -290,7 +290,7 @@ importers:
   packages/testing:
     specifiers:
       '@ethersproject/providers': ^5.5.1
-      '@wagmi/core': 0.1.11
+      '@wagmi/core': 0.1.13
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
       msw: ^0.36.3
