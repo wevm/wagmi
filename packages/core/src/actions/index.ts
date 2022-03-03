@@ -71,6 +71,9 @@ export type {
   WatchFeeDataCallback,
 } from './network-status'
 
+export { fetchToken } from './tokens'
+export type { FetchTokenArgs, FetchTokenResponse } from './tokens'
+
 export { sendTransaction, waitForTransaction } from './transactions'
 export type {
   SendTransactionArgs,
