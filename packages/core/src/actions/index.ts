@@ -56,7 +56,20 @@ export type {
   WatchEnsResolverCallback,
 } from './ens'
 
-export { fetchBlockNumber, watchBlockNumber } from './network-status'
+export {
+  fetchBlockNumber,
+  fetchFeeData,
+  watchBlockNumber,
+  watchFeeData,
+} from './network-status'
+export type {
+  FetchFeeDataArgs,
+  FetchFeeDataResult,
+  WatchBlockNumberArgs,
+  WatchBlockNumberCallback,
+  WatchFeeDataArgs,
+  WatchFeeDataCallback,
+} from './network-status'
 
 export { sendTransaction, waitForTransaction } from './transactions'
 export type {

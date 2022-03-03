@@ -7,7 +7,7 @@ export default function BlockNumber() {
   useEffect(() => {
     ;(async () => {
       setBlockNumber(await fetchBlockNumber())
-      const unwatch = watchBlockNumber(setBlockNumber)
+      const unwatch = watchBlockNumber({ listen: true }, setBlockNumber)
       return unwatch
     })()
   }, [])
