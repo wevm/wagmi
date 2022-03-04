@@ -8,7 +8,7 @@ export type FetchTokenArgs = {
   address?: string
   formatUnits?: Unit | number
 }
-export type FetchTokenResponse = {
+export type FetchTokenResult = {
   address: string
   decimals: number
   symbol: string

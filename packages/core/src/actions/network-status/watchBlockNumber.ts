@@ -1,10 +1,12 @@
 import { BaseProvider } from '@ethersproject/providers'
 
 import { wagmiClient } from '../../client'
-import { fetchBlockNumber } from './fetchBlockNumber'
+import { FetchBlockNumberResult, fetchBlockNumber } from './fetchBlockNumber'
 
 export type WatchBlockNumberArgs = { listen: boolean }
-export type WatchBlockNumberCallback = (blockNumber: number) => void
+export type WatchBlockNumberCallback = (
+  blockNumber: FetchBlockNumberResult,
+) => void
 
 export function watchBlockNumber(
   args: WatchBlockNumberArgs,
@@ -12,7 +14,7 @@ export function watchBlockNumber(
 ) {
   let prevProvider: BaseProvider
   const createListener = (provider: BaseProvider) => {
-    const listener = (blockNumber: number) => {
+    const listener = (blockNumber: FetchBlockNumberResult) => {
       callback(blockNumber)
     }
     if (prevProvider) {

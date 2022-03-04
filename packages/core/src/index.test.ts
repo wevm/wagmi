@@ -34,6 +34,7 @@ it('should expose correct exports', () => {
       "watchFeeData",
       "watchNetwork",
       "watchSigner",
+      "watchToken",
       "writeContract",
       "erc1155ABI",
       "erc20ABI",

@@ -63,6 +63,7 @@ export {
   watchFeeData,
 } from './network-status'
 export type {
+  FetchBlockNumberResult,
   FetchFeeDataArgs,
   FetchFeeDataResult,
   WatchBlockNumberArgs,
@@ -71,8 +72,12 @@ export type {
   WatchFeeDataCallback,
 } from './network-status'
 
-export { fetchToken } from './tokens'
-export type { FetchTokenArgs, FetchTokenResponse } from './tokens'
+export { fetchToken, watchToken } from './tokens'
+export type {
+  FetchTokenArgs,
+  FetchTokenResult,
+  WatchTokenCallback,
+} from './tokens'
 
 export { sendTransaction, waitForTransaction } from './transactions'
 export type {

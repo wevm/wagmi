@@ -1,4 +1,7 @@
-export { fetchBlockNumber } from './fetchBlockNumber'
+export {
+  type FetchBlockNumberResult,
+  fetchBlockNumber,
+} from './fetchBlockNumber'
 export {
   type FetchFeeDataResult,
   type FetchFeeDataArgs,

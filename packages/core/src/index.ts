@@ -31,12 +31,14 @@ export {
   watchFeeData,
   watchNetwork,
   watchSigner,
+  watchToken,
   writeContract,
 } from './actions'
 export type {
   ConnectResult,
   FetchBalanceArgs,
   FetchBalanceResult,
+  FetchBlockNumberResult,
   FetchEnsAddressArgs,
   FetchEnsAddressResult,
   FetchEnsAvatarArgs,
@@ -49,7 +51,7 @@ export type {
   FetchFeeDataResult,
   FetchSignerResult,
   FetchTokenArgs,
-  FetchTokenResponse,
+  FetchTokenResult,
   GetAccountResult,
   GetContractArgs,
   GetNetworkResult,
@@ -69,6 +71,7 @@ export type {
   WatchFeeDataArgs,
   WatchFeeDataCallback,
   WatchNetworkCallback,
+  WatchTokenCallback,
   WatchSignerCallback,
 } from './actions'
 
