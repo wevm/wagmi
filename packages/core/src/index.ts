@@ -16,6 +16,7 @@ export {
   getAccount,
   getContract,
   getNetwork,
+  readContract,
   sendTransaction,
   signMessage,
   switchNetwork,
@@ -30,6 +31,7 @@ export {
   watchEnsResolver,
   watchFeeData,
   watchNetwork,
+  watchReadContract,
   watchSigner,
   watchToken,
   writeContract,
@@ -55,6 +57,9 @@ export type {
   GetAccountResult,
   GetContractArgs,
   GetNetworkResult,
+  ReadContractArgs,
+  ReadContractConfig,
+  ReadContractResult,
   SendTransactionArgs,
   SignMessageArgs,
   SignMessageResult,
@@ -71,8 +76,11 @@ export type {
   WatchFeeDataArgs,
   WatchFeeDataCallback,
   WatchNetworkCallback,
-  WatchTokenCallback,
+  WatchReadContractArgs,
+  WatchReadContractConfig,
+  WatchReadContractResult,
   WatchSignerCallback,
+  WatchTokenCallback,
 } from './actions'
 
 export {

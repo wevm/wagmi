@@ -28,8 +28,22 @@ export type {
   WatchSignerCallback,
 } from './accounts'
 
-export { getContract, writeContract, watchContractEvent } from './contracts'
-export type { GetContractArgs } from './contracts'
+export {
+  getContract,
+  readContract,
+  writeContract,
+  watchReadContract,
+  watchContractEvent,
+} from './contracts'
+export type {
+  GetContractArgs,
+  ReadContractArgs,
+  ReadContractConfig,
+  ReadContractResult,
+  WatchReadContractArgs,
+  WatchReadContractConfig,
+  WatchReadContractResult,
+} from './contracts'
 
 export {
   fetchEnsAddress,

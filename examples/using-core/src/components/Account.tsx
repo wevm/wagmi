@@ -9,8 +9,10 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import BlockNumber from './BlockNumber'
-import FeeData from './FeeData'
+// import BlockNumber from './BlockNumber'
+// import Contract from './Contract'
+// import FeeData from './FeeData'
+// import ReadContract from './ReadContract'
 
 export const Account = () => {
   const [accountData, setAccountData] = React.useState(getAccount())
@@ -71,8 +73,10 @@ export const Account = () => {
         {ensName ? ` (${accountData?.address})` : null}
       </div>
       {ensAvatar && <img src={ensAvatar} style={{ height: 40, width: 40 }} />}
-      <BlockNumber />
-      <FeeData />
+      {/* <Contract /> */}
+      {/* <BlockNumber /> */}
+      {/* <FeeData /> */}
+      {/* <ReadContract /> */}
     </div>
   )
 }

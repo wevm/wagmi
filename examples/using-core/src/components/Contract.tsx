@@ -16,5 +16,5 @@ export default function Contract() {
     )
     return unwatch
   }, [])
-  return <div>New owner: {owner}</div>
+  return <div>New ENS owner: {owner}</div>
 }
