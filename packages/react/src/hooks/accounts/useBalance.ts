@@ -1,11 +1,6 @@
 import * as React from 'react'
-import { BigNumber } from 'ethers'
-import {
-  BalanceActionArgs,
-  balanceAction,
-  defaultChains,
-  defaultL2Chains,
-} from 'wagmi-core'
+import { BigNumber, ethers, utils } from 'ethers'
+import { Unit, defaultChains, defaultL2Chains, erc20ABI } from '@wagmi/core'
 
 import { useContext } from '../../context'
 import { useProvider } from '../providers'
@@ -13,17 +8,24 @@ import { useBlockNumber } from '../network-status'
 import { useCacheBuster, useCancel } from '../utils'
 
 export type Config = {
+  /** Address or ENS name */
+  addressOrName?: string
+  /** Units for formatting output */
+  formatUnits?: Unit | number
   /** Disables fetching */
   skip?: boolean
+  /** ERC-20 address */
+  token?: string
   /** Subscribe to changes */
   watch?: boolean
-} & Partial<BalanceActionArgs['config']>
+}
 
 type State = {
   balance?: {
     decimals: number
     formatted: string
     symbol: string
+    unit: Unit | number
     value: BigNumber
   }
   error?: Error
@@ -69,22 +71,54 @@ export const useBalance = ({
         }
         if (!config_.addressOrName) throw new Error('address is required')
 
+        const formatUnits_ = config_.formatUnits ?? 'ether'
+
         setState((x) => ({ ...x, error: undefined, loading: true }))
-        const balance = await balanceAction({
-          chains: [
+        let balance: State['balance']
+        if (config_.token) {
+          const contract = new ethers.Contract(
+            config_.token,
+            erc20ABI,
+            provider,
+          )
+          const [value, decimals, symbol] = await Promise.all([
+            contract.balanceOf(config_.addressOrName),
+            contract.decimals(),
+            contract.symbol(),
+          ])
+          balance = {
+            decimals,
+            formatted: utils.formatUnits(value, formatUnits_),
+            symbol,
+            unit: formatUnits_,
+            value,
+          }
+        } else {
+          const value = await provider.getBalance(config_.addressOrName)
+          const chain = [
             ...(connector?.chains ?? []),
             ...defaultChains,
             ...defaultL2Chains,
-          ],
-          config: <BalanceActionArgs['config']>config_,
-          provider,
-        })
-        if (!didCancel) setState((x) => ({ ...x, balance, loading: false }))
+          ].find((x) => x.id === provider.network.chainId)
+          balance = {
+            decimals: chain?.nativeCurrency?.decimals ?? 18,
+            formatted: utils.formatUnits(value, formatUnits_),
+            symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
+            unit: formatUnits_,
+            value,
+          }
+        }
+
+        if (!didCancel) {
+          setState((x) => ({ ...x, balance, loading: false }))
+        }
 
         return { data: balance, error: undefined }
       } catch (error_) {
         const error = <Error>error_
-        if (!didCancel) setState((x) => ({ ...x, error, loading: false }))
+        if (!didCancel) {
+          setState((x) => ({ ...x, error, loading: false }))
+        }
         return { data: undefined, error }
       }
     },

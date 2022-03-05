@@ -11,7 +11,7 @@ import {
   infuraApiKey,
   wallets,
 } from 'wagmi-testing'
-import { chain } from 'wagmi-core'
+import { chain } from '@wagmi/core'
 
 import { Provider, ProviderProps } from '../src'
 

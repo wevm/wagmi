@@ -1,8 +1,87 @@
 export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
 
-export type { BalanceActionArgs, BalanceActionResult } from './actions'
-export { balanceAction } from './actions'
+export {
+  connect,
+  disconnect,
+  fetchBalance,
+  fetchBlockNumber,
+  fetchEnsAddress,
+  fetchEnsAvatar,
+  fetchEnsName,
+  fetchEnsResolver,
+  fetchFeeData,
+  fetchSigner,
+  fetchToken,
+  getAccount,
+  getContract,
+  getNetwork,
+  readContract,
+  sendTransaction,
+  signMessage,
+  switchNetwork,
+  waitForTransaction,
+  watchAccount,
+  watchBalance,
+  watchBlockNumber,
+  watchContractEvent,
+  watchEnsAddress,
+  watchEnsAvatar,
+  watchEnsName,
+  watchEnsResolver,
+  watchFeeData,
+  watchNetwork,
+  watchReadContract,
+  watchSigner,
+  watchToken,
+  writeContract,
+} from './actions'
+export type {
+  ConnectResult,
+  FetchBalanceArgs,
+  FetchBalanceResult,
+  FetchBlockNumberResult,
+  FetchEnsAddressArgs,
+  FetchEnsAddressResult,
+  FetchEnsAvatarArgs,
+  FetchEnsAvatarResult,
+  FetchEnsNameArgs,
+  FetchEnsNameResult,
+  FetchEnsResolverArgs,
+  FetchEnsResolverResult,
+  FetchFeeDataArgs,
+  FetchFeeDataResult,
+  FetchSignerResult,
+  FetchTokenArgs,
+  FetchTokenResult,
+  GetAccountResult,
+  GetContractArgs,
+  GetNetworkResult,
+  ReadContractArgs,
+  ReadContractConfig,
+  ReadContractResult,
+  SendTransactionArgs,
+  SignMessageArgs,
+  SignMessageResult,
+  SwitchNetworkArgs,
+  WaitForTransactionArgs,
+  WatchAccountCallback,
+  WatchBalanceCallback,
+  WatchBlockNumberArgs,
+  WatchBlockNumberCallback,
+  WatchEnsAddressCallback,
+  WatchEnsAvatarCallback,
+  WatchEnsNameCallback,
+  WatchEnsResolverCallback,
+  WatchFeeDataArgs,
+  WatchFeeDataCallback,
+  WatchNetworkCallback,
+  WatchReadContractArgs,
+  WatchReadContractConfig,
+  WatchReadContractResult,
+  WatchSignerCallback,
+  WatchTokenCallback,
+} from './actions'
 
 export {
   erc1155ABI,
@@ -25,6 +104,10 @@ export {
   UserRejectedRequestError,
 } from './errors'
 
+export { createWagmiClient } from './client'
+export type { WagmiClient, WagmiClientConfig } from './client'
+
 export type { Balance, Chain, Unit } from './types'
 
-export { normalizeChainId } from './utils'
+export { normalizeChainId, createStorage } from './utils'
+export type { WagmiStorage } from './utils'

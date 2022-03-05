@@ -1,5 +1,5 @@
 {
-  "name": "wagmi-core",
+  "name": "@wagmi/core",
   "license": "MIT",
   "version": "0.1.13",
   "ethereum": "awkweb.eth",
@@ -49,7 +49,8 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
-    "eventemitter3": "^4.0.7"
+    "eventemitter3": "^4.0.7",
+    "zustand": "^3.7.0"
   },
   "devDependencies": {
     "@walletconnect/ethereum-provider": "1.7.1",

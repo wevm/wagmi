@@ -7,7 +7,7 @@ const path = require('path')
   const packages = glob.sync('packages/*', {
     onlyDirectories: true,
     absolute: true,
-    ignore: ['packages/private'],
+    ignore: ['packages/core'],
   })
 
   for (const packageDir of packages) {

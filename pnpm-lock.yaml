@@ -125,6 +125,7 @@ importers:
 
   examples/next:
     specifiers:
+      '@preconstruct/next': 3.0.1
       '@types/node': 17.0.5
       '@types/react': 17.0.38
       eslint: 8.5.0
@@ -142,6 +143,7 @@ importers:
       react-dom: 17.0.2_react@17.0.2
       wagmi: link:../../packages/react
     devDependencies:
+      '@preconstruct/next': 3.0.1
       '@types/node': 17.0.5
       '@types/react': 17.0.38
       eslint: 8.5.0
@@ -185,6 +187,33 @@ importers:
       '@types/react-dom': 17.0.11
       typescript: 4.5.4
 
+  examples/using-core:
+    specifiers:
+      '@preconstruct/next': ^3.0.1
+      '@types/node': 17.0.5
+      '@types/react': 17.0.38
+      '@wagmi/core': 0.1.13
+      eslint: 8.5.0
+      eslint-config-next: 12.0.7
+      ethers: ^5.5.1
+      next: 12.0.7
+      react: 17.0.2
+      react-dom: 17.0.2
+      typescript: 4.5.4
+    dependencies:
+      '@wagmi/core': link:../../packages/core
+      ethers: 5.5.2
+      next: 12.0.7_08e041ced5dbc85933fef7a25e63a057
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    devDependencies:
+      '@preconstruct/next': 3.0.1
+      '@types/node': 17.0.5
+      '@types/react': 17.0.38
+      eslint: 8.5.0
+      eslint-config-next: 12.0.7_151adb91c2dbffa9bf336078aa7406b9
+      typescript: 4.5.4
+
   examples/vite-react:
     specifiers:
       '@types/react': ^17.0.33
@@ -224,9 +253,11 @@ importers:
       eventemitter3: ^4.0.7
       wagmi-testing: 0.1.13
       walletlink: ^2.5.0
+      zustand: ^3.7.0
     dependencies:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7
+      zustand: 3.7.0
     devDependencies:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: 5.5.2
@@ -238,16 +269,16 @@ importers:
       '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
+      '@wagmi/core': 0.1.13
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       react: ^17.0.0
-      wagmi-core: 0.1.13
       wagmi-testing: 0.1.13
       walletlink: ^2.5.0
     dependencies:
       '@ethersproject/providers': 5.5.1
+      '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.1
-      wagmi-core: link:../core
       walletlink: 2.5.0_@babel+core@7.16.5
     devDependencies:
       '@testing-library/react-hooks': 7.0.2_react@17.0.2
@@ -259,17 +290,17 @@ importers:
   packages/testing:
     specifiers:
       '@ethersproject/providers': ^5.5.1
+      '@wagmi/core': 0.1.13
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
       msw: ^0.36.3
       ts-pattern: ^3.3.4
-      wagmi-core: 0.1.13
     dependencies:
       '@ethersproject/providers': 5.5.1
+      '@wagmi/core': link:../core
       eventemitter3: 4.0.7
       msw: 0.36.3
       ts-pattern: 3.3.4
-      wagmi-core: link:../core
     devDependencies:
       ethers: 5.5.2
 
@@ -3016,6 +3047,10 @@ packages:
       source-map-support: 0.5.21
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@preconstruct/next/3.0.1:
+    resolution: {integrity: sha512-b9q1US5vsUzHPeMGlCFGWdttAHQ2q6raFlY1vf5binrKMkki/gt6GvskTJ4RXfFCt7QmVx9tRcuTFXMhUDgb6A==}
     dev: true
 
   /@reach/skip-nav/0.16.0_react-dom@17.0.2+react@17.0.2:
@@ -14803,6 +14838,16 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  /zustand/3.7.0:
+    resolution: {integrity: sha512-USzVzLGrvZ8VK1/sEsOAmeqa8N7D3OBdZskVaL7DL89Q4QLTYD053iIlZ5KDidyZ+Od80Dttin/f8ZulOLFFDQ==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dev: false
 
   /zwitch/2.0.2:
     resolution: {integrity: sha512-JZxotl7SxAJH0j7dN4pxsTV6ZLXoLdGME+PsjkL/DaBrVryK9kTGq06GfKrwcSOqypP+fdXGoCHE36b99fWVoA==}

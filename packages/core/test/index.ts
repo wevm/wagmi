@@ -1,5 +1,30 @@
 import { providers } from 'ethers'
-import { infuraApiKey } from 'wagmi-testing'
+import {
+  MockConnector,
+  defaultChains,
+  infuraApiKey,
+  wallets,
+} from 'wagmi-testing'
 
-export const getProvider = ({ chainId }: { chainId?: number } = {}) =>
-  new providers.InfuraProvider(chainId ?? 1, infuraApiKey)
+import { WagmiClientConfig, createWagmiClient } from '../src'
+
+type Config = Partial<WagmiClientConfig> & {
+  chainId?: number
+}
+
+export const setupWagmiClient = (config?: Config) => {
+  const network = config?.chainId ?? 1
+  return createWagmiClient({
+    connectors: [
+      new MockConnector({
+        chains: defaultChains,
+        options: {
+          network,
+          privateKey: wallets.ethers1.privateKey,
+        },
+      }),
+    ],
+    provider: new providers.InfuraProvider(network, infuraApiKey),
+    ...config,
+  })
+}

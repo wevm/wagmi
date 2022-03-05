@@ -49,6 +49,7 @@ export class InjectedConnector extends Connector<
     chains?: Chain[]
     options?: InjectedConnectorOptions
   }) {
+    // TODO(note): Should shimDisconnect be default truthy??
     super({ ...config, options: config?.options })
 
     let name = 'Injected'
@@ -225,10 +226,13 @@ export class InjectedConnector extends Connector<
     this.emit('change', { chain: { id, unsupported } })
   }
 
-  protected onDisconnect = () => {
-    this.emit('disconnect')
+  protected onDisconnect = (err: Error) => {
+    // TODO: this is a hack, probs better way to deal
+    if (!err.message.includes('Attempting to connect.')) {
+      this.emit('disconnect')
 
-    if (this.options?.shimDisconnect)
-      typeof localStorage !== 'undefined' && localStorage.removeItem(shimKey)
+      if (this.options?.shimDisconnect)
+        typeof localStorage !== 'undefined' && localStorage.removeItem(shimKey)
+    }
   }
 }
