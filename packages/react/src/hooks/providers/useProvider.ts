@@ -1,6 +1,6 @@
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 
 export const useProvider = () => {
-  const { state } = useContext()
+  const { state } = useClient()
   return state.provider
 }

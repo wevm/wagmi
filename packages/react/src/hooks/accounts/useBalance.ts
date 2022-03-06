@@ -2,7 +2,7 @@ import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
 import { Unit, defaultChains, defaultL2Chains, erc20ABI } from '@wagmi/core'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { useProvider } from '../providers'
 import { useBlockNumber } from '../network-status'
 import { useCacheBuster, useCancel } from '../utils'
@@ -45,7 +45,7 @@ export const useBalance = ({
 }: Config = {}) => {
   const {
     state: { connector },
-  } = useContext()
+  } = useClient()
   const cacheBuster = useCacheBuster()
   const provider = useProvider()
   const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })

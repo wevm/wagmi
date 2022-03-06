@@ -3,7 +3,7 @@ import { CallOverrides, ethers } from 'ethers'
 import { TransactionResponse } from '@ethersproject/providers'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '@wagmi/core'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { Config as UseContractConfig, useContract } from './useContract'
 import { useCancel } from '../utils'
 
@@ -32,7 +32,7 @@ export const useContractWrite = <
 ) => {
   const {
     state: { connector },
-  } = useContext()
+  } = useClient()
 
   const contract = useContract<Contract>(contractConfig)
   const [state, setState] = React.useState<State>(initialState)

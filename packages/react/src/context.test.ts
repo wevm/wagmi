@@ -1,20 +1,20 @@
 import * as React from 'react'
 
 import { renderHook, wrapper } from '../test'
-import { useContext } from './context'
+import { useClient } from './context'
 
 describe('useContext', () => {
   it('should throw when not inside Provider', () => {
     const wrapper = ({ children }: { children: React.ReactElement }) =>
       React.createElement('div', { children })
-    const { result } = renderHook(() => useContext(), { wrapper })
+    const { result } = renderHook(() => useClient(), { wrapper })
     expect(() => result.current).toThrowErrorMatchingInlineSnapshot(
-      `"Must be used within Provider"`,
+      `"Must be used within WagmiProvider"`,
     )
   })
 
   it('inits', () => {
-    const { result } = renderHook(() => useContext())
+    const { result } = renderHook(() => useClient())
     const state = result.current.state
     const { connectors, provider, ...rest } = state
     expect(rest).toMatchInlineSnapshot(`
@@ -31,7 +31,7 @@ describe('useContext', () => {
   })
 
   it('autoConnect', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useContext(), {
+    const { result, waitForNextUpdate } = renderHook(() => useClient(), {
       wrapper,
       initialProps: {
         autoConnect: true,

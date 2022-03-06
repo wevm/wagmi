@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Bytes } from 'ethers/lib/utils'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '@wagmi/core'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { useCancel } from '../utils'
 
 export type Config = {
@@ -23,7 +23,7 @@ const initialState: State = {
 export const useSignMessage = ({ message }: Config = {}) => {
   const {
     state: { connector },
-  } = useContext()
+  } = useClient()
   const [state, setState] = React.useState<State>(initialState)
 
   const cancelQuery = useCancel()

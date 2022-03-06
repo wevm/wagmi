@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Chain, SwitchChainError, allChains } from '@wagmi/core'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { useCancel } from '../utils'
 
 type State = {
@@ -16,7 +16,7 @@ const initialState: State = {
 export const useNetwork = () => {
   const {
     state: { connector, data },
-  } = useContext()
+  } = useClient()
   const [state, setState] = React.useState<State>(initialState)
 
   const chainId = data?.chain?.id

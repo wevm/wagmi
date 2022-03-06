@@ -1,7 +1,7 @@
 export {
   Provider,
   Provider as WagmiProvider,
-  useContext,
+  useClient as useContext,
   Context,
 } from './context'
 export type {
@@ -9,35 +9,21 @@ export type {
   Props as WagmiProviderProps,
 } from './context'
 
-export {
-  useAccount,
-  useBalance,
-  useBlockNumber,
-  useConnect,
-  useContract,
-  useContractEvent,
-  useContractRead,
-  useContractWrite,
-  useEnsAvatar,
-  useEnsLookup,
-  useEnsResolveName,
-  useEnsResolver,
-  useFeeData,
-  useNetwork,
-  useProvider,
-  useSigner,
-  useSignMessage,
-  useToken,
-  useTransaction,
-  useWaitForTransaction,
-  useWebSocketProvider,
-} from './hooks'
+export { useConnect } from './hooks'
 
 export {
+  AddChainError,
+  ChainNotConfiguredError,
   Connector,
+  ConnectorAlreadyConnectedError,
+  ConnectorNotFoundError,
   InjectedConnector,
-  chain,
+  SwitchChainError,
+  UserRejectedRequestError,
   allChains,
+  chain,
+  createWagmiClient,
+  createStorage,
   defaultChains,
   defaultL2Chains,
   developmentChains,
@@ -45,12 +31,6 @@ export {
   erc20ABI,
   erc721ABI,
   normalizeChainId,
-  AddChainError,
-  ChainNotConfiguredError,
-  ConnectorAlreadyConnectedError,
-  ConnectorNotFoundError,
-  SwitchChainError,
-  UserRejectedRequestError,
 } from '@wagmi/core'
 
 export type { Chain, ConnectorData } from '@wagmi/core'

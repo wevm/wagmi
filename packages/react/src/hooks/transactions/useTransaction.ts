@@ -5,7 +5,7 @@ import {
 } from '@ethersproject/providers'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '@wagmi/core'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { useCancel } from '../utils'
 
 export type Config = {
@@ -26,7 +26,7 @@ const initialState: State = {
 export const useTransaction = ({ request }: Config = {}) => {
   const {
     state: { connector },
-  } = useContext()
+  } = useClient()
   const [state, setState] = React.useState<State>(initialState)
 
   const cancelQuery = useCancel()

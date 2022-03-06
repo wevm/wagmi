@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Signer } from 'ethers'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { useCacheBuster, useCancel } from '../utils'
 
 type Config = {
@@ -25,7 +25,7 @@ export const useSigner = ({ skip }: Config = {}) => {
   const cacheBuster = useCacheBuster()
   const {
     state: { connector },
-  } = useContext()
+  } = useClient()
   const [state, setState] = React.useState<State>(initialState)
 
   const cancelQuery = useCancel()

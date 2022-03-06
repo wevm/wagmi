@@ -109,7 +109,7 @@ export {
 
 export {
   createWagmiClient,
-  type WagmiClient,
+  WagmiClient,
   type WagmiClientConfig,
 } from './client'
 

@@ -1,6 +1,6 @@
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 
 export const useCacheBuster = () => {
-  const context = useContext()
+  const context = useClient()
   return context.state.cacheBuster
 }

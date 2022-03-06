@@ -2,7 +2,7 @@ import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
 import { Unit, erc20ABI } from '@wagmi/core'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { useProvider } from '../providers'
 import { useCancel } from '../utils'
 
@@ -36,7 +36,7 @@ export const useToken = ({
 }: Config = {}) => {
   const {
     state: { connector },
-  } = useContext()
+  } = useClient()
   const provider = useProvider()
   const [state, setState] = React.useState<State>(initialState)
 

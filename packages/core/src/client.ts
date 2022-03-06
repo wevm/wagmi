@@ -267,7 +267,7 @@ export class WagmiClient {
 
 export let wagmiClient = new WagmiClient()
 
-export function createWagmiClient(config: WagmiClientConfig) {
+export function createWagmiClient(config?: WagmiClientConfig) {
   const client = new WagmiClient(config)
   wagmiClient = client
   return client

@@ -1,6 +1,6 @@
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 
 export const useWebSocketProvider = () => {
-  const { state } = useContext()
+  const { state } = useClient()
   return state.webSocketProvider
 }

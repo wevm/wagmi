@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { useContext } from '../../context'
+import { useClient } from '../../context'
 import { useEnsAvatar, useEnsLookup } from '../ens'
 
 export type Config = {
@@ -9,7 +9,7 @@ export type Config = {
 }
 
 export const useAccount = ({ fetchEns }: Config = {}) => {
-  const { state: globalState, setState } = useContext()
+  const { state: globalState, setState } = useClient()
   const address = globalState.data?.account
   const [{ data: ens, error: ensError, loading: ensLoading }] = useEnsLookup({
     address,
