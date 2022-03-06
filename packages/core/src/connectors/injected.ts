@@ -59,6 +59,7 @@ export class InjectedConnector extends Connector<
         provider.on('accountsChanged', this.onAccountsChanged)
         provider.on('chainChanged', this.onChainChanged)
         provider.on('disconnect', this.onDisconnect)
+      }
 
       const account = await this.getAccount()
       const id = await this.getChainId()

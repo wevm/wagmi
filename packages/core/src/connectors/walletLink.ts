@@ -120,7 +120,13 @@ export class WalletLinkConnector extends Connector<
         params: [{ chainId: id }],
       })
       const chains = [...this.chains, ...allChains]
-      return chains.find((x) => x.id === chainId)
+      return (
+        chains.find((x) => x.id === chainId) ?? {
+          id: chainId,
+          name: `Chain ${id}`,
+          rpcUrls: [],
+        }
+      )
     } catch (error) {
       if (
         /user rejected signature request/i.test(
