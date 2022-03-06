@@ -107,10 +107,17 @@ export {
   UserRejectedRequestError,
 } from './errors'
 
-export { createWagmiClient } from './client'
-export type { WagmiClient, WagmiClientConfig } from './client'
+export {
+  createWagmiClient,
+  type WagmiClient,
+  type WagmiClientConfig,
+} from './client'
 
 export type { Balance, Chain, Unit } from './types'
 
-export { normalizeChainId, createStorage } from './utils'
-export type { WagmiStorage } from './utils'
+export {
+  normalizeChainId,
+  createStorage,
+  verifyEIP1271Signature,
+  type WagmiStorage,
+} from './utils'

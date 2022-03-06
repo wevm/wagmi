@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from 'ethers/lib/ethers'
 
 import { units } from '../constants'
 import './declarations'

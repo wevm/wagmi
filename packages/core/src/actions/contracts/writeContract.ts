@@ -1,5 +1,5 @@
 import { TransactionResponse } from '@ethersproject/providers'
-import { CallOverrides, ethers } from 'ethers'
+import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
 
 import { wagmiClient } from '../../client'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
@@ -13,7 +13,7 @@ type Config = {
 }
 
 export async function writeContract<
-  Contract extends ethers.Contract = ethers.Contract,
+  Contract extends EthersContract = EthersContract,
 >(
   contractConfig: GetContractArgs,
   functionName: string,

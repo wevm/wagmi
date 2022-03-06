@@ -1,4 +1,4 @@
-export { erc1155ABI, erc20ABI, erc721ABI } from './abis'
+export { erc1155ABI, erc20ABI, erc721ABI, gnosisSafeABI } from './abis'
 
 export {
   chain,

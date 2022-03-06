@@ -1,6 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { Signer, ethers } from 'ethers'
+import { Signer } from 'ethers/lib/ethers'
 import { getAddress } from 'ethers/lib/utils'
+import { BaseProvider, Listener } from '@ethersproject/providers'
 
 import { UserRejectedRequestError } from '../../errors'
 
@@ -20,11 +21,11 @@ type Events = {
 }
 type Event = keyof Events
 
-export class MockProvider extends ethers.providers.BaseProvider {
+export class MockProvider extends BaseProvider {
   events = new EventEmitter<Events>()
 
   #options: MockProviderOptions
-  #signer?: ethers.Signer
+  #signer?: Signer
 
   constructor(options: MockProviderOptions) {
     super(options.network ?? 1)
@@ -71,19 +72,19 @@ export class MockProvider extends ethers.providers.BaseProvider {
     return true
   }
 
-  on(event: Event, listener: ethers.providers.Listener) {
+  on(event: Event, listener: Listener) {
     this.events.on(event, listener)
     return this
   }
-  once(event: Event, listener: ethers.providers.Listener) {
+  once(event: Event, listener: Listener) {
     this.events.once(event, listener)
     return this
   }
-  removeListener(event: Event, listener: ethers.providers.Listener) {
+  removeListener(event: Event, listener: Listener) {
     this.events.removeListener(event, listener)
     return this
   }
-  off(event: Event, listener: ethers.providers.Listener) {
+  off(event: Event, listener: Listener) {
     this.events.off(event, listener)
     return this
   }

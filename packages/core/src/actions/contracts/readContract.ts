@@ -1,8 +1,7 @@
-import { CallOverrides, ethers } from 'ethers'
+import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
 import { wagmiClient } from '../../client'
-
 import { GetContractArgs, getContract } from './getContract'
 
 export type ReadContractArgs = GetContractArgs
@@ -14,7 +13,7 @@ export type ReadContractConfig = {
 export type ReadContractResult = Result
 
 export async function readContract<
-  Contract extends ethers.Contract = ethers.Contract,
+  Contract extends EthersContract = EthersContract,
 >(
   contractConfig: ReadContractArgs,
   functionName: string,

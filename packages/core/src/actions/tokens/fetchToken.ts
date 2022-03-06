@@ -1,4 +1,5 @@
-import { BigNumber, ethers, utils } from 'ethers'
+import { BigNumber, Contract } from 'ethers/lib/ethers'
+import { formatUnits } from 'ethers/lib/utils'
 
 import { wagmiClient } from '../../client'
 import { erc20ABI } from '../../constants'
@@ -20,12 +21,12 @@ export type FetchTokenResult = {
 
 export async function fetchToken({
   address,
-  formatUnits = 'ether',
+  formatUnits: units = 'ether',
 }: FetchTokenArgs) {
   if (!address) throw new Error('address is required')
 
   const { provider } = wagmiClient
-  const contract = new ethers.Contract(address, erc20ABI, provider)
+  const contract = new Contract(address, erc20ABI, provider)
   const [symbol, decimals, totalSupply] = await Promise.all([
     contract.symbol(),
     contract.decimals(),
@@ -36,7 +37,7 @@ export async function fetchToken({
     decimals,
     symbol,
     totalSupply: {
-      formatted: utils.formatUnits(totalSupply, formatUnits),
+      formatted: formatUnits(totalSupply, units),
       value: totalSupply,
     },
   }

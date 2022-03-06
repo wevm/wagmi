@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { Contract as EthersContract } from 'ethers/lib/ethers'
 
 import { wagmiClient } from '../../client'
 import { GetContractArgs, getContract } from './getContract'
@@ -9,7 +9,7 @@ type Config = {
 }
 
 export function watchContractEvent<
-  Contract extends ethers.Contract = ethers.Contract,
+  Contract extends EthersContract = EthersContract,
 >(
   /** Contract configuration */
   contractArgs: GetContractArgs,

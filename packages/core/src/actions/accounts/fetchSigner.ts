@@ -1,4 +1,4 @@
-import { Signer } from 'ethers'
+import { Signer } from 'ethers/lib/ethers'
 
 import { wagmiClient } from '../../client'
 

@@ -1,5 +1,5 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { Signer } from 'ethers'
+import { Signer } from 'ethers/lib/ethers'
 
 import { defaultChains } from '../constants'
 import { Chain } from '../types'
