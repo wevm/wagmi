@@ -44,6 +44,7 @@ it('should expose correct exports', () => {
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
       "SwitchChainError",
+      "SwitchChainNotSupportedError",
       "UserRejectedRequestError",
       "createWagmiClient",
       "normalizeChainId",

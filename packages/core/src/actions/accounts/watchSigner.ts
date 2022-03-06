@@ -1,12 +1,12 @@
 import { wagmiClient } from '../../client'
 import { FetchSignerResult, fetchSigner } from './fetchSigner'
 
-export type WatchSignerCallback = (signer: FetchSignerResult) => void
+export type WatchSignerCallback = (data: FetchSignerResult) => void
 
 export function watchSigner(callback: WatchSignerCallback) {
   const handleChange = async () => callback(await fetchSigner())
   const unsubscribe = wagmiClient.subscribe(
-    ({ connector }) => [connector],
+    ({ data, connector }) => [data?.account, data?.chain, connector],
     handleChange,
   )
   return unsubscribe

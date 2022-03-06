@@ -4,14 +4,14 @@ import { disconnect } from './disconnect'
 
 describe('disconnect', () => {
   it('disconnects', async () => {
-    const wagmiClient = setupWagmiClient()
+    const client = await setupWagmiClient()
 
-    await connect(wagmiClient.connectors[0])
-    expect(wagmiClient.data?.account).toMatchInlineSnapshot(
-      `"0x012363D61BDC53D0290A0f25e9C89F8257550FB8"`,
+    await connect(client.connectors[0])
+    expect(client.data?.account).toMatchInlineSnapshot(
+      `"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`,
     )
 
     await disconnect()
-    expect(wagmiClient.data?.account).toMatchInlineSnapshot(`undefined`)
+    expect(client.data?.account).toMatchInlineSnapshot(`undefined`)
   })
 })

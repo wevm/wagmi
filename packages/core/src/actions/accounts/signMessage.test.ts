@@ -1,20 +1,19 @@
-import { toUtf8Bytes } from 'ethers/lib/utils'
+import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
 
 import { setupWagmiClient } from '../../../test'
-import { wagmiClient } from '../../client'
 import { connect } from './connect'
 import { signMessage } from './signMessage'
 
 const messages = {
-  basic: 'The quick brown fox jumped over the lazy dogs.',
+  string: 'The quick brown fox jumped over the lazy dogs.',
   bytes: toUtf8Bytes('The quick brown fox jumped over the lazy dogs.'),
 }
 
 describe('signMessage', () => {
   it('not connected', async () => {
-    setupWagmiClient()
+    await setupWagmiClient()
     try {
-      await signMessage({ message: messages.basic })
+      await signMessage({ message: messages.string })
     } catch (err) {
       expect(err).toMatchInlineSnapshot(
         `[ConnectorNotFoundError: Connector not found]`,
@@ -23,12 +22,27 @@ describe('signMessage', () => {
   })
 
   describe('connected', () => {
-    it('signs message', async () => {
-      setupWagmiClient()
-      await connect(wagmiClient.connectors[0])
-      const signature = await signMessage({ message: messages.basic })
-      expect(signature).toMatchInlineSnapshot(
-        `"0x28005a47b2d96159654ddc9e762b005f429a37b7790036a7817e3a6db60c634d538fe762c641f48da1c4aa3f8d001d2d4ca0c804a1a87f5b401d5b73b314fa221b"`,
+    it('signs string message', async () => {
+      const client = await setupWagmiClient()
+      const connectResult = await connect(client.connectors[0])
+      const signMessageResult = await signMessage({ message: messages.string })
+      expect(signMessageResult).toMatchInlineSnapshot(
+        `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
+      )
+      expect(verifyMessage(messages.string, signMessageResult)).toEqual(
+        connectResult.data?.account,
+      )
+    })
+
+    it('signs bytes message', async () => {
+      const client = await setupWagmiClient()
+      const connectResult = await connect(client.connectors[0])
+      const signMessageResult = await signMessage({ message: messages.bytes })
+      expect(signMessageResult).toMatchInlineSnapshot(
+        `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
+      )
+      expect(verifyMessage(messages.bytes, signMessageResult)).toEqual(
+        connectResult.data?.account,
       )
     })
   })

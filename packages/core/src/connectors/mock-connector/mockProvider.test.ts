@@ -1,17 +1,15 @@
-import { ethers } from 'ethers'
+import { Signer } from 'ethers/lib/ethers'
 
-import { contracts, wallets } from '../constants'
+import { ethers } from '../../../test'
 import { MockProvider } from './mockProvider'
 
 describe('MockProvider', () => {
   let provider: MockProvider
-  let wallet: ethers.Wallet
-  beforeEach(() => {
-    provider = new MockProvider({
-      network: 1,
-      privateKey: wallets.ethers1.privateKey,
-    })
-    wallet = new ethers.Wallet(wallets.ethers1.privateKey)
+  let signer: Signer
+  beforeEach(async () => {
+    const signers = await ethers.getSigners()
+    signer = signers[0]
+    provider = new MockProvider({ signer })
   })
 
   it('inits', () => {
@@ -21,17 +19,18 @@ describe('MockProvider', () => {
   describe('connect', () => {
     it('succeeds', async () => {
       const accounts = await provider.enable()
-      const account = await wallet.getAddress()
+      const account = await signer.getAddress()
       expect(accounts[0]).toEqual(account)
     })
 
     it('fails', async () => {
+      const signers = await ethers.getSigners()
+      signer = signers[0]
       const provider = new MockProvider({
         flags: {
           failConnect: true,
         },
-        network: 1,
-        privateKey: wallets.ethers1.privateKey,
+        signer,
       })
       try {
         await provider.enable()
@@ -58,7 +57,7 @@ describe('MockProvider', () => {
 
     it('connected', async () => {
       await provider.enable()
-      const account = await wallet.getAddress()
+      const account = await signer.getAddress()
       const connected = await provider.getAccounts()
       expect(connected[0]).toEqual(account)
     })
@@ -87,7 +86,7 @@ describe('MockProvider', () => {
 
   it('watchAsset', async () => {
     await provider.watchAsset({
-      address: contracts.uniToken,
+      address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
       decimals: 18,
       symbol: 'UNI',
     })

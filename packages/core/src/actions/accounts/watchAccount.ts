@@ -1,7 +1,7 @@
 import { wagmiClient } from '../../client'
 import { GetAccountResult, getAccount } from './getAccount'
 
-export type WatchAccountCallback = (account: GetAccountResult) => void
+export type WatchAccountCallback = (data: GetAccountResult) => void
 
 export function watchAccount(callback: WatchAccountCallback) {
   const handleChange = () => callback(getAccount())

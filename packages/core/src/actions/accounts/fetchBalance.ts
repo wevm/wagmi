@@ -1,4 +1,5 @@
-import { ethers, utils } from 'ethers'
+import { Contract } from 'ethers/lib/ethers'
+import { formatUnits } from 'ethers/lib/utils'
 
 import { wagmiClient } from '../../client'
 import { defaultChains, defaultL2Chains, erc20ABI } from '../../constants'
@@ -21,7 +22,7 @@ export async function fetchBalance({
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
   if (token) {
-    const contract = new ethers.Contract(token, erc20ABI, wagmiClient.provider)
+    const contract = new Contract(token, erc20ABI, wagmiClient.provider)
     const [value, decimals, symbol] = await Promise.all([
       contract.balanceOf(addressOrName),
       contract.decimals(),
@@ -29,7 +30,7 @@ export async function fetchBalance({
     ])
     return {
       decimals,
-      formatted: utils.formatUnits(value, unit),
+      formatted: formatUnits(value, unit),
       symbol,
       unit,
       value,
@@ -47,7 +48,7 @@ export async function fetchBalance({
   )
   return {
     decimals: chain?.nativeCurrency?.decimals ?? 18,
-    formatted: utils.formatUnits(value, unit),
+    formatted: formatUnits(value, unit),
     symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
     unit,
     value,

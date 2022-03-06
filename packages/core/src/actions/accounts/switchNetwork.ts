@@ -1,14 +1,19 @@
 import { wagmiClient } from '../../client'
-import { SwitchChainError } from '../../errors'
+import { SwitchChainNotSupportedError } from '../../errors'
+import { Chain } from '../../types'
 
 export type SwitchNetworkArgs = {
   chainId: number
 }
 
-export async function switchNetwork({ chainId }: SwitchNetworkArgs) {
-  if (!wagmiClient.connector?.switchChain)
-    return { data: undefined, error: new SwitchChainError() }
+export type SwitchNetworkResult = Chain
 
-  const chain = await wagmiClient.connector.switchChain(chainId)
+export async function switchNetwork(
+  args: SwitchNetworkArgs,
+): Promise<SwitchNetworkResult> {
+  if (!wagmiClient.connector?.switchChain)
+    throw new SwitchChainNotSupportedError()
+
+  const chain = await wagmiClient.connector.switchChain(args.chainId)
   return chain
 }

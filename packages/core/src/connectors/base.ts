@@ -51,12 +51,12 @@ export abstract class Connector<
   abstract getProvider(create?: boolean): Provider
   abstract getSigner(): Promise<Signer>
   abstract isAuthorized(): Promise<boolean>
-  switchChain?(chainId: number): Promise<Chain | undefined>
+  switchChain?(chainId: number): Promise<Chain>
   watchAsset?(asset: {
     address: string
     image?: string
     symbol: string
-  }): Promise<void>
+  }): Promise<boolean>
 
   protected abstract onAccountsChanged(accounts: string[]): void
   protected abstract onChainChanged(chain: number | string): void

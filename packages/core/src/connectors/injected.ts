@@ -159,7 +159,13 @@ export class InjectedConnector extends Connector<
         params: [{ chainId: id }],
       })
       const chains = [...this.chains, ...allChains]
-      return chains.find((x) => x.id === chainId)
+      return (
+        chains.find((x) => x.id === chainId) ?? {
+          id: chainId,
+          name: `Chain ${id}`,
+          rpcUrls: [],
+        }
+      )
     } catch (error) {
       // Indicates chain is not added to MetaMask
       if ((<ProviderRpcError>error).code === 4902) {
@@ -201,7 +207,7 @@ export class InjectedConnector extends Connector<
   }) {
     const provider = this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
-    await provider.request({
+    return await provider.request({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',

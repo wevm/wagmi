@@ -1,21 +1,21 @@
-import { ethers } from 'ethers'
-import { defaultChains } from '@wagmi/core'
+import { Signer } from 'ethers/lib/ethers'
 
-import { contracts, wallets } from '../constants'
+import { ethers } from '../../../test'
+import { defaultChains } from '../../constants'
 import { MockConnector } from './mockConnector'
 
 describe('MockConnector', () => {
   let connector: MockConnector
-  let wallet: ethers.Wallet
-  beforeEach(() => {
+  let signer: Signer
+  beforeEach(async () => {
+    const signers = await ethers.getSigners()
+    signer = signers[0]
     connector = new MockConnector({
       chains: defaultChains,
       options: {
-        network: 1,
-        privateKey: wallets.ethers1.privateKey,
+        signer,
       },
     })
-    wallet = new ethers.Wallet(wallets.ethers1.privateKey)
   })
 
   it('inits', () => {
@@ -28,11 +28,18 @@ describe('MockConnector', () => {
       const onChange = jest.fn()
       connector.on('change', onChange)
 
-      const data = await connector.connect()
+      const { provider, ...data } = await connector.connect()
       expect(onChange).toBeCalledTimes(1)
-      expect(data.account).toEqual(wallet.address)
-      expect(data.chain.id).toEqual(1)
-      expect(data.chain.unsupported).toEqual(false)
+      expect(data).toMatchInlineSnapshot(`
+        {
+          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "chain": {
+            "id": 1,
+            "unsupported": false,
+          },
+        }
+      `)
+      expect(provider).toBeDefined()
       connector.isAuthorized().then((x) => expect(x).toEqual(true))
     })
 
@@ -43,8 +50,7 @@ describe('MockConnector', () => {
           flags: {
             failConnect: true,
           },
-          network: 1,
-          privateKey: wallets.ethers1.privateKey,
+          signer,
         },
       })
       try {
@@ -69,7 +75,7 @@ describe('MockConnector', () => {
   it('getAccount', async () => {
     await connector.connect()
     const account = await connector.getAccount()
-    expect(account).toEqual(wallet.address)
+    expect(account).toEqual(await signer.getAddress())
   })
 
   it('getChainId', async () => {
@@ -99,7 +105,7 @@ describe('MockConnector', () => {
   it('watchAsset', async () => {
     await connector.connect()
     await connector.watchAsset({
-      address: contracts.uniToken,
+      address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
       decimals: 18,
       symbol: 'UNI',
     })

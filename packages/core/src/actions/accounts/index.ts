@@ -1,24 +1,24 @@
-export { connect } from './connect'
+export { connect, type ConnectResult } from './connect'
 export { disconnect } from './disconnect'
-export { fetchBalance } from './fetchBalance'
-export { fetchSigner } from './fetchSigner'
-export { getAccount } from './getAccount'
-export { getNetwork } from './getNetwork'
-export { signMessage } from './signMessage'
-export { switchNetwork } from './switchNetwork'
-export { watchAccount } from './watchAccount'
-export { watchBalance } from './watchBalance'
-export { watchNetwork } from './watchNetwork'
-export { watchSigner } from './watchSigner'
-
-export type { ConnectResult } from './connect'
-export type { FetchBalanceArgs, FetchBalanceResult } from './fetchBalance'
-export type { FetchSignerResult } from './fetchSigner'
-export type { GetAccountResult } from './getAccount'
-export type { GetNetworkResult } from './getNetwork'
-export type { SignMessageArgs, SignMessageResult } from './signMessage'
-export type { SwitchNetworkArgs } from './switchNetwork'
-export type { WatchAccountCallback } from './watchAccount'
-export type { WatchBalanceCallback } from './watchBalance'
-export type { WatchNetworkCallback } from './watchNetwork'
-export type { WatchSignerCallback } from './watchSigner'
+export {
+  fetchBalance,
+  type FetchBalanceArgs,
+  type FetchBalanceResult,
+} from './fetchBalance'
+export { fetchSigner, type FetchSignerResult } from './fetchSigner'
+export { getAccount, type GetAccountResult } from './getAccount'
+export { getNetwork, type GetNetworkResult } from './getNetwork'
+export {
+  signMessage,
+  type SignMessageArgs,
+  type SignMessageResult,
+} from './signMessage'
+export {
+  switchNetwork,
+  type SwitchNetworkArgs,
+  type SwitchNetworkResult,
+} from './switchNetwork'
+export { watchAccount, type WatchAccountCallback } from './watchAccount'
+export { watchBalance, type WatchBalanceCallback } from './watchBalance'
+export { watchNetwork, type WatchNetworkCallback } from './watchNetwork'
+export { watchSigner, type WatchSignerCallback } from './watchSigner'

@@ -3,8 +3,6 @@ import { BigNumber } from 'ethers'
 import { units } from '../constants'
 import './declarations'
 
-export type { WithProvider } from './actions'
-
 export type Balance = {
   decimals: number
   formatted: string

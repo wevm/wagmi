@@ -16,19 +16,18 @@ export function getNetwork(): GetNetworkResult {
   const chainId = data?.chain?.id
   const unsupported = data?.chain?.unsupported
   const activeChains = connector?.chains ?? []
-  const activeChain: Chain | undefined = [...activeChains, ...allChains].find(
+  const activeChain = [...activeChains, ...allChains].find(
     (x) => x.id === chainId,
-  )
+  ) ?? { id: chainId, name: `Chain ${chainId}`, rpcUrls: [] }
 
   return {
-    chain:
-      activeChain && chainId
-        ? {
-            ...activeChain,
-            id: chainId,
-            unsupported,
-          }
-        : undefined,
+    chain: chainId
+      ? {
+          ...activeChain,
+          id: chainId,
+          unsupported,
+        }
+      : undefined,
     chains: activeChains,
   }
 }

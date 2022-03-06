@@ -45,10 +45,12 @@ export type {
   GetContractArgs,
   GetNetworkResult,
   SendTransactionArgs,
+  SendTransactionResult,
   SignMessageArgs,
   SignMessageResult,
   SwitchNetworkArgs,
   WaitForTransactionArgs,
+  WaitForTransactionResult,
   WatchAccountCallback,
   WatchBalanceCallback,
   WatchEnsAddressCallback,
@@ -77,6 +79,7 @@ export {
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
   SwitchChainError,
+  SwitchChainNotSupportedError,
   UserRejectedRequestError,
 } from './errors'
 

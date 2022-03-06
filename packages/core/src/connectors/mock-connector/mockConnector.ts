@@ -1,13 +1,9 @@
 import { getAddress } from 'ethers/lib/utils'
-import {
-  Chain,
-  Connector,
-  allChains,
-  defaultChains,
-  normalizeChainId,
-} from '@wagmi/core'
 
-import { wallets } from '../constants'
+import { allChains } from '../../constants'
+import { Chain } from '../../types'
+import { normalizeChainId } from '../../utils'
+import { Connector } from '../base'
 import { MockProvider, MockProviderOptions } from './mockProvider'
 
 export class MockConnector extends Connector<
@@ -20,15 +16,7 @@ export class MockConnector extends Connector<
 
   #provider?: MockProvider
 
-  constructor(
-    config: { chains: Chain[]; options: MockProviderOptions } = {
-      chains: defaultChains,
-      options: {
-        network: 1,
-        privateKey: wallets.ethers1.privateKey,
-      },
-    },
-  ) {
+  constructor(config: { chains: Chain[]; options: MockProviderOptions }) {
     super(config)
   }
 
@@ -43,6 +31,10 @@ export class MockConnector extends Connector<
     const id = normalizeChainId(provider._network.chainId)
     const unsupported = this.isChainUnsupported(id)
     const data = { account, chain: { id, unsupported }, provider }
+
+    if (!this.options.flags?.failSwitchChain)
+      this.switchChain = this.#switchChain
+
     return data
   }
 
@@ -91,7 +83,7 @@ export class MockConnector extends Connector<
     }
   }
 
-  async switchChain(chainId: number) {
+  async #switchChain(chainId: number) {
     const provider = this.getProvider()
     await provider.switchChain(chainId)
     const chains = [...this.chains, ...allChains]
@@ -105,7 +97,7 @@ export class MockConnector extends Connector<
     symbol: string
   }) {
     const provider = this.getProvider()
-    await provider.watchAsset(asset)
+    return await provider.watchAsset(asset)
   }
 
   protected onAccountsChanged = (accounts: string[]) => {

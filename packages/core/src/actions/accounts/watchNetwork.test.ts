@@ -1,18 +1,17 @@
 import { setupWagmiClient } from '../../../test'
-import { wagmiClient } from '../../client'
 import { connect } from './connect'
 import { GetNetworkResult } from './getNetwork'
 import { switchNetwork } from './switchNetwork'
 import { watchNetwork } from './watchNetwork'
 
 describe('watchNetwork', () => {
-  it('invokes callback on account change', async () => {
-    setupWagmiClient()
+  it('callback receives data', async () => {
+    const client = await setupWagmiClient()
 
-    await connect(wagmiClient.connectors[0])
+    await connect(client.connectors[0])
 
     const networks: GetNetworkResult[] = []
-    watchNetwork((network) => networks.push(network))
+    watchNetwork((data) => networks.push(data))
 
     await switchNetwork({ chainId: 4 })
     await switchNetwork({ chainId: 1 })

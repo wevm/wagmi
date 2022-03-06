@@ -1,5 +1,6 @@
 import { WagmiClient, wagmiClient } from '../../client'
 import { Connector } from '../../connectors'
+import { ConnectorAlreadyConnectedError } from '../../errors'
 
 export type ConnectResult = {
   data: WagmiClient['data']
@@ -8,8 +9,7 @@ export type ConnectResult = {
 
 export async function connect(connector: Connector): Promise<ConnectResult> {
   const activeConnector = wagmiClient?.connector
-  if (connector === activeConnector)
-    return { data: wagmiClient.data, connector }
+  if (connector === activeConnector) throw new ConnectorAlreadyConnectedError()
 
   const data = await connector.connect()
 

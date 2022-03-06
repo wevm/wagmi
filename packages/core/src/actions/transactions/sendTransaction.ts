@@ -1,20 +1,24 @@
-import { TransactionRequest } from '@ethersproject/providers'
+import {
+  TransactionRequest,
+  TransactionResponse,
+} from '@ethersproject/providers'
 
-import { wagmiClient } from '../../client'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
+import { fetchSigner } from '../accounts'
 
 export type SendTransactionArgs = {
   /** Object to use when creating transaction */
   request: TransactionRequest
 }
 
-export async function sendTransaction(args: SendTransactionArgs) {
-  const { connector } = wagmiClient
+export type SendTransactionResult = TransactionResponse
 
-  if (!connector) throw new ConnectorNotFoundError()
-
+export async function sendTransaction(
+  args: SendTransactionArgs,
+): Promise<SendTransactionResult> {
   try {
-    const signer = await connector.getSigner()
+    const signer = await fetchSigner()
+    if (!signer) throw new ConnectorNotFoundError()
     const transaction = await signer.sendTransaction(args.request)
     return transaction
   } catch (error_) {

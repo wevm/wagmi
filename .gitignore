@@ -3,6 +3,7 @@
 .eslintcache
 .next
 .pnpm-debug.log*
+cache
 dist
 node_modules
 tsconfig.tsbuildinfo

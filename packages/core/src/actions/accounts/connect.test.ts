@@ -1,18 +1,24 @@
-import { MockConnector, defaultChains, wallets } from 'wagmi-testing'
+import { Signer } from 'ethers'
 
-import { setupWagmiClient } from '../../../test'
+import { ethers, getMockConnector, setupWagmiClient } from '../../../test'
 import { connect } from './connect'
 
 describe('connect', () => {
-  it('should connect successfully', async () => {
-    const wagmiClient = setupWagmiClient()
-    expect(wagmiClient.connector).toBeUndefined()
-    const result = await connect(wagmiClient.connectors[0])
+  let signer: Signer
+  beforeEach(async () => {
+    const signers = await ethers.getSigners()
+    signer = signers[0]
+  })
+
+  it('connects', async () => {
+    const client = await setupWagmiClient()
+    expect(client.connector).toBeUndefined()
+    const result = await connect(client.connectors[0])
     const { data: { provider, ...rest } = {} } = result
     expect(provider).toBeDefined()
     expect(rest).toMatchInlineSnapshot(`
       {
-        "account": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
+        "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "chain": {
           "id": 1,
           "unsupported": false,
@@ -21,15 +27,22 @@ describe('connect', () => {
     `)
   })
 
-  it('succeeds (unsupported chain)', async () => {
-    const wagmiClient = setupWagmiClient({ chainId: 69 })
-    expect(wagmiClient.connector).toBeUndefined()
-    const result = await connect(wagmiClient.connectors[0])
+  it('connects to unsupported chain', async () => {
+    const client = await setupWagmiClient({
+      connectors: [
+        getMockConnector({
+          network: 69,
+          signer,
+        }),
+      ],
+    })
+    expect(client.connector).toBeUndefined()
+    const result = await connect(client.connectors[0])
     const { data: { provider, ...rest } = {} } = result
     expect(provider).toBeDefined()
     expect(rest).toMatchInlineSnapshot(`
       {
-        "account": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
+        "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "chain": {
           "id": 69,
           "unsupported": true,
@@ -38,26 +51,34 @@ describe('connect', () => {
     `)
   })
 
+  it('connects with already connected connector', async () => {
+    const client = await setupWagmiClient()
+    await connect(client.connectors[0])
+    try {
+      await connect(client.connectors[0])
+    } catch (error) {
+      expect(error).toMatchInlineSnapshot(
+        `[ConnectorAlreadyConnectedError: Connector already connected]`,
+      )
+    }
+  })
+
   it('fails', async () => {
-    const wagmiClient = setupWagmiClient({
+    const client = await setupWagmiClient({
       connectors: [
-        new MockConnector({
-          chains: defaultChains,
-          options: {
-            flags: {
-              failConnect: true,
-            },
-            privateKey: wallets.ethers1.privateKey,
-            network: 1,
+        getMockConnector({
+          signer,
+          flags: {
+            failConnect: true,
           },
         }),
       ],
     })
-    expect(wagmiClient.connector).toBeUndefined()
+
     try {
-      await connect(wagmiClient.connectors[0])
-    } catch (err) {
-      expect(err).toMatchInlineSnapshot(
+      await connect(client.connectors[0])
+    } catch (error) {
+      expect(error).toMatchInlineSnapshot(
         `[UserRejectedRequestError: User rejected request]`,
       )
     }

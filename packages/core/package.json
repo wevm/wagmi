@@ -48,14 +48,13 @@
     }
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.5.1",
+    "@ethersproject/providers": "^5.5.3",
     "eventemitter3": "^4.0.7",
     "zustand": "^3.7.0"
   },
   "devDependencies": {
     "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
-    "wagmi-testing": "0.1.13",
     "walletlink": "^2.5.0"
   }
 }

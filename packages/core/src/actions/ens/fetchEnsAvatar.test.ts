@@ -1,22 +1,45 @@
-import { wallets } from 'wagmi-testing'
-
 import { setupWagmiClient } from '../../../test'
 import { fetchEnsAvatar } from './fetchEnsAvatar'
 
 describe('fetchEnsAvatar', () => {
+  beforeEach(async () => {
+    await setupWagmiClient()
+  })
+
   it('no result', async () => {
-    setupWagmiClient()
-    const result = await fetchEnsAvatar({ addressOrName: 'foo.eth' })
+    const result = await fetchEnsAvatar({ addressOrName: 'awkweb.eth' })
     expect(result).toMatchInlineSnapshot(`null`)
   })
 
-  it('has avatar', async () => {
-    setupWagmiClient()
-    const result = await fetchEnsAvatar({
-      addressOrName: wallets.ethers3.ensName,
+  describe('has avatar', () => {
+    it('erc1155', async () => {
+      setupWagmiClient()
+      const result = await fetchEnsAvatar({
+        addressOrName: 'nick.eth',
+      })
+      expect(result).toMatchInlineSnapshot(
+        `"https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE"`,
+      )
     })
-    expect(result).toMatchInlineSnapshot(
-      `"https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg"`,
-    )
+
+    it('erc721', async () => {
+      setupWagmiClient()
+      const result = await fetchEnsAvatar({
+        addressOrName: 'brantly.eth',
+      })
+      expect(result).toMatchInlineSnapshot(
+        `"https://api.wrappedpunks.com/images/punks/2430.png"`,
+      )
+    })
+
+    it('custom', async () => {
+      setupWagmiClient()
+      const result = await fetchEnsAvatar({
+        addressOrName: 'tanrikulu.eth',
+      })
+      expect(result).toMatchInlineSnapshot(
+        `"https://ipfs.io/ipfs/QmUShgfoZQSHK3TQyuTfUpsc8UfeNfD8KwPUvDBUdZ4nmR"`,
+      )
+    })
   })
 })

@@ -59,5 +59,7 @@ export type {
 export { sendTransaction, waitForTransaction } from './transactions'
 export type {
   SendTransactionArgs,
+  SendTransactionResult,
   WaitForTransactionArgs,
+  WaitForTransactionResult,
 } from './transactions'

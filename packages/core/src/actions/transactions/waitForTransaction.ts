@@ -22,7 +22,11 @@ export type WaitForTransactionArgs = {
   wait?: TransactionResponse['wait']
 }
 
-export async function waitForTransaction(args: WaitForTransactionArgs) {
+export type WaitForTransactionResult = TransactionReceipt
+
+export async function waitForTransaction(
+  args: WaitForTransactionArgs,
+): Promise<WaitForTransactionResult> {
   const { provider } = wagmiClient
 
   let promise: Promise<TransactionReceipt>

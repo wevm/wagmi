@@ -1,15 +1,16 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { ethers } from 'ethers'
-import { UserRejectedRequestError } from '@wagmi/core'
+import { Signer, ethers } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
+
+import { UserRejectedRequestError } from '../../errors'
 
 export type MockProviderOptions = {
   flags?: {
     failConnect?: boolean
-    failSign?: boolean
+    failSwitchChain?: boolean
   }
-  privateKey: string
-  network: number | string
+  network?: number | string
+  signer: Signer
 }
 
 type Events = {
@@ -23,35 +24,34 @@ export class MockProvider extends ethers.providers.BaseProvider {
   events = new EventEmitter<Events>()
 
   #options: MockProviderOptions
-  #wallet?: ethers.Wallet
+  #signer?: ethers.Signer
 
   constructor(options: MockProviderOptions) {
-    super(options.network)
+    super(options.network ?? 1)
     this.#options = options
   }
 
   async enable() {
     if (this.#options.flags?.failConnect) throw new UserRejectedRequestError()
-    if (!this.#wallet)
-      this.#wallet = new ethers.Wallet(this.#options.privateKey)
-    const address = await this.#wallet.getAddress()
+    if (!this.#signer) this.#signer = this.#options.signer
+    const address = await this.#signer.getAddress()
     this.events.emit('accountsChanged', [address])
     return [address]
   }
 
   async disconnect() {
     this.events.emit('disconnect')
-    this.#wallet = undefined
+    this.#signer = undefined
   }
 
   async getAccounts() {
-    const address = await this.#wallet?.getAddress()
+    const address = await this.#signer?.getAddress()
     if (!address) return []
     return [getAddress(address)]
   }
 
   getSigner() {
-    const signer = this.#wallet
+    const signer = this.#signer
     if (!signer) throw new Error('Signer not found')
     return signer
   }
@@ -68,7 +68,7 @@ export class MockProvider extends ethers.providers.BaseProvider {
     image?: string
     symbol: string
   }) {
-    true
+    return true
   }
 
   on(event: Event, listener: ethers.providers.Listener) {

@@ -1,30 +1,43 @@
-import { providers } from 'ethers'
+import { default as hre } from 'hardhat'
+import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/src/types'
+import { ethers as ethersLib } from 'ethers'
+
+import { WagmiClientConfig, createWagmiClient, defaultChains } from '../src'
 import {
   MockConnector,
-  defaultChains,
-  infuraApiKey,
-  wallets,
-} from 'wagmi-testing'
+  MockProviderOptions,
+} from '../src/connectors/mock-connector'
 
-import { WagmiClientConfig, createWagmiClient } from '../src'
+type HardhatRuntimeEnvironment = typeof hre & {
+  ethers: typeof ethersLib & HardhatEthersHelpers
+}
+export const ethers = (<HardhatRuntimeEnvironment>hre).ethers
 
-type Config = Partial<WagmiClientConfig> & {
-  chainId?: number
+type Config = Partial<WagmiClientConfig>
+
+export const setupWagmiClient = async (config: Config = {}) => {
+  const signers = await ethers.getSigners()
+  const signer = signers[0]
+
+  // Temporary workaround for getting ENS to work with Hardhat forking
+  // https://github.com/NomicFoundation/hardhat/issues/1306
+  const provider = ethers.provider
+  await provider.getNetwork()
+  provider.network.ensAddress = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+
+  return createWagmiClient({
+    connectors: [getMockConnector({ signer })],
+    provider: ethers.provider,
+    ...config,
+  })
 }
 
-export const setupWagmiClient = (config?: Config) => {
-  const network = config?.chainId ?? 1
-  return createWagmiClient({
-    connectors: [
-      new MockConnector({
-        chains: defaultChains,
-        options: {
-          network,
-          privateKey: wallets.ethers1.privateKey,
-        },
-      }),
-    ],
-    provider: new providers.InfuraProvider(network, infuraApiKey),
-    ...config,
+export const getMockConnector = (
+  options: MockProviderOptions,
+  chains = defaultChains,
+) => {
+  return new MockConnector({
+    chains,
+    options,
   })
 }

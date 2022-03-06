@@ -1,7 +1,7 @@
 import { Bytes } from 'ethers'
 
-import { wagmiClient } from '../../client'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
+import { fetchSigner } from './fetchSigner'
 
 export type SignMessageArgs = {
   /** Message to sign with wallet */
@@ -14,12 +14,9 @@ export type SignMessageResult = Signature
 export async function signMessage(
   args: SignMessageArgs,
 ): Promise<SignMessageResult> {
-  const { connector } = wagmiClient
-
-  if (!connector) throw new ConnectorNotFoundError()
-
   try {
-    const signer = await connector.getSigner()
+    const signer = await fetchSigner()
+    if (!signer) throw new ConnectorNotFoundError()
     const signature = await signer.signMessage(args.message)
     return signature
   } catch (error_) {

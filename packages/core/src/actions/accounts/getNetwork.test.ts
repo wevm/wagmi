@@ -1,11 +1,18 @@
-import { setupWagmiClient } from '../../../test'
-import { wagmiClient } from '../../client'
+import { Signer } from 'ethers/lib/ethers'
+
+import { ethers, getMockConnector, setupWagmiClient } from '../../../test'
 import { connect } from './connect'
 import { getNetwork } from './getNetwork'
 
 describe('getNetwork', () => {
-  it('not connected', () => {
-    setupWagmiClient()
+  let signer: Signer
+  beforeEach(async () => {
+    const signers = await ethers.getSigners()
+    signer = signers[0]
+  })
+
+  it('not connected', async () => {
+    await setupWagmiClient()
     expect(getNetwork()).toMatchInlineSnapshot(`
       {
         "chain": undefined,
@@ -15,8 +22,8 @@ describe('getNetwork', () => {
   })
 
   it('connected', async () => {
-    setupWagmiClient()
-    await connect(wagmiClient.connectors[0])
+    const client = await setupWagmiClient()
+    await connect(client.connectors[0])
     expect(getNetwork()).toMatchInlineSnapshot(`
       {
         "chain": {
@@ -139,19 +146,26 @@ describe('getNetwork', () => {
   })
 
   it('unsupported chain', async () => {
-    setupWagmiClient({ chainId: 69 })
-    await connect(wagmiClient.connectors[0])
+    const client = await setupWagmiClient({
+      connectors: [
+        getMockConnector({
+          network: 69,
+          signer,
+        }),
+      ],
+    })
+    await connect(client.connectors[0])
     expect(getNetwork()).toMatchInlineSnapshot(`
       {
         "chain": {
           "blockExplorers": [
             {
               "name": "Etherscan",
-              "url": "https://optimistic.etherscan.io",
+              "url": "https://kovan-optimistic.etherscan.io",
             },
           ],
           "id": 69,
-          "name": "Optimistic Kovan",
+          "name": "Optimism Kovan",
           "nativeCurrency": {
             "decimals": 18,
             "name": "Kovan Ether",

@@ -1,11 +1,10 @@
 import { setupWagmiClient } from '../../../test'
-import { wagmiClient } from '../../client'
 import { connect } from './connect'
 import { getAccount } from './getAccount'
 
 describe('getAccount', () => {
-  it('not connected', () => {
-    setupWagmiClient()
+  it('not connected', async () => {
+    await setupWagmiClient()
     expect(getAccount()).toMatchInlineSnapshot(`
       {
         "address": undefined,
@@ -15,12 +14,11 @@ describe('getAccount', () => {
   })
 
   it('connected', async () => {
-    setupWagmiClient()
-    await connect(wagmiClient.connectors[0])
-    expect(getAccount()).toMatchInlineSnapshot(
-      `
+    const client = await setupWagmiClient()
+    await connect(client.connectors[0])
+    expect(getAccount()).toMatchInlineSnapshot(`
       {
-        "address": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
+        "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "connector": MockConnector {
           "_events": {
             "change": EE {
@@ -142,13 +140,12 @@ describe('getAccount', () => {
           "onChainChanged": [Function],
           "onDisconnect": [Function],
           "options": {
-            "network": 1,
-            "privateKey": "0x4c94faa2c558a998d10ee8b2b9b8eb1fbcb8a6ac5fd085c6f95535604fc1bffb",
+            "signer": "<SignerWithAddress 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266>",
           },
           "ready": true,
+          "switchChain": [Function],
         },
       }
-    `,
-    )
+    `)
   })
 })

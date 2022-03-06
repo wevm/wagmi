@@ -13,7 +13,7 @@ export function watchBalance(
 ) {
   const handleChange = async () => callback(await fetchBalance(args))
   const unsubscribe = wagmiClient.subscribe(
-    ({ connector, provider }) => [connector, provider],
+    ({ data }) => [data?.account, data?.chain],
     handleChange,
   )
   return unsubscribe
