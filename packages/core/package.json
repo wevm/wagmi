@@ -13,6 +13,10 @@
       "module": "./dist/wagmi-core.esm.js",
       "default": "./dist/wagmi-core.cjs.js"
     },
+    "./connectors/mock": {
+      "module": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
+      "default": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js"
+    },
     "./connectors/walletConnect": {
       "module": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
       "default": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js"
@@ -24,12 +28,14 @@
   },
   "files": [
     "/dist",
+    "/connectors/mock/",
     "/connectors/walletConnect/",
     "/connectors/walletLink/"
   ],
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "connectors/mock/index.ts",
       "connectors/walletConnect.ts",
       "connectors/walletLink.ts"
     ]

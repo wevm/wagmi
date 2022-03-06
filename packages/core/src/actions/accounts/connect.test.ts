@@ -14,6 +14,7 @@ describe('connect', () => {
     const client = await setupWagmiClient()
     expect(client.connector).toBeUndefined()
     const result = await connect(client.connectors[0])
+
     const { data: { provider, ...rest } = {} } = result
     expect(provider).toBeDefined()
     expect(rest).toMatchInlineSnapshot(`

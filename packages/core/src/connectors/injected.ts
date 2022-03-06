@@ -24,13 +24,6 @@ type InjectedConnectorOptions = {
    * @see https://github.com/MetaMask/metamask-extension/issues/10353
    */
   shimDisconnect?: boolean
-  /**
-   * MetaMask 10.9.3 emits disconnect event when chain is changed.
-   * This flag disables the disconnect event and relies on the accountsChanged event for updating wallet connection.
-   * This workaround is experimental and might result in stale connections.
-   * @see https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334
-   */
-  shimChainChangedDisconnect?: boolean
 }
 
 const shimKey = 'wagmi.shimDisconnect'
@@ -65,9 +58,7 @@ export class InjectedConnector extends Connector<
       if (provider.on) {
         provider.on('accountsChanged', this.onAccountsChanged)
         provider.on('chainChanged', this.onChainChanged)
-        if (!this.options?.shimChainChangedDisconnect)
-          provider.on('disconnect', this.onDisconnect)
-      }
+        provider.on('disconnect', this.onDisconnect)
 
       const account = await this.getAccount()
       const id = await this.getChainId()

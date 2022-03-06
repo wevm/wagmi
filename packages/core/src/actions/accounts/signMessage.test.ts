@@ -1,6 +1,7 @@
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
 
 import { setupWagmiClient } from '../../../test'
+
 import { connect } from './connect'
 import { signMessage } from './signMessage'
 

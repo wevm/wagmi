@@ -2,7 +2,7 @@ import { Signer } from 'ethers/lib/ethers'
 
 import { ethers } from '../../../test'
 import { defaultChains } from '../../constants'
-import { MockConnector } from './mockConnector'
+import { MockConnector } from './connector'
 
 describe('MockConnector', () => {
   let connector: MockConnector

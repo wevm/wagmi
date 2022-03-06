@@ -1,7 +1,7 @@
 import { Signer } from 'ethers/lib/ethers'
 
 import { ethers } from '../../../test'
-import { MockProvider } from './mockProvider'
+import { MockProvider } from './provider'
 
 describe('MockProvider', () => {
   let provider: MockProvider

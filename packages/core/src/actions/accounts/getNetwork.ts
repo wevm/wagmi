@@ -28,6 +28,7 @@ export function getNetwork(): GetNetworkResult {
           unsupported,
         }
       : undefined,
+
     chains: activeChains,
   }
 }

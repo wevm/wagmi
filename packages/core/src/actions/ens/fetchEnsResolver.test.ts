@@ -12,7 +12,6 @@ describe('fetchEnsResolver', () => {
   })
 
   it('has resolver', async () => {
-    setupWagmiClient()
     const result = await fetchEnsResolver({ name: 'awkweb.eth' })
     expect(result).toMatchInlineSnapshot(`
       Resolver {

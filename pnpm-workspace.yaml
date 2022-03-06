@@ -1,0 +1,5 @@
+prefer-workspace-packages: true
+packages:
+  - 'docs'
+  - 'examples/*'
+  - 'packages/*'

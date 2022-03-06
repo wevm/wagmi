@@ -19,6 +19,7 @@ export async function sendTransaction(
   try {
     const signer = await fetchSigner()
     if (!signer) throw new ConnectorNotFoundError()
+
     const transaction = await signer.sendTransaction(args.request)
     return transaction
   } catch (error_) {

@@ -4,7 +4,7 @@ import { allChains } from '../../constants'
 import { Chain } from '../../types'
 import { normalizeChainId } from '../../utils'
 import { Connector } from '../base'
-import { MockProvider, MockProviderOptions } from './mockProvider'
+import { MockProvider, MockProviderOptions } from './provider'
 
 export class MockConnector extends Connector<
   MockProvider,
@@ -87,7 +87,13 @@ export class MockConnector extends Connector<
     const provider = this.getProvider()
     await provider.switchChain(chainId)
     const chains = [...this.chains, ...allChains]
-    return chains.find((x) => x.id === chainId)
+    return (
+      chains.find((x) => x.id === chainId) ?? {
+        id: chainId,
+        name: `Chain ${chainId}`,
+        rpcUrls: [],
+      }
+    )
   }
 
   async watchAsset(asset: {

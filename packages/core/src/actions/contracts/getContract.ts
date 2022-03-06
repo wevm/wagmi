@@ -1,5 +1,5 @@
 import { Provider } from '@ethersproject/providers'
-import { Contract, ContractInterface, Signer } from 'ethers'
+import { Contract, ContractInterface, Signer } from 'ethers/lib/ethers'
 
 export type GetContractArgs = {
   /** Contract address or ENS name */

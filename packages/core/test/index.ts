@@ -3,10 +3,7 @@ import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/src/types'
 import { ethers as ethersLib } from 'ethers'
 
 import { WagmiClientConfig, createWagmiClient, defaultChains } from '../src'
-import {
-  MockConnector,
-  MockProviderOptions,
-} from '../src/connectors/mock-connector'
+import { MockConnector, MockProviderOptions } from '../src/connectors/mock'
 
 type HardhatRuntimeEnvironment = typeof hre & {
   ethers: typeof ethersLib & HardhatEthersHelpers
