@@ -222,23 +222,24 @@ importers:
 
   packages/core:
     specifiers:
+      '@coinbase/wallet-sdk': ^3.0.1
       '@ethersproject/providers': ^5.5.3
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
-      walletlink: ^2.5.0
       zustand: ^3.7.0
     dependencies:
       '@ethersproject/providers': 5.5.3
       eventemitter3: 4.0.7
       zustand: 3.7.1
     devDependencies:
+      '@coinbase/wallet-sdk': 3.0.1_@babel+core@7.17.5
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: 5.5.4
-      walletlink: 2.5.0_@babel+core@7.17.5
 
   packages/react:
     specifiers:
+      '@coinbase/wallet-sdk': ^3.0.1
       '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
@@ -246,12 +247,11 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.1
       ethers: ^5.5.1
       react: ^17.0.0
-      walletlink: ^2.5.0
     dependencies:
+      '@coinbase/wallet-sdk': 3.0.1_@babel+core@7.17.5
       '@ethersproject/providers': 5.5.3
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.1
-      walletlink: 2.5.0_@babel+core@7.17.5
     devDependencies:
       '@testing-library/react-hooks': 7.0.2_react@17.0.2
       '@types/react': 17.0.39
@@ -1842,6 +1842,28 @@ packages:
       human-id: 1.0.2
       prettier: 1.19.1
     dev: true
+
+  /@coinbase/wallet-sdk/3.0.1_@babel+core@7.17.5:
+    resolution: {integrity: sha512-wHCoOhT7/34xK2XKRvOBA2ZINsrQLbkLftvN31RwHtscHy21B8AGBbhxetUdJvOeBTqAxQKwWTDKYxvl2Rn5gg==}
+    engines: {node: '>= 10.0.0'}
+    dependencies:
+      '@metamask/safe-event-emitter': 2.0.0
+      bind-decorator: 1.0.11
+      bn.js: 5.2.0
+      clsx: 1.1.1
+      eth-block-tracker: 4.4.3_@babel+core@7.17.5
+      eth-json-rpc-filters: 4.2.2
+      eth-rpc-errors: 4.0.2
+      js-sha256: 0.9.0
+      json-rpc-engine: 6.1.0
+      keccak: 3.0.2
+      preact: 10.6.6
+      rxjs: 6.6.7
+      stream-browserify: 3.0.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - encoding
+      - supports-color
 
   /@cspotcode/source-map-consumer/0.8.0:
     resolution: {integrity: sha512-41qniHzTU8yAGbCp04ohlmSrZf8bkf/iJsl3V0dRGsQN/5GFfx+LbCSsCpp2gqrqjTVg/K6O8ycoV35JIwAzAg==}
@@ -13870,29 +13892,6 @@ packages:
     dependencies:
       makeerror: 1.0.12
     dev: true
-
-  /walletlink/2.5.0_@babel+core@7.17.5:
-    resolution: {integrity: sha512-PBJmK5tZmonwKPABBI2/optaZ11O4kKmkmnU5eLKhk4XRlal5qJ1igZ4U5j3w6w8wxxdhCWpLMHzGWt3n/p7mw==}
-    engines: {node: '>= 10.0.0'}
-    deprecated: 'WARNING: This project has been renamed to @coinbase/wallet-sdk. Install using @coinbase/wallet-sdk instead.'
-    dependencies:
-      '@metamask/safe-event-emitter': 2.0.0
-      bind-decorator: 1.0.11
-      bn.js: 5.2.0
-      clsx: 1.1.1
-      eth-block-tracker: 4.4.3_@babel+core@7.17.5
-      eth-json-rpc-filters: 4.2.2
-      eth-rpc-errors: 4.0.2
-      js-sha256: 0.9.0
-      json-rpc-engine: 6.1.0
-      keccak: 3.0.2
-      preact: 10.6.6
-      rxjs: 6.6.7
-      stream-browserify: 3.0.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - encoding
-      - supports-color
 
   /watchpack/2.3.0:
     resolution: {integrity: sha512-MnN0Q1OsvB/GGHETrFeZPQaOelWh/7O+EiFlj8sM9GPjtQkis7k01aAxrg/18kTfoIVcLL+haEVFlXDaSRwKRw==}

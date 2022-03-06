@@ -13,7 +13,7 @@ export async function connect(connector: Connector): Promise<ConnectResult> {
 
   const data = await connector.connect()
 
-  wagmiClient.setLastUsedConnector(connector.name)
+  wagmiClient.setLastUsedConnector(connector.id)
   wagmiClient.setState((x) => ({ ...x, connector, data }))
 
   return { data, connector }

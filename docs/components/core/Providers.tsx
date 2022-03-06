@@ -3,9 +3,9 @@ import { providers } from 'ethers'
 
 // Imports
 import { Connector, Provider, chain, defaultChains } from 'wagmi'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
 
 // Get environment variables
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
@@ -33,7 +33,7 @@ const connectors = ({ chainId }: ConnectorsConfig) => {
         qrcode: true,
       },
     }),
-    new WalletLinkConnector({
+    new CoinbaseWalletConnector({
       options: {
         appName: 'wagmi',
         jsonRpcUrl: `${rpcUrl}/${infuraId}`,

@@ -7,7 +7,7 @@ import {
   defaultChains,
 } from '@wagmi/core'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
-import { WalletLinkConnector } from '@wagmi/core/connectors/walletLink'
+import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
 import { providers } from 'ethers'
 
 // Get environment variables
@@ -34,7 +34,7 @@ const connectors = ({ chainId }: ConnectorsConfig) => {
         qrcode: true,
       },
     }),
-    new WalletLinkConnector({
+    new CoinbaseWalletConnector({
       chains,
       options: {
         appName: 'wagmi',

@@ -176,7 +176,7 @@ export class WagmiClient {
 
     const sorted = this.#lastUsedConnector
       ? [...this.connectors].sort((x) =>
-          x.name === this.#lastUsedConnector ? -1 : 1,
+          x.id === this.#lastUsedConnector ? -1 : 1,
         )
       : this.connectors
 

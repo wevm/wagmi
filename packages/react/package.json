@@ -23,9 +23,9 @@
       "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js",
       "default": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.cjs.js"
     },
-    "./connectors/walletLink": {
-      "module": "./connectors/walletLink/dist/wagmi-connectors-walletLink.esm.js",
-      "default": "./connectors/walletLink/dist/wagmi-connectors-walletLink.cjs.js"
+    "./connectors/coinbaseWallet": {
+      "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
+      "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
     }
   },
   "files": [
@@ -37,7 +37,7 @@
       "index.ts",
       "connectors/injected.ts",
       "connectors/walletConnect.ts",
-      "connectors/walletLink.ts"
+      "connectors/coinbaseWallet.ts"
     ]
   },
   "peerDependencies": {
@@ -45,17 +45,15 @@
     "react": "^17.0.0"
   },
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.0.1",
     "@ethersproject/providers": "^5.5.1",
-    "@walletconnect/ethereum-provider": "1.7.1",
     "@wagmi/core": "0.1.13",
-    "walletlink": "^2.5.0"
+    "@walletconnect/ethereum-provider": "1.7.1"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^7.0.2",
     "@types/react": "^17.0.0",
-    "@walletconnect/ethereum-provider": "1.7.1",
     "ethers": "^5.5.1",
-    "react": "^17.0.0",
-    "walletlink": "^2.5.0"
+    "react": "^17.0.0"
   }
 }
