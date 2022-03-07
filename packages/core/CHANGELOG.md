@@ -1,5 +1,11 @@
 # wagmi-core
 
+## 0.1.14
+
+### Patch Changes
+
+- [#236](https://github.com/tmm/wagmi/pull/236) [`53bad61`](https://github.com/tmm/wagmi/commit/53bad615788764e31121678083c382c1bd042fe8) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Updated `@walletconnect/ethereum-provider` to [v1.7.4](https://github.com/WalletConnect/walletconnect-monorepo/releases/tag/1.7.4)
+
 ## 0.1.13
 
 ### Patch Changes
