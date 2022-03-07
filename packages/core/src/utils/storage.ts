@@ -16,7 +16,7 @@ export const noopStorage: Storage = {
   key: (_index: number) => null,
 }
 
-export function createStorage({
+export function createWagmiStorage({
   storage,
   key: prefix = 'wagmi',
 }: {

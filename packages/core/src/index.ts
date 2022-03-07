@@ -116,8 +116,8 @@ export {
 export type { Balance, Chain, Unit } from './types'
 
 export {
+  createWagmiStorage,
   normalizeChainId,
-  createStorage,
   verifyEIP1271Signature,
   type WagmiStorage,
 } from './utils'

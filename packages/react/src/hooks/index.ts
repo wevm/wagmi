@@ -1,5 +1,5 @@
 export {
-  // useAccount,
+  useAccount,
   // useBalance,
   useConnect, // useNetwork, // useSigner, // useSignMessage,
 } from './accounts'

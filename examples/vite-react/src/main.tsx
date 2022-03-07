@@ -18,7 +18,7 @@ import { App } from './App'
 
 // Get environment variables
 const alchemyId = import.meta.env.VITE_ALCHEMY_ID as string
-const etherscanApiKey = import.meta.env.VITE_ETHERSCAN_API_KEY as string
+// const etherscanApiKey = import.meta.env.VITE_ETHERSCAN_API_KEY as string
 const infuraId = import.meta.env.VITE_INFURA_ID as string
 
 // Pick chains
@@ -57,13 +57,9 @@ const isChainSupported = (chainId?: number) =>
 
 // Set up providers
 const provider = ({ chainId }: ProviderConfig) =>
-  providers.getDefaultProvider(
+  new providers.AlchemyProvider(
     isChainSupported(chainId) ? chainId : defaultChain.id,
-    {
-      alchemy: alchemyId,
-      etherscan: etherscanApiKey,
-      infura: infuraId,
-    },
+    alchemyId,
   )
 const webSocketProvider = ({ chainId }: ConnectorsConfig) =>
   isChainSupported(chainId)

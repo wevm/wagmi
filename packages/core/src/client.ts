@@ -17,7 +17,7 @@ import {
   Connector as TConnector,
   ConnectorData as TData,
 } from './connectors'
-import { WagmiStorage, createStorage, noopStorage } from './utils/storage'
+import { WagmiStorage, createWagmiStorage, noopStorage } from './utils/storage'
 
 export type WagmiClientConfig = {
   /** Enables reconnecting to last used connector on init */
@@ -52,7 +52,7 @@ const defaultConfig: Required<
 > = {
   connectors: [new InjectedConnector()],
   provider: getDefaultProvider(),
-  storage: createStorage({
+  storage: createWagmiStorage({
     storage: typeof window !== 'undefined' ? window.localStorage : noopStorage,
   }),
 }
@@ -62,9 +62,10 @@ export type Data = TData<BaseProvider>
 export type State = {
   connecting?: boolean
   connector?: Connector
+  connectors: Connector[]
   data?: Data
   error?: Error
-  connectors: Connector[]
+  forceUpdate: number
   provider: BaseProvider
   webSocketProvider?: WebSocketProvider
 }
@@ -77,9 +78,10 @@ export type AutoConnectionChangedArgs = {
 
 export class WagmiClient {
   config: Partial<WagmiClientConfig>
-  lastUsedConnector?: string | null
   store: Mutate<StoreApi<State>, [['zustand/subscribeWithSelector', never]]>
-  storage?: WagmiStorage
+
+  #lastUsedConnector?: string | null
+  #storage?: WagmiStorage
 
   constructor({
     autoConnect = false,
@@ -112,13 +114,14 @@ export class WagmiClient {
       subscribeWithSelector<State>(() => ({
         connecting: autoConnect,
         connectors: connectors_,
+        forceUpdate: 0,
         provider: provider_,
         webSocketProvider: webSocketProvider_,
       })),
     )
 
-    this.storage = storage
-    this.lastUsedConnector = storage?.getItem('wallet')
+    this.#storage = storage
+    this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
   }
 
@@ -160,13 +163,12 @@ export class WagmiClient {
       connector: undefined,
       data: undefined,
       error: undefined,
+      forceUpdate: 1,
     }))
   }
 
   async destroy() {
-    if (this.connector) {
-      await this.connector.disconnect()
-    }
+    if (this.connector) await this.connector.disconnect()
     this.clearState()
     this.store.destroy()
   }
@@ -174,9 +176,9 @@ export class WagmiClient {
   async autoConnect() {
     if (!this.connectors) return
 
-    const sorted = this.lastUsedConnector
+    const sorted = this.#lastUsedConnector
       ? [...this.connectors].sort((x) =>
-          x.id === this.lastUsedConnector ? -1 : 1,
+          x.id === this.#lastUsedConnector ? -1 : 1,
         )
       : this.connectors
 
@@ -196,7 +198,7 @@ export class WagmiClient {
   }
 
   setLastUsedConnector(lastUsedConnector: string | null = null) {
-    this.storage?.setItem('wallet', lastUsedConnector)
+    this.#storage?.setItem('wallet', lastUsedConnector)
   }
 
   #addEffects() {
@@ -204,6 +206,7 @@ export class WagmiClient {
       this.setState((x) => ({
         ...x,
         data: { ...x.data, ...data },
+        forceUpdate: x.forceUpdate + 1,
       }))
     const onDisconnect = () => this.clearState()
     const onError = (error: Error) => this.setState((x) => ({ ...x, error }))

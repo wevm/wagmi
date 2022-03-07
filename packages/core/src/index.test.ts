@@ -56,7 +56,7 @@ it('should expose correct exports', () => {
       "UserRejectedRequestError",
       "createWagmiClient",
       "normalizeChainId",
-      "createStorage",
+      "createWagmiStorage",
     ]
   `)
 })

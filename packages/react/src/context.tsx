@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { WagmiClient, createWagmiClient } from '@wagmi/core'
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import {
+  QueryClient,
+  QueryClientConfig,
+  QueryClientProvider,
+} from 'react-query'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
@@ -19,7 +23,7 @@ export type Props = {
   queryClient?: QueryClient
 }
 
-const defaultQueryClient = new QueryClient({
+const defaultQueryClientConfig: QueryClientConfig = {
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
@@ -27,32 +31,12 @@ const defaultQueryClient = new QueryClient({
       retry: 0,
     },
   },
-})
-
-const AutoConnect = () => {
-  const client = useClient()
-  // Attempt to connect on mount
-  useQuery(
-    'connect',
-    async () => {
-      const data = await client.autoConnect()
-      return {
-        account: data?.account,
-        chain: data?.chain,
-      }
-    },
-    {
-      enabled: Boolean(client.config.autoConnect && client.lastUsedConnector),
-      queryHash: 'connect',
-    },
-  )
-  return null
 }
 
 export const Provider = ({
   children,
   client = createWagmiClient(),
-  queryClient = defaultQueryClient,
+  queryClient = new QueryClient(defaultQueryClientConfig),
 }: React.PropsWithChildren<Props>) => {
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
@@ -61,9 +45,15 @@ export const Provider = ({
     })
 
     persistQueryClient({
-      queryClient: defaultQueryClient,
+      queryClient,
       persistor: localStoragePersistor,
     })
+
+    // Attempt to connect on mount
+    ;(async () => {
+      if (!client.config.autoConnect) return
+      await client.autoConnect()
+    })()
 
     return () => {
       client.destroy()
@@ -73,10 +63,7 @@ export const Provider = ({
 
   return (
     <Context.Provider value={client}>
-      <QueryClientProvider client={queryClient}>
-        <AutoConnect />
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </Context.Provider>
   )
 }

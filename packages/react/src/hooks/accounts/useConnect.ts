@@ -1,98 +1,54 @@
-import {
-  ConnectResult,
-  Connector,
-  ConnectorNotFoundError,
-  connect as connect_,
-} from '@wagmi/core'
-import { useCallback, useEffect, useState } from 'react'
-import { UseQueryOptions, useQuery } from 'react-query'
+import { ConnectResult, Connector, connect } from '@wagmi/core'
+import { UseMutationOptions, UseMutationResult, useMutation } from 'react-query'
 
 import { useClient } from '../../context'
 
-type Query = UseQueryOptions<ConnectResult['data'], Error>
+type MutationOptions = UseMutationOptions<ConnectResult, Error, Connector>
 
-export type UseConnectArgs = {
-  /** The default connector when `connect()` is invoked with no connector.  */
-  defaultConnector?: Connector
-  onConnect?: Query['onSuccess']
-  onError?: Query['onError']
-  onSettled?: Query['onSettled']
+export type UseConnectConfig = {
+  onConnect?: MutationOptions['onSuccess']
+  onError?: MutationOptions['onError']
+  onSettled?: MutationOptions['onSettled']
 }
 
-export function useConnect(args: UseConnectArgs) {
-  const [connector, setConnector] = useState<Connector | undefined>()
-
+export function useConnect({
+  onConnect,
+  onError,
+  onSettled,
+}: UseConnectConfig = {}) {
   const client = useClient()
   const {
-    data,
     error,
     isError,
-    isLoading: isConnecting,
-    isRefetching: isReconnecting,
-    isSuccess: isConnected,
-    refetch: reconnect,
+    mutateAsync,
     status,
-  } = useQuery<ConnectResult['data'], Error>(
-    'connect',
-    async () => {
-      if (!connector) return
-      const { data } = await connect_(connector)
-      return {
-        account: data?.account,
-        chain: data?.chain,
-      }
-    },
+    variables: connector,
+  } = useMutation<ConnectResult, Error, Connector>(
+    (connector) => connect(connector),
     {
-      queryHash: 'connect',
-      enabled: Boolean(connector),
-      onError: args.onError,
-      onSettled: args.onSettled,
-      onSuccess: args.onConnect,
+      onError,
+      onSettled,
+      onSuccess: onConnect,
     },
   )
 
-  // Reconnect whenever the connector changes
-  useEffect(() => {
-    if (connector) {
-      reconnect()
-    }
-  }, [connector, reconnect])
-
-  const connect = useCallback(
-    (nextConnector?: Connector) => {
-      // If the next connector is the same as the current connector,
-      // attempt to reconnect.
-      if (connector?.id === nextConnector?.id) {
-        reconnect()
-        return
-      }
-      // If a next connector is specified, set the connector to it (and connect).
-      if (nextConnector) {
-        setConnector(nextConnector)
-        return
-      }
-      // If a next connector is not specified, set the connector to the default
-      // one.
-      if (args.defaultConnector) {
-        setConnector(args.defaultConnector)
-        return
-      }
-      // If no connector is specified, throw an error.
-      throw new ConnectorNotFoundError()
-    },
-    [args.defaultConnector, connector?.id, reconnect],
-  )
+  let status_:
+    | Extract<UseMutationResult['status'], 'error' | 'idle'>
+    | 'connected'
+    | 'connecting'
+  if (status === 'loading' || client.connecting) status_ = 'connecting'
+  else if (status === 'success' || !!client.connector) status_ = 'connected'
+  else status_ = status
 
   return {
-    connect,
-    connector: client.connector ?? connector,
+    connect: mutateAsync,
+    connector: connector ?? client.connector,
     connectors: client.connectors,
-    data,
     error,
-    isConnected,
-    isConnecting,
-    isReconnecting,
+    isConnected: status_ === 'connected',
+    isConnecting: status_ === 'connecting',
     isError,
-    status,
+    isIdle: status_ === 'idle',
+    status: status_,
   } as const
 }

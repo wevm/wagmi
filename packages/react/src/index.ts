@@ -1,15 +1,13 @@
 export {
-  Provider,
-  Provider as WagmiProvider,
-  useClient as useContext,
   Context,
-} from './context'
-export type {
-  Props as ProviderProps,
-  Props as WagmiProviderProps,
+  Provider as WagmiProvider,
+  Provider,
+  useClient,
+  type Props as ProviderProps,
+  type Props as WagmiProviderProps,
 } from './context'
 
-export { useConnect } from './hooks'
+export { useAccount, useConnect } from './hooks'
 
 export {
   AddChainError,
@@ -23,7 +21,7 @@ export {
   allChains,
   chain,
   createWagmiClient,
-  createStorage,
+  createWagmiStorage,
   defaultChains,
   defaultL2Chains,
   developmentChains,
