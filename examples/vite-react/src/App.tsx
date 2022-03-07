@@ -1,15 +1,19 @@
 import { useConnect } from 'wagmi'
 
 export const App = () => {
-  const { connectors, connect, connector, isConnecting, error } = useConnect({
-    onConnect(data) {
-      console.log('connected!!', data)
-    },
-  })
+  const { data, connector, connectors, connect, isConnecting, error } =
+    useConnect({
+      onConnect(data) {
+        console.log('connected!!', data)
+      },
+    })
+
+  console.log(data?.account)
 
   return (
     <div>
       <div>
+        {data?.account}
         {connectors.map((x) => (
           <button disabled={!x.ready} key={x.name} onClick={() => connect(x)}>
             {x.name}

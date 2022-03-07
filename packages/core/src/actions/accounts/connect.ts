@@ -9,7 +9,8 @@ export type ConnectResult = {
 
 export async function connect(connector: Connector): Promise<ConnectResult> {
   const activeConnector = wagmiClient?.connector
-  if (connector === activeConnector) throw new ConnectorAlreadyConnectedError()
+  if (connector?.id === activeConnector?.id)
+    throw new ConnectorAlreadyConnectedError()
 
   const data = await connector.connect()
 
