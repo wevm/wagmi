@@ -1,5 +1,12 @@
 # wagmi-testing
 
+## 0.1.14
+
+### Patch Changes
+
+- Updated dependencies [[`53bad61`](https://github.com/tmm/wagmi/commit/53bad615788764e31121678083c382c1bd042fe8)]:
+  - wagmi-core@0.1.14
+
 ## 0.1.13
 
 ### Patch Changes
