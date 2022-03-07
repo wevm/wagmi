@@ -1,33 +1,6 @@
-# wagmi
+# wagmi [![Version](https://img.shields.io/npm/v/wagmi)](https://www.npmjs.com/package/wagmi) [![Downloads](https://img.shields.io/npm/dm/wagmi)](https://www.npmjs.com/package/wagmi) [![Sponsors](https://img.shields.io/github/sponsors/tmm)](https://github.com/sponsors/tmm)
 
 React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).
-
-<p>
-  <a aria-label="Version" href="https://www.npmjs.com/package/wagmi">
-    <img
-      alt=""
-      src="https://img.shields.io/npm/v/wagmi?color=%23161b22&label=%20npm"
-    />
-  </a>
-  <a aria-label="License" href="/LICENSE">
-    <img
-      alt=""
-      src="https://img.shields.io/npm/l/wagmi?color=%23161b22"
-    />
-  </a>
-  <a aria-label="Sponsors" href="https://github.com/sponsors/tmm">
-    <img
-      alt=""
-      src="https://img.shields.io/github/sponsors/tmm?color=%23161b22"
-    />
-  </a>
-  <a aria-label="Downloads" href="https://www.npmjs.com/package/wagmi">
-    <img
-      alt=""
-      src="https://img.shields.io/npm/dm/wagmi?color=%23161b22"
-    />
-  </a>
-</p>
 
 ## Features
 

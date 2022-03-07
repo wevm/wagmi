@@ -15,3 +15,7 @@ html {
 .dark .invert-on-dark {
   filter: invert(1) brightness(1.8);
 }
+
+h1 a {
+  display: inline-block;
+}
