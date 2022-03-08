@@ -5,6 +5,7 @@ import {
   QueryClientConfig,
   QueryClientProvider,
 } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
@@ -63,7 +64,11 @@ export const Provider = ({
 
   return (
     <Context.Provider value={client}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        {children}
+        {/* Automatically removed during production builds */}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </Context.Provider>
   )
 }

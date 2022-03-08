@@ -10,15 +10,20 @@ export type UseAccountConfig = {
   fetchEns?: boolean
 }
 
+export const accountQueryKey = 'account' as const
+
+const accountQueryFn = () => {
+  return getAccount()
+}
+
 export const useAccount = ({ fetchEns }: UseAccountConfig = {}) => {
   const client = useClient()
   const queryClient = useQueryClient()
+
   const { data, error, isError, isLoading, status } = useQuery<
     GetAccountResult,
     Error
-  >('account', () => {
-    return getAccount()
-  })
+  >(accountQueryKey, accountQueryFn)
 
   const res = useEnsLookup({
     address: data?.address,
@@ -28,7 +33,10 @@ export const useAccount = ({ fetchEns }: UseAccountConfig = {}) => {
 
   React.useEffect(() => {
     const unwatch = watchAccount((data) =>
-      queryClient.setQueryData('account', data),
+      queryClient.setQueryData<GetAccountResult>('account', (oldData) => ({
+        ...oldData,
+        ...data,
+      })),
     )
     return unwatch
   }, [queryClient])

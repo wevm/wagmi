@@ -6,10 +6,17 @@ import { useClient } from '../../context'
 type MutationOptions = UseMutationOptions<ConnectResult, Error, Connector>
 
 export type UseConnectConfig = {
+  /** Function fires when connect is successful */
   onConnect?: MutationOptions['onSuccess']
+  /** Function fires if connect encounters error */
   onError?: MutationOptions['onError']
+  /** Function fires when connect is either successful or encounters error */
   onSettled?: MutationOptions['onSettled']
 }
+
+export const connectMutationKey = 'connect' as const
+
+const connectMutationFn = (connector: Connector) => connect(connector)
 
 export function useConnect({
   onConnect,
@@ -20,11 +27,12 @@ export function useConnect({
   const {
     error,
     isError,
-    mutateAsync,
+    mutate,
     status,
     variables: connector,
   } = useMutation<ConnectResult, Error, Connector>(
-    (connector) => connect(connector),
+    connectMutationKey,
+    connectMutationFn,
     {
       onError,
       onSettled,
@@ -41,7 +49,7 @@ export function useConnect({
   else status_ = status
 
   return {
-    connect: mutateAsync,
+    connect: mutate,
     connector: connector ?? client.connector,
     connectors: client.connectors,
     error,

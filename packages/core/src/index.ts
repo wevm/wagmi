@@ -16,6 +16,8 @@ export {
   getAccount,
   getContract,
   getNetwork,
+  getProvider,
+  getWebSocketProvider,
   readContract,
   sendTransaction,
   signMessage,

@@ -78,10 +78,10 @@ export type AutoConnectionChangedArgs = {
 
 export class WagmiClient {
   config: Partial<WagmiClientConfig>
+  storage?: WagmiStorage
   store: Mutate<StoreApi<State>, [['zustand/subscribeWithSelector', never]]>
 
   #lastUsedConnector?: string | null
-  #storage?: WagmiStorage
 
   constructor({
     autoConnect = false,
@@ -120,7 +120,7 @@ export class WagmiClient {
       })),
     )
 
-    this.#storage = storage
+    this.storage = storage
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
   }
@@ -198,7 +198,7 @@ export class WagmiClient {
   }
 
   setLastUsedConnector(lastUsedConnector: string | null = null) {
-    this.#storage?.setItem('wallet', lastUsedConnector)
+    this.storage?.setItem('wallet', lastUsedConnector)
   }
 
   #addEffects() {
