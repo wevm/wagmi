@@ -127,17 +127,17 @@ export class WagmiClient {
           {
             name: 'state',
             getStorage: () => storage,
-            partialize: (state) => ({
+            partialize: ({ connector, data, status }) => ({
               connector: {
-                chains: state.connector?.chains,
-                id: state.connector?.id,
-                name: state.connector?.name,
+                chains: connector?.chains,
+                id: connector?.id,
+                name: connector?.name,
               },
               data: {
-                account: state.data?.account,
-                chain: state.data?.chain,
+                account: data?.account,
+                chain: data?.chain,
               },
-              status: state.status,
+              status,
             }),
           },
         ),
