@@ -10,7 +10,7 @@ import {
   StoreApi,
   default as create,
 } from 'zustand/vanilla'
-import { subscribeWithSelector } from 'zustand/middleware'
+import { persist, subscribeWithSelector } from 'zustand/middleware'
 
 import {
   InjectedConnector,
@@ -111,17 +111,37 @@ export class WagmiClient {
       GetState<State>,
       WagmiClient['store']
     >(
-      subscribeWithSelector<State>(() => ({
-        status: !autoConnect
-          ? 'disconnected'
-          : storage?.getItem('connected')
-          ? 'reconnecting'
-          : 'connecting',
-        connectors: connectors_,
-        forceUpdate: 0,
-        provider: provider_,
-        webSocketProvider: webSocketProvider_,
-      })),
+      subscribeWithSelector<State>(
+        persist<State>(
+          () => ({
+            status: !autoConnect
+              ? 'disconnected'
+              : storage?.getItem('connected')
+              ? 'reconnecting'
+              : 'connecting',
+            connectors: connectors_,
+            forceUpdate: 0,
+            provider: provider_,
+            webSocketProvider: webSocketProvider_,
+          }),
+          {
+            name: 'state',
+            getStorage: () => storage,
+            partialize: (state) => ({
+              connector: {
+                chains: state.connector?.chains,
+                id: state.connector?.id,
+                name: state.connector?.name,
+              },
+              data: {
+                account: state.data?.account,
+                chain: state.data?.chain,
+              },
+              status: state.status,
+            }),
+          },
+        ),
+      ),
     )
 
     this.storage = storage
@@ -224,14 +244,14 @@ export class WagmiClient {
     this.store.subscribe(
       ({ connector }) => connector,
       (connector, prevConnector) => {
-        prevConnector?.off('change', onChange)
-        prevConnector?.off('disconnect', onDisconnect)
-        prevConnector?.off('error', onError)
+        prevConnector?.off?.('change', onChange)
+        prevConnector?.off?.('disconnect', onDisconnect)
+        prevConnector?.off?.('error', onError)
 
         if (!connector) return
-        connector.on('change', onChange)
-        connector.on('disconnect', onDisconnect)
-        connector.on('error', onError)
+        connector.on?.('change', onChange)
+        connector.on?.('disconnect', onDisconnect)
+        connector.on?.('error', onError)
       },
     )
 
