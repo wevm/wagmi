@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
+import {
+  GetAccountResult,
+  disconnect,
+  getAccount,
+  watchAccount,
+} from '@wagmi/core'
 import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
@@ -12,10 +17,6 @@ export type UseAccountConfig = {
 
 export const accountQueryKey = 'account' as const
 
-const accountQueryFn = () => {
-  return getAccount()
-}
-
 export const useAccount = ({ fetchEns }: UseAccountConfig = {}) => {
   const client = useClient()
   const queryClient = useQueryClient()
@@ -23,7 +24,12 @@ export const useAccount = ({ fetchEns }: UseAccountConfig = {}) => {
   const { data, error, isError, isLoading, status } = useQuery<
     GetAccountResult,
     Error
-  >(accountQueryKey, accountQueryFn)
+  >(accountQueryKey, async () => {
+    const { address } = getAccount()
+    const cachedAccount =
+      queryClient.getQueryData<GetAccountResult>(accountQueryKey)
+    return address ? { address } : cachedAccount || { address: undefined }
+  })
 
   const res = useEnsLookup({
     address: data?.address,
@@ -32,23 +38,17 @@ export const useAccount = ({ fetchEns }: UseAccountConfig = {}) => {
   console.log(res)
 
   React.useEffect(() => {
-    const unwatch = watchAccount((data) =>
-      queryClient.setQueryData<GetAccountResult>('account', (oldData) => ({
-        ...oldData,
-        ...data,
+    const unwatch = watchAccount(({ address }) =>
+      queryClient.setQueryData<GetAccountResult>(accountQueryKey, () => ({
+        address,
       })),
     )
     return unwatch
   }, [queryClient])
 
-  const disconnect = React.useCallback(async () => {
-    await client.connector?.disconnect()
-    client.clearState()
-  }, [client])
-
   // Force data to be undefined if no address exists
   const data_ = data?.address ? data : undefined
-  const isLoading_ = isLoading || client.connecting
+  const isLoading_ = isLoading || client.status === 'connecting'
 
   let status_: UseQueryResult['status']
   if (isLoading_) status_ = 'loading'

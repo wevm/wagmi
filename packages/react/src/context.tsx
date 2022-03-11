@@ -39,17 +39,18 @@ export const Provider = ({
   client = createWagmiClient(),
   queryClient = new QueryClient(defaultQueryClientConfig),
 }: React.PropsWithChildren<Props>) => {
-  /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => {
-    const localStoragePersistor = createWebStoragePersistor({
+  React.useMemo(() => {
+    const persistor = createWebStoragePersistor({
       storage: (client.storage as Storage) || window.localStorage,
     })
-
     persistQueryClient({
       queryClient,
-      persistor: localStoragePersistor,
+      persistor,
     })
+  }, [client, queryClient])
 
+  /* eslint-disable react-hooks/exhaustive-deps */
+  React.useEffect(() => {
     // Attempt to connect on mount
     ;(async () => {
       if (!client.config.autoConnect) return

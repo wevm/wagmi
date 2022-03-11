@@ -60,7 +60,7 @@ const defaultConfig: Required<
 export type Connector = TConnector
 export type Data = TData<BaseProvider>
 export type State = {
-  connecting?: boolean
+  status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
   connector?: Connector
   connectors: Connector[]
   data?: Data
@@ -71,7 +71,7 @@ export type State = {
 }
 
 export type AutoConnectionChangedArgs = {
-  connecting: boolean
+  status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
   data: Data | undefined
   connector: Connector | undefined
 }
@@ -112,7 +112,11 @@ export class WagmiClient {
       WagmiClient['store']
     >(
       subscribeWithSelector<State>(() => ({
-        connecting: autoConnect,
+        status: !autoConnect
+          ? 'disconnected'
+          : storage?.getItem('connected')
+          ? 'reconnecting'
+          : 'connecting',
         connectors: connectors_,
         forceUpdate: 0,
         provider: provider_,
@@ -125,8 +129,8 @@ export class WagmiClient {
     this.#addEffects()
   }
 
-  get connecting() {
-    return this.store.getState().connecting
+  get status() {
+    return this.store.getState().status
   }
   get connectors() {
     return this.store.getState().connectors
@@ -159,7 +163,7 @@ export class WagmiClient {
   clearState() {
     this.setState((x) => ({
       ...x,
-      connecting: false,
+      status: 'disconnected',
       connector: undefined,
       data: undefined,
       error: undefined,
@@ -182,17 +186,23 @@ export class WagmiClient {
         )
       : this.connectors
 
-    this.setState((x) => ({ ...x, connecting: true }))
+    let data: TData<any>
+    let newConnector: Connector
     for (const connector of sorted) {
       if (!connector.ready || !connector.isAuthorized) continue
       const isAuthorized = await connector.isAuthorized()
       if (!isAuthorized) continue
 
-      const data = await connector.connect()
-      this.setState((x) => ({ ...x, data, connector }))
+      newConnector = connector
+      data = await connector.connect()
       break
     }
-    this.setState((x) => ({ ...x, connecting: false }))
+    this.setState((x) => ({
+      ...x,
+      connector: newConnector,
+      data,
+      status: data ? 'connected' : 'disconnected',
+    }))
 
     return this.data
   }

@@ -16,6 +16,7 @@ export async function connect(connector: Connector): Promise<ConnectResult> {
 
   wagmiClient.setLastUsedConnector(connector.id)
   wagmiClient.setState((x) => ({ ...x, connector, data }))
+  wagmiClient.storage?.setItem('connected', true)
 
   return { data, connector }
 }
