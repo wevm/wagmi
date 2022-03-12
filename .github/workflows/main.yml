@@ -74,4 +74,4 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
       - name: Test
-        run: pnpm test
+        run: pnpm test:ci

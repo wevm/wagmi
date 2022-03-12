@@ -1,14 +1,16 @@
 import { hashMessage } from 'ethers/lib/utils'
 
-import { ethers } from '../../test'
+import { getProvider } from '../../test'
 import { verifyEIP1271Signature } from './verifyEIP1271Signature'
 
-const provider = ethers.provider
+const provider = getProvider()
+
+const multisigAddress = '0xF7f52Dd34bc21eDA08c0b804C7c1dbc48375820f'
 
 describe.skip('verifyEIP1271Signature', () => {
   it('is valid', async () => {
     const isValid = await verifyEIP1271Signature({
-      address: '0x2E12888E480314DF227AC11e5FBa1F79029d091D',
+      address: multisigAddress,
       data: hashMessage('Hello World'),
       provider,
       signature: '0x',
@@ -18,7 +20,7 @@ describe.skip('verifyEIP1271Signature', () => {
 
   it('is invalid', async () => {
     const isValid = await verifyEIP1271Signature({
-      address: '0x2E12888E480314DF227AC11e5FBa1F79029d091D',
+      address: multisigAddress,
       data: hashMessage('invalid message'),
       provider,
       signature: '0x',

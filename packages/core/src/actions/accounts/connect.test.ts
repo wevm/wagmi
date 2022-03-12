@@ -1,17 +1,17 @@
 import { Signer } from 'ethers'
 
-import { ethers, getMockConnector, setupWagmiClient } from '../../../test'
+import { getMockConnector, getSigners, setupWagmiClient } from '../../../test'
 import { connect } from './connect'
 
 describe('connect', () => {
   let signer: Signer
-  beforeEach(async () => {
-    const signers = await ethers.getSigners()
+  beforeEach(() => {
+    const signers = getSigners()
     signer = signers[0]
   })
 
   it('connects', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
     expect(client.connector).toBeUndefined()
     const result = await connect(client.connectors[0])
 
@@ -29,7 +29,7 @@ describe('connect', () => {
   })
 
   it('connects to unsupported chain', async () => {
-    const client = await setupWagmiClient({
+    const client = setupWagmiClient({
       connectors: [
         getMockConnector({
           network: 69,
@@ -53,7 +53,7 @@ describe('connect', () => {
   })
 
   it('connects with already connected connector', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
     await connect(client.connectors[0])
     try {
       await connect(client.connectors[0])
@@ -65,7 +65,7 @@ describe('connect', () => {
   })
 
   it('fails', async () => {
-    const client = await setupWagmiClient({
+    const client = setupWagmiClient({
       connectors: [
         getMockConnector({
           signer,

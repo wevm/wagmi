@@ -8,16 +8,17 @@ import {
 import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
-import { useEnsLookup } from '../ens'
 
 export type UseAccountConfig = {
   /** Fetches ENS for connected account */
-  fetchEns?: boolean
+  ens?: boolean | { avatar?: boolean; name?: boolean }
 }
 
 export const accountQueryKey = 'account' as const
+export const accountWithEnsQueryKey = ({ chainId }: { chainId?: number }) =>
+  [{ entity: 'account', chainId }] as const
 
-export const useAccount = ({ fetchEns }: UseAccountConfig = {}) => {
+export const useAccount = (_config: UseAccountConfig = {}) => {
   const client = useClient()
   const queryClient = useQueryClient()
 
@@ -30,12 +31,6 @@ export const useAccount = ({ fetchEns }: UseAccountConfig = {}) => {
       queryClient.getQueryData<GetAccountResult>(accountQueryKey)
     return address ? { address } : cachedAccount || { address: undefined }
   })
-
-  const res = useEnsLookup({
-    address: data?.address,
-    enabled: fetchEns,
-  })
-  console.log(res)
 
   React.useEffect(() => {
     const unwatch = watchAccount(({ address }) =>

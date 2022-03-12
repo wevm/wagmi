@@ -22,14 +22,12 @@ export const verifyEIP1271Signature = async ({
   data,
   provider,
   signature,
-}: Args): Promise<boolean> => {
+}: Args) => {
   try {
     const contract = new Contract(address, EIP_1271_ABI, provider)
     const returnValue = await contract['isValidSignature'](data, signature)
-    console.log({ returnValue })
     return returnValue.toLowerCase() === MAGIC_VALUE.toLowerCase()
   } catch (error) {
-    console.log({ error })
     return false
   }
 }

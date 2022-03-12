@@ -34,12 +34,6 @@ module.exports = {
       testEnvironment: 'jsdom',
       testRegex: 'packages/react/.*\\.test\\.ts(x)?$',
     },
-    {
-      ...config,
-      displayName: 'testing',
-      testEnvironment: 'node',
-      testRegex: 'packages/testing/.*\\.test\\.ts$',
-    },
   ],
   watchPlugins: [
     'jest-watch-typeahead/filename',

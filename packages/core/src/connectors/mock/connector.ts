@@ -120,4 +120,8 @@ export class MockConnector extends Connector<
   protected onDisconnect = () => {
     this.emit('disconnect')
   }
+
+  toJSON() {
+    return '<MockConnector>'
+  }
 }

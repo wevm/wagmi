@@ -4,7 +4,7 @@ import { disconnect } from './disconnect'
 
 describe('disconnect', () => {
   it('disconnects', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
 
     await connect(client.connectors[0])
     expect(client.data?.account).toMatchInlineSnapshot(

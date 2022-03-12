@@ -1,32 +1,43 @@
-import { default as hre } from 'hardhat'
-import { HardhatEthersHelpers } from '@nomiclabs/hardhat-ethers/src/types'
-import { ethers as ethersLib } from 'ethers'
+import { JsonRpcProvider } from '@ethersproject/providers'
+import { normalizeHardhatNetworkAccountsConfig } from 'hardhat/internal/core/providers/util'
+import { defaultHardhatNetworkParams } from 'hardhat/internal/core/config/default-config'
+import { Wallet } from 'ethers/lib/ethers'
 
-import { WagmiClientConfig, createWagmiClient, defaultChains } from '../src'
+import {
+  WagmiClientConfig,
+  chain,
+  createWagmiClient,
+  defaultChains,
+} from '../src'
 import { MockConnector, MockProviderOptions } from '../src/connectors/mock'
 
-type HardhatRuntimeEnvironment = typeof hre & {
-  ethers: typeof ethersLib & HardhatEthersHelpers
+class EthersProviderWrapper extends JsonRpcProvider {
+  toJSON() {
+    return '<WrappedHardhatProvider>'
+  }
 }
-export const ethers = (<HardhatRuntimeEnvironment>hre).ethers
 
-type Config = Partial<WagmiClientConfig>
+export const getProvider = () => {
+  const url = chain.hardhat.rpcUrls[0]
+  const network = {
+    chainId: chain.hardhat.id,
+    ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    name: chain.hardhat.name,
+  }
+  return new EthersProviderWrapper(url, network)
+}
 
-export const setupWagmiClient = async (config: Config = {}) => {
-  const signers = await ethers.getSigners()
-  const signer = signers[0]
+const accounts = normalizeHardhatNetworkAccountsConfig(
+  defaultHardhatNetworkParams.accounts,
+)
 
-  // Temporary workaround for getting ENS to work with Hardhat forking
-  // https://github.com/NomicFoundation/hardhat/issues/1306
-  const provider = ethers.provider
-  await provider.getNetwork()
-  provider.network.ensAddress = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
-
-  return createWagmiClient({
-    connectors: [getMockConnector({ signer })],
-    provider: ethers.provider,
-    ...config,
+export const getSigners = () => {
+  const provider = getProvider()
+  const signers = accounts.map((x) => {
+    const wallet = new Wallet(x.privateKey)
+    return provider.getSigner(wallet.address)
   })
+  return signers
 }
 
 export const getMockConnector = (
@@ -36,5 +47,18 @@ export const getMockConnector = (
   return new MockConnector({
     chains,
     options,
+  })
+}
+
+type Config = Partial<WagmiClientConfig>
+export const setupWagmiClient = (config: Config = {}) => {
+  return createWagmiClient({
+    connectors: [
+      getMockConnector({
+        signer: getSigners()[0],
+      }),
+    ],
+    provider: getProvider,
+    ...config,
   })
 }

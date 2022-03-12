@@ -4,42 +4,18 @@ import {
   WrapperComponent,
   renderHook as defaultRenderHook,
 } from '@testing-library/react-hooks'
-import { providers } from 'ethers'
-import {
-  MockConnector,
-  defaultChains,
-  infuraApiKey,
-  wallets,
-} from 'wagmi-testing'
-import { chain } from '@wagmi/core'
-
-import { Provider, ProviderProps } from '../src'
-
 import '@testing-library/jest-dom/extend-expect'
 
+import { Provider, ProviderProps } from '../src'
+import { setupWagmiClient } from './utils'
+
 type Props = ProviderProps & {
-  chainId?: number
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
 export const wrapper = (props: Props) => {
-  const network = props.chainId ?? chain.mainnet.id
-  return (
-    <Provider
-      connectors={[
-        new MockConnector({
-          chains: defaultChains,
-          options: {
-            network,
-            privateKey: wallets.ethers1.privateKey,
-          },
-        }),
-      ]}
-      provider={new providers.InfuraProvider(network, infuraApiKey)}
-      {...props}
-    />
-  )
+  return <Provider client={setupWagmiClient()} {...props} />
 }
 
 export const renderHook = <TProps, TResult>(
@@ -57,3 +33,9 @@ export const renderHook = <TProps, TResult>(
 }
 
 export { act as actHook } from '@testing-library/react-hooks'
+export {
+  setupWagmiClient,
+  getMockConnector,
+  getProvider,
+  getSigners,
+} from './utils'

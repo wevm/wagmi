@@ -12,7 +12,7 @@ const messages = {
 
 describe('signMessage', () => {
   it('not connected', async () => {
-    await setupWagmiClient()
+    setupWagmiClient()
     try {
       await signMessage({ message: messages.string })
     } catch (err) {
@@ -24,7 +24,7 @@ describe('signMessage', () => {
 
   describe('connected', () => {
     it('signs string message', async () => {
-      const client = await setupWagmiClient()
+      const client = setupWagmiClient()
       const connectResult = await connect(client.connectors[0])
       const signMessageResult = await signMessage({ message: messages.string })
       expect(signMessageResult).toMatchInlineSnapshot(
@@ -36,7 +36,7 @@ describe('signMessage', () => {
     })
 
     it('signs bytes message', async () => {
-      const client = await setupWagmiClient()
+      const client = setupWagmiClient()
       const connectResult = await connect(client.connectors[0])
       const signMessageResult = await signMessage({ message: messages.bytes })
       expect(signMessageResult).toMatchInlineSnapshot(

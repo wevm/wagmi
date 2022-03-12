@@ -31,15 +31,11 @@ export function useConnect({
     mutate,
     status,
     variables: connector,
-  } = useMutation<ConnectResult, Error, Connector>(
-    connectMutationKey,
-    connectMutationFn,
-    {
-      onError,
-      onSettled,
-      onSuccess: onConnect,
-    },
-  )
+  } = useMutation(connectMutationKey, connectMutationFn, {
+    onError,
+    onSettled,
+    onSuccess: onConnect,
+  })
 
   const [client, setClient] = useState({
     status: wagmiClient.status,

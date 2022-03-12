@@ -1,8 +1,9 @@
 import { UseQueryOptions, useQuery } from 'react-query'
 import { FetchEnsNameResult, fetchEnsName } from '@wagmi/core'
 
-import { useChainId } from '../utils'
 import { QueryFunctionArgs } from '../../types'
+import { hashPrefix } from '../../constants'
+import { useChainId } from '../utils'
 
 type QueryOptions = UseQueryOptions<FetchEnsNameResult, Error>
 
@@ -50,7 +51,7 @@ const ensLookupQueryFn = ({
 
 const queryKeyHashFn = ([{ address, chainId, entity }]: ReturnType<
   typeof ensLookupQueryKey
->) => `${entity}:${JSON.stringify({ address, chainId })}`
+>) => `${hashPrefix}:${entity}:${JSON.stringify({ address, chainId })}`
 
 export const useEnsLookup = ({
   address,
@@ -71,19 +72,15 @@ export const useEnsLookup = ({
     isSuccess,
     refetch,
     status,
-  } = useQuery<FetchEnsNameResult, Error>(
-    ensLookupQueryKey({ address, chainId }),
-    ensLookupQueryFn,
-    {
-      cacheTime,
-      enabled: Boolean(enabled && address && chainId),
-      queryKeyHashFn,
-      staleTime,
-      onError,
-      onSettled,
-      onSuccess,
-    },
-  )
+  } = useQuery(ensLookupQueryKey({ address, chainId }), ensLookupQueryFn, {
+    cacheTime,
+    enabled: Boolean(enabled && address && chainId),
+    queryKeyHashFn,
+    staleTime,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 
   return {
     data,

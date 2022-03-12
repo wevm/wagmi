@@ -1,14 +1,14 @@
 import { Signer } from 'ethers/lib/ethers'
 
-import { ethers } from '../../../test'
+import { getSigners } from '../../../test'
 import { defaultChains } from '../../constants'
 import { MockConnector } from './connector'
 
 describe('MockConnector', () => {
   let connector: MockConnector
   let signer: Signer
-  beforeEach(async () => {
-    const signers = await ethers.getSigners()
+  beforeEach(() => {
+    const signers = getSigners()
     signer = signers[0]
     connector = new MockConnector({
       chains: defaultChains,
@@ -96,7 +96,7 @@ describe('MockConnector', () => {
     const chainIdBefore = await connector.getChainId()
     expect(chainIdBefore).toEqual(1)
     await connector.connect()
-    await connector.switchChain(4)
+    await connector.switchChain?.(4)
     expect(onChange).toBeCalledTimes(2)
     const chainIdAfter = await connector.getChainId()
     expect(chainIdAfter).toEqual(4)

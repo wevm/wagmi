@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import { getProvider } from '@wagmi/core'
 
 import { useClient } from '../../context'
+import { hashPrefix } from '../../constants'
 
 export const chainIdQueryKey = 'chainId'
 
@@ -12,7 +13,9 @@ export function useChainId() {
   const client = useClient()
   const queryClient = useQueryClient()
 
-  const { data } = useQuery<number>(chainIdQueryKey, chainIdQueryFn)
+  const { data } = useQuery<number>(chainIdQueryKey, chainIdQueryFn, {
+    queryHash: `${hashPrefix}:chainId`,
+  })
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {

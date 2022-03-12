@@ -1,136 +1,99 @@
-import { wallets } from 'wagmi-testing'
-
-import { actHook, renderHook } from '../../../test'
+import { getSigners, renderHook } from '../../../test'
 import { useEnsLookup } from './useEnsLookup'
 
 describe('useEnsLookup', () => {
-  describe('on mount', () => {
+  describe('address', () => {
     it('has ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsLookup({
-          address: wallets.ethers3.address,
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
         }),
       )
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
         }
       `)
       await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
-          "data": "meagher.eth",
-          "error": undefined,
-          "loading": false,
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "loading",
+        }
+      `)
+      await waitForNextUpdate()
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": "awkweb.eth",
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
     })
 
     it('does not have ens', async () => {
+      const address = await getSigners()[0].getAddress()
       const { result, waitForNextUpdate } = renderHook(() =>
         useEnsLookup({
-          address: wallets.ethers2.address,
+          address,
         }),
       )
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
         }
       `)
       await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "loading",
+        }
+      `)
+      await waitForNextUpdate()
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": null,
-          "error": undefined,
-          "loading": false,
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
-    })
-
-    it('has error', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsLookup({
-          address: 'meagher.eth',
-        }),
-      )
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": true,
-        }
-      `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": [Error: invalid address (argument="address", value="meagher.eth", code=INVALID_ARGUMENT, version=address/5.5.0)],
-          "loading": false,
-        }
-      `)
-    })
-  })
-
-  it('skip', async () => {
-    const { result } = renderHook(() => useEnsLookup({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
-      }
-    `)
-  })
-
-  describe('lookupAddress', () => {
-    it('uses config', async () => {
-      const { result } = renderHook(() =>
-        useEnsLookup({
-          address: wallets.ethers3.address,
-          skip: true,
-        }),
-      )
-      await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": "meagher.eth",
-            "error": undefined,
-          }
-        `)
-      })
-    })
-
-    it('uses params', async () => {
-      const { result } = renderHook(() => useEnsLookup({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]({
-          address: wallets.ethers3.address,
-        })
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": "meagher.eth",
-            "error": undefined,
-          }
-        `)
-      })
-    })
-
-    it('has error', async () => {
-      const { result } = renderHook(() => useEnsLookup({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": undefined,
-            "error": [Error: address is required],
-          }
-        `)
-      })
     })
   })
 })

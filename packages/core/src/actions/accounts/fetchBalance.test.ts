@@ -2,8 +2,8 @@ import { setupWagmiClient } from '../../../test'
 import { fetchBalance } from './fetchBalance'
 
 describe('fetchBalance', () => {
-  beforeEach(async () => {
-    await setupWagmiClient()
+  beforeEach(() => {
+    setupWagmiClient()
   })
 
   it('fetches eth balance for address', async () => {

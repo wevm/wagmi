@@ -192,7 +192,7 @@ export class WagmiClient {
   }
 
   async destroy() {
-    if (this.connector) await this.connector.disconnect()
+    if (this.connector) await this.connector.disconnect?.()
     this.clearState()
     this.store.destroy()
   }
@@ -300,7 +300,7 @@ export class WagmiClient {
   }
 }
 
-export let wagmiClient = new WagmiClient()
+export let wagmiClient: WagmiClient
 
 export function createWagmiClient(config?: WagmiClientConfig) {
   const client = new WagmiClient(config)

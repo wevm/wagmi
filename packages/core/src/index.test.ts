@@ -19,6 +19,8 @@ it('should expose correct exports', () => {
       "getAccount",
       "getContract",
       "getNetwork",
+      "getProvider",
+      "getWebSocketProvider",
       "readContract",
       "sendTransaction",
       "signMessage",
@@ -55,8 +57,10 @@ it('should expose correct exports', () => {
       "SwitchChainNotSupportedError",
       "UserRejectedRequestError",
       "createWagmiClient",
-      "normalizeChainId",
+      "WagmiClient",
       "createWagmiStorage",
+      "normalizeChainId",
+      "verifyEIP1271Signature",
     ]
   `)
 })

@@ -2,8 +2,8 @@ import { setupWagmiClient } from '../../../test'
 import { fetchEnsName } from './fetchEnsName'
 
 describe('fetchEnsName', () => {
-  beforeEach(async () => {
-    await setupWagmiClient()
+  beforeEach(() => {
+    setupWagmiClient()
   })
 
   it('no result', async () => {
