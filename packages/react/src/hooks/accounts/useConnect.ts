@@ -15,9 +15,9 @@ export type UseConnectConfig = {
   onSettled?: MutationOptions['onSettled']
 }
 
-export const connectMutationKey = 'connect' as const
+export const mutationKey = 'connect' as const
 
-const connectMutationFn = (connector: Connector) => connect(connector)
+const mutationFn = (connector: Connector) => connect(connector)
 
 export function useConnect({
   onConnect,
@@ -31,7 +31,7 @@ export function useConnect({
     mutate,
     status,
     variables: activeConnector,
-  } = useMutation(connectMutationKey, connectMutationFn, {
+  } = useMutation(mutationKey, mutationFn, {
     onError,
     onSettled,
     onSuccess: onConnect,

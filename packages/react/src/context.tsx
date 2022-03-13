@@ -71,7 +71,7 @@ export const Provider = ({
     <Context.Provider value={client}>
       <QueryClientProvider client={queryClient}>
         {children}
-        {/* Automatically removed during production builds */}
+        {/* Automatically removed for production build */}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </Context.Provider>

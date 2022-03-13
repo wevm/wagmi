@@ -3,8 +3,6 @@ import * as Exports from './'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "Connector",
-      "InjectedConnector",
       "connect",
       "disconnect",
       "fetchBalance",
@@ -40,14 +38,18 @@ it('should expose correct exports', () => {
       "watchSigner",
       "watchToken",
       "writeContract",
+      "createClient",
+      "createWagmiClient",
+      "Client",
+      "WagmiClient",
+      "Connector",
+      "InjectedConnector",
+      "allChains",
+      "chain",
+      "defaultChains",
       "erc1155ABI",
       "erc20ABI",
       "erc721ABI",
-      "chain",
-      "allChains",
-      "defaultChains",
-      "defaultL2Chains",
-      "developmentChains",
       "units",
       "AddChainError",
       "ChainNotConfiguredError",
@@ -56,11 +58,9 @@ it('should expose correct exports', () => {
       "SwitchChainError",
       "SwitchChainNotSupportedError",
       "UserRejectedRequestError",
-      "createWagmiClient",
-      "WagmiClient",
+      "createStorage",
       "createWagmiStorage",
       "normalizeChainId",
-      "verifyEIP1271Signature",
     ]
   `)
 })

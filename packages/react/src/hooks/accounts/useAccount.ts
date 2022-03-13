@@ -15,7 +15,7 @@ export type UseAccountConfig = {
   ens?: boolean | { avatar?: boolean; name?: boolean }
 }
 
-export const queryKey = 'account' as const
+export const queryKey = () => [{ entity: 'account' }] as const
 
 export const useAccount = ({ ens }: UseAccountConfig = {}) => {
   const client = useClient()
@@ -28,9 +28,9 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
     isLoading,
     status,
     ...accountQueryResult
-  } = useQuery(queryKey, async () => {
+  } = useQuery(queryKey(), async () => {
     const { address, connector } = getAccount()
-    const cachedAccount = queryClient.getQueryData<GetAccountResult>(queryKey)
+    const cachedAccount = queryClient.getQueryData<GetAccountResult>(queryKey())
     return address
       ? { address, connector }
       : cachedAccount || { address: undefined, connector: undefined }
@@ -48,7 +48,7 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
 
   React.useEffect(() => {
     const unwatch = watchAccount(({ address, connector }) =>
-      queryClient.setQueryData<GetAccountResult>(queryKey, () => ({
+      queryClient.setQueryData<GetAccountResult>(queryKey(), () => ({
         address,
         connector,
       })),

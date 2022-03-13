@@ -125,4 +125,4 @@ function replaceGetterValues(replacer) {
   }
 }
 
-module.exports = stringify
+export default stringify

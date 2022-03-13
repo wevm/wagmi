@@ -2,7 +2,7 @@ import { BigNumber, Contract } from 'ethers/lib/ethers'
 import { formatUnits } from 'ethers/lib/utils'
 
 import { client } from '../../client'
-import { defaultChains, defaultL2Chains, erc20ABI } from '../../constants'
+import { allChains, erc20ABI } from '../../constants'
 import { Unit } from '../../types'
 
 export type FetchBalanceArgs = {
@@ -43,11 +43,7 @@ export async function fetchBalance({
     }
   }
 
-  const chains = [
-    ...(client.connector?.chains ?? []),
-    ...defaultChains,
-    ...defaultL2Chains,
-  ]
+  const chains = [...(client.connector?.chains ?? []), ...allChains]
   const value = await client.provider.getBalance(addressOrName)
   const chain = chains.find((x) => x.id === client.provider.network.chainId)
   return {

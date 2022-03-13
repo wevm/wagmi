@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { BigNumber, ethers, utils } from 'ethers'
-import { Unit, defaultChains, defaultL2Chains, erc20ABI } from '@wagmi/core'
+import { Unit, allChains, erc20ABI } from '@wagmi/core'
 
 import { useClient } from '../../context'
 import { useProvider } from '../providers'
@@ -95,11 +95,9 @@ export const useBalance = ({
           }
         } else {
           const value = await provider.getBalance(config_.addressOrName)
-          const chain = [
-            ...(connector?.chains ?? []),
-            ...defaultChains,
-            ...defaultL2Chains,
-          ].find((x) => x.id === provider.network.chainId)
+          const chain = [...(connector?.chains ?? []), ...allChains].find(
+            (x) => x.id === provider.network.chainId,
+          )
           balance = {
             decimals: chain?.nativeCurrency?.decimals ?? 18,
             formatted: utils.formatUnits(value, formatUnits_),
