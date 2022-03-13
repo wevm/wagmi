@@ -10,7 +10,7 @@ import {
   StoreApi,
   default as create,
 } from 'zustand/vanilla'
-import { subscribeWithSelector } from 'zustand/middleware'
+import { persist, subscribeWithSelector } from 'zustand/middleware'
 
 import {
   InjectedConnector,
@@ -115,12 +115,32 @@ export class Client {
       GetState<State>,
       Client['store']
     >(
-      subscribeWithSelector<State>(() => ({
-        status,
-        connectors: connectors_,
-        provider: provider_,
-        webSocketProvider: webSocketProvider_,
-      })),
+      subscribeWithSelector<State>(
+        persist<State>(
+          () => ({
+            connectors: connectors_,
+            provider: provider_,
+            status,
+            webSocketProvider: webSocketProvider_,
+          }),
+          {
+            name: 'state',
+            getStorage: () => storage,
+            partialize: ({ connector, data, status }) => ({
+              connector: {
+                chains: connector?.chains,
+                id: connector?.id,
+                name: connector?.name,
+              },
+              data: {
+                account: data?.account,
+                chain: data?.chain,
+              },
+              status,
+            }),
+          },
+        ),
+      ),
     )
 
     this.storage = storage

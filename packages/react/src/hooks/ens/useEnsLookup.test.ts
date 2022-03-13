@@ -12,12 +12,25 @@ describe('useEnsLookup', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
+          "dataUpdatedAt": 0,
           "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
           "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": false,
           "isIdle": true,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
+          "remove": [Function],
           "status": "idle",
         }
       `)
@@ -25,25 +38,53 @@ describe('useEnsLookup', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
+          "dataUpdatedAt": 0,
           "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
           "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
           "isIdle": false,
           "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
+          "remove": [Function],
           "status": "loading",
         }
       `)
       await waitForNextUpdate()
-      expect(result.current).toMatchInlineSnapshot(`
+
+      const { dataUpdatedAt, ...data } = result.current
+      expect(dataUpdatedAt).toBeDefined()
+      expect(data).toMatchInlineSnapshot(`
         {
           "data": "awkweb.eth",
           "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
           "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
           "isIdle": false,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
+          "remove": [Function],
           "status": "success",
         }
       `)
@@ -59,12 +100,25 @@ describe('useEnsLookup', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
+          "dataUpdatedAt": 0,
           "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
           "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": false,
           "isIdle": true,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
+          "remove": [Function],
           "status": "idle",
         }
       `)
@@ -72,25 +126,53 @@ describe('useEnsLookup', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
+          "dataUpdatedAt": 0,
           "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
           "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
           "isIdle": false,
           "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
+          "remove": [Function],
           "status": "loading",
         }
       `)
       await waitForNextUpdate()
-      expect(result.current).toMatchInlineSnapshot(`
+
+      const { dataUpdatedAt, ...data } = result.current
+      expect(dataUpdatedAt).toBeDefined()
+      expect(data).toMatchInlineSnapshot(`
         {
           "data": null,
           "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
           "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
           "isIdle": false,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
+          "remove": [Function],
           "status": "success",
         }
       `)

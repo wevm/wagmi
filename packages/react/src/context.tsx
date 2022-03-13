@@ -9,6 +9,8 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
+import stringify from './utils/safe-stringify'
+
 export const Context = React.createContext<WagmiClient | undefined>(undefined)
 
 export type ProviderProps = {
@@ -27,6 +29,7 @@ export type ProviderProps = {
 const defaultQueryClientConfig: QueryClientConfig = {
   defaultOptions: {
     queries: {
+      notifyOnChangeProps: 'tracked',
       refetchOnWindowFocus: false,
       cacheTime: 1000 * 60 * 60 * 24,
       retry: 0,
@@ -42,6 +45,7 @@ export const Provider = ({
   React.useMemo(() => {
     const persistor = createWebStoragePersistor({
       storage: (client.storage as Storage) || window.localStorage,
+      serialize: stringify,
     })
     persistQueryClient({
       queryClient,

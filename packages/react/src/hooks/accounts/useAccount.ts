@@ -27,6 +27,7 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
     isError,
     isLoading,
     status,
+    ...accountQueryResult
   } = useQuery(queryKey, async () => {
     const { address, connector } = getAccount()
     const cachedAccount = queryClient.getQueryData<GetAccountResult>(queryKey)
@@ -65,6 +66,7 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
   else status_ = status
 
   return {
+    ...accountQueryResult,
     data: data_
       ? {
           ...data_,

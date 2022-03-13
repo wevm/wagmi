@@ -1,5 +1,5 @@
+import * as React from 'react'
 import { FetchBlockNumberResult, fetchBlockNumber } from '@wagmi/core'
-import { useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'
@@ -13,9 +13,9 @@ export type UseBlockNumberConfig = QueryConfig<
   watch?: boolean
 }
 
-export const blockNumberQueryKey = () => [{ entity: 'block-number' }] as const
+export const queryKey = () => [{ entity: 'blockNumber' }] as const
 
-const blockNumberQueryFn = () => {
+const queryFn = () => {
   return fetchBlockNumber()
 }
 
@@ -28,34 +28,17 @@ export const useBlockNumber = ({
   onSuccess,
   watch = false,
 }: UseBlockNumberConfig = {}) => {
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  } = useQuery(blockNumberQueryKey(), blockNumberQueryFn, {
-    cacheTime,
-    enabled,
-    staleTime,
-    onError,
-    onSettled,
-    onSuccess,
-  })
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const queryClient = useQueryClient()
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!watch) return
 
     const listener = (blockNumber: number) => {
       // Just to be safe in case the provider implementation
       // calls the event callback after .off() has been called
-      queryClient.setQueryData(blockNumberQueryKey(), blockNumber)
+      queryClient.setQueryData(queryKey(), blockNumber)
     }
 
     const provider_ = webSocketProvider ?? provider
@@ -66,14 +49,12 @@ export const useBlockNumber = ({
     }
   }, [provider, queryClient, watch, webSocketProvider])
 
-  return {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  }
+  return useQuery(queryKey(), queryFn, {
+    cacheTime,
+    enabled,
+    staleTime,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }
