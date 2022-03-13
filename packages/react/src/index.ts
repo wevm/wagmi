@@ -7,7 +7,14 @@ export {
   type Props as WagmiProviderProps,
 } from './context'
 
-export { useAccount, useConnect, useEnsLookup } from './hooks'
+export {
+  useAccount,
+  useBlockNumber,
+  useConnect,
+  useEnsLookup,
+  useProvider,
+  useWebSocketProvider,
+} from './hooks'
 
 export {
   AddChainError,

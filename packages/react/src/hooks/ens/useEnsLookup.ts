@@ -1,37 +1,13 @@
-import { UseQueryOptions, useQuery } from 'react-query'
+import { useQuery } from 'react-query'
 import { FetchEnsNameResult, fetchEnsName } from '@wagmi/core'
 
-import { QueryFunctionArgs } from '../../types'
+import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { hashPrefix } from '../../constants'
 import { useChainId } from '../utils'
 
-type QueryOptions = UseQueryOptions<FetchEnsNameResult, Error>
-
-export type UseEnsLookupConfig = {
+export type UseEnsLookupConfig = QueryConfig<FetchEnsNameResult, Error> & {
   /** Address to use for looking up ENS name */
   address?: string
-  /**
-   * The time in milliseconds that unused/inactive cache data remains in memory.
-   * If set to Infinity, will disable garbage collection.
-   */
-  cacheTime?: QueryOptions['cacheTime']
-  /**
-   * Set this to `false` to disable this query from automatically running
-   * @default true
-   */
-  enabled?: QueryOptions['enabled']
-  /**
-   * The time in milliseconds after data is considered stale.
-   * If set to Infinity, the data will never be considered stale.
-   * @default Infinity
-   */
-  staleTime?: QueryOptions['staleTime']
-  /** Function fires if connect encounters error */
-  onError?: QueryOptions['onError']
-  /** Function fires when query is either successfully fetched or encounters error */
-  onSettled?: QueryOptions['onSettled']
-  /** Function fires when query successfully fetches new data or the cache is updated */
-  onSuccess?: QueryOptions['onSuccess']
 }
 
 export const ensLookupQueryKey = ({

@@ -5,44 +5,65 @@ describe('useBlockNumber', () => {
   describe('on mount', () => {
     it('fetches', async () => {
       const { result, waitForNextUpdate } = renderHook(() => useBlockNumber())
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "loading",
         }
       `)
       await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
-          "data": 13897897,
-          "error": undefined,
-          "loading": false,
+          "data": 14297676,
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
     })
   })
 
   it('skip', async () => {
-    const { result } = renderHook(() => useBlockNumber({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
+    const { result } = renderHook(() => useBlockNumber({ enabled: false }))
+    expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
-        "error": undefined,
-        "loading": false,
+        "error": null,
+        "isError": false,
+        "isIdle": true,
+        "isLoading": false,
+        "isSuccess": false,
+        "refetch": [Function],
+        "status": "idle",
       }
     `)
   })
 
   it('getBlockNumber', async () => {
-    const { result } = renderHook(() => useBlockNumber({ skip: true }))
+    const { result } = renderHook(() => useBlockNumber({ enabled: false }))
 
     await actHook(async () => {
-      const res = await result.current[1]()
-      expect(res).toMatchInlineSnapshot(`
+      await result.current.refetch()
+      expect(result.current).toMatchInlineSnapshot(`
         {
-          "data": 13897897,
-          "error": undefined,
+          "data": 14297676,
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
     })
