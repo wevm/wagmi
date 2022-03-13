@@ -5,10 +5,12 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { hashPrefix } from '../../constants'
 import { useChainId } from '../utils'
 
-export type UseEnsLookupConfig = QueryConfig<FetchEnsNameResult, Error> & {
+export type UseEnsLookupArgs = {
   /** Address to use for looking up ENS name */
   address?: string
 }
+
+export type UseEnsLookupConfig = QueryConfig<FetchEnsNameResult, Error>
 
 export const ensLookupQueryKey = ({
   address,
@@ -29,26 +31,20 @@ const queryKeyHashFn = ([{ address, chainId, entity }]: ReturnType<
   typeof ensLookupQueryKey
 >) => `${hashPrefix}:${entity}:${JSON.stringify({ address, chainId })}`
 
-export const useEnsLookup = ({
-  address,
-  cacheTime,
-  enabled = true,
-  staleTime = Infinity,
-  onError,
-  onSettled,
-  onSuccess,
-}: UseEnsLookupConfig = {}) => {
+export const useEnsLookup = (
+  { address }: UseEnsLookupArgs,
+  {
+    cacheTime,
+    enabled = true,
+    staleTime = Infinity,
+    onError,
+    onSettled,
+    onSuccess,
+  }: UseEnsLookupConfig = {},
+) => {
   const chainId = useChainId()
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  } = useQuery(ensLookupQueryKey({ address, chainId }), ensLookupQueryFn, {
+
+  return useQuery(ensLookupQueryKey({ address, chainId }), ensLookupQueryFn, {
     cacheTime,
     enabled: Boolean(enabled && address && chainId),
     queryKeyHashFn,
@@ -57,15 +53,4 @@ export const useEnsLookup = ({
     onSettled,
     onSuccess,
   })
-
-  return {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  } as const
 }

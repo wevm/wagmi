@@ -22,15 +22,15 @@ export const useAccount = (_config: UseAccountConfig = {}) => {
   const client = useClient()
   const queryClient = useQueryClient()
 
-  const { data, error, isError, isLoading, status } = useQuery<
-    GetAccountResult,
-    Error
-  >(accountQueryKey, async () => {
-    const { address } = getAccount()
-    const cachedAccount =
-      queryClient.getQueryData<GetAccountResult>(accountQueryKey)
-    return address ? { address } : cachedAccount || { address: undefined }
-  })
+  const { data, error, isError, isLoading, status, ...accountQueryResult } =
+    useQuery<GetAccountResult, Error>(accountQueryKey, async () => {
+      const account = getAccount()
+      const cachedAccount =
+        queryClient.getQueryData<GetAccountResult>(accountQueryKey)
+      return account.address
+        ? account
+        : cachedAccount || { address: undefined, connector: undefined }
+    })
 
   React.useEffect(() => {
     const unwatch = watchAccount(({ address }) =>
@@ -51,6 +51,7 @@ export const useAccount = (_config: UseAccountConfig = {}) => {
   else status_ = status
 
   return {
+    ...accountQueryResult,
     data: data_,
     disconnect,
     error,

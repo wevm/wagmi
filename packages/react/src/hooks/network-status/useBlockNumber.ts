@@ -28,23 +28,6 @@ export const useBlockNumber = ({
   onSuccess,
   watch = false,
 }: UseBlockNumberConfig = {}) => {
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  } = useQuery(blockNumberQueryKey(), blockNumberQueryFn, {
-    cacheTime,
-    enabled,
-    staleTime,
-    onError,
-    onSettled,
-    onSuccess,
-  })
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const queryClient = useQueryClient()
@@ -66,14 +49,12 @@ export const useBlockNumber = ({
     }
   }, [provider, queryClient, watch, webSocketProvider])
 
-  return {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  }
+  return useQuery(blockNumberQueryKey(), blockNumberQueryFn, {
+    cacheTime,
+    enabled,
+    staleTime,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }
