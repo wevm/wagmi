@@ -3,7 +3,7 @@ import {
   TransactionResponse,
 } from '@ethersproject/providers'
 
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 
 export type WaitForTransactionArgs = {
   /**
@@ -27,7 +27,7 @@ export type WaitForTransactionResult = TransactionReceipt
 export async function waitForTransaction(
   args: WaitForTransactionArgs,
 ): Promise<WaitForTransactionResult> {
-  const { provider } = wagmiClient
+  const { provider } = client
 
   let promise: Promise<TransactionReceipt>
   // eslint-disable-next-line testing-library/await-async-utils

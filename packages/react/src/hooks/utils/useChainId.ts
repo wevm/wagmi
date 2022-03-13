@@ -3,25 +3,27 @@ import { useQuery, useQueryClient } from 'react-query'
 import { getProvider } from '@wagmi/core'
 
 import { useClient } from '../../context'
-import { hashPrefix } from '../../constants'
 
-export const chainIdQueryKey = 'chainId'
+export const queryKey = 'chainId'
 
-const chainIdQueryFn = () => getProvider().network.chainId
+const queryFn = () => {
+  const chainId = getProvider().network.chainId
+  return chainId
+}
 
 export function useChainId() {
   const client = useClient()
   const queryClient = useQueryClient()
-
-  const { data } = useQuery<number>(chainIdQueryKey, chainIdQueryFn, {
-    queryHash: `${hashPrefix}:chainId`,
-  })
+  const { data } = useQuery(queryKey, queryFn)
 
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     const unsubscribe = client.subscribe(
-      (state) => state.provider.network.chainId,
-      (chainId) => queryClient.setQueryData(chainIdQueryKey, chainId),
+      (state) => ({ chainId: state.data?.chain?.id, provider: state.provider }),
+      ({ chainId, provider }) => {
+        const chainId_ = chainId ?? provider.network.chainId
+        return queryClient.setQueryData(queryKey, chainId_)
+      },
     )
     return unsubscribe
   }, [])

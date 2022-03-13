@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import {
   FetchEnsResolverArgs,
   FetchEnsResolverResult,
@@ -14,7 +14,7 @@ export function watchEnsResolver(
   callback: WatchEnsResolverCallback,
 ) {
   const handleChange = async () => callback(await fetchEnsResolver(args))
-  const unsubscribe = wagmiClient.subscribe(
+  const unsubscribe = client.subscribe(
     ({ connector, provider }) => [connector, provider],
     handleChange,
   )

@@ -1,11 +1,12 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import { CoinbaseWalletProvider, CoinbaseWalletSDK } from '@coinbase/wallet-sdk'
 import { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
+import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, hexValue, normalizeChainId } from '../utils'
+import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
 type Options = CoinbaseWalletSDKOptions & { jsonRpcUrl?: string }

@@ -1,11 +1,12 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
+import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, hexValue, normalizeChainId } from '../utils'
+import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
 const switchChainAllowedRegex = /(rainbow)/i

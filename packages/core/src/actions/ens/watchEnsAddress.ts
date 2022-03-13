@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import {
   FetchEnsAddressArgs,
   FetchEnsAddressResult,
@@ -12,7 +12,7 @@ export function watchEnsAddress(
   callback: WatchEnsAddressCallback,
 ) {
   const handleChange = async () => callback(await fetchEnsAddress(args))
-  const unsubscribe = wagmiClient.subscribe(
+  const unsubscribe = client.subscribe(
     ({ connector, provider }) => [connector, provider],
     handleChange,
   )

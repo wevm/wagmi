@@ -1,7 +1,7 @@
 import { TransactionResponse } from '@ethersproject/providers'
 import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
 
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 
 import { GetContractArgs, getContract } from './getContract'
@@ -19,7 +19,7 @@ export async function writeContract<
   functionName: string,
   { args, overrides }: Config = {},
 ): Promise<TransactionResponse> {
-  const { connector } = wagmiClient
+  const { connector } = client
   const contract = getContract<Contract>(contractConfig)
 
   if (!connector) throw new ConnectorNotFoundError()

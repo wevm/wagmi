@@ -8,50 +8,73 @@ import {
 import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
+import { useEnsAvatar, useEnsLookup } from '../ens'
 
 export type UseAccountConfig = {
   /** Fetches ENS for connected account */
   ens?: boolean | { avatar?: boolean; name?: boolean }
 }
 
-export const accountQueryKey = 'account' as const
-export const accountWithEnsQueryKey = ({ chainId }: { chainId?: number }) =>
-  [{ entity: 'account', chainId }] as const
+export const queryKey = 'account' as const
 
-export const useAccount = (_config: UseAccountConfig = {}) => {
+export const useAccount = ({ ens }: UseAccountConfig = {}) => {
   const client = useClient()
   const queryClient = useQueryClient()
 
-  const { data, error, isError, isLoading, status } = useQuery<
-    GetAccountResult,
-    Error
-  >(accountQueryKey, async () => {
-    const { address } = getAccount()
-    const cachedAccount =
-      queryClient.getQueryData<GetAccountResult>(accountQueryKey)
-    return address ? { address } : cachedAccount || { address: undefined }
+  const {
+    data: accountData,
+    error,
+    isError,
+    isLoading,
+    status,
+  } = useQuery(queryKey, async () => {
+    const { address, connector } = getAccount()
+    const cachedAccount = queryClient.getQueryData<GetAccountResult>(queryKey)
+    return address
+      ? { address, connector }
+      : cachedAccount || { address: undefined, connector: undefined }
+  })
+  const address = accountData?.address
+
+  const { data: ensNameData } = useEnsLookup({
+    address,
+    enabled: Boolean(typeof ens === 'boolean' ? ens : ens?.name),
+  })
+  const { data: ensAvatarData } = useEnsAvatar({
+    addressOrName: address,
+    enabled: Boolean(typeof ens === 'boolean' ? ens : ens?.avatar),
   })
 
   React.useEffect(() => {
-    const unwatch = watchAccount(({ address }) =>
-      queryClient.setQueryData<GetAccountResult>(accountQueryKey, () => ({
+    const unwatch = watchAccount(({ address, connector }) =>
+      queryClient.setQueryData<GetAccountResult>(queryKey, () => ({
         address,
+        connector,
       })),
     )
     return unwatch
   }, [queryClient])
 
   // Force data to be undefined if no address exists
-  const data_ = data?.address ? data : undefined
+  const data_ = address ? accountData : undefined
   const isLoading_ = isLoading || client.status === 'connecting'
 
   let status_: UseQueryResult['status']
   if (isLoading_) status_ = 'loading'
-  else if (!data?.address) status_ = 'idle'
+  else if (!address) status_ = 'idle'
   else status_ = status
 
   return {
-    data: data_,
+    data: data_
+      ? {
+          ...data_,
+          ...(ensNameData || ensAvatarData
+            ? {
+                ens: { avatar: ensAvatarData, name: ensNameData },
+              }
+            : {}),
+        }
+      : data_,
     disconnect,
     error,
     isError,

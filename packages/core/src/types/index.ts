@@ -1,15 +1,5 @@
-import { BigNumber } from 'ethers/lib/ethers'
-
 import { units } from '../constants'
 import './declarations'
-
-export type Balance = {
-  decimals: number
-  formatted: string
-  symbol: string
-  unit: Unit | number
-  value: BigNumber
-}
 
 export type Chain = {
   id: number

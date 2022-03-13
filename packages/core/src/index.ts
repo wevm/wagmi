@@ -1,6 +1,3 @@
-export { Connector, InjectedConnector } from './connectors'
-export type { ConnectorData, ConnectorEvents } from './connectors'
-
 export {
   connect,
   disconnect,
@@ -88,14 +85,28 @@ export type {
 } from './actions'
 
 export {
+  createClient,
+  createClient as createWagmiClient,
+  Client,
+  Client as WagmiClient,
+  type ClientConfig,
+  type ClientConfig as WagmiClientConfig,
+} from './client'
+
+export {
+  Connector,
+  InjectedConnector,
+  type ConnectorData,
+  type ConnectorEvents,
+} from './connectors'
+
+export {
+  allChains,
+  chain,
+  defaultChains,
   erc1155ABI,
   erc20ABI,
   erc721ABI,
-  chain,
-  allChains,
-  defaultChains,
-  defaultL2Chains,
-  developmentChains,
   units,
 } from './constants'
 
@@ -110,16 +121,12 @@ export {
 } from './errors'
 
 export {
-  createWagmiClient,
-  WagmiClient,
-  type WagmiClientConfig,
-} from './client'
-
-export type { Balance, Chain, Unit } from './types'
-
-export {
-  createWagmiStorage,
-  normalizeChainId,
-  verifyEIP1271Signature,
+  createStorage,
+  createStorage as createWagmiStorage,
+  type WagmiStorage as Storage,
   type WagmiStorage,
-} from './utils'
+} from './storage'
+
+export type { Chain, Unit } from './types'
+
+export { normalizeChainId } from './utils'

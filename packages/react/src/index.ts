@@ -1,10 +1,10 @@
 export {
-  Context,
-  Provider as WagmiProvider,
   Provider,
+  Provider as WagmiProvider,
   useClient,
-  type Props as ProviderProps,
-  type Props as WagmiProviderProps,
+  useClient as useWagmiClient,
+  type ProviderProps,
+  type ProviderProps as WagmiProviderProps,
 } from './context'
 
 export {
@@ -17,25 +17,25 @@ export {
 } from './hooks'
 
 export {
-  AddChainError,
-  ChainNotConfiguredError,
+  Client,
   Connector,
-  ConnectorAlreadyConnectedError,
-  ConnectorNotFoundError,
-  InjectedConnector,
-  SwitchChainError,
-  UserRejectedRequestError,
+  WagmiClient,
   allChains,
   chain,
+  createClient,
+  createStorage,
   createWagmiClient,
   createWagmiStorage,
   defaultChains,
-  defaultL2Chains,
-  developmentChains,
   erc1155ABI,
   erc20ABI,
   erc721ABI,
-  normalizeChainId,
+  type Chain,
+  type ClientConfig,
+  type ConnectorData,
+  type ConnectorEvents,
+  type Storage,
+  type Unit,
+  type WagmiClientConfig,
+  type WagmiStorage,
 } from '@wagmi/core'
-
-export type { Chain, ConnectorData } from '@wagmi/core'

@@ -30,7 +30,7 @@ export function useConnect({
     isError,
     mutate,
     status,
-    variables: connector,
+    variables: activeConnector,
   } = useMutation(connectMutationKey, connectMutationFn, {
     onError,
     onSettled,
@@ -56,9 +56,9 @@ export function useConnect({
 
   let status_:
     | Extract<UseMutationResult['status'], 'error' | 'idle'>
-    | 'disconnected'
     | 'connected'
     | 'connecting'
+    | 'disconnected'
     | 'reconnecting'
   if (client.status === 'reconnecting') status_ = 'reconnecting'
   else if (status === 'loading' || client.status === 'connecting')
@@ -69,7 +69,7 @@ export function useConnect({
 
   return {
     connect: mutate,
-    connector: connector ?? client.connector,
+    connector: activeConnector ?? client.connector,
     connectors: wagmiClient.connectors,
     error,
     isDisconnected: status_ === 'disconnected',

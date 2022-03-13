@@ -1,11 +1,11 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import { GetNetworkResult, getNetwork } from './getNetwork'
 
 export type WatchNetworkCallback = (data: GetNetworkResult) => void
 
 export function watchNetwork(callback: WatchNetworkCallback) {
   const handleChange = () => callback(getNetwork())
-  const unsubscribe = wagmiClient.subscribe(
+  const unsubscribe = client.subscribe(
     ({ data, connector }) => [data?.chain, connector],
     handleChange,
   )

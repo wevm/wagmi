@@ -1,6 +1,6 @@
 import { Contract as EthersContract } from 'ethers/lib/ethers'
 
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import { GetContractArgs, getContract } from './getContract'
 
 type Config = {
@@ -25,7 +25,7 @@ export function watchContractEvent<
     }
 
     contract = getContract<Contract>({
-      signerOrProvider: wagmiClient.webSocketProvider || wagmiClient.provider,
+      signerOrProvider: client.webSocketProvider || client.provider,
       ...contractArgs,
     })
 
@@ -34,7 +34,7 @@ export function watchContractEvent<
   }
 
   watchEvent()
-  const unsubscribe = wagmiClient.subscribe(
+  const unsubscribe = client.subscribe(
     ({ provider, webSocketProvider }) => [provider, webSocketProvider],
     watchEvent,
   )

@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import {
   ReadContractArgs,
   ReadContractConfig,
@@ -26,7 +26,7 @@ export function watchReadContract(
     config.listenToBlock ?? true
       ? watchBlockNumber({ listen: true }, handleChange)
       : undefined
-  const unsubscribe = wagmiClient.subscribe(
+  const unsubscribe = client.subscribe(
     ({ provider }) => [provider],
     handleChange,
   )

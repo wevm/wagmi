@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import {
   FetchFeeDataArgs,
   FetchFeeDataResult,
@@ -21,7 +21,7 @@ export function watchFeeData(
   const unwatch = args.listenToBlock
     ? watchBlockNumber({ listen: true }, handleChange)
     : undefined
-  const unsubscribe = wagmiClient.subscribe(
+  const unsubscribe = client.subscribe(
     ({ provider }) => [provider],
     handleChange,
   )

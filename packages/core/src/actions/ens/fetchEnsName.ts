@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 
 export type FetchEnsNameArgs = {
   /** Address to lookup */
@@ -10,6 +10,6 @@ export type FetchEnsNameResult = string | null
 export async function fetchEnsName({
   address,
 }: FetchEnsNameArgs): Promise<FetchEnsNameResult> {
-  const ensName = await wagmiClient.provider.lookupAddress(address)
+  const ensName = await client.provider.lookupAddress(address)
   return ensName
 }

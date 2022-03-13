@@ -11,7 +11,7 @@ import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor
 
 export const Context = React.createContext<WagmiClient | undefined>(undefined)
 
-export type Props = {
+export type ProviderProps = {
   /**
    * WagmiClient instance
    * @default new WagmiClient()
@@ -38,7 +38,7 @@ export const Provider = ({
   children,
   client = createWagmiClient(),
   queryClient = new QueryClient(defaultQueryClientConfig),
-}: React.PropsWithChildren<Props>) => {
+}: React.PropsWithChildren<ProviderProps>) => {
   React.useMemo(() => {
     const persistor = createWebStoragePersistor({
       storage: (client.storage as Storage) || window.localStorage,

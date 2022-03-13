@@ -1,13 +1,9 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { Chain } from '../types'
 import { allChains } from '../constants'
-import {
-  getAddress,
-  getInjectedName,
-  hexValue,
-  normalizeChainId,
-} from '../utils'
+import { getInjectedName, normalizeChainId } from '../utils'
 import {
   AddChainError,
   ChainNotConfiguredError,

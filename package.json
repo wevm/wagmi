@@ -7,6 +7,7 @@
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "preconstruct dev",
     "dev:docs": "pnpm build && manypkg run docs dev",
+    "dev:example:playground": "manypkg run example-playground dev",
     "dev:example:next": "pnpm build && manypkg run example-next dev",
     "dev:example:remix": "pnpm build && manypkg run example-remix dev",
     "dev:example:vite-react": "pnpm build && manypkg run example-vite-react dev",
@@ -80,6 +81,6 @@
     "size-limit": "^7.0.5",
     "start-server-and-test": "^1.14.0",
     "ts-node": "^10.5.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.6.2"
   }
 }
