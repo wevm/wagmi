@@ -1,12 +1,12 @@
-import { BigNumberish, BytesLike } from 'ethers/lib/ethers'
 import * as React from 'react'
-
+import { BigNumberish, BytesLike } from 'ethers/lib/ethers'
 import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-core'
+import { JsonRpcSigner } from '@ethersproject/providers'
 
 import { useContext } from '../../context'
 import { useCancel } from '../utils'
 
-interface TypedDataDomain {
+type TypedDataDomain = {
   name?: string
   version?: string
   chainId?: BigNumberish
@@ -14,7 +14,7 @@ interface TypedDataDomain {
   salt?: BytesLike
 }
 
-interface TypedDataField {
+type TypedDataField = {
   name: string
   type: string
 }
@@ -64,7 +64,7 @@ export const useSignTypedData = ({ domain, types, value }: Config = {}) => {
         const signer = await connector.getSigner()
 
         // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-        const signature = await signer._signTypedData(
+        const signature = await (<JsonRpcSigner>signer)._signTypedData(
           config_.domain,
           config_.types,
           config_.value,
