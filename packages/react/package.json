@@ -2,7 +2,7 @@
   "name": "wagmi",
   "description": "React Hooks library for Ethereum",
   "license": "MIT",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "homepage": "https://wagmi.sh",
@@ -47,7 +47,7 @@
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
     "@walletconnect/ethereum-provider": "1.7.5",
-    "wagmi-core": "0.1.14",
+    "wagmi-core": "0.1.15",
     "walletlink": "^2.5.0"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "@types/react": "^17.0.0",
     "ethers": "^5.5.1",
     "react": "^17.0.0",
-    "wagmi-testing": "0.1.14",
+    "wagmi-testing": "0.1.15",
     "walletlink": "^2.5.0"
   }
 }
