@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.20
+
+### Patch Changes
+
+- [`fed29fb`](https://github.com/tmm/wagmi/commit/fed29fb4714abe234e2dabb63782cfc4439a10cf) Thanks [@tmm](https://github.com/tmm)! - export useSignTypedData
+
 ## 0.2.19
 
 ### Patch Changes
