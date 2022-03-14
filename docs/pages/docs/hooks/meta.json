@@ -16,6 +16,7 @@
   "useProvider": "useProvider",
   "useSigner": "useSigner",
   "useSignMessage": "useSignMessage",
+  "useSignTypedData": "useSignTypedData",
   "useToken": "useToken",
   "useTransaction": "useTransaction",
   "useWaitForTransaction": "useWaitForTransaction",
