@@ -14,7 +14,7 @@ React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers
 
 ## Documentation
 
-Visit https://wagmi-xyz.vercel.app to view the full documentation.
+Visit https://wagmi.sh to view the full documentation.
 
 ## Usage
 

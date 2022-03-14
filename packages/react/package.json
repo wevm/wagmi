@@ -5,7 +5,7 @@
   "version": "0.2.18",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
-  "homepage": "https://wagmi-xyz.vercel.app",
+  "homepage": "https://wagmi.sh",
   "sideEffects": false,
   "main": "dist/wagmi.cjs.js",
   "module": "dist/wagmi.esm.js",

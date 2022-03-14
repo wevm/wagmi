@@ -1,0 +1,5 @@
+---
+'wagmi': patch
+---
+
+add useSignedTypeData
