@@ -173,7 +173,7 @@ export class Client {
   }
 
   async destroy() {
-    if (this.connector) await this.connector.disconnect()
+    if (this.connector) await this.connector.disconnect?.()
     this.clearState()
     this.store.destroy()
   }

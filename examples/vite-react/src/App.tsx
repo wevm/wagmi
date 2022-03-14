@@ -1,5 +1,6 @@
 import { useAccount, useConnect } from 'wagmi'
 
+import { Balance } from './components/Balance'
 import { BlockNumber } from './components/BlockNumber'
 
 export const App = () => {
@@ -23,6 +24,7 @@ export const App = () => {
       <div>
         <div>{account.data.address}</div>
         <BlockNumber />
+        <Balance />
         <button onClick={account.disconnect}>disconnect</button>
       </div>
     )

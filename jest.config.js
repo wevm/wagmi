@@ -4,7 +4,7 @@ const config = {
     printBasicPrototype: false,
   },
   transform: {
-    '^.+\\.ts(x)?$': [
+    '^.+\\.(ts|js)(x)?$': [
       '@swc-node/jest',
       {
         jsc: {

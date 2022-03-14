@@ -9,6 +9,7 @@ export {
 
 export {
   useAccount,
+  useBalance,
   useNetwork,
   useBlockNumber,
   useConnect,

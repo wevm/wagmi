@@ -1,6 +1,6 @@
 export {
   useAccount,
-  // useBalance,
+  useBalance,
   useConnect, // useNetwork, // useSigner, // useSignMessage,
   useNetwork,
 } from './accounts'
