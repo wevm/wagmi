@@ -1,15 +1,15 @@
 import { useQuery } from 'react-query'
-import { FetchEnsResolverResult, fetchEnsResolver } from '@wagmi/core'
+import { FetchEnsAddressResult, fetchEnsAddress } from '@wagmi/core'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId } from '../utils'
 
-export type UseEnsResolverArgs = {
+export type UseEnsAddressArgs = {
   /** ENS name */
   name?: string
 }
 
-export type UseEnsResolverConfig = QueryConfig<FetchEnsResolverResult, Error>
+export type UseEnsAddressConfig = QueryConfig<FetchEnsAddressResult, Error>
 
 export const queryKey = ({
   chainId,
@@ -17,19 +17,19 @@ export const queryKey = ({
 }: {
   chainId?: number
   name?: string
-}) => [{ entity: 'ensResolver', chainId, name }] as const
+}) => [{ entity: 'ensAddress', chainId, name }] as const
 
 const queryFn = ({
   queryKey: [{ name }],
 }: QueryFunctionArgs<typeof queryKey>) => {
   if (!name) throw new Error('QueryKey missing name')
-  return fetchEnsResolver({ name })
+  return fetchEnsAddress({ name })
 }
 
 /**
- * Fetches ENS resolver for ENS name
+ * Fetches address for ENS name
  */
-export const useEnsResolver = ({
+export const useEnsAddress = ({
   name,
   cacheTime,
   enabled = true,
@@ -37,7 +37,7 @@ export const useEnsResolver = ({
   onError,
   onSettled,
   onSuccess,
-}: UseEnsResolverArgs & UseEnsResolverConfig = {}) => {
+}: UseEnsAddressArgs & UseEnsAddressConfig = {}) => {
   const chainId = useChainId()
   return useQuery(queryKey({ chainId, name }), queryFn, {
     cacheTime,

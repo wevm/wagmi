@@ -1,12 +1,12 @@
-import { renderHook } from '../../../test'
-import { useEnsResolver } from './useEnsResolver'
+import { getSigners, renderHook } from '../../../test'
+import { useEnsName } from './useEnsName'
 
-describe('useEnsResolver', () => {
-  describe('name', () => {
-    it('has resolver', async () => {
+describe('useEnsName', () => {
+  describe('address', () => {
+    it('has ens', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsResolver({
-          name: 'awkweb.eth',
+        useEnsName({
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
         }),
       )
       expect(result.current).toMatchInlineSnapshot(`
@@ -66,12 +66,7 @@ describe('useEnsResolver', () => {
       expect(dataUpdatedAt).toBeDefined()
       expect(data).toMatchInlineSnapshot(`
         {
-          "data": Resolver {
-            "_resolvedAddress": undefined,
-            "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
-            "name": "awkweb.eth",
-            "provider": "<WrappedHardhatProvider>",
-          },
+          "data": "awkweb.eth",
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
@@ -95,10 +90,11 @@ describe('useEnsResolver', () => {
       `)
     })
 
-    it('does not have resolver', async () => {
+    it('does not have ens', async () => {
+      const address = await getSigners()[0].getAddress()
       const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsResolver({
-          name: 'awkweb123.eth',
+        useEnsName({
+          address,
         }),
       )
       expect(result.current).toMatchInlineSnapshot(`
@@ -186,8 +182,8 @@ describe('useEnsResolver', () => {
   describe('enabled', () => {
     it('is false', () => {
       const { result } = renderHook(() =>
-        useEnsResolver({
-          name: 'awkweb.eth',
+        useEnsName({
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
           enabled: false,
         }),
       )
@@ -218,8 +214,8 @@ describe('useEnsResolver', () => {
       `)
     })
 
-    it('missing name', () => {
-      const { result } = renderHook(() => useEnsResolver({}))
+    it('missing address', () => {
+      const { result } = renderHook(() => useEnsName({}))
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,

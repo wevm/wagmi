@@ -4,12 +4,12 @@ import { FetchEnsNameResult, fetchEnsName } from '@wagmi/core'
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId } from '../utils'
 
-export type UseEnsLookupArgs = {
-  /** Address to use for looking up ENS name */
+export type UseEnsNameArgs = {
+  /** Address */
   address?: string
 }
 
-export type UseEnsLookupConfig = QueryConfig<FetchEnsNameResult, Error>
+export type UseEnsNameConfig = QueryConfig<FetchEnsNameResult, Error>
 
 export const queryKey = ({
   address,
@@ -26,7 +26,10 @@ const queryFn = ({
   return fetchEnsName({ address })
 }
 
-export const useEnsLookup = ({
+/**
+ * Fetches ENS name for address
+ */
+export const useEnsName = ({
   address,
   cacheTime,
   enabled = true,
@@ -34,9 +37,8 @@ export const useEnsLookup = ({
   onError,
   onSettled,
   onSuccess,
-}: UseEnsLookupArgs & UseEnsLookupConfig = {}) => {
+}: UseEnsNameArgs & UseEnsNameConfig = {}) => {
   const chainId = useChainId()
-
   return useQuery(queryKey({ address, chainId }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && address && chainId),

@@ -14,12 +14,9 @@ export async function fetchEnsAddress({
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
   const address = await client.provider.resolveName(name)
 
-  let checksumAddress: FetchEnsAddressResult
   try {
-    checksumAddress = address ? getAddress(address) : null
+    return address ? getAddress(address) : null
   } catch (_error) {
-    checksumAddress = null
+    return null
   }
-
-  return checksumAddress
 }

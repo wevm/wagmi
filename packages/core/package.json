@@ -13,6 +13,10 @@
       "module": "./dist/wagmi-core.esm.js",
       "default": "./dist/wagmi-core.cjs.js"
     },
+    "./connectors/coinbaseWallet": {
+      "module": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
+      "default": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js"
+    },
     "./connectors/mock": {
       "module": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
       "default": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js"
@@ -20,10 +24,6 @@
     "./connectors/walletConnect": {
       "module": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
       "default": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js"
-    },
-    "./connectors/coinbaseWallet": {
-      "module": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
-      "default": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js"
     }
   },
   "files": [
@@ -36,13 +36,13 @@
     "entrypoints": [
       "index.ts",
       "connectors/coinbaseWallet.ts",
-      "connectors/walletConnect.ts",
-      "connectors/mock/index.ts"
+      "connectors/mock/index.ts",
+      "connectors/walletConnect.ts"
     ]
   },
   "peerDependencies": {
     "@coinbase/wallet-sdk": "^3.0.1",
-    "@walletconnect/ethereum-provider": "1.7.1",
+    "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1"
   },
   "peerDependenciesMeta": {
@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.0.1",
-    "@walletconnect/ethereum-provider": "1.7.1",
+    "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1"
   }
 }

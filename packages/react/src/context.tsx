@@ -63,10 +63,6 @@ export const Provider = ({
       if (!client.config.autoConnect) return
       await client.autoConnect()
     })()
-
-    return () => {
-      client.destroy()
-    }
   }, [])
   /* eslint-enable react-hooks/exhaustive-deps */
 

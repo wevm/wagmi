@@ -8,7 +8,7 @@ import {
 import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
-import { useEnsAvatar, useEnsLookup } from '../ens'
+import { useEnsAvatar, useEnsName } from '../ens'
 
 export type UseAccountConfig = {
   /** Fetches ENS for connected account */
@@ -37,13 +37,13 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
   })
   const address = accountData?.address
 
-  const { data: ensNameData } = useEnsLookup({
-    address,
-    enabled: Boolean(typeof ens === 'boolean' ? ens : ens?.name),
-  })
   const { data: ensAvatarData } = useEnsAvatar({
     addressOrName: address,
     enabled: Boolean(typeof ens === 'boolean' ? ens : ens?.avatar),
+  })
+  const { data: ensNameData } = useEnsName({
+    address,
+    enabled: Boolean(typeof ens === 'boolean' ? ens : ens?.name),
   })
 
   React.useEffect(() => {

@@ -25,7 +25,7 @@ export type ClientConfig = {
   connectors: ((config: { chainId?: number }) => Connector[]) | Connector[]
   /**
    * Interface for connecting to network
-   * @default getDefaultProvider()
+   * @default (config) => getDefaultProvider(config.chainId)
    */
   provider?: ((config: { chainId?: number }) => BaseProvider) | BaseProvider
   /**
@@ -41,7 +41,13 @@ export type ClientConfig = {
 
 const defaultConfig: ClientConfig = {
   connectors: [new InjectedConnector()],
-  provider: getDefaultProvider(),
+  provider: ({ chainId }) => {
+    try {
+      return getDefaultProvider(chainId)
+    } catch (error) {
+      return getDefaultProvider()
+    }
+  },
   storage: createStorage({
     storage: typeof window !== 'undefined' ? window.localStorage : noopStorage,
   }),

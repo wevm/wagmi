@@ -41,7 +41,7 @@ React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers
 
 ## Documentation
 
-Visit https://wagmi-xyz.vercel.app to view the full documentation.
+Visit https://wagmi.sh to view the full documentation.
 
 ## Usage
 
@@ -79,7 +79,7 @@ const Page = () => {
 
 Every component inside the `Provider` is set up with the default `InjectedConnector` for connecting wallets and ethers.js [Default Provider](https://docs.ethers.io/v5/api/providers/#providers-getDefaultProvider) for fetching data.
 
-Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/connect-wallet) or browse the [API docs](https://wagmi-xyz.vercel.app/docs/provider).
+Want to learn more? Check out the [guides](https://wagmi.sh/guides/connect-wallet) or browse the [API docs](https://wagmi.sh/docs/provider).
 
 ## Community
 

@@ -1,4 +1,4 @@
+export { useEnsAddress } from './useEnsAddress'
 export { useEnsAvatar } from './useEnsAvatar'
-export { useEnsLookup } from './useEnsLookup'
-// export { useEnsResolveName } from './useEnsResolveName'
-// export { useEnsResolver } from './useEnsResolver'
+export { useEnsName } from './useEnsName'
+export { useEnsResolver } from './useEnsResolver'

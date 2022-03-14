@@ -14,8 +14,6 @@ export type UseConnectConfig = {
   onSettled?: MutationOptions['onSettled']
 }
 
-export const mutationKey = 'network' as const
-
 export const useNetwork = ({
   onError,
   onSettled,

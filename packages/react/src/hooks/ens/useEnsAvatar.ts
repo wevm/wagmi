@@ -4,16 +4,18 @@ import { FetchEnsAvatarResult, fetchEnsAvatar } from '@wagmi/core'
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId } from '../utils'
 
-export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error> & {
-  /** Address or ENS name to use for looking up ENS avatar */
+export type UseEnsAvatarArgs = {
+  /** Address or ENS name */
   addressOrName?: string
 }
+
+export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 
 export const queryKey = ({
   addressOrName,
   chainId,
 }: {
-  addressOrName?: UseEnsLookupConfig['addressOrName']
+  addressOrName?: UseEnsAvatarArgs['addressOrName']
   chainId?: number
 }) => [{ entity: 'ensAvatar', addressOrName, chainId }] as const
 
@@ -24,6 +26,9 @@ const queryFn = ({
   return fetchEnsAvatar({ addressOrName })
 }
 
+/**
+ * Fetches ENS avatar for address or ENS name
+ */
 export const useEnsAvatar = ({
   addressOrName,
   cacheTime,
@@ -32,18 +37,9 @@ export const useEnsAvatar = ({
   onError,
   onSettled,
   onSuccess,
-}: UseEnsLookupConfig = {}) => {
+}: UseEnsAvatarArgs & UseEnsLookupConfig = {}) => {
   const chainId = useChainId()
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  } = useQuery(queryKey({ addressOrName, chainId }), queryFn, {
+  return useQuery(queryKey({ addressOrName, chainId }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && addressOrName && chainId),
     staleTime,
@@ -51,15 +47,4 @@ export const useEnsAvatar = ({
     onSettled,
     onSuccess,
   })
-
-  return {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    refetch,
-    status,
-  } as const
 }

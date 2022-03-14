@@ -12,10 +12,7 @@ export {
 //   useContractWrite,
 //   useToken,
 // } from './contracts'
-export {
-  // useEnsAvatar,
-  useEnsLookup, // useEnsResolveName, // useEnsResolver,
-} from './ens'
+export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
 export {
   useBlockNumber, // useFeeData
 } from './network-status'

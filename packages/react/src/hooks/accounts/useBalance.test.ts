@@ -54,9 +54,9 @@ describe('useBalance', () => {
         }),
       )
 
-      await actHook(async () => {
+      actHook(() => {
         const mockConnector = result.current.connect.connectors[0]
-        await result.current.connect.connect(mockConnector)
+        result.current.connect.connect(mockConnector)
       })
 
       await waitFor(() => result.current.balance.isSuccess)
@@ -146,7 +146,7 @@ describe('useBalance', () => {
 
       await actHook(async () => {
         const mockConnector = result.current.connect.connectors[0]
-        await result.current.connect.connect(mockConnector)
+        result.current.connect.connect(mockConnector)
 
         const { dataUpdatedAt, ...res } = await result.current.balance.refetch()
         expect(dataUpdatedAt).toBeDefined()
@@ -193,7 +193,7 @@ describe('useBalance', () => {
 
       await actHook(async () => {
         const mockConnector = result.current.connect.connectors[0]
-        await result.current.connect.connect(mockConnector)
+        result.current.connect.connect(mockConnector)
 
         const { errorUpdatedAt, ...res } =
           await result.current.balance.refetch()
