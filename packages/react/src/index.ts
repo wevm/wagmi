@@ -27,6 +27,7 @@ export {
   useProvider,
   useSigner,
   useSignMessage,
+  useSignTypedData,
   useToken,
   useTransaction,
   useWaitForTransaction,
