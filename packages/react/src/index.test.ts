@@ -24,6 +24,7 @@ it('should expose correct exports', () => {
       "useProvider",
       "useSigner",
       "useSignMessage",
+      "useSignTypedData",
       "useToken",
       "useTransaction",
       "useWaitForTransaction",

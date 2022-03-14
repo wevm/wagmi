@@ -5,6 +5,7 @@ export {
   useNetwork,
   useSigner,
   useSignMessage,
+  useSignTypedData,
 } from './accounts'
 export {
   useContract,
