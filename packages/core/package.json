@@ -35,7 +35,7 @@
     ]
   },
   "peerDependencies": {
-    "@walletconnect/ethereum-provider": "1.7.4",
+    "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1",
     "walletlink": "^2.5.0"
   },
@@ -52,7 +52,7 @@
     "eventemitter3": "^4.0.7"
   },
   "devDependencies": {
-    "@walletconnect/ethereum-provider": "1.7.4",
+    "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1",
     "wagmi-testing": "0.1.14",
     "walletlink": "^2.5.0"
