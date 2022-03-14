@@ -50,6 +50,9 @@ export const Provider = ({
     persistQueryClient({
       queryClient,
       persistor,
+      dehydrateOptions: {
+        shouldDehydrateQuery: (query) => query.cacheTime !== 0,
+      },
     })
   }, [client, queryClient])
 

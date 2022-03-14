@@ -15,6 +15,7 @@ export {
   useConnect,
   useEnsLookup,
   useProvider,
+  useSigner,
   useWebSocketProvider,
 } from './hooks'
 
