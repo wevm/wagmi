@@ -1,75 +1,55 @@
-import * as React from 'react'
-import { Chain, SwitchChainError, allChains } from '@wagmi/core'
+import { SwitchChainError, SwitchNetworkResult } from '@wagmi/core'
+import { UseMutationOptions, useMutation } from 'react-query'
 
 import { useClient } from '../../context'
-import { useCancel } from '../utils'
 
-type State = {
-  error?: Error
-  loading?: boolean
+type MutationOptions = UseMutationOptions<SwitchNetworkResult, Error, number>
+
+export type UseConnectConfig = {
+  /** Function fires when connect is successful */
+  onSuccess?: MutationOptions['onSuccess']
+  /** Function fires if connect encounters error */
+  onError?: MutationOptions['onError']
+  /** Function fires when connect is either successful or encounters error */
+  onSettled?: MutationOptions['onSettled']
 }
 
-const initialState: State = {
-  loading: false,
-}
+export const mutationKey = 'network' as const
 
-export const useNetwork = () => {
-  const {
-    state: { connector, data },
-  } = useClient()
-  const [state, setState] = React.useState<State>(initialState)
-
-  const chainId = data?.chain?.id
-  const unsupported = data?.chain?.unsupported
-  const activeChains = connector?.chains ?? []
-  const activeChain: Chain | undefined = [...activeChains, ...allChains].find(
-    (x) => x.id === chainId,
-  )
-
-  const cancelQuery = useCancel()
-  const switchNetwork = React.useCallback(
-    async (chainId: number) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      if (!connector?.switchChain)
-        return { data: undefined, error: new SwitchChainError() }
-
-      try {
-        setState((x) => ({ ...x, error: undefined, loading: true }))
-        const chain = await connector.switchChain(chainId)
-        if (!didCancel) {
-          setState((x) => ({ ...x, loading: false }))
-        }
-        return { data: chain, error: undefined }
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return { data: undefined, error }
-      }
+export const useNetwork = ({
+  onError,
+  onSettled,
+  onSuccess,
+}: UseConnectConfig = {}) => {
+  const client = useClient()
+  const connector = client.connector
+  const { error, isError, mutate, status } = useMutation(
+    'network',
+    (chainId) => {
+      if (!connector?.switchChain) throw new SwitchChainError()
+      return connector.switchChain(chainId)
     },
-    [cancelQuery, connector],
-  )
-
-  return [
     {
-      data: {
-        chain: chainId
-          ? {
-              ...activeChain,
-              id: chainId,
-              unsupported,
-            }
-          : undefined,
-        chains: activeChains,
-      },
-      error: state.error,
-      loading: state.loading,
+      onError,
+      onSettled,
+      onSuccess,
     },
-    connector?.switchChain ? switchNetwork : undefined,
-  ] as const
+  )
+
+  // const chainId = data?.chain?.id
+  // const unsupported = data?.chain?.unsupported
+  // const activeChains = connector?.chains ?? []
+  // const activeChain: Chain | undefined = [...activeChains, ...allChains].find(
+  //   (x) => x.id === chainId,
+  // )
+
+  const activeChains = connector?.chains ?? []
+
+  return {
+    chains: activeChains,
+    error,
+    isError,
+    status,
+    switchNetwork: connector?.switchChain ? mutate : undefined,
+  } as const
 }

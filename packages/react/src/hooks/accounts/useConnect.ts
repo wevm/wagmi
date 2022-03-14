@@ -1,5 +1,5 @@
+import * as React from 'react'
 import { ConnectResult, Connector, connect } from '@wagmi/core'
-import { useEffect, useState } from 'react'
 import { UseMutationOptions, UseMutationResult, useMutation } from 'react-query'
 
 import { useClient } from '../../context'
@@ -15,10 +15,6 @@ export type UseConnectConfig = {
   onSettled?: MutationOptions['onSettled']
 }
 
-export const mutationKey = 'connect' as const
-
-const mutationFn = (connector: Connector) => connect(connector)
-
 export function useConnect({
   onConnect,
   onError,
@@ -31,17 +27,17 @@ export function useConnect({
     mutate,
     status,
     variables: activeConnector,
-  } = useMutation(mutationKey, mutationFn, {
+  } = useMutation('connect', (connector: Connector) => connect(connector), {
     onError,
     onSettled,
     onSuccess: onConnect,
   })
 
-  const [client, setClient] = useState({
+  const [client, setClient] = React.useState({
     status: wagmiClient.status,
     connector: wagmiClient.connector,
   })
-  useEffect(() => {
+  React.useEffect(() => {
     const unsubscribe = wagmiClient.subscribe(
       ({ status, connector }) => [status, connector],
       () =>

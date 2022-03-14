@@ -28,7 +28,7 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
     isLoading,
     status,
     ...accountQueryResult
-  } = useQuery(queryKey(), async () => {
+  } = useQuery(queryKey(), () => {
     const { address, connector } = getAccount()
     const cachedAccount = queryClient.getQueryData<GetAccountResult>(queryKey())
     return address
@@ -65,16 +65,19 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
   else if (!address) status_ = 'idle'
   else status_ = status
 
+  const ensData =
+    ensNameData || ensAvatarData
+      ? {
+          ens: { avatar: ensAvatarData, name: ensNameData },
+        }
+      : {}
+
   return {
     ...accountQueryResult,
     data: data_
       ? {
           ...data_,
-          ...(ensNameData || ensAvatarData
-            ? {
-                ens: { avatar: ensAvatarData, name: ensNameData },
-              }
-            : {}),
+          ...ensData,
         }
       : data_,
     disconnect,

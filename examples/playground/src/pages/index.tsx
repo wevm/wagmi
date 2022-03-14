@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 
-import { Account, Connect } from '../components'
+import { Account, Connect, NetworkSwitcher } from '../components'
 
 const Page = () => {
   const { data: accountData } = useAccount()
@@ -10,6 +10,7 @@ const Page = () => {
     return (
       <>
         <Account />
+        <NetworkSwitcher />
       </>
     )
 

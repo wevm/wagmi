@@ -12,11 +12,7 @@ import {
 } from 'zustand/vanilla'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 
-import {
-  InjectedConnector,
-  Connector as TConnector,
-  ConnectorData as TData,
-} from './connectors'
+import { Connector, ConnectorData, InjectedConnector } from './connectors'
 import { WagmiStorage, createStorage, noopStorage } from './storage'
 
 export type ClientConfig = {
@@ -31,9 +27,7 @@ export type ClientConfig = {
    * Interface for connecting to network
    * @default getDefaultProvider()
    */
-  provider?:
-    | ((config: { chainId?: number; connector?: Connector }) => BaseProvider)
-    | BaseProvider
+  provider?: ((config: { chainId?: number }) => BaseProvider) | BaseProvider
   /**
    * Custom storage for data persistance
    * @default window.localStorage
@@ -41,15 +35,11 @@ export type ClientConfig = {
   storage?: WagmiStorage
   /** WebSocket interface for connecting to network */
   webSocketProvider?:
-    | ((config: {
-        chainId?: number
-        connector?: Connector
-      }) => WebSocketProvider | undefined)
+    | ((config: { chainId?: number }) => WebSocketProvider | undefined)
     | WebSocketProvider
 }
-const defaultConfig: Required<
-  Pick<ClientConfig, 'connectors' | 'provider' | 'storage'>
-> = {
+
+const defaultConfig: ClientConfig = {
   connectors: [new InjectedConnector()],
   provider: getDefaultProvider(),
   storage: createStorage({
@@ -57,22 +47,15 @@ const defaultConfig: Required<
   }),
 }
 
-export type Connector = TConnector
-export type Data = TData<BaseProvider>
-export type State = {
-  status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
+type Data = ConnectorData<BaseProvider>
+type State = {
   connector?: Connector
   connectors: Connector[]
   data?: Data
   error?: Error
   provider: BaseProvider
-  webSocketProvider?: WebSocketProvider
-}
-
-export type AutoConnectionChangedArgs = {
   status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
-  data: Data | undefined
-  connector: Connector | undefined
+  webSocketProvider?: WebSocketProvider
 }
 
 export class Client {
@@ -104,7 +87,7 @@ export class Client {
         ? webSocketProvider({})
         : webSocketProvider
 
-    let status: AutoConnectionChangedArgs['status']
+    let status: State['status']
     if (!autoConnect) status = 'disconnected'
     else if (storage?.getItem('connected')) status = 'reconnecting'
     else status = 'connecting'
@@ -182,15 +165,15 @@ export class Client {
   clearState() {
     this.setState((x) => ({
       ...x,
-      status: 'disconnected',
       connector: undefined,
       data: undefined,
       error: undefined,
+      status: 'disconnected',
     }))
   }
 
   async destroy() {
-    if (this.connector) await this.connector.disconnect?.()
+    if (this.connector) await this.connector.disconnect()
     this.clearState()
     this.store.destroy()
   }
@@ -204,23 +187,20 @@ export class Client {
         )
       : this.connectors
 
-    let data: TData<any>
-    let newConnector: Connector
     for (const connector of sorted) {
       if (!connector.ready || !connector.isAuthorized) continue
       const isAuthorized = await connector.isAuthorized()
       if (!isAuthorized) continue
 
-      newConnector = connector
-      data = await connector.connect()
+      const data = await connector.connect()
+      this.setState((x) => ({
+        ...x,
+        connector,
+        data,
+        status: data ? 'connected' : 'disconnected',
+      }))
       break
     }
-    this.setState((x) => ({
-      ...x,
-      connector: newConnector,
-      data,
-      status: data ? 'connected' : 'disconnected',
-    }))
 
     return this.data
   }
@@ -254,44 +234,25 @@ export class Client {
 
     const { connectors, provider, webSocketProvider } = this.config
 
-    // Subscribe to changes that should update `connectors`
-    if (typeof connectors === 'function')
-      this.store.subscribe(
-        ({ data }) => data?.chain?.id,
-        () => {
-          this.setState((x) => ({
-            ...x,
-            connectors: connectors({ chainId: this.data?.chain?.id }),
-          }))
-        },
-      )
-
-    // Subscribe to changes that should update `provider` or `webSocketProvider`
+    const subscribeConnectors = typeof connectors === 'function'
     const subscribeProvider = typeof provider === 'function'
     const subscribeWebSocketProvider =
       !(webSocketProvider instanceof WebSocketProvider) && webSocketProvider
-    if (subscribeProvider || subscribeWebSocketProvider)
+
+    if (subscribeConnectors || subscribeProvider || subscribeWebSocketProvider)
       this.store.subscribe(
-        ({ data, connector }) => [data?.chain?.id, connector],
-        () => {
+        ({ data }) => data?.chain?.id,
+        (chainId) => {
           this.setState((x) => ({
             ...x,
-            provider: subscribeProvider
-              ? provider({
-                  chainId: this.data?.chain?.id,
-                  connector: this.connector,
-                })
-              : x.provider,
+            connectors: subscribeConnectors
+              ? connectors({ chainId })
+              : x.connectors,
+            provider: subscribeProvider ? provider({ chainId }) : x.provider,
             webSocketProvider: subscribeWebSocketProvider
-              ? webSocketProvider({
-                  chainId: this.data?.chain?.id,
-                  connector: this.connector,
-                })
+              ? webSocketProvider({ chainId })
               : x.webSocketProvider,
           }))
-        },
-        {
-          equalityFn: ([chainId], [newChainId]) => chainId === newChainId,
         },
       )
   }

@@ -2,6 +2,7 @@ export {
   useAccount,
   // useBalance,
   useConnect, // useNetwork, // useSigner, // useSignMessage,
+  useNetwork,
 } from './accounts'
 // export {
 //   useContract,

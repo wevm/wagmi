@@ -64,6 +64,7 @@ export type {
   SignMessageArgs,
   SignMessageResult,
   SwitchNetworkArgs,
+  SwitchNetworkResult,
   WaitForTransactionArgs,
   WaitForTransactionResult,
   WatchAccountCallback,
