@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.2.19
+
+### Patch Changes
+
+- [`6987278`](https://github.com/tmm/wagmi/commit/69872786e0b54b89a20945cc5471c1f4675b0a68) Thanks [@tmm](https://github.com/tmm)! - add useSignedTypeData
+
 ## 0.2.18
 
 ### Patch Changes
