@@ -1,5 +1,11 @@
 # wagmi-core
 
+## 0.1.15
+
+### Patch Changes
+
+- [`f9790b5`](https://github.com/tmm/wagmi/commit/f9790b55600df09c77bb8ca349c5a3457df1b07c) Thanks [@tmm](https://github.com/tmm)! - fix WalletConnect issue
+
 ## 0.1.14
 
 ### Patch Changes
