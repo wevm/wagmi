@@ -13,18 +13,14 @@ export type QueryConfig<Data, Error> = {
    * If set to Infinity, will disable garbage collection.
    */
   cacheTime?: UseQueryOptions<Data, Error>['cacheTime']
-  /**
-   * Set this to `false` to disable this query from automatically running
-   * @default true
-   */
+  /** Set this to `false` to disable this query from automatically running */
   enabled?: UseQueryOptions<Data, Error>['enabled']
   /**
    * The time in milliseconds after data is considered stale.
    * If set to Infinity, the data will never be considered stale.
-   * @default Infinity
    */
   staleTime?: UseQueryOptions<Data, Error>['staleTime']
-  /** Function fires if connect encounters error */
+  /** Function fires if query encounters error */
   onError?: UseQueryOptions<Data, Error>['onError']
   /** Function fires when query is either successfully fetched or encounters error */
   onSettled?: UseQueryOptions<Data, Error>['onSettled']

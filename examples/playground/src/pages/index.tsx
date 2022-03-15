@@ -1,18 +1,17 @@
 import * as React from 'react'
-import { useAccount } from 'wagmi'
 
-import { Account, Connect, NetworkSwitcher } from '../components'
+import { Connect } from '../components'
 
 const Page = () => {
-  const { data: accountData } = useAccount()
+  // const { data: accountData } = useAccount()
 
-  if (accountData?.address)
-    return (
-      <>
-        <Account />
-        <NetworkSwitcher />
-      </>
-    )
+  // if (accountData?.address)
+  //   return (
+  //     <>
+  //       <Account />
+  //       <NetworkSwitcher />
+  //     </>
+  //   )
 
   return <Connect />
 }

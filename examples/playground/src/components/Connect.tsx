@@ -5,10 +5,14 @@ import { useIsMounted } from '../hooks'
 
 export const Connect = () => {
   const isMounted = useIsMounted()
-  const { connectors, connector, connect, status, error } = useConnect()
+  const { activeConnector, connectors, connector, connect, status, error } =
+    useConnect()
 
   return (
     <div>
+      {typeof window !== 'undefined' && activeConnector?.name && (
+        <div>Connected to {activeConnector.name}</div>
+      )}
       <div>
         {connectors.map((x) => (
           <button

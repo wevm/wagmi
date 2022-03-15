@@ -25,7 +25,7 @@ export function useConnect({
     mutate,
     mutateAsync,
     status,
-    variables: activeConnector,
+    variables: connector,
     ...connectMutation
   } = useMutation('connect', (connector: Connector) => connect(connector), {
     onError,
@@ -65,9 +65,10 @@ export function useConnect({
 
   return {
     ...connectMutation,
+    activeConnector: client.connector,
     connect: mutate,
     connectAsync: mutateAsync,
-    connector: activeConnector ?? client.connector,
+    connector,
     connectors: wagmiClient.connectors,
     isDisconnected: status_ === 'disconnected',
     isConnected: status_ === 'connected',

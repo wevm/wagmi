@@ -6,11 +6,11 @@ import { useClient } from '../../context'
 type MutationOptions = UseMutationOptions<SwitchNetworkResult, Error, number>
 
 export type UseConnectConfig = {
-  /** Function fires when connect is successful */
+  /** Function fires when switch network is successful */
   onSuccess?: MutationOptions['onSuccess']
-  /** Function fires if connect encounters error */
+  /** Function fires if switch network encounters error */
   onError?: MutationOptions['onError']
-  /** Function fires when connect is either successful or encounters error */
+  /** Function fires when switch network is either successful or encounters error */
   onSettled?: MutationOptions['onSettled']
 }
 
@@ -34,6 +34,8 @@ export const useNetwork = ({
     },
   )
 
+  console.log('useNetwork', client)
+
   // const chainId = data?.chain?.id
   // const unsupported = data?.chain?.unsupported
   // const activeChains = connector?.chains ?? []
@@ -41,11 +43,11 @@ export const useNetwork = ({
   //   (x) => x.id === chainId,
   // )
 
-  const activeChains = connector?.chains ?? []
+  const chains = connector?.chains ?? []
 
   return {
     ...networkMutation,
-    chains: activeChains,
+    chains,
     switchNetwork: connector?.switchChain ? mutate : undefined,
     switchNetworkAsync: connector?.switchChain ? mutateAsync : undefined,
   } as const
