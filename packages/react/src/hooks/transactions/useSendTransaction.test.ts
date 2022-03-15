@@ -75,6 +75,52 @@ describe('useSendTransaction', () => {
     `)
   })
 
+  it('sends transaction (deferred args)', async () => {
+    const { result, waitFor } = renderHook(() => useSendTransaction())
+
+    await actHook(async () => {
+      await disconnect()
+      const mockConnector = client.connectors[0]
+      await connect(mockConnector)
+      result.current.sendTransaction({
+        request: {
+          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+          value: BigNumber.from('1000000000000000000'), // 1 ETH
+        },
+      })
+    })
+
+    await waitFor(() => result.current.isSuccess)
+
+    const { data, ...res } = result.current
+    expect(data).toBeDefined()
+    expect(res).toMatchInlineSnapshot(`
+      {
+        "context": undefined,
+        "error": null,
+        "failureCount": 0,
+        "isError": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isPaused": false,
+        "isSuccess": true,
+        "reset": [Function],
+        "sendTransaction": [Function],
+        "sendTransactionAsync": [Function],
+        "status": "success",
+        "variables": {
+          "request": {
+            "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+            "value": {
+              "hex": "0x0de0b6b3a7640000",
+              "type": "BigNumber",
+            },
+          },
+        },
+      }
+    `)
+  })
+
   it('fails on insufficient balance', async () => {
     const { result, waitFor } = renderHook(() =>
       useSendTransaction({
