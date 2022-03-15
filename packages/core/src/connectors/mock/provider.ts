@@ -88,4 +88,8 @@ export class MockProvider extends BaseProvider {
     this.events.off(event, listener)
     return this
   }
+
+  toJSON() {
+    return '<MockProvider>'
+  }
 }

@@ -10,24 +10,25 @@ import { QueryClient } from 'react-query'
 import { Provider, ProviderProps } from '../src'
 import { setupWagmiClient } from './utils'
 
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Prevent Jest from garbage collecting cache
+      cacheTime: Infinity,
+      // Turn off retries to prevent timeouts
+      retry: false,
+    },
+  },
+})
+
 type Props = ProviderProps & {
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
 export const wrapper = (props: Props) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        // Prevent Jest from garbage collecting cache
-        cacheTime: Infinity,
-        // Turn off retries to prevent timeouts
-        retry: false,
-      },
-    },
-  })
   const client = setupWagmiClient({ queryClient })
-  return <Provider {...props} client={client} />
+  return <Provider client={client} {...props} />
 }
 
 export const renderHook = <TProps, TResult>(

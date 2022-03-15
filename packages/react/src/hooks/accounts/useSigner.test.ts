@@ -44,7 +44,7 @@ describe('useSigner', () => {
 
       await actHook(async () => {
         const mockConnector = result.current.connect.connectors[0]
-        await result.current.connect.connect(mockConnector)
+        result.current.connect.connect(mockConnector)
       })
 
       const { data, dataUpdatedAt, ...rest } = result.current.signer
@@ -111,7 +111,7 @@ describe('useSigner', () => {
 
       await actHook(async () => {
         const mockConnector = result.current.connect.connectors[0]
-        await result.current.connect.connect(mockConnector)
+        result.current.connect.connect(mockConnector)
         const res = await result.current.signer.refetch()
         expect(res).toBeDefined()
       })

@@ -27,6 +27,11 @@ export function useConnect({
     mutateAsync,
     status,
     variables: connector,
+    // Remove these values from return
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    isSuccess,
+    isLoading,
+    /* eslint-enable @typescript-eslint/no-unused-vars */
     ...connectMutation
   } = useMutation('connect', (connector) => connect(connector), {
     onError,
