@@ -21,7 +21,7 @@ export const useNetwork = ({
 }: UseConnectConfig = {}) => {
   const client = useClient()
   const connector = client.connector
-  const { error, isError, mutate, status } = useMutation(
+  const { mutate, mutateAsync, ...networkMutation } = useMutation(
     'network',
     (chainId) => {
       if (!connector?.switchChain) throw new SwitchChainError()
@@ -44,10 +44,9 @@ export const useNetwork = ({
   const activeChains = connector?.chains ?? []
 
   return {
+    ...networkMutation,
     chains: activeChains,
-    error,
-    isError,
-    status,
     switchNetwork: connector?.switchChain ? mutate : undefined,
+    switchNetworkAsync: connector?.switchChain ? mutateAsync : undefined,
   } as const
 }

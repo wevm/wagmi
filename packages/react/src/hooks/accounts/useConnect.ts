@@ -22,11 +22,11 @@ export function useConnect({
 }: UseConnectConfig = {}) {
   const wagmiClient = useClient()
   const {
-    error,
-    isError,
     mutate,
+    mutateAsync,
     status,
     variables: activeConnector,
+    ...connectMutation
   } = useMutation('connect', (connector: Connector) => connect(connector), {
     onError,
     onSettled,
@@ -64,16 +64,16 @@ export function useConnect({
   else status_ = status
 
   return {
+    ...connectMutation,
     connect: mutate,
+    connectAsync: mutateAsync,
     connector: activeConnector ?? client.connector,
     connectors: wagmiClient.connectors,
-    error,
     isDisconnected: status_ === 'disconnected',
     isConnected: status_ === 'connected',
     isConnecting: status_ === 'connecting',
     isReconnecting: status_ === 'reconnecting',
     isIdle: status_ === 'idle',
-    isError,
     status: status_,
   } as const
 }
