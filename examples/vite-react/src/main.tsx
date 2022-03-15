@@ -3,13 +3,7 @@ import * as ReactDOM from 'react-dom'
 import { providers } from 'ethers'
 
 // Imports
-import {
-  Connector,
-  Provider,
-  chain,
-  createWagmiClient,
-  defaultChains,
-} from 'wagmi'
+import { Connector, Provider, chain, createClient, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -66,7 +60,7 @@ const webSocketProvider = ({ chainId }: ConnectorsConfig) =>
     ? new providers.InfuraWebSocketProvider(chainId, infuraId)
     : undefined
 
-const client = createWagmiClient({
+const client = createClient({
   autoConnect: true,
   connectors,
   provider,

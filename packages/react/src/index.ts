@@ -32,7 +32,6 @@ export {
   allChains,
   chain,
   createStorage,
-  createWagmiClient,
   createWagmiStorage,
   defaultChains,
   erc1155ABI,
@@ -43,6 +42,5 @@ export {
   type ConnectorEvents,
   type Storage,
   type Unit,
-  type WagmiClientConfig,
   type WagmiStorage,
 } from '@wagmi/core'
