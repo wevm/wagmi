@@ -22,6 +22,7 @@ export function useConnect({
 }: UseConnectConfig = {}) {
   const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
   const client = useClient()
+
   const {
     mutate,
     mutateAsync,

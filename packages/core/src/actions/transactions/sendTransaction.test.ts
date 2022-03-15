@@ -7,6 +7,7 @@ import { sendTransaction } from './sendTransaction'
 describe('sendTransaction', () => {
   it('throws', async () => {
     try {
+      setupWagmiClient()
       await sendTransaction({
         request: {},
       })

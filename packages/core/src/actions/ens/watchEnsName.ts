@@ -13,8 +13,13 @@ export function watchEnsName(
 ) {
   const handleChange = async () => callback(await fetchEnsName(args))
   const unsubscribe = client.subscribe(
-    ({ connector, provider }) => [connector, provider],
+    ({ connector, provider }) => ({ connector, provider }),
     handleChange,
+    {
+      equalityFn: (selected, previous) =>
+        selected.connector === previous.connector &&
+        selected.provider === previous.provider,
+    },
   )
   return unsubscribe
 }

@@ -6,8 +6,18 @@ export type WatchSignerCallback = (data: FetchSignerResult) => void
 export function watchSigner(callback: WatchSignerCallback) {
   const handleChange = async () => callback(await fetchSigner())
   const unsubscribe = client.subscribe(
-    ({ data, connector }) => [data?.account, data?.chain, connector],
+    ({ data, connector }) => ({
+      account: data?.account,
+      chainId: data?.chain?.id,
+      connector,
+    }),
     handleChange,
+    {
+      equalityFn: (selected, previous) =>
+        selected.account === previous.account &&
+        selected.chainId === previous.chainId &&
+        selected.connector === previous.connector,
+    },
   )
   return unsubscribe
 }

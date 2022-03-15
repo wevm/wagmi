@@ -1,6 +1,9 @@
+import { setupWagmiClient } from '../../../test'
 import { readContract } from './readContract'
 
 describe('readContract', () => {
+  beforeEach(() => setupWagmiClient())
+
   it('reads data', async () => {
     const result = await readContract(
       {

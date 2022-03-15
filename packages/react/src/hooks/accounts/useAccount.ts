@@ -67,9 +67,7 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
 
   const ensData =
     ensNameData || ensAvatarData
-      ? {
-          ens: { avatar: ensAvatarData, name: ensNameData },
-        }
+      ? { ens: { avatar: ensAvatarData, name: ensNameData } }
       : {}
 
   return {

@@ -22,24 +22,8 @@ describe('watchAccount', () => {
           "connector": "<MockConnector>",
         },
         {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "connector": "<MockConnector>",
-        },
-        {
           "address": undefined,
           "connector": undefined,
-        },
-        {
-          "address": undefined,
-          "connector": undefined,
-        },
-        {
-          "address": undefined,
-          "connector": undefined,
-        },
-        {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "connector": "<MockConnector>",
         },
         {
           "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
