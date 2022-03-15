@@ -1,6 +1,10 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 
+import { Balance } from './Balance'
+import { BlockNumber } from './BlockNumber'
+import { SendTransaction } from './SendTransaction'
+
 export const Account = () => {
   const { data: accountData, disconnect } = useAccount({ ens: true })
 
@@ -9,9 +13,7 @@ export const Account = () => {
   return (
     <div>
       <div>
-        <button onClick={() => disconnect()}>
-          Disconnect from {accountData?.connector?.name}
-        </button>
+        <button onClick={() => disconnect()}>Disconnect</button>
       </div>
 
       <div>
@@ -22,6 +24,10 @@ export const Account = () => {
       {accountData?.ens?.avatar && (
         <img src={accountData.ens.avatar} style={{ height: 40, width: 40 }} />
       )}
+
+      <Balance />
+      <BlockNumber />
+      <SendTransaction />
     </div>
   )
 }

@@ -22,7 +22,7 @@ export type ClientConfig = {
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
    */
-  connectors: ((config: { chainId?: number }) => Connector[]) | Connector[]
+  connectors?: ((config: { chainId?: number }) => Connector[]) | Connector[]
   /**
    * Interface for connecting to network
    * @default (config) => getDefaultProvider(config.chainId)

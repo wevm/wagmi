@@ -16,7 +16,6 @@ type Props = ProviderProps & {
     | React.ReactNode
 }
 export const wrapper = (props: Props) => {
-  const client = setupWagmiClient()
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -27,7 +26,8 @@ export const wrapper = (props: Props) => {
       },
     },
   })
-  return <Provider client={client} queryClient={queryClient} {...props} />
+  const client = setupWagmiClient({ queryClient })
+  return <Provider {...props} client={client} />
 }
 
 export const renderHook = <TProps, TResult>(

@@ -1,8 +1,10 @@
 export {
+  createClient,
   Provider,
   Provider as WagmiProvider,
   useClient,
   useClient as useWagmiClient,
+  type ClientConfig,
   type ProviderProps,
   type ProviderProps as WagmiProviderProps,
 } from './context'
@@ -18,6 +20,7 @@ export {
   useEnsResolver,
   useNetwork,
   useProvider,
+  useSendTransaction,
   useSigner,
   useWebSocketProvider,
 } from './hooks'
@@ -28,7 +31,6 @@ export {
   WagmiClient,
   allChains,
   chain,
-  createClient,
   createStorage,
   createWagmiClient,
   createWagmiStorage,
@@ -37,7 +39,6 @@ export {
   erc20ABI,
   erc721ABI,
   type Chain,
-  type ClientConfig,
   type ConnectorData,
   type ConnectorEvents,
   type Storage,

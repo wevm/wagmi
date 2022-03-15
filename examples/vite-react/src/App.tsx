@@ -1,8 +1,5 @@
 import { useAccount, useConnect } from 'wagmi'
 
-import { Balance } from './components/Balance'
-import { BlockNumber } from './components/BlockNumber'
-
 export const App = () => {
   // const result = useEnsLookup({
   //   address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
@@ -23,8 +20,6 @@ export const App = () => {
     return (
       <div>
         <div>{account.data.address}</div>
-        <BlockNumber />
-        <Balance />
         <button onClick={account.disconnect}>disconnect</button>
       </div>
     )

@@ -1,5 +1,9 @@
 import * as React from 'react'
-import { WagmiClient, createWagmiClient } from '@wagmi/core'
+import {
+  WagmiClient,
+  ClientConfig as WagmiClientConfig,
+  createClient as createWagmiClient,
+} from '@wagmi/core'
 import {
   QueryClient,
   QueryClientConfig,
@@ -13,17 +17,15 @@ import stringify from './utils/safe-stringify'
 
 export const Context = React.createContext<WagmiClient | undefined>(undefined)
 
+export type ClientConfig = WagmiClientConfig & {
+  queryClient?: QueryClient
+}
+
 export type ProviderProps = {
   /**
-   * WagmiClient instance
-   * @default new WagmiClient()
+   * React-decorated WagmiClient instance
    */
-  client?: WagmiClient
-  /**
-   * react-query instance
-   * @default new QueryClient()
-   */
-  queryClient?: QueryClient
+  client?: ReturnType<typeof createClient>
 }
 
 const defaultQueryClientConfig: QueryClientConfig = {
@@ -37,25 +39,29 @@ const defaultQueryClientConfig: QueryClientConfig = {
   },
 }
 
+export const createClient = ({
+  queryClient = new QueryClient(defaultQueryClientConfig),
+  ...config
+}: ClientConfig = {}) => {
+  const client = createWagmiClient(config)
+  const persistor = createWebStoragePersistor({
+    storage: (client.storage as Storage) || window.localStorage,
+    serialize: stringify,
+  })
+  persistQueryClient({
+    queryClient,
+    persistor,
+    dehydrateOptions: {
+      shouldDehydrateQuery: (query) => query.cacheTime !== 0,
+    },
+  })
+  return Object.assign(client, { queryClient })
+}
+
 export const Provider = ({
   children,
-  client = createWagmiClient(),
-  queryClient = new QueryClient(defaultQueryClientConfig),
+  client = createClient(),
 }: React.PropsWithChildren<ProviderProps>) => {
-  React.useMemo(() => {
-    const persistor = createWebStoragePersistor({
-      storage: (client.storage as Storage) || window.localStorage,
-      serialize: stringify,
-    })
-    persistQueryClient({
-      queryClient,
-      persistor,
-      dehydrateOptions: {
-        shouldDehydrateQuery: (query) => query.cacheTime !== 0,
-      },
-    })
-  }, [client, queryClient])
-
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     // Attempt to connect on mount
@@ -68,7 +74,7 @@ export const Provider = ({
 
   return (
     <Context.Provider value={client}>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={client.queryClient}>
         {children}
         {/* Automatically removed for production build */}
         <ReactQueryDevtools initialIsOpen={false} />

@@ -1,9 +1,4 @@
-import {
-  WagmiClientConfig,
-  chain,
-  createWagmiClient,
-  defaultChains,
-} from '@wagmi/core'
+import { chain, defaultChains } from '@wagmi/core'
 import {
   MockConnector,
   MockProviderOptions,
@@ -12,6 +7,8 @@ import { JsonRpcProvider } from '@ethersproject/providers'
 import { HDNode, mnemonicToSeed } from 'ethers/lib/utils'
 import { defaultHardhatNetworkParams } from 'hardhat/internal/core/config/default-config'
 import { HardhatNetworkHDAccountsConfig } from 'hardhat/types'
+
+import { ClientConfig, createClient } from '../../src'
 
 export const getMockConnector = (
   options: MockProviderOptions,
@@ -64,9 +61,9 @@ export const getSigners = () => {
   return signers
 }
 
-type Config = Partial<WagmiClientConfig>
+type Config = Partial<ClientConfig>
 export const setupWagmiClient = (config: Config = {}) => {
-  return createWagmiClient({
+  return createClient({
     connectors: [
       getMockConnector({
         signer: getSigners()[0],
