@@ -22,18 +22,16 @@ export type ClientConfig = WagmiClientConfig & {
 }
 
 export type ProviderProps = {
-  /**
-   * React-decorated WagmiClient instance
-   */
+  /** React-decorated WagmiClient instance */
   client?: ReturnType<typeof createClient>
 }
 
 const defaultQueryClientConfig: QueryClientConfig = {
   defaultOptions: {
     queries: {
+      cacheTime: 1000 * 60 * 60 * 24,
       notifyOnChangeProps: 'tracked',
       refetchOnWindowFocus: false,
-      cacheTime: 1000 * 60 * 60 * 24,
       retry: 0,
     },
   },
@@ -69,11 +67,6 @@ export const Provider = ({
       if (!client.config.autoConnect) return
       await client.autoConnect()
     })()
-
-    // Make sure client cleans up
-    return () => {
-      client.destroy()
-    }
   }, [])
   /* eslint-enable react-hooks/exhaustive-deps */
 

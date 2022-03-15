@@ -19,9 +19,9 @@ export function useChainId() {
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     const unsubscribe = client.subscribe(
-      (state) => ({ chainId: state.data?.chain?.id, provider: state.provider }),
-      ({ chainId, provider }) => {
-        const chainId_ = chainId ?? provider.network.chainId
+      (state) => state.provider,
+      (provider) => {
+        const chainId_ = provider.network.chainId
         return queryClient.setQueryData(queryKey, chainId_)
       },
     )

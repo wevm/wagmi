@@ -20,35 +20,35 @@ export function useConnect({
   onError,
   onSettled,
 }: UseConnectConfig = {}) {
-  const wagmiClient = useClient()
+  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
+  const client = useClient()
   const {
     mutate,
     mutateAsync,
     status,
     variables: connector,
     ...connectMutation
-  } = useMutation('connect', (connector: Connector) => connect(connector), {
+  } = useMutation('connect', (connector) => connect(connector), {
     onError,
     onSettled,
     onSuccess: onConnect,
   })
 
-  const [client, setClient] = React.useState({
-    status: wagmiClient.status,
-    connector: wagmiClient.connector,
-  })
   React.useEffect(() => {
-    const unsubscribe = wagmiClient.subscribe(
-      ({ status, connector }) => [status, connector],
-      () =>
-        setClient((x) => ({
-          ...x,
-          status: wagmiClient.status,
-          connector: wagmiClient.connector,
-        })),
+    const unsubscribe = client.subscribe(
+      (state) => ({
+        connector: state.connector,
+        status: state.status,
+      }),
+      () => forceUpdate(),
+      {
+        equalityFn: (selected, previous) =>
+          selected.status === previous.status &&
+          selected.connector === previous.connector,
+      },
     )
     return unsubscribe
-  }, [wagmiClient])
+  }, [client])
 
   let status_:
     | Extract<UseMutationResult['status'], 'error' | 'idle'>
@@ -69,12 +69,12 @@ export function useConnect({
     connect: mutate,
     connectAsync: mutateAsync,
     connector,
-    connectors: wagmiClient.connectors,
-    isDisconnected: status_ === 'disconnected',
+    connectors: client.connectors,
     isConnected: status_ === 'connected',
     isConnecting: status_ === 'connecting',
-    isReconnecting: status_ === 'reconnecting',
+    isDisconnected: status_ === 'disconnected',
     isIdle: status_ === 'idle',
+    isReconnecting: status_ === 'reconnecting',
     status: status_,
   } as const
 }

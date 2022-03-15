@@ -5,28 +5,34 @@ import { useIsMounted } from '../hooks'
 
 export const Connect = () => {
   const isMounted = useIsMounted()
-  const { activeConnector, connectors, connector, connect, status, error } =
-    useConnect()
+  const connect = useConnect()
 
   return (
     <div>
-      {typeof window !== 'undefined' && activeConnector?.name && (
-        <div>Connected to {activeConnector.name}</div>
+      {isMounted && connect.status}
+
+      {isMounted && connect.activeConnector?.name && (
+        <div>Connected to {connect.activeConnector.name}</div>
       )}
+
       <div>
-        {connectors.map((x) => (
+        {connect.connectors.map((x) => (
           <button
             disabled={isMounted && !x.ready}
             key={x.name}
-            onClick={() => connect(x)}
+            onClick={() => connect.connect(x)}
           >
             {x.id === 'injected' ? (isMounted ? x.name : x.id) : x.name}
             {isMounted && !x.ready && ' (unsupported)'}
-            {status === 'connecting' && x.name === connector?.name && '…'}
+            {connect.status === 'connecting' &&
+              x.name === connect.connector?.name &&
+              '…'}
           </button>
         ))}
       </div>
-      <div>{error && (error?.message ?? 'Failed to connect')}</div>
+      <div>
+        {connect.error && (connect.error?.message ?? 'Failed to connect')}
+      </div>
     </div>
   )
 }

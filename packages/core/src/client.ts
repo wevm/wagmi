@@ -39,7 +39,9 @@ export type ClientConfig = {
     | WebSocketProvider
 }
 
-const defaultConfig: ClientConfig = {
+const defaultConfig: Required<
+  Pick<ClientConfig, 'connectors' | 'provider' | 'storage'>
+> = {
   connectors: [new InjectedConnector()],
   provider: ({ chainId }) => {
     try {
@@ -67,7 +69,13 @@ type State = {
 export class Client {
   config: Partial<ClientConfig>
   storage?: WagmiStorage
-  store: Mutate<StoreApi<State>, [['zustand/subscribeWithSelector', never]]>
+  store: Mutate<
+    StoreApi<State>,
+    [
+      ['zustand/subscribeWithSelector', never],
+      ['zustand/persist', Partial<State>],
+    ]
+  >
 
   #lastUsedConnector?: string | null
 
@@ -85,18 +93,16 @@ export class Client {
       webSocketProvider,
     }
 
-    const connectors_ =
-      typeof connectors === 'function' ? connectors({}) : connectors
-    const provider_ = typeof provider === 'function' ? provider({}) : provider
-    const webSocketProvider_ =
-      typeof webSocketProvider === 'function'
-        ? webSocketProvider({})
-        : webSocketProvider
-
-    let status: State['status']
-    if (!autoConnect) status = 'disconnected'
-    else if (storage?.getItem('connected')) status = 'reconnecting'
-    else status = 'connecting'
+    let status: State['status'] = 'disconnected'
+    if (autoConnect) {
+      try {
+        const rawState = storage.getItem('state', '')
+        const data = JSON.parse(rawState || '{}')?.state?.data
+        // If account exists in localStorage, set status to reconnecting
+        status = data?.account ? 'reconnecting' : 'connecting'
+        // eslint-disable-next-line no-empty
+      } catch (_error) {}
+    }
 
     this.store = create<
       State,
@@ -104,28 +110,26 @@ export class Client {
       GetState<State>,
       Client['store']
     >(
-      subscribeWithSelector<State>(
+      subscribeWithSelector(
         persist<State>(
-          () => ({
-            connectors: connectors_,
-            provider: provider_,
+          (_set, _get) => ({
+            connectors:
+              typeof connectors === 'function' ? connectors({}) : connectors,
+            provider: typeof provider === 'function' ? provider({}) : provider,
             status,
-            webSocketProvider: webSocketProvider_,
+            webSocketProvider:
+              typeof webSocketProvider === 'function'
+                ? webSocketProvider({})
+                : webSocketProvider,
           }),
           {
             name: 'state',
             getStorage: () => storage,
-            partialize: ({ connector, data, status }) => ({
-              connector: {
-                chains: connector?.chains,
-                id: connector?.id,
-                name: connector?.name,
-              },
+            partialize: (state) => ({
               data: {
-                account: data?.account,
-                chain: data?.chain,
+                account: state?.data?.account,
+                chain: state?.data?.chain,
               },
-              status,
             }),
           },
         ),
@@ -137,9 +141,6 @@ export class Client {
     this.#addEffects()
   }
 
-  get status() {
-    return this.store.getState().status
-  }
   get connectors() {
     return this.store.getState().connectors
   }
@@ -155,11 +156,14 @@ export class Client {
   get provider() {
     return this.store.getState().provider
   }
-  get webSocketProvider() {
-    return this.store.getState().webSocketProvider
+  get status() {
+    return this.store.getState().status
   }
   get subscribe() {
     return this.store.subscribe
+  }
+  get webSocketProvider() {
+    return this.store.getState().webSocketProvider
   }
 
   setState(updater: State | ((state: State) => State)) {
@@ -185,28 +189,29 @@ export class Client {
   }
 
   async autoConnect() {
-    if (!this.connectors) return
+    if (!this.connectors.length) return
 
+    // Try last used connector first
     const sorted = this.#lastUsedConnector
       ? [...this.connectors].sort((x) =>
           x.id === this.#lastUsedConnector ? -1 : 1,
         )
       : this.connectors
 
+    let connected = false
     for (const connector of sorted) {
       if (!connector.ready || !connector.isAuthorized) continue
       const isAuthorized = await connector.isAuthorized()
       if (!isAuthorized) continue
 
       const data = await connector.connect()
-      this.setState((x) => ({
-        ...x,
-        connector,
-        data,
-        status: data ? 'connected' : 'disconnected',
-      }))
+      this.setState((x) => ({ ...x, connector, data, status: 'connected' }))
+      connected = true
       break
     }
+
+    // If connecting didn't succeed, set to disconnected
+    if (!connected) this.setState((x) => ({ ...x, status: 'disconnected' }))
 
     return this.data
   }
@@ -239,11 +244,9 @@ export class Client {
     )
 
     const { connectors, provider, webSocketProvider } = this.config
-
     const subscribeConnectors = typeof connectors === 'function'
     const subscribeProvider = typeof provider === 'function'
-    const subscribeWebSocketProvider =
-      !(webSocketProvider instanceof WebSocketProvider) && webSocketProvider
+    const subscribeWebSocketProvider = typeof webSocketProvider === 'function'
 
     if (subscribeConnectors || subscribeProvider || subscribeWebSocketProvider)
       this.store.subscribe(
