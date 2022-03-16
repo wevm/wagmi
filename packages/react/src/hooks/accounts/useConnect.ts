@@ -7,6 +7,11 @@ import { useClient } from '../../context'
 type MutationOptions = UseMutationOptions<ConnectResult, Error, Connector>
 
 export type UseConnectConfig = {
+  /**
+   * Function fires before connect function and is passed same variables connect function would receive.
+   * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
+   */
+  onBeforeConnect?: MutationOptions['onMutate']
   /** Function fires when connect is successful */
   onConnect?: MutationOptions['onSuccess']
   /** Function fires if connect encounters error */
@@ -15,7 +20,12 @@ export type UseConnectConfig = {
   onSettled?: MutationOptions['onSettled']
 }
 
+export const mutationKey = 'connect'
+
+const mutationFn = (connector: Connector) => connect(connector)
+
 export function useConnect({
+  onBeforeConnect,
   onConnect,
   onError,
   onSettled,
@@ -34,8 +44,9 @@ export function useConnect({
     isLoading,
     /* eslint-enable @typescript-eslint/no-unused-vars */
     ...connectMutation
-  } = useMutation('connect', (connector) => connect(connector), {
+  } = useMutation(mutationKey, mutationFn, {
     onError,
+    onMutate: onBeforeConnect,
     onSettled,
     onSuccess: onConnect,
   })

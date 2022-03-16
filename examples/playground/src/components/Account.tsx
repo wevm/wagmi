@@ -5,7 +5,7 @@ import { useIsMounted } from '../hooks'
 
 export const Account = () => {
   const isMounted = useIsMounted()
-  const account = useAccount({ ens: true })
+  const account = useAccount({ ens: { name: true } })
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Account, Connect } from '../components'
+import { Account, Connect, NetworkSwitcher } from '../components'
 import { useIsMounted } from '../hooks'
 
 const Page = () => {
@@ -11,6 +11,7 @@ const Page = () => {
     <>
       <Connect />
       <Account />
+      <NetworkSwitcher />
     </>
   )
 }

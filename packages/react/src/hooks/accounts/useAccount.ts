@@ -47,8 +47,8 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
   })
 
   React.useEffect(() => {
-    const unwatch = watchAccount(({ address, connector }) => {
-      queryClient.setQueryData(queryKey(), { address, connector })
+    const unwatch = watchAccount((data) => {
+      queryClient.setQueryData(queryKey(), data)
     })
     return unwatch
   }, [queryClient])

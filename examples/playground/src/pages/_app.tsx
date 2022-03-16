@@ -12,7 +12,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
 
-const chains = defaultChains
+const chains = [...defaultChains, chain.optimism, chain.arbitrumOne]
 const defaultChain = chain.mainnet
 
 const isChainSupported = (chainId?: number) =>
