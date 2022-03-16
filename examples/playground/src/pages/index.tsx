@@ -1,19 +1,21 @@
 import * as React from 'react'
-import { useAccount } from 'wagmi'
 
-import { Account, Connect } from '../components'
+import { Account, Connect, NetworkSwitcher } from '../components'
+import { useIsMounted } from '../hooks'
 
 const Page = () => {
-  const { data: accountData } = useAccount()
+  const isMounted = useIsMounted()
+  if (!isMounted) return null
 
-  if (accountData?.address)
-    return (
-      <>
-        <Account />
-      </>
-    )
+  return (
+    <>
+      <Connect />
+      <Account />
 
-  return <Connect />
+      <h4>Switch Network</h4>
+      <NetworkSwitcher />
+    </>
+  )
 }
 
 export default Page

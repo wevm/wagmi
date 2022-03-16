@@ -55,8 +55,8 @@ const defaultConfig: Required<
   }),
 }
 
-type Data = ConnectorData<BaseProvider>
-type State = {
+export type Data = ConnectorData<BaseProvider>
+export type State = {
   connector?: Connector
   connectors: Connector[]
   data?: Data

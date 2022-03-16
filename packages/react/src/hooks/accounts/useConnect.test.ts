@@ -83,6 +83,62 @@ describe('useConnect', () => {
       `)
     })
 
+    it('succeeds with unsupported chain', async () => {
+      const { result } = renderHook(() => useConnect(), {
+        wrapper,
+        initialProps: {
+          client: setupWagmiClient({
+            connectors: [
+              getMockConnector({
+                network: 69,
+                signer: getSigners()[0],
+              }),
+            ],
+            queryClient,
+          }),
+        },
+      })
+
+      await actHook(async () => {
+        const mockConnector = result.current.connectors[0]
+        result.current.connect(mockConnector)
+      })
+
+      const { connectors, ...data } = result.current
+      expect(connectors.length).toEqual(1)
+      expect(data).toMatchInlineSnapshot(`
+        {
+          "activeConnector": undefined,
+          "connect": [Function],
+          "connectAsync": [Function],
+          "connector": "<MockConnector>",
+          "context": undefined,
+          "data": {
+            "connector": "<MockConnector>",
+            "data": {
+              "account": "0x555fbD6976904AB47bC225eCf44B76799996870b",
+              "chain": {
+                "id": 69,
+                "unsupported": true,
+              },
+              "provider": "<MockProvider>",
+            },
+          },
+          "error": null,
+          "failureCount": 0,
+          "isConnected": true,
+          "isConnecting": false,
+          "isDisconnected": false,
+          "isError": false,
+          "isIdle": false,
+          "isPaused": false,
+          "isReconnecting": false,
+          "reset": [Function],
+          "status": "connected",
+        }
+      `)
+    })
+
     it('fails', async () => {
       const { result } = renderHook(() => useConnect(), {
         wrapper,

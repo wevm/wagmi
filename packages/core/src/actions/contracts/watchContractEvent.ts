@@ -35,8 +35,16 @@ export function watchContractEvent<
 
   watchEvent()
   const unsubscribe = client.subscribe(
-    ({ provider, webSocketProvider }) => [provider, webSocketProvider],
+    ({ provider, webSocketProvider }) => ({
+      provider,
+      webSocketProvider,
+    }),
     watchEvent,
+    {
+      equalityFn: (selected, previous) =>
+        selected.provider === previous.provider &&
+        selected.webSocketProvider === previous.webSocketProvider,
+    },
   )
 
   return () => {

@@ -8,7 +8,7 @@ import { HDNode, mnemonicToSeed } from 'ethers/lib/utils'
 import { defaultHardhatNetworkParams } from 'hardhat/internal/core/config/default-config'
 import { HardhatNetworkHDAccountsConfig } from 'hardhat/types'
 
-import { ClientConfig, createClient } from '../../src'
+import { ClientConfig, createClient } from '../src'
 
 export const getMockConnector = (
   options: MockProviderOptions,

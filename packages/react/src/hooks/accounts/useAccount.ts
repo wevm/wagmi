@@ -52,12 +52,9 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
   })
 
   React.useEffect(() => {
-    const unwatch = watchAccount(({ address, connector }) =>
-      queryClient.setQueryData<GetAccountResult>(queryKey({ chainId }), () => ({
-        address,
-        connector,
-      })),
-    )
+    const unwatch = watchAccount((data) => {
+      queryClient.setQueryData(queryKey({ chainId }), data)
+    })
     return unwatch
   }, [chainId, queryClient])
 
@@ -72,19 +69,12 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
 
   const ensData =
     ensNameData || ensAvatarData
-      ? {
-          ens: { avatar: ensAvatarData, name: ensNameData },
-        }
+      ? { ens: { avatar: ensAvatarData, name: ensNameData } }
       : {}
 
   return {
     ...accountQueryResult,
-    data: data_
-      ? {
-          ...data_,
-          ...ensData,
-        }
-      : data_,
+    data: data_ ? { ...data_, ...ensData } : undefined,
     disconnect,
     error,
     isError,

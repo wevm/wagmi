@@ -3,30 +3,33 @@ import { useAccount } from 'wagmi'
 
 import { Balance } from './Balance'
 import { BlockNumber } from './BlockNumber'
-import { NetworkSwitcher } from './NetworkSwitcher'
 import { ReadContract } from './ReadContract'
 import { SendTransaction } from './SendTransaction'
+import { useIsMounted } from '../hooks'
 
 export const Account = () => {
-  const { data: accountData, disconnect } = useAccount({ ens: true })
-
-  if (!accountData) return <div>No account connected</div>
+  const isMounted = useIsMounted()
+  const account = useAccount({ ens: { name: true } })
 
   return (
     <div>
       <div>
-        <button onClick={() => disconnect()}>Disconnect</button>
+        {account.data?.ens?.name ?? account.data?.address}
+        {account.data?.ens?.name ? ` (${account.data?.address})` : null}
       </div>
 
-      <h4>Account Data</h4>
-      <div>
-        {accountData.ens?.name ?? accountData?.address}
-        {accountData.ens?.name ? ` (${accountData?.address})` : null}
-      </div>
-
-      {accountData?.ens?.avatar && (
-        <img src={accountData.ens.avatar} style={{ height: 40, width: 40 }} />
+      {account.data?.ens?.avatar && (
+        <img src={account.data.ens.avatar} style={{ height: 40, width: 40 }} />
       )}
+
+      <div>
+        {account.data?.address && (
+          <button onClick={() => account.disconnect()}>Disconnect</button>
+        )}
+        {isMounted && account.data?.connector?.name && (
+          <span>Connected to {account.data.connector.name}</span>
+        )}
+      </div>
 
       <h4>Balance</h4>
       <Balance />
@@ -39,9 +42,6 @@ export const Account = () => {
 
       <h4>Read Contract</h4>
       <ReadContract />
-
-      <h4>Switch Network</h4>
-      <NetworkSwitcher />
     </div>
   )
 }

@@ -21,10 +21,7 @@ export function watchFeeData(
   const unwatch = args.listenToBlock
     ? watchBlockNumber({ listen: true }, handleChange)
     : undefined
-  const unsubscribe = client.subscribe(
-    ({ provider }) => [provider],
-    handleChange,
-  )
+  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
 
   return () => {
     unsubscribe()

@@ -13,8 +13,13 @@ export function watchBalance(
 ) {
   const handleChange = async () => callback(await fetchBalance(args))
   const unsubscribe = client.subscribe(
-    ({ data }) => [data?.account, data?.chain],
+    ({ data }) => ({ account: data?.account, chainId: data?.chain?.id }),
     handleChange,
+    {
+      equalityFn: (selected, previous) =>
+        selected.account === previous.account &&
+        selected.chainId === previous.chainId,
+    },
   )
   return unsubscribe
 }

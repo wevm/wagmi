@@ -1,9 +1,9 @@
+import * as React from 'react'
 import {
   SendTransactionArgs,
   SendTransactionResult,
   sendTransaction,
 } from '@wagmi/core'
-import { useCallback } from 'react'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
@@ -16,9 +16,9 @@ export type UseSendTransactionConfig = MutationConfig<
   UseSendTransactionArgs
 >
 
-export const mutationKey = 'send-transaction'
+export const mutationKey = 'sendTransaction'
 
-export const mutationFn = async (args: UseSendTransactionArgs) => {
+const mutationFn = async (args: UseSendTransactionArgs) => {
   const { request } = args
   if (!request) throw new Error('request is required')
   return sendTransaction({ request })
@@ -27,6 +27,7 @@ export const mutationFn = async (args: UseSendTransactionArgs) => {
 export const useSendTransaction = ({
   request,
   onError,
+  onMutate,
   onSettled,
   onSuccess,
 }: UseSendTransactionArgs & UseSendTransactionConfig = {}) => {
@@ -35,17 +36,18 @@ export const useSendTransaction = ({
     mutationFn,
     {
       onError,
+      onMutate,
       onSettled,
       onSuccess,
     },
   )
 
-  const sendTransaction = useCallback(
+  const sendTransaction = React.useCallback(
     (args = {}) => mutate({ request, ...args }),
     [mutate, request],
   )
 
-  const sendTransactionAsync = useCallback(
+  const sendTransactionAsync = React.useCallback(
     (args = {}) => mutateAsync({ request, ...args }),
     [mutateAsync, request],
   )

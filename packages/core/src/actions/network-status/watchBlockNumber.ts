@@ -29,13 +29,18 @@ export function watchBlockNumber(
   if (args.listen) createListener(provider_)
 
   const unsubscribe = client.subscribe(
-    ({ provider, webSocketProvider }) => [provider, webSocketProvider],
-    async ([provider, webSocketProvider]) => {
+    ({ provider, webSocketProvider }) => ({ provider, webSocketProvider }),
+    async ({ provider, webSocketProvider }) => {
       const provider_ = webSocketProvider ?? provider
       if (args.listen && provider_) {
         createListener(provider_)
       }
       callback(await fetchBlockNumber())
+    },
+    {
+      equalityFn: (selected, previous) =>
+        selected.provider === previous.provider &&
+        selected.webSocketProvider === previous.webSocketProvider,
     },
   )
   return unsubscribe

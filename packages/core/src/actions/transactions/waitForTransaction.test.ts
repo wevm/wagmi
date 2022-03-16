@@ -9,6 +9,7 @@ describe('waitForTransaction', () => {
   it('throws', async () => {
     setupWagmiClient()
     try {
+      setupWagmiClient()
       await waitForTransaction({})
     } catch (error) {
       expect(error).toMatchInlineSnapshot(`[Error: hash or wait is required]`)
