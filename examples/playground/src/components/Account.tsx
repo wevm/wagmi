@@ -1,33 +1,31 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 
-import { Balance } from './Balance'
-import { BlockNumber } from './BlockNumber'
-import { SendTransaction } from './SendTransaction'
+import { useIsMounted } from '../hooks'
 
 export const Account = () => {
-  const { data: accountData, disconnect } = useAccount({ ens: true })
-
-  if (!accountData) return <div>No account connected</div>
+  const isMounted = useIsMounted()
+  const account = useAccount({ ens: true })
 
   return (
     <div>
       <div>
-        <button onClick={() => disconnect()}>Disconnect</button>
+        {account.data?.ens?.name ?? account.data?.address}
+        {account.data?.ens?.name ? ` (${account.data?.address})` : null}
       </div>
 
-      <div>
-        {accountData.ens?.name ?? accountData?.address}
-        {accountData.ens?.name ? ` (${accountData?.address})` : null}
-      </div>
-
-      {accountData?.ens?.avatar && (
-        <img src={accountData.ens.avatar} style={{ height: 40, width: 40 }} />
+      {account.data?.ens?.avatar && (
+        <img src={account.data.ens.avatar} style={{ height: 40, width: 40 }} />
       )}
 
-      <Balance />
-      <BlockNumber />
-      <SendTransaction />
+      <div>
+        {account.data?.address && (
+          <button onClick={() => account.disconnect()}>Disconnect</button>
+        )}
+        {isMounted && account.data?.connector?.name && (
+          <span>Connected to {account.data.connector.name}</span>
+        )}
+      </div>
     </div>
   )
 }

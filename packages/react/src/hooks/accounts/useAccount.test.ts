@@ -45,7 +45,7 @@ describe('useAccount', () => {
 
       await actHook(async () => {
         const mockConnector = result.current.connect.connectors[0]
-        await result.current.connect.connect(mockConnector)
+        result.current.connect.connect(mockConnector)
       })
 
       const { dataUpdatedAt, ...data } = result.current.account
@@ -110,7 +110,7 @@ describe('useAccount', () => {
 
     await actHook(async () => {
       const mockConnector = result.current.connect.connectors[0]
-      await result.current.connect.connect(mockConnector)
+      result.current.connect.connect(mockConnector)
     })
 
     const { dataUpdatedAt, ...data } = result.current.account

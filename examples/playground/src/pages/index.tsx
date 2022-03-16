@@ -1,19 +1,18 @@
 import * as React from 'react'
 
-import { Connect } from '../components'
+import { Account, Connect } from '../components'
+import { useIsMounted } from '../hooks'
 
 const Page = () => {
-  // const { data: accountData } = useAccount()
+  const isMounted = useIsMounted()
+  if (!isMounted) return null
 
-  // if (accountData?.address)
-  //   return (
-  //     <>
-  //       <Account />
-  //       <NetworkSwitcher />
-  //     </>
-  //   )
-
-  return <Connect />
+  return (
+    <>
+      <Connect />
+      <Account />
+    </>
+  )
 }
 
 export default Page

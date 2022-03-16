@@ -9,12 +9,6 @@ export const Connect = () => {
 
   return (
     <div>
-      {isMounted && connect.status}
-
-      {isMounted && connect.activeConnector?.name && (
-        <div>Connected to {connect.activeConnector.name}</div>
-      )}
-
       <div>
         {connect.connectors.map((x) => (
           <button
