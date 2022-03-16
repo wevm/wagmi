@@ -69,12 +69,7 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
 
   return {
     ...accountQueryResult,
-    data: data_
-      ? {
-          ...data_,
-          ...ensData,
-        }
-      : data_,
+    data: data_ ? { ...data_, ...ensData } : undefined,
     disconnect,
     error,
     isError,
