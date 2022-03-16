@@ -1,5 +1,3 @@
-// TODO(jxom): write tests for this
-
 import { BigNumber } from 'ethers'
 import { PersistedClient } from 'react-query/types/persistQueryClient-experimental'
 

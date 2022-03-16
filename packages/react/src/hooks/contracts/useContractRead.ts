@@ -1,5 +1,3 @@
-// TODO(jxom): write tests for this
-
 import {
   ReadContractArgs,
   ReadContractConfig,
