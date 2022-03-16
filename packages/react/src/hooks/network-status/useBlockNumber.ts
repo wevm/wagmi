@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
+import { useChainId } from '../utils'
 
 export type UseBlockNumberConfig = QueryConfig<
   FetchBlockNumberResult,
@@ -13,7 +14,8 @@ export type UseBlockNumberConfig = QueryConfig<
   watch?: boolean
 }
 
-export const queryKey = () => [{ entity: 'blockNumber' }] as const
+export const queryKey = ({ chainId }: { chainId?: number }) =>
+  [{ entity: 'blockNumber', chainId }] as const
 
 const queryFn = () => {
   return fetchBlockNumber()
@@ -28,6 +30,7 @@ export const useBlockNumber = ({
   onSuccess,
   watch = false,
 }: UseBlockNumberConfig = {}) => {
+  const chainId = useChainId()
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const queryClient = useQueryClient()
@@ -38,7 +41,7 @@ export const useBlockNumber = ({
     const listener = (blockNumber: number) => {
       // Just to be safe in case the provider implementation
       // calls the event callback after .off() has been called
-      queryClient.setQueryData(queryKey(), blockNumber)
+      queryClient.setQueryData(queryKey({ chainId }), blockNumber)
     }
 
     const provider_ = webSocketProvider ?? provider
@@ -47,9 +50,9 @@ export const useBlockNumber = ({
     return () => {
       provider_.off('block', listener)
     }
-  }, [provider, queryClient, watch, webSocketProvider])
+  }, [chainId, provider, queryClient, watch, webSocketProvider])
 
-  return useQuery(queryKey(), queryFn, {
+  return useQuery(queryKey({ chainId }), queryFn, {
     cacheTime,
     enabled,
     staleTime,

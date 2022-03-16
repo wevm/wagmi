@@ -14,6 +14,7 @@ import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
 import stringify from './utils/safe-stringify'
+import { deserializeCache } from './utils/deserializeCache'
 
 export const Context = React.createContext<WagmiClient | undefined>(undefined)
 
@@ -45,6 +46,7 @@ export const createClient = ({
   const persistor = createWebStoragePersistor({
     storage: (client.storage as Storage) || window.localStorage,
     serialize: stringify,
+    deserialize: deserializeCache,
   })
   persistQueryClient({
     queryClient,

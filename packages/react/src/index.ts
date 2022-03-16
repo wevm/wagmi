@@ -14,6 +14,7 @@ export {
   useBalance,
   useBlockNumber,
   useConnect,
+  useContractRead,
   useEnsAddress,
   useEnsAvatar,
   useEnsName,

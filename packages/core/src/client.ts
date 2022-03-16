@@ -94,12 +94,14 @@ export class Client {
     }
 
     let status: State['status'] = 'disconnected'
+    let chainId: number | undefined
     if (autoConnect) {
       try {
         const rawState = storage.getItem('state', '')
-        const data = JSON.parse(rawState || '{}')?.state?.data
+        const data: Data | undefined = JSON.parse(rawState || '{}')?.state?.data
         // If account exists in localStorage, set status to reconnecting
         status = data?.account ? 'reconnecting' : 'connecting'
+        chainId = data?.chain?.id
         // eslint-disable-next-line no-empty
       } catch (_error) {}
     }
@@ -114,12 +116,15 @@ export class Client {
         persist<State>(
           (_set, _get) => ({
             connectors:
-              typeof connectors === 'function' ? connectors({}) : connectors,
-            provider: typeof provider === 'function' ? provider({}) : provider,
+              typeof connectors === 'function'
+                ? connectors({ chainId })
+                : connectors,
+            provider:
+              typeof provider === 'function' ? provider({ chainId }) : provider,
             status,
             webSocketProvider:
               typeof webSocketProvider === 'function'
-                ? webSocketProvider({})
+                ? webSocketProvider({ chainId })
                 : webSocketProvider,
           }),
           {

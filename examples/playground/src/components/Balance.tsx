@@ -1,9 +1,45 @@
-import { useBalance } from 'wagmi'
+import { useState } from 'react'
+import { useAccount, useBalance } from 'wagmi'
 
 export const Balance = () => {
+  return (
+    <div>
+      <div>
+        <AccountBalance />
+      </div>
+      <div>
+        <FindBalance />
+      </div>
+    </div>
+  )
+}
+
+const AccountBalance = () => {
+  const { data: account } = useAccount()
   const { data } = useBalance({
-    addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+    addressOrName: account?.address,
     watch: true,
   })
   return <div>{data?.formatted}</div>
+}
+
+const FindBalance = () => {
+  const { data, isLoading, getBalance } = useBalance()
+
+  const [address, setAddress] = useState('')
+
+  return (
+    <div>
+      Find balance:{' '}
+      <input
+        onChange={(e) => setAddress(e.target.value)}
+        placeholder="wallet address"
+        value={address}
+      />
+      <button onClick={() => getBalance({ addressOrName: address })}>
+        {isLoading ? 'fetching...' : 'fetch'}
+      </button>
+      <div>{data?.formatted}</div>
+    </div>
+  )
 }

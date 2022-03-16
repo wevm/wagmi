@@ -5,13 +5,11 @@ export {
   useNetwork,
   useSigner,
 } from './accounts'
-// export {
-//   useContract,
-//   useContractEvent,
-//   useContractRead,
-//   useContractWrite,
-//   useToken,
-// } from './contracts'
+export {
+  // useContract,
+  // useContractEvent,
+  useContractRead, // useContractWrite, // useToken,
+} from './contracts'
 export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
 export {
   useBlockNumber, // useFeeData

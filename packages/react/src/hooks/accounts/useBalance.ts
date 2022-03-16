@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
+import { useChainId, useGetterWithConfig } from '../utils'
 
 export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
   /** Subscribe to changes */
@@ -14,10 +15,13 @@ export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
 
 export const queryKey = ({
   addressOrName,
+  chainId,
   formatUnits,
   token,
-}: Partial<FetchBalanceArgs>) =>
-  [{ entity: 'balance', addressOrName, formatUnits, token }] as const
+}: Partial<FetchBalanceArgs> & {
+  chainId?: number
+}) =>
+  [{ entity: 'balance', addressOrName, chainId, formatUnits, token }] as const
 
 const queryFn = ({
   queryKey: [{ addressOrName, formatUnits, token }],
@@ -27,9 +31,9 @@ const queryFn = ({
 }
 
 export const useBalance = ({
-  addressOrName,
-  formatUnits = 'ether',
-  token,
+  addressOrName: addressOrName_,
+  formatUnits: formatUnits_ = 'ether',
+  token: token_,
   watch,
   cacheTime,
   enabled = true,
@@ -37,13 +41,24 @@ export const useBalance = ({
   onError,
   onSettled,
   onSuccess,
-}: UseBalanceArgs & UseBalanceConfig) => {
+}: UseBalanceArgs & UseBalanceConfig = {}) => {
+  const chainId = useChainId()
+  const {
+    config: { addressOrName, formatUnits, token },
+    forceEnabled,
+    getter,
+  } = useGetterWithConfig<FetchBalanceArgs>({
+    addressOrName: addressOrName_,
+    formatUnits: formatUnits_,
+    token: token_,
+  })
+
   const balanceQuery = useQuery(
-    queryKey({ addressOrName, formatUnits, token }),
+    queryKey({ addressOrName, chainId, formatUnits, token }),
     queryFn,
     {
       cacheTime,
-      enabled: Boolean(enabled && addressOrName),
+      enabled: forceEnabled || Boolean(enabled && addressOrName),
       staleTime,
       onError,
       onSettled,
@@ -51,8 +66,9 @@ export const useBalance = ({
     },
   )
 
-  const { data: blockNumber } = useBlockNumber({ watch: true })
+  const { data: blockNumber } = useBlockNumber({ watch })
   useEffect(() => {
+    if (!enabled && !forceEnabled) return
     if (!watch) return
     if (!blockNumber) return
     if (!addressOrName) return
@@ -60,5 +76,5 @@ export const useBalance = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockNumber])
 
-  return balanceQuery
+  return { ...balanceQuery, getBalance: getter(balanceQuery.refetch) }
 }
