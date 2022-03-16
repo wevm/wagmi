@@ -106,9 +106,9 @@ describe('useEnsAvatar', () => {
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
-          "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
           "isLoadingError": false,
           "isPlaceholderData": false,
           "isPreviousData": false,
@@ -118,7 +118,7 @@ describe('useEnsAvatar', () => {
           "isSuccess": false,
           "refetch": [Function],
           "remove": [Function],
-          "status": "idle",
+          "status": "loading",
         }
       `)
       await waitForNextUpdate()
@@ -182,7 +182,7 @@ describe('useEnsAvatar', () => {
     it('is false', () => {
       const { result } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: 'nick.eth',
+          addressOrName: 'moxey.eth',
           enabled: false,
         }),
       )

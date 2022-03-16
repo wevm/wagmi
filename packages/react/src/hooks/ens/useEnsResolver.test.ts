@@ -111,9 +111,9 @@ describe('useEnsResolver', () => {
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
-          "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
           "isLoadingError": false,
           "isPlaceholderData": false,
           "isPreviousData": false,
@@ -123,7 +123,7 @@ describe('useEnsResolver', () => {
           "isSuccess": false,
           "refetch": [Function],
           "remove": [Function],
-          "status": "idle",
+          "status": "loading",
         }
       `)
       await waitForNextUpdate()
@@ -187,7 +187,7 @@ describe('useEnsResolver', () => {
     it('is false', () => {
       const { result } = renderHook(() =>
         useEnsResolver({
-          name: 'awkweb.eth',
+          name: 'moxey.eth',
           enabled: false,
         }),
       )

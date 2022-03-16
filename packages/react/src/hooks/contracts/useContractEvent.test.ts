@@ -1,10 +1,10 @@
 import { erc20ABI } from '@wagmi/core'
-import { contracts } from 'wagmi-testing'
+// import { contracts } from 'wagmi-testing'
 
 import { renderHook } from '../../../test'
 import { useContractEvent } from './useContractEvent'
 
-describe('useContractEvent', () => {
+describe.skip('useContractEvent', () => {
   describe('on mount', () => {
     it('has token', async () => {
       const listener = jest.fn()

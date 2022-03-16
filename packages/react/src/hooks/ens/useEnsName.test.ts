@@ -107,9 +107,9 @@ describe('useEnsName', () => {
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
-          "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
           "isLoadingError": false,
           "isPlaceholderData": false,
           "isPreviousData": false,
@@ -119,7 +119,7 @@ describe('useEnsName', () => {
           "isSuccess": false,
           "refetch": [Function],
           "remove": [Function],
-          "status": "idle",
+          "status": "loading",
         }
       `)
       await waitForNextUpdate()
@@ -183,7 +183,7 @@ describe('useEnsName', () => {
     it('is false', () => {
       const { result } = renderHook(() =>
         useEnsName({
-          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
           enabled: false,
         }),
       )

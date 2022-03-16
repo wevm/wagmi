@@ -4,7 +4,7 @@ import { useBlockNumber } from './useBlockNumber'
 describe('useBlockNumber', () => {
   describe('on mount', () => {
     it('fetches', async () => {
-      const { result, waitForNextUpdate } = renderHook(() => useBlockNumber())
+      const { result, waitFor } = renderHook(() => useBlockNumber())
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -30,13 +30,13 @@ describe('useBlockNumber', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
+      await waitFor(() => result.current.isSuccess)
 
-      const { dataUpdatedAt, ...data } = result.current
+      const { dataUpdatedAt, data, ...res } = result.current
       expect(dataUpdatedAt).toBeDefined()
-      expect(data).toMatchInlineSnapshot(`
+      expect(typeof data === 'number').toBeTruthy()
+      expect(res).toMatchInlineSnapshot(`
         {
-          "data": 14297676,
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
@@ -95,18 +95,19 @@ describe('useBlockNumber', () => {
 
     await actHook(async () => {
       await result.current.refetch()
-      expect(result.current).toMatchInlineSnapshot(`
+      const { dataUpdatedAt, data, ...res } = result.current
+      expect(dataUpdatedAt).toBeDefined()
+      expect(typeof data === 'number').toBeTruthy()
+      expect(res).toMatchInlineSnapshot(`
         {
-          "data": undefined,
-          "dataUpdatedAt": 0,
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
           "isError": false,
-          "isFetched": false,
-          "isFetchedAfterMount": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
-          "isIdle": true,
+          "isIdle": false,
           "isLoading": false,
           "isLoadingError": false,
           "isPlaceholderData": false,
@@ -114,10 +115,10 @@ describe('useBlockNumber', () => {
           "isRefetchError": false,
           "isRefetching": false,
           "isStale": true,
-          "isSuccess": false,
+          "isSuccess": true,
           "refetch": [Function],
           "remove": [Function],
-          "status": "idle",
+          "status": "success",
         }
       `)
     })

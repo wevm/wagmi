@@ -8,7 +8,7 @@ const useNetworkWithConnect = () => {
   return { connect, network } as const
 }
 
-describe('useNetwork', () => {
+describe.skip('useNetwork', () => {
   describe('on mount', () => {
     it('not connected', async () => {
       const { result } = renderHook(() => useNetwork())

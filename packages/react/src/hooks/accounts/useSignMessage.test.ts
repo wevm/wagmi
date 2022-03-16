@@ -15,7 +15,7 @@ const useSignMessageWithConnect = (config: { message?: Config } = {}) => {
   return { connect, signMessage } as const
 }
 
-describe('useSignMessage', () => {
+describe.skip('useSignMessage', () => {
   it('on mount', async () => {
     const { result } = renderHook(() =>
       useSignMessage({

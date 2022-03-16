@@ -54,6 +54,7 @@ describe('useAccount', () => {
         {
           "data": {
             "address": "0x555fbD6976904AB47bC225eCf44B76799996870b",
+            "connector": "<MockConnector>",
           },
           "disconnect": [Function],
           "error": null,
@@ -119,6 +120,7 @@ describe('useAccount', () => {
       {
         "data": {
           "address": "0x555fbD6976904AB47bC225eCf44B76799996870b",
+          "connector": "<MockConnector>",
         },
         "disconnect": [Function],
         "error": null,

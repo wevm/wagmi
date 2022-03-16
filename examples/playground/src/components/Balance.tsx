@@ -16,11 +16,17 @@ export const Balance = () => {
 
 const AccountBalance = () => {
   const { data: account } = useAccount()
-  const { data } = useBalance({
+  const { data, refetch } = useBalance({
     addressOrName: account?.address,
+    enabled: false,
     watch: true,
   })
-  return <div>{data?.formatted}</div>
+  return (
+    <div>
+      {data?.formatted}
+      <button onClick={() => refetch()}>fetch</button>
+    </div>
+  )
 }
 
 const FindBalance = () => {

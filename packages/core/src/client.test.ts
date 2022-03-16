@@ -8,7 +8,7 @@ describe('WagmiClient', () => {
     expect(rest).toMatchInlineSnapshot(`
       {
         "config": {
-          "autoConnect": false,
+          "autoConnect": undefined,
           "connectors": [
             "<MockConnector>",
           ],

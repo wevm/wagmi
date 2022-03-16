@@ -1,4 +1,4 @@
-import { contracts } from 'wagmi-testing'
+// import { contracts } from 'wagmi-testing'
 
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
@@ -10,7 +10,7 @@ const useTokenWithConnect = (config: { token?: Config } = {}) => {
   return { connect, token } as const
 }
 
-describe('useToken', () => {
+describe.skip('useToken', () => {
   describe('on mount', () => {
     it('has token', async () => {
       const { result, waitForNextUpdate } = renderHook(() =>

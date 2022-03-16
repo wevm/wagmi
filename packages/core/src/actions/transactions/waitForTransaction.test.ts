@@ -7,6 +7,7 @@ import { waitForTransaction } from './waitForTransaction'
 
 describe('waitForTransaction', () => {
   it('throws', async () => {
+    setupWagmiClient()
     try {
       await waitForTransaction({})
     } catch (error) {

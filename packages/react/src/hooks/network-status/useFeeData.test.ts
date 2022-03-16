@@ -1,7 +1,7 @@
 import { actHook, renderHook } from '../../../test'
 import { useFeeData } from './useFeeData'
 
-describe('useFeeData', () => {
+describe.skip('useFeeData', () => {
   describe('on mount', () => {
     it('fetches', async () => {
       const { result, waitForNextUpdate } = renderHook(() => useFeeData())
