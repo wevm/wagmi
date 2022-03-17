@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
 
+import { useIsMounted } from '../hooks'
 import { Balance } from './Balance'
 import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
 import { SendTransaction } from './SendTransaction'
-import { useIsMounted } from '../hooks'
+import { SignMessage } from './SignMessage'
 
 export const Account = () => {
   const isMounted = useIsMounted()
@@ -42,6 +43,9 @@ export const Account = () => {
 
       <h4>Read Contract</h4>
       <ReadContract />
+
+      <h4>Sign Message</h4>
+      <SignMessage />
     </div>
   )
 }

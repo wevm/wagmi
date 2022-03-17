@@ -1,9 +1,10 @@
 export {
   useAccount,
   useBalance,
-  useConnect, // useNetwork, // useSignMessage,
+  useConnect,
   useNetwork,
   useSigner,
+  useSignMessage,
 } from './accounts'
 export {
   // useContract,

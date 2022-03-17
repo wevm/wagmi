@@ -23,6 +23,7 @@ export {
   useProvider,
   useSendTransaction,
   useSigner,
+  useSignMessage,
   useWebSocketProvider,
 } from './hooks'
 

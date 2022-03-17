@@ -43,12 +43,12 @@ export function useSendTransaction({
   )
 
   const sendTransaction = React.useCallback(
-    (args = {}) => mutate({ request, ...args }),
+    (args?: SendTransactionArgs) => mutate({ request, ...(args ?? {}) }),
     [mutate, request],
   )
 
   const sendTransactionAsync = React.useCallback(
-    (args = {}) => mutateAsync({ request, ...args }),
+    (args?: SendTransactionArgs) => mutateAsync({ request, ...(args ?? {}) }),
     [mutateAsync, request],
   )
 
