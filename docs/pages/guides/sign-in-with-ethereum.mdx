@@ -40,13 +40,11 @@ npm install siwe iron-session
 
 ## Typing Requirements
 
-In order for TypeScript to work properly with `iron-session` you will need to do a global declare adjustment.
-
-Adjust your `tsconfig.json` to include custom types.
-
-**File:** `./tsconfig.json`
+In order for TypeScript to work properly with `iron-session` you will need add support for custom types.
 
 ```diff
+# tsconfig.json
+
 {
   "compilerOptions": {
     "target": "es5",
@@ -72,9 +70,9 @@ Adjust your `tsconfig.json` to include custom types.
 
 Include your custom types in a new `./types/` folder with your specific library name.
 
-**File*: `./types/iron-session/index.d.ts`
-
 ```ts
+# types/iron-session/index.d.ts
+
 import 'iron-session';
 import { SiweMessage } from 'siwe';
 
