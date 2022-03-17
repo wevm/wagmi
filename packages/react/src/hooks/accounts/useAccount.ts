@@ -9,20 +9,17 @@ import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
 import { useEnsAvatar, useEnsName } from '../ens'
-import { useChainId } from '../utils'
 
 export type UseAccountConfig = {
   /** Fetches ENS for connected account */
   ens?: boolean | { avatar?: boolean; name?: boolean }
 }
 
-export const queryKey = ({ chainId }: { chainId?: number }) =>
-  [{ entity: 'account', chainId }] as const
+export const queryKey = () => [{ entity: 'account' }] as const
 
-export const useAccount = ({ ens }: UseAccountConfig = {}) => {
+export function useAccount({ ens }: UseAccountConfig = {}) {
   const client = useClient()
   const queryClient = useQueryClient()
-  const chainId = useChainId()
 
   const {
     data: accountData,
@@ -31,11 +28,9 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
     isLoading,
     status,
     ...accountQueryResult
-  } = useQuery(queryKey({ chainId }), () => {
+  } = useQuery(queryKey(), () => {
     const { address, connector } = getAccount()
-    const cachedAccount = queryClient.getQueryData<GetAccountResult>(
-      queryKey({ chainId }),
-    )
+    const cachedAccount = queryClient.getQueryData<GetAccountResult>(queryKey())
     return address
       ? { address, connector }
       : cachedAccount || { address: undefined, connector: undefined }
@@ -53,10 +48,10 @@ export const useAccount = ({ ens }: UseAccountConfig = {}) => {
 
   React.useEffect(() => {
     const unwatch = watchAccount((data) => {
-      queryClient.setQueryData(queryKey({ chainId }), data)
+      queryClient.setQueryData(queryKey(), data)
     })
     return unwatch
-  }, [chainId, queryClient])
+  }, [queryClient])
 
   // Force data to be undefined if no address exists
   const data_ = address ? accountData : undefined

@@ -21,7 +21,7 @@ const queryFn = () => {
   return fetchBlockNumber()
 }
 
-export const useBlockNumber = ({
+export function useBlockNumber({
   cacheTime = 0,
   enabled = true,
   staleTime,
@@ -29,7 +29,7 @@ export const useBlockNumber = ({
   onSettled,
   onSuccess,
   watch = false,
-}: UseBlockNumberConfig = {}) => {
+}: UseBlockNumberConfig = {}) {
   const chainId = useChainId()
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()

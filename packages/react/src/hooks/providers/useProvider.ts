@@ -1,6 +1,6 @@
 import { useClient } from '../../context'
 
-export const useProvider = () => {
+export function useProvider() {
   const { provider } = useClient()
   return provider
 }

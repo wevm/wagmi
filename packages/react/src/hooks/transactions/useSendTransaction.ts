@@ -24,13 +24,13 @@ const mutationFn = async (args: UseSendTransactionArgs) => {
   return sendTransaction({ request })
 }
 
-export const useSendTransaction = ({
+export function useSendTransaction({
   request,
   onError,
   onMutate,
   onSettled,
   onSuccess,
-}: UseSendTransactionArgs & UseSendTransactionConfig = {}) => {
+}: UseSendTransactionArgs & UseSendTransactionConfig = {}) {
   const { mutate, mutateAsync, ...transactionMutation } = useMutation(
     mutationKey,
     mutationFn,

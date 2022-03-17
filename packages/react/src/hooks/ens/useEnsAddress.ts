@@ -29,7 +29,7 @@ const queryFn = ({
 /**
  * Fetches address for ENS name
  */
-export const useEnsAddress = ({
+export function useEnsAddress({
   name,
   cacheTime,
   enabled = true,
@@ -37,7 +37,7 @@ export const useEnsAddress = ({
   onError,
   onSettled,
   onSuccess,
-}: UseEnsAddressArgs & UseEnsAddressConfig = {}) => {
+}: UseEnsAddressArgs & UseEnsAddressConfig = {}) {
   const chainId = useChainId()
   return useQuery(queryKey({ chainId, name }), queryFn, {
     cacheTime,

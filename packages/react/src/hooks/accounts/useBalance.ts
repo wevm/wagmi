@@ -1,5 +1,5 @@
+import * as React from 'react'
 import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
-import { useEffect } from 'react'
 import { useQuery } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -30,7 +30,7 @@ const queryFn = ({
   return fetchBalance({ addressOrName, formatUnits, token })
 }
 
-export const useBalance = ({
+export function useBalance({
   addressOrName: addressOrName_,
   formatUnits: formatUnits_ = 'ether',
   token: token_,
@@ -41,7 +41,7 @@ export const useBalance = ({
   onError,
   onSettled,
   onSuccess,
-}: UseBalanceArgs & UseBalanceConfig = {}) => {
+}: UseBalanceArgs & UseBalanceConfig = {}) {
   const chainId = useChainId()
   const {
     config: { addressOrName, formatUnits, token },
@@ -67,7 +67,7 @@ export const useBalance = ({
   )
 
   const { data: blockNumber } = useBlockNumber({ watch })
-  useEffect(() => {
+  React.useEffect(() => {
     if (!enabled && !forceEnabled) return
     if (!watch) return
     if (!blockNumber) return

@@ -29,7 +29,7 @@ const queryFn = ({
 /**
  * Fetches ENS avatar for address or ENS name
  */
-export const useEnsAvatar = ({
+export function useEnsAvatar({
   addressOrName,
   cacheTime,
   enabled = true,
@@ -37,7 +37,7 @@ export const useEnsAvatar = ({
   onError,
   onSettled,
   onSuccess,
-}: UseEnsAvatarArgs & UseEnsLookupConfig = {}) => {
+}: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
   const chainId = useChainId()
   return useQuery(queryKey({ addressOrName, chainId }), queryFn, {
     cacheTime,

@@ -14,11 +14,11 @@ export const queryFn = () => {
   return fetchSigner()
 }
 
-export const useSigner = ({
+export function useSigner({
   onError,
   onSettled,
   onSuccess,
-}: UseSignerConfig = {}) => {
+}: UseSignerConfig = {}) {
   const signerQuery = useQuery(queryKey(), queryFn, {
     cacheTime: 0,
     enabled: false,

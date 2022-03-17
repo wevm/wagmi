@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { BigNumber } from 'ethers/lib/ethers'
 import { PersistedClient } from 'react-query/types/persistQueryClient-experimental'
 
 const findAndReplace = (
@@ -32,7 +32,7 @@ const findAndReplace = (
   return cacheRef
 }
 
-export const deserializeCache = (cachedString: string) => {
+export function deserializeCache(cachedString: string) {
   const cache = JSON.parse(cachedString)
 
   const deserializedCacheWithBigNumbers = findAndReplace(cache, {

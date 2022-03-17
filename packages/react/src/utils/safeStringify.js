@@ -12,7 +12,7 @@ function defaultOptions() {
 }
 
 // Regular stringify
-function stringify(obj, replacer, spacer, options) {
+export function safeStringify(obj, replacer, spacer, options) {
   if (typeof options === 'undefined') {
     options = defaultOptions()
   }
@@ -124,5 +124,3 @@ function replaceGetterValues(replacer) {
     return replacer.call(this, key, val)
   }
 }
-
-export default stringify

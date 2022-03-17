@@ -1,3 +1,4 @@
+import * as React from 'react'
 import {
   ReadContractArgs,
   ReadContractConfig,
@@ -5,7 +6,6 @@ import {
   readContract,
   watchReadContract,
 } from '@wagmi/core'
-import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -48,7 +48,7 @@ const queryFn = ({
   return readContract(contractConfig, functionName, { args, overrides })
 }
 
-export const useContractRead = (
+export function useContractRead(
   contractConfig: ReadContractArgs,
   functionName: string,
   {
@@ -62,7 +62,7 @@ export const useContractRead = (
     onSettled,
     onSuccess,
   }: UseContractReadArgs & UseContractReadConfig = {},
-) => {
+) {
   const chainId = useChainId()
   const { data: blockNumber } = useBlockNumber({ enabled: false, watch })
 
@@ -75,7 +75,7 @@ export const useContractRead = (
     overrides: overrides_,
   })
 
-  const queryKey_ = useMemo(
+  const queryKey_ = React.useMemo(
     () =>
       queryKey([
         contractConfig,
@@ -97,7 +97,7 @@ export const useContractRead = (
     ],
   )
 
-  const enabled = useMemo(() => {
+  const enabled = React.useMemo(() => {
     let enabled = Boolean(enabled_ && contractConfig && functionName)
     if (watch) {
       enabled = Boolean(enabled && blockNumber)
@@ -106,7 +106,7 @@ export const useContractRead = (
   }, [blockNumber, contractConfig, enabled_, functionName, watch])
 
   const client = useQueryClient()
-  useEffect(() => {
+  React.useEffect(() => {
     ;(forceEnabled || enabled) &&
       watchReadContract(
         contractConfig,

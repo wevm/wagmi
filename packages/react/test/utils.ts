@@ -10,10 +10,10 @@ import { HardhatNetworkHDAccountsConfig } from 'hardhat/types'
 
 import { ClientConfig, createClient } from '../src'
 
-export const getMockConnector = (
+export function getMockConnector(
   options: MockProviderOptions,
   chains = defaultChains,
-) => {
+) {
   return new MockConnector({
     chains,
     options,
@@ -26,7 +26,7 @@ class EthersProviderWrapper extends JsonRpcProvider {
   }
 }
 
-export const getProvider = () => {
+export function getProvider() {
   const url = chain.hardhat.rpcUrls[0]
   const network = {
     chainId: chain.hardhat.id,
@@ -52,7 +52,7 @@ const getSeeds = () => {
 }
 const seeds = getSeeds()
 
-export const getSigners = () => {
+export function getSigners() {
   const provider = getProvider()
   const signers = seeds.map((x) => {
     const wallet = HDNode.fromSeed(x)
@@ -62,7 +62,7 @@ export const getSigners = () => {
 }
 
 type Config = Partial<ClientConfig>
-export const setupWagmiClient = (config: Config = {}) => {
+export function setupWagmiClient(config: Config = {}) {
   return createClient({
     connectors: [
       getMockConnector({

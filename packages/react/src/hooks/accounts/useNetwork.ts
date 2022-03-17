@@ -21,12 +21,12 @@ export const mutationKey = 'switchNetwork'
 export const queryKey = () => [{ entity: 'chain' }] as const
 const queryFn = () => getNetwork()
 
-export const useNetwork = ({
+export function useNetwork({
   onError,
   onMutate,
   onSettled,
   onSuccess,
-}: UseConnectConfig = {}) => {
+}: UseConnectConfig = {}) {
   const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
   const client = useClient()
   const queryClient = useQueryClient()

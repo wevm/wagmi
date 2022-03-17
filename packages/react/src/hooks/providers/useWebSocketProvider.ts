@@ -1,6 +1,6 @@
 import { useClient } from '../../context'
 
-export const useWebSocketProvider = () => {
+export function useWebSocketProvider() {
   const { webSocketProvider } = useClient()
   return webSocketProvider
 }

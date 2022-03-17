@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import * as React from 'react'
 
 // React Query doesn't provide the functionality to "refetch" with config (query key) as
 // an argument. This hook is a workaround to provide a `getter` function that acts like
 // a `refetch` with config.
 
-export const useGetterWithConfig = <T>(config_: Partial<T>) => {
-  const isMounted = useRef(false)
-  const [config, setConfig] = useState<Partial<T>>(config_)
-  useEffect(() => {
+export function useGetterWithConfig<T>(config_: Partial<T>) {
+  const isMounted = React.useRef(false)
+  const [config, setConfig] = React.useState<Partial<T>>(config_)
+  React.useEffect(() => {
     if (isMounted.current) {
       setConfig(config_)
     }
@@ -15,9 +15,9 @@ export const useGetterWithConfig = <T>(config_: Partial<T>) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...Object.values(config_)])
 
-  const [forceEnabled, setForceEnabled] = useState(false)
+  const [forceEnabled, setForceEnabled] = React.useState(false)
 
-  const getter = useCallback(
+  const getter = React.useCallback(
     (refetch: () => void) => (config: T) => {
       setConfig(config)
       if (forceEnabled) {

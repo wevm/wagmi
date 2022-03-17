@@ -29,7 +29,7 @@ const queryFn = ({
 /**
  * Fetches ENS resolver for ENS name
  */
-export const useEnsResolver = ({
+export function useEnsResolver({
   name,
   cacheTime,
   enabled = true,
@@ -37,7 +37,7 @@ export const useEnsResolver = ({
   onError,
   onSettled,
   onSuccess,
-}: UseEnsResolverArgs & UseEnsResolverConfig = {}) => {
+}: UseEnsResolverArgs & UseEnsResolverConfig = {}) {
   const chainId = useChainId()
   return useQuery(queryKey({ chainId, name }), queryFn, {
     cacheTime,

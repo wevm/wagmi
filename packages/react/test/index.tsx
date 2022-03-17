@@ -26,18 +26,18 @@ type Props = ProviderProps & {
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
-export const wrapper = (props: Props) => {
+export function wrapper(props: Props) {
   const client = setupWagmiClient({ queryClient })
   return <Provider client={client} {...props} />
 }
 
-export const renderHook = <TProps, TResult>(
+export function renderHook<TProps, TResult>(
   hook: (props: TProps) => TResult,
   {
     wrapper: wrapper_,
     ...options
   }: RenderHookOptions<TProps & ProviderProps> | undefined = {},
-) => {
+) {
   if (wrapper_ == undefined) wrapper_ = wrapper as WrapperComponent<TProps>
   return defaultRenderHook<TProps, TResult>(hook, {
     wrapper: wrapper_,

@@ -13,7 +13,7 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
-import stringify from './utils/safe-stringify'
+import { safeStringify } from './utils/safeStringify'
 import { deserializeCache } from './utils/deserializeCache'
 
 export const Context = React.createContext<WagmiClient | undefined>(undefined)
@@ -38,14 +38,14 @@ const defaultQueryClientConfig: QueryClientConfig = {
   },
 }
 
-export const createClient = ({
+export function createClient({
   queryClient = new QueryClient(defaultQueryClientConfig),
   ...config
-}: ClientConfig = {}) => {
+}: ClientConfig = {}) {
   const client = createWagmiClient(config)
   const persistor = createWebStoragePersistor({
     storage: (client.storage as Storage) || window.localStorage,
-    serialize: stringify,
+    serialize: safeStringify,
     deserialize: deserializeCache,
   })
   persistQueryClient({
@@ -58,10 +58,10 @@ export const createClient = ({
   return Object.assign(client, { queryClient })
 }
 
-export const Provider = ({
+export function Provider({
   children,
   client = createClient(),
-}: React.PropsWithChildren<ProviderProps>) => {
+}: React.PropsWithChildren<ProviderProps>) {
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     // Attempt to connect on mount
@@ -83,7 +83,7 @@ export const Provider = ({
   )
 }
 
-export const useClient = () => {
+export function useClient() {
   const client = React.useContext(Context)
   if (!client) throw Error('Must be used within WagmiProvider')
   return client

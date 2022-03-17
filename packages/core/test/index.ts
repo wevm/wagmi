@@ -17,7 +17,7 @@ class EthersProviderWrapper extends JsonRpcProvider {
   }
 }
 
-export const getProvider = () => {
+export function getProvider() {
   const url = chain.hardhat.rpcUrls[0]
   const network = {
     chainId: chain.hardhat.id,
@@ -31,7 +31,7 @@ const accounts = normalizeHardhatNetworkAccountsConfig(
   defaultHardhatNetworkParams.accounts,
 )
 
-export const getSigners = () => {
+export function getSigners() {
   const provider = getProvider()
   const signers = accounts.map((x) => {
     const wallet = new Wallet(x.privateKey)
@@ -40,10 +40,10 @@ export const getSigners = () => {
   return signers
 }
 
-export const getMockConnector = (
+export function getMockConnector(
   options: MockProviderOptions,
   chains = defaultChains,
-) => {
+) {
   return new MockConnector({
     chains,
     options,
@@ -51,7 +51,7 @@ export const getMockConnector = (
 }
 
 type Config = Partial<WagmiClientConfig>
-export const setupWagmiClient = (config: Config = {}) => {
+export function setupWagmiClient(config: Config = {}) {
   return createWagmiClient({
     connectors: [
       getMockConnector({
