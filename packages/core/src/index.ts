@@ -83,6 +83,9 @@ export type {
   WatchReadContractResult,
   WatchSignerCallback,
   WatchTokenCallback,
+  WriteContractArgs,
+  WriteContractConfig,
+  WriteContractResult,
 } from './actions'
 
 export {

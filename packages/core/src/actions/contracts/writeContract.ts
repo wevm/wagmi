@@ -6,19 +6,23 @@ import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 
 import { GetContractArgs, getContract } from './getContract'
 
-type Config = {
+export type WriteContractArgs = GetContractArgs
+
+export type WriteContractConfig = {
   /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
 }
 
+export type WriteContractResult = TransactionResponse
+
 export async function writeContract<
   Contract extends EthersContract = EthersContract,
 >(
-  contractConfig: GetContractArgs,
+  contractConfig: WriteContractArgs,
   functionName: string,
-  { args, overrides }: Config = {},
-): Promise<TransactionResponse> {
+  { args, overrides }: WriteContractConfig = {},
+): Promise<WriteContractResult> {
   const { connector } = client
   const contract = getContract<Contract>(contractConfig)
 

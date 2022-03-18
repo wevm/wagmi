@@ -7,6 +7,7 @@ import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
 import { SendTransaction } from './SendTransaction'
 import { SignMessage } from './SignMessage'
+import { WriteContract } from './WriteContract'
 
 export const Account = () => {
   const isMounted = useIsMounted()
@@ -46,6 +47,9 @@ export const Account = () => {
 
       <h4>Sign Message</h4>
       <SignMessage />
+
+      <h4>Write Contract</h4>
+      <WriteContract />
     </div>
   )
 }

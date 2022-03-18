@@ -7,9 +7,10 @@ export {
   useSignMessage,
 } from './accounts'
 export {
-  // useContract,
+  useContract,
   // useContractEvent,
-  useContractRead, // useContractWrite, // useToken,
+  useContractRead,
+  useContractWrite, // useToken,
 } from './contracts'
 export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
 export {

@@ -40,6 +40,9 @@ export {
   type WatchReadContractArgs,
   type WatchReadContractConfig,
   type WatchReadContractResult,
+  type WriteContractArgs,
+  type WriteContractConfig,
+  type WriteContractResult,
 } from './contracts'
 
 export {

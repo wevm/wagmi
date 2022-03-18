@@ -32,7 +32,7 @@ export const queryKey = ([
 ]) =>
   [
     {
-      entity: 'balance',
+      entity: 'read-contract',
       args,
       blockNumber,
       chainId,
