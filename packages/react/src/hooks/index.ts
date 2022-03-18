@@ -10,7 +10,8 @@ export {
   useContract,
   useContractEvent,
   useContractRead,
-  useContractWrite, // useToken,
+  useContractWrite,
+  useToken,
 } from './contracts'
 export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
 export {

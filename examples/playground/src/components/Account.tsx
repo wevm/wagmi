@@ -7,6 +7,7 @@ import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
 import { SendTransaction } from './SendTransaction'
 import { SignMessage } from './SignMessage'
+import { Token } from './Token'
 import { WriteContract } from './WriteContract'
 
 export const Account = () => {
@@ -45,11 +46,14 @@ export const Account = () => {
       <h4>Read Contract</h4>
       <ReadContract />
 
+      <h4>Write Contract</h4>
+      <WriteContract />
+
       <h4>Sign Message</h4>
       <SignMessage />
 
-      <h4>Write Contract</h4>
-      <WriteContract />
+      <h4>Token</h4>
+      <Token />
     </div>
   )
 }
