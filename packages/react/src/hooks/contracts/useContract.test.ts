@@ -1,5 +1,4 @@
-import { Signer } from 'ethers'
-import { Provider } from '@ethersproject/providers'
+import { Signer, providers } from 'ethers'
 import { erc20ABI } from '@wagmi/core'
 
 import { getProvider, renderHook } from '../../../test'
@@ -20,7 +19,7 @@ describe('useContract', () => {
   })
 
   it('changes config', async () => {
-    let signerOrProvider: Signer | Provider | undefined = undefined
+    let signerOrProvider: Signer | providers.Provider | undefined = undefined
     const { result, rerender } = renderHook(() =>
       useContract({
         addressOrName: uniContractAddress,

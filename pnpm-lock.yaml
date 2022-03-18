@@ -249,14 +249,14 @@ importers:
     specifiers:
       '@coinbase/wallet-sdk': ^3.0.1
       '@ethersproject/abstract-signer': ^5.6.0
-      '@ethersproject/providers': ^5.5.3
+      '@ethersproject/providers': ^5.6.0
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
       zustand: ^3.7.0
     dependencies:
       '@ethersproject/abstract-signer': 5.6.0
-      '@ethersproject/providers': 5.5.3
+      '@ethersproject/providers': 5.6.0
       eventemitter3: 4.0.7
       zustand: 3.7.1
     devDependencies:
@@ -267,7 +267,6 @@ importers:
   packages/react:
     specifiers:
       '@coinbase/wallet-sdk': ^3.0.1
-      '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
       '@wagmi/core': 0.1.13
@@ -276,8 +275,7 @@ importers:
       react: ^17.0.0
       react-query: ^3.34.16
     dependencies:
-      '@coinbase/wallet-sdk': 3.0.1
-      '@ethersproject/providers': 5.5.3
+      '@coinbase/wallet-sdk': 3.0.1_@babel+core@7.17.5
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.5
       react-query: 3.34.16_react@17.0.2
@@ -382,18 +380,6 @@ packages:
       '@babel/types': 7.17.0
     dev: true
 
-  /@babel/helper-compilation-targets/7.16.7:
-    resolution: {integrity: sha512-mGojBwIWcwGD6rfqgRXVlVYmPAv7eOpIemUG3dGnDdCY4Pae70ROij3XmfrH6Fa1h1aiDylpglbZyktfzyo/hA==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0
-    dependencies:
-      '@babel/compat-data': 7.17.0
-      '@babel/helper-validator-option': 7.16.7
-      browserslist: 4.19.3
-      semver: 6.3.0
-    dev: false
-
   /@babel/helper-compilation-targets/7.16.7_@babel+core@7.17.5:
     resolution: {integrity: sha512-mGojBwIWcwGD6rfqgRXVlVYmPAv7eOpIemUG3dGnDdCY4Pae70ROij3XmfrH6Fa1h1aiDylpglbZyktfzyo/hA==}
     engines: {node: '>=6.9.0'}
@@ -405,7 +391,6 @@ packages:
       '@babel/helper-validator-option': 7.16.7
       browserslist: 4.19.3
       semver: 6.3.0
-    dev: true
 
   /@babel/helper-create-class-features-plugin/7.17.6_@babel+core@7.17.5:
     resolution: {integrity: sha512-SogLLSxXm2OkBbSsHZMM4tUi8fUzjs63AT/d0YQIzr6GSd8Hxsbk2KYDX0k0DweAzGMj/YWeiCsorIdtdcW8Eg==}
@@ -436,23 +421,6 @@ packages:
       regexpu-core: 5.0.1
     dev: true
 
-  /@babel/helper-define-polyfill-provider/0.3.1:
-    resolution: {integrity: sha512-J9hGMpJQmtWmj46B3kBHmL38UhJGhYX7eqkcq+2gsstyYt341HmPeWspihX43yVRA0mS+8GGk2Gckc7bY/HCmA==}
-    peerDependencies:
-      '@babel/core': ^7.4.0-0
-    dependencies:
-      '@babel/helper-compilation-targets': 7.16.7
-      '@babel/helper-module-imports': 7.16.7
-      '@babel/helper-plugin-utils': 7.16.7
-      '@babel/traverse': 7.17.3
-      debug: 4.3.3
-      lodash.debounce: 4.0.8
-      resolve: 1.22.0
-      semver: 6.3.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@babel/helper-define-polyfill-provider/0.3.1_@babel+core@7.17.5:
     resolution: {integrity: sha512-J9hGMpJQmtWmj46B3kBHmL38UhJGhYX7eqkcq+2gsstyYt341HmPeWspihX43yVRA0mS+8GGk2Gckc7bY/HCmA==}
     peerDependencies:
@@ -469,7 +437,6 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/helper-environment-visitor/7.16.7:
     resolution: {integrity: sha512-SLLb0AAn6PkUeAfKJCCOl9e1R53pQlGAfc4y4XuMRZfqeMYLE0dM1LMhqbGAlGQY0lfw5/ohoYWAe9V1yibRag==}
@@ -1410,22 +1377,6 @@ packages:
       '@babel/helper-plugin-utils': 7.16.7
     dev: true
 
-  /@babel/plugin-transform-runtime/7.17.0:
-    resolution: {integrity: sha512-fr7zPWnKXNc1xoHfrIU9mN/4XKX4VLZ45Q+oMhfsYIaHvg7mHgmhfOy/ckRWqDK7XF3QDigRpkh5DKq6+clE8A==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/helper-module-imports': 7.16.7
-      '@babel/helper-plugin-utils': 7.16.7
-      babel-plugin-polyfill-corejs2: 0.3.1
-      babel-plugin-polyfill-corejs3: 0.5.2
-      babel-plugin-polyfill-regenerator: 0.3.1
-      semver: 6.3.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /@babel/plugin-transform-runtime/7.17.0_@babel+core@7.17.5:
     resolution: {integrity: sha512-fr7zPWnKXNc1xoHfrIU9mN/4XKX4VLZ45Q+oMhfsYIaHvg7mHgmhfOy/ckRWqDK7XF3QDigRpkh5DKq6+clE8A==}
     engines: {node: '>=6.9.0'}
@@ -1441,7 +1392,6 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /@babel/plugin-transform-shorthand-properties/7.16.7_@babel+core@7.17.5:
     resolution: {integrity: sha512-hah2+FEnoRoATdIb05IOXf+4GzXYTq75TVhIn1PewihbpyrNWUt2JbudKQOETWw6QpLe+AIUpJ5MVLYTQbeeUg==}
@@ -1921,29 +1871,6 @@ packages:
       prettier: 1.19.1
     dev: true
 
-  /@coinbase/wallet-sdk/3.0.1:
-    resolution: {integrity: sha512-wHCoOhT7/34xK2XKRvOBA2ZINsrQLbkLftvN31RwHtscHy21B8AGBbhxetUdJvOeBTqAxQKwWTDKYxvl2Rn5gg==}
-    engines: {node: '>= 10.0.0'}
-    dependencies:
-      '@metamask/safe-event-emitter': 2.0.0
-      bind-decorator: 1.0.11
-      bn.js: 5.2.0
-      clsx: 1.1.1
-      eth-block-tracker: 4.4.3
-      eth-json-rpc-filters: 4.2.2
-      eth-rpc-errors: 4.0.2
-      js-sha256: 0.9.0
-      json-rpc-engine: 6.1.0
-      keccak: 3.0.2
-      preact: 10.6.6
-      rxjs: 6.6.7
-      stream-browserify: 3.0.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - encoding
-      - supports-color
-    dev: false
-
   /@coinbase/wallet-sdk/3.0.1_@babel+core@7.17.5:
     resolution: {integrity: sha512-wHCoOhT7/34xK2XKRvOBA2ZINsrQLbkLftvN31RwHtscHy21B8AGBbhxetUdJvOeBTqAxQKwWTDKYxvl2Rn5gg==}
     engines: {node: '>= 10.0.0'}
@@ -1965,7 +1892,6 @@ packages:
       - '@babel/core'
       - encoding
       - supports-color
-    dev: true
 
   /@cspotcode/source-map-consumer/0.8.0:
     resolution: {integrity: sha512-41qniHzTU8yAGbCp04ohlmSrZf8bkf/iJsl3V0dRGsQN/5GFfx+LbCSsCpp2gqrqjTVg/K6O8ycoV35JIwAzAg==}
@@ -5273,18 +5199,6 @@ packages:
       '@types/babel__traverse': 7.14.2
     dev: true
 
-  /babel-plugin-polyfill-corejs2/0.3.1:
-    resolution: {integrity: sha512-v7/T6EQcNfVLfcN2X8Lulb7DjprieyLWJK/zOWH5DUYcAgex9sP3h25Q+DLsX9TloXe3y1O8l2q2Jv9q8UVB9w==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/compat-data': 7.17.0
-      '@babel/helper-define-polyfill-provider': 0.3.1
-      semver: 6.3.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /babel-plugin-polyfill-corejs2/0.3.1_@babel+core@7.17.5:
     resolution: {integrity: sha512-v7/T6EQcNfVLfcN2X8Lulb7DjprieyLWJK/zOWH5DUYcAgex9sP3h25Q+DLsX9TloXe3y1O8l2q2Jv9q8UVB9w==}
     peerDependencies:
@@ -5296,18 +5210,6 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /babel-plugin-polyfill-corejs3/0.5.2:
-    resolution: {integrity: sha512-G3uJih0XWiID451fpeFaYGVuxHEjzKTHtc9uGFEjR6hHrvNzeS/PX+LLLcetJcytsB5m4j+K3o/EpXJNb/5IEQ==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/helper-define-polyfill-provider': 0.3.1
-      core-js-compat: 3.21.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /babel-plugin-polyfill-corejs3/0.5.2_@babel+core@7.17.5:
     resolution: {integrity: sha512-G3uJih0XWiID451fpeFaYGVuxHEjzKTHtc9uGFEjR6hHrvNzeS/PX+LLLcetJcytsB5m4j+K3o/EpXJNb/5IEQ==}
@@ -5319,17 +5221,6 @@ packages:
       core-js-compat: 3.21.1
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /babel-plugin-polyfill-regenerator/0.3.1:
-    resolution: {integrity: sha512-Y2B06tvgHYt1x0yz17jGkGeeMr5FeKUu+ASJ+N6nB5lQ8Dapfg42i0OVrf8PNGJ3zKL4A23snMi1IRwrqqND7A==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/helper-define-polyfill-provider': 0.3.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
 
   /babel-plugin-polyfill-regenerator/0.3.1_@babel+core@7.17.5:
     resolution: {integrity: sha512-Y2B06tvgHYt1x0yz17jGkGeeMr5FeKUu+ASJ+N6nB5lQ8Dapfg42i0OVrf8PNGJ3zKL4A23snMi1IRwrqqND7A==}
@@ -5340,7 +5231,6 @@ packages:
       '@babel/helper-define-polyfill-provider': 0.3.1_@babel+core@7.17.5
     transitivePeerDependencies:
       - supports-color
-    dev: true
 
   /babel-preset-current-node-syntax/1.0.1_@babel+core@7.17.5:
     resolution: {integrity: sha512-M7LQ0bxarkxQoN+vz5aJPsLBn77n8QgTFmo8WK0/44auK2xlCXrYcUxHFxgU7qW5Yzw/CjmLRK2uJzaCd7LvqQ==}
@@ -7567,20 +7457,6 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /eth-block-tracker/4.4.3:
-    resolution: {integrity: sha512-A8tG4Z4iNg4mw5tP1Vung9N9IjgMNqpiMoJ/FouSFwNCGHv2X0mmOYwtQOJzki6XN7r7Tyo01S29p7b224I4jw==}
-    dependencies:
-      '@babel/plugin-transform-runtime': 7.17.0
-      '@babel/runtime': 7.17.2
-      eth-query: 2.1.2
-      json-rpc-random-id: 1.0.1
-      pify: 3.0.0
-      safe-event-emitter: 1.0.1
-    transitivePeerDependencies:
-      - '@babel/core'
-      - supports-color
-    dev: false
-
   /eth-block-tracker/4.4.3_@babel+core@7.17.5:
     resolution: {integrity: sha512-A8tG4Z4iNg4mw5tP1Vung9N9IjgMNqpiMoJ/FouSFwNCGHv2X0mmOYwtQOJzki6XN7r7Tyo01S29p7b224I4jw==}
     dependencies:
@@ -7593,7 +7469,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
-    dev: true
 
   /eth-json-rpc-filters/4.2.2:
     resolution: {integrity: sha512-DGtqpLU7bBg63wPMWg1sCpkKCf57dJ+hj/k3zF26anXMzkmtSBDExL8IhUu7LUd34f0Zsce3PYNO2vV2GaTzaw==}
