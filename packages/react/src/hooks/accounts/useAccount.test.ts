@@ -95,7 +95,7 @@ describe('useAccount', () => {
       expect(data).toMatchInlineSnapshot(`
         {
           "data": {
-            "address": "0x555fbD6976904AB47bC225eCf44B76799996870b",
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "connector": "<MockConnector>",
           },
           "disconnect": [Function],
@@ -122,56 +122,134 @@ describe('useAccount', () => {
       `)
     })
 
-    it('true', async () => {
-      const { result, waitForNextUpdate } = renderHook(
-        () => useAccountWithConnect({ account: { ens: true } }),
-        {
-          wrapper,
-          initialProps: {
-            client: setupWagmiClient({
-              connectors: [
-                getMockConnector({
-                  signer: new VoidSigner(
-                    '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-                  ),
-                }),
-              ],
-              provider: getProvider(),
-              queryClient,
-            }),
+    describe('ens', () => {
+      it('true', async () => {
+        const { result, waitForNextUpdate } = renderHook(
+          () => useAccountWithConnect({ account: { ens: true } }),
+          {
+            wrapper,
+            initialProps: {
+              client: setupWagmiClient({
+                connectors: [
+                  getMockConnector({
+                    signer: new VoidSigner(
+                      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                    ),
+                  }),
+                ],
+                provider: getProvider(),
+                queryClient,
+              }),
+            },
           },
-        },
-      )
+        )
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
+        await actHook(async () => {
+          const mockConnector = result.current.connect.connectors[0]
+          result.current.connect.connect(mockConnector)
+        })
+
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "connector": "<MockConnector>",
+          }
+        `)
+        await waitForNextUpdate()
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "connector": "<MockConnector>",
+          }
+        `)
+        await waitForNextUpdate()
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "connector": "<MockConnector>",
+            "ens": {
+              "avatar": null,
+              "name": "awkweb.eth",
+            },
+          }
+        `)
       })
 
-      expect(result.current.account.data).toMatchInlineSnapshot(`
-        {
-          "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
-          "connector": "<MockConnector>",
-        }
-      `)
-      await waitForNextUpdate()
-      expect(result.current.account.data).toMatchInlineSnapshot(`
-        {
-          "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
-          "connector": "<MockConnector>",
-        }
-      `)
-      await waitForNextUpdate()
-      expect(result.current.account.data).toMatchInlineSnapshot(`
-        {
-          "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
-          "connector": "<MockConnector>",
-          "ens": {
-            "avatar": null,
-            "name": "awkweb.eth",
+      it('name', async () => {
+        const { result } = renderHook(
+          () => useAccountWithConnect({ account: { ens: { name: true } } }),
+          {
+            wrapper,
+            initialProps: {
+              client: setupWagmiClient({
+                connectors: [
+                  getMockConnector({
+                    signer: new VoidSigner(
+                      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                    ),
+                  }),
+                ],
+                provider: getProvider(),
+                queryClient,
+              }),
+            },
           },
-        }
-      `)
+        )
+
+        await actHook(async () => {
+          const mockConnector = result.current.connect.connectors[0]
+          result.current.connect.connect(mockConnector)
+        })
+
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "connector": "<MockConnector>",
+            "ens": {
+              "avatar": null,
+              "name": "awkweb.eth",
+            },
+          }
+        `)
+      })
+
+      it('avatar', async () => {
+        const { result } = renderHook(
+          () => useAccountWithConnect({ account: { ens: { avatar: true } } }),
+          {
+            wrapper,
+            initialProps: {
+              client: setupWagmiClient({
+                connectors: [
+                  getMockConnector({
+                    signer: new VoidSigner(
+                      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                    ),
+                  }),
+                ],
+                provider: getProvider(),
+                queryClient,
+              }),
+            },
+          },
+        )
+
+        await actHook(async () => {
+          const mockConnector = result.current.connect.connectors[0]
+          result.current.connect.connect(mockConnector)
+        })
+
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "connector": "<MockConnector>",
+            "ens": {
+              "avatar": null,
+              "name": "awkweb.eth",
+            },
+          }
+        `)
+      })
     })
   })
 
@@ -188,7 +266,7 @@ describe('useAccount', () => {
     expect(data).toMatchInlineSnapshot(`
       {
         "data": {
-          "address": "0x555fbD6976904AB47bC225eCf44B76799996870b",
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "connector": "<MockConnector>",
         },
         "disconnect": [Function],

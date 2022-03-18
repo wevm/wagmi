@@ -30,6 +30,10 @@ module.exports = {
     {
       ...config,
       displayName: 'react',
+      globals: {
+        Uint8Array: Uint8Array,
+        ArrayBuffer: ArrayBuffer,
+      },
       setupFilesAfterEnv: ['<rootDir>/packages/react/test/setup.ts'],
       testEnvironment: 'jsdom',
       testRegex: 'packages/react/.*\\.test\\.ts(x)?$',

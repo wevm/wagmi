@@ -21,4 +21,3 @@ export { useProvider, useWebSocketProvider } from './providers'
 export {
   useSendTransaction, // useWaitForTransaction
 } from './transactions'
-// export { useCacheBuster, useLocalStorage } from './utils'

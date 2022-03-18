@@ -14,6 +14,11 @@ export {
   type SignMessageResult,
 } from './signMessage'
 export {
+  signTypedData,
+  type SignTypedDataArgs,
+  type SignTypedDataResult,
+} from './signTypedData'
+export {
   switchNetwork,
   type SwitchNetworkArgs,
   type SwitchNetworkResult,

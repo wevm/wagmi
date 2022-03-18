@@ -26,9 +26,6 @@ const queryFn = ({
   return fetchEnsAvatar({ addressOrName })
 }
 
-/**
- * Fetches ENS avatar for address or ENS name
- */
 export function useEnsAvatar({
   addressOrName,
   cacheTime,

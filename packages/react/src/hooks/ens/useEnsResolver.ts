@@ -26,9 +26,6 @@ const queryFn = ({
   return fetchEnsResolver({ name })
 }
 
-/**
- * Fetches ENS resolver for ENS name
- */
 export function useEnsResolver({
   name,
   cacheTime,

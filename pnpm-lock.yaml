@@ -248,12 +248,14 @@ importers:
   packages/core:
     specifiers:
       '@coinbase/wallet-sdk': ^3.0.1
+      '@ethersproject/abstract-signer': ^5.6.0
       '@ethersproject/providers': ^5.5.3
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
       zustand: ^3.7.0
     dependencies:
+      '@ethersproject/abstract-signer': 5.6.0
       '@ethersproject/providers': 5.5.3
       eventemitter3: 4.0.7
       zustand: 3.7.1
@@ -2209,7 +2211,7 @@ packages:
     dependencies:
       '@ethersproject/abi': 5.5.0
       '@ethersproject/abstract-provider': 5.5.1
-      '@ethersproject/abstract-signer': 5.5.0
+      '@ethersproject/abstract-signer': 5.6.0
       '@ethersproject/address': 5.5.0
       '@ethersproject/bignumber': 5.5.0
       '@ethersproject/bytes': 5.5.0
@@ -2236,7 +2238,7 @@ packages:
   /@ethersproject/hash/5.5.0:
     resolution: {integrity: sha512-dnGVpK1WtBjmnp3mUT0PlU2MpapnwWI0PibldQEq1408tQBAbZpPidkWoVVuNMOl/lISO3+4hXZWCL3YV7qzfg==}
     dependencies:
-      '@ethersproject/abstract-signer': 5.5.0
+      '@ethersproject/abstract-signer': 5.6.0
       '@ethersproject/address': 5.5.0
       '@ethersproject/bignumber': 5.5.0
       '@ethersproject/bytes': 5.5.0
@@ -2260,7 +2262,7 @@ packages:
   /@ethersproject/hdnode/5.5.0:
     resolution: {integrity: sha512-mcSOo9zeUg1L0CoJH7zmxwUG5ggQHU1UrRf8jyTYy6HxdZV+r0PBoL1bxr+JHIPXRzS6u/UW4mEn43y0tmyF8Q==}
     dependencies:
-      '@ethersproject/abstract-signer': 5.5.0
+      '@ethersproject/abstract-signer': 5.6.0
       '@ethersproject/basex': 5.5.0
       '@ethersproject/bignumber': 5.5.0
       '@ethersproject/bytes': 5.5.0
@@ -2293,7 +2295,7 @@ packages:
   /@ethersproject/json-wallets/5.5.0:
     resolution: {integrity: sha512-9lA21XQnCdcS72xlBn1jfQdj2A1VUxZzOzi9UkNdnokNKke/9Ya2xA9aIK1SC3PQyBDLt4C+dfps7ULpkvKikQ==}
     dependencies:
-      '@ethersproject/abstract-signer': 5.5.0
+      '@ethersproject/abstract-signer': 5.6.0
       '@ethersproject/address': 5.5.0
       '@ethersproject/bytes': 5.5.0
       '@ethersproject/hdnode': 5.5.0
@@ -2380,7 +2382,7 @@ packages:
     resolution: {integrity: sha512-ZHXxXXXWHuwCQKrgdpIkbzMNJMvs+9YWemanwp1fA7XZEv7QlilseysPvQe0D7Q7DlkJX/w/bGA1MdgK2TbGvA==}
     dependencies:
       '@ethersproject/abstract-provider': 5.5.1
-      '@ethersproject/abstract-signer': 5.5.0
+      '@ethersproject/abstract-signer': 5.6.0
       '@ethersproject/address': 5.5.0
       '@ethersproject/basex': 5.5.0
       '@ethersproject/bignumber': 5.5.0
@@ -2566,7 +2568,7 @@ packages:
     resolution: {integrity: sha512-Mlu13hIctSYaZmUOo7r2PhNSd8eaMPVXe1wxrz4w4FCE4tDYBywDH+bAR1Xz2ADyXGwqYMwstzTrtUVIsKDO0Q==}
     dependencies:
       '@ethersproject/abstract-provider': 5.5.1
-      '@ethersproject/abstract-signer': 5.5.0
+      '@ethersproject/abstract-signer': 5.6.0
       '@ethersproject/address': 5.5.0
       '@ethersproject/bignumber': 5.5.0
       '@ethersproject/bytes': 5.5.0

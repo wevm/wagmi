@@ -26,9 +26,6 @@ const queryFn = ({
   return fetchEnsName({ address })
 }
 
-/**
- * Fetches ENS name for address
- */
 export function useEnsName({
   address,
   cacheTime,

@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { FetchSignerResult, fetchSigner, watchSigner } from '@wagmi/core'
 import { useQuery, useQueryClient } from 'react-query'
 
@@ -28,7 +29,12 @@ export function useSigner({
   })
 
   const queryClient = useQueryClient()
-  watchSigner((signer) => queryClient.setQueryData(queryKey(), signer))
+  React.useEffect(() => {
+    const unwatch = watchSigner((signer) =>
+      queryClient.setQueryData(queryKey(), signer),
+    )
+    return unwatch
+  }, [queryClient])
 
   const status = !signerQuery.data ? 'loading' : signerQuery.status
 

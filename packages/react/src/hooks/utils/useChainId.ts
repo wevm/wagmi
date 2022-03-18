@@ -7,8 +7,7 @@ import { useClient } from '../../context'
 export const queryKey = 'chainId'
 
 const queryFn = () => {
-  const chainId = getProvider().network.chainId
-  return chainId
+  return getProvider().network.chainId
 }
 
 export function useChainId() {
