@@ -27,7 +27,7 @@ export function useGetterWithConfig<T>(config_: Partial<T>) {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [forceEnabled],
   )
 
   return {

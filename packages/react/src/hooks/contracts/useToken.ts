@@ -35,7 +35,7 @@ export function useToken({
   onError,
   onSettled,
   onSuccess,
-}: UseTokenArgs & UseTokenConfig) {
+}: UseTokenArgs & UseTokenConfig = {}) {
   const chainId = useChainId()
   const {
     config: { address, formatUnits },
