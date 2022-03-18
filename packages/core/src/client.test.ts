@@ -1,4 +1,5 @@
 import { setupWagmiClient } from '../test'
+import { Client, createClient } from './client'
 
 describe('WagmiClient', () => {
   it('inits', async () => {
@@ -16,10 +17,7 @@ describe('WagmiClient', () => {
           "webSocketProvider": undefined,
         },
         "storage": {
-          "clear": [Function],
           "getItem": [Function],
-          "key": [Function],
-          "length": 0,
           "removeItem": [Function],
           "setItem": [Function],
         },
@@ -39,5 +37,12 @@ describe('WagmiClient', () => {
         },
       }
     `)
+  })
+})
+
+describe('createClient', () => {
+  it('returns client', () => {
+    const client = createClient()
+    expect(client).toBeInstanceOf(Client)
   })
 })

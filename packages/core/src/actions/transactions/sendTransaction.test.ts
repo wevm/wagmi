@@ -6,16 +6,12 @@ import { sendTransaction } from './sendTransaction'
 
 describe('sendTransaction', () => {
   it('throws', async () => {
-    try {
-      setupWagmiClient()
-      await sendTransaction({
+    setupWagmiClient()
+    await expect(
+      sendTransaction({
         request: {},
-      })
-    } catch (error) {
-      expect(error).toMatchInlineSnapshot(
-        `[ConnectorNotFoundError: Connector not found]`,
-      )
-    }
+      }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
   })
 
   it('works', async () => {

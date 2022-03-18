@@ -1,5 +1,9 @@
 const config = {
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/test/'],
+  globals: {
+    Uint8Array: Uint8Array,
+    ArrayBuffer: ArrayBuffer,
+  },
   snapshotFormat: {
     printBasicPrototype: false,
   },
@@ -24,16 +28,12 @@ module.exports = {
       ...config,
       displayName: 'core',
       setupFilesAfterEnv: ['<rootDir>/packages/core/test/setup.ts'],
-      testEnvironment: 'node',
+      testEnvironment: 'jsdom',
       testRegex: 'packages/core/.*\\.test\\.ts$',
     },
     {
       ...config,
       displayName: 'react',
-      globals: {
-        Uint8Array: Uint8Array,
-        ArrayBuffer: ArrayBuffer,
-      },
       setupFilesAfterEnv: ['<rootDir>/packages/react/test/setup.ts'],
       testEnvironment: 'jsdom',
       testRegex: 'packages/react/.*\\.test\\.ts(x)?$',

@@ -14,4 +14,10 @@ describe('disconnect', () => {
     await disconnect()
     expect(client.data?.account).toMatchInlineSnapshot(`undefined`)
   })
+
+  it('not connected', async () => {
+    await expect(disconnect).rejects.toMatchInlineSnapshot(
+      `[ConnectorNotFoundError: Connector not found]`,
+    )
+  })
 })

@@ -32,13 +32,9 @@ describe('MockProvider', () => {
         },
         signer,
       })
-      try {
-        await provider.enable()
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(
-          `[UserRejectedRequestError: User rejected request]`,
-        )
-      }
+      await expect(
+        provider.enable(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
     })
   })
 

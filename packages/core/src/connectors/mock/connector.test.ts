@@ -53,13 +53,9 @@ describe('MockConnector', () => {
           signer,
         },
       })
-      try {
-        await connector.connect()
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(
-          `[UserRejectedRequestError: User rejected request]`,
-        )
-      }
+      await expect(
+        connector.connect(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
     })
   })
 

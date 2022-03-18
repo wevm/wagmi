@@ -13,13 +13,9 @@ const messages = {
 describe('signMessage', () => {
   it('not connected', async () => {
     setupWagmiClient()
-    try {
-      await signMessage({ message: messages.string })
-    } catch (err) {
-      expect(err).toMatchInlineSnapshot(
-        `[ConnectorNotFoundError: Connector not found]`,
-      )
-    }
+    await expect(
+      signMessage({ message: messages.string }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
   })
 
   describe('connected', () => {

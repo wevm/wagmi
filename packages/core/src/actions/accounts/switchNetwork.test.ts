@@ -55,13 +55,11 @@ describe('switchNetwork', () => {
         }),
       ],
     })
-    try {
-      await connect(client.connectors[0])
-      await switchNetwork({ chainId: 69 })
-    } catch (error) {
-      expect(error).toMatchInlineSnapshot(
-        `[SwitchChainNotSupportedError: Switch chain not supported by connector]`,
-      )
-    }
+    await connect(client.connectors[0])
+    await expect(
+      switchNetwork({ chainId: 69 }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Switch chain not supported by connector"`,
+    )
   })
 })

@@ -8,15 +8,15 @@ export type ConnectResult = {
 }
 
 export async function connect(connector: Connector): Promise<ConnectResult> {
-  const activeConnector = client?.connector
-  if (connector?.id === activeConnector?.id)
+  const activeConnector = client.connector
+  if (connector.id === activeConnector?.id)
     throw new ConnectorAlreadyConnectedError()
 
   const data = await connector.connect()
 
   client.setLastUsedConnector(connector.id)
   client.setState((x) => ({ ...x, connector, data }))
-  client.storage?.setItem('connected', true)
+  client.storage.setItem('connected', true)
 
   return { data, connector }
 }

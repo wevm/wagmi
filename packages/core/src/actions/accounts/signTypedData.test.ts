@@ -42,13 +42,9 @@ const value = {
 describe('signTypedData', () => {
   it('not connected', async () => {
     setupWagmiClient()
-    try {
-      await signTypedData({ domain, types, value })
-    } catch (err) {
-      expect(err).toMatchInlineSnapshot(
-        `[ConnectorNotFoundError: Connector not found]`,
-      )
-    }
+    await expect(
+      signTypedData({ domain, types, value }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
   })
 
   describe('connected', () => {
