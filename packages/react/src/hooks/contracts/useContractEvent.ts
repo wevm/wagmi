@@ -2,9 +2,9 @@ import * as React from 'react'
 import { ethers } from 'ethers'
 
 import { useProvider, useWebSocketProvider } from '../providers'
-import { Config as UseContractConfig, useContract } from './useContract'
+import { UseContractConfig, useContract } from './useContract'
 
-type Config = {
+export type UseContractEventConfig = {
   /** Receive only a single event */
   once?: boolean
 }
@@ -18,7 +18,7 @@ export const useContractEvent = <
   eventName: Parameters<Contract['on']>[0],
   /** Callback function when event is called */
   listener: Parameters<Contract['on']>[1],
-  { once }: Config = {},
+  { once }: UseContractEventConfig = {},
 ) => {
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()

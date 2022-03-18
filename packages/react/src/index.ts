@@ -15,6 +15,7 @@ export {
   useBlockNumber,
   useConnect,
   useContract,
+  useContractEvent,
   useContractRead,
   useContractWrite,
   useEnsAddress,

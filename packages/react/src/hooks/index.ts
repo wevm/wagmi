@@ -8,7 +8,7 @@ export {
 } from './accounts'
 export {
   useContract,
-  // useContractEvent,
+  useContractEvent,
   useContractRead,
   useContractWrite, // useToken,
 } from './contracts'
