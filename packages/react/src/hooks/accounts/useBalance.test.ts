@@ -101,7 +101,7 @@ describe('useBalance', () => {
     })
   })
 
-  it('skip', async () => {
+  it('enabled', async () => {
     const { result } = renderHook(() =>
       useBalance({
         enabled: false,

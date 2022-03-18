@@ -48,7 +48,7 @@ export abstract class Connector<
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
-  abstract getProvider(create?: boolean): Provider
+  abstract getProvider(create?: boolean): Promise<Provider>
   abstract getSigner(): Promise<Signer>
   abstract isAuthorized(): Promise<boolean>
   switchChain?(chainId: number): Promise<Chain>

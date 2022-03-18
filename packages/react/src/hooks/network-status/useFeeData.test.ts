@@ -41,7 +41,7 @@ describe.skip('useFeeData', () => {
     })
   })
 
-  it('skip', async () => {
+  it('enabled', async () => {
     const { result } = renderHook(() => useFeeData({ skip: true }))
     expect(result.current[0]).toMatchInlineSnapshot(`
       {

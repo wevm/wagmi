@@ -61,7 +61,7 @@ describe('useBlockNumber', () => {
     })
   })
 
-  it('skip', async () => {
+  it('enabled', async () => {
     const { result } = renderHook(() => useBlockNumber({ enabled: false }))
     expect(result.current).toMatchInlineSnapshot(`
       {

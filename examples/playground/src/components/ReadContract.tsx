@@ -67,7 +67,7 @@ const Love = () => {
             : 'fetching...'
           : 'fetch'}
       </button>
-      {isSuccess && <div>{data.toString()}</div>}
+      {isSuccess && <div>{data?.toString()}</div>}
     </div>
   )
 }

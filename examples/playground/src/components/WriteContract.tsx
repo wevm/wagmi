@@ -31,7 +31,7 @@ export const WriteContract = () => {
           Mint
         </button>
       </div>
-      {isError && <div>{error.message}</div>}
+      {isError && <div>{error?.message}</div>}
       {isSuccess && <div>Transaction hash: {data?.hash}</div>}
     </div>
   )

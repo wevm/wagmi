@@ -24,7 +24,7 @@ export const mutationKey = ([
 ]: [WriteContractArgs, string, Partial<WriteContractConfig>]) =>
   [
     {
-      entity: 'write-contract',
+      entity: 'writeContract',
       args,
       contractConfig,
       functionName,

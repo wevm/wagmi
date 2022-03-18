@@ -76,35 +76,6 @@ describe('useSigner', () => {
     })
   })
 
-  it('skip', async () => {
-    const { result } = renderHook(() => useSigner({ enabled: false }))
-    expect(result.current).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "dataUpdatedAt": 0,
-        "error": null,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
-        "isError": false,
-        "isFetched": false,
-        "isFetchedAfterMount": false,
-        "isFetching": true,
-        "isIdle": false,
-        "isLoading": true,
-        "isLoadingError": false,
-        "isPlaceholderData": false,
-        "isPreviousData": false,
-        "isRefetchError": false,
-        "isRefetching": false,
-        "isStale": true,
-        "isSuccess": false,
-        "refetch": [Function],
-        "remove": [Function],
-        "status": "loading",
-      }
-    `)
-  })
-
   describe('getSigner', () => {
     it('connected', async () => {
       const { result } = renderHook(() => useSignerWithConnect())

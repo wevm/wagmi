@@ -1,6 +1,6 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
-import WalletConnectProvider from '@walletconnect/ethereum-provider'
-import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
+import type WalletConnectProvider from '@walletconnect/ethereum-provider'
+import type { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
@@ -30,7 +30,7 @@ export class WalletConnectConnector extends Connector<
 
   async connect() {
     try {
-      const provider = this.getProvider(true)
+      const provider = await this.getProvider(true)
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -59,7 +59,7 @@ export class WalletConnectConnector extends Connector<
   }
 
   async disconnect() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     await provider.disconnect()
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
@@ -71,21 +71,25 @@ export class WalletConnectConnector extends Connector<
   }
 
   async getAccount() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const accounts = provider.accounts
     // return checksum address
     return getAddress(accounts[0])
   }
 
   async getChainId() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const chainId = normalizeChainId(provider.chainId)
     return chainId
   }
 
-  getProvider(create?: boolean) {
-    if (!this.#provider || create)
+  async getProvider(create?: boolean) {
+    if (!this.#provider || create) {
+      const WalletConnectProvider = (
+        await import('@walletconnect/ethereum-provider')
+      ).default
       this.#provider = new WalletConnectProvider(this.options)
+    }
     return this.#provider
   }
 
@@ -105,7 +109,7 @@ export class WalletConnectConnector extends Connector<
   }
 
   async #switchChain(chainId: number) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const id = hexValue(chainId)
 
     try {

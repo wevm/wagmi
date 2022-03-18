@@ -22,7 +22,7 @@ export const queryKey = ({
 const queryFn = ({
   queryKey: [{ addressOrName }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  if (!addressOrName) throw new Error('QueryKey missing addressOrName')
+  if (!addressOrName) throw new Error('addressOrName is required')
   return fetchEnsAvatar({ addressOrName })
 }
 

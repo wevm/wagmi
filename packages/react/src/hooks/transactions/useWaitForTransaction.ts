@@ -1,114 +1,92 @@
-import * as React from 'react'
 import {
-  TransactionReceipt,
-  TransactionResponse,
-} from '@ethersproject/providers'
+  WaitForTransactionArgs,
+  WaitForTransactionResult,
+  waitForTransaction,
+} from '@wagmi/core'
+import { useQuery } from 'react-query'
 
-import { useProvider } from '../providers'
-import { useCancel } from '../utils'
+import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId, useGetterWithConfig } from '../utils'
 
-export type Config = {
-  /**
-   * Number of blocks to wait for after transaction is mined
-   * @default 1
-   */
-  confirmations?: number
-  /** Transaction hash to monitor */
-  hash?: string
-  /** Disables fetching */
-  skip?: boolean
-  /*
-   * Maximum amount of time to wait before timing out in milliseconds
-   * @default 0
-   */
-  timeout?: number
-  /** Function resolving to transaction receipt */
-  wait?: TransactionResponse['wait']
-}
+export type UseWaitForTransactionArgs = Partial<WaitForTransactionArgs>
 
-type State = {
-  receipt?: TransactionReceipt
-  error?: Error
-  loading?: boolean
-}
+export type UseWaitForTransactionConfig = QueryConfig<
+  WaitForTransactionResult,
+  Error
+>
 
-const initialState: State = {
-  loading: false,
-}
-
-export const useWaitForTransaction = ({
+export const queryKey = ({
   confirmations,
+  chainId,
   hash,
-  skip,
   timeout,
-  wait: wait_,
-}: Config = {}) => {
-  const provider = useProvider()
-  const [state, setState] = React.useState<State>(initialState)
-
-  const cancelQuery = useCancel()
-  const wait = React.useCallback(
-    async (config?: {
-      confirmations?: Config['confirmations']
-      hash?: Config['hash']
-      timeout?: Config['timeout']
-      wait?: Config['wait']
-    }) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const config_ = config ?? { confirmations, hash, timeout, wait: wait_ }
-        if (!config_.hash && !config_.wait)
-          throw new Error('hash or wait is required')
-
-        let promise: Promise<TransactionReceipt>
-        // eslint-disable-next-line testing-library/await-async-utils
-        if (config_.wait) promise = config_.wait(config_.confirmations)
-        else if (config_.hash)
-          promise = provider.waitForTransaction(
-            config_.hash,
-            config_.confirmations,
-            config_.timeout,
-          )
-        else throw new Error('hash or wait is required')
-
-        setState((x) => ({ ...x, loading: true }))
-        const receipt = await promise
-        if (!didCancel) {
-          setState((x) => ({ ...x, loading: false, receipt }))
-        }
-        return { data: receipt, error: undefined }
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return { data: undefined, error }
-      }
+  wait,
+}: Partial<WaitForTransactionArgs> & {
+  chainId?: number
+}) =>
+  [
+    {
+      entity: 'waitForTransaction',
+      confirmations,
+      chainId,
+      hash,
+      timeout,
+      wait,
     },
-    [cancelQuery, confirmations, hash, provider, timeout, wait_],
+  ] as const
+
+const queryFn = ({
+  queryKey: [{ confirmations, hash, timeout, wait }],
+}: QueryFunctionArgs<typeof queryKey>) => {
+  if (!hash || !wait) throw new Error('hash or wait is required')
+  return waitForTransaction({ confirmations, hash, timeout, wait })
+}
+
+export function useWaitForTransaction({
+  confirmations: confirmations_,
+  hash: hash_,
+  timeout: timeout_,
+  wait: wait_,
+  cacheTime,
+  enabled = true,
+  keepPreviousData,
+  select,
+  staleTime,
+  suspense,
+  onError,
+  onSettled,
+  onSuccess,
+}: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
+  const chainId = useChainId()
+  const {
+    config: { confirmations, hash, timeout, wait },
+    forceEnabled,
+    getter,
+  } = useGetterWithConfig<WaitForTransactionArgs>({
+    confirmations: confirmations_,
+    hash: hash_,
+    timeout: timeout_,
+    wait: wait_,
+  })
+
+  const waitForTransactionQuery = useQuery(
+    queryKey({ confirmations, chainId, hash, timeout, wait }),
+    queryFn,
+    {
+      cacheTime,
+      enabled: forceEnabled || Boolean(enabled && (hash || wait)),
+      keepPreviousData,
+      select,
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
   )
 
-  // Fetch balance when deps or chain changes
-  /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => {
-    if (skip || (!hash && !wait_)) return
-    /* eslint-disable testing-library/await-async-utils */
-    wait({ confirmations, hash, timeout, wait: wait_ })
-    /* eslint-enable testing-library/await-async-utils */
-    return cancelQuery
-  }, [cancelQuery, hash, skip, wait_])
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  return [
-    {
-      data: state.receipt,
-      error: state.error,
-      loading: state.loading,
-    },
-    wait,
-  ] as const
+  return {
+    ...waitForTransactionQuery,
+    getToken: getter(waitForTransactionQuery.refetch),
+  }
 }

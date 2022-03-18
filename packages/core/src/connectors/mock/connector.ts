@@ -21,7 +21,7 @@ export class MockConnector extends Connector<
   }
 
   async connect() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     provider.on('accountsChanged', this.onAccountsChanged)
     provider.on('chainChanged', this.onChainChanged)
     provider.on('disconnect', this.onDisconnect)
@@ -39,7 +39,7 @@ export class MockConnector extends Connector<
   }
 
   async disconnect() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     await provider.disconnect()
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
@@ -48,7 +48,7 @@ export class MockConnector extends Connector<
   }
 
   async getAccount() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const accounts = await provider.getAccounts()
     const account = accounts[0]
     if (!account) throw new Error('Failed to get account')
@@ -57,25 +57,25 @@ export class MockConnector extends Connector<
   }
 
   async getChainId() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const chainId = normalizeChainId(provider.network.chainId)
     return chainId
   }
 
-  getProvider() {
+  async getProvider() {
     if (!this.#provider) this.#provider = new MockProvider(this.options)
     return this.#provider
   }
 
   async getSigner() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const signer = provider.getSigner()
     return signer
   }
 
   async isAuthorized() {
     try {
-      const provider = this.getProvider()
+      const provider = await this.getProvider()
       const account = await provider.getAccounts()
       return !!account
     } catch {
@@ -84,7 +84,7 @@ export class MockConnector extends Connector<
   }
 
   async #switchChain(chainId: number) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     await provider.switchChain(chainId)
     const chains = [...this.chains, ...allChains]
     return (
@@ -102,7 +102,7 @@ export class MockConnector extends Connector<
     image?: string
     symbol: string
   }) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     return await provider.watchAsset(asset)
   }
 
