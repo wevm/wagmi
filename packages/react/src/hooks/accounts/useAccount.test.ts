@@ -137,7 +137,7 @@ describe('useAccount', () => {
                     ),
                   }),
                 ],
-                provider: getProvider(),
+                provider: getProvider,
                 queryClient,
               }),
             },
@@ -292,8 +292,8 @@ describe('useAccount', () => {
       }
     `)
 
-    actHook(() => {
-      result.current.account.disconnect()
+    await actHook(async () => {
+      await result.current.account.disconnect()
     })
 
     const { dataUpdatedAt: dataUpdatedAt2, ...data2 } = result.current.account

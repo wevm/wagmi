@@ -40,7 +40,6 @@ export class InjectedConnector extends Connector<
     chains?: Chain[]
     options?: InjectedConnectorOptions
   }) {
-    // TODO(note): Should shimDisconnect be default truthy??
     super({ ...config, options: { shimDisconnect: true, ...config?.options } })
 
     let name = 'Injected'

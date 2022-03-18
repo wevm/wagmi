@@ -38,7 +38,7 @@ export function useFeeData({
   onError,
   onSettled,
   onSuccess,
-}: UseFeeDataArgs & UseFeedDataConfig) {
+}: UseFeeDataArgs & UseFeedDataConfig = {}) {
   const chainId = useChainId()
   const {
     config: { formatUnits },
@@ -69,5 +69,5 @@ export function useFeeData({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockNumber])
 
-  return { ...feeDataQuery, read: getter(feeDataQuery.refetch) }
+  return { ...feeDataQuery, getFeeData: getter(feeDataQuery.refetch) }
 }

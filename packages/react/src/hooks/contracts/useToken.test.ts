@@ -120,7 +120,7 @@ describe('useToken', () => {
     })
   })
 
-  it('skip', async () => {
+  it('enabled', async () => {
     const { result } = renderHook(() => useToken({ enabled: false }))
     expect(result.current).toMatchInlineSnapshot(`
       {

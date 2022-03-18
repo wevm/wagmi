@@ -7,6 +7,7 @@ import * as React from 'react'
 export function useGetterWithConfig<T>(config_: Partial<T>) {
   const isMounted = React.useRef(false)
   const [config, setConfig] = React.useState<Partial<T>>(config_)
+
   React.useEffect(() => {
     if (isMounted.current) {
       setConfig(config_)
@@ -20,11 +21,8 @@ export function useGetterWithConfig<T>(config_: Partial<T>) {
   const getter = React.useCallback(
     (refetch: () => void) => (config: T) => {
       setConfig(config)
-      if (forceEnabled) {
-        refetch()
-      } else {
-        setForceEnabled(true)
-      }
+      if (forceEnabled) refetch()
+      else setForceEnabled(true)
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [forceEnabled],

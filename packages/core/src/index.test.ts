@@ -22,6 +22,7 @@ it('should expose correct exports', () => {
       "readContract",
       "sendTransaction",
       "signMessage",
+      "signTypedData",
       "switchNetwork",
       "waitForTransaction",
       "watchAccount",

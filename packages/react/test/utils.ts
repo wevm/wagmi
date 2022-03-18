@@ -13,7 +13,8 @@ class EthersProviderWrapper extends providers.JsonRpcProvider {
   }
 }
 
-export function getProvider() {
+// TODO: Fix typing
+export const getProvider: any = () => {
   const url = chain.hardhat.rpcUrls[0]
   const network = {
     chainId: chain.hardhat.id,

@@ -204,7 +204,7 @@ describe('useNetwork', () => {
     `)
 
     await actHook(async () => {
-      result.current.network.switchNetwork(4)
+      result.current.network.switchNetwork?.(4)
     })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
