@@ -9,15 +9,29 @@ import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
 import { useEnsAvatar, useEnsName } from '../ens'
+import { QueryConfig } from '../../types'
 
-export type UseAccountConfig = {
+export type UseAccountArgs = {
   /** Fetches ENS for connected account */
   ens?: boolean | { avatar?: boolean; name?: boolean }
 }
 
+export type UseAccountConfig = QueryConfig<GetAccountResult, Error>
+
 export const queryKey = () => [{ entity: 'account' }] as const
 
-export function useAccount({ ens }: UseAccountConfig = {}) {
+export function useAccount({
+  ens,
+  cacheTime,
+  enabled = true,
+  keepPreviousData,
+  select,
+  staleTime,
+  suspense,
+  onError,
+  onSettled,
+  onSuccess,
+}: UseAccountArgs & UseAccountConfig = {}) {
   const client = useClient()
   const queryClient = useQueryClient()
 
@@ -28,13 +42,29 @@ export function useAccount({ ens }: UseAccountConfig = {}) {
     isLoading,
     status,
     ...accountQueryResult
-  } = useQuery(queryKey(), () => {
-    const { address, connector } = getAccount()
-    const cachedAccount = queryClient.getQueryData<GetAccountResult>(queryKey())
-    return address
-      ? { address, connector }
-      : cachedAccount || { address: undefined, connector: undefined }
-  })
+  } = useQuery(
+    queryKey(),
+    () => {
+      const { address, connector } = getAccount()
+      const cachedAccount = queryClient.getQueryData<GetAccountResult>(
+        queryKey(),
+      )
+      return address
+        ? { address, connector }
+        : cachedAccount || { address: undefined, connector: undefined }
+    },
+    {
+      cacheTime,
+      enabled,
+      keepPreviousData,
+      select,
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
   const address = accountData?.address
 
   const { data: ensAvatarData } = useEnsAvatar({

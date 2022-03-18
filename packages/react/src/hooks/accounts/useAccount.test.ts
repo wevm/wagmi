@@ -9,10 +9,12 @@ import {
   setupWagmiClient,
   wrapper,
 } from '../../../test'
-import { UseAccountConfig, useAccount } from './useAccount'
+import { UseAccountArgs, UseAccountConfig, useAccount } from './useAccount'
 import { useConnect } from './useConnect'
 
-const useAccountWithConnect = (config: { account?: UseAccountConfig } = {}) => {
+const useAccountWithConnect = (
+  config: { account?: UseAccountArgs & UseAccountConfig } = {},
+) => {
   const account = useAccount(config.account)
   const connect = useConnect()
   return { account, connect } as const

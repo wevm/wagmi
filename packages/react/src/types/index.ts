@@ -16,10 +16,25 @@ export type QueryConfig<Data, Error> = {
   /** Set this to `false` to disable this query from automatically running */
   enabled?: UseQueryOptions<Data, Error>['enabled']
   /**
+   * Set this to `true` to keep the previous `data` when fetching based on a new query key.
+   * Defaults to `false`.
+   */
+  keepPreviousData?: UseQueryOptions<Data, Error>['keepPreviousData']
+  /**
+   * This option can be used to transform or select a part of the data returned by the query function.
+   */
+  select?: UseQueryOptions<Data, Error>['select']
+  /**
    * The time in milliseconds after data is considered stale.
    * If set to Infinity, the data will never be considered stale.
    */
   staleTime?: UseQueryOptions<Data, Error>['staleTime']
+  /**
+   * If set to `true`, the query will suspend when `status === 'loading'`
+   * and throw errors when `status === 'error'`.
+   * Defaults to `false`.
+   */
+  suspense?: UseQueryOptions<Data, Error>['suspense']
   /** Function fires if query encounters error */
   onError?: UseQueryOptions<Data, Error>['onError']
   /** Function fires when query is either successfully fetched or encounters error */
