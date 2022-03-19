@@ -33,7 +33,24 @@ describe('useSendTransaction', () => {
     })
 
     const res = result.current.sendTransaction
-    expect(res).toMatchInlineSnapshot(`[Function]`)
+    expect(res).toMatchInlineSnapshot(`
+      {
+        "context": undefined,
+        "data": undefined,
+        "error": null,
+        "failureCount": 0,
+        "isError": false,
+        "isIdle": true,
+        "isLoading": false,
+        "isPaused": false,
+        "isSuccess": false,
+        "reset": [Function],
+        "sendTransaction": [Function],
+        "sendTransactionAsync": [Function],
+        "status": "idle",
+        "variables": undefined,
+      }
+    `)
   })
 
   it('sends transaction', async () => {
@@ -45,9 +62,13 @@ describe('useSendTransaction', () => {
         },
       }),
     )
+
     await actHook(async () => {
       const mockConnector = result.current.connect.connectors[0]
       result.current.connect.connect(mockConnector)
+    })
+
+    await actHook(async () => {
       result.current.sendTransaction.sendTransaction()
     })
 
@@ -90,6 +111,9 @@ describe('useSendTransaction', () => {
     await actHook(async () => {
       const mockConnector = result.current.connect.connectors[0]
       result.current.connect.connect(mockConnector)
+    })
+
+    await actHook(async () => {
       result.current.sendTransaction.sendTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
@@ -142,6 +166,9 @@ describe('useSendTransaction', () => {
     await actHook(async () => {
       const mockConnector = result.current.connect.connectors[0]
       result.current.connect.connect(mockConnector)
+    })
+
+    await actHook(async () => {
       result.current.sendTransaction.sendTransaction()
     })
 

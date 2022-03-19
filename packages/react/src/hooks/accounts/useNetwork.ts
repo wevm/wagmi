@@ -38,7 +38,7 @@ export function useNetwork({
     variables: chainId,
     ...networkMutation
   } = useMutation(
-    'switchNetwork',
+    mutationKey,
     (chainId) => {
       if (!connector?.switchChain) throw new SwitchChainError()
       return connector.switchChain(chainId)

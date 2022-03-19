@@ -30,7 +30,7 @@ export type ProviderProps = {
 const defaultQueryClientConfig: QueryClientConfig = {
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60 * 60 * 24,
+      cacheTime: 60 * 60 * 24 * 2, // two days
       notifyOnChangeProps: 'tracked',
       refetchOnWindowFocus: false,
       retry: 0,

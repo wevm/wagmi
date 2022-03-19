@@ -32,12 +32,6 @@ export const mutationKey = ([
     },
   ] as const
 
-const mutationFn =
-  ([contractConfig, functionName]: [WriteContractArgs, string]) =>
-  (args: UseContractWriteArgs): Promise<WriteContractResult> => {
-    return writeContract(contractConfig, functionName, args)
-  }
-
 export function useContractWrite(
   contractConfig: WriteContractArgs,
   functionName: string,
@@ -52,7 +46,7 @@ export function useContractWrite(
 ) {
   const { mutate, mutateAsync, ...writeContractMutation } = useMutation(
     mutationKey([contractConfig, functionName, { args, overrides }]),
-    mutationFn([contractConfig, functionName]),
+    (args) => writeContract(contractConfig, functionName, { args, overrides }),
     {
       onError,
       onMutate,
@@ -75,7 +69,7 @@ export function useContractWrite(
 
   return {
     ...writeContractMutation,
-    writeAsync,
     write,
+    writeAsync,
   }
 }

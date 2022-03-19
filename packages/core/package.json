@@ -55,7 +55,6 @@
     }
   },
   "dependencies": {
-    "@ethersproject/abstract-signer": "^5.6.0",
     "@ethersproject/providers": "^5.6.0",
     "eventemitter3": "^4.0.7",
     "zustand": "^3.7.0"

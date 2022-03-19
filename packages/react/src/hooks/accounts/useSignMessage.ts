@@ -52,7 +52,7 @@ export function useSignMessage({
 
   return {
     ...signMessageMutation,
-    signMessageAsync,
     signMessage,
+    signMessageAsync,
   }
 }

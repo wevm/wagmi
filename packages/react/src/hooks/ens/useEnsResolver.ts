@@ -32,7 +32,7 @@ export function useEnsResolver({
   enabled = true,
   keepPreviousData,
   select,
-  staleTime = Infinity,
+  staleTime = 60 * 60 * 24 * 2, // two days
   suspense,
   onError,
   onSettled,

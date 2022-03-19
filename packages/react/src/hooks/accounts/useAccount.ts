@@ -93,7 +93,7 @@ export function useAccount({
   else status_ = status
 
   const ensData =
-    ensNameData || ensAvatarData
+    ensNameData !== undefined || ensAvatarData !== undefined
       ? { ens: { avatar: ensAvatarData, name: ensNameData } }
       : {}
 

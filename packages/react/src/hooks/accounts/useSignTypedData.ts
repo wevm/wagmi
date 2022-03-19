@@ -59,7 +59,7 @@ export function useSignTypedData({
 
   return {
     ...signTypedDataMutation,
-    signTypedDataAsync,
     signTypedData,
+    signTypedDataAsync,
   }
 }

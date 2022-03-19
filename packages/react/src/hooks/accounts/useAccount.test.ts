@@ -133,7 +133,7 @@ describe('useAccount', () => {
                 connectors: [
                   getMockConnector({
                     signer: new VoidSigner(
-                      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                      '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
                     ),
                   }),
                 ],
@@ -151,32 +151,36 @@ describe('useAccount', () => {
 
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
-            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
             "connector": "<MockConnector>",
           }
         `)
         await waitForNextUpdate()
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
-            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
-            "connector": "<MockConnector>",
-          }
-        `)
-        await waitForNextUpdate()
-        expect(result.current.account.data).toMatchInlineSnapshot(`
-          {
-            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
             "connector": "<MockConnector>",
             "ens": {
               "avatar": null,
-              "name": "awkweb.eth",
+              "name": undefined,
+            },
+          }
+        `)
+        await waitForNextUpdate()
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            "connector": "<MockConnector>",
+            "ens": {
+              "avatar": null,
+              "name": "moxey.eth",
             },
           }
         `)
       })
 
       it('name', async () => {
-        const { result } = renderHook(
+        const { result, waitForNextUpdate } = renderHook(
           () => useAccountWithConnect({ account: { ens: { name: true } } }),
           {
             wrapper,
@@ -185,7 +189,7 @@ describe('useAccount', () => {
                 connectors: [
                   getMockConnector({
                     signer: new VoidSigner(
-                      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                      '0xb0623c91c65621df716ab8afe5f66656b21a9108',
                     ),
                   }),
                 ],
@@ -203,18 +207,25 @@ describe('useAccount', () => {
 
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
-            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "address": "0xB0623C91c65621df716aB8aFE5f66656B21A9108",
+            "connector": "<MockConnector>",
+          }
+        `)
+        await waitForNextUpdate()
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xB0623C91c65621df716aB8aFE5f66656B21A9108",
             "connector": "<MockConnector>",
             "ens": {
-              "avatar": null,
-              "name": "awkweb.eth",
+              "avatar": undefined,
+              "name": "johnpalmer.eth",
             },
           }
         `)
       })
 
       it('avatar', async () => {
-        const { result } = renderHook(
+        const { result, waitForNextUpdate } = renderHook(
           () => useAccountWithConnect({ account: { ens: { avatar: true } } }),
           {
             wrapper,
@@ -243,9 +254,16 @@ describe('useAccount', () => {
           {
             "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
             "connector": "<MockConnector>",
+          }
+        `)
+        await waitForNextUpdate()
+        expect(result.current.account.data).toMatchInlineSnapshot(`
+          {
+            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "connector": "<MockConnector>",
             "ens": {
               "avatar": null,
-              "name": "awkweb.eth",
+              "name": undefined,
             },
           }
         `)
@@ -268,6 +286,10 @@ describe('useAccount', () => {
         "data": {
           "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "connector": "<MockConnector>",
+          "ens": {
+            "avatar": null,
+            "name": null,
+          },
         },
         "disconnect": [Function],
         "error": null,

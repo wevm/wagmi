@@ -3,7 +3,6 @@ import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
 
 import { client } from '../../client'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
-
 import { GetContractArgs, getContract } from './getContract'
 
 export type WriteContractArgs = GetContractArgs

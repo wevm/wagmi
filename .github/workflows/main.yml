@@ -79,3 +79,5 @@ jobs:
         run: pnpm i
       - name: Test
         run: pnpm test:ci
+        env:
+          ALCHEMY_ID: ${{ secrets.ALCHEMY_ID }}

@@ -16,9 +16,10 @@ export type UseSendTransactionConfig = MutationConfig<
   UseSendTransactionArgs
 >
 
-export const mutationKey = 'sendTransaction'
+export const mutationKey = ({ request }: UseSendTransactionArgs) =>
+  [{ entity: 'writeContract', request }] as const
 
-const mutationFn = async (args: UseSendTransactionArgs) => {
+const mutationFn = (args: UseSendTransactionArgs) => {
   const { request } = args
   if (!request) throw new Error('request is required')
   return sendTransaction({ request })
@@ -32,7 +33,7 @@ export function useSendTransaction({
   onSuccess,
 }: UseSendTransactionArgs & UseSendTransactionConfig = {}) {
   const { mutate, mutateAsync, ...transactionMutation } = useMutation(
-    mutationKey,
+    mutationKey({ request }),
     mutationFn,
     {
       onError,
@@ -54,7 +55,7 @@ export function useSendTransaction({
 
   return {
     ...transactionMutation,
-    sendTransactionAsync,
     sendTransaction,
+    sendTransactionAsync,
   }
 }
