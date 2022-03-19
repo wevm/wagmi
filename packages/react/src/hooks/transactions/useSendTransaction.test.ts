@@ -1,15 +1,25 @@
-import { connect, disconnect } from '@wagmi/core'
-import { client } from '@wagmi/core/src/client'
-
 import { BigNumber } from 'ethers'
 
 import { actHook, renderHook } from '../../../test'
-import { useSendTransaction } from './useSendTransaction'
+import { useConnect } from '../accounts'
+import {
+  UseSendTransactionArgs,
+  UseSendTransactionConfig,
+  useSendTransaction,
+} from './useSendTransaction'
+
+const useSendTransactionWithConnect = (
+  config: UseSendTransactionArgs & UseSendTransactionConfig = {},
+) => {
+  const connect = useConnect()
+  const sendTransaction = useSendTransaction(config)
+  return { connect, sendTransaction } as const
+}
 
 describe('useSendTransaction', () => {
   it('on mount', async () => {
     const { result } = renderHook(() =>
-      useSendTransaction({
+      useSendTransactionWithConnect({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -18,9 +28,8 @@ describe('useSendTransaction', () => {
     )
 
     await actHook(async () => {
-      await disconnect()
-      const mockConnector = client.connectors[0]
-      await connect(mockConnector)
+      const mockConnector = result.current.connect.connectors[0]
+      result.current.connect.connect(mockConnector)
     })
 
     const res = result.current.sendTransaction
@@ -29,24 +38,22 @@ describe('useSendTransaction', () => {
 
   it('sends transaction', async () => {
     const { result, waitFor } = renderHook(() =>
-      useSendTransaction({
+      useSendTransactionWithConnect({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: BigNumber.from('1000000000000000000'), // 1 ETH
         },
       }),
     )
-
     await actHook(async () => {
-      await disconnect()
-      const mockConnector = client.connectors[0]
-      await connect(mockConnector)
-      result.current.sendTransaction()
+      const mockConnector = result.current.connect.connectors[0]
+      result.current.connect.connect(mockConnector)
+      result.current.sendTransaction.sendTransaction()
     })
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => result.current.sendTransaction.isSuccess)
 
-    const { data, ...res } = result.current
+    const { data, ...res } = result.current.sendTransaction
     expect(data).toBeDefined()
     expect(res).toMatchInlineSnapshot(`
       {
@@ -76,13 +83,14 @@ describe('useSendTransaction', () => {
   })
 
   it('sends transaction (deferred args)', async () => {
-    const { result, waitFor } = renderHook(() => useSendTransaction())
+    const { result, waitFor } = renderHook(() =>
+      useSendTransactionWithConnect(),
+    )
 
     await actHook(async () => {
-      await disconnect()
-      const mockConnector = client.connectors[0]
-      await connect(mockConnector)
-      result.current.sendTransaction({
+      const mockConnector = result.current.connect.connectors[0]
+      result.current.connect.connect(mockConnector)
+      result.current.sendTransaction.sendTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -90,9 +98,9 @@ describe('useSendTransaction', () => {
       })
     })
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => result.current.sendTransaction.isSuccess)
 
-    const { data, ...res } = result.current
+    const { data, ...res } = result.current.sendTransaction
     expect(data).toBeDefined()
     expect(res).toMatchInlineSnapshot(`
       {
@@ -123,7 +131,7 @@ describe('useSendTransaction', () => {
 
   it('fails on insufficient balance', async () => {
     const { result, waitFor } = renderHook(() =>
-      useSendTransaction({
+      useSendTransactionWithConnect({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
@@ -132,15 +140,14 @@ describe('useSendTransaction', () => {
     )
 
     await actHook(async () => {
-      await disconnect()
-      const mockConnector = client.connectors[0]
-      await connect(mockConnector)
-      result.current.sendTransaction()
+      const mockConnector = result.current.connect.connectors[0]
+      result.current.connect.connect(mockConnector)
+      result.current.sendTransaction.sendTransaction()
     })
 
-    await waitFor(() => result.current.isError)
+    await waitFor(() => result.current.sendTransaction.isError)
 
-    const { error, ...res } = result.current
+    const { error, ...res } = result.current.sendTransaction
     expect(error).toBeDefined()
     expect(res).toMatchInlineSnapshot(`
       {

@@ -1,8 +1,8 @@
 const LIMIT_REPLACE_NODE = '[...]'
 const CIRCULAR_REPLACE_NODE = '[Circular]'
 
-const arr = []
-const replacerStack = []
+const arr: any[] = []
+const replacerStack: any[] = []
 
 type Options = { depthLimit?: number; edgesLimit?: number }
 const defaultOptions: Options = {
@@ -51,7 +51,7 @@ function setReplace(
   parent: any,
 ) {
   const propertyDescriptor = Object.getOwnPropertyDescriptor(parent, k)
-  if (propertyDescriptor.get !== undefined) {
+  if (propertyDescriptor?.get !== undefined) {
     if (propertyDescriptor.configurable) {
       Object.defineProperty(parent, k, { value: replace })
       arr.push([parent, k, val, propertyDescriptor])
@@ -132,6 +132,6 @@ function replaceGetterValues(replacer: Replacer = (_k, v) => v) {
         }
       }
     }
-    return replacer.call(this, key, val)
+    return replacer.apply(key, val)
   }
 }

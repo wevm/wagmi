@@ -68,7 +68,7 @@ export type State = {
 
 export class Client {
   config: Partial<ClientConfig>
-  storage?: WagmiStorage
+  storage: WagmiStorage
   store: Mutate<
     StoreApi<State>,
     [
