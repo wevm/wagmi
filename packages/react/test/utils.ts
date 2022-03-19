@@ -142,11 +142,10 @@ export function getSigners() {
   return signers
 }
 
-// TODO: Fix typing
-export const getMockConnector: any = (
+export function getMockConnector(
   options: MockProviderOptions,
   chains = defaultChains,
-) => {
+) {
   return new MockConnector({
     chains,
     options,

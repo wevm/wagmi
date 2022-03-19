@@ -14,14 +14,6 @@ export function watchEnsResolver(
   callback: WatchEnsResolverCallback,
 ) {
   const handleChange = async () => callback(await fetchEnsResolver(args))
-  const unsubscribe = client.subscribe(
-    ({ connector, provider }) => ({ connector, provider }),
-    handleChange,
-    {
-      equalityFn: (selected, previous) =>
-        selected.connector === previous.connector &&
-        selected.provider === previous.provider,
-    },
-  )
+  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
   return unsubscribe
 }

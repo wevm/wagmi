@@ -49,7 +49,7 @@ export {
 } from './contracts'
 
 export {
-  fetchEnsAddress as fetchEnsAddress,
+  fetchEnsAddress,
   fetchEnsAvatar,
   fetchEnsName,
   fetchEnsResolver,
@@ -87,9 +87,13 @@ export {
 
 export {
   getProvider,
-  type GetProviderResult,
   getWebSocketProvider,
+  watchProvider,
+  watchWebSocketProvider,
+  type GetProviderResult,
   type GetWebSocketProviderResult,
+  type WatchProviderCallback,
+  type WatchWebSocketProviderCallback,
 } from './providers'
 
 export {

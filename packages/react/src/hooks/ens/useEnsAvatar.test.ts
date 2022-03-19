@@ -4,7 +4,7 @@ import { useEnsAvatar } from './useEnsAvatar'
 describe('useEnsAvatar', () => {
   describe('addressOrName', () => {
     it('has avatar', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
           addressOrName: 'nick.eth',
         }),
@@ -34,7 +34,8 @@ describe('useEnsAvatar', () => {
           "status": "idle",
         }
       `)
-      await waitForNextUpdate()
+
+      await waitFor(() => result.current.isLoading)
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -60,8 +61,8 @@ describe('useEnsAvatar', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
 
+      await waitFor(() => result.current.isSuccess)
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
       expect(data).toMatchInlineSnapshot(`
@@ -91,7 +92,7 @@ describe('useEnsAvatar', () => {
     })
 
     it('does not have avatar', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
           addressOrName: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
         }),
@@ -121,7 +122,8 @@ describe('useEnsAvatar', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
+
+      await waitFor(() => result.current.isLoading)
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -147,8 +149,8 @@ describe('useEnsAvatar', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
 
+      await waitFor(() => result.current.isSuccess)
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
       expect(data).toMatchInlineSnapshot(`
@@ -214,7 +216,7 @@ describe('useEnsAvatar', () => {
     })
 
     it('missing addressOrName', () => {
-      const { result } = renderHook(() => useEnsAvatar({}))
+      const { result } = renderHook(() => useEnsAvatar())
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
