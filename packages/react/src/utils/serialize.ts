@@ -4,21 +4,22 @@ const CIRCULAR_REPLACE_NODE = '[Circular]'
 const arr = []
 const replacerStack = []
 
-function defaultOptions() {
-  return {
-    depthLimit: Number.MAX_SAFE_INTEGER,
-    edgesLimit: Number.MAX_SAFE_INTEGER,
-  }
+type Options = { depthLimit?: number; edgesLimit?: number }
+const defaultOptions: Options = {
+  depthLimit: Number.MAX_SAFE_INTEGER,
+  edgesLimit: Number.MAX_SAFE_INTEGER,
 }
 
 // Regular stringify
-export function safeStringify(obj, replacer, spacer, options) {
-  if (typeof options === 'undefined') {
-    options = defaultOptions()
-  }
-
+export function serialize(
+  obj: Record<string, any>,
+  replacer?: Replacer,
+  spacer?: string | number,
+  options: Options = defaultOptions,
+) {
   decirc(obj, '', 0, [], undefined, 0, options)
-  let res
+
+  let res: string
   try {
     if (replacerStack.length === 0) {
       res = JSON.stringify(obj, replacer, spacer)
@@ -39,10 +40,16 @@ export function safeStringify(obj, replacer, spacer, options) {
       }
     }
   }
+
   return res
 }
 
-function setReplace(replace, val, k, parent) {
+function setReplace(
+  replace: string,
+  val: any,
+  k: string | number,
+  parent: any,
+) {
   const propertyDescriptor = Object.getOwnPropertyDescriptor(parent, k)
   if (propertyDescriptor.get !== undefined) {
     if (propertyDescriptor.configurable) {
@@ -57,9 +64,17 @@ function setReplace(replace, val, k, parent) {
   }
 }
 
-function decirc(val, k, edgeIndex, stack, parent, depth, options) {
+function decirc(
+  val: any,
+  k: number | string,
+  edgeIndex: number,
+  stack: any[],
+  parent: any,
+  depth: number,
+  options: Options,
+) {
   depth += 1
-  let i
+  let i: number
   if (typeof val === 'object' && val !== null) {
     for (i = 0; i < stack.length; i++) {
       if (stack[i] === val) {
@@ -101,16 +116,12 @@ function decirc(val, k, edgeIndex, stack, parent, depth, options) {
   }
 }
 
+type Replacer = (key: string, value: any) => string
+
 // wraps replacer function to handle values we couldn't replace
 // and mark them as replaced value
-function replaceGetterValues(replacer) {
-  replacer =
-    typeof replacer !== 'undefined'
-      ? replacer
-      : function (k, v) {
-          return v
-        }
-  return function (key, val) {
+function replaceGetterValues(replacer: Replacer = (_k, v) => v) {
+  return (key: string, val: any) => {
     if (replacerStack.length > 0) {
       for (let i = 0; i < replacerStack.length; i++) {
         const part = replacerStack[i]

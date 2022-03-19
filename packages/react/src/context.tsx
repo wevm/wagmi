@@ -13,8 +13,8 @@ import { ReactQueryDevtools } from 'react-query/devtools'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
-import { safeStringify } from './utils/safeStringify'
-import { deserializeCache } from './utils/deserializeCache'
+import { deserialize, serialize } from './utils'
+import { chainIdQueryKey } from './hooks'
 
 export const Context = React.createContext<WagmiClient | undefined>(undefined)
 
@@ -45,8 +45,8 @@ export function createClient({
   const client = createWagmiClient(config)
   const persistor = createWebStoragePersistor({
     storage: (client.storage as Storage) || window.localStorage,
-    serialize: safeStringify,
-    deserialize: deserializeCache,
+    serialize,
+    deserialize,
   })
   persistQueryClient({
     queryClient,
@@ -62,9 +62,9 @@ export function Provider({
   children,
   client = createClient(),
 }: React.PropsWithChildren<ProviderProps>) {
+  // Attempt to connect on mount
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    // Attempt to connect on mount
     ;(async () => {
       if (!client.config.autoConnect) return
       await client.autoConnect()
@@ -72,9 +72,22 @@ export function Provider({
   }, [])
   /* eslint-enable react-hooks/exhaustive-deps */
 
+  const queryClient = client.queryClient
+  // Pairs with `useChainId` hook so we only subscribe once
+  /* eslint-disable react-hooks/exhaustive-deps */
+  React.useEffect(() => {
+    const unsubscribe = client.subscribe(
+      (state) => state.provider,
+      (provider) =>
+        queryClient.setQueryData(chainIdQueryKey(), provider.network.chainId),
+    )
+    return unsubscribe
+  }, [])
+  /* eslint-enable react-hooks/exhaustive-deps */
+
   return (
     <Context.Provider value={client}>
-      <QueryClientProvider client={client.queryClient}>
+      <QueryClientProvider client={queryClient}>
         {children}
         {/* Automatically removed for production build */}
         <ReactQueryDevtools initialIsOpen={false} />

@@ -8,25 +8,24 @@ export function useGetterWithConfig<T>(config_: Partial<T>) {
   const isMounted = React.useRef(false)
   const [config, setConfig] = React.useState<Partial<T>>(config_)
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    if (isMounted.current) {
-      setConfig(config_)
-    }
+    if (isMounted.current) setConfig(config_)
     isMounted.current = true
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...Object.values(config_)])
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   const [forceEnabled, setForceEnabled] = React.useState(false)
-
+  /* eslint-disable react-hooks/exhaustive-deps */
   const getter = React.useCallback(
     (refetch: () => void) => (config: T) => {
       setConfig(config)
       if (forceEnabled) refetch()
       else setForceEnabled(true)
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [forceEnabled],
   )
+  /* eslint-enable react-hooks/exhaustive-deps */
 
   return {
     config,

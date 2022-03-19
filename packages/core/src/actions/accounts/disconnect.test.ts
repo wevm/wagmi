@@ -16,8 +16,8 @@ describe('disconnect', () => {
   })
 
   it('not connected', async () => {
-    await expect(disconnect).rejects.toMatchInlineSnapshot(
-      `[ConnectorNotFoundError: Connector not found]`,
-    )
+    const client = setupWagmiClient()
+    await disconnect()
+    expect(client.data?.account).toMatchInlineSnapshot(`undefined`)
   })
 })

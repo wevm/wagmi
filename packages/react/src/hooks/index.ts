@@ -22,3 +22,5 @@ export { useBlockNumber, useFeeData } from './network-status'
 export { useProvider, useWebSocketProvider } from './providers'
 
 export { useSendTransaction, useWaitForTransaction } from './transactions'
+
+export { chainIdQueryKey, useChainId, useGetterWithConfig } from './utils'

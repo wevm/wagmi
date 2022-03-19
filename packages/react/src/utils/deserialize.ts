@@ -32,7 +32,7 @@ const findAndReplace = (
   return cacheRef
 }
 
-export function deserializeCache(cachedString: string) {
+export function deserialize(cachedString: string) {
   const cache = JSON.parse(cachedString)
 
   const deserializedCacheWithBigNumbers = findAndReplace(cache, {

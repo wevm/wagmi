@@ -1,1 +1,2 @@
-export { deserializeCache } from './deserializeCache'
+export { deserialize } from './deserialize'
+export { serialize } from './serialize'

@@ -1,12 +1,12 @@
 import { BigNumber } from 'ethers'
 
-import { deserializeCache } from './deserializeCache'
-import { safeStringify } from './safeStringify'
+import { deserialize } from './deserialize'
+import { serialize } from './serialize'
 
-describe('deserializeCache', () => {
+describe('deserialize', () => {
   it('deserializes', () => {
-    const deserializedCache = deserializeCache(
-      safeStringify({
+    const deserializedCache = deserialize(
+      serialize({
         some: 'complex',
         object: {
           that: 'has',

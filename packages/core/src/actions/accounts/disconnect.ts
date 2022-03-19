@@ -1,11 +1,8 @@
 import { client } from '../../client'
-import { ConnectorNotFoundError } from '../../errors'
 
 export async function disconnect(): Promise<void> {
-  const connector = client.connector
-  if (!connector) throw new ConnectorNotFoundError()
+  if (client.connector) await client.connector.disconnect()
 
-  await connector.disconnect()
   client.storage.removeItem('connected')
   client.clearState()
 }
