@@ -1,4 +1,4 @@
-import {
+import type {
   TransactionReceipt,
   TransactionResponse,
 } from '@ethersproject/providers'

@@ -1,4 +1,5 @@
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+import type { ExternalProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import type { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 import { getAddress, hexValue } from 'ethers/lib/utils'
@@ -49,7 +50,7 @@ export class WalletConnectConnector extends Connector<
       return {
         account,
         chain: { id, unsupported },
-        provider: new Web3Provider(<ExternalProvider>provider),
+        provider: new providers.Web3Provider(<ExternalProvider>provider),
       }
     } catch (error) {
       if (/user closed modal/i.test((<ProviderRpcError>error).message))
@@ -96,7 +97,9 @@ export class WalletConnectConnector extends Connector<
   async getSigner() {
     const provider = this.getProvider()
     const account = await this.getAccount()
-    return new Web3Provider(<ExternalProvider>provider).getSigner(account)
+    return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
+      account,
+    )
   }
 
   async isAuthorized() {

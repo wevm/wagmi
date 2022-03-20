@@ -1,7 +1,8 @@
 import { default as EventEmitter } from 'eventemitter3'
 import { Signer } from 'ethers/lib/ethers'
 import { getAddress } from 'ethers/lib/utils'
-import { BaseProvider, Listener } from '@ethersproject/providers'
+import type { Listener } from '@ethersproject/providers'
+import { providers } from 'ethers'
 
 import { UserRejectedRequestError } from '../../errors'
 
@@ -21,7 +22,7 @@ type Events = {
 }
 type Event = keyof Events
 
-export class MockProvider extends BaseProvider {
+export class MockProvider extends providers.BaseProvider {
   events = new EventEmitter<Events>()
 
   #options: MockProviderOptions

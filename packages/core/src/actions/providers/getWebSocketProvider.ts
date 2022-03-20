@@ -1,4 +1,4 @@
-import { WebSocketProvider } from '@ethersproject/providers'
+import type { WebSocketProvider } from '@ethersproject/providers'
 
 import { client } from '../../client'
 

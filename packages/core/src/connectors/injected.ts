@@ -1,4 +1,5 @@
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+import type { ExternalProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { Chain } from '../types'
@@ -110,7 +111,9 @@ export class InjectedConnector extends Connector<
   async getSigner() {
     const provider = this.getProvider()
     const account = await this.getAccount()
-    return new Web3Provider(<ExternalProvider>provider).getSigner(account)
+    return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
+      account,
+    )
   }
 
   async isAuthorized() {

@@ -16,7 +16,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2019"
+    "target": "es2019",
+    "types": ["@ethersproject/abstract-provider", "@ethersproject/providers"]
   },
   "exclude": ["node_modules", "**/dist/**"],
   "include": ["packages/**/*"],

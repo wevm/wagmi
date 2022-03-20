@@ -161,8 +161,8 @@ describe('useAccount', () => {
             "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
             "connector": "<MockConnector>",
             "ens": {
-              "avatar": null,
-              "name": undefined,
+              "avatar": undefined,
+              "name": "moxey.eth",
             },
           }
         `)
@@ -172,7 +172,7 @@ describe('useAccount', () => {
             "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
             "connector": "<MockConnector>",
             "ens": {
-              "avatar": null,
+              "avatar": "https://creature.mypinata.cloud/ipfs/QmZ9R2z6bTbrcfrFZ6U1BPsBUsD9aopea88ege78xrNQtV/2257.jpg",
               "name": "moxey.eth",
             },
           }
@@ -234,7 +234,7 @@ describe('useAccount', () => {
                 connectors: [
                   getMockConnector({
                     signer: new VoidSigner(
-                      '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                      '0x0d59d0f7dcc0fbf0a3305ce0261863aaf7ab685c',
                     ),
                   }),
                 ],
@@ -252,17 +252,17 @@ describe('useAccount', () => {
 
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
-            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "address": "0x0D59d0f7DcC0fBF0A3305cE0261863aAf7Ab685c",
             "connector": "<MockConnector>",
           }
         `)
         await waitForNextUpdate()
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
-            "address": "0xA0Cf798816D4b9b9866b5330EEa46a18382f251e",
+            "address": "0x0D59d0f7DcC0fBF0A3305cE0261863aAf7Ab685c",
             "connector": "<MockConnector>",
             "ens": {
-              "avatar": null,
+              "avatar": "https://ipfs.io/ipfs/QmUShgfoZQSHK3TQyuTfUpsc8UfeNfD8KwPUvDBUdZ4nmR",
               "name": undefined,
             },
           }

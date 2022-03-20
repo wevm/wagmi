@@ -4,7 +4,7 @@ import { useEnsAvatar } from './useEnsAvatar'
 describe('useEnsAvatar', () => {
   describe('addressOrName', () => {
     it('has avatar', async () => {
-      const { result, waitFor } = renderHook(() =>
+      const { result, waitForNextUpdate } = renderHook(() =>
         useEnsAvatar({
           addressOrName: 'nick.eth',
         }),
@@ -35,7 +35,8 @@ describe('useEnsAvatar', () => {
         }
       `)
 
-      await waitFor(() => result.current.isLoading)
+      await waitForNextUpdate()
+      // await waitFor(() => result.current.isLoading)
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -62,7 +63,8 @@ describe('useEnsAvatar', () => {
         }
       `)
 
-      await waitFor(() => result.current.isSuccess)
+      await waitForNextUpdate()
+      // await waitFor(() => result.current.isSuccess)
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
       expect(data).toMatchInlineSnapshot(`
@@ -184,7 +186,7 @@ describe('useEnsAvatar', () => {
     it('is false', () => {
       const { result } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: 'moxey.eth',
+          addressOrName: 'meagher.eth',
           enabled: false,
         }),
       )

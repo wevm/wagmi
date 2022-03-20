@@ -1,4 +1,4 @@
-import { FeeData } from '@ethersproject/providers'
+import type { FeeData } from '@ethersproject/providers'
 import { BigNumberish } from 'ethers/lib/ethers'
 import { formatUnits } from 'ethers/lib/utils'
 

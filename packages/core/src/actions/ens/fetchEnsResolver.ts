@@ -1,4 +1,4 @@
-import { Resolver } from '@ethersproject/providers'
+import type { Resolver } from '@ethersproject/providers'
 
 import { client } from '../../client'
 

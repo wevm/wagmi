@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.6.0",
+    "@ethersproject/providers": "^5.5.1",
     "ethers": "^5.5.1",
     "next": "12.1.0",
     "react": "17.0.2",

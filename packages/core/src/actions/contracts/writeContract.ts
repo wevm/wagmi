@@ -1,4 +1,4 @@
-import { TransactionResponse } from '@ethersproject/providers'
+import type { TransactionResponse } from '@ethersproject/providers'
 import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
 
 import { client } from '../../client'

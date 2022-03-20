@@ -1,8 +1,5 @@
-import {
-  BaseProvider,
-  WebSocketProvider,
-  getDefaultProvider,
-} from '@ethersproject/providers'
+import type { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
+import { getDefaultProvider } from 'ethers'
 import {
   GetState,
   Mutate,

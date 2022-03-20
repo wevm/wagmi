@@ -1,10 +1,10 @@
-import { JsonRpcProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import { Wallet } from 'ethers/lib/ethers'
 
 import { chain, defaultChains } from '../src'
 import { MockConnector, MockProviderOptions } from '../src/connectors/mock'
 
-class EthersProviderWrapper extends JsonRpcProvider {
+class EthersProviderWrapper extends providers.JsonRpcProvider {
   toJSON() {
     return '<WrappedHardhatProvider>'
   }

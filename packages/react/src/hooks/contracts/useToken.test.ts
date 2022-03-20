@@ -96,7 +96,7 @@ describe('useToken', () => {
         {
           "data": undefined,
           "dataUpdatedAt": 0,
-          "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.5.0)],
+          "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.0)],
           "failureCount": 1,
           "getToken": [Function],
           "isError": true,
