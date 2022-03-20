@@ -16,14 +16,14 @@ type State = {
   loading: boolean
 }
 
-const initialState: State = {
-  loading: false,
-}
+const getInitialState = (skip: boolean): State => ({
+  loading: !skip,
+})
 
 export const useEnsLookup = ({ address, skip }: Config = {}) => {
   const cacheBuster = useCacheBuster()
   const provider = useProvider()
-  const [state, setState] = React.useState<State>(initialState)
+  const [state, setState] = React.useState<State>(getInitialState(!!skip))
 
   const cancelQuery = useCancel()
   const lookupAddress = React.useCallback(
