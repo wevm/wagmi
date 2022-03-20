@@ -75,6 +75,17 @@ describe('useEnsLookup', () => {
     })
   })
 
+  it('loading from first render', async () => {
+    const { result } = renderHook(() => useEnsLookup())
+    expect(result.current[0]).toMatchInlineSnapshot(`
+      {
+        "data": undefined,
+        "error": undefined,
+        "loading": true,
+      }
+    `)
+  })
+
   it('skip', async () => {
     const { result } = renderHook(() => useEnsLookup({ skip: true }))
     expect(result.current[0]).toMatchInlineSnapshot(`
