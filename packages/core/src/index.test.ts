@@ -61,6 +61,7 @@ it('should expose correct exports', () => {
       "UserRejectedRequestError",
       "createStorage",
       "createWagmiStorage",
+      "noopStorage",
       "normalizeChainId",
     ]
   `)

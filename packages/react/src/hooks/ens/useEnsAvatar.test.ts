@@ -19,33 +19,6 @@ describe('useEnsAvatar', () => {
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
-          "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": false,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "idle",
-        }
-      `)
-
-      await waitFor(() => result.current.isLoading)
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "dataUpdatedAt": 0,
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isError": false,
-          "isFetched": false,
-          "isFetchedAfterMount": false,
           "isFetching": true,
           "isIdle": false,
           "isLoading": true,
@@ -62,7 +35,8 @@ describe('useEnsAvatar', () => {
         }
       `)
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
+
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
       expect(data).toMatchInlineSnapshot(`
@@ -123,34 +97,8 @@ describe('useEnsAvatar', () => {
         }
       `)
 
-      await waitFor(() => result.current.isLoading)
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "dataUpdatedAt": 0,
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isError": false,
-          "isFetched": false,
-          "isFetchedAfterMount": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": false,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "loading",
-        }
-      `)
-
       await waitFor(() => result.current.isSuccess)
+
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
       expect(data).toMatchInlineSnapshot(`

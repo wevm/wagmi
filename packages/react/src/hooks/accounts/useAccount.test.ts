@@ -23,7 +23,7 @@ const useAccountWithConnect = (
 describe('useAccount', () => {
   describe('on mount', () => {
     it('not connected', async () => {
-      const { result, waitForNextUpdate } = renderHook(() => useAccount())
+      const { result, waitFor } = renderHook(() => useAccount())
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -51,7 +51,7 @@ describe('useAccount', () => {
         }
       `)
 
-      await waitForNextUpdate()
+      await waitFor(() => result.current.isIdle)
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
@@ -124,7 +124,7 @@ describe('useAccount', () => {
 
     describe('ens', () => {
       it('true', async () => {
-        const { result, waitForNextUpdate } = renderHook(
+        const { result, waitFor } = renderHook(
           () => useAccountWithConnect({ account: { ens: true } }),
           {
             wrapper,
@@ -155,7 +155,10 @@ describe('useAccount', () => {
             "connector": "<MockConnector>",
           }
         `)
-        await waitForNextUpdate()
+
+        await waitFor(() => !!result.current.account.data?.ens?.name, {
+          timeout: 5_000,
+        })
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
@@ -166,7 +169,9 @@ describe('useAccount', () => {
             },
           }
         `)
-        await waitForNextUpdate()
+        await waitFor(() => !!result.current.account.data?.ens?.avatar, {
+          timeout: 5_000,
+        })
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
@@ -180,7 +185,7 @@ describe('useAccount', () => {
       })
 
       it('name', async () => {
-        const { result, waitForNextUpdate } = renderHook(
+        const { result, waitFor } = renderHook(
           () => useAccountWithConnect({ account: { ens: { name: true } } }),
           {
             wrapper,
@@ -211,7 +216,9 @@ describe('useAccount', () => {
             "connector": "<MockConnector>",
           }
         `)
-        await waitForNextUpdate()
+        await waitFor(() => !!result.current.account.data?.ens?.name, {
+          timeout: 5_000,
+        })
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0xB0623C91c65621df716aB8aFE5f66656B21A9108",
@@ -225,7 +232,7 @@ describe('useAccount', () => {
       })
 
       it('avatar', async () => {
-        const { result, waitForNextUpdate } = renderHook(
+        const { result, waitFor } = renderHook(
           () => useAccountWithConnect({ account: { ens: { avatar: true } } }),
           {
             wrapper,
@@ -256,7 +263,9 @@ describe('useAccount', () => {
             "connector": "<MockConnector>",
           }
         `)
-        await waitForNextUpdate()
+        await waitFor(() => !!result.current.account.data?.ens?.avatar, {
+          timeout: 5_000,
+        })
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0x0D59d0f7DcC0fBF0A3305cE0261863aAf7Ab685c",

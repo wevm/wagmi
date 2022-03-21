@@ -4,37 +4,11 @@ import { useEnsName } from './useEnsName'
 describe('useEnsName', () => {
   describe('address', () => {
     it('has ens', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsName({
           address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
         }),
       )
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "dataUpdatedAt": 0,
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isError": false,
-          "isFetched": false,
-          "isFetchedAfterMount": false,
-          "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": false,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "idle",
-        }
-      `)
-      await waitForNextUpdate()
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -60,7 +34,8 @@ describe('useEnsName', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
+
+      await waitFor(() => result.current.isSuccess)
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
@@ -92,7 +67,7 @@ describe('useEnsName', () => {
 
     it('does not have ens', async () => {
       const address = await getSigners()[0].getAddress()
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsName({
           address,
         }),
@@ -122,33 +97,8 @@ describe('useEnsName', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "dataUpdatedAt": 0,
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isError": false,
-          "isFetched": false,
-          "isFetchedAfterMount": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": false,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "loading",
-        }
-      `)
-      await waitForNextUpdate()
+
+      await waitFor(() => result.current.isSuccess)
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()

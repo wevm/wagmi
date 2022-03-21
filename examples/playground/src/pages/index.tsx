@@ -18,12 +18,4 @@ const Page = () => {
   )
 }
 
-// import { useProvider } from 'wagmi'
-//
-// const Page = () => {
-//   const provider = useProvider()
-//   console.log({ provider })
-//   return provider._network.name
-// }
-
 export default Page

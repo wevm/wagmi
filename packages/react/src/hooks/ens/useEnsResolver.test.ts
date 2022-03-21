@@ -4,37 +4,11 @@ import { useEnsResolver } from './useEnsResolver'
 describe('useEnsResolver', () => {
   describe('name', () => {
     it('has resolver', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsResolver({
           name: 'awkweb.eth',
         }),
       )
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "dataUpdatedAt": 0,
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isError": false,
-          "isFetched": false,
-          "isFetchedAfterMount": false,
-          "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": false,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "idle",
-        }
-      `)
-      await waitForNextUpdate()
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -60,7 +34,8 @@ describe('useEnsResolver', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
+
+      await waitFor(() => result.current.isSuccess)
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
@@ -96,7 +71,7 @@ describe('useEnsResolver', () => {
     })
 
     it('does not have resolver', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsResolver({
           name: 'awkweb123.eth',
         }),
@@ -126,33 +101,8 @@ describe('useEnsResolver', () => {
           "status": "loading",
         }
       `)
-      await waitForNextUpdate()
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "dataUpdatedAt": 0,
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isError": false,
-          "isFetched": false,
-          "isFetchedAfterMount": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": false,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "loading",
-        }
-      `)
-      await waitForNextUpdate()
+
+      await waitFor(() => result.current.isSuccess)
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()

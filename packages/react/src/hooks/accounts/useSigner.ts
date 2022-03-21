@@ -11,9 +11,7 @@ export type UseSignerConfig = Omit<
 
 export const queryKey = () => [{ entity: 'signer' }] as const
 
-export const queryFn = () => {
-  return fetchSigner()
-}
+export const queryFn = () => fetchSigner()
 
 export function useSigner({
   onError,
