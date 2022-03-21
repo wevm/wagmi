@@ -10,7 +10,7 @@ import { useQuery, useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId, useGetterWithConfig } from '../utils'
+import { useChainId } from '../utils'
 
 type UseContractReadArgs = Partial<ReadContractConfig> & {
   /** Subscribe to changes */
@@ -52,8 +52,8 @@ export function useContractRead(
   contractConfig: ReadContractArgs,
   functionName: string,
   {
-    args: args_,
-    overrides: overrides_,
+    args,
+    overrides,
     watch,
     cacheTime,
     enabled: enabled_ = true,
@@ -68,15 +68,6 @@ export function useContractRead(
 ) {
   const chainId = useChainId()
   const { data: blockNumber } = useBlockNumber({ enabled: false, watch })
-
-  const {
-    config: { args, overrides },
-    forceEnabled,
-    getter,
-  } = useGetterWithConfig<ReadContractConfig>({
-    args: args_,
-    overrides: overrides_,
-  })
 
   const queryKey_ = React.useMemo(
     () =>
@@ -110,7 +101,7 @@ export function useContractRead(
 
   const client = useQueryClient()
   React.useEffect(() => {
-    ;(forceEnabled || enabled) &&
+    enabled &&
       watchReadContract(
         contractConfig,
         functionName,
@@ -122,15 +113,14 @@ export function useContractRead(
     client,
     contractConfig,
     enabled,
-    forceEnabled,
     functionName,
     overrides,
     queryKey_,
   ])
 
-  const contractReadQuery = useQuery(queryKey_, queryFn, {
+  return useQuery(queryKey_, queryFn, {
     cacheTime,
-    enabled: forceEnabled || enabled,
+    enabled,
     keepPreviousData,
     select,
     staleTime,
@@ -139,9 +129,4 @@ export function useContractRead(
     onSettled,
     onSuccess,
   })
-
-  return {
-    ...contractReadQuery,
-    read: getter(contractReadQuery.refetch),
-  }
 }

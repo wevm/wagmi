@@ -28,4 +28,4 @@ export {
 
 export { useSendTransaction, useWaitForTransaction } from './transactions'
 
-export { useChainId, useGetterWithConfig } from './utils'
+export { useChainId } from './utils'

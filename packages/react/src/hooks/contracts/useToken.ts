@@ -2,7 +2,7 @@ import { FetchTokenArgs, FetchTokenResult, fetchToken } from '@wagmi/core'
 import { useQuery } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useChainId, useGetterWithConfig } from '../utils'
+import { useChainId } from '../utils'
 
 export type UseTokenArgs = Partial<FetchTokenArgs>
 
@@ -24,8 +24,8 @@ const queryFn = ({
 }
 
 export function useToken({
-  address: address_,
-  formatUnits: formatUnits_ = 'ether',
+  address,
+  formatUnits = 'ether',
   cacheTime,
   enabled = true,
   keepPreviousData,
@@ -37,33 +37,16 @@ export function useToken({
   onSuccess,
 }: UseTokenArgs & UseTokenConfig = {}) {
   const chainId = useChainId()
-  const {
-    config: { address, formatUnits },
-    forceEnabled,
-    getter,
-  } = useGetterWithConfig<FetchTokenArgs>({
-    address: address_,
-    formatUnits: formatUnits_,
+
+  return useQuery(queryKey({ address, chainId, formatUnits }), queryFn, {
+    cacheTime,
+    enabled: Boolean(enabled && address),
+    keepPreviousData,
+    select,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
   })
-
-  const tokenQuery = useQuery(
-    queryKey({ address, chainId, formatUnits }),
-    queryFn,
-    {
-      cacheTime,
-      enabled: forceEnabled || Boolean(enabled && address),
-      keepPreviousData,
-      select,
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    },
-  )
-
-  return {
-    ...tokenQuery,
-    getToken: getter(tokenQuery.refetch),
-  }
 }

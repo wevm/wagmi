@@ -6,7 +6,7 @@ import {
 import { useQuery } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useChainId, useGetterWithConfig } from '../utils'
+import { useChainId } from '../utils'
 
 export type UseWaitForTransactionArgs = Partial<WaitForTransactionArgs>
 
@@ -43,10 +43,10 @@ const queryFn = ({
 }
 
 export function useWaitForTransaction({
-  confirmations: confirmations_,
-  hash: hash_,
-  timeout: timeout_,
-  wait: wait_,
+  confirmations,
+  hash,
+  timeout,
+  wait,
   cacheTime,
   enabled = true,
   keepPreviousData,
@@ -58,23 +58,13 @@ export function useWaitForTransaction({
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
   const chainId = useChainId()
-  const {
-    config: { confirmations, hash, timeout, wait },
-    forceEnabled,
-    getter,
-  } = useGetterWithConfig<WaitForTransactionArgs>({
-    confirmations: confirmations_,
-    hash: hash_,
-    timeout: timeout_,
-    wait: wait_,
-  })
 
-  const waitForTransactionQuery = useQuery(
+  return useQuery(
     queryKey({ confirmations, chainId, hash, timeout, wait }),
     queryFn,
     {
       cacheTime,
-      enabled: forceEnabled || Boolean(enabled && (hash || wait)),
+      enabled: Boolean(enabled && (hash || wait)),
       keepPreviousData,
       select,
       staleTime,
@@ -84,9 +74,4 @@ export function useWaitForTransaction({
       onSuccess,
     },
   )
-
-  return {
-    ...waitForTransactionQuery,
-    getToken: getter(waitForTransactionQuery.refetch),
-  }
 }

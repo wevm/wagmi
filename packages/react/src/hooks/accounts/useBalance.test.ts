@@ -25,7 +25,6 @@ describe('useBalance', () => {
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
-          "getBalance": [Function],
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
@@ -79,7 +78,6 @@ describe('useBalance', () => {
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
-          "getBalance": [Function],
           "isError": false,
           "isFetched": true,
           "isFetchedAfterMount": true,
@@ -115,7 +113,6 @@ describe('useBalance', () => {
         "error": null,
         "errorUpdatedAt": 0,
         "failureCount": 0,
-        "getBalance": [Function],
         "isError": false,
         "isFetched": false,
         "isFetchedAfterMount": false,
@@ -226,63 +223,6 @@ describe('useBalance', () => {
           }
         `)
       })
-    })
-  })
-
-  describe('getBalance', () => {
-    it('uses config', async () => {
-      const { result, waitFor } = renderHook(() =>
-        useBalanceWithConnect({
-          balance: {},
-        }),
-      )
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-        result.current.balance.getBalance({
-          addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-        })
-      })
-
-      await waitFor(() => result.current.balance.isSuccess)
-
-      const { dataUpdatedAt, ...res } = result.current.balance
-      expect(dataUpdatedAt).toBeDefined()
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "data": {
-            "decimals": 18,
-            "formatted": "1.403416862768458662",
-            "symbol": "ETH",
-            "unit": "ether",
-            "value": {
-              "hex": "0x1379f033791b6ba6",
-              "type": "BigNumber",
-            },
-          },
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "getBalance": [Function],
-          "isError": false,
-          "isFetched": true,
-          "isFetchedAfterMount": true,
-          "isFetching": false,
-          "isIdle": false,
-          "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": true,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "success",
-        }
-      `)
     })
   })
 })

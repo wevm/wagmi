@@ -19,7 +19,6 @@ describe('useToken', () => {
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
-          "getToken": [Function],
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
@@ -60,7 +59,6 @@ describe('useToken', () => {
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
-          "getToken": [Function],
           "isError": false,
           "isFetched": true,
           "isFetchedAfterMount": true,
@@ -96,9 +94,8 @@ describe('useToken', () => {
         {
           "data": undefined,
           "dataUpdatedAt": 0,
-          "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.0)],
+          "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.5.0)],
           "failureCount": 1,
-          "getToken": [Function],
           "isError": true,
           "isFetched": true,
           "isFetchedAfterMount": true,
@@ -129,7 +126,6 @@ describe('useToken', () => {
         "error": null,
         "errorUpdatedAt": 0,
         "failureCount": 0,
-        "getToken": [Function],
         "isError": false,
         "isFetched": false,
         "isFetchedAfterMount": false,
@@ -179,60 +175,6 @@ describe('useToken', () => {
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
-          "getToken": [Function],
-          "isError": false,
-          "isFetched": true,
-          "isFetchedAfterMount": true,
-          "isFetching": false,
-          "isIdle": false,
-          "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isRefetching": false,
-          "isStale": true,
-          "isSuccess": true,
-          "refetch": [Function],
-          "remove": [Function],
-          "status": "success",
-        }
-      `)
-    })
-  })
-
-  describe('getToken', () => {
-    it('uses params', async () => {
-      const { result, waitFor } = renderHook(() => useToken({ enabled: false }))
-
-      await actHook(async () => {
-        result.current.getToken({
-          address: uniContractAddress,
-        })
-      })
-
-      await waitFor(() => result.current.isFetched)
-
-      const { dataUpdatedAt, ...res } = result.current
-      expect(dataUpdatedAt).toBeDefined()
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "data": {
-            "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-            "decimals": 18,
-            "symbol": "UNI",
-            "totalSupply": {
-              "formatted": "1000000000.0",
-              "value": {
-                "hex": "0x033b2e3c9fd0803ce8000000",
-                "type": "BigNumber",
-              },
-            },
-          },
-          "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "getToken": [Function],
           "isError": false,
           "isFetched": true,
           "isFetchedAfterMount": true,

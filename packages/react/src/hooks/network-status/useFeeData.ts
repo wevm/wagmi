@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId, useGetterWithConfig } from '../utils'
+import { useChainId } from '../utils'
 
 type UseFeeDataArgs = Partial<FetchFeeDataArgs> & {
   /** Subscribe to changes */
@@ -27,7 +27,7 @@ const queryFn = ({
 }
 
 export function useFeeData({
-  formatUnits: formatUnits_ = 'wei',
+  formatUnits = 'wei',
   watch,
   cacheTime,
   enabled = true,
@@ -40,17 +40,10 @@ export function useFeeData({
   onSuccess,
 }: UseFeeDataArgs & UseFeedDataConfig = {}) {
   const chainId = useChainId()
-  const {
-    config: { formatUnits },
-    forceEnabled,
-    getter,
-  } = useGetterWithConfig<FetchFeeDataArgs>({
-    formatUnits: formatUnits_,
-  })
 
   const feeDataQuery = useQuery(queryKey({ chainId, formatUnits }), queryFn, {
     cacheTime,
-    enabled: forceEnabled || enabled,
+    enabled,
     keepPreviousData,
     select,
     staleTime,
@@ -62,12 +55,12 @@ export function useFeeData({
 
   const { data: blockNumber } = useBlockNumber({ watch })
   React.useEffect(() => {
-    if (!enabled && !forceEnabled) return
+    if (!enabled) return
     if (!watch) return
     if (!blockNumber) return
     feeDataQuery.refetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockNumber])
 
-  return { ...feeDataQuery, getFeeData: getter(feeDataQuery.refetch) }
+  return feeDataQuery
 }
