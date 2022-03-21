@@ -1,26 +1,22 @@
-export type WagmiStorage = Omit<
-  Storage,
-  'getItem' | 'setItem' | 'removeItem'
-> & {
+type BaseStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
+
+export type WagmiStorage = {
   getItem: <T>(key: string, defaultState?: T | null) => T | null
   setItem: <T>(key: string, value: T | null) => void
   removeItem: (key: string) => void
 }
 
-export const noopStorage: Storage = {
-  length: 0,
-  clear: () => null,
+export const noopStorage: BaseStorage = {
   getItem: (_key: string) => '',
   setItem: (_key: string, _value: string) => null,
   removeItem: (_key: string) => null,
-  key: (_index: number) => null,
 }
 
 export function createStorage({
   storage,
   key: prefix = 'wagmi',
 }: {
-  storage: Storage
+  storage: BaseStorage
   key?: string
 }): WagmiStorage {
   return {

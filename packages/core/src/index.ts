@@ -130,6 +130,7 @@ export {
 export {
   createStorage,
   createStorage as createWagmiStorage,
+  noopStorage,
   type WagmiStorage as Storage,
   type WagmiStorage,
 } from './storage'

@@ -14,7 +14,7 @@ import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
 import { deserialize, serialize } from './utils'
-import { chainIdQueryKey } from './hooks'
+import { providerQueryKey, webSocketProviderQueryKey } from './hooks'
 
 export const Context = React.createContext<WagmiClient | undefined>(undefined)
 
@@ -73,15 +73,23 @@ export function Provider({
   /* eslint-enable react-hooks/exhaustive-deps */
 
   const queryClient = client.queryClient
-  // Pairs with `useChainId` hook so we only subscribe once
+  // Update provider query hooks
   /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
-    const unsubscribe = client.subscribe(
+    const unsubscribeProvider = client.subscribe(
       (state) => state.provider,
-      (provider) =>
-        queryClient.setQueryData(chainIdQueryKey(), provider.network.chainId),
+      (provider) => queryClient.setQueryData(providerQueryKey(), provider),
     )
-    return unsubscribe
+    const unsubscribeWebSocketProvider = client.subscribe(
+      (state) => state.webSocketProvider,
+      (webSocketProvider) => {
+        queryClient.setQueryData(webSocketProviderQueryKey(), webSocketProvider)
+      },
+    )
+    return () => {
+      unsubscribeProvider()
+      unsubscribeWebSocketProvider()
+    }
   }, [])
   /* eslint-enable react-hooks/exhaustive-deps */
 
