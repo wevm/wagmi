@@ -124,3 +124,12 @@ const App = () => {
   return ...
 }
 ```
+#### Overide from write call
+```tsx highlight='11'
+write({
+    args: ['someArg'],
+    overrides: {
+      value: ethers.utils.parseEther("0.1")
+    }
+})
+```
