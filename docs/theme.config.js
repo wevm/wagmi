@@ -60,6 +60,9 @@ export default {
     )
   },
   nextLinks: true,
+  nextThemes: {
+    defaultTheme: 'dark',
+  },
   prevLinks: true,
   projectLink: github,
   search: true,
