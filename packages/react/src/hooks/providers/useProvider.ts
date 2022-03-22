@@ -1,14 +1,15 @@
-import { getProvider } from '@wagmi/core'
-import { useQuery } from 'react-query'
+import * as React from 'react'
 
 import { useClient } from '../../context'
 
-export const queryKey = () => [{ entity: 'provider' }] as const
-
-const queryFn = () => getProvider()
-
 export function useProvider() {
+  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
   const client = useClient()
-  const query = useQuery(queryKey(), queryFn, { initialData: getProvider() })
-  return query.data || client.provider
+
+  React.useEffect(() => {
+    const unsubscribe = client.subscribe((state) => state.provider, forceUpdate)
+    return unsubscribe
+  }, [client])
+
+  return client.provider
 }

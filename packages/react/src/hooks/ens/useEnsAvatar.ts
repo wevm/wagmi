@@ -32,7 +32,7 @@ export function useEnsAvatar({
   enabled = true,
   keepPreviousData,
   select,
-  staleTime = 60 * 60 * 24 * 2, // two days
+  staleTime = 1000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,

@@ -1,5 +1,2 @@
-export { queryKey as providerQueryKey, useProvider } from './useProvider'
-export {
-  queryKey as webSocketProviderQueryKey,
-  useWebSocketProvider,
-} from './useWebSocketProvider'
+export { useProvider } from './useProvider'
+export { useWebSocketProvider } from './useWebSocketProvider'

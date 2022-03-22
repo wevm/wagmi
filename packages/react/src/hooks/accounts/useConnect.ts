@@ -51,13 +51,14 @@ export function useConnect({
     onSuccess: onConnect,
   })
 
+  // Trigger update when connector or status change
   React.useEffect(() => {
     const unsubscribe = client.subscribe(
       (state) => ({
         connector: state.connector,
         status: state.status,
       }),
-      () => forceUpdate(),
+      forceUpdate,
       {
         equalityFn: (selected, previous) =>
           selected.status === previous.status &&

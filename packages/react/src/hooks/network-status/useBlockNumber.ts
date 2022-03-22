@@ -37,6 +37,7 @@ export function useBlockNumber({
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const queryClient = useQueryClient()
+  // console.log({ webSocketProvider, provider })
 
   React.useEffect(() => {
     if (!watch) return
@@ -48,6 +49,7 @@ export function useBlockNumber({
     }
 
     const provider_ = webSocketProvider ?? provider
+    // console.log({ provider_ })
     provider_.on('block', listener)
 
     return () => {

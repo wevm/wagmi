@@ -1,18 +1,18 @@
-import { getWebSocketProvider } from '@wagmi/core'
-import { useQuery } from 'react-query'
+import * as React from 'react'
 
 import { useClient } from '../../context'
 
-export const queryKey = () => [{ entity: 'webSocketProvider' }] as const
-
-const queryFn = () => {
-  return getWebSocketProvider()
-}
-
 export function useWebSocketProvider() {
+  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
   const client = useClient()
-  const query = useQuery(queryKey(), queryFn, {
-    initialData: getWebSocketProvider(),
-  })
-  return query.data || client.webSocketProvider
+
+  React.useEffect(() => {
+    const unsubscribe = client.subscribe(
+      (state) => state.webSocketProvider,
+      forceUpdate,
+    )
+    return unsubscribe
+  }, [client])
+
+  return client.webSocketProvider
 }

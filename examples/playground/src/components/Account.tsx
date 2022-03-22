@@ -34,28 +34,36 @@ export const Account = () => {
         )}
       </div>
 
-      {false && (
+      {true && (
         <>
-          <h4>Balance</h4>
-          <Balance />
+          {false && (
+            <>
+              <h4>Balance</h4>
+              <Balance />
 
-          <h4>Block Number</h4>
-          <BlockNumber />
+              <h4>Block Number</h4>
+              <BlockNumber />
 
-          <h4>Send Transaction</h4>
-          <SendTransaction />
+              <h4>Send Transaction</h4>
+              <SendTransaction />
+            </>
+          )}
 
           <h4>Read Contract</h4>
           <ReadContract />
 
-          <h4>Write Contract</h4>
-          <WriteContract />
+          {false && (
+            <>
+              <h4>Write Contract</h4>
+              <WriteContract />
 
-          <h4>Sign Message</h4>
-          <SignMessage />
+              <h4>Sign Message</h4>
+              <SignMessage />
 
-          <h4>Token</h4>
-          <Token />
+              <h4>Token</h4>
+              <Token />
+            </>
+          )}
         </>
       )}
     </div>

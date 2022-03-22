@@ -14,7 +14,7 @@ export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
     error?: Error
     loading?: boolean
   }>({})
-  const [, signMessage] = useSignMessage()
+  const { signMessageAsync } = useSignMessage()
 
   const handleSignIn = React.useCallback(async () => {
     try {
@@ -30,10 +30,9 @@ export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
         nonce: await nonceRes.text(),
       })
 
-      const signRes = await signMessage({ message: message.prepareMessage() })
-      if (signRes.error) throw signRes.error
-
-      const signature = signRes.data
+      const signature = await signMessageAsync({
+        message: message.prepareMessage(),
+      })
       const verifyRes = await fetch('/api/verify', {
         method: 'POST',
         headers: {
@@ -48,7 +47,7 @@ export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
     } catch (error) {
       setState((x) => ({ ...x, error: error as Error, loading: false }))
     }
-  }, [address, chainId, signMessage, onSuccess])
+  }, [address, chainId, signMessageAsync, onSuccess])
 
   return (
     <Stack space="4">

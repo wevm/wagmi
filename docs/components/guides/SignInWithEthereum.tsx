@@ -11,8 +11,8 @@ export const SignInWithEthereum = () => {
     address?: string
     loading?: boolean
   }>({})
-  const [{ data: accountData }] = useAccount()
-  const [{ data: networkData }] = useNetwork()
+  const { data: accountData } = useAccount()
+  const { chainId } = useNetwork()
 
   React.useEffect(() => {
     const handler = async () => {
@@ -57,8 +57,8 @@ export const SignInWithEthereum = () => {
           ) : (
             <Skeleton loading={state.loading} width="full" radius="2xLarge">
               <SiweButton
-                address={accountData.address}
-                chainId={networkData.chain?.id ?? chain.mainnet.id}
+                address={accountData.address as string}
+                chainId={chainId ?? chain.mainnet.id}
                 onSuccess={({ address }) =>
                   setState((x) => ({ ...x, address }))
                 }
