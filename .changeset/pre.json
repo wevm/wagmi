@@ -1,0 +1,10 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "docs": "0.0.1",
+    "@wagmi/core": "0.1.13",
+    "wagmi": "0.2.17"
+  },
+  "changesets": ["khaki-dingos-juggle"]
+}
