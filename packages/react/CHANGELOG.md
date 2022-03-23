@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.3.0-next.4
+
+### Minor Changes
+
+- force address to be required in `useAccount`
+
 ## 0.3.0-next.3
 
 ### Patch Changes

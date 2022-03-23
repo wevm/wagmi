@@ -12,7 +12,7 @@
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "wagmi": "0.3.0-next.2"
+    "wagmi": "0.3.0-next.3"
   },
   "devDependencies": {
     "@preconstruct/next": "3.0.1",
