@@ -132,6 +132,9 @@ export class Client {
                 account: state?.data?.account,
                 chain: state?.data?.chain,
               },
+              connector: {
+                chains: state.connector?.chains,
+              },
             }),
           },
         ),
