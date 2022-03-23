@@ -1,17 +1,17 @@
 import * as React from 'react'
-import { Avatar, Box, Button, Stack } from 'degen'
+import { Avatar, Box, Button, Skeleton, Stack } from 'degen'
 import { useAccount } from 'wagmi'
 
 import { formatAddress } from '../../lib/address'
+import { useIsMounted } from '../../hooks'
 
 export const Account = () => {
-  const [{ data: accountData }, disconnect] = useAccount({
-    fetchEns: true,
-  })
+  const isMounted = useIsMounted()
+  const { data, disconnect } = useAccount({ ens: true })
 
-  if (!accountData) return null
+  if (!data?.address) return null
 
-  const formattedAddress = formatAddress(accountData.address)
+  const formattedAddress = formatAddress(data.address)
   return (
     <Stack
       align="center"
@@ -20,25 +20,30 @@ export const Account = () => {
     >
       <Stack align="center" direction={{ xs: 'vertical', sm: 'horizontal' }}>
         <Avatar
-          src={accountData.ens?.avatar as any}
+          src={data.ens?.avatar as any}
           label="ENS Avatar"
-          placeholder={!accountData.ens?.avatar}
+          placeholder={!data.ens?.avatar}
         />
         <Stack space="0">
           <Box fontSize="large" textAlign={{ xs: 'center', sm: 'left' }}>
-            {accountData.ens?.name
-              ? `${accountData.ens?.name} (${formattedAddress})`
+            {data.ens?.name
+              ? `${data.ens?.name} (${formattedAddress})`
               : formattedAddress}
           </Box>
-          {accountData.connector?.name && (
-            <Box
-              fontSize="small"
-              color="textSecondary"
-              textAlign={{ xs: 'center', sm: 'left' }}
-            >
-              Connected to {accountData.connector.name}
-            </Box>
-          )}
+          <Box
+            fontSize="small"
+            color="textSecondary"
+            textAlign={{ xs: 'center', sm: 'left' }}
+            display="flex"
+            gap="1"
+          >
+            Connected to{' '}
+            <Skeleton loading={!(isMounted && data.connector)}>
+              {isMounted && data.connector
+                ? data.connector.name
+                : 'Wallet Name'}
+            </Skeleton>
+          </Box>
         </Stack>
       </Stack>
 

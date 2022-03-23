@@ -1,5 +1,4 @@
 import { HardhatUserConfig } from 'hardhat/config'
-import '@nomiclabs/hardhat-ethers'
 
 const config: HardhatUserConfig = {
   networks: {
@@ -8,6 +7,7 @@ const config: HardhatUserConfig = {
         url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_ID}`,
         blockNumber: 14297676,
       },
+      loggingEnabled: false,
     },
   },
 }

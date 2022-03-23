@@ -6,6 +6,7 @@ export {
   useSigner,
   useSignMessage,
 } from './accounts'
+
 export {
   useContract,
   useContractEvent,
@@ -13,13 +14,13 @@ export {
   useContractWrite,
   useToken,
 } from './contracts'
-export {
-  useEnsAvatar,
-  useEnsLookup,
-  useEnsResolveName,
-  useEnsResolver,
-} from './ens'
+
+export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
+
 export { useBlockNumber, useFeeData } from './network-status'
+
 export { useProvider, useWebSocketProvider } from './providers'
-export { useTransaction, useWaitForTransaction } from './transactions'
-export { useCacheBuster, useLocalStorage } from './utils'
+
+export { useSendTransaction, useWaitForTransaction } from './transactions'
+
+export { useChainId } from './utils'

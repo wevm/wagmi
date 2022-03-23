@@ -1,102 +1,195 @@
-import { wallets } from 'wagmi-testing'
-
-import { actHook, renderHook } from '../../../test'
+import { renderHook } from '../../../test'
 import { useEnsAvatar } from './useEnsAvatar'
 
 describe('useEnsAvatar', () => {
-  describe('on mount', () => {
-    it('has ens', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+  describe('addressOrName', () => {
+    it('has avatar', async () => {
+      const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: wallets.ethers3.ensName,
+          addressOrName: 'nick.eth',
         }),
       )
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "loading",
         }
       `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+
+      await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
+
+      const { dataUpdatedAt, ...data } = result.current
+      expect(dataUpdatedAt).toBeDefined()
+      expect(data).toMatchInlineSnapshot(`
         {
-          "data": "https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg",
-          "error": undefined,
-          "loading": false,
+          "data": "https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE",
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "success",
         }
       `)
     })
 
     it('does not have avatar', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: wallets.ethers1.address,
+          addressOrName: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
         }),
       )
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "loading",
         }
       `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+
+      await waitFor(() => result.current.isSuccess)
+
+      const { dataUpdatedAt, ...data } = result.current
+      expect(dataUpdatedAt).toBeDefined()
+      expect(data).toMatchInlineSnapshot(`
         {
           "data": null,
-          "error": undefined,
-          "loading": false,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "success",
         }
       `)
     })
   })
 
-  it('skip', async () => {
-    const { result } = renderHook(() => useEnsAvatar({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
-      }
-    `)
-  })
-
-  describe('getEnsAvatar', () => {
-    it('uses config', async () => {
+  describe('enabled', () => {
+    it('is false', () => {
       const { result } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: wallets.ethers3.ensName,
-          skip: true,
+          addressOrName: 'meagher.eth',
+          enabled: false,
         }),
       )
-      await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(
-          `"https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg"`,
-        )
-      })
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "idle",
+        }
+      `)
     })
 
-    it('uses params', async () => {
-      const { result } = renderHook(() => useEnsAvatar({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]({
-          addressOrName: wallets.ethers3.ensName,
-        })
-        expect(res).toMatchInlineSnapshot(
-          `"https://pbs.twimg.com/profile_images/1462291760135258115/tJ9K8K5v_400x400.jpg"`,
-        )
-      })
-    })
-
-    it('has error', async () => {
-      const { result } = renderHook(() => useEnsAvatar({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`[Error: addressOrName is required]`)
-      })
+    it('missing addressOrName', () => {
+      const { result } = renderHook(() => useEnsAvatar())
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "idle",
+        }
+      `)
     })
   })
 })

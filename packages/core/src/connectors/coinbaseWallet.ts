@@ -1,11 +1,16 @@
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
-import { CoinbaseWalletProvider, CoinbaseWalletSDK } from '@coinbase/wallet-sdk'
-import { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
+import type { ExternalProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
+import type {
+  CoinbaseWalletProvider,
+  CoinbaseWalletSDK,
+} from '@coinbase/wallet-sdk'
+import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
+import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, hexValue, normalizeChainId } from '../utils'
+import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
 type Options = CoinbaseWalletSDKOptions & { jsonRpcUrl?: string }
@@ -28,7 +33,7 @@ export class CoinbaseWalletConnector extends Connector<
 
   async connect() {
     try {
-      const provider = this.getProvider()
+      const provider = await this.getProvider()
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -40,7 +45,9 @@ export class CoinbaseWalletConnector extends Connector<
       return {
         account,
         chain: { id, unsupported },
-        provider: new Web3Provider(<ExternalProvider>(<unknown>provider)),
+        provider: new providers.Web3Provider(
+          <ExternalProvider>(<unknown>provider),
+        ),
       }
     } catch (error) {
       if (/user closed modal/i.test((<ProviderRpcError>error).message))
@@ -52,7 +59,7 @@ export class CoinbaseWalletConnector extends Connector<
   async disconnect() {
     if (!this.#provider) return
 
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     provider.removeListener('accountsChanged', this.onAccountsChanged)
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
@@ -71,7 +78,7 @@ export class CoinbaseWalletConnector extends Connector<
   }
 
   async getAccount() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const accounts = await provider.request<string[]>({
       method: 'eth_accounts',
     })
@@ -80,13 +87,14 @@ export class CoinbaseWalletConnector extends Connector<
   }
 
   async getChainId() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const chainId = normalizeChainId(provider.chainId)
     return chainId
   }
 
-  getProvider() {
+  async getProvider() {
     if (!this.#provider) {
+      const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
       this.#client = new CoinbaseWalletSDK(this.options)
       this.#provider = this.#client.makeWeb3Provider(this.options.jsonRpcUrl)
     }
@@ -96,9 +104,9 @@ export class CoinbaseWalletConnector extends Connector<
   async getSigner() {
     const provider = this.getProvider()
     const account = await this.getAccount()
-    return new Web3Provider(<ExternalProvider>(<unknown>provider)).getSigner(
-      account,
-    )
+    return new providers.Web3Provider(
+      <ExternalProvider>(<unknown>provider),
+    ).getSigner(account)
   }
 
   async isAuthorized() {
@@ -111,7 +119,7 @@ export class CoinbaseWalletConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const id = hexValue(chainId)
 
     try {
@@ -149,7 +157,7 @@ export class CoinbaseWalletConnector extends Connector<
     image?: string
     symbol: string
   }) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     return await provider.request<boolean>({
       method: 'wallet_watchAsset',
       params: {

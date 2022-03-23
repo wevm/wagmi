@@ -1,13 +1,13 @@
 import { Signer } from 'ethers/lib/ethers'
 
-import { ethers } from '../../../test'
+import { getSigners } from '../../../test'
 import { MockProvider } from './provider'
 
 describe('MockProvider', () => {
   let provider: MockProvider
   let signer: Signer
-  beforeEach(async () => {
-    const signers = await ethers.getSigners()
+  beforeEach(() => {
+    const signers = getSigners()
     signer = signers[0]
     provider = new MockProvider({ signer })
   })
@@ -24,7 +24,7 @@ describe('MockProvider', () => {
     })
 
     it('fails', async () => {
-      const signers = await ethers.getSigners()
+      const signers = getSigners()
       signer = signers[0]
       const provider = new MockProvider({
         flags: {
@@ -32,13 +32,9 @@ describe('MockProvider', () => {
         },
         signer,
       })
-      try {
-        await provider.enable()
-      } catch (error) {
-        expect(error).toMatchInlineSnapshot(
-          `[UserRejectedRequestError: User rejected request]`,
-        )
-      }
+      await expect(
+        provider.enable(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
     })
   })
 

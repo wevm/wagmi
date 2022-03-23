@@ -1,4 +1,4 @@
-import { Provider } from '@ethersproject/providers'
+import type { Provider } from '@ethersproject/providers'
 import { Contract, ContractInterface, Signer } from 'ethers/lib/ethers'
 
 export type GetContractArgs = {

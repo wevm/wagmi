@@ -1,62 +1,46 @@
 import * as React from 'react'
-import { Signer } from 'ethers'
+import { FetchSignerResult, fetchSigner, watchSigner } from '@wagmi/core'
+import { useQuery, useQueryClient } from 'react-query'
 
-import { useContext } from '../../context'
-import { useCacheBuster, useCancel } from '../utils'
+import { QueryConfig } from '../../types'
 
-type Config = {
-  /** Disables fetching */
-  skip?: boolean
-}
+export type UseSignerConfig = Omit<
+  QueryConfig<FetchSignerResult, Error>,
+  'cacheTime' | 'staleTime' | 'enabled'
+>
 
-type State = {
-  data?: Signer
-  error?: Error
-  loading?: boolean
-}
+export const queryKey = () => [{ entity: 'signer' }] as const
 
-const initialState: State = {
-  data: undefined,
-  error: undefined,
-  loading: false,
-}
+export const queryFn = () => fetchSigner()
 
-export const useSigner = ({ skip }: Config = {}) => {
-  const cacheBuster = useCacheBuster()
-  const {
-    state: { connector },
-  } = useContext()
-  const [state, setState] = React.useState<State>(initialState)
+export function useSigner({
+  onError,
+  onSettled,
+  onSuccess,
+}: UseSignerConfig = {}) {
+  const signerQuery = useQuery(queryKey(), queryFn, {
+    cacheTime: 0,
+    enabled: false,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 
-  const cancelQuery = useCancel()
-  const getSigner = React.useCallback(async () => {
-    let didCancel = false
-    cancelQuery(() => {
-      didCancel = true
-    })
-
-    try {
-      setState((x) => ({ ...x, error: undefined, loading: true }))
-      const signer = await connector?.getSigner()
-      if (!didCancel) {
-        setState((x) => ({ ...x, data: signer, loading: false }))
-      }
-      return signer
-    } catch (error_) {
-      const error = <Error>error_
-      if (!didCancel) {
-        setState((x) => ({ ...x, data: undefined, error, loading: false }))
-      }
-    }
-  }, [cancelQuery, connector])
-
-  /* eslint-disable react-hooks/exhaustive-deps */
+  const queryClient = useQueryClient()
   React.useEffect(() => {
-    if (skip) return
-    getSigner()
-    return cancelQuery
-  }, [cacheBuster, connector, cancelQuery, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
+    const unwatch = watchSigner((signer) =>
+      queryClient.setQueryData(queryKey(), signer),
+    )
+    return unwatch
+  }, [queryClient])
 
-  return [state, getSigner] as const
+  const status = !signerQuery.data ? 'loading' : signerQuery.status
+
+  return {
+    ...signerQuery,
+    isIdle: false,
+    isFetching: signerQuery.isFetching || status === 'loading',
+    isLoading: signerQuery.isLoading || status === 'loading',
+    status,
+  }
 }

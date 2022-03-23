@@ -3,12 +3,11 @@ import { fetchToken } from './fetchToken'
 
 describe('fetchToken', () => {
   it('fetches token', async () => {
-    await setupWagmiClient()
-    expect(
-      await fetchToken({
-        address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-      }),
-    ).toMatchInlineSnapshot(`
+    setupWagmiClient()
+    const result = await fetchToken({
+      address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+    })
+    expect(result).toMatchInlineSnapshot(`
       {
         "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
         "decimals": 18,

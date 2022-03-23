@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import {
   FetchBalanceArgs,
   FetchBalanceResult,
@@ -12,9 +12,14 @@ export function watchBalance(
   callback: WatchBalanceCallback,
 ) {
   const handleChange = async () => callback(await fetchBalance(args))
-  const unsubscribe = wagmiClient.subscribe(
-    ({ data }) => [data?.account, data?.chain],
+  const unsubscribe = client.subscribe(
+    ({ data }) => ({ account: data?.account, chainId: data?.chain?.id }),
     handleChange,
+    {
+      equalityFn: (selected, previous) =>
+        selected.account === previous.account &&
+        selected.chainId === previous.chainId,
+    },
   )
   return unsubscribe
 }

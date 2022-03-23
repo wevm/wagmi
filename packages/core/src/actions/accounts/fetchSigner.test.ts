@@ -4,16 +4,21 @@ import { fetchSigner } from './fetchSigner'
 
 describe('fetchSigner', () => {
   it('not connected', async () => {
-    await setupWagmiClient()
+    setupWagmiClient()
     expect(await fetchSigner()).toMatchInlineSnapshot(`undefined`)
   })
 
   it('connected', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
     await connect(client.connectors[0])
     const result = await fetchSigner()
-    expect(result).toMatchInlineSnapshot(
-      `"<SignerWithAddress 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266>"`,
-    )
+    expect(result).toMatchInlineSnapshot(`
+      JsonRpcSigner {
+        "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "_index": null,
+        "_isSigner": true,
+        "provider": "<WrappedHardhatProvider>",
+      }
+    `)
   })
 })

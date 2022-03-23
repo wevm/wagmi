@@ -1,2 +1,2 @@
-export { useTransaction } from './useTransaction'
+export { useSendTransaction } from './useSendTransaction'
 export { useWaitForTransaction } from './useWaitForTransaction'

@@ -1,43 +1,32 @@
 import * as React from 'react'
 import { Button, Stack, Text } from 'degen'
-import { Connector, ConnectorData, useConnect } from 'wagmi'
+import { Connector, useConnect } from 'wagmi'
 import { SiweMessage } from 'siwe'
 
 import { useIsMounted } from '../../hooks'
 
-type Props = {
-  onError?(error: Error): void
-  onSuccess?(data: ConnectorData): void
-}
-
-export const WalletSelectorWithSiwe = ({ onError, onSuccess }: Props) => {
+export const WalletSelectorWithSiwe = () => {
   const isMounted = useIsMounted()
   const [state, setState] = React.useState<{ loading?: boolean }>({})
-  const [
-    {
-      data: { connector, connectors },
-      error,
-      loading,
-    },
-    connect,
-  ] = useConnect()
-  const resolvedLoading = loading || state.loading
+  const { connectAsync, connector, connectors, error, isConnecting } =
+    useConnect()
+  const resolvedLoading = isConnecting || state.loading
 
   const handleConnect = React.useCallback(
     async (connector: Connector) => {
       try {
         setState((x) => ({ ...x, loading: true }))
-        const res = await connect(connector)
-        if (!res.data) throw res.error ?? new Error('Something went wrong')
+        const res = await connectAsync(connector)
+        if (!res.data) new Error('Something went wrong')
 
         const nonceRes = await fetch('/api/nonce')
         const message = new SiweMessage({
           domain: window.location.host,
-          address: res.data.account,
+          address: res.data?.account,
           statement: 'Sign in with Ethereum to the app.',
           uri: window.location.origin,
           version: '1',
-          chainId: res.data.chain?.id,
+          chainId: res.data?.chain?.id,
           nonce: await nonceRes.text(),
         })
 
@@ -52,15 +41,11 @@ export const WalletSelectorWithSiwe = ({ onError, onSuccess }: Props) => {
           body: JSON.stringify({ message, signature }),
         })
         if (!verifyRes.ok) throw new Error('Error verifying message')
-
-        onSuccess?.(res.data)
-      } catch (error) {
-        onError?.(error as Error)
       } finally {
         setState((x) => ({ ...x, loading: false }))
       }
     },
-    [connect, onError, onSuccess],
+    [connectAsync],
   )
 
   return (

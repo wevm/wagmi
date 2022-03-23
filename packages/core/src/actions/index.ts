@@ -6,6 +6,7 @@ export {
   getAccount,
   getNetwork,
   signMessage,
+  signTypedData,
   switchNetwork,
   watchAccount,
   watchBalance,
@@ -19,6 +20,8 @@ export {
   type GetNetworkResult,
   type SignMessageArgs,
   type SignMessageResult,
+  type SignTypedDataArgs,
+  type SignTypedDataResult,
   type SwitchNetworkArgs,
   type SwitchNetworkResult,
   type WatchAccountCallback,
@@ -40,10 +43,13 @@ export {
   type WatchReadContractArgs,
   type WatchReadContractConfig,
   type WatchReadContractResult,
+  type WriteContractArgs,
+  type WriteContractConfig,
+  type WriteContractResult,
 } from './contracts'
 
 export {
-  fetchEnsAddress as fetchEnsAddress,
+  fetchEnsAddress,
   fetchEnsAvatar,
   fetchEnsName,
   fetchEnsResolver,
@@ -81,9 +87,13 @@ export {
 
 export {
   getProvider,
-  type GetProviderResult,
   getWebSocketProvider,
+  watchProvider,
+  watchWebSocketProvider,
+  type GetProviderResult,
   type GetWebSocketProviderResult,
+  type WatchProviderCallback,
+  type WatchWebSocketProviderCallback,
 } from './providers'
 
 export {

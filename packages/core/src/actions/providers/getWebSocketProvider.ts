@@ -1,9 +1,9 @@
-import { WebSocketProvider } from '@ethersproject/providers'
+import type { WebSocketProvider } from '@ethersproject/providers'
 
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 
 export type GetWebSocketProviderResult = WebSocketProvider | undefined
 
 export function getWebSocketProvider(): GetWebSocketProviderResult {
-  return wagmiClient.webSocketProvider
+  return client.webSocketProvider
 }

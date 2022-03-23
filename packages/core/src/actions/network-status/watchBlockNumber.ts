@@ -1,6 +1,6 @@
-import { BaseProvider } from '@ethersproject/providers'
+import type { BaseProvider } from '@ethersproject/providers'
 
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import { FetchBlockNumberResult, fetchBlockNumber } from './fetchBlockNumber'
 
 export type WatchBlockNumberArgs = { listen: boolean }
@@ -24,18 +24,23 @@ export function watchBlockNumber(
     prevProvider = provider
   }
 
-  const { provider, webSocketProvider } = wagmiClient
+  const { provider, webSocketProvider } = client
   const provider_ = webSocketProvider ?? provider
   if (args.listen) createListener(provider_)
 
-  const unsubscribe = wagmiClient.subscribe(
-    ({ provider, webSocketProvider }) => [provider, webSocketProvider],
-    async ([provider, webSocketProvider]) => {
+  const unsubscribe = client.subscribe(
+    ({ provider, webSocketProvider }) => ({ provider, webSocketProvider }),
+    async ({ provider, webSocketProvider }) => {
       const provider_ = webSocketProvider ?? provider
       if (args.listen && provider_) {
         createListener(provider_)
       }
       callback(await fetchBlockNumber())
+    },
+    {
+      equalityFn: (selected, previous) =>
+        selected.provider === previous.provider &&
+        selected.webSocketProvider === previous.webSocketProvider,
     },
   )
   return unsubscribe

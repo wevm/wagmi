@@ -1,115 +1,132 @@
 import * as React from 'react'
-import { CallOverrides, ethers } from 'ethers'
-import { Result } from 'ethers/lib/utils'
+import {
+  ReadContractArgs,
+  ReadContractConfig,
+  ReadContractResult,
+  readContract,
+  watchReadContract,
+} from '@wagmi/core'
+import { useQuery, useQueryClient } from 'react-query'
 
+import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useProvider } from '../providers'
-import { Config as UseContractConfig, useContract } from './useContract'
-import { useCacheBuster, useCancel } from '../utils'
+import { useChainId } from '../utils'
 
-type Config = {
-  /** Arguments to pass contract method */
-  args?: any | any[]
-  overrides?: CallOverrides
-  /** Disables fetching */
-  skip?: boolean
+type UseContractReadArgs = Partial<ReadContractConfig> & {
   /** Subscribe to changes */
   watch?: boolean
 }
 
-type State = {
-  response?: Result
-  error?: Error
-  loading?: boolean
-}
+export type UseContractReadConfig = QueryConfig<ReadContractResult, Error>
 
-const initialState: State = {
-  loading: false,
-}
-
-export const useContractRead = <
-  Contract extends ethers.Contract = ethers.Contract,
->(
-  contractConfig: UseContractConfig,
-  functionName: string,
-  { args, overrides, skip, watch }: Config = {},
-) => {
-  const cacheBuster = useCacheBuster()
-  const provider = useProvider()
-  const contract = useContract<Contract>({
-    signerOrProvider: provider,
-    ...contractConfig,
-  })
-  const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
-  const [state, setState] = React.useState<State>(initialState)
-
-  const cancelQuery = useCancel()
-  const read = React.useCallback(
-    async (config?: {
-      args?: Config['args']
-      overrides?: Config['overrides']
-    }) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const config_ = config ?? { args, overrides }
-        const params = [
-          ...(Array.isArray(config_.args)
-            ? config_.args
-            : config_.args
-            ? [config_.args]
-            : []),
-          ...(config_.overrides ? [config_.overrides] : []),
-        ]
-
-        setState((x) => ({
-          ...x,
-          error: undefined,
-          loading: true,
-          response: undefined,
-        }))
-        const response = (await contract[functionName](...params)) as Result
-        if (!didCancel) {
-          setState((x) => ({ ...x, loading: false, response }))
-        }
-        return { data: response, error: undefined }
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return { data: undefined, error }
-      }
+export const queryKey = ([
+  contractConfig,
+  functionName,
+  { args, overrides },
+  { blockNumber, chainId },
+]: [
+  ReadContractArgs,
+  string,
+  Partial<ReadContractConfig>,
+  { blockNumber?: number; chainId?: number },
+]) =>
+  [
+    {
+      entity: 'readContract',
+      args,
+      blockNumber,
+      chainId,
+      contractConfig,
+      functionName,
+      overrides,
     },
-    [args, cancelQuery, contract, functionName, overrides],
+  ] as const
+
+const queryFn = ({
+  queryKey: [{ args, contractConfig, functionName, overrides }],
+}: QueryFunctionArgs<typeof queryKey>) => {
+  return readContract(contractConfig, functionName, { args, overrides })
+}
+
+export function useContractRead(
+  contractConfig: ReadContractArgs,
+  functionName: string,
+  {
+    args,
+    overrides,
+    watch,
+    cacheTime,
+    enabled: enabled_ = true,
+    keepPreviousData,
+    select,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  }: UseContractReadArgs & UseContractReadConfig = {},
+) {
+  const chainId = useChainId()
+  const { data: blockNumber } = useBlockNumber({ enabled: false, watch })
+
+  const queryKey_ = React.useMemo(
+    () =>
+      queryKey([
+        contractConfig,
+        functionName,
+        { args, overrides },
+        {
+          chainId,
+          blockNumber: watch ? blockNumber : undefined,
+        },
+      ]),
+    [
+      args,
+      blockNumber,
+      chainId,
+      contractConfig,
+      functionName,
+      overrides,
+      watch,
+    ],
   )
 
-  /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => {
-    if (skip) return
-    read()
-    return cancelQuery
-  }, [cacheBuster, cancelQuery, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
+  const enabled = React.useMemo(() => {
+    let enabled = Boolean(enabled_ && contractConfig && functionName)
+    if (watch) {
+      enabled = Boolean(enabled && blockNumber)
+    }
+    return enabled
+  }, [blockNumber, contractConfig, enabled_, functionName, watch])
 
-  /* eslint-disable react-hooks/exhaustive-deps */
+  const client = useQueryClient()
   React.useEffect(() => {
-    if (!watch) return
-    if (!blockNumber) return
-    read()
-    return cancelQuery
-  }, [blockNumber, cancelQuery, watch])
-  /* eslint-enable react-hooks/exhaustive-deps */
+    enabled &&
+      watchReadContract(
+        contractConfig,
+        functionName,
+        { args, overrides, listenToBlock: false },
+        (result) => client.setQueryData(queryKey_, result),
+      )
+  }, [
+    args,
+    client,
+    contractConfig,
+    enabled,
+    functionName,
+    overrides,
+    queryKey_,
+  ])
 
-  return [
-    {
-      data: state.response,
-      error: state.error,
-      loading: state.loading,
-    },
-    read,
-  ] as const
+  return useQuery(queryKey_, queryFn, {
+    cacheTime,
+    enabled,
+    keepPreviousData,
+    select,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }

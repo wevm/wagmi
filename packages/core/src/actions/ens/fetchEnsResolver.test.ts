@@ -2,8 +2,8 @@ import { setupWagmiClient } from '../../../test'
 import { fetchEnsResolver } from './fetchEnsResolver'
 
 describe('fetchEnsResolver', () => {
-  beforeEach(async () => {
-    await setupWagmiClient()
+  beforeEach(() => {
+    setupWagmiClient()
   })
 
   it('no result', async () => {

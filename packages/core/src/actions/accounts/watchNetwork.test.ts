@@ -6,7 +6,7 @@ import { watchNetwork } from './watchNetwork'
 
 describe('watchNetwork', () => {
   it('callback receives data', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
 
     await connect(client.connectors[0])
 

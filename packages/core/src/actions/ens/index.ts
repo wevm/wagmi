@@ -1,30 +1,30 @@
 export {
+  fetchEnsAddress,
   type FetchEnsAddressArgs,
   type FetchEnsAddressResult,
-  fetchEnsAddress as fetchEnsAddress,
 } from './fetchEnsAddress'
 
 export {
+  fetchEnsAvatar,
   type FetchEnsAvatarArgs,
   type FetchEnsAvatarResult,
-  fetchEnsAvatar,
 } from './fetchEnsAvatar'
 
 export {
+  fetchEnsName,
   type FetchEnsNameArgs,
   type FetchEnsNameResult,
-  fetchEnsName,
 } from './fetchEnsName'
 
 export {
+  fetchEnsResolver,
   type FetchEnsResolverArgs,
   type FetchEnsResolverResult,
-  fetchEnsResolver,
 } from './fetchEnsResolver'
 
 export {
-  type WatchEnsAddressCallback,
   watchEnsAddress,
+  type WatchEnsAddressCallback,
 } from './watchEnsAddress'
 
 export { type WatchEnsAvatarCallback, watchEnsAvatar } from './watchEnsAvatar'
@@ -32,6 +32,6 @@ export { type WatchEnsAvatarCallback, watchEnsAvatar } from './watchEnsAvatar'
 export { type WatchEnsNameCallback, watchEnsName } from './watchEnsName'
 
 export {
-  type WatchEnsResolverCallback,
   watchEnsResolver,
+  type WatchEnsResolverCallback,
 } from './watchEnsResolver'

@@ -1,133 +1,52 @@
-import * as React from 'react'
-import { BigNumber, ethers, utils } from 'ethers'
-import { Unit, erc20ABI } from '@wagmi/core'
+import { FetchTokenArgs, FetchTokenResult, fetchToken } from '@wagmi/core'
+import { useQuery } from 'react-query'
 
-import { useContext } from '../../context'
-import { useProvider } from '../providers'
-import { useCancel } from '../utils'
+import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId } from '../utils'
 
-export type Config = {
-  address?: string
-  formatUnits?: Unit | number
-  skip?: boolean
+export type UseTokenArgs = Partial<FetchTokenArgs>
+
+export type UseTokenConfig = QueryConfig<FetchTokenResult, Error>
+
+export const queryKey = ({
+  address,
+  chainId,
+  formatUnits,
+}: Partial<FetchTokenArgs> & {
+  chainId?: number
+}) => [{ entity: 'token', address, chainId, formatUnits }] as const
+
+const queryFn = ({
+  queryKey: [{ address, formatUnits }],
+}: QueryFunctionArgs<typeof queryKey>) => {
+  if (!address) throw new Error('address is required')
+  return fetchToken({ address, formatUnits })
 }
 
-type State = {
-  token?: {
-    decimals: number
-    symbol: string
-    totalSupply: {
-      formatted: string
-      value: BigNumber
-    }
-  }
-  error?: Error
-  loading?: boolean
-}
-
-const initialState: State = {
-  loading: false,
-}
-
-export const useToken = ({
+export function useToken({
   address,
   formatUnits = 'ether',
-  skip,
-}: Config = {}) => {
-  const {
-    state: { connector },
-  } = useContext()
-  const provider = useProvider()
-  const [state, setState] = React.useState<State>(initialState)
+  cacheTime,
+  enabled = true,
+  keepPreviousData,
+  select,
+  staleTime,
+  suspense,
+  onError,
+  onSettled,
+  onSuccess,
+}: UseTokenArgs & UseTokenConfig = {}) {
+  const chainId = useChainId()
 
-  const cancelQuery = useCancel()
-  const getToken = React.useCallback(
-    async (config?: {
-      address: string
-      formatUnits?: Config['formatUnits']
-    }) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const config_ = config ?? {
-          address,
-          formatUnits,
-        }
-        if (!config_.address) throw new Error('address is required')
-
-        const contract = new ethers.Contract(
-          config_.address,
-          erc20ABI,
-          provider,
-        )
-        const formatUnits_ = config_.formatUnits ?? 'ether'
-
-        setState((x) => ({ ...x, error: undefined, loading: true }))
-        const [symbol, decimals, totalSupply] = await Promise.all([
-          contract.symbol(),
-          contract.decimals(),
-          contract.totalSupply(),
-        ])
-        const token = {
-          address: config_.address,
-          decimals,
-          symbol,
-          totalSupply: {
-            formatted: utils.formatUnits(totalSupply, formatUnits_),
-            value: totalSupply,
-          },
-        }
-        if (!didCancel) {
-          setState((x) => ({ ...x, token, loading: false }))
-        }
-        return { data: token, error: undefined }
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return { data: undefined, error }
-      }
-    },
-    [address, cancelQuery, formatUnits, provider],
-  )
-
-  const watchToken = React.useCallback(
-    async (token: {
-      address: string
-      decimals?: number
-      image?: string
-      symbol: string
-    }) => {
-      if (!connector?.watchAsset) return false
-      try {
-        await connector.watchAsset(token)
-        return true
-      } catch (error) {
-        return <Error>error
-      }
-    },
-    [connector],
-  )
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => {
-    if (skip || !address) return
-    getToken({ address, formatUnits })
-    return cancelQuery
-  }, [address, cancelQuery, formatUnits, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  return [
-    {
-      data: state.token ? { ...state.token, address } : undefined,
-      error: state.error,
-      loading: state.loading,
-    },
-    watchToken,
-    getToken,
-  ] as const
+  return useQuery(queryKey({ address, chainId, formatUnits }), queryFn, {
+    cacheTime,
+    enabled: Boolean(enabled && address),
+    keepPreviousData,
+    select,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }

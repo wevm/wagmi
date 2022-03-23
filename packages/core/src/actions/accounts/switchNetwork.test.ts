@@ -1,11 +1,11 @@
-import { ethers, getMockConnector, setupWagmiClient } from '../../../test'
+import { getMockConnector, getSigners, setupWagmiClient } from '../../../test'
 import { connect } from './connect'
 import { getNetwork } from './getNetwork'
 import { switchNetwork } from './switchNetwork'
 
 describe('switchNetwork', () => {
   it('switches network', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
     const connectResult = await connect(client.connectors[0])
     const switchNetworkResult = await switchNetwork({ chainId: 69 })
     expect(
@@ -35,7 +35,7 @@ describe('switchNetwork', () => {
   })
 
   it('switches network to same network', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
     await connect(client.connectors[0])
     const network1 = getNetwork()
     await switchNetwork({ chainId: 1 })
@@ -44,8 +44,8 @@ describe('switchNetwork', () => {
   })
 
   it('fails', async () => {
-    const signers = await ethers.getSigners()
-    const client = await setupWagmiClient({
+    const signers = getSigners()
+    const client = setupWagmiClient({
       connectors: [
         getMockConnector({
           signer: signers[0],
@@ -55,13 +55,11 @@ describe('switchNetwork', () => {
         }),
       ],
     })
-    try {
-      await connect(client.connectors[0])
-      await switchNetwork({ chainId: 69 })
-    } catch (error) {
-      expect(error).toMatchInlineSnapshot(
-        `[SwitchChainNotSupportedError: Switch chain not supported by connector]`,
-      )
-    }
+    await connect(client.connectors[0])
+    await expect(
+      switchNetwork({ chainId: 69 }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      `"Switch chain not supported by connector"`,
+    )
   })
 })

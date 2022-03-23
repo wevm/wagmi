@@ -1,9 +1,9 @@
-import { Contract } from 'ethers/lib/ethers'
+import { BigNumber, Contract } from 'ethers/lib/ethers'
 import { formatUnits } from 'ethers/lib/utils'
 
-import { wagmiClient } from '../../client'
-import { defaultChains, defaultL2Chains, erc20ABI } from '../../constants'
-import { Balance, Unit } from '../../types'
+import { client } from '../../client'
+import { allChains, erc20ABI } from '../../constants'
+import { Unit } from '../../types'
 
 export type FetchBalanceArgs = {
   /** Address or ENS name */
@@ -14,7 +14,13 @@ export type FetchBalanceArgs = {
   token?: string
 }
 
-export type FetchBalanceResult = Balance
+export type FetchBalanceResult = {
+  decimals: number
+  formatted: string
+  symbol: string
+  unit: Unit | number
+  value: BigNumber
+}
 
 export async function fetchBalance({
   addressOrName,
@@ -22,7 +28,7 @@ export async function fetchBalance({
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
   if (token) {
-    const contract = new Contract(token, erc20ABI, wagmiClient.provider)
+    const contract = new Contract(token, erc20ABI, client.provider)
     const [value, decimals, symbol] = await Promise.all([
       contract.balanceOf(addressOrName),
       contract.decimals(),
@@ -37,15 +43,9 @@ export async function fetchBalance({
     }
   }
 
-  const chains = [
-    ...(wagmiClient.connector?.chains ?? []),
-    ...defaultChains,
-    ...defaultL2Chains,
-  ]
-  const value = await wagmiClient.provider.getBalance(addressOrName)
-  const chain = chains.find(
-    (x) => x.id === wagmiClient.provider.network.chainId,
-  )
+  const chains = [...(client.connector?.chains ?? []), ...allChains]
+  const value = await client.provider.getBalance(addressOrName)
+  const chain = chains.find((x) => x.id === client.provider.network.chainId)
   return {
     decimals: chain?.nativeCurrency?.decimals ?? 18,
     formatted: formatUnits(value, unit),

@@ -1,104 +1,200 @@
-import { wallets } from 'wagmi-testing'
-
-import { actHook, renderHook } from '../../../test'
+import { renderHook } from '../../../test'
 import { useEnsResolver } from './useEnsResolver'
 
 describe('useEnsResolver', () => {
-  describe('on mount', () => {
+  describe('name', () => {
     it('has resolver', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsResolver({
-          name: wallets.ethers3.ensName,
+          name: 'awkweb.eth',
         }),
       )
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "loading",
         }
       `)
-      await waitForNextUpdate()
-      const { data, ...rest } = result.current[0]
-      expect(data?.name).toEqual(wallets.ethers3.ensName)
-      expect(rest).toMatchInlineSnapshot(`
+
+      await waitFor(() => result.current.isSuccess)
+
+      const { dataUpdatedAt, ...data } = result.current
+      expect(dataUpdatedAt).toBeDefined()
+      expect(data).toMatchInlineSnapshot(`
         {
-          "error": undefined,
-          "loading": false,
+          "data": Resolver {
+            "_resolvedAddress": undefined,
+            "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
+            "name": "awkweb.eth",
+            "provider": "<WrappedHardhatProvider>",
+          },
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "success",
         }
       `)
     })
 
     it('does not have resolver', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useEnsResolver({
-          name: 'foobar.eth',
+          name: 'awkweb123.eth',
         }),
       )
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "loading",
         }
       `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+
+      await waitFor(() => result.current.isSuccess)
+
+      const { dataUpdatedAt, ...data } = result.current
+      expect(dataUpdatedAt).toBeDefined()
+      expect(data).toMatchInlineSnapshot(`
         {
           "data": null,
-          "error": undefined,
-          "loading": false,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "success",
         }
       `)
     })
   })
 
-  it('skip', async () => {
-    const { result } = renderHook(() => useEnsResolver({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
-      }
-    `)
-  })
-
-  describe('getEnsResolver', () => {
-    it('uses config', async () => {
+  describe('enabled', () => {
+    it('is false', () => {
       const { result } = renderHook(() =>
         useEnsResolver({
-          name: wallets.ethers3.ensName,
-          skip: true,
+          name: 'moxey.eth',
+          enabled: false,
         }),
       )
-      await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res?.data?.name).toEqual(wallets.ethers3.ensName)
-      })
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "idle",
+        }
+      `)
     })
 
-    it('uses params', async () => {
-      const { result } = renderHook(() => useEnsResolver({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]({
-          name: wallets.ethers3.ensName,
-        })
-        expect(res?.data?.name).toEqual(wallets.ethers3.ensName)
-      })
-    })
-
-    it('has error', async () => {
-      const { result } = renderHook(() => useEnsResolver({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": undefined,
-            "error": [Error: name is required],
-          }
-        `)
-      })
+    it('missing name', () => {
+      const { result } = renderHook(() => useEnsResolver({}))
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "idle",
+        }
+      `)
     })
   })
 })

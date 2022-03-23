@@ -30,11 +30,13 @@ export const Connect = () => {
 
   React.useEffect(() => {
     const unsubscribe = wagmiClient.subscribe(
-      ({ connecting, connector }) => [connecting, connector],
+      ({ status, connector }) => [status, connector],
       () =>
         setState((x) => ({
           ...x,
-          loading: wagmiClient.connecting,
+          loading:
+            wagmiClient.status === 'connecting' ||
+            wagmiClient.status === 'reconnecting',
           connector: wagmiClient.connector,
         })),
     )

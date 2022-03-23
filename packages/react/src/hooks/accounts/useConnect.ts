@@ -1,100 +1,98 @@
 import * as React from 'react'
-import {
-  Connector,
-  ConnectorAlreadyConnectedError,
-  ConnectorData,
-} from '@wagmi/core'
+import { ConnectResult, Connector, connect } from '@wagmi/core'
+import { UseMutationOptions, UseMutationResult, useMutation } from 'react-query'
 
-import { useContext } from '../../context'
-import { useCancel } from '../utils'
+import { useClient } from '../../context'
 
-type State = {
-  connector?: Connector
-  error?: Error
-  loading: boolean
+type MutationOptions = UseMutationOptions<ConnectResult, Error, Connector>
+
+export type UseConnectConfig = {
+  /**
+   * Function fires before connect function and is passed same variables connect function would receive.
+   * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
+   */
+  onBeforeConnect?: MutationOptions['onMutate']
+  /** Function fires when connect is successful */
+  onConnect?: MutationOptions['onSuccess']
+  /** Function fires if connect encounters error */
+  onError?: MutationOptions['onError']
+  /** Function fires when connect is either successful or encounters error */
+  onSettled?: MutationOptions['onSettled']
 }
 
-const initialState: State = {
-  loading: false,
-}
+export const mutationKey = 'connect'
 
-export const useConnect = () => {
+const mutationFn = (connector: Connector) => connect(connector)
+
+export function useConnect({
+  onBeforeConnect,
+  onConnect,
+  onError,
+  onSettled,
+}: UseConnectConfig = {}) {
+  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
+  const client = useClient()
+
   const {
-    state: globalState,
-    setState: setGlobalState,
-    setLastUsedConnector,
-  } = useContext()
-  const [state, setState] = React.useState<State>(initialState)
+    mutate,
+    mutateAsync,
+    status,
+    variables: connector,
+    // Remove these values from return
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    isSuccess,
+    isLoading,
+    /* eslint-enable @typescript-eslint/no-unused-vars */
+    ...connectMutation
+  } = useMutation(mutationKey, mutationFn, {
+    onError,
+    onMutate: onBeforeConnect,
+    onSettled,
+    onSuccess: onConnect,
+  })
 
-  const cancelQuery = useCancel()
-  const connect = React.useCallback(
-    async (
-      connector: Connector,
-    ): Promise<{
-      data?: ConnectorData
-      error?: Error
-    }> => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const activeConnector = globalState?.connector
-        if (connector === activeConnector)
-          throw new ConnectorAlreadyConnectedError()
-
-        setState((x) => ({
-          ...x,
-          loading: true,
-          connector,
-          error: undefined,
-        }))
-        const data = await connector.connect()
-
-        if (!didCancel) {
-          // Update connector globally only after successful connection
-          setGlobalState((x) => ({ ...x, connector, data }))
-          setLastUsedConnector(connector.name)
-          setState((x) => ({ ...x, loading: false }))
-        }
-        return { data, error: undefined }
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({
-            ...x,
-            connector: undefined,
-            error,
-            loading: false,
-          }))
-        }
-        return { data: undefined, error }
-      }
-    },
-    [cancelQuery, globalState.connector, setGlobalState, setLastUsedConnector],
-  )
-
-  // Keep connector in sync with global connector
+  // Trigger update when connector or status change
   React.useEffect(() => {
-    setState((x) => ({
-      ...x,
-      connector: globalState.connector,
-      error: undefined,
-    }))
-    return cancelQuery
-  }, [cancelQuery, globalState.connector])
-
-  return [
-    {
-      data: {
-        connected: !!globalState.data?.account,
+    const unsubscribe = client.subscribe(
+      (state) => ({
         connector: state.connector,
-        connectors: globalState.connectors,
+        status: state.status,
+      }),
+      forceUpdate,
+      {
+        equalityFn: (selected, previous) =>
+          selected.status === previous.status &&
+          selected.connector === previous.connector,
       },
-      error: state.error,
-      loading: state.loading || globalState.connecting,
-    },
-    connect,
-  ] as const
+    )
+    return unsubscribe
+  }, [client])
+
+  let status_:
+    | Extract<UseMutationResult['status'], 'error' | 'idle'>
+    | 'connected'
+    | 'connecting'
+    | 'disconnected'
+    | 'reconnecting'
+  if (client.status === 'reconnecting') status_ = 'reconnecting'
+  else if (status === 'loading' || client.status === 'connecting')
+    status_ = 'connecting'
+  else if (status === 'success' || !!client.connector) status_ = 'connected'
+  else if (!client.connector) status_ = 'disconnected'
+  else status_ = status
+
+  return {
+    ...connectMutation,
+    activeConnector: client.connector,
+    connect: mutate,
+    connectAsync: mutateAsync,
+    connector,
+    connectors: client.connectors,
+    isConnected: status_ === 'connected',
+    isConnecting: status_ === 'connecting',
+    isDisconnected: status_ === 'disconnected',
+    isIdle: status_ === 'idle',
+    isReconnecting: status_ === 'reconnecting',
+    status: status_,
+  } as const
 }

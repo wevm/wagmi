@@ -8,14 +8,19 @@ import { Account, WalletSelector } from '../web3'
 
 export const SignMessage = () => {
   const previousMessage = React.useRef<string>()
-  const [{ data: accountData }] = useAccount()
+  const { data: accountData } = useAccount()
   const [message, setMessage] = React.useState('')
-  const [{ data, error, loading }, signMessage] = useSignMessage()
+  const {
+    data: signMessageData,
+    error,
+    isLoading,
+    signMessage,
+  } = useSignMessage()
 
   const recoveredAddress = React.useMemo(() => {
-    if (!data || !previousMessage.current) return undefined
-    return verifyMessage(previousMessage.current, data)
-  }, [data, previousMessage])
+    if (!signMessageData || !previousMessage.current) return undefined
+    return verifyMessage(previousMessage.current, signMessageData)
+  }, [signMessageData, previousMessage])
 
   if (accountData)
     return (
@@ -41,16 +46,18 @@ export const SignMessage = () => {
           <Button
             width="full"
             center
-            disabled={loading || !message.length}
-            loading={loading}
+            disabled={isLoading || !message.length}
+            loading={isLoading}
           >
-            {loading ? 'Check Wallet' : 'Sign Message'}
+            {isLoading ? 'Check Wallet' : 'Sign Message'}
           </Button>
 
-          {data && (
+          {signMessageData && (
             <Box>
               <Box>Recovered Address: {recoveredAddress}</Box>
-              <Box style={{ wordBreak: 'break-all' }}>Signature: {data}</Box>
+              <Box style={{ wordBreak: 'break-all' }}>
+                Signature: {signMessageData}
+              </Box>
             </Box>
           )}
           {error && (

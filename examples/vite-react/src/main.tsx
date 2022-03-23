@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import { providers } from 'ethers'
 
 // Imports
-import { Connector, Provider, chain, defaultChains } from 'wagmi'
+import { Connector, Provider, chain, createClient, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -12,7 +12,7 @@ import { App } from './App'
 
 // Get environment variables
 const alchemyId = import.meta.env.VITE_ALCHEMY_ID as string
-const etherscanApiKey = import.meta.env.VITE_ETHERSCAN_API_KEY as string
+// const etherscanApiKey = import.meta.env.VITE_ETHERSCAN_API_KEY as string
 const infuraId = import.meta.env.VITE_INFURA_ID as string
 
 // Pick chains
@@ -51,27 +51,25 @@ const isChainSupported = (chainId?: number) =>
 
 // Set up providers
 const provider = ({ chainId }: ProviderConfig) =>
-  providers.getDefaultProvider(
+  new providers.AlchemyProvider(
     isChainSupported(chainId) ? chainId : defaultChain.id,
-    {
-      alchemy: alchemyId,
-      etherscan: etherscanApiKey,
-      infura: infuraId,
-    },
+    alchemyId,
   )
 const webSocketProvider = ({ chainId }: ConnectorsConfig) =>
   isChainSupported(chainId)
     ? new providers.InfuraWebSocketProvider(chainId, infuraId)
     : undefined
 
+const client = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+  webSocketProvider,
+})
+
 ReactDOM.render(
   <React.StrictMode>
-    <Provider
-      autoConnect
-      connectors={connectors}
-      provider={provider}
-      webSocketProvider={webSocketProvider}
-    >
+    <Provider client={client}>
       <App />
     </Provider>
   </React.StrictMode>,

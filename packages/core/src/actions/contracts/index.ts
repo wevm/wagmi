@@ -1,10 +1,10 @@
-export { type GetContractArgs, getContract } from './getContract'
+export { getContract, type GetContractArgs } from './getContract'
 
 export {
+  readContract,
   type ReadContractArgs,
   type ReadContractConfig,
   type ReadContractResult,
-  readContract,
 } from './readContract'
 
 export { watchContractEvent } from './watchContractEvent'
@@ -16,4 +16,9 @@ export {
   type WatchReadContractResult,
 } from './watchReadContract'
 
-export { writeContract } from './writeContract'
+export {
+  writeContract,
+  type WriteContractArgs,
+  type WriteContractConfig,
+  type WriteContractResult,
+} from './writeContract'

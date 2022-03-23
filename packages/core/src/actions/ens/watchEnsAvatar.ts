@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import {
   FetchEnsAvatarArgs,
   FetchEnsAvatarResult,
@@ -14,9 +14,6 @@ export function watchEnsAvatar(
   callback: WatchEnsAvatarCallback,
 ) {
   const handleChange = async () => callback(await fetchEnsAvatar(args))
-  const unsubscribe = wagmiClient.subscribe(
-    ({ connector, provider }) => [connector, provider],
-    handleChange,
-  )
+  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
   return unsubscribe
 }

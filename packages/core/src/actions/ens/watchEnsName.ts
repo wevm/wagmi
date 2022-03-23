@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import {
   FetchEnsNameArgs,
   FetchEnsNameResult,
@@ -12,9 +12,6 @@ export function watchEnsName(
   callback: WatchEnsNameCallback,
 ) {
   const handleChange = async () => callback(await fetchEnsName(args))
-  const unsubscribe = wagmiClient.subscribe(
-    ({ connector, provider }) => [connector, provider],
-    handleChange,
-  )
+  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
   return unsubscribe
 }

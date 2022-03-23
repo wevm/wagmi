@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 import { allChains } from '../../constants'
 import { Chain } from '../../types'
 
@@ -11,7 +11,7 @@ export type GetNetworkResult = {
 }
 
 export function getNetwork(): GetNetworkResult {
-  const { connector, data } = wagmiClient
+  const { connector, data } = client
 
   const chainId = data?.chain?.id
   const unsupported = data?.chain?.unsupported
@@ -28,7 +28,6 @@ export function getNetwork(): GetNetworkResult {
           unsupported,
         }
       : undefined,
-
     chains: activeChains,
   }
 }

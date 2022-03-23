@@ -3,7 +3,7 @@ import { getProvider } from './getProvider'
 
 describe('getProvider', () => {
   it('defined', async () => {
-    await setupWagmiClient()
+    setupWagmiClient()
     expect(getProvider()).toBeDefined()
   })
 })

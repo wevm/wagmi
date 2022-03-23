@@ -1,5 +1,3 @@
-import { Signer } from 'ethers'
-
 import { actHook, renderHook } from '../../../test'
 import { useSigner } from './useSigner'
 import { useConnect } from './useConnect'
@@ -13,20 +11,30 @@ const useSignerWithConnect = () => {
 describe('useSigner', () => {
   describe('on mount', () => {
     it('not connected', async () => {
-      const { result, waitForNextUpdate } = renderHook(() => useSigner())
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      const { result } = renderHook(() => useSigner())
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
-        }
-      `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": false,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "loading",
         }
       `)
     })
@@ -35,26 +43,37 @@ describe('useSigner', () => {
       const { result } = renderHook(() => useSignerWithConnect())
 
       await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
+        const mockConnector = result.current.connect.connectors[0]
+        result.current.connect.connect(mockConnector)
       })
 
-      const { data, loading, error } = result.current.signer[0]
-      expect(data).toBeInstanceOf(Signer)
-      expect(loading).toBe(false)
-      expect(error).toBeUndefined()
+      const { data, dataUpdatedAt, ...rest } = result.current.signer
+      expect(data).toBeDefined()
+      expect(dataUpdatedAt).toBeDefined()
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": true,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "success",
+        }
+      `)
     })
-  })
-
-  it('skip', async () => {
-    const { result } = renderHook(() => useSigner({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
-      }
-    `)
   })
 
   describe('getSigner', () => {
@@ -62,10 +81,10 @@ describe('useSigner', () => {
       const { result } = renderHook(() => useSignerWithConnect())
 
       await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
-        const res = await result.current.signer[1]()
-        expect(res).toBeInstanceOf(Signer)
+        const mockConnector = result.current.connect.connectors[0]
+        result.current.connect.connect(mockConnector)
+        const res = await result.current.signer.refetch()
+        expect(res).toBeDefined()
       })
     })
 
@@ -73,8 +92,33 @@ describe('useSigner', () => {
       const { result } = renderHook(() => useSigner())
 
       await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res).toMatchInlineSnapshot(`undefined`)
+        const res = await result.current.refetch()
+        const { dataUpdatedAt, ...rest } = res
+        expect(dataUpdatedAt).toBeDefined()
+        expect(rest).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": null,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isError": false,
+            "isFetched": true,
+            "isFetchedAfterMount": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isLoadingError": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isRefetching": false,
+            "isStale": true,
+            "isSuccess": true,
+            "refetch": [Function],
+            "remove": [Function],
+            "status": "success",
+          }
+        `)
       })
     })
   })

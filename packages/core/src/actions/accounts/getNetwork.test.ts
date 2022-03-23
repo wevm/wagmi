@@ -1,18 +1,18 @@
 import { Signer } from 'ethers/lib/ethers'
 
-import { ethers, getMockConnector, setupWagmiClient } from '../../../test'
+import { getMockConnector, getSigners, setupWagmiClient } from '../../../test'
 import { connect } from './connect'
 import { getNetwork } from './getNetwork'
 
 describe('getNetwork', () => {
   let signer: Signer
-  beforeEach(async () => {
-    const signers = await ethers.getSigners()
+  beforeEach(() => {
+    const signers = getSigners()
     signer = signers[0]
   })
 
   it('not connected', async () => {
-    await setupWagmiClient()
+    setupWagmiClient()
     expect(getNetwork()).toMatchInlineSnapshot(`
       {
         "chain": undefined,
@@ -22,7 +22,7 @@ describe('getNetwork', () => {
   })
 
   it('connected', async () => {
-    const client = await setupWagmiClient()
+    const client = setupWagmiClient()
     await connect(client.connectors[0])
     expect(getNetwork()).toMatchInlineSnapshot(`
       {
@@ -146,7 +146,7 @@ describe('getNetwork', () => {
   })
 
   it('unsupported chain', async () => {
-    const client = await setupWagmiClient({
+    const client = setupWagmiClient({
       connectors: [
         getMockConnector({
           network: 69,

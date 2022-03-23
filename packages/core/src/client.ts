@@ -1,8 +1,5 @@
-import {
-  BaseProvider,
-  WebSocketProvider,
-  getDefaultProvider,
-} from '@ethersproject/providers'
+import type { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
+import { getDefaultProvider } from 'ethers'
 import {
   GetState,
   Mutate,
@@ -10,30 +7,24 @@ import {
   StoreApi,
   default as create,
 } from 'zustand/vanilla'
-import { subscribeWithSelector } from 'zustand/middleware'
+import { persist, subscribeWithSelector } from 'zustand/middleware'
 
-import {
-  InjectedConnector,
-  Connector as TConnector,
-  ConnectorData as TData,
-} from './connectors'
-import { WagmiStorage, createStorage, noopStorage } from './utils/storage'
+import { Connector, ConnectorData, InjectedConnector } from './connectors'
+import { WagmiStorage, createStorage, noopStorage } from './storage'
 
-export type WagmiClientConfig = {
+export type ClientConfig = {
   /** Enables reconnecting to last used connector on init */
   autoConnect?: boolean
   /**
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
    */
-  connectors: Connector[] | ((config: { chainId?: number }) => Connector[])
+  connectors?: ((config: { chainId?: number }) => Connector[]) | Connector[]
   /**
    * Interface for connecting to network
-   * @default getDefaultProvider()
+   * @default (config) => getDefaultProvider(config.chainId)
    */
-  provider?:
-    | BaseProvider
-    | ((config: { chainId?: number; connector?: Connector }) => BaseProvider)
+  provider?: ((config: { chainId?: number }) => BaseProvider) | BaseProvider
   /**
    * Custom storage for data persistance
    * @default window.localStorage
@@ -41,90 +32,117 @@ export type WagmiClientConfig = {
   storage?: WagmiStorage
   /** WebSocket interface for connecting to network */
   webSocketProvider?:
+    | ((config: { chainId?: number }) => WebSocketProvider | undefined)
     | WebSocketProvider
-    | ((config: {
-        chainId?: number
-        connector?: Connector
-      }) => WebSocketProvider | undefined)
 }
+
 const defaultConfig: Required<
-  Pick<WagmiClientConfig, 'connectors' | 'provider' | 'storage'>
+  Pick<ClientConfig, 'connectors' | 'provider' | 'storage'>
 > = {
   connectors: [new InjectedConnector()],
-  provider: getDefaultProvider(),
+  provider: ({ chainId }) => {
+    try {
+      return getDefaultProvider(chainId)
+    } catch (error) {
+      return getDefaultProvider()
+    }
+  },
   storage: createStorage({
     storage: typeof window !== 'undefined' ? window.localStorage : noopStorage,
   }),
 }
 
-export type Connector = TConnector
-export type Data = TData<BaseProvider>
+export type Data = ConnectorData<BaseProvider>
 export type State = {
-  connecting?: boolean
   connector?: Connector
+  connectors: Connector[]
   data?: Data
   error?: Error
-  connectors: Connector[]
   provider: BaseProvider
+  status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
   webSocketProvider?: WebSocketProvider
 }
 
-export type AutoConnectionChangedArgs = {
-  connecting: boolean
-  data: Data | undefined
-  connector: Connector | undefined
-}
+export class Client {
+  config: Partial<ClientConfig>
+  storage: WagmiStorage
+  store: Mutate<
+    StoreApi<State>,
+    [
+      ['zustand/subscribeWithSelector', never],
+      ['zustand/persist', Partial<State>],
+    ]
+  >
 
-export class WagmiClient {
-  config: Partial<WagmiClientConfig>
-  store: Mutate<StoreApi<State>, [['zustand/subscribeWithSelector', never]]>
-
-  #storage?: WagmiStorage
   #lastUsedConnector?: string | null
 
   constructor({
-    autoConnect = false,
+    autoConnect,
     connectors = defaultConfig.connectors,
     provider = defaultConfig.provider,
     storage = defaultConfig.storage,
     webSocketProvider,
-  }: WagmiClientConfig = defaultConfig) {
+  }: ClientConfig = defaultConfig) {
     this.config = {
+      autoConnect,
       connectors,
       provider,
       webSocketProvider,
     }
 
-    const connectors_ =
-      typeof connectors === 'function' ? connectors({}) : connectors
-    const provider_ = typeof provider === 'function' ? provider({}) : provider
-    const webSocketProvider_ =
-      typeof webSocketProvider === 'function'
-        ? webSocketProvider({})
-        : webSocketProvider
+    let status: State['status'] = 'disconnected'
+    let chainId: number | undefined
+    if (autoConnect) {
+      try {
+        const rawState = storage.getItem('state', '')
+        const data: Data | undefined = JSON.parse(rawState || '{}')?.state?.data
+        // If account exists in localStorage, set status to reconnecting
+        status = data?.account ? 'reconnecting' : 'connecting'
+        chainId = data?.chain?.id
+        // eslint-disable-next-line no-empty
+      } catch (_error) {}
+    }
 
     this.store = create<
       State,
       SetState<State>,
       GetState<State>,
-      WagmiClient['store']
+      Client['store']
     >(
-      subscribeWithSelector<State>(() => ({
-        connecting: autoConnect,
-        connectors: connectors_,
-        provider: provider_,
-        webSocketProvider: webSocketProvider_,
-      })),
+      subscribeWithSelector(
+        persist<State>(
+          (_set, _get) => ({
+            connectors:
+              typeof connectors === 'function'
+                ? connectors({ chainId })
+                : connectors,
+            provider:
+              typeof provider === 'function' ? provider({ chainId }) : provider,
+            status,
+            webSocketProvider:
+              typeof webSocketProvider === 'function'
+                ? webSocketProvider({ chainId })
+                : webSocketProvider,
+          }),
+          {
+            name: 'state',
+            getStorage: () => storage,
+            partialize: (state) => ({
+              data: {
+                account: state?.data?.account,
+                chain: state?.data?.chain,
+              },
+            }),
+          },
+        ),
+      ),
     )
 
-    this.#storage = storage
+    this.storage = storage
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
   }
 
-  get connecting() {
-    return this.store.getState().connecting
-  }
   get connectors() {
     return this.store.getState().connectors
   }
@@ -140,11 +158,14 @@ export class WagmiClient {
   get provider() {
     return this.store.getState().provider
   }
-  get webSocketProvider() {
-    return this.store.getState().webSocketProvider
+  get status() {
+    return this.store.getState().status
   }
   get subscribe() {
     return this.store.subscribe
+  }
+  get webSocketProvider() {
+    return this.store.getState().webSocketProvider
   }
 
   setState(updater: State | ((state: State) => State)) {
@@ -156,45 +177,49 @@ export class WagmiClient {
   clearState() {
     this.setState((x) => ({
       ...x,
-      connecting: false,
       connector: undefined,
       data: undefined,
       error: undefined,
+      status: 'disconnected',
     }))
   }
 
   async destroy() {
-    if (this.connector) {
-      await this.connector.disconnect()
-    }
+    if (this.connector) await this.connector.disconnect?.()
     this.clearState()
     this.store.destroy()
   }
 
   async autoConnect() {
-    if (!this.connectors) return
+    if (!this.connectors.length) return
 
+    // Try last used connector first
     const sorted = this.#lastUsedConnector
       ? [...this.connectors].sort((x) =>
           x.id === this.#lastUsedConnector ? -1 : 1,
         )
       : this.connectors
 
-    this.setState((x) => ({ ...x, connecting: true }))
+    let connected = false
     for (const connector of sorted) {
       if (!connector.ready || !connector.isAuthorized) continue
       const isAuthorized = await connector.isAuthorized()
       if (!isAuthorized) continue
 
       const data = await connector.connect()
-      this.setState((x) => ({ ...x, data, connector }))
+      this.setState((x) => ({ ...x, connector, data, status: 'connected' }))
+      connected = true
       break
     }
-    this.setState((x) => ({ ...x, connecting: false }))
+
+    // If connecting didn't succeed, set to disconnected
+    if (!connected) this.setState((x) => ({ ...x, status: 'disconnected' }))
+
+    return this.data
   }
 
   setLastUsedConnector(lastUsedConnector: string | null = null) {
-    this.#storage?.setItem('wallet', lastUsedConnector)
+    this.storage?.setItem('wallet', lastUsedConnector)
   }
 
   #addEffects() {
@@ -209,66 +234,45 @@ export class WagmiClient {
     this.store.subscribe(
       ({ connector }) => connector,
       (connector, prevConnector) => {
-        prevConnector?.off('change', onChange)
-        prevConnector?.off('disconnect', onDisconnect)
-        prevConnector?.off('error', onError)
+        prevConnector?.off?.('change', onChange)
+        prevConnector?.off?.('disconnect', onDisconnect)
+        prevConnector?.off?.('error', onError)
 
         if (!connector) return
-        connector.on('change', onChange)
-        connector.on('disconnect', onDisconnect)
-        connector.on('error', onError)
+        connector.on?.('change', onChange)
+        connector.on?.('disconnect', onDisconnect)
+        connector.on?.('error', onError)
       },
     )
 
     const { connectors, provider, webSocketProvider } = this.config
+    const subscribeConnectors = typeof connectors === 'function'
+    const subscribeProvider = typeof provider === 'function'
+    const subscribeWebSocketProvider = typeof webSocketProvider === 'function'
 
-    // Subscribe to changes that should update `connectors`
-    if (typeof connectors === 'function')
+    if (subscribeConnectors || subscribeProvider || subscribeWebSocketProvider)
       this.store.subscribe(
         ({ data }) => data?.chain?.id,
-        () => {
+        (chainId) => {
           this.setState((x) => ({
             ...x,
-            connectors: connectors({ chainId: this.data?.chain?.id }),
-          }))
-        },
-      )
-
-    // Subscribe to changes that should update `provider` or `webSocketProvider`
-    const subscribeProvider = typeof provider === 'function'
-    const subscribeWebSocketProvider =
-      !(webSocketProvider instanceof WebSocketProvider) && webSocketProvider
-    if (subscribeProvider || subscribeWebSocketProvider)
-      this.store.subscribe(
-        ({ data, connector }) => [data?.chain?.id, connector],
-        () => {
-          this.setState((x) => ({
-            ...x,
-            provider: subscribeProvider
-              ? provider({
-                  chainId: this.data?.chain?.id,
-                  connector: this.connector,
-                })
-              : x.provider,
+            connectors: subscribeConnectors
+              ? connectors({ chainId })
+              : x.connectors,
+            provider: subscribeProvider ? provider({ chainId }) : x.provider,
             webSocketProvider: subscribeWebSocketProvider
-              ? webSocketProvider({
-                  chainId: this.data?.chain?.id,
-                  connector: this.connector,
-                })
+              ? webSocketProvider({ chainId })
               : x.webSocketProvider,
           }))
-        },
-        {
-          equalityFn: ([chainId], [newChainId]) => chainId === newChainId,
         },
       )
   }
 }
 
-export let wagmiClient = new WagmiClient()
+export let client: Client
 
-export function createWagmiClient(config: WagmiClientConfig) {
-  const client = new WagmiClient(config)
-  wagmiClient = client
-  return client
+export function createClient(config?: ClientConfig) {
+  const client_ = new Client(config)
+  client = client_
+  return client_
 }

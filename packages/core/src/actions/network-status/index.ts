@@ -1,20 +1,22 @@
 export {
-  type FetchBlockNumberResult,
   fetchBlockNumber,
+  type FetchBlockNumberResult,
 } from './fetchBlockNumber'
+
 export {
+  fetchFeeData,
   type FetchFeeDataResult,
   type FetchFeeDataArgs,
-  fetchFeeData,
 } from './fetchFeeData'
 
 export {
+  watchFeeData,
   type WatchFeeDataArgs,
   type WatchFeeDataCallback,
-  watchFeeData,
 } from './watchFeeData'
+
 export {
+  watchBlockNumber,
   type WatchBlockNumberArgs,
   type WatchBlockNumberCallback,
-  watchBlockNumber,
 } from './watchBlockNumber'

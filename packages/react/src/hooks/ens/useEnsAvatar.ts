@@ -1,70 +1,53 @@
-import * as React from 'react'
+import { useQuery } from 'react-query'
+import { FetchEnsAvatarResult, fetchEnsAvatar } from '@wagmi/core'
 
-import { useProvider } from '../providers'
-import { useCacheBuster, useCancel } from '../utils'
+import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId } from '../utils'
 
-type Config = {
+export type UseEnsAvatarArgs = {
   /** Address or ENS name */
-  addressOrName?: string | null
-  /** Disables fetching */
-  skip?: boolean
+  addressOrName?: string
 }
 
-type State = {
-  avatar?: string | null
-  error?: Error
-  loading: boolean
+export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
+
+export const queryKey = ({
+  addressOrName,
+  chainId,
+}: {
+  addressOrName?: UseEnsAvatarArgs['addressOrName']
+  chainId?: number
+}) => [{ entity: 'ensAvatar', addressOrName, chainId }] as const
+
+const queryFn = ({
+  queryKey: [{ addressOrName }],
+}: QueryFunctionArgs<typeof queryKey>) => {
+  if (!addressOrName) throw new Error('addressOrName is required')
+  return fetchEnsAvatar({ addressOrName })
 }
 
-const initialState: State = {
-  loading: false,
-}
-
-export const useEnsAvatar = ({ addressOrName, skip }: Config = {}) => {
-  const cacheBuster = useCacheBuster()
-  const provider = useProvider()
-  const [state, setState] = React.useState<State>(initialState)
-
-  const cancelQuery = useCancel()
-  const getEnsAvatar = React.useCallback(
-    async (config?: { addressOrName: string }) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const config_ = config ?? { addressOrName }
-        if (!config_.addressOrName) throw new Error('addressOrName is required')
-
-        setState((x) => ({ ...x, error: undefined, loading: true }))
-        const avatar = await provider.getAvatar(config_.addressOrName)
-        if (!didCancel) {
-          setState((x) => ({ ...x, avatar, loading: false }))
-        }
-        return avatar
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return error
-      }
-    },
-    [addressOrName, cancelQuery, provider],
-  )
-
-  // Fetch avatar when deps or chain changes
-  /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => {
-    if (skip || !addressOrName) return
-    getEnsAvatar({ addressOrName })
-    return cancelQuery
-  }, [addressOrName, cacheBuster, cancelQuery, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
-
-  return [
-    { data: state.avatar, loading: state.loading, error: state.error },
-    getEnsAvatar,
-  ] as const
+export function useEnsAvatar({
+  addressOrName,
+  cacheTime,
+  enabled = true,
+  keepPreviousData,
+  select,
+  staleTime = 1000 * 60 * 60 * 24, // 24 hours
+  suspense,
+  onError,
+  onSettled,
+  onSuccess,
+}: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
+  const chainId = useChainId()
+  return useQuery(queryKey({ addressOrName, chainId }), queryFn, {
+    cacheTime,
+    enabled: Boolean(enabled && addressOrName && chainId),
+    keepPreviousData,
+    select,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }

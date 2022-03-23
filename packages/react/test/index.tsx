@@ -4,51 +4,40 @@ import {
   WrapperComponent,
   renderHook as defaultRenderHook,
 } from '@testing-library/react-hooks'
-import { providers } from 'ethers'
-import {
-  MockConnector,
-  defaultChains,
-  infuraApiKey,
-  wallets,
-} from 'wagmi-testing'
-import { chain } from '@wagmi/core'
+import '@testing-library/jest-dom/extend-expect'
+import { QueryClient } from 'react-query'
 
 import { Provider, ProviderProps } from '../src'
+import { setupWagmiClient } from './utils'
 
-import '@testing-library/jest-dom/extend-expect'
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Prevent Jest from garbage collecting cache
+      cacheTime: Infinity,
+      // Turn off retries to prevent timeouts
+      retry: false,
+    },
+  },
+})
 
 type Props = ProviderProps & {
-  chainId?: number
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
-export const wrapper = (props: Props) => {
-  const network = props.chainId ?? chain.mainnet.id
-  return (
-    <Provider
-      connectors={[
-        new MockConnector({
-          chains: defaultChains,
-          options: {
-            network,
-            privateKey: wallets.ethers1.privateKey,
-          },
-        }),
-      ]}
-      provider={new providers.InfuraProvider(network, infuraApiKey)}
-      {...props}
-    />
-  )
+export function wrapper(props: Props) {
+  const client = setupWagmiClient({ queryClient })
+  return <Provider client={client} {...props} />
 }
 
-export const renderHook = <TProps, TResult>(
+export function renderHook<TProps, TResult>(
   hook: (props: TProps) => TResult,
   {
     wrapper: wrapper_,
     ...options
   }: RenderHookOptions<TProps & ProviderProps> | undefined = {},
-) => {
+) {
   if (wrapper_ == undefined) wrapper_ = wrapper as WrapperComponent<TProps>
   return defaultRenderHook<TProps, TResult>(hook, {
     wrapper: wrapper_,
@@ -57,3 +46,9 @@ export const renderHook = <TProps, TResult>(
 }
 
 export { act as actHook } from '@testing-library/react-hooks'
+export {
+  setupWagmiClient,
+  getMockConnector,
+  getProvider,
+  getSigners,
+} from './utils'

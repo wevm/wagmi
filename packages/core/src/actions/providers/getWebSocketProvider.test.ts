@@ -3,7 +3,7 @@ import { getWebSocketProvider } from './getWebSocketProvider'
 
 describe('getWebSocketProvider', () => {
   it('undefined', async () => {
-    await setupWagmiClient()
+    setupWagmiClient()
     expect(getWebSocketProvider()).toBeUndefined()
   })
 })

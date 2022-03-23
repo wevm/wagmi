@@ -232,14 +232,3 @@ export const defaultChains: Chain[] = [
   chain.goerli,
   chain.kovan,
 ]
-
-export const defaultL2Chains: Chain[] = [
-  chain.optimism,
-  chain.optimismKovan,
-  chain.polygonMainnet,
-  chain.polygonTestnetMumbai,
-  chain.arbitrumOne,
-  chain.arbitrumRinkeby,
-]
-
-export const developmentChains: Chain[] = [chain.localhost, chain.hardhat]

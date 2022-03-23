@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build
@@ -74,4 +78,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
       - name: Test
-        run: pnpm test
+        run: pnpm test:ci
+        env:
+          ALCHEMY_ID: ${{ secrets.ALCHEMY_ID }}

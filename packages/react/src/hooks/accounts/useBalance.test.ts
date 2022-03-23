@@ -1,10 +1,10 @@
-import { wallets } from 'wagmi-testing'
-
 import { actHook, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
-import { Config, useBalance } from './useBalance'
+import { UseBalanceArgs, UseBalanceConfig, useBalance } from './useBalance'
 
-const useBalanceWithConnect = (config: { balance?: Config } = {}) => {
+const useBalanceWithConnect = (config: {
+  balance: UseBalanceArgs & UseBalanceConfig
+}) => {
   const balance = useBalance(config.balance)
   const connect = useConnect()
   return { balance, connect } as const
@@ -13,105 +13,174 @@ const useBalanceWithConnect = (config: { balance?: Config } = {}) => {
 describe('useBalance', () => {
   describe('on mount', () => {
     it('not connected', async () => {
-      const { result } = renderHook(() => useBalance())
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      const { result } = renderHook(() =>
+        useBalance({
+          addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+        }),
+      )
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": false,
+          "dataUpdatedAt": 0,
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
+          "isFetching": true,
+          "isIdle": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": false,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "loading",
         }
       `)
-      expect(result.current[1]).toBeDefined()
     })
 
     it('connected', async () => {
-      const { result } = renderHook(() => useBalanceWithConnect())
+      const { result, waitFor } = renderHook(() =>
+        useBalanceWithConnect({
+          balance: {
+            addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          },
+        }),
+      )
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
+      actHook(() => {
+        const mockConnector = result.current.connect.connectors[0]
+        result.current.connect.connect(mockConnector)
       })
 
-      expect(result.current.balance[0]).toMatchInlineSnapshot(`
+      await waitFor(() => result.current.balance.isSuccess)
+
+      const { dataUpdatedAt, ...res } = result.current.balance
+      expect(dataUpdatedAt).toBeDefined()
+      expect(res).toMatchInlineSnapshot(`
         {
-          "data": undefined,
-          "error": undefined,
-          "loading": false,
+          "data": {
+            "decimals": 18,
+            "formatted": "1.403416862768458662",
+            "symbol": "ETH",
+            "unit": "ether",
+            "value": {
+              "hex": "0x1379f033791b6ba6",
+              "type": "BigNumber",
+            },
+          },
+          "error": null,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": true,
+          "isSuccess": true,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "success",
         }
       `)
     })
   })
 
-  it('skip', async () => {
-    const { result } = renderHook(() => useBalance({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
+  it('enabled', async () => {
+    const { result } = renderHook(() =>
+      useBalance({
+        enabled: false,
+        addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+      }),
+    )
+    expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
-        "error": undefined,
-        "loading": false,
+        "dataUpdatedAt": 0,
+        "error": null,
+        "errorUpdatedAt": 0,
+        "failureCount": 0,
+        "isError": false,
+        "isFetched": false,
+        "isFetchedAfterMount": false,
+        "isFetching": false,
+        "isIdle": true,
+        "isLoading": false,
+        "isLoadingError": false,
+        "isPlaceholderData": false,
+        "isPreviousData": false,
+        "isRefetchError": false,
+        "isRefetching": false,
+        "isStale": true,
+        "isSuccess": false,
+        "refetch": [Function],
+        "remove": [Function],
+        "status": "idle",
       }
     `)
   })
 
-  describe('getBalance', () => {
+  describe('refetch', () => {
     it('uses config', async () => {
       const { result } = renderHook(() =>
         useBalanceWithConnect({
           balance: {
-            addressOrName: wallets.ethers1.address,
-            skip: true,
+            addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            enabled: false,
           },
         }),
       )
 
       await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
+        const mockConnector = result.current.connect.connectors[0]
+        result.current.connect.connect(mockConnector)
 
-        const res = await result.current.balance[1]()
+        const { dataUpdatedAt, ...res } = await result.current.balance.refetch()
+        expect(dataUpdatedAt).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "data": {
               "decimals": 18,
-              "formatted": "0.193861344139087225",
+              "formatted": "1.403416862768458662",
               "symbol": "ETH",
               "unit": "ether",
               "value": {
-                "hex": "0x02b0bbdd89170d79",
+                "hex": "0x1379f033791b6ba6",
                 "type": "BigNumber",
               },
             },
-            "error": undefined,
-          }
-        `)
-      })
-    })
-
-    it('uses params', async () => {
-      const { result } = renderHook(() =>
-        useBalanceWithConnect({ balance: { skip: true } }),
-      )
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
-
-        const res = await result.current.balance[1]({
-          addressOrName: wallets.ethers1.address,
-        })
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "decimals": 18,
-              "formatted": "0.193861344139087225",
-              "symbol": "ETH",
-              "unit": "ether",
-              "value": {
-                "hex": "0x02b0bbdd89170d79",
-                "type": "BigNumber",
-              },
-            },
-            "error": undefined,
+            "error": null,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isError": false,
+            "isFetched": true,
+            "isFetchedAfterMount": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isLoadingError": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isRefetching": false,
+            "isStale": true,
+            "isSuccess": true,
+            "refetch": [Function],
+            "remove": [Function],
+            "status": "success",
           }
         `)
       })
@@ -119,18 +188,38 @@ describe('useBalance', () => {
 
     it('has error', async () => {
       const { result } = renderHook(() =>
-        useBalanceWithConnect({ balance: { skip: true } }),
+        useBalanceWithConnect({ balance: { enabled: false } }),
       )
 
       await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
+        const mockConnector = result.current.connect.connectors[0]
+        result.current.connect.connect(mockConnector)
 
-        const res = await result.current.balance[1]()
+        const { errorUpdatedAt, ...res } =
+          await result.current.balance.refetch()
+        expect(errorUpdatedAt).toBeDefined
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
+            "dataUpdatedAt": 0,
             "error": [Error: address is required],
+            "failureCount": 1,
+            "isError": true,
+            "isFetched": true,
+            "isFetchedAfterMount": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isLoadingError": true,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isRefetching": false,
+            "isStale": true,
+            "isSuccess": false,
+            "refetch": [Function],
+            "remove": [Function],
+            "status": "error",
           }
         `)
       })

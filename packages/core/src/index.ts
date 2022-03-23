@@ -1,6 +1,3 @@
-export { Connector, InjectedConnector } from './connectors'
-export type { ConnectorData, ConnectorEvents } from './connectors'
-
 export {
   connect,
   disconnect,
@@ -16,9 +13,12 @@ export {
   getAccount,
   getContract,
   getNetwork,
+  getProvider,
+  getWebSocketProvider,
   readContract,
   sendTransaction,
   signMessage,
+  signTypedData,
   switchNetwork,
   waitForTransaction,
   watchAccount,
@@ -64,7 +64,10 @@ export type {
   SendTransactionResult,
   SignMessageArgs,
   SignMessageResult,
+  SignTypedDataArgs,
+  SignTypedDataResult,
   SwitchNetworkArgs,
+  SwitchNetworkResult,
   WaitForTransactionArgs,
   WaitForTransactionResult,
   WatchAccountCallback,
@@ -83,17 +86,34 @@ export type {
   WatchReadContractResult,
   WatchSignerCallback,
   WatchTokenCallback,
+  WriteContractArgs,
+  WriteContractConfig,
+  WriteContractResult,
 } from './actions'
 
 export {
+  createClient,
+  createClient as createWagmiClient,
+  Client,
+  Client as WagmiClient,
+  type ClientConfig,
+  type ClientConfig as WagmiClientConfig,
+} from './client'
+
+export {
+  Connector,
+  InjectedConnector,
+  type ConnectorData,
+  type ConnectorEvents,
+} from './connectors'
+
+export {
+  allChains,
+  chain,
+  defaultChains,
   erc1155ABI,
   erc20ABI,
   erc721ABI,
-  chain,
-  allChains,
-  defaultChains,
-  defaultL2Chains,
-  developmentChains,
   units,
 } from './constants'
 
@@ -108,16 +128,13 @@ export {
 } from './errors'
 
 export {
-  createWagmiClient,
-  type WagmiClient,
-  type WagmiClientConfig,
-} from './client'
-
-export type { Balance, Chain, Unit } from './types'
-
-export {
-  normalizeChainId,
   createStorage,
-  verifyEIP1271Signature,
+  createStorage as createWagmiStorage,
+  noopStorage,
+  type WagmiStorage as Storage,
   type WagmiStorage,
-} from './utils'
+} from './storage'
+
+export type { Chain, Unit } from './types'
+
+export { normalizeChainId } from './utils'

@@ -1,12 +1,12 @@
-import { Data, WagmiClient, wagmiClient } from '../../client'
+import { Client, Data, client } from '../../client'
 
 export type GetAccountResult = {
   address?: Data['account']
-  connector?: WagmiClient['connector']
+  connector?: Client['connector']
 }
 
 export function getAccount(): GetAccountResult {
-  const { data, connector } = wagmiClient
+  const { data, connector } = client
   return {
     address: data?.account,
     connector,

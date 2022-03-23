@@ -1,4 +1,4 @@
-import { wagmiClient } from '../../client'
+import { client } from '../../client'
 
 export type FetchEnsAvatarArgs = {
   /** Address or ENS name */
@@ -12,6 +12,6 @@ export async function fetchEnsAvatar({
 }: FetchEnsAvatarArgs): Promise<FetchEnsAvatarResult> {
   // TODO: Update with more advanced logic
   // https://github.com/ensdomains/ens-avatar
-  const avatar = await wagmiClient.provider.getAvatar(addressOrName)
+  const avatar = await client.provider.getAvatar(addressOrName)
   return avatar
 }

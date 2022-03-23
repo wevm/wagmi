@@ -1,5 +1,6 @@
 {
   "name": "@wagmi/core",
+  "description": "JavaScript library for Ethereum",
   "license": "MIT",
   "version": "0.1.13",
   "ethereum": "awkweb.eth",
@@ -13,6 +14,10 @@
       "module": "./dist/wagmi-core.esm.js",
       "default": "./dist/wagmi-core.cjs.js"
     },
+    "./connectors/coinbaseWallet": {
+      "module": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
+      "default": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js"
+    },
     "./connectors/mock": {
       "module": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
       "default": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js"
@@ -20,10 +25,6 @@
     "./connectors/walletConnect": {
       "module": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
       "default": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js"
-    },
-    "./connectors/coinbaseWallet": {
-      "module": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
-      "default": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js"
     }
   },
   "files": [
@@ -41,9 +42,9 @@
     ]
   },
   "peerDependencies": {
-    "@coinbase/wallet-sdk": "^3.0.1",
-    "@walletconnect/ethereum-provider": "1.7.1",
-    "ethers": "^5.5.1"
+    "@coinbase/wallet-sdk": ">=3.0.1",
+    "@walletconnect/ethereum-provider": ">=1.7.5",
+    "ethers": ">=5.5.1"
   },
   "peerDependenciesMeta": {
     "@coinbase/wallet-sdk": {
@@ -54,13 +55,13 @@
     }
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.5.3",
     "eventemitter3": "^4.0.7",
     "zustand": "^3.7.0"
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.0.1",
-    "@walletconnect/ethereum-provider": "1.7.1",
+    "@ethersproject/providers": "^5.5.1",
+    "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1"
   }
 }
