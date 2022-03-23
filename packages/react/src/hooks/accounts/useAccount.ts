@@ -84,7 +84,7 @@ export function useAccount({
   }, [queryClient])
 
   // Force data to be undefined if no address exists
-  const data_ = address ? accountData : undefined
+  const data_ = address ? { ...accountData, address } : undefined
   const isLoading_ = isLoading || client.status === 'connecting'
 
   let status_: UseQueryResult['status']

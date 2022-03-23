@@ -111,7 +111,7 @@ importers:
       siwe: ^1.1.0
       tailwindcss: ^3.0.19
       typescript: 4.5.4
-      wagmi: 0.3.0-next.2
+      wagmi: 0.3.0-next.3
     dependencies:
       '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
       degen: 0.0.49_react-dom@17.0.2+react@17.0.2
@@ -147,13 +147,13 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       typescript: 4.5.4
-      wagmi: 0.2.17
+      wagmi: 0.3.0-next.2
     dependencies:
       ethers: 5.6.1
       next: 12.0.7_978f344c876a57c1143ffe356b90df31
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      wagmi: 0.2.17_1f4cde6f9856225f7b605058cd4634f3
+      wagmi: 0.3.0-next.2_868cc7ee6a386a178feb147c6bc6f064
     devDependencies:
       '@preconstruct/next': 3.0.1
       '@types/node': 17.0.5
@@ -175,7 +175,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       typescript: 4.5.4
-      wagmi: 0.3.0-next.2
+      wagmi: 0.3.0-next.3
     dependencies:
       '@ethersproject/providers': 5.6.1
       ethers: 5.6.1
@@ -196,7 +196,7 @@ importers:
       '@preconstruct/next': ^3.0.1
       '@types/node': 17.0.5
       '@types/react': 17.0.38
-      '@wagmi/core': 0.2.0-next.1
+      '@wagmi/core': 0.2.0-next.2
       eslint: 8.5.0
       eslint-config-next: 12.0.7
       ethers: ^5.5.1
@@ -232,7 +232,7 @@ importers:
       typescript: ^4.4.4
       util: ^0.12.4
       vite: ^2.7.2
-      wagmi: 0.3.0-next.2
+      wagmi: 0.3.0-next.3
     dependencies:
       buffer: 6.0.3
       ethers: 5.6.1
@@ -271,7 +271,7 @@ importers:
       '@coinbase/wallet-sdk': ^3.0.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
-      '@wagmi/core': 0.2.0-next.1
+      '@wagmi/core': 0.2.0-next.2
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
       react: ^17.0.0
@@ -4227,6 +4227,27 @@ packages:
       - supports-color
     dev: true
 
+  /@wagmi/core/0.2.0-next.1_23f7810dedad9f461d7dd59b025138fa:
+    resolution: {integrity: sha512-+MaiFHT7Kc3PzwEKtd5ybK5qYdB6wlKGMgg4Y4ITDAKwUYk8Kx6GyQ3c8NmIpkMVcgO5Cg/JOMYNzrghCoxPWg==}
+    peerDependencies:
+      '@coinbase/wallet-sdk': '>=3.0.1'
+      '@walletconnect/ethereum-provider': '>=1.7.5'
+      ethers: '>=5.5.1'
+    peerDependenciesMeta:
+      '@coinbase/wallet-sdk':
+        optional: true
+      '@walletconnect/ethereum-provider':
+        optional: true
+    dependencies:
+      '@coinbase/wallet-sdk': 3.0.4_@babel+core@7.17.8
+      '@walletconnect/ethereum-provider': 1.7.5
+      ethers: 5.6.1
+      eventemitter3: 4.0.7
+      zustand: 3.7.1_react@17.0.2
+    transitivePeerDependencies:
+      - react
+    dev: false
+
   /@walletconnect/browser-utils/1.7.5:
     resolution: {integrity: sha512-gm9ufi0n5cGBXoGWDtMVSqIJ0eXYW+ZFuTNVN0fm4oal26J7cPrOdFjzhv5zvx5fKztWQ21DNFZ+PRXBjXg04Q==}
     dependencies:
@@ -4274,24 +4295,6 @@ packages:
 
   /@walletconnect/environment/1.0.0:
     resolution: {integrity: sha512-4BwqyWy6KpSvkocSaV7WR3BlZfrxLbJSLkg+j7Gl6pTDE+U55lLhJvQaMuDVazXYxcjBsG09k7UlH7cGiUI5vQ==}
-
-  /@walletconnect/ethereum-provider/1.7.1:
-    resolution: {integrity: sha512-r01XPO8NHs0n/rjU77VXXgCtxC/hL8F34bu+UHGXmkMUHZGCSY2uKN4VCe2uptkCVYUQ9gCEDyCOUyQSQzULjw==}
-    dependencies:
-      '@walletconnect/client': 1.7.5
-      '@walletconnect/jsonrpc-http-connection': 1.0.0
-      '@walletconnect/jsonrpc-provider': 1.0.2
-      '@walletconnect/signer-connection': 1.7.5
-      '@walletconnect/types': 1.7.5
-      '@walletconnect/utils': 1.7.5
-      eip1193-provider: 1.0.1
-      eventemitter3: 4.0.7
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - encoding
-      - utf-8-validate
-    dev: false
 
   /@walletconnect/ethereum-provider/1.7.5:
     resolution: {integrity: sha512-hEY7YhQSCcUccwuVgQvpL/FZB6ov07ad+FZ0NSsr8Xv54ysmgoaE8tdReVa8zrGK2LCuB6mtfSGx2E0bZ2H4Ng==}
@@ -11737,6 +11740,25 @@ packages:
   /react-is/17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
 
+  /react-query/3.34.16_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-7FvBvjgEM4YQ8nPfmAr+lJfbW95uyW/TVjFoi2GwCkF33/S8ajx45tuPHPFGWs4qYwPy1mzwxD4IQfpUDrefNQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.17.8
+      broadcast-channel: 3.7.0
+      match-sorter: 6.3.1
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
+
   /react-query/3.34.16_react@17.0.2:
     resolution: {integrity: sha512-7FvBvjgEM4YQ8nPfmAr+lJfbW95uyW/TVjFoi2GwCkF33/S8ajx45tuPHPFGWs4qYwPy1mzwxD4IQfpUDrefNQ==}
     peerDependencies:
@@ -13717,45 +13739,25 @@ packages:
       xml-name-validator: 3.0.0
     dev: true
 
-  /wagmi-core/0.1.13_80c4d14757507e1b16ac6b9f0350436c:
-    resolution: {integrity: sha512-IwICPk0XOsSjaru0VsA4pkR0lRoAsEhCokFEa69dGhB1eyzNrcYydRIh8tikofz8Hf5bTUesM6hq2QLXPI8JRw==}
+  /wagmi/0.3.0-next.2_868cc7ee6a386a178feb147c6bc6f064:
+    resolution: {integrity: sha512-Dat63r1iTwWypPIEJCQcTrupJsbjhxJh9YRHDy/iERUQzcEQ+uNw9UbTPtIVLHP9iAhtW3S+5q75VMgT4uSijw==}
     peerDependencies:
-      '@walletconnect/ethereum-provider': 1.7.1
-      ethers: ^5.5.1
-      walletlink: ^2.5.0
-    peerDependenciesMeta:
-      '@walletconnect/ethereum-provider':
-        optional: true
-      walletlink:
-        optional: true
+      ethers: '>=5.5.1'
+      react: '>=17.0.0'
     dependencies:
-      '@ethersproject/providers': 5.6.1
-      '@walletconnect/ethereum-provider': 1.7.1
-      ethers: 5.6.1
-      eventemitter3: 4.0.7
-      walletlink: 2.5.0_@babel+core@7.17.8
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /wagmi/0.2.17_1f4cde6f9856225f7b605058cd4634f3:
-    resolution: {integrity: sha512-LKbQaH806eq7C46Bhj+7WNP97QszTH90fFz730Nzt7mt5qBhbwnzydJAKc/y7i/Out5Y2m4xaf8b6ULsM4bhkw==}
-    peerDependencies:
-      ethers: ^5.5.1
-      react: ^17.0.0
-    dependencies:
-      '@ethersproject/providers': 5.6.1
-      '@walletconnect/ethereum-provider': 1.7.1
+      '@coinbase/wallet-sdk': 3.0.4_@babel+core@7.17.8
+      '@wagmi/core': 0.2.0-next.1_23f7810dedad9f461d7dd59b025138fa
+      '@walletconnect/ethereum-provider': 1.7.5
       ethers: 5.6.1
       react: 17.0.2
-      wagmi-core: 0.1.13_80c4d14757507e1b16ac6b9f0350436c
-      walletlink: 2.5.0_@babel+core@7.17.8
+      react-query: 3.34.16_react-dom@17.0.2+react@17.0.2
     transitivePeerDependencies:
       - '@babel/core'
       - bufferutil
       - debug
       - encoding
+      - react-dom
+      - react-native
       - supports-color
       - utf-8-validate
     dev: false
@@ -13779,30 +13781,6 @@ packages:
     dependencies:
       makeerror: 1.0.12
     dev: true
-
-  /walletlink/2.5.0_@babel+core@7.17.8:
-    resolution: {integrity: sha512-PBJmK5tZmonwKPABBI2/optaZ11O4kKmkmnU5eLKhk4XRlal5qJ1igZ4U5j3w6w8wxxdhCWpLMHzGWt3n/p7mw==}
-    engines: {node: '>= 10.0.0'}
-    deprecated: 'WARNING: This project has been renamed to @coinbase/wallet-sdk. Install using @coinbase/wallet-sdk instead.'
-    dependencies:
-      '@metamask/safe-event-emitter': 2.0.0
-      bind-decorator: 1.0.11
-      bn.js: 5.2.0
-      clsx: 1.1.1
-      eth-block-tracker: 4.4.3_@babel+core@7.17.8
-      eth-json-rpc-filters: 4.2.2
-      eth-rpc-errors: 4.0.2
-      js-sha256: 0.9.0
-      json-rpc-engine: 6.1.0
-      keccak: 3.0.2
-      preact: 10.6.6
-      rxjs: 6.6.7
-      stream-browserify: 3.0.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - encoding
-      - supports-color
-    dev: false
 
   /watchpack/2.3.0:
     resolution: {integrity: sha512-MnN0Q1OsvB/GGHETrFeZPQaOelWh/7O+EiFlj8sM9GPjtQkis7k01aAxrg/18kTfoIVcLL+haEVFlXDaSRwKRw==}
@@ -14128,6 +14106,18 @@ packages:
     peerDependenciesMeta:
       react:
         optional: true
+    dev: false
+
+  /zustand/3.7.1_react@17.0.2:
+    resolution: {integrity: sha512-wHBCZlKj+bg03/hP+Tzv24YhnqqP8MCeN9ECPDXoF01062SIbnfl3j9O0znkDw1lNTY0a8WN3F///a0UhhaEqg==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 17.0.2
     dev: false
 
   /zwitch/2.0.2:
