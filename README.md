@@ -1,33 +1,8 @@
-# wagmi
+# wagmi [![Version](https://img.shields.io/npm/v/wagmi?colorA=292929&colorB=3c82f6)](https://www.npmjs.com/package/wagmi) [![Downloads](https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6)](https://www.npmjs.com/package/wagmi) [![Sponsors](https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6)](https://github.com/sponsors/tmm)
 
-React Hooks library for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).
+> React Hooks for Ethereum
 
-<p>
-  <a aria-label="Version" href="https://www.npmjs.com/package/wagmi">
-    <img
-      alt=""
-      src="https://img.shields.io/npm/v/wagmi?color=%23161b22&label=%20npm"
-    />
-  </a>
-  <a aria-label="License" href="/LICENSE">
-    <img
-      alt=""
-      src="https://img.shields.io/npm/l/wagmi?color=%23161b22"
-    />
-  </a>
-  <a aria-label="Sponsors" href="https://github.com/sponsors/tmm">
-    <img
-      alt=""
-      src="https://img.shields.io/github/sponsors/tmm?color=%23161b22"
-    />
-  </a>
-  <a aria-label="Downloads" href="https://www.npmjs.com/package/wagmi">
-    <img
-      alt=""
-      src="https://img.shields.io/npm/dm/wagmi?color=%23161b22"
-    />
-  </a>
-</p>
+**wagmi** is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.
 
 ## Features
 
@@ -79,7 +54,7 @@ const Page = () => {
 
 Every component inside the `Provider` is set up with the default `InjectedConnector` for connecting wallets and ethers.js [Default Provider](https://docs.ethers.io/v5/api/providers/#providers-getDefaultProvider) for fetching data.
 
-Want to learn more? Check out the [guides](https://wagmi.sh/guides/connect-wallet) or browse the [API docs](https://wagmi.sh/docs/provider).
+Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/connect-wallet) or browse the [API docs](https://wagmi-xyz.vercel.app/docs/provider).
 
 ## Community
 
@@ -105,4 +80,4 @@ MIT.
 
 <br />
 
-wagmi
+wagmi frens

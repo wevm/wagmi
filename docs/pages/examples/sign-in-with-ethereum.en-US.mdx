@@ -38,6 +38,52 @@ yarn add siwe iron-session
 npm install siwe iron-session
 ```
 
+## Typing Requirements
+
+In order for TypeScript to work properly with `iron-session` you will need add support for custom types.
+
+```diff
+# tsconfig.json
+
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
+  },
+-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
++  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}
+```
+
+Include your custom types in a new `./types/` folder with your specific library name.
+
+```ts
+# types/iron-session/index.d.ts
+
+import 'iron-session';
+import { SiweMessage } from 'siwe';
+
+declare module 'iron-session' {
+  interface IronSessionData {
+    nonce?: string;
+    siwe?: SiweMessage;
+  }
+}
+```
+
 ## Step 1: Connect Wallet
 
 Follow the [Connect Wallet](/guides/connect-wallet#step-1-configuring-connectors) guide to get this set up.
@@ -53,7 +99,7 @@ import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { generateNonce } from 'siwe'
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req
   switch (method) {
     case 'GET':
