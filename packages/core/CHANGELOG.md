@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.2
+
+### Minor Changes
+
+- fix: persist connector chains to local storage
+
 ## 0.2.0-next.1
 
 ### Minor Changes
