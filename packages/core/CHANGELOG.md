@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.0
+
+### Minor Changes
+
+- Initial 0.3.0 release
+
 ## 0.1.13
 
 ### Patch Changes
