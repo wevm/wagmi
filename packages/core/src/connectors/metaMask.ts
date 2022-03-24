@@ -1,0 +1,19 @@
+import { InjectedConnector } from './injected'
+
+export class MetaMaskConnector extends InjectedConnector {
+  readonly name = 'MetaMask'
+  #provider?: Window['ethereum']
+
+  getProvider() {
+    const { ethereum } = window
+
+    if (ethereum?.isMetaMask)
+      if (ethereum.providers)
+        this.#provider = ethereum.providers.find(
+          (provider: InjectedProviders) => provider.isMetaMask,
+        )
+      else this.#provider = ethereum
+
+    return this.#provider
+  }
+}

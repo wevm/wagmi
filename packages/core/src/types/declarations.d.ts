@@ -42,6 +42,7 @@ interface Window {
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void
     request<T = any>(args: RequestArguments): Promise<T>
+    providers?: Window.ethereum[]
   }
 }
 
