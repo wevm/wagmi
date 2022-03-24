@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.3
+
+### Minor Changes
+
+- Fix issue where `getProvider` was not being awaited in `getSigner`
+
 ## 0.2.0-next.2
 
 ### Minor Changes
