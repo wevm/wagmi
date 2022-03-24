@@ -95,8 +95,10 @@ export class WalletConnectConnector extends Connector<
   }
 
   async getSigner() {
-    const provider = this.getProvider()
-    const account = await this.getAccount()
+    const [provider, account] = await Promise.all([
+      this.getProvider(),
+      this.getAccount(),
+    ])
     return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
       account,
     )
