@@ -1,0 +1,142 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Client
+
+The **Wagmi Client** is inherently a framework agnostic (vanilla JS) client that manages connection state & configuration such as: auto-connection, connectors & providers.
+
+```tsx
+import { createClient } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient()
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+## Configuration
+
+### autoConnect (optional)
+
+Enables reconnecting to last used connector on mount. Defaults to `false`.
+
+```tsx
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient({ autoConnect: true })
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+### connectors (optional)
+
+Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
+
+```tsx
+import { Provider, createClient, defaultChains } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connectors = [
+  new InjectedConnector({ chains: defaultChains }),
+  new WalletConnectConnector({
+    chains: defaultChains,
+    options: {
+      infuraId: 'Your infura id',
+      qrcode: true,
+    },
+  }),
+]
+
+const client = createClient({ connectors })
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+<Callout>
+  Learn more about wagmi's built-in connectors or how to create a custom
+  connector [here](TODO).
+</Callout>
+
+### provider (optional)
+
+ethers.js [interface](https://docs.ethers.io/v5/api/providers/) for connecting to a network. Defaults to `getDefaultProvider()`.
+
+```tsx
+import { providers } from 'ethers'
+import { Provider, createClient } from 'wagmi'
+
+const provider = ({ chainId }) =>
+  new providers.InfuraProvider(chainId, 'Your infura id')
+
+const client = createClient({ provider })
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+<Callout emoji="💡">
+  When using `getDefaultProvider()`, you likely want to [provide an API key for
+  each
+  service](https://docs.ethers.io/v5/api-keys/#api-keys--getDefaultProvider) to
+  minimize disruptions. (By default `getDefaultProvider` falls back to ethers.js
+  shared API keys.)
+</Callout>
+
+### webSocketProvider (optional)
+
+WebSocket interface for connecting to a network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+
+```tsx
+import { providers } from 'ethers'
+import { Provider, createClient } from 'wagmi'
+
+const webSocketProvider = ({ chainId }) =>
+  new providers.InfuraWebSocketProvider(chainId, 'Your infura id')
+
+const client = createClient({ webSocketProvider })
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+### storage (optional)
+
+The default strategy to persist & cache data. Defaults to `window.localStorage`.
+
+```tsx
+import { providers } from 'ethers'
+import { Provider, createClient, createStorage } from 'wagmi'
+
+const storage = createStorage({ storage: window.localStorage })
+
+const client = createClient({ storage })
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```

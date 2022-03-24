@@ -2,7 +2,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Provider
 
-The **Provider** manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html). Not to be confused of an [Ethereum Provider](https://docs.ethers.io/v5/api/providers/) of course.
+The **Provider** manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html) (not to be confused with an [Ethereum Provider](https://docs.ethers.io/v5/api/providers/) of course).
 
 ```tsx
 import { Provider } from 'wagmi'
@@ -26,11 +26,18 @@ const App = () => (
 )
 ```
 
+<Callout>
+  You can specify multiple configuration options, such as: connectors (i.e.
+  WalletConnect), auto-connection, websockets, etc, by passing a "wagmi client"
+  instance to the `Provider` via the `client` prop. [See
+  below](#client-optional)
+</Callout>
+
 ## Configuration
 
 ### client (optional)
 
-A "wagmi client" instance that consists of configuration options.
+A "wagmi client" instance that consists of configuration options. [Read more](/client)
 
 ```tsx highlight='4'
 import { Provider, createClient } from 'wagmi'
