@@ -37,13 +37,15 @@ type InjectedProviders = {
   isTally?: true
 }
 
+interface Ethereum extends InjectedProviders {
+  on?: (...args: any[]) => void
+  removeListener?: (...args: any[]) => void
+  request<T = any>(args: RequestArguments): Promise<T>
+  providers?: Ethereum[]
+}
+
 interface Window {
-  ethereum?: InjectedProviders & {
-    on?: (...args: any[]) => void
-    removeListener?: (...args: any[]) => void
-    request<T = any>(args: RequestArguments): Promise<T>
-    providers?: Window.ethereum[]
-  }
+  ethereum?: Ethereum
 }
 
 interface ProviderRpcError extends Error {
