@@ -1,0 +1,49 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Provider
+
+The **Provider** manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html). Not to be confused of an [Ethereum Provider](https://docs.ethers.io/v5/api/providers/) of course.
+
+```tsx
+import { Provider } from 'wagmi'
+```
+
+To help avoid conflicts with other providers in your app, the **Provider** is also aliased as **WagmiProvider**.
+
+```tsx
+import { WagmiProvider } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { Provider } from 'wagmi'
+
+const App = () => (
+  <Provider>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+## Configuration
+
+### client (optional)
+
+A "wagmi client" instance that consists of configuration options.
+
+```tsx highlight='4'
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+})
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```
