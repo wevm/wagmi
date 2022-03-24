@@ -1,0 +1,225 @@
+# Migrating to 0.3.0
+
+If you are coming from an earlier version of `wagmi`, in order to update to `0.3.0` you will need to make sure to update the following hooks & API's listed below.
+
+## Breaking changes
+
+### `Provider` no longer supports configuration as props
+
+The `Provider` component no longer supports configuration directly as props.
+
+You will now need to create a ["wagmi client" instance](/docs/client) via `createClient`, and then pass the client to `Provider`:
+
+#### Before
+
+```tsx
+import { Provider } from 'wagmi'
+
+const App = () => (
+  <Provider autoConnect connectors={connectors} provider={provider}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+#### After
+
+```tsx
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+})
+
+const App = () => (
+  <Provider client={client}>
+    <YourRoutes />
+  </Provider>
+)
+```
+
+### Hooks now return a singular object, instead of an array pair
+
+All hooks in wagmi now return a single object instead of an array pair.
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, disconnect] = useAccount()
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error, disconnect } = useAccount()
+```
+
+### Declarative getters > imperative getters
+
+Getter functions such as `getBalance`, `getBlockNumber`, `read`, etc have been removed in favour of `refetch`. The `refetch` function does not accept arguments/config, so you will need to restructure your components more declaratively.
+
+#### Before
+
+```tsx
+import { useBalance } from 'wagmi'
+
+function Example() {
+  const [address, setAddress] = useState<string>('')
+
+  const [{ data }, getBalance] = useBalance({
+    skip: true,
+  })
+
+  return (
+    <div>
+      Get balance:
+      <input onChange={(e) => setAddress(e.target.value)} value={address} />
+      <button onClick={() => getBalance({ addressOrName: address })}>
+        fetch
+      </button>
+    </div>
+  )
+}
+```
+
+#### After
+
+```tsx
+import { useContractRead } from 'wagmi'
+
+function Example() {
+  const [address, setAddress] = useState<string>('')
+
+  const { data } = useBalance({
+    addressOrName: address,
+    enabled: Boolean(address),
+  })
+
+  const [value, setValue] = useState<string>('')
+
+  return (
+    <div>
+      Get balance:
+      <input onChange={(e) => setValue(e.target.value)} value={value} />
+      <button onClick={() => setAddress(value)}>fetch</button>
+    </div>
+  )
+}
+```
+
+### Changes to hooks
+
+#### `useAccount`
+
+- Now returns a singular object, instead of an array pair
+- `fetchEns` has been renamed to `ens`
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, disconnect] = useAccount({ fetchEns: true })
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error, disconnect } = useAccount({ ens: true })
+```
+
+#### `useBalance`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It has been repurposed to `enabled`.
+- `getBalance` has been removed in favour of `refetch`.
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, getBalance] = useBalance({ skip: true })
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error, refetch } = useBalance({ enabled: false })
+```
+
+#### `useBlockNumber`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It has been repurposed to `enabled`.
+- `getBlockNumber` has been removed in favour of `refetch`.
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, getBlockNumber] = useBlockNumber({
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error, refetch } = useBlockNumber({
+  enabled: false,
+})
+```
+
+#### `useConnect`
+
+- Now returns a singular object, instead of an array pair
+- `connect` is no longer asynchronous. Use `connectAsync` instead.
+- `data.connected` no longer exists. Use `isConnected` instead.
+- `data.connectors` no longer exists. Use `connectors` instead.
+- Prefer `connector` over `data.connector`
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, connect] = useConnect()
+```
+
+##### After
+
+```tsx
+const { isConnected, connector, connectors, connectAsync } = useConnect()
+```
+
+#### `useContractRead`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It has been repurposed to `enabled`.
+- `read` has been removed in favour of `refetch`.
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, read] = useContractRead(
+  {
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+  },
+  'getHunger',
+  { skip: true },
+)
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useContractRead(
+  {
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+  },
+  'getHunger',
+  { enabled: false },
+)
+```
+
+### `connector.getProvider` is now asynchronous
+
+### `wagmi/connectors/walletLink` has been renamed

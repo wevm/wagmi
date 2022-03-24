@@ -41,26 +41,27 @@ const GetAlive = () => {
 
 const Love = () => {
   const [address, setAddress] = useState<string>('')
-  const { data, isFetching, isRefetching, isSuccess, refetch } =
-    useContractRead(
-      {
-        addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-        contractInterface: wagmigotchiABI,
-      },
-      'love',
-      { args: [address], enabled: false },
-    )
+  const { data, isFetching, isRefetching, isSuccess } = useContractRead(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'love',
+    { args: [address], enabled: Boolean(address) },
+  )
+
+  const [value, setValue] = useState('')
 
   return (
     <div>
       Get wagmigotchi love:
       <input
-        onChange={(e) => setAddress(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="wallet address"
         style={{ marginLeft: 4 }}
-        value={address}
+        value={value}
       />
-      <button onClick={() => refetch()}>
+      <button onClick={() => setAddress(value)}>
         {isFetching
           ? isRefetching
             ? 'refetching...'
