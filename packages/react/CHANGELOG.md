@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.3.0-next.6
+
+### Minor Changes
+
+- fix `useContractWrite` mutation fn arguments
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.4
+
 ## 0.3.0-next.5
 
 ### Patch Changes
