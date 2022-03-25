@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.5
+
+### Minor Changes
+
+- don't persist account data when `autoConnect` is falsy
+
 ## 0.2.0-next.4
 
 ### Minor Changes

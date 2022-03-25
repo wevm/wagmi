@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.3.0-next.7
+
+### Minor Changes
+
+- don't persist account data when `autoConnect` is falsy
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.5
+
 ## 0.3.0-next.6
 
 ### Minor Changes

@@ -8,6 +8,7 @@
     "example-playground": "null-next.0"
   },
   "changesets": [
+    "cold-penguins-heal",
     "flat-doors-impress",
     "grumpy-sloths-cough",
     "khaki-dingos-juggle",
