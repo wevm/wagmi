@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.6
+
+### Minor Changes
+
+- add `connecting` event to connectors
+
 ## 0.2.0-next.5
 
 ### Minor Changes

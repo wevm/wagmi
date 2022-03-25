@@ -1,5 +1,12 @@
 # wagmi
 
+## 0.3.0-next.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.6
+
 ## 0.3.0-next.7
 
 ### Minor Changes
