@@ -4,6 +4,8 @@ import { useNetwork } from 'wagmi'
 export const NetworkSwitcher = () => {
   const network = useNetwork()
 
+  console.log(network.chains)
+
   return (
     <div>
       {network.activeChain && <div>Using {network.activeChain.name}</div>}

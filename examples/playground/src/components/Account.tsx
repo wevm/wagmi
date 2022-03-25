@@ -52,7 +52,7 @@ export const Account = () => {
           <h4>Read Contract</h4>
           <ReadContract />
 
-          {false && (
+          {true && (
             <>
               <h4>Write Contract</h4>
               <WriteContract />
