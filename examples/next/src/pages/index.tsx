@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { useAccount } from 'wagmi'
+import dynamic from 'next/dynamic'
 
+const Provider = dynamic(() => import('../components/Provider'))
 import { Account, Connect, NetworkSwitcher } from '../components'
 
 const Page = () => {
@@ -17,4 +19,7 @@ const Page = () => {
   return <Connect />
 }
 
-export default Page
+const withProvider = (child: React.ReactNode) => () =>
+  <Provider>{child}</Provider>
+
+export default withProvider(<Page />)
