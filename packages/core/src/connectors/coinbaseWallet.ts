@@ -38,6 +38,8 @@ export class CoinbaseWalletConnector extends Connector<
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
 
+      this.emit('connecting')
+
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
       const id = await this.getChainId()

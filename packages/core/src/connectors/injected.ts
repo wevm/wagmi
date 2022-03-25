@@ -59,6 +59,8 @@ export class InjectedConnector extends Connector<
         provider.on('disconnect', this.onDisconnect)
       }
 
+      this.emit('connecting')
+
       const account = await this.getAccount()
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
