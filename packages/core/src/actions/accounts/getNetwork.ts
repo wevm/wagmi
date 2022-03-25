@@ -11,11 +11,11 @@ export type GetNetworkResult = {
 }
 
 export function getNetwork(): GetNetworkResult {
-  const { connector, data } = client
+  const { chains, data } = client
 
   const chainId = data?.chain?.id
   const unsupported = data?.chain?.unsupported
-  const activeChains = connector?.chains ?? []
+  const activeChains = chains ?? []
   const activeChain = [...activeChains, ...allChains].find(
     (x) => x.id === chainId,
   ) ?? { id: chainId, name: `Chain ${chainId}`, rpcUrls: [] }

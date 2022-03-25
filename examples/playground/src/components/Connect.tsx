@@ -13,7 +13,10 @@ export const Connect = () => {
         {connect.connectors.map((x) => (
           <button
             disabled={
-              isMounted && (!x.ready || connect.activeConnector?.id === x.id)
+              isMounted &&
+              (!x.ready ||
+                connect.isReconnecting ||
+                connect.activeConnector?.id === x.id)
             }
             key={x.name}
             onClick={() => connect.connect(x)}

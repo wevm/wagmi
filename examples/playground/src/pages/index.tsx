@@ -5,8 +5,8 @@ import { useIsMounted } from '../hooks'
 
 const Page = () => {
   const isMounted = useIsMounted()
-  if (!isMounted) return null
 
+  if (!isMounted) return null
   return (
     <>
       <Connect />

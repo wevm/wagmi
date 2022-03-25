@@ -59,6 +59,8 @@ export class InjectedConnector extends Connector<
         provider.on('disconnect', this.onDisconnect)
       }
 
+      this.emit('connecting')
+
       const account = await this.getAccount()
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
@@ -109,8 +111,10 @@ export class InjectedConnector extends Connector<
   }
 
   async getSigner() {
-    const provider = this.getProvider()
-    const account = await this.getAccount()
+    const [provider, account] = await Promise.all([
+      this.getProvider(),
+      this.getAccount(),
+    ])
     return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
       account,
     )

@@ -54,6 +54,7 @@ const defaultConfig: Required<
 
 export type Data = ConnectorData<BaseProvider>
 export type State = {
+  chains?: Connector['chains']
   connector?: Connector
   connectors: Connector[]
   data?: Data
@@ -128,13 +129,13 @@ export class Client {
             name: 'state',
             getStorage: () => storage,
             partialize: (state) => ({
-              data: {
-                account: state?.data?.account,
-                chain: state?.data?.chain,
-              },
-              connector: {
-                chains: state.connector?.chains,
-              },
+              ...(this.config.autoConnect && {
+                data: {
+                  account: state?.data?.account,
+                  chain: state?.data?.chain,
+                },
+              }),
+              chains: state?.chains,
             }),
           },
         ),
@@ -146,6 +147,9 @@ export class Client {
     this.#addEffects()
   }
 
+  get chains() {
+    return this.store.getState().chains
+  }
   get connectors() {
     return this.store.getState().connectors
   }
@@ -210,7 +214,13 @@ export class Client {
       if (!isAuthorized) continue
 
       const data = await connector.connect()
-      this.setState((x) => ({ ...x, connector, data, status: 'connected' }))
+      this.setState((x) => ({
+        ...x,
+        connector,
+        chains: connector?.chains,
+        data,
+        status: 'connected',
+      }))
       connected = true
       break
     }

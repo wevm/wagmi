@@ -6,12 +6,12 @@ export type WatchNetworkCallback = (data: GetNetworkResult) => void
 export function watchNetwork(callback: WatchNetworkCallback) {
   const handleChange = () => callback(getNetwork())
   const unsubscribe = client.subscribe(
-    ({ data, connector }) => ({ chainId: data?.chain?.id, connector }),
+    ({ data, chains }) => ({ chainId: data?.chain?.id, chains }),
     handleChange,
     {
       equalityFn: (selected, previous) =>
         selected.chainId === previous.chainId &&
-        selected.connector === previous.connector,
+        selected.chains === previous.chains,
     },
   )
   return unsubscribe

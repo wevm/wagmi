@@ -36,6 +36,8 @@ export class WalletConnectConnector extends Connector<
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
 
+      setTimeout(() => this.emit('connecting'), 0)
+
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
       const id = await this.getChainId()
@@ -95,8 +97,10 @@ export class WalletConnectConnector extends Connector<
   }
 
   async getSigner() {
-    const provider = this.getProvider()
-    const account = await this.getAccount()
+    const [provider, account] = await Promise.all([
+      this.getProvider(),
+      this.getAccount(),
+    ])
     return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
       account,
     )

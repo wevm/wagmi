@@ -1,5 +1,30 @@
 # @wagmi/core
 
+## 0.2.0-next.6
+
+### Minor Changes
+
+- add `connecting` event to connectors
+
+## 0.2.0-next.5
+
+### Minor Changes
+
+- don't persist account data when `autoConnect` is falsy
+
+## 0.2.0-next.4
+
+### Minor Changes
+
+- remove storage persistence of `connector`
+- add `chains` to client state
+
+## 0.2.0-next.3
+
+### Minor Changes
+
+- Fix issue where `getProvider` was not being awaited in `getSigner`
+
 ## 0.2.0-next.2
 
 ### Minor Changes

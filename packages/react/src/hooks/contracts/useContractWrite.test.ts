@@ -18,7 +18,7 @@ const useContractWriteWithConnect = (
   return { connect, contractWrite } as const
 }
 
-describe.skip('useContractWrite', () => {
+describe('useContractWrite', () => {
   it('init', async () => {
     const { result } = renderHook(() =>
       useContractWriteWithConnect(

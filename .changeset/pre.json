@@ -4,11 +4,17 @@
   "initialVersions": {
     "docs": "0.0.1",
     "@wagmi/core": "0.1.13",
-    "wagmi": "0.2.17"
+    "wagmi": "0.2.17",
+    "example-playground": "null-next.0"
   },
   "changesets": [
+    "cold-penguins-heal",
     "flat-doors-impress",
     "grumpy-sloths-cough",
-    "khaki-dingos-juggle"
+    "khaki-dingos-juggle",
+    "pink-trees-walk",
+    "selfish-poets-poke",
+    "shiny-pumas-suffer",
+    "tasty-humans-jog"
   ]
 }

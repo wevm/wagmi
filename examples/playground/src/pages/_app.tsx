@@ -15,6 +15,14 @@ const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
 const chains = [...defaultChains, chain.optimism, chain.arbitrumOne]
 const defaultChain = chain.mainnet
 
+export const walletConnectConnector = new WalletConnectConnector({
+  chains,
+  options: {
+    infuraId,
+    qrcode: true,
+  },
+})
+
 const isChainSupported = (chainId?: number) =>
   chains.some((x) => x.id === chainId)
 

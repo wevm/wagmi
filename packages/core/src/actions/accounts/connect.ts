@@ -15,7 +15,7 @@ export async function connect(connector: Connector): Promise<ConnectResult> {
   const data = await connector.connect()
 
   client.setLastUsedConnector(connector.id)
-  client.setState((x) => ({ ...x, connector, data }))
+  client.setState((x) => ({ ...x, connector, chains: connector?.chains, data }))
   client.storage.setItem('connected', true)
 
   return { data, connector }

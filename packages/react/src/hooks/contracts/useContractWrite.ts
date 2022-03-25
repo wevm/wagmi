@@ -46,7 +46,8 @@ export function useContractWrite(
 ) {
   const { mutate, mutateAsync, ...writeContractMutation } = useMutation(
     mutationKey([contractConfig, functionName, { args, overrides }]),
-    (args) => writeContract(contractConfig, functionName, { args, overrides }),
+    ({ args, overrides }) =>
+      writeContract(contractConfig, functionName, { args, overrides }),
     {
       onError,
       onMutate,
