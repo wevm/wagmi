@@ -28,6 +28,7 @@ export {
   useSigner,
   useSignMessage,
   useToken,
+  useWaitForTransaction,
   useWebSocketProvider,
 } from './hooks'
 
