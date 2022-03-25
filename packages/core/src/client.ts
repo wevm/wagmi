@@ -129,10 +129,12 @@ export class Client {
             name: 'state',
             getStorage: () => storage,
             partialize: (state) => ({
-              data: {
-                account: state?.data?.account,
-                chain: state?.data?.chain,
-              },
+              ...(this.config.autoConnect && {
+                data: {
+                  account: state?.data?.account,
+                  chain: state?.data?.chain,
+                },
+              }),
               chains: state?.chains,
             }),
           },

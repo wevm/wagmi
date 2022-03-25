@@ -46,9 +46,9 @@ export function useAccount({
     queryKey(),
     () => {
       const { address, connector } = getAccount()
-      const cachedAccount = queryClient.getQueryData<GetAccountResult>(
-        queryKey(),
-      )
+      const cachedAccount = client.config.autoConnect
+        ? queryClient.getQueryData<GetAccountResult>(queryKey())
+        : undefined
       return address
         ? { address, connector }
         : cachedAccount || { address: undefined, connector: undefined }
