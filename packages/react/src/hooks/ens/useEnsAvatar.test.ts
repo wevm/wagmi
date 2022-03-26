@@ -1,7 +1,47 @@
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+import { chain } from '@wagmi/core'
+
 import { renderHook } from '../../../test'
 import { useEnsAvatar } from './useEnsAvatar'
 
+const handlers = [
+  // nick.eth
+  rest.get(
+    'https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x11ef687cfeb2e353670479f2dcc76af2bc6b3935000000000002c40000000001',
+    (_req, res, ctx) =>
+      res(
+        ctx.status(200),
+        ctx.json({
+          name: 'Nick Johnson',
+          description: null,
+          external_link: null,
+          image:
+            'https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE',
+          animation_url: null,
+        }),
+      ),
+  ),
+]
+
+const server = setupServer(...handlers)
+
 describe('useEnsAvatar', () => {
+  beforeAll(() =>
+    server.listen({
+      onUnhandledRequest(req) {
+        if (req.url.origin !== chain.hardhat.rpcUrls[0])
+          console.warn(
+            `Found an unhandled ${req.method} request to ${req.url.href}`,
+          )
+      },
+    }),
+  )
+
+  afterEach(() => server.resetHandlers())
+
+  afterAll(() => server.close())
+
   describe('addressOrName', () => {
     it('has avatar', async () => {
       const { result, waitFor } = renderHook(() =>
@@ -35,7 +75,7 @@ describe('useEnsAvatar', () => {
         }
       `)
 
-      await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
+      await waitFor(() => result.current.isSuccess)
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
