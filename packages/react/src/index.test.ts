@@ -26,6 +26,7 @@ it('should expose correct exports', () => {
       "useSigner",
       "useSignMessage",
       "useToken",
+      "useWaitForTransaction",
       "useWebSocketProvider",
       "Client",
       "Connector",
