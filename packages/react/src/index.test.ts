@@ -4,6 +4,7 @@ it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
       "createClient",
+      "createWagmiClient",
       "Provider",
       "WagmiProvider",
       "useClient",
@@ -20,11 +21,13 @@ it('should expose correct exports', () => {
       "useEnsAvatar",
       "useEnsName",
       "useEnsResolver",
+      "useFeeData",
       "useNetwork",
       "useProvider",
       "useSendTransaction",
-      "useSigner",
       "useSignMessage",
+      "useSignTypedData",
+      "useSigner",
       "useToken",
       "useWaitForTransaction",
       "useWebSocketProvider",
