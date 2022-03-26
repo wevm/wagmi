@@ -32,6 +32,6 @@ body {
     fixed 10px 10px / 20px 20px radial-gradient(#313131 1px, transparent 0);
 }
 
-p a {
+.callout a {
   color: inherit;
 }
