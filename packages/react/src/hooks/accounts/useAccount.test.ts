@@ -1,4 +1,7 @@
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
 import { VoidSigner } from 'ethers'
+import { chain } from '@wagmi/core'
 
 import {
   actHook,
@@ -20,7 +23,72 @@ const useAccountWithConnect = (
   return { account, connect } as const
 }
 
+const handlers = [
+  // moxey.eth
+  rest.get(
+    'https://creature.mypinata.cloud/ipfs/Qmf6aHsrtWqenvcSa8j585yojuGdv3vDccMLpco9PdpS9X/2257',
+    (req, res, ctx) =>
+      res(
+        ctx.status(200),
+        ctx.json({
+          name: 'Creature #2257',
+          description:
+            'Welcome to The Creature World. You have arrived in a nearby magical dimension of love, divine intervention, and possibility. 10,000 unique Creatures are here to guide you on this journey. Follow their lead. Created with love by NYC-based artist Danny Cole. www.creature.world.',
+          attributes: [
+            {
+              trait_type: 'Background',
+              value: 'Ascension',
+            },
+            {
+              trait_type: 'Creature',
+              value: 'Sand',
+            },
+            {
+              trait_type: 'Decoration',
+              value: 'Sand Arneum',
+            },
+            {
+              trait_type: 'Outfit',
+              value: 'Oxoto',
+            },
+            {
+              trait_type: 'Eyes',
+              value: 'Clementine',
+            },
+            {
+              trait_type: 'Mouth',
+              value: 'Happy',
+            },
+            {
+              trait_type: 'Foreground',
+              value: 'Rain',
+            },
+          ],
+          image:
+            'https://creature.mypinata.cloud/ipfs/QmZ9R2z6bTbrcfrFZ6U1BPsBUsD9aopea88ege78xrNQtV/2257.jpg',
+        }),
+      ),
+  ),
+]
+
+const server = setupServer(...handlers)
+
 describe('useAccount', () => {
+  beforeAll(() =>
+    server.listen({
+      onUnhandledRequest(req) {
+        if (req.url.origin !== chain.hardhat.rpcUrls[0])
+          console.warn(
+            `Found an unhandled ${req.method} request to ${req.url.href}`,
+          )
+      },
+    }),
+  )
+
+  afterEach(() => server.resetHandlers())
+
+  afterAll(() => server.close())
+
   describe('on mount', () => {
     it('not connected', async () => {
       const { result, waitFor } = renderHook(() => useAccount())
@@ -156,9 +224,7 @@ describe('useAccount', () => {
           }
         `)
 
-        await waitFor(() => !!result.current.account.data?.ens?.name, {
-          timeout: 5_000,
-        })
+        await waitFor(() => !!result.current.account.data?.ens?.name)
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
@@ -169,9 +235,7 @@ describe('useAccount', () => {
             },
           }
         `)
-        await waitFor(() => !!result.current.account.data?.ens?.avatar, {
-          timeout: 5_000,
-        })
+        await waitFor(() => !!result.current.account.data?.ens?.avatar)
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
@@ -216,9 +280,7 @@ describe('useAccount', () => {
             "connector": "<MockConnector>",
           }
         `)
-        await waitFor(() => !!result.current.account.data?.ens?.name, {
-          timeout: 5_000,
-        })
+        await waitFor(() => !!result.current.account.data?.ens?.name)
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0xB0623C91c65621df716aB8aFE5f66656B21A9108",
@@ -231,7 +293,7 @@ describe('useAccount', () => {
         `)
       })
 
-      it('avatar', async () => {
+      it.only('avatar', async () => {
         const { result, waitFor } = renderHook(
           () => useAccountWithConnect({ account: { ens: { avatar: true } } }),
           {
@@ -263,9 +325,7 @@ describe('useAccount', () => {
             "connector": "<MockConnector>",
           }
         `)
-        await waitFor(() => !!result.current.account.data?.ens?.avatar, {
-          timeout: 5_000,
-        })
+        await waitFor(() => !!result.current.account.data?.ens?.avatar)
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0x0D59d0f7DcC0fBF0A3305cE0261863aAf7Ab685c",

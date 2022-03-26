@@ -76,6 +76,7 @@
     "jest": "^27.5.1",
     "jest-watch-typeahead": "^1.0.0",
     "lint-staged": "^12.3.7",
+    "msw": "^0.39.2",
     "prettier": "^2.6.0",
     "start-server-and-test": "^1.14.0",
     "ts-node": "^10.7.0",
