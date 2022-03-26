@@ -9,7 +9,7 @@ const handlers = [
   // brantly.eth
   rest.get(
     'https://wrappedpunks.com:3000/api/punks/metadata/2430',
-    (req, res, ctx) =>
+    (_req, res, ctx) =>
       res(
         ctx.status(200),
         ctx.json({
@@ -25,7 +25,7 @@ const handlers = [
   // nick.eth
   rest.get(
     'https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x11ef687cfeb2e353670479f2dcc76af2bc6b3935000000000002c40000000001',
-    (req, res, ctx) =>
+    (_req, res, ctx) =>
       res(
         ctx.status(200),
         ctx.json({

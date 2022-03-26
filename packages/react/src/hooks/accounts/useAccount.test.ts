@@ -27,7 +27,7 @@ const handlers = [
   // moxey.eth
   rest.get(
     'https://creature.mypinata.cloud/ipfs/Qmf6aHsrtWqenvcSa8j585yojuGdv3vDccMLpco9PdpS9X/2257',
-    (req, res, ctx) =>
+    (_req, res, ctx) =>
       res(
         ctx.status(200),
         ctx.json({
