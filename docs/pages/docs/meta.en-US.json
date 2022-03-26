@@ -1,9 +1,9 @@
 {
   "getting-started": "Getting Started",
   "comparison": "Library Comparison",
+  "migrating-to-030": "Migrating to 0.3.0",
   "client": "Client",
   "provider": "Provider",
   "connectors": "Connectors",
-  "hooks": "Hooks",
-  "migrating-to-030": "Migrating to 0.3.0"
+  "hooks": "Hooks"
 }

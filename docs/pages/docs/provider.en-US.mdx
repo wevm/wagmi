@@ -32,7 +32,7 @@ function App() {
 
 A wagmi [`Client`](/docs/client) instance that consists of configuration options. Defaults to `createClient()`.
 
-```tsx {4-9,12}
+```tsx {4-9,13}
 import { providers } from 'ethers'
 import { Provider, createClient } from 'wagmi'
 
@@ -43,9 +43,11 @@ const client = createClient({
   },
 })
 
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
+function App() {
+  return (
+    <Provider client={client}>
+      <YourRoutes />
+    </Provider>
+  )
+}
 ```
