@@ -1,6 +1,6 @@
 {
   "getting-started": "Getting Started",
   "migrating-to-030": "Migrating to 0.3.0",
-  "provider": "Provider",
-  "client": "Client"
+  "client": "Client",
+  "provider": "Provider"
 }

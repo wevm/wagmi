@@ -1,14 +1,12 @@
-import Callout from 'nextra-theme-docs/callout'
-
 # Provider
 
-The **Provider** manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html) (not to be confused with an [Ethereum Provider](https://docs.ethers.io/v5/api/providers/) of course).
+The wagmi `Provider` manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html) (not to be confused with an [ethers.js Provider](https://docs.ethers.io/v5/api/providers/) of course).
 
 ```tsx
 import { Provider } from 'wagmi'
 ```
 
-To help avoid conflicts with other providers in your app, the **Provider** is also aliased as **WagmiProvider**.
+To help avoid conflicts with other providers in your app, the `Provider` is also aliased as `WagmiProvider`.
 
 ```tsx
 import { WagmiProvider } from 'wagmi'
@@ -19,33 +17,30 @@ import { WagmiProvider } from 'wagmi'
 ```tsx
 import { Provider } from 'wagmi'
 
-const App = () => (
-  <Provider>
-    <YourRoutes />
-  </Provider>
-)
+function App() {
+  return (
+    <Provider>
+      <YourRoutes />
+    </Provider>
+  )
+}
 ```
-
-<Callout>
-  You can specify multiple configuration options, such as: connectors (i.e.
-  WalletConnect), auto-connection, websockets, etc, by passing a "wagmi client"
-  instance to the `Provider` via the `client` prop. [See
-  below](#client-optional)
-</Callout>
 
 ## Configuration
 
 ### client (optional)
 
-A "wagmi client" instance that consists of configuration options. [Read more](/client)
+A wagmi [`Client`](/docs/client) instance that consists of configuration options. Defaults to `createClient()`.
 
-```tsx highlight='4'
+```tsx {4-9,12}
+import { providers } from 'ethers'
 import { Provider, createClient } from 'wagmi'
 
 const client = createClient({
   autoConnect: true,
-  connectors,
-  provider,
+  provider(config) {
+    return new providers.InfuraProvider(config.chainId, 'Your infura id')
+  },
 })
 
 const App = () => (

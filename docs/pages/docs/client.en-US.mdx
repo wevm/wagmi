@@ -2,24 +2,24 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Client
 
-The **Wagmi Client** is inherently a framework agnostic (vanilla JS) client that manages connection state & configuration such as: auto-connection, connectors & providers.
+The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers.js providers.
 
-```tsx
+```ts
 import { createClient } from 'wagmi'
+```
+
+To help avoid conflicts with other libraries in your app, `createClient` is also aliased as `createWagmiClient`.
+
+```ts
+import { createWagmiClient } from 'wagmi'
 ```
 
 ## Usage
 
-```tsx
-import { Provider, createClient } from 'wagmi'
+```ts {3}
+import { createClient } from 'wagmi'
 
 const client = createClient()
-
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
 ```
 
 ## Configuration
@@ -28,115 +28,113 @@ const App = () => (
 
 Enables reconnecting to last used connector on mount. Defaults to `false`.
 
-```tsx
-import { Provider, createClient } from 'wagmi'
+```ts {4}
+import { createClient } from 'wagmi'
 
-const client = createClient({ autoConnect: true })
-
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
+const client = createClient({
+  autoConnect: true,
+})
 ```
 
 ### connectors (optional)
 
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
-```tsx
-import { Provider, createClient, defaultChains } from 'wagmi'
+```ts {6-14}
+import { createClient } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-const connectors = [
-  new InjectedConnector({ chains: defaultChains }),
-  new WalletConnectConnector({
-    chains: defaultChains,
-    options: {
-      infuraId: 'Your infura id',
-      qrcode: true,
-    },
-  }),
-]
-
-const client = createClient({ connectors })
-
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
+const client = createClient({
+  connectors: [
+    new InjectedConnector(),
+    new WalletConnectConnector({
+      options: {
+        infuraId: 'Your infura id',
+        qrcode: true,
+      },
+    }),
+  ],
+})
 ```
 
-<Callout>
-  Learn more about wagmi's built-in connectors or how to create a custom
-  connector [here](TODO).
-</Callout>
+`connectors` also accepts a function that receives basic data about the current connection. For example, this is useful if you want to make your connectors aware of the active chain.
+
+```ts {5}
+import { chain, createClient, defaultChains } from 'wagmi'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+
+const client = createClient({
+  connectors(config) {
+    const rpcUrl =
+      defaultChains.find((x) => x.id === config.chainId)?.rpcUrls?.[0] ??
+      chain.mainnet.rpcUrls[0]
+    const jsonRpcUrl = `${rpcUrl}/yourInfuraId`
+    return [
+      new CoinbaseWalletConnector({
+        options: {
+          appName: 'wagmi',
+          jsonRpcUrl,
+        },
+      }),
+    ]
+  },
+})
+```
 
 ### provider (optional)
 
-ethers.js [interface](https://docs.ethers.io/v5/api/providers/) for connecting to a network. Defaults to `getDefaultProvider()`.
+ethers.js [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network. Defaults to `(config) => getDefaultProvider(config.chainId)`.
 
-```tsx
+```ts {5-7}
 import { providers } from 'ethers'
-import { Provider, createClient } from 'wagmi'
+import { createClient } from 'wagmi'
 
-const provider = ({ chainId }) =>
-  new providers.InfuraProvider(chainId, 'Your infura id')
-
-const client = createClient({ provider })
-
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
+const client = createClient({
+  provider(config) {
+    return new providers.InfuraProvider(config.chainId, 'Your infura id')
+  },
+})
 ```
+
+`provider` also accepts an ethers.js provider directly instead of using a function, but you likely want to use the function approach instead so your provider is aware of the active chain.
 
 <Callout emoji="💡">
   When using `getDefaultProvider()`, you likely want to [provide an API key for
   each
   service](https://docs.ethers.io/v5/api-keys/#api-keys--getDefaultProvider) to
-  minimize disruptions. (By default `getDefaultProvider` falls back to ethers.js
-  shared API keys.)
+  minimize disruptions. By default `getDefaultProvider` falls back to ethers.js
+  shared API keys.
 </Callout>
-
-### webSocketProvider (optional)
-
-WebSocket interface for connecting to a network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
-
-```tsx
-import { providers } from 'ethers'
-import { Provider, createClient } from 'wagmi'
-
-const webSocketProvider = ({ chainId }) =>
-  new providers.InfuraWebSocketProvider(chainId, 'Your infura id')
-
-const client = createClient({ webSocketProvider })
-
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
-```
 
 ### storage (optional)
 
-The default strategy to persist & cache data. Defaults to `window.localStorage`.
+The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
-```tsx
-import { providers } from 'ethers'
-import { Provider, createClient, createStorage } from 'wagmi'
+```ts {4}
+import { createClient, createStorage } from 'wagmi'
 
-const storage = createStorage({ storage: window.localStorage })
-
-const client = createClient({ storage })
-
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
+const client = createClient({
+  storage: createStorage({ storage: window.localStorage }),
+})
 ```
+
+### webSocketProvider (optional)
+
+ethers.js WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+
+```ts {5-7}
+import { providers } from 'ethers'
+import { createClient } from 'wagmi'
+
+const client = createClient({
+  webSocketProvider(config) {
+    return new providers.InfuraWebSocketProvider(
+      config.chainId,
+      'Your infura id',
+    )
+  },
+})
+```
+
+`webSocketProvider` also accepts an ethers.js WebSocket provider directly instead of using a function, but you likely want to use the function approach instead so your WebSocket provider is aware of the active chain.

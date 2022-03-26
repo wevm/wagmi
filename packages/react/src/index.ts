@@ -1,5 +1,6 @@
 export {
   createClient,
+  createClient as createWagmiClient,
   Provider,
   Provider as WagmiProvider,
   useClient,

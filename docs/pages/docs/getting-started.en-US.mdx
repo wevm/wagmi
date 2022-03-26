@@ -18,38 +18,49 @@ npm install wagmi ethers
 
 ## Quick Start
 
-Wrap your app with the [`Provider`](TODO) component.
+First, create a wagmi `Client` instance using [`createClient`](/docs/client).
 
-```tsx
-import { createClient, Provider } from 'wagmi'
+```tsx {3}
+import { createClient } from 'wagmi'
 
-const App = () => (
-  <Provider>
-    <YourRoutes />
-  </Provider>
-)
+const client = createClient()
 ```
 
 <Callout>
-  You can specify multiple configuration options, such as: connectors (i.e.
-  WalletConnect), auto-connection, websockets, etc, by passing a "wagmi client"
-  instance to the `Provider` via the `client` prop. [Read more](/docs/client)
+  You can pass a configuration object to `createClient` to customize the
+  Client's properties. Properties, like auto-connect, wallet connectors,
+  ethers.js provider, and more, are [all configurable](/docs/client).
 </Callout>
 
-Use hooks! Every component inside the Provider is set up with the default InjectedConnector for connecting wallets and ethers.js [Default Provider](https://docs.ethers.io/v5/api/providers/#providers-getDefaultProvider) for fetching data.
+Next, wrap your app with the [`Provider`](/docs/provider) component, passing `client` to it.
 
-```tsx
-import { useAccount } from 'wagmi'
+```tsx {7-9}
+import { Provider, createClient } from 'wagmi'
 
-function AccountDetails() {
-  const { data, isLoading, disconnect } = useAccount({
-    ens: true,
-  })
+const client = createClient()
 
-  return ...
+function App() {
+  return (
+    <Provider client={client}>
+      <YourRoutes />
+    </Provider>
+  )
 }
 ```
 
-Check out [some examples](/examples/connect-wallet), or continue on to the [API documentation](/docs/provider).
+Finally, use hooks! Every component inside the `Provider` is now set up to use the wagmi hooks.
 
-wagmi!
+```tsx {4,5}
+import { useAccount, useConnect } from 'wagmi'
+
+function Profile() {
+  const { data } = useAccount({ ens: true })
+  const { connectors, connect } = useConnect()
+
+  if (data?.address)
+    return <div>Connected to {data.ens?.name ?? data.address}</div>
+  return <button onClick={() => connect(connectors[0])}>Connect Wallet</button>
+}
+```
+
+Want to learn more? Check out the [examples](/examples/connect-wallet) to learn how to use wagmi in real-world situations or continue on reading the documentation.
