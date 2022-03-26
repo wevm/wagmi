@@ -325,7 +325,9 @@ describe('useAccount', () => {
             "connector": "<MockConnector>",
           }
         `)
-        await waitFor(() => !!result.current.account.data?.ens?.avatar)
+        await waitFor(() => !!result.current.account.data?.ens?.avatar, {
+          timeout: 5_000,
+        })
         expect(result.current.account.data).toMatchInlineSnapshot(`
           {
             "address": "0x0D59d0f7DcC0fBF0A3305cE0261863aAf7Ab685c",

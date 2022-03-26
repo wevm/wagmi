@@ -75,7 +75,7 @@ describe('useEnsAvatar', () => {
         }
       `)
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()
