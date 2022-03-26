@@ -1,0 +1,69 @@
+# useAccount
+
+Hook for accessing the connected account.
+
+```ts
+import { useAccount } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useAccount } from 'wagmi'
+
+function App() {
+  const account = useAccount()
+
+  if (account.isLoading) return <div>Loading account…</div>
+  if (account.isError) return <div>Error loading account</div>
+  return (
+    <>
+      <div>{account.data?.address}</div>
+
+      <button onClick={account.disconnect}>
+        Disconnect from {data?.connector?.name}
+      </button>
+    </>
+  )
+}
+```
+
+## Return Values
+
+```tsx
+{
+  data?: {
+    address: string
+    connector: Connector
+    ens?: {
+      avatar?: string | null
+      name?: string | null
+    }
+  }
+  disconnect: () => Promise<void>
+  error: Error | null
+  isLoading: boolean
+  isIdle: boolean
+  isError boolean
+  status: "idle" | "error" | "loading" | "success"
+}
+```
+
+## Configuration
+
+### ens (optional)
+
+Fetches ENS name and avatar for connected account. Accepts boolean or `{ avatar?: boolean; name?: boolean }`.
+
+```tsx {5,8}
+import { useAccount } from 'wagmi'
+
+function App() {
+  const account = useAccount({
+    ens: true,
+  })
+  const account2 = useAccount({
+    ens: { name: true },
+  })
+}
+```
