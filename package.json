@@ -71,7 +71,7 @@
     "ethers": "^5.6.1",
     "fs-extra": "^10.0.1",
     "glob": "^7.2.0",
-    "hardhat": "^2.9.1",
+    "hardhat": "^2.9.2",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "jest-watch-typeahead": "^1.0.0",
