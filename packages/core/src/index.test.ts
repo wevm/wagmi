@@ -48,7 +48,6 @@ it('should expose correct exports', () => {
       "allChains",
       "chain",
       "defaultChains",
-      "erc1155ABI",
       "erc20ABI",
       "erc721ABI",
       "units",

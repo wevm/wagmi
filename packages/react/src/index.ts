@@ -45,7 +45,6 @@ export {
   createStorage,
   createWagmiStorage,
   defaultChains,
-  erc1155ABI,
   erc20ABI,
   erc721ABI,
   type Chain,

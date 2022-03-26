@@ -111,7 +111,6 @@ export {
   allChains,
   chain,
   defaultChains,
-  erc1155ABI,
   erc20ABI,
   erc721ABI,
   units,
