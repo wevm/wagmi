@@ -5,3 +5,54 @@ The `InjectedConnector` supports wallets that inject an Ethereum Provider into t
 ```ts
 import { InjectedConnector } from 'wagmi/connectors/injected'
 ```
+
+## Usage
+
+```ts
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector()
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { chain } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  chains: [chain.mainnet, chain.optimism],
+})
+```
+
+### options (optional)
+
+Options for configuring the connector.
+
+```ts {4-6}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    shimDisconnect: true,
+  },
+})
+```
+
+#### shimDisconnect
+
+MetaMask and other injected providers [do not support programmatic disconnect](https://github.com/MetaMask/metamask-extension/issues/10353). This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
+
+```ts {5}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    shimDisconnect: false,
+  },
+})
+```
