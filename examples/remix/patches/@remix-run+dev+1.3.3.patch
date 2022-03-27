@@ -1,0 +1,34 @@
+diff --git a/node_modules/@remix-run/dev/compiler.js b/node_modules/@remix-run/dev/compiler.js
+index 82be2b4..05b991b 100644
+--- a/node_modules/@remix-run/dev/compiler.js
++++ b/node_modules/@remix-run/dev/compiler.js
+@@ -19,6 +19,7 @@ var fse = require('fs-extra');
+ var debounce = require('lodash.debounce');
+ var chokidar = require('chokidar');
+ var nodeModulesPolyfill = require('@esbuild-plugins/node-modules-polyfill');
++var nodeGlobalsPolyfill = require('@esbuild-plugins/node-globals-polyfill');
+ var build$1 = require('./build.js');
+ var config = require('./config.js');
+ var warnings = require('./compiler/warnings.js');
+@@ -289,9 +290,9 @@ async function createBrowserBuild(config, options) {
+   let externals = module$1.builtinModules.filter(mod => !dependencies$1.includes(mod));
+   let fakeBuiltins = module$1.builtinModules.filter(mod => dependencies$1.includes(mod));
+ 
+-  if (fakeBuiltins.length > 0) {
+-    throw new Error(`It appears you're using a module that is built in to node, but you installed it as a dependency which could cause problems. Please remove ${fakeBuiltins.join(", ")} before continuing.`);
+-  }
++  // if (fakeBuiltins.length > 0) {
++  //   throw new Error(`It appears you're using a module that is built in to node, but you installed it as a dependency which could cause problems. Please remove ${fakeBuiltins.join(", ")} before continuing.`);
++  // }
+ 
+   let entryPoints = {
+     "entry.client": path__namespace.resolve(config.appDirectory, config.entryClientFile)
+@@ -304,7 +305,7 @@ async function createBrowserBuild(config, options) {
+     entryPoints[id] = path__namespace.resolve(config.appDirectory, config.routes[id].file) + "?browser";
+   }
+ 
+-  let plugins = [mdx.mdxPlugin(config), browserRouteModulesPlugin.browserRouteModulesPlugin(config, /\?browser$/), emptyModulesPlugin.emptyModulesPlugin(config, /\.server(\.[jt]sx?)?$/), nodeModulesPolyfill.NodeModulesPolyfillPlugin()];
++  let plugins = [mdx.mdxPlugin(config), browserRouteModulesPlugin.browserRouteModulesPlugin(config, /\?browser$/), emptyModulesPlugin.emptyModulesPlugin(config, /\.server(\.[jt]sx?)?$/), nodeModulesPolyfill.NodeModulesPolyfillPlugin(), nodeGlobalsPolyfill.NodeGlobalsPolyfillPlugin()];
+ 
+   if (config.serverBuildTarget === "deno") {
+     // @ts-expect-error
