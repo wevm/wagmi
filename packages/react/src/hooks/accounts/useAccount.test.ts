@@ -121,8 +121,7 @@ describe('useAccount', () => {
 
       await waitFor(() => result.current.isIdle)
 
-      const { dataUpdatedAt, ...data } = result.current
-      expect(dataUpdatedAt).toBeDefined()
+      const { ...data } = result.current
       expect(data).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -158,8 +157,7 @@ describe('useAccount', () => {
         result.current.connect.connect(mockConnector)
       })
 
-      const { dataUpdatedAt, ...data } = result.current.account
-      expect(dataUpdatedAt).toBeDefined()
+      const { ...data } = result.current.account
       expect(data).toMatchInlineSnapshot(`
         {
           "data": {
@@ -350,8 +348,7 @@ describe('useAccount', () => {
       result.current.connect.connect(mockConnector)
     })
 
-    const { dataUpdatedAt, ...data } = result.current.account
-    expect(dataUpdatedAt).toBeDefined()
+    const { ...data } = result.current.account
     expect(data).toMatchInlineSnapshot(`
       {
         "data": {
@@ -389,8 +386,7 @@ describe('useAccount', () => {
       await result.current.account.disconnect()
     })
 
-    const { dataUpdatedAt: dataUpdatedAt2, ...data2 } = result.current.account
-    expect(dataUpdatedAt2).toBeDefined()
+    const { ...data2 } = result.current.account
     expect(data2).toMatchInlineSnapshot(`
       {
         "data": undefined,

@@ -8,9 +8,7 @@ describe('switchNetwork', () => {
     const client = setupWagmiClient()
     const connectResult = await connect(client.connectors[0])
     const switchNetworkResult = await switchNetwork({ chainId: 69 })
-    expect(
-      connectResult.data?.chain?.id !== switchNetworkResult.id,
-    ).toBeTruthy()
+    expect(connectResult?.chain?.id !== switchNetworkResult.id).toBeTruthy()
     expect(switchNetworkResult).toMatchInlineSnapshot(`
       {
         "blockExplorers": [

@@ -27,7 +27,7 @@ describe('signMessage', () => {
         `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
       )
       expect(verifyMessage(messages.string, signMessageResult)).toEqual(
-        connectResult.data?.account,
+        connectResult?.account,
       )
     })
 
@@ -39,7 +39,7 @@ describe('signMessage', () => {
         `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
       )
       expect(verifyMessage(messages.bytes, signMessageResult)).toEqual(
-        connectResult.data?.account,
+        connectResult?.account,
       )
     })
   })

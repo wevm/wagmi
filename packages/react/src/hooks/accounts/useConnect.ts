@@ -8,19 +8,19 @@ type MutationOptions = UseMutationOptions<ConnectResult, Error, Connector>
 
 export type UseConnectConfig = {
   /**
-   * Function fires before connect function and is passed same variables connect function would receive.
+   * Function to invoke before connect and is passed same variables connect function would receive.
    * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
    */
   onBeforeConnect?: MutationOptions['onMutate']
-  /** Function fires when connect is successful */
+  /** Function to invoke when connect is successful. */
   onConnect?: MutationOptions['onSuccess']
-  /** Function fires if connect encounters error */
+  /** Function to invoke when an error is thrown while connecting. */
   onError?: MutationOptions['onError']
-  /** Function fires when connect is either successful or encounters error */
+  /** Function to invoke when connect is settled (either successfully connected, or an error has thrown). */
   onSettled?: MutationOptions['onSettled']
 }
 
-export const mutationKey = 'connect'
+export const mutationKey = [{ entity: 'connect' }]
 
 const mutationFn = (connector: Connector) => connect(connector)
 
@@ -34,16 +34,12 @@ export function useConnect({
   const client = useClient()
 
   const {
+    data,
+    error,
     mutate,
     mutateAsync,
     status,
     variables: connector,
-    // Remove these values from return
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    isSuccess,
-    isLoading,
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-    ...connectMutation
   } = useMutation(mutationKey, mutationFn, {
     onError,
     onMutate: onBeforeConnect,
@@ -51,8 +47,8 @@ export function useConnect({
     onSuccess: onConnect,
   })
 
-  // Trigger update when connector or status change
   React.useEffect(() => {
+    // Trigger update when connector or status change
     const unsubscribe = client.subscribe(
       (state) => ({
         connector: state.connector,
@@ -82,15 +78,17 @@ export function useConnect({
   else status_ = status
 
   return {
-    ...connectMutation,
     activeConnector: client.connector,
     connect: mutate,
     connectAsync: mutateAsync,
     connector,
     connectors: client.connectors,
+    data,
+    error,
     isConnected: status_ === 'connected',
     isConnecting: status_ === 'connecting',
     isDisconnected: status_ === 'disconnected',
+    isError: status === 'error',
     isIdle: status_ === 'idle',
     isReconnecting: status_ === 'reconnecting',
     status: status_,

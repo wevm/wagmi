@@ -16,15 +16,15 @@ export type UseAccountArgs = {
   ens?: boolean | { avatar?: boolean; name?: boolean }
 }
 
-export type UseAccountConfig = QueryConfig<GetAccountResult, Error>
+export type UseAccountConfig = Pick<
+  QueryConfig<GetAccountResult, Error>,
+  'suspense' | 'onError' | 'onSettled' | 'onSuccess'
+>
 
 export const queryKey = () => [{ entity: 'account' }] as const
 
 export function useAccount({
   ens,
-  cacheTime,
-  enabled = true,
-  staleTime,
   suspense,
   onError,
   onSettled,
@@ -36,10 +36,10 @@ export function useAccount({
   const {
     data: accountData,
     error,
-    isError,
+    isFetched,
+    isFetching,
     isLoading,
     status,
-    ...accountQueryResult
   } = useQuery(
     queryKey(),
     () => {
@@ -52,9 +52,6 @@ export function useAccount({
         : cachedAccount || { address: undefined, connector: undefined }
     },
     {
-      cacheTime,
-      enabled,
-      staleTime,
       suspense,
       onError,
       onSettled,
@@ -94,11 +91,12 @@ export function useAccount({
       : {}
 
   return {
-    ...accountQueryResult,
     data: data_ ? { ...data_, ...ensData } : undefined,
     disconnect,
     error,
-    isError,
+    isError: status === 'error',
+    isFetching,
+    isFetched,
     isIdle: status_ === 'idle',
     isLoading: status_ === 'loading',
     isSuccess: status_ === 'success',

@@ -26,9 +26,7 @@ export const WalletSelector = () => {
           </Button>
         ))}
 
-      {error && (
-        <Text color="red">{error?.message ?? 'Failed to connect'}</Text>
-      )}
+      {error && <Text color="red">{error.message}</Text>}
     </Stack>
   )
 }

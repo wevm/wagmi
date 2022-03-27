@@ -15,15 +15,15 @@ describe('connect', () => {
     expect(client.connector).toBeUndefined()
     const result = await connect(client.connectors[0])
 
-    const { data: { provider, ...rest } = {} } = result
-    expect(provider).toBeDefined()
-    expect(rest).toMatchInlineSnapshot(`
+    expect(result).toMatchInlineSnapshot(`
       {
         "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "chain": {
           "id": 1,
           "unsupported": false,
         },
+        "connector": "<MockConnector>",
+        "provider": "<MockProvider>",
       }
     `)
   })
@@ -39,15 +39,16 @@ describe('connect', () => {
     })
     expect(client.connector).toBeUndefined()
     const result = await connect(client.connectors[0])
-    const { data: { provider, ...rest } = {} } = result
-    expect(provider).toBeDefined()
-    expect(rest).toMatchInlineSnapshot(`
+
+    expect(result).toMatchInlineSnapshot(`
       {
         "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "chain": {
           "id": 69,
           "unsupported": true,
         },
+        "connector": "<MockConnector>",
+        "provider": "<MockProvider>",
       }
     `)
   })

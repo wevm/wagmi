@@ -16,7 +16,7 @@ export type UseConnectConfig = MutationConfig<
   number
 >
 
-export const mutationKey = 'switchNetwork'
+export const mutationKey = [{ entity: 'switchNetwork' }]
 
 export const queryKey = () => [{ entity: 'chain' }] as const
 const queryFn = () => getNetwork()

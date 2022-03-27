@@ -12,15 +12,15 @@ import { useAccount } from 'wagmi'
 import { useAccount } from 'wagmi'
 
 function App() {
-  const account = useAccount()
+  const { data, disconnect, isError, isLoading } = useAccount()
 
-  if (account.isLoading) return <div>Loading account…</div>
-  if (account.isError) return <div>Error loading account</div>
+  if (isLoading) return <div>Loading account…</div>
+  if (isError) return <div>Error loading account</div>
   return (
     <>
-      <div>{account.data?.address}</div>
+      <div>{data?.address}</div>
 
-      <button onClick={account.disconnect}>
+      <button onClick={disconnect}>
         Disconnect from {data?.connector?.name}
       </button>
     </>
@@ -41,10 +41,12 @@ function App() {
     }
   }
   disconnect: () => Promise<void>
-  error: Error | null
-  isLoading: boolean
-  isIdle: boolean
+  error?: Error
   isError boolean
+  isFetching: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
   status: "idle" | "error" | "loading" | "success"
 }
 ```
@@ -53,7 +55,7 @@ function App() {
 
 ### ens (optional)
 
-Fetches ENS name and avatar for connected account. Accepts boolean or `{ avatar?: boolean; name?: boolean }`.
+Fetches ENS name and avatar for connected account. Accepts `boolean` or `{ avatar?: boolean; name?: boolean }`.
 
 ```tsx {5,8}
 import { useAccount } from 'wagmi'
@@ -61,9 +63,6 @@ import { useAccount } from 'wagmi'
 function App() {
   const account = useAccount({
     ens: true,
-  })
-  const account2 = useAccount({
-    ens: { name: true },
   })
 }
 ```

@@ -2,6 +2,7 @@
   "useAccount": "useAccount",
   "useBalance": "useBalance",
   "useBlockNumber": "useBlockNumber",
+  "useConnect": "useConnect",
   "useEnsAddress": "useEnsAddress",
   "useEnsAvatar": "useEnsAvatar",
   "useEnsName": "useEnsName",

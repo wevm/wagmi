@@ -45,7 +45,7 @@ export abstract class Connector<
     this.options = options
   }
 
-  abstract connect(): Promise<ConnectorData>
+  abstract connect(): Promise<Required<ConnectorData>>
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>

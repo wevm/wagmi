@@ -27,7 +27,7 @@ export type QueryConfig<Data, Error> = {
   suspense?: UseQueryOptions<Data, Error>['suspense']
   /** Function to invoke when an error is thrown while fetching for new data. */
   onError?: UseQueryOptions<Data, Error>['onError']
-  /** Function to invoke when fetching has been settled (either successfully fetched, or an error has thrown). */
+  /** Function to invoke when fetching is settled (either successfully fetched, or an error has thrown). */
   onSettled?: UseQueryOptions<Data, Error>['onSettled']
   /** Function to invoke when fetching for new data is successful. */
   onSuccess?: UseQueryOptions<Data, Error>['onSuccess']

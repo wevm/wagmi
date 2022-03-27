@@ -17,16 +17,15 @@ export const WalletSelectorWithSiwe = () => {
       try {
         setState((x) => ({ ...x, loading: true }))
         const res = await connectAsync(connector)
-        if (!res.data) new Error('Something went wrong')
 
         const nonceRes = await fetch('/api/nonce')
         const message = new SiweMessage({
           domain: window.location.host,
-          address: res.data?.account,
+          address: res.account,
           statement: 'Sign in with Ethereum to the app.',
           uri: window.location.origin,
           version: '1',
-          chainId: res.data?.chain?.id,
+          chainId: res.chain?.id,
           nonce: await nonceRes.text(),
         })
 

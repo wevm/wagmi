@@ -16,7 +16,7 @@ export type UseSignTypedDataConfig = MutationConfig<
   SignTypedDataArgs
 >
 
-export const mutationKey = 'signTypedData'
+export const mutationKey = [{ entity: 'signTypedData' }]
 
 const mutationFn = (args: UseSignTypedDataArgs) => {
   const { domain, types, value } = args
