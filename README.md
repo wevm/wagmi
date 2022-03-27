@@ -1,62 +1,73 @@
-# wagmi [![Version](https://img.shields.io/npm/v/wagmi?colorA=292929&colorB=3c82f6)](https://www.npmjs.com/package/wagmi) [![Downloads](https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6)](https://www.npmjs.com/package/wagmi) [![Sponsors](https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6)](https://github.com/sponsors/tmm)
+# wagmi
 
-> React Hooks for Ethereum
+React Hooks for Ethereum, built on [ethers.js](https://github.com/ethers-io/ethers.js).
 
-**wagmi** is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.
+[![Version](https://img.shields.io/npm/v/wagmi?colorA=292929&colorB=3c82f6)](https://www.npmjs.com/package/wagmi) [![Downloads](https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6)](https://www.npmjs.com/package/wagmi) [![License](https://img.shields.io/npm/l/wagmi?colorA=292929&colorB=3c82f6)](/LICENSE) [![Sponsors](https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6)](https://github.com/sponsors/tmm)
 
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
 - 💼 Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
-- 🌀 Auto-refresh data on wallet and network changes
+- 👟 Caching, request deduplication, and persistence
+- 🌀 Auto-refresh data on wallet, block, and network changes
 - 🦄 TypeScript ready
-- 💨 Zero-dependencies (besides ethers.js peer dependency)
-- 🌳 Test suite and documentation
-- 📖 MIT License
+- 🌳 Test suite running against forked Ethereum network
+
+...and a lot more.
 
 ## Documentation
 
-Visit https://wagmi.sh to view the full documentation.
+For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
-## Usage
+## Installation
 
-1. Install the dependencies.
+Install wagmi and its ethers peer dependency.
 
 ```bash
-npm add wagmi ethers
+npm install wagmi ethers
 ```
 
-2. Wrap your app with the `Provider` component.
+## Quick Start
+
+Connect a wallet in under 60 seconds. LFG.
 
 ```tsx
-import { Provider } from 'wagmi'
+import { Provider, createClient, useAccount, useConnect } from 'wagmi'
 
-const App = () => (
-  <Provider>
-    <YourRoutes />
-  </Provider>
-)
-```
+const client = createClient()
 
-3. Use hooks.
+function App() {
+  return (
+    <Provider client={client}>
+      <Profile />
+    </Provider>
+  )
+}
 
-```tsx
-import { useAccount } from 'wagmi'
+function Profile() {
+  const { data, disconnect } = useAccount()
+  const { connectors, connect } = useConnect()
 
-const Page = () => {
-  const [{ data, error, loading }, disconnect] = useAccount({
-    fetchEns: true,
-  })
-
-  return ...
+  if (data?.address)
+    return (
+      <div>
+        Connected to {data.address}
+        <button onClick={disconnect}>Disconnect</button>
+      </div>
+    )
+  return <button onClick={() => connect(connectors[0])}>Connect Wallet</button>
 }
 ```
 
-Every component inside the `Provider` is set up with the default `InjectedConnector` for connecting wallets and ethers.js [Default Provider](https://docs.ethers.io/v5/api/providers/#providers-getDefaultProvider) for fetching data.
+In this example, we create a wagmi `Client` (using the default configuration) and pass it to the React Context `Provider`. Then, we use the `useConnect` hook to connect a wallet to the app. Finally, we show the connected account's address using `useAccount`.
 
-Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/connect-wallet) or browse the [API docs](https://wagmi-xyz.vercel.app/docs/provider).
+The default client is initialized with MetaMask, but connectors for WalletConnect and Coinbase Wallet are also just an import away. `useAccount` can also automatically fetch (and cache) the connected account's ENS name and avatar.
+
+We've only scratched the surface for what you can do with wagmi!
 
 ## Community
+
+Check out the following places for more wagmi-related content:
 
 - Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
 - Follow [@awkweb](https://twitter.com/awkweb) on Twitter for project updates
@@ -65,19 +76,21 @@ Want to learn more? Check out the [guides](https://wagmi-xyz.vercel.app/guides/c
 
 ## Support
 
-- awkweb.eth
+Help support future development and make wagmi a sustainable open-source project:
+
+- [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
 - [GitHub Sponsors](https://github.com/sponsors/tmm)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
 
-## Thanks
+## Contributing
 
-- [ricmoo.eth](https://twitter.com/ricmoo) for creating and continued work on [ethers.js](https://github.com/ethers-io/ethers.js)
-- [Mirror](https://mirror.xyz) for creating space to do good work
+If you're interested in contributing to wagmi, please read the [contributing docs](/.github/CONTRIBUTING.md) **before submitting a pull request**.
 
 ## License
 
-MIT.
+The MIT License.
 
+<br />
 <br />
 
 wagmi frens
