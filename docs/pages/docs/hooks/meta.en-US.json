@@ -7,5 +7,7 @@
   "useEnsName": "useEnsName",
   "useEnsResolver": "useEnsResolver",
   "useFeeData": "useFeeData",
-  "useToken": "useToken"
+  "useProvider": "useProvider",
+  "useToken": "useToken",
+  "useWebSocketProvider": "useWebSocketProvider"
 }
