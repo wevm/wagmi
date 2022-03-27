@@ -13,8 +13,18 @@ pnpm dev
 
 ### Testing
 
+Add a `ALCHEMY_ID` to your environment variables so [Hardhat](https://hardhat.org) can fork mainnet.
+
+Start local Ethereum network and tests in parallel:
+
 ```bash
-pnpm test
+pnpm test:ci
+```
+
+Or, run the follow command separately:
+
+```bash
+pnpm hardhat:dev
 pnpm test:watch
 ```
 
