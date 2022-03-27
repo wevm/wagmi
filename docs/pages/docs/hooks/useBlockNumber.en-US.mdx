@@ -1,6 +1,6 @@
 # useBlockNumber
 
-Hook for accessing the current block number.
+Hook for fetching the current block number.
 
 ```ts
 import { useBlockNumber } from 'wagmi'
@@ -11,7 +11,7 @@ import { useBlockNumber } from 'wagmi'
 ```tsx
 import { useBlockNumber } from 'wagmi'
 
-const App = () => {
+function App() {
   const { data, isError, isLoading } = useBlockNumber()
 
   if (isLoading) return <div>Fetching block number…</div>
@@ -26,120 +26,62 @@ const App = () => {
 {
   data?: number
   error?: Error
-  isIdle: boolean
-  isLoading: boolean
   isError: boolean
-  isSuccess: boolean
   isFetched: boolean
   isFetching: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isRefetching: boolean
   isStale: boolean
-  refetch: () => Promise<number>
-  status: "idle" | "error" | "loading" | "success"
+  isSuccess: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<number>
+  status: 'idle' | 'error' | 'loading' | 'success'
 }
 ```
 
 ## Configuration
 
-### enabled (optional)
-
-Defaults to `true`.
-
-Enables the function to be ran on mount. Setting to `false` will disable the function from automatically running – useful if you want to fetch the block number at a later stage using `refetch`.
-
-```tsx
-import { useBlockNumber } from 'wagmi'
-
-function App() {
-  const { data } = useBlockNumber({
-    enabled: false,
-  })
-}
-```
-
-### watch (optional)
-
-Watches and refreshes balance for new blocks.
-
-```tsx
-import { useBlockNumber } from 'wagmi'
-
-function App() {
-  const { data } = useBlockNumber({
-    watch: true,
-  })
-}
-```
-
 ### cacheTime (optional)
 
-Defaults to `0`.
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
-Time (in ms) which the data should remain in the cache.
-
-```tsx
+```tsx {5}
 import { useBlockNumber } from 'wagmi'
 
 function App() {
-  const { data } = useBlockNumber({
-    cacheTime: 10000,
+  const blockNumber = useBlockNumber({
+    cacheTime: 2_000,
   })
 }
 ```
 
-### onSuccess (optional)
+### enabled (optional)
 
-Function to invoke when fetching for new data is successful.
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
-```tsx
+```tsx {5}
 import { useBlockNumber } from 'wagmi'
 
 function App() {
-  const { data } = useBlockNumber({
-    onSuccess: (data) => console.log('Block number: ', data),
-  })
-}
-```
-
-### onError (optional)
-
-Function to invoke when an error is thrown while fetching for new data.
-
-```tsx
-import { useBlockNumber } from 'wagmi'
-
-function App() {
-  const { data } = useBlockNumber({
-    onError: (error) => console.log('Error: ', data),
-  })
-}
-```
-
-### onSettled (optional)
-
-Function to invoke when fetching has been settled (either successfully fetched, or an error has thrown).
-
-```tsx
-import { useBlockNumber } from 'wagmi'
-
-function App() {
-  const { data } = useBlockNumber({
-    onSettled: () => console.log('Settled'),
+  const blockNumber = useBlockNumber({
+    enabled: false,
   })
 }
 ```
 
 ### staleTime (optional)
 
-Defaults to `0`.
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
-Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale.
-
-```tsx
+```tsx {5}
 import { useBlockNumber } from 'wagmi'
 
 function App() {
-  const { data } = useBlockNumber({
-    staleTime: 10000,
+  const blockNumber = useBlockNumber({
+    staleTime: 2_000,
   })
 }
 ```
@@ -148,12 +90,74 @@ function App() {
 
 Set this to `true` to enable suspense mode.
 
-```tsx
+```tsx {5}
 import { useBlockNumber } from 'wagmi'
 
 function App() {
-  const { data } = useBlockNumber({
+  const blockNumber = useBlockNumber({
     suspense: true,
+  })
+}
+```
+
+### watch (optional)
+
+Watches and refreshes data for new blocks.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    watch: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching for new data is successful.
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching for new data.
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching has been settled (either successfully fetched, or an error has thrown).
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
   })
 }
 ```

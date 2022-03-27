@@ -24,12 +24,12 @@ const queryFn = () => {
 export function useBlockNumber({
   cacheTime = 0,
   enabled = true,
-  onError,
-  onSettled,
-  onSuccess,
   staleTime,
   suspense,
   watch = false,
+  onError,
+  onSettled,
+  onSuccess,
 }: UseBlockNumberConfig = {}) {
   const chainId = useChainId()
   const provider = useProvider()

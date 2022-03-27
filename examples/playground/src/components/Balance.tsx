@@ -21,6 +21,7 @@ const AccountBalance = () => {
     enabled: false,
     watch: true,
   })
+
   return (
     <div>
       {data?.formatted}

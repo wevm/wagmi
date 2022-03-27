@@ -12,15 +12,15 @@ import { useBalance } from 'wagmi'
 import { useBalance } from 'wagmi'
 
 function App() {
-  const balance = useBalance({
+  const { data, isError, isLoading } = useBalance({
     addressOrName: 'awkweb.eth',
   })
 
-  if (balance.isLoading) return <div>Fetching balance…</div>
-  if (balance.isError) return <div>Error fetching balance</div>
+  if (isLoading) return <div>Fetching balance…</div>
+  if (isError) return <div>Error fetching balance</div>
   return (
     <div>
-      {data?.formatted} {data?.symbol}
+      Balance: {data?.formatted} {data?.symbol}
     </div>
   )
 }
@@ -36,11 +36,25 @@ function App() {
     symbol: string
     value: BigNumber
   }
-  error: Error | null
-  isLoading: boolean
+  error?: Error
+  isError: boolean
+  isFetched: boolean
+  isFetching: boolean
   isIdle: boolean
-  isError boolean
-  status: "idle" | "error" | "loading" | "success"
+  isLoading: boolean
+  isRefetching: boolean
+  isStale: boolean
+  isSuccess: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<{
+    decimals: number
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }>
+  status: 'idle' | 'error' | 'loading' | 'success'
 }
 ```
 
@@ -60,9 +74,9 @@ function App() {
 }
 ```
 
-### formatUnits (optional)
+### cacheTime (optional)
 
-Formats balance using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'
@@ -70,7 +84,7 @@ import { useBalance } from 'wagmi'
 function App() {
   const balance = useBalance({
     addressOrName: 'awkweb.eth',
-    formatUnits: 'gwei',
+    cacheTime: 2_000,
   })
 }
 ```
@@ -86,6 +100,51 @@ function App() {
   const balance = useBalance({
     addressOrName: 'awkweb.eth',
     enabled: false,
+  })
+}
+```
+
+### formatUnits (optional)
+
+Formats balance using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    formatUnits: 'gwei',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    suspense: true,
   })
 }
 ```
@@ -107,7 +166,7 @@ function App() {
 
 ### watch (optional)
 
-Watches and refreshes balance for new blocks.
+Watches and refreshes data for new blocks.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'
@@ -116,6 +175,57 @@ function App() {
   const balance = useBalance({
     addressOrName: 'awkweb.eth',
     watch: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching for new data is successful.
+
+```tsx {6-8}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching for new data.
+
+```tsx {6-8}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching has been settled (either successfully fetched, or an error has thrown).
+
+```tsx {6-8}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
   })
 }
 ```

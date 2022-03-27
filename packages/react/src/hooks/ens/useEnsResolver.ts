@@ -27,12 +27,10 @@ const queryFn = ({
 }
 
 export function useEnsResolver({
-  name,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
-  staleTime = 1000 * 60 * 60 * 24, // 24 hours
+  name,
+  staleTime = 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,
@@ -42,8 +40,6 @@ export function useEnsResolver({
   return useQuery(queryKey({ chainId, name }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && chainId && name),
-    keepPreviousData,
-    select,
     staleTime,
     suspense,
     onError,

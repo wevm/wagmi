@@ -1,5 +1,9 @@
 {
   "useAccount": "useAccount",
   "useBalance": "useBalance",
-  "useBlockNumber": "useBlockNumber"
+  "useBlockNumber": "useBlockNumber",
+  "useEnsAddress": "useEnsAddress",
+  "useEnsAvatar": "useEnsAvatar",
+  "useEnsName": "useEnsName",
+  "useEnsResolver": "useEnsResolver"
 }

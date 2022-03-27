@@ -23,7 +23,7 @@ export type ClientConfig = WagmiClientConfig & {
 const defaultQueryClientConfig: QueryClientConfig = {
   defaultOptions: {
     queries: {
-      cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+      cacheTime: 60 * 60 * 24, // 24 hours
       notifyOnChangeProps: 'tracked',
       refetchOnWindowFocus: false,
       retry: 0,
