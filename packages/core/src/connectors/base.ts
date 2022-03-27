@@ -13,7 +13,7 @@ export type ConnectorData<Provider = any> = {
 export interface ConnectorEvents<Provider = any> {
   change(data: ConnectorData<Provider>): void
   connect(data: ConnectorData<Provider>): void
-  connecting(): void
+  message({ type, data }: { type: string; data?: unknown }): void
   disconnect(): void
   error(error: Error): void
 }
