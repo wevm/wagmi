@@ -23,10 +23,12 @@ const client = createClient({
       chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
       defaultChain.rpcUrls[0]
     return [
-      new InjectedConnector({
+      new InjectedConnector({ chains }),
+      new CoinbaseWalletConnector({
         chains,
         options: {
-          shimDisconnect: true,
+          appName: 'wagmi',
+          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
         },
       }),
       new WalletConnectConnector({
@@ -34,13 +36,6 @@ const client = createClient({
         options: {
           infuraId,
           qrcode: true,
-        },
-      }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: 'wagmi',
-          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
         },
       }),
     ]
