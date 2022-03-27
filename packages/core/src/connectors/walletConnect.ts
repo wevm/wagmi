@@ -36,7 +36,8 @@ export class WalletConnectConnector extends Connector<
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
 
-      setTimeout(() => this.emit('connecting'), 0)
+      // Defer message to the next tick to ensure wallet connect data (provided by `.enable()`) is available
+      setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
 
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
