@@ -24,20 +24,17 @@ const queryFn = () => {
 export function useBlockNumber({
   cacheTime = 0,
   enabled = true,
-  keepPreviousData,
-  select,
-  staleTime,
-  suspense,
   onError,
   onSettled,
   onSuccess,
+  staleTime,
+  suspense,
   watch = false,
 }: UseBlockNumberConfig = {}) {
   const chainId = useChainId()
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const queryClient = useQueryClient()
-  // console.log({ webSocketProvider, provider })
 
   React.useEffect(() => {
     if (!watch) return
@@ -49,7 +46,6 @@ export function useBlockNumber({
     }
 
     const provider_ = webSocketProvider ?? provider
-    // console.log({ provider_ })
     provider_.on('block', listener)
 
     return () => {
@@ -60,8 +56,6 @@ export function useBlockNumber({
   return useQuery(queryKey({ chainId }), queryFn, {
     cacheTime,
     enabled,
-    keepPreviousData,
-    select,
     staleTime,
     suspense,
     onError,

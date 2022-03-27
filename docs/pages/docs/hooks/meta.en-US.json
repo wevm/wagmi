@@ -1,4 +1,5 @@
 {
   "useAccount": "useAccount",
-  "useBalance": "useBalance"
+  "useBalance": "useBalance",
+  "useBlockNumber": "useBlockNumber"
 }
