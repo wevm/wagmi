@@ -113,7 +113,7 @@ importers:
       siwe: ^1.1.0
       tailwindcss: ^3.0.19
       typescript: 4.5.4
-      wagmi: 0.3.0-next.8
+      wagmi: 0.3.0-next.9
     dependencies:
       '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
       degen: 0.0.49_react-dom@17.0.2+react@17.0.2
@@ -177,7 +177,7 @@ importers:
       react: 17.0.2
       react-dom: 17.0.2
       typescript: 4.5.4
-      wagmi: 0.3.0-next.8
+      wagmi: 0.3.0-next.9
     dependencies:
       '@ethersproject/providers': 5.6.1
       ethers: 5.6.1
@@ -198,7 +198,7 @@ importers:
       '@preconstruct/next': ^3.0.1
       '@types/node': 17.0.5
       '@types/react': 17.0.38
-      '@wagmi/core': 0.2.0-next.6
+      '@wagmi/core': 0.2.0-next.7
       eslint: 8.5.0
       eslint-config-next: 12.0.7
       ethers: ^5.5.1
@@ -234,7 +234,7 @@ importers:
       typescript: ^4.4.4
       util: ^0.12.4
       vite: ^2.7.2
-      wagmi: 0.3.0-next.8
+      wagmi: 0.3.0-next.9
     dependencies:
       buffer: 6.0.3
       ethers: 5.6.1
@@ -273,7 +273,7 @@ importers:
       '@coinbase/wallet-sdk': ^3.0.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
-      '@wagmi/core': 0.2.0-next.6
+      '@wagmi/core': 0.2.0-next.7
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
       react: ^17.0.0
