@@ -5,5 +5,7 @@
   "useEnsAddress": "useEnsAddress",
   "useEnsAvatar": "useEnsAvatar",
   "useEnsName": "useEnsName",
-  "useEnsResolver": "useEnsResolver"
+  "useEnsResolver": "useEnsResolver",
+  "useFeeData": "useFeeData",
+  "useToken": "useToken"
 }

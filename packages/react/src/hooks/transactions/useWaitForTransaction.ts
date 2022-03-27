@@ -49,8 +49,6 @@ export function useWaitForTransaction({
   wait,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
   staleTime,
   suspense,
   onError,
@@ -65,8 +63,6 @@ export function useWaitForTransaction({
     {
       cacheTime,
       enabled: Boolean(enabled && (hash || wait)),
-      keepPreviousData,
-      select,
       staleTime,
       suspense,
       onError,

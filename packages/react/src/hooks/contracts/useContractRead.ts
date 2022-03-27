@@ -57,8 +57,6 @@ export function useContractRead(
     watch,
     cacheTime,
     enabled: enabled_ = true,
-    keepPreviousData,
-    select,
     staleTime,
     suspense,
     onError,
@@ -121,8 +119,6 @@ export function useContractRead(
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
-    keepPreviousData,
-    select,
     staleTime,
     suspense,
     onError,

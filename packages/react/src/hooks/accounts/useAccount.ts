@@ -24,8 +24,6 @@ export function useAccount({
   ens,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
   staleTime,
   suspense,
   onError,
@@ -56,8 +54,6 @@ export function useAccount({
     {
       cacheTime,
       enabled,
-      keepPreviousData,
-      select,
       staleTime,
       suspense,
       onError,
