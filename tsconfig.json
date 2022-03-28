@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ESNEXT"
+    "target": "ES2021"
   },
   "exclude": ["node_modules", "**/dist/**"],
   "include": ["packages/**/*"]
