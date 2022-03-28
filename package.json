@@ -11,7 +11,6 @@
     "dev:example:next": "pnpm build && manypkg run example-next dev",
     "dev:example:remix": "pnpm build && manypkg run example-remix dev",
     "dev:example:vite-react": "pnpm build && manypkg run example-vite-react dev",
-    "gen:readme": "pnpm node scripts/copyReadme.js",
     "hardhat:dev": "pnpx hardhat node --config .config/hardhat.config.ts",
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
@@ -21,8 +20,7 @@
     "preinstall": "npx only-allow pnpm",
     "test": "jest --coverage",
     "test:ci": "start-server-and-test hardhat:dev http://127.0.0.1:8545 test",
-    "test:watch": "jest --watch",
-    "watch": "preconstruct watch"
+    "test:watch": "jest --watch"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
