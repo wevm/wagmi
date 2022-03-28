@@ -6,10 +6,10 @@ import type { AppProps } from 'next/app'
 import '../styles/globals.css'
 import 'nextra-theme-docs/style.css'
 
-/* eslint-disable import/no-unresolved */
 // https://github.com/import-js/eslint-plugin-import/issues/1868
+// eslint-disable-next-line import/no-unresolved
 import 'degen/styles'
-/* eslint-enable import/no-unresolved */
+import { useFathom } from '../hooks'
 import { Providers } from '../components/core'
 import { encodeBase64 } from '../lib/encode'
 
@@ -36,6 +36,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   const getLayout =
     (Component as any).getLayout || ((page: React.ReactElement) => page)
+
+  useFathom()
 
   return (
     <>
