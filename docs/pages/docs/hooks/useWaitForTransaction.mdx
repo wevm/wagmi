@@ -22,6 +22,35 @@ const App = () => {
 }
 ```
 
+## Usage useWaitForTransaction() with useContractWrite()
+
+```tsx
+import { useContractWrite, useWaitForTransaction } from 'wagmi'
+
+const App = () => {
+  const [callFeedData, write: callFeed] = useContractWrite(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'feed',
+  )
+  
+  const [{ data, error, loading }, wait: waitForFeedTransaction] = useWaitForTransaction({
+    skip: true,
+  })
+
+  const someActionHandler = async () => {
+       const txn = await callFeed();
+       await waitForFeedTransaction({wait: txn.data.wait});
+  }
+  
+  if (loading) return <div>Processing…</div>
+  if (error) return <div>Transaction error</div>
+  return <div>Transaction: {JSON.stringify(data)}</div>
+}
+```
+
 ## Return Values
 
 ### result
