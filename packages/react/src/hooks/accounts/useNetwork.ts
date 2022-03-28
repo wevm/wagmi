@@ -35,7 +35,7 @@ export function useNetwork({
   const {
     mutate,
     mutateAsync,
-    variables: chainId,
+    variables: pendingChainId,
     ...networkMutation
   } = useMutation(
     mutationKey,
@@ -63,8 +63,8 @@ export function useNetwork({
   return {
     ...networkMutation,
     activeChain: queryResult.data?.chain,
-    chainId,
     chains: queryResult.data?.chains ?? [],
+    pendingChainId,
     switchNetwork: connector?.switchChain ? mutate : undefined,
     switchNetworkAsync: connector?.switchChain ? mutateAsync : undefined,
   } as const

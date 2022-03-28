@@ -39,7 +39,7 @@ export function useConnect({
     mutate,
     mutateAsync,
     status,
-    variables: connector,
+    variables: pendingConnector,
   } = useMutation(mutationKey, mutationFn, {
     onError,
     onMutate: onBeforeConnect,
@@ -81,7 +81,6 @@ export function useConnect({
     activeConnector: client.connector,
     connect: mutate,
     connectAsync: mutateAsync,
-    connector,
     connectors: client.connectors,
     data,
     error,
@@ -91,6 +90,7 @@ export function useConnect({
     isError: status === 'error',
     isIdle: status_ === 'idle',
     isReconnecting: status_ === 'reconnecting',
+    pendingConnector,
     status: status_,
   } as const
 }

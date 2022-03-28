@@ -20,7 +20,6 @@ describe('useConnect', () => {
           "activeConnector": undefined,
           "connect": [Function],
           "connectAsync": [Function],
-          "connector": undefined,
           "data": undefined,
           "error": null,
           "isConnected": false,
@@ -29,6 +28,7 @@ describe('useConnect', () => {
           "isError": false,
           "isIdle": false,
           "isReconnecting": false,
+          "pendingConnector": undefined,
           "status": "disconnected",
         }
       `)
@@ -51,7 +51,6 @@ describe('useConnect', () => {
           "activeConnector": "<MockConnector>",
           "connect": [Function],
           "connectAsync": [Function],
-          "connector": "<MockConnector>",
           "data": {
             "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chain": {
@@ -68,6 +67,7 @@ describe('useConnect', () => {
           "isError": false,
           "isIdle": false,
           "isReconnecting": false,
+          "pendingConnector": "<MockConnector>",
           "status": "connected",
         }
       `)
@@ -101,7 +101,6 @@ describe('useConnect', () => {
           "activeConnector": undefined,
           "connect": [Function],
           "connectAsync": [Function],
-          "connector": "<MockConnector>",
           "data": {
             "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chain": {
@@ -118,6 +117,7 @@ describe('useConnect', () => {
           "isError": false,
           "isIdle": false,
           "isReconnecting": false,
+          "pendingConnector": "<MockConnector>",
           "status": "connected",
         }
       `)
@@ -151,7 +151,6 @@ describe('useConnect', () => {
           "activeConnector": undefined,
           "connect": [Function],
           "connectAsync": [Function],
-          "connector": "<MockConnector>",
           "data": undefined,
           "error": [UserRejectedRequestError: User rejected request],
           "isConnected": false,
@@ -160,6 +159,7 @@ describe('useConnect', () => {
           "isError": true,
           "isIdle": false,
           "isReconnecting": false,
+          "pendingConnector": "<MockConnector>",
           "status": "disconnected",
         }
       `)
@@ -185,7 +185,6 @@ describe('useConnect', () => {
           "activeConnector": "<MockConnector>",
           "connect": [Function],
           "connectAsync": [Function],
-          "connector": "<MockConnector>",
           "data": undefined,
           "error": [ConnectorAlreadyConnectedError: Connector already connected],
           "isConnected": true,
@@ -194,6 +193,7 @@ describe('useConnect', () => {
           "isError": true,
           "isIdle": false,
           "isReconnecting": false,
+          "pendingConnector": "<MockConnector>",
           "status": "connected",
         }
       `)

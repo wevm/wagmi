@@ -8,7 +8,7 @@ import { useIsMounted } from '../../hooks'
 export const WalletSelectorWithSiwe = () => {
   const isMounted = useIsMounted()
   const [state, setState] = React.useState<{ loading?: boolean }>({})
-  const { connectAsync, connector, connectors, error, isConnecting } =
+  const { connectAsync, connectors, error, isConnecting, pendingConnector } =
     useConnect()
   const resolvedLoading = isConnecting || state.loading
 
@@ -56,7 +56,7 @@ export const WalletSelectorWithSiwe = () => {
             width="full"
             variant="tertiary"
             center
-            loading={resolvedLoading && x.name === connector?.name}
+            loading={resolvedLoading && x.id === pendingConnector?.id}
             disabled={isMounted ? !x.ready : false}
             key={x.id}
             onClick={() => handleConnect(x)}

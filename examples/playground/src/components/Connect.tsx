@@ -24,7 +24,7 @@ export const Connect = () => {
             {x.id === 'injected' ? (isMounted ? x.name : x.id) : x.name}
             {isMounted && !x.ready && ' (unsupported)'}
             {connect.status === 'connecting' &&
-              x.id === connect.connector?.id &&
+              x.id === connect.pendingConnector?.id &&
               '…'}
           </button>
         ))}

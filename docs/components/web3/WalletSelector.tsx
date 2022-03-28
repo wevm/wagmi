@@ -6,7 +6,8 @@ import { useIsMounted } from '../../hooks'
 
 export const WalletSelector = () => {
   const isMounted = useIsMounted()
-  const { connectors, isConnecting, connector, connect, error } = useConnect()
+  const { connectors, isConnecting, connect, error, pendingConnector } =
+    useConnect()
 
   return (
     <Stack space="4">
@@ -17,7 +18,7 @@ export const WalletSelector = () => {
             width="full"
             variant="tertiary"
             center
-            loading={isConnecting && x.name === connector?.name}
+            loading={isConnecting && x.id === pendingConnector?.id}
             disabled={isMounted ? !x.ready : false}
             key={x.id}
             onClick={() => connect(x)}

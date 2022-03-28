@@ -15,10 +15,10 @@ function App() {
   const {
     activeConnector,
     connect,
-    connector,
     connectors,
     error,
     isConnecting,
+    pendingConnector,
   } = useConnect()
 
   return (
@@ -27,7 +27,7 @@ function App() {
 
       {connectors.map((x) => (
         <button disabled={x.ready} key={x.id} onClick={() => connect(x)}>
-          {isConnecting && connector.id === x.id
+          {isConnecting && pendingConnector.id === x.id
             ? `Connecting to ${x.name}…`
             : x.name}
         </button>
@@ -42,7 +42,7 @@ function App() {
 ## Return Values
 
 ```tsx
-type T = {
+{
   activeConnector: Connector
   connect: (connector) => void
   connectAsync: (connector) => Promise<{
@@ -54,7 +54,6 @@ type T = {
     connector: Connector
     provider: Provider
   }>
-  connector: Connector
   connectors: Connector[]
   data?: {
     address: string
@@ -71,6 +70,7 @@ type T = {
   isDisconnected: boolean
   isIdle: boolean
   isReconnecting: boolean
+  pendingConnector: Connector
   status:
     | 'error'
     | 'idle'
