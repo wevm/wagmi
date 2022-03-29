@@ -36,7 +36,7 @@ export const Account = () => {
 
       {true && (
         <>
-          {false && (
+          {true && (
             <>
               <h4>Balance</h4>
               <Balance />
