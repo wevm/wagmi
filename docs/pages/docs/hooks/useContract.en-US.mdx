@@ -21,7 +21,7 @@ The following examples use the [ENS Registry Contract](https://etherscan.io/addr
 ```tsx
 import { useContract } from 'wagmi'
 
-const App = () => {
+function App() {
   const contract = useContract({
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
@@ -44,7 +44,7 @@ Contract address or ENS name.
 ```tsx {5}
 import { useContract } from 'wagmi'
 
-const App = () => {
+function App() {
   const contract = useContract({
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
@@ -59,7 +59,7 @@ Contract ABI in JSON or JS object format. An [ethers.js Interface](https://docs.
 ```tsx {6}
 import { useContract } from 'wagmi'
 
-const App = () => {
+function App() {
   const contract = useContract({
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
@@ -74,7 +74,7 @@ An ethers.js [Provider](https://docs.ethers.io/v5/api/providers/provider/#Provid
 ```tsx {8}
 import { useContract, useProvider } from 'wagmi'
 
-const App = () => {
+function App() {
   const provider = useProvider()
   const contract = useContract({
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
