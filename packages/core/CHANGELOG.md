@@ -1,5 +1,12 @@
 # @wagmi/core
 
+## 0.2.0-next.7
+
+### Minor Changes
+
+- - Favour `message` event over `connecting` event to conform to EIP-1193
+  - Export `useWaitForTransaction`
+
 ## 0.2.0-next.6
 
 ### Minor Changes

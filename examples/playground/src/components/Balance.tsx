@@ -18,7 +18,6 @@ const AccountBalance = () => {
   const { data: account } = useAccount()
   const { data, refetch } = useBalance({
     addressOrName: account?.address,
-    enabled: false,
     watch: true,
   })
 
@@ -31,19 +30,22 @@ const AccountBalance = () => {
 }
 
 const FindBalance = () => {
-  const { data, isLoading, getBalance } = useBalance()
-
   const [address, setAddress] = useState('')
+  const { data, isLoading, refetch } = useBalance({ addressOrName: address })
+
+  const [value, setValue] = useState('')
 
   return (
     <div>
       Find balance:{' '}
       <input
-        onChange={(e) => setAddress(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         placeholder="wallet address"
-        value={address}
+        value={value}
       />
-      <button onClick={() => getBalance({ addressOrName: address })}>
+      <button
+        onClick={() => (value === address ? refetch() : setAddress(value))}
+      >
         {isLoading ? 'fetching...' : 'fetch'}
       </button>
       <div>{data?.formatted}</div>
