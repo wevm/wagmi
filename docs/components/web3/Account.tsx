@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { Avatar, Box, Button, Skeleton, Stack } from 'degen'
-import { useAccount } from 'wagmi'
+import { useAccount, useDisconnect } from 'wagmi'
 
 import { formatAddress } from '../../lib/address'
 import { useIsMounted } from '../../hooks'
 
 export const Account = () => {
   const isMounted = useIsMounted()
-  const { data, disconnect } = useAccount({ ens: true })
+  const { data } = useAccount({ ens: true })
+  const { disconnect } = useDisconnect()
 
   if (!data?.address) return null
 
@@ -47,7 +48,7 @@ export const Account = () => {
         </Stack>
       </Stack>
 
-      <Button variant="secondary" onClick={disconnect}>
+      <Button variant="secondary" onClick={() => disconnect()}>
         Disconnect
       </Button>
     </Stack>
