@@ -29,7 +29,6 @@ export const useContractEvent = <
   const listenerRef = React.useRef(listener)
   listenerRef.current = listener
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     const handler = (...event: Array<Parameters<Contract['on']>[1]>) =>
       listenerRef.current(event)
@@ -41,6 +40,6 @@ export const useContractEvent = <
     return () => {
       contract_.off(eventName, handler)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract, eventName])
-  /* eslint-enable react-hooks/exhaustive-deps */
 }

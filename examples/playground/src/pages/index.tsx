@@ -12,8 +12,7 @@ const Page = () => {
       <Connect />
       <Account />
 
-      <h4>Switch Network</h4>
-      <NetworkSwitcher />
+      {false && <NetworkSwitcher />}
     </>
   )
 }

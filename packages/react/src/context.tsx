@@ -61,14 +61,13 @@ export function Provider({
   client = createClient(),
 }: React.PropsWithChildren<ProviderProps>) {
   // Attempt to connect on mount
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     ;(async () => {
       if (!client.config.autoConnect) return
       await client.autoConnect()
     })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  /* eslint-enable react-hooks/exhaustive-deps */
 
   return (
     <Context.Provider value={client}>

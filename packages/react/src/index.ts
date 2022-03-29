@@ -20,6 +20,7 @@ export {
   useContractEvent,
   useContractRead,
   useContractWrite,
+  useDisconnect,
   useEnsAddress,
   useEnsAvatar,
   useEnsName,

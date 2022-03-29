@@ -17,6 +17,7 @@ it('should expose correct exports', () => {
       "useContractEvent",
       "useContractRead",
       "useContractWrite",
+      "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",
       "useEnsName",

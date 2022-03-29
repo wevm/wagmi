@@ -10,7 +10,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
 
-export type UseConnectConfig = MutationConfig<
+export type UseNetworkConfig = MutationConfig<
   SwitchNetworkResult,
   Error,
   number
@@ -26,7 +26,7 @@ export function useNetwork({
   onMutate,
   onSettled,
   onSuccess,
-}: UseConnectConfig = {}) {
+}: UseNetworkConfig = {}) {
   const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
   const client = useClient()
   const queryClient = useQueryClient()
