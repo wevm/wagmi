@@ -33,7 +33,7 @@ export type QueryConfig<Data, Error> = {
   onSuccess?: UseQueryOptions<Data, Error>['onSuccess']
 }
 
-export type MutationConfig<Data, Error, Variables> = {
+export type MutationConfig<Data, Error, Variables = void> = {
   /** Function fires if mutation encounters error */
   onError?: UseMutationOptions<Data, Error, Variables>['onError']
   /**

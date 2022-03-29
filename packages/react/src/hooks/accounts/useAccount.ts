@@ -1,10 +1,5 @@
 import * as React from 'react'
-import {
-  GetAccountResult,
-  disconnect,
-  getAccount,
-  watchAccount,
-} from '@wagmi/core'
+import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
 import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
@@ -23,6 +18,8 @@ export type UseAccountConfig = Pick<
 
 export const queryKey = () => [{ entity: 'account' }] as const
 
+const queryFn = () => getAccount()
+
 export function useAccount({
   ens,
   suspense,
@@ -40,24 +37,13 @@ export function useAccount({
     isFetching,
     isLoading,
     status,
-  } = useQuery(
-    queryKey(),
-    () => {
-      const { address, connector } = getAccount()
-      const cachedAccount = client.config.autoConnect
-        ? queryClient.getQueryData<GetAccountResult>(queryKey())
-        : undefined
-      return address
-        ? { address, connector }
-        : cachedAccount || { address: undefined, connector: undefined }
-    },
-    {
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    },
-  )
+  } = useQuery(queryKey(), queryFn, {
+    staleTime: 0,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
   const address = accountData?.address
 
   const { data: ensAvatarData } = useEnsAvatar({
@@ -70,9 +56,9 @@ export function useAccount({
   })
 
   React.useEffect(() => {
-    const unwatch = watchAccount((data) => {
-      queryClient.setQueryData(queryKey(), data)
-    })
+    const unwatch = watchAccount((data) =>
+      queryClient.setQueryData(queryKey(), data),
+    )
     return unwatch
   }, [queryClient])
 
@@ -92,7 +78,6 @@ export function useAccount({
 
   return {
     data: data_ ? { ...data_, ...ensData } : undefined,
-    disconnect,
     error,
     isError: status === 'error',
     isFetching,

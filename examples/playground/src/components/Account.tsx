@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useDisconnect } from 'wagmi'
 
 import { useIsMounted } from '../hooks'
 import { Balance } from './Balance'
@@ -13,6 +13,7 @@ import { WriteContract } from './WriteContract'
 export const Account = () => {
   const isMounted = useIsMounted()
   const account = useAccount({ ens: { name: true } })
+  const disconnect = useDisconnect()
 
   return (
     <div>
@@ -27,14 +28,14 @@ export const Account = () => {
 
       <div>
         {account.data?.address && (
-          <button onClick={() => account.disconnect()}>Disconnect</button>
+          <button onClick={() => disconnect.disconnect()}>Disconnect</button>
         )}
         {isMounted && account.data?.connector?.name && (
           <span>Connected to {account.data.connector.name}</span>
         )}
       </div>
 
-      {true && (
+      {false && (
         <>
           {false && (
             <>
