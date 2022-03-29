@@ -38,7 +38,7 @@ export const queryKey = ({
 const queryFn = ({
   queryKey: [{ confirmations, hash, timeout, wait }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  if (!hash || !wait) throw new Error('hash or wait is required')
+  if (!hash && !wait) throw new Error('hash or wait is required')
   return waitForTransaction({ confirmations, hash, timeout, wait })
 }
 
