@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.2.23
+
+### Patch Changes
+
+- [#292](https://github.com/tmm/wagmi/pull/292) [`53c9be1`](https://github.com/tmm/wagmi/commit/53c9be17ee0c2ae6b8f34f2351b8858257b3f5f2) Thanks [@tmm](https://github.com/tmm)! - fix private fields
+
+- Updated dependencies [[`53c9be1`](https://github.com/tmm/wagmi/commit/53c9be17ee0c2ae6b8f34f2351b8858257b3f5f2)]:
+  - wagmi-core@0.1.17
+
 ## 0.2.22
 
 ### Patch Changes
