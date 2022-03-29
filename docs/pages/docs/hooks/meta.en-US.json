@@ -3,6 +3,7 @@
   "useBalance": "useBalance",
   "useBlockNumber": "useBlockNumber",
   "useConnect": "useConnect",
+  "useContract": "useContract",
   "useEnsAddress": "useEnsAddress",
   "useEnsAvatar": "useEnsAvatar",
   "useEnsName": "useEnsName",
