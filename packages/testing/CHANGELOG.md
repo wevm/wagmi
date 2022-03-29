@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.1.16
+
+### Patch Changes
+
+- [`79a2499`](https://github.com/tmm/wagmi/commit/79a249989029f818c32c0e84c0dd2c75e8aa990a) Thanks [@tmm](https://github.com/tmm)! - update build target to es2021
+
+- Updated dependencies [[`79a2499`](https://github.com/tmm/wagmi/commit/79a249989029f818c32c0e84c0dd2c75e8aa990a)]:
+  - wagmi-core@0.1.16
+
 ## 0.1.15
 
 ### Patch Changes
