@@ -1,7 +1,7 @@
 {
   "name": "wagmi-core",
   "license": "MIT",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "sideEffects": false,
@@ -54,7 +54,7 @@
   "devDependencies": {
     "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1",
-    "wagmi-testing": "0.1.17",
+    "wagmi-testing": "0.1.18",
     "walletlink": "^2.5.0"
   }
 }

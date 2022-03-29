@@ -2,7 +2,7 @@
   "name": "wagmi-testing",
   "description": "Testing utils for wagmi",
   "license": "MIT",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "sideEffects": false,
@@ -31,7 +31,7 @@
     "eventemitter3": "^4.0.7",
     "msw": "^0.36.3",
     "ts-pattern": "^3.3.4",
-    "wagmi-core": "0.1.17"
+    "wagmi-core": "0.1.18"
   },
   "devDependencies": {
     "ethers": "^5.5.1"
