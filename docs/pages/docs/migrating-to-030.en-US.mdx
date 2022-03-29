@@ -53,7 +53,7 @@ const [{ data, loading, error }, disconnect] = useAccount()
 ##### After
 
 ```tsx
-const { data, isLoading, error, disconnect } = useAccount()
+const { data, isLoading, error } = useAccount()
 ```
 
 ### Declarative getters > imperative getters
@@ -119,6 +119,7 @@ function Example() {
 
 - Now returns a singular object, instead of an array pair
 - `fetchEns` has been renamed to `ens`
+- `disconnect` has been removed. Use [`useDisconnect`](/docs/hooks/useDisconnect) instead.
 
 ##### Before
 
@@ -129,7 +130,8 @@ const [{ data, loading, error }, disconnect] = useAccount({ fetchEns: true })
 ##### After
 
 ```tsx
-const { data, isLoading, error, disconnect } = useAccount({ ens: true })
+const { data, isLoading, error } = useAccount({ ens: true })
+const { disconnect } = useDisconnect()
 ```
 
 #### `useBalance`
