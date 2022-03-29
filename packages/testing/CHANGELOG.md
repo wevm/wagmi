@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.1.18
+
+### Patch Changes
+
+- [#294](https://github.com/tmm/wagmi/pull/294) [`1d253f3`](https://github.com/tmm/wagmi/commit/1d253f3a59b61d24c88d25c99decd84a6c734e5d) Thanks [@tmm](https://github.com/tmm)! - change babel target
+
+- Updated dependencies [[`1d253f3`](https://github.com/tmm/wagmi/commit/1d253f3a59b61d24c88d25c99decd84a6c734e5d)]:
+  - wagmi-core@0.1.18
+
 ## 0.1.17
 
 ### Patch Changes
