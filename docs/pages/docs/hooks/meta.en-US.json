@@ -17,5 +17,6 @@
   "useSigner": "useSigner",
   "useSignMessage": "useSignMessage",
   "useToken": "useToken",
+  "useWaitForTransaction": "useWaitForTransaction",
   "useWebSocketProvider": "useWebSocketProvider"
 }
