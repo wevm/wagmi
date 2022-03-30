@@ -4,6 +4,7 @@
   "useBlockNumber": "useBlockNumber",
   "useConnect": "useConnect",
   "useContract": "useContract",
+  "useContractEvent": "useContractEvent",
   "useContractRead": "useContractRead",
   "useContractWrite": "useContractWrite",
   "useEnsAddress": "useEnsAddress",
