@@ -10,7 +10,7 @@ describe('fetchSigner', () => {
 
   it('connected', async () => {
     const client = setupWagmiClient()
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     const result = await fetchSigner()
     expect(result).toMatchInlineSnapshot(`
       JsonRpcSigner {

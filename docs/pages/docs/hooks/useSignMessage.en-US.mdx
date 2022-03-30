@@ -49,11 +49,11 @@ function App() {
 
 ## Configuration
 
-### message
+### message (optional)
 
 Message to sign with wallet. This can be a fixed string or a reactive state variable.
 
-```tsx {5}
+```tsx {7}
 import * as React from 'react'
 import { useSignMessage } from 'wagmi'
 
@@ -65,7 +65,7 @@ function App() {
 }
 ```
 
-#### onError (optional)
+### onError (optional)
 
 Function to invoke when an error is thrown while attempting to sign.
 
@@ -82,7 +82,7 @@ function App() {
 }
 ```
 
-#### onMutate (optional)
+### onMutate (optional)
 
 Function fires before sign message function and is passed same variables sign message function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a sign message failure.
 
@@ -99,7 +99,7 @@ function App() {
 }
 ```
 
-#### onSettled (optional)
+### onSettled (optional)
 
 Function to invoke when sign message is settled (either successfully signed, or an error has thrown).
 
@@ -116,7 +116,7 @@ function App() {
 }
 ```
 
-#### onSuccess (optional)
+### onSuccess (optional)
 
 Function to invoke when sign message is successful.
 

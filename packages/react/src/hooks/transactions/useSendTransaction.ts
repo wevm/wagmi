@@ -16,8 +16,8 @@ export type UseSendTransactionConfig = MutationConfig<
   UseSendTransactionArgs
 >
 
-export const mutationKey = ({ request }: UseSendTransactionArgs) =>
-  [{ entity: 'writeContract', request }] as const
+export const mutationKey = (args: UseSendTransactionArgs) =>
+  [{ entity: 'sendTransaction', ...args }] as const
 
 const mutationFn = (args: UseSendTransactionArgs) => {
   const { request } = args

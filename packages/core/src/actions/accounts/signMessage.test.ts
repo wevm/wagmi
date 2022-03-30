@@ -21,7 +21,7 @@ describe('signMessage', () => {
   describe('connected', () => {
     it('signs string message', async () => {
       const client = setupWagmiClient()
-      const connectResult = await connect(client.connectors[0])
+      const connectResult = await connect({ connector: client.connectors[0] })
       const signMessageResult = await signMessage({ message: messages.string })
       expect(signMessageResult).toMatchInlineSnapshot(
         `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
@@ -33,7 +33,7 @@ describe('signMessage', () => {
 
     it('signs bytes message', async () => {
       const client = setupWagmiClient()
-      const connectResult = await connect(client.connectors[0])
+      const connectResult = await connect({ connector: client.connectors[0] })
       const signMessageResult = await signMessage({ message: messages.bytes })
       expect(signMessageResult).toMatchInlineSnapshot(
         `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,

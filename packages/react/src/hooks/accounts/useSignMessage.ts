@@ -12,7 +12,9 @@ export type UseSignMessageConfig = MutationConfig<
   SignMessageArgs
 >
 
-export const mutationKey = [{ entity: 'signMessage' }]
+export const mutationKey = (args: UseSignMessageArgs) => [
+  { entity: 'signMessage', ...args },
+]
 
 const mutationFn = (args: UseSignMessageArgs) => {
   const { message } = args
@@ -28,7 +30,7 @@ export function useSignMessage({
   onSuccess,
 }: UseSignMessageArgs & UseSignMessageConfig = {}) {
   const { mutate, mutateAsync, ...signMessageMutation } = useMutation(
-    mutationKey,
+    mutationKey({ message }),
     mutationFn,
     {
       onError,

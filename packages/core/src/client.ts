@@ -236,13 +236,18 @@ export class Client {
   }
 
   #addEffects() {
-    const onChange = (data: Data) =>
+    const onChange = (data: Data) => {
       this.setState((x) => ({
         ...x,
         data: { ...x.data, ...data },
       }))
-    const onDisconnect = () => this.clearState()
-    const onError = (error: Error) => this.setState((x) => ({ ...x, error }))
+    }
+    const onDisconnect = () => {
+      this.clearState()
+    }
+    const onError = (error: Error) => {
+      this.setState((x) => ({ ...x, error }))
+    }
 
     this.store.subscribe(
       ({ connector }) => connector,

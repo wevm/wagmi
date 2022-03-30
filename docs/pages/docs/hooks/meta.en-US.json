@@ -13,11 +13,13 @@
   "useEnsName": "useEnsName",
   "useEnsResolver": "useEnsResolver",
   "useFeeData": "useFeeData",
+  "useNetwork": "useNetwork",
   "useProvider": "useProvider",
   "useSendTransaction": "useSendTransaction",
   "useSigner": "useSigner",
   "useSignMessage": "useSignMessage",
   "useSignTypedData": "useSignTypedData",
   "useToken": "useToken",
+  "useWaitForTransaction": "useWaitForTransaction",
   "useWebSocketProvider": "useWebSocketProvider"
 }

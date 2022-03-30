@@ -13,7 +13,7 @@ describe('connect', () => {
   it('connects', async () => {
     const client = setupWagmiClient()
     expect(client.connector).toBeUndefined()
-    const result = await connect(client.connectors[0])
+    const result = await connect({ connector: client.connectors[0] })
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -38,7 +38,7 @@ describe('connect', () => {
       ],
     })
     expect(client.connector).toBeUndefined()
-    const result = await connect(client.connectors[0])
+    const result = await connect({ connector: client.connectors[0] })
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -55,9 +55,9 @@ describe('connect', () => {
 
   it('connects with already connected connector', async () => {
     const client = setupWagmiClient()
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     await expect(
-      connect(client.connectors[0]),
+      connect({ connector: client.connectors[0] }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       `"Connector already connected"`,
     )
@@ -76,7 +76,7 @@ describe('connect', () => {
     })
 
     await expect(
-      connect(client.connectors[0]),
+      connect({ connector: client.connectors[0] }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
   })
 })

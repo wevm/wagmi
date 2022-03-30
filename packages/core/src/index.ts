@@ -37,6 +37,7 @@ export {
   writeContract,
 } from './actions'
 export type {
+  ConnectArgs,
   ConnectResult,
   FetchBalanceArgs,
   FetchBalanceResult,

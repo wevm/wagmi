@@ -71,7 +71,7 @@ function App() {
 }
 ```
 
-#### onError (optional)
+### onError (optional)
 
 Function to invoke when an error is thrown while attempting to send.
 
@@ -91,7 +91,7 @@ function App() {
 }
 ```
 
-#### onMutate (optional)
+### onMutate (optional)
 
 Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
 
@@ -111,7 +111,7 @@ function App() {
 }
 ```
 
-#### onSettled (optional)
+### onSettled (optional)
 
 Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
 
@@ -131,7 +131,7 @@ function App() {
 }
 ```
 
-#### onSuccess (optional)
+### onSuccess (optional)
 
 Function to invoke when send transaction is successful.
 

@@ -8,7 +8,7 @@ describe('watchNetwork', () => {
   it('callback receives data', async () => {
     const client = setupWagmiClient()
 
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
 
     const networks: GetNetworkResult[] = []
     watchNetwork((data) => networks.push(data))

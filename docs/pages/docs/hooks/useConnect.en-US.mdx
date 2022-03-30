@@ -27,9 +27,8 @@ function App() {
 
       {connectors.map((x) => (
         <button disabled={x.ready} key={x.id} onClick={() => connect(x)}>
-          {isConnecting && pendingConnector.id === x.id
-            ? `Connecting to ${x.name}…`
-            : x.name}
+          {x.name}
+          {isConnecting && pendingConnector.id === x.id && ' (connecting)'}
         </button>
       ))}
 
@@ -82,6 +81,21 @@ function App() {
 ```
 
 ## Configuration
+
+### connector (optional)
+
+Connector to use for connecting wallet. Useful if you want to connect to a specific connector, instead of [displaying a list](/docs/hooks/useConnect#usage).
+
+```tsx {5}
+import { useConnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+function App() {
+  const connect = useConnect({
+    connector: new InjectedConnector(),
+  })
+}
+```
 
 ### onBeforeConnect (optional)
 
