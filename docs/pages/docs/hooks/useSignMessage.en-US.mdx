@@ -1,0 +1,137 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# useSignMessage
+
+Hook for signing messages with connected account.
+
+```tsx
+import { useSignMessage } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the message: `gm wagmi frens`.
+
+```tsx
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const { data, isIdle, isError, isLoading, isSuccess, signMessage } =
+    useSignMessage({
+      message: 'gm wagmi frens',
+    })
+
+  return (
+    <div>
+      {(isIdle || isLoading) && (
+        <button disabled={isLoading} onClick={() => signMessage()}>
+          Sign message
+        </button>
+      )}
+      {isSuccess && <div>Signature: {data}</div>}
+      {isError && <div>Error signing message</div>}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: string
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  signMessageAsync: ({ message: string }) => Promise<string>
+  signMessage: ({ message: string }) => void
+  reset: () => void
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### message
+
+Message to sign with wallet.
+
+```tsx {5}
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const { data, signMessage } = useSignMessage({
+    message: 'gm wagmi frens',
+  })
+}
+```
+
+#### onError (optional)
+
+Function to invoke when an error is thrown while attempting to send.
+
+```tsx {6-8}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const { data, signMessage } = useTransaction({
+    message: 'gm wagmi frens',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+#### onMutate (optional)
+
+Function to call before the send function is invoked.
+
+```tsx {6-8}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const { data, signMessage } = useTransaction({
+    message: 'gm wagmi frens',
+    onMutate({ args, overrides }) {
+      console.log(args, overrides)
+    },
+  })
+}
+```
+
+#### onSettled (optional)
+
+Function to invoke when sending has settled (either successfully sent, or an error has thrown).
+
+```tsx {6-8}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const { data, signMessage } = useTransaction({
+    message: 'gm wagmi frens',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+#### onSuccess (optional)
+
+Function to invoke when successful
+
+```tsx {6-8}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const { data, signMessage } = useTransaction({
+    message: 'gm wagmi frens',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

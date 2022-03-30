@@ -11,11 +11,11 @@ import { useSendTransaction } from 'wagmi'
 ## Usage
 
 ```tsx
-import { useTransaction } from 'wagmi'
+import { useSendTransaction } from 'wagmi'
 
 function App() {
   const { data, isIdle, isError, isLoading, isSuccess, sendTransaction } =
-    useTransaction({
+    useSendTransaction({
       request: {
         to: 'awkweb.eth',
         value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -61,10 +61,10 @@ function App() {
 Object to use when creating transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
 
 ```tsx {5-8}
-import { useTransaction } from 'wagmi'
+import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useTransaction({
+  const { data, sendTransaction } = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -78,10 +78,10 @@ function App() {
 Function to invoke when an error is thrown while attempting to send.
 
 ```tsx {9-11}
-import { useTransaction } from 'wagmi'
+import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useTransaction({
+  const { data, sendTransaction } = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -98,10 +98,10 @@ function App() {
 Function to call before the send function is invoked.
 
 ```tsx {9-11}
-import { useTransaction } from 'wagmi'
+import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useTransaction({
+  const { data, sendTransaction } = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -118,10 +118,10 @@ function App() {
 Function to invoke when sending has settled (either successfully sent, or an error has thrown).
 
 ```tsx {9-11}
-import { useTransaction } from 'wagmi'
+import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useTransaction({
+  const { data, sendTransaction } = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -138,10 +138,10 @@ function App() {
 Function to invoke when successful
 
 ```tsx {9-11}
-import { useTransaction } from 'wagmi'
+import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useTransaction({
+  const { data, sendTransaction } = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH

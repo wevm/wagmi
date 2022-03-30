@@ -15,6 +15,7 @@
   "useProvider": "useProvider",
   "useSendTransaction": "useSendTransaction",
   "useSigner": "useSigner",
+  "useSignMessage": "useSignMessage",
   "useToken": "useToken",
   "useWebSocketProvider": "useWebSocketProvider"
 }
