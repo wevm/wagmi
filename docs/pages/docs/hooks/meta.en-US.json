@@ -13,6 +13,7 @@
   "useEnsResolver": "useEnsResolver",
   "useFeeData": "useFeeData",
   "useProvider": "useProvider",
+  "useSendTransaction": "useSendTransaction",
   "useToken": "useToken",
   "useWebSocketProvider": "useWebSocketProvider"
 }
