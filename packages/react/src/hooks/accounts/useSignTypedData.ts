@@ -47,13 +47,13 @@ export function useSignTypedData({
 
   const signTypedData = React.useCallback(
     (args?: SignTypedDataArgs) =>
-      mutate(<SignTypedDataArgs>{ domain, types, value, ...(args ?? {}) }),
+      mutate(args || <SignTypedDataArgs>{ domain, types, value }),
     [domain, types, value, mutate],
   )
 
   const signTypedDataAsync = React.useCallback(
     (args?: SignTypedDataArgs) =>
-      mutateAsync(<SignTypedDataArgs>{ domain, types, value, ...(args ?? {}) }),
+      mutateAsync(args || <SignTypedDataArgs>{ domain, types, value }),
     [domain, types, value, mutateAsync],
   )
 

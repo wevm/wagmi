@@ -44,6 +44,20 @@ function App() {
 
 ## Configuration
 
+### watch (optional)
+
+Watches and refreshes data for new blocks.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    watch: true,
+  })
+}
+```
+
 ### cacheTime (optional)
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
@@ -96,20 +110,6 @@ import { useBlockNumber } from 'wagmi'
 function App() {
   const blockNumber = useBlockNumber({
     suspense: true,
-  })
-}
-```
-
-### watch (optional)
-
-Watches and refreshes data for new blocks.
-
-```tsx {5}
-import { useBlockNumber } from 'wagmi'
-
-function App() {
-  const blockNumber = useBlockNumber({
-    watch: true,
   })
 }
 ```

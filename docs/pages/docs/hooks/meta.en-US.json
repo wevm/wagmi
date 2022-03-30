@@ -7,6 +7,7 @@
   "useContractEvent": "useContractEvent",
   "useContractRead": "useContractRead",
   "useContractWrite": "useContractWrite",
+  "useDisconnect": "useDisconnect",
   "useEnsAddress": "useEnsAddress",
   "useEnsAvatar": "useEnsAvatar",
   "useEnsName": "useEnsName",
@@ -16,6 +17,7 @@
   "useSendTransaction": "useSendTransaction",
   "useSigner": "useSigner",
   "useSignMessage": "useSignMessage",
+  "useSignTypedData": "useSignTypedData",
   "useToken": "useToken",
   "useWebSocketProvider": "useWebSocketProvider"
 }

@@ -1,5 +1,3 @@
-import Callout from 'nextra-theme-docs/callout'
-
 # useSignMessage
 
 Hook for signing messages with connected account.
@@ -16,18 +14,15 @@ The following examples use the message: `gm wagmi frens`.
 import { useSignMessage } from 'wagmi'
 
 function App() {
-  const { data, isIdle, isError, isLoading, isSuccess, signMessage } =
-    useSignMessage({
-      message: 'gm wagmi frens',
-    })
+  const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
+    message: 'gm wagmi frens',
+  })
 
   return (
     <div>
-      {(isIdle || isLoading) && (
-        <button disabled={isLoading} onClick={() => signMessage()}>
-          Sign message
-        </button>
-      )}
+      <button disabled={isLoading} onClick={() => signMessage()}>
+        Sign message
+      </button>
       {isSuccess && <div>Signature: {data}</div>}
       {isError && <div>Error signing message</div>}
     </div>
@@ -45,8 +40,8 @@ function App() {
   isIdle: boolean
   isLoading: boolean
   isSuccess: boolean
-  signMessageAsync: ({ message: string }) => Promise<string>
-  signMessage: ({ message: string }) => void
+  signMessage: (args?: SignMessageArgs) => void
+  signMessageAsync: (args?: SignMessageArgs) => Promise<string>
   reset: () => void
   status: 'idle' | 'error' | 'loading' | 'success'
 }
@@ -56,27 +51,29 @@ function App() {
 
 ### message
 
-Message to sign with wallet.
+Message to sign with wallet. This can be a fixed string or a reactive state variable.
 
 ```tsx {5}
+import * as React from 'react'
 import { useSignMessage } from 'wagmi'
 
 function App() {
-  const { data, signMessage } = useSignMessage({
-    message: 'gm wagmi frens',
+  const [message, setMessage] = React.useState('gm wagmi frens')
+  const signMessage = useSignMessage({
+    message,
   })
 }
 ```
 
 #### onError (optional)
 
-Function to invoke when an error is thrown while attempting to send.
+Function to invoke when an error is thrown while attempting to sign.
 
 ```tsx {6-8}
-import { useTransaction } from 'wagmi'
+import { useSignMessage } from 'wagmi'
 
 function App() {
-  const { data, signMessage } = useTransaction({
+  const signMessage = useSignMessage({
     message: 'gm wagmi frens',
     onError(error) {
       console.log('Error', error)
@@ -87,16 +84,16 @@ function App() {
 
 #### onMutate (optional)
 
-Function to call before the send function is invoked.
+Function fires before sign message function and is passed same variables sign message function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a sign message failure.
 
 ```tsx {6-8}
-import { useTransaction } from 'wagmi'
+import { useSignMessage } from 'wagmi'
 
 function App() {
-  const { data, signMessage } = useTransaction({
+  const signMessage = useSignMessage({
     message: 'gm wagmi frens',
-    onMutate({ args, overrides }) {
-      console.log(args, overrides)
+    onMutate(args) {
+      console.log('Mutate', args)
     },
   })
 }
@@ -104,13 +101,13 @@ function App() {
 
 #### onSettled (optional)
 
-Function to invoke when sending has settled (either successfully sent, or an error has thrown).
+Function to invoke when sign message is settled (either successfully signed, or an error has thrown).
 
 ```tsx {6-8}
-import { useTransaction } from 'wagmi'
+import { useSignMessage } from 'wagmi'
 
 function App() {
-  const { data, signMessage } = useTransaction({
+  const signMessage = useSignMessage({
     message: 'gm wagmi frens',
     onSettled(data, error) {
       console.log('Settled', { data, error })
@@ -121,13 +118,13 @@ function App() {
 
 #### onSuccess (optional)
 
-Function to invoke when successful
+Function to invoke when sign message is successful.
 
 ```tsx {6-8}
-import { useTransaction } from 'wagmi'
+import { useSignMessage } from 'wagmi'
 
 function App() {
-  const { data, signMessage } = useTransaction({
+  const signMessage = useSignMessage({
     message: 'gm wagmi frens',
     onSuccess(data) {
       console.log('Success', data)

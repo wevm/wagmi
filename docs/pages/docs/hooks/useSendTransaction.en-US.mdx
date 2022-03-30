@@ -1,5 +1,3 @@
-import Callout from 'nextra-theme-docs/callout'
-
 # useSendTransaction
 
 Hook for sending a transaction.
@@ -47,8 +45,8 @@ function App() {
   isIdle: boolean
   isLoading: boolean
   isSuccess: boolean
-  sendTransactionAsync: ({ request: TransactionRequest }) => Promise<TransactionResponse>
-  sendTransaction: ({ request: TransactionRequest }) => void
+  sendTransaction: (args? SendTransactionArgs) => void
+  sendTransactionAsync: (args? SendTransactionArgs) => Promise<TransactionResponse>
   reset: () => void
   status: 'idle' | 'error' | 'loading' | 'success'
 }
@@ -64,7 +62,7 @@ Object to use when creating transaction. See [TransactionRequest](https://docs.e
 import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useSendTransaction({
+  const sendTransaction = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -81,7 +79,7 @@ Function to invoke when an error is thrown while attempting to send.
 import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useSendTransaction({
+  const sendTransaction = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -95,19 +93,19 @@ function App() {
 
 #### onMutate (optional)
 
-Function to call before the send function is invoked.
+Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
 
 ```tsx {9-11}
 import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useSendTransaction({
+  const sendTransaction = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
     },
     onMutate({ args, overrides }) {
-      console.log(args, overrides)
+      console.log('Mutate', { args, overrides })
     },
   })
 }
@@ -115,13 +113,13 @@ function App() {
 
 #### onSettled (optional)
 
-Function to invoke when sending has settled (either successfully sent, or an error has thrown).
+Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
 
 ```tsx {9-11}
 import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useSendTransaction({
+  const sendTransaction = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -135,13 +133,13 @@ function App() {
 
 #### onSuccess (optional)
 
-Function to invoke when successful
+Function to invoke when send transaction is successful.
 
 ```tsx {9-11}
 import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, sendTransaction } = useSendTransaction({
+  const sendTransaction = useSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH

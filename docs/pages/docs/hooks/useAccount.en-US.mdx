@@ -40,7 +40,6 @@ function App() {
       name?: string | null
     }
   }
-  disconnect: () => Promise<void>
   error?: Error
   isError boolean
   isFetching: boolean
@@ -55,14 +54,28 @@ function App() {
 
 ### ens (optional)
 
-Fetches ENS name and avatar for connected account. Accepts `boolean` or `{ avatar?: boolean; name?: boolean }`.
+Fetches ENS information for connected account. When `true`, fetches both ENS name and avatar. Also, accepts object in the shape of `{ avatar?: boolean; name?: boolean }`.
 
-```tsx {5,8}
+```tsx {5}
 import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({
-    ens: true,
+    ens: { name: true },
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {5}
+import { useAccount } from 'wagmi'
+
+function App() {
+  const balance = useAccount({
+    suspense: true,
   })
 }
 ```

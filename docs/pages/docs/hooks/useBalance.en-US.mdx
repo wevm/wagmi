@@ -74,36 +74,6 @@ function App() {
 }
 ```
 
-### cacheTime (optional)
-
-Time (in ms) which the data should remain in the cache. Defaults to `0`.
-
-```tsx {6}
-import { useBalance } from 'wagmi'
-
-function App() {
-  const balance = useBalance({
-    addressOrName: 'awkweb.eth',
-    cacheTime: 2_000,
-  })
-}
-```
-
-### enabled (optional)
-
-Set this to `false` to disable this query from automatically running. Defaults to `true`.
-
-```tsx {6}
-import { useBalance } from 'wagmi'
-
-function App() {
-  const balance = useBalance({
-    addressOrName: 'awkweb.eth',
-    enabled: false,
-  })
-}
-```
-
 ### formatUnits (optional)
 
 Formats balance using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
@@ -115,36 +85,6 @@ function App() {
   const balance = useBalance({
     addressOrName: 'awkweb.eth',
     formatUnits: 'gwei',
-  })
-}
-```
-
-### staleTime (optional)
-
-Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
-
-```tsx {6}
-import { useBalance } from 'wagmi'
-
-function App() {
-  const balance = useBalance({
-    addressOrName: 'awkweb.eth',
-    staleTime: 2_000,
-  })
-}
-```
-
-### suspense (optional)
-
-Set this to `true` to enable suspense mode.
-
-```tsx {6}
-import { useBalance } from 'wagmi'
-
-function App() {
-  const balance = useBalance({
-    addressOrName: 'awkweb.eth',
-    suspense: true,
   })
 }
 ```
@@ -175,6 +115,66 @@ function App() {
   const balance = useBalance({
     addressOrName: 'awkweb.eth',
     watch: true,
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    enabled: false,
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    suspense: true,
   })
 }
 ```
