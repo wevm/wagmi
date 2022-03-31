@@ -4,7 +4,7 @@ const TITLE_WITH_TRANSLATIONS: Record<string, string> = {
   'en-US': 'React Hooks for Ethereum',
 }
 
-export const Header = () => {
+export function Header() {
   const { locale, defaultLocale = 'en-US' } = useRouter()
   const resolvedLocale = locale || defaultLocale
   const title = TITLE_WITH_TRANSLATIONS[resolvedLocale]

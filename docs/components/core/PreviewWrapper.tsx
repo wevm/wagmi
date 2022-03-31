@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode
 }
 
-export const PreviewWrapper = ({ children }: Props) => {
+export function PreviewWrapper({ children }: Props) {
   const { resolvedTheme } = useNextThemes()
   const { setMode } = useTheme()
 

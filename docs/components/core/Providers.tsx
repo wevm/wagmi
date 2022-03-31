@@ -61,6 +61,6 @@ type Props = {
   children?: React.ReactNode
 }
 
-export const Providers = ({ children }: Props) => {
+export function Providers({ children }: Props) {
   return <Provider client={client}>{children}</Provider>
 }

@@ -6,7 +6,7 @@ import { PreviewWrapper } from '../core'
 import { Account, SiweButton, WalletSelector } from '../web3'
 import { formatAddress } from '../../lib/address'
 
-export const SignInWithEthereum = () => {
+export function SignInWithEthereum() {
   const [state, setState] = React.useState<{
     address?: string
     loading?: boolean

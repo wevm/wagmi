@@ -15,7 +15,7 @@ import { encodeBase64 } from '../lib/encode'
 
 const themeKey = 'theme'
 
-const App = ({ Component, pageProps }: AppProps) => {
+function App({ Component, pageProps }: AppProps) {
   const savedTheme =
     typeof window !== 'undefined'
       ? (localStorage.getItem(themeKey) as any)

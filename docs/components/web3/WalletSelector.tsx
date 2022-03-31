@@ -4,7 +4,7 @@ import { useConnect } from 'wagmi'
 
 import { useIsMounted } from '../../hooks'
 
-export const WalletSelector = () => {
+export function WalletSelector() {
   const isMounted = useIsMounted()
   const { connectors, isConnecting, connect, error, pendingConnector } =
     useConnect()

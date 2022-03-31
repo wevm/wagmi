@@ -4,7 +4,7 @@ import { useAccount } from 'wagmi'
 import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'
 
-export const ConnectWallet = () => {
+export function ConnectWallet() {
   const { data } = useAccount()
 
   if (data)

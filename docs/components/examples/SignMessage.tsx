@@ -6,7 +6,7 @@ import { useAccount, useSignMessage } from 'wagmi'
 import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'
 
-export const SignMessage = () => {
+export function SignMessage() {
   const previousMessage = React.useRef<string>()
   const { data: accountData } = useAccount()
   const [message, setMessage] = React.useState('')

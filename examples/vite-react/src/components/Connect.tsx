@@ -1,19 +1,35 @@
-import { useConnect } from 'wagmi'
+import { useConnect, useDisconnect } from 'wagmi'
 
 export function Connect() {
-  const { connect, connectors, error, isConnecting, pendingConnector } =
-    useConnect()
+  const {
+    activeConnector,
+    connect,
+    connectors,
+    error,
+    isConnecting,
+    pendingConnector,
+  } = useConnect()
+  const { disconnect } = useDisconnect()
 
   return (
     <div>
       <div>
-        {connectors.map((x) => (
-          <button disabled={!x.ready} key={x.name} onClick={() => connect(x)}>
-            {x.name}
-            {!x.ready && ' (unsupported)'}
-            {isConnecting && x.name === pendingConnector?.name && '…'}
+        {activeConnector && (
+          <button onClick={() => disconnect()}>
+            Disconnect from {activeConnector.name}
           </button>
-        ))}
+        )}
+
+        {connectors
+          .filter((x) => x.ready && x.id !== activeConnector?.id)
+          .map((x) => (
+            <button key={x.name} onClick={() => connect(x)}>
+              {x.name}
+              {isConnecting &&
+                x.name === pendingConnector?.name &&
+                ' (connecting)'}
+            </button>
+          ))}
       </div>
 
       <div>{error && error.message}</div>

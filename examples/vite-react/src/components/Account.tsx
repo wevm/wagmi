@@ -1,26 +1,14 @@
 import { useAccount } from 'wagmi'
 
 export function Account() {
-  const { data, disconnect } = useAccount({ ens: true })
+  const { data } = useAccount({ ens: { name: true } })
 
-  if (!data) return <div>No account connected</div>
+  if (!data) return null
 
   return (
     <div>
-      <div>
-        <button onClick={() => disconnect()}>
-          Disconnect from {data?.connector?.name}
-        </button>
-      </div>
-
-      <div>
-        {data?.ens?.name ?? data?.address}
-        {data?.ens ? ` (${data?.address})` : null}
-      </div>
-
-      {data?.ens?.avatar && (
-        <img src={data.ens.avatar} style={{ height: 40, width: 40 }} />
-      )}
+      {data.ens?.name ?? data.address}
+      {data.ens?.name ? ` (${data.address})` : null}
     </div>
   )
 }

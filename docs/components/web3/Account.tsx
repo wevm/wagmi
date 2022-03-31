@@ -5,7 +5,7 @@ import { useAccount, useDisconnect } from 'wagmi'
 import { formatAddress } from '../../lib/address'
 import { useIsMounted } from '../../hooks'
 
-export const Account = () => {
+export function Account() {
   const isMounted = useIsMounted()
   const { data } = useAccount({ ens: true })
   const { disconnect } = useDisconnect()

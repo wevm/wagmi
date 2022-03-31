@@ -5,7 +5,7 @@ import { SiweMessage } from 'siwe'
 
 import { useIsMounted } from '../../hooks'
 
-export const WalletSelectorWithSiwe = () => {
+export function WalletSelectorWithSiwe() {
   const isMounted = useIsMounted()
   const [state, setState] = React.useState<{ loading?: boolean }>({})
   const { connectAsync, connectors, error, isConnecting, pendingConnector } =
