@@ -1,3 +1,5 @@
+import Callout from 'nextra-theme-docs/callout'
+
 # useWaitForTransaction
 
 Hook for declaratively waiting until transaction is processed. Pairs well with [`useContractWrite`](/docs/hooks/useContractWrite) and [`useSendTransaction`](/docs/hooks/useSendTransaction).
@@ -21,6 +23,8 @@ function App() {
   return <div>Transaction: {JSON.stringify(data)}</div>
 }
 ```
+
+<Callout>Hook does not run unless `hash` or `wait` is defined.</Callout>
 
 ## Return Values
 
@@ -54,7 +58,7 @@ Waits until confirmations number of blocks are mined on top of the block contain
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     confirmations: 1,
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
   })
@@ -63,14 +67,21 @@ function App() {
 
 ### hash (optional)
 
-Transaction hash to monitor.
+Transaction hash to monitor. Works well with [`useContractWrite`](/docs/hooks/useContractWrite) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.hash`.
 
 ```tsx {5}
-import { useWaitForTransaction } from 'wagmi'
+import { useContractWrite, useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
-    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  const contractWrite = useContractWrite(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'feed',
+  )
+  const waitForTransaction = useWaitForTransaction({
+    hash: contractWrite.data?.hash,
   })
 }
 ```
@@ -83,9 +94,30 @@ Maximum amount of time to wait before timing out in milliseconds. Defaults to `0
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     timeout: 2_000, // 2 seconds
+  })
+}
+```
+
+### wait (optional)
+
+Function that resolves to processed transaction receipt. Works well with [`useContractWrite`](/docs/hooks/useContractWrite) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.wait`.
+
+```tsx {5}
+import { useContractWrite, useWaitForTransaction } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'feed',
+  )
+  const waitForTransaction = useWaitForTransaction({
+    wait: contractWrite.data?.wait,
   })
 }
 ```
@@ -98,7 +130,7 @@ Time (in ms) which the data should remain in the cache.
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     cacheTime: 2_000,
   })
@@ -113,7 +145,7 @@ Set this to `false` to disable this query from automatically running. Defaults t
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     enabled: false,
   })
@@ -128,7 +160,7 @@ Time (in ms) after data is considered stale. If set to `Infinity` the data will 
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     staleTime: 2_000,
   })
@@ -143,7 +175,7 @@ Set this to `true` to enable suspense mode.
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     suspense: true,
   })
@@ -158,7 +190,7 @@ Function to invoke when fetching for new data is successful.
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     onSuccess(data) {
       console.log('Success', data)
@@ -175,7 +207,7 @@ Function to invoke when an error is thrown while fetching for new data.
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     onError(error) {
       console.log('Error', error)
@@ -192,7 +224,7 @@ Function to invoke when fetching is settled (either successfully fetched, or an 
 import { useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const { data } = useWaitForTransaction({
+  const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
     onSettled(data, error) {
       console.log('Settled', { data, error })
