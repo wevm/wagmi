@@ -12,7 +12,9 @@ export type UseSignMessageConfig = MutationConfig<
   SignMessageArgs
 >
 
-export const mutationKey = [{ entity: 'signMessage' }]
+export const mutationKey = (args: UseSignMessageArgs) => [
+  { entity: 'signMessage', ...args },
+]
 
 const mutationFn = (args: UseSignMessageArgs) => {
   const { message } = args
@@ -28,7 +30,7 @@ export function useSignMessage({
   onSuccess,
 }: UseSignMessageArgs & UseSignMessageConfig = {}) {
   const { mutate, mutateAsync, ...signMessageMutation } = useMutation(
-    mutationKey,
+    mutationKey({ message }),
     mutationFn,
     {
       onError,
@@ -39,14 +41,13 @@ export function useSignMessage({
   )
 
   const signMessage = React.useCallback(
-    (args?: SignMessageArgs) =>
-      mutate(<SignMessageArgs>{ message, ...(args ?? {}) }),
+    (args?: SignMessageArgs) => mutate(args || <SignMessageArgs>{ message }),
     [message, mutate],
   )
 
   const signMessageAsync = React.useCallback(
     (args?: SignMessageArgs) =>
-      mutateAsync(<SignMessageArgs>{ message, ...(args ?? {}) }),
+      mutateAsync(args || <SignMessageArgs>{ message }),
     [message, mutateAsync],
   )
 

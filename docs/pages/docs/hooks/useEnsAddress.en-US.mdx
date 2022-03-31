@@ -46,6 +46,20 @@ function App() {
 
 ## Configuration
 
+### name (optional)
+
+ENS name to fetch address for. If `name` is not defined, hook will not run.
+
+```tsx {5}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'moxey.eth',
+  })
+}
+```
+
 ### cacheTime (optional)
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
@@ -72,20 +86,6 @@ function App() {
   const ensAddress = useEnsAddress({
     name: 'awkweb.eth',
     enabled: false,
-  })
-}
-```
-
-### name (optional)
-
-ENS name to fetch address for. If `name` is not defined, hook will not run.
-
-```tsx {5}
-import { useEnsAddress } from 'wagmi'
-
-function App() {
-  const ensAddress = useEnsAddress({
-    name: 'moxey.eth',
   })
 }
 ```

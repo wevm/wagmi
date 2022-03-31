@@ -23,7 +23,7 @@ describe('getNetwork', () => {
 
   it('connected', async () => {
     const client = setupWagmiClient()
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     expect(getNetwork()).toMatchInlineSnapshot(`
       {
         "chain": {
@@ -154,7 +154,7 @@ describe('getNetwork', () => {
         }),
       ],
     })
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     expect(getNetwork()).toMatchInlineSnapshot(`
       {
         "chain": {

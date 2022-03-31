@@ -22,7 +22,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       : undefined
   const defaultMode = ['dark', 'light'].includes(savedTheme)
     ? savedTheme
-    : undefined
+    : 'dark'
 
   const themeScriptSrc = `!function(){try{var d=document.documentElement;var e=localStorage.getItem(${themeKey});if(e){d.setAttribute('data-theme',e.trim())}else{d.setAttribute('data-theme','light');}}catch(t){}}();`
 

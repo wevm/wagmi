@@ -4,6 +4,11 @@ import { Client, client } from '../../client'
 import { Connector, ConnectorData } from '../../connectors'
 import { ConnectorAlreadyConnectedError } from '../../errors'
 
+export type ConnectArgs = {
+  /** Connector to connect */
+  connector: Connector
+}
+
 type Data = Required<ConnectorData<BaseProvider>>
 
 export type ConnectResult = {
@@ -13,7 +18,9 @@ export type ConnectResult = {
   provider: Data['provider']
 }
 
-export async function connect(connector: Connector): Promise<ConnectResult> {
+export async function connect({
+  connector,
+}: ConnectArgs): Promise<ConnectResult> {
   const activeConnector = client.connector
   if (connector.id === activeConnector?.id)
     throw new ConnectorAlreadyConnectedError()

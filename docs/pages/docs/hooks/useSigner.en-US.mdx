@@ -43,22 +43,6 @@ function App() {
 
 ## Configuration
 
-### onSuccess (optional)
-
-Function to invoke when fetching for new data is successful.
-
-```tsx {5-7}
-import { useContract, useSigner } from 'wagmi'
-
-function App() {
-  const { data: signer } = useSigner({
-    onSuccess(data) {
-      console.log('Success', data)
-    },
-  })
-}
-```
-
 ### onError (optional)
 
 Function to invoke when an error is thrown while fetching for new data.
@@ -86,6 +70,22 @@ function App() {
   const { data: signer } = useSigner({
     onSettled(data, error) {
       console.log('Settled', data, error)
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching for new data is successful.
+
+```tsx {5-7}
+import { useContract, useSigner } from 'wagmi'
+
+function App() {
+  const { data: signer } = useSigner({
+    onSuccess(data) {
+      console.log('Success', data)
     },
   })
 }

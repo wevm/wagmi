@@ -16,7 +16,9 @@ export type UseSignTypedDataConfig = MutationConfig<
   SignTypedDataArgs
 >
 
-export const mutationKey = [{ entity: 'signTypedData' }]
+export const mutationKey = (args: UseSignTypedDataArgs) => [
+  { entity: 'signTypedData', ...args },
+]
 
 const mutationFn = (args: UseSignTypedDataArgs) => {
   const { domain, types, value } = args
@@ -35,7 +37,7 @@ export function useSignTypedData({
   onSuccess,
 }: UseSignTypedDataArgs & UseSignTypedDataConfig = {}) {
   const { mutate, mutateAsync, ...signTypedDataMutation } = useMutation(
-    mutationKey,
+    mutationKey({ domain, types, value }),
     mutationFn,
     {
       onError,
@@ -47,13 +49,13 @@ export function useSignTypedData({
 
   const signTypedData = React.useCallback(
     (args?: SignTypedDataArgs) =>
-      mutate(<SignTypedDataArgs>{ domain, types, value, ...(args ?? {}) }),
+      mutate(args || <SignTypedDataArgs>{ domain, types, value }),
     [domain, types, value, mutate],
   )
 
   const signTypedDataAsync = React.useCallback(
     (args?: SignTypedDataArgs) =>
-      mutateAsync(<SignTypedDataArgs>{ domain, types, value, ...(args ?? {}) }),
+      mutateAsync(args || <SignTypedDataArgs>{ domain, types, value }),
     [domain, types, value, mutateAsync],
   )
 

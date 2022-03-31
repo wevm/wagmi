@@ -58,13 +58,13 @@ export function useContractWrite(
 
   const write = React.useCallback(
     (overrideConfig?: WriteContractConfig) =>
-      mutate(<WriteContractConfig>overrideConfig || { args, overrides }),
+      mutate(overrideConfig || { args, overrides }),
     [args, mutate, overrides],
   )
 
   const writeAsync = React.useCallback(
     (overrideConfig?: WriteContractConfig) =>
-      mutateAsync(<WriteContractConfig>overrideConfig || { args, overrides }),
+      mutateAsync(overrideConfig || { args, overrides }),
     [args, mutateAsync, overrides],
   )
 

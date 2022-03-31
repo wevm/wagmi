@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { ConnectResult, Connector, connect } from '@wagmi/core'
+import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
 import { UseMutationOptions, UseMutationResult, useMutation } from 'react-query'
 
 import { useClient } from '../../context'
 
-type MutationOptions = UseMutationOptions<ConnectResult, Error, Connector>
+export type UseConnectArgs = Partial<ConnectArgs>
 
+type MutationOptions = UseMutationOptions<ConnectResult, Error, ConnectArgs>
 export type UseConnectConfig = {
   /**
    * Function to invoke before connect and is passed same variables connect function would receive.
@@ -20,32 +21,36 @@ export type UseConnectConfig = {
   onSettled?: MutationOptions['onSettled']
 }
 
-export const mutationKey = [{ entity: 'connect' }]
+export const mutationKey = (args: UseConnectArgs) => [
+  { entity: 'connect', ...args },
+]
 
-const mutationFn = (connector: Connector) => connect(connector)
+const mutationFn = (args: UseConnectArgs) => {
+  const { connector } = args
+  if (!connector) throw new Error('connector is required')
+  return connect({ connector })
+}
 
 export function useConnect({
+  connector,
   onBeforeConnect,
   onConnect,
   onError,
   onSettled,
-}: UseConnectConfig = {}) {
+}: UseConnectArgs & UseConnectConfig = {}) {
   const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
   const client = useClient()
 
-  const {
-    data,
-    error,
-    mutate,
-    mutateAsync,
-    status,
-    variables: pendingConnector,
-  } = useMutation(mutationKey, mutationFn, {
-    onError,
-    onMutate: onBeforeConnect,
-    onSettled,
-    onSuccess: onConnect,
-  })
+  const { data, error, mutate, mutateAsync, status, variables } = useMutation(
+    mutationKey({ connector }),
+    mutationFn,
+    {
+      onError,
+      onMutate: onBeforeConnect,
+      onSettled,
+      onSuccess: onConnect,
+    },
+  )
 
   React.useEffect(() => {
     // Trigger update when connector or status change
@@ -77,10 +82,22 @@ export function useConnect({
   else if (!client.connector) status_ = 'disconnected'
   else status_ = status
 
+  const connect = React.useCallback(
+    (connector_?: ConnectArgs['connector']) =>
+      mutate(<ConnectArgs>{ connector: connector_ ?? connector }),
+    [connector, mutate],
+  )
+
+  const connectAsync = React.useCallback(
+    (connector_?: ConnectArgs['connector']) =>
+      mutateAsync(<ConnectArgs>{ connector: connector_ ?? connector }),
+    [connector, mutateAsync],
+  )
+
   return {
     activeConnector: client.connector,
-    connect: mutate,
-    connectAsync: mutateAsync,
+    connect,
+    connectAsync,
     connectors: client.connectors,
     data,
     error,
@@ -90,7 +107,7 @@ export function useConnect({
     isError: status === 'error',
     isIdle: status_ === 'idle',
     isReconnecting: status_ === 'reconnecting',
-    pendingConnector,
+    pendingConnector: variables?.connector,
     status: status_,
   } as const
 }

@@ -62,6 +62,34 @@ function App() {
 
 ## Configuration
 
+### formatUnits (optional)
+
+Formats fee data using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+
+```tsx {5}
+import { useFeeData } from 'wagmi'
+
+function App() {
+  const feeData = useFeeData({
+    formatUnits: 'gwei',
+  })
+}
+```
+
+### watch (optional)
+
+Watches and refreshes data for new blocks.
+
+```tsx {5}
+import { useFeeData } from 'wagmi'
+
+function App() {
+  const feeData = useFeeData({
+    watch: true,
+  })
+}
+```
+
 ### cacheTime (optional)
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
@@ -90,20 +118,6 @@ function App() {
 }
 ```
 
-### formatUnits (optional)
-
-Formats fee data using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
-
-```tsx {5}
-import { useFeeData } from 'wagmi'
-
-function App() {
-  const feeData = useFeeData({
-    formatUnits: 'gwei',
-  })
-}
-```
-
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
@@ -128,20 +142,6 @@ import { useFeeData } from 'wagmi'
 function App() {
   const feeData = useFeeData({
     suspense: true,
-  })
-}
-```
-
-### watch (optional)
-
-Watches and refreshes data for new blocks.
-
-```tsx {5}
-import { useFeeData } from 'wagmi'
-
-function App() {
-  const feeData = useFeeData({
-    watch: true,
   })
 }
 ```

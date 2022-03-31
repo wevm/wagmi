@@ -6,7 +6,7 @@ import { switchNetwork } from './switchNetwork'
 describe('switchNetwork', () => {
   it('switches network', async () => {
     const client = setupWagmiClient()
-    const connectResult = await connect(client.connectors[0])
+    const connectResult = await connect({ connector: client.connectors[0] })
     const switchNetworkResult = await switchNetwork({ chainId: 69 })
     expect(connectResult?.chain?.id !== switchNetworkResult.id).toBeTruthy()
     expect(switchNetworkResult).toMatchInlineSnapshot(`
@@ -34,7 +34,7 @@ describe('switchNetwork', () => {
 
   it('switches network to same network', async () => {
     const client = setupWagmiClient()
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     const network1 = getNetwork()
     await switchNetwork({ chainId: 1 })
     const network2 = getNetwork()
@@ -53,7 +53,7 @@ describe('switchNetwork', () => {
         }),
       ],
     })
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     await expect(
       switchNetwork({ chainId: 69 }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
