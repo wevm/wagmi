@@ -32,7 +32,7 @@ npm install wagmi ethers
 Connect a wallet in under 60 seconds. LFG.
 
 ```tsx
-import { Provider, createClient, useAccount, useConnect } from 'wagmi'
+import { Provider, createClient } from 'wagmi'
 
 const client = createClient()
 
@@ -44,9 +44,15 @@ function App() {
   )
 }
 
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
 function Profile() {
-  const { data, disconnect } = useAccount()
-  const { connectors, connect } = useConnect()
+  const { data } = useAccount()
+  const { connectors, connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
 
   if (data?.address)
     return (
@@ -55,13 +61,11 @@ function Profile() {
         <button onClick={disconnect}>Disconnect</button>
       </div>
     )
-  return <button onClick={() => connect(connectors[0])}>Connect Wallet</button>
+  return <button onClick={connect}>Connect Wallet</button>
 }
 ```
 
-In this example, we create a wagmi `Client` (using the default configuration) and pass it to the React Context `Provider`. Then, we use the `useConnect` hook to connect a wallet to the app. Finally, we show the connected account's address using `useAccount`.
-
-The default client is initialized with MetaMask, but connectors for WalletConnect and Coinbase Wallet are also just an import away. `useAccount` can also automatically fetch (and cache) the connected account's ENS name and avatar.
+In this example, we create a wagmi `Client` (using the default configuration) and pass it to the React Context `Provider`. Next, we use the `useConnect` hook to connect an injected wallet (i.e. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
 
 We've only scratched the surface for what you can do with wagmi!
 
