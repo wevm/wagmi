@@ -14,7 +14,7 @@ jobs:
         node-version: [14]
         pnpm-version: [6.24.2]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
