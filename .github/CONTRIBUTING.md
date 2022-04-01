@@ -1,51 +1,55 @@
-If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).
+gm.
 
-### Prerequisites
+Thanks for your interest in contributing to wagmi! Please take a moment to review this document **before submitting a pull request.**
 
-This project uses [pnpm](https://pnpm.io) as a package manager.
+## Pull requests
 
-### Development
+**Please ask first before starting work on any significant new features.**
+
+It's never a fun experience to have your pull request declined after investing a lot of time and effort into a new feature. To avoid this from happening, we request that contributors create [a feature request](https://github.com/tmm/wagmi/discussions/new?category=ideas) to first discuss any significant new ideas. This includes things like adding new hooks, connectors, etc.
+
+## Prerequisites
+
+This project uses [`pnpm`](https://pnpm.io) as a package manager.
+
+## Coding standards
+
+Our code formatting rules are defined in [.eslintrc](https://github.com/tmm/wagmi/blob/main/.eslintrc). You can check your code against these standards by running:
 
 ```bash
-pnpm i
-pnpm dev
+pnpm lint
 ```
 
-### Testing
+To automatically fix any error in your code, you can run:
 
-Add a `ALCHEMY_ID` to your environment variables so [Hardhat](https://hardhat.org) can fork mainnet.
+```bash
+npm lint:fix
+```
 
-Start local Ethereum network and tests in parallel:
+## Running tests
+
+wagmi runs it's test suite against a forked Ethereum network using [Hardhat](https://hardhat.org). To get started, add a `ALCHEMY_ID` to your environment variables. You can sign up for a free Alchemy account [here](https://www.alchemy.com/).
+
+Once you are set up, you can start the local Ethereum network and run tests in parallel:
 
 ```bash
 pnpm test:ci
 ```
 
-Or, run the follow command separately:
+Or fire up two terminal sessions and run `pnpm hardhat:dev` in one and `pnpm test:watch` in the other. This will run tests interactively while developing.
 
-```bash
-pnpm hardhat:dev
-pnpm test:watch
-```
+Please ensure that the tests are passing when submitting a pull request. If you're adding new features to wagmi, please include tests.
 
-### Docs
+## Updating documentation
+
+Documentation is crucial to helping developers of all experience levels use wagmi. To preview the docs site in development mode, run:
 
 ```bash
 pnpm dev:docs
 ```
 
-### Examples
+Not all contributions require updates to the docs. Also, feel free to update the docs if you think somemthing is unclear or could be explained better.
 
-```bash
-pnpm dev:example:next
-pnpm dev:example:remix
-pnpm dev:example:vite-react
-```
+---
 
-### CI
-
-[Add secrets](https://github.com/tmm/wagmi/settings/secrets/actions) to GitHub:
-
-```
-NPM_TOKEN
-```
+If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).

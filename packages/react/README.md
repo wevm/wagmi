@@ -76,7 +76,7 @@ Check out the following places for more wagmi-related content:
 - Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
 - Follow [@awkweb](https://twitter.com/awkweb) on Twitter for project updates
 - Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
-- Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) that uses wagmi
+- Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) using wagmi
 
 ## Support
 
