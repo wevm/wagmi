@@ -1,11 +1,20 @@
+import { useAccount } from 'wagmi'
+
 import { Account, Connect, NetworkSwitcher } from './components'
 
 export function App() {
+  const { data } = useAccount()
+
   return (
     <>
       <Connect />
-      <Account />
-      <NetworkSwitcher />
+
+      {data?.address && (
+        <>
+          <Account />
+          <NetworkSwitcher />
+        </>
+      )}
     </>
   )
 }

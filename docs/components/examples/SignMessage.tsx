@@ -7,20 +7,20 @@ import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'
 
 export function SignMessage() {
-  const previousMessage = React.useRef<string>()
+  const recoveredAddress = React.useRef<string>()
+
   const { data: accountData } = useAccount()
-  const [message, setMessage] = React.useState('')
   const {
     data: signMessageData,
     error,
     isLoading,
     signMessage,
-  } = useSignMessage()
-
-  const recoveredAddress = React.useMemo(() => {
-    if (!signMessageData || !previousMessage.current) return undefined
-    return verifyMessage(previousMessage.current, signMessageData)
-  }, [signMessageData, previousMessage])
+  } = useSignMessage({
+    onSuccess(data, variables) {
+      const address = verifyMessage(variables.message, data)
+      recoveredAddress.current = address
+    },
+  })
 
   if (accountData)
     return (
@@ -34,35 +34,32 @@ export function SignMessage() {
           marginTop="8"
           onSubmit={(event) => {
             event.preventDefault()
-            previousMessage.current = message
+            const formData = new FormData(event.target as HTMLFormElement)
+            const message = formData.get('message') as string
             signMessage({ message })
           }}
         >
           <Textarea
+            name="message"
             label="Enter a message to sign"
             placeholder="The quick brown fox…"
-            onChange={(event) => setMessage(event.target.value)}
+            required
           />
-          <Button
-            width="full"
-            center
-            disabled={isLoading || !message.length}
-            loading={isLoading}
-          >
+
+          <Button width="full" center disabled={isLoading} loading={isLoading}>
             {isLoading ? 'Check Wallet' : 'Sign Message'}
           </Button>
 
           {signMessageData && (
-            <Box>
-              <Box>Recovered Address: {recoveredAddress}</Box>
+            <Box color="textSecondary">
+              <Box>Recovered Address: {recoveredAddress.current}</Box>
               <Box style={{ wordBreak: 'break-all' }}>
                 Signature: {signMessageData}
               </Box>
             </Box>
           )}
-          {error && (
-            <Text color="red">{error?.message ?? 'Error signing message'}</Text>
-          )}
+
+          {error && <Text color="red">{error.message}</Text>}
         </Box>
       </PreviewWrapper>
     )

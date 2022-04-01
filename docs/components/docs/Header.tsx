@@ -21,19 +21,19 @@ export function Header() {
         <a aria-label="Stars" href="https://github.com/tmm/wagmi">
           <img
             alt=""
-            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=292929&colorB=3c82f6"
+            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=292929&colorB=3c82f6&label=Stars"
           />
         </a>
         <a aria-label="Downloads" href="https://www.npmjs.com/package/wagmi">
           <img
             alt=""
-            src="https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6"
+            src="https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6&label=Downloads"
           />
         </a>
         <a aria-label="Sponsors" href="https://github.com/sponsors/tmm">
           <img
             alt=""
-            src="https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6"
+            src="https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6&label=Sponsors"
           />
         </a>
       </div>

@@ -10,9 +10,10 @@ export function Account() {
   const { data } = useAccount({ ens: true })
   const { disconnect } = useDisconnect()
 
-  if (!data?.address) return null
+  if (!data || !isMounted) return null
 
   const formattedAddress = formatAddress(data.address)
+
   return (
     <Stack
       align="center"
@@ -21,13 +22,13 @@ export function Account() {
     >
       <Stack align="center" direction={{ xs: 'vertical', sm: 'horizontal' }}>
         <Avatar
-          src={data.ens?.avatar as any}
+          src={data?.ens?.avatar as any}
           label="ENS Avatar"
-          placeholder={!data.ens?.avatar}
+          placeholder={!data?.ens?.avatar}
         />
         <Stack space="0">
           <Box fontSize="large" textAlign={{ xs: 'center', sm: 'left' }}>
-            {data.ens?.name
+            {data?.ens?.name
               ? `${data.ens?.name} (${formattedAddress})`
               : formattedAddress}
           </Box>
@@ -39,8 +40,8 @@ export function Account() {
             gap="1"
           >
             Connected to{' '}
-            <Skeleton loading={!(isMounted && data.connector)}>
-              {isMounted && data.connector
+            <Skeleton loading={!(isMounted && data?.connector)}>
+              {isMounted && data?.connector
                 ? data.connector.name
                 : 'Wallet Name'}
             </Skeleton>

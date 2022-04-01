@@ -10,8 +10,6 @@ export function NetworkSwitcher() {
     switchNetwork,
   } = useNetwork()
 
-  if (!activeChain) return null
-
   return (
     <div>
       <div>

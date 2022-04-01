@@ -24,18 +24,16 @@ export function Connect() {
         )}
 
         {connectors
-          .filter((x) => x.ready && x.id !== activeConnector?.id)
+          .filter((x) => isMounted && x.ready && x.id !== activeConnector?.id)
           .map((x) => (
-            <button key={x.name} onClick={() => connect(x)}>
-              {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
-              {isConnecting &&
-                x.name === pendingConnector?.name &&
-                ' (connecting)'}
+            <button key={x.id} onClick={() => connect(x)}>
+              {x.name}
+              {isConnecting && x.id === pendingConnector?.id && ' (connecting)'}
             </button>
           ))}
       </div>
 
-      <div>{error && error.message}</div>
+      {error && <div>{error.message}</div>}
     </div>
   )
 }

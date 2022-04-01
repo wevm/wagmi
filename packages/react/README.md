@@ -2,7 +2,7 @@
 
 React Hooks for Ethereum
 
-[![Version](https://img.shields.io/npm/v/wagmi?label=&colorB=3fba11)](https://www.npmjs.com/package/wagmi) [![License](https://img.shields.io/npm/l/wagmi?label=&colorB=3fba11)](/LICENSE) [![Downloads](https://img.shields.io/npm/dm/wagmi?colorA=161b22&colorB=3fba11)](https://www.npmjs.com/package/wagmi) [![Sponsors](https://img.shields.io/github/sponsors/tmm?colorA=161b22&colorB=3fba11)](https://github.com/sponsors/tmm)
+[![Version](https://img.shields.io/npm/v/wagmi?label=&colorB=3fba11)](https://www.npmjs.com/package/wagmi) [![License](https://img.shields.io/npm/l/wagmi?label=&colorB=3fba11)](/LICENSE) [![Downloads](https://img.shields.io/npm/dm/wagmi?colorA=161b22&colorB=3fba11&label=Downloads)](https://www.npmjs.com/package/wagmi) [![Sponsors](https://img.shields.io/github/sponsors/tmm?colorA=161b22&colorB=3fba11&label=Sponsors)](https://github.com/sponsors/tmm)
 
 ## Features
 

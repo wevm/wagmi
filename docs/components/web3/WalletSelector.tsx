@@ -12,7 +12,7 @@ export function WalletSelector() {
   return (
     <Stack space="4">
       {connectors
-        .filter((x) => x.ready)
+        .filter((x) => isMounted && x.ready)
         .map((x) => (
           <Button
             width="full"
@@ -23,7 +23,7 @@ export function WalletSelector() {
             key={x.id}
             onClick={() => connect(x)}
           >
-            {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
+            {x.name}
           </Button>
         ))}
 
