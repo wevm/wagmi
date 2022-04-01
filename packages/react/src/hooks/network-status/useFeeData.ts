@@ -27,14 +27,12 @@ const queryFn = ({
 }
 
 export function useFeeData({
-  formatUnits = 'wei',
-  watch,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
+  formatUnits = 'wei',
   staleTime,
   suspense,
+  watch,
   onError,
   onSettled,
   onSuccess,
@@ -44,8 +42,6 @@ export function useFeeData({
   const feeDataQuery = useQuery(queryKey({ chainId, formatUnits }), queryFn, {
     cacheTime,
     enabled,
-    keepPreviousData,
-    select,
     staleTime,
     suspense,
     onError,

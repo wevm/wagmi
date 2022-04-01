@@ -15,7 +15,9 @@ export const NetworkSwitcher = () => {
           onClick={() => network.switchNetwork?.(x.id)}
         >
           Switch to {x.name}
-          {network.status === 'loading' && x.id === network.chainId && '…'}
+          {network.status === 'loading' &&
+            x.id === network.pendingChainId &&
+            '…'}
         </button>
       ))}
 

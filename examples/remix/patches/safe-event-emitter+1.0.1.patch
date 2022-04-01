@@ -1,0 +1,11 @@
+diff --git a/node_modules/safe-event-emitter/index.js b/node_modules/safe-event-emitter/index.js
+index 48e4cb0..89b4582 100644
+--- a/node_modules/safe-event-emitter/index.js
++++ b/node_modules/safe-event-emitter/index.js
+@@ -1,5 +1,5 @@
+ const util = require('util')
+-const EventEmitter = require('events/')
++const EventEmitter = require('events')
+ 
+ var R = typeof Reflect === 'object' ? Reflect : null
+ var ReflectApply = R && typeof R.apply === 'function'

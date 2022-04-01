@@ -11,9 +11,9 @@ describe('watchAccount', () => {
     const accounts: GetAccountResult[] = []
     watchAccount((data) => accounts.push(data))
 
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     await disconnect()
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
 
     expect(accounts).toMatchInlineSnapshot(`
       [

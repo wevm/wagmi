@@ -1,58 +1,59 @@
 import * as React from 'react'
-import { ConnectResult, Connector, connect } from '@wagmi/core'
+import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
 import { UseMutationOptions, UseMutationResult, useMutation } from 'react-query'
 
 import { useClient } from '../../context'
 
-type MutationOptions = UseMutationOptions<ConnectResult, Error, Connector>
+export type UseConnectArgs = Partial<ConnectArgs>
 
+type MutationOptions = UseMutationOptions<ConnectResult, Error, ConnectArgs>
 export type UseConnectConfig = {
   /**
-   * Function fires before connect function and is passed same variables connect function would receive.
+   * Function to invoke before connect and is passed same variables connect function would receive.
    * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
    */
   onBeforeConnect?: MutationOptions['onMutate']
-  /** Function fires when connect is successful */
+  /** Function to invoke when connect is successful. */
   onConnect?: MutationOptions['onSuccess']
-  /** Function fires if connect encounters error */
+  /** Function to invoke when an error is thrown while connecting. */
   onError?: MutationOptions['onError']
-  /** Function fires when connect is either successful or encounters error */
+  /** Function to invoke when connect is settled (either successfully connected, or an error has thrown). */
   onSettled?: MutationOptions['onSettled']
 }
 
-export const mutationKey = 'connect'
+export const mutationKey = (args: UseConnectArgs) => [
+  { entity: 'connect', ...args },
+]
 
-const mutationFn = (connector: Connector) => connect(connector)
+const mutationFn = (args: UseConnectArgs) => {
+  const { connector } = args
+  if (!connector) throw new Error('connector is required')
+  return connect({ connector })
+}
 
 export function useConnect({
+  connector,
   onBeforeConnect,
   onConnect,
   onError,
   onSettled,
-}: UseConnectConfig = {}) {
+}: UseConnectArgs & UseConnectConfig = {}) {
   const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
   const client = useClient()
 
-  const {
-    mutate,
-    mutateAsync,
-    status,
-    variables: connector,
-    // Remove these values from return
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    isSuccess,
-    isLoading,
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-    ...connectMutation
-  } = useMutation(mutationKey, mutationFn, {
-    onError,
-    onMutate: onBeforeConnect,
-    onSettled,
-    onSuccess: onConnect,
-  })
+  const { data, error, mutate, mutateAsync, status, variables } = useMutation(
+    mutationKey({ connector }),
+    mutationFn,
+    {
+      onError,
+      onMutate: onBeforeConnect,
+      onSettled,
+      onSuccess: onConnect,
+    },
+  )
 
-  // Trigger update when connector or status change
   React.useEffect(() => {
+    // Trigger update when connector or status change
     const unsubscribe = client.subscribe(
       (state) => ({
         connector: state.connector,
@@ -81,18 +82,32 @@ export function useConnect({
   else if (!client.connector) status_ = 'disconnected'
   else status_ = status
 
+  const connect = React.useCallback(
+    (connector_?: ConnectArgs['connector']) =>
+      mutate(<ConnectArgs>{ connector: connector_ ?? connector }),
+    [connector, mutate],
+  )
+
+  const connectAsync = React.useCallback(
+    (connector_?: ConnectArgs['connector']) =>
+      mutateAsync(<ConnectArgs>{ connector: connector_ ?? connector }),
+    [connector, mutateAsync],
+  )
+
   return {
-    ...connectMutation,
     activeConnector: client.connector,
-    connect: mutate,
-    connectAsync: mutateAsync,
-    connector,
+    connect,
+    connectAsync,
     connectors: client.connectors,
+    data,
+    error,
     isConnected: status_ === 'connected',
     isConnecting: status_ === 'connecting',
     isDisconnected: status_ === 'disconnected',
+    isError: status === 'error',
     isIdle: status_ === 'idle',
     isReconnecting: status_ === 'reconnecting',
+    pendingConnector: variables?.connector,
     status: status_,
   } as const
 }

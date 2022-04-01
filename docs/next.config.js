@@ -20,6 +20,11 @@ const config = {
         destination: '/examples/connect-wallet',
         statusCode: 302,
       },
+      {
+        source: '/guides/:path*',
+        destination: '/examples/:path*',
+        statusCode: 301,
+      },
     ]
   },
 }

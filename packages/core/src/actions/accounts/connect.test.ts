@@ -13,17 +13,17 @@ describe('connect', () => {
   it('connects', async () => {
     const client = setupWagmiClient()
     expect(client.connector).toBeUndefined()
-    const result = await connect(client.connectors[0])
+    const result = await connect({ connector: client.connectors[0] })
 
-    const { data: { provider, ...rest } = {} } = result
-    expect(provider).toBeDefined()
-    expect(rest).toMatchInlineSnapshot(`
+    expect(result).toMatchInlineSnapshot(`
       {
         "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "chain": {
           "id": 1,
           "unsupported": false,
         },
+        "connector": "<MockConnector>",
+        "provider": "<MockProvider>",
       }
     `)
   })
@@ -38,25 +38,26 @@ describe('connect', () => {
       ],
     })
     expect(client.connector).toBeUndefined()
-    const result = await connect(client.connectors[0])
-    const { data: { provider, ...rest } = {} } = result
-    expect(provider).toBeDefined()
-    expect(rest).toMatchInlineSnapshot(`
+    const result = await connect({ connector: client.connectors[0] })
+
+    expect(result).toMatchInlineSnapshot(`
       {
         "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "chain": {
           "id": 69,
           "unsupported": true,
         },
+        "connector": "<MockConnector>",
+        "provider": "<MockProvider>",
       }
     `)
   })
 
   it('connects with already connected connector', async () => {
     const client = setupWagmiClient()
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     await expect(
-      connect(client.connectors[0]),
+      connect({ connector: client.connectors[0] }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       `"Connector already connected"`,
     )
@@ -75,7 +76,7 @@ describe('connect', () => {
     })
 
     await expect(
-      connect(client.connectors[0]),
+      connect({ connector: client.connectors[0] }),
     ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
   })
 })

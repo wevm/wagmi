@@ -17,6 +17,7 @@ it('should expose correct exports', () => {
       "useContractEvent",
       "useContractRead",
       "useContractWrite",
+      "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",
       "useEnsName",
@@ -39,7 +40,6 @@ it('should expose correct exports', () => {
       "createStorage",
       "createWagmiStorage",
       "defaultChains",
-      "erc1155ABI",
       "erc20ABI",
       "erc721ABI",
     ]

@@ -1,6 +1,7 @@
 import { actHook, renderHook } from '../../../test'
 import { useToken } from './useToken'
 
+const ensContractAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
 describe('useToken', () => {
@@ -8,7 +9,7 @@ describe('useToken', () => {
     it('has token', async () => {
       const { result, waitFor } = renderHook(() =>
         useToken({
-          address: uniContractAddress,
+          address: ensContractAddress,
         }),
       )
 
@@ -45,13 +46,13 @@ describe('useToken', () => {
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
-            "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+            "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
             "decimals": 18,
-            "symbol": "UNI",
+            "symbol": "ENS",
             "totalSupply": {
-              "formatted": "1000000000.0",
+              "formatted": "100000000.0",
               "value": {
-                "hex": "0x033b2e3c9fd0803ce8000000",
+                "hex": "0x52b7d2dcc80cd2e4000000",
                 "type": "BigNumber",
               },
             },
@@ -70,7 +71,7 @@ describe('useToken', () => {
           "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
+          "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
           "remove": [Function],
@@ -186,7 +187,7 @@ describe('useToken', () => {
           "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
+          "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
           "remove": [Function],

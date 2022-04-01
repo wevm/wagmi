@@ -20,6 +20,7 @@ const AccountBalance = () => {
     addressOrName: account?.address,
     watch: true,
   })
+
   return (
     <div>
       {data?.formatted}

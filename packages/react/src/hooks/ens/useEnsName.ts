@@ -30,9 +30,7 @@ export function useEnsName({
   address,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
-  staleTime = 1000 * 60 * 60 * 24, // 24 hours
+  staleTime = 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,
@@ -42,8 +40,6 @@ export function useEnsName({
   return useQuery(queryKey({ address, chainId }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && address && chainId),
-    keepPreviousData,
-    select,
     staleTime,
     suspense,
     onError,

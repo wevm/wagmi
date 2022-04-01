@@ -1,4 +1,4 @@
-export { connect, type ConnectResult } from './connect'
+export { connect, type ConnectArgs, type ConnectResult } from './connect'
 
 export { disconnect } from './disconnect'
 

@@ -32,15 +32,13 @@ const queryFn = ({
 
 export function useBalance({
   addressOrName,
-  formatUnits = 'ether',
-  token,
-  watch,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
+  formatUnits = 'ether',
   staleTime,
   suspense,
+  token,
+  watch,
   onError,
   onSettled,
   onSuccess,
@@ -52,8 +50,6 @@ export function useBalance({
     {
       cacheTime,
       enabled: Boolean(enabled && addressOrName),
-      keepPreviousData,
-      select,
       staleTime,
       suspense,
       onError,

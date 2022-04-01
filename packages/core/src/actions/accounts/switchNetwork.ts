@@ -8,11 +8,11 @@ export type SwitchNetworkArgs = {
 
 export type SwitchNetworkResult = Chain
 
-export async function switchNetwork(
-  args: SwitchNetworkArgs,
-): Promise<SwitchNetworkResult> {
+export async function switchNetwork({
+  chainId,
+}: SwitchNetworkArgs): Promise<SwitchNetworkResult> {
   if (!client.connector?.switchChain) throw new SwitchChainNotSupportedError()
 
-  const chain = await client.connector.switchChain(args.chainId)
+  const chain = await client.connector.switchChain(chainId)
   return chain
 }

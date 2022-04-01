@@ -16,7 +16,7 @@ describe('sendTransaction', () => {
 
   it('works', async () => {
     const client = setupWagmiClient()
-    await connect(client.connectors[0])
+    await connect({ connector: client.connectors[0] })
     const fromAddress = client.data?.account
     if (!fromAddress) throw new Error('Not connected')
 

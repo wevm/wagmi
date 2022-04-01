@@ -2,6 +2,7 @@ export {
   useAccount,
   useBalance,
   useConnect,
+  useDisconnect,
   useNetwork,
   useSigner,
   useSignMessage,
