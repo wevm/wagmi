@@ -25,6 +25,7 @@ export function PreviewWrapper({ children }: Props) {
       overflow="hidden"
       padding="6"
       width="full"
+      minHeight="24"
     >
       {children}
     </Box>

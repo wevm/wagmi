@@ -7,10 +7,7 @@ import { Account, SiweButton, WalletSelector } from '../web3'
 import { formatAddress } from '../../lib/address'
 
 export function SignInWithEthereum() {
-  const [state, setState] = React.useState<{
-    address?: string
-    loading?: boolean
-  }>({})
+  const [address, setAddress] = React.useState<string>()
   const { data: accountData } = useAccount()
   const { activeChain } = useNetwork()
 
@@ -19,26 +16,26 @@ export function SignInWithEthereum() {
       try {
         const res = await fetch('/api/me')
         const json = await res.json()
-        setState((x) => ({ ...x, address: json.address }))
-      } finally {
-        setState((x) => ({ ...x, loading: false }))
+        setAddress(json.address)
+      } catch (error) {
+        console.log({ error })
       }
     }
-    ;(async () => await handler())()
+    handler()
 
     window.addEventListener('focus', handler)
     return () => window.removeEventListener('focus', handler)
   }, [])
 
-  const signedInContent = state.address ? (
+  const signedInContent = address ? (
     <Stack direction="horizontal" align="center" justify="center">
-      <Box fontSize="large">Signed in as {formatAddress(state.address)}</Box>
+      <Box fontSize="large">Signed in as {formatAddress(address)}</Box>
       <Button
         size="small"
         variant="tertiary"
         onClick={async () => {
           await fetch('/api/logout')
-          setState({})
+          setAddress(undefined)
         }}
       >
         Sign Out
@@ -52,16 +49,14 @@ export function SignInWithEthereum() {
         <Stack space="6">
           <Account />
 
-          {state.address ? (
+          {address ? (
             signedInContent
           ) : (
-            <Skeleton loading={state.loading} width="full" radius="2xLarge">
+            <Skeleton width="full" radius="2xLarge">
               <SiweButton
                 address={accountData.address as string}
                 chainId={activeChain?.id ?? chain.mainnet.id}
-                onSuccess={({ address }) =>
-                  setState((x) => ({ ...x, address }))
-                }
+                onSuccess={({ address }) => setAddress(address)}
               />
             </Skeleton>
           )}
