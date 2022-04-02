@@ -10,9 +10,9 @@
   },
   "ignore": [
     "docs",
-    "example-core",
     "example-next",
-    "example-vite-react",
-    "example-playground"
+    "example-playground",
+    "example-remix",
+    "example-vite-react"
   ]
 }

@@ -64,17 +64,22 @@ const client = createClient({
 import { chain, createClient, defaultChains } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
+const alchemyId = process.env.ALCHEMY_ID
+
 const client = createClient({
   connectors(config) {
-    const rpcUrl =
-      defaultChains.find((x) => x.id === config.chainId)?.rpcUrls?.[0] ??
-      chain.mainnet.rpcUrls[0]
-    const jsonRpcUrl = `${rpcUrl}/yourInfuraId`
+    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+    const rpcUrl = chain.rpcUrls.alchemy
+      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+      : typeof chain.rpcUrls.default === 'string'
+      ? chain.rpcUrls.default
+      : chain.rpcUrls.default[0]
     return [
       new CoinbaseWalletConnector({
         options: {
           appName: 'wagmi',
-          jsonRpcUrl,
+          chainId: chain.id,
+          jsonRpcUrl: rpcUrl,
         },
       }),
     ]
@@ -92,7 +97,7 @@ import { createClient } from 'wagmi'
 
 const client = createClient({
   provider(config) {
-    return new providers.InfuraProvider(config.chainId, 'Your infura id')
+    return new providers.AlchemyProvider(config.chainId, 'Your Alchemy ID')
   },
 })
 ```
@@ -129,9 +134,9 @@ import { createClient } from 'wagmi'
 
 const client = createClient({
   webSocketProvider(config) {
-    return new providers.InfuraWebSocketProvider(
+    return new providers.AlchemyWebSocketProvider(
       config.chainId,
-      'Your infura id',
+      'Your Alchemy ID',
     )
   },
 })

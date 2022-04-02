@@ -19,28 +19,37 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 // API key for Ethereum node
-// Two popular services are Infura (infura.io) and Alchemy (alchemy.com)
-const infuraId = process.env.INFURA_ID
+// Two popular services are Alchemy (alchemy.com) and Infura (infura.io)
+const alchemyId = process.env.ALCHEMY_ID
+
+const chains = defaultChains
+const defaultChain = chain.mainnet
 
 // Set up connectors
 const client = createClient({
   autoConnect: true,
   connectors({ chainId }) {
-    const rpcUrl =
-      chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-      chain.mainnet.rpcUrls[0]
+    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+    const rpcUrl = chain.rpcUrls.alchemy
+      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+      : typeof chain.rpcUrls.default === 'string'
+      ? chain.rpcUrls.default
+      : chain.rpcUrls.default[0]
     return [
       new InjectedConnector(),
       new CoinbaseWalletConnector({
         options: {
           appName: 'wagmi',
-          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
+          chainId: chain.id,
+          jsonRpcUrl: rpcUrl,
         },
       }),
       new WalletConnectConnector({
         options: {
-          infuraId,
           qrcode: true,
+          rpc: {
+            [chain.id]: rpcUrl,
+          },
         },
       }),
     ]

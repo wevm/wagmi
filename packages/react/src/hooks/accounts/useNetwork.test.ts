@@ -74,7 +74,7 @@ describe('useNetwork', () => {
             },
             "rpcUrls": {
               "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-              "default": "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213",
+              "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
               "infura": "https://mainnet.infura.io/v3",
             },
             "unsupported": false,
@@ -201,7 +201,7 @@ describe('useNetwork', () => {
           },
           "rpcUrls": {
             "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-            "default": "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213",
+            "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
             "infura": "https://mainnet.infura.io/v3",
           },
           "unsupported": false,
@@ -251,7 +251,7 @@ describe('useNetwork', () => {
           },
           "rpcUrls": {
             "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-            "default": "https://rinkeby.infura.io/v3/84842078b09946638c03157f83405213",
+            "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
             "infura": "https://rinkeby.infura.io/v3",
           },
           "testnet": true,
@@ -278,7 +278,7 @@ describe('useNetwork', () => {
           },
           "rpcUrls": {
             "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-            "default": "https://rinkeby.infura.io/v3/84842078b09946638c03157f83405213",
+            "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
             "infura": "https://rinkeby.infura.io/v3",
           },
           "testnet": true,

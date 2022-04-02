@@ -1,6 +1,6 @@
 import { Chain } from '../types'
 import { etherscanBlockExplorers } from './blockExplorers'
-import { defaultInfuraId } from './keys'
+import { defaultAlchemyId } from './keys'
 import { alchemyRpcUrls, infuraRpcUrls } from './rpcs'
 
 export type ChainName =
@@ -42,7 +42,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.mainnet,
       infura: infuraRpcUrls.mainnet,
-      default: `${infuraRpcUrls.mainnet}/${defaultInfuraId}`,
+      default: `${alchemyRpcUrls.mainnet}/${defaultAlchemyId}`,
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.mainnet,
@@ -56,7 +56,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.ropsten,
       infura: infuraRpcUrls.ropsten,
-      default: `${infuraRpcUrls.ropsten}/${defaultInfuraId}`,
+      default: `${alchemyRpcUrls.ropsten}/${defaultAlchemyId}`,
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.ropsten,
@@ -71,7 +71,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.rinkeby,
       infura: infuraRpcUrls.rinkeby,
-      default: `${infuraRpcUrls.rinkeby}/${defaultInfuraId}`,
+      default: `${alchemyRpcUrls.rinkeby}/${defaultAlchemyId}`,
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.rinkeby,
@@ -86,7 +86,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.goerli,
       infura: infuraRpcUrls.goerli,
-      default: `${infuraRpcUrls.goerli}/${defaultInfuraId}`,
+      default: `${alchemyRpcUrls.goerli}/${defaultAlchemyId}`,
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.goerli,
@@ -101,7 +101,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.kovan,
       infura: infuraRpcUrls.kovan,
-      default: `${infuraRpcUrls.kovan}/${defaultInfuraId}`,
+      default: `${alchemyRpcUrls.kovan}/${defaultAlchemyId}`,
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.kovan,
