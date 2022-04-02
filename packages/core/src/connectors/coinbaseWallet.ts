@@ -8,12 +8,28 @@ import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/Coinbas
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
-import { SwitchChainError, UserRejectedRequestError } from '../errors'
+import {
+  AddChainError,
+  ChainNotConfiguredError,
+  SwitchChainError,
+  UserRejectedRequestError,
+} from '../errors'
 import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
-type Options = CoinbaseWalletSDKOptions & { jsonRpcUrl?: string }
+type Options = CoinbaseWalletSDKOptions & {
+  /**
+   * Fallback Ethereum JSON RPC URL
+   * @default ""
+   */
+  jsonRpcUrl?: string
+  /**
+   * Fallback Ethereum Chain ID
+   * @default 1
+   */
+  chainId?: number
+}
 
 export class CoinbaseWalletConnector extends Connector<
   CoinbaseWalletProvider,
@@ -98,7 +114,10 @@ export class CoinbaseWalletConnector extends Connector<
     if (!this.#provider) {
       const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
       this.#client = new CoinbaseWalletSDK(this.options)
-      this.#provider = this.#client.makeWeb3Provider(this.options.jsonRpcUrl)
+      this.#provider = this.#client.makeWeb3Provider(
+        this.options.jsonRpcUrl,
+        this.options.chainId,
+      )
     }
     return this.#provider
   }
@@ -136,15 +155,32 @@ export class CoinbaseWalletConnector extends Connector<
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
-          rpcUrls: [],
+          rpcUrls: { default: [] },
         }
       )
     } catch (error) {
-      if (
-        /user rejected signature request/i.test(
-          (<ProviderRpcError>error).message,
-        )
-      )
+      // Indicates chain is not added to provider
+      if ((<ProviderRpcError>error).code === 4902) {
+        try {
+          const chain = this.chains.find((x) => x.id === chainId)
+          if (!chain) throw new ChainNotConfiguredError()
+          await provider.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: id,
+                chainName: chain.name,
+                nativeCurrency: chain.nativeCurrency,
+                rpcUrls: this.getRpcUrls(chain),
+                blockExplorerUrls: this.getBlockExplorerUrls(chain),
+              },
+            ],
+          })
+          return chain
+        } catch (addError) {
+          throw new AddChainError()
+        }
+      } else if ((<ProviderRpcError>error).code === 4001)
         throw new UserRejectedRequestError()
       else throw new SwitchChainError()
     }

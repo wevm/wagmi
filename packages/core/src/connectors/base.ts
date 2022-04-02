@@ -63,6 +63,19 @@ export abstract class Connector<
   protected abstract onChainChanged(chain: number | string): void
   protected abstract onDisconnect(error: Error): void
 
+  protected getBlockExplorerUrls(chain: Chain) {
+    const blockExplorer = chain.blockExplorers?.default
+    if (Array.isArray(blockExplorer)) return blockExplorer.map((x) => x.url)
+    if (blockExplorer?.url) return [blockExplorer.url]
+    return []
+  }
+
+  protected getRpcUrls(chain: Chain) {
+    return typeof chain.rpcUrls.default === 'string'
+      ? [chain.rpcUrls.default]
+      : chain.rpcUrls.default
+  }
+
   protected isChainUnsupported(chainId: number) {
     return !this.chains.some((x) => x.id === chainId)
   }

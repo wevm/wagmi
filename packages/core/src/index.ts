@@ -97,23 +97,22 @@ export {
   createClient as createWagmiClient,
   Client,
   Client as WagmiClient,
-  type ClientConfig,
-  type ClientConfig as WagmiClientConfig,
 } from './client'
+export type { ClientConfig, ClientConfig as WagmiClientConfig } from './client'
+
+export { Connector, InjectedConnector } from './connectors'
+export type { ConnectorData, ConnectorEvents } from './connectors'
 
 export {
-  Connector,
-  InjectedConnector,
-  type ConnectorData,
-  type ConnectorEvents,
-} from './connectors'
-
-export {
+  alchemyRpcUrls,
   allChains,
   chain,
+  chainId,
   defaultChains,
   erc20ABI,
   erc721ABI,
+  etherscanBlockExplorers,
+  infuraRpcUrls,
   units,
 } from './constants'
 
@@ -131,9 +130,8 @@ export {
   createStorage,
   createStorage as createWagmiStorage,
   noopStorage,
-  type WagmiStorage as Storage,
-  type WagmiStorage,
 } from './storage'
+export type { WagmiStorage as Storage, WagmiStorage } from './storage'
 
 export type { Chain, Unit } from './types'
 

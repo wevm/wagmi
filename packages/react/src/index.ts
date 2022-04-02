@@ -5,10 +5,12 @@ export {
   Provider as WagmiProvider,
   useClient,
   useClient as useWagmiClient,
-  type ClientConfig,
-  type ClientConfig as WagmiClientConfig,
-  type ProviderProps,
-  type ProviderProps as WagmiProviderProps,
+} from './context'
+export type {
+  ClientConfig,
+  ClientConfig as WagmiClientConfig,
+  ProviderProps,
+  ProviderProps as WagmiProviderProps,
 } from './context'
 
 export {
@@ -41,17 +43,22 @@ export {
   Client,
   Connector,
   WagmiClient,
+  alchemyRpcUrls,
   allChains,
   chain,
+  chainId,
   createStorage,
   createWagmiStorage,
   defaultChains,
   erc20ABI,
   erc721ABI,
-  type Chain,
-  type ConnectorData,
-  type ConnectorEvents,
-  type Storage,
-  type Unit,
-  type WagmiStorage,
+  infuraRpcUrls,
+} from '@wagmi/core'
+export type {
+  Chain,
+  ConnectorData,
+  ConnectorEvents,
+  Storage,
+  Unit,
+  WagmiStorage,
 } from '@wagmi/core'
