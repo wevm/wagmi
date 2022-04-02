@@ -11,7 +11,7 @@ class EthersProviderWrapper extends providers.JsonRpcProvider {
 }
 
 export function getProvider() {
-  const url = chain.hardhat.rpcUrls[0]
+  const url = chain.hardhat.rpcUrls.default.toString()
   const network = {
     chainId: chain.hardhat.id,
     ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',

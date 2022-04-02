@@ -6,7 +6,9 @@ describe('WalletConnectConnector', () => {
     const connector = new WalletConnectConnector({
       chains: defaultChains,
       options: {
-        rpc: `${chain.hardhat.rpcUrls[0]}`,
+        rpc: {
+          [chain.hardhat.id]: chain.hardhat.rpcUrls.default.toString(),
+        },
       },
     })
     expect(connector.name).toEqual('WalletConnect')

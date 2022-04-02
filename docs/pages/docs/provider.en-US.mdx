@@ -39,7 +39,7 @@ import { Provider, createClient } from 'wagmi'
 const client = createClient({
   autoConnect: true,
   provider(config) {
-    return new providers.InfuraProvider(config.chainId, 'Your infura id')
+    return new providers.AlchemyProvider(config.chainId, 'Your Alchemy ID')
   },
 })
 

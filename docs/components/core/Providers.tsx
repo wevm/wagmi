@@ -19,23 +19,29 @@ const isChainSupported = (chainId?: number) =>
 const client = createClient({
   autoConnect: true,
   connectors({ chainId }) {
-    const rpcUrl =
-      chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-      defaultChain.rpcUrls[0]
+    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+    const rpcUrl = chain.rpcUrls.alchemy
+      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+      : typeof chain.rpcUrls.default === 'string'
+      ? chain.rpcUrls.default
+      : chain.rpcUrls.default[0]
     return [
       new InjectedConnector({ chains }),
       new CoinbaseWalletConnector({
         chains,
         options: {
           appName: 'wagmi',
-          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
+          chainId: chain.id,
+          jsonRpcUrl: rpcUrl,
         },
       }),
       new WalletConnectConnector({
         chains,
         options: {
-          infuraId,
           qrcode: true,
+          rpc: {
+            [chain.id]: rpcUrl,
+          },
         },
       }),
     ]
@@ -51,8 +57,9 @@ const client = createClient({
     )
   },
   webSocketProvider({ chainId }) {
-    return new providers.InfuraWebSocketProvider(
+    return new providers.AlchemyWebSocketProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
+      alchemyId,
     )
   },
 })

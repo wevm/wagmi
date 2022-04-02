@@ -35,13 +35,16 @@ it('should expose correct exports', () => {
       "Client",
       "Connector",
       "WagmiClient",
+      "alchemyRpcUrls",
       "allChains",
       "chain",
+      "chainId",
       "createStorage",
       "createWagmiStorage",
       "defaultChains",
       "erc20ABI",
       "erc721ABI",
+      "infuraRpcUrls",
     ]
   `)
 })
