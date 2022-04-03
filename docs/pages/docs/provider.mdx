@@ -97,7 +97,7 @@ import { providers } from 'ethers'
 import { Provider } from 'wagmi'
 
 const provider = ({ chainId }) =>
-  new providers.InfuraProvider(chainId, 'Your infura id')
+  new providers.AlchemyProvider(chainId, 'Your Alchemy api key')
 
 const App = () => (
   <Provider provider={provider}>
