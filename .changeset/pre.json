@@ -2,10 +2,13 @@
   "mode": "pre",
   "tag": "next",
   "initialVersions": {
-    "docs": "0.0.1",
     "@wagmi/core": "0.1.13",
     "wagmi": "0.2.17",
-    "example-playground": "null-next.0"
+    "docs": "0.0.1",
+    "example-next": "0.0.1",
+    "example-playground": "0.0.1",
+    "example-remix": "0.0.1",
+    "example-vite-react": "0.0.1"
   },
   "changesets": [
     "cold-penguins-heal",
@@ -13,6 +16,7 @@
     "four-actors-tell",
     "grumpy-sloths-cough",
     "khaki-dingos-juggle",
+    "modern-dodos-dress",
     "pink-trees-walk",
     "selfish-poets-poke",
     "shiny-pumas-suffer",

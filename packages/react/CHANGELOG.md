@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.3.0-next.10
+
+### Patch Changes
+
+- update babel target
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.8
+
 ## 0.3.0-next.9
 
 ### Minor Changes
