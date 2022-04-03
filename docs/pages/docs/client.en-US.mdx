@@ -40,7 +40,7 @@ const client = createClient({
 
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
-```ts {6-14}
+```ts {6-13}
 import { createClient } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
@@ -50,7 +50,6 @@ const client = createClient({
     new InjectedConnector(),
     new WalletConnectConnector({
       options: {
-        infuraId: 'Your infura id',
         qrcode: true,
       },
     }),
@@ -60,26 +59,18 @@ const client = createClient({
 
 `connectors` also accepts a function that receives basic data about the current connection. For example, this is useful if you want to make your connectors aware of the active chain.
 
-```ts {5}
-import { chain, createClient, defaultChains } from 'wagmi'
+```ts {5-15}
+import { createClient } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-
-const alchemyId = process.env.ALCHEMY_ID
 
 const client = createClient({
   connectors(config) {
-    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
-    const rpcUrl = chain.rpcUrls.alchemy
-      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-      : typeof chain.rpcUrls.default === 'string'
-      ? chain.rpcUrls.default
-      : chain.rpcUrls.default[0]
     return [
+      new InjectedConnector(),
       new CoinbaseWalletConnector({
         options: {
           appName: 'wagmi',
-          chainId: chain.id,
-          jsonRpcUrl: rpcUrl,
+          chainId: config.chainId,
         },
       }),
     ]
@@ -128,7 +119,7 @@ const client = createClient({
 
 ethers.js WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
-```ts {5-7}
+```ts {5-10}
 import { providers } from 'ethers'
 import { createClient } from 'wagmi'
 
