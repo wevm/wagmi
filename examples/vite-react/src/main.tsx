@@ -10,9 +10,6 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { App } from './App'
 
 const alchemyId = import.meta.env.VITE_ALCHEMY_ID as string
-const etherscanApiKey = import.meta.env.VITE_ETHERSCAN_API_KEY as string
-const infuraId = import.meta.env.VITE_INFURA_ID as string
-
 const chains = defaultChains
 const defaultChain = chain.mainnet
 
@@ -50,13 +47,9 @@ const client = createClient({
     ]
   },
   provider({ chainId }) {
-    return providers.getDefaultProvider(
+    return new providers.AlchemyProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
-      {
-        alchemy: alchemyId,
-        etherscan: etherscanApiKey,
-        infura: infuraId,
-      },
+      alchemyId,
     )
   },
   webSocketProvider({ chainId }) {

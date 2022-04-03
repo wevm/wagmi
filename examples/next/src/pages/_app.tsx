@@ -9,9 +9,6 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
-const etherscanApiKey = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY as string
-const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
-
 const chains = defaultChains
 const defaultChain = chain.mainnet
 
@@ -49,13 +46,9 @@ const client = createClient({
     ]
   },
   provider({ chainId }) {
-    return providers.getDefaultProvider(
+    return new providers.AlchemyProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
-      {
-        alchemy: alchemyId,
-        etherscan: etherscanApiKey,
-        infura: infuraId,
-      },
+      alchemyId,
     )
   },
   webSocketProvider({ chainId }) {

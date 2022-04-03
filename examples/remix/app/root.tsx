@@ -19,8 +19,6 @@ export function loader() {
   require('dotenv').config()
   return {
     alchemyId: process.env.REMIX_ALCHEMY_ID as string,
-    etherscanApiKey: process.env.REMIX_ETHERSCAN_API_KEY as string,
-    infuraId: process.env.REMIX_INFURA_ID as string,
   }
 }
 
@@ -35,7 +33,7 @@ const isChainSupported = (chainId?: number) =>
   chains.some((x) => x.id === chainId)
 
 export default function App() {
-  const { alchemyId, etherscanApiKey, infuraId } = useLoaderData()
+  const { alchemyId } = useLoaderData()
 
   const client = createClient({
     autoConnect: true,
@@ -68,13 +66,9 @@ export default function App() {
       ]
     },
     provider({ chainId }) {
-      return providers.getDefaultProvider(
+      return new providers.AlchemyProvider(
         isChainSupported(chainId) ? chainId : defaultChain.id,
-        {
-          alchemy: alchemyId,
-          etherscan: etherscanApiKey,
-          infura: infuraId,
-        },
+        alchemyId,
       )
     },
     webSocketProvider({ chainId }) {
