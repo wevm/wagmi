@@ -10,7 +10,7 @@ import { Connector } from './base'
 
 type Options = CoinbaseWalletProviderOptions & { jsonRpcUrl?: string }
 
-export class WalletLinkConnector extends Connector<
+export class CoinbaseWalletConnector extends Connector<
   CoinbaseWalletProvider,
   Options
 > {
