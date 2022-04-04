@@ -256,3 +256,10 @@ export const defaultChains: Chain[] = [
   chain.goerli,
   chain.kovan,
 ]
+
+export const defaultL2Chains: Chain[] = [
+  chain.arbitrum,
+  chain.arbitrumRinkeby,
+  chain.optimism,
+  chain.optimismKovan,
+]

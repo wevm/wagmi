@@ -50,8 +50,10 @@ export {
   createStorage,
   createWagmiStorage,
   defaultChains,
+  defaultL2Chains,
   erc20ABI,
   erc721ABI,
+  etherscanBlockExplorers,
   infuraRpcUrls,
 } from '@wagmi/core'
 export type {

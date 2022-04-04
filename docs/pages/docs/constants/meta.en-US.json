@@ -1,4 +1,6 @@
 {
   "abis": "ABIs",
-  "chains": "Chains & Networks"
+  "block-explorers": "Block Explorers",
+  "chains": "Chains & Networks",
+  "rpcs": "RPC Providers"
 }
