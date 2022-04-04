@@ -43,7 +43,9 @@ function App() {
     </Provider>
   )
 }
+```
 
+```tsx
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
@@ -80,7 +82,7 @@ Check out the following places for more wagmi-related content:
 
 ## Support
 
-Help support future development and make wagmi a sustainable open-source project:
+If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 - [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
 - [GitHub Sponsors](https://github.com/sponsors/tmm)
@@ -92,7 +94,7 @@ If you're interested in contributing to wagmi, please read the [contributing doc
 
 ## License
 
-The MIT License.
+MIT
 
 <br />
 <br />
