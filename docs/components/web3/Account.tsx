@@ -1,18 +1,22 @@
 import * as React from 'react'
 import { Avatar, Box, Button, Skeleton, Stack } from 'degen'
-import { useAccount, useDisconnect } from 'wagmi'
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
 import { formatAddress } from '../../lib/address'
 import { useIsMounted } from '../../hooks'
 
 export function Account() {
   const isMounted = useIsMounted()
-  const { data } = useAccount({ ens: true })
+  const { data: accountData } = useAccount()
+  const { data: ensNameData } = useEnsName({ address: accountData?.address })
+  const { data: ensAvatarData } = useEnsAvatar({
+    addressOrName: accountData?.address,
+  })
   const { disconnect } = useDisconnect()
 
-  if (!data || !isMounted) return null
+  if (!accountData?.address || !isMounted) return null
 
-  const formattedAddress = formatAddress(data.address)
+  const formattedAddress = formatAddress(accountData.address)
 
   return (
     <Stack
@@ -22,14 +26,14 @@ export function Account() {
     >
       <Stack align="center" direction={{ xs: 'vertical', sm: 'horizontal' }}>
         <Avatar
-          src={data?.ens?.avatar as any}
+          src={ensAvatarData as any}
           label="ENS Avatar"
-          placeholder={!data?.ens?.avatar}
+          placeholder={!ensAvatarData}
         />
         <Stack space="0">
           <Box fontSize="large" textAlign={{ xs: 'center', sm: 'left' }}>
-            {data?.ens?.name
-              ? `${data.ens?.name} (${formattedAddress})`
+            {ensNameData
+              ? `${ensNameData} (${formattedAddress})`
               : formattedAddress}
           </Box>
           <Box
@@ -40,9 +44,9 @@ export function Account() {
             gap="1"
           >
             Connected to{' '}
-            <Skeleton loading={!(isMounted && data?.connector)}>
-              {isMounted && data?.connector
-                ? data.connector.name
+            <Skeleton loading={!(isMounted && accountData?.connector)}>
+              {isMounted && accountData?.connector
+                ? accountData.connector.name
                 : 'Wallet Name'}
             </Skeleton>
           </Box>

@@ -11,7 +11,7 @@ const Page = () => {
     <>
       <Connect />
       <Account />
-      <NetworkSwitcher />
+      {false && <NetworkSwitcher />}
     </>
   )
 }

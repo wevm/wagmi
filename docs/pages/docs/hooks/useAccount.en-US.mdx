@@ -12,33 +12,21 @@ import { useAccount } from 'wagmi'
 import { useAccount } from 'wagmi'
 
 function App() {
-  const { data, disconnect, isError, isLoading } = useAccount()
+  const { data, isError, isLoading } = useAccount()
 
   if (isLoading) return <div>Loading account…</div>
   if (isError) return <div>Error loading account</div>
-  return (
-    <>
-      <div>{data?.address}</div>
-
-      <button onClick={disconnect}>
-        Disconnect from {data?.connector?.name}
-      </button>
-    </>
-  )
+  return <div>{data?.address}</div>
 }
 ```
 
 ## Return Values
 
-```tsx
+```ts
 {
   data?: {
     address: string
     connector: Connector
-    ens?: {
-      avatar?: string | null
-      name?: string | null
-    }
   }
   error?: Error
   isError boolean
@@ -52,20 +40,6 @@ function App() {
 
 ## Configuration
 
-### ens (optional)
-
-Fetches ENS information for connected account. When `true`, fetches both ENS name and avatar. Also, accepts object in the shape of `{ avatar?: boolean; name?: boolean }`.
-
-```tsx {5}
-import { useAccount } from 'wagmi'
-
-function App() {
-  const account = useAccount({
-    ens: { name: true },
-  })
-}
-```
-
 ### suspense (optional)
 
 Set this to `true` to enable suspense mode.
@@ -74,8 +48,56 @@ Set this to `true` to enable suspense mode.
 import { useAccount } from 'wagmi'
 
 function App() {
-  const balance = useAccount({
+  const account = useAccount({
     suspense: true,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {5-7}
+import { useAccount } from 'wagmi'
+
+function App() {
+  const account = useAccount({
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {5-7}
+import { useAccount } from 'wagmi'
+
+function App() {
+  const account = useAccount({
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {5-7}
+import { useAccount } from 'wagmi'
+
+function App() {
+  const account = useAccount({
+    onSuccess(data) {
+      console.log('Success', data)
+    },
   })
 }
 ```
