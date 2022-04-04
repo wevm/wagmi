@@ -3,6 +3,7 @@ import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
 import { UseMutationOptions, UseMutationResult, useMutation } from 'react-query'
 
 import { useClient } from '../../context'
+import { useForceUpdate } from '../utils'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 
@@ -38,7 +39,7 @@ export function useConnect({
   onError,
   onSettled,
 }: UseConnectArgs & UseConnectConfig = {}) {
-  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
+  const forceUpdate = useForceUpdate()
   const client = useClient()
 
   const { data, error, mutate, mutateAsync, status, variables } = useMutation(
@@ -67,7 +68,7 @@ export function useConnect({
       },
     )
     return unsubscribe
-  }, [client])
+  }, [client, forceUpdate])
 
   let status_:
     | Extract<UseMutationResult['status'], 'error' | 'idle'>

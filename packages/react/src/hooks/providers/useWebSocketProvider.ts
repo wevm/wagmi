@@ -1,10 +1,14 @@
+import { WebSocketProvider } from '@ethersproject/providers'
 import * as React from 'react'
 
 import { useClient } from '../../context'
+import { useForceUpdate } from '../utils'
 
-export function useWebSocketProvider() {
-  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
-  const client = useClient()
+export function useWebSocketProvider<
+  TWebSocketProvider extends WebSocketProvider,
+>() {
+  const forceUpdate = useForceUpdate()
+  const client = useClient<any, TWebSocketProvider>()
 
   React.useEffect(() => {
     const unsubscribe = client.subscribe(
@@ -12,7 +16,7 @@ export function useWebSocketProvider() {
       forceUpdate,
     )
     return unsubscribe
-  }, [client])
+  }, [client, forceUpdate])
 
   return client.webSocketProvider
 }

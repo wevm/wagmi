@@ -60,7 +60,6 @@
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.0.1",
-    "@ethersproject/providers": "^5.5.1",
     "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1"
   }

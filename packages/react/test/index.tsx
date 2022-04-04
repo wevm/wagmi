@@ -5,6 +5,7 @@ import {
   renderHook as defaultRenderHook,
 } from '@testing-library/react-hooks'
 import '@testing-library/jest-dom/extend-expect'
+import { providers } from 'ethers'
 import { QueryClient } from 'react-query'
 
 import { Provider, ProviderProps } from '../src'
@@ -21,7 +22,7 @@ export const queryClient = new QueryClient({
   },
 })
 
-type Props = ProviderProps & {
+type Props = ProviderProps<providers.JsonRpcProvider> & {
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode

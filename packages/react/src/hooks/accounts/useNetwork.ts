@@ -10,6 +10,7 @@ import { useMutation, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
+import { useForceUpdate } from '../utils'
 
 export type UseNetworkArgs = Partial<SwitchNetworkArgs>
 
@@ -36,7 +37,7 @@ export function useNetwork({
   onSettled,
   onSuccess,
 }: UseNetworkArgs & UseNetworkConfig = {}) {
-  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
+  const forceUpdate = useForceUpdate()
   const network = React.useRef(getNetwork())
 
   const client = useClient()

@@ -1,9 +1,12 @@
 import type { BaseProvider } from '@ethersproject/providers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
 
-export type GetProviderResult = BaseProvider
+export type GetProviderResult<TProvider extends BaseProvider = BaseProvider> =
+  TProvider
 
-export function getProvider(): GetProviderResult {
-  return client.provider
+export function getProvider<
+  TProvider extends BaseProvider = BaseProvider,
+>(): GetProviderResult<TProvider> {
+  return getClient<TProvider>().provider
 }
