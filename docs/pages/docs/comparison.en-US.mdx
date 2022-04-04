@@ -2,13 +2,27 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Comparison To Other Libraries
 
-There are a few different options when it comes to React libraries for Ethereum that help manage wallet connections, provide utility methods/hooks, etc.
-
 <Callout emoji="👀">
-  If you have any thoughts about this section or want to add another comparison,
-  [please contribute](https://github.com/tmm/wagmi)! The goal is for these
-  comparisons to be unbiased and informative.
+  This comparison strives to be as accurate and as unbiased as possible. If you
+  use any of these libraries and feel the information could be improved, feel
+  free to suggest changes (with notes or evidence of claims) using the "Edit
+  this page on Github" link.
 </Callout>
+
+There are a multiple options when it comes to React libraries for Ethereum that help manage wallet connections, provide utility methods/hooks, etc.
+
+## Overview
+
+|                      | [wagmi](https://github.com/tmm/wagmi)                                                     | [web3-react](https://github.com/NoahZinsmeister/web3-react)                                                     | [useDApp](https://github.com/EthWorks/useDApp)                                                     | [web3modal](https://github.com/Web3Modal/web3modal)                                                     |
+| -------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| GitHub Stars         | ![wagmi star count](https://img.shields.io/github/stars/tmm/wagmi?colorB=3fba11&label=)   | ![web3-react star count](https://img.shields.io/github/stars/NoahZinsmeister/web3-react?colorB=3fba11&label=)   | ![useDApp star count](https://img.shields.io/github/stars/EthWorks/useDApp?colorB=3fba11&label=)   | ![web3modal star count](https://img.shields.io/github/stars/Web3Modal/web3modal?colorB=3fba11&label=)   |
+| Open Issues          | ![wagmi star count](https://img.shields.io/github/issues/tmm/wagmi?colorB=3fba11&label=)  | ![web3-react star count](https://img.shields.io/github/issues/NoahZinsmeister/web3-react?colorB=3fba11&label=)  | ![useDApp star count](https://img.shields.io/github/issues/EthWorks/useDApp?colorB=3fba11&label=)  | ![web3modal star count](https://img.shields.io/github/issues/Web3Modal/web3modal?colorB=3fba11&label=)  |
+| License              | ![wagmi star count](https://img.shields.io/github/license/tmm/wagmi?colorB=3fba11&label=) | ![web3-react star count](https://img.shields.io/github/license/NoahZinsmeister/web3-react?colorB=3fba11&label=) | ![useDApp star count](https://img.shields.io/github/license/EthWorks/useDApp?colorB=3fba11&label=) | ![web3modal star count](https://img.shields.io/github/license/Web3Modal/web3modal?colorB=3fba11&label=) |
+| Their Comparison     |                                                                                           | (none)                                                                                                          | (none)                                                                                             | (none)                                                                                                  |
+| Supported Frameworks | React, Vanilla JS                                                                         | React                                                                                                           | React                                                                                              | Vanilla JS                                                                                              |
+| Documentation        | ✅                                                                                        | 🛑                                                                                                              | ✅                                                                                                 | 🛑                                                                                                      |
+| Test Suite[^1]       | ✅                                                                                        | 🔶                                                                                                              | 🔶                                                                                                 | 🛑                                                                                                      |
+| Examples[^2]         | ✅                                                                                        | 🔶                                                                                                              | 🛑                                                                                                 | 🔶                                                                                                      |
 
 ## [wagmi](https://github.com/tmm/wagmi)
 
@@ -71,3 +85,8 @@ There are a few different options when it comes to React libraries for Ethereum 
 - Cannot be used headlessly
 - No hooks for interacting with Ethereum, fetching information, etc.
 - Almost no tests and infrequent updates
+
+---
+
+[^1]: Runs against forked Ethereum network ✅. Mocking functionality (i.e. RPC calls) is 🔶.
+[^2]: Has multiple examples ✅. Has single example 🔶.
