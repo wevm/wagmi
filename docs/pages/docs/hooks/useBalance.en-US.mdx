@@ -179,26 +179,9 @@ function App() {
 }
 ```
 
-### onSuccess (optional)
-
-Function to invoke when fetching for new data is successful.
-
-```tsx {6-8}
-import { useBalance } from 'wagmi'
-
-function App() {
-  const balance = useBalance({
-    addressOrName: 'awkweb.eth',
-    onSuccess(data) {
-      console.log('Success', data)
-    },
-  })
-}
-```
-
 ### onError (optional)
 
-Function to invoke when an error is thrown while fetching for new data.
+Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {6-8}
 import { useBalance } from 'wagmi'
@@ -225,6 +208,23 @@ function App() {
     addressOrName: 'awkweb.eth',
     onSettled(data, error) {
       console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {6-8}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: 'awkweb.eth',
+    onSuccess(data) {
+      console.log('Success', data)
     },
   })
 }

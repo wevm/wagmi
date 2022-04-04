@@ -6,7 +6,7 @@ import {
   switchNetwork,
   watchNetwork,
 } from '@wagmi/core'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
@@ -29,9 +29,6 @@ const mutationFn = (args: UseNetworkArgs) => {
   return switchNetwork({ chainId })
 }
 
-export const queryKey = () => [{ entity: 'chain' }] as const
-const queryFn = () => getNetwork()
-
 export function useNetwork({
   chainId,
   onError,
@@ -40,6 +37,8 @@ export function useNetwork({
   onSuccess,
 }: UseNetworkArgs & UseNetworkConfig = {}) {
   const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
+  const network = React.useRef(getNetwork())
+
   const client = useClient()
   const queryClient = useQueryClient()
 
@@ -55,10 +54,9 @@ export function useNetwork({
     },
   )
 
-  const queryResult = useQuery(queryKey(), queryFn)
   React.useEffect(() => {
     const unwatch = watchNetwork((data) => {
-      queryClient.setQueryData(queryKey(), data)
+      network.current = data
       forceUpdate()
     })
     return unwatch
@@ -78,8 +76,8 @@ export function useNetwork({
 
   return {
     ...networkMutation,
-    activeChain: queryResult.data?.chain,
-    chains: queryResult.data?.chains ?? [],
+    activeChain: network.current.chain,
+    chains: network.current.chains ?? [],
     pendingChainId: variables?.chainId,
     switchNetwork: connector?.switchChain ? switchNetwork_ : undefined,
     switchNetworkAsync: connector?.switchChain

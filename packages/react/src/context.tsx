@@ -14,8 +14,6 @@ import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor
 
 import { deserialize, serialize } from './utils'
 
-export const Context = React.createContext<WagmiClient | undefined>(undefined)
-
 export type ClientConfig = WagmiClientConfig & {
   queryClient?: QueryClient
 }
@@ -30,6 +28,8 @@ const defaultQueryClientConfig: QueryClientConfig = {
     },
   },
 }
+
+export const Context = React.createContext<WagmiClient | undefined>(undefined)
 
 export function createClient({
   queryClient = new QueryClient(defaultQueryClientConfig),
