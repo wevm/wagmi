@@ -9,18 +9,20 @@ export type ConnectArgs = {
   connector: Connector
 }
 
-type Data = Required<ConnectorData<BaseProvider>>
+type Data<TProvider extends BaseProvider = BaseProvider> = Required<
+  ConnectorData<TProvider>
+>
 
-export type ConnectResult = {
-  account: Data['account']
-  chain: Data['chain']
-  connector: Client['connector']
-  provider: Data['provider']
+export type ConnectResult<TProvider extends BaseProvider = BaseProvider> = {
+  account: Data<TProvider>['account']
+  chain: Data<TProvider>['chain']
+  connector: Client<TProvider>['connector']
+  provider: Data<TProvider>['provider']
 }
 
-export async function connect({
+export async function connect<TProvider extends BaseProvider>({
   connector,
-}: ConnectArgs): Promise<ConnectResult> {
+}: ConnectArgs): Promise<ConnectResult<TProvider>> {
   const activeConnector = client.connector
   if (connector.id === activeConnector?.id)
     throw new ConnectorAlreadyConnectedError()

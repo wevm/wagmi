@@ -153,7 +153,7 @@ export const getMockConnector: any = (
   })
 }
 
-type Config = Partial<ClientConfig>
+type Config = Partial<ClientConfig<providers.JsonRpcProvider>>
 export function setupWagmiClient(config: Config = {}) {
   return createClient({
     connectors: [

@@ -1,41 +1,47 @@
 import * as React from 'react'
+import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
 import {
   WagmiClient,
   ClientConfig as WagmiClientConfig,
   createClient as createWagmiClient,
 } from '@wagmi/core'
-import {
-  QueryClient,
-  QueryClientConfig,
-  QueryClientProvider,
-} from 'react-query'
+import { QueryClient, QueryClientProvider } from 'react-query'
 import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
 import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
 
 import { deserialize, serialize } from './utils'
 
-export type ClientConfig = WagmiClientConfig & {
+type DecoratedWagmiClient<
+  TProvider extends BaseProvider = BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = WagmiClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
+export const Context = React.createContext<
+  DecoratedWagmiClient<BaseProvider, WebSocketProvider> | undefined
+>(undefined)
+
+export type ClientConfig<
+  TProvider extends BaseProvider = BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = WagmiClientConfig<TProvider, TWebSocketProvider> & {
   queryClient?: QueryClient
 }
-
-const defaultQueryClientConfig: QueryClientConfig = {
-  defaultOptions: {
-    queries: {
-      cacheTime: 60 * 60 * 24, // 24 hours
-      notifyOnChangeProps: 'tracked',
-      refetchOnWindowFocus: false,
-      retry: 0,
+export function createClient<
+  TProvider extends BaseProvider,
+  TWebSocketProvider extends WebSocketProvider,
+>({
+  queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        cacheTime: 60 * 60 * 24, // 24 hours
+        notifyOnChangeProps: 'tracked',
+        refetchOnWindowFocus: false,
+        retry: 0,
+      },
     },
-  },
-}
-
-export const Context = React.createContext<WagmiClient | undefined>(undefined)
-
-export function createClient({
-  queryClient = new QueryClient(defaultQueryClientConfig),
+  }),
   ...config
-}: ClientConfig = {}) {
-  const client = createWagmiClient(config)
+}: ClientConfig<TProvider, TWebSocketProvider> = {}) {
+  const client = createWagmiClient<TProvider, TWebSocketProvider>(config)
   const persistor = createWebStoragePersistor({
     storage: (client.storage as Storage) || window.localStorage,
     serialize,
@@ -51,15 +57,20 @@ export function createClient({
   return Object.assign(client, { queryClient })
 }
 
-export type ProviderProps = {
+export type ProviderProps<
+  TProvider extends BaseProvider = BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = {
   /** React-decorated WagmiClient instance */
-  client?: ReturnType<typeof createClient>
+  client?: DecoratedWagmiClient<TProvider, TWebSocketProvider>
 }
-
-export function Provider({
+export function Provider<
+  TProvider extends BaseProvider,
+  TWebSocketProvider extends WebSocketProvider,
+>({
   children,
-  client = createClient(),
-}: React.PropsWithChildren<ProviderProps>) {
+  client = createClient<TProvider, TWebSocketProvider>(),
+}: React.PropsWithChildren<ProviderProps<TProvider, TWebSocketProvider>>) {
   // Attempt to connect on mount
   React.useEffect(() => {
     ;(async () => {
@@ -70,7 +81,7 @@ export function Provider({
   }, [])
 
   return (
-    <Context.Provider value={client}>
+    <Context.Provider value={client as unknown as DecoratedWagmiClient}>
       <QueryClientProvider client={client.queryClient}>
         {children}
       </QueryClientProvider>
@@ -78,8 +89,14 @@ export function Provider({
   )
 }
 
-export function useClient() {
-  const client = React.useContext(Context)
+export function useClient<
+  TProvider extends BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+>() {
+  const client = React.useContext(Context) as unknown as DecoratedWagmiClient<
+    TProvider,
+    TWebSocketProvider
+  >
   if (!client) throw Error('Must be used within WagmiProvider')
   return client
 }

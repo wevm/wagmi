@@ -1,25 +1,25 @@
 # Migrating to 0.3.0
 
-If you are coming from an earlier version of `wagmi`, in order to update to `0.3.0` you will need to make sure to update the following hooks & API's listed below.
+If you are coming from an earlier version of `wagmi`, in order to update to `0.3.0`, you will need to make sure to update the following hooks & API's listed below.
 
 ## Breaking changes
 
 ### `Provider` no longer supports configuration as props
 
-The `Provider` component no longer supports configuration directly as props.
-
-You will now need to create a ["wagmi client" instance](/docs/client) via `createClient`, and then pass the client to `Provider`:
+The `Provider` component no longer supports configuration directly as props. You will now need to create a wagmi [`Client`](/docs/client) via `createClient`, and then pass the client to `Provider`:
 
 #### Before
 
 ```tsx
 import { Provider } from 'wagmi'
 
-const App = () => (
-  <Provider autoConnect connectors={connectors} provider={provider}>
-    <YourRoutes />
-  </Provider>
-)
+function App() {
+  return (
+    <Provider autoConnect connectors={connectors} provider={provider}>
+      <YourRoutes />
+    </Provider>
+  )
+}
 ```
 
 #### After
@@ -33,11 +33,13 @@ const client = createClient({
   provider,
 })
 
-const App = () => (
-  <Provider client={client}>
-    <YourRoutes />
-  </Provider>
-)
+function App() {
+  return (
+    <Provider client={client}>
+      <YourRoutes />
+    </Provider>
+  )
+}
 ```
 
 ### Hooks now return a singular object, instead of an array pair
@@ -58,7 +60,7 @@ const { data, isLoading, error } = useAccount()
 
 ### Declarative getters > imperative getters
 
-Getter functions such as `getBalance`, `getBlockNumber`, `read`, etc have been removed in favour of hook parameters / `refetch`. The `refetch` function does not accept arguments/config, so you will need to restructure your components more declaratively.
+Getter functions such as `getBalance`, `getBlockNumber`, `read`, etc have been removed in favor of hook parameters / `refetch`. The `refetch` function does not accept arguments/config, so you will need to restructure your components more declaratively.
 
 #### Before
 
@@ -118,8 +120,8 @@ function Example() {
 #### `useAccount`
 
 - Now returns a singular object, instead of an array pair
-- `fetchEns` has been renamed to `ens`
-- `disconnect` has been removed. Use [`useDisconnect`](/docs/hooks/useDisconnect) instead.
+- `fetchEns` was removed in favor of keeping `useAccount` as lightweight as possible. Use [`useEnsName`](/docs/hooks/useEnsName) and [`useEnsAvatar`](/docs/hooks/useEnsAvatar) instead.
+- `disconnect` was removed. Use [`useDisconnect`](/docs/hooks/useDisconnect) instead.
 
 ##### Before
 
@@ -131,14 +133,16 @@ const [{ data, loading, error }, disconnect] = useAccount({ fetchEns: true })
 
 ```tsx
 const { data, isLoading, error } = useAccount({ ens: true })
+const { data: ensName } = useEnsName()
+const { data: ensAvatar } = useEnsAvatar()
 const { disconnect } = useDisconnect()
 ```
 
 #### `useBalance`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `getBalance` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getBalance` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -155,8 +159,8 @@ const { data, isLoading, error, refetch } = useBalance({ enabled: false })
 #### `useBlockNumber`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `getBlockNumber` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getBlockNumber` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -197,8 +201,8 @@ const { isConnected, connector, connectors, connectAsync } = useConnect()
 #### `useContractRead`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `read` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `read` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -257,8 +261,8 @@ const { data, error, isLoading, write } = useContractWrite(
 #### `useEnsAvatar`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `getEnsAvatar` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getEnsAvatar` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -280,10 +284,10 @@ const { data, error, isLoading, refetch } = useEnsAvatar({
 
 #### `useEnsLookup`
 
-- `useEnsLookup` has been renamed to `useEnsName`
+- `useEnsLookup` was renamed to `useEnsName`
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `lookupAddress` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `lookupAddress` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -305,10 +309,10 @@ const { data, error, isLoading, refetch } = useEnsName({
 
 #### `useEnsResolveName`
 
-- `useEnsResolveName` has been renamed to `useEnsAddress`
+- `useEnsResolveName` was renamed to `useEnsAddress`
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `resolveName` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `resolveName` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -331,8 +335,8 @@ const { data, error, loading, refetch } = useEnsAddress({
 #### `useEnsResolver`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `getEnsResolver` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getEnsResolver` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -355,8 +359,8 @@ const { data, error, isLoading, refetch } = useEnsResolver({
 #### `useFeeData`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `getFeeData` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getFeeData` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -394,7 +398,7 @@ const { activeChain, chains, data, isLoading, switchNetworkAsync } =
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported.
-- `getSigner` has been removed in favour of `refetch`
+- `getSigner` was removed in favor of `refetch`
 
 ##### Before
 
@@ -457,8 +461,8 @@ const { data, error, isLoading, signTypedDataAsync } = useSignTypedData({
 #### `useToken`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `getToken` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getToken` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -480,7 +484,7 @@ const { data, error, isLoading, refetch } = useToken({
 
 #### `useTransaction`
 
-- `useTransaction` has been renamed to `useSendTransaction`
+- `useTransaction` was renamed to `useSendTransaction`
 - Now returns a singular object, instead of an array pair
 - `sendTransaction` now has sync (`sendTransaction`) and async (`sendTransactionAsync`) variants.
 
@@ -509,8 +513,8 @@ const { data, error, isLoading, sendTransactionAsync } = useTransaction({
 #### `useWaitForTransaction`
 
 - Now returns a singular object, instead of an array pair
-- `skip` is no longer supported. It has been repurposed to `enabled`.
-- `wait` has been removed in favour of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `wait` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
 
 ##### Before
 
@@ -548,9 +552,9 @@ const { connector } = useConnect()
 const provider = await connector.getProvider()
 ```
 
-### `wagmi/connectors/walletLink` has been renamed
+### `wagmi/connectors/walletLink` was renamed
 
-The WalletLink connector has been replaced with the Coinbase Wallet SDK.
+The WalletLink connector was replaced with the Coinbase Wallet SDK.
 
 ##### Before
 
