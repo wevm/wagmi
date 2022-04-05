@@ -31,6 +31,7 @@ type RequestArguments =
   | { method: 'wallet_watchAsset'; params: WatchAssetParams }
 
 type InjectedProviders = {
+  isBraveWallet?: true
   isCoinbaseWallet?: true
   isFrame?: true
   isMetaMask?: true
