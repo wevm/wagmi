@@ -3,6 +3,7 @@ import { getInjectedName } from './getInjectedName'
 describe.each`
   ethereum                      | expected
   ${undefined}                  | ${'Injected'}
+  ${{ isBraveWallet: true }}    | ${'Brave Wallet'}
   ${{ isMetaMask: true }}       | ${'MetaMask'}
   ${{ isCoinbaseWallet: true }} | ${'Coinbase Wallet'}
   ${{ isFrame: true }}          | ${'Frame'}
