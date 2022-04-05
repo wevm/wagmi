@@ -45,14 +45,14 @@ function App() {
 Finally, use hooks! Every component inside the `Provider` is now set up to use the wagmi hooks.
 
 ```tsx {4,5}
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount, useConnect, useEnsName } from 'wagmi'
 
 function Profile() {
-  const { data } = useAccount({ ens: true })
+  const { data: account } = useAccount()
+  const { data: ensName } = useEnsName({ address: account.address })
   const { connectors, connect } = useConnect()
 
-  if (data?.address)
-    return <div>Connected to {data.ens?.name ?? data.address}</div>
+  if (data?.address) return <div>Connected to {ensName ?? account.address}</div>
   return <button onClick={() => connect(connectors[0])}>Connect Wallet</button>
 }
 ```

@@ -71,7 +71,7 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { SignMessage } from './SignMessage'
 
 export function Profile() {
-  const { data: accountData } = useAccount({ ens: true })
+  const { data: accountData } = useAccount()
   const { connect, connectors, error, isConnecting, pendingConnector } =
     useConnect()
   const { disconnect } = useDisconnect()

@@ -104,24 +104,30 @@ export function Profile() {
 Lastly, if an account is connected, we want to show some basic information, like the connected address and ENS name and avatar. We can display the connected account with `useAccount` and add a button for disconnecting with `useDisconnect`.
 
 ```tsx
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useEnsAvatar,
+  useEnsName,
+} from 'wagmi'
 
 export function Profile() {
-  const { data: accountData } = useAccount({ ens: true })
+  const { data: account } = useAccount()
+  const { data: ensAvatar } = useEnsAvatar({ addressOrName: account.address })
+  const { data: ensName } = useEnsName({ address: account.address })
   const { connect, connectors, error, isConnecting, pendingConnector } =
     useConnect()
   const { disconnect } = useDisconnect()
 
-  if (accountData) {
+  if (account) {
     return (
       <div>
-        <img src={accountData.ens?.avatar} alt="ENS Avatar" />
+        <img src={ensAvatar} alt="ENS Avatar" />
         <div>
-          {accountData.ens?.name
-            ? `${accountData.ens?.name} (${accountData.address})`
-            : accountData.address}
+          {ensName ? `${ensName} (${account.address})` : account.address}
         </div>
-        <div>Connected to {accountData.connector.name}</div>
+        <div>Connected to {account.connector.name}</div>
         <button onClick={disconnect}>Disconnect</button>
       </div>
     )
