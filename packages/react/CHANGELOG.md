@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.3.0-next.13
+
+### Patch Changes
+
+- fix stale connectors when switching chains
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.11
+
 ## 0.3.0-next.12
 
 ### Patch Changes
