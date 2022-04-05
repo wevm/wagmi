@@ -9,5 +9,5 @@ export type GetWebSocketProviderResult<
 export function getWebSocketProvider<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >(): GetWebSocketProviderResult<TWebSocketProvider> {
-  return getClient<any, TWebSocketProvider>().provider
+  return getClient<any, TWebSocketProvider>().webSocketProvider
 }

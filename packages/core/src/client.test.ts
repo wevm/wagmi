@@ -9,11 +9,16 @@ describe('WagmiClient', () => {
     expect(rest).toMatchInlineSnapshot(`
       {
         "config": {
-          "autoConnect": undefined,
+          "autoConnect": false,
           "connectors": [
             "<MockConnector>",
           ],
           "provider": [Function],
+          "storage": {
+            "getItem": [Function],
+            "removeItem": [Function],
+            "setItem": [Function],
+          },
           "webSocketProvider": undefined,
         },
         "storage": {

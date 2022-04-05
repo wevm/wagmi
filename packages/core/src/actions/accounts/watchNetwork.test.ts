@@ -58,7 +58,7 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 1,
-              "name": "Mainnet",
+              "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Ether",
@@ -185,7 +185,7 @@ describe('watchNetwork', () => {
               },
             },
             "id": 1,
-            "name": "Mainnet",
+            "name": "Ethereum",
             "nativeCurrency": {
               "decimals": 18,
               "name": "Ether",
@@ -211,7 +211,7 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 1,
-              "name": "Mainnet",
+              "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Ether",

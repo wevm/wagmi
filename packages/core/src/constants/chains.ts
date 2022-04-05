@@ -37,7 +37,7 @@ export const chainId = {
 export const chain: Record<ChainName, Chain> = {
   mainnet: {
     id: chainId.mainnet,
-    name: 'Mainnet',
+    name: 'Ethereum',
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.mainnet,
@@ -144,7 +144,7 @@ export const chain: Record<ChainName, Chain> = {
   },
   polygon: {
     id: chainId.polygon,
-    name: 'Polygon Mainnet',
+    name: 'Polygon',
     nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.polygon,
@@ -188,7 +188,7 @@ export const chain: Record<ChainName, Chain> = {
   },
   arbitrum: {
     id: chainId.arbitrum,
-    name: 'Arbitrum One',
+    name: 'Arbitrum',
     nativeCurrency: { name: 'Ether', symbol: 'AETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.arbitrum,
