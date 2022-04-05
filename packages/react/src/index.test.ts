@@ -42,8 +42,10 @@ it('should expose correct exports', () => {
       "createStorage",
       "createWagmiStorage",
       "defaultChains",
+      "defaultL2Chains",
       "erc20ABI",
       "erc721ABI",
+      "etherscanBlockExplorers",
       "infuraRpcUrls",
     ]
   `)

@@ -50,6 +50,7 @@ it('should expose correct exports', () => {
       "chain",
       "chainId",
       "defaultChains",
+      "defaultL2Chains",
       "erc20ABI",
       "erc721ABI",
       "etherscanBlockExplorers",
