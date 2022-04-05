@@ -73,7 +73,7 @@ export class Client<
       ((config) => {
         try {
           return <TProvider>getDefaultProvider(config.chainId)
-        } catch (error) {
+        } catch {
           return <TProvider>getDefaultProvider()
         }
       })

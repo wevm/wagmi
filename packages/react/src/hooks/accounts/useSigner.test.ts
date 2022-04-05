@@ -22,9 +22,9 @@ describe('useSigner', () => {
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
           "isLoadingError": false,
           "isPlaceholderData": false,
           "isPreviousData": false,
@@ -34,7 +34,7 @@ describe('useSigner', () => {
           "isSuccess": false,
           "refetch": [Function],
           "remove": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })
@@ -47,11 +47,16 @@ describe('useSigner', () => {
         result.current.connect.connect(mockConnector)
       })
 
-      const { data, dataUpdatedAt, ...rest } = result.current.signer
-      expect(data).toBeDefined()
+      const { dataUpdatedAt, ...rest } = result.current.signer
       expect(dataUpdatedAt).toBeDefined()
       expect(rest).toMatchInlineSnapshot(`
         {
+          "data": JsonRpcSigner {
+            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "_index": null,
+            "_isSigner": true,
+            "provider": "<WrappedHardhatProvider>",
+          },
           "error": null,
           "errorUpdatedAt": 0,
           "failureCount": 0,
@@ -83,8 +88,41 @@ describe('useSigner', () => {
       await actHook(async () => {
         const mockConnector = result.current.connect.connectors[0]
         result.current.connect.connect(mockConnector)
+      })
+
+      await actHook(async () => {
         const res = await result.current.signer.refetch()
-        expect(res).toBeDefined()
+        const { dataUpdatedAt, ...rest } = res
+        expect(dataUpdatedAt).toBeDefined()
+        expect(rest).toMatchInlineSnapshot(`
+          {
+            "data": JsonRpcSigner {
+              "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+              "_index": null,
+              "_isSigner": true,
+              "provider": "<WrappedHardhatProvider>",
+            },
+            "error": null,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isError": false,
+            "isFetched": true,
+            "isFetchedAfterMount": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isLoadingError": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isRefetching": false,
+            "isStale": true,
+            "isSuccess": true,
+            "refetch": [Function],
+            "remove": [Function],
+            "status": "success",
+          }
+        `)
       })
     })
 

@@ -58,13 +58,15 @@ export function useConnect({
     const unsubscribe = client.subscribe(
       (state) => ({
         connector: state.connector,
+        connectors: state.connectors,
         status: state.status,
       }),
       forceUpdate,
       {
         equalityFn: (selected, previous) =>
-          selected.status === previous.status &&
-          selected.connector === previous.connector,
+          selected.connector === previous.connector &&
+          selected.connectors === previous.connectors &&
+          selected.status === previous.status,
       },
     )
     return unsubscribe

@@ -11,7 +11,7 @@ export type UseSignerConfig = Omit<
 
 export const queryKey = () => [{ entity: 'signer' }] as const
 
-export const queryFn = () => fetchSigner()
+const queryFn = () => fetchSigner()
 
 export function useSigner({
   onError,
@@ -34,13 +34,5 @@ export function useSigner({
     return unwatch
   }, [queryClient])
 
-  const status = !signerQuery.data ? 'loading' : signerQuery.status
-
-  return {
-    ...signerQuery,
-    isIdle: false,
-    isFetching: signerQuery.isFetching || status === 'loading',
-    isLoading: signerQuery.isLoading || status === 'loading',
-    status,
-  }
+  return signerQuery
 }

@@ -56,7 +56,6 @@ export function useWaitForTransaction({
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
   const chainId = useChainId()
-
   return useQuery(
     queryKey({ confirmations, chainId, hash, timeout, wait }),
     queryFn,
