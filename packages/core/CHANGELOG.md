@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.10
+
+### Patch Changes
+
+- republish
+
 ## 0.2.0-next.9
 
 ### Patch Changes
