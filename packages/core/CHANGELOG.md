@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.9
+
+### Patch Changes
+
+- improve type support for ethers providers
+
 ## 0.2.0-next.8
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.3.0-next.11
+
+### Patch Changes
+
+- improve type support for ethers providers
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.9
+
 ## 0.3.0-next.10
 
 ### Patch Changes
