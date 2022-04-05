@@ -18,6 +18,11 @@ export class ConnectorNotFoundError extends Error {
   message = 'Connector not found'
 }
 
+export class NFTURIParsingError extends Error {
+  name = 'NFTURIParsingError'
+  message = 'Error parsing NFT URI'
+}
+
 export class SwitchChainError extends Error {
   name = 'SwitchChainError'
   message = 'Error switching chain'
@@ -26,6 +31,11 @@ export class SwitchChainError extends Error {
 export class SwitchChainNotSupportedError extends Error {
   name = 'SwitchChainNotSupportedError'
   message = 'Switch chain not supported by connector'
+}
+
+export class UnsupportedNamespaceError extends Error {
+  name = 'UnsupportedNamespaceError'
+  message = 'Unsupported namespace'
 }
 
 export class UserRejectedRequestError extends Error {

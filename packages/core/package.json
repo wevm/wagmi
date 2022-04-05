@@ -60,8 +60,15 @@
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.0.1",
+    "@ethersproject/contracts": "^5.5.0",
     "@ethersproject/providers": "^5.5.1",
+    "@types/dompurify": "^2.3.3",
     "@walletconnect/ethereum-provider": "1.7.5",
-    "ethers": "^5.5.1"
+    "buffer": "^6.0.3",
+    "dompurify": "^2.3.6",
+    "ethers": "^5.5.1",
+    "is-svg": "^4.3.2",
+    "multiformats": "^9.6.4",
+    "url-join": "^5.0.0"
   }
 }
