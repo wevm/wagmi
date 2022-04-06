@@ -1,5 +1,5 @@
 import { Buffer } from 'buffer/'
-import createDOMPurify from 'dompurify'
+import xss from 'xss'
 import { CID } from 'multiformats/cid'
 import isSVG from 'is-svg'
 import urlJoin from 'url-join'
@@ -109,10 +109,7 @@ export const resolveURI = (
 }
 
 const _sanitize = (data: string): Buffer => {
-  const DOMPurify = createDOMPurify(window as any)
-  // purges malicious scripting from svg content
-  const cleanDOM = DOMPurify.sanitize(data)
-  return Buffer.from(cleanDOM)
+  return Buffer.from(xss(data))
 }
 
 export interface ImageURIOpts {
