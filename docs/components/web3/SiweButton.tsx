@@ -9,7 +9,7 @@ type Props = {
   onSuccess?(data: { address: string }): void
 }
 
-export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
+export function SiweButton({ address, chainId, onSuccess }: Props) {
   const [state, setState] = React.useState<{
     error?: Error
     loading?: boolean
@@ -43,7 +43,7 @@ export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
       if (!verifyRes.ok) throw new Error('Error verifying message')
 
       setState((x) => ({ ...x, loading: false }))
-      onSuccess && onSuccess({ address })
+      onSuccess?.({ address })
     } catch (error) {
       setState((x) => ({ ...x, error: error as Error, loading: false }))
     }
@@ -52,19 +52,17 @@ export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
   return (
     <Stack space="4">
       <Button
+        center
+        disabled={state.loading}
+        loading={state.loading}
         prefix={!state.loading && <IconEth />}
         width="full"
-        loading={state.loading}
-        disabled={state.loading}
-        center
         onClick={handleSignIn}
       >
         {state.loading ? 'Check Wallet' : 'Sign-In with Ethereum'}
       </Button>
 
-      {state.error && (
-        <Text color="red">{state.error?.message ?? 'Failed to sign in'}</Text>
-      )}
+      {state.error && <Text color="red">{state.error.message}</Text>}
     </Stack>
   )
 }

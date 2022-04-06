@@ -1,79 +1,36 @@
 import * as React from 'react'
-import {
-  GetAccountResult,
-  disconnect,
-  getAccount,
-  watchAccount,
-} from '@wagmi/core'
-import { UseQueryResult, useQuery, useQueryClient } from 'react-query'
+import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
+import { useQuery, useQueryClient } from 'react-query'
 
-import { useClient } from '../../context'
-import { useEnsAvatar, useEnsName } from '../ens'
 import { QueryConfig } from '../../types'
 
-export type UseAccountArgs = {
-  /** Fetches ENS for connected account */
-  ens?: boolean | { avatar?: boolean; name?: boolean }
-}
-
-export type UseAccountConfig = QueryConfig<GetAccountResult, Error>
+export type UseAccountConfig = Pick<
+  QueryConfig<GetAccountResult, Error>,
+  'suspense' | 'onError' | 'onSettled' | 'onSuccess'
+>
 
 export const queryKey = () => [{ entity: 'account' }] as const
 
+const queryFn = () => {
+  const result = getAccount()
+  if (result.address) return result
+  return null
+}
+
 export function useAccount({
-  ens,
-  cacheTime,
-  enabled = true,
-  keepPreviousData,
-  select,
-  staleTime,
   suspense,
   onError,
   onSettled,
   onSuccess,
-}: UseAccountArgs & UseAccountConfig = {}) {
-  const client = useClient()
+}: UseAccountConfig = {}) {
   const queryClient = useQueryClient()
 
-  const {
-    data: accountData,
-    error,
-    isError,
-    isLoading,
-    status,
-    ...accountQueryResult
-  } = useQuery(
-    queryKey(),
-    () => {
-      const { address, connector } = getAccount()
-      const cachedAccount = client.config.autoConnect
-        ? queryClient.getQueryData<GetAccountResult>(queryKey())
-        : undefined
-      return address
-        ? { address, connector }
-        : cachedAccount || { address: undefined, connector: undefined }
-    },
-    {
-      cacheTime,
-      enabled,
-      keepPreviousData,
-      select,
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    },
-  )
-  const address = accountData?.address
-
-  const { data: ensAvatarData } = useEnsAvatar({
-    addressOrName: address,
-    enabled: Boolean(typeof ens === 'boolean' ? ens : ens?.avatar),
-  })
-  const { data: ensNameData } = useEnsName({
-    address,
-    enabled: Boolean(typeof ens === 'boolean' ? ens : ens?.name),
+  const accountQuery = useQuery(queryKey(), queryFn, {
+    staleTime: 0,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
   })
 
   React.useEffect(() => {
@@ -83,29 +40,5 @@ export function useAccount({
     return unwatch
   }, [queryClient])
 
-  // Force data to be undefined if no address exists
-  const data_ = address ? { ...accountData, address } : undefined
-  const isLoading_ = isLoading || client.status === 'connecting'
-
-  let status_: UseQueryResult['status']
-  if (isLoading_) status_ = 'loading'
-  else if (!address) status_ = 'idle'
-  else status_ = status
-
-  const ensData =
-    ensNameData !== undefined || ensAvatarData !== undefined
-      ? { ens: { avatar: ensAvatarData, name: ensNameData } }
-      : {}
-
-  return {
-    ...accountQueryResult,
-    data: data_ ? { ...data_, ...ensData } : undefined,
-    disconnect,
-    error,
-    isError,
-    isIdle: status_ === 'idle',
-    isLoading: status_ === 'loading',
-    isSuccess: status_ === 'success',
-    status: status_,
-  } as const
+  return accountQuery
 }

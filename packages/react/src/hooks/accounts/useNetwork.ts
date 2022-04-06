@@ -1,48 +1,52 @@
 import * as React from 'react'
 import {
-  SwitchChainError,
+  SwitchNetworkArgs,
   SwitchNetworkResult,
   getNetwork,
+  switchNetwork,
   watchNetwork,
 } from '@wagmi/core'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
+import { useForceUpdate } from '../utils'
 
-export type UseConnectConfig = MutationConfig<
+export type UseNetworkArgs = Partial<SwitchNetworkArgs>
+
+export type UseNetworkConfig = MutationConfig<
   SwitchNetworkResult,
   Error,
-  number
+  SwitchNetworkArgs
 >
 
-export const mutationKey = 'switchNetwork'
+export const mutationKey = (args: UseNetworkArgs) => [
+  { entity: 'switchNetwork', ...args },
+]
 
-export const queryKey = () => [{ entity: 'chain' }] as const
-const queryFn = () => getNetwork()
+const mutationFn = (args: UseNetworkArgs) => {
+  const { chainId } = args
+  if (!chainId) throw new Error('chainId is required')
+  return switchNetwork({ chainId })
+}
 
 export function useNetwork({
+  chainId,
   onError,
   onMutate,
   onSettled,
   onSuccess,
-}: UseConnectConfig = {}) {
-  const [, forceUpdate] = React.useReducer((c) => c + 1, 0)
+}: UseNetworkArgs & UseNetworkConfig = {}) {
+  const forceUpdate = useForceUpdate()
+  const network = React.useRef(getNetwork())
+
   const client = useClient()
   const queryClient = useQueryClient()
 
   const connector = client.connector
-  const {
-    mutate,
-    mutateAsync,
-    variables: chainId,
-    ...networkMutation
-  } = useMutation(
-    mutationKey,
-    (chainId) => {
-      if (!connector?.switchChain) throw new SwitchChainError()
-      return connector.switchChain(chainId)
-    },
+  const { mutate, mutateAsync, variables, ...networkMutation } = useMutation(
+    mutationKey({ chainId }),
+    mutationFn,
     {
       onError,
       onMutate,
@@ -51,21 +55,34 @@ export function useNetwork({
     },
   )
 
-  const queryResult = useQuery(queryKey(), queryFn)
   React.useEffect(() => {
     const unwatch = watchNetwork((data) => {
-      queryClient.setQueryData(queryKey(), data)
+      network.current = data
       forceUpdate()
     })
     return unwatch
   }, [queryClient])
 
+  const switchNetwork_ = React.useCallback(
+    (chainId_?: SwitchNetworkArgs['chainId']) =>
+      mutate(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+    [chainId, mutate],
+  )
+
+  const switchNetworkAsync_ = React.useCallback(
+    (chainId_?: SwitchNetworkArgs['chainId']) =>
+      mutateAsync(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+    [chainId, mutateAsync],
+  )
+
   return {
     ...networkMutation,
-    activeChain: queryResult.data?.chain,
-    chainId,
-    chains: queryResult.data?.chains ?? [],
-    switchNetwork: connector?.switchChain ? mutate : undefined,
-    switchNetworkAsync: connector?.switchChain ? mutateAsync : undefined,
+    activeChain: network.current.chain,
+    chains: network.current.chains ?? [],
+    pendingChainId: variables?.chainId,
+    switchNetwork: connector?.switchChain ? switchNetwork_ : undefined,
+    switchNetworkAsync: connector?.switchChain
+      ? switchNetworkAsync_
+      : undefined,
   } as const
 }

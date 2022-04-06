@@ -13,7 +13,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const siweMessage = new SiweMessage(message)
         const fields = await siweMessage.validate(signature)
 
-        console.log({ fields, session: req.session.nonce })
         if (fields.nonce !== req.session.nonce)
           return res.status(422).json({ message: 'Invalid nonce.' })
 

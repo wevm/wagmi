@@ -22,7 +22,7 @@ export default {
   footerEditLink: `Edit this page on GitHub`,
   footerText: () => (
     <div className="text-current">
-      MIT ${new Date().getFullYear()} © awkweb.eth
+      MIT {new Date().getFullYear()} © awkweb.eth
     </div>
   ),
   github,

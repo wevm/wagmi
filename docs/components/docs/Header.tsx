@@ -4,7 +4,7 @@ const TITLE_WITH_TRANSLATIONS: Record<string, string> = {
   'en-US': 'React Hooks for Ethereum',
 }
 
-export const Header = () => {
+export function Header() {
   const { locale, defaultLocale = 'en-US' } = useRouter()
   const resolvedLocale = locale || defaultLocale
   const title = TITLE_WITH_TRANSLATIONS[resolvedLocale]
@@ -18,22 +18,34 @@ export const Header = () => {
       </p>
 
       <div className="flex gap-4 justify-center">
-        <a aria-label="Stars" href="https://github.com/tmm/wagmi">
+        <a
+          aria-label="Stars"
+          href="https://github.com/tmm/wagmi"
+          className="h-5"
+        >
           <img
             alt=""
-            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=292929&colorB=3c82f6"
+            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=292929&colorB=3c82f6&label=Stars"
           />
         </a>
-        <a aria-label="Downloads" href="https://www.npmjs.com/package/wagmi">
+        <a
+          aria-label="Downloads"
+          href="https://www.npmjs.com/package/wagmi"
+          className="h-5"
+        >
           <img
             alt=""
-            src="https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6"
+            src="https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6&label=Downloads"
           />
         </a>
-        <a aria-label="Sponsors" href="https://github.com/sponsors/tmm">
+        <a
+          aria-label="Sponsors"
+          href="https://github.com/sponsors/tmm"
+          className="h-5"
+        >
           <img
             alt=""
-            src="https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6"
+            src="https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6&label=Sponsors"
           />
         </a>
       </div>

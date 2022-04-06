@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode
 }
 
-export const PreviewWrapper = ({ children }: Props) => {
+export function PreviewWrapper({ children }: Props) {
   const { resolvedTheme } = useNextThemes()
   const { setMode } = useTheme()
 
@@ -25,6 +25,7 @@ export const PreviewWrapper = ({ children }: Props) => {
       overflow="hidden"
       padding="6"
       width="full"
+      minHeight="24"
     >
       {children}
     </Box>

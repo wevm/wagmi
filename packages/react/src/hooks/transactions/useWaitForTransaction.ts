@@ -49,8 +49,6 @@ export function useWaitForTransaction({
   wait,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
   staleTime,
   suspense,
   onError,
@@ -58,15 +56,12 @@ export function useWaitForTransaction({
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
   const chainId = useChainId()
-
   return useQuery(
     queryKey({ confirmations, chainId, hash, timeout, wait }),
     queryFn,
     {
       cacheTime,
       enabled: Boolean(enabled && (hash || wait)),
-      keepPreviousData,
-      select,
       staleTime,
       suspense,
       onError,

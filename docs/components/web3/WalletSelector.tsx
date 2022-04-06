@@ -4,31 +4,30 @@ import { useConnect } from 'wagmi'
 
 import { useIsMounted } from '../../hooks'
 
-export const WalletSelector = () => {
+export function WalletSelector() {
   const isMounted = useIsMounted()
-  const { connectors, isConnecting, connector, connect, error } = useConnect()
+  const { connectors, isConnecting, connect, error, pendingConnector } =
+    useConnect()
 
   return (
     <Stack space="4">
       {connectors
-        .filter((x) => x.ready)
+        .filter((x) => isMounted && x.ready)
         .map((x) => (
           <Button
             width="full"
             variant="tertiary"
             center
-            loading={isConnecting && x.name === connector?.name}
+            loading={isConnecting && x.id === pendingConnector?.id}
             disabled={isMounted ? !x.ready : false}
             key={x.id}
             onClick={() => connect(x)}
           >
-            {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
+            {x.name}
           </Button>
         ))}
 
-      {error && (
-        <Text color="red">{error?.message ?? 'Failed to connect'}</Text>
-      )}
+      {error && <Text color="red">{error.message}</Text>}
     </Stack>
   )
 }

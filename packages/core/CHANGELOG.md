@@ -1,5 +1,29 @@
 # @wagmi/core
 
+## 0.2.0-next.11
+
+### Patch Changes
+
+- fix stale connectors when switching chains
+
+## 0.2.0-next.10
+
+### Patch Changes
+
+- republish
+
+## 0.2.0-next.9
+
+### Patch Changes
+
+- improve type support for ethers providers
+
+## 0.2.0-next.8
+
+### Patch Changes
+
+- update babel target
+
 ## 0.2.0-next.7
 
 ### Minor Changes

@@ -23,7 +23,6 @@ describe('useNetwork', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "activeChain": undefined,
-          "chainId": undefined,
           "chains": [],
           "context": undefined,
           "data": undefined,
@@ -34,6 +33,7 @@ describe('useNetwork', () => {
           "isLoading": false,
           "isPaused": false,
           "isSuccess": false,
+          "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
           "switchNetwork": undefined,
@@ -55,25 +55,30 @@ describe('useNetwork', () => {
       expect(data).toMatchInlineSnapshot(`
         {
           "activeChain": {
-            "blockExplorers": [
-              {
+            "blockExplorers": {
+              "default": {
                 "name": "Etherscan",
                 "url": "https://etherscan.io",
               },
-            ],
+              "etherscan": {
+                "name": "Etherscan",
+                "url": "https://etherscan.io",
+              },
+            },
             "id": 1,
-            "name": "Mainnet",
+            "name": "Ethereum",
             "nativeCurrency": {
               "decimals": 18,
               "name": "Ether",
               "symbol": "ETH",
             },
-            "rpcUrls": [
-              "https://mainnet.infura.io/v3",
-            ],
+            "rpcUrls": {
+              "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
+              "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+              "infura": "https://mainnet.infura.io/v3",
+            },
             "unsupported": false,
           },
-          "chainId": undefined,
           "context": undefined,
           "data": undefined,
           "error": null,
@@ -83,6 +88,7 @@ describe('useNetwork', () => {
           "isLoading": false,
           "isPaused": false,
           "isSuccess": false,
+          "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
           "switchNetwork": [Function],
@@ -117,12 +123,16 @@ describe('useNetwork', () => {
       expect(data).toMatchInlineSnapshot(`
         {
           "activeChain": {
-            "blockExplorers": [
-              {
+            "blockExplorers": {
+              "default": {
                 "name": "Etherscan",
                 "url": "https://kovan-optimistic.etherscan.io",
               },
-            ],
+              "etherscan": {
+                "name": "Etherscan",
+                "url": "https://kovan-optimistic.etherscan.io",
+              },
+            },
             "id": 69,
             "name": "Optimism Kovan",
             "nativeCurrency": {
@@ -130,13 +140,16 @@ describe('useNetwork', () => {
               "name": "Kovan Ether",
               "symbol": "KOR",
             },
-            "rpcUrls": [
-              "https://kovan.optimism.io",
-            ],
+            "rpcUrls": {
+              "alchemy": "https://opt-kovan.g.alchemy.com/v2",
+              "default": [
+                "https://kovan.optimism.io",
+              ],
+              "infura": "https://optimism-kovan.infura.io/v3",
+            },
             "testnet": true,
             "unsupported": true,
           },
-          "chainId": undefined,
           "context": undefined,
           "data": undefined,
           "error": null,
@@ -146,6 +159,7 @@ describe('useNetwork', () => {
           "isLoading": false,
           "isPaused": false,
           "isSuccess": false,
+          "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
           "switchNetwork": undefined,
@@ -168,25 +182,30 @@ describe('useNetwork', () => {
     expect(data).toMatchInlineSnapshot(`
       {
         "activeChain": {
-          "blockExplorers": [
-            {
+          "blockExplorers": {
+            "default": {
               "name": "Etherscan",
               "url": "https://etherscan.io",
             },
-          ],
+            "etherscan": {
+              "name": "Etherscan",
+              "url": "https://etherscan.io",
+            },
+          },
           "id": 1,
-          "name": "Mainnet",
+          "name": "Ethereum",
           "nativeCurrency": {
             "decimals": 18,
             "name": "Ether",
             "symbol": "ETH",
           },
-          "rpcUrls": [
-            "https://mainnet.infura.io/v3",
-          ],
+          "rpcUrls": {
+            "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
+            "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+            "infura": "https://mainnet.infura.io/v3",
+          },
           "unsupported": false,
         },
-        "chainId": undefined,
         "context": undefined,
         "data": undefined,
         "error": null,
@@ -196,6 +215,7 @@ describe('useNetwork', () => {
         "isLoading": false,
         "isPaused": false,
         "isSuccess": false,
+        "pendingChainId": undefined,
         "reset": [Function],
         "status": "idle",
         "switchNetwork": [Function],
@@ -212,12 +232,16 @@ describe('useNetwork', () => {
     expect(data2).toMatchInlineSnapshot(`
       {
         "activeChain": {
-          "blockExplorers": [
-            {
+          "blockExplorers": {
+            "default": {
               "name": "Etherscan",
               "url": "https://rinkeby.etherscan.io",
             },
-          ],
+            "etherscan": {
+              "name": "Etherscan",
+              "url": "https://rinkeby.etherscan.io",
+            },
+          },
           "id": 4,
           "name": "Rinkeby",
           "nativeCurrency": {
@@ -225,21 +249,26 @@ describe('useNetwork', () => {
             "name": "Rinkeby Ether",
             "symbol": "rETH",
           },
-          "rpcUrls": [
-            "https://rinkeby.infura.io/v3",
-          ],
+          "rpcUrls": {
+            "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
+            "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+            "infura": "https://rinkeby.infura.io/v3",
+          },
           "testnet": true,
           "unsupported": false,
         },
-        "chainId": 4,
         "context": undefined,
         "data": {
-          "blockExplorers": [
-            {
+          "blockExplorers": {
+            "default": {
               "name": "Etherscan",
               "url": "https://rinkeby.etherscan.io",
             },
-          ],
+            "etherscan": {
+              "name": "Etherscan",
+              "url": "https://rinkeby.etherscan.io",
+            },
+          },
           "id": 4,
           "name": "Rinkeby",
           "nativeCurrency": {
@@ -247,9 +276,11 @@ describe('useNetwork', () => {
             "name": "Rinkeby Ether",
             "symbol": "rETH",
           },
-          "rpcUrls": [
-            "https://rinkeby.infura.io/v3",
-          ],
+          "rpcUrls": {
+            "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
+            "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+            "infura": "https://rinkeby.infura.io/v3",
+          },
           "testnet": true,
         },
         "error": null,
@@ -259,6 +290,7 @@ describe('useNetwork', () => {
         "isLoading": false,
         "isPaused": false,
         "isSuccess": true,
+        "pendingChainId": 4,
         "reset": [Function],
         "status": "success",
         "switchNetwork": [Function],

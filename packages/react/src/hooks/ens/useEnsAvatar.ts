@@ -30,9 +30,7 @@ export function useEnsAvatar({
   addressOrName,
   cacheTime,
   enabled = true,
-  keepPreviousData,
-  select,
-  staleTime = 1000 * 60 * 60 * 24, // 24 hours
+  staleTime = 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,
@@ -42,8 +40,6 @@ export function useEnsAvatar({
   return useQuery(queryKey({ addressOrName, chainId }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && addressOrName && chainId),
-    keepPreviousData,
-    select,
     staleTime,
     suspense,
     onError,

@@ -12,6 +12,7 @@ export {
   watchBalance,
   watchNetwork,
   watchSigner,
+  type ConnectArgs,
   type ConnectResult,
   type FetchBalanceArgs,
   type FetchBalanceResult,

@@ -1,9 +1,13 @@
 import type { WebSocketProvider } from '@ethersproject/providers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
 
-export type GetWebSocketProviderResult = WebSocketProvider | undefined
+export type GetWebSocketProviderResult<
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = TWebSocketProvider | undefined
 
-export function getWebSocketProvider(): GetWebSocketProviderResult {
-  return client.webSocketProvider
+export function getWebSocketProvider<
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+>(): GetWebSocketProviderResult<TWebSocketProvider> {
+  return getClient<any, TWebSocketProvider>().webSocketProvider
 }

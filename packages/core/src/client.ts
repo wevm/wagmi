@@ -1,18 +1,15 @@
-import type { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
+import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
 import { getDefaultProvider } from 'ethers'
-import {
-  GetState,
-  Mutate,
-  SetState,
-  StoreApi,
-  default as create,
-} from 'zustand/vanilla'
+import { Mutate, StoreApi, default as create } from 'zustand/vanilla'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 
 import { Connector, ConnectorData, InjectedConnector } from './connectors'
 import { WagmiStorage, createStorage, noopStorage } from './storage'
 
-export type ClientConfig = {
+export type ClientConfig<
+  TProvider extends BaseProvider = BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = {
   /** Enables reconnecting to last used connector on init */
   autoConnect?: boolean
   /**
@@ -24,7 +21,7 @@ export type ClientConfig = {
    * Interface for connecting to network
    * @default (config) => getDefaultProvider(config.chainId)
    */
-  provider?: ((config: { chainId?: number }) => BaseProvider) | BaseProvider
+  provider?: ((config: { chainId?: number }) => TProvider) | TProvider
   /**
    * Custom storage for data persistance
    * @default window.localStorage
@@ -32,71 +29,70 @@ export type ClientConfig = {
   storage?: WagmiStorage
   /** WebSocket interface for connecting to network */
   webSocketProvider?:
-    | ((config: { chainId?: number }) => WebSocketProvider | undefined)
-    | WebSocketProvider
+    | ((config: { chainId?: number }) => TWebSocketProvider | undefined)
+    | TWebSocketProvider
 }
 
-const defaultConfig: Required<
-  Pick<ClientConfig, 'connectors' | 'provider' | 'storage'>
+export type Data<TProvider extends BaseProvider> = ConnectorData<TProvider>
+export type State<
+  TProvider extends BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
-  connectors: [new InjectedConnector()],
-  provider: ({ chainId }) => {
-    try {
-      return getDefaultProvider(chainId)
-    } catch (error) {
-      return getDefaultProvider()
-    }
-  },
-  storage: createStorage({
-    storage: typeof window !== 'undefined' ? window.localStorage : noopStorage,
-  }),
-}
-
-export type Data = ConnectorData<BaseProvider>
-export type State = {
   chains?: Connector['chains']
   connector?: Connector
   connectors: Connector[]
-  data?: Data
+  data?: Data<TProvider>
   error?: Error
-  provider: BaseProvider
+  provider: TProvider
   status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
-  webSocketProvider?: WebSocketProvider
+  webSocketProvider?: TWebSocketProvider
 }
 
-export class Client {
-  config: Partial<ClientConfig>
+export class Client<
+  TProvider extends BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> {
+  config: Partial<ClientConfig<TProvider, TWebSocketProvider>>
   storage: WagmiStorage
   store: Mutate<
-    StoreApi<State>,
+    StoreApi<State<TProvider, TWebSocketProvider>>,
     [
       ['zustand/subscribeWithSelector', never],
-      ['zustand/persist', Partial<State>],
+      ['zustand/persist', Partial<State<TProvider, TWebSocketProvider>>],
     ]
   >
 
   #lastUsedConnector?: string | null
 
-  constructor({
-    autoConnect,
-    connectors = defaultConfig.connectors,
-    provider = defaultConfig.provider,
-    storage = defaultConfig.storage,
-    webSocketProvider,
-  }: ClientConfig = defaultConfig) {
-    this.config = {
-      autoConnect,
-      connectors,
-      provider,
-      webSocketProvider,
-    }
+  constructor(config: ClientConfig<TProvider, TWebSocketProvider> = {}) {
+    // Set default values for config
+    const autoConnect = config.autoConnect ?? false
+    const connectors = config.connectors ?? [new InjectedConnector()]
+    const provider =
+      config.provider ??
+      ((config) => {
+        try {
+          return <TProvider>getDefaultProvider(config.chainId)
+        } catch {
+          return <TProvider>getDefaultProvider()
+        }
+      })
+    const storage =
+      config.storage ??
+      createStorage({
+        storage:
+          typeof window !== 'undefined' ? window.localStorage : noopStorage,
+      })
+    const webSocketProvider = config.webSocketProvider
 
-    let status: State['status'] = 'disconnected'
+    // Check status for autoConnect flag
+    let status: State<TProvider, TWebSocketProvider>['status'] = 'disconnected'
     let chainId: number | undefined
     if (autoConnect) {
       try {
         const rawState = storage.getItem('state', '')
-        const data: Data | undefined = JSON.parse(rawState || '{}')?.state?.data
+        const data: Data<TProvider> | undefined = JSON.parse(rawState || '{}')
+          ?.state?.data
         // If account exists in localStorage, set status to reconnecting
         status = data?.account ? 'reconnecting' : 'connecting'
         chainId = data?.chain?.id
@@ -104,32 +100,31 @@ export class Client {
       } catch (_error) {}
     }
 
-    this.store = create<
-      State,
-      SetState<State>,
-      GetState<State>,
-      Client['store']
-    >(
+    // Evaluate initial store values
+    const connectors_ =
+      typeof connectors === 'function' ? connectors({ chainId }) : connectors
+    const provider_ =
+      typeof provider === 'function' ? provider({ chainId }) : provider
+    const webSocketProvider_ =
+      typeof webSocketProvider === 'function'
+        ? webSocketProvider({ chainId })
+        : webSocketProvider
+
+    // Create store
+    this.store = create(
       subscribeWithSelector(
-        persist<State>(
-          (_set, _get) => ({
-            connectors:
-              typeof connectors === 'function'
-                ? connectors({ chainId })
-                : connectors,
-            provider:
-              typeof provider === 'function' ? provider({ chainId }) : provider,
+        persist<State<TProvider, TWebSocketProvider>>(
+          () => ({
+            connectors: connectors_,
+            provider: provider_,
             status,
-            webSocketProvider:
-              typeof webSocketProvider === 'function'
-                ? webSocketProvider({ chainId })
-                : webSocketProvider,
+            webSocketProvider: webSocketProvider_,
           }),
           {
             name: 'state',
             getStorage: () => storage,
             partialize: (state) => ({
-              ...(this.config.autoConnect && {
+              ...(autoConnect && {
                 data: {
                   account: state?.data?.account,
                   chain: state?.data?.chain,
@@ -142,6 +137,13 @@ export class Client {
       ),
     )
 
+    this.config = {
+      autoConnect,
+      connectors,
+      provider,
+      storage,
+      webSocketProvider,
+    }
     this.storage = storage
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
@@ -175,7 +177,13 @@ export class Client {
     return this.store.getState().webSocketProvider
   }
 
-  setState(updater: State | ((state: State) => State)) {
+  setState(
+    updater:
+      | State<TProvider, TWebSocketProvider>
+      | ((
+          state: State<TProvider, TWebSocketProvider>,
+        ) => State<TProvider, TWebSocketProvider>),
+  ) {
     const newState =
       typeof updater === 'function' ? updater(this.store.getState()) : updater
     this.store.setState(newState, true)
@@ -236,13 +244,18 @@ export class Client {
   }
 
   #addEffects() {
-    const onChange = (data: Data) =>
+    const onChange = (data: Data<TProvider>) => {
       this.setState((x) => ({
         ...x,
         data: { ...x.data, ...data },
       }))
-    const onDisconnect = () => this.clearState()
-    const onError = (error: Error) => this.setState((x) => ({ ...x, error }))
+    }
+    const onDisconnect = () => {
+      this.clearState()
+    }
+    const onError = (error: Error) => {
+      this.setState((x) => ({ ...x, error }))
+    }
 
     this.store.subscribe(
       ({ connector }) => connector,
@@ -282,10 +295,20 @@ export class Client {
   }
 }
 
-export let client: Client
+export let client: Client<BaseProvider, WebSocketProvider>
 
-export function createClient(config?: ClientConfig) {
-  const client_ = new Client(config)
-  client = client_
+export function createClient<
+  TProvider extends BaseProvider = BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+>(config?: ClientConfig<TProvider, TWebSocketProvider>) {
+  const client_ = new Client<TProvider, TWebSocketProvider>(config)
+  client = client_ as unknown as Client<BaseProvider, WebSocketProvider>
   return client_
+}
+
+export function getClient<
+  TProvider extends BaseProvider = BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+>() {
+  return client as unknown as Client<TProvider, TWebSocketProvider>
 }

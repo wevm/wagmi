@@ -50,13 +50,13 @@ describe('signTypedData', () => {
   describe('connected', () => {
     it('signs message', async () => {
       const client = setupWagmiClient()
-      const connectResult = await connect(client.connectors[0])
+      const connectResult = await connect({ connector: client.connectors[0] })
       const signMessageResult = await signTypedData({ domain, types, value })
       expect(signMessageResult).toMatchInlineSnapshot(
         `"0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b"`,
       )
       expect(verifyTypedData(domain, types, value, signMessageResult)).toEqual(
-        connectResult.data?.account,
+        connectResult?.account,
       )
     })
   })

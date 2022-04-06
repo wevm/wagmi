@@ -1,5 +1,6 @@
 {
   "name": "example-playground",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,7 +14,7 @@
     "next": "12.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "wagmi": "0.3.0-next.9"
+    "wagmi": "0.3.0-next.13"
   },
   "devDependencies": {
     "@preconstruct/next": "^3.0.1",
@@ -22,6 +23,5 @@
     "eslint": "8.5.0",
     "eslint-config-next": "12.0.7",
     "typescript": "4.5.4"
-  },
-  "version": "null-next.0"
+  }
 }

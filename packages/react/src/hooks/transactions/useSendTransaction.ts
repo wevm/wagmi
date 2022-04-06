@@ -16,8 +16,8 @@ export type UseSendTransactionConfig = MutationConfig<
   UseSendTransactionArgs
 >
 
-export const mutationKey = ({ request }: UseSendTransactionArgs) =>
-  [{ entity: 'writeContract', request }] as const
+export const mutationKey = (args: UseSendTransactionArgs) =>
+  [{ entity: 'sendTransaction', ...args }] as const
 
 const mutationFn = (args: UseSendTransactionArgs) => {
   const { request } = args
@@ -44,12 +44,12 @@ export function useSendTransaction({
   )
 
   const sendTransaction = React.useCallback(
-    (args?: SendTransactionArgs) => mutate({ request, ...(args ?? {}) }),
+    (args?: SendTransactionArgs) => mutate(args || { request }),
     [mutate, request],
   )
 
   const sendTransactionAsync = React.useCallback(
-    (args?: SendTransactionArgs) => mutateAsync({ request, ...(args ?? {}) }),
+    (args?: SendTransactionArgs) => mutateAsync(args || { request }),
     [mutateAsync, request],
   )
 

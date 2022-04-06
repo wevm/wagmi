@@ -2,26 +2,18 @@ import * as React from 'react'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import {
-  InfuraProvider,
-  InfuraWebSocketProvider,
+  AlchemyProvider,
+  AlchemyWebSocketProvider,
 } from '@ethersproject/providers'
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
-const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
 
-const chains = [...defaultChains, chain.optimism, chain.arbitrumOne]
+const chains = [...defaultChains, chain.optimism]
 const defaultChain = chain.mainnet
-
-export const walletConnectConnector = new WalletConnectConnector({
-  chains,
-  options: {
-    infuraId,
-    qrcode: true,
-  },
-})
 
 const isChainSupported = (chainId?: number) =>
   chains.some((x) => x.id === chainId)
@@ -29,40 +21,41 @@ const isChainSupported = (chainId?: number) =>
 const client = createClient({
   autoConnect: true,
   connectors({ chainId }) {
-    const rpcUrl =
-      chains.find((x) => x.id === chainId)?.rpcUrls?.[0] ??
-      defaultChain.rpcUrls[0]
+    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+    const rpcUrl = chain.rpcUrls.alchemy
+      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+      : typeof chain.rpcUrls.default === 'string'
+      ? chain.rpcUrls.default
+      : chain.rpcUrls.default[0]
     return [
-      new InjectedConnector({
+      new InjectedConnector({ chains }),
+      new CoinbaseWalletConnector({
         chains,
         options: {
-          shimDisconnect: true,
+          appName: 'wagmi',
+          jsonRpcUrl: rpcUrl,
         },
       }),
       new WalletConnectConnector({
         chains,
         options: {
-          infuraId,
           qrcode: true,
-        },
-      }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: 'wagmi',
-          jsonRpcUrl: `${rpcUrl}/${infuraId}`,
+          rpc: {
+            [chain.id]: rpcUrl,
+          },
         },
       }),
     ]
   },
   provider({ chainId }) {
-    return new InfuraProvider(
+    return new AlchemyProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
     )
   },
   webSocketProvider({ chainId }) {
-    return new InfuraWebSocketProvider(
+    return new AlchemyWebSocketProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
+      alchemyId,
     )
   },
 })

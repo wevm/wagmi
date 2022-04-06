@@ -1,0 +1,25 @@
+# Chains & Networks
+
+Chain and network information for use with hooks, connectors, and anywhere else you need in your app.
+
+## chain
+
+Object containing chains by name. Useful for creating lists of specific chains, like `defaultL2Chains`.
+
+```ts
+import { chain } from 'wagmi'
+
+const defaultL2Chains = [chain.optimism, chain.arbitrumOne]
+```
+
+## Default Groups
+
+wagmi has built-in chain groups for convenience:
+
+```ts
+import {
+  allChains,
+  defaultChains, // mainnet, rinkeby, etc.
+  defaultL2Chains, // arbitrum, optimism
+} from 'wagmi'
+```

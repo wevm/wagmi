@@ -15,7 +15,7 @@ class EthersProviderWrapper extends providers.JsonRpcProvider {
 
 // TODO: Fix typing
 export const getProvider: any = () => {
-  const url = chain.hardhat.rpcUrls[0]
+  const url = chain.hardhat.rpcUrls.default.toString()
   const network = {
     chainId: chain.hardhat.id,
     ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
@@ -153,7 +153,7 @@ export const getMockConnector: any = (
   })
 }
 
-type Config = Partial<ClientConfig>
+type Config = Partial<ClientConfig<providers.JsonRpcProvider>>
 export function setupWagmiClient(config: Config = {}) {
   return createClient({
     connectors: [

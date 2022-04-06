@@ -17,6 +17,7 @@ it('should expose correct exports', () => {
       "useContractEvent",
       "useContractRead",
       "useContractWrite",
+      "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",
       "useEnsName",
@@ -34,14 +35,18 @@ it('should expose correct exports', () => {
       "Client",
       "Connector",
       "WagmiClient",
+      "alchemyRpcUrls",
       "allChains",
       "chain",
+      "chainId",
       "createStorage",
       "createWagmiStorage",
       "defaultChains",
-      "erc1155ABI",
+      "defaultL2Chains",
       "erc20ABI",
       "erc721ABI",
+      "etherscanBlockExplorers",
+      "infuraRpcUrls",
     ]
   `)
 })

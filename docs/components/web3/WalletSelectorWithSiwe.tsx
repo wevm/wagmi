@@ -5,10 +5,10 @@ import { SiweMessage } from 'siwe'
 
 import { useIsMounted } from '../../hooks'
 
-export const WalletSelectorWithSiwe = () => {
+export function WalletSelectorWithSiwe() {
   const isMounted = useIsMounted()
   const [state, setState] = React.useState<{ loading?: boolean }>({})
-  const { connectAsync, connector, connectors, error, isConnecting } =
+  const { connectAsync, connectors, error, isConnecting, pendingConnector } =
     useConnect()
   const resolvedLoading = isConnecting || state.loading
 
@@ -17,16 +17,15 @@ export const WalletSelectorWithSiwe = () => {
       try {
         setState((x) => ({ ...x, loading: true }))
         const res = await connectAsync(connector)
-        if (!res.data) new Error('Something went wrong')
 
         const nonceRes = await fetch('/api/nonce')
         const message = new SiweMessage({
           domain: window.location.host,
-          address: res.data?.account,
+          address: res.account,
           statement: 'Sign in with Ethereum to the app.',
           uri: window.location.origin,
           version: '1',
-          chainId: res.data?.chain?.id,
+          chainId: res.chain?.id,
           nonce: await nonceRes.text(),
         })
 
@@ -57,7 +56,7 @@ export const WalletSelectorWithSiwe = () => {
             width="full"
             variant="tertiary"
             center
-            loading={resolvedLoading && x.name === connector?.name}
+            loading={resolvedLoading && x.id === pendingConnector?.id}
             disabled={isMounted ? !x.ready : false}
             key={x.id}
             onClick={() => handleConnect(x)}

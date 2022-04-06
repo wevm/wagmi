@@ -1,0 +1,152 @@
+# useSendTransaction
+
+Hook for sending a transaction.
+
+```tsx
+import { useSendTransaction } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const { data, isIdle, isError, isLoading, isSuccess, sendTransaction } =
+    useSendTransaction({
+      request: {
+        to: 'awkweb.eth',
+        value: BigNumber.from('1000000000000000000'), // 1 ETH
+      },
+    })
+
+  return (
+    <div>
+      {isIdle && (
+        <button disabled={loading} onClick={() => sendTransaction()}>
+          Send Transaction
+        </button>
+      )}
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      {isError && <div>Error sending transaction</div>}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: TransactionResponse
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  sendTransaction: (args? SendTransactionArgs) => void
+  sendTransactionAsync: (args? SendTransactionArgs) => Promise<TransactionResponse>
+  reset: () => void
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### request (optional)
+
+Object to use when creating transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
+
+```tsx {5-8}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const sendTransaction = useSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: BigNumber.from('1000000000000000000'), // 1 ETH
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to send.
+
+```tsx {9-11}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const sendTransaction = useSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: BigNumber.from('1000000000000000000'), // 1 ETH
+    },
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
+
+```tsx {9-11}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const sendTransaction = useSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: BigNumber.from('1000000000000000000'), // 1 ETH
+    },
+    onMutate({ args, overrides }) {
+      console.log('Mutate', { args, overrides })
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
+
+```tsx {9-11}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const sendTransaction = useSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: BigNumber.from('1000000000000000000'), // 1 ETH
+    },
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when send transaction is successful.
+
+```tsx {9-11}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const sendTransaction = useSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: BigNumber.from('1000000000000000000'), // 1 ETH
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

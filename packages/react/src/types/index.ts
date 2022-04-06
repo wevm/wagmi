@@ -16,15 +16,6 @@ export type QueryConfig<Data, Error> = {
   /** Set this to `false` to disable this query from automatically running */
   enabled?: UseQueryOptions<Data, Error>['enabled']
   /**
-   * Set this to `true` to keep the previous `data` when fetching based on a new query key.
-   * Defaults to `false`.
-   */
-  keepPreviousData?: UseQueryOptions<Data, Error>['keepPreviousData']
-  /**
-   * This option can be used to transform or select a part of the data returned by the query function.
-   */
-  select?: UseQueryOptions<Data, Error>['select']
-  /**
    * The time in milliseconds after data is considered stale.
    * If set to Infinity, the data will never be considered stale.
    */
@@ -32,18 +23,17 @@ export type QueryConfig<Data, Error> = {
   /**
    * If set to `true`, the query will suspend when `status === 'loading'`
    * and throw errors when `status === 'error'`.
-   * Defaults to `false`.
    */
   suspense?: UseQueryOptions<Data, Error>['suspense']
-  /** Function fires if query encounters error */
+  /** Function to invoke when an error is thrown while fetching new data. */
   onError?: UseQueryOptions<Data, Error>['onError']
-  /** Function fires when query is either successfully fetched or encounters error */
+  /** Function to invoke when fetching is settled (either successfully fetched, or an error has thrown). */
   onSettled?: UseQueryOptions<Data, Error>['onSettled']
-  /** Function fires when query successfully fetches new data or cache is updated */
+  /** Function to invoke when fetching new data is successful. */
   onSuccess?: UseQueryOptions<Data, Error>['onSuccess']
 }
 
-export type MutationConfig<Data, Error, Variables> = {
+export type MutationConfig<Data, Error, Variables = void> = {
   /** Function fires if mutation encounters error */
   onError?: UseMutationOptions<Data, Error, Variables>['onError']
   /**

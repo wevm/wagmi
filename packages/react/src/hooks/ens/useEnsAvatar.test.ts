@@ -30,7 +30,7 @@ describe('useEnsAvatar', () => {
   beforeAll(() =>
     server.listen({
       onUnhandledRequest(req) {
-        if (req.url.origin !== chain.hardhat.rpcUrls[0])
+        if (req.url.origin !== chain.hardhat.rpcUrls.default.toString())
           console.warn(
             `Found an unhandled ${req.method} request to ${req.url.href}`,
           )
@@ -75,7 +75,7 @@ describe('useEnsAvatar', () => {
         }
       `)
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
 
       const { dataUpdatedAt, ...data } = result.current
       expect(dataUpdatedAt).toBeDefined()

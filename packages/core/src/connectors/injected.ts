@@ -152,11 +152,11 @@ export class InjectedConnector extends Connector<
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
-          rpcUrls: [],
+          rpcUrls: { default: [] },
         }
       )
     } catch (error) {
-      // Indicates chain is not added to MetaMask
+      // Indicates chain is not added to provider
       if ((<ProviderRpcError>error).code === 4902) {
         try {
           const chain = this.chains.find((x) => x.id === chainId)
@@ -168,8 +168,8 @@ export class InjectedConnector extends Connector<
                 chainId: id,
                 chainName: chain.name,
                 nativeCurrency: chain.nativeCurrency,
-                rpcUrls: chain.rpcUrls,
-                blockExplorerUrls: chain.blockExplorers?.map((x) => x.url),
+                rpcUrls: this.getRpcUrls(chain),
+                blockExplorerUrls: this.getBlockExplorerUrls(chain),
               },
             ],
           })

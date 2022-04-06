@@ -17,7 +17,11 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2021",
-    "types": ["@ethersproject/abstract-provider", "@ethersproject/providers"]
+    "types": [
+      "@ethersproject/abstract-provider",
+      "@ethersproject/abstract-signer",
+      "@ethersproject/providers"
+    ]
   },
   "exclude": ["node_modules", "**/dist/**"],
   "include": ["packages/**/*"],

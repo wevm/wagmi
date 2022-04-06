@@ -6,6 +6,10 @@ const withNextra = require('nextra')({
   unstable_staticImage: true,
 })
 
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 /** @type {import('next').NextConfig} */
 const config = {
   i18n: {
@@ -20,8 +24,13 @@ const config = {
         destination: '/examples/connect-wallet',
         statusCode: 302,
       },
+      {
+        source: '/guides/:path*',
+        destination: '/examples/:path*',
+        statusCode: 301,
+      },
     ]
   },
 }
 
-module.exports = withNextra(config)
+module.exports = withBundleAnalyzer(withNextra(config))

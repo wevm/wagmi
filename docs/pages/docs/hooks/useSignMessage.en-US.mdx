@@ -1,0 +1,134 @@
+# useSignMessage
+
+Hook for signing messages with connected account.
+
+```tsx
+import { useSignMessage } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the message: `gm wagmi frens`.
+
+```tsx
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
+    message: 'gm wagmi frens',
+  })
+
+  return (
+    <div>
+      <button disabled={isLoading} onClick={() => signMessage()}>
+        Sign message
+      </button>
+      {isSuccess && <div>Signature: {data}</div>}
+      {isError && <div>Error signing message</div>}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: string
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  signMessage: (args?: SignMessageArgs) => void
+  signMessageAsync: (args?: SignMessageArgs) => Promise<string>
+  reset: () => void
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### message (optional)
+
+Message to sign with wallet. This can be a fixed string or a reactive state variable.
+
+```tsx {7}
+import * as React from 'react'
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const [message, setMessage] = React.useState('gm wagmi frens')
+  const signMessage = useSignMessage({
+    message,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to sign.
+
+```tsx {6-8}
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: 'gm wagmi frens',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before sign message function and is passed same variables sign message function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a sign message failure.
+
+```tsx {6-8}
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: 'gm wagmi frens',
+    onMutate(args) {
+      console.log('Mutate', args)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when sign message is settled (either successfully signed, or an error has thrown).
+
+```tsx {6-8}
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: 'gm wagmi frens',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when sign message is successful.
+
+```tsx {6-8}
+import { useSignMessage } from 'wagmi'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: 'gm wagmi frens',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
