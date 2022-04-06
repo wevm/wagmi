@@ -37,9 +37,9 @@ export const Account = () => {
         )}
       </div>
 
-      {false && (
+      {true && (
         <>
-          {true && (
+          {false && (
             <>
               <h4>Balance</h4>
               <Balance />
@@ -55,7 +55,7 @@ export const Account = () => {
           <h4>Read Contract</h4>
           <ReadContract />
 
-          {true && (
+          {false && (
             <>
               <h4>Write Contract</h4>
               <WriteContract />

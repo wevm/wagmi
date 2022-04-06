@@ -10,8 +10,8 @@ const Page = () => {
   return (
     <>
       <Connect />
-      {false && <Account />}
-      {false && <NetworkSwitcher />}
+      <Account />
+      <NetworkSwitcher />
     </>
   )
 }
