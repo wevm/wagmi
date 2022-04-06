@@ -43,10 +43,9 @@ const getMetadata = async (ens: string) => {
   // parse retrieved avatar uri
   const { chainID, namespace, contractAddress, tokenID } = parseNFT(avatarURI)
   // detect avatar spec by namespace
-  const Spec = specs[namespace]
-  if (!Spec)
+  const spec = new specs[namespace]()
+  if (!spec)
     throw new UnsupportedNamespaceError(`Unsupported namespace: ${namespace}`)
-  const spec = new Spec()
 
   // add meta information of the avatar record
   const host_meta = {

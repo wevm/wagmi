@@ -55,20 +55,17 @@
     }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.0.1",
     "@ethersproject/contracts": "^5.5.0",
     "@ethersproject/providers": "^5.5.1",
-    "@types/dompurify": "^2.3.3",
     "buffer": "^6.0.3",
     "eventemitter3": "^4.0.7",
-    "is-svg": "^4.3.2",
     "multiformats": "^9.6.4",
     "url-join": "^5.0.0",
-    "xss": "^1.0.11",
     "zustand": "^3.7.0"
   },
   "devDependencies": {
-    "ethers": "^5.5.1",
-    "@walletconnect/ethereum-provider": "1.7.5"
+    "@coinbase/wallet-sdk": "^3.0.1",
+    "@walletconnect/ethereum-provider": "1.7.5",
+    "ethers": "^5.5.1"
   }
 }

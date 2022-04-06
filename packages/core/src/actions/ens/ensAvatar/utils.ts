@@ -1,7 +1,4 @@
-import { Buffer } from 'buffer/'
-import xss from 'xss'
 import { CID } from 'multiformats/cid'
-import isSVG from 'is-svg'
 import urlJoin from 'url-join'
 
 import { NFTURIParsingError } from '../../../errors'
@@ -24,6 +21,8 @@ export const isCID = (hash: any) => {
   // check if given string or object is a valid IPFS CID
   try {
     if (typeof hash === 'string') {
+      console.log(hash)
+      console.log(CID.parse(hash))
       return Boolean(CID.parse(hash))
     }
 
@@ -33,7 +32,7 @@ export const isCID = (hash: any) => {
   }
 }
 
-export const parseNFT = (uri: string, seperator = '/') => {
+export const parseNFT = (uri: string, separator = '/') => {
   // parse valid nft spec (CAIP-22/CAIP-29)
   // @see: https://github.com/ChainAgnostic/CAIPs/tree/master/CAIPs
   try {
@@ -44,7 +43,7 @@ export const parseNFT = (uri: string, seperator = '/') => {
       uri = uri.replace('did:nft:', '').replace(/_/g, '/')
     }
 
-    const [reference, asset_namespace, tokenID] = uri.split(seperator)
+    const [reference, asset_namespace, tokenID] = uri.split(separator)
     const [, chainID] = reference.split(':')
     const [namespace, contractAddress] = asset_namespace.split(':')
 
@@ -108,10 +107,6 @@ export const resolveURI = (
   }
 }
 
-const _sanitize = (data: string): Buffer => {
-  return Buffer.from(xss(data))
-}
-
 export interface ImageURIOpts {
   metadata: any
 }
@@ -126,12 +121,6 @@ export const getImageURI = ({ metadata }: ImageURIOpts) => {
 
   if (parsedURI.startsWith('data:') || parsedURI.startsWith('http')) {
     return parsedURI
-  }
-
-  if (isSVG(parsedURI)) {
-    // svg - image_data
-    const data = _sanitize(parsedURI)
-    return `data:image/svg+xml;base64,${data.toString('base64')}`
   }
   return null
 }

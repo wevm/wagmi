@@ -1,7 +1,7 @@
 import { BaseProvider } from '@ethersproject/providers'
 import { Contract } from '@ethersproject/contracts'
-import { Buffer } from 'buffer/'
 
+import { Buffer } from 'buffer'
 import { resolveURI } from '../utils'
 
 const abi = [
