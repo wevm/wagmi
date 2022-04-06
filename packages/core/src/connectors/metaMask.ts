@@ -2,6 +2,8 @@ import { InjectedConnector } from './injected'
 
 export class MetaMaskConnector extends InjectedConnector {
   readonly name = 'MetaMask'
+  readonly ready = typeof window != 'undefined' && !!window.ethereum?.isMetaMask
+
   #provider?: Window['ethereum']
 
   getProvider() {
