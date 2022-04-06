@@ -1,5 +1,11 @@
 # wagmi-core
 
+## 0.1.19
+
+### Patch Changes
+
+- [`d467df6`](https://github.com/tmm/wagmi/commit/d467df6374210dbc4b016788b4beb4fded54cb4d) Thanks [@tmm](https://github.com/tmm)! - fix global type leaking
+
 ## 0.1.18
 
 ### Patch Changes
