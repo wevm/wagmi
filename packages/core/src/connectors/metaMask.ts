@@ -2,21 +2,27 @@ import { InjectedConnector } from './injected'
 
 export class MetaMaskConnector extends InjectedConnector {
   readonly name = 'MetaMask'
-  readonly ready = typeof window != 'undefined' && !!window.ethereum?.isMetaMask
+  readonly ready =
+    typeof window !== 'undefined' &&
+    !!this.#getMetaMaskProvider(window.ethereum)
 
-  #provider?: Window['ethereum']
+  #provider?: Ethereum
 
   getProvider() {
-    const { ethereum } = window
-
-    if (ethereum?.isMetaMask)
-      if (ethereum.providers)
-        this.#provider = ethereum.providers.find(
-          ({ isMetaMask, _events, _state }) =>
-            isMetaMask && !!_events?.connect && !!_state,
-        )
-      else this.#provider = ethereum
+    this.#provider = this.#getMetaMaskProvider(window.ethereum)
 
     return this.#provider
+  }
+
+  #getMetaMaskProvider(ethereum?: Ethereum): Ethereum | undefined {
+    if (ethereum?.providers)
+      return ethereum.providers.find(this.#getMetaMaskProvider)
+
+    if (
+      !!ethereum?.isMetaMask &&
+      !!ethereum._events?.connect &&
+      !!ethereum._state
+    )
+      return ethereum
   }
 }
