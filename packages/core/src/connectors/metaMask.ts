@@ -12,7 +12,8 @@ export class MetaMaskConnector extends InjectedConnector {
     if (ethereum?.isMetaMask)
       if (ethereum.providers)
         this.#provider = ethereum.providers.find(
-          (provider) => provider.isMetaMask,
+          ({ isMetaMask, _events, _state }) =>
+            isMetaMask && !!_events?.connect && !!_state,
         )
       else this.#provider = ethereum
 

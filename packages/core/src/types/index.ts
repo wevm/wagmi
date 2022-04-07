@@ -69,6 +69,20 @@ declare global {
     removeListener?: (...args: any[]) => void
     request<T = any>(args: RequestArguments): Promise<T>
     providers?: Ethereum[]
+    // Properties to help detecting different wallet providers
+    // Note: ethereum._events.connect exists only in MetaMask
+    // Note: ethereum._state exists only in MetaMask
+    // WARNING: These might change in the future
+    _events?: {
+      connect?: () => void
+    }
+    _state?: {
+      accounts?: string[]
+      initialized?: boolean
+      isConnected?: boolean
+      isPermanentlyDisconnected?: boolean
+      isUnlocked?: boolean
+    }
   }
 
   interface Window {
