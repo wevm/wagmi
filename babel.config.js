@@ -3,8 +3,8 @@ module.exports = {
 
   overrides: [
     {
-      include: ['./packages/private', './packages/react'],
-      presets: [['@babel/preset-env', { targets: { esmodules: true } }]],
+      include: ['./packages/core', './packages/react'],
+      presets: [['@babel/preset-env', { targets: 'defaults, not ie 11' }]],
     },
   ],
 }
