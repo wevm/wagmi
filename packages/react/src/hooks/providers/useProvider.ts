@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BaseProvider } from '@ethersproject/providers'
+import type { BaseProvider } from '@ethersproject/providers'
 
 import { useClient } from '../../context'
 import { useForceUpdate } from '../utils'

@@ -51,7 +51,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {
   const { data } = useAccount()
-  const { connectors, connect } = useConnect({
+  const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
   const { disconnect } = useDisconnect()
@@ -94,7 +94,7 @@ If you're interested in contributing to wagmi, please read the [contributing doc
 
 ## License
 
-MIT
+[WAGMIT](/LICENSE) (MIT)
 
 <br />
 <br />

@@ -1,4 +1,4 @@
-import { BaseProvider } from '@ethersproject/providers'
+import type { BaseProvider } from '@ethersproject/providers'
 
 import { Client, client } from '../../client'
 import { Connector, ConnectorData } from '../../connectors'

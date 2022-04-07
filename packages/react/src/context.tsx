@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
+import type { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
 import {
   WagmiClient,
   ClientConfig as WagmiClientConfig,

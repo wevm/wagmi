@@ -56,6 +56,7 @@
     "@types/prettier": "^2.4.4",
     "@typescript-eslint/eslint-plugin": "^5.15.0",
     "@typescript-eslint/parser": "^5.15.0",
+    "bundlewatch": "^0.3.3",
     "eslint": "8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.5.0",

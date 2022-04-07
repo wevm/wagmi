@@ -1,4 +1,4 @@
-import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
+import type { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
 import { getDefaultProvider } from 'ethers'
 import { Mutate, StoreApi, default as create } from 'zustand/vanilla'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
