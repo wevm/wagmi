@@ -37,7 +37,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {
   const { data } = useAccount()
-  const { connectors, connect } = useConnect({
+  const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
   const { disconnect } = useDisconnect()
@@ -62,7 +62,7 @@ We've only scratched the surface for what you can do with wagmi!
 wagmi supports all these features out-of-the-box:
 
 - 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
-- Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
+- Built-in wallet connectors for Injected (e.g. MetaMask), WalletConnect, and Coinbase Wallet
 - Caching, request deduplication, and persistence
 - Auto-refresh data on wallet, block, and network changes
 - TypeScript ready

@@ -28,6 +28,18 @@ export function Header() {
             src="https://img.shields.io/github/stars/tmm/wagmi?colorA=292929&colorB=3c82f6&label=Stars"
           />
         </a>
+
+        <a
+          aria-label="Best of JS"
+          href="https://bestofjs.org/projects/wagmi"
+          className="h-5"
+        >
+          <img
+            alt=""
+            src="https://img.shields.io/endpoint?colorA=292929&colorB=3c82f6&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily"
+          />
+        </a>
+
         <a
           aria-label="Downloads"
           href="https://www.npmjs.com/package/wagmi"

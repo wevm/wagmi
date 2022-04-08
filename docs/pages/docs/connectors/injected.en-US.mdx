@@ -1,3 +1,5 @@
+import Callout from 'nextra-theme-docs/callout'
+
 # Injected
 
 The `InjectedConnector` supports wallets that inject an Ethereum Provider into the browser or window. The MetaMask browser extension is the most popular example of this.
@@ -13,6 +15,13 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 const connector = new InjectedConnector()
 ```
+
+<Callout emoji="💼">
+  Injected wallets can set up custom name mappings in wagmi. You can [see the
+  full list and add to it
+  here](https://github.com/tmm/wagmi/blob/main/packages/core/src/utils/getInjectedName.ts).
+  By default, "Injected" is the name for unmapped wallets.
+</Callout>
 
 ## Configuration
 
