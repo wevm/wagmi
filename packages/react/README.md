@@ -67,7 +67,7 @@ function Profile() {
 }
 ```
 
-In this example, we create a wagmi `Client` (using the default configuration) and pass it to the React Context `Provider`. Next, we use the `useConnect` hook to connect an injected wallet (i.e. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
+In this example, we create a wagmi `Client` and pass it to the React Context `Provider`. Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
 
 We've only scratched the surface for what you can do with wagmi!
 
