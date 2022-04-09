@@ -61,7 +61,7 @@ export function useNetwork({
       forceUpdate()
     })
     return unwatch
-  }, [queryClient])
+  }, [forceUpdate, queryClient])
 
   const switchNetwork_ = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>

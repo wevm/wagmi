@@ -1,4 +1,4 @@
-import { client } from '../../client'
+import { getClient } from '../../client'
 import {
   FetchEnsAddressArgs,
   FetchEnsAddressResult,
@@ -11,6 +11,7 @@ export function watchEnsAddress(
   args: FetchEnsAddressArgs,
   callback: WatchEnsAddressCallback,
 ) {
+  const client = getClient()
   const handleChange = async () => callback(await fetchEnsAddress(args))
   const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
   return unsubscribe

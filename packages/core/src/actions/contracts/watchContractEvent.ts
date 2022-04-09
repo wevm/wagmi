@@ -1,6 +1,6 @@
 import { Contract as EthersContract } from 'ethers/lib/ethers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
 import { GetContractArgs, getContract } from './getContract'
 
 type Config = {
@@ -18,6 +18,8 @@ export function watchContractEvent<
   callback: Parameters<Contract['on']>[1],
   { once }: Config = {},
 ) {
+  const client = getClient()
+
   let contract: Contract
   const watchEvent = async () => {
     if (contract) {

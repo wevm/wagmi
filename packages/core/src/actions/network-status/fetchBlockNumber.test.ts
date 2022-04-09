@@ -2,9 +2,15 @@ import { setupWagmiClient } from '../../../test'
 import { fetchBlockNumber } from './fetchBlockNumber'
 
 describe('fetchBlockNumber', () => {
-  it('fetches block number', async () => {
-    setupWagmiClient()
-    const result = await fetchBlockNumber()
-    expect(result).toBeDefined()
+  beforeEach(() => setupWagmiClient())
+
+  it('default', async () => {
+    expect(await fetchBlockNumber()).toBeDefined()
+  })
+
+  describe('args', () => {
+    it('chainId', async () => {
+      expect(await fetchBlockNumber({ chainId: 1 })).toBeDefined()
+    })
   })
 })

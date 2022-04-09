@@ -167,7 +167,7 @@ describe('useBalance', () => {
             "failureCount": 0,
             "isError": false,
             "isFetched": true,
-            "isFetchedAfterMount": true,
+            "isFetchedAfterMount": false,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,

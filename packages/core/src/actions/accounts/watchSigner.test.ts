@@ -18,7 +18,7 @@ describe('watchSigner', () => {
             "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "_index": null,
             "_isSigner": true,
-            "provider": "<WrappedHardhatProvider>",
+            "provider": "<Provider network={31337} />",
           }
         `)
       else if (counter === 1) expect(data).toMatchInlineSnapshot(`undefined`)
@@ -40,7 +40,7 @@ describe('watchSigner', () => {
             "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "_index": null,
             "_isSigner": true,
-            "provider": "<WrappedHardhatProvider>",
+            "provider": "<Provider network={31337} />",
           }
         `)
       else if (counter === 1)
@@ -49,7 +49,7 @@ describe('watchSigner', () => {
             "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "_index": null,
             "_isSigner": true,
-            "provider": "<WrappedHardhatProvider>",
+            "provider": "<Provider network={31337} />",
           }
         `)
       counter += 1

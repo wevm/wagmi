@@ -17,7 +17,7 @@ describe('fetchSigner', () => {
         "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "_index": null,
         "_isSigner": true,
-        "provider": "<WrappedHardhatProvider>",
+        "provider": "<Provider network={31337} />",
       }
     `)
   })
