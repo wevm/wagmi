@@ -5,6 +5,7 @@ type ChainName =
   | 'arbitrumRinkeby'
   | 'avalanche'
   | 'avalancheFuji'
+  | 'gnosis'
   | 'goerli'
   | 'hardhat'
   | 'kovan'
@@ -59,6 +60,18 @@ export const chain: Record<ChainName, Chain> = {
       },
     ],
     testnet: true,
+  },
+  gnosis: {
+    id: 100,
+    name: 'Gnosis Chain',
+    nativeCurrency: { name: 'xDai', symbol: 'xDAI', decimals: 18 },
+    rpcUrls: ['https://rpc.gnosischain.com'],
+    blockExplorers: [
+      {
+        name: 'Blockscout',
+        url: 'https://blockscout.com',
+      },
+    ],
   },
   goerli: {
     id: 5,
@@ -234,6 +247,7 @@ export const defaultChains: Chain[] = [
 ]
 
 export const defaultL2Chains: Chain[] = [
+  chain.gnosis,
   chain.optimism,
   chain.optimismKovan,
   chain.polygonMainnet,
