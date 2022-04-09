@@ -17,7 +17,7 @@ export function Header() {
         {title}
       </p>
 
-      <div className="flex gap-4 justify-center">
+      <div className="flex flex-wrap gap-4 justify-center">
         <a
           aria-label="Stars"
           href="https://github.com/tmm/wagmi"
