@@ -1,10 +1,9 @@
 import * as React from 'react'
 import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
-import { useQuery } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
 export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
   /** Subscribe to changes */

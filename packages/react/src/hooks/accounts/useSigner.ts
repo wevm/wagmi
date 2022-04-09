@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { FetchSignerResult, fetchSigner, watchSigner } from '@wagmi/core'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'
+import { useQuery } from '../utils'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,

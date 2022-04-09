@@ -74,7 +74,7 @@ describe('useConnect', () => {
     })
 
     it('succeeds with unsupported chain', async () => {
-      const { result } = renderHook(() => useConnect(), {
+      const { result, waitFor } = renderHook(() => useConnect(), {
         wrapper,
         initialProps: {
           client: setupWagmiClient({
@@ -93,6 +93,8 @@ describe('useConnect', () => {
         const mockConnector = result.current.connectors[0]
         result.current.connect(mockConnector)
       })
+
+      await waitFor(() => result.current.isConnected)
 
       const { connectors, ...data } = result.current
       expect(connectors.length).toEqual(1)

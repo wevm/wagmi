@@ -170,7 +170,7 @@ describe('useNetwork', () => {
   })
 
   it('switchChain', async () => {
-    const { result } = renderHook(() => useNetworkWithConnect())
+    const { result, waitFor } = renderHook(() => useNetworkWithConnect())
 
     await actHook(async () => {
       const mockConnector = result.current.connect.connectors[0]
@@ -226,6 +226,8 @@ describe('useNetwork', () => {
     await actHook(async () => {
       result.current.network.switchNetwork?.(4)
     })
+
+    await waitFor(() => result.current.network.isSuccess)
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { chains: __, ...data2 } = result.current.network

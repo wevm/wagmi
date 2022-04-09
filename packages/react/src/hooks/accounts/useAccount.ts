@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'
+import { useQuery } from '../utils'
 
 export type UseAccountConfig = Pick<
   QueryConfig<GetAccountResult, Error>,

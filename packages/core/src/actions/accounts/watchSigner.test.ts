@@ -21,7 +21,7 @@ describe('watchSigner', () => {
             "provider": "<WrappedHardhatProvider>",
           }
         `)
-      else if (counter === 1) expect(data).toMatchInlineSnapshot(`undefined`)
+      else if (counter === 1) expect(data).toMatchInlineSnapshot(`null`)
       counter += 1
     })
 

@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { FetchBlockNumberResult, fetchBlockNumber } from '@wagmi/core'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
-import { useChainId } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
 export type UseBlockNumberConfig = QueryConfig<
   FetchBlockNumberResult,

@@ -15,26 +15,30 @@ describe('useSigner', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "dataUpdatedAt": 0,
           "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
+          "fetchStatus": "idle",
+          "internal": {
+            "dataUpdatedAt": 0,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": false,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": true,
+            "remove": [Function],
+          },
           "isError": false,
           "isFetched": false,
-          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
-          "remove": [Function],
-          "status": "idle",
+          "status": "loading",
         }
       `)
     })
@@ -47,9 +51,7 @@ describe('useSigner', () => {
         result.current.connect.connect(mockConnector)
       })
 
-      const { dataUpdatedAt, ...rest } = result.current.signer
-      expect(dataUpdatedAt).toBeDefined()
-      expect(rest).toMatchInlineSnapshot(`
+      expect(result.current.signer).toMatchInlineSnapshot(`
         {
           "data": JsonRpcSigner {
             "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -58,23 +60,28 @@ describe('useSigner', () => {
             "provider": "<WrappedHardhatProvider>",
           },
           "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
+          "fetchStatus": "idle",
+          "internal": {
+            "dataUpdatedAt": 1643673600000,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": true,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": true,
+            "remove": [Function],
+          },
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
@@ -91,10 +98,8 @@ describe('useSigner', () => {
       })
 
       await actHook(async () => {
-        const res = await result.current.signer.refetch()
-        const { dataUpdatedAt, ...rest } = res
-        expect(dataUpdatedAt).toBeDefined()
-        expect(rest).toMatchInlineSnapshot(`
+        const refetchResult = await result.current.signer.refetch()
+        expect(refetchResult).toMatchInlineSnapshot(`
           {
             "data": JsonRpcSigner {
               "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -102,16 +107,18 @@ describe('useSigner', () => {
               "_isSigner": true,
               "provider": "<WrappedHardhatProvider>",
             },
+            "dataUpdatedAt": 1643673600000,
             "error": null,
             "errorUpdatedAt": 0,
             "failureCount": 0,
+            "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
             "isFetchedAfterMount": true,
             "isFetching": false,
-            "isIdle": false,
             "isLoading": false,
             "isLoadingError": false,
+            "isPaused": false,
             "isPlaceholderData": false,
             "isPreviousData": false,
             "isRefetchError": false,
@@ -130,22 +137,22 @@ describe('useSigner', () => {
       const { result } = renderHook(() => useSigner())
 
       await actHook(async () => {
-        const res = await result.current.refetch()
-        const { dataUpdatedAt, ...rest } = res
-        expect(dataUpdatedAt).toBeDefined()
-        expect(rest).toMatchInlineSnapshot(`
+        const refetchResult = await result.current.refetch()
+        expect(refetchResult).toMatchInlineSnapshot(`
           {
-            "data": undefined,
+            "data": null,
+            "dataUpdatedAt": 1643673600000,
             "error": null,
             "errorUpdatedAt": 0,
             "failureCount": 0,
+            "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
             "isFetchedAfterMount": true,
             "isFetching": false,
-            "isIdle": false,
             "isLoading": false,
             "isLoadingError": false,
+            "isPaused": false,
             "isPlaceholderData": false,
             "isPreviousData": false,
             "isRefetchError": false,

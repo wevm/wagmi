@@ -48,7 +48,7 @@
     "@coinbase/wallet-sdk": "^3.0.1",
     "@wagmi/core": "0.2.0-next.11",
     "@walletconnect/ethereum-provider": "1.7.5",
-    "react-query": "^3.34.16"
+    "react-query": "^4.0.0-beta.2"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^7.0.2",

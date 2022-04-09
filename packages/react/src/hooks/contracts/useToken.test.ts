@@ -16,34 +16,36 @@ describe('useToken', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "dataUpdatedAt": 0,
           "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
+          "fetchStatus": "fetching",
+          "internal": {
+            "dataUpdatedAt": 0,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": false,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": true,
+            "remove": [Function],
+          },
           "isError": false,
           "isFetched": false,
-          "isFetchedAfterMount": false,
           "isFetching": true,
           "isIdle": false,
           "isLoading": true,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
-          "remove": [Function],
           "status": "loading",
         }
       `)
 
       await waitFor(() => result.current.isFetched)
 
-      const { dataUpdatedAt, ...res } = result.current
-      expect(dataUpdatedAt).toBeDefined()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": {
             "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
@@ -58,23 +60,28 @@ describe('useToken', () => {
             },
           },
           "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
+          "fetchStatus": "idle",
+          "internal": {
+            "dataUpdatedAt": 1643673600000,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": true,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": false,
+            "remove": [Function],
+          },
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
@@ -89,29 +96,32 @@ describe('useToken', () => {
 
       await waitFor(() => result.current.isFetched)
 
-      const { errorUpdatedAt, ...res } = result.current
-      expect(errorUpdatedAt).toBeDefined()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "dataUpdatedAt": 0,
           "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.0)],
-          "failureCount": 1,
+          "fetchStatus": "idle",
+          "internal": {
+            "dataUpdatedAt": 0,
+            "errorUpdatedAt": 1643673600000,
+            "failureCount": 1,
+            "isFetchedAfterMount": true,
+            "isLoadingError": true,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": true,
+            "remove": [Function],
+          },
           "isError": true,
           "isFetched": true,
-          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
-          "isLoadingError": true,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
-          "remove": [Function],
           "status": "error",
         }
       `)
@@ -123,33 +133,37 @@ describe('useToken', () => {
     expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
-        "dataUpdatedAt": 0,
         "error": null,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
+        "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": true,
+          "remove": [Function],
+        },
         "isError": false,
         "isFetched": false,
-        "isFetchedAfterMount": false,
         "isFetching": false,
         "isIdle": true,
         "isLoading": false,
-        "isLoadingError": false,
-        "isPlaceholderData": false,
-        "isPreviousData": false,
-        "isRefetchError": false,
         "isRefetching": false,
-        "isStale": true,
         "isSuccess": false,
         "refetch": [Function],
-        "remove": [Function],
-        "status": "idle",
+        "status": "loading",
       }
     `)
   })
 
   describe('refetch', () => {
     it('uses config', async () => {
-      const { result } = renderHook(() =>
+      const { result, waitFor } = renderHook(() =>
         useToken({ address: uniContractAddress, enabled: false }),
       )
 
@@ -157,9 +171,9 @@ describe('useToken', () => {
         await result.current.refetch()
       })
 
-      const { dataUpdatedAt, ...res } = result.current
-      expect(dataUpdatedAt).toBeDefined()
-      expect(res).toMatchInlineSnapshot(`
+      await waitFor(() => result.current.isSuccess)
+
+      expect(result.current).toMatchInlineSnapshot(`
         {
           "data": {
             "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
@@ -174,23 +188,28 @@ describe('useToken', () => {
             },
           },
           "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
+          "fetchStatus": "idle",
+          "internal": {
+            "dataUpdatedAt": 1643673600000,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": true,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": false,
+            "remove": [Function],
+          },
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)

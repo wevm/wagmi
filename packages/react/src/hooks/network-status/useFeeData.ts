@@ -1,10 +1,9 @@
 import * as React from 'react'
 import { FetchFeeDataArgs, FetchFeeDataResult, fetchFeeData } from '@wagmi/core'
-import { useQuery } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
 type UseFeeDataArgs = Partial<FetchFeeDataArgs> & {
   /** Subscribe to changes */

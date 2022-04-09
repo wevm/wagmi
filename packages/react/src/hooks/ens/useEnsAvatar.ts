@@ -1,8 +1,7 @@
-import { useQuery } from 'react-query'
 import { FetchEnsAvatarResult, fetchEnsAvatar } from '@wagmi/core'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useChainId } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
 export type UseEnsAvatarArgs = {
   /** Address or ENS name */

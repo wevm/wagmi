@@ -26,32 +26,35 @@ describe('useContractRead', () => {
 
     await waitFor(() => result.current.isSuccess)
 
-    const { dataUpdatedAt, ...res } = result.current
-    expect(dataUpdatedAt).toBeDefined()
-    expect(res).toMatchInlineSnapshot(`
+    expect(result.current).toMatchInlineSnapshot(`
       {
         "data": {
           "hex": "0x00",
           "type": "BigNumber",
         },
         "error": null,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
+        "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 1643673600000,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": true,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": true,
+          "remove": [Function],
+        },
         "isError": false,
         "isFetched": true,
-        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
-        "isLoadingError": false,
-        "isPlaceholderData": false,
-        "isPreviousData": false,
-        "isRefetchError": false,
         "isRefetching": false,
-        "isStale": true,
         "isSuccess": true,
         "refetch": [Function],
-        "remove": [Function],
         "status": "success",
       }
     `)
@@ -83,26 +86,30 @@ describe('useContractRead', () => {
     expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
-        "dataUpdatedAt": 0,
         "error": null,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
+        "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": true,
+          "remove": [Function],
+        },
         "isError": false,
         "isFetched": false,
-        "isFetchedAfterMount": false,
         "isFetching": false,
         "isIdle": true,
         "isLoading": false,
-        "isLoadingError": false,
-        "isPlaceholderData": false,
-        "isPreviousData": false,
-        "isRefetchError": false,
         "isRefetching": false,
-        "isStale": true,
         "isSuccess": false,
         "refetch": [Function],
-        "remove": [Function],
-        "status": "idle",
+        "status": "loading",
       }
     `)
   })
@@ -136,32 +143,35 @@ describe('useContractRead', () => {
 
     await waitFor(() => result.current.isSuccess)
 
-    const { dataUpdatedAt, ...res } = result.current
-    expect(dataUpdatedAt).toBeDefined()
-    expect(res).toMatchInlineSnapshot(`
+    expect(result.current).toMatchInlineSnapshot(`
       {
         "data": {
           "hex": "0x01",
           "type": "BigNumber",
         },
         "error": null,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
+        "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 1643673600000,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": true,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": true,
+          "remove": [Function],
+        },
         "isError": false,
         "isFetched": true,
-        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
-        "isLoadingError": false,
-        "isPlaceholderData": false,
-        "isPreviousData": false,
-        "isRefetchError": false,
         "isRefetching": false,
-        "isStale": true,
         "isSuccess": true,
         "refetch": [Function],
-        "remove": [Function],
         "status": "success",
       }
     `)
