@@ -1,5 +1,11 @@
 # wagmi-core
 
+## 0.1.20
+
+### Patch Changes
+
+- [#326](https://github.com/tmm/wagmi/pull/326) [`36e6989`](https://github.com/tmm/wagmi/commit/36e69894f4c27aaad7fb6d678476c8bb870244bb) Thanks [@0xGabi](https://github.com/0xGabi)! - Add Gnosis Chain
+
 ## 0.1.19
 
 ### Patch Changes
