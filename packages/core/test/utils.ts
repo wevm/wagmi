@@ -34,7 +34,7 @@ class EthersWebSocketProviderWrapper extends providers.WebSocketProvider {
 export function getWebSocketProvider({ chainId }: { chainId?: number } = {}) {
   const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
   const network = getNetwork(chain)
-  const url = chain_.hardhat.rpcUrls.default.toString()
+  const url = chain_.hardhat.rpcUrls.default.toString().replace('http', 'ws')
   return new EthersWebSocketProviderWrapper(url, network)
 }
 

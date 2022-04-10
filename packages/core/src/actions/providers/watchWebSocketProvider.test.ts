@@ -7,9 +7,10 @@ import { watchWebSocketProvider } from './watchWebSocketProvider'
 describe('watchWebSocketProvider', () => {
   it('callback receives data', async () => {
     const client = setupWagmiClient({ webSocketProvider: getWebSocketProvider })
+    await client.webSocketProvider?.destroy()
 
     const providers: GetWebSocketProviderResult[] = []
-    watchWebSocketProvider((data) => providers.push(data))
+    watchWebSocketProvider((provider) => providers.push(provider))
 
     await connect({ connector: client.connectors[0] })
     await disconnect()
