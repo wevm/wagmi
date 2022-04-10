@@ -1,7 +1,7 @@
 {
   "name": "@wagmi/core",
   "description": "Vanilla JS Client for Ethereum",
-  "license": "MIT",
+  "license": "WAGMIT",
   "version": "0.2.0-next.11",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
