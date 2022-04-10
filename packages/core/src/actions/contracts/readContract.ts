@@ -33,6 +33,11 @@ export async function readContract<
     ...(overrides ? [overrides] : []),
   ]
 
-  const response = (await contract[functionName](...params)) as Result
+  const contractFunction = contract[functionName]
+  if (!contractFunction)
+    console.warn(
+      `"${functionName}" does not in interface for contract "${contractConfig.addressOrName}"`,
+    )
+  const response = (await contractFunction?.(...params)) as Result
   return response
 }

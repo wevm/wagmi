@@ -33,10 +33,13 @@ export async function writeContract<
   try {
     const signer = await client.connector.getSigner()
     const contract = getContract<Contract>(contractConfig)
-    const contract_ = contract.connect(signer)
-    const response = (await contract_[functionName](
-      ...params,
-    )) as TransactionResponse
+    const contractWithSigner = contract.connect(signer)
+    const contractFunction = contractWithSigner[functionName]
+    if (!contractFunction)
+      console.warn(
+        `"${functionName}" does not in interface for contract "${contractConfig.addressOrName}"`,
+      )
+    const response = (await contractFunction(...params)) as TransactionResponse
     return response
   } catch (error_) {
     let error: Error = <Error>error_
