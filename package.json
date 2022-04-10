@@ -18,7 +18,7 @@
     "lint:types": "tsc --noEmit",
     "postinstall": "husky install .config/husky && preconstruct dev",
     "preinstall": "npx only-allow pnpm",
-    "test": "jest --coverage",
+    "test": "jest --coverage --detectOpenHandles",
     "test:ci": "start-server-and-test hardhat:dev http://127.0.0.1:8545 test",
     "test:watch": "jest --watch"
   },
