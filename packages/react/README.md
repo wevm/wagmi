@@ -94,4 +94,4 @@ If you're interested in contributing to wagmi, please read the [contributing doc
 
 ## License
 
-[WAGMIT](/LICENSE)
+[WAGMIT](/LICENSE) License

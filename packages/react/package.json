@@ -3,6 +3,7 @@
   "description": "React Hooks for Ethereum",
   "license": "WAGMIT",
   "version": "0.3.0-next.14",
+  "author": "awkweb.eth",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "homepage": "https://wagmi.sh",
@@ -55,5 +56,14 @@
     "@types/react": "^17.0.0",
     "ethers": "^5.5.1",
     "react": "^17.0.0"
-  }
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }
