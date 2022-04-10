@@ -46,6 +46,21 @@ function App() {
 
 ## Configuration
 
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    chainId: 1,
+  })
+}
+```
+
 ### name (optional)
 
 ENS name to fetch address for. If `name` is not defined, hook will not run.

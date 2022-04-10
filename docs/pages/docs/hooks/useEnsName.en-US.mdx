@@ -60,6 +60,21 @@ function App() {
 }
 ```
 
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {6}
+import { useEnsName } from 'wagmi'
+
+function App() {
+  const ensName = useEnsName({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    chainId: 1,
+  })
+}
+```
+
 ### cacheTime (optional)
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.

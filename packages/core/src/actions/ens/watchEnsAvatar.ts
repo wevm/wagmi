@@ -1,4 +1,4 @@
-import { client } from '../../client'
+import { getClient } from '../../client'
 import {
   FetchEnsAvatarArgs,
   FetchEnsAvatarResult,
@@ -13,6 +13,7 @@ export function watchEnsAvatar(
   args: FetchEnsAvatarArgs,
   callback: WatchEnsAvatarCallback,
 ) {
+  const client = getClient()
   const handleChange = async () => callback(await fetchEnsAvatar(args))
   const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
   return unsubscribe

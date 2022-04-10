@@ -1,4 +1,4 @@
-import { client } from '../../client'
+import { getClient } from '../../client'
 import { allChains } from '../../constants'
 import { Chain } from '../../types'
 
@@ -11,11 +11,10 @@ export type GetNetworkResult = {
 }
 
 export function getNetwork(): GetNetworkResult {
-  const { chains, data } = client
+  const client = getClient()
 
-  const chainId = data?.chain?.id
-  const unsupported = data?.chain?.unsupported
-  const activeChains = chains ?? []
+  const chainId = client.data?.chain?.id
+  const activeChains = client.chains ?? []
   const activeChain = [...activeChains, ...allChains].find(
     (x) => x.id === chainId,
   ) ?? { id: chainId, name: `Chain ${chainId}`, rpcUrls: { default: [] } }
@@ -24,8 +23,8 @@ export function getNetwork(): GetNetworkResult {
     chain: chainId
       ? {
           ...activeChain,
+          ...client.data?.chain,
           id: chainId,
-          unsupported,
         }
       : undefined,
     chains: activeChains,

@@ -1,4 +1,4 @@
-import { client } from '../../client'
+import { getClient } from '../../client'
 import {
   FetchEnsResolverArgs,
   FetchEnsResolverResult,
@@ -13,6 +13,7 @@ export function watchEnsResolver(
   args: FetchEnsResolverArgs,
   callback: WatchEnsResolverCallback,
 ) {
+  const client = getClient()
   const handleChange = async () => callback(await fetchEnsResolver(args))
   const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
   return unsubscribe

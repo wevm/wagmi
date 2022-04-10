@@ -1,7 +1,12 @@
-export { getProvider, type GetProviderResult } from './getProvider'
+export {
+  getProvider,
+  type GetProviderArgs,
+  type GetProviderResult,
+} from './getProvider'
 
 export {
   getWebSocketProvider,
+  type GetWebSocketProviderArgs,
   type GetWebSocketProviderResult,
 } from './getWebSocketProvider'
 

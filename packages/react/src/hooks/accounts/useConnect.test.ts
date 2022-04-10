@@ -98,7 +98,7 @@ describe('useConnect', () => {
       expect(connectors.length).toEqual(1)
       expect(data).toMatchInlineSnapshot(`
         {
-          "activeConnector": undefined,
+          "activeConnector": "<MockConnector>",
           "connect": [Function],
           "connectAsync": [Function],
           "data": {

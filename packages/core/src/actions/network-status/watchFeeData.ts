@@ -1,4 +1,4 @@
-import { client } from '../../client'
+import { getClient } from '../../client'
 import {
   FetchFeeDataArgs,
   FetchFeeDataResult,
@@ -16,6 +16,7 @@ export function watchFeeData(
   args: WatchFeeDataArgs,
   callback: WatchFeeDataCallback,
 ) {
+  const client = getClient()
   const handleChange = async () => callback(await fetchFeeData(args))
 
   const unwatch = args.listenToBlock

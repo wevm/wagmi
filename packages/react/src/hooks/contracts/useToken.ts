@@ -17,14 +17,15 @@ export const queryKey = ({
 }) => [{ entity: 'token', address, chainId, formatUnits }] as const
 
 const queryFn = ({
-  queryKey: [{ address, formatUnits }],
+  queryKey: [{ address, chainId, formatUnits }],
 }: QueryFunctionArgs<typeof queryKey>) => {
   if (!address) throw new Error('address is required')
-  return fetchToken({ address, formatUnits })
+  return fetchToken({ address, chainId, formatUnits })
 }
 
 export function useToken({
   address,
+  chainId: chainId_,
   formatUnits = 'ether',
   cacheTime,
   enabled = true,
@@ -34,7 +35,7 @@ export function useToken({
   onSettled,
   onSuccess,
 }: UseTokenArgs & UseTokenConfig = {}) {
-  const chainId = useChainId()
+  const chainId = useChainId({ chainId: chainId_ })
 
   return useQuery(queryKey({ address, chainId, formatUnits }), queryFn, {
     cacheTime,

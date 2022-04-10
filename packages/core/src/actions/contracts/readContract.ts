@@ -1,13 +1,16 @@
 import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
-import { client } from '../../client'
+import { getProvider } from '../providers'
 import { GetContractArgs, getContract } from './getContract'
 
 export type ReadContractArgs = GetContractArgs
 export type ReadContractConfig = {
   /** Arguments to pass contract method */
   args?: any | any[]
+  /** Chain id to use for provider */
+  chainId?: number
+  /** Call overrides */
   overrides?: CallOverrides
 }
 export type ReadContractResult = Result
@@ -17,9 +20,9 @@ export async function readContract<
 >(
   contractConfig: ReadContractArgs,
   functionName: string,
-  { args, overrides }: ReadContractConfig = {},
+  { args, chainId, overrides }: ReadContractConfig = {},
 ): Promise<Result> {
-  const { provider } = client
+  const provider = getProvider({ chainId })
   const contract = getContract<Contract>({
     signerOrProvider: provider,
     ...contractConfig,
@@ -30,6 +33,11 @@ export async function readContract<
     ...(overrides ? [overrides] : []),
   ]
 
-  const response = (await contract[functionName](...params)) as Result
+  const contractFunction = contract[functionName]
+  if (!contractFunction)
+    console.warn(
+      `"${functionName}" does not in interface for contract "${contractConfig.addressOrName}"`,
+    )
+  const response = (await contractFunction?.(...params)) as Result
   return response
 }

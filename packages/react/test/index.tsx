@@ -5,7 +5,6 @@ import {
   renderHook as defaultRenderHook,
 } from '@testing-library/react-hooks'
 import '@testing-library/jest-dom/extend-expect'
-import { providers } from 'ethers'
 import { QueryClient } from 'react-query'
 
 import { Provider, ProviderProps } from '../src'
@@ -22,13 +21,13 @@ export const queryClient = new QueryClient({
   },
 })
 
-type Props = ProviderProps<providers.JsonRpcProvider> & {
+type Props = ProviderProps & {
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
 export function wrapper(props: Props) {
-  const client = setupWagmiClient({ queryClient })
+  const client = props.client ?? setupWagmiClient({ queryClient })
   return <Provider client={client} {...props} />
 }
 
@@ -47,9 +46,10 @@ export function renderHook<TProps, TResult>(
 }
 
 export { act as actHook } from '@testing-library/react-hooks'
+export { setupWagmiClient } from './utils'
 export {
-  setupWagmiClient,
   getMockConnector,
   getProvider,
+  getWebSocketProvider,
   getSigners,
-} from './utils'
+} from '../../core/test/utils'

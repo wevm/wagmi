@@ -2,12 +2,14 @@ import type { FeeData } from '@ethersproject/providers'
 import { BigNumberish } from 'ethers/lib/ethers'
 import { formatUnits } from 'ethers/lib/utils'
 
-import { client } from '../../client'
 import { Unit } from '../../types'
+import { getProvider } from '../providers'
 
 export type FetchFeeDataArgs = {
   /** Units for formatting output */
   formatUnits?: Unit | number
+  /** Chain id to use for provider */
+  chainId?: number
 }
 
 export type FetchFeeDataResult = FeeData & {
@@ -19,9 +21,11 @@ export type FetchFeeDataResult = FeeData & {
 }
 
 export async function fetchFeeData({
+  chainId,
   formatUnits: units = 'wei',
 }: FetchFeeDataArgs = {}): Promise<FetchFeeDataResult> {
-  const feeData = await client.provider.getFeeData()
+  const provider = getProvider({ chainId })
+  const feeData = await provider.getFeeData()
   const formatted = {
     gasPrice: formatUnits(<BigNumberish>feeData.gasPrice, units),
     maxFeePerGas: formatUnits(<BigNumberish>feeData.maxFeePerGas, units),
