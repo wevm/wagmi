@@ -11,7 +11,7 @@ describe('watchSigner', () => {
     const client = setupWagmiClient()
 
     let counter = 0
-    watchSigner((data) => {
+    const unsubscribe = watchSigner((data) => {
       if (counter === 0)
         expect(data).toMatchInlineSnapshot(`
           JsonRpcSigner {
@@ -27,13 +27,14 @@ describe('watchSigner', () => {
 
     await connect({ connector: client.connectors[0] })
     await disconnect()
+    unsubscribe()
   })
 
   it('listens to chain changes', async () => {
     const client = setupWagmiClient()
 
     let counter = 0
-    watchSigner((data) => {
+    const unwatch = watchSigner((data) => {
       if (counter === 0)
         expect(data).toMatchInlineSnapshot(`
           JsonRpcSigner {
@@ -57,5 +58,6 @@ describe('watchSigner', () => {
 
     await connect({ connector: client.connectors[0] })
     await switchNetwork({ chainId: 4 })
+    unwatch()
   })
 })

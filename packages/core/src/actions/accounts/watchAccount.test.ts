@@ -9,11 +9,12 @@ describe('watchAccount', () => {
     const client = setupWagmiClient()
 
     const accounts: GetAccountResult[] = []
-    watchAccount((data) => accounts.push(data))
+    const unwatch = watchAccount((data) => accounts.push(data))
 
     await connect({ connector: client.connectors[0] })
     await disconnect()
     await connect({ connector: client.connectors[0] })
+    unwatch()
 
     expect(accounts).toMatchInlineSnapshot(`
       [

@@ -9,11 +9,12 @@ describe('watchProvider', () => {
     const client = setupWagmiClient()
 
     const providers: GetProviderResult[] = []
-    watchProvider((provider) => providers.push(provider))
+    const unwatch = watchProvider((provider) => providers.push(provider))
 
     await connect({ connector: client.connectors[0] })
     await disconnect()
     await connect({ connector: client.connectors[0] })
+    unwatch()
 
     expect(providers).toMatchInlineSnapshot(`
       [

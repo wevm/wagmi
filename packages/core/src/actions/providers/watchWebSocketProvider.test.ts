@@ -10,11 +10,17 @@ describe('watchWebSocketProvider', () => {
     await client.webSocketProvider?.destroy()
 
     const providers: GetWebSocketProviderResult[] = []
-    watchWebSocketProvider((provider) => providers.push(provider))
+    const unwatch = watchWebSocketProvider((provider) =>
+      providers.push(provider),
+    )
 
     await connect({ connector: client.connectors[0] })
+    await client.webSocketProvider?.destroy()
     await disconnect()
+    await client.webSocketProvider?.destroy()
     await connect({ connector: client.connectors[0] })
+    await client.webSocketProvider?.destroy()
+    unwatch()
 
     expect(providers).toMatchInlineSnapshot(`
       [
