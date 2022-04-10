@@ -39,7 +39,7 @@ export class InjectedConnector extends Connector<
   Window['ethereum'],
   InjectedConnectorOptions | undefined
 > {
-  readonly id = 'injected'
+  readonly id: string
   readonly name: string
   readonly ready = typeof window != 'undefined' && !!window.ethereum
 
@@ -50,6 +50,8 @@ export class InjectedConnector extends Connector<
     options?: InjectedConnectorOptions
   }) {
     super({ ...config, options: config?.options })
+
+    this.id = 'injected'
 
     let name = 'Injected'
     if (typeof window !== 'undefined') name = getInjectedName(window.ethereum)

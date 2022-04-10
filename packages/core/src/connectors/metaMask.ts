@@ -1,6 +1,7 @@
 import { InjectedConnector } from './injected'
 
 export class MetaMaskConnector extends InjectedConnector {
+  readonly id = 'metamask'
   readonly name = 'MetaMask'
   readonly ready =
     typeof window !== 'undefined' &&
