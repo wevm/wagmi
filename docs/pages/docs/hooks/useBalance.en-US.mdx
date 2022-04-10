@@ -74,9 +74,24 @@ function App() {
 }
 ```
 
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    chainId: 1,
+  })
+}
+```
+
 ### formatUnits (optional)
 
-Formats balance using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+Formats balance using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'
