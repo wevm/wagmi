@@ -163,9 +163,13 @@ describe('useToken', () => {
 
   describe('refetch', () => {
     it('uses config', async () => {
-      const { result, waitFor } = renderHook(() =>
-        useToken({ address: uniContractAddress, enabled: false }),
-      )
+      const { result, waitFor } = renderHook(() => {
+        const { ...res } = useToken({
+          address: uniContractAddress,
+          enabled: false,
+        })
+        return res
+      })
 
       await actHook(async () => {
         await result.current.refetch()

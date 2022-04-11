@@ -112,7 +112,7 @@ describe('useBlockNumber', () => {
       expect(res).toMatchInlineSnapshot(`
         {
           "error": null,
-          "fetchStatus": "fetching",
+          "fetchStatus": "idle",
           "internal": {
             "dataUpdatedAt": 1643673600000,
             "errorUpdatedAt": 0,
@@ -128,10 +128,10 @@ describe('useBlockNumber', () => {
           },
           "isError": false,
           "isFetched": true,
-          "isFetching": true,
+          "isFetching": false,
           "isIdle": false,
           "isLoading": false,
-          "isRefetching": true,
+          "isRefetching": false,
           "isSuccess": true,
           "refetch": [Function],
           "status": "success",
