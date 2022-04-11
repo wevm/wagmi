@@ -62,6 +62,7 @@ export function useBlockNumber({
   return useQuery(queryKey({ chainId }), queryFn, {
     cacheTime,
     enabled,
+    keepPreviousData: watch,
     staleTime,
     suspense,
     onError,

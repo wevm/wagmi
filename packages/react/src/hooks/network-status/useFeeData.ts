@@ -43,6 +43,7 @@ export function useFeeData({
   const feeDataQuery = useQuery(queryKey({ chainId, formatUnits }), queryFn, {
     cacheTime,
     enabled,
+    keepPreviousData: watch,
     staleTime,
     suspense,
     onError,

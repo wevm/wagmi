@@ -121,6 +121,7 @@ export function useContractRead(
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
+    keepPreviousData: watch,
     staleTime,
     suspense,
     onError,
