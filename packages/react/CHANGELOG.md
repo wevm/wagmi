@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.3.0-next.15
+
+### Patch Changes
+
+- keep previous data when watching
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.13
+
 ## 0.3.0-next.14
 
 ### Patch Changes
