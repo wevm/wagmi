@@ -1,9 +1,12 @@
 import { Contract as EthersContract } from 'ethers/lib/ethers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
+import { getProvider, getWebSocketProvider } from '../providers'
 import { GetContractArgs, getContract } from './getContract'
 
 type Config = {
+  /** Chain id to use for provider */
+  chainId?: number
   /** Receive only a single event */
   once?: boolean
 }
@@ -16,7 +19,7 @@ export function watchContractEvent<
   /** Event name to listen to */
   eventName: Parameters<Contract['on']>[0],
   callback: Parameters<Contract['on']>[1],
-  { once }: Config = {},
+  { chainId, once }: Config = {},
 ) {
   let contract: Contract
   const watchEvent = async () => {
@@ -25,7 +28,8 @@ export function watchContractEvent<
     }
 
     contract = getContract<Contract>({
-      signerOrProvider: client.webSocketProvider || client.provider,
+      signerOrProvider:
+        getWebSocketProvider({ chainId }) || getProvider({ chainId }),
       ...contractArgs,
     })
 
@@ -34,6 +38,7 @@ export function watchContractEvent<
   }
 
   watchEvent()
+  const client = getClient()
   const unsubscribe = client.subscribe(
     ({ provider, webSocketProvider }) => ({
       provider,

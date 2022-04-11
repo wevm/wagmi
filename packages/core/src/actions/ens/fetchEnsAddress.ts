@@ -1,8 +1,10 @@
 import { getAddress } from 'ethers/lib/utils'
 
-import { client } from '../../client'
+import { getProvider } from '../providers'
 
 export type FetchEnsAddressArgs = {
+  /** Chain id to use for provider */
+  chainId?: number
   /** ENS name to resolve */
   name: string
 }
@@ -10,9 +12,11 @@ export type FetchEnsAddressArgs = {
 export type FetchEnsAddressResult = string | null
 
 export async function fetchEnsAddress({
+  chainId,
   name,
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
-  const address = await client.provider.resolveName(name)
+  const provider = getProvider({ chainId })
+  const address = await provider.resolveName(name)
 
   try {
     return address ? getAddress(address) : null

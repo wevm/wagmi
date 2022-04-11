@@ -13,7 +13,7 @@ import {
   UserRejectedRequestError,
 } from '../errors'
 import { Connector } from './base'
-import { client } from '../client'
+import { getClient } from '../client'
 
 type InjectedConnectorOptions = {
   /**
@@ -65,7 +65,8 @@ export class InjectedConnector extends Connector<
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
 
-      if (this.options?.shimDisconnect) client.storage?.setItem(shimKey, true)
+      if (this.options?.shimDisconnect)
+        getClient().storage?.setItem(shimKey, true)
 
       return { account, chain: { id, unsupported }, provider }
     } catch (error) {
@@ -83,7 +84,7 @@ export class InjectedConnector extends Connector<
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
 
-    if (this.options?.shimDisconnect) client.storage?.removeItem(shimKey)
+    if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
   }
 
   async getAccount() {
@@ -122,7 +123,10 @@ export class InjectedConnector extends Connector<
 
   async isAuthorized() {
     try {
-      if (this.options?.shimDisconnect && !client.storage?.getItem(shimKey))
+      if (
+        this.options?.shimDisconnect &&
+        !getClient().storage?.getItem(shimKey)
+      )
         return false
 
       const provider = await this.getProvider()
@@ -223,6 +227,6 @@ export class InjectedConnector extends Connector<
 
   protected onDisconnect = () => {
     this.emit('disconnect')
-    if (this.options?.shimDisconnect) client.storage?.removeItem(shimKey)
+    if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
   }
 }

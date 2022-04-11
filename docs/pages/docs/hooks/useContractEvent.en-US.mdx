@@ -1,6 +1,6 @@
 # useContractEvent
 
-Hook for subscribing to ethers.js Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
+Hook for subscribing to ethers Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
 
 ```tsx
 import { useContractEvent } from 'wagmi'
@@ -70,6 +70,28 @@ function App() {
 ```
 
 ### Configuration
+
+#### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/docs/client#websocketprovider-optional) for this to work correctly.
+
+```tsx {12}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+    {
+      chainId: 1,
+    },
+  )
+}
+```
 
 #### once (optional)
 

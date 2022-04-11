@@ -1,12 +1,9 @@
-import { FetchEnsNameResult, fetchEnsName } from '@wagmi/core'
+import { FetchEnsNameArgs, FetchEnsNameResult, fetchEnsName } from '@wagmi/core'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseEnsNameArgs = {
-  /** Address */
-  address?: string
-}
+export type UseEnsNameArgs = Partial<FetchEnsNameArgs>
 
 export type UseEnsNameConfig = QueryConfig<FetchEnsNameResult, Error>
 
@@ -28,6 +25,7 @@ const queryFn = ({
 export function useEnsName({
   address,
   cacheTime,
+  chainId: chainId_,
   enabled = true,
   staleTime = 60 * 60 * 24, // 24 hours
   suspense,
@@ -35,7 +33,8 @@ export function useEnsName({
   onSettled,
   onSuccess,
 }: UseEnsNameArgs & UseEnsNameConfig = {}) {
-  const chainId = useChainId()
+  const chainId = useChainId({ chainId: chainId_ })
+
   return useQuery(queryKey({ address, chainId }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && address && chainId),

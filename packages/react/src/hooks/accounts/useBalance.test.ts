@@ -179,7 +179,7 @@ describe('useBalance', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
-            "isFetchedAfterMount": true,
+            "isFetchedAfterMount": false,
             "isFetching": false,
             "isLoading": false,
             "isLoadingError": false,

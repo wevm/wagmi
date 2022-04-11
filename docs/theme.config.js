@@ -21,8 +21,8 @@ export default {
   floatTOC: true,
   footerEditLink: `Edit this page on GitHub`,
   footerText: () => (
-    <div className="text-current">
-      MIT {new Date().getFullYear()} © awkweb.eth
+    <div className="text-current text-sm">
+      WAGMIT {new Date().getFullYear()} © awkweb.eth
     </div>
   ),
   github,

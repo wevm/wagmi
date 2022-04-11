@@ -1,4 +1,4 @@
-import { client } from '../../client'
+import { getClient } from '../../client'
 import {
   FetchBalanceArgs,
   FetchBalanceResult,
@@ -11,6 +11,7 @@ export function watchBalance(
   args: FetchBalanceArgs,
   callback: WatchBalanceCallback,
 ) {
+  const client = getClient()
   const handleChange = async () => callback(await fetchBalance(args))
   const unsubscribe = client.subscribe(
     ({ data }) => ({ account: data?.account, chainId: data?.chain?.id }),

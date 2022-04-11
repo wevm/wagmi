@@ -2,19 +2,27 @@ import { setupWagmiClient } from '../../../test'
 import { fetchEnsAddress } from './fetchEnsAddress'
 
 describe('fetchEnsAddress', () => {
-  beforeEach(() => {
-    setupWagmiClient()
-  })
+  describe('args', () => {
+    beforeEach(() => setupWagmiClient())
 
-  it('no result', async () => {
-    const result = await fetchEnsAddress({ name: 'awkweb123.eth' })
-    expect(result).toMatchInlineSnapshot(`null`)
-  })
+    describe('name', () => {
+      it('no result', async () => {
+        expect(
+          await fetchEnsAddress({ name: 'awkweb123.eth' }),
+        ).toMatchInlineSnapshot(`null`)
+      })
 
-  it('has address', async () => {
-    const result = await fetchEnsAddress({ name: 'awkweb.eth' })
-    expect(result).toMatchInlineSnapshot(
-      `"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`,
-    )
+      it('has address', async () => {
+        expect(
+          await fetchEnsAddress({ name: 'awkweb.eth' }),
+        ).toMatchInlineSnapshot(`"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`)
+      })
+    })
+
+    it('chainId', async () => {
+      expect(
+        await fetchEnsAddress({ name: 'awkweb.eth', chainId: 1 }),
+      ).toMatchInlineSnapshot(`"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`)
+    })
   })
 })

@@ -22,13 +22,13 @@ export type UseContractReadConfig = QueryConfig<ReadContractResult, Error>
 export const queryKey = ([
   contractConfig,
   functionName,
-  { args, overrides },
-  { blockNumber, chainId },
+  { args, chainId, overrides },
+  { blockNumber },
 ]: [
   ReadContractArgs,
   string,
   Partial<ReadContractConfig>,
-  { blockNumber?: number; chainId?: number },
+  { blockNumber?: number },
 ]) =>
   [
     {
@@ -43,9 +43,13 @@ export const queryKey = ([
   ] as const
 
 const queryFn = ({
-  queryKey: [{ args, contractConfig, functionName, overrides }],
+  queryKey: [{ args, chainId, contractConfig, functionName, overrides }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return readContract(contractConfig, functionName, { args, overrides })
+  return readContract(contractConfig, functionName, {
+    args,
+    chainId,
+    overrides,
+  })
 }
 
 export function useContractRead(
@@ -53,6 +57,7 @@ export function useContractRead(
   functionName: string,
   {
     args,
+    chainId: chainId_,
     overrides,
     watch,
     cacheTime,
@@ -64,7 +69,7 @@ export function useContractRead(
     onSuccess,
   }: UseContractReadArgs & UseContractReadConfig = {},
 ) {
-  const chainId = useChainId()
+  const chainId = useChainId({ chainId: chainId_ })
   const { data: blockNumber } = useBlockNumber({ enabled: false, watch })
 
   const queryKey_ = React.useMemo(
@@ -72,11 +77,8 @@ export function useContractRead(
       queryKey([
         contractConfig,
         functionName,
-        { args, overrides },
-        {
-          chainId,
-          blockNumber: watch ? blockNumber : undefined,
-        },
+        { args, chainId, overrides },
+        { blockNumber: watch ? blockNumber : undefined },
       ]),
     [
       args,

@@ -1,4 +1,4 @@
-import { client } from '../../client'
+import { getClient } from '../../client'
 import {
   ReadContractArgs,
   ReadContractConfig,
@@ -19,6 +19,8 @@ export function watchReadContract(
   config: WatchReadContractConfig = {},
   callback: WatchReadContractResult,
 ) {
+  const client = getClient()
+
   const handleChange = async () =>
     callback(await readContract(contractConfig, functionName, config))
 

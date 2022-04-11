@@ -1,8 +1,6 @@
-import Callout from 'nextra-theme-docs/callout'
-
 # Client
 
-The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers.js providers.
+The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.
 
 ```ts
 import { createClient } from 'wagmi'
@@ -80,7 +78,7 @@ const client = createClient({
 
 ### provider (optional)
 
-ethers.js [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network. Defaults to `(config) => getDefaultProvider(config.chainId)`.
+ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network. Defaults to `(config) => getDefaultProvider(config.chainId)`.
 
 ```ts {5-7}
 import { providers } from 'ethers'
@@ -93,15 +91,7 @@ const client = createClient({
 })
 ```
 
-`provider` also accepts an ethers.js provider directly instead of using a function, but you likely want to use the function approach instead so your provider is aware of the active chain.
-
-<Callout emoji="💡">
-  When using `getDefaultProvider()`, you likely want to [provide an API key for
-  each
-  service](https://docs.ethers.io/v5/api-keys/#api-keys--getDefaultProvider) to
-  minimize disruptions. By default `getDefaultProvider` falls back to ethers.js
-  shared API keys.
-</Callout>
+`provider` also accepts an ethers provider directly instead of using a function, but you likely want to use the function approach instead so your provider is aware of the active chain.
 
 ### storage (optional)
 
@@ -117,7 +107,7 @@ const client = createClient({
 
 ### webSocketProvider (optional)
 
-ethers.js WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
 ```ts {5-10}
 import { providers } from 'ethers'
@@ -133,4 +123,4 @@ const client = createClient({
 })
 ```
 
-`webSocketProvider` also accepts an ethers.js WebSocket provider directly instead of using a function, but you likely want to use the function approach instead so your WebSocket provider is aware of the active chain.
+`webSocketProvider` also accepts an ethers WebSocket provider directly instead of using a function, but you likely want to use the function approach instead so your WebSocket provider is aware of the active chain.

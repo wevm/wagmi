@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.12
+
+### Patch Changes
+
+- add chainId to actions and hooks
+
 ## 0.2.0-next.11
 
 ### Patch Changes

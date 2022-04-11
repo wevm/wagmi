@@ -44,6 +44,20 @@ function App() {
 
 ## Configuration
 
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    chainId: 1,
+  })
+}
+```
+
 ### watch (optional)
 
 Watches and refreshes data for new blocks.
