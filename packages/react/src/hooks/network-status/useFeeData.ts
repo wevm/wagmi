@@ -20,13 +20,14 @@ export const queryKey = ({
 }) => [{ entity: 'feeData', chainId, formatUnits }] as const
 
 const queryFn = ({
-  queryKey: [{ formatUnits }],
+  queryKey: [{ chainId, formatUnits }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return fetchFeeData({ formatUnits })
+  return fetchFeeData({ chainId, formatUnits })
 }
 
 export function useFeeData({
   cacheTime,
+  chainId: chainId_,
   enabled = true,
   formatUnits = 'wei',
   staleTime,
@@ -36,11 +37,12 @@ export function useFeeData({
   onSettled,
   onSuccess,
 }: UseFeeDataArgs & UseFeedDataConfig = {}) {
-  const chainId = useChainId()
+  const chainId = useChainId({ chainId: chainId_ })
 
   const feeDataQuery = useQuery(queryKey({ chainId, formatUnits }), queryFn, {
     cacheTime,
     enabled,
+    keepPreviousData: watch,
     staleTime,
     suspense,
     onError,

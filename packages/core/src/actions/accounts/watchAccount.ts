@@ -1,6 +1,6 @@
 import type { BaseProvider } from '@ethersproject/providers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
 import { GetAccountResult, getAccount } from './getAccount'
 
 export type WatchAccountCallback<
@@ -10,6 +10,7 @@ export type WatchAccountCallback<
 export function watchAccount<TProvider extends BaseProvider>(
   callback: WatchAccountCallback<TProvider>,
 ) {
+  const client = getClient()
   const handleChange = () => callback(getAccount())
   const unsubscribe = client.subscribe(
     ({ data, connector }) => ({

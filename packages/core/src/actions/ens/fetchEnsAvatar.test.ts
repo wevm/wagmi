@@ -54,44 +54,61 @@ describe('fetchEnsAvatar', () => {
     }),
   )
 
-  beforeEach(() => {
-    setupWagmiClient()
-  })
+  beforeEach(() => setupWagmiClient())
 
   afterEach(() => server.resetHandlers())
 
   afterAll(() => server.close())
 
-  it('no result', async () => {
-    const result = await fetchEnsAvatar({ addressOrName: 'awkweb.eth' })
-    expect(result).toMatchInlineSnapshot(`null`)
-  })
-
-  describe('has avatar', () => {
-    it('erc1155', async () => {
-      const result = await fetchEnsAvatar({
-        addressOrName: 'nick.eth',
+  describe('args', () => {
+    describe('addressOrName', () => {
+      it('no result', async () => {
+        expect(
+          await fetchEnsAvatar({ addressOrName: 'awkweb.eth' }),
+        ).toMatchInlineSnapshot(`null`)
       })
-      expect(result).toMatchInlineSnapshot(
+
+      describe('has avatar', () => {
+        it('erc1155', async () => {
+          expect(
+            await fetchEnsAvatar({
+              addressOrName: 'nick.eth',
+            }),
+          ).toMatchInlineSnapshot(
+            `"https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE"`,
+          )
+        })
+
+        it('erc721', async () => {
+          expect(
+            await fetchEnsAvatar({
+              addressOrName: 'brantly.eth',
+            }),
+          ).toMatchInlineSnapshot(
+            `"https://api.wrappedpunks.com/images/punks/2430.png"`,
+          )
+        })
+
+        it('custom', async () => {
+          expect(
+            await fetchEnsAvatar({
+              addressOrName: 'tanrikulu.eth',
+            }),
+          ).toMatchInlineSnapshot(
+            `"https://ipfs.io/ipfs/QmUShgfoZQSHK3TQyuTfUpsc8UfeNfD8KwPUvDBUdZ4nmR"`,
+          )
+        })
+      })
+    })
+
+    it('chainId', async () => {
+      expect(
+        await fetchEnsAvatar({
+          addressOrName: 'nick.eth',
+          chainId: 1,
+        }),
+      ).toMatchInlineSnapshot(
         `"https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE"`,
-      )
-    })
-
-    it('erc721', async () => {
-      const result = await fetchEnsAvatar({
-        addressOrName: 'brantly.eth',
-      })
-      expect(result).toMatchInlineSnapshot(
-        `"https://api.wrappedpunks.com/images/punks/2430.png"`,
-      )
-    })
-
-    it('custom', async () => {
-      const result = await fetchEnsAvatar({
-        addressOrName: 'tanrikulu.eth',
-      })
-      expect(result).toMatchInlineSnapshot(
-        `"https://ipfs.io/ipfs/QmUShgfoZQSHK3TQyuTfUpsc8UfeNfD8KwPUvDBUdZ4nmR"`,
       )
     })
   })

@@ -1,12 +1,13 @@
-import { FetchEnsAvatarResult, fetchEnsAvatar } from '@wagmi/core'
+import {
+  FetchEnsAvatarArgs,
+  FetchEnsAvatarResult,
+  fetchEnsAvatar,
+} from '@wagmi/core'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseEnsAvatarArgs = {
-  /** Address or ENS name */
-  addressOrName?: string
-}
+export type UseEnsAvatarArgs = Partial<FetchEnsAvatarArgs>
 
 export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 
@@ -19,15 +20,16 @@ export const queryKey = ({
 }) => [{ entity: 'ensAvatar', addressOrName, chainId }] as const
 
 const queryFn = ({
-  queryKey: [{ addressOrName }],
+  queryKey: [{ addressOrName, chainId }],
 }: QueryFunctionArgs<typeof queryKey>) => {
   if (!addressOrName) throw new Error('addressOrName is required')
-  return fetchEnsAvatar({ addressOrName })
+  return fetchEnsAvatar({ addressOrName, chainId })
 }
 
 export function useEnsAvatar({
   addressOrName,
   cacheTime,
+  chainId: chainId_,
   enabled = true,
   staleTime = 60 * 60 * 24, // 24 hours
   suspense,
@@ -35,7 +37,8 @@ export function useEnsAvatar({
   onSettled,
   onSuccess,
 }: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
-  const chainId = useChainId()
+  const chainId = useChainId({ chainId: chainId_ })
+
   return useQuery(queryKey({ addressOrName, chainId }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && addressOrName && chainId),

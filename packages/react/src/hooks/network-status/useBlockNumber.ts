@@ -1,28 +1,34 @@
 import * as React from 'react'
-import { FetchBlockNumberResult, fetchBlockNumber } from '@wagmi/core'
+import {
+  FetchBlockNumberArgs,
+  FetchBlockNumberResult,
+  fetchBlockNumber,
+} from '@wagmi/core'
 import { useQueryClient } from 'react-query'
 
-import { QueryConfig } from '../../types'
+import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
 
-export type UseBlockNumberConfig = QueryConfig<
-  FetchBlockNumberResult,
-  Error
-> & {
+type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
   /** Subscribe to changes */
   watch?: boolean
 }
 
+export type UseBlockNumberConfig = QueryConfig<FetchBlockNumberResult, Error>
+
 export const queryKey = ({ chainId }: { chainId?: number }) =>
   [{ entity: 'blockNumber', chainId }] as const
 
-const queryFn = () => {
-  return fetchBlockNumber()
+const queryFn = ({
+  queryKey: [{ chainId }],
+}: QueryFunctionArgs<typeof queryKey>) => {
+  return fetchBlockNumber({ chainId })
 }
 
 export function useBlockNumber({
   cacheTime = 0,
+  chainId: chainId_,
   enabled = true,
   staleTime,
   suspense,
@@ -30,8 +36,8 @@ export function useBlockNumber({
   onError,
   onSettled,
   onSuccess,
-}: UseBlockNumberConfig = {}) {
-  const chainId = useChainId()
+}: UseBlockNumberArgs & UseBlockNumberConfig = {}) {
+  const chainId = useChainId({ chainId: chainId_ })
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
   const queryClient = useQueryClient()
@@ -56,6 +62,7 @@ export function useBlockNumber({
   return useQuery(queryKey({ chainId }), queryFn, {
     cacheTime,
     enabled,
+    keepPreviousData: watch,
     staleTime,
     suspense,
     onError,

@@ -47,3 +47,12 @@ body {
   border-top-right-radius: 0;
   margin: 0;
 }
+
+sup a {
+  @apply text-current;
+  text-decoration: none;
+}
+
+.footnotes {
+  @apply text-sm;
+}

@@ -162,8 +162,8 @@ describe('useNetwork', () => {
           "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
-          "switchNetwork": undefined,
-          "switchNetworkAsync": undefined,
+          "switchNetwork": [Function],
+          "switchNetworkAsync": [Function],
         }
       `)
     })

@@ -1,6 +1,6 @@
 import type { WebSocketProvider } from '@ethersproject/providers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
 import {
   GetWebSocketProviderResult,
   getWebSocketProvider,
@@ -13,8 +13,12 @@ export type WatchWebSocketProviderCallback<
 export function watchWebSocketProvider<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >(callback: WatchWebSocketProviderCallback<TWebSocketProvider>) {
+  const client = getClient()
   const handleChange = async () =>
-    callback(await getWebSocketProvider<TWebSocketProvider>())
-  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
+    callback(getWebSocketProvider<TWebSocketProvider>())
+  const unsubscribe = client.subscribe(
+    ({ webSocketProvider }) => webSocketProvider,
+    handleChange,
+  )
   return unsubscribe
 }

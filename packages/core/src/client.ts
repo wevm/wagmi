@@ -49,7 +49,7 @@ export type State<
 }
 
 export class Client<
-  TProvider extends BaseProvider,
+  TProvider extends BaseProvider = BaseProvider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > {
   config: Partial<ClientConfig<TProvider, TWebSocketProvider>>

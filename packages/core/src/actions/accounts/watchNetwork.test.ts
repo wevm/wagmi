@@ -11,10 +11,11 @@ describe('watchNetwork', () => {
     await connect({ connector: client.connectors[0] })
 
     const networks: GetNetworkResult[] = []
-    watchNetwork((data) => networks.push(data))
+    const unwatch = watchNetwork((data) => networks.push(data))
 
     await switchNetwork({ chainId: 4 })
     await switchNetwork({ chainId: 1 })
+    unwatch()
 
     expect(networks).toMatchInlineSnapshot(`
       [

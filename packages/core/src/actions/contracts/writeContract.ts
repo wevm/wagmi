@@ -1,7 +1,7 @@
 import type { TransactionResponse } from '@ethersproject/providers'
 import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 import { GetContractArgs, getContract } from './getContract'
 
@@ -22,21 +22,24 @@ export async function writeContract<
   functionName: string,
   { args, overrides }: WriteContractConfig = {},
 ): Promise<WriteContractResult> {
-  const { connector } = client
-  const contract = getContract<Contract>(contractConfig)
+  const client = getClient()
+  if (!client.connector) throw new ConnectorNotFoundError()
 
-  if (!connector) throw new ConnectorNotFoundError()
   const params = [
     ...(Array.isArray(args) ? args : args ? [args] : []),
     ...(overrides ? [overrides] : []),
   ]
 
   try {
-    const signer = await connector.getSigner()
-    const contract_ = contract.connect(signer)
-    const response = (await contract_[functionName](
-      ...params,
-    )) as TransactionResponse
+    const signer = await client.connector.getSigner()
+    const contract = getContract<Contract>(contractConfig)
+    const contractWithSigner = contract.connect(signer)
+    const contractFunction = contractWithSigner[functionName]
+    if (!contractFunction)
+      console.warn(
+        `"${functionName}" does not in interface for contract "${contractConfig.addressOrName}"`,
+      )
+    const response = (await contractFunction(...params)) as TransactionResponse
     return response
   } catch (error_) {
     let error: Error = <Error>error_

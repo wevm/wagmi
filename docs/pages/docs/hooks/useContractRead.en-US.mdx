@@ -1,8 +1,6 @@
-import Callout from 'nextra-theme-docs/callout'
-
 # useContractRead
 
-Hook for calling an ethers.js Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) method.
+Hook for calling an ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) method.
 
 ```tsx
 import { useContractRead } from 'wagmi'
@@ -62,7 +60,7 @@ Name of function to call.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -78,16 +76,11 @@ function App() {
 
 Arguments to pass to function call. Accepts `any | any[]`.
 
-<Callout>
-  When using a list of positional arguments, you probably want to memoize them
-  with something like `React.useMemo` so the updater effect remains stable.
-</Callout>
-
 ```tsx {11}
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -95,6 +88,27 @@ function App() {
     'love',
     {
       args: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    },
+  )
+}
+```
+
+#### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {11}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'getHunger',
+    {
+      chainId: 1,
     },
   )
 }
@@ -108,7 +122,7 @@ function App() {
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -129,7 +143,7 @@ Watches and refreshes data for new blocks.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -150,7 +164,7 @@ Time (in ms) which the data should remain in the cache. Defaults to `0`.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -171,7 +185,7 @@ Set this to `false` to disable this query from automatically running. Defaults t
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -192,7 +206,7 @@ Time (in ms) after data is considered stale. If set to `Infinity` the data will 
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -213,7 +227,7 @@ Set this to `true` to enable suspense mode.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -234,7 +248,7 @@ Function to invoke when fetching new data is successful.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -257,7 +271,7 @@ Function to invoke when an error is thrown while fetching new data.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -280,7 +294,7 @@ Function to invoke when fetching is settled (either successfully fetched, or an 
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
+  const contractRead = useContractRead(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,

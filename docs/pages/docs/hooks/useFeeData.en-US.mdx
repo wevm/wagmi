@@ -62,9 +62,23 @@ function App() {
 
 ## Configuration
 
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {5}
+import { useFeeData } from 'wagmi'
+
+function App() {
+  const feeData = useFeeData({
+    chainId: 1,
+  })
+}
+```
+
 ### formatUnits (optional)
 
-Formats fee data using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
 
 ```tsx {5}
 import { useFeeData } from 'wagmi'

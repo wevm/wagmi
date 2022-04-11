@@ -1,6 +1,6 @@
 import type { BaseProvider } from '@ethersproject/providers'
 
-import { client } from '../../client'
+import { getClient } from '../../client'
 import { FetchBlockNumberResult, fetchBlockNumber } from './fetchBlockNumber'
 
 export type WatchBlockNumberArgs = { listen: boolean }
@@ -24,8 +24,8 @@ export function watchBlockNumber(
     prevProvider = provider
   }
 
-  const { provider, webSocketProvider } = client
-  const provider_ = webSocketProvider ?? provider
+  const client = getClient()
+  const provider_ = client.webSocketProvider ?? client.provider
   if (args.listen) createListener(provider_)
 
   const unsubscribe = client.subscribe(

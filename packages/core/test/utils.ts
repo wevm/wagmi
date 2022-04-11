@@ -1,23 +1,41 @@
 import { providers } from 'ethers'
 import { Wallet } from 'ethers/lib/ethers'
 
-import { chain, defaultChains } from '../src'
+import { Chain, allChains, chain as chain_, defaultChains } from '../src'
 import { MockConnector, MockProviderOptions } from '../src/connectors/mock'
 
-class EthersProviderWrapper extends providers.JsonRpcProvider {
-  toJSON() {
-    return '<WrappedHardhatProvider>'
+export function getNetwork(chain: Chain) {
+  return {
+    chainId: chain.id,
+    ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    name: chain.name,
   }
 }
 
-export function getProvider() {
-  const url = chain.hardhat.rpcUrls.default.toString()
-  const network = {
-    chainId: chain.hardhat.id,
-    ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    name: chain.hardhat.name,
+class EthersProviderWrapper extends providers.StaticJsonRpcProvider {
+  toJSON() {
+    return `<Provider network={${this.network.chainId}} />`
   }
+}
+
+export function getProvider({ chainId }: { chainId?: number } = {}) {
+  const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
+  const network = getNetwork(chain)
+  const url = chain_.hardhat.rpcUrls.default.toString()
   return new EthersProviderWrapper(url, network)
+}
+
+class EthersWebSocketProviderWrapper extends providers.WebSocketProvider {
+  toJSON() {
+    return `<WebSocketProvider network={${this.network.chainId}} />`
+  }
+}
+
+export function getWebSocketProvider({ chainId }: { chainId?: number } = {}) {
+  const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
+  const network = getNetwork(chain)
+  const url = chain_.hardhat.rpcUrls.default.toString().replace('http', 'ws')
+  return new EthersWebSocketProviderWrapper(url, network)
 }
 
 // TODO: Figure out why this is flaky
@@ -26,7 +44,7 @@ export function getProvider() {
 // const accounts = normalizeHardhatNetworkAccountsConfig(
 //   defaultHardhatNetworkParams.accounts,
 // )
-const accounts = [
+export const accounts = [
   {
     privateKey:
       '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80',

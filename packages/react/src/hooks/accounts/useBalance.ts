@@ -23,15 +23,16 @@ export const queryKey = ({
   [{ entity: 'balance', addressOrName, chainId, formatUnits, token }] as const
 
 const queryFn = ({
-  queryKey: [{ addressOrName, formatUnits, token }],
+  queryKey: [{ addressOrName, chainId, formatUnits, token }],
 }: QueryFunctionArgs<typeof queryKey>) => {
   if (!addressOrName) throw new Error('address is required')
-  return fetchBalance({ addressOrName, formatUnits, token })
+  return fetchBalance({ addressOrName, chainId, formatUnits, token })
 }
 
 export function useBalance({
   addressOrName,
   cacheTime,
+  chainId: chainId_,
   enabled = true,
   formatUnits = 'ether',
   staleTime,
@@ -42,13 +43,14 @@ export function useBalance({
   onSettled,
   onSuccess,
 }: UseBalanceArgs & UseBalanceConfig = {}) {
-  const chainId = useChainId()
+  const chainId = useChainId({ chainId: chainId_ })
   const balanceQuery = useQuery(
     queryKey({ addressOrName, chainId, formatUnits, token }),
     queryFn,
     {
       cacheTime,
       enabled: Boolean(enabled && addressOrName),
+      keepPreviousData: watch,
       staleTime,
       suspense,
       onError,
