@@ -6,8 +6,8 @@ import {
   createClient as createWagmiClient,
 } from '@wagmi/core'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { persistQueryClient } from 'react-query/persistQueryClient-experimental'
-import { createWebStoragePersistor } from 'react-query/createWebStoragePersistor-experimental'
+import { persistQueryClient } from 'react-query/persistQueryClient'
+import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
 
 import { deserialize, serialize } from './utils'
 
@@ -33,23 +33,26 @@ export function createClient<
     defaultOptions: {
       queries: {
         cacheTime: 60 * 60 * 24, // 24 hours
-        notifyOnChangeProps: 'tracked',
+        networkMode: 'offlineFirst',
         refetchOnWindowFocus: false,
         retry: 0,
+      },
+      mutations: {
+        networkMode: 'offlineFirst',
       },
     },
   }),
   ...config
 }: ClientConfig<TProvider, TWebSocketProvider> = {}) {
   const client = createWagmiClient<TProvider, TWebSocketProvider>(config)
-  const persistor = createWebStoragePersistor({
+  const persister = createWebStoragePersister({
     storage: (client.storage as Storage) || window.localStorage,
     serialize,
     deserialize,
   })
   persistQueryClient({
     queryClient,
-    persistor,
+    persister,
     dehydrateOptions: {
       shouldDehydrateQuery: (query) => query.cacheTime !== 0,
     },

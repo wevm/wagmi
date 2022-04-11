@@ -1,14 +1,14 @@
 import * as React from 'react'
+import { useQueryClient } from 'react-query'
 import {
   FetchBlockNumberArgs,
   FetchBlockNumberResult,
   fetchBlockNumber,
 } from '@wagmi/core'
-import { useQuery, useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
-import { useChainId } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
 type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
   /** Subscribe to changes */

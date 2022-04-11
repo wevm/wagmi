@@ -5,7 +5,7 @@ import { fetchSigner } from './fetchSigner'
 describe('fetchSigner', () => {
   it('not connected', async () => {
     setupWagmiClient()
-    expect(await fetchSigner()).toMatchInlineSnapshot(`undefined`)
+    expect(await fetchSigner()).toMatchInlineSnapshot(`null`)
   })
 
   it('connected', async () => {

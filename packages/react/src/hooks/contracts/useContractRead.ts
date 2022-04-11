@@ -6,11 +6,11 @@ import {
   readContract,
   watchReadContract,
 } from '@wagmi/core'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
 type UseContractReadArgs = Partial<ReadContractConfig> & {
   /** Subscribe to changes */

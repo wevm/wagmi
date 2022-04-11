@@ -105,6 +105,6 @@ describe('useDisconnect', () => {
     })
 
     await waitFor(() => result.current.disconnect.isSuccess)
-    expect(result.current.account.data).toMatchInlineSnapshot(`null`)
+    expect(result.current.account.data).toMatchInlineSnapshot(`undefined`)
   })
 })

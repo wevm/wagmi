@@ -19,6 +19,12 @@ export const queryClient = new QueryClient({
       retry: false,
     },
   },
+  logger: {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    error: () => {},
+    log: console.log,
+    warn: console.warn,
+  },
 })
 
 type Props = ProviderProps & {

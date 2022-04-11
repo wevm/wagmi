@@ -21,7 +21,7 @@ describe('watchSigner', () => {
             "provider": "<Provider network={31337} />",
           }
         `)
-      else if (counter === 1) expect(data).toMatchInlineSnapshot(`undefined`)
+      else if (counter === 1) expect(data).toMatchInlineSnapshot(`null`)
       counter += 1
     })
 

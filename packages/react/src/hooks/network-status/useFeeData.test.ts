@@ -8,54 +8,62 @@ describe('useFeeData', () => {
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "dataUpdatedAt": 0,
           "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
+          "fetchStatus": "fetching",
+          "internal": {
+            "dataUpdatedAt": 0,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": false,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": true,
+            "remove": [Function],
+          },
           "isError": false,
           "isFetched": false,
-          "isFetchedAfterMount": false,
           "isFetching": true,
           "isIdle": false,
           "isLoading": true,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
-          "remove": [Function],
           "status": "loading",
         }
       `)
 
       await waitFor(() => result.current.isFetched)
 
-      const { data, dataUpdatedAt, ...res } = result.current
+      const { data, ...res } = result.current
       expect(data).toBeDefined()
-      expect(dataUpdatedAt).toBeDefined()
       expect(res).toMatchInlineSnapshot(`
         {
           "error": null,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
+          "fetchStatus": "idle",
+          "internal": {
+            "dataUpdatedAt": 1643673600000,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": true,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": true,
+            "remove": [Function],
+          },
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
-          "isLoadingError": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
           "isRefetching": false,
-          "isStale": true,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
@@ -69,26 +77,30 @@ describe('useFeeData', () => {
     expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
-        "dataUpdatedAt": 0,
         "error": null,
-        "errorUpdatedAt": 0,
-        "failureCount": 0,
+        "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": true,
+          "remove": [Function],
+        },
         "isError": false,
         "isFetched": false,
-        "isFetchedAfterMount": false,
         "isFetching": false,
         "isIdle": true,
         "isLoading": false,
-        "isLoadingError": false,
-        "isPlaceholderData": false,
-        "isPreviousData": false,
-        "isRefetchError": false,
         "isRefetching": false,
-        "isStale": true,
         "isSuccess": false,
         "refetch": [Function],
-        "remove": [Function],
-        "status": "idle",
+        "status": "loading",
       }
     `)
   })

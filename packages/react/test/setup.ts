@@ -1,10 +1,3 @@
-import { setLogger } from 'react-query'
 import '@testing-library/jest-dom'
 
-// Turn off network error logging
-setLogger({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  error: () => {},
-  log: console.log,
-  warn: console.warn,
-})
+Date.now = jest.fn(() => new Date(Date.UTC(2022, 1, 1)).valueOf())
