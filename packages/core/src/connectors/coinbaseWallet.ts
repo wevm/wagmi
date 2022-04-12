@@ -64,7 +64,7 @@ export class CoinbaseWalletConnector extends Connector<
       while (n--) {
         const key = localStorage.key(n)
         if (!key) continue
-        if (!/-coinbasewallet/.test(key)) continue
+        if (!/-walletlink/.test(key)) continue
         localStorage.removeItem(key)
       }
     }

@@ -220,7 +220,7 @@ importers:
 
   packages/core:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.0.5
+      '@coinbase/wallet-sdk': ^3.0.6
       '@ethersproject/providers': ^5.5.1
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
@@ -231,7 +231,7 @@ importers:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7
     devDependencies:
-      '@coinbase/wallet-sdk': 3.0.5_@babel+core@7.16.5
+      '@coinbase/wallet-sdk': 3.0.6_@babel+core@7.16.5
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: 5.5.2
       wagmi-testing: link:../testing
@@ -239,6 +239,7 @@ importers:
 
   packages/react:
     specifiers:
+      '@coinbase/wallet-sdk': ^3.0.6
       '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
@@ -249,6 +250,7 @@ importers:
       wagmi-testing: 0.1.20
       walletlink: ^2.5.0
     dependencies:
+      '@coinbase/wallet-sdk': 3.0.6_@babel+core@7.16.5
       '@ethersproject/providers': 5.5.1
       '@walletconnect/ethereum-provider': 1.7.5
       wagmi-core: link:../core
@@ -417,7 +419,7 @@ packages:
       '@babel/traverse': 7.16.5
       debug: 4.3.3
       lodash.debounce: 4.0.8
-      resolve: 1.20.0
+      resolve: 1.22.0
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -1844,8 +1846,8 @@ packages:
       prettier: 1.19.1
     dev: true
 
-  /@coinbase/wallet-sdk/3.0.5_@babel+core@7.16.5:
-    resolution: {integrity: sha512-MsPhgS9b9DpNQdbuYEFDZToPVhh8OQZFkLH59LpYHXRxRIjQDsGGjXcLC50jfW06ElBbtB9adl5RlJTmXb9KbA==}
+  /@coinbase/wallet-sdk/3.0.6_@babel+core@7.16.5:
+    resolution: {integrity: sha512-HKDStu0z+U9xUJFAr5Flk0LgsV9pUrkvErC1iEG4cRR4TEpb+Nv3INF2TiYDjRQObp1qLLBh+42DEnbWWQ2iqw==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
@@ -1865,7 +1867,6 @@ packages:
       - '@babel/core'
       - encoding
       - supports-color
-    dev: true
 
   /@emotion/hash/0.8.0:
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
@@ -9167,12 +9168,12 @@ packages:
     resolution: {integrity: sha512-vd15qHsaqrRL7dtH6QNuy0ndJmRDrS9HAM1CAiSifNUFv4x1a0CCVsj18hJ1mShxIG6T2i1sO78MkP56r0nYRw==}
     dependencies:
       has: 1.0.3
+    dev: true
 
   /is-core-module/2.8.1:
     resolution: {integrity: sha512-SdNCUs284hr40hFTFP6l0IfZ/RSrMXF3qgoRHd3/79unUTvrFO/JoXwkGm+5J/Oe3E/b5GsnG330uUNgRpu1PA==}
     dependencies:
       has: 1.0.3
-    dev: true
 
   /is-data-descriptor/0.1.4:
     resolution: {integrity: sha1-C17mSDiOLIYCgueT8YVv7D8wG1Y=}
@@ -13142,6 +13143,7 @@ packages:
     dependencies:
       is-core-module: 2.8.0
       path-parse: 1.0.7
+    dev: true
 
   /resolve/1.22.0:
     resolution: {integrity: sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw==}
@@ -13150,7 +13152,6 @@ packages:
       is-core-module: 2.8.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
-    dev: true
 
   /resolve/2.0.0-next.3:
     resolution: {integrity: sha512-W8LucSynKUIDu9ylraa7ueVZ7hc0uAgJBxVsQSKOXOyle8a93qXhcz+XAXZ8bIq2d6i4Ehddn6Evt+0/UwKk6Q==}
@@ -14082,7 +14083,6 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-    dev: true
 
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
