@@ -50,7 +50,6 @@ export function useBalance({
     {
       cacheTime,
       enabled: Boolean(enabled && addressOrName),
-      keepPreviousData: watch,
       staleTime,
       suspense,
       onError,

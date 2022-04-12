@@ -13,6 +13,8 @@ import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 
 type UseContractReadArgs = Partial<ReadContractConfig> & {
+  /** If set to `true`, the cache will depend on the block number */
+  cacheOnBlock?: boolean
   /** Subscribe to changes */
   watch?: boolean
 }
@@ -60,6 +62,7 @@ export function useContractRead(
     chainId: chainId_,
     overrides,
     watch,
+    cacheOnBlock = false,
     cacheTime,
     enabled: enabled_ = true,
     staleTime,
@@ -70,7 +73,7 @@ export function useContractRead(
   }: UseContractReadArgs & UseContractReadConfig = {},
 ) {
   const chainId = useChainId({ chainId: chainId_ })
-  const { data: blockNumber } = useBlockNumber({ enabled: false, watch })
+  const { data: blockNumber } = useBlockNumber({ enabled: watch, watch })
 
   const queryKey_ = React.useMemo(
     () =>
@@ -78,11 +81,12 @@ export function useContractRead(
         contractConfig,
         functionName,
         { args, chainId, overrides },
-        { blockNumber: watch ? blockNumber : undefined },
+        { blockNumber: watch && cacheOnBlock ? blockNumber : undefined },
       ]),
     [
       args,
       blockNumber,
+      cacheOnBlock,
       chainId,
       contractConfig,
       functionName,
@@ -93,11 +97,11 @@ export function useContractRead(
 
   const enabled = React.useMemo(() => {
     let enabled = Boolean(enabled_ && contractConfig && functionName)
-    if (watch) {
+    if (watch && cacheOnBlock) {
       enabled = Boolean(enabled && blockNumber)
     }
     return enabled
-  }, [blockNumber, contractConfig, enabled_, functionName, watch])
+  }, [blockNumber, cacheOnBlock, contractConfig, enabled_, functionName, watch])
 
   const client = useQueryClient()
   React.useEffect(() => {
@@ -121,7 +125,6 @@ export function useContractRead(
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
-    keepPreviousData: watch,
     staleTime,
     suspense,
     onError,
