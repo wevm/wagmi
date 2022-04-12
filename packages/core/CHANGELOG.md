@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.2.0-next.14
+
+### Minor Changes
+
+- Add `cacheOnBlock` config for `useContractRead`
+- Update `react-query` to v4
+- Fix `watchBlockNumber` listener leak
+
 ## 0.2.0-next.13
 
 ### Patch Changes
