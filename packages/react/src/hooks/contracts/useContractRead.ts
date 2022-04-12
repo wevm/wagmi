@@ -105,21 +105,25 @@ export function useContractRead(
 
   const client = useQueryClient()
   React.useEffect(() => {
-    enabled &&
-      watchReadContract(
+    if (enabled) {
+      const unwatch = watchReadContract(
         contractConfig,
         functionName,
-        { args, overrides, listenToBlock: false },
+        { args, overrides, listenToBlock: watch && !cacheOnBlock },
         (result) => client.setQueryData(queryKey_, result),
       )
+      return unwatch
+    }
   }, [
     args,
+    cacheOnBlock,
     client,
     contractConfig,
     enabled,
     functionName,
     overrides,
     queryKey_,
+    watch,
   ])
 
   return useQuery(queryKey_, queryFn, {

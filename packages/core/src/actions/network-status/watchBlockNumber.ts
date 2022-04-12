@@ -14,13 +14,10 @@ export function watchBlockNumber(
 ) {
   let prevProvider: BaseProvider
   const createListener = (provider: BaseProvider) => {
-    const listener = (blockNumber: FetchBlockNumberResult) => {
-      callback(blockNumber)
-    }
     if (prevProvider) {
-      prevProvider?.off('block', listener)
+      prevProvider?.off('block', callback)
     }
-    provider.on('block', listener)
+    provider.on('block', callback)
     prevProvider = provider
   }
 
@@ -43,5 +40,8 @@ export function watchBlockNumber(
         selected.webSocketProvider === previous.webSocketProvider,
     },
   )
-  return unsubscribe
+  return () => {
+    unsubscribe()
+    provider_?.off('block', callback)
+  }
 }
