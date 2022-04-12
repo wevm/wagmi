@@ -126,7 +126,7 @@ describe('useConnect', () => {
     })
 
     it('fails', async () => {
-      const { result } = renderHook(() => useConnect(), {
+      const { result, waitFor } = renderHook(() => useConnect(), {
         wrapper,
         initialProps: {
           client: setupWagmiClient({
@@ -145,6 +145,8 @@ describe('useConnect', () => {
         const mockConnector = result.current.connectors[0]
         result.current.connect(mockConnector)
       })
+
+      await waitFor(() => result.current.isError)
 
       const { connectors, ...data } = result.current
       expect(connectors.length).toEqual(1)
@@ -168,7 +170,7 @@ describe('useConnect', () => {
     })
 
     it('already connected', async () => {
-      const { result } = renderHook(() => useConnect())
+      const { result, waitFor } = renderHook(() => useConnect())
 
       await actHook(async () => {
         const mockConnector = result.current.connectors[0]
@@ -179,6 +181,8 @@ describe('useConnect', () => {
         const mockConnector = result.current.connectors[0]
         result.current.connect(mockConnector)
       })
+
+      await waitFor(() => result.current.isError)
 
       const { connectors, ...data } = result.current
       expect(connectors.length).toEqual(1)
