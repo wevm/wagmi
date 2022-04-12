@@ -49,11 +49,13 @@
     "@coinbase/wallet-sdk": "^3.0.1",
     "@wagmi/core": "0.2.0-next.13",
     "@walletconnect/ethereum-provider": "1.7.5",
-    "react-query": "^4.0.0-beta.2"
+    "react-query": "^4.0.0-beta.2",
+    "use-sync-external-store": "^1.0.0"
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^7.0.2",
     "@types/react": "^17.0.0",
+    "@types/use-sync-external-store": "^0.0.3",
     "ethers": "^5.5.1",
     "react": "^17.0.0"
   },

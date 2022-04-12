@@ -83,8 +83,7 @@ describe('useAccount', () => {
         result.current.connect.connect(mockConnector)
       })
 
-      const { ...res } = result.current.account
-      expect(res).toMatchInlineSnapshot(`
+      expect(result.current.account).toMatchInlineSnapshot(`
         {
           "data": {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",

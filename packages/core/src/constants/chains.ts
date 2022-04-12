@@ -1,7 +1,6 @@
 import { Chain } from '../types'
 import { etherscanBlockExplorers } from './blockExplorers'
-import { defaultAlchemyId } from './keys'
-import { alchemyRpcUrls, infuraRpcUrls } from './rpcs'
+import { alchemyRpcUrls, defaultAlchemyId, infuraRpcUrls } from './rpcs'
 
 export type ChainName =
   | 'arbitrum'

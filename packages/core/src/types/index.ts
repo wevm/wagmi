@@ -29,7 +29,7 @@ declare global {
     nativeCurrency?: {
       name: string
       symbol: string // 2-6 characters long
-      decimals: 18
+      decimals: number
     }
     rpcUrls: string[]
     blockExplorerUrls?: string[]
