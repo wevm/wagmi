@@ -49,6 +49,8 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
+    "@gnosis.pm/safe-apps-provider": "^0.11.0",
+    "@gnosis.pm/safe-apps-sdk": "^7.3.0",
     "eventemitter3": "^4.0.7"
   },
   "devDependencies": {

@@ -1,0 +1,44 @@
+# GnosisConnector (Gnosis, etc.)
+
+The **GnosisConnector** supports Gnosis Dapp connection, that runs in the Gnosis context.
+
+```tsx
+import { GnosisConnector } from 'wagmi/connectors/gnosis'
+```
+
+## Usage
+
+```tsx
+import { GnosisConnector } from 'wagmi/connectors/gnosis'
+
+const connector = new GnosisConnector()
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```tsx highlight='5'
+import { defaultChains, defaultL2Chains } from 'wagmi'
+import { GnosisConnector } from 'wagmi/connectors/gnosis'
+
+const connector = new GnosisConnector({
+  chains: [...defaultChains, ...defaultL2Chains],
+})
+```
+
+### options
+
+Options for configuring the connector.
+
+```tsx highlight='4-6'
+import { GnosisConnector } from 'wagmi/connectors/gnosis'
+
+const connector = new GnosisConnector({
+  options: {
+    shimDisconnect: true,
+  },
+})
+```

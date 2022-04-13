@@ -221,6 +221,8 @@ importers:
   packages/core:
     specifiers:
       '@ethersproject/providers': ^5.5.1
+      '@gnosis.pm/safe-apps-provider': ^0.11.0
+      '@gnosis.pm/safe-apps-sdk': ^7.3.0
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
@@ -228,6 +230,8 @@ importers:
       walletlink: ^2.5.0
     dependencies:
       '@ethersproject/providers': 5.5.1
+      '@gnosis.pm/safe-apps-provider': 0.11.0
+      '@gnosis.pm/safe-apps-sdk': 7.3.0
       eventemitter3: 4.0.7
     devDependencies:
       '@walletconnect/ethereum-provider': 1.7.5
@@ -2191,6 +2195,36 @@ packages:
   /@gar/promisify/1.1.2:
     resolution: {integrity: sha512-82cpyJyKRoQoRi+14ibCeGPu0CwypgtBAdBhq1WfvagpCZNKqwXbKwXllYSMG91DhmG4jt9gN8eP6lGOtozuaw==}
     dev: true
+
+  /@gnosis.pm/safe-apps-provider/0.11.0:
+    resolution: {integrity: sha512-XTEXa5iCk0XOZQkgwHcpzP3sOmT9kYsieY5Bfmlrj7GSuApxnn8PnA7tQuzCOrrH2PbT+nspY04h4aBDDJaKrw==}
+    dependencies:
+      '@gnosis.pm/safe-apps-sdk': 7.3.0
+      events: 3.3.0
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-apps-sdk/7.3.0:
+    resolution: {integrity: sha512-1f6VHJWqPRKAEg/m+fbO1XiaDrsTcI3PQg31A0ciHATlVVoh35BYXryijaQxXblLzz4eDgbbIXQdNAH683j87Q==}
+    dependencies:
+      '@gnosis.pm/safe-react-gateway-sdk': 2.10.2
+      ethers: 5.5.2
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@gnosis.pm/safe-react-gateway-sdk/2.10.2:
+    resolution: {integrity: sha512-9o0JiA3zS5s1fVQa61DB1gBdFgyqA9QxW3y8lTYzX/lWNbfpm2psonyLjBJkETp7RoMFSp30pM4wgPXXT9bjzQ==}
+    dependencies:
+      cross-fetch: 3.1.5
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /@hapi/accept/5.0.2:
     resolution: {integrity: sha512-CmzBx/bXUR8451fnZRuZAJRlzgm0Jgu5dltTX/bszmR2lheb9BpyN47Q1RbaGTsvFzn0PXAEs+lXDKfshccYZw==}
@@ -6054,6 +6088,14 @@ packages:
     resolution: {integrity: sha512-1eAtFWdIubi6T4XPy6ei9iUFoKpUkIF971QLN8lIvvvwueI65+Nw5haMNKUwfJxabqlIIDODJKGrQ66gxC0PbQ==}
     dependencies:
       node-fetch: 2.6.1
+
+  /cross-fetch/3.1.5:
+    resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
+    dependencies:
+      node-fetch: 2.6.7
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /cross-spawn/5.1.0:
     resolution: {integrity: sha1-6L0O/uWPz/b4+UUQoKVUu/ojVEk=}
@@ -11681,7 +11723,6 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
-    dev: true
 
   /node-gyp-build/4.3.0:
     resolution: {integrity: sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==}
