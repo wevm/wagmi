@@ -19,7 +19,7 @@ export class GnosisConnector extends Connector<
 > {
   readonly id = 'gnosis'
   readonly name = 'Gnosis'
-  readonly ready = !__IS_SERVER__
+  ready = !__IS_SERVER__
 
   #provider?: SafeAppProvider
   #sdk?: SafeAppsSDK
@@ -27,11 +27,18 @@ export class GnosisConnector extends Connector<
 
   constructor(config: { chains?: Chain[]; options?: SafeOpts }) {
     super({ ...config, options: config?.options })
-    if (!__IS_SERVER__) {
-      this.#sdk = new SafeAppsSDK(config.options)
-      // Auto connect on safe environment
-      this.connect()
-    }
+    this.#isSafeApp()
+      .then((isSafeApp) => {
+        if (!__IS_SERVER__ && isSafeApp) {
+          this.ready = true
+          this.#sdk = new SafeAppsSDK(config.options)
+          // Auto connect on safe environment
+          this.connect()
+        }
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   async connect() {
