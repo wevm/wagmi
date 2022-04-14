@@ -29,7 +29,7 @@ export class GnosisConnector extends Connector<
     super({ ...config, options: config?.options })
     this.#isSafeApp()
       .then((isSafeApp) => {
-        if (!__IS_SERVER__ && isSafeApp) {
+        if (isSafeApp) {
           this.ready = true
           this.#sdk = new SafeAppsSDK(config.options)
           // Auto connect on safe environment
@@ -102,6 +102,10 @@ export class GnosisConnector extends Connector<
   }
 
   async #isSafeApp(): Promise<boolean> {
+    if (__IS_SERVER__) {
+      return false
+    }
+
     // check if we're in an iframe
     if (window?.parent === window) {
       return false
