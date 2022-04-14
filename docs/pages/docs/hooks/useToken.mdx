@@ -83,7 +83,7 @@ const App = () => {
 Address of token.
 
 ```tsx highlight='5'
-import { useContractEvent } from 'wagmi'
+import { useToken } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getToken] = useToken({
@@ -99,7 +99,7 @@ const App = () => {
 Formats balance using ethers.js [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
 
 ```tsx highlight='6'
-import { useContractEvent } from 'wagmi'
+import { useToken } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getToken] = useToken({
@@ -116,7 +116,7 @@ const App = () => {
 Skips automatically fetching data on mount. Defaults to `false`. Useful if you want to call `getToken` manually at some other point.
 
 ```tsx highlight='6'
-import { useContractEvent } from 'wagmi'
+import { useToken } from 'wagmi'
 
 const App = () => {
   const [{ data, error, loading }, getToken] = useToken({
