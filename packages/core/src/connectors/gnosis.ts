@@ -13,9 +13,13 @@ import { ConnectorNotFoundError } from '../errors'
 
 const __IS_SERVER__ = typeof window === 'undefined'
 
+type SafeConnectOptions = SafeOpts & {
+  doNotAutoConnect?: boolean
+}
+
 export class GnosisConnector extends Connector<
   SafeAppProvider,
-  SafeOpts | undefined
+  SafeConnectOptions | undefined
 > {
   readonly id = 'gnosis'
   readonly name = 'Gnosis'
@@ -25,7 +29,7 @@ export class GnosisConnector extends Connector<
   #sdk?: SafeAppsSDK
   #safe?: SafeInfo
 
-  constructor(config: { chains?: Chain[]; options?: SafeOpts }) {
+  constructor(config: { chains?: Chain[]; options?: SafeConnectOptions }) {
     super({ ...config, options: config?.options })
     this.#isSafeApp()
       .then((isSafeApp) => {
@@ -33,6 +37,9 @@ export class GnosisConnector extends Connector<
           this.ready = true
           this.#sdk = new SafeAppsSDK(config.options)
           // Auto connect on safe environment
+          if (config.options?.doNotAutoConnect) {
+            return
+          }
           this.connect()
         }
       })
