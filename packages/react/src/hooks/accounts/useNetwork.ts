@@ -44,16 +44,24 @@ export function useNetwork({
   const queryClient = useQueryClient()
 
   const connector = client.connector
-  const { mutate, mutateAsync, variables, ...networkMutation } = useMutation(
-    mutationKey({ chainId }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
-    },
-  )
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ chainId }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   React.useEffect(() => {
     const unwatch = watchNetwork((data) => {
@@ -76,13 +84,21 @@ export function useNetwork({
   )
 
   return {
-    ...networkMutation,
     activeChain: network.current.chain,
     chains: network.current.chains ?? [],
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
     pendingChainId: variables?.chainId,
+    reset,
+    status,
     switchNetwork: connector?.switchChain ? switchNetwork_ : undefined,
     switchNetworkAsync: connector?.switchChain
       ? switchNetworkAsync_
       : undefined,
+    variables,
   } as const
 }

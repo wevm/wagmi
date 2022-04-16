@@ -16,7 +16,7 @@ export class MockConnector extends Connector<
 
   #provider?: MockProvider
 
-  constructor(config: { chains: Chain[]; options: MockProviderOptions }) {
+  constructor(config: { chains?: Chain[]; options: MockProviderOptions }) {
     super(config)
   }
 
@@ -34,8 +34,7 @@ export class MockConnector extends Connector<
     const unsupported = this.isChainUnsupported(id)
     const data = { account, chain: { id, unsupported }, provider }
 
-    if (!this.options.flags?.failSwitchChain)
-      this.switchChain = this.#switchChain
+    if (!this.options.flags?.noSwitchChain) this.switchChain = this.#switchChain
 
     return data
   }
@@ -60,8 +59,7 @@ export class MockConnector extends Connector<
 
   async getChainId() {
     const provider = await this.getProvider()
-    const chainId = normalizeChainId(provider.network.chainId)
-    return chainId
+    return normalizeChainId(provider.network.chainId)
   }
 
   async getProvider() {
@@ -71,8 +69,7 @@ export class MockConnector extends Connector<
 
   async getSigner() {
     const provider = await this.getProvider()
-    const signer = provider.getSigner()
-    return signer
+    return provider.getSigner()
   }
 
   async isAuthorized() {

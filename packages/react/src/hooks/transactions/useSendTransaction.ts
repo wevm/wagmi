@@ -32,16 +32,24 @@ export function useSendTransaction({
   onSettled,
   onSuccess,
 }: UseSendTransactionArgs & UseSendTransactionConfig = {}) {
-  const { mutate, mutateAsync, ...transactionMutation } = useMutation(
-    mutationKey({ request }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
-    },
-  )
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ request }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const sendTransaction = React.useCallback(
     (args?: SendTransactionArgs) => mutate(args || { request }),
@@ -54,8 +62,16 @@ export function useSendTransaction({
   )
 
   return {
-    ...transactionMutation,
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
     sendTransaction,
     sendTransactionAsync,
+    status,
+    variables,
   }
 }

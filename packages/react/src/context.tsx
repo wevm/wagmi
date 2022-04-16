@@ -11,7 +11,7 @@ import { createWebStoragePersister } from 'react-query/createWebStoragePersister
 
 import { deserialize, serialize } from './utils'
 
-type DecoratedWagmiClient<
+export type DecoratedWagmiClient<
   TProvider extends BaseProvider = BaseProvider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = WagmiClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }

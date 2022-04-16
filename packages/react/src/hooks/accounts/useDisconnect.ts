@@ -37,6 +37,7 @@ export function useDisconnect({
     isSuccess,
     mutate,
     mutateAsync,
+    reset,
     status,
   } = useMutation<void, Error>(mutationKey, mutationFn, {
     ...(onError
@@ -70,6 +71,7 @@ export function useDisconnect({
     isIdle,
     isLoading,
     isSuccess,
+    reset,
     status,
   } as const
 }

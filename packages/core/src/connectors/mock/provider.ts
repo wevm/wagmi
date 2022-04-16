@@ -10,6 +10,7 @@ export type MockProviderOptions = {
   flags?: {
     failConnect?: boolean
     failSwitchChain?: boolean
+    noSwitchChain?: boolean
   }
   network?: number | string
   signer: Signer
@@ -59,6 +60,8 @@ export class MockProvider extends providers.BaseProvider {
   }
 
   async switchChain(chainId: number) {
+    if (this.#options.flags?.failSwitchChain)
+      throw new UserRejectedRequestError()
     this.#options.network = chainId
     this.network.chainId = chainId
     this.events.emit('chainChanged', chainId)

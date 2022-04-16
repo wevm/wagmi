@@ -55,14 +55,11 @@ describe('useSignTypedData', () => {
     const { result } = renderHook(() => useSignTypedData())
     expect(result.current).toMatchInlineSnapshot(`
       {
-        "context": undefined,
         "data": undefined,
         "error": null,
-        "failureCount": 0,
         "isError": false,
         "isIdle": true,
         "isLoading": false,
-        "isPaused": false,
         "isSuccess": false,
         "reset": [Function],
         "signTypedData": [Function],
@@ -103,14 +100,11 @@ describe('useSignTypedData', () => {
       expect(account).toEqual(recoveredAccount)
       expect(result.current.signTypedData).toMatchInlineSnapshot(`
         {
-          "context": undefined,
           "data": "0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b",
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": false,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": true,
           "reset": [Function],
           "signTypedData": [Function],
@@ -194,14 +188,11 @@ describe('useSignTypedData', () => {
       expect(account).toEqual(recoveredAccount)
       expect(result.current.signTypedData).toMatchInlineSnapshot(`
         {
-          "context": undefined,
           "data": "0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b",
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": false,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": true,
           "reset": [Function],
           "signTypedData": [Function],
@@ -273,14 +264,11 @@ describe('useSignTypedData', () => {
       await waitFor(() => result.current.signTypedData.isError)
       expect(result.current.signTypedData).toMatchInlineSnapshot(`
         {
-          "context": undefined,
           "data": undefined,
           "error": [Error: domain, types, and value are all required],
-          "failureCount": 1,
           "isError": true,
           "isIdle": false,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": false,
           "reset": [Function],
           "signTypedData": [Function],

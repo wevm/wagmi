@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import * as React from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim'
 
 import {
@@ -110,7 +110,7 @@ export function useQuery<
     }
   }
 
-  const [observer] = useState(
+  const [observer] = React.useState(
     () =>
       new QueryObserver<TQueryFnData, TError, TData, TQueryData, TQueryKey>(
         queryClient,
@@ -144,7 +144,7 @@ export function useQuery<
   } = observer.getOptimisticResult(defaultedOptions)
 
   useSyncExternalStore(
-    useCallback(
+    React.useCallback(
       (onStoreChange) =>
         isHydrating
           ? () => undefined
@@ -155,11 +155,11 @@ export function useQuery<
     () => observer.getCurrentResult(),
   )
 
-  useEffect(() => {
+  React.useEffect(() => {
     errorResetBoundary.clearReset()
   }, [errorResetBoundary])
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Do not notify on updates because of changes in the options because
     // these changes should already be reflected in the optimistic result.
     observer.setOptions(defaultedOptions, { listeners: false })

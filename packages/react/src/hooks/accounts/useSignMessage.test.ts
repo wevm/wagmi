@@ -26,14 +26,11 @@ describe('useSignMessage', () => {
     const { result } = renderHook(() => useSignMessage())
     expect(result.current).toMatchInlineSnapshot(`
       {
-        "context": undefined,
         "data": undefined,
         "error": null,
-        "failureCount": 0,
         "isError": false,
         "isIdle": true,
         "isLoading": false,
-        "isPaused": false,
         "isSuccess": false,
         "reset": [Function],
         "signMessage": [Function],
@@ -70,14 +67,11 @@ describe('useSignMessage', () => {
       expect(account).toEqual(recoveredAccount)
       expect(result.current.signMessage).toMatchInlineSnapshot(`
         {
-          "context": undefined,
           "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": false,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": true,
           "reset": [Function],
           "signMessage": [Function],
@@ -113,14 +107,11 @@ describe('useSignMessage', () => {
       expect(account).toEqual(recoveredAccount)
       expect(result.current.signMessage).toMatchInlineSnapshot(`
         {
-          "context": undefined,
           "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": false,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": true,
           "reset": [Function],
           "signMessage": [Function],
@@ -148,14 +139,11 @@ describe('useSignMessage', () => {
       await waitFor(() => result.current.signMessage.isError)
       expect(result.current.signMessage).toMatchInlineSnapshot(`
         {
-          "context": undefined,
           "data": undefined,
           "error": [Error: message is required],
-          "failureCount": 1,
           "isError": true,
           "isIdle": false,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": false,
           "reset": [Function],
           "signMessage": [Function],

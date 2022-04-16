@@ -29,6 +29,7 @@ describe('useDisconnect', () => {
           "isIdle": true,
           "isLoading": false,
           "isSuccess": false,
+          "reset": [Function],
           "status": "idle",
         }
       `)
@@ -56,6 +57,7 @@ describe('useDisconnect', () => {
           "isIdle": true,
           "isLoading": false,
           "isSuccess": false,
+          "reset": [Function],
           "status": "idle",
         }
       `)
@@ -77,6 +79,7 @@ describe('useDisconnect', () => {
           "isIdle": false,
           "isLoading": false,
           "isSuccess": true,
+          "reset": [Function],
           "status": "success",
         }
       `)

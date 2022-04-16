@@ -1,7 +1,6 @@
 import { Signer } from 'ethers/lib/ethers'
 
 import { getSigners } from '../../../test'
-import { defaultChains } from '../../constants'
 import { MockConnector } from './connector'
 
 describe('MockConnector', () => {
@@ -11,14 +10,11 @@ describe('MockConnector', () => {
     const signers = getSigners()
     signer = signers[0]
     connector = new MockConnector({
-      chains: defaultChains,
-      options: {
-        signer,
-      },
+      options: { signer },
     })
   })
 
-  it('inits', () => {
+  it('constructor', () => {
     expect(connector.name).toEqual('Mock')
     expect(connector.ready).toEqual(true)
   })
@@ -28,28 +24,24 @@ describe('MockConnector', () => {
       const onChange = jest.fn()
       connector.on('change', onChange)
 
-      const { provider, ...data } = await connector.connect()
-      expect(onChange).toBeCalledTimes(1)
-      expect(data).toMatchInlineSnapshot(`
+      expect(await connector.connect()).toMatchInlineSnapshot(`
         {
           "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "chain": {
             "id": 1,
             "unsupported": false,
           },
+          "provider": "<MockProvider>",
         }
       `)
-      expect(provider).toBeDefined()
-      connector.isAuthorized().then((x) => expect(x).toEqual(true))
+      expect(onChange).toBeCalledTimes(1)
+      expect(await connector.isAuthorized()).toEqual(true)
     })
 
     it('fails', async () => {
       const connector = new MockConnector({
-        chains: defaultChains,
         options: {
-          flags: {
-            failConnect: true,
-          },
+          flags: { failConnect: true },
           signer,
         },
       })
@@ -68,43 +60,88 @@ describe('MockConnector', () => {
     expect(onDisconnect).toBeCalledTimes(1)
   })
 
-  it('getAccount', async () => {
-    await connector.connect()
-    const account = await connector.getAccount()
-    expect(account).toEqual(await signer.getAddress())
+  describe('getAccount', () => {
+    it('succeeds', async () => {
+      await connector.connect()
+      expect(await connector.getAccount()).toMatchInlineSnapshot(
+        `"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`,
+      )
+    })
+
+    it('fails', async () => {
+      await expect(
+        connector.getAccount(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"Failed to get account"`)
+    })
   })
 
   it('getChainId', async () => {
-    const chainId = await connector.getChainId()
-    expect(chainId).toEqual(1)
+    expect(await connector.getChainId()).toEqual(1)
+  })
+
+  it('getProvider', async () => {
+    expect(await connector.getProvider()).toMatchInlineSnapshot(
+      `"<MockProvider>"`,
+    )
   })
 
   it('getSigner', async () => {
     await connector.connect()
-    const signer = await connector.getSigner()
-    expect(signer).toBeDefined()
+    expect(await connector.getSigner()).toMatchInlineSnapshot(`
+      JsonRpcSigner {
+        "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "_index": null,
+        "_isSigner": true,
+        "provider": "<Provider network={31337} />",
+      }
+    `)
   })
 
-  it('switchChain', async () => {
-    const onChange = jest.fn()
-    connector.on('change', onChange)
+  describe('isAuthorized', () => {
+    it('true', async () => {
+      await connector.connect()
+      expect(await connector.isAuthorized()).toMatchInlineSnapshot(`true`)
+    })
 
-    const chainIdBefore = await connector.getChainId()
-    expect(chainIdBefore).toEqual(1)
-    await connector.connect()
-    await connector.switchChain?.(4)
-    expect(onChange).toBeCalledTimes(2)
-    const chainIdAfter = await connector.getChainId()
-    expect(chainIdAfter).toEqual(4)
+    it('false', async () => {
+      expect(await connector.isAuthorized()).toMatchInlineSnapshot(`true`)
+    })
+  })
+
+  describe('switchChain', () => {
+    it('succeeds', async () => {
+      const onChange = jest.fn()
+      connector.on('change', onChange)
+
+      expect(await connector.getChainId()).toEqual(1)
+      await connector.connect()
+      await connector.switchChain?.(4)
+      expect(onChange).toBeCalledTimes(2)
+      expect(await connector.getChainId()).toEqual(4)
+    })
+
+    it('fails', async () => {
+      const connector = new MockConnector({
+        options: {
+          flags: { failSwitchChain: true },
+          signer,
+        },
+      })
+      await connector.connect()
+      await expect(
+        connector.switchChain?.(4),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+    })
   })
 
   it('watchAsset', async () => {
     await connector.connect()
-    await connector.watchAsset({
-      address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-      decimals: 18,
-      symbol: 'UNI',
-    })
-    expect(true).toEqual(true)
+    expect(
+      await connector.watchAsset({
+        address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+        decimals: 18,
+        symbol: 'UNI',
+      }),
+    ).toEqual(true)
   })
 })

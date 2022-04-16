@@ -15,13 +15,15 @@ export const queryKey = () => [{ entity: 'signer' }] as const
 const queryFn = () => fetchSigner()
 
 export function useSigner({
+  suspense,
   onError,
   onSettled,
   onSuccess,
 }: UseSignerConfig = {}) {
   const signerQuery = useQuery(queryKey(), queryFn, {
     cacheTime: 0,
-    enabled: false,
+    staleTime: 0,
+    suspense,
     onError,
     onSettled,
     onSuccess,

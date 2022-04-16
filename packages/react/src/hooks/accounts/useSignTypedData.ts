@@ -36,16 +36,24 @@ export function useSignTypedData({
   onSettled,
   onSuccess,
 }: UseSignTypedDataArgs & UseSignTypedDataConfig = {}) {
-  const { mutate, mutateAsync, ...signTypedDataMutation } = useMutation(
-    mutationKey({ domain, types, value }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
-    },
-  )
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ domain, types, value }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const signTypedData = React.useCallback(
     (args?: SignTypedDataArgs) =>
@@ -60,8 +68,16 @@ export function useSignTypedData({
   )
 
   return {
-    ...signTypedDataMutation,
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
     signTypedData,
     signTypedDataAsync,
+    status,
+    variables,
   }
 }

@@ -1,5 +1,9 @@
 import { WebSocketProvider } from '@ethersproject/providers'
-import { GetWebSocketProviderArgs, getWebSocketProvider } from '@wagmi/core'
+import {
+  GetWebSocketProviderArgs,
+  getWebSocketProvider,
+  watchWebSocketProvider,
+} from '@wagmi/core'
 import * as React from 'react'
 
 import { useClient } from '../../context'
@@ -17,14 +21,14 @@ export function useWebSocketProvider<
   )
 
   React.useEffect(() => {
-    const unsubscribe = client.subscribe(
-      (state) => state.webSocketProvider,
-      () => {
-        webSocketProvider.current = getWebSocketProvider({ chainId })
+    const unwatch = watchWebSocketProvider<TWebSocketProvider>(
+      { chainId },
+      (webSocketProvider_) => {
+        webSocketProvider.current = webSocketProvider_
         forceUpdate()
       },
     )
-    return unsubscribe
+    return unwatch
   }, [chainId, client, forceUpdate])
 
   return webSocketProvider.current

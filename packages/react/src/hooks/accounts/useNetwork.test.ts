@@ -24,20 +24,18 @@ describe('useNetwork', () => {
         {
           "activeChain": undefined,
           "chains": [],
-          "context": undefined,
           "data": undefined,
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": true,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": false,
           "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
           "switchNetwork": undefined,
           "switchNetworkAsync": undefined,
+          "variables": undefined,
         }
       `)
     })
@@ -79,20 +77,18 @@ describe('useNetwork', () => {
             },
             "unsupported": false,
           },
-          "context": undefined,
           "data": undefined,
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": true,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": false,
           "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
           "switchNetwork": [Function],
           "switchNetworkAsync": [Function],
+          "variables": undefined,
         }
       `)
     })
@@ -150,20 +146,18 @@ describe('useNetwork', () => {
             "testnet": true,
             "unsupported": true,
           },
-          "context": undefined,
           "data": undefined,
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": true,
           "isLoading": false,
-          "isPaused": false,
           "isSuccess": false,
           "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
           "switchNetwork": [Function],
           "switchNetworkAsync": [Function],
+          "variables": undefined,
         }
       `)
     })
@@ -206,20 +200,18 @@ describe('useNetwork', () => {
           },
           "unsupported": false,
         },
-        "context": undefined,
         "data": undefined,
         "error": null,
-        "failureCount": 0,
         "isError": false,
         "isIdle": true,
         "isLoading": false,
-        "isPaused": false,
         "isSuccess": false,
         "pendingChainId": undefined,
         "reset": [Function],
         "status": "idle",
         "switchNetwork": [Function],
         "switchNetworkAsync": [Function],
+        "variables": undefined,
       }
     `)
 
@@ -259,7 +251,6 @@ describe('useNetwork', () => {
           "testnet": true,
           "unsupported": false,
         },
-        "context": undefined,
         "data": {
           "blockExplorers": {
             "default": {
@@ -286,17 +277,18 @@ describe('useNetwork', () => {
           "testnet": true,
         },
         "error": null,
-        "failureCount": 0,
         "isError": false,
         "isIdle": false,
         "isLoading": false,
-        "isPaused": false,
         "isSuccess": true,
         "pendingChainId": 4,
         "reset": [Function],
         "status": "success",
         "switchNetwork": [Function],
         "switchNetworkAsync": [Function],
+        "variables": {
+          "chainId": 4,
+        },
       }
     `)
   })

@@ -34,8 +34,6 @@ export {
 
 export { watchAccount, type WatchAccountCallback } from './watchAccount'
 
-export { watchBalance, type WatchBalanceCallback } from './watchBalance'
-
 export { watchNetwork, type WatchNetworkCallback } from './watchNetwork'
 
 export { watchSigner, type WatchSignerCallback } from './watchSigner'

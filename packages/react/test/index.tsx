@@ -2,12 +2,13 @@ import * as React from 'react'
 import {
   RenderHookOptions,
   WrapperComponent,
+  act,
   renderHook as defaultRenderHook,
 } from '@testing-library/react-hooks'
 import '@testing-library/jest-dom/extend-expect'
 import { QueryClient } from 'react-query'
 
-import { Provider, ProviderProps } from '../src'
+import { Connector, Provider, ProviderProps } from '../src'
 import { setupWagmiClient } from './utils'
 
 export const queryClient = new QueryClient({
@@ -52,10 +53,34 @@ export function renderHook<TProps, TResult>(
 }
 
 export { act as actHook } from '@testing-library/react-hooks'
-export { setupWagmiClient } from './utils'
+export { setupWagmiClient, sleep } from './utils'
 export {
   getMockConnector,
   getProvider,
   getWebSocketProvider,
   getSigners,
 } from '../../core/test/utils'
+
+export async function actHookConnect(
+  utils: ReturnType<typeof defaultRenderHook>,
+  connector?: Connector,
+) {
+  const { result, waitFor } = utils
+  await act(async () => {
+    const mockConnector =
+      connector ?? (result.current as any).connect.connectors[0]
+    ;(result.current as any).connect.connect(mockConnector)
+  })
+  await waitFor(() => (result.current as any).connect.isConnected)
+}
+
+export async function actHookNetwork(
+  utils: ReturnType<typeof defaultRenderHook>,
+  chainId: number,
+) {
+  const { result, waitFor } = utils
+  await act(async () => {
+    ;(result.current as any).network.switchNetwork(chainId)
+  })
+  await waitFor(() => (result.current as any).connect.isSuccess)
+}
