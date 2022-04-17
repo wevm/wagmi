@@ -3,7 +3,7 @@ import * as React from 'react'
 import { actHook, renderHook } from '../../../test'
 import { useForceUpdate } from './useForceUpdate'
 
-const useForceUpdateWithCounter = () => {
+function useForceUpdateWithCounter() {
   const counter = React.useRef(0)
   const forceUpdate = useForceUpdate()
   counter.current = counter.current + 1

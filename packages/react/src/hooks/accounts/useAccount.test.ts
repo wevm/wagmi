@@ -11,13 +11,12 @@ import { UseAccountConfig, useAccount } from './useAccount'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
-const useAccountWithConnectAndDisconnect = (
-  config: { account?: UseAccountConfig } = {},
-) => {
-  const account = useAccount(config.account)
-  const connect = useConnect()
-  const disconnect = useDisconnect()
-  return { account, connect, disconnect } as const
+function useAccountWithConnectAndDisconnect(config: UseAccountConfig = {}) {
+  return {
+    account: useAccount(config),
+    connect: useConnect(),
+    disconnect: useDisconnect(),
+  }
 }
 
 describe('useAccount', () => {

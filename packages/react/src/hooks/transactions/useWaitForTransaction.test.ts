@@ -9,13 +9,14 @@ import {
   useWaitForTransaction,
 } from './useWaitForTransaction'
 
-const useWaitForTransactionWithSendTransactionAndConnect = (
+function useWaitForTransactionWithSendTransactionAndConnect(
   config: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {},
-) => {
-  const connect = useConnect()
-  const sendTransaction = useSendTransaction()
-  const waitForTransaction = useWaitForTransaction(config)
-  return { connect, sendTransaction, waitForTransaction } as const
+) {
+  return {
+    connect: useConnect(),
+    sendTransaction: useSendTransaction(),
+    waitForTransaction: useWaitForTransaction(config),
+  }
 }
 
 describe('useWaitForTransaction', () => {

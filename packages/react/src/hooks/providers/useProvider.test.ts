@@ -2,11 +2,12 @@ import { actHookConnect, actHookNetwork, renderHook } from '../../../test'
 import { useConnect, useNetwork } from '../accounts'
 import { UseProviderArgs, useProvider } from './useProvider'
 
-const useProviderWithConnectAndNetwork = (config: UseProviderArgs = {}) => {
-  const connect = useConnect()
-  const network = useNetwork()
-  const provider = useProvider(config)
-  return { connect, network, provider } as const
+function useProviderWithConnectAndNetwork(config: UseProviderArgs = {}) {
+  return {
+    connect: useConnect(),
+    network: useNetwork(),
+    provider: useProvider(config),
+  }
 }
 
 describe('useProvider', () => {

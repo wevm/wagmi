@@ -8,14 +8,15 @@ import {
   useContractWrite,
 } from './useContractWrite'
 
-const useContractWriteWithConnect = (
+function useContractWriteWithConnect(
   contractConfig: WriteContractArgs,
   functionName: string,
   config: UseContractWriteArgs & UseContractWriteConfig = {},
-) => {
-  const connect = useConnect()
-  const contractWrite = useContractWrite(contractConfig, functionName, config)
-  return { connect, contractWrite } as const
+) {
+  return {
+    connect: useConnect(),
+    contractWrite: useContractWrite(contractConfig, functionName, config),
+  }
 }
 
 describe.skip('useContractWrite', () => {

@@ -13,12 +13,10 @@ const messages = {
   bytes: toUtf8Bytes('The quick brown fox jumped over the lazy dogs.'),
 }
 
-const useSignMessageWithConnect = (
+function useSignMessageWithConnect(
   config: UseSignMessageArgs & UseSignMessageConfig = {},
-) => {
-  const connect = useConnect()
-  const signMessage = useSignMessage(config)
-  return { connect, signMessage } as const
+) {
+  return { connect: useConnect(), signMessage: useSignMessage(config) }
 }
 
 describe('useSignMessage', () => {

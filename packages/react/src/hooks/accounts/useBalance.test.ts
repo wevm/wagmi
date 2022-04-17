@@ -7,7 +7,7 @@ describe('useBalance', () => {
       useBalance({ addressOrName: 'awkweb.eth' }),
     )
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current

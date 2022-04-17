@@ -8,12 +8,10 @@ import {
   useSendTransaction,
 } from './useSendTransaction'
 
-const useSendTransactionWithConnect = (
+function useSendTransactionWithConnect(
   config: UseSendTransactionArgs & UseSendTransactionConfig = {},
-) => {
-  const connect = useConnect()
-  const sendTransaction = useSendTransaction(config)
-  return { connect, sendTransaction } as const
+) {
+  return { connect: useConnect(), sendTransaction: useSendTransaction(config) }
 }
 
 describe('useSendTransaction', () => {

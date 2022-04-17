@@ -42,12 +42,10 @@ const value = {
   contents: 'Hello, Bob!',
 }
 
-const useSignTypedDataWithConnect = (
+function useSignTypedDataWithConnect(
   config: UseSignTypedDataArgs & UseSignTypedDataConfig = {},
-) => {
-  const connect = useConnect()
-  const signTypedData = useSignTypedData(config)
-  return { connect, signTypedData } as const
+) {
+  return { connect: useConnect(), signTypedData: useSignTypedData(config) }
 }
 
 describe('useSignTypedData', () => {
