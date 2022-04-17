@@ -90,8 +90,8 @@ export function useConnect({
   if (client.status === 'reconnecting') status_ = 'reconnecting'
   else if (status === 'loading' || client.status === 'connecting')
     status_ = 'connecting'
-  else if (status === 'success' || !!client.connector) status_ = 'connected'
-  else if (!client.connector) status_ = 'disconnected'
+  else if (client.connector) status_ = 'connected'
+  else if (!client.connector || status === 'success') status_ = 'disconnected'
   else status_ = status
 
   return {

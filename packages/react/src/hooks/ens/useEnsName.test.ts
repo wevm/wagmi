@@ -169,7 +169,7 @@ describe('useEnsName', () => {
 
       await actHook(async () => {
         const { data } = await result.current.refetch()
-        expect(data).toMatchInlineSnapshot(`"worm.context.app"`)
+        expect(data).toMatchInlineSnapshot(`"worm.eth"`)
       })
     })
   })
