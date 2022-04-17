@@ -1,52 +1,67 @@
-import { actHook, renderHook } from '../../../test'
+import { actHook, actHookConnect, renderHook } from '../../../test'
 import { useAccount } from './useAccount'
 import { useConnect } from './useConnect'
-import { useDisconnect } from './useDisconnect'
+import { UseDisconnectConfig, useDisconnect } from './useDisconnect'
 
-const useDisconnectWithConnect = () => {
-  const connect = useConnect()
-  const disconnect = useDisconnect()
-  return { connect, disconnect } as const
+function useDisconnectWithConnect(config: UseDisconnectConfig = {}) {
+  return { connect: useConnect(), disconnect: useDisconnect(config) }
 }
 
-const useDisconnectWithAccountAndConnect = () => {
-  const account = useAccount()
-  const connect = useConnect()
-  const disconnect = useDisconnect()
-  return { account, connect, disconnect } as const
+function useDisconnectWithAccountAndConnect() {
+  return {
+    account: useAccount(),
+    connect: useConnect(),
+    disconnect: useDisconnect(),
+  }
 }
 
 describe('useDisconnect', () => {
-  describe('on mount', () => {
-    it('not connected', async () => {
-      const { result } = renderHook(() => useDisconnect())
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "disconnect": [Function],
-          "disconnectAsync": [Function],
-          "error": null,
-          "isError": false,
-          "isIdle": true,
-          "isLoading": false,
-          "isSuccess": false,
-          "reset": [Function],
-          "status": "idle",
-        }
-      `)
+  it('mounts', () => {
+    const { result } = renderHook(() => useDisconnect())
+    expect(result.current).toMatchInlineSnapshot(`
+      {
+        "disconnect": [Function],
+        "disconnectAsync": [Function],
+        "error": null,
+        "isError": false,
+        "isIdle": true,
+        "isLoading": false,
+        "isSuccess": false,
+        "reset": [Function],
+        "status": "idle",
+      }
+    `)
+  })
+
+  describe('configuration', () => {
+    it('onSuccess', async () => {
+      const onSuccess = jest.fn()
+      const utils = renderHook(() => useDisconnectWithConnect({ onSuccess }))
+      const { result, waitFor } = utils
+
+      await actHookConnect({ utils })
+
+      await actHook(async () => result.current.disconnect.disconnect())
+      await waitFor(() => result.current.disconnect.isSuccess)
+      expect(onSuccess).toBeCalledWith(undefined)
     })
   })
 
-  describe('disconnect', () => {
-    it('succeeds', async () => {
-      const { result, waitFor } = renderHook(() => useDisconnectWithConnect())
+  describe('return value', () => {
+    it('disconnect', async () => {
+      const utils = renderHook(() => useDisconnectWithConnect())
+      const { result, waitFor } = utils
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
-
+      await actHookConnect({ utils })
       expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
         `"<MockConnector>"`,
+      )
+
+      await actHook(async () => result.current.disconnect.disconnect())
+      await waitFor(() => result.current.disconnect.isSuccess)
+
+      expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
+        `undefined`,
       )
       expect(result.current.disconnect).toMatchInlineSnapshot(`
         {
@@ -54,19 +69,27 @@ describe('useDisconnect', () => {
           "disconnectAsync": [Function],
           "error": null,
           "isError": false,
-          "isIdle": true,
+          "isIdle": false,
           "isLoading": false,
-          "isSuccess": false,
+          "isSuccess": true,
           "reset": [Function],
-          "status": "idle",
+          "status": "success",
         }
       `)
+    })
 
-      await actHook(async () => {
-        result.current.disconnect.disconnect()
-      })
+    it('disconnectAsync', async () => {
+      const utils = renderHook(() => useDisconnectWithConnect())
+      const { result, waitFor } = utils
 
+      await actHookConnect({ utils })
+      expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
+        `"<MockConnector>"`,
+      )
+
+      await actHook(async () => result.current.disconnect.disconnectAsync())
       await waitFor(() => result.current.disconnect.isSuccess)
+
       expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
         `undefined`,
       )
@@ -86,28 +109,25 @@ describe('useDisconnect', () => {
     })
   })
 
-  it('clears account cache', async () => {
-    const { result, waitFor } = renderHook(() =>
-      useDisconnectWithAccountAndConnect(),
-    )
+  describe('behavior', () => {
+    it('clears account cache', async () => {
+      const utils = renderHook(() => useDisconnectWithAccountAndConnect())
+      const { result, rerender, waitFor } = utils
 
-    await actHook(async () => {
-      const mockConnector = result.current.connect.connectors[0]
-      result.current.connect.connect(mockConnector)
+      await actHookConnect({ utils })
+
+      expect(result.current.account.data).toMatchInlineSnapshot(`
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "connector": "<MockConnector>",
+        }
+      `)
+
+      await actHook(async () => result.current.disconnect.disconnect())
+
+      await waitFor(() => result.current.disconnect.isSuccess)
+      rerender()
+      expect(result.current.account.data).toMatchInlineSnapshot(`null`)
     })
-
-    expect(result.current.account.data).toMatchInlineSnapshot(`
-      {
-        "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "connector": "<MockConnector>",
-      }
-    `)
-
-    await actHook(async () => {
-      result.current.disconnect.disconnect()
-    })
-
-    await waitFor(() => result.current.disconnect.isSuccess)
-    expect(result.current.account.data).toMatchInlineSnapshot(`undefined`)
   })
 })

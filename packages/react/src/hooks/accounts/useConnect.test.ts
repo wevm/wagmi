@@ -367,7 +367,7 @@ describe('useConnect', () => {
 
       await actHook(async () => result.current.connect())
       await waitFor(() => result.current.isConnected)
-      expect(result.current.data.chain.unsupported).toBeTruthy()
+      expect(result.current.data?.chain.unsupported).toBeTruthy()
     })
 
     it('is already connected', async () => {
