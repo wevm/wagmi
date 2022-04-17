@@ -32,8 +32,8 @@ describe('useProvider', () => {
         `"<Provider network={31337} />"`,
       )
 
-      await actHookConnect(utils)
-      await actHookNetwork(utils, 4)
+      await actHookConnect({ utils })
+      await actHookNetwork({ utils, chainId: 4 })
 
       expect(result.current.provider).toMatchInlineSnapshot(
         `"<Provider network={4} />"`,

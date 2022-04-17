@@ -48,7 +48,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect(utils)
+        await actHookConnect({ utils })
 
         await actHook(async () => {
           result.current.sendTransaction.sendTransaction()
@@ -86,7 +86,7 @@ describe('useSendTransaction', () => {
       it('uses deferred args', async () => {
         const utils = renderHook(() => useSendTransactionWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect(utils)
+        await actHookConnect({ utils })
 
         await actHook(async () => {
           result.current.sendTransaction.sendTransaction({
@@ -136,7 +136,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect(utils)
+        await actHookConnect({ utils })
 
         await actHook(async () => {
           result.current.sendTransaction.sendTransaction()
@@ -186,7 +186,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect(utils)
+        await actHookConnect({ utils })
 
         await actHook(async () => {
           const res =
@@ -207,7 +207,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect(utils)
+        await actHookConnect({ utils })
 
         await actHook(async () => {
           const mockConnector = result.current.connect.connectors[0]

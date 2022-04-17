@@ -46,7 +46,10 @@ export function createClient<
 }: ClientConfig<TProvider, TWebSocketProvider> = {}) {
   const client = createWagmiClient<TProvider, TWebSocketProvider>(config)
   const persister = createWebStoragePersister({
-    storage: window.localStorage,
+    storage:
+      typeof window !== 'undefined'
+        ? window.localStorage
+        : (client.storage as Storage),
     serialize,
     deserialize,
   })

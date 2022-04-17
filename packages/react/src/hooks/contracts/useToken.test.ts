@@ -1,14 +1,14 @@
 import { actHook, renderHook } from '../../../test'
 import { useToken } from './useToken'
 
-const ensContractAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
-const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
+const ensTokenAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+const uniTokenAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
 describe('useToken', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useToken({
-        address: ensContractAddress,
+        address: ensTokenAddress,
       }),
     )
 
@@ -50,7 +50,7 @@ describe('useToken', () => {
       it('has token', async () => {
         const { result, waitFor } = renderHook(() =>
           useToken({
-            address: uniContractAddress,
+            address: uniTokenAddress,
           }),
         )
 
@@ -119,7 +119,7 @@ describe('useToken', () => {
 
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
-        useToken({ address: ensContractAddress, chainId: 1 }),
+        useToken({ address: ensTokenAddress, chainId: 1 }),
       )
 
       await waitFor(() => result.current.isSuccess)
@@ -182,7 +182,7 @@ describe('useToken', () => {
 
     it('formatUnits', async () => {
       const { result, waitFor } = renderHook(() =>
-        useToken({ address: ensContractAddress, formatUnits: 'wei' }),
+        useToken({ address: ensTokenAddress, formatUnits: 'wei' }),
       )
 
       await waitFor(() => result.current.isSuccess)
@@ -222,7 +222,7 @@ describe('useToken', () => {
   describe('return value', () => {
     it('refetch', async () => {
       const { result } = renderHook(() =>
-        useToken({ address: uniContractAddress, enabled: false }),
+        useToken({ address: uniTokenAddress, enabled: false }),
       )
 
       await actHook(async () => {

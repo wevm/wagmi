@@ -51,7 +51,7 @@ describe('useWaitForTransaction', () => {
         }),
       )
       const { rerender, result, waitFor } = utils
-      await actHookConnect(utils)
+      await actHookConnect({ utils })
 
       await actHook(async () => {
         result.current.sendTransaction.sendTransaction({
@@ -95,7 +95,7 @@ describe('useWaitForTransaction', () => {
         useWaitForTransactionWithSendTransactionAndConnect({ hash }),
       )
       const { rerender, result, waitFor } = utils
-      await actHookConnect(utils)
+      await actHookConnect({ utils })
 
       await actHook(async () => {
         result.current.sendTransaction.sendTransaction({
