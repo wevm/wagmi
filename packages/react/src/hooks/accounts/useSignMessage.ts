@@ -29,16 +29,24 @@ export function useSignMessage({
   onSettled,
   onSuccess,
 }: UseSignMessageArgs & UseSignMessageConfig = {}) {
-  const { mutate, mutateAsync, ...signMessageMutation } = useMutation(
-    mutationKey({ message }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
-    },
-  )
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ message }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const signMessage = React.useCallback(
     (args?: SignMessageArgs) => mutate(args || <SignMessageArgs>{ message }),
@@ -52,8 +60,16 @@ export function useSignMessage({
   )
 
   return {
-    ...signMessageMutation,
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
     signMessage,
     signMessageAsync,
+    status,
+    variables,
   }
 }

@@ -52,7 +52,13 @@ export function renderHook<TProps, TResult>(
 }
 
 export { act as actHook } from '@testing-library/react-hooks'
-export { setupWagmiClient } from './utils'
+export {
+  setupWagmiClient,
+  actHookConnect,
+  actHookDisconnect,
+  actHookNetwork,
+  getUnclaimedTokenId,
+} from './utils'
 export {
   getMockConnector,
   getProvider,

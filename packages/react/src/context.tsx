@@ -6,12 +6,12 @@ import {
   createClient as createWagmiClient,
 } from '@wagmi/core'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { persistQueryClient } from 'react-query/persistQueryClient'
+import { Persister, persistQueryClient } from 'react-query/persistQueryClient'
 import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
 
 import { deserialize, serialize } from './utils'
 
-type DecoratedWagmiClient<
+export type DecoratedWagmiClient<
   TProvider extends BaseProvider = BaseProvider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = WagmiClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
@@ -24,6 +24,7 @@ export type ClientConfig<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = WagmiClientConfig<TProvider, TWebSocketProvider> & {
   queryClient?: QueryClient
+  persister?: Persister
 }
 export function createClient<
   TProvider extends BaseProvider,
@@ -42,21 +43,25 @@ export function createClient<
       },
     },
   }),
+  persister = typeof window !== 'undefined'
+    ? createWebStoragePersister({
+        key: 'wagmi.cache',
+        storage: window.localStorage,
+        serialize,
+        deserialize,
+      })
+    : undefined,
   ...config
 }: ClientConfig<TProvider, TWebSocketProvider> = {}) {
   const client = createWagmiClient<TProvider, TWebSocketProvider>(config)
-  const persister = createWebStoragePersister({
-    storage: (client.storage as Storage) || window.localStorage,
-    serialize,
-    deserialize,
-  })
-  persistQueryClient({
-    queryClient,
-    persister,
-    dehydrateOptions: {
-      shouldDehydrateQuery: (query) => query.cacheTime !== 0,
-    },
-  })
+  if (persister)
+    persistQueryClient({
+      queryClient,
+      persister,
+      dehydrateOptions: {
+        shouldDehydrateQuery: (query) => query.cacheTime !== 0,
+      },
+    })
   return Object.assign(client, { queryClient })
 }
 

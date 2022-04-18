@@ -113,7 +113,10 @@ export class Client<
     // Create store
     this.store = create(
       subscribeWithSelector(
-        persist<State<TProvider, TWebSocketProvider>>(
+        persist<
+          State<TProvider, TWebSocketProvider>,
+          [['zustand/subscribeWithSelector', never]]
+        >(
           () => ({
             connectors: connectors_,
             provider: provider_,
@@ -132,6 +135,7 @@ export class Client<
               }),
               chains: state?.chains,
             }),
+            version: 1,
           },
         ),
       ),

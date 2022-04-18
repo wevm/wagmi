@@ -1,303 +1,387 @@
+import { connect } from '@wagmi/core'
+import { MockConnector } from '@wagmi/core/connectors/mock'
+
 import {
   actHook,
-  getMockConnector,
+  actHookConnect,
+  actHookDisconnect,
   getSigners,
-  queryClient,
   renderHook,
   setupWagmiClient,
   wrapper,
 } from '../../../test'
-import { useConnect } from './useConnect'
-import { useNetwork } from './useNetwork'
+import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
+import { useDisconnect } from './useDisconnect'
+import { UseNetworkArgs, UseNetworkConfig, useNetwork } from './useNetwork'
 
-const useNetworkWithConnect = () => {
-  const connect = useConnect()
-  const network = useNetwork()
-  return { connect, network } as const
+function useNetworkWithConnectAndDisconnect(
+  config: {
+    connect?: UseConnectArgs & UseConnectConfig
+    network?: UseNetworkArgs & UseNetworkConfig
+  } = {},
+) {
+  return {
+    connect: useConnect(config.connect),
+    disconnect: useDisconnect(),
+    network: useNetwork(config.network),
+  }
 }
 
 describe('useNetwork', () => {
-  describe('on mount', () => {
-    it('not connected', async () => {
-      const { result } = renderHook(() => useNetwork())
-      expect(result.current).toMatchInlineSnapshot(`
+  describe('mounts', () => {
+    it('is connected', async () => {
+      const client = setupWagmiClient()
+      await connect({ connector: client.connectors[0] })
+
+      const { result, waitFor } = renderHook(() => useNetwork(), {
+        wrapper,
+        initialProps: { client },
+      })
+
+      await waitFor(() => result.current.isIdle)
+
+      const { activeChain, chains, ...res } = result.current
+      expect(activeChain?.id).toEqual(1)
+      expect(chains.length).toEqual(5)
+      expect(res).toMatchInlineSnapshot(`
         {
-          "activeChain": undefined,
-          "chains": [],
-          "context": undefined,
           "data": undefined,
           "error": null,
-          "failureCount": 0,
           "isError": false,
           "isIdle": true,
           "isLoading": false,
-          "isPaused": false,
+          "isSuccess": false,
+          "pendingChainId": undefined,
+          "reset": [Function],
+          "status": "idle",
+          "switchNetwork": [Function],
+          "switchNetworkAsync": [Function],
+          "variables": undefined,
+        }
+      `)
+    })
+
+    it('is not connected', async () => {
+      const { result, waitFor } = renderHook(() => useNetwork())
+
+      await waitFor(() => result.current.isIdle)
+
+      const { chains, ...res } = result.current
+      expect(chains.length).toEqual(5)
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "activeChain": undefined,
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
           "isSuccess": false,
           "pendingChainId": undefined,
           "reset": [Function],
           "status": "idle",
           "switchNetwork": undefined,
           "switchNetworkAsync": undefined,
-        }
-      `)
-    })
-
-    it('connected', async () => {
-      const { result } = renderHook(() => useNetworkWithConnect())
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
-
-      const { chains, ...data } = result.current.network
-      expect(chains.length).toEqual(5)
-      expect(data).toMatchInlineSnapshot(`
-        {
-          "activeChain": {
-            "blockExplorers": {
-              "default": {
-                "name": "Etherscan",
-                "url": "https://etherscan.io",
-              },
-              "etherscan": {
-                "name": "Etherscan",
-                "url": "https://etherscan.io",
-              },
-            },
-            "id": 1,
-            "name": "Ethereum",
-            "nativeCurrency": {
-              "decimals": 18,
-              "name": "Ether",
-              "symbol": "ETH",
-            },
-            "rpcUrls": {
-              "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-              "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              "infura": "https://mainnet.infura.io/v3",
-            },
-            "unsupported": false,
-          },
-          "context": undefined,
-          "data": undefined,
-          "error": null,
-          "failureCount": 0,
-          "isError": false,
-          "isIdle": true,
-          "isLoading": false,
-          "isPaused": false,
-          "isSuccess": false,
-          "pendingChainId": undefined,
-          "reset": [Function],
-          "status": "idle",
-          "switchNetwork": [Function],
-          "switchNetworkAsync": [Function],
-        }
-      `)
-    })
-
-    it('unsupported chain', async () => {
-      const { result } = renderHook(() => useNetworkWithConnect(), {
-        wrapper,
-        initialProps: {
-          client: setupWagmiClient({
-            connectors: [
-              getMockConnector({
-                network: 69,
-                signer: getSigners()[0],
-              }),
-            ],
-            queryClient,
-          }),
-        },
-      })
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
-
-      const { chains, ...data } = result.current.network
-      expect(chains.length).toEqual(5)
-      expect(data).toMatchInlineSnapshot(`
-        {
-          "activeChain": {
-            "blockExplorers": {
-              "default": {
-                "name": "Etherscan",
-                "url": "https://kovan-optimistic.etherscan.io",
-              },
-              "etherscan": {
-                "name": "Etherscan",
-                "url": "https://kovan-optimistic.etherscan.io",
-              },
-            },
-            "id": 69,
-            "name": "Optimism Kovan",
-            "nativeCurrency": {
-              "decimals": 18,
-              "name": "Kovan Ether",
-              "symbol": "KOR",
-            },
-            "rpcUrls": {
-              "alchemy": "https://opt-kovan.g.alchemy.com/v2",
-              "default": [
-                "https://kovan.optimism.io",
-              ],
-              "infura": "https://optimism-kovan.infura.io/v3",
-            },
-            "testnet": true,
-            "unsupported": true,
-          },
-          "context": undefined,
-          "data": undefined,
-          "error": null,
-          "failureCount": 0,
-          "isError": false,
-          "isIdle": true,
-          "isLoading": false,
-          "isPaused": false,
-          "isSuccess": false,
-          "pendingChainId": undefined,
-          "reset": [Function],
-          "status": "idle",
-          "switchNetwork": [Function],
-          "switchNetworkAsync": [Function],
+          "variables": undefined,
         }
       `)
     })
   })
 
-  it('switchChain', async () => {
-    const { result, waitFor } = renderHook(() => useNetworkWithConnect())
+  describe('configuration', () => {
+    it('chainId', async () => {
+      const { result, waitFor } = renderHook(() => useNetwork({ chainId: 1 }))
 
-    await actHook(async () => {
-      const mockConnector = result.current.connect.connectors[0]
-      result.current.connect.connect(mockConnector)
+      await waitFor(() => result.current.isIdle)
+
+      const { chains, ...res } = result.current
+      expect(chains.length).toEqual(5)
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "activeChain": undefined,
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isSuccess": false,
+          "pendingChainId": undefined,
+          "reset": [Function],
+          "status": "idle",
+          "switchNetwork": undefined,
+          "switchNetworkAsync": undefined,
+          "variables": undefined,
+        }
+      `)
+    })
+  })
+
+  describe('return value', () => {
+    describe('switchNetwork', () => {
+      it('uses configuration', async () => {
+        const utils = renderHook(() =>
+          useNetworkWithConnectAndDisconnect({
+            network: {
+              chainId: 4,
+            },
+          }),
+        )
+        const { result, waitFor } = utils
+
+        await actHookConnect({ utils })
+
+        await actHook(async () => result.current.network.switchNetwork?.())
+        await waitFor(() => result.current.network.isSuccess)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { activeChain, chains, data, ...res } = result.current.network
+        expect(activeChain?.id).toMatchInlineSnapshot(`4`)
+        expect(data?.id).toMatchInlineSnapshot(`4`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "error": null,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": true,
+            "pendingChainId": 4,
+            "reset": [Function],
+            "status": "success",
+            "switchNetwork": [Function],
+            "switchNetworkAsync": [Function],
+            "variables": {
+              "chainId": 4,
+            },
+          }
+        `)
+      })
+
+      it('uses deferred args', async () => {
+        const utils = renderHook(() => useNetworkWithConnectAndDisconnect())
+        const { result, waitFor } = utils
+
+        await actHookConnect({ utils })
+
+        await actHook(async () => result.current.network.switchNetwork?.(4))
+
+        await waitFor(() => result.current.network.isSuccess)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { activeChain, chains, data, ...res } = result.current.network
+        expect(activeChain?.id).toMatchInlineSnapshot(`4`)
+        expect(data?.id).toMatchInlineSnapshot(`4`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "error": null,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": true,
+            "pendingChainId": 4,
+            "reset": [Function],
+            "status": "success",
+            "switchNetwork": [Function],
+            "switchNetworkAsync": [Function],
+            "variables": {
+              "chainId": 4,
+            },
+          }
+        `)
+      })
+
+      it('fails', async () => {
+        const connector = new MockConnector({
+          options: {
+            flags: { failSwitchChain: true },
+            signer: getSigners()[0],
+          },
+        })
+        const utils = renderHook(() =>
+          useNetworkWithConnectAndDisconnect({
+            connect: { connector },
+          }),
+        )
+        const { result, waitFor } = utils
+
+        await actHookConnect({ utils, connector })
+        await actHook(async () => result.current.network.switchNetwork?.(4))
+        await waitFor(() => result.current.network.isError)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { activeChain, chains, ...res } = result.current.network
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [UserRejectedRequestError: User rejected request],
+            "isError": true,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": false,
+            "pendingChainId": 4,
+            "reset": [Function],
+            "status": "error",
+            "switchNetwork": [Function],
+            "switchNetworkAsync": [Function],
+            "variables": {
+              "chainId": 4,
+            },
+          }
+        `)
+      })
+
+      it('unsupported chain', async () => {
+        const utils = renderHook(() =>
+          useNetworkWithConnectAndDisconnect({
+            network: { chainId: 69 },
+          }),
+        )
+        const { result, waitFor } = utils
+
+        await actHookConnect({ utils })
+
+        await actHook(async () => result.current.network.switchNetwork?.())
+
+        await waitFor(() => result.current.network.isSuccess)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { activeChain, chains, data, ...res } = result.current.network
+        expect(activeChain?.id).toMatchInlineSnapshot(`69`)
+        expect(activeChain?.unsupported).toMatchInlineSnapshot(`true`)
+        expect(data?.id).toMatchInlineSnapshot(`69`)
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "error": null,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": true,
+            "pendingChainId": 69,
+            "reset": [Function],
+            "status": "success",
+            "switchNetwork": [Function],
+            "switchNetworkAsync": [Function],
+            "variables": {
+              "chainId": 69,
+            },
+          }
+        `)
+      })
     })
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { chains: _, ...data } = result.current.network
-    expect(data).toMatchInlineSnapshot(`
-      {
-        "activeChain": {
-          "blockExplorers": {
-            "default": {
-              "name": "Etherscan",
-              "url": "https://etherscan.io",
+    describe('switchNetworkAsync', () => {
+      it('uses configuration', async () => {
+        const utils = renderHook(() =>
+          useNetworkWithConnectAndDisconnect({
+            network: {
+              chainId: 4,
             },
-            "etherscan": {
-              "name": "Etherscan",
-              "url": "https://etherscan.io",
-            },
-          },
-          "id": 1,
-          "name": "Ethereum",
-          "nativeCurrency": {
-            "decimals": 18,
-            "name": "Ether",
-            "symbol": "ETH",
-          },
-          "rpcUrls": {
-            "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-            "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-            "infura": "https://mainnet.infura.io/v3",
-          },
-          "unsupported": false,
-        },
-        "context": undefined,
-        "data": undefined,
-        "error": null,
-        "failureCount": 0,
-        "isError": false,
-        "isIdle": true,
-        "isLoading": false,
-        "isPaused": false,
-        "isSuccess": false,
-        "pendingChainId": undefined,
-        "reset": [Function],
-        "status": "idle",
-        "switchNetwork": [Function],
-        "switchNetworkAsync": [Function],
-      }
-    `)
+          }),
+        )
+        const { result, waitFor } = utils
 
-    await actHook(async () => {
-      result.current.network.switchNetwork?.(4)
+        await actHookConnect({ utils })
+
+        await actHook(async () => {
+          const res = await result.current.network.switchNetworkAsync?.()
+          expect(res).toMatchInlineSnapshot(`
+            {
+              "blockExplorers": {
+                "default": {
+                  "name": "Etherscan",
+                  "url": "https://rinkeby.etherscan.io",
+                },
+                "etherscan": {
+                  "name": "Etherscan",
+                  "url": "https://rinkeby.etherscan.io",
+                },
+              },
+              "id": 4,
+              "name": "Rinkeby",
+              "nativeCurrency": {
+                "decimals": 18,
+                "name": "Rinkeby Ether",
+                "symbol": "rETH",
+              },
+              "rpcUrls": {
+                "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
+                "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "infura": "https://rinkeby.infura.io/v3",
+              },
+              "testnet": true,
+            }
+          `)
+        })
+
+        await waitFor(() => result.current.network.isSuccess)
+      })
+
+      it('throws error', async () => {
+        const connector = new MockConnector({
+          options: {
+            flags: { failSwitchChain: true },
+            signer: getSigners()[0],
+          },
+        })
+        const utils = renderHook(() =>
+          useNetworkWithConnectAndDisconnect({
+            connect: { connector },
+          }),
+        )
+        const { result, waitFor } = utils
+
+        await actHookConnect({ utils, connector })
+
+        await actHook(async () => {
+          await expect(
+            result.current.network.switchNetworkAsync?.(4),
+          ).rejects.toThrowErrorMatchingInlineSnapshot(
+            `"User rejected request"`,
+          )
+        })
+
+        await waitFor(() => result.current.network.isError)
+      })
+    })
+  })
+
+  describe('behavior', () => {
+    it('updates on connect and disconnect', async () => {
+      const utils = renderHook(() => useNetworkWithConnectAndDisconnect())
+      const { result } = utils
+
+      await actHookConnect({ utils })
+      expect(result.current.network.activeChain?.id).toMatchInlineSnapshot(`1`)
+      await actHookDisconnect({ utils })
+      expect(result.current.network.activeChain).toMatchInlineSnapshot(
+        `undefined`,
+      )
     })
 
-    await waitFor(() => result.current.network.isSuccess)
+    it('connector does not support programmatic switching', async () => {
+      const connector = new MockConnector({
+        options: {
+          flags: { noSwitchChain: true },
+          signer: getSigners()[0],
+        },
+      })
+      const utils = renderHook(() =>
+        useNetworkWithConnectAndDisconnect({
+          connect: { connector },
+        }),
+      )
+      const { result } = utils
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { chains: __, ...data2 } = result.current.network
-    expect(data2).toMatchInlineSnapshot(`
-      {
-        "activeChain": {
-          "blockExplorers": {
-            "default": {
-              "name": "Etherscan",
-              "url": "https://rinkeby.etherscan.io",
-            },
-            "etherscan": {
-              "name": "Etherscan",
-              "url": "https://rinkeby.etherscan.io",
-            },
-          },
-          "id": 4,
-          "name": "Rinkeby",
-          "nativeCurrency": {
-            "decimals": 18,
-            "name": "Rinkeby Ether",
-            "symbol": "rETH",
-          },
-          "rpcUrls": {
-            "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-            "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-            "infura": "https://rinkeby.infura.io/v3",
-          },
-          "testnet": true,
-          "unsupported": false,
-        },
-        "context": undefined,
-        "data": {
-          "blockExplorers": {
-            "default": {
-              "name": "Etherscan",
-              "url": "https://rinkeby.etherscan.io",
-            },
-            "etherscan": {
-              "name": "Etherscan",
-              "url": "https://rinkeby.etherscan.io",
-            },
-          },
-          "id": 4,
-          "name": "Rinkeby",
-          "nativeCurrency": {
-            "decimals": 18,
-            "name": "Rinkeby Ether",
-            "symbol": "rETH",
-          },
-          "rpcUrls": {
-            "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-            "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-            "infura": "https://rinkeby.infura.io/v3",
-          },
-          "testnet": true,
-        },
-        "error": null,
-        "failureCount": 0,
-        "isError": false,
-        "isIdle": false,
-        "isLoading": false,
-        "isPaused": false,
-        "isSuccess": true,
-        "pendingChainId": 4,
-        "reset": [Function],
-        "status": "success",
-        "switchNetwork": [Function],
-        "switchNetworkAsync": [Function],
-      }
-    `)
+      await actHookConnect({ utils, connector })
+
+      await actHook(async () => {
+        try {
+          result.current.network.switchNetwork?.(4)
+        } catch (error) {
+          expect(error).toMatchInlineSnapshot(
+            `[TypeError: result.current.network.switchNetwork is not a function]`,
+          )
+        }
+      })
+    })
   })
 })

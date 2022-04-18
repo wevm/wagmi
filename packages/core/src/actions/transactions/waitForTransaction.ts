@@ -6,6 +6,8 @@ import type {
 import { getProvider } from '../providers'
 
 export type WaitForTransactionArgs = {
+  /** Chain id to use for provider */
+  chainId?: number
   /**
    * Number of blocks to wait for after transaction is mined
    * @default 1
@@ -24,22 +26,19 @@ export type WaitForTransactionArgs = {
 
 export type WaitForTransactionResult = TransactionReceipt
 
-export async function waitForTransaction(
-  args: WaitForTransactionArgs,
-): Promise<WaitForTransactionResult> {
-  const provider = getProvider()
-
+export async function waitForTransaction({
+  chainId,
+  confirmations,
+  hash,
+  timeout,
+  wait: wait_,
+}: WaitForTransactionArgs): Promise<WaitForTransactionResult> {
   let promise: Promise<TransactionReceipt>
-  // eslint-disable-next-line testing-library/await-async-utils
-  if (args.wait) promise = args.wait(args.confirmations)
-  else if (args.hash)
-    promise = provider.waitForTransaction(
-      args.hash,
-      args.confirmations,
-      args.timeout,
-    )
+  if (hash) {
+    const provider = getProvider({ chainId })
+    promise = provider.waitForTransaction(hash, confirmations, timeout)
+  } else if (wait_) promise = wait_(confirmations)
   else throw new Error('hash or wait is required')
 
-  const receipt = await promise
-  return receipt
+  return await promise
 }

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import type { BaseProvider } from '@ethersproject/providers'
-import { GetProviderArgs, getProvider } from '@wagmi/core'
+import { GetProviderArgs, getProvider, watchProvider } from '@wagmi/core'
 
 import { useClient } from '../../context'
 import { useForceUpdate } from '../utils'
@@ -15,14 +15,11 @@ export function useProvider<TProvider extends BaseProvider>({
   const provider = React.useRef(getProvider<TProvider>({ chainId }))
 
   React.useEffect(() => {
-    const unsubscribe = client.subscribe(
-      (state) => state.provider,
-      () => {
-        provider.current = getProvider({ chainId })
-        forceUpdate()
-      },
-    )
-    return unsubscribe
+    const unwatch = watchProvider<TProvider>({ chainId }, (provider_) => {
+      provider.current = provider_
+      forceUpdate()
+    })
+    return unwatch
   }, [chainId, client, forceUpdate])
 
   return provider.current

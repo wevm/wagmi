@@ -14,11 +14,11 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "1.403416862768458662",
+            "formatted": "1.622080339908136684",
             "symbol": "ETH",
             "unit": "ether",
             "value": {
-              "hex": "0x1379f033791b6ba6",
+              "hex": "0x1682c979995e8eec",
               "type": "BigNumber",
             },
           }
@@ -33,11 +33,11 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "1.403416862768458662",
+            "formatted": "1.622080339908136684",
             "symbol": "ETH",
             "unit": "ether",
             "value": {
-              "hex": "0x1379f033791b6ba6",
+              "hex": "0x1682c979995e8eec",
               "type": "BigNumber",
             },
           }
@@ -54,11 +54,11 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "1.403416862768458662",
+          "formatted": "1.622080339908136684",
           "symbol": "ETH",
           "unit": "ether",
           "value": {
-            "hex": "0x1379f033791b6ba6",
+            "hex": "0x1682c979995e8eec",
             "type": "BigNumber",
           },
         }
@@ -74,11 +74,11 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "1403416862.768458662",
+          "formatted": "1622080339.908136684",
           "symbol": "ETH",
           "unit": "gwei",
           "value": {
-            "hex": "0x1379f033791b6ba6",
+            "hex": "0x1682c979995e8eec",
             "type": "BigNumber",
           },
         }

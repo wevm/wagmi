@@ -12,7 +12,7 @@ describe('MockProvider', () => {
     provider = new MockProvider({ signer })
   })
 
-  it('inits', () => {
+  it('constructor', () => {
     expect(provider).toBeDefined()
   })
 
@@ -27,9 +27,7 @@ describe('MockProvider', () => {
       const signers = getSigners()
       signer = signers[0]
       const provider = new MockProvider({
-        flags: {
-          failConnect: true,
-        },
+        flags: { failConnect: true },
         signer,
       })
       await expect(
@@ -41,14 +39,14 @@ describe('MockProvider', () => {
   it('disconnect', async () => {
     await provider.enable()
     await provider.disconnect()
-    const disconnected = await provider.getAccounts()
-    expect(disconnected[0]).toEqual(undefined)
+    const accounts = await provider.getAccounts()
+    expect(accounts[0]).toEqual(undefined)
   })
 
   describe('getAccounts', () => {
     it('disconnected', async () => {
-      const disconnected = await provider.getAccounts()
-      expect(disconnected[0]).toEqual(undefined)
+      const accounts = await provider.getAccounts()
+      expect(accounts[0]).toEqual(undefined)
     })
 
     it('connected', async () => {
@@ -70,22 +68,41 @@ describe('MockProvider', () => {
 
     it('connected', async () => {
       await provider.enable()
-      const signer = provider.getSigner()
-      expect(signer).toBeDefined()
+      expect(provider.getSigner()).toMatchInlineSnapshot(`
+        JsonRpcSigner {
+          "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "_index": null,
+          "_isSigner": true,
+          "provider": "<Provider network={31337} />",
+        }
+      `)
     })
   })
 
-  it('switchChain', async () => {
-    await provider.switchChain(4)
-    expect(provider.network.chainId).toEqual(4)
+  describe('switchChain', () => {
+    it('succeeds', async () => {
+      await provider.switchChain(4)
+      expect(provider.network.chainId).toEqual(4)
+    })
+
+    it('fails', async () => {
+      const provider = new MockProvider({
+        flags: { failSwitchChain: true },
+        signer,
+      })
+      await expect(
+        provider.switchChain(4),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+    })
   })
 
   it('watchAsset', async () => {
-    await provider.watchAsset({
-      address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-      decimals: 18,
-      symbol: 'UNI',
-    })
-    expect(true).toEqual(true)
+    expect(
+      await provider.watchAsset({
+        address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+        decimals: 18,
+        symbol: 'UNI',
+      }),
+    ).toEqual(true)
   })
 })

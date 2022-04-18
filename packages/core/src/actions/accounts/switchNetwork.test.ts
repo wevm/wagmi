@@ -49,15 +49,29 @@ describe('switchNetwork', () => {
     expect(network1.chain?.id === network2.chain?.id).toBeTruthy()
   })
 
-  it('fails', async () => {
+  it('user rejected request', async () => {
     const signers = getSigners()
     const client = setupWagmiClient({
       connectors: [
         getMockConnector({
           signer: signers[0],
-          flags: {
-            failSwitchChain: true,
-          },
+          flags: { failSwitchChain: true },
+        }),
+      ],
+    })
+    await connect({ connector: client.connectors[0] })
+    await expect(
+      switchNetwork({ chainId: 69 }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+  })
+
+  it('not supported by connector', async () => {
+    const signers = getSigners()
+    const client = setupWagmiClient({
+      connectors: [
+        getMockConnector({
+          signer: signers[0],
+          flags: { noSwitchChain: true },
         }),
       ],
     })

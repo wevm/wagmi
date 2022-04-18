@@ -10,7 +10,7 @@ describe('watchWebSocketProvider', () => {
     await client.webSocketProvider?.destroy()
 
     const providers: GetWebSocketProviderResult[] = []
-    const unwatch = watchWebSocketProvider((provider) =>
+    const unwatch = watchWebSocketProvider({}, (provider) =>
       providers.push(provider),
     )
 

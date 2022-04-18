@@ -1,57 +1,43 @@
-import { actHook, renderHook } from '../../../test'
-import { useSigner } from './useSigner'
-import { useConnect } from './useConnect'
+import { connect } from '@wagmi/core'
 
-const useSignerWithConnect = () => {
-  const signer = useSigner()
-  const connect = useConnect()
-  return { signer, connect } as const
+import {
+  actHookConnect,
+  actHookDisconnect,
+  actHookNetwork,
+  renderHook,
+  setupWagmiClient,
+  wrapper,
+} from '../../../test'
+import { useConnect } from './useConnect'
+import { useDisconnect } from './useDisconnect'
+import { useNetwork } from './useNetwork'
+import { useSigner } from './useSigner'
+
+function useSignerWithAccount() {
+  return {
+    connect: useConnect(),
+    disconnect: useDisconnect(),
+    network: useNetwork(),
+    signer: useSigner(),
+  }
 }
 
 describe('useSigner', () => {
-  describe('on mount', () => {
-    it('not connected', async () => {
-      const { result } = renderHook(() => useSigner())
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": null,
-          "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 0,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
-          "isError": false,
-          "isFetched": false,
-          "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
-          "isRefetching": false,
-          "isSuccess": false,
-          "refetch": [Function],
-          "status": "loading",
-        }
-      `)
-    })
+  describe('mounts', () => {
+    it('is connected', async () => {
+      const client = setupWagmiClient()
+      await connect({ connector: client.connectors[0] })
 
-    it('connected', async () => {
-      const { result } = renderHook(() => useSignerWithConnect())
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
+      const { result, waitFor } = renderHook(() => useSigner(), {
+        wrapper,
+        initialProps: { client },
       })
 
-      expect(result.current.signer).toMatchInlineSnapshot(`
+      await waitFor(() => result.current.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": JsonRpcSigner {
             "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -61,19 +47,31 @@ describe('useSigner', () => {
           },
           "error": null,
           "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 1643673600000,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": true,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+
+    it('is not connected', async () => {
+      const { result, waitFor } = renderHook(() => useSigner())
+
+      await waitFor(() => result.current.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": null,
+          "error": null,
+          "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
           "isFetching": false,
@@ -88,83 +86,122 @@ describe('useSigner', () => {
     })
   })
 
-  describe('getSigner', () => {
-    it('connected', async () => {
-      const { result } = renderHook(() => useSignerWithConnect())
+  describe('behavior', () => {
+    it('updates on connect and disconnect', async () => {
+      const utils = renderHook(() => useSignerWithAccount())
+      const { result, waitFor } = utils
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
+      await actHookConnect({ utils })
 
-      await actHook(async () => {
-        const refetchResult = await result.current.signer.refetch()
-        expect(refetchResult).toMatchInlineSnapshot(`
-          {
-            "data": JsonRpcSigner {
-              "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-              "_index": null,
-              "_isSigner": true,
-              "provider": "<Provider network={31337} />",
-            },
-            "dataUpdatedAt": 1643673600000,
-            "error": null,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "fetchStatus": "idle",
-            "isError": false,
-            "isFetched": true,
-            "isFetchedAfterMount": true,
-            "isFetching": false,
-            "isLoading": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isRefetching": false,
-            "isStale": true,
-            "isSuccess": true,
-            "refetch": [Function],
-            "remove": [Function],
-            "status": "success",
-          }
-        `)
-      })
+      await waitFor(() => result.current.signer.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current.signer
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": JsonRpcSigner {
+            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "_index": null,
+            "_isSigner": true,
+            "provider": "<Provider network={31337} />",
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+
+      await actHookDisconnect({ utils })
+
+      await waitFor(() => result.current.signer.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal: _, ...res2 } = result.current.signer
+      expect(res2).toMatchInlineSnapshot(`
+        {
+          "data": null,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
     })
 
-    it('not connected', async () => {
-      const { result } = renderHook(() => useSigner())
+    it('updates on network', async () => {
+      const utils = renderHook(() => useSignerWithAccount())
+      const { result, waitFor } = utils
 
-      await actHook(async () => {
-        const refetchResult = await result.current.refetch()
-        expect(refetchResult).toMatchInlineSnapshot(`
-          {
-            "data": null,
-            "dataUpdatedAt": 1643673600000,
-            "error": null,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "fetchStatus": "idle",
-            "isError": false,
-            "isFetched": true,
-            "isFetchedAfterMount": true,
-            "isFetching": false,
-            "isLoading": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isRefetching": false,
-            "isStale": true,
-            "isSuccess": true,
-            "refetch": [Function],
-            "remove": [Function],
-            "status": "success",
-          }
-        `)
-      })
+      await actHookConnect({ utils })
+
+      await waitFor(() => result.current.signer.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current.signer
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": JsonRpcSigner {
+            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "_index": null,
+            "_isSigner": true,
+            "provider": "<Provider network={31337} />",
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+
+      await actHookNetwork({ utils, chainId: 1 })
+
+      await waitFor(() => result.current.signer.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal: _, ...res2 } = result.current.signer
+      expect(res2).toMatchInlineSnapshot(`
+        {
+          "data": JsonRpcSigner {
+            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "_index": null,
+            "_isSigner": true,
+            "provider": "<Provider network={31337} />",
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
     })
   })
 })

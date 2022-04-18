@@ -1,61 +1,103 @@
-import { renderHook } from '../../../test'
+import { actHook, renderHook } from '../../../test'
 import { useFeeData } from './useFeeData'
 
 describe('useFeeData', () => {
-  describe('on mount', () => {
-    it('fetches', async () => {
-      const { result, waitFor } = renderHook(() => useFeeData())
-      expect(result.current).toMatchInlineSnapshot(`
+  it('mounts', async () => {
+    const { result, waitFor } = renderHook(() => useFeeData())
+
+    await waitFor(() => result.current.isSuccess)
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { data, internal, ...res } = result.current
+    expect(data).toBeDefined()
+    expect(res).toMatchInlineSnapshot(`
+      {
+        "error": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetching": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isRefetching": false,
+        "isSuccess": true,
+        "refetch": [Function],
+        "status": "success",
+      }
+    `)
+  })
+
+  describe('configuration', () => {
+    it('chainId', async () => {
+      const { result, waitFor } = renderHook(() => useFeeData({ chainId: 1 }))
+
+      await waitFor(() => result.current.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data, internal, ...res } = result.current
+      expect(data).toBeDefined()
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+
+    it('enabled', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useFeeData({
+          // set chainId to force new query key and skip cache
+          chainId: 69,
+          enabled: false,
+        }),
+      )
+
+      await waitFor(() => result.current.isIdle)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
           "error": null,
-          "fetchStatus": "fetching",
-          "internal": {
-            "dataUpdatedAt": 0,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
+          "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
           "status": "loading",
         }
       `)
+    })
 
-      await waitFor(() => result.current.isFetched)
+    it('formatUnits', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useFeeData({ formatUnits: 'kwei' }),
+      )
 
-      const { data, ...res } = result.current
+      await waitFor(() => result.current.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data, internal, ...res } = result.current
       expect(data).toBeDefined()
       expect(res).toMatchInlineSnapshot(`
         {
           "error": null,
           "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 1643673600000,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": true,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
           "isError": false,
           "isFetched": true,
           "isFetching": false,
@@ -70,38 +112,14 @@ describe('useFeeData', () => {
     })
   })
 
-  it('enabled', async () => {
-    const { result } = renderHook(() =>
-      useFeeData({ enabled: false, formatUnits: 'kwei' }),
-    )
-    expect(result.current).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": null,
-        "fetchStatus": "idle",
-        "internal": {
-          "dataUpdatedAt": 0,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isFetchedAfterMount": false,
-          "isLoadingError": false,
-          "isPaused": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isStale": true,
-          "remove": [Function],
-        },
-        "isError": false,
-        "isFetched": false,
-        "isFetching": false,
-        "isIdle": true,
-        "isLoading": false,
-        "isRefetching": false,
-        "isSuccess": false,
-        "refetch": [Function],
-        "status": "loading",
-      }
-    `)
+  describe('return value', () => {
+    it('refetch', async () => {
+      const { result } = renderHook(() => useFeeData({ enabled: false }))
+
+      await actHook(async () => {
+        const { data } = await result.current.refetch()
+        expect(data).toBeDefined()
+      })
+    })
   })
 })

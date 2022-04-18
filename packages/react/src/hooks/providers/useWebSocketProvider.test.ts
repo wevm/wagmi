@@ -7,7 +7,7 @@ import {
 import { useWebSocketProvider } from './useWebSocketProvider'
 
 describe('useWebSocketProvider', () => {
-  it('inits', async () => {
+  it('mounts', async () => {
     const client = setupWagmiClient({
       webSocketProvider: getWebSocketProvider,
     })
@@ -23,20 +23,25 @@ describe('useWebSocketProvider', () => {
     )
   })
 
-  it('chainId', async () => {
-    const client = setupWagmiClient({
-      webSocketProvider: getWebSocketProvider,
+  describe('configuration', () => {
+    it('chainId', async () => {
+      const client = setupWagmiClient({
+        webSocketProvider: getWebSocketProvider,
+      })
+      await client.webSocketProvider?.destroy()
+      const { result } = renderHook(
+        () => useWebSocketProvider({ chainId: 1 }),
+        {
+          wrapper,
+          initialProps: {
+            client,
+          },
+        },
+      )
+      await result.current?.destroy()
+      expect(result.current).toMatchInlineSnapshot(
+        `"<WebSocketProvider network={1} />"`,
+      )
     })
-    await client.webSocketProvider?.destroy()
-    const { result } = renderHook(() => useWebSocketProvider({ chainId: 1 }), {
-      wrapper,
-      initialProps: {
-        client,
-      },
-    })
-    await result.current?.destroy()
-    expect(result.current).toMatchInlineSnapshot(
-      `"<WebSocketProvider network={1} />"`,
-    )
   })
 })

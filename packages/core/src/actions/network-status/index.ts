@@ -11,12 +11,6 @@ export {
 } from './fetchFeeData'
 
 export {
-  watchFeeData,
-  type WatchFeeDataArgs,
-  type WatchFeeDataCallback,
-} from './watchFeeData'
-
-export {
   watchBlockNumber,
   type WatchBlockNumberArgs,
   type WatchBlockNumberCallback,

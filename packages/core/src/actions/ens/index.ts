@@ -21,17 +21,3 @@ export {
   type FetchEnsResolverArgs,
   type FetchEnsResolverResult,
 } from './fetchEnsResolver'
-
-export {
-  watchEnsAddress,
-  type WatchEnsAddressCallback,
-} from './watchEnsAddress'
-
-export { type WatchEnsAvatarCallback, watchEnsAvatar } from './watchEnsAvatar'
-
-export { type WatchEnsNameCallback, watchEnsName } from './watchEnsName'
-
-export {
-  watchEnsResolver,
-  type WatchEnsResolverCallback,
-} from './watchEnsResolver'

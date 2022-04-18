@@ -7,7 +7,7 @@ import { useContract } from './useContract'
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
 describe('useContract', () => {
-  it('inits', async () => {
+  it('mounts', async () => {
     const { result } = renderHook(() =>
       useContract({
         addressOrName: uniContractAddress,
@@ -18,19 +18,21 @@ describe('useContract', () => {
     expect(result.current.balanceOf).toBeDefined()
   })
 
-  it('changes config', async () => {
-    let signerOrProvider: Signer | providers.Provider | undefined = undefined
-    const { result, rerender } = renderHook(() =>
-      useContract({
-        addressOrName: uniContractAddress,
-        contractInterface: erc20ABI,
-        signerOrProvider,
-      }),
-    )
-    expect(result.current.provider).toBeNull()
+  describe('behavior', () => {
+    it('changes config', async () => {
+      let signerOrProvider: Signer | providers.Provider | undefined = undefined
+      const { result, rerender } = renderHook(() =>
+        useContract({
+          addressOrName: uniContractAddress,
+          contractInterface: erc20ABI,
+          signerOrProvider,
+        }),
+      )
+      expect(result.current.provider).toBeNull()
 
-    signerOrProvider = getProvider()
-    rerender()
-    expect(result.current.provider).not.toBeNull()
+      signerOrProvider = getProvider()
+      rerender()
+      expect(result.current.provider).not.toBeNull()
+    })
   })
 })

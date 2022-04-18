@@ -1,67 +1,47 @@
-import { actHook, renderHook } from '../../../test'
+import { connect } from '@wagmi/core'
+
+import {
+  actHookConnect,
+  actHookDisconnect,
+  renderHook,
+  setupWagmiClient,
+  wrapper,
+} from '../../../test'
 import { UseAccountConfig, useAccount } from './useAccount'
 import { useConnect } from './useConnect'
+import { useDisconnect } from './useDisconnect'
 
-const useAccountWithConnect = (config: { account?: UseAccountConfig } = {}) => {
-  const account = useAccount(config.account)
-  const connect = useConnect()
-  return { account, connect } as const
+function useAccountWithConnectAndDisconnect(config: UseAccountConfig = {}) {
+  return {
+    account: useAccount(config),
+    connect: useConnect(),
+    disconnect: useDisconnect(),
+  }
 }
 
 describe('useAccount', () => {
-  describe('on mount', () => {
-    it('not connected', async () => {
-      const { result, waitFor } = renderHook(() => useAccount())
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": null,
-          "fetchStatus": "fetching",
-          "internal": {
-            "dataUpdatedAt": 0,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
-          "isError": false,
-          "isFetched": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
-          "isRefetching": false,
-          "isSuccess": false,
-          "refetch": [Function],
-          "status": "loading",
-        }
-      `)
+  describe('mounts', () => {
+    it('is connected', async () => {
+      const client = setupWagmiClient()
+      await connect({ connector: client.connectors[0] })
+
+      const { result, waitFor } = renderHook(() => useAccount(), {
+        wrapper,
+        initialProps: { client },
+      })
 
       await waitFor(() => result.current.isSuccess)
 
-      expect(result.current).toMatchInlineSnapshot(`
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
-          "data": null,
+          "data": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
+          },
           "error": null,
           "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 1643673600000,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": true,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
           "isError": false,
           "isFetched": true,
           "isFetching": false,
@@ -75,15 +55,44 @@ describe('useAccount', () => {
       `)
     })
 
-    it('connected', async () => {
-      const { result } = renderHook(() => useAccountWithConnect())
+    it('is not connected', async () => {
+      const { result, waitFor } = renderHook(() => useAccount())
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
+      await waitFor(() => result.current.isSuccess)
 
-      expect(result.current.account).toMatchInlineSnapshot(`
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": null,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+  })
+
+  describe('behavior', () => {
+    it('updates on connect and disconnect', async () => {
+      const utils = renderHook(() => useAccountWithConnectAndDisconnect())
+      const { result, waitFor } = utils
+
+      await actHookConnect({ utils })
+
+      await waitFor(() => result.current.account.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current.account
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -91,19 +100,28 @@ describe('useAccount', () => {
           },
           "error": null,
           "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 1643673600000,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": true,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+
+      await actHookDisconnect({ utils })
+
+      await waitFor(() => result.current.account.isSuccess)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal: _, ...res2 } = result.current.account
+      expect(res2).toMatchInlineSnapshot(`
+        {
+          "data": null,
+          "error": null,
+          "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
           "isFetching": false,

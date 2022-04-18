@@ -1,64 +1,119 @@
-import { getSigners, renderHook } from '../../../test'
+import { actHook, getSigners, renderHook } from '../../../test'
 import { useEnsName } from './useEnsName'
 
 describe('useEnsName', () => {
-  describe('address', () => {
-    it('has ens', async () => {
+  it('mounts', async () => {
+    const { result, waitFor } = renderHook(() =>
+      useEnsName({ address: '0xb0623c91c65621df716ab8afe5f66656b21a9108' }),
+    )
+
+    await waitFor(() => result.current.isSuccess)
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { internal, ...res } = result.current
+    expect(res).toMatchInlineSnapshot(`
+      {
+        "data": "johnpalmer.eth",
+        "error": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetching": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isRefetching": false,
+        "isSuccess": true,
+        "refetch": [Function],
+        "status": "success",
+      }
+    `)
+  })
+
+  describe('configuration', () => {
+    describe('address', () => {
+      it('has name', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useEnsName({ address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' }),
+        )
+
+        await waitFor(() => result.current.isSuccess)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": "awkweb.eth",
+            "error": null,
+            "fetchStatus": "idle",
+            "isError": false,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": true,
+            "refetch": [Function],
+            "status": "success",
+          }
+        `)
+      })
+
+      it('invalid address', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useEnsName({ address: '3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj' }),
+        )
+
+        await waitFor(() => result.current.isError)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: invalid address (argument="address", value="3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj", code=INVALID_ARGUMENT, version=address/5.6.0)],
+            "fetchStatus": "idle",
+            "isError": true,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": false,
+            "refetch": [Function],
+            "status": "error",
+          }
+        `)
+      })
+
+      it('does not have name', async () => {
+        const address = await getSigners()[0].getAddress()
+        const { result, waitFor } = renderHook(() => useEnsName({ address }))
+
+        await waitFor(() => result.current.isSuccess)
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res.data).toMatchInlineSnapshot(`null`)
+      })
+    })
+
+    it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsName({
           address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          chainId: 1,
         }),
       )
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": null,
-          "fetchStatus": "fetching",
-          "internal": {
-            "dataUpdatedAt": 0,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
-          "isError": false,
-          "isFetched": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
-          "isRefetching": false,
-          "isSuccess": false,
-          "refetch": [Function],
-          "status": "loading",
-        }
-      `)
 
       await waitFor(() => result.current.isSuccess)
 
-      expect(result.current).toMatchInlineSnapshot(`
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": "awkweb.eth",
           "error": null,
           "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 1643673600000,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": true,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": false,
-            "remove": [Function],
-          },
           "isError": false,
           "isFetched": true,
           "isFetching": false,
@@ -72,103 +127,23 @@ describe('useEnsName', () => {
       `)
     })
 
-    it('does not have ens', async () => {
-      const address = await getSigners()[0].getAddress()
+    it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsName({
-          address,
-        }),
-      )
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": null,
-          "fetchStatus": "fetching",
-          "internal": {
-            "dataUpdatedAt": 0,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
-          "isError": false,
-          "isFetched": false,
-          "isFetching": true,
-          "isIdle": false,
-          "isLoading": true,
-          "isRefetching": false,
-          "isSuccess": false,
-          "refetch": [Function],
-          "status": "loading",
-        }
-      `)
-
-      await waitFor(() => result.current.isSuccess)
-
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "data": null,
-          "error": null,
-          "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 1643673600000,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": true,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": false,
-            "remove": [Function],
-          },
-          "isError": false,
-          "isFetched": true,
-          "isFetching": false,
-          "isIdle": false,
-          "isLoading": false,
-          "isRefetching": false,
-          "isSuccess": true,
-          "refetch": [Function],
-          "status": "success",
-        }
-      `)
-    })
-  })
-
-  describe('enabled', () => {
-    it('is false', () => {
-      const { result } = renderHook(() =>
-        useEnsName({
-          address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+          address: '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
           enabled: false,
         }),
       )
-      expect(result.current).toMatchInlineSnapshot(`
+
+      await waitFor(() => result.current.isIdle)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
           "error": null,
           "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 0,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
           "isError": false,
           "isFetched": false,
           "isFetching": false,
@@ -181,27 +156,37 @@ describe('useEnsName', () => {
         }
       `)
     })
+  })
 
-    it('missing address', () => {
-      const { result } = renderHook(() => useEnsName({}))
-      expect(result.current).toMatchInlineSnapshot(`
+  describe('return value', () => {
+    it('refetch', async () => {
+      const { result } = renderHook(() =>
+        useEnsName({
+          address: '0xfb843f8c4992efdb6b42349c35f025ca55742d33',
+          enabled: false,
+        }),
+      )
+
+      await actHook(async () => {
+        const { data } = await result.current.refetch()
+        expect(data).toMatchInlineSnapshot(`"worm.eth"`)
+      })
+    })
+  })
+
+  describe('behavior', () => {
+    it('does nothing when `address` is missing', async () => {
+      const { result, waitFor } = renderHook(() => useEnsName())
+
+      await waitFor(() => result.current.isIdle)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
           "error": null,
           "fetchStatus": "idle",
-          "internal": {
-            "dataUpdatedAt": 0,
-            "errorUpdatedAt": 0,
-            "failureCount": 0,
-            "isFetchedAfterMount": false,
-            "isLoadingError": false,
-            "isPaused": false,
-            "isPlaceholderData": false,
-            "isPreviousData": false,
-            "isRefetchError": false,
-            "isStale": true,
-            "remove": [Function],
-          },
           "isError": false,
           "isFetched": false,
           "isFetching": false,

@@ -7,9 +7,9 @@ export type WagmiStorage = {
 }
 
 export const noopStorage: BaseStorage = {
-  getItem: (_key: string) => '',
-  setItem: (_key: string, _value: string) => null,
-  removeItem: (_key: string) => null,
+  getItem: (_key) => '',
+  setItem: (_key, _value) => null,
+  removeItem: (_key) => null,
 }
 
 export function createStorage({

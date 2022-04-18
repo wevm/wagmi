@@ -9,7 +9,6 @@ export {
   signTypedData,
   switchNetwork,
   watchAccount,
-  watchBalance,
   watchNetwork,
   watchSigner,
   type ConnectArgs,
@@ -26,7 +25,6 @@ export {
   type SwitchNetworkArgs,
   type SwitchNetworkResult,
   type WatchAccountCallback,
-  type WatchBalanceCallback,
   type WatchNetworkCallback,
   type WatchSignerCallback,
 } from './accounts'
@@ -54,10 +52,6 @@ export {
   fetchEnsAvatar,
   fetchEnsName,
   fetchEnsResolver,
-  watchEnsAddress,
-  watchEnsAvatar,
-  watchEnsName,
-  watchEnsResolver,
   type FetchEnsAddressArgs,
   type FetchEnsAddressResult,
   type FetchEnsAvatarArgs,
@@ -66,25 +60,18 @@ export {
   type FetchEnsNameResult,
   type FetchEnsResolverArgs,
   type FetchEnsResolverResult,
-  type WatchEnsAddressCallback,
-  type WatchEnsAvatarCallback,
-  type WatchEnsNameCallback,
-  type WatchEnsResolverCallback,
 } from './ens'
 
 export {
   fetchBlockNumber,
   fetchFeeData,
   watchBlockNumber,
-  watchFeeData,
   type FetchBlockNumberArgs,
   type FetchBlockNumberResult,
   type FetchFeeDataArgs,
   type FetchFeeDataResult,
   type WatchBlockNumberArgs,
   type WatchBlockNumberCallback,
-  type WatchFeeDataArgs,
-  type WatchFeeDataCallback,
 } from './network-status'
 
 export {
@@ -102,10 +89,8 @@ export {
 
 export {
   fetchToken,
-  watchToken,
   type FetchTokenArgs,
   type FetchTokenResult,
-  type WatchTokenCallback,
 } from './tokens'
 
 export {

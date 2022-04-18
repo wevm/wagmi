@@ -36,18 +36,6 @@ body {
   color: inherit;
 }
 
-.code-wrapper > header {
-  contain: paint;
-  @apply bg-slate-100 border-slate-200;
-  @apply dark:bg-blue-300 dark:border-gray-700 dark:bg-opacity-10;
-}
-
-.code-wrapper pre {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  margin: 0;
-}
-
 sup a {
   @apply text-current;
   text-decoration: none;

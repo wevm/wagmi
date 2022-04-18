@@ -50,6 +50,21 @@ function App() {
 
 ## Configuration
 
+### chainId (optional)
+
+Force a specific chain id for waiting on transaction. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {5}
+import { useWaitForTransaction } from 'wagmi'
+
+function App() {
+  const waitForTransaction = useWaitForTransaction({
+    chainId: 1,
+    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  })
+}
+```
+
 ### confirmations (optional)
 
 Waits until confirmations number of blocks are mined on top of the block containing the transaction. Defaults to `1`. If confirmations is `0`, hook will not wait and return immediately without blocking, likely resulting in `data` being `null`.

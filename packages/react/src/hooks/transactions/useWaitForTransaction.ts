@@ -20,9 +20,7 @@ export const queryKey = ({
   hash,
   timeout,
   wait,
-}: Partial<WaitForTransactionArgs> & {
-  chainId?: number
-}) =>
+}: Partial<WaitForTransactionArgs>) =>
   [
     {
       entity: 'waitForTransaction',
@@ -35,13 +33,13 @@ export const queryKey = ({
   ] as const
 
 const queryFn = ({
-  queryKey: [{ confirmations, hash, timeout, wait }],
+  queryKey: [{ chainId, confirmations, hash, timeout, wait }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  if (!hash && !wait) throw new Error('hash or wait is required')
-  return waitForTransaction({ confirmations, hash, timeout, wait })
+  return waitForTransaction({ chainId, confirmations, hash, timeout, wait })
 }
 
 export function useWaitForTransaction({
+  chainId: chainId_,
   confirmations,
   hash,
   timeout,
@@ -54,9 +52,10 @@ export function useWaitForTransaction({
   onSettled,
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
-  const chainId = useChainId()
+  const chainId = useChainId({ chainId: chainId_ })
+
   return useQuery(
-    queryKey({ confirmations, chainId, hash, timeout, wait }),
+    queryKey({ chainId, confirmations, hash, timeout, wait }),
     queryFn,
     {
       cacheTime,

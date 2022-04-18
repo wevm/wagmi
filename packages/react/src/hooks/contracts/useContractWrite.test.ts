@@ -1,6 +1,12 @@
 import { WriteContractArgs } from '@wagmi/core'
 
-import { actHook, renderHook } from '../../../test'
+import {
+  actHook,
+  actHookConnect,
+  getSigners,
+  getUnclaimedTokenId,
+  renderHook,
+} from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UseContractWriteArgs,
@@ -8,48 +14,85 @@ import {
   useContractWrite,
 } from './useContractWrite'
 
-const useContractWriteWithConnect = (
+function useContractWriteWithConnect(
   contractConfig: WriteContractArgs,
   functionName: string,
   config: UseContractWriteArgs & UseContractWriteConfig = {},
-) => {
-  const connect = useConnect()
-  const contractWrite = useContractWrite(contractConfig, functionName, config)
-  return { connect, contractWrite } as const
+) {
+  return {
+    connect: useConnect(),
+    contractWrite: useContractWrite(contractConfig, functionName, config),
+  }
 }
 
-describe.skip('useContractWrite', () => {
-  it('init', async () => {
-    const { result } = renderHook(() =>
-      useContractWriteWithConnect(
+const mlootContractConfig = {
+  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  contractInterface: [
+    {
+      inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
+      name: 'claim',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
+      name: 'ownerOf',
+      outputs: [{ internalType: 'address', name: '', type: 'address' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'totalSupply',
+      outputs: [
         {
-          addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-          contractInterface: [
-            {
-              inputs: [
-                { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-              ],
-              name: 'claim',
-              outputs: [],
-              stateMutability: 'nonpayable',
-              type: 'function',
-            },
-          ],
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
         },
-        'claim',
-      ),
-    )
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'from',
+          type: 'address',
+        },
+        {
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'tokenId',
+          type: 'uint256',
+        },
+      ],
+      name: 'transferFrom',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+  ],
+}
 
-    expect(result.current.contractWrite).toMatchInlineSnapshot(`
+describe('useContractWrite', () => {
+  it('mounts', () => {
+    const { result } = renderHook(() =>
+      useContractWrite(mlootContractConfig, 'claim'),
+    )
+    expect(result.current).toMatchInlineSnapshot(`
       {
-        "context": undefined,
         "data": undefined,
         "error": null,
-        "failureCount": 0,
         "isError": false,
         "isIdle": true,
         "isLoading": false,
-        "isPaused": false,
         "isSuccess": false,
         "reset": [Function],
         "status": "idle",
@@ -60,186 +103,153 @@ describe.skip('useContractWrite', () => {
     `)
   })
 
-  describe('write', () => {
-    it('no deferred args', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useContractWriteWithConnect(
-          {
-            addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-            contractInterface: [
-              {
-                inputs: [
-                  { internalType: 'address', name: 'to', type: 'address' },
-                  { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-                ],
-                name: 'approve',
-                outputs: [],
-                stateMutability: 'nonpayable',
-                type: 'function',
-              },
-            ],
-          },
-          'approve',
-          { args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC', 121] },
-        ),
-      )
+  describe('return value', () => {
+    describe('write', () => {
+      jest.setTimeout(10_000)
+      it('uses configuration', async () => {
+        const tokenId = await getUnclaimedTokenId(
+          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        )
+        if (!tokenId) return
+        const utils = renderHook(() =>
+          useContractWriteWithConnect(mlootContractConfig, 'claim', {
+            args: tokenId,
+          }),
+        )
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
+        await actHook(async () => result.current.contractWrite.write())
+        await waitFor(() => result.current.contractWrite.isSuccess, {
+          timeout: 5_000,
+        })
+
+        expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
 
-      await actHook(async () => {
-        result.current.contractWrite.write()
+      it('uses deferred args', async () => {
+        const tokenId = await getUnclaimedTokenId(
+          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        )
+        if (!tokenId) return
+        const utils = renderHook(() =>
+          useContractWriteWithConnect(mlootContractConfig, 'claim'),
+        )
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
+
+        await actHook(async () =>
+          result.current.contractWrite.write({ args: tokenId }),
+        )
+        await waitFor(() => result.current.contractWrite.isSuccess, {
+          timeout: 5_000,
+        })
+
+        expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
 
-      await waitForNextUpdate()
+      it('fails', async () => {
+        const utils = renderHook(() =>
+          useContractWriteWithConnect(mlootContractConfig, 'claim', {
+            args: 1,
+          }),
+        )
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
 
-      const { data, ...res } = result.current.contractWrite
-      expect(data).toBeDefined()
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "context": undefined,
-          "error": null,
-          "failureCount": 0,
-          "isError": false,
-          "isIdle": false,
-          "isLoading": false,
-          "isPaused": false,
-          "isSuccess": true,
-          "reset": [Function],
-          "status": "success",
-          "variables": {
-            "args": [
-              "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-              121,
-            ],
-            "overrides": undefined,
-          },
-          "write": [Function],
-          "writeAsync": [Function],
-        }
-      `)
+        await actHook(async () => result.current.contractWrite.write())
+        await waitFor(() => result.current.contractWrite.isError)
+
+        expect(result.current.contractWrite.error?.message).toContain(
+          'Token ID invalid',
+        )
+      })
     })
 
-    it('deferred args', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useContractWriteWithConnect(
-          {
-            addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-            contractInterface: [
-              {
-                inputs: [
-                  { internalType: 'address', name: 'to', type: 'address' },
-                  { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-                ],
-                name: 'approve',
-                outputs: [],
-                stateMutability: 'nonpayable',
-                type: 'function',
-              },
-            ],
-          },
-          'approve',
-        ),
-      )
+    describe('writeAsync', () => {
+      jest.setTimeout(10_000)
+      it('uses configuration', async () => {
+        const tokenId = await getUnclaimedTokenId(
+          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        )
+        if (!tokenId) return
+        const utils = renderHook(() =>
+          useContractWriteWithConnect(mlootContractConfig, 'claim'),
+        )
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
-
-      await actHook(async () => {
-        result.current.contractWrite.write({
-          args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC', 121],
+        await actHook(async () => {
+          const res = await result.current.contractWrite.writeAsync({
+            args: tokenId,
+          })
+          expect(res.hash).toBeDefined()
+        })
+        await waitFor(() => result.current.contractWrite.isSuccess, {
+          timeout: 5_000,
         })
       })
 
-      await waitForNextUpdate()
+      it('throws error', async () => {
+        const utils = renderHook(() =>
+          useContractWriteWithConnect(mlootContractConfig, 'claim'),
+        )
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
 
-      const { data, ...res } = result.current.contractWrite
-      expect(data).toBeDefined()
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "context": undefined,
-          "error": null,
-          "failureCount": 0,
-          "isError": false,
-          "isIdle": false,
-          "isLoading": false,
-          "isPaused": false,
-          "isSuccess": true,
-          "reset": [Function],
-          "status": "success",
-          "variables": {
-            "args": [
-              "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-              121,
-            ],
-          },
-          "write": [Function],
-          "writeAsync": [Function],
-        }
-      `)
+        await actHook(async () => {
+          await expect(
+            result.current.contractWrite.writeAsync({
+              args: 1,
+            }),
+          ).rejects.toThrowErrorMatchingInlineSnapshot(
+            `"processing response error (body=\\"{\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\",\\\\\\"id\\\\\\":43,\\\\\\"error\\\\\\":{\\\\\\"code\\\\\\":-32603,\\\\\\"message\\\\\\":\\\\\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\\\\\"}}\\", error={\\"code\\":-32603}, requestBody=\\"{\\\\\\"method\\\\\\":\\\\\\"eth_estimateGas\\\\\\",\\\\\\"params\\\\\\":[{\\\\\\"from\\\\\\":\\\\\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\\\\\",\\\\\\"to\\\\\\":\\\\\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\\\\\"}],\\\\\\"id\\\\\\":43,\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\"}\\", requestMethod=\\"POST\\", url=\\"http://127.0.0.1:8545\\", code=SERVER_ERROR, version=web/5.6.0)"`,
+          )
+        })
+        await waitFor(() => result.current.contractWrite.isError, {
+          timeout: 5_000,
+        })
+      })
     })
+  })
 
-    it('contract error', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useContractWriteWithConnect(
-          {
-            addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-            contractInterface: [
-              {
-                inputs: [
-                  { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
-                ],
-                name: 'claim',
-                outputs: [],
-                stateMutability: 'nonpayable',
-                type: 'function',
-              },
-            ],
-          },
-          'claim',
-          { args: [121] },
-        ),
+  describe('behavior', () => {
+    jest.setTimeout(10_000)
+    it('can call multiple writes', async () => {
+      const tokenId = await getUnclaimedTokenId(
+        '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
       )
+      if (!tokenId) return
+      let functionName = 'claim'
+      let args: any | any[] = tokenId
+      const utils = renderHook(() =>
+        useContractWriteWithConnect(mlootContractConfig, functionName, {
+          args,
+        }),
+      )
+      const { result, rerender, waitFor } = utils
+      await actHookConnect({ utils })
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
+      await actHook(async () => result.current.contractWrite.write())
+      await waitFor(() => result.current.contractWrite.isSuccess, {
+        timeout: 8_000,
       })
 
-      await actHook(async () => {
-        result.current.contractWrite.write()
+      expect(result.current.contractWrite.data?.hash).toBeDefined()
+
+      const from = await getSigners()[0].getAddress()
+      const to = await getSigners()[1].getAddress()
+      functionName = 'transferFrom'
+      args = [from, to, tokenId]
+      rerender()
+
+      await actHookConnect({ utils })
+      await actHook(async () => result.current.contractWrite.write())
+      await waitFor(() => result.current.contractWrite.isSuccess, {
+        timeout: 8_000,
       })
 
-      await waitForNextUpdate()
-
-      const { error, ...res } = result.current.contractWrite
-      expect(error?.message).toContain('token already minted')
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "context": undefined,
-          "data": undefined,
-          "failureCount": 1,
-          "isError": true,
-          "isIdle": false,
-          "isLoading": false,
-          "isPaused": false,
-          "isSuccess": false,
-          "reset": [Function],
-          "status": "error",
-          "variables": {
-            "args": [
-              121,
-            ],
-            "overrides": undefined,
-          },
-          "write": [Function],
-          "writeAsync": [Function],
-        }
-      `)
+      expect(result.current.contractWrite.data?.hash).toBeDefined()
     })
   })
 })

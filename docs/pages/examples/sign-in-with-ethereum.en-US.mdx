@@ -1,6 +1,5 @@
 import Callout from 'nextra-theme-docs/callout'
 
-import { CodeWrapper } from '../../components/docs'
 import { SignInWithEthereum } from '../../components/examples'
 
 # Sign-In with Ethereum
@@ -55,18 +54,16 @@ declare module 'iron-session' {
 
 Then, update your `tsconfig.json` to include the custom types directory:
 
-<CodeWrapper title="tsconfig.json">
-  ```diff
-  {
-    "compilerOptions": {
-      // ...
-    },
-  -  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  +  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types/**/*.d.ts"],
-    "exclude": ["node_modules"]
-  }
-  ```
-</CodeWrapper>
+```diff
+{
+  "compilerOptions": {
+    // ...
+  },
+-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
++  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types/**/*.d.ts"],
+  "exclude": ["node_modules"]
+}
+```
 
 </details>
 
@@ -78,36 +75,36 @@ Follow the [Connect Wallet](/examples/connect-wallet#step-1-configuring-connecto
 
 First, create an API route for generating a random nonce. This is used to identify the session and prevent against [replay attacks](https://en.wikipedia.org/wiki/Replay_attack).
 
-<CodeWrapper title="pages/api/nonce.ts">
-  ```ts {11-12}
-  import { withIronSessionApiRoute } from 'iron-session/next'
-  import { NextApiRequest, NextApiResponse } from 'next'
-  import { generateNonce } from 'siwe'
+`pages/api/nonce.ts`
+
+```ts {9-10}
+import { withIronSessionApiRoute } from 'iron-session/next'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { generateNonce } from 'siwe'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-const { method } = req
-switch (method) {
-case 'GET':
-req.session.nonce = generateNonce()
-await req.session.save()
-res.setHeader('Content-Type', 'text/plain')
-res.send(req.session.nonce)
-break
-default:
-res.setHeader('Allow', ['GET'])
-res.status(405).end(`Method ${method} Not Allowed`)
-}
+  const { method } = req
+  switch (method) {
+    case 'GET':
+      req.session.nonce = generateNonce()
+      await req.session.save()
+      res.setHeader('Content-Type', 'text/plain')
+      res.send(req.session.nonce)
+      break
+    default:
+      res.setHeader('Allow', ['GET'])
+      res.status(405).end(`Method ${method} Not Allowed`)
+  }
 }
 
 export default withIronSessionApiRoute(handler, ironOptions)
-
-````
-</CodeWrapper>
+```
 
 Next, add an API route for verifying a SIWE message and creating the user session.
 
-<CodeWrapper title="pages/api/verify.ts">
-```ts {13-14,16,19-20}
+`pages/api/verify.ts`
+
+```ts {11-12,14,17-18}
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { SiweMessage } from 'siwe'
@@ -138,9 +135,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default withIronSessionApiRoute(handler, ironOptions)
-````
-
-</CodeWrapper>
+```
 
 `ironOptions` should look something like this:
 
@@ -156,31 +151,31 @@ export default withIronSessionApiRoute(handler, ironOptions)
 
 Finally, add two simple API routes for retrieving the signed-in user:
 
-<CodeWrapper title="pages/api/me.ts">
-  ```ts
-  import { withIronSessionApiRoute } from 'iron-session/next'
-  import { NextApiRequest, NextApiResponse } from 'next'
+`pages/api/me.ts`
+
+```ts
+import { withIronSessionApiRoute } from 'iron-session/next'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-const { method } = req
-switch (method) {
-case 'GET':
-res.send({ address: req.session.siwe?.address })
-break
-default:
-res.setHeader('Allow', ['GET'])
-res.status(405).end(`Method ${method} Not Allowed`)
-}
+  const { method } = req
+  switch (method) {
+    case 'GET':
+      res.send({ address: req.session.siwe?.address })
+      break
+    default:
+      res.setHeader('Allow', ['GET'])
+      res.status(405).end(`Method ${method} Not Allowed`)
+  }
 }
 
 export default withIronSessionApiRoute(handler, ironOptions)
-
-````
-</CodeWrapper>
+```
 
 And logging out:
 
-<CodeWrapper title="pages/api/logout.ts">
+`pages/api/logout.ts`
+
 ```ts
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -199,9 +194,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default withIronSessionApiRoute(handler, ironOptions)
-````
-
-</CodeWrapper>
+```
 
 ## Step 3: Sign & Verify Message
 
@@ -353,5 +346,4 @@ try {
 
 ### Additional Resources
 
-[**Sign-In with Ethereum to Next.js Applications**](https://blog.spruceid.com/sign-in-with-ethereum-on-next-js-applications)\
-Guide for setting up SIWE with [`next-auth`](https://next-auth.js.org) from the [Spruce team](https://www.spruceid.com).
+- [**Sign-In with Ethereum to Next.js Applications**](https://blog.spruceid.com/sign-in-with-ethereum-on-next-js-applications) Guide for setting up SIWE with [`next-auth`](https://next-auth.js.org) from the [Spruce team](https://www.spruceid.com).

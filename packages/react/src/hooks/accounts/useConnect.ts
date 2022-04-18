@@ -42,16 +42,13 @@ export function useConnect({
   const forceUpdate = useForceUpdate()
   const client = useClient()
 
-  const { data, error, mutate, mutateAsync, status, variables } = useMutation(
-    mutationKey({ connector }),
-    mutationFn,
-    {
+  const { data, error, mutate, mutateAsync, reset, status, variables } =
+    useMutation(mutationKey({ connector }), mutationFn, {
       onError,
       onMutate: onBeforeConnect,
       onSettled,
       onSuccess: onConnect,
-    },
-  )
+    })
 
   React.useEffect(() => {
     // Trigger update when connector or status change
@@ -72,19 +69,6 @@ export function useConnect({
     return unsubscribe
   }, [client, forceUpdate])
 
-  let status_:
-    | Extract<UseMutationResult['status'], 'error' | 'idle'>
-    | 'connected'
-    | 'connecting'
-    | 'disconnected'
-    | 'reconnecting'
-  if (client.status === 'reconnecting') status_ = 'reconnecting'
-  else if (status === 'loading' || client.status === 'connecting')
-    status_ = 'connecting'
-  else if (status === 'success' || !!client.connector) status_ = 'connected'
-  else if (!client.connector) status_ = 'disconnected'
-  else status_ = status
-
   const connect = React.useCallback(
     (connector_?: ConnectArgs['connector']) =>
       mutate(<ConnectArgs>{ connector: connector_ ?? connector }),
@@ -96,6 +80,19 @@ export function useConnect({
       mutateAsync(<ConnectArgs>{ connector: connector_ ?? connector }),
     [connector, mutateAsync],
   )
+
+  let status_:
+    | Extract<UseMutationResult['status'], 'error' | 'idle'>
+    | 'connected'
+    | 'connecting'
+    | 'disconnected'
+    | 'reconnecting'
+  if (client.status === 'reconnecting') status_ = 'reconnecting'
+  else if (status === 'loading' || client.status === 'connecting')
+    status_ = 'connecting'
+  else if (client.connector) status_ = 'connected'
+  else if (!client.connector || status === 'success') status_ = 'disconnected'
+  else status_ = status
 
   return {
     activeConnector: client.connector,
@@ -111,6 +108,7 @@ export function useConnect({
     isIdle: status_ === 'idle',
     isReconnecting: status_ === 'reconnecting',
     pendingConnector: variables?.connector,
+    reset,
     status: status_,
   } as const
 }
