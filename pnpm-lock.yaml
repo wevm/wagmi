@@ -10,9 +10,9 @@ importers:
       '@babel/preset-typescript': ^7.16.7
       '@changesets/changelog-github': ^0.4.3
       '@changesets/cli': ^2.21.1
-      '@ethersproject/abstract-provider': ^5.5.1
+      '@ethersproject/abstract-provider': ^5.6.0
       '@ethersproject/abstract-signer': ^5.6.0
-      '@ethersproject/providers': ^5.5.1
+      '@ethersproject/providers': ^5.6.1
       '@nomiclabs/hardhat-ethers': ^2.0.5
       '@preconstruct/cli': ^2.1.5
       '@swc-node/jest': ^1.4.3
@@ -35,7 +35,7 @@ importers:
       eslint-plugin-prettier: ^4.0.0
       eslint-plugin-react-hooks: ^4.3.0
       eslint-plugin-testing-library: ^5.1.0
-      ethers: ^5.5.1
+      ethers: ^5.6.1
       hardhat: ^2.9.2
       husky: ^7.0.4
       jest: ^27.5.1
@@ -263,7 +263,7 @@ importers:
 
   packages/core:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.0.1
+      '@coinbase/wallet-sdk': ^3.0.8
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
@@ -272,13 +272,13 @@ importers:
       eventemitter3: 4.0.7
       zustand: 4.0.0-rc.0
     devDependencies:
-      '@coinbase/wallet-sdk': 3.0.4_@babel+core@7.17.8
+      '@coinbase/wallet-sdk': 3.0.8_@babel+core@7.17.8
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: 5.6.1
 
   packages/react:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.0.1
+      '@coinbase/wallet-sdk': ^3.0.8
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
       '@types/use-sync-external-store': ^0.0.3
@@ -289,7 +289,7 @@ importers:
       react-query: ^4.0.0-beta.2
       use-sync-external-store: ^1.0.0
     dependencies:
-      '@coinbase/wallet-sdk': 3.0.4_@babel+core@7.17.8
+      '@coinbase/wallet-sdk': 3.0.8_@babel+core@7.17.8
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.5
       react-query: 4.0.0-beta.2_react@17.0.2
@@ -1883,8 +1883,8 @@ packages:
       prettier: 1.19.1
     dev: true
 
-  /@coinbase/wallet-sdk/3.0.4_@babel+core@7.17.8:
-    resolution: {integrity: sha512-v5+zQB3Q8HXVs67l6uXwqq+BYP2Z1H4Sc0XdSdBGbq1Yn/A7AX94sAOcp66gNu0cySgOYoPZcenCueBlPVhQTA==}
+  /@coinbase/wallet-sdk/3.0.8_@babel+core@7.17.8:
+    resolution: {integrity: sha512-yqnId5BIPeDbHks/DzAeSIvk68r5wvhoTpVnGHSZGWOgRx3h7K8y124WYCD+ketbKCdwoeOd8CLgXdc3H6VRug==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
@@ -1898,6 +1898,7 @@ packages:
       json-rpc-engine: 6.1.0
       keccak: 3.0.2
       preact: 10.6.6
+      qs: 6.10.3
       rxjs: 6.6.7
       stream-browserify: 3.0.0
     transitivePeerDependencies:
@@ -12493,7 +12494,6 @@ packages:
     engines: {node: '>=0.6'}
     dependencies:
       side-channel: 1.0.4
-    dev: true
 
   /qs/6.9.7:
     resolution: {integrity: sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==}

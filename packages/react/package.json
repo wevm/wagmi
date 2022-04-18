@@ -46,7 +46,7 @@
     "react": ">=17.0.0"
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.0.1",
+    "@coinbase/wallet-sdk": "^3.0.8",
     "@wagmi/core": "0.2.0-next.15",
     "@walletconnect/ethereum-provider": "1.7.5",
     "react-query": "^4.0.0-beta.2",
