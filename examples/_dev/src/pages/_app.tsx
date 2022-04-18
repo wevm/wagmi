@@ -1,14 +1,11 @@
 import * as React from 'react'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
-import {
-  AlchemyProvider,
-  AlchemyWebSocketProvider,
-} from '@ethersproject/providers'
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { providers } from 'ethers/lib/ethers'
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
 
@@ -48,12 +45,12 @@ const client = createClient({
     ]
   },
   provider({ chainId }) {
-    return new AlchemyProvider(
+    return new providers.AlchemyProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
     )
   },
   webSocketProvider({ chainId }) {
-    return new AlchemyWebSocketProvider(
+    return new providers.AlchemyWebSocketProvider(
       isChainSupported(chainId) ? chainId : defaultChain.id,
       alchemyId,
     )

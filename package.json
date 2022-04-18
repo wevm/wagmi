@@ -7,7 +7,7 @@
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "preconstruct dev",
     "dev:docs": "pnpm build && pnpm --filter docs dev",
-    "dev:example:playground": "pnpm --filter example-playground dev",
+    "dev:playground": "pnpm --filter example-dev dev",
     "dev:example:next": "pnpm build && pnpm --filter example-next dev",
     "dev:example:remix": "pnpm build && pnpm --filter example-remix dev",
     "dev:example:vite-react": "pnpm build && pnpm --filter example-vite-react dev",

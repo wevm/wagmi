@@ -10,8 +10,8 @@
   },
   "ignore": [
     "docs",
+    "example-dev",
     "example-next",
-    "example-playground",
     "example-remix",
     "example-vite-react"
   ]
