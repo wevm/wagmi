@@ -269,10 +269,10 @@ importers:
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
       eventemitter3: ^4.0.7
-      zustand: ^3.7.0
+      zustand: ^4.0.0-rc.0
     dependencies:
       eventemitter3: 4.0.7
-      zustand: 3.7.1
+      zustand: 4.0.0-rc.0
     devDependencies:
       '@coinbase/wallet-sdk': 3.0.4_@babel+core@7.17.8
       '@walletconnect/ethereum-provider': 1.7.5
@@ -14529,6 +14529,12 @@ packages:
       react: 17.0.2
     dev: false
 
+  /use-sync-external-store/1.0.0:
+    resolution: {integrity: sha512-AFVsxg5GkFg8GDcxnl+Z0lMAz9rE8DGJCc28qnBuQF7lac57B5smLcT37aXpXIIPz75rW4g3eXHPjhHwdGskOw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0-rc
+    dev: false
+
   /use-sync-external-store/1.0.0_react@17.0.2:
     resolution: {integrity: sha512-AFVsxg5GkFg8GDcxnl+Z0lMAz9rE8DGJCc28qnBuQF7lac57B5smLcT37aXpXIIPz75rW4g3eXHPjhHwdGskOw==}
     peerDependencies:
@@ -15099,14 +15105,19 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  /zustand/3.7.1:
-    resolution: {integrity: sha512-wHBCZlKj+bg03/hP+Tzv24YhnqqP8MCeN9ECPDXoF01062SIbnfl3j9O0znkDw1lNTY0a8WN3F///a0UhhaEqg==}
+  /zustand/4.0.0-rc.0:
+    resolution: {integrity: sha512-jMimx6EIlLb/hwgnkVZ4Wd/UI73wXedUB6L/kcdIYbOYHcjIFRc7JEB8IXFZt+1rQq2qwuts7kN6kuHhFss47A==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
+      immer: '>=9.0'
       react: '>=16.8'
     peerDependenciesMeta:
+      immer:
+        optional: true
       react:
         optional: true
+    dependencies:
+      use-sync-external-store: 1.0.0
     dev: false
 
   /zwitch/2.0.2:

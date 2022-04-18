@@ -40,12 +40,15 @@ const connector = new WalletConnectConnector({
 
 Options to pass to the [WalletConnect Ethereum Provider](https://walletconnect.com).
 
-```ts {4-6}
+```ts {4-9}
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
   options: {
     qrcode: true,
+    rpc: {
+      1: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+    },
   },
 })
 ```

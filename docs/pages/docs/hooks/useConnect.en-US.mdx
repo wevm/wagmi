@@ -70,6 +70,7 @@ function App() {
   isIdle: boolean
   isReconnecting: boolean
   pendingConnector: Connector
+  reset: () => void
   status:
     | 'error'
     | 'idle'
