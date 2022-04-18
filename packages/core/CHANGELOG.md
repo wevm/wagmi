@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.15
+
+### Patch Changes
+
+- update zustand
+
 ## 0.2.0-next.14
 
 ### Minor Changes
