@@ -81,6 +81,8 @@ const mlootContractConfig = {
   ],
 }
 
+const timeout = 10_000
+
 describe('useContractWrite', () => {
   it('mounts', () => {
     const { result } = renderHook(() =>
@@ -105,7 +107,7 @@ describe('useContractWrite', () => {
 
   describe('return value', () => {
     describe('write', () => {
-      jest.setTimeout(10_000)
+      jest.setTimeout(timeout)
       it('uses configuration', async () => {
         const tokenId = await getUnclaimedTokenId(
           '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -120,9 +122,7 @@ describe('useContractWrite', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.contractWrite.write())
-        await waitFor(() => result.current.contractWrite.isSuccess, {
-          timeout: 5_000,
-        })
+        await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
@@ -141,9 +141,7 @@ describe('useContractWrite', () => {
         await actHook(async () =>
           result.current.contractWrite.write({ args: tokenId }),
         )
-        await waitFor(() => result.current.contractWrite.isSuccess, {
-          timeout: 5_000,
-        })
+        await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
@@ -167,7 +165,7 @@ describe('useContractWrite', () => {
     })
 
     describe('writeAsync', () => {
-      jest.setTimeout(10_000)
+      jest.setTimeout(timeout)
       it('uses configuration', async () => {
         const tokenId = await getUnclaimedTokenId(
           '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -185,9 +183,7 @@ describe('useContractWrite', () => {
           })
           expect(res.hash).toBeDefined()
         })
-        await waitFor(() => result.current.contractWrite.isSuccess, {
-          timeout: 5_000,
-        })
+        await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
       })
 
       it('throws error', async () => {
@@ -206,15 +202,13 @@ describe('useContractWrite', () => {
             `"processing response error (body=\\"{\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\",\\\\\\"id\\\\\\":43,\\\\\\"error\\\\\\":{\\\\\\"code\\\\\\":-32603,\\\\\\"message\\\\\\":\\\\\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\\\\\"}}\\", error={\\"code\\":-32603}, requestBody=\\"{\\\\\\"method\\\\\\":\\\\\\"eth_estimateGas\\\\\\",\\\\\\"params\\\\\\":[{\\\\\\"from\\\\\\":\\\\\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\\\\\",\\\\\\"to\\\\\\":\\\\\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\\\\\"}],\\\\\\"id\\\\\\":43,\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\"}\\", requestMethod=\\"POST\\", url=\\"http://127.0.0.1:8545\\", code=SERVER_ERROR, version=web/5.6.0)"`,
           )
         })
-        await waitFor(() => result.current.contractWrite.isError, {
-          timeout: 5_000,
-        })
+        await waitFor(() => result.current.contractWrite.isError, { timeout })
       })
     })
   })
 
   describe('behavior', () => {
-    jest.setTimeout(10_000)
+    jest.setTimeout(timeout)
     it('can call multiple writes', async () => {
       const tokenId = await getUnclaimedTokenId(
         '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -231,9 +225,7 @@ describe('useContractWrite', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.contractWrite.write())
-      await waitFor(() => result.current.contractWrite.isSuccess, {
-        timeout: 8_000,
-      })
+      await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
 
@@ -245,9 +237,7 @@ describe('useContractWrite', () => {
 
       await actHookConnect({ utils })
       await actHook(async () => result.current.contractWrite.write())
-      await waitFor(() => result.current.contractWrite.isSuccess, {
-        timeout: 8_000,
-      })
+      await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
     })
