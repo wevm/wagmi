@@ -14,6 +14,36 @@ const wagmigotchiContractConfig = {
   ],
 }
 
+const mlootContractConfig = {
+  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  contractInterface: [
+    {
+      inputs: [
+        {
+          internalType: 'address',
+          name: 'owner',
+          type: 'address',
+        },
+        {
+          internalType: 'uint256',
+          name: 'index',
+          type: 'uint256',
+        },
+      ],
+      name: 'tokenOfOwnerByIndex',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+  ],
+}
+
 describe('useContractRead', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
@@ -129,6 +159,40 @@ describe('useContractRead', () => {
           }
         `)
       })
+    })
+  })
+
+  describe('behavior', () => {
+    it('can use multiple args', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useContractRead(mlootContractConfig, 'tokenOfOwnerByIndex', {
+          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+        }),
+      )
+
+      await waitFor(() => result.current.isSuccess)
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "hex": "0x05a6db",
+            "type": "BigNumber",
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
     })
   })
 })

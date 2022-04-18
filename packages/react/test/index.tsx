@@ -57,6 +57,7 @@ export {
   actHookConnect,
   actHookDisconnect,
   actHookNetwork,
+  getUnclaimedTokenId,
 } from './utils'
 export {
   getMockConnector,

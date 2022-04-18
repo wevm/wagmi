@@ -11,7 +11,6 @@ export type UseDisconnectConfig = {
    * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
    */
   onMutate?: () => unknown
-
   /** Function to invoke when connect is settled (either successfully connected, or an error has thrown). */
   onSettled?: (error: Error | null, context: unknown) => void | Promise<unknown>
   /** Function fires when mutation is successful and will be passed the mutation's result */
@@ -35,8 +34,8 @@ export function useDisconnect({
     isIdle,
     isLoading,
     isSuccess,
-    mutate,
-    mutateAsync,
+    mutate: disconnect,
+    mutateAsync: disconnectAsync,
     reset,
     status,
   } = useMutation<void, Error>(mutationKey, mutationFn, {
@@ -64,8 +63,8 @@ export function useDisconnect({
   })
 
   return {
-    disconnect: mutate,
-    disconnectAsync: mutateAsync,
+    disconnect,
+    disconnectAsync,
     error,
     isError,
     isIdle,

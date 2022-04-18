@@ -1,6 +1,6 @@
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
 
-import { actHook, renderHook } from '../../../test'
+import { actHook, actHookConnect, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 import {
   UseSignMessageArgs,
@@ -16,11 +16,14 @@ const messages = {
 function useSignMessageWithConnect(
   config: UseSignMessageArgs & UseSignMessageConfig = {},
 ) {
-  return { connect: useConnect(), signMessage: useSignMessage(config) }
+  return {
+    connect: useConnect(),
+    signMessage: useSignMessage(config),
+  }
 }
 
 describe('useSignMessage', () => {
-  it('on mount', async () => {
+  it('mounts', () => {
     const { result } = renderHook(() => useSignMessage())
     expect(result.current).toMatchInlineSnapshot(`
       {
@@ -39,145 +42,245 @@ describe('useSignMessage', () => {
     `)
   })
 
-  describe('signMessage', () => {
-    it('uses config', async () => {
-      const { result, waitFor } = renderHook(() =>
+  describe('configuration', () => {
+    it('onSuccess', async () => {
+      const onSuccess = jest.fn()
+      const utils = renderHook(() =>
         useSignMessageWithConnect({
           message: messages.basic,
+          onSuccess,
         }),
       )
+      const { result, waitFor } = utils
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
+      await actHookConnect({ utils })
 
-      await actHook(async () => {
-        result.current.signMessage.signMessage()
-      })
-
+      await actHook(async () => result.current.signMessage.signMessage())
       await waitFor(() => result.current.signMessage.isSuccess)
-      const account = await result.current.connect.activeConnector?.getAccount()
-      const recoveredAccount = verifyMessage(
-        <string>result.current.signMessage.variables?.message,
-        <string>result.current.signMessage.data,
+      expect(onSuccess).toBeCalledWith(
+        result.current.signMessage.data,
+        { message: messages.basic },
+        undefined,
       )
-      expect(account).toEqual(recoveredAccount)
-      expect(result.current.signMessage).toMatchInlineSnapshot(`
-        {
-          "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
-          "error": null,
-          "isError": false,
-          "isIdle": false,
-          "isLoading": false,
-          "isSuccess": true,
-          "reset": [Function],
-          "signMessage": [Function],
-          "signMessageAsync": [Function],
-          "status": "success",
-          "variables": {
-            "message": "The quick brown fox jumped over the lazy dogs.",
-          },
-        }
-      `)
-    })
-
-    it('uses params', async () => {
-      const { result, waitFor } = renderHook(() => useSignMessageWithConnect())
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
-
-      await actHook(async () => {
-        result.current.signMessage.signMessage({
-          message: messages.basic,
-        })
-      })
-
-      await waitFor(() => result.current.signMessage.isSuccess)
-      const account = await result.current.connect.activeConnector?.getAccount()
-      const recoveredAccount = verifyMessage(
-        <string>result.current.signMessage.variables?.message,
-        <string>result.current.signMessage.data,
-      )
-      expect(account).toEqual(recoveredAccount)
-      expect(result.current.signMessage).toMatchInlineSnapshot(`
-        {
-          "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
-          "error": null,
-          "isError": false,
-          "isIdle": false,
-          "isLoading": false,
-          "isSuccess": true,
-          "reset": [Function],
-          "signMessage": [Function],
-          "signMessageAsync": [Function],
-          "status": "success",
-          "variables": {
-            "message": "The quick brown fox jumped over the lazy dogs.",
-          },
-        }
-      `)
-    })
-
-    it('has error', async () => {
-      const { result, waitFor } = renderHook(() => useSignMessageWithConnect())
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
-
-      await actHook(async () => {
-        result.current.signMessage.signMessage()
-      })
-
-      await waitFor(() => result.current.signMessage.isError)
-      expect(result.current.signMessage).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": [Error: message is required],
-          "isError": true,
-          "isIdle": false,
-          "isLoading": false,
-          "isSuccess": false,
-          "reset": [Function],
-          "signMessage": [Function],
-          "signMessageAsync": [Function],
-          "status": "error",
-          "variables": {
-            "message": undefined,
-          },
-        }
-      `)
     })
   })
 
-  describe('signMessageAsync', () => {
-    it('uses config', async () => {
-      const { result } = renderHook(() =>
+  describe('return value', () => {
+    describe('signMessage', () => {
+      it('uses configuration', async () => {
+        const utils = renderHook(() =>
+          useSignMessageWithConnect({
+            message: messages.basic,
+          }),
+        )
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
+
+        await actHook(async () => result.current.signMessage.signMessage())
+        await waitFor(() => result.current.signMessage.isSuccess)
+        expect(result.current.signMessage).toMatchInlineSnapshot(`
+          {
+            "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
+            "error": null,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": true,
+            "reset": [Function],
+            "signMessage": [Function],
+            "signMessageAsync": [Function],
+            "status": "success",
+            "variables": {
+              "message": "The quick brown fox jumped over the lazy dogs.",
+            },
+          }
+        `)
+      })
+
+      it('uses deferred args', async () => {
+        const utils = renderHook(() => useSignMessageWithConnect())
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
+
+        await actHook(async () =>
+          result.current.signMessage.signMessage({ message: messages.basic }),
+        )
+        await waitFor(() => result.current.signMessage.isSuccess)
+        expect(result.current.signMessage).toMatchInlineSnapshot(`
+          {
+            "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
+            "error": null,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": true,
+            "reset": [Function],
+            "signMessage": [Function],
+            "signMessageAsync": [Function],
+            "status": "success",
+            "variables": {
+              "message": "The quick brown fox jumped over the lazy dogs.",
+            },
+          }
+        `)
+      })
+
+      it('fails', async () => {
+        const utils = renderHook(() => useSignMessageWithConnect())
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
+
+        await actHook(async () => result.current.signMessage.signMessage())
+        await waitFor(() => result.current.signMessage.isError)
+        expect(result.current.signMessage).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: message is required],
+            "isError": true,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": false,
+            "reset": [Function],
+            "signMessage": [Function],
+            "signMessageAsync": [Function],
+            "status": "error",
+            "variables": {
+              "message": undefined,
+            },
+          }
+        `)
+      })
+    })
+
+    describe('signMessageAsync', () => {
+      it('uses configuration', async () => {
+        const utils = renderHook(() =>
+          useSignMessageWithConnect({
+            message: messages.basic,
+          }),
+        )
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
+
+        await actHook(async () => {
+          const res = await result.current.signMessage.signMessageAsync()
+          expect(res).toMatchInlineSnapshot(
+            `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
+          )
+        })
+        await waitFor(() => result.current.signMessage.isSuccess)
+      })
+
+      it('throws error', async () => {
+        const utils = renderHook(() => useSignMessageWithConnect())
+        const { result, waitFor } = utils
+        await actHookConnect({ utils })
+
+        await actHook(async () => {
+          await expect(
+            result.current.signMessage.signMessageAsync(),
+          ).rejects.toThrowErrorMatchingInlineSnapshot(`"message is required"`)
+        })
+        await waitFor(() => result.current.signMessage.isError)
+      })
+    })
+  })
+
+  describe('behavior', () => {
+    it('can sign bytes message', async () => {
+      const utils = renderHook(() =>
+        useSignMessageWithConnect({
+          message: messages.bytes,
+        }),
+      )
+      const { result, waitFor } = utils
+      await actHookConnect({ utils })
+
+      await actHook(async () => result.current.signMessage.signMessage())
+      await waitFor(() => result.current.signMessage.isSuccess)
+      expect(result.current.signMessage).toMatchInlineSnapshot(`
+        {
+          "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
+          "error": null,
+          "isError": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isSuccess": true,
+          "reset": [Function],
+          "signMessage": [Function],
+          "signMessageAsync": [Function],
+          "status": "success",
+          "variables": {
+            "message": Uint8Array [
+              84,
+              104,
+              101,
+              32,
+              113,
+              117,
+              105,
+              99,
+              107,
+              32,
+              98,
+              114,
+              111,
+              119,
+              110,
+              32,
+              102,
+              111,
+              120,
+              32,
+              106,
+              117,
+              109,
+              112,
+              101,
+              100,
+              32,
+              111,
+              118,
+              101,
+              114,
+              32,
+              116,
+              104,
+              101,
+              32,
+              108,
+              97,
+              122,
+              121,
+              32,
+              100,
+              111,
+              103,
+              115,
+              46,
+            ],
+          },
+        }
+      `)
+    })
+
+    it('can verify message', async () => {
+      const utils = renderHook(() =>
         useSignMessageWithConnect({
           message: messages.basic,
         }),
       )
+      const { result, waitFor } = utils
+      await actHookConnect({ utils })
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect.connectors[0]
-        result.current.connect.connect(mockConnector)
-      })
-
-      await actHook(async () => {
-        const res = await result.current.signMessage.signMessageAsync()
-        const account =
-          await result.current.connect.activeConnector?.getAccount()
-        const recoveredAccount = verifyMessage(
-          <string>result.current.signMessage.variables?.message,
-          <string>res,
-        )
-        expect(account).toEqual(recoveredAccount)
-      })
+      await actHook(async () => result.current.signMessage.signMessage())
+      await waitFor(() => result.current.signMessage.isSuccess)
+      expect(
+        verifyMessage(
+          messages.basic,
+          result.current.signMessage.data as string,
+        ),
+      ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
     })
   })
 })

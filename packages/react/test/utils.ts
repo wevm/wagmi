@@ -1,6 +1,8 @@
 import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
 import { act, renderHook } from '@testing-library/react-hooks'
 
+import { Contract } from 'ethers/lib/ethers'
+
 import { ClientConfig, Connector, createClient } from '../src'
 import {
   getMockConnector,
@@ -71,4 +73,36 @@ export async function actHookNetwork(config: {
 
   const { waitFor } = utils
   await waitFor(() => getNetwork(utils).isSuccess)
+}
+
+export async function getUnclaimedTokenId(
+  addressOrName: string,
+  maxAttempts = 3,
+) {
+  function getRandomTokenId(from: number, to: number) {
+    return Math.floor(Math.random() * to) + from
+  }
+
+  let attempts = 0
+  const provider = getProvider()
+  const contract = new Contract(
+    addressOrName,
+    [
+      'function ownerOf(uint256 _tokenId) external view returns (address)',
+      'function totalSupply() view returns (uint256)',
+    ],
+    provider,
+  )
+  const totalSupply = await contract.totalSupply()
+  while (attempts < maxAttempts) {
+    const randomTokenId = getRandomTokenId(1, totalSupply)
+    try {
+      await contract.ownerOf(randomTokenId)
+    } catch (error) {
+      return randomTokenId
+      break
+    }
+    attempts += 1
+  }
+  return false
 }
