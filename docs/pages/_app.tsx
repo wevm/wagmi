@@ -10,6 +10,7 @@ import 'nextra-theme-docs/style.css'
 import 'degen/styles'
 /* eslint-enable import/no-unresolved */
 import { Providers } from '../components/core'
+import { useFathom } from '../hooks'
 
 const App = ({ Component, pageProps }: AppProps) => {
   const savedTheme =
@@ -19,6 +20,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   const defaultMode = ['dark', 'light'].includes(savedTheme)
     ? savedTheme
     : undefined
+
+  useFathom()
+
   return (
     <>
       <Providers>

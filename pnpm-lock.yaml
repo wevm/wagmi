@@ -88,6 +88,7 @@ importers:
       eslint: 8.5.0
       eslint-config-next: 12.0.7
       ethers: ^5.5.1
+      fathom-client: ^3.4.1
       iron-session: ^6.0.5
       next: 12.1.0
       next-themes: 0.2.0-beta.0
@@ -104,6 +105,7 @@ importers:
       '@reach/skip-nav': 0.16.0_react-dom@17.0.2+react@17.0.2
       degen: 0.0.49_react-dom@17.0.2+react@17.0.2
       ethers: 5.5.2
+      fathom-client: 3.4.1
       iron-session: 6.0.5_next@12.1.0
       next: 12.1.0_08e041ced5dbc85933fef7a25e63a057
       next-themes: 0.2.0-beta.0_caa633a00319350dbda42996613fe26c
@@ -8147,6 +8149,10 @@ packages:
     dependencies:
       reusify: 1.0.4
     dev: true
+
+  /fathom-client/3.4.1:
+    resolution: {integrity: sha512-iQFKx9B9RDeGLzgNqsaXWg3Fvu7yfq1Z8GjpAG3DP8IoGoPRWOOktpM7DUKiUzoE3d37hdvDQvkqUHfNzVwimg==}
+    dev: false
 
   /fault/2.0.1:
     resolution: {integrity: sha512-WtySTkS4OKev5JtpHXnib4Gxiurzh5NCGvWrFaZ34m6JehfTUhKZvn9njTfw48t6JumVQOmrKqpmGcdwxnhqBQ==}
