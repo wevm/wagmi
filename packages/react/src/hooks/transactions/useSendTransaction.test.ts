@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { parseEther } from 'ethers/lib/utils'
 
 import { actHook, actHookConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
@@ -41,7 +41,7 @@ describe('useSendTransaction', () => {
           useSendTransactionWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: BigNumber.from('1000000000000000000'), // 1 ETH
+              value: parseEther('1'),
             },
           }),
         )
@@ -90,7 +90,7 @@ describe('useSendTransaction', () => {
           result.current.sendTransaction.sendTransaction({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: BigNumber.from('1000000000000000000'), // 1 ETH
+              value: parseEther('1'),
             },
           })
         })
@@ -129,7 +129,7 @@ describe('useSendTransaction', () => {
           useSendTransactionWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
+              value: parseEther('100000'),
             },
           }),
         )
@@ -163,7 +163,7 @@ describe('useSendTransaction', () => {
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": {
-                  "hex": "0x021e19e0c9bab2400000",
+                  "hex": "0x152d02c7e14af6800000",
                   "type": "BigNumber",
                 },
               },
@@ -179,7 +179,7 @@ describe('useSendTransaction', () => {
           useSendTransactionWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: BigNumber.from('1000000000000000000'), // 1 ETH
+              value: parseEther('1'),
             },
           }),
         )
@@ -200,7 +200,7 @@ describe('useSendTransaction', () => {
           useSendTransactionWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
+              value: parseEther('100000'),
             },
           }),
         )

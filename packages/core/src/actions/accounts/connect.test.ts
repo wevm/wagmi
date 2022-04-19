@@ -1,82 +1,63 @@
-import { Signer } from 'ethers'
-
-import { getMockConnector, getSigners, setupWagmiClient } from '../../../test'
+import { getSigners, setupWagmiClient } from '../../../test'
+import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 
+const connector = new MockConnector({
+  options: { signer: getSigners()[0] },
+})
+
 describe('connect', () => {
-  let signer: Signer
-  beforeEach(() => {
-    const signers = getSigners()
-    signer = signers[0]
-  })
+  beforeEach(() => setupWagmiClient())
 
-  it('connects', async () => {
-    const client = setupWagmiClient()
-    expect(client.connector).toBeUndefined()
-    const result = await connect({ connector: client.connectors[0] })
-
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "chain": {
-          "id": 1,
-          "unsupported": false,
-        },
-        "connector": "<MockConnector>",
-        "provider": "<MockProvider>",
-      }
-    `)
-  })
-
-  it('connects to unsupported chain', async () => {
-    const client = setupWagmiClient({
-      connectors: [
-        getMockConnector({
-          network: 69,
-          signer,
-        }),
-      ],
+  describe('args', () => {
+    it('connector', async () => {
+      expect(await connect({ connector })).toMatchInlineSnapshot(`
+        {
+          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "chain": {
+            "id": 1,
+            "unsupported": false,
+          },
+          "connector": "<MockConnector>",
+          "provider": "<MockProvider>",
+        }
+      `)
     })
-    expect(client.connector).toBeUndefined()
-    const result = await connect({ connector: client.connectors[0] })
-
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "chain": {
-          "id": 69,
-          "unsupported": true,
-        },
-        "connector": "<MockConnector>",
-        "provider": "<MockProvider>",
-      }
-    `)
   })
 
-  it('connects with already connected connector', async () => {
-    const client = setupWagmiClient()
-    await connect({ connector: client.connectors[0] })
-    await expect(
-      connect({ connector: client.connectors[0] }),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      `"Connector already connected"`,
-    )
-  })
-
-  it('fails', async () => {
-    const client = setupWagmiClient({
-      connectors: [
-        getMockConnector({
-          signer,
-          flags: {
-            failConnect: true,
+  describe('behavior', () => {
+    it('connects to unsupported chain', async () => {
+      const result = await connect({
+        connector: new MockConnector({
+          options: {
+            network: 69,
+            signer: getSigners()[0],
           },
         }),
-      ],
+      })
+      expect(result.chain.unsupported).toBeTruthy()
     })
 
-    await expect(
-      connect({ connector: client.connectors[0] }),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+    it('is already connected', async () => {
+      await connect({ connector })
+      await expect(
+        connect({ connector }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Connector already connected"`,
+      )
+    })
+
+    it('is already connected', async () => {
+      await expect(
+        connect({
+          connector: new MockConnector({
+            options: {
+              flags: { failConnect: true },
+              signer: getSigners()[0],
+            },
+          }),
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+    })
   })
 })

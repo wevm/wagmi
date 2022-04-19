@@ -1,52 +1,61 @@
-import { formatUnits, parseEther } from 'ethers/lib/utils'
+import { BigNumber } from 'ethers/lib/ethers'
+import { parseEther } from 'ethers/lib/utils'
 
 import { getSigners, setupWagmiClient } from '../../../test'
-import { connect, fetchBalance } from '../accounts'
+import { Client } from '../../client'
+import { connect } from '../accounts'
 import { sendTransaction } from './sendTransaction'
 
 describe('sendTransaction', () => {
-  it('throws', async () => {
-    setupWagmiClient()
-    await expect(
-      sendTransaction({
-        request: {},
-      }),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
+  let client: Client
+  beforeEach(() => {
+    client = setupWagmiClient()
   })
 
-  it('works', async () => {
-    const client = setupWagmiClient()
-    await connect({ connector: client.connectors[0] })
-    const fromAddress = client.data?.account
-    if (!fromAddress) throw new Error('Not connected')
+  describe('args', () => {
+    it('request', async () => {
+      await connect({ connector: client.connectors[0] })
 
-    const signers = getSigners()
-    const to = signers[1]
-    const toAddress = await to.getAddress()
+      const signers = getSigners()
+      const to = signers[1]
+      const toAddress = await to.getAddress()
+      const fromAddress = client.data?.account
 
-    const fromBalance = await fetchBalance({ addressOrName: fromAddress })
-    const toBalance = await fetchBalance({ addressOrName: toAddress })
-    const amount = parseEther('10')
-
-    const result = await sendTransaction({
-      request: {
-        from: fromAddress,
-        to: toAddress,
-        value: amount,
-      },
+      const result = await sendTransaction({
+        request: {
+          from: fromAddress,
+          to: toAddress,
+          value: parseEther('10'),
+        },
+      })
+      expect(result.hash).toBeDefined()
     })
-    expect(result.hash).toBeDefined()
-    const receipt = await result.wait()
+  })
 
-    const fromBalanceAfter = await fetchBalance({ addressOrName: fromAddress })
-    expect(formatUnits(fromBalanceAfter.value)).toEqual(
-      formatUnits(
-        fromBalance.value
-          .sub(amount)
-          .sub(receipt.gasUsed.mul(receipt.effectiveGasPrice)),
-      ),
-    )
-    const toBalanceAfter = await fetchBalance({ addressOrName: toAddress })
-    expect(toBalanceAfter.value).toEqual(toBalance.value.add(amount))
+  describe('behavior', () => {
+    it('throws', async () => {
+      await expect(
+        sendTransaction({
+          request: {},
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
+    })
+
+    it('fails on insufficient balance', async () => {
+      await connect({ connector: client.connectors[0] })
+
+      try {
+        await sendTransaction({
+          request: {
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
+          },
+        })
+      } catch (error) {
+        expect((<Error>error).message).toContain(
+          "sender doesn't have enough funds to send tx",
+        )
+      }
+    })
   })
 })

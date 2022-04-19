@@ -1,26 +1,33 @@
-import { setupWagmiClient } from '../../../test'
+import { getSigners, setupWagmiClient } from '../../../test'
+import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { getAccount } from './getAccount'
 
-describe('getAccount', () => {
-  it('not connected', async () => {
-    setupWagmiClient()
-    expect(getAccount()).toMatchInlineSnapshot(`
-      {
-        "address": undefined,
-        "connector": undefined,
-      }
-    `)
-  })
+const connector = new MockConnector({
+  options: { signer: getSigners()[0] },
+})
 
-  it('connected', async () => {
-    const client = setupWagmiClient()
-    await connect({ connector: client.connectors[0] })
-    expect(getAccount()).toMatchInlineSnapshot(`
-      {
-        "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "connector": "<MockConnector>",
-      }
-    `)
+describe('getAccount', () => {
+  beforeEach(() => setupWagmiClient())
+
+  describe('behavior', () => {
+    it('not connected', async () => {
+      expect(getAccount()).toMatchInlineSnapshot(`
+        {
+          "address": undefined,
+          "connector": undefined,
+        }
+      `)
+    })
+
+    it('connected', async () => {
+      await connect({ connector })
+      expect(getAccount()).toMatchInlineSnapshot(`
+        {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "connector": "<MockConnector>",
+        }
+      `)
+    })
   })
 })

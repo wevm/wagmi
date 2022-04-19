@@ -5,6 +5,12 @@ describe('fetchEnsAddress', () => {
   describe('args', () => {
     beforeEach(() => setupWagmiClient())
 
+    it('chainId', async () => {
+      expect(
+        await fetchEnsAddress({ name: 'awkweb.eth', chainId: 1 }),
+      ).toMatchInlineSnapshot(`"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`)
+    })
+
     describe('name', () => {
       it('no result', async () => {
         expect(
@@ -17,12 +23,6 @@ describe('fetchEnsAddress', () => {
           await fetchEnsAddress({ name: 'awkweb.eth' }),
         ).toMatchInlineSnapshot(`"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`)
       })
-    })
-
-    it('chainId', async () => {
-      expect(
-        await fetchEnsAddress({ name: 'awkweb.eth', chainId: 1 }),
-      ).toMatchInlineSnapshot(`"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e"`)
     })
   })
 })
