@@ -222,7 +222,7 @@ importers:
 
   packages/core:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.0.6
+      '@coinbase/wallet-sdk': ^3.0.8
       '@ethersproject/providers': ^5.5.1
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
@@ -233,7 +233,7 @@ importers:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7
     devDependencies:
-      '@coinbase/wallet-sdk': 3.0.6_@babel+core@7.16.5
+      '@coinbase/wallet-sdk': 3.0.8_@babel+core@7.16.5
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: 5.5.2
       wagmi-testing: link:../testing
@@ -241,7 +241,7 @@ importers:
 
   packages/react:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.0.6
+      '@coinbase/wallet-sdk': ^3.0.8
       '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
@@ -252,7 +252,7 @@ importers:
       wagmi-testing: 0.1.21
       walletlink: ^2.5.0
     dependencies:
-      '@coinbase/wallet-sdk': 3.0.6_@babel+core@7.16.5
+      '@coinbase/wallet-sdk': 3.0.8_@babel+core@7.16.5
       '@ethersproject/providers': 5.5.1
       '@walletconnect/ethereum-provider': 1.7.5
       wagmi-core: link:../core
@@ -1848,8 +1848,8 @@ packages:
       prettier: 1.19.1
     dev: true
 
-  /@coinbase/wallet-sdk/3.0.6_@babel+core@7.16.5:
-    resolution: {integrity: sha512-HKDStu0z+U9xUJFAr5Flk0LgsV9pUrkvErC1iEG4cRR4TEpb+Nv3INF2TiYDjRQObp1qLLBh+42DEnbWWQ2iqw==}
+  /@coinbase/wallet-sdk/3.0.8_@babel+core@7.16.5:
+    resolution: {integrity: sha512-yqnId5BIPeDbHks/DzAeSIvk68r5wvhoTpVnGHSZGWOgRx3h7K8y124WYCD+ketbKCdwoeOd8CLgXdc3H6VRug==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
@@ -1863,6 +1863,7 @@ packages:
       json-rpc-engine: 6.1.0
       keccak: 3.0.2
       preact: 10.6.4
+      qs: 6.10.3
       rxjs: 6.6.7
       stream-browserify: 3.0.0
     transitivePeerDependencies:
@@ -12607,6 +12608,12 @@ packages:
       isarray: 2.0.5
       pngjs: 3.4.0
       yargs: 13.3.2
+
+  /qs/6.10.3:
+    resolution: {integrity: sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==}
+    engines: {node: '>=0.6'}
+    dependencies:
+      side-channel: 1.0.4
 
   /qs/6.9.6:
     resolution: {integrity: sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==}
