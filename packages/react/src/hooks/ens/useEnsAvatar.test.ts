@@ -42,6 +42,8 @@ const handlers = [
 
 const server = setupServer(...handlers)
 
+const timeout = 10_000
+
 describe('useEnsAvatar', () => {
   beforeAll(() =>
     server.listen({
@@ -58,12 +60,13 @@ describe('useEnsAvatar', () => {
 
   afterAll(() => server.close())
 
+  jest.setTimeout(timeout)
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useEnsAvatar({ addressOrName: 'nick.eth' }),
     )
 
-    await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
+    await waitFor(() => result.current.isSuccess, { timeout })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
@@ -94,7 +97,7 @@ describe('useEnsAvatar', () => {
           }),
         )
 
-        await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
+        await waitFor(() => result.current.isSuccess, { timeout })
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
