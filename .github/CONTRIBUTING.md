@@ -12,9 +12,20 @@ It's never a fun experience to have your pull request declined after investing a
 
 This project uses [`pnpm`](https://pnpm.io) as a package manager.
 
+## Development playground
+
+To play around with code while making changes, you can run the development playground:
+
+```bash
+pnpm install
+pnpm dev:playground
+```
+
+The development playground code is located at [`examples/_dev`](../examples/_dev). Make sure you clean up after yourself before pushing up any changes.
+
 ## Coding standards
 
-Our code formatting rules are defined in [.eslintrc](https://github.com/tmm/wagmi/blob/main/.eslintrc). You can check your code against these standards by running:
+Our code formatting rules are defined in [.eslintrc](../.eslintrc). You can check your code against these standards by running:
 
 ```bash
 pnpm lint
@@ -23,7 +34,7 @@ pnpm lint
 To automatically fix any error in your code, you can run:
 
 ```bash
-npm lint:fix
+pnpm lint:fix
 ```
 
 ## Running tests
