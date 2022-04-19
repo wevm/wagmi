@@ -1,9 +1,13 @@
 import { verifyTypedData } from 'ethers/lib/utils'
 
-import { setupWagmiClient } from '../../../test'
-
+import { getSigners, setupWagmiClient } from '../../../test'
+import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { signTypedData } from './signTypedData'
+
+const connector = new MockConnector({
+  options: { signer: getSigners()[0] },
+})
 
 // All properties on a domain are optional
 const domain = {
@@ -40,23 +44,31 @@ const value = {
 }
 
 describe('signTypedData', () => {
-  it('not connected', async () => {
-    setupWagmiClient()
-    await expect(
-      signTypedData({ domain, types, value }),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
-  })
+  beforeEach(() => setupWagmiClient())
 
-  describe('connected', () => {
-    it('signs message', async () => {
-      const client = setupWagmiClient()
-      const connectResult = await connect({ connector: client.connectors[0] })
-      const signMessageResult = await signTypedData({ domain, types, value })
-      expect(signMessageResult).toMatchInlineSnapshot(
+  describe('args', () => {
+    it('domain, types, and value', async () => {
+      await connect({ connector })
+      expect(
+        await signTypedData({ domain, types, value }),
+      ).toMatchInlineSnapshot(
         `"0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b"`,
       )
-      expect(verifyTypedData(domain, types, value, signMessageResult)).toEqual(
-        connectResult?.account,
+    })
+  })
+
+  describe('behavior', () => {
+    it('not connected', async () => {
+      await expect(
+        signTypedData({ domain, types, value }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
+    })
+
+    it('can verify typed data', async () => {
+      await connect({ connector })
+      const res = await signTypedData({ domain, types, value })
+      expect(verifyTypedData(domain, types, value, res)).toMatchInlineSnapshot(
+        `"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`,
       )
     })
   })

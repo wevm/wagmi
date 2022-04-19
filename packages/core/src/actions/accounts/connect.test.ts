@@ -47,7 +47,7 @@ describe('connect', () => {
       )
     })
 
-    it('is already connected', async () => {
+    it('user rejected request', async () => {
       await expect(
         connect({
           connector: new MockConnector({

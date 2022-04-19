@@ -9,7 +9,7 @@ import {
 } from './useSignMessage'
 
 const messages = {
-  basic: 'The quick brown fox jumped over the lazy dogs.',
+  string: 'The quick brown fox jumped over the lazy dogs.',
   bytes: toUtf8Bytes('The quick brown fox jumped over the lazy dogs.'),
 }
 
@@ -47,7 +47,7 @@ describe('useSignMessage', () => {
       const onSuccess = jest.fn()
       const utils = renderHook(() =>
         useSignMessageWithConnect({
-          message: messages.basic,
+          message: messages.string,
           onSuccess,
         }),
       )
@@ -59,7 +59,7 @@ describe('useSignMessage', () => {
       await waitFor(() => result.current.signMessage.isSuccess)
       expect(onSuccess).toBeCalledWith(
         result.current.signMessage.data,
-        { message: messages.basic },
+        { message: messages.string },
         undefined,
       )
     })
@@ -70,7 +70,7 @@ describe('useSignMessage', () => {
       it('uses configuration', async () => {
         const utils = renderHook(() =>
           useSignMessageWithConnect({
-            message: messages.basic,
+            message: messages.string,
           }),
         )
         const { result, waitFor } = utils
@@ -103,7 +103,7 @@ describe('useSignMessage', () => {
         await actHookConnect({ utils })
 
         await actHook(async () =>
-          result.current.signMessage.signMessage({ message: messages.basic }),
+          result.current.signMessage.signMessage({ message: messages.string }),
         )
         await waitFor(() => result.current.signMessage.isSuccess)
         expect(result.current.signMessage).toMatchInlineSnapshot(`
@@ -156,7 +156,7 @@ describe('useSignMessage', () => {
       it('uses configuration', async () => {
         const utils = renderHook(() =>
           useSignMessageWithConnect({
-            message: messages.basic,
+            message: messages.string,
           }),
         )
         const { result, waitFor } = utils
@@ -267,7 +267,7 @@ describe('useSignMessage', () => {
     it('can verify message', async () => {
       const utils = renderHook(() =>
         useSignMessageWithConnect({
-          message: messages.basic,
+          message: messages.string,
         }),
       )
       const { result, waitFor } = utils
@@ -277,7 +277,7 @@ describe('useSignMessage', () => {
       await waitFor(() => result.current.signMessage.isSuccess)
       expect(
         verifyMessage(
-          messages.basic,
+          messages.string,
           result.current.signMessage.data as string,
         ),
       ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
