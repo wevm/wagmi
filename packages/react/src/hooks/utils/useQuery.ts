@@ -18,6 +18,7 @@ type QueryResult<TData, TError> = Pick<
   QueryObserverResult<TData, TError>,
   | 'data'
   | 'error'
+  | 'fetchStatus'
   | 'isError'
   | 'isFetched'
   | 'isFetching'
@@ -26,7 +27,6 @@ type QueryResult<TData, TError> = Pick<
   | 'isSuccess'
   | 'refetch'
   | 'status'
-  | 'fetchStatus'
 > & {
   isIdle: boolean
   internal: Pick<
@@ -120,27 +120,27 @@ export function useQuery<
 
   const {
     data,
-    error,
-    isError,
-    isFetched,
-    isFetching,
-    isRefetching,
-    isSuccess,
-    refetch,
-    status,
-    fetchStatus,
     dataUpdatedAt,
+    error,
     errorUpdatedAt,
     failureCount,
+    fetchStatus,
+    isError,
+    isFetched,
     isFetchedAfterMount,
+    isFetching,
     isLoading,
     isLoadingError,
     isPaused,
     isPlaceholderData,
     isPreviousData,
     isRefetchError,
+    isRefetching,
     isStale,
+    isSuccess,
+    refetch,
     remove,
+    status,
   } = observer.getOptimisticResult(defaultedOptions)
 
   useSyncExternalStore(
@@ -199,16 +199,16 @@ export function useQuery<
   const result: QueryResult<TData, TError> = {
     data,
     error,
-    isIdle,
+    fetchStatus,
     isError,
     isFetched,
     isFetching,
+    isIdle,
     isLoading: isLoading_,
     isRefetching,
     isSuccess,
     refetch,
     status,
-    fetchStatus,
     internal: {
       dataUpdatedAt,
       errorUpdatedAt,
