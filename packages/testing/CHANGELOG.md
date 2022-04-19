@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.1.21
+
+### Patch Changes
+
+- [`c858c51`](https://github.com/tmm/wagmi/commit/c858c51b44d9039f1d0db5bcf016639f47d1931f) Thanks [@tmm](https://github.com/tmm)! - update coinbase connector
+
+- Updated dependencies [[`c858c51`](https://github.com/tmm/wagmi/commit/c858c51b44d9039f1d0db5bcf016639f47d1931f)]:
+  - wagmi-core@0.1.21
+
 ## 0.1.20
 
 ### Patch Changes
