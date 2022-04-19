@@ -7,7 +7,7 @@ describe('useEnsName', () => {
       useEnsName({ address: '0xb0623c91c65621df716ab8afe5f66656b21a9108' }),
     )
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
