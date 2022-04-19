@@ -92,7 +92,7 @@ describe('useEnsResolver', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })
@@ -200,7 +200,7 @@ describe('useEnsResolver', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })

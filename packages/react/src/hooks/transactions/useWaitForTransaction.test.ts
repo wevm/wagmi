@@ -37,7 +37,7 @@ describe('useWaitForTransaction', () => {
         "isRefetching": false,
         "isSuccess": false,
         "refetch": [Function],
-        "status": "loading",
+        "status": "idle",
       }
     `)
   })

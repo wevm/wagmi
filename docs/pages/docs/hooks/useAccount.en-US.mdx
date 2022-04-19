@@ -29,12 +29,21 @@ function App() {
     connector: Connector
   }
   error?: Error
-  isError boolean
-  isFetching: boolean
   isIdle: boolean
   isLoading: boolean
+  isFetching: boolean
   isSuccess: boolean
-  status: "idle" | "error" | "loading" | "success"
+  isError: boolean
+  isFetched: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<{
+    address: string
+    connector: Connector
+  }>
+  status: 'idle' | 'error' | 'loading' | 'success'
 }
 ```
 

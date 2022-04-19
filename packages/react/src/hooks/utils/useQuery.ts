@@ -25,10 +25,10 @@ type QueryResult<TData, TError> = Pick<
   | 'isRefetching'
   | 'isSuccess'
   | 'refetch'
-  | 'status'
   | 'fetchStatus'
 > & {
   isIdle: boolean
+  status: 'idle' | 'loading' | 'success' | 'error'
   internal: Pick<
     QueryObserverResult,
     | 'dataUpdatedAt'
@@ -127,7 +127,7 @@ export function useQuery<
     isRefetching,
     isSuccess,
     refetch,
-    status,
+    status: status_,
     fetchStatus,
     dataUpdatedAt,
     errorUpdatedAt,
@@ -193,7 +193,10 @@ export function useQuery<
     throw error
   }
 
-  const isIdle = status === 'loading' && fetchStatus === 'idle'
+  const status =
+    status_ === 'loading' && fetchStatus === 'idle' ? 'idle' : status_
+
+  const isIdle = status === 'idle'
   const isLoading_ = status === 'loading' && fetchStatus === 'fetching'
 
   const result: QueryResult<TData, TError> = {
@@ -207,8 +210,8 @@ export function useQuery<
     isRefetching,
     isSuccess,
     refetch,
-    status,
     fetchStatus,
+    status,
     internal: {
       dataUpdatedAt,
       errorUpdatedAt,

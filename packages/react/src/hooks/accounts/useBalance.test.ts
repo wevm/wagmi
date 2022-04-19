@@ -178,7 +178,7 @@ describe('useBalance', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })
@@ -302,7 +302,7 @@ describe('useBalance', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })

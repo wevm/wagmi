@@ -82,7 +82,7 @@ describe('useEnsAddress', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })
@@ -180,7 +180,7 @@ describe('useEnsAddress', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })

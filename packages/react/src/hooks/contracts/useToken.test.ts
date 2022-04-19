@@ -175,7 +175,7 @@ describe('useToken', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })
@@ -266,7 +266,7 @@ describe('useToken', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })

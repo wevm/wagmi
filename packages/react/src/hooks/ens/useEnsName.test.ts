@@ -152,7 +152,7 @@ describe('useEnsName', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })
@@ -195,7 +195,7 @@ describe('useEnsName', () => {
           "isRefetching": false,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "loading",
+          "status": "idle",
         }
       `)
     })
