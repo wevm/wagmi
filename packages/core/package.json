@@ -1,7 +1,7 @@
 {
   "name": "wagmi-core",
   "license": "MIT",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
   "sideEffects": false,
@@ -65,7 +65,7 @@
     "@coinbase/wallet-sdk": "^3.0.6",
     "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1",
-    "wagmi-testing": "0.1.20",
+    "wagmi-testing": "0.1.21",
     "walletlink": "^2.5.0"
   }
 }
