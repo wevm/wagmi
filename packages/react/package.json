@@ -26,6 +26,10 @@
     "./connectors/walletLink": {
       "module": "./connectors/walletLink/dist/wagmi-connectors-walletLink.esm.js",
       "default": "./connectors/walletLink/dist/wagmi-connectors-walletLink.cjs.js"
+    },
+    "./connectors/coinbaseWallet": {
+      "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
+      "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
     }
   },
   "files": [
@@ -37,7 +41,8 @@
       "index.ts",
       "connectors/injected.ts",
       "connectors/walletConnect.ts",
-      "connectors/walletLink.ts"
+      "connectors/walletLink.ts",
+      "connectors/coinbaseWallet.ts"
     ]
   },
   "peerDependencies": {
@@ -46,6 +51,7 @@
   },
   "dependencies": {
     "@ethersproject/providers": "^5.5.1",
+    "@coinbase/wallet-sdk": "^3.0.6",
     "@walletconnect/ethereum-provider": "1.7.5",
     "wagmi-core": "0.1.20",
     "walletlink": "^2.5.0"

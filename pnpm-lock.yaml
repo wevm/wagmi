@@ -220,6 +220,7 @@ importers:
 
   packages/core:
     specifiers:
+      '@coinbase/wallet-sdk': ^3.0.6
       '@ethersproject/providers': ^5.5.1
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: ^5.5.1
@@ -230,6 +231,7 @@ importers:
       '@ethersproject/providers': 5.5.1
       eventemitter3: 4.0.7
     devDependencies:
+      '@coinbase/wallet-sdk': 3.0.6_@babel+core@7.16.5
       '@walletconnect/ethereum-provider': 1.7.5
       ethers: 5.5.2
       wagmi-testing: link:../testing
@@ -237,6 +239,7 @@ importers:
 
   packages/react:
     specifiers:
+      '@coinbase/wallet-sdk': ^3.0.6
       '@ethersproject/providers': ^5.5.1
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^17.0.0
@@ -247,6 +250,7 @@ importers:
       wagmi-testing: 0.1.20
       walletlink: ^2.5.0
     dependencies:
+      '@coinbase/wallet-sdk': 3.0.6_@babel+core@7.16.5
       '@ethersproject/providers': 5.5.1
       '@walletconnect/ethereum-provider': 1.7.5
       wagmi-core: link:../core
@@ -415,7 +419,7 @@ packages:
       '@babel/traverse': 7.16.5
       debug: 4.3.3
       lodash.debounce: 4.0.8
-      resolve: 1.20.0
+      resolve: 1.22.0
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
@@ -1841,6 +1845,28 @@ packages:
       human-id: 1.0.2
       prettier: 1.19.1
     dev: true
+
+  /@coinbase/wallet-sdk/3.0.6_@babel+core@7.16.5:
+    resolution: {integrity: sha512-HKDStu0z+U9xUJFAr5Flk0LgsV9pUrkvErC1iEG4cRR4TEpb+Nv3INF2TiYDjRQObp1qLLBh+42DEnbWWQ2iqw==}
+    engines: {node: '>= 10.0.0'}
+    dependencies:
+      '@metamask/safe-event-emitter': 2.0.0
+      bind-decorator: 1.0.11
+      bn.js: 5.2.0
+      clsx: 1.1.1
+      eth-block-tracker: 4.4.3_@babel+core@7.16.5
+      eth-json-rpc-filters: 4.2.2
+      eth-rpc-errors: 4.0.2
+      js-sha256: 0.9.0
+      json-rpc-engine: 6.1.0
+      keccak: 3.0.2
+      preact: 10.6.4
+      rxjs: 6.6.7
+      stream-browserify: 3.0.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - encoding
+      - supports-color
 
   /@emotion/hash/0.8.0:
     resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
@@ -3943,7 +3969,7 @@ packages:
   /@types/pbkdf2/3.1.0:
     resolution: {integrity: sha512-Cf63Rv7jCQ0LaL8tNXmEyqTHuIJxRdlS5vMh1mj5voN4+QFhVZnlZruezqpWYDiJ8UTzhP0VmeLXCmBk66YrMQ==}
     dependencies:
-      '@types/node': 17.0.5
+      '@types/node': 17.0.21
 
   /@types/prettier/2.4.2:
     resolution: {integrity: sha512-ekoj4qOQYp7CvjX8ZDBgN86w3MqQhLE1hczEJbEIjgFEumDy+na/4AJAbLXfgEWFNB2pKadM5rPFtuSGMWK7xA==}
@@ -4005,7 +4031,7 @@ packages:
   /@types/secp256k1/4.0.3:
     resolution: {integrity: sha512-Da66lEIFeIz9ltsdMZcpQvmrmmoqrfju8pm1BH8WbYjZSwUgCwXLb9C+9XYogwBITnbsSaMdVPb2ekf7TV+03w==}
     dependencies:
-      '@types/node': 17.0.5
+      '@types/node': 17.0.21
 
   /@types/semver/6.2.3:
     resolution: {integrity: sha512-KQf+QAMWKMrtBMsB8/24w53tEsxllMj6TuA80TT/5igJalLI/zm0L3oXRbIAl4Ohfc85gyHX/jhMwsVkmhLU4A==}
@@ -7744,6 +7770,8 @@ packages:
       eth-query: 2.1.2
       json-rpc-engine: 6.1.0
       pify: 5.0.0
+    transitivePeerDependencies:
+      - encoding
 
   /eth-json-rpc-middleware/6.0.0:
     resolution: {integrity: sha512-qqBfLU2Uq1Ou15Wox1s+NX05S9OcAEL4JZ04VZox2NS0U+RtCMjSxzXhLFWekdShUPZ+P8ax3zCO2xcPrp6XJQ==}
@@ -7756,9 +7784,11 @@ packages:
       ethereumjs-util: 5.2.1
       json-rpc-engine: 5.4.0
       json-stable-stringify: 1.0.1
-      node-fetch: 2.6.6
+      node-fetch: 2.6.7
       pify: 3.0.0
       safe-event-emitter: 1.0.1
+    transitivePeerDependencies:
+      - encoding
 
   /eth-query/2.1.2:
     resolution: {integrity: sha1-1nQdkAAQa1FRDHLbktY2VFam2l4=}
@@ -9138,12 +9168,12 @@ packages:
     resolution: {integrity: sha512-vd15qHsaqrRL7dtH6QNuy0ndJmRDrS9HAM1CAiSifNUFv4x1a0CCVsj18hJ1mShxIG6T2i1sO78MkP56r0nYRw==}
     dependencies:
       has: 1.0.3
+    dev: true
 
   /is-core-module/2.8.1:
     resolution: {integrity: sha512-SdNCUs284hr40hFTFP6l0IfZ/RSrMXF3qgoRHd3/79unUTvrFO/JoXwkGm+5J/Oe3E/b5GsnG330uUNgRpu1PA==}
     dependencies:
       has: 1.0.3
-    dev: true
 
   /is-data-descriptor/0.1.4:
     resolution: {integrity: sha1-C17mSDiOLIYCgueT8YVv7D8wG1Y=}
@@ -11681,7 +11711,6 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
-    dev: true
 
   /node-gyp-build/4.3.0:
     resolution: {integrity: sha512-iWjXZvmboq0ja1pUGULQBexmxq8CV4xBhX7VDOTbL7ZR4FOowwY/VOtRxBN/yKxmdGoIp4j5ysNT4u3S2pDQ3Q==}
@@ -13114,6 +13143,7 @@ packages:
     dependencies:
       is-core-module: 2.8.0
       path-parse: 1.0.7
+    dev: true
 
   /resolve/1.22.0:
     resolution: {integrity: sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw==}
@@ -13122,7 +13152,6 @@ packages:
       is-core-module: 2.8.1
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
-    dev: true
 
   /resolve/2.0.0-next.3:
     resolution: {integrity: sha512-W8LucSynKUIDu9ylraa7ueVZ7hc0uAgJBxVsQSKOXOyle8a93qXhcz+XAXZ8bIq2d6i4Ehddn6Evt+0/UwKk6Q==}
@@ -14054,7 +14083,6 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
-    dev: true
 
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
@@ -14932,6 +14960,7 @@ packages:
   /walletlink/2.5.0_@babel+core@7.16.5:
     resolution: {integrity: sha512-PBJmK5tZmonwKPABBI2/optaZ11O4kKmkmnU5eLKhk4XRlal5qJ1igZ4U5j3w6w8wxxdhCWpLMHzGWt3n/p7mw==}
     engines: {node: '>= 10.0.0'}
+    deprecated: 'WARNING: This project has been renamed to @coinbase/wallet-sdk. Install using @coinbase/wallet-sdk instead.'
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
       bind-decorator: 1.0.11
@@ -14948,6 +14977,7 @@ packages:
       stream-browserify: 3.0.0
     transitivePeerDependencies:
       - '@babel/core'
+      - encoding
       - supports-color
 
   /watchpack/2.3.0:

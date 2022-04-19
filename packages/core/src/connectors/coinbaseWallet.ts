@@ -1,6 +1,6 @@
 import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
-import { WalletLink, WalletLinkProvider } from 'walletlink'
-import { WalletLinkOptions } from 'walletlink/dist/WalletLink'
+import { CoinbaseWalletSDK, CoinbaseWalletProvider } from '@coinbase/wallet-sdk'
+import { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
 
 import { allChains } from '../constants'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
@@ -8,19 +8,19 @@ import { Chain } from '../types'
 import { getAddress, hexValue, normalizeChainId } from '../utils'
 import { Connector } from './base'
 
-type Options = WalletLinkOptions & { jsonRpcUrl?: string }
+type Options = CoinbaseWalletSDKOptions & { jsonRpcUrl?: string }
 
-export class WalletLinkConnector extends Connector<
-  WalletLinkProvider,
+export class CoinbaseWalletConnector extends Connector<
+  CoinbaseWalletProvider,
   Options
 > {
-  readonly id = 'walletLink'
-  readonly name = 'Coinbase Wallet (deprecated)'
+  readonly id = 'coinbasewallet'
+  readonly name = 'Coinbase Wallet'
   readonly ready =
     typeof window !== 'undefined' && !window.ethereum?.isCoinbaseWallet
 
-  #client?: WalletLink
-  #provider?: WalletLinkProvider
+  #client?: CoinbaseWalletSDK
+  #provider?: CoinbaseWalletProvider
 
   constructor(config: { chains?: Chain[]; options: Options }) {
     super(config)
@@ -87,7 +87,7 @@ export class WalletLinkConnector extends Connector<
 
   getProvider() {
     if (!this.#provider) {
-      this.#client = new WalletLink(this.options)
+      this.#client = new CoinbaseWalletSDK(this.options)
       this.#provider = this.#client.makeWeb3Provider(this.options.jsonRpcUrl)
     }
     return this.#provider
