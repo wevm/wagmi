@@ -1,5 +1,14 @@
 # wagmi-testing
 
+## 0.1.22
+
+### Patch Changes
+
+- [`747d895`](https://github.com/tmm/wagmi/commit/747d895a54b562958afde34b1d34e81ab5039e2c) Thanks [@tmm](https://github.com/tmm)! - add warning to WalletLinkConnector
+
+- Updated dependencies [[`747d895`](https://github.com/tmm/wagmi/commit/747d895a54b562958afde34b1d34e81ab5039e2c)]:
+  - wagmi-core@0.1.22
+
 ## 0.1.21
 
 ### Patch Changes
