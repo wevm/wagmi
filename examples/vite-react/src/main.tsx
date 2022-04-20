@@ -6,7 +6,7 @@ import { providers } from 'ethers'
 import { Connector, Provider, chain, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 import { App } from './App'
 
@@ -34,7 +34,7 @@ const connectors = ({ chainId }: ConnectorsConfig) => {
         qrcode: true,
       },
     }),
-    new WalletLinkConnector({
+    new CoinbaseWalletConnector({
       chains,
       options: {
         appName: 'wagmi',

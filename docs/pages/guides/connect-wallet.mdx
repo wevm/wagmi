@@ -10,13 +10,13 @@ The example below uses [`useConnect`](/docs/hooks/useConnect) and [`useAccount`]
 
 ## Step 1: Configuring Connectors
 
-First, we want to set up our [`Provider`](/docs/provider) with the Injected (MetaMask), WalletConnect, and WalletLink (Coinbase Wallet) connectors:
+First, we want to set up our [`Provider`](/docs/provider) with the Injected (MetaMask), WalletConnect, and Coinbase Wallet connectors:
 
 ```tsx
 import { Provider, chain, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 import { Example } from './components'
 
@@ -43,7 +43,7 @@ const connectors = ({ chainId }) => {
         qrcode: true,
       },
     }),
-    new WalletLinkConnector({
+    new CoinbaseWalletConnector({
       options: {
         appName: 'My wagmi app',
         jsonRpcUrl: `${rpcUrl}/${infuraId}`,

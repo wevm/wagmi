@@ -10,12 +10,19 @@ import { Connector } from './base'
 
 type Options = WalletLinkOptions & { jsonRpcUrl?: string }
 
+const cache = new Set<string>()
+const deprecatedMessage =
+  'WalletLinkConnector is deprecated. Use CoinbaseWalletConnector instead.'
+
+/**
+ * @deprecated se the new {@link CoinbaseWalletConnector} base class instead.
+ */
 export class WalletLinkConnector extends Connector<
   WalletLinkProvider,
   Options
 > {
   readonly id = 'walletLink'
-  readonly name = 'Coinbase Wallet (deprecated)'
+  readonly name = 'Coinbase Wallet'
   readonly ready =
     typeof window !== 'undefined' && !window.ethereum?.isCoinbaseWallet
 
@@ -24,6 +31,11 @@ export class WalletLinkConnector extends Connector<
 
   constructor(config: { chains?: Chain[]; options: Options }) {
     super(config)
+
+    if (typeof window !== 'undefined' && !cache.has(deprecatedMessage)) {
+      console.warn(deprecatedMessage)
+      cache.add(deprecatedMessage)
+    }
   }
 
   async connect() {

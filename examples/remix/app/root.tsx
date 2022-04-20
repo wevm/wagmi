@@ -14,7 +14,7 @@ import type { MetaFunction } from 'remix'
 import { Connector, Provider, chain, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 export function loader() {
   require('dotenv').config()
@@ -52,7 +52,7 @@ export default function App() {
           qrcode: true,
         },
       }),
-      new WalletLinkConnector({
+      new CoinbaseWalletConnector({
         chains,
         options: {
           appName: 'wagmi',
