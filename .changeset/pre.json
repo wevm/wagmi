@@ -8,7 +8,8 @@
     "example-next": "0.0.1",
     "example-playground": "0.0.1",
     "example-remix": "0.0.1",
-    "example-vite-react": "0.0.1"
+    "example-vite-react": "0.0.1",
+    "example-dev": "0.0.1"
   },
   "changesets": [
     "cold-penguins-heal",
@@ -27,6 +28,7 @@
     "sharp-lizards-explode",
     "shiny-pumas-suffer",
     "tasty-humans-jog",
-    "thirty-pears-search"
+    "thirty-pears-search",
+    "twelve-papayas-reflect"
   ]
 }

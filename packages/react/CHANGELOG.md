@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.3.0-next.18
+
+### Patch Changes
+
+- last beta
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.16
+
 ## 0.3.0-next.17
 
 ### Patch Changes
@@ -147,6 +156,7 @@
 
 - Updated dependencies []:
   - @wagmi/core@0.2.0-next.1
+
 ## 0.2.28
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.16
+
+### Patch Changes
+
+- last beta
+
 ## 0.2.0-next.15
 
 ### Patch Changes
