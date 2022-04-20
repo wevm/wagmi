@@ -33,7 +33,7 @@ describe('fetchToken', () => {
             address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
           }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"symbol()\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.0)"`,
+          `"call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"symbol()\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.1)"`,
         )
       })
     })

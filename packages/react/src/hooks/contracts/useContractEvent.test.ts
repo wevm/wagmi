@@ -134,6 +134,8 @@ function useContractEventWithWrite(config: {
   }
 }
 
+const timeout = 10_000
+
 describe('useContractEvent', () => {
   it('mounts', () => {
     const listener = jest.fn()
@@ -152,7 +154,7 @@ describe('useContractEvent', () => {
 
   describe('configuration', () => {
     describe('once', () => {
-      jest.setTimeout(10_000)
+      jest.setTimeout(timeout)
       it('listens', async () => {
         const tokenId = await getUnclaimedTokenId(
           '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -183,12 +185,15 @@ describe('useContractEvent', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.contractWrite.write())
-        await waitFor(() => result.current.contractWrite.isSuccess, {
-          timeout: 5_000,
-        })
+        await waitFor(
+          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+          { timeout },
+        )
         hash = result.current.contractWrite.data?.hash
         rerender()
-        await waitFor(() => result.current.waitForTransaction.isSuccess)
+        await waitFor(() =>
+          expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
+        )
 
         const to = await getSigners()[1].getAddress()
         functionName = 'approve'
@@ -197,12 +202,15 @@ describe('useContractEvent', () => {
 
         await actHookConnect({ utils })
         await actHook(async () => result.current.contractWrite.write())
-        await waitFor(() => result.current.contractWrite.isSuccess, {
-          timeout: 8_000,
-        })
+        await waitFor(
+          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+          { timeout },
+        )
         hash = result.current.contractWrite.data?.hash
         rerender()
-        await waitFor(() => result.current.waitForTransaction.isSuccess)
+        await waitFor(() =>
+          expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
+        )
 
         expect(listener).toHaveBeenCalled()
       })

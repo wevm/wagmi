@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom/client'
 import { providers } from 'ethers'
 
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
@@ -60,11 +60,10 @@ const client = createClient({
   },
 })
 
-ReactDOM.render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider client={client}>
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root'),
 )

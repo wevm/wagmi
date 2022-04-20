@@ -84,7 +84,9 @@ describe('useSignTypedData', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.signTypedData.signTypedData())
-      await waitFor(() => result.current.signTypedData.isSuccess)
+      await waitFor(() =>
+        expect(result.current.signTypedData.isSuccess).toBeTruthy(),
+      )
       expect(onSuccess).toBeCalledWith(
         result.current.signTypedData.data,
         { domain, types, value },
@@ -107,7 +109,9 @@ describe('useSignTypedData', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.signTypedData.signTypedData())
-        await waitFor(() => result.current.signTypedData.isSuccess)
+        await waitFor(() =>
+          expect(result.current.signTypedData.isSuccess).toBeTruthy(),
+        )
         expect(result.current.signTypedData).toMatchInlineSnapshot(`
           {
             "data": "0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b",
@@ -177,7 +181,9 @@ describe('useSignTypedData', () => {
         await actHook(async () =>
           result.current.signTypedData.signTypedData({ domain, types, value }),
         )
-        await waitFor(() => result.current.signTypedData.isSuccess)
+        await waitFor(() =>
+          expect(result.current.signTypedData.isSuccess).toBeTruthy(),
+        )
         expect(result.current.signTypedData).toMatchInlineSnapshot(`
           {
             "data": "0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b",
@@ -245,7 +251,9 @@ describe('useSignTypedData', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.signTypedData.signTypedData())
-        await waitFor(() => result.current.signTypedData.isError)
+        await waitFor(() =>
+          expect(result.current.signTypedData.isError).toBeTruthy(),
+        )
         expect(result.current.signTypedData).toMatchInlineSnapshot(`
           {
             "data": undefined,
@@ -286,7 +294,9 @@ describe('useSignTypedData', () => {
             `"0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b"`,
           )
         })
-        await waitFor(() => result.current.signTypedData.isSuccess)
+        await waitFor(() =>
+          expect(result.current.signTypedData.isSuccess).toBeTruthy(),
+        )
       })
 
       it('throws error', async () => {
@@ -301,7 +311,9 @@ describe('useSignTypedData', () => {
             `"domain, types, and value are all required"`,
           )
         })
-        await waitFor(() => result.current.signTypedData.isError)
+        await waitFor(() =>
+          expect(result.current.signTypedData.isError).toBeTruthy(),
+        )
       })
     })
   })
@@ -319,7 +331,9 @@ describe('useSignTypedData', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.signTypedData.signTypedData())
-      await waitFor(() => result.current.signTypedData.isSuccess)
+      await waitFor(() =>
+        expect(result.current.signTypedData.isSuccess).toBeTruthy(),
+      )
       expect(
         verifyTypedData(
           domain,

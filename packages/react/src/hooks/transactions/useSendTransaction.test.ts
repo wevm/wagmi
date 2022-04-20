@@ -52,7 +52,9 @@ describe('useSendTransaction', () => {
           result.current.sendTransaction.sendTransaction()
         })
 
-        await waitFor(() => result.current.sendTransaction.isSuccess)
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+        )
 
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
@@ -95,7 +97,9 @@ describe('useSendTransaction', () => {
           })
         })
 
-        await waitFor(() => result.current.sendTransaction.isSuccess)
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+        )
 
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
@@ -140,7 +144,9 @@ describe('useSendTransaction', () => {
           result.current.sendTransaction.sendTransaction()
         })
 
-        await waitFor(() => result.current.sendTransaction.isError)
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isError).toBeTruthy(),
+        )
 
         const { error, ...res } = result.current.sendTransaction
         expect(
@@ -192,7 +198,9 @@ describe('useSendTransaction', () => {
           expect(res.hash).toBeDefined()
         })
 
-        await waitFor(() => result.current.sendTransaction.isSuccess)
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+        )
       })
 
       it('throws on error', async () => {
@@ -224,7 +232,9 @@ describe('useSendTransaction', () => {
           }
         })
 
-        await waitFor(() => result.current.sendTransaction.isError)
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isError).toBeTruthy(),
+        )
       })
     })
   })

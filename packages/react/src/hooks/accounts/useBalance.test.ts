@@ -7,7 +7,9 @@ describe('useBalance', () => {
       useBalance({ addressOrName: 'awkweb.eth' }),
     )
 
-    await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+      timeout: 5_000,
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
@@ -47,7 +49,7 @@ describe('useBalance', () => {
           }),
         )
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -85,7 +87,7 @@ describe('useBalance', () => {
           }),
         )
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -122,7 +124,7 @@ describe('useBalance', () => {
         useBalance({ chainId: 1, addressOrName: 'awkweb.eth' }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -161,7 +163,7 @@ describe('useBalance', () => {
         }),
       )
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -188,7 +190,7 @@ describe('useBalance', () => {
         useBalance({ addressOrName: 'awkweb.eth', formatUnits: 'gwei' }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -225,7 +227,7 @@ describe('useBalance', () => {
         useBalance({ addressOrName: 'awkweb.eth', token: ensTokenAddress }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -285,7 +287,7 @@ describe('useBalance', () => {
     it('does nothing when `addressOrName` is missing', async () => {
       const { result, waitFor } = renderHook(() => useBalance())
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current

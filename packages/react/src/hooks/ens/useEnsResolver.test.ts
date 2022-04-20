@@ -7,7 +7,7 @@ describe('useEnsResolver', () => {
       useEnsResolver({ name: 'imhiring.eth' }),
     )
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
@@ -40,7 +40,7 @@ describe('useEnsResolver', () => {
         useEnsResolver({ chainId: 1, name: 'awkweb.eth' }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -75,7 +75,7 @@ describe('useEnsResolver', () => {
         }),
       )
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -103,7 +103,7 @@ describe('useEnsResolver', () => {
           useEnsResolver({ name: 'awkweb.eth' }),
         )
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -135,7 +135,7 @@ describe('useEnsResolver', () => {
           useEnsResolver({ name: 'awkweb123.eth' }),
         )
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -183,7 +183,7 @@ describe('useEnsResolver', () => {
     it('does nothing when `name` is missing', async () => {
       const { result, waitFor } = renderHook(() => useEnsResolver())
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current

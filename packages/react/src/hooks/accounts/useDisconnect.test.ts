@@ -42,7 +42,9 @@ describe('useDisconnect', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.disconnect.disconnect())
-      await waitFor(() => result.current.disconnect.isSuccess)
+      await waitFor(() =>
+        expect(result.current.disconnect.isSuccess).toBeTruthy(),
+      )
       expect(onSuccess).toBeCalledWith(undefined)
     })
   })
@@ -58,7 +60,9 @@ describe('useDisconnect', () => {
       )
 
       await actHook(async () => result.current.disconnect.disconnect())
-      await waitFor(() => result.current.disconnect.isSuccess)
+      await waitFor(() =>
+        expect(result.current.disconnect.isSuccess).toBeTruthy(),
+      )
 
       expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
         `undefined`,
@@ -88,7 +92,9 @@ describe('useDisconnect', () => {
       )
 
       await actHook(async () => result.current.disconnect.disconnectAsync())
-      await waitFor(() => result.current.disconnect.isSuccess)
+      await waitFor(() =>
+        expect(result.current.disconnect.isSuccess).toBeTruthy(),
+      )
 
       expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
         `undefined`,
@@ -125,7 +131,9 @@ describe('useDisconnect', () => {
 
       await actHook(async () => result.current.disconnect.disconnect())
 
-      await waitFor(() => result.current.disconnect.isSuccess)
+      await waitFor(() =>
+        expect(result.current.disconnect.isSuccess).toBeTruthy(),
+      )
       rerender()
       expect(result.current.account.data).toMatchInlineSnapshot(`null`)
     })

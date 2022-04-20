@@ -1,6 +1,5 @@
 import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
-import { act, renderHook } from '@testing-library/react-hooks'
-
+import { act } from '@testing-library/react'
 import { Contract } from 'ethers/lib/ethers'
 
 import { ClientConfig, Connector, createClient } from '../src'
@@ -9,6 +8,7 @@ import {
   getProvider,
   getSigners,
 } from '../../core/test/utils'
+import { renderHook } from '.'
 
 type Config = Partial<ClientConfig>
 
@@ -39,7 +39,7 @@ export async function actHookConnect(config: {
   })
 
   const { waitFor } = utils
-  await waitFor(() => getConnect(utils).isConnected)
+  await waitFor(() => expect(getConnect(utils).isConnected).toBeTruthy())
 }
 
 export async function actHookDisconnect(config: {
@@ -55,7 +55,7 @@ export async function actHookDisconnect(config: {
   })
 
   const { waitFor } = utils
-  await waitFor(() => getDisconnect(utils).isSuccess)
+  await waitFor(() => expect(getDisconnect(utils).isSuccess).toBeTruthy())
 }
 
 export async function actHookNetwork(config: {
@@ -72,7 +72,7 @@ export async function actHookNetwork(config: {
   })
 
   const { waitFor } = utils
-  await waitFor(() => getNetwork(utils).isSuccess)
+  await waitFor(() => expect(getNetwork(utils).isSuccess).toBeTruthy())
 }
 
 export async function getUnclaimedTokenId(

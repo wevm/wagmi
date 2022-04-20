@@ -30,7 +30,7 @@ describe('useAccount', () => {
         initialProps: { client },
       })
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -58,7 +58,7 @@ describe('useAccount', () => {
     it('is not connected', async () => {
       const { result, waitFor } = renderHook(() => useAccount())
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -88,7 +88,7 @@ describe('useAccount', () => {
 
       await actHookConnect({ utils })
 
-      await waitFor(() => result.current.account.isSuccess)
+      await waitFor(() => expect(result.current.account.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current.account
@@ -114,7 +114,7 @@ describe('useAccount', () => {
 
       await actHookDisconnect({ utils })
 
-      await waitFor(() => result.current.account.isSuccess)
+      await waitFor(() => expect(result.current.account.isSuccess).toBeTruthy())
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal: _, ...res2 } = result.current.account
       expect(res2).toMatchInlineSnapshot(`

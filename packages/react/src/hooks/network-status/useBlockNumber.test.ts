@@ -5,7 +5,7 @@ describe('useBlockNumber', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() => useBlockNumber())
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, internal, ...res } = result.current
@@ -33,7 +33,7 @@ describe('useBlockNumber', () => {
         useBlockNumber({ chainId: 1 }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, internal, ...res } = result.current
@@ -60,7 +60,7 @@ describe('useBlockNumber', () => {
         useBlockNumber({ enabled: false }),
       )
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current

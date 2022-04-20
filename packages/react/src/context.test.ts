@@ -5,11 +5,17 @@ import { useClient } from './context'
 
 describe('useContext', () => {
   it('should throw when not inside Provider', () => {
-    const wrapper = ({ children }: { children: React.ReactElement }) =>
-      React.createElement('div', { children })
-    const { result } = renderHook(() => useClient(), { wrapper })
-    expect(() => result.current).toThrowErrorMatchingInlineSnapshot(
-      `"Must be used within WagmiProvider"`,
-    )
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    try {
+      const wrapper = ({ children }: { children?: React.ReactNode }) =>
+        React.createElement('div', { children })
+      renderHook(() => useClient(), { wrapper })
+    } catch (error) {
+      expect(error).toMatchInlineSnapshot(
+        `[Error: Must be used within WagmiProvider]`,
+      )
+    }
   })
 })

@@ -63,11 +63,15 @@ describe('useWaitForTransaction', () => {
         })
       })
 
-      await waitFor(() => result.current.sendTransaction.isSuccess)
+      await waitFor(() =>
+        expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+      )
       hash = result.current.sendTransaction.data?.hash
       rerender()
 
-      await waitFor(() => result.current.waitForTransaction.isSuccess)
+      await waitFor(() =>
+        expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, internal, ...res } = result.current.waitForTransaction
@@ -107,11 +111,15 @@ describe('useWaitForTransaction', () => {
         })
       })
 
-      await waitFor(() => result.current.sendTransaction.isSuccess)
+      await waitFor(() =>
+        expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+      )
       hash = result.current.sendTransaction.data?.hash
       rerender()
 
-      await waitFor(() => result.current.waitForTransaction.isSuccess)
+      await waitFor(() =>
+        expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, internal, ...res } = result.current.waitForTransaction

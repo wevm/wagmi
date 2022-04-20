@@ -7,7 +7,9 @@ describe('useEnsName', () => {
       useEnsName({ address: '0xb0623c91c65621df716ab8afe5f66656b21a9108' }),
     )
 
-    await waitFor(() => result.current.isSuccess, { timeout: 5_000 })
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+      timeout: 5_000,
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
@@ -36,7 +38,7 @@ describe('useEnsName', () => {
           useEnsName({ address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' }),
         )
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -63,7 +65,7 @@ describe('useEnsName', () => {
           useEnsName({ address: '3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj' }),
         )
 
-        await waitFor(() => result.current.isError)
+        await waitFor(() => expect(result.current.isError).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -89,7 +91,7 @@ describe('useEnsName', () => {
         const address = await getSigners()[0].getAddress()
         const { result, waitFor } = renderHook(() => useEnsName({ address }))
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -105,7 +107,7 @@ describe('useEnsName', () => {
         }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -135,7 +137,7 @@ describe('useEnsName', () => {
         }),
       )
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -178,7 +180,7 @@ describe('useEnsName', () => {
     it('does nothing when `address` is missing', async () => {
       const { result, waitFor } = renderHook(() => useEnsName())
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current

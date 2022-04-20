@@ -62,7 +62,7 @@
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.0.8",
     "@walletconnect/ethereum-provider": "1.7.5",
-    "ethers": "^5.5.1"
+    "ethers": "^5.6.4"
   },
   "keywords": [
     "eth",

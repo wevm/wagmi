@@ -38,7 +38,7 @@ describe('useNetwork', () => {
         initialProps: { client },
       })
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { activeChain, chains, ...res } = result.current
       expect(activeChain?.id).toEqual(1)
@@ -64,7 +64,7 @@ describe('useNetwork', () => {
     it('is not connected', async () => {
       const { result, waitFor } = renderHook(() => useNetwork())
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { chains, ...res } = result.current
       expect(chains.length).toEqual(5)
@@ -92,7 +92,7 @@ describe('useNetwork', () => {
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() => useNetwork({ chainId: 1 }))
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { chains, ...res } = result.current
       expect(chains.length).toEqual(5)
@@ -131,7 +131,9 @@ describe('useNetwork', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.network.switchNetwork?.())
-        await waitFor(() => result.current.network.isSuccess)
+        await waitFor(() =>
+          expect(result.current.network.isSuccess).toBeTruthy(),
+        )
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { activeChain, chains, data, ...res } = result.current.network
@@ -164,7 +166,9 @@ describe('useNetwork', () => {
 
         await actHook(async () => result.current.network.switchNetwork?.(4))
 
-        await waitFor(() => result.current.network.isSuccess)
+        await waitFor(() =>
+          expect(result.current.network.isSuccess).toBeTruthy(),
+        )
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { activeChain, chains, data, ...res } = result.current.network
@@ -205,7 +209,7 @@ describe('useNetwork', () => {
 
         await actHookConnect({ utils, connector })
         await actHook(async () => result.current.network.switchNetwork?.(4))
-        await waitFor(() => result.current.network.isError)
+        await waitFor(() => expect(result.current.network.isError).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { activeChain, chains, ...res } = result.current.network
@@ -241,7 +245,9 @@ describe('useNetwork', () => {
 
         await actHook(async () => result.current.network.switchNetwork?.())
 
-        await waitFor(() => result.current.network.isSuccess)
+        await waitFor(() =>
+          expect(result.current.network.isSuccess).toBeTruthy(),
+        )
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { activeChain, chains, data, ...res } = result.current.network
@@ -312,7 +318,9 @@ describe('useNetwork', () => {
           `)
         })
 
-        await waitFor(() => result.current.network.isSuccess)
+        await waitFor(() =>
+          expect(result.current.network.isSuccess).toBeTruthy(),
+        )
       })
 
       it('throws error', async () => {
@@ -339,7 +347,7 @@ describe('useNetwork', () => {
           )
         })
 
-        await waitFor(() => result.current.network.isError)
+        await waitFor(() => expect(result.current.network.isError).toBeTruthy())
       })
     })
   })

@@ -5,7 +5,7 @@ describe('useFeeData', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() => useFeeData())
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, internal, ...res } = result.current
@@ -31,7 +31,7 @@ describe('useFeeData', () => {
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() => useFeeData({ chainId: 1 }))
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, internal, ...res } = result.current
@@ -62,7 +62,7 @@ describe('useFeeData', () => {
         }),
       )
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -89,7 +89,7 @@ describe('useFeeData', () => {
         useFeeData({ formatUnits: 'kwei' }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, internal, ...res } = result.current

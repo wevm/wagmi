@@ -36,7 +36,7 @@ export function useAccount({
 
   React.useEffect(() => {
     const unwatch = watchAccount((data) => {
-      queryClient.setQueryData(queryKey(), data)
+      queryClient.setQueryData(queryKey(), data?.address ? data : null)
     })
     return unwatch
   }, [queryClient])

@@ -33,7 +33,7 @@ describe('useSigner', () => {
         initialProps: { client },
       })
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -63,7 +63,7 @@ describe('useSigner', () => {
     it('is not connected', async () => {
       const { result, waitFor } = renderHook(() => useSigner())
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -93,7 +93,7 @@ describe('useSigner', () => {
 
       await actHookConnect({ utils })
 
-      await waitFor(() => result.current.signer.isSuccess)
+      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current.signer
@@ -121,7 +121,7 @@ describe('useSigner', () => {
 
       await actHookDisconnect({ utils })
 
-      await waitFor(() => result.current.signer.isSuccess)
+      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal: _, ...res2 } = result.current.signer
@@ -149,7 +149,7 @@ describe('useSigner', () => {
 
       await actHookConnect({ utils })
 
-      await waitFor(() => result.current.signer.isSuccess)
+      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current.signer
@@ -177,7 +177,7 @@ describe('useSigner', () => {
 
       await actHookNetwork({ utils, chainId: 1 })
 
-      await waitFor(() => result.current.signer.isSuccess)
+      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal: _, ...res2 } = result.current.signer

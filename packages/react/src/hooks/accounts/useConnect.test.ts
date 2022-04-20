@@ -41,8 +41,7 @@ describe('useConnect', () => {
         wrapper,
         initialProps: { client },
       })
-
-      await waitFor(() => result.current.isConnected)
+      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       expect(result.current).toMatchInlineSnapshot(`
@@ -71,7 +70,7 @@ describe('useConnect', () => {
     it('is not connected', async () => {
       const { result, waitFor } = renderHook(() => useConnect())
 
-      await waitFor(() => result.current.isDisconnected)
+      await waitFor(() => expect(result.current.isDisconnected).toBeTruthy())
 
       expect(result.current).toMatchInlineSnapshot(`
         {
@@ -103,8 +102,7 @@ describe('useConnect', () => {
         const { result, waitFor } = renderHook(() => useConnect({ connector }))
 
         await actHook(async () => result.current.connect())
-
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
           {
@@ -147,8 +145,7 @@ describe('useConnect', () => {
         await actHook(async () => {
           result.current.connect()
         })
-
-        await waitFor(() => result.current.isError)
+        await waitFor(() => expect(result.current.isError).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
           {
@@ -181,8 +178,7 @@ describe('useConnect', () => {
       )
 
       await actHook(async () => result.current.connect())
-
-      await waitFor(() => result.current.isConnected)
+      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
       expect(onConnect).toBeCalledWith(
         result.current.data,
@@ -202,8 +198,7 @@ describe('useConnect', () => {
         )
 
         await actHook(async () => result.current.connect())
-
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
           {
@@ -243,8 +238,7 @@ describe('useConnect', () => {
           const mockConnector = result.current.connectors[0]
           result.current.connect(mockConnector)
         })
-
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
           {
@@ -285,8 +279,7 @@ describe('useConnect', () => {
         )
 
         await actHook(async () => result.current.connect())
-
-        await waitFor(() => result.current.isError)
+        await waitFor(() => expect(result.current.isError).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
           {
@@ -347,7 +340,7 @@ describe('useConnect', () => {
           )
         })
 
-        await waitFor(() => result.current.isError)
+        await waitFor(() => expect(result.current.isError).toBeTruthy())
       })
     })
   })
@@ -374,11 +367,11 @@ describe('useConnect', () => {
       const { result, waitFor } = renderHook(() => useConnect())
 
       await actHook(async () => result.current.connect(connector))
-      await waitFor(() => result.current.isConnected)
+      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
       await actHook(async () => result.current.connect(connector))
 
-      await waitFor(() => result.current.isError)
+      await waitFor(() => expect(result.current.isError).toBeTruthy())
       expect(result.current.error).toMatchInlineSnapshot(
         `[ConnectorAlreadyConnectedError: Connector already connected]`,
       )
@@ -390,7 +383,9 @@ describe('useConnect', () => {
       )
 
       await actHook(async () => result.current.connect.connect(connector))
-      await waitFor(() => result.current.connect.isConnected)
+      await waitFor(() =>
+        expect(result.current.connect.isConnected).toBeTruthy(),
+      )
       expect(result.current.connect).toMatchInlineSnapshot(`
         {
           "activeConnector": "<MockConnector>",
@@ -422,7 +417,9 @@ describe('useConnect', () => {
       `)
 
       await actHook(async () => result.current.disconnect.disconnect())
-      await waitFor(() => result.current.disconnect.isSuccess)
+      await waitFor(() =>
+        expect(result.current.disconnect.isSuccess).toBeTruthy(),
+      )
       expect(result.current.connect).toMatchInlineSnapshot(`
         {
           "activeConnector": undefined,
@@ -463,9 +460,9 @@ describe('useConnect', () => {
         initialProps: { client },
       })
 
-      await waitFor(() => result.current.isConnecting)
+      await waitFor(() => expect(result.current.isConnecting).toBeTruthy())
       expect(result.current.status).toMatchInlineSnapshot(`"connecting"`)
-      await waitFor(() => result.current.isConnected)
+      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
       expect(result.current.status).toMatchInlineSnapshot(`"connected"`)
     })
   })

@@ -14,9 +14,7 @@ describe('useWebSocketProvider', () => {
     await client.webSocketProvider?.destroy()
     const { result } = renderHook(() => useWebSocketProvider(), {
       wrapper,
-      initialProps: {
-        client,
-      },
+      initialProps: { client },
     })
     expect(result.current).toMatchInlineSnapshot(
       `"<WebSocketProvider network={31337} />"`,
@@ -33,9 +31,7 @@ describe('useWebSocketProvider', () => {
         () => useWebSocketProvider({ chainId: 1 }),
         {
           wrapper,
-          initialProps: {
-            client,
-          },
+          initialProps: { client },
         },
       )
       await result.current?.destroy()

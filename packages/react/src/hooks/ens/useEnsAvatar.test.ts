@@ -66,7 +66,9 @@ describe('useEnsAvatar', () => {
       useEnsAvatar({ addressOrName: 'nick.eth' }),
     )
 
-    await waitFor(() => result.current.isSuccess, { timeout })
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+      timeout,
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
@@ -97,7 +99,9 @@ describe('useEnsAvatar', () => {
           }),
         )
 
-        await waitFor(() => result.current.isSuccess, { timeout })
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+          timeout,
+        })
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -126,7 +130,7 @@ describe('useEnsAvatar', () => {
           }),
         )
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -157,7 +161,7 @@ describe('useEnsAvatar', () => {
         }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -187,7 +191,7 @@ describe('useEnsAvatar', () => {
         }),
       )
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -232,7 +236,7 @@ describe('useEnsAvatar', () => {
     it('does nothing when `addressOrName` is missing', async () => {
       const { result, waitFor } = renderHook(() => useEnsAvatar())
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current

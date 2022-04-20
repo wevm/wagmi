@@ -12,7 +12,7 @@ describe('useToken', () => {
       }),
     )
 
-    await waitFor(() => result.current.isSuccess)
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
@@ -54,7 +54,7 @@ describe('useToken', () => {
           }),
         )
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
@@ -94,14 +94,14 @@ describe('useToken', () => {
           }),
         )
 
-        await waitFor(() => result.current.isError)
+        await waitFor(() => expect(result.current.isError).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { internal, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.0)],
+            "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", data="0x", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.1)],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
@@ -122,7 +122,7 @@ describe('useToken', () => {
         useToken({ address: ensTokenAddress, chainId: 1 }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -158,7 +158,7 @@ describe('useToken', () => {
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() => useToken({ enabled: false }))
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -185,7 +185,7 @@ describe('useToken', () => {
         useToken({ address: ensTokenAddress, formatUnits: 'wei' }),
       )
 
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
@@ -249,7 +249,7 @@ describe('useToken', () => {
     it('does nothing when `address` is missing', async () => {
       const { result, waitFor } = renderHook(() => useToken())
 
-      await waitFor(() => result.current.isIdle)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current

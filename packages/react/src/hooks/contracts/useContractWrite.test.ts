@@ -122,7 +122,10 @@ describe('useContractWrite', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.contractWrite.write())
-        await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
+        await waitFor(
+          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+          { timeout },
+        )
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
@@ -141,7 +144,10 @@ describe('useContractWrite', () => {
         await actHook(async () =>
           result.current.contractWrite.write({ args: tokenId }),
         )
-        await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
+        await waitFor(
+          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+          { timeout },
+        )
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
@@ -156,7 +162,9 @@ describe('useContractWrite', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.contractWrite.write())
-        await waitFor(() => result.current.contractWrite.isError)
+        await waitFor(() =>
+          expect(result.current.contractWrite.isError).toBeTruthy(),
+        )
 
         expect(result.current.contractWrite.error?.message).toContain(
           'Token ID invalid',
@@ -183,7 +191,10 @@ describe('useContractWrite', () => {
           })
           expect(res.hash).toBeDefined()
         })
-        await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
+        await waitFor(
+          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+          { timeout },
+        )
       })
 
       it('throws error', async () => {
@@ -202,7 +213,10 @@ describe('useContractWrite', () => {
             `"processing response error (body=\\"{\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\",\\\\\\"id\\\\\\":43,\\\\\\"error\\\\\\":{\\\\\\"code\\\\\\":-32603,\\\\\\"message\\\\\\":\\\\\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\\\\\"}}\\", error={\\"code\\":-32603}, requestBody=\\"{\\\\\\"method\\\\\\":\\\\\\"eth_estimateGas\\\\\\",\\\\\\"params\\\\\\":[{\\\\\\"from\\\\\\":\\\\\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\\\\\",\\\\\\"to\\\\\\":\\\\\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\\\\\"}],\\\\\\"id\\\\\\":43,\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\"}\\", requestMethod=\\"POST\\", url=\\"http://127.0.0.1:8545\\", code=SERVER_ERROR, version=web/5.6.0)"`,
           )
         })
-        await waitFor(() => result.current.contractWrite.isError, { timeout })
+        await waitFor(
+          () => expect(result.current.contractWrite.isError).toBeTruthy(),
+          { timeout },
+        )
       })
     })
   })
@@ -225,7 +239,10 @@ describe('useContractWrite', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.contractWrite.write())
-      await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
+      await waitFor(
+        () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+        { timeout },
+      )
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
 
@@ -237,7 +254,10 @@ describe('useContractWrite', () => {
 
       await actHookConnect({ utils })
       await actHook(async () => result.current.contractWrite.write())
-      await waitFor(() => result.current.contractWrite.isSuccess, { timeout })
+      await waitFor(
+        () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+        { timeout },
+      )
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
     })

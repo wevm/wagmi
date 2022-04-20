@@ -56,7 +56,9 @@ describe('useSignMessage', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.signMessage.signMessage())
-      await waitFor(() => result.current.signMessage.isSuccess)
+      await waitFor(() =>
+        expect(result.current.signMessage.isSuccess).toBeTruthy(),
+      )
       expect(onSuccess).toBeCalledWith(
         result.current.signMessage.data,
         { message: messages.string },
@@ -77,7 +79,9 @@ describe('useSignMessage', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.signMessage.signMessage())
-        await waitFor(() => result.current.signMessage.isSuccess)
+        await waitFor(() =>
+          expect(result.current.signMessage.isSuccess).toBeTruthy(),
+        )
         expect(result.current.signMessage).toMatchInlineSnapshot(`
           {
             "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
@@ -105,7 +109,9 @@ describe('useSignMessage', () => {
         await actHook(async () =>
           result.current.signMessage.signMessage({ message: messages.string }),
         )
-        await waitFor(() => result.current.signMessage.isSuccess)
+        await waitFor(() =>
+          expect(result.current.signMessage.isSuccess).toBeTruthy(),
+        )
         expect(result.current.signMessage).toMatchInlineSnapshot(`
           {
             "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
@@ -131,7 +137,9 @@ describe('useSignMessage', () => {
         await actHookConnect({ utils })
 
         await actHook(async () => result.current.signMessage.signMessage())
-        await waitFor(() => result.current.signMessage.isError)
+        await waitFor(() =>
+          expect(result.current.signMessage.isError).toBeTruthy(),
+        )
         expect(result.current.signMessage).toMatchInlineSnapshot(`
           {
             "data": undefined,
@@ -168,7 +176,9 @@ describe('useSignMessage', () => {
             `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
           )
         })
-        await waitFor(() => result.current.signMessage.isSuccess)
+        await waitFor(() =>
+          expect(result.current.signMessage.isSuccess).toBeTruthy(),
+        )
       })
 
       it('throws error', async () => {
@@ -181,7 +191,9 @@ describe('useSignMessage', () => {
             result.current.signMessage.signMessageAsync(),
           ).rejects.toThrowErrorMatchingInlineSnapshot(`"message is required"`)
         })
-        await waitFor(() => result.current.signMessage.isError)
+        await waitFor(() =>
+          expect(result.current.signMessage.isError).toBeTruthy(),
+        )
       })
     })
   })
@@ -197,7 +209,9 @@ describe('useSignMessage', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.signMessage.signMessage())
-      await waitFor(() => result.current.signMessage.isSuccess)
+      await waitFor(() =>
+        expect(result.current.signMessage.isSuccess).toBeTruthy(),
+      )
       expect(result.current.signMessage).toMatchInlineSnapshot(`
         {
           "data": "0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c",
@@ -274,7 +288,9 @@ describe('useSignMessage', () => {
       await actHookConnect({ utils })
 
       await actHook(async () => result.current.signMessage.signMessage())
-      await waitFor(() => result.current.signMessage.isSuccess)
+      await waitFor(() =>
+        expect(result.current.signMessage.isSuccess).toBeTruthy(),
+      )
       expect(
         verifyMessage(
           messages.string,

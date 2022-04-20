@@ -1,14 +1,14 @@
 import * as React from 'react'
 import {
-  RenderHookOptions,
-  WrapperComponent,
   renderHook as defaultRenderHook,
-} from '@testing-library/react-hooks'
+  waitFor,
+} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import { QueryClient } from 'react-query'
 
 import { Provider, ProviderProps } from '../src'
 import { setupWagmiClient } from './utils'
+import { reactVersion } from './setup'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,21 +37,39 @@ export function wrapper(props: Props) {
   return <Provider client={client} {...props} />
 }
 
-export function renderHook<TProps, TResult>(
+type RenderHookOptions<Props> = {
+  initialProps?: Props
+  wrapper?: typeof wrapper
+}
+
+export function renderHook<TResult, TProps>(
   hook: (props: TProps) => TResult,
   {
     wrapper: wrapper_,
-    ...options
+    ...options_
   }: RenderHookOptions<TProps & ProviderProps> | undefined = {},
 ) {
-  if (wrapper_ == undefined) wrapper_ = wrapper as WrapperComponent<TProps>
-  return defaultRenderHook<TProps, TResult>(hook, {
-    wrapper: wrapper_,
-    ...options,
-  })
+  let options: RenderHookOptions<TProps & ProviderProps>
+  if (reactVersion === '18')
+    options = {
+      wrapper: (props) =>
+        (wrapper_ ?? wrapper)({ ...props, ...options_?.initialProps }),
+      ...options_,
+    }
+  else
+    options = {
+      wrapper: wrapper_ ?? wrapper,
+      ...options_,
+    }
+
+  const utils = defaultRenderHook<TResult, TProps>(hook, options)
+  return {
+    ...utils,
+    waitFor: ((utils as any).waitFor as typeof waitFor) ?? waitFor,
+  }
 }
 
-export { act as actHook } from '@testing-library/react-hooks'
+export { act as actHook } from '@testing-library/react'
 export {
   setupWagmiClient,
   actHookConnect,
