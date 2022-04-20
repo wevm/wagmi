@@ -147,6 +147,96 @@
 
 - Updated dependencies []:
   - @wagmi/core@0.2.0-next.1
+## 0.2.28
+
+### Patch Changes
+
+- [`747d895`](https://github.com/tmm/wagmi/commit/747d895a54b562958afde34b1d34e81ab5039e2c) Thanks [@tmm](https://github.com/tmm)! - add warning to WalletLinkConnector
+
+- Updated dependencies [[`747d895`](https://github.com/tmm/wagmi/commit/747d895a54b562958afde34b1d34e81ab5039e2c)]:
+  - wagmi-core@0.1.22
+
+## 0.2.27
+
+### Patch Changes
+
+- [`c858c51`](https://github.com/tmm/wagmi/commit/c858c51b44d9039f1d0db5bcf016639f47d1931f) Thanks [@tmm](https://github.com/tmm)! - update coinbase connector
+
+- Updated dependencies [[`c858c51`](https://github.com/tmm/wagmi/commit/c858c51b44d9039f1d0db5bcf016639f47d1931f)]:
+  - wagmi-core@0.1.21
+
+## 0.2.26
+
+### Patch Changes
+
+- Updated dependencies [[`36e6989`](https://github.com/tmm/wagmi/commit/36e69894f4c27aaad7fb6d678476c8bb870244bb)]:
+  - wagmi-core@0.1.20
+
+## 0.2.25
+
+### Patch Changes
+
+- [`d467df6`](https://github.com/tmm/wagmi/commit/d467df6374210dbc4b016788b4beb4fded54cb4d) Thanks [@tmm](https://github.com/tmm)! - fix global type leaking
+
+- Updated dependencies [[`d467df6`](https://github.com/tmm/wagmi/commit/d467df6374210dbc4b016788b4beb4fded54cb4d)]:
+  - wagmi-core@0.1.19
+
+## 0.2.24
+
+### Patch Changes
+
+- [#294](https://github.com/tmm/wagmi/pull/294) [`1d253f3`](https://github.com/tmm/wagmi/commit/1d253f3a59b61d24c88d25c99decd84a6c734e5d) Thanks [@tmm](https://github.com/tmm)! - change babel target
+
+- Updated dependencies [[`1d253f3`](https://github.com/tmm/wagmi/commit/1d253f3a59b61d24c88d25c99decd84a6c734e5d)]:
+  - wagmi-core@0.1.18
+
+## 0.2.23
+
+### Patch Changes
+
+- [#292](https://github.com/tmm/wagmi/pull/292) [`53c9be1`](https://github.com/tmm/wagmi/commit/53c9be17ee0c2ae6b8f34f2351b8858257b3f5f2) Thanks [@tmm](https://github.com/tmm)! - fix private fields
+
+- Updated dependencies [[`53c9be1`](https://github.com/tmm/wagmi/commit/53c9be17ee0c2ae6b8f34f2351b8858257b3f5f2)]:
+  - wagmi-core@0.1.17
+
+## 0.2.22
+
+### Patch Changes
+
+- [`79a2499`](https://github.com/tmm/wagmi/commit/79a249989029f818c32c0e84c0dd2c75e8aa990a) Thanks [@tmm](https://github.com/tmm)! - update build target to es2021
+
+- Updated dependencies [[`79a2499`](https://github.com/tmm/wagmi/commit/79a249989029f818c32c0e84c0dd2c75e8aa990a)]:
+  - wagmi-core@0.1.16
+
+## 0.2.21
+
+### Patch Changes
+
+- [`f9790b5`](https://github.com/tmm/wagmi/commit/f9790b55600df09c77bb8ca349c5a3457df1b07c) Thanks [@tmm](https://github.com/tmm)! - fix WalletConnect issue
+
+- Updated dependencies [[`f9790b5`](https://github.com/tmm/wagmi/commit/f9790b55600df09c77bb8ca349c5a3457df1b07c)]:
+  - wagmi-core@0.1.15
+
+## 0.2.20
+
+### Patch Changes
+
+- [`fed29fb`](https://github.com/tmm/wagmi/commit/fed29fb4714abe234e2dabb63782cfc4439a10cf) Thanks [@tmm](https://github.com/tmm)! - export useSignTypedData
+
+## 0.2.19
+
+### Patch Changes
+
+- [`6987278`](https://github.com/tmm/wagmi/commit/69872786e0b54b89a20945cc5471c1f4675b0a68) Thanks [@tmm](https://github.com/tmm)! - add useSignedTypeData
+
+## 0.2.18
+
+### Patch Changes
+
+- [#236](https://github.com/tmm/wagmi/pull/236) [`53bad61`](https://github.com/tmm/wagmi/commit/53bad615788764e31121678083c382c1bd042fe8) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Updated `@walletconnect/ethereum-provider` to [v1.7.4](https://github.com/WalletConnect/walletconnect-monorepo/releases/tag/1.7.4)
+
+- Updated dependencies [[`53bad61`](https://github.com/tmm/wagmi/commit/53bad615788764e31121678083c382c1bd042fe8)]:
+  - wagmi-core@0.1.14
 
 ## 0.2.17
 

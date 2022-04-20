@@ -4360,7 +4360,7 @@ packages:
   /@types/set-cookie-parser/2.4.2:
     resolution: {integrity: sha512-fBZgytwhYAUkj/jC/FAV4RQ5EerRup1YQsXQCh8rZfiHkc4UahC192oH0smGwsXol3cL3A5oETuAHeQHmhXM4w==}
     dependencies:
-      '@types/node': 17.0.21
+      '@types/node': 17.0.25
     dev: true
 
   /@types/stack-utils/2.0.1:
