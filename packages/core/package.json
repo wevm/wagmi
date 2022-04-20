@@ -41,7 +41,7 @@
     ]
   },
   "peerDependencies": {
-    "@coinbase/wallet-sdk": "^3.0.6",
+    "@coinbase/wallet-sdk": "^3.0.8",
     "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1",
     "walletlink": "^2.5.0"
@@ -62,7 +62,7 @@
     "eventemitter3": "^4.0.7"
   },
   "devDependencies": {
-    "@coinbase/wallet-sdk": "^3.0.6",
+    "@coinbase/wallet-sdk": "^3.0.8",
     "@walletconnect/ethereum-provider": "1.7.5",
     "ethers": "^5.5.1",
     "wagmi-testing": "0.1.21",
