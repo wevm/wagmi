@@ -3,7 +3,7 @@ name: Main
 on:
   pull_request:
   push:
-    branches: [main, next, v*]
+    branches: [main, v*]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}

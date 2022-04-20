@@ -81,7 +81,7 @@ const mlootContractConfig = {
   ],
 }
 
-const timeout = 10_000
+const timeout = 15_000
 
 describe('useContractWrite', () => {
   it('mounts', () => {

@@ -134,7 +134,7 @@ function useContractEventWithWrite(config: {
   }
 }
 
-const timeout = 10_000
+const timeout = 15_000
 
 describe('useContractEvent', () => {
   it('mounts', () => {
