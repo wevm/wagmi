@@ -1,8 +1,8 @@
 import { connect } from '@wagmi/core'
 
 import {
-  actHookConnect,
-  actHookDisconnect,
+  actConnect,
+  actDisconnect,
   renderHook,
   setupWagmiClient,
   wrapper,
@@ -86,7 +86,7 @@ describe('useAccount', () => {
       const utils = renderHook(() => useAccountWithConnectAndDisconnect())
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
       await waitFor(() => expect(result.current.account.isSuccess).toBeTruthy())
 
@@ -112,7 +112,7 @@ describe('useAccount', () => {
         }
       `)
 
-      await actHookDisconnect({ utils })
+      await actDisconnect({ utils })
 
       await waitFor(() => expect(result.current.account.isSuccess).toBeTruthy())
       // eslint-disable-next-line @typescript-eslint/no-unused-vars

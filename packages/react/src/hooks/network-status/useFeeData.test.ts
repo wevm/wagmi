@@ -1,4 +1,4 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useFeeData } from './useFeeData'
 
 describe('useFeeData', () => {
@@ -116,7 +116,7 @@ describe('useFeeData', () => {
     it('refetch', async () => {
       const { result } = renderHook(() => useFeeData({ enabled: false }))
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toBeDefined()
       })

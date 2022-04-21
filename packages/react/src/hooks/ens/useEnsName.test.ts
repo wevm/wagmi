@@ -1,4 +1,4 @@
-import { actHook, getSigners, renderHook } from '../../../test'
+import { act, getSigners, renderHook } from '../../../test'
 import { useEnsName } from './useEnsName'
 
 describe('useEnsName', () => {
@@ -169,7 +169,7 @@ describe('useEnsName', () => {
         }),
       )
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(`"worm.eth"`)
       })

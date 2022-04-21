@@ -2,12 +2,10 @@ import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
 import { act } from '@testing-library/react'
 import { Contract } from 'ethers/lib/ethers'
 
+import { MockConnector } from '@wagmi/core/connectors/mock'
+
 import { ClientConfig, Connector, createClient } from '../src'
-import {
-  getMockConnector,
-  getProvider,
-  getSigners,
-} from '../../core/test/utils'
+import { getProvider, getSigners } from '../../core/test/utils'
 import { renderHook } from '.'
 
 type Config = Partial<ClientConfig>
@@ -15,8 +13,10 @@ type Config = Partial<ClientConfig>
 export function setupWagmiClient(config: Config = {}) {
   return createClient<BaseProvider, WebSocketProvider>({
     connectors: [
-      getMockConnector({
-        signer: getSigners()[0],
+      new MockConnector({
+        options: {
+          signer: getSigners()[0],
+        },
       }),
     ],
     provider: getProvider,
@@ -24,7 +24,7 @@ export function setupWagmiClient(config: Config = {}) {
   })
 }
 
-export async function actHookConnect(config: {
+export async function actConnect(config: {
   connector?: Connector
   utils: ReturnType<typeof renderHook>
 }) {
@@ -42,7 +42,7 @@ export async function actHookConnect(config: {
   await waitFor(() => expect(getConnect(utils).isConnected).toBeTruthy())
 }
 
-export async function actHookDisconnect(config: {
+export async function actDisconnect(config: {
   utils: ReturnType<typeof renderHook>
 }) {
   const getDisconnect = (utils: ReturnType<typeof renderHook>) =>
@@ -58,7 +58,7 @@ export async function actHookDisconnect(config: {
   await waitFor(() => expect(getDisconnect(utils).isSuccess).toBeTruthy())
 }
 
-export async function actHookNetwork(config: {
+export async function actNetwork(config: {
   chainId: number
   utils: ReturnType<typeof renderHook>
 }) {

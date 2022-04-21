@@ -1,4 +1,4 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useEnsAddress } from './useEnsAddress'
 
 describe('useEnsAddress', () => {
@@ -150,7 +150,7 @@ describe('useEnsAddress', () => {
         useEnsAddress({ enabled: false, name: 'worm.eth' }),
       )
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(
           `"0xfB843f8c4992EfDb6b42349C35f025ca55742D33"`,

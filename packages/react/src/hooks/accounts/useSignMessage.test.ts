@@ -1,6 +1,6 @@
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
 
-import { actHook, actHookConnect, renderHook } from '../../../test'
+import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 import {
   UseSignMessageArgs,
@@ -53,9 +53,9 @@ describe('useSignMessage', () => {
       )
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
-      await actHook(async () => result.current.signMessage.signMessage())
+      await act(async () => result.current.signMessage.signMessage())
       await waitFor(() =>
         expect(result.current.signMessage.isSuccess).toBeTruthy(),
       )
@@ -76,9 +76,9 @@ describe('useSignMessage', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.signMessage.signMessage())
+        await act(async () => result.current.signMessage.signMessage())
         await waitFor(() =>
           expect(result.current.signMessage.isSuccess).toBeTruthy(),
         )
@@ -104,9 +104,9 @@ describe('useSignMessage', () => {
       it('uses deferred args', async () => {
         const utils = renderHook(() => useSignMessageWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () =>
+        await act(async () =>
           result.current.signMessage.signMessage({ message: messages.string }),
         )
         await waitFor(() =>
@@ -134,9 +134,9 @@ describe('useSignMessage', () => {
       it('fails', async () => {
         const utils = renderHook(() => useSignMessageWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.signMessage.signMessage())
+        await act(async () => result.current.signMessage.signMessage())
         await waitFor(() =>
           expect(result.current.signMessage.isError).toBeTruthy(),
         )
@@ -168,9 +168,9 @@ describe('useSignMessage', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           const res = await result.current.signMessage.signMessageAsync()
           expect(res).toMatchInlineSnapshot(
             `"0x4a05822c986433a093433ba479c8f500fd70215e8864241035498db99107e8a56b34b373e0a3580dc9f532d610341cd83ccdfc623a6545a865314200acfe4f151c"`,
@@ -184,9 +184,9 @@ describe('useSignMessage', () => {
       it('throws error', async () => {
         const utils = renderHook(() => useSignMessageWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           await expect(
             result.current.signMessage.signMessageAsync(),
           ).rejects.toThrowErrorMatchingInlineSnapshot(`"message is required"`)
@@ -206,9 +206,9 @@ describe('useSignMessage', () => {
         }),
       )
       const { result, waitFor } = utils
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
-      await actHook(async () => result.current.signMessage.signMessage())
+      await act(async () => result.current.signMessage.signMessage())
       await waitFor(() =>
         expect(result.current.signMessage.isSuccess).toBeTruthy(),
       )
@@ -285,9 +285,9 @@ describe('useSignMessage', () => {
         }),
       )
       const { result, waitFor } = utils
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
-      await actHook(async () => result.current.signMessage.signMessage())
+      await act(async () => result.current.signMessage.signMessage())
       await waitFor(() =>
         expect(result.current.signMessage.isSuccess).toBeTruthy(),
       )

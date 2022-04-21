@@ -1,4 +1,4 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useBalance } from './useBalance'
 
 describe('useBalance', () => {
@@ -265,7 +265,7 @@ describe('useBalance', () => {
         useBalance({ enabled: false, addressOrName: 'worm.eth' }),
       )
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(`
           {

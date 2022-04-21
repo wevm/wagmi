@@ -1,4 +1,4 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useBlockNumber } from './useBlockNumber'
 
 describe('useBlockNumber', () => {
@@ -87,7 +87,7 @@ describe('useBlockNumber', () => {
     it('refetch', async () => {
       const { result } = renderHook(() => useBlockNumber({ enabled: false }))
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(typeof data === 'number').toBeTruthy()
       })

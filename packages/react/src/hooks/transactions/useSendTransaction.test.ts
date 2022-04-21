@@ -1,6 +1,6 @@
 import { parseEther } from 'ethers/lib/utils'
 
-import { actHook, actHookConnect, renderHook } from '../../../test'
+import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UseSendTransactionArgs,
@@ -46,9 +46,9 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           result.current.sendTransaction.sendTransaction()
         })
 
@@ -86,9 +86,9 @@ describe('useSendTransaction', () => {
       it('uses deferred args', async () => {
         const utils = renderHook(() => useSendTransactionWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           result.current.sendTransaction.sendTransaction({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
@@ -138,9 +138,9 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           result.current.sendTransaction.sendTransaction()
         })
 
@@ -190,9 +190,9 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           const res =
             await result.current.sendTransaction.sendTransactionAsync()
           expect(res.hash).toBeDefined()
@@ -213,14 +213,14 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           const mockConnector = result.current.connect.connectors[0]
           result.current.connect.connect(mockConnector)
         })
 
-        await actHook(async () => {
+        await act(async () => {
           try {
             await result.current.sendTransaction.sendTransactionAsync()
           } catch (error) {

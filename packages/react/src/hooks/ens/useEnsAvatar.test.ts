@@ -2,7 +2,7 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { chain } from '@wagmi/core'
 
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useEnsAvatar } from './useEnsAvatar'
 
 const handlers = [
@@ -223,7 +223,7 @@ describe('useEnsAvatar', () => {
         }),
       )
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(
           `"https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE"`,

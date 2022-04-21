@@ -2,9 +2,9 @@ import { connect } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
 import {
-  actHook,
-  actHookConnect,
-  actHookDisconnect,
+  act,
+  actConnect,
+  actDisconnect,
   getSigners,
   renderHook,
   setupWagmiClient,
@@ -128,9 +128,9 @@ describe('useNetwork', () => {
         )
         const { result, waitFor } = utils
 
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.network.switchNetwork?.())
+        await act(async () => result.current.network.switchNetwork?.())
         await waitFor(() =>
           expect(result.current.network.isSuccess).toBeTruthy(),
         )
@@ -162,9 +162,9 @@ describe('useNetwork', () => {
         const utils = renderHook(() => useNetworkWithConnectAndDisconnect())
         const { result, waitFor } = utils
 
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.network.switchNetwork?.(4))
+        await act(async () => result.current.network.switchNetwork?.(4))
 
         await waitFor(() =>
           expect(result.current.network.isSuccess).toBeTruthy(),
@@ -207,8 +207,8 @@ describe('useNetwork', () => {
         )
         const { result, waitFor } = utils
 
-        await actHookConnect({ utils, connector })
-        await actHook(async () => result.current.network.switchNetwork?.(4))
+        await actConnect({ utils, connector })
+        await act(async () => result.current.network.switchNetwork?.(4))
         await waitFor(() => expect(result.current.network.isError).toBeTruthy())
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -241,9 +241,9 @@ describe('useNetwork', () => {
         )
         const { result, waitFor } = utils
 
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.network.switchNetwork?.())
+        await act(async () => result.current.network.switchNetwork?.())
 
         await waitFor(() =>
           expect(result.current.network.isSuccess).toBeTruthy(),
@@ -285,9 +285,9 @@ describe('useNetwork', () => {
         )
         const { result, waitFor } = utils
 
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           const res = await result.current.network.switchNetworkAsync?.()
           expect(res).toMatchInlineSnapshot(`
             {
@@ -337,9 +337,9 @@ describe('useNetwork', () => {
         )
         const { result, waitFor } = utils
 
-        await actHookConnect({ utils, connector })
+        await actConnect({ utils, connector })
 
-        await actHook(async () => {
+        await act(async () => {
           await expect(
             result.current.network.switchNetworkAsync?.(4),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -357,9 +357,9 @@ describe('useNetwork', () => {
       const utils = renderHook(() => useNetworkWithConnectAndDisconnect())
       const { result } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
       expect(result.current.network.activeChain?.id).toMatchInlineSnapshot(`1`)
-      await actHookDisconnect({ utils })
+      await actDisconnect({ utils })
       expect(result.current.network.activeChain).toMatchInlineSnapshot(
         `undefined`,
       )
@@ -379,9 +379,9 @@ describe('useNetwork', () => {
       )
       const { result } = utils
 
-      await actHookConnect({ utils, connector })
+      await actConnect({ utils, connector })
 
-      await actHook(async () => {
+      await act(async () => {
         try {
           result.current.network.switchNetwork?.(4)
         } catch (error) {

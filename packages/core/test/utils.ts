@@ -1,8 +1,7 @@
 import { providers } from 'ethers'
 import { Wallet } from 'ethers/lib/ethers'
 
-import { Chain, allChains, chain as chain_, defaultChains } from '../src'
-import { MockConnector, MockProviderOptions } from '../src/connectors/mock'
+import { Chain, allChains, chain as chain_ } from '../src'
 
 export function getNetwork(chain: Chain) {
   return {
@@ -154,14 +153,4 @@ export function getSigners() {
     return provider.getSigner(wallet.address)
   })
   return signers
-}
-
-export function getMockConnector(
-  options: MockProviderOptions,
-  chains = defaultChains,
-) {
-  return new MockConnector({
-    chains,
-    options,
-  })
 }

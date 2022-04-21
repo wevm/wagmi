@@ -1,4 +1,4 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useEnsResolver } from './useEnsResolver'
 
 describe('useEnsResolver', () => {
@@ -165,7 +165,7 @@ describe('useEnsResolver', () => {
         useEnsResolver({ enabled: false, name: 'worm.eth' }),
       )
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(`
           Resolver {

@@ -1,8 +1,8 @@
 import { WriteContractArgs, erc20ABI } from '@wagmi/core'
 
 import {
-  actHook,
-  actHookConnect,
+  act,
+  actConnect,
   getSigners,
   getUnclaimedTokenId,
   renderHook,
@@ -182,9 +182,9 @@ describe('useContractEvent', () => {
           }),
         )
         const { result, rerender, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.contractWrite.write())
+        await act(async () => result.current.contractWrite.write())
         await waitFor(
           () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
           { timeout },
@@ -200,8 +200,8 @@ describe('useContractEvent', () => {
         args = [to, tokenId]
         rerender()
 
-        await actHookConnect({ utils })
-        await actHook(async () => result.current.contractWrite.write())
+        await actConnect({ utils })
+        await act(async () => result.current.contractWrite.write())
         await waitFor(
           () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
           { timeout },

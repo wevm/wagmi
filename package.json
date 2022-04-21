@@ -18,8 +18,10 @@
     "lint:types": "tsc --noEmit",
     "postinstall": "husky install .config/husky && preconstruct dev",
     "preinstall": "npx only-allow pnpm",
+    "size": "bundlewatch --config .config/bundlewatch.config.js",
     "test": "jest --coverage",
     "test:ci": "start-server-and-test hardhat:dev http://127.0.0.1:8545 test",
+    "test:size": "pnpm build && pnpm size",
     "test:watch": "jest --watch"
   },
   "lint-staged": {

@@ -1,10 +1,6 @@
-import {
-  getMockConnector,
-  getProvider,
-  getSigners,
-  getWebSocketProvider,
-} from '../test'
+import { getProvider, getSigners, getWebSocketProvider } from '../test'
 import { Client, createClient, getClient } from './client'
+import { MockConnector } from './connectors/mock'
 import { createStorage } from './storage'
 
 describe('createClient', () => {
@@ -41,8 +37,10 @@ describe('createClient', () => {
       it('custom', () => {
         const client = createClient({
           connectors: [
-            getMockConnector({
-              signer: getSigners()[0],
+            new MockConnector({
+              options: {
+                signer: getSigners()[0],
+              },
             }),
           ],
         })

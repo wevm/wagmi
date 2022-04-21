@@ -1,4 +1,4 @@
-import { actHookConnect, actHookNetwork, renderHook } from '../../../test'
+import { actConnect, actNetwork, renderHook } from '../../../test'
 import { useConnect, useNetwork } from '../accounts'
 import { UseProviderArgs, useProvider } from './useProvider'
 
@@ -33,8 +33,8 @@ describe('useProvider', () => {
         `"<Provider network={31337} />"`,
       )
 
-      await actHookConnect({ utils })
-      await actHookNetwork({ utils, chainId: 4 })
+      await actConnect({ utils })
+      await actNetwork({ utils, chainId: 4 })
 
       expect(result.current.provider).toMatchInlineSnapshot(
         `"<Provider network={4} />"`,

@@ -1,4 +1,4 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useContractRead } from './useContractRead'
 
 const wagmigotchiContractConfig = {
@@ -150,7 +150,7 @@ describe('useContractRead', () => {
         }),
       )
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(`
           {

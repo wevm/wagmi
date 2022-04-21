@@ -1,4 +1,4 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useToken } from './useToken'
 
 const ensTokenAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
@@ -225,7 +225,7 @@ describe('useToken', () => {
         useToken({ address: uniTokenAddress, enabled: false }),
       )
 
-      await actHook(async () => {
+      await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(`
           {

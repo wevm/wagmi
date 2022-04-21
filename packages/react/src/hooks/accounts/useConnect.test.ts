@@ -2,7 +2,7 @@ import { connect } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
 import {
-  actHook,
+  act,
   getSigners,
   renderHook,
   setupWagmiClient,
@@ -101,7 +101,7 @@ describe('useConnect', () => {
       it('connects', async () => {
         const { result, waitFor } = renderHook(() => useConnect({ connector }))
 
-        await actHook(async () => result.current.connect())
+        await act(async () => result.current.connect())
         await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
@@ -142,7 +142,7 @@ describe('useConnect', () => {
           }),
         )
 
-        await actHook(async () => {
+        await act(async () => {
           result.current.connect()
         })
         await waitFor(() => expect(result.current.isError).toBeTruthy())
@@ -177,7 +177,7 @@ describe('useConnect', () => {
         useConnect({ connector, onConnect }),
       )
 
-      await actHook(async () => result.current.connect())
+      await act(async () => result.current.connect())
       await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
       expect(onConnect).toBeCalledWith(
@@ -197,7 +197,7 @@ describe('useConnect', () => {
           }),
         )
 
-        await actHook(async () => result.current.connect())
+        await act(async () => result.current.connect())
         await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
@@ -234,7 +234,7 @@ describe('useConnect', () => {
       it('uses deferred args', async () => {
         const { result, waitFor } = renderHook(() => useConnect())
 
-        await actHook(async () => {
+        await act(async () => {
           const mockConnector = result.current.connectors[0]
           result.current.connect(mockConnector)
         })
@@ -278,7 +278,7 @@ describe('useConnect', () => {
           }),
         )
 
-        await actHook(async () => result.current.connect())
+        await act(async () => result.current.connect())
         await waitFor(() => expect(result.current.isError).toBeTruthy())
 
         expect(result.current).toMatchInlineSnapshot(`
@@ -309,7 +309,7 @@ describe('useConnect', () => {
       it('uses configuration', async () => {
         const { result, waitFor } = renderHook(() => useConnect({ connector }))
 
-        await actHook(async () => {
+        await act(async () => {
           const res = await result.current.connectAsync()
           expect(res).toMatchInlineSnapshot(`
             {
@@ -332,7 +332,7 @@ describe('useConnect', () => {
           useConnect({ connector: connectorFail }),
         )
 
-        await actHook(async () => {
+        await act(async () => {
           await expect(
             result.current.connectAsync(),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -358,7 +358,7 @@ describe('useConnect', () => {
         }),
       )
 
-      await actHook(async () => result.current.connect())
+      await act(async () => result.current.connect())
       await waitFor(() => result.current.isConnected)
       expect(result.current.data?.chain.unsupported).toBeTruthy()
     })
@@ -366,10 +366,10 @@ describe('useConnect', () => {
     it('is already connected', async () => {
       const { result, waitFor } = renderHook(() => useConnect())
 
-      await actHook(async () => result.current.connect(connector))
+      await act(async () => result.current.connect(connector))
       await waitFor(() => expect(result.current.isConnected).toBeTruthy())
 
-      await actHook(async () => result.current.connect(connector))
+      await act(async () => result.current.connect(connector))
 
       await waitFor(() => expect(result.current.isError).toBeTruthy())
       expect(result.current.error).toMatchInlineSnapshot(
@@ -382,7 +382,7 @@ describe('useConnect', () => {
         useConnectWithDisconnect({ connector }),
       )
 
-      await actHook(async () => result.current.connect.connect(connector))
+      await act(async () => result.current.connect.connect(connector))
       await waitFor(() =>
         expect(result.current.connect.isConnected).toBeTruthy(),
       )
@@ -416,7 +416,7 @@ describe('useConnect', () => {
         }
       `)
 
-      await actHook(async () => result.current.disconnect.disconnect())
+      await act(async () => result.current.disconnect.disconnect())
       await waitFor(() =>
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )

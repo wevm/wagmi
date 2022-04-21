@@ -2,6 +2,8 @@ gm.
 
 Thanks for your interest in contributing to wagmi! Please take a moment to review this document **before submitting a pull request.**
 
+If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).
+
 ## Pull requests
 
 **Please ask first before starting work on any significant new features.**
@@ -61,6 +63,12 @@ pnpm dev:docs
 
 Not all contributions require updates to the docs. Also, feel free to update the docs if you think somemthing is unclear or could be explained better.
 
----
+## CI setup
 
-If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).
+The following secrets are required to run the GitHub Actions workflows:
+
+```
+ALCHEMY_ID
+BUNDLEWATCH_GITHUB_TOKEN
+NPM_TOKEN
+```

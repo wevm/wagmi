@@ -1,9 +1,9 @@
 import { connect } from '@wagmi/core'
 
 import {
-  actHookConnect,
-  actHookDisconnect,
-  actHookNetwork,
+  actConnect,
+  actDisconnect,
+  actNetwork,
   renderHook,
   setupWagmiClient,
   wrapper,
@@ -91,7 +91,7 @@ describe('useSigner', () => {
       const utils = renderHook(() => useSignerWithAccount())
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
       await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 
@@ -119,7 +119,7 @@ describe('useSigner', () => {
         }
       `)
 
-      await actHookDisconnect({ utils })
+      await actDisconnect({ utils })
 
       await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 
@@ -147,7 +147,7 @@ describe('useSigner', () => {
       const utils = renderHook(() => useSignerWithAccount())
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
       await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 
@@ -175,7 +175,7 @@ describe('useSigner', () => {
         }
       `)
 
-      await actHookNetwork({ utils, chainId: 1 })
+      await actNetwork({ utils, chainId: 1 })
 
       await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 

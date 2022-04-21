@@ -1,8 +1,8 @@
 import { WriteContractArgs } from '@wagmi/core'
 
 import {
-  actHook,
-  actHookConnect,
+  act,
+  actConnect,
   getSigners,
   getUnclaimedTokenId,
   renderHook,
@@ -119,9 +119,9 @@ describe('useContractWrite', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.contractWrite.write())
+        await act(async () => result.current.contractWrite.write())
         await waitFor(
           () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
           { timeout },
@@ -139,9 +139,9 @@ describe('useContractWrite', () => {
           useContractWriteWithConnect(mlootContractConfig, 'claim'),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () =>
+        await act(async () =>
           result.current.contractWrite.write({ args: tokenId }),
         )
         await waitFor(
@@ -159,9 +159,9 @@ describe('useContractWrite', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.contractWrite.write())
+        await act(async () => result.current.contractWrite.write())
         await waitFor(() =>
           expect(result.current.contractWrite.isError).toBeTruthy(),
         )
@@ -183,9 +183,9 @@ describe('useContractWrite', () => {
           useContractWriteWithConnect(mlootContractConfig, 'claim'),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           const res = await result.current.contractWrite.writeAsync({
             args: tokenId,
           })
@@ -202,9 +202,9 @@ describe('useContractWrite', () => {
           useContractWriteWithConnect(mlootContractConfig, 'claim'),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           await expect(
             result.current.contractWrite.writeAsync({
               args: 1,
@@ -236,9 +236,9 @@ describe('useContractWrite', () => {
         }),
       )
       const { result, rerender, waitFor } = utils
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
-      await actHook(async () => result.current.contractWrite.write())
+      await act(async () => result.current.contractWrite.write())
       await waitFor(
         () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         { timeout },
@@ -252,8 +252,8 @@ describe('useContractWrite', () => {
       args = [from, to, tokenId]
       rerender()
 
-      await actHookConnect({ utils })
-      await actHook(async () => result.current.contractWrite.write())
+      await actConnect({ utils })
+      await act(async () => result.current.contractWrite.write())
       await waitFor(
         () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         { timeout },

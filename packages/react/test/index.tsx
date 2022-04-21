@@ -65,20 +65,19 @@ export function renderHook<TResult, TProps>(
   const utils = defaultRenderHook<TResult, TProps>(hook, options)
   return {
     ...utils,
-    waitFor: ((utils as any).waitFor as typeof waitFor) ?? waitFor,
+    waitFor: (utils as { waitFor?: typeof waitFor }).waitFor ?? waitFor,
   }
 }
 
-export { act as actHook } from '@testing-library/react'
+export { act } from '@testing-library/react'
 export {
   setupWagmiClient,
-  actHookConnect,
-  actHookDisconnect,
-  actHookNetwork,
+  actConnect,
+  actDisconnect,
+  actNetwork,
   getUnclaimedTokenId,
 } from './utils'
 export {
-  getMockConnector,
   getProvider,
   getWebSocketProvider,
   getSigners,

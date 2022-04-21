@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useForceUpdate } from './useForceUpdate'
 
 function useForceUpdateWithCounter() {
@@ -21,7 +21,7 @@ describe('useForceUpdate', () => {
       const { result } = renderHook(() => useForceUpdateWithCounter())
       expect(result.current.counter).toMatchInlineSnapshot(`1`)
 
-      actHook(() => {
+      act(() => {
         result.current.forceUpdate()
       })
 

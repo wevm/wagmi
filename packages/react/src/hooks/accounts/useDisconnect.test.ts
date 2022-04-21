@@ -1,4 +1,4 @@
-import { actHook, actHookConnect, renderHook } from '../../../test'
+import { act, actConnect, renderHook } from '../../../test'
 import { useAccount } from './useAccount'
 import { useConnect } from './useConnect'
 import { UseDisconnectConfig, useDisconnect } from './useDisconnect'
@@ -39,9 +39,9 @@ describe('useDisconnect', () => {
       const utils = renderHook(() => useDisconnectWithConnect({ onSuccess }))
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
-      await actHook(async () => result.current.disconnect.disconnect())
+      await act(async () => result.current.disconnect.disconnect())
       await waitFor(() =>
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
@@ -54,12 +54,12 @@ describe('useDisconnect', () => {
       const utils = renderHook(() => useDisconnectWithConnect())
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
       expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
         `"<MockConnector>"`,
       )
 
-      await actHook(async () => result.current.disconnect.disconnect())
+      await act(async () => result.current.disconnect.disconnect())
       await waitFor(() =>
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
@@ -86,12 +86,12 @@ describe('useDisconnect', () => {
       const utils = renderHook(() => useDisconnectWithConnect())
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
       expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
         `"<MockConnector>"`,
       )
 
-      await actHook(async () => result.current.disconnect.disconnectAsync())
+      await act(async () => result.current.disconnect.disconnectAsync())
       await waitFor(() =>
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
@@ -120,7 +120,7 @@ describe('useDisconnect', () => {
       const utils = renderHook(() => useDisconnectWithAccountAndConnect())
       const { result, rerender, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
       expect(result.current.account.data).toMatchInlineSnapshot(`
         {
@@ -129,7 +129,7 @@ describe('useDisconnect', () => {
         }
       `)
 
-      await actHook(async () => result.current.disconnect.disconnect())
+      await act(async () => result.current.disconnect.disconnect())
 
       await waitFor(() =>
         expect(result.current.disconnect.isSuccess).toBeTruthy(),

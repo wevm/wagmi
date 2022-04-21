@@ -1,6 +1,6 @@
 import { verifyTypedData } from 'ethers/lib/utils'
 
-import { actHook, actHookConnect, renderHook } from '../../../test'
+import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 import {
   UseSignTypedDataArgs,
@@ -81,9 +81,9 @@ describe('useSignTypedData', () => {
       )
       const { result, waitFor } = utils
 
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
-      await actHook(async () => result.current.signTypedData.signTypedData())
+      await act(async () => result.current.signTypedData.signTypedData())
       await waitFor(() =>
         expect(result.current.signTypedData.isSuccess).toBeTruthy(),
       )
@@ -106,9 +106,9 @@ describe('useSignTypedData', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.signTypedData.signTypedData())
+        await act(async () => result.current.signTypedData.signTypedData())
         await waitFor(() =>
           expect(result.current.signTypedData.isSuccess).toBeTruthy(),
         )
@@ -176,9 +176,9 @@ describe('useSignTypedData', () => {
       it('uses deferred args', async () => {
         const utils = renderHook(() => useSignTypedDataWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () =>
+        await act(async () =>
           result.current.signTypedData.signTypedData({ domain, types, value }),
         )
         await waitFor(() =>
@@ -248,9 +248,9 @@ describe('useSignTypedData', () => {
       it('fails', async () => {
         const utils = renderHook(() => useSignTypedDataWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => result.current.signTypedData.signTypedData())
+        await act(async () => result.current.signTypedData.signTypedData())
         await waitFor(() =>
           expect(result.current.signTypedData.isError).toBeTruthy(),
         )
@@ -286,9 +286,9 @@ describe('useSignTypedData', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           const res = await result.current.signTypedData.signTypedDataAsync()
           expect(res).toMatchInlineSnapshot(
             `"0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b"`,
@@ -302,9 +302,9 @@ describe('useSignTypedData', () => {
       it('throws error', async () => {
         const utils = renderHook(() => useSignTypedDataWithConnect())
         const { result, waitFor } = utils
-        await actHookConnect({ utils })
+        await actConnect({ utils })
 
-        await actHook(async () => {
+        await act(async () => {
           await expect(
             result.current.signTypedData.signTypedDataAsync(),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -328,9 +328,9 @@ describe('useSignTypedData', () => {
         }),
       )
       const { result, waitFor } = utils
-      await actHookConnect({ utils })
+      await actConnect({ utils })
 
-      await actHook(async () => result.current.signTypedData.signTypedData())
+      await act(async () => result.current.signTypedData.signTypedData())
       await waitFor(() =>
         expect(result.current.signTypedData.isSuccess).toBeTruthy(),
       )

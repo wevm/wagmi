@@ -1,13 +1,16 @@
 import { ClientConfig, createClient } from '../src'
-import { getMockConnector, getProvider, getSigners } from './utils'
+import { MockConnector } from '../src/connectors/mock'
+import { getProvider, getSigners } from './utils'
 
 type Config = Partial<ClientConfig>
 
 export function setupWagmiClient(config: Config = {}) {
   return createClient({
     connectors: [
-      getMockConnector({
-        signer: getSigners()[0],
+      new MockConnector({
+        options: {
+          signer: getSigners()[0],
+        },
       }),
     ],
     provider: getProvider,
@@ -15,9 +18,4 @@ export function setupWagmiClient(config: Config = {}) {
   })
 }
 
-export {
-  getMockConnector,
-  getProvider,
-  getWebSocketProvider,
-  getSigners,
-} from './utils'
+export { getProvider, getWebSocketProvider, getSigners } from './utils'
