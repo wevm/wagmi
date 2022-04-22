@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 
+import { LogoType } from '../core'
+
 const TITLE_WITH_TRANSLATIONS: Record<string, string> = {
   'en-US': 'React Hooks for Ethereum',
 }
@@ -10,8 +12,10 @@ export function Header() {
   const title = TITLE_WITH_TRANSLATIONS[resolvedLocale]
 
   return (
-    <header className="mb-10">
-      <h1 className="text-center font-extrabold md:text-5xl mt-8">wagmi</h1>
+    <header className="mb-10 flex flex-col items-center">
+      <div className="mt-8 w-auto h-12 md:h-16">
+        <LogoType />
+      </div>
 
       <p className="text-center text-lg mb-6 text-gray-500 md:!text-2xl">
         {title}
