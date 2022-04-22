@@ -114,7 +114,7 @@ importers:
       siwe: ^1.1.6
       tailwindcss: ^3.0.24
       typescript: 4.6.3
-      wagmi: 0.3.0-next.18
+      wagmi: 0.3.0-next.19
     dependencies:
       '@reach/skip-nav': 0.16.0_react-dom@18.0.0+react@18.0.0
       degen: 0.0.49_react-dom@18.0.0+react@18.0.0
@@ -154,7 +154,7 @@ importers:
       react: 18.0.0
       react-dom: 18.0.0
       typescript: 4.6.3
-      wagmi: 0.3.0-next.18
+      wagmi: 0.3.0-next.19
     dependencies:
       ethers: 5.6.4
       next: 12.1.5_cba0cb7a45c5be1acc73e969c348db7f
@@ -182,7 +182,7 @@ importers:
       react: 18.0.0
       react-dom: 18.0.0
       typescript: 4.6.3
-      wagmi: 0.3.0-next.18
+      wagmi: 0.3.0-next.19
     dependencies:
       ethers: 5.6.4
       next: 12.1.5_cba0cb7a45c5be1acc73e969c348db7f
@@ -214,7 +214,7 @@ importers:
       remix: ^1.4.1
       safe-event-emitter: ^1.0.1
       typescript: 4.6.3
-      wagmi: 0.3.0-next.18
+      wagmi: 0.3.0-next.19
     dependencies:
       '@esbuild-plugins/node-globals-polyfill': 0.1.1
       '@esbuild-plugins/node-modules-polyfill': 0.1.4
@@ -248,7 +248,7 @@ importers:
       typescript: ^4.6.3
       util: ^0.12.4
       vite: ^2.9.5
-      wagmi: 0.3.0-next.18
+      wagmi: 0.3.0-next.19
     dependencies:
       buffer: 6.0.3
       ethers: 5.6.4
@@ -295,13 +295,13 @@ importers:
       react-17: npm:react@^17.0.2
       react-dom: ^18.0.0
       react-dom-17: npm:react-dom@^17.0.2
-      react-query: ^4.0.0-beta.3
+      react-query: ^4.0.0-beta.5
       use-sync-external-store: ^1.0.0
     dependencies:
       '@coinbase/wallet-sdk': 3.0.8_@babel+core@7.17.9
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.5
-      react-query: 4.0.0-beta.3_react-dom@18.0.0+react@18.0.0
+      react-query: 4.0.0-beta.5_react-dom@18.0.0+react@18.0.0
       use-sync-external-store: 1.0.0_react@18.0.0
     devDependencies:
       '@testing-library/react': 13.1.1_react-dom@18.0.0+react@18.0.0
@@ -12801,8 +12801,8 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: true
 
-  /react-query/4.0.0-beta.3_react-dom@18.0.0+react@18.0.0:
-    resolution: {integrity: sha512-WZkiBD+B3rVfPwR9e7W1TvshLYCfsCKx2t/jqpF/ZP3KwQnLAQ8aO67qtrP616QAK1qk3AfJMSsFtDwgYcq0AA==}
+  /react-query/4.0.0-beta.5_react-dom@18.0.0+react@18.0.0:
+    resolution: {integrity: sha512-Po18vTTK3mYnhwi8Uz4iTGxh7/CbNssH0enl/BSHUFaK5QCMMwYxkVInbRFS3Y4bcI62dxaro3GhOU9FtneEyA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: '*'

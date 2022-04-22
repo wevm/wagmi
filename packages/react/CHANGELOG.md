@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.3.0-next.19
+
+### Minor Changes
+
+- Update react-query to 4.0.0-beta.5
+
 ## 0.3.0-next.18
 
 ### Patch Changes
