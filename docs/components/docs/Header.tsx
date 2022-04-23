@@ -13,7 +13,7 @@ export function Header() {
 
   return (
     <header className="mb-10 flex flex-col items-center">
-      <div className="mt-8 w-auto h-12 md:h-16">
+      <div className="mt-8 w-auto h-12 md:h-14">
         <LogoType />
       </div>
 
@@ -29,7 +29,7 @@ export function Header() {
         >
           <img
             alt=""
-            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=292929&colorB=3c82f6&label=Stars"
+            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=2B323B&colorB=1e2329&label=Stars"
           />
         </a>
 
@@ -40,7 +40,7 @@ export function Header() {
         >
           <img
             alt=""
-            src="https://img.shields.io/endpoint?colorA=292929&colorB=3c82f6&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily"
+            src="https://img.shields.io/endpoint?colorA=2B323B&colorB=1e2329&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily"
           />
         </a>
 
@@ -51,7 +51,7 @@ export function Header() {
         >
           <img
             alt=""
-            src="https://img.shields.io/npm/dm/wagmi?colorA=292929&colorB=3c82f6&label=Downloads"
+            src="https://img.shields.io/npm/dm/wagmi?colorA=2B323B&colorB=1e2329&label=Downloads"
           />
         </a>
         <a
@@ -61,7 +61,7 @@ export function Header() {
         >
           <img
             alt=""
-            src="https://img.shields.io/github/sponsors/tmm?colorA=292929&colorB=3c82f6&label=Sponsors"
+            src="https://img.shields.io/github/sponsors/tmm?colorA=2B323B&colorB=1e2329&label=Sponsors"
           />
         </a>
       </div>

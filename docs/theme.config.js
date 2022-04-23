@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { useTheme } from 'next-themes'
 
 const github = 'https://github.com/tmm/wagmi'
 
@@ -27,12 +28,15 @@ export default {
   ),
   github,
   head: ({ title, meta }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { systemTheme } = useTheme()
     return (
       <>
-        <meta name="msapplication-TileColor" content="#ffffff" />
-        <meta name="theme-color" content="#ffffff" />
+        {/* General */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="Content-Language" content="en" />
+
+        {/* SEO */}
         <meta
           name="description"
           content={meta.description || 'React Hooks for Ethereum.'}
@@ -47,6 +51,35 @@ export default {
             title ? title + ' – wagmi' : 'wagmi: React Hooks for Ethereum'
           }
         />
+        <meta name="og:image" content="https://wagmi.sh/og.png" />
+
+        {/* Misc */}
+        <meta name="apple-mobile-web-app-title" content="wagmi" />
+        <meta name="msapplication-TileColor" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff" />
+
+        {/* Dynamic favicon */}
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href="/favicons/favicon.svg"
+          key="dynamic-favicon"
+        />
+        {!systemTheme || systemTheme === 'dark' ? (
+          <link
+            rel="alternate icon"
+            type="image/png"
+            href="/favicons/dark.png"
+            key="dark-favicon"
+          />
+        ) : (
+          <link
+            rel="alternate icon"
+            type="image/png"
+            href="/favicons/light.png"
+            key="light-favicon"
+          />
+        )}
       </>
     )
   },
