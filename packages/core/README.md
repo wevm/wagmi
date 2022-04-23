@@ -1,4 +1,4 @@
-# wagmi
+# @wagmi/core
 
 ## Documentation
 
@@ -9,7 +9,7 @@ For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 Install wagmi and its ethers peer dependency.
 
 ```bash
-npm install wagmi ethers
+npm install @wagmi/core ethers
 ```
 
 ## Community

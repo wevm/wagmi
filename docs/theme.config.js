@@ -52,6 +52,7 @@ export default {
           }
         />
         <meta name="og:image" content="https://wagmi.sh/og.png" />
+        <meta name="twitter:card" content="summary_large_image" />
 
         {/* Misc */}
         <meta name="apple-mobile-web-app-title" content="wagmi" />

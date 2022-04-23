@@ -21,26 +21,26 @@ export function Header() {
         {title}
       </p>
 
-      <div className="flex flex-wrap gap-4 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center max-w-[28rem] min-h-[3rem]">
         <a
-          aria-label="Stars"
-          href="https://github.com/tmm/wagmi"
+          aria-label="Version"
+          href="https://www.npmjs.com/package/wagmi"
           className="h-5"
         >
           <img
             alt=""
-            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=2B323B&colorB=1e2329&label=Stars"
+            src="https://img.shields.io/npm/v/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Version"
           />
         </a>
 
         <a
-          aria-label="Best of JS"
-          href="https://bestofjs.org/projects/wagmi"
+          aria-label="License"
+          href="https://www.npmjs.com/package/wagmi"
           className="h-5"
         >
           <img
             alt=""
-            src="https://img.shields.io/endpoint?colorA=2B323B&colorB=1e2329&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily"
+            src="https://img.shields.io/npm/l/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=License"
           />
         </a>
 
@@ -51,9 +51,32 @@ export function Header() {
         >
           <img
             alt=""
-            src="https://img.shields.io/npm/dm/wagmi?colorA=2B323B&colorB=1e2329&label=Downloads"
+            src="https://img.shields.io/npm/dm/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Downloads"
           />
         </a>
+
+        <a
+          aria-label="Stars"
+          href="https://github.com/tmm/wagmi"
+          className="h-5"
+        >
+          <img
+            alt=""
+            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Stars"
+          />
+        </a>
+
+        <a
+          aria-label="Best of JS"
+          href="https://bestofjs.org/projects/wagmi"
+          className="h-5"
+        >
+          <img
+            alt=""
+            src="https://img.shields.io/endpoint?colorA=2B323B&colorB=1e2329&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily"
+          />
+        </a>
+
         <a
           aria-label="Sponsors"
           href="https://github.com/sponsors/tmm"
@@ -61,7 +84,7 @@ export function Header() {
         >
           <img
             alt=""
-            src="https://img.shields.io/github/sponsors/tmm?colorA=2B323B&colorB=1e2329&label=Sponsors"
+            src="https://img.shields.io/github/sponsors/tmm?colorA=2B323B&colorB=1e2329&style=flat&label=Sponsors"
           />
         </a>
       </div>
