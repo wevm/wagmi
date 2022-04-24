@@ -22,7 +22,7 @@ React Hooks for Ethereum
   <a href="https://bestofjs.org/projects/wagmi">
     <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily" alt="Best of JS">
   </a>
-  <a href="https://github.com/sponsors/tmm">
+  <a href="https://github.com/sponsors/tmm?metadata_campaign=gh_readme_badge">
     <img src="https://img.shields.io/github/sponsors/tmm?colorA=21262d&colorB=161b22&style=flat" alt="Sponsors">
   </a>
 </p>
@@ -79,7 +79,7 @@ function Profile() {
   })
   const { disconnect } = useDisconnect()
 
-  if (data?.address)
+  if (data)
     return (
       <div>
         Connected to {data.address}
@@ -108,7 +108,7 @@ Check out the following places for more wagmi-related content:
 If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 - [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
-- [GitHub Sponsors](https://github.com/sponsors/tmm)
+- [GitHub Sponsors](https://github.com/sponsors/tmm?metadata_campaign=gh_readme_support)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
 
 ## Contributing
@@ -125,4 +125,3 @@ Thanks to julianhutton.eth ([@julianjhutton](https://twitter.com/julianjhutton))
 ## License
 
 [WAGMIT](/LICENSE) License
-

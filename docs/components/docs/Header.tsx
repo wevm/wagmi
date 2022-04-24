@@ -14,6 +14,7 @@ export function Header() {
   return (
     <header className="mb-10 flex flex-col items-center">
       <div className="mt-8 w-auto h-12 md:h-14">
+        <h1 className="sr-only">wagmi</h1>
         <LogoType />
       </div>
 
@@ -79,7 +80,7 @@ export function Header() {
 
         <a
           aria-label="Sponsors"
-          href="https://github.com/sponsors/tmm"
+          href="https://github.com/sponsors/tmm?metadata_campaign=docs_header"
           className="h-5"
         >
           <img

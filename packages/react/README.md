@@ -26,5 +26,5 @@ Check out the following places for more wagmi-related content:
 If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 - [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
-- [GitHub Sponsors](https://github.com/sponsors/tmm)
+- [GitHub Sponsors](https://github.com/sponsors/tmm?metadata_campaign=readme_wagmi)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
