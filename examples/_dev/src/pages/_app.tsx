@@ -21,9 +21,7 @@ const client = createClient({
     const chain = chains.find((x) => x.id === chainId) ?? defaultChain
     const rpcUrl = chain.rpcUrls.alchemy
       ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-      : typeof chain.rpcUrls.default === 'string'
-      ? chain.rpcUrls.default
-      : chain.rpcUrls.default[0]
+      : chain.rpcUrls.default
     return [
       new InjectedConnector({ chains }),
       new CoinbaseWalletConnector({
