@@ -115,7 +115,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.optimism,
       infura: infuraRpcUrls.optimism,
-      default: ['https://mainnet.optimism.io'],
+      default: 'https://mainnet.optimism.io',
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.optimism,
@@ -133,7 +133,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.optimismKovan,
       infura: infuraRpcUrls.optimismKovan,
-      default: ['https://kovan.optimism.io'],
+      default: 'https://kovan.optimism.io',
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.optimismKovan,
@@ -148,14 +148,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.polygon,
       infura: infuraRpcUrls.polygon,
-      default: [
-        'https://polygon-rpc.com',
-        'https://rpc-mainnet.matic.network',
-        'https://matic-mainnet.chainstacklabs.com',
-        'https://rpc-mainnet.maticvigil.com',
-        'https://rpc-mainnet.matic.quiknode.pro',
-        'https://matic-mainnet-full-rpc.bwarelabs.com',
-      ],
+      default: 'https://polygon-rpc.com',
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.polygon,
@@ -164,7 +157,7 @@ export const chain: Record<ChainName, Chain> = {
   },
   polygonMumbai: {
     id: chainId.polygonMumbai,
-    name: 'Mumbai',
+    name: 'Polygon Mumbai',
     nativeCurrency: {
       name: 'MATIC',
       symbol: 'MATIC',
@@ -173,11 +166,7 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.polygonMumbai,
       infura: infuraRpcUrls.polygonMumbai,
-      default: [
-        'https://matic-mumbai.chainstacklabs.com',
-        'https://rpc-mumbai.maticvigil.com',
-        'https://matic-testnet-archive-rpc.bwarelabs.com',
-      ],
+      default: 'https://matic-mumbai.chainstacklabs.com',
     },
     blockExplorers: {
       etherscan: etherscanBlockExplorers.polygonMumbai,
@@ -192,17 +181,15 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.arbitrum,
       infura: infuraRpcUrls.arbitrum,
-      default: ['https://arb1.arbitrum.io/rpc'],
+      default: 'https://arb1.arbitrum.io/rpc',
     },
     blockExplorers: {
+      arbitrum: {
+        name: 'Arbitrum Explorer',
+        url: 'https://explorer.arbitrum.io',
+      },
       etherscan: etherscanBlockExplorers.arbitrum,
-      default: [
-        etherscanBlockExplorers.arbitrum,
-        {
-          name: 'Arbitrum Explorer',
-          url: 'https://explorer.arbitrum.io',
-        },
-      ],
+      default: etherscanBlockExplorers.arbitrum,
     },
   },
   arbitrumRinkeby: {
@@ -216,17 +203,15 @@ export const chain: Record<ChainName, Chain> = {
     rpcUrls: {
       alchemy: alchemyRpcUrls.arbitrumRinkeby,
       infura: infuraRpcUrls.arbitrumRinkeby,
-      default: ['https://rinkeby.arbitrum.io/rpc'],
+      default: 'https://rinkeby.arbitrum.io/rpc',
     },
     blockExplorers: {
+      arbitrum: {
+        name: 'Arbitrum Explorer',
+        url: 'https://rinkeby-explorer.arbitrum.io',
+      },
       etherscan: etherscanBlockExplorers.arbitrumRinkeby,
-      default: [
-        etherscanBlockExplorers.arbitrumRinkeby,
-        {
-          name: 'Arbitrum Explorer',
-          url: 'https://rinkeby-explorer.arbitrum.io',
-        },
-      ],
+      default: etherscanBlockExplorers.arbitrumRinkeby,
     },
     testnet: true,
   },

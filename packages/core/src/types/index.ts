@@ -10,12 +10,14 @@ export type Chain = {
   name: AddEthereumChainParameter['chainName']
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
   rpcUrls: { [key in RpcProviderName]?: string } & {
-    default: string | string[]
+    [key: string]: string
+    default: string
   }
   blockExplorers?: {
-    [key in BlockExplorerName]?: BlockExplorer
+    [key in BlockExplorerName]: BlockExplorer
   } & {
-    default: BlockExplorer | BlockExplorer[]
+    [key: string]: BlockExplorer
+    default: BlockExplorer
   }
   testnet?: boolean
 }

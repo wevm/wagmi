@@ -155,7 +155,7 @@ export class CoinbaseWalletConnector extends Connector<
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
-          rpcUrls: { default: [] },
+          rpcUrls: { default: '' },
         }
       )
     } catch (error) {
