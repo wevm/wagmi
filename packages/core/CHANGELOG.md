@@ -1,4 +1,116 @@
-# wagmi-core
+# @wagmi/core
+
+## 0.2.0-next.18
+
+### Patch Changes
+
+- showtime
+
+## 0.2.0-next.17
+
+### Patch Changes
+
+- update block explorers and rpc urls structure
+
+## 0.2.0-next.16
+
+### Patch Changes
+
+- last beta
+
+## 0.2.0-next.15
+
+### Patch Changes
+
+- update zustand
+
+## 0.2.0-next.14
+
+### Minor Changes
+
+- Add `cacheOnBlock` config for `useContractRead`
+- Update `react-query` to v4
+- Fix `watchBlockNumber` listener leak
+
+## 0.2.0-next.13
+
+### Patch Changes
+
+- keep previous data when watching
+
+## 0.2.0-next.12
+
+### Patch Changes
+
+- add chainId to actions and hooks
+
+## 0.2.0-next.11
+
+### Patch Changes
+
+- fix stale connectors when switching chains
+
+## 0.2.0-next.10
+
+### Patch Changes
+
+- republish
+
+## 0.2.0-next.9
+
+### Patch Changes
+
+- improve type support for ethers providers
+
+## 0.2.0-next.8
+
+### Patch Changes
+
+- update babel target
+
+## 0.2.0-next.7
+
+### Minor Changes
+
+- - Favour `message` event over `connecting` event to conform to EIP-1193
+  - Export `useWaitForTransaction`
+
+## 0.2.0-next.6
+
+### Minor Changes
+
+- add `connecting` event to connectors
+
+## 0.2.0-next.5
+
+### Minor Changes
+
+- don't persist account data when `autoConnect` is falsy
+
+## 0.2.0-next.4
+
+### Minor Changes
+
+- remove storage persistence of `connector`
+- add `chains` to client state
+
+## 0.2.0-next.3
+
+### Minor Changes
+
+- Fix issue where `getProvider` was not being awaited in `getSigner`
+
+## 0.2.0-next.2
+
+### Minor Changes
+
+- fix: persist connector chains to local storage
+
+## 0.2.0-next.1
+
+### Minor Changes
+
+- Initial 0.3.0 release
 
 ## 0.1.22
 

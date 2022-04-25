@@ -1,35 +1,234 @@
-import { contracts } from 'wagmi-testing'
+import { act, renderHook } from '../../../test'
+import { useToken } from './useToken'
 
-import { actHook, renderHook } from '../../../test'
-import { useConnect } from '../accounts'
-import { Config, useToken } from './useToken'
-
-const useTokenWithConnect = (config: { token?: Config } = {}) => {
-  const connect = useConnect()
-  const token = useToken(config.token)
-  return { connect, token } as const
-}
+const ensTokenAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+const uniTokenAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
 describe('useToken', () => {
-  describe('on mount', () => {
-    it('has token', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useToken({
-          address: contracts.uniToken,
-        }),
+  it('mounts', async () => {
+    const { result, waitFor } = renderHook(() =>
+      useToken({
+        address: ensTokenAddress,
+      }),
+    )
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { internal, ...res } = result.current
+    expect(res).toMatchInlineSnapshot(`
+      {
+        "data": {
+          "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+          "decimals": 18,
+          "symbol": "ENS",
+          "totalSupply": {
+            "formatted": "100000000.0",
+            "value": {
+              "hex": "0x52b7d2dcc80cd2e4000000",
+              "type": "BigNumber",
+            },
+          },
+        },
+        "error": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetching": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isRefetching": false,
+        "isSuccess": true,
+        "refetch": [Function],
+        "status": "success",
+      }
+    `)
+  })
+
+  describe('configuration', () => {
+    describe('address', () => {
+      it('has token', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useToken({
+            address: uniTokenAddress,
+          }),
+        )
+
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": {
+              "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+              "decimals": 18,
+              "symbol": "UNI",
+              "totalSupply": {
+                "formatted": "1000000000.0",
+                "value": {
+                  "hex": "0x033b2e3c9fd0803ce8000000",
+                  "type": "BigNumber",
+                },
+              },
+            },
+            "error": null,
+            "fetchStatus": "idle",
+            "isError": false,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": true,
+            "refetch": [Function],
+            "status": "success",
+          }
+        `)
+      })
+
+      it('bogus token', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useToken({
+            address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
+          }),
+        )
+
+        await waitFor(() => expect(result.current.isError).toBeTruthy())
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": undefined,
+            "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", data="0x", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.1)],
+            "fetchStatus": "idle",
+            "isError": true,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": false,
+            "refetch": [Function],
+            "status": "error",
+          }
+        `)
+      })
+    })
+
+    it('chainId', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useToken({ address: ensTokenAddress, chainId: 1 }),
       )
 
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": true,
-        }
-      `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": {
+            "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+            "decimals": 18,
+            "symbol": "ENS",
+            "totalSupply": {
+              "formatted": "100000000.0",
+              "value": {
+                "hex": "0x52b7d2dcc80cd2e4000000",
+                "type": "BigNumber",
+              },
+            },
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+
+    it('enabled', async () => {
+      const { result, waitFor } = renderHook(() => useToken({ enabled: false }))
+
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
+        }
+      `)
+    })
+
+    it('formatUnits', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useToken({ address: ensTokenAddress, formatUnits: 'wei' }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
+            "decimals": 18,
+            "symbol": "ENS",
+            "totalSupply": {
+              "formatted": "100000000000000000000000000",
+              "value": {
+                "hex": "0x52b7d2dcc80cd2e4000000",
+                "type": "BigNumber",
+              },
+            },
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+  })
+
+  describe('return value', () => {
+    it('refetch', async () => {
+      const { result } = renderHook(() =>
+        useToken({ address: uniTokenAddress, enabled: false }),
+      )
+
+      await act(async () => {
+        const { data } = await result.current.refetch()
+        expect(data).toMatchInlineSnapshot(`
+          {
             "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
             "decimals": 18,
             "symbol": "UNI",
@@ -40,146 +239,36 @@ describe('useToken', () => {
                 "type": "BigNumber",
               },
             },
-          },
-          "error": undefined,
-          "loading": false,
-        }
-      `)
+          }
+        `)
+      })
     })
+  })
 
-    it('bogus token', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useToken({
-          address: contracts.bogusToken,
-        }),
-      )
+  describe('behavior', () => {
+    it('does nothing when `address` is missing', async () => {
+      const { result, waitFor } = renderHook(() => useToken())
 
-      expect(result.current[0]).toMatchInlineSnapshot(`
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
         }
       `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": [Error: missing revert data in call exception (error={"reason":"missing response","code":"SERVER_ERROR","requestBody":"{\\"method\\":\\"eth_call\\",\\"params\\":[{\\"to\\":\\"0xa0cf798816d4b9b9866b5330eea46a18382f251e\\",\\"data\\":\\"0x313ce567\\"},\\"latest\\"],\\"id\\":43,\\"jsonrpc\\":\\"2.0\\"}","requestMethod":"POST","serverError":{},"url":"https://mainnet.infura.io/v3/mockApiKey"}, data="0x", code=CALL_EXCEPTION, version=providers/5.5.1)],
-          "loading": false,
-        }
-      `)
-    })
-  })
-
-  it('skip', async () => {
-    const { result } = renderHook(() => useToken({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
-      }
-    `)
-  })
-
-  describe('watchAsset', () => {
-    it('succeeds', async () => {
-      const { result } = renderHook(() =>
-        useTokenWithConnect({ token: { skip: true } }),
-      )
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
-
-        const res = await result.current.token[1]({
-          address: contracts.uniToken,
-          decimals: 18,
-          symbol: 'UNI',
-        })
-        expect(res).toMatchInlineSnapshot(`true`)
-      })
-    })
-
-    it('not connected', async () => {
-      const { result } = renderHook(() => useToken({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]({
-          address: contracts.uniToken,
-          decimals: 18,
-          symbol: 'UNI',
-        })
-        expect(res).toMatchInlineSnapshot(`false`)
-      })
-    })
-  })
-
-  describe('getToken', () => {
-    it('uses config', async () => {
-      const { result } = renderHook(() =>
-        useToken({ address: contracts.uniToken, skip: true }),
-      )
-
-      await actHook(async () => {
-        const res = await result.current[2]()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-              "decimals": 18,
-              "symbol": "UNI",
-              "totalSupply": {
-                "formatted": "1000000000.0",
-                "value": {
-                  "hex": "0x033b2e3c9fd0803ce8000000",
-                  "type": "BigNumber",
-                },
-              },
-            },
-            "error": undefined,
-          }
-        `)
-      })
-    })
-
-    it('uses params', async () => {
-      const { result } = renderHook(() => useToken({ skip: true }))
-
-      await actHook(async () => {
-        const res = await result.current[2]({
-          address: contracts.uniToken,
-        })
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-              "decimals": 18,
-              "symbol": "UNI",
-              "totalSupply": {
-                "formatted": "1000000000.0",
-                "value": {
-                  "hex": "0x033b2e3c9fd0803ce8000000",
-                  "type": "BigNumber",
-                },
-              },
-            },
-            "error": undefined,
-          }
-        `)
-      })
-    })
-
-    it('has error', async () => {
-      const { result } = renderHook(() => useToken({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[2]()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": undefined,
-            "error": [Error: address is required],
-          }
-        `)
-      })
     })
   })
 })

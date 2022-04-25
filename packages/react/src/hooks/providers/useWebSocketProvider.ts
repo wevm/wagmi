@@ -1,6 +1,35 @@
-import { useContext } from '../../context'
+import { WebSocketProvider } from '@ethersproject/providers'
+import {
+  GetWebSocketProviderArgs,
+  getWebSocketProvider,
+  watchWebSocketProvider,
+} from '@wagmi/core'
+import * as React from 'react'
 
-export const useWebSocketProvider = () => {
-  const { state } = useContext()
-  return state.webSocketProvider
+import { useClient } from '../../context'
+import { useForceUpdate } from '../utils'
+
+export type UseWebSocketProviderArgs = Partial<GetWebSocketProviderArgs>
+
+export function useWebSocketProvider<
+  TWebSocketProvider extends WebSocketProvider,
+>({ chainId }: UseWebSocketProviderArgs = {}) {
+  const forceUpdate = useForceUpdate()
+  const client = useClient()
+  const webSocketProvider = React.useRef(
+    getWebSocketProvider<TWebSocketProvider>({ chainId }),
+  )
+
+  React.useEffect(() => {
+    const unwatch = watchWebSocketProvider<TWebSocketProvider>(
+      { chainId },
+      (webSocketProvider_) => {
+        webSocketProvider.current = webSocketProvider_
+        forceUpdate()
+      },
+    )
+    return unwatch
+  }, [chainId, client, forceUpdate])
+
+  return webSocketProvider.current
 }

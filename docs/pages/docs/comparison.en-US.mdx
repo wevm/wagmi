@@ -1,0 +1,91 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Comparison To Other Libraries
+
+<Callout emoji="✏️">
+  This comparison strives to be as accurate and as unbiased as possible. If you
+  use any of these libraries and feel the information could be improved, feel
+  free to suggest changes.
+</Callout>
+
+There are a multiple options when it comes to React libraries for Ethereum that help manage wallet connections, provide utility methods/hooks, etc.
+
+## Overview
+
+|                      | [wagmi](https://github.com/tmm/wagmi)                                                     | [web3-react](https://github.com/NoahZinsmeister/web3-react)                                                     | [useDApp](https://github.com/EthWorks/useDApp)                                                     | [web3modal](https://github.com/Web3Modal/web3modal)                                                     |
+| -------------------- | ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| GitHub Stars         | ![wagmi star count](https://img.shields.io/github/stars/tmm/wagmi?colorB=3fba11&label=)   | ![web3-react star count](https://img.shields.io/github/stars/NoahZinsmeister/web3-react?colorB=3fba11&label=)   | ![useDApp star count](https://img.shields.io/github/stars/EthWorks/useDApp?colorB=3fba11&label=)   | ![web3modal star count](https://img.shields.io/github/stars/Web3Modal/web3modal?colorB=3fba11&label=)   |
+| Open Issues          | ![wagmi issue count](https://img.shields.io/github/issues/tmm/wagmi?colorB=3fba11&label=) | ![web3-react issue count](https://img.shields.io/github/issues/NoahZinsmeister/web3-react?colorB=3fba11&label=) | ![useDApp issue count](https://img.shields.io/github/issues/EthWorks/useDApp?colorB=3fba11&label=) | ![web3modal issue count](https://img.shields.io/github/issues/Web3Modal/web3modal?colorB=3fba11&label=) |
+| License              | ![wagmi license](https://img.shields.io/github/license/tmm/wagmi?colorB=3fba11&label=)    | ![web3-react license](https://img.shields.io/github/license/NoahZinsmeister/web3-react?colorB=3fba11&label=)    | ![useDApp license](https://img.shields.io/github/license/EthWorks/useDApp?colorB=3fba11&label=)    | ![web3modal license](https://img.shields.io/github/license/Web3Modal/web3modal?colorB=3fba11&label=)    |
+| Their Comparison     | –                                                                                         | none                                                                                                            | none                                                                                               | none                                                                                                    |
+| Supported Frameworks | React, Vanilla JS                                                                         | React                                                                                                           | React                                                                                              | Vanilla JS                                                                                              |
+| Documentation        | ✅                                                                                        | 🛑                                                                                                              | ✅                                                                                                 | 🛑                                                                                                      |
+| Test Suite[^1]       | ✅                                                                                        | 🔶                                                                                                              | 🔶                                                                                                 | 🛑                                                                                                      |
+| Examples[^2]         | ✅                                                                                        | 🔶                                                                                                              | 🛑                                                                                                 | 🔶                                                                                                      |
+
+## [wagmi](https://github.com/tmm/wagmi)
+
+### Pros
+
+- 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
+- Built-in wallet connectors for MetaMask, WalletConnect, and Coinbase Wallet
+- Caching, request deduplication, and persistence powered
+- Auto-refresh data on wallet, block, and network changes
+- Test suite running against forked Ethereum network
+- TypeScript ready and extensive documentation
+- WAGMIT License
+
+### Cons
+
+- Not as many connectors as `web3-react`
+
+## [web3-react](https://github.com/NoahZinsmeister/web3-react)
+
+### Pros
+
+- Supports many different connectors (conceptually similar to wagmi's connectors)
+- Basic hooks for managing account
+- Used by [Uniswap](https://uniswap.org) and some other popular projects
+
+### Cons
+
+- Need to set up connectors and method for connecting wallet on your own
+- Need to install connectors separately
+- Almost no tests or documentation; infrequent updates
+- GPL-3.0 License
+
+## [useDApp](https://github.com/EthWorks/useDApp)
+
+### Pros
+
+- Auto-refresh on new blocks and wallet changes
+- Multicall support
+- Transaction notifications
+- Chrome extension and Firefox add-on
+- MIT License
+
+### Cons
+
+- Uses `web3-react`
+- Non-standard hook API
+- Lack of TypeScript generics support
+- Almost no tests
+
+## [web3modal](https://github.com/Web3Modal/web3modal)
+
+### Pros
+
+- UI component for connecting wallet
+- Supports many different connectors
+- MIT License
+
+### Cons
+
+- Cannot be used headlessly
+- No hooks for interacting with Ethereum, fetching information, etc.
+- Almost no tests and infrequent updates
+
+---
+
+[^1]: Runs against forked Ethereum network ✅. Mocking functionality (i.e. RPC calls) is 🔶.
+[^2]: Has multiple examples ✅. Has single example 🔶.

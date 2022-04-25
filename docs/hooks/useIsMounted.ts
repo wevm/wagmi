@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-export const useIsMounted = () => {
+export function useIsMounted() {
   const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => setMounted(true), [])

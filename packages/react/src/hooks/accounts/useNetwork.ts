@@ -1,75 +1,104 @@
 import * as React from 'react'
-import { Chain, SwitchChainError, allChains } from 'wagmi-core'
+import {
+  SwitchNetworkArgs,
+  SwitchNetworkResult,
+  getNetwork,
+  switchNetwork,
+  watchNetwork,
+} from '@wagmi/core'
+import { useMutation, useQueryClient } from 'react-query'
 
-import { useContext } from '../../context'
-import { useCancel } from '../utils'
+import { useClient } from '../../context'
+import { MutationConfig } from '../../types'
+import { useForceUpdate } from '../utils'
 
-type State = {
-  error?: Error
-  loading?: boolean
+export type UseNetworkArgs = Partial<SwitchNetworkArgs>
+
+export type UseNetworkConfig = MutationConfig<
+  SwitchNetworkResult,
+  Error,
+  SwitchNetworkArgs
+>
+
+export const mutationKey = (args: UseNetworkArgs) => [
+  { entity: 'switchNetwork', ...args },
+]
+
+const mutationFn = (args: UseNetworkArgs) => {
+  const { chainId } = args
+  if (!chainId) throw new Error('chainId is required')
+  return switchNetwork({ chainId })
 }
 
-const initialState: State = {
-  loading: false,
-}
+export function useNetwork({
+  chainId,
+  onError,
+  onMutate,
+  onSettled,
+  onSuccess,
+}: UseNetworkArgs & UseNetworkConfig = {}) {
+  const forceUpdate = useForceUpdate()
+  const network = React.useRef(getNetwork())
 
-export const useNetwork = () => {
+  const client = useClient()
+  const queryClient = useQueryClient()
+
+  const connector = client.connector
   const {
-    state: { connector, data },
-  } = useContext()
-  const [state, setState] = React.useState<State>(initialState)
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ chainId }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
-  const chainId = data?.chain?.id
-  const unsupported = data?.chain?.unsupported
-  const activeChains = connector?.chains ?? []
-  const activeChain: Chain | undefined = [...activeChains, ...allChains].find(
-    (x) => x.id === chainId,
+  React.useEffect(() => {
+    const unwatch = watchNetwork((data) => {
+      network.current = data
+      forceUpdate()
+    })
+    return unwatch
+  }, [forceUpdate, queryClient])
+
+  const switchNetwork_ = React.useCallback(
+    (chainId_?: SwitchNetworkArgs['chainId']) =>
+      mutate(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+    [chainId, mutate],
   )
 
-  const cancelQuery = useCancel()
-  const switchNetwork = React.useCallback(
-    async (chainId: number) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      if (!connector?.switchChain)
-        return { data: undefined, error: new SwitchChainError() }
-
-      try {
-        setState((x) => ({ ...x, error: undefined, loading: true }))
-        const chain = await connector.switchChain(chainId)
-        if (!didCancel) {
-          setState((x) => ({ ...x, loading: false }))
-        }
-        return { data: chain, error: undefined }
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return { data: undefined, error }
-      }
-    },
-    [cancelQuery, connector],
+  const switchNetworkAsync_ = React.useCallback(
+    (chainId_?: SwitchNetworkArgs['chainId']) =>
+      mutateAsync(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+    [chainId, mutateAsync],
   )
 
-  return [
-    {
-      data: {
-        chain: chainId
-          ? {
-              ...activeChain,
-              id: chainId,
-              unsupported,
-            }
-          : undefined,
-        chains: activeChains,
-      },
-      error: state.error,
-      loading: state.loading,
-    },
-    connector?.switchChain ? switchNetwork : undefined,
-  ] as const
+  return {
+    activeChain: network.current.chain,
+    chains: network.current.chains ?? [],
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    pendingChainId: variables?.chainId,
+    reset,
+    status,
+    switchNetwork: connector?.switchChain ? switchNetwork_ : undefined,
+    switchNetworkAsync: connector?.switchChain
+      ? switchNetworkAsync_
+      : undefined,
+    variables,
+  } as const
 }

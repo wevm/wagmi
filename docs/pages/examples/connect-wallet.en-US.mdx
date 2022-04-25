@@ -1,0 +1,160 @@
+import { ConnectWallet } from '../../components/examples'
+
+# Connect Wallet
+
+Connecting wallets to your app is extremely simple when you use wagmi. It takes less than five minutes to get up and running with MetaMask, WalletConnect, and Coinbase Wallet!
+
+The example below uses [`useConnect`](/docs/hooks/useConnect), [`useAccount`](/docs/hooks/useAccount), and [`useDisconnect`](/docs/hooks/useDisconnect) to allow you to connect a wallet and view ENS information for the connected account. Try it out before moving on.
+
+<ConnectWallet />
+
+## Step 1: Configuring Connectors
+
+First, we create a new wagmi client set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors:
+
+```tsx
+import { Provider, chain, createClient } from 'wagmi'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+// API key for Ethereum node
+// Two popular services are Alchemy (alchemy.com) and Infura (infura.io)
+const alchemyId = process.env.ALCHEMY_ID
+
+const chains = defaultChains
+const defaultChain = chain.mainnet
+
+// Set up connectors
+const client = createClient({
+  autoConnect: true,
+  connectors({ chainId }) {
+    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+    const rpcUrl = chain.rpcUrls.alchemy
+      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+      : typeof chain.rpcUrls.default === 'string'
+      ? chain.rpcUrls.default
+      : chain.rpcUrls.default[0]
+    return [
+      new InjectedConnector(),
+      new CoinbaseWalletConnector({
+        options: {
+          appName: 'wagmi',
+          chainId: chain.id,
+          jsonRpcUrl: rpcUrl,
+        },
+      }),
+      new WalletConnectConnector({
+        options: {
+          qrcode: true,
+          rpc: {
+            [chain.id]: rpcUrl,
+          },
+        },
+      }),
+    ]
+  },
+})
+
+// Pass client to React Context Provider
+function App() {
+  return (
+    <Provider client={client}>
+      <Profile />
+    </Provider>
+  )
+}
+```
+
+## Step 2: Display Wallet Options
+
+Now that our connectors are set up, we want users to be able to choose a connector to connect their wallets using `useConnect`.
+
+```tsx
+import { useConnect } from 'wagmi'
+
+export function Profile() {
+  const { connect, connectors, error, isConnecting, pendingConnector } =
+    useConnect()
+
+  return (
+    <div>
+      {connectors.map((connector) => (
+        <button
+          disabled={!connector.ready}
+          key={connector.id}
+          onClick={() => connect(connector)}
+        >
+          {connector.name}
+          {!connector.ready && ' (unsupported)'}
+          {isConnecting &&
+            connector.id === pendingConnector?.id &&
+            ' (connecting)'}
+        </button>
+      ))}
+
+      {error && <div>{error.message}</div>}
+    </div>
+  )
+}
+```
+
+## Step 3: Display Connected Account
+
+Lastly, if an account is connected, we want to show some basic information, like the connected address and ENS name and avatar. We can display the connected account with `useAccount` and add a button for disconnecting with `useDisconnect`.
+
+```tsx
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useEnsAvatar,
+  useEnsName,
+} from 'wagmi'
+
+export function Profile() {
+  const { data: account } = useAccount()
+  const { data: ensAvatar } = useEnsAvatar({ addressOrName: account.address })
+  const { data: ensName } = useEnsName({ address: account.address })
+  const { connect, connectors, error, isConnecting, pendingConnector } =
+    useConnect()
+  const { disconnect } = useDisconnect()
+
+  if (account) {
+    return (
+      <div>
+        <img src={ensAvatar} alt="ENS Avatar" />
+        <div>
+          {ensName ? `${ensName} (${account.address})` : account.address}
+        </div>
+        <div>Connected to {account.connector.name}</div>
+        <button onClick={disconnect}>Disconnect</button>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      {connectors.map((connector) => (
+        <button
+          disabled={!connector.ready}
+          key={connector.id}
+          onClick={() => connect(connector)}
+        >
+          {connector.name}
+          {!connector.ready && ' (unsupported)'}
+          {isConnecting &&
+            connector.id === pendingConnector?.id &&
+            ' (connecting)'}
+        </button>
+      ))}
+
+      {error && <div>{error.message}</div>}
+    </div>
+  )
+}
+```
+
+## Wrap Up
+
+That's it! You now have a way for users to connect wallets and view information about the connected account. wagmi also listens for account and chain changes to keep connections and information up-to-date.

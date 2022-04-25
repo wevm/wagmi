@@ -1,0 +1,590 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Migrating to 0.3.x
+
+If you are coming from an earlier version of `wagmi`, in order to update to `0.3.x`, you will need to make sure to update the following hooks & API's listed below.
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.2.x` docs
+  [here](https://0.2.x.wagmi.sh).
+</Callout>
+
+## Breaking changes
+
+### `Provider` no longer supports configuration as props
+
+The `Provider` component no longer supports configuration directly as props. You will now need to create a wagmi [`Client`](/docs/client) via `createClient`, and then pass the client to `Provider`:
+
+#### Before
+
+```tsx
+import { Provider } from 'wagmi'
+
+function App() {
+  return (
+    <Provider autoConnect connectors={connectors} provider={provider}>
+      <YourRoutes />
+    </Provider>
+  )
+}
+```
+
+#### After
+
+```tsx
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+})
+
+function App() {
+  return (
+    <Provider client={client}>
+      <YourRoutes />
+    </Provider>
+  )
+}
+```
+
+### Hooks now return a singular object, instead of an array pair
+
+All hooks in wagmi now return a single object instead of an array pair.
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, disconnect] = useAccount()
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error } = useAccount()
+```
+
+### Declarative getters > imperative getters
+
+Getter functions such as `getBalance`, `getBlockNumber`, `read`, etc have been removed in favor of hook parameters / `refetch`. The `refetch` function does not accept arguments/config, so you will need to restructure your components more declaratively.
+
+#### Before
+
+```tsx
+import { useBalance } from 'wagmi'
+
+function Example() {
+  const [address, setAddress] = useState<string>('')
+
+  const [{ data }, getBalance] = useBalance({
+    skip: true,
+  })
+
+  return (
+    <div>
+      Get balance:
+      <input onChange={(e) => setAddress(e.target.value)} value={address} />
+      <button onClick={() => getBalance({ addressOrName: address })}>
+        fetch
+      </button>
+    </div>
+  )
+}
+```
+
+#### After
+
+```tsx
+import { useContractRead } from 'wagmi'
+
+function Example() {
+  const [address, setAddress] = useState<string>('')
+
+  const { data, refetch } = useBalance({
+    addressOrName: address,
+    enabled: Boolean(address),
+  })
+
+  const [value, setValue] = useState<string>('')
+
+  return (
+    <div>
+      Get balance:
+      <input onChange={(e) => setValue(e.target.value)} value={value} />
+      <button
+        onClick={() => (address === value ? refetch() : setAddress(value))}
+      >
+        fetch
+      </button>
+    </div>
+  )
+}
+```
+
+### Changes to hooks
+
+#### `useAccount`
+
+- Now returns a singular object, instead of an array pair
+- `fetchEns` was removed in favor of keeping `useAccount` as lightweight as possible. Use [`useEnsName`](/docs/hooks/useEnsName) and [`useEnsAvatar`](/docs/hooks/useEnsAvatar) instead.
+- `disconnect` was removed. Use [`useDisconnect`](/docs/hooks/useDisconnect) instead.
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, disconnect] = useAccount({ fetchEns: true })
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error } = useAccount({ ens: true })
+const { data: ensName } = useEnsName()
+const { data: ensAvatar } = useEnsAvatar()
+const { disconnect } = useDisconnect()
+```
+
+#### `useBalance`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getBalance` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, getBalance] = useBalance({ skip: true })
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error, refetch } = useBalance({ enabled: false })
+```
+
+#### `useBlockNumber`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getBlockNumber` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, getBlockNumber] = useBlockNumber({
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, isLoading, error, refetch } = useBlockNumber({
+  enabled: false,
+})
+```
+
+#### `useConnect`
+
+- Now returns a singular object, instead of an array pair
+- `connect` is no longer asynchronous. Use `connectAsync` instead.
+- `data.connected` no longer exists. Use `isConnected` instead.
+- `data.connectors` no longer exists. Use `connectors` instead.
+- Prefer `connector` over `data.connector`
+
+##### Before
+
+```tsx
+const [{ data, loading, error }, connect] = useConnect()
+```
+
+##### After
+
+```tsx
+const { isConnected, connector, connectors, connectAsync } = useConnect()
+```
+
+#### `useContractRead`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `read` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, read] = useContractRead(
+  {
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+  },
+  'getHunger',
+  { skip: true },
+)
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useContractRead(
+  {
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+  },
+  'getHunger',
+  { enabled: false },
+)
+```
+
+#### `useContractWrite`
+
+- Now returns a singular object, instead of an array pair
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, write] = useContractWrite(
+  {
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+  },
+  'feed',
+)
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, write } = useContractWrite(
+  {
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+  },
+  'feed',
+)
+```
+
+#### `useEnsAvatar`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getEnsAvatar` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, getEnsAvatar] = useEnsAvatar({
+  addressOrName: 'awkweb.eth',
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useEnsAvatar({
+  addressOrName: 'awkweb.eth',
+  enabled: false,
+})
+```
+
+#### `useEnsLookup`
+
+- `useEnsLookup` was renamed to `useEnsName`
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `lookupAddress` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, lookupAddress] = useEnsLookup({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useEnsName({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  enabled: false,
+})
+```
+
+#### `useEnsResolveName`
+
+- `useEnsResolveName` was renamed to `useEnsAddress`
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `resolveName` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, resolveName] = useEnsResolveName({
+  name: 'meagher.eth',
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, error, loading, refetch } = useEnsAddress({
+  name: 'meagher.eth',
+  enabled: false,
+})
+```
+
+#### `useEnsResolver`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getEnsResolver` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, getEnsResolver] = useEnsResolver({
+  name: 'awkweb.eth',
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useEnsResolver({
+  name: 'awkweb.eth',
+  enabled: false,
+})
+```
+
+#### `useFeeData`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getFeeData` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, getFeeData] = useFeeData({ skip: true })
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useFeeData({ enabled: false })
+```
+
+#### `useNetwork`
+
+- Now returns a singular object, instead of an array pair
+- `data.chain` is now `activeChain`
+- `data.chains` is now `chains`
+- `switchNetwork` now has sync (`switchNetwork`) and async (`switchNetworkAsync`) variants.
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, switchNetwork] = useNetwork()
+```
+
+##### After
+
+```tsx
+const { activeChain, chains, data, isLoading, switchNetworkAsync } =
+  useNetwork()
+```
+
+#### `useSigner`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported.
+- `getSigner` was removed in favor of `refetch`
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, getSigner] = useSigner()
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useSigner()
+```
+
+#### `useSignMessage`
+
+- Now returns a singular object, instead of an array pair
+- `signMessage` now has sync (`signMessage`) and async (`signMessageAsync`) variants.
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, signMessage] = useSignMessage({
+  message: 'gm wagmi frens',
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, signMessageAsync } = useSignMessage({
+  message: 'gm wagmi frens',
+})
+```
+
+#### `useSignTypedData`
+
+- Now returns a singular object, instead of an array pair
+- `signTypedData` now has sync (`signTypedData`) and async (`signTypedDataAsync`) variants.
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, signTypedData] = useSignTypedData({
+  domain,
+  types,
+  value,
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, signTypedDataAsync } = useSignTypedData({
+  domain,
+  types,
+  value,
+})
+```
+
+#### `useToken`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `getToken` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, getToken] = useToken({
+  address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useToken({
+  address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+  enabled: false,
+})
+```
+
+#### `useTransaction`
+
+- `useTransaction` was renamed to `useSendTransaction`
+- Now returns a singular object, instead of an array pair
+- `sendTransaction` now has sync (`sendTransaction`) and async (`sendTransactionAsync`) variants.
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, sendTransaction] = useTransaction({
+  request: {
+    to: 'awkweb.eth',
+    value: BigNumber.from('1000000000000000000'), // 1 ETH
+  },
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, sendTransactionAsync } = useTransaction({
+  request: {
+    to: 'awkweb.eth',
+    value: BigNumber.from('1000000000000000000'), // 1 ETH
+  },
+})
+```
+
+#### `useWaitForTransaction`
+
+- Now returns a singular object, instead of an array pair
+- `skip` is no longer supported. It was repurposed to `enabled`.
+- `wait` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
+
+##### Before
+
+```tsx
+const [{ data, error, loading }, wait] = useWaitForTransaction({
+  hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  skip: true,
+})
+```
+
+##### After
+
+```tsx
+const { data, error, isLoading, refetch } = useWaitForTransaction({
+  hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  enabled: false,
+})
+```
+
+### `connector.getProvider` is now asynchronous
+
+#### Before
+
+```tsx
+const { connector } = useConnect()
+
+const provider = connector.getProvider()
+```
+
+#### After
+
+```tsx
+const { connector } = useConnect()
+
+const provider = await connector.getProvider()
+```
+
+### `wagmi/connectors/walletLink` was renamed
+
+The WalletLink connector was replaced with the Coinbase Wallet SDK.
+
+##### Before
+
+```tsx
+import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
+
+const connector = new WalletLinkConnector({
+  options: {
+    appName: 'Mirror.xyz',
+    jsonRpcUrl: 'https://mainnet.infura.io/v3',
+  },
+})
+```
+
+##### After
+
+```tsx
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+
+const connector = new CoinbaseWalletConnector({
+  options: {
+    appName: 'Mirror.xyz',
+    jsonRpcUrl: 'https://mainnet.infura.io/v3',
+  },
+})
+```

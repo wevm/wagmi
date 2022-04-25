@@ -1,0 +1,67 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Injected
+
+The `InjectedConnector` supports wallets that inject an Ethereum Provider into the browser or window. The MetaMask browser extension is the most popular example of this.
+
+```ts
+import { InjectedConnector } from 'wagmi/connectors/injected'
+```
+
+## Usage
+
+```ts
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector()
+```
+
+<Callout emoji="💼">
+  Injected wallets can set up custom name mappings in wagmi. You can [see the
+  full list and add to it
+  here](https://github.com/tmm/wagmi/blob/main/packages/core/src/utils/getInjectedName.ts).
+  By default, "Injected" is the name for unmapped wallets.
+</Callout>
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { chain } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  chains: [chain.mainnet, chain.optimism],
+})
+```
+
+### options (optional)
+
+Options for configuring the connector.
+
+```ts {4-6}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    shimDisconnect: true,
+  },
+})
+```
+
+#### shimDisconnect
+
+MetaMask and other injected providers [do not support programmatic disconnect](https://github.com/MetaMask/metamask-extension/issues/10353). This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
+
+```ts {5}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    shimDisconnect: false,
+  },
+})
+```

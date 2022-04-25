@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-core-connectors-mock.cjs.js",
+  "module": "dist/wagmi-core-connectors-mock.esm.js"
+}

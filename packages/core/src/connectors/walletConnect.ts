@@ -1,11 +1,13 @@
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
-import WalletConnectProvider from '@walletconnect/ethereum-provider'
-import { IWCEthRpcConnectionOptions } from '@walletconnect/types'
+import type { ExternalProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
+import type WalletConnectProvider from '@walletconnect/ethereum-provider'
+import type { IWCEthRpcConnectionOptions } from '@walletconnect/types'
+import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import { Chain } from '../types'
-import { getAddress, hexValue, normalizeChainId } from '../utils'
+import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
 const switchChainAllowedRegex = /(rainbow)/i
@@ -29,10 +31,13 @@ export class WalletConnectConnector extends Connector<
 
   async connect() {
     try {
-      const provider = this.getProvider(true)
+      const provider = await this.getProvider(true)
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
+
+      // Defer message to the next tick to ensure wallet connect data (provided by `.enable()`) is available
+      setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
 
       const accounts = await provider.enable()
       const account = getAddress(accounts[0])
@@ -48,7 +53,7 @@ export class WalletConnectConnector extends Connector<
       return {
         account,
         chain: { id, unsupported },
-        provider: new Web3Provider(<ExternalProvider>provider),
+        provider: new providers.Web3Provider(<ExternalProvider>provider),
       }
     } catch (error) {
       if (/user closed modal/i.test((<ProviderRpcError>error).message))
@@ -58,7 +63,7 @@ export class WalletConnectConnector extends Connector<
   }
 
   async disconnect() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     await provider.disconnect()
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
@@ -70,28 +75,36 @@ export class WalletConnectConnector extends Connector<
   }
 
   async getAccount() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const accounts = provider.accounts
     // return checksum address
     return getAddress(accounts[0])
   }
 
   async getChainId() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const chainId = normalizeChainId(provider.chainId)
     return chainId
   }
 
-  getProvider(create?: boolean) {
-    if (!this.#provider || create)
+  async getProvider(create?: boolean) {
+    if (!this.#provider || create) {
+      const WalletConnectProvider = (
+        await import('@walletconnect/ethereum-provider')
+      ).default
       this.#provider = new WalletConnectProvider(this.options)
+    }
     return this.#provider
   }
 
   async getSigner() {
-    const provider = this.getProvider()
-    const account = await this.getAccount()
-    return new Web3Provider(<ExternalProvider>provider).getSigner(account)
+    const [provider, account] = await Promise.all([
+      this.getProvider(),
+      this.getAccount(),
+    ])
+    return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
+      account,
+    )
   }
 
   async isAuthorized() {
@@ -104,7 +117,7 @@ export class WalletConnectConnector extends Connector<
   }
 
   async #switchChain(chainId: number) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     const id = hexValue(chainId)
 
     try {
@@ -113,7 +126,13 @@ export class WalletConnectConnector extends Connector<
         params: [{ chainId: id }],
       })
       const chains = [...this.chains, ...allChains]
-      return chains.find((x) => x.id === chainId)
+      return (
+        chains.find((x) => x.id === chainId) ?? {
+          id: chainId,
+          name: `Chain ${id}`,
+          rpcUrls: { default: '' },
+        }
+      )
     } catch (error) {
       const message =
         typeof error === 'string' ? error : (<ProviderRpcError>error)?.message

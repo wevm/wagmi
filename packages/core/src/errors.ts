@@ -23,6 +23,11 @@ export class SwitchChainError extends Error {
   message = 'Error switching chain'
 }
 
+export class SwitchChainNotSupportedError extends Error {
+  name = 'SwitchChainNotSupportedError'
+  message = 'Switch chain not supported by connector'
+}
+
 export class UserRejectedRequestError extends Error {
   name = 'UserRejectedRequestError'
   message = 'User rejected request'

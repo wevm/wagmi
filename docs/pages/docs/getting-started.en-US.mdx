@@ -1,0 +1,63 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Getting Started
+
+## Installation
+
+Install wagmi and its ethers peer dependency.
+
+```plaintext
+npm install wagmi ethers
+```
+
+## Quick Start
+
+First, create a wagmi `Client` instance using [`createClient`](/docs/client).
+
+```tsx {3}
+import { createClient } from 'wagmi'
+
+const client = createClient()
+```
+
+<Callout>
+  You can pass a configuration object to `createClient` to customize the
+  Client's properties. Properties, like auto-connect, wallet connectors, ethers
+  provider, and more, are [all configurable](/docs/client).
+</Callout>
+
+Next, wrap your app with the [`Provider`](/docs/provider) component, passing `client` to it.
+
+```tsx {7-9}
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient()
+
+function App() {
+  return (
+    <Provider client={client}>
+      <YourRoutes />
+    </Provider>
+  )
+}
+```
+
+Finally, use hooks! Every component inside the `Provider` is now set up to use the wagmi hooks.
+
+```tsx {5,6,7-9}
+import { useAccount, useConnect, useEnsName } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+function Profile() {
+  const { data: account } = useAccount()
+  const { data: ensName } = useEnsName({ address: account.address })
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+
+  if (account) return <div>Connected to {ensName ?? account.address}</div>
+  return <button onClick={() => connect()}>Connect Wallet</button>
+}
+```
+
+Want to learn more? Check out the [examples](/examples/connect-wallet) to learn how to use wagmi in real-world scenarios or continue on reading the documentation.

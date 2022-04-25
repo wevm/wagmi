@@ -9,12 +9,12 @@ type Props = {
   onSuccess?(data: { address: string }): void
 }
 
-export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
+export function SiweButton({ address, chainId, onSuccess }: Props) {
   const [state, setState] = React.useState<{
     error?: Error
     loading?: boolean
   }>({})
-  const [, signMessage] = useSignMessage()
+  const { signMessageAsync } = useSignMessage()
 
   const handleSignIn = React.useCallback(async () => {
     try {
@@ -30,10 +30,9 @@ export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
         nonce: await nonceRes.text(),
       })
 
-      const signRes = await signMessage({ message: message.prepareMessage() })
-      if (signRes.error) throw signRes.error
-
-      const signature = signRes.data
+      const signature = await signMessageAsync({
+        message: message.prepareMessage(),
+      })
       const verifyRes = await fetch('/api/verify', {
         method: 'POST',
         headers: {
@@ -44,28 +43,26 @@ export const SiweButton = ({ address, chainId, onSuccess }: Props) => {
       if (!verifyRes.ok) throw new Error('Error verifying message')
 
       setState((x) => ({ ...x, loading: false }))
-      onSuccess && onSuccess({ address })
+      onSuccess?.({ address })
     } catch (error) {
       setState((x) => ({ ...x, error: error as Error, loading: false }))
     }
-  }, [address, chainId, signMessage, onSuccess])
+  }, [address, chainId, signMessageAsync, onSuccess])
 
   return (
     <Stack space="4">
       <Button
+        center
+        disabled={state.loading}
+        loading={state.loading}
         prefix={!state.loading && <IconEth />}
         width="full"
-        loading={state.loading}
-        disabled={state.loading}
-        center
         onClick={handleSignIn}
       >
         {state.loading ? 'Check Wallet' : 'Sign-In with Ethereum'}
       </Button>
 
-      {state.error && (
-        <Text color="red">{state.error?.message ?? 'Failed to sign in'}</Text>
-      )}
+      {state.error && <Text color="red">{state.error.message}</Text>}
     </Stack>
   )
 }

@@ -1,43 +1,31 @@
 import * as React from 'react'
 import { Button, Stack, Text } from 'degen'
-import { Connector, ConnectorData, useConnect } from 'wagmi'
+import { Connector, useConnect } from 'wagmi'
 import { SiweMessage } from 'siwe'
 
 import { useIsMounted } from '../../hooks'
 
-type Props = {
-  onError?(error: Error): void
-  onSuccess?(data: ConnectorData): void
-}
-
-export const WalletSelectorWithSiwe = ({ onError, onSuccess }: Props) => {
+export function WalletSelectorWithSiwe() {
   const isMounted = useIsMounted()
   const [state, setState] = React.useState<{ loading?: boolean }>({})
-  const [
-    {
-      data: { connector, connectors },
-      error,
-      loading,
-    },
-    connect,
-  ] = useConnect()
-  const resolvedLoading = loading || state.loading
+  const { connectAsync, connectors, error, isConnecting, pendingConnector } =
+    useConnect()
+  const resolvedLoading = isConnecting || state.loading
 
   const handleConnect = React.useCallback(
     async (connector: Connector) => {
       try {
         setState((x) => ({ ...x, loading: true }))
-        const res = await connect(connector)
-        if (!res.data) throw res.error ?? new Error('Something went wrong')
+        const res = await connectAsync(connector)
 
         const nonceRes = await fetch('/api/nonce')
         const message = new SiweMessage({
           domain: window.location.host,
-          address: res.data.account,
+          address: res.account,
           statement: 'Sign in with Ethereum to the app.',
           uri: window.location.origin,
           version: '1',
-          chainId: res.data.chain?.id,
+          chainId: res.chain?.id,
           nonce: await nonceRes.text(),
         })
 
@@ -52,32 +40,30 @@ export const WalletSelectorWithSiwe = ({ onError, onSuccess }: Props) => {
           body: JSON.stringify({ message, signature }),
         })
         if (!verifyRes.ok) throw new Error('Error verifying message')
-
-        onSuccess?.(res.data)
-      } catch (error) {
-        onError?.(error as Error)
       } finally {
         setState((x) => ({ ...x, loading: false }))
       }
     },
-    [connect, onError, onSuccess],
+    [connectAsync],
   )
 
   return (
     <Stack space="4">
-      {connectors.map((x) => (
-        <Button
-          width="full"
-          variant="tertiary"
-          center
-          loading={resolvedLoading && x.name === connector?.name}
-          disabled={isMounted ? !x.ready : false}
-          key={x.id}
-          onClick={() => handleConnect(x)}
-        >
-          {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
-        </Button>
-      ))}
+      {connectors
+        .filter((x) => x.ready)
+        .map((x) => (
+          <Button
+            width="full"
+            variant="tertiary"
+            center
+            loading={resolvedLoading && x.id === pendingConnector?.id}
+            disabled={isMounted ? !x.ready : false}
+            key={x.id}
+            onClick={() => handleConnect(x)}
+          >
+            {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
+          </Button>
+        ))}
 
       {error && (
         <Text color="red">{error?.message ?? 'Failed to connect'}</Text>

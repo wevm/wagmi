@@ -1,12 +1,16 @@
 export {
+  createClient,
+  createClient as createWagmiClient,
   Provider,
   Provider as WagmiProvider,
-  useContext,
-  Context,
+  useClient,
+  useClient as useWagmiClient,
 } from './context'
 export type {
-  Props as ProviderProps,
-  Props as WagmiProviderProps,
+  ClientConfig,
+  ClientConfig as WagmiClientConfig,
+  ProviderProps,
+  ProviderProps as WagmiProviderProps,
 } from './context'
 
 export {
@@ -18,40 +22,45 @@ export {
   useContractEvent,
   useContractRead,
   useContractWrite,
+  useDisconnect,
+  useEnsAddress,
   useEnsAvatar,
-  useEnsLookup,
-  useEnsResolveName,
+  useEnsName,
   useEnsResolver,
   useFeeData,
   useNetwork,
   useProvider,
-  useSigner,
+  useSendTransaction,
   useSignMessage,
   useSignTypedData,
+  useSigner,
   useToken,
-  useTransaction,
   useWaitForTransaction,
   useWebSocketProvider,
 } from './hooks'
 
 export {
+  Client,
   Connector,
-  InjectedConnector,
-  chain,
+  WagmiClient,
+  alchemyRpcUrls,
   allChains,
+  chain,
+  chainId,
+  createStorage,
+  createWagmiStorage,
   defaultChains,
   defaultL2Chains,
-  developmentChains,
-  erc1155ABI,
   erc20ABI,
   erc721ABI,
-  normalizeChainId,
-  AddChainError,
-  ChainNotConfiguredError,
-  ConnectorAlreadyConnectedError,
-  ConnectorNotFoundError,
-  SwitchChainError,
-  UserRejectedRequestError,
-} from 'wagmi-core'
-
-export type { Chain, ConnectorData } from 'wagmi-core'
+  etherscanBlockExplorers,
+  infuraRpcUrls,
+} from '@wagmi/core'
+export type {
+  Chain,
+  ConnectorData,
+  ConnectorEvents,
+  Storage,
+  Unit,
+  WagmiStorage,
+} from '@wagmi/core'

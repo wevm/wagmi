@@ -1,5 +1,186 @@
 # wagmi
 
+## 0.3.0-next.21
+
+### Patch Changes
+
+- showtime
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.18
+
+## 0.3.0-next.20
+
+### Patch Changes
+
+- update block explorers and rpc urls structure
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.17
+
+## 0.3.0-next.19
+
+### Minor Changes
+
+- Update react-query to 4.0.0-beta.5
+
+## 0.3.0-next.18
+
+### Patch Changes
+
+- last beta
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.16
+
+## 0.3.0-next.17
+
+### Patch Changes
+
+- update zustand
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.15
+
+## 0.3.0-next.16
+
+### Minor Changes
+
+- Add `cacheOnBlock` config for `useContractRead`
+- Update `react-query` to v4
+- Fix `watchBlockNumber` listener leak
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.14
+
+## 0.3.0-next.15
+
+### Patch Changes
+
+- keep previous data when watching
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.13
+
+## 0.3.0-next.14
+
+### Patch Changes
+
+- add chainId to actions and hooks
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.12
+
+## 0.3.0-next.13
+
+### Patch Changes
+
+- fix stale connectors when switching chains
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.11
+
+## 0.3.0-next.12
+
+### Patch Changes
+
+- republish
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.10
+
+## 0.3.0-next.11
+
+### Patch Changes
+
+- improve type support for ethers providers
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.9
+
+## 0.3.0-next.10
+
+### Patch Changes
+
+- update babel target
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.8
+
+## 0.3.0-next.9
+
+### Minor Changes
+
+- - Favour `message` event over `connecting` event to conform to EIP-1193
+  - Export `useWaitForTransaction`
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.7
+
+## 0.3.0-next.8
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.6
+
+## 0.3.0-next.7
+
+### Minor Changes
+
+- don't persist account data when `autoConnect` is falsy
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.5
+
+## 0.3.0-next.6
+
+### Minor Changes
+
+- fix `useContractWrite` mutation fn arguments
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.4
+
+## 0.3.0-next.5
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.3
+
+## 0.3.0-next.4
+
+### Minor Changes
+
+- force address to be required in `useAccount`
+
+## 0.3.0-next.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.2
+
+## 0.3.0-next.2
+
+### Minor Changes
+
+- Initial 0.3.0 release
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.1
+
 ## 0.2.28
 
 ### Patch Changes

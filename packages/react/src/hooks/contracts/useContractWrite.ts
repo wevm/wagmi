@@ -1,99 +1,96 @@
 import * as React from 'react'
-import { CallOverrides, ethers } from 'ethers'
-import { TransactionResponse } from '@ethersproject/providers'
-import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-core'
+import {
+  WriteContractArgs,
+  WriteContractConfig,
+  WriteContractResult,
+  writeContract,
+} from '@wagmi/core'
+import { useMutation } from 'react-query'
 
-import { useContext } from '../../context'
-import { Config as UseContractConfig, useContract } from './useContract'
-import { useCancel } from '../utils'
+import { MutationConfig } from '../../types'
 
-type Config = {
-  /** Arguments to pass contract method */
-  args?: any | any[]
-  overrides?: CallOverrides
-}
+export type UseContractWriteArgs = Partial<WriteContractConfig>
 
-type State = {
-  response?: TransactionResponse
-  error?: Error
-  loading?: boolean
-}
+export type UseContractWriteConfig = MutationConfig<
+  WriteContractResult,
+  Error,
+  UseContractWriteArgs
+>
 
-const initialState: State = {
-  loading: false,
-}
-
-export const useContractWrite = <
-  Contract extends ethers.Contract = ethers.Contract,
->(
-  contractConfig: UseContractConfig,
-  functionName: string,
-  { args, overrides }: Config = {},
-) => {
-  const {
-    state: { connector },
-  } = useContext()
-
-  const contract = useContract<Contract>(contractConfig)
-  const [state, setState] = React.useState<State>(initialState)
-
-  const cancelQuery = useCancel()
-  const write = React.useCallback(
-    async (config?: {
-      args?: Config['args']
-      overrides?: Config['overrides']
-    }) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const config_ = config ?? { args, overrides }
-        if (!connector) throw new ConnectorNotFoundError()
-        const params = [
-          ...(Array.isArray(config_.args)
-            ? config_.args
-            : config_.args
-            ? [config_.args]
-            : []),
-          ...(config_.overrides ? [config_.overrides] : []),
-        ]
-
-        setState((x) => ({
-          ...x,
-          error: undefined,
-          loading: true,
-          response: undefined,
-        }))
-        const signer = await connector.getSigner()
-        const contract_ = contract.connect(signer)
-        const response = (await contract_[functionName](
-          ...params,
-        )) as TransactionResponse
-        if (!didCancel) {
-          setState((x) => ({ ...x, loading: false, response }))
-        }
-        return { data: response, error: undefined }
-      } catch (error_) {
-        let error: Error = <Error>error_
-        if ((<ProviderRpcError>error_).code === 4001)
-          error = new UserRejectedRequestError()
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return { data: undefined, error }
-      }
+export const mutationKey = ([
+  contractConfig,
+  functionName,
+  { args, overrides },
+]: [WriteContractArgs, string, Partial<WriteContractConfig>]) =>
+  [
+    {
+      entity: 'writeContract',
+      args,
+      contractConfig,
+      functionName,
+      overrides,
     },
-    [args, cancelQuery, connector, contract, functionName, overrides],
+  ] as const
+
+export function useContractWrite(
+  contractConfig: WriteContractArgs,
+  functionName: string,
+  {
+    args,
+    overrides,
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  }: UseContractWriteArgs & UseContractWriteConfig = {},
+) {
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(
+    mutationKey([contractConfig, functionName, { args, overrides }]),
+    ({ args, overrides }) =>
+      writeContract(contractConfig, functionName, { args, overrides }),
+    {
+      onError,
+      onMutate,
+      onSettled,
+      onSuccess,
+    },
   )
 
-  return [
-    {
-      data: state.response,
-      error: state.error,
-      loading: state.loading,
-    },
+  const write = React.useCallback(
+    (overrideConfig?: WriteContractConfig) =>
+      mutate(overrideConfig || { args, overrides }),
+    [args, mutate, overrides],
+  )
+
+  const writeAsync = React.useCallback(
+    (overrideConfig?: WriteContractConfig) =>
+      mutateAsync(overrideConfig || { args, overrides }),
+    [args, mutateAsync, overrides],
+  )
+
+  return {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
+    status,
+    variables,
     write,
-  ] as const
+    writeAsync,
+  }
 }

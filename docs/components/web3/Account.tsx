@@ -1,17 +1,23 @@
 import * as React from 'react'
-import { Avatar, Box, Button, Stack } from 'degen'
-import { useAccount } from 'wagmi'
+import { Avatar, Box, Button, Skeleton, Stack } from 'degen'
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
 import { formatAddress } from '../../lib/address'
+import { useIsMounted } from '../../hooks'
 
-export const Account = () => {
-  const [{ data: accountData }, disconnect] = useAccount({
-    fetchEns: true,
+export function Account() {
+  const isMounted = useIsMounted()
+  const { data: accountData } = useAccount()
+  const { data: ensNameData } = useEnsName({ address: accountData?.address })
+  const { data: ensAvatarData } = useEnsAvatar({
+    addressOrName: accountData?.address,
   })
+  const { disconnect } = useDisconnect()
 
-  if (!accountData) return null
+  if (!accountData?.address || !isMounted) return null
 
   const formattedAddress = formatAddress(accountData.address)
+
   return (
     <Stack
       align="center"
@@ -20,29 +26,34 @@ export const Account = () => {
     >
       <Stack align="center" direction={{ xs: 'vertical', sm: 'horizontal' }}>
         <Avatar
-          src={accountData.ens?.avatar as any}
+          src={ensAvatarData as any}
           label="ENS Avatar"
-          placeholder={!accountData.ens?.avatar}
+          placeholder={!ensAvatarData}
         />
         <Stack space="0">
           <Box fontSize="large" textAlign={{ xs: 'center', sm: 'left' }}>
-            {accountData.ens?.name
-              ? `${accountData.ens?.name} (${formattedAddress})`
+            {ensNameData
+              ? `${ensNameData} (${formattedAddress})`
               : formattedAddress}
           </Box>
-          {accountData.connector?.name && (
-            <Box
-              fontSize="small"
-              color="textSecondary"
-              textAlign={{ xs: 'center', sm: 'left' }}
-            >
-              Connected to {accountData.connector.name}
-            </Box>
-          )}
+          <Box
+            fontSize="small"
+            color="textSecondary"
+            textAlign={{ xs: 'center', sm: 'left' }}
+            display="flex"
+            gap="1"
+          >
+            Connected to{' '}
+            <Skeleton loading={!(isMounted && accountData?.connector)}>
+              {isMounted && accountData?.connector
+                ? accountData.connector.name
+                : 'Wallet Name'}
+            </Skeleton>
+          </Box>
         </Stack>
       </Stack>
 
-      <Button variant="secondary" onClick={disconnect}>
+      <Button variant="secondary" onClick={() => disconnect()}>
         Disconnect
       </Button>
     </Stack>

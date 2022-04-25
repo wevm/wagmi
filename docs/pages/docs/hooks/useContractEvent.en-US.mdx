@@ -1,0 +1,116 @@
+# useContractEvent
+
+Hook for subscribing to ethers Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
+
+```tsx
+import { useContractEvent } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [ENS Registry Contract](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code).
+
+```tsx
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+  )
+}
+```
+
+## Arguments
+
+### contractConfig
+
+See [useContract](/docs/hooks/useContract) for more info.
+
+### eventName
+
+Name of the event to listen to.
+
+```tsx {9}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewResolver',
+    (event) => console.log(event),
+  )
+}
+```
+
+### listener
+
+Callback that receives event.
+
+```tsx {10}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+  )
+}
+```
+
+### Configuration
+
+#### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/docs/client#websocketprovider-optional) for this to work correctly.
+
+```tsx {12}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+    {
+      chainId: 1,
+    },
+  )
+}
+```
+
+#### once (optional)
+
+Receive only a single event, then stop listener. Defaults to `false`.
+
+```tsx {12}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent(
+    {
+      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+      contractInterface: ensRegistryABI,
+    },
+    'NewOwner',
+    (event) => console.log(event),
+    {
+      once: true,
+    },
+  )
+}
+```

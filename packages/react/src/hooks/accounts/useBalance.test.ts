@@ -1,139 +1,312 @@
-import { wallets } from 'wagmi-testing'
-
-import { actHook, renderHook } from '../../../test'
-import { useConnect } from './useConnect'
-import { Config, useBalance } from './useBalance'
-
-const useBalanceWithConnect = (config: { balance?: Config } = {}) => {
-  const balance = useBalance(config.balance)
-  const connect = useConnect()
-  return { balance, connect } as const
-}
+import { act, renderHook } from '../../../test'
+import { useBalance } from './useBalance'
 
 describe('useBalance', () => {
-  describe('on mount', () => {
-    it('not connected', async () => {
-      const { result } = renderHook(() => useBalance())
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": false,
-        }
-      `)
-      expect(result.current[1]).toBeDefined()
+  it('mounts', async () => {
+    const { result, waitFor } = renderHook(() =>
+      useBalance({ addressOrName: 'awkweb.eth' }),
+    )
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+      timeout: 5_000,
     })
 
-    it('connected', async () => {
-      const { result } = renderHook(() => useBalanceWithConnect())
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
-      })
-
-      expect(result.current.balance[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": false,
-        }
-      `)
-    })
-  })
-
-  it('skip', async () => {
-    const { result } = renderHook(() => useBalance({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { internal, ...res } = result.current
+    expect(res).toMatchInlineSnapshot(`
       {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
+        "data": {
+          "decimals": 18,
+          "formatted": "1.622080339908136684",
+          "symbol": "ETH",
+          "unit": "ether",
+          "value": {
+            "hex": "0x1682c979995e8eec",
+            "type": "BigNumber",
+          },
+        },
+        "error": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetching": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isRefetching": false,
+        "isSuccess": true,
+        "refetch": [Function],
+        "status": "success",
       }
     `)
   })
 
-  describe('getBalance', () => {
-    it('uses config', async () => {
-      const { result } = renderHook(() =>
-        useBalanceWithConnect({
-          balance: {
-            addressOrName: wallets.ethers1.address,
-            skip: true,
+  describe('configuration', () => {
+    describe('addressOrName', () => {
+      it('address', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useBalance({
+            addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          }),
+        )
+
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": {
+              "decimals": 18,
+              "formatted": "1.622080339908136684",
+              "symbol": "ETH",
+              "unit": "ether",
+              "value": {
+                "hex": "0x1682c979995e8eec",
+                "type": "BigNumber",
+              },
+            },
+            "error": null,
+            "fetchStatus": "idle",
+            "isError": false,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": true,
+            "refetch": [Function],
+            "status": "success",
+          }
+        `)
+      })
+
+      it('name', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useBalance({
+            addressOrName: 'medha.eth',
+          }),
+        )
+
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": {
+              "decimals": 18,
+              "formatted": "0.063903008095677776",
+              "symbol": "ETH",
+              "unit": "ether",
+              "value": {
+                "hex": "0xe30772819f2d50",
+                "type": "BigNumber",
+              },
+            },
+            "error": null,
+            "fetchStatus": "idle",
+            "isError": false,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": true,
+            "refetch": [Function],
+            "status": "success",
+          }
+        `)
+      })
+    })
+
+    it('chainId', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useBalance({ chainId: 1, addressOrName: 'awkweb.eth' }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "decimals": 18,
+            "formatted": "1.622080339908136684",
+            "symbol": "ETH",
+            "unit": "ether",
+            "value": {
+              "hex": "0x1682c979995e8eec",
+              "type": "BigNumber",
+            },
           },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+
+    it('enabled', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useBalance({
+          addressOrName: 'moxey.eth',
+          enabled: false,
         }),
       )
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-        const res = await result.current.balance[1]()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "decimals": 18,
-              "formatted": "0.193861344139087225",
-              "symbol": "ETH",
-              "unit": "ether",
-              "value": {
-                "hex": "0x02b0bbdd89170d79",
-                "type": "BigNumber",
-              },
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
+        }
+      `)
+    })
+
+    it('formatUnits', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useBalance({ addressOrName: 'awkweb.eth', formatUnits: 'gwei' }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "decimals": 18,
+            "formatted": "1622080339.908136684",
+            "symbol": "ETH",
+            "unit": "gwei",
+            "value": {
+              "hex": "0x1682c979995e8eec",
+              "type": "BigNumber",
             },
-            "error": undefined,
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+
+    it('token', async () => {
+      const ensTokenAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
+      const { result, waitFor } = renderHook(() =>
+        useBalance({ addressOrName: 'awkweb.eth', token: ensTokenAddress }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "decimals": 18,
+            "formatted": "445.85124391824564224",
+            "symbol": "ENS",
+            "unit": "ether",
+            "value": {
+              "hex": "0x182b6dd01f5d124000",
+              "type": "BigNumber",
+            },
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+  })
+
+  describe('return value', () => {
+    it('refetch', async () => {
+      const { result } = renderHook(() =>
+        useBalance({ enabled: false, addressOrName: 'worm.eth' }),
+      )
+
+      await act(async () => {
+        const { data } = await result.current.refetch()
+        expect(data).toMatchInlineSnapshot(`
+          {
+            "decimals": 18,
+            "formatted": "2.540437289581808169",
+            "symbol": "ETH",
+            "unit": "ether",
+            "value": {
+              "hex": "0x234172414bae0a29",
+              "type": "BigNumber",
+            },
           }
         `)
       })
     })
+  })
 
-    it('uses params', async () => {
-      const { result } = renderHook(() =>
-        useBalanceWithConnect({ balance: { skip: true } }),
-      )
+  describe('behavior', () => {
+    it('does nothing when `addressOrName` is missing', async () => {
+      const { result, waitFor } = renderHook(() => useBalance())
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-        const res = await result.current.balance[1]({
-          addressOrName: wallets.ethers1.address,
-        })
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "decimals": 18,
-              "formatted": "0.193861344139087225",
-              "symbol": "ETH",
-              "unit": "ether",
-              "value": {
-                "hex": "0x02b0bbdd89170d79",
-                "type": "BigNumber",
-              },
-            },
-            "error": undefined,
-          }
-        `)
-      })
-    })
-
-    it('has error', async () => {
-      const { result } = renderHook(() =>
-        useBalanceWithConnect({ balance: { skip: true } }),
-      )
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
-
-        const res = await result.current.balance[1]()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": undefined,
-            "error": [Error: address is required],
-          }
-        `)
-      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
+        }
+      `)
     })
   })
 })

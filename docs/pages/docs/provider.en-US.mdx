@@ -1,0 +1,53 @@
+# Provider
+
+The wagmi `Provider` manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html) (not to be confused with an [ethers Provider](https://docs.ethers.io/v5/api/providers/) of course).
+
+```tsx
+import { Provider } from 'wagmi'
+```
+
+To help avoid conflicts with other providers in your app, the `Provider` is also aliased as `WagmiProvider`.
+
+```tsx
+import { WagmiProvider } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { Provider } from 'wagmi'
+
+function App() {
+  return (
+    <Provider>
+      <YourRoutes />
+    </Provider>
+  )
+}
+```
+
+## Configuration
+
+### client (optional)
+
+A wagmi [`Client`](/docs/client) instance that consists of configuration options. Defaults to `createClient()`.
+
+```tsx {4-9,13}
+import { providers } from 'ethers'
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient({
+  autoConnect: true,
+  provider(config) {
+    return new providers.AlchemyProvider(config.chainId, 'Your Alchemy ID')
+  },
+})
+
+function App() {
+  return (
+    <Provider client={client}>
+      <YourRoutes />
+    </Provider>
+  )
+}
+```

@@ -1,101 +1,62 @@
 import * as React from 'react'
-import { BigNumberish, utils } from 'ethers'
-import { FeeData } from '@ethersproject/providers'
-import { Unit } from 'wagmi-core'
+import { FetchFeeDataArgs, FetchFeeDataResult, fetchFeeData } from '@wagmi/core'
 
-import { useProvider } from '../providers'
-import { useCacheBuster, useCancel } from '../utils'
-import { useBlockNumber } from './useBlockNumber'
+import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useBlockNumber } from '../network-status'
+import { useChainId, useQuery } from '../utils'
 
-type Config = {
-  /** Units for formatting output */
-  formatUnits?: Unit | number
-  /** Disables fetching */
-  skip?: boolean
+type UseFeeDataArgs = Partial<FetchFeeDataArgs> & {
   /** Subscribe to changes */
   watch?: boolean
 }
 
-type State = {
-  feeData?: FeeData
-  error?: Error
-  loading?: boolean
+export type UseFeedDataConfig = QueryConfig<FetchFeeDataResult, Error>
+
+export const queryKey = ({
+  chainId,
+  formatUnits,
+}: Partial<FetchFeeDataArgs> & {
+  chainId?: number
+}) => [{ entity: 'feeData', chainId, formatUnits }] as const
+
+const queryFn = ({
+  queryKey: [{ chainId, formatUnits }],
+}: QueryFunctionArgs<typeof queryKey>) => {
+  return fetchFeeData({ chainId, formatUnits })
 }
 
-const initialState: State = {
-  loading: false,
-}
-
-export const useFeeData = ({
+export function useFeeData({
+  cacheTime,
+  chainId: chainId_,
+  enabled = true,
   formatUnits = 'wei',
-  skip,
+  staleTime,
+  suspense,
   watch,
-}: Config = {}) => {
-  const provider = useProvider()
-  const [{ data: blockNumber }] = useBlockNumber({ skip: true, watch })
-  const cacheBuster = useCacheBuster()
-  const [state, setState] = React.useState<State>(initialState)
+  onError,
+  onSettled,
+  onSuccess,
+}: UseFeeDataArgs & UseFeedDataConfig = {}) {
+  const chainId = useChainId({ chainId: chainId_ })
 
-  const cancelQuery = useCancel()
-  const getFeeData = React.useCallback(async () => {
-    let didCancel = false
-    cancelQuery(() => {
-      didCancel = true
-    })
-    try {
-      setState((x) => ({ ...x, error: undefined, loading: true }))
-      const feeData = await provider.getFeeData()
-      if (!didCancel) {
-        setState((x) => ({ ...x, feeData, loading: false }))
-      }
-      return { data: feeData, error: undefined }
-    } catch (error_) {
-      const error = <Error>error_
-      if (!didCancel) {
-        setState((x) => ({ ...x, error, loading: false }))
-      }
-      return { data: undefined, error }
-    }
-  }, [cancelQuery, provider])
+  const feeDataQuery = useQuery(queryKey({ chainId, formatUnits }), queryFn, {
+    cacheTime,
+    enabled,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 
-  // Fetch feeData on mount or when chain changes
-  /* eslint-disable react-hooks/exhaustive-deps */
+  const { data: blockNumber } = useBlockNumber({ watch })
   React.useEffect(() => {
-    if (skip) return
-    getFeeData()
-    return cancelQuery
-  }, [cacheBuster, cancelQuery, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
+    if (!enabled) return
+    if (!watch) return
+    if (!blockNumber) return
+    feeDataQuery.refetch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blockNumber])
 
-  React.useEffect(() => {
-    if (!watch || !blockNumber) return
-    getFeeData()
-    return cancelQuery
-  }, [blockNumber, cancelQuery, getFeeData, watch])
-
-  const formatted = state.feeData
-    ? {
-        gasPrice: utils.formatUnits(
-          <BigNumberish>state.feeData.gasPrice,
-          formatUnits,
-        ),
-        maxFeePerGas: utils.formatUnits(
-          <BigNumberish>state.feeData.maxFeePerGas,
-          formatUnits,
-        ),
-        maxPriorityFeePerGas: utils.formatUnits(
-          <BigNumberish>state.feeData.maxPriorityFeePerGas,
-          formatUnits,
-        ),
-      }
-    : undefined
-
-  return [
-    {
-      data: state.feeData ? { ...state.feeData, formatted } : undefined,
-      loading: state.loading,
-      error: state.error,
-    },
-    getFeeData,
-  ] as const
+  return feeDataQuery
 }

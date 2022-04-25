@@ -1,50 +1,96 @@
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useBlockNumber } from './useBlockNumber'
 
 describe('useBlockNumber', () => {
-  describe('on mount', () => {
-    it('fetches', async () => {
-      const { result, waitForNextUpdate } = renderHook(() => useBlockNumber())
-      expect(result.current[0]).toMatchInlineSnapshot(`
+  it('mounts', async () => {
+    const { result, waitFor } = renderHook(() => useBlockNumber())
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { data, internal, ...res } = result.current
+    expect(typeof data === 'number').toBeTruthy()
+    expect(res).toMatchInlineSnapshot(`
+      {
+        "error": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetching": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isRefetching": false,
+        "isSuccess": true,
+        "refetch": [Function],
+        "status": "success",
+      }
+    `)
+  })
+
+  describe('configuration', () => {
+    it('chainId', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useBlockNumber({ chainId: 1 }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data, internal, ...res } = result.current
+      expect(typeof data === 'number').toBeTruthy()
+      expect(res).toMatchInlineSnapshot(`
         {
-          "data": undefined,
-          "error": undefined,
-          "loading": true,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
+    })
+
+    it('enabled', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useBlockNumber({ enabled: false }),
+      )
+
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
-          "data": 13897897,
-          "error": undefined,
-          "loading": false,
+          "data": undefined,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
         }
       `)
     })
   })
 
-  it('skip', async () => {
-    const { result } = renderHook(() => useBlockNumber({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
-      }
-    `)
-  })
+  describe('return value', () => {
+    it('refetch', async () => {
+      const { result } = renderHook(() => useBlockNumber({ enabled: false }))
 
-  it('getBlockNumber', async () => {
-    const { result } = renderHook(() => useBlockNumber({ skip: true }))
-
-    await actHook(async () => {
-      const res = await result.current[1]()
-      expect(res).toMatchInlineSnapshot(`
-        {
-          "data": 13897897,
-          "error": undefined,
-        }
-      `)
+      await act(async () => {
+        const { data } = await result.current.refetch()
+        expect(typeof data === 'number').toBeTruthy()
+      })
     })
   })
 })

@@ -2,9 +2,11 @@ import * as React from 'react'
 import { ethers } from 'ethers'
 
 import { useProvider, useWebSocketProvider } from '../providers'
-import { Config as UseContractConfig, useContract } from './useContract'
+import { UseContractConfig, useContract } from './useContract'
 
-type Config = {
+export type UseContractEventConfig = {
+  /** Chain id to use for provider */
+  chainId?: number
   /** Receive only a single event */
   once?: boolean
 }
@@ -18,10 +20,10 @@ export const useContractEvent = <
   eventName: Parameters<Contract['on']>[0],
   /** Callback function when event is called */
   listener: Parameters<Contract['on']>[1],
-  { once }: Config = {},
+  { chainId, once }: UseContractEventConfig = {},
 ) => {
-  const provider = useProvider()
-  const webSocketProvider = useWebSocketProvider()
+  const provider = useProvider({ chainId })
+  const webSocketProvider = useWebSocketProvider({ chainId })
   const contract = useContract<Contract>({
     signerOrProvider: webSocketProvider ?? provider,
     ...contractConfig,
@@ -29,7 +31,6 @@ export const useContractEvent = <
   const listenerRef = React.useRef(listener)
   listenerRef.current = listener
 
-  /* eslint-disable react-hooks/exhaustive-deps */
   React.useEffect(() => {
     const handler = (...event: Array<Parameters<Contract['on']>[1]>) =>
       listenerRef.current(event)
@@ -41,6 +42,6 @@ export const useContractEvent = <
     return () => {
       contract_.off(eventName, handler)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract, eventName])
-  /* eslint-enable react-hooks/exhaustive-deps */
 }

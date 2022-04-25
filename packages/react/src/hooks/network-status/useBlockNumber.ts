@@ -1,88 +1,71 @@
 import * as React from 'react'
+import { useQueryClient } from 'react-query'
+import {
+  FetchBlockNumberArgs,
+  FetchBlockNumberResult,
+  fetchBlockNumber,
+} from '@wagmi/core'
 
+import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
-import { useCacheBuster, useCancel } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
-type Config = {
-  /** Disables fetching */
-  skip?: boolean
+type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
   /** Subscribe to changes */
   watch?: boolean
 }
 
-type State = {
-  blockNumber?: number
-  error?: Error
-  loading?: boolean
+export type UseBlockNumberConfig = QueryConfig<FetchBlockNumberResult, Error>
+
+export const queryKey = ({ chainId }: { chainId?: number }) =>
+  [{ entity: 'blockNumber', chainId }] as const
+
+const queryFn = ({
+  queryKey: [{ chainId }],
+}: QueryFunctionArgs<typeof queryKey>) => {
+  return fetchBlockNumber({ chainId })
 }
 
-const initialState: State = {
-  loading: false,
-}
-
-export const useBlockNumber = ({ skip, watch }: Config = {}) => {
-  const cacheBuster = useCacheBuster()
+export function useBlockNumber({
+  cacheTime = 0,
+  chainId: chainId_,
+  enabled = true,
+  staleTime,
+  suspense,
+  watch = false,
+  onError,
+  onSettled,
+  onSuccess,
+}: UseBlockNumberArgs & UseBlockNumberConfig = {}) {
+  const chainId = useChainId({ chainId: chainId_ })
   const provider = useProvider()
   const webSocketProvider = useWebSocketProvider()
-  const [state, setState] = React.useState<State>(initialState)
-
-  const cancelQuery = useCancel()
-  const getBlockNumber = React.useCallback(async () => {
-    let didCancel = false
-    cancelQuery(() => {
-      didCancel = true
-    })
-    try {
-      setState((x) => ({ ...x, error: undefined, loading: true }))
-      const blockNumber = await provider.getBlockNumber()
-      if (!didCancel) {
-        setState((x) => ({ ...x, blockNumber, loading: false }))
-      }
-      return { data: blockNumber, error: undefined }
-    } catch (error_) {
-      const error = <Error>error_
-      if (!didCancel) {
-        setState((x) => ({ ...x, error, loading: false }))
-      }
-      return { data: undefined, error }
-    }
-  }, [cancelQuery, provider])
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  React.useEffect(() => {
-    if (skip) return
-    getBlockNumber()
-    return cancelQuery
-  }, [cacheBuster, cancelQuery, skip])
-  /* eslint-enable react-hooks/exhaustive-deps */
+  const queryClient = useQueryClient()
 
   React.useEffect(() => {
     if (!watch) return
-    let didCancel = false
 
-    const listener = (blockNumber: State['blockNumber']) => {
+    const listener = (blockNumber: number) => {
       // Just to be safe in case the provider implementation
       // calls the event callback after .off() has been called
-      if (!didCancel) {
-        setState((x) => ({ ...x, blockNumber }))
-      }
+      queryClient.setQueryData(queryKey({ chainId }), blockNumber)
     }
 
     const provider_ = webSocketProvider ?? provider
     provider_.on('block', listener)
 
     return () => {
-      didCancel = true
       provider_.off('block', listener)
     }
-  }, [provider, watch, webSocketProvider])
+  }, [chainId, provider, queryClient, watch, webSocketProvider])
 
-  return [
-    {
-      data: state.blockNumber,
-      error: state.error,
-      loading: state.loading,
-    },
-    getBlockNumber,
-  ] as const
+  return useQuery(queryKey({ chainId }), queryFn, {
+    cacheTime,
+    enabled,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }

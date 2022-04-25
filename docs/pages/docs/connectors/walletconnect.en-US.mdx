@@ -1,0 +1,54 @@
+# WalletConnect
+
+The `WalletConnectConnector` wraps the [WalletConnect Ethereum Provider](https://walletconnect.com) and supports its configuration options. This is a great option for adding support for many wallets to your app.
+
+```ts
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+```
+
+## Usage
+
+```ts
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+  },
+})
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { chain } from 'wagmi'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  chains: [chain.mainnet, chain.optimism],
+  options: {
+    qrcode: true,
+  },
+})
+```
+
+### options
+
+Options to pass to the [WalletConnect Ethereum Provider](https://walletconnect.com).
+
+```ts {4-9}
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+    rpc: {
+      1: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+    },
+  },
+})
+```

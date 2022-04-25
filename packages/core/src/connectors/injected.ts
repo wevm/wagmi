@@ -1,13 +1,10 @@
-import { ExternalProvider, Web3Provider } from '@ethersproject/providers'
+import type { ExternalProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
+import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { Chain } from '../types'
 import { allChains } from '../constants'
-import {
-  getAddress,
-  getInjectedName,
-  hexValue,
-  normalizeChainId,
-} from '../utils'
+import { getInjectedName, normalizeChainId } from '../utils'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -16,24 +13,19 @@ import {
   UserRejectedRequestError,
 } from '../errors'
 import { Connector } from './base'
+import { getClient } from '../client'
 
 type InjectedConnectorOptions = {
   /**
    * MetaMask and other injected providers do not support programmatic disconnect.
-   * This flag simulates the disconnect behavior by keeping track of connection status in localStorage.
+   * This flag simulates the disconnect behavior by keeping track of connection status in storage.
    * @see https://github.com/MetaMask/metamask-extension/issues/10353
+   * @default true
    */
   shimDisconnect?: boolean
-  /**
-   * MetaMask 10.9.3 emits disconnect event when chain is changed.
-   * This flag disables the disconnect event and relies on the accountsChanged event for updating wallet connection.
-   * This workaround is experimental and might result in stale connections.
-   * @see https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334
-   */
-  shimChainChangedDisconnect?: boolean
 }
 
-const shimKey = 'wagmi.shimDisconnect'
+const shimKey = 'injected.shimDisconnect'
 
 export class InjectedConnector extends Connector<
   Window['ethereum'],
@@ -49,7 +41,7 @@ export class InjectedConnector extends Connector<
     chains?: Chain[]
     options?: InjectedConnectorOptions
   }) {
-    super({ ...config, options: config?.options })
+    super({ ...config, options: { shimDisconnect: true, ...config?.options } })
 
     let name = 'Injected'
     if (typeof window !== 'undefined') name = getInjectedName(window.ethereum)
@@ -58,23 +50,23 @@ export class InjectedConnector extends Connector<
 
   async connect() {
     try {
-      const provider = this.getProvider()
+      const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
 
       if (provider.on) {
         provider.on('accountsChanged', this.onAccountsChanged)
         provider.on('chainChanged', this.onChainChanged)
-        if (!this.options?.shimChainChangedDisconnect)
-          provider.on('disconnect', this.onDisconnect)
+        provider.on('disconnect', this.onDisconnect)
       }
+
+      this.emit('message', { type: 'connecting' })
 
       const account = await this.getAccount()
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
 
       if (this.options?.shimDisconnect)
-        typeof localStorage !== 'undefined' &&
-          localStorage.setItem(shimKey, 'true')
+        getClient().storage?.setItem(shimKey, true)
 
       return { account, chain: { id, unsupported }, provider }
     } catch (error) {
@@ -85,19 +77,18 @@ export class InjectedConnector extends Connector<
   }
 
   async disconnect() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     if (!provider?.removeListener) return
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
 
-    if (this.options?.shimDisconnect)
-      typeof localStorage !== 'undefined' && localStorage.removeItem(shimKey)
+    if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
   }
 
   async getAccount() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     const accounts = await provider.request<string[]>({
       method: 'eth_requestAccounts',
@@ -107,35 +98,38 @@ export class InjectedConnector extends Connector<
   }
 
   async getChainId() {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     return await provider
       .request<string>({ method: 'eth_chainId' })
       .then(normalizeChainId)
   }
 
-  getProvider() {
+  async getProvider() {
     if (typeof window !== 'undefined' && !!window.ethereum)
       this.#provider = window.ethereum
     return this.#provider
   }
 
   async getSigner() {
-    const provider = this.getProvider()
-    const account = await this.getAccount()
-    return new Web3Provider(<ExternalProvider>provider).getSigner(account)
+    const [provider, account] = await Promise.all([
+      this.getProvider(),
+      this.getAccount(),
+    ])
+    return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
+      account,
+    )
   }
 
   async isAuthorized() {
     try {
       if (
         this.options?.shimDisconnect &&
-        typeof localStorage !== 'undefined' &&
-        !localStorage.getItem(shimKey)
+        !getClient().storage?.getItem(shimKey)
       )
         return false
 
-      const provider = this.getProvider()
+      const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
       const accounts = await provider.request<string[]>({
         method: 'eth_accounts',
@@ -148,7 +142,7 @@ export class InjectedConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     const id = hexValue(chainId)
 
@@ -158,9 +152,15 @@ export class InjectedConnector extends Connector<
         params: [{ chainId: id }],
       })
       const chains = [...this.chains, ...allChains]
-      return chains.find((x) => x.id === chainId)
+      return (
+        chains.find((x) => x.id === chainId) ?? {
+          id: chainId,
+          name: `Chain ${id}`,
+          rpcUrls: { default: '' },
+        }
+      )
     } catch (error) {
-      // Indicates chain is not added to MetaMask
+      // Indicates chain is not added to provider
       if ((<ProviderRpcError>error).code === 4902) {
         try {
           const chain = this.chains.find((x) => x.id === chainId)
@@ -172,8 +172,8 @@ export class InjectedConnector extends Connector<
                 chainId: id,
                 chainName: chain.name,
                 nativeCurrency: chain.nativeCurrency,
-                rpcUrls: chain.rpcUrls,
-                blockExplorerUrls: chain.blockExplorers?.map((x) => x.url),
+                rpcUrls: this.getRpcUrls(chain),
+                blockExplorerUrls: this.getBlockExplorerUrls(chain),
               },
             ],
           })
@@ -198,9 +198,9 @@ export class InjectedConnector extends Connector<
     image?: string
     symbol: string
   }) {
-    const provider = this.getProvider()
+    const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
-    await provider.request({
+    return await provider.request({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',
@@ -227,8 +227,6 @@ export class InjectedConnector extends Connector<
 
   protected onDisconnect = () => {
     this.emit('disconnect')
-
-    if (this.options?.shimDisconnect)
-      typeof localStorage !== 'undefined' && localStorage.removeItem(shimKey)
+    if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
   }
 }

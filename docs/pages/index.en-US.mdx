@@ -1,0 +1,88 @@
+---
+title: React Hooks for Ethereum
+---
+
+import { Header } from '../components/docs'
+
+<Header />
+
+**wagmi** is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.
+
+<div className="mt-16 mb-4 text-center">`npm i wagmi ethers`</div>
+
+<div className="mb-20 text-center">
+  [Get Started](/docs/getting-started) · [Examples](/examples/connect-wallet) ·
+  [GitHub Repository](https://github.com/tmm/wagmi)
+</div>
+
+## Overview
+
+```tsx
+import { Provider, createClient } from 'wagmi'
+
+const client = createClient()
+
+function App() {
+  return (
+    <Provider client={client}>
+      <Profile />
+    </Provider>
+  )
+}
+```
+
+```tsx
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+function Profile() {
+  const { data } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
+
+  if (data)
+    return (
+      <div>
+        Connected to {data.address}
+        <button onClick={disconnect}>Disconnect</button>
+      </div>
+    )
+  return <button onClick={connect}>Connect Wallet</button>
+}
+```
+
+In this example, we create a wagmi `Client` and pass it to the React Context `Provider`. Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
+
+We've only scratched the surface for what you can do with wagmi!
+
+## Features
+
+wagmi supports all these features out-of-the-box:
+
+- 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
+- Built-in wallet connectors for Injected (e.g. MetaMask), WalletConnect, and Coinbase Wallet
+- Caching, request deduplication, and persistence
+- Auto-refresh data on wallet, block, and network changes
+- TypeScript ready
+- Test suite running against forked Ethereum network
+
+...and a lot more.
+
+## Community
+
+Check out the following places for more wagmi-related content:
+
+- Follow [@awkweb](https://twitter.com/awkweb) on Twitter for project updates
+- Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
+- Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
+- Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) that uses wagmi
+
+## Support
+
+Help support future development and make wagmi a sustainable open-source project. Thank you 🙏
+
+- [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
+- [GitHub Sponsors](https://github.com/sponsors/tmm?metadata_campaign=docs_support)
+- [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)

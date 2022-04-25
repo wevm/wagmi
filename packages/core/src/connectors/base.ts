@@ -1,5 +1,5 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { Signer } from 'ethers'
+import { Signer } from 'ethers/lib/ethers'
 
 import { defaultChains } from '../constants'
 import { Chain } from '../types'
@@ -13,6 +13,7 @@ export type ConnectorData<Provider = any> = {
 export interface ConnectorEvents<Provider = any> {
   change(data: ConnectorData<Provider>): void
   connect(data: ConnectorData<Provider>): void
+  message({ type, data }: { type: string; data?: unknown }): void
   disconnect(): void
   error(error: Error): void
 }
@@ -44,23 +45,36 @@ export abstract class Connector<
     this.options = options
   }
 
-  abstract connect(): Promise<ConnectorData>
+  abstract connect(): Promise<Required<ConnectorData>>
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
-  abstract getProvider(create?: boolean): Provider
+  abstract getProvider(create?: boolean): Promise<Provider>
   abstract getSigner(): Promise<Signer>
   abstract isAuthorized(): Promise<boolean>
-  switchChain?(chainId: number): Promise<Chain | undefined>
+  switchChain?(chainId: number): Promise<Chain>
   watchAsset?(asset: {
     address: string
     image?: string
     symbol: string
-  }): Promise<void>
+  }): Promise<boolean>
 
   protected abstract onAccountsChanged(accounts: string[]): void
   protected abstract onChainChanged(chain: number | string): void
-  protected abstract onDisconnect(): void
+  protected abstract onDisconnect(error: Error): void
+
+  protected getBlockExplorerUrls(chain: Chain) {
+    const blockExplorer = chain.blockExplorers?.default
+    if (Array.isArray(blockExplorer)) return blockExplorer.map((x) => x.url)
+    if (blockExplorer?.url) return [blockExplorer.url]
+    return []
+  }
+
+  protected getRpcUrls(chain: Chain) {
+    return typeof chain.rpcUrls.default === 'string'
+      ? [chain.rpcUrls.default]
+      : chain.rpcUrls.default
+  }
 
   protected isChainUnsupported(chainId: number) {
     return !this.chains.some((x) => x.id === chainId)

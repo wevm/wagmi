@@ -1,23 +1,24 @@
-import { BigNumber } from 'ethers'
-
-import { units } from '../constants'
-
-export type { WithProvider } from './actions'
-
-export type Balance = {
-  decimals: number
-  formatted: string
-  symbol: string
-  unit: Unit | number
-  value: BigNumber
-}
+import {
+  BlockExplorer,
+  BlockExplorerName,
+  RpcProviderName,
+  units,
+} from '../constants'
 
 export type Chain = {
   id: number
   name: AddEthereumChainParameter['chainName']
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
-  rpcUrls: AddEthereumChainParameter['rpcUrls']
-  blockExplorers?: { name: string; url: string }[]
+  rpcUrls: { [key in RpcProviderName]?: string } & {
+    [key: string]: string
+    default: string
+  }
+  blockExplorers?: {
+    [key in BlockExplorerName]: BlockExplorer
+  } & {
+    [key: string]: BlockExplorer
+    default: BlockExplorer
+  }
   testnet?: boolean
 }
 
@@ -30,7 +31,7 @@ declare global {
     nativeCurrency?: {
       name: string
       symbol: string // 2-6 characters long
-      decimals: 18
+      decimals: number
     }
     rpcUrls: string[]
     blockExplorerUrls?: string[]
@@ -64,12 +65,15 @@ declare global {
     isTally?: true
   }
 
+  interface Ethereum extends InjectedProviders {
+    on?: (...args: any[]) => void
+    removeListener?: (...args: any[]) => void
+    request<T = any>(args: RequestArguments): Promise<T>
+    providers?: Ethereum[]
+  }
+
   interface Window {
-    ethereum?: InjectedProviders & {
-      on?: (...args: any[]) => void
-      removeListener?: (...args: any[]) => void
-      request<T = any>(args: RequestArguments): Promise<T>
-    }
+    ethereum?: Ethereum
   }
 
   interface ProviderRpcError extends Error {

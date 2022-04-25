@@ -1,0 +1,246 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# useSignTypedData
+
+<Callout emoji="⚠️">
+  This hook uses an experimental ethers feature. If using it, please specify the
+  exact version of ethers you are using (e.g. specify "5.6.0", not "^5.6.0").
+</Callout>
+
+Hook for signing messages with connected account.
+
+```tsx
+import { useSignTypedData } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the typed data:
+
+```ts
+// All properties on a domain are optional
+const domain = {
+  name: 'Ether Mail',
+  version: '1',
+  chainId: 1,
+  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+}
+
+// The named list of all type definitions
+const types = {
+  Person: [
+    { name: 'name', type: 'string' },
+    { name: 'wallet', type: 'address' },
+  ],
+  Mail: [
+    { name: 'from', type: 'Person' },
+    { name: 'to', type: 'Person' },
+    { name: 'contents', type: 'string' },
+  ],
+}
+
+const value = {
+  from: {
+    name: 'Cow',
+    wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+  },
+  to: {
+    name: 'Bob',
+    wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+  },
+  contents: 'Hello, Bob!',
+}
+```
+
+From now on, the typed data variables (above) are referenced only by name for brevity.
+
+```tsx
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading, isSuccess, signTypedData } =
+    useSignTypedData({
+      domain,
+      types,
+      value,
+    })
+
+  return (
+    <div>
+      <button disabled={isLoading} onClick={() => signTypedData()}>
+        Sign typed data
+      </button>
+      {isSuccess && <div>Signature: {data}</div>}
+      {isError && <div>Error signing message</div>}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: string
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  signTypedData: (args?: SignTypedDataArgs) => void
+  signTypeDataAsync: (args?: SignTypedDataArgs) => Promise<string>
+  reset: () => void
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### domain (optional)
+
+Typed data domain. This can be a fixed object or a reactive state variable.
+
+```tsx {5-10}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain: {
+      name: 'Ether Mail',
+      version: '1',
+      chainId: 1,
+      verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+    },
+    types,
+    value,
+  })
+}
+```
+
+### types (optional)
+
+Typed data type definition. This can be a fixed object or a reactive state variable.
+
+```tsx {6-16}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    types: {
+      Person: [
+        { name: 'name', type: 'string' },
+        { name: 'wallet', type: 'address' },
+      ],
+      Mail: [
+        { name: 'from', type: 'Person' },
+        { name: 'to', type: 'Person' },
+        { name: 'contents', type: 'string' },
+      ],
+    },
+    value,
+  })
+}
+```
+
+### value (optional)
+
+Typed data value. This can be a fixed object or a reactive state variable.
+
+```tsx {7-17}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    types,
+    value: {
+      from: {
+        name: 'Cow',
+        wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+      },
+      to: {
+        name: 'Bob',
+        wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+      },
+      contents: 'Hello, Bob!',
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to sign.
+
+```tsx {8-10}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    types,
+    value,
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before sign message function and is passed same variables sign message function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a sign message failure.
+
+```tsx {8-10}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    types,
+    value,
+    onMutate(args) {
+      console.log('Mutate', args)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when sign message is settled (either successfully signed, or an error has thrown).
+
+```tsx {8-10}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    types,
+    value,
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when sign message is successful.
+
+```tsx {8-10}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    types,
+    value,
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

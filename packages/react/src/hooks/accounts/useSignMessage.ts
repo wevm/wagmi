@@ -1,70 +1,75 @@
 import * as React from 'react'
-import { Bytes } from 'ethers/lib/utils'
-import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-core'
+import { SignMessageArgs, SignMessageResult, signMessage } from '@wagmi/core'
+import { useMutation } from 'react-query'
 
-import { useContext } from '../../context'
-import { useCancel } from '../utils'
+import { MutationConfig } from '../../types'
 
-export type Config = {
-  /** Message to sign with wallet */
-  message?: Bytes | string
+export type UseSignMessageArgs = Partial<SignMessageArgs>
+
+export type UseSignMessageConfig = MutationConfig<
+  SignMessageResult,
+  Error,
+  SignMessageArgs
+>
+
+export const mutationKey = (args: UseSignMessageArgs) => [
+  { entity: 'signMessage', ...args },
+]
+
+const mutationFn = (args: UseSignMessageArgs) => {
+  const { message } = args
+  if (!message) throw new Error('message is required')
+  return signMessage({ message })
 }
 
-type State = {
-  signature?: string
-  error?: Error
-  loading?: boolean
-}
-
-const initialState: State = {
-  loading: false,
-}
-
-export const useSignMessage = ({ message }: Config = {}) => {
+export function useSignMessage({
+  message,
+  onError,
+  onMutate,
+  onSettled,
+  onSuccess,
+}: UseSignMessageArgs & UseSignMessageConfig = {}) {
   const {
-    state: { connector },
-  } = useContext()
-  const [state, setState] = React.useState<State>(initialState)
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ message }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
-  const cancelQuery = useCancel()
   const signMessage = React.useCallback(
-    async (config?: { message?: Config['message'] }) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const config_ = config ?? { message }
-        if (!config_.message) throw new Error('message is required')
-        if (!connector) throw new ConnectorNotFoundError()
-
-        setState((x) => ({ ...x, error: undefined, loading: true }))
-        const signer = await connector.getSigner()
-        const signature = await signer.signMessage(config_.message)
-        if (!didCancel) {
-          setState((x) => ({ ...x, signature, loading: false }))
-        }
-        return { data: signature, error: undefined }
-      } catch (error_) {
-        let error: Error = <Error>error_
-        if ((<ProviderRpcError>error_).code === 4001)
-          error = new UserRejectedRequestError()
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-        return { data: undefined, error }
-      }
-    },
-    [cancelQuery, connector, message],
+    (args?: SignMessageArgs) => mutate(args || <SignMessageArgs>{ message }),
+    [message, mutate],
   )
 
-  return [
-    {
-      data: state.signature,
-      error: state.error,
-      loading: state.loading,
-    },
+  const signMessageAsync = React.useCallback(
+    (args?: SignMessageArgs) =>
+      mutateAsync(args || <SignMessageArgs>{ message }),
+    [message, mutateAsync],
+  )
+
+  return {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
     signMessage,
-  ] as const
+    signMessageAsync,
+    status,
+    variables,
+  }
 }

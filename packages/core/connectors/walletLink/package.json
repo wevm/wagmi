@@ -1,4 +1,0 @@
-{
-  "main": "dist/wagmi-core-connectors-walletLink.cjs.js",
-  "module": "dist/wagmi-core-connectors-walletLink.esm.js"
-}

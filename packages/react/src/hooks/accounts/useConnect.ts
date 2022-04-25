@@ -1,100 +1,114 @@
 import * as React from 'react'
-import {
-  Connector,
-  ConnectorAlreadyConnectedError,
-  ConnectorData,
-} from 'wagmi-core'
+import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
+import { UseMutationOptions, UseMutationResult, useMutation } from 'react-query'
 
-import { useContext } from '../../context'
-import { useCancel } from '../utils'
+import { useClient } from '../../context'
+import { useForceUpdate } from '../utils'
 
-type State = {
-  connector?: Connector
-  error?: Error
-  loading: boolean
+export type UseConnectArgs = Partial<ConnectArgs>
+
+type MutationOptions = UseMutationOptions<ConnectResult, Error, ConnectArgs>
+export type UseConnectConfig = {
+  /**
+   * Function to invoke before connect and is passed same variables connect function would receive.
+   * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
+   */
+  onBeforeConnect?: MutationOptions['onMutate']
+  /** Function to invoke when connect is successful. */
+  onConnect?: MutationOptions['onSuccess']
+  /** Function to invoke when an error is thrown while connecting. */
+  onError?: MutationOptions['onError']
+  /** Function to invoke when connect is settled (either successfully connected, or an error has thrown). */
+  onSettled?: MutationOptions['onSettled']
 }
 
-const initialState: State = {
-  loading: false,
+export const mutationKey = (args: UseConnectArgs) => [
+  { entity: 'connect', ...args },
+]
+
+const mutationFn = (args: UseConnectArgs) => {
+  const { connector } = args
+  if (!connector) throw new Error('connector is required')
+  return connect({ connector })
 }
 
-export const useConnect = () => {
-  const {
-    state: globalState,
-    setState: setGlobalState,
-    setLastUsedConnector,
-  } = useContext()
-  const [state, setState] = React.useState<State>(initialState)
+export function useConnect({
+  connector,
+  onBeforeConnect,
+  onConnect,
+  onError,
+  onSettled,
+}: UseConnectArgs & UseConnectConfig = {}) {
+  const forceUpdate = useForceUpdate()
+  const client = useClient()
 
-  const cancelQuery = useCancel()
+  const { data, error, mutate, mutateAsync, reset, status, variables } =
+    useMutation(mutationKey({ connector }), mutationFn, {
+      onError,
+      onMutate: onBeforeConnect,
+      onSettled,
+      onSuccess: onConnect,
+    })
+
+  React.useEffect(() => {
+    // Trigger update when connector or status change
+    const unsubscribe = client.subscribe(
+      (state) => ({
+        connector: state.connector,
+        connectors: state.connectors,
+        status: state.status,
+      }),
+      forceUpdate,
+      {
+        equalityFn: (selected, previous) =>
+          selected.connector === previous.connector &&
+          selected.connectors === previous.connectors &&
+          selected.status === previous.status,
+      },
+    )
+    return unsubscribe
+  }, [client, forceUpdate])
+
   const connect = React.useCallback(
-    async (
-      connector: Connector,
-    ): Promise<{
-      data?: ConnectorData
-      error?: Error
-    }> => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const activeConnector = globalState?.connector
-        if (connector === activeConnector)
-          throw new ConnectorAlreadyConnectedError()
-
-        setState((x) => ({
-          ...x,
-          loading: true,
-          connector,
-          error: undefined,
-        }))
-        const data = await connector.connect()
-
-        if (!didCancel) {
-          // Update connector globally only after successful connection
-          setGlobalState((x) => ({ ...x, connector, data }))
-          setLastUsedConnector(connector.name)
-          setState((x) => ({ ...x, loading: false }))
-        }
-        return { data, error: undefined }
-      } catch (error_) {
-        const error = <Error>error_
-        if (!didCancel) {
-          setState((x) => ({
-            ...x,
-            connector: undefined,
-            error,
-            loading: false,
-          }))
-        }
-        return { data: undefined, error }
-      }
-    },
-    [cancelQuery, globalState.connector, setGlobalState, setLastUsedConnector],
+    (connector_?: ConnectArgs['connector']) =>
+      mutate(<ConnectArgs>{ connector: connector_ ?? connector }),
+    [connector, mutate],
   )
 
-  // Keep connector in sync with global connector
-  React.useEffect(() => {
-    setState((x) => ({
-      ...x,
-      connector: globalState.connector,
-      error: undefined,
-    }))
-    return cancelQuery
-  }, [cancelQuery, globalState.connector])
+  const connectAsync = React.useCallback(
+    (connector_?: ConnectArgs['connector']) =>
+      mutateAsync(<ConnectArgs>{ connector: connector_ ?? connector }),
+    [connector, mutateAsync],
+  )
 
-  return [
-    {
-      data: {
-        connected: !!globalState.data?.account,
-        connector: state.connector,
-        connectors: globalState.connectors,
-      },
-      error: state.error,
-      loading: state.loading || globalState.connecting,
-    },
+  let status_:
+    | Extract<UseMutationResult['status'], 'error' | 'idle'>
+    | 'connected'
+    | 'connecting'
+    | 'disconnected'
+    | 'reconnecting'
+  if (client.status === 'reconnecting') status_ = 'reconnecting'
+  else if (status === 'loading' || client.status === 'connecting')
+    status_ = 'connecting'
+  else if (client.connector) status_ = 'connected'
+  else if (!client.connector || status === 'success') status_ = 'disconnected'
+  else status_ = status
+
+  return {
+    activeConnector: client.connector,
     connect,
-  ] as const
+    connectAsync,
+    connectors: client.connectors,
+    data,
+    error,
+    isConnected: status_ === 'connected',
+    isConnecting: status_ === 'connecting',
+    isDisconnected: status_ === 'disconnected',
+    isError: status === 'error',
+    isIdle: status_ === 'idle',
+    isReconnecting: status_ === 'reconnecting',
+    pendingConnector: variables?.connector,
+    reset,
+    status: status_,
+  } as const
 }

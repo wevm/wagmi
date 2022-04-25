@@ -16,8 +16,17 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "es2021"
+    "target": "es2021",
+    "types": [
+      "@ethersproject/abstract-provider",
+      "@ethersproject/abstract-signer",
+      "@ethersproject/providers"
+    ]
   },
   "exclude": ["node_modules", "**/dist/**"],
-  "include": ["packages/**/*"]
+  "include": ["packages/**/*"],
+  "ts-node": {
+    "transpileOnly": true,
+    "transpiler": "ts-node/transpilers/swc-experimental"
+  }
 }

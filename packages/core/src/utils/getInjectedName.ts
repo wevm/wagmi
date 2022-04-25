@@ -1,9 +1,17 @@
-export const getInjectedName = (ethereum?: Window['ethereum']) => {
+const injectedProvidersLookup: Record<keyof InjectedProviders, string> = {
+  isMetaMask: 'MetaMask',
+  // Place other options below in alphabetical order
+  isBraveWallet: 'Brave Wallet',
+  isCoinbaseWallet: 'Coinbase Wallet',
+  isFrame: 'Frame',
+  isTally: 'Tally',
+}
+const injectedOptions = Object.entries(injectedProvidersLookup)
+
+export function getInjectedName(ethereum?: Window['ethereum']) {
   if (!ethereum) return 'Injected'
-  if (ethereum.isBraveWallet) return 'Brave Wallet'
-  if (ethereum.isMetaMask) return 'MetaMask'
-  if (ethereum.isCoinbaseWallet) return 'Coinbase Wallet'
-  if (ethereum.isFrame) return 'Frame'
-  if (ethereum.isTally) return 'Tally'
+  for (const [key, val] of injectedOptions) {
+    if (ethereum[<keyof InjectedProviders>key]) return val
+  }
   return 'Injected'
 }

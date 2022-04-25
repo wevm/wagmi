@@ -1,104 +1,208 @@
-import { wallets } from 'wagmi-testing'
-
-import { actHook, renderHook } from '../../../test'
+import { act, renderHook } from '../../../test'
 import { useEnsResolver } from './useEnsResolver'
 
 describe('useEnsResolver', () => {
-  describe('on mount', () => {
-    it('has resolver', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsResolver({
-          name: wallets.ethers3.ensName,
-        }),
-      )
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": true,
-        }
-      `)
-      await waitForNextUpdate()
-      const { data, ...rest } = result.current[0]
-      expect(data?.name).toEqual(wallets.ethers3.ensName)
-      expect(rest).toMatchInlineSnapshot(`
-        {
-          "error": undefined,
-          "loading": false,
-        }
-      `)
-    })
+  it('mounts', async () => {
+    const { result, waitFor } = renderHook(() =>
+      useEnsResolver({ name: 'imhiring.eth' }),
+    )
 
-    it('does not have resolver', async () => {
-      const { result, waitForNextUpdate } = renderHook(() =>
-        useEnsResolver({
-          name: 'foobar.eth',
-        }),
-      )
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": true,
-        }
-      `)
-      await waitForNextUpdate()
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": null,
-          "error": undefined,
-          "loading": false,
-        }
-      `)
-    })
-  })
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-  it('skip', async () => {
-    const { result } = renderHook(() => useEnsResolver({ skip: true }))
-    expect(result.current[0]).toMatchInlineSnapshot(`
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { internal, ...res } = result.current
+    expect(res).toMatchInlineSnapshot(`
       {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
+        "data": Resolver {
+          "_resolvedAddress": undefined,
+          "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
+          "name": "imhiring.eth",
+          "provider": "<Provider network={31337} />",
+        },
+        "error": null,
+        "fetchStatus": "idle",
+        "isError": false,
+        "isFetched": true,
+        "isFetching": false,
+        "isIdle": false,
+        "isLoading": false,
+        "isRefetching": false,
+        "isSuccess": true,
+        "refetch": [Function],
+        "status": "success",
       }
     `)
   })
 
-  describe('getEnsResolver', () => {
-    it('uses config', async () => {
-      const { result } = renderHook(() =>
+  describe('configuration', () => {
+    it('chainId', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useEnsResolver({ chainId: 1, name: 'awkweb.eth' }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": Resolver {
+            "_resolvedAddress": undefined,
+            "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
+            "name": "awkweb.eth",
+            "provider": "<Provider network={1} />",
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+    })
+
+    it('enabled', async () => {
+      const { result, waitFor } = renderHook(() =>
         useEnsResolver({
-          name: wallets.ethers3.ensName,
-          skip: true,
+          name: 'moxey.eth',
+          enabled: false,
         }),
       )
-      await actHook(async () => {
-        const res = await result.current[1]()
-        expect(res?.data?.name).toEqual(wallets.ethers3.ensName)
-      })
+
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
+        }
+      `)
     })
 
-    it('uses params', async () => {
-      const { result } = renderHook(() => useEnsResolver({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]({
-          name: wallets.ethers3.ensName,
-        })
-        expect(res?.data?.name).toEqual(wallets.ethers3.ensName)
-      })
-    })
+    describe('name', () => {
+      it('has address', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useEnsResolver({ name: 'awkweb.eth' }),
+        )
 
-    it('has error', async () => {
-      const { result } = renderHook(() => useEnsResolver({ skip: true }))
-      await actHook(async () => {
-        const res = await result.current[1]()
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": undefined,
-            "error": [Error: name is required],
+            "data": Resolver {
+              "_resolvedAddress": undefined,
+              "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
+              "name": "awkweb.eth",
+              "provider": "<Provider network={31337} />",
+            },
+            "error": null,
+            "fetchStatus": "idle",
+            "isError": false,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": true,
+            "refetch": [Function],
+            "status": "success",
           }
         `)
       })
+
+      it('does not have address', async () => {
+        const { result, waitFor } = renderHook(() =>
+          useEnsResolver({ name: 'awkweb123.eth' }),
+        )
+
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "data": null,
+            "error": null,
+            "fetchStatus": "idle",
+            "isError": false,
+            "isFetched": true,
+            "isFetching": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isRefetching": false,
+            "isSuccess": true,
+            "refetch": [Function],
+            "status": "success",
+          }
+        `)
+      })
+    })
+  })
+
+  describe('return value', () => {
+    it('refetch', async () => {
+      const { result } = renderHook(() =>
+        useEnsResolver({ enabled: false, name: 'worm.eth' }),
+      )
+
+      await act(async () => {
+        const { data } = await result.current.refetch()
+        expect(data).toMatchInlineSnapshot(`
+          Resolver {
+            "_resolvedAddress": undefined,
+            "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
+            "name": "worm.eth",
+            "provider": "<Provider network={31337} />",
+          }
+        `)
+      })
+    })
+  })
+
+  describe('behavior', () => {
+    it('does nothing when `name` is missing', async () => {
+      const { result, waitFor } = renderHook(() => useEnsResolver())
+
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": false,
+          "isFetching": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": false,
+          "refetch": [Function],
+          "status": "idle",
+        }
+      `)
     })
   })
 })

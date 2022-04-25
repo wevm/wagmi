@@ -1,48 +1,45 @@
 import * as React from 'react'
+import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
+import { useQueryClient } from 'react-query'
 
-import { useContext } from '../../context'
-import { useEnsAvatar, useEnsLookup } from '../ens'
+import { QueryConfig } from '../../types'
+import { useQuery } from '../utils'
 
-export type Config = {
-  /** Fetches ENS for connected account */
-  fetchEns?: boolean
+export type UseAccountConfig = Pick<
+  QueryConfig<GetAccountResult, Error>,
+  'suspense' | 'onError' | 'onSettled' | 'onSuccess'
+>
+
+export const queryKey = () => [{ entity: 'account' }] as const
+
+const queryFn = () => {
+  const result = getAccount()
+  if (result.address) return result
+  return null
 }
 
-export const useAccount = ({ fetchEns }: Config = {}) => {
-  const { state: globalState, setState } = useContext()
-  const address = globalState.data?.account
-  const [{ data: ens, error: ensError, loading: ensLoading }] = useEnsLookup({
-    address,
-    skip: !fetchEns,
+export function useAccount({
+  suspense,
+  onError,
+  onSettled,
+  onSuccess,
+}: UseAccountConfig = {}) {
+  const queryClient = useQueryClient()
+
+  const accountQuery = useQuery(queryKey(), queryFn, {
+    staleTime: 0,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
   })
-  const [{ data: avatar, error: avatarError, loading: avatarLoading }] =
-    useEnsAvatar({
-      addressOrName: ens,
-      skip: !fetchEns || !ens,
+
+  React.useEffect(() => {
+    const unwatch = watchAccount((data) => {
+      queryClient.setQueryData(queryKey(), data?.address ? data : null)
     })
+    return unwatch
+  }, [queryClient])
 
-  const disconnect = React.useCallback(() => {
-    setState((x) => {
-      x.connector?.disconnect()
-      return { cacheBuster: x.cacheBuster + 1 }
-    })
-  }, [setState])
-
-  const error = ensError || avatarError
-  const loading = ensLoading || avatarLoading
-
-  return [
-    {
-      data: address
-        ? {
-            address,
-            connector: globalState.connector,
-            ens: ens ? { avatar, name: ens } : undefined,
-          }
-        : undefined,
-      error,
-      loading,
-    },
-    disconnect,
-  ] as const
+  return accountQuery
 }

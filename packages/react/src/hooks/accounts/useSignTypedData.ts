@@ -1,99 +1,83 @@
 import * as React from 'react'
-import { BigNumberish, BytesLike } from 'ethers/lib/ethers'
-import { ConnectorNotFoundError, UserRejectedRequestError } from 'wagmi-core'
-import { JsonRpcSigner } from '@ethersproject/providers'
+import {
+  SignTypedDataArgs,
+  SignTypedDataResult,
+  signTypedData,
+} from '@wagmi/core'
+import { useMutation } from 'react-query'
 
-import { useContext } from '../../context'
-import { useCancel } from '../utils'
+import { MutationConfig } from '../../types'
 
-type TypedDataDomain = {
-  name?: string
-  version?: string
-  chainId?: BigNumberish
-  verifyingContract?: string
-  salt?: BytesLike
+export type UseSignTypedDataArgs = Partial<SignTypedDataArgs>
+
+export type UseSignTypedDataConfig = MutationConfig<
+  SignTypedDataResult,
+  Error,
+  SignTypedDataArgs
+>
+
+export const mutationKey = (args: UseSignTypedDataArgs) => [
+  { entity: 'signTypedData', ...args },
+]
+
+const mutationFn = (args: UseSignTypedDataArgs) => {
+  const { domain, types, value } = args
+  if (!domain || !types || !value)
+    throw new Error('domain, types, and value are all required')
+  return signTypedData({ domain, types, value })
 }
 
-type TypedDataField = {
-  name: string
-  type: string
-}
-
-export type Config = {
-  domain?: TypedDataDomain
-  types?: Record<string, Array<TypedDataField>>
-  value?: Record<string, any>
-}
-
-type State = {
-  signature?: string
-  error?: Error
-  loading?: boolean
-}
-
-const initialState: State = {
-  loading: false,
-}
-
-export const useSignTypedData = ({ domain, types, value }: Config = {}) => {
+export function useSignTypedData({
+  domain,
+  types,
+  value,
+  onError,
+  onMutate,
+  onSettled,
+  onSuccess,
+}: UseSignTypedDataArgs & UseSignTypedDataConfig = {}) {
   const {
-    state: { connector },
-  } = useContext()
-  const [state, setState] = React.useState<State>(initialState)
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ domain, types, value }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
-  const cancelQuery = useCancel()
   const signTypedData = React.useCallback(
-    async (config?: {
-      domain?: Config['domain']
-      types?: Config['types']
-      value?: Config['value']
-    }) => {
-      let didCancel = false
-      cancelQuery(() => {
-        didCancel = true
-      })
-
-      try {
-        const config_ = config ?? { domain, types, value }
-        if (!config_.domain) throw new Error('domain is required')
-        if (!config_.types) throw new Error('type is required')
-        if (!config_.value) throw new Error('value is required')
-        if (!connector) throw new ConnectorNotFoundError()
-
-        setState((x) => ({ ...x, error: undefined, loading: true }))
-        const signer = await connector.getSigner()
-
-        // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-        const signature = await (<JsonRpcSigner>signer)._signTypedData(
-          config_.domain,
-          config_.types,
-          config_.value,
-        )
-
-        if (!didCancel) {
-          setState((x) => ({ ...x, signature, loading: false }))
-        }
-        return { data: signature, error: undefined }
-      } catch (error_) {
-        let error: Error = <Error>error_
-        if ((<ProviderRpcError>error_).code === 4001)
-          error = new UserRejectedRequestError()
-        if (!didCancel) {
-          setState((x) => ({ ...x, error, loading: false }))
-        }
-
-        return { data: undefined, error }
-      }
-    },
-    [cancelQuery, connector, domain, types, value],
+    (args?: SignTypedDataArgs) =>
+      mutate(args || <SignTypedDataArgs>{ domain, types, value }),
+    [domain, types, value, mutate],
   )
 
-  return [
-    {
-      data: state.signature,
-      error: state.error,
-      loading: state.loading,
-    },
+  const signTypedDataAsync = React.useCallback(
+    (args?: SignTypedDataArgs) =>
+      mutateAsync(args || <SignTypedDataArgs>{ domain, types, value }),
+    [domain, types, value, mutateAsync],
+  )
+
+  return {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    reset,
     signTypedData,
-  ] as const
+    signTypedDataAsync,
+    status,
+    variables,
+  }
 }

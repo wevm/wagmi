@@ -1,11 +1,44 @@
 import '@testing-library/jest-dom'
 
-import { server } from 'wagmi-testing'
+// Make dates stable across runs
+Date.now = jest.fn(() => new Date(Date.UTC(2022, 1, 1)).valueOf())
 
-// Establish API mocking before all tests.
-beforeAll(() => server.listen())
-// Reset any request handlers that we may add during the tests,
-// so they don't affect other tests.
-afterEach(() => server.resetHandlers())
-// Clean up after the tests are finished.
-afterAll(() => server.close())
+type ReactVersion = '17' | '18'
+export const reactVersion: ReactVersion =
+  <ReactVersion>process.env.REACT_VERSION || '17'
+
+jest.mock('react', () => {
+  const packages = {
+    '18': 'react',
+    '17': 'react-17',
+  }
+
+  return jest.requireActual(packages[reactVersion])
+})
+
+jest.mock('react-dom', () => {
+  const packages = {
+    '18': 'react-dom',
+    '17': 'react-dom-17',
+  }
+
+  return jest.requireActual(packages[reactVersion])
+})
+
+jest.mock('react-dom/test-utils', () => {
+  const packages = {
+    '18': 'react-dom/test-utils',
+    '17': 'react-dom-17/test-utils',
+  }
+
+  return jest.requireActual(packages[reactVersion])
+})
+
+jest.mock('@testing-library/react', () => {
+  const packages = {
+    '18': '@testing-library/react',
+    '17': '@testing-library/react-hooks',
+  }
+
+  return jest.requireActual(packages[reactVersion])
+})

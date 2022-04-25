@@ -1,0 +1,126 @@
+# Client
+
+The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.
+
+```ts
+import { createClient } from 'wagmi'
+```
+
+To help avoid conflicts with other libraries in your app, `createClient` is also aliased as `createWagmiClient`.
+
+```ts
+import { createWagmiClient } from 'wagmi'
+```
+
+## Usage
+
+```ts
+import { createClient } from 'wagmi'
+
+const client = createClient()
+```
+
+## Configuration
+
+### autoConnect (optional)
+
+Enables reconnecting to last used connector on mount. Defaults to `false`.
+
+```ts {4}
+import { createClient } from 'wagmi'
+
+const client = createClient({
+  autoConnect: true,
+})
+```
+
+### connectors (optional)
+
+Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
+
+```ts {6-13}
+import { createClient } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const client = createClient({
+  connectors: [
+    new InjectedConnector(),
+    new WalletConnectConnector({
+      options: {
+        qrcode: true,
+      },
+    }),
+  ],
+})
+```
+
+`connectors` also accepts a function that receives basic data about the current connection. For example, this is useful if you want to make your connectors aware of the active chain.
+
+```ts {5-15}
+import { createClient } from 'wagmi'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+
+const client = createClient({
+  connectors(config) {
+    return [
+      new InjectedConnector(),
+      new CoinbaseWalletConnector({
+        options: {
+          appName: 'wagmi',
+          chainId: config.chainId,
+        },
+      }),
+    ]
+  },
+})
+```
+
+### provider (optional)
+
+ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network. Defaults to `(config) => getDefaultProvider(config.chainId)`.
+
+```ts {5-7}
+import { providers } from 'ethers'
+import { createClient } from 'wagmi'
+
+const client = createClient({
+  provider(config) {
+    return new providers.AlchemyProvider(config.chainId, 'Your Alchemy ID')
+  },
+})
+```
+
+`provider` also accepts an ethers provider directly instead of using a function, but you likely want to use the function approach instead so your provider is aware of the active chain.
+
+### storage (optional)
+
+The default strategy to persist and cache data. Defaults to `window.localStorage`.
+
+```ts {4}
+import { createClient, createStorage } from 'wagmi'
+
+const client = createClient({
+  storage: createStorage({ storage: window.localStorage }),
+})
+```
+
+### webSocketProvider (optional)
+
+ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+
+```ts {5-10}
+import { providers } from 'ethers'
+import { createClient } from 'wagmi'
+
+const client = createClient({
+  webSocketProvider(config) {
+    return new providers.AlchemyWebSocketProvider(
+      config.chainId,
+      'Your Alchemy ID',
+    )
+  },
+})
+```
+
+`webSocketProvider` also accepts an ethers WebSocket provider directly instead of using a function, but you likely want to use the function approach instead so your WebSocket provider is aware of the active chain.

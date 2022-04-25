@@ -3,9 +3,83 @@ name: Main
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, v*]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
 
 jobs:
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
+        pnpm-version: [6.24.2]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.1
+        with:
+          version: ${{ matrix.pnpm-version }}
+      - name: Set up Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          node-version: ${{ matrix.node-version }}
+      - name: Cache pnpm
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            packages/**/dist
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: pnpm i
+      - name: Link Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit == 'true'
+        run: pnpm dev
+
+  lint:
+    name: Lint
+    needs: install
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14]
+        pnpm-version: [6.24.2]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.1
+        with:
+          version: ${{ matrix.pnpm-version }}
+      - name: Set up Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            packages/**/dist
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Lint code
+        run: pnpm lint
+      - name: Check types
+        run: pnpm lint:types
+
   build:
     name: Build
     needs: lint
@@ -24,34 +98,20 @@ jobs:
         with:
           cache: 'pnpm'
           node-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
-        run: pnpm i
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            packages/**/dist
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build
         run: pnpm build
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14]
-        pnpm-version: [6.24.2]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.1
-        with:
-          version: ${{ matrix.pnpm-version }}
-      - name: Set up Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          cache: 'pnpm'
-          node-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
-        run: pnpm i
-      - name: Lint code
-        run: pnpm lint
-      - name: Check types
-        run: pnpm lint:types
+      - name: Check size
+        run: pnpm size
+        env:
+          BUNDLEWATCH_GITHUB_TOKEN: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
 
   test:
     name: Test
@@ -71,7 +131,15 @@ jobs:
         with:
           cache: 'pnpm'
           node-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
-        run: pnpm i
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            node_modules
+            packages/*/node_modules
+            packages/**/dist
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Test
-        run: pnpm test
+        run: pnpm test:ci
+        env:
+          ALCHEMY_ID: ${{ secrets.ALCHEMY_ID }}

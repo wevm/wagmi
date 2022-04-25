@@ -1,5 +1,21 @@
-import { providers } from 'ethers'
-import { infuraApiKey } from 'wagmi-testing'
+import { ClientConfig, createClient } from '../src'
+import { MockConnector } from '../src/connectors/mock'
+import { getProvider, getSigners } from './utils'
 
-export const getProvider = ({ chainId }: { chainId?: number } = {}) =>
-  new providers.InfuraProvider(chainId ?? 1, infuraApiKey)
+type Config = Partial<ClientConfig>
+
+export function setupWagmiClient(config: Config = {}) {
+  return createClient({
+    connectors: [
+      new MockConnector({
+        options: {
+          signer: getSigners()[0],
+        },
+      }),
+    ],
+    provider: getProvider,
+    ...config,
+  })
+}
+
+export { getProvider, getWebSocketProvider, getSigners } from './utils'

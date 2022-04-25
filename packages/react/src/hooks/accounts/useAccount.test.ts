@@ -1,108 +1,138 @@
-import { actHook, renderHook } from '../../../test'
-import { Config, useAccount } from './useAccount'
-import { useConnect } from './useConnect'
+import { connect } from '@wagmi/core'
 
-const useAccountWithConnect = (config: { account?: Config } = {}) => {
-  const account = useAccount(config.account)
-  const connect = useConnect()
-  return { account, connect } as const
+import {
+  actConnect,
+  actDisconnect,
+  renderHook,
+  setupWagmiClient,
+  wrapper,
+} from '../../../test'
+import { UseAccountConfig, useAccount } from './useAccount'
+import { useConnect } from './useConnect'
+import { useDisconnect } from './useDisconnect'
+
+function useAccountWithConnectAndDisconnect(config: UseAccountConfig = {}) {
+  return {
+    account: useAccount(config),
+    connect: useConnect(),
+    disconnect: useDisconnect(),
+  }
 }
 
 describe('useAccount', () => {
-  describe('on mount', () => {
-    it('not connected', async () => {
-      const { result } = renderHook(() => useAccount())
-      expect(result.current[0]).toMatchInlineSnapshot(`
-        {
-          "data": undefined,
-          "error": undefined,
-          "loading": false,
-        }
-      `)
-      expect(result.current[1]).toBeDefined()
-    })
+  describe('mounts', () => {
+    it('is connected', async () => {
+      const client = setupWagmiClient()
+      await connect({ connector: client.connectors[0] })
 
-    it('connected', async () => {
-      const { result } = renderHook(() => useAccountWithConnect())
-
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
+      const { result, waitFor } = renderHook(() => useAccount(), {
+        wrapper,
+        initialProps: { client },
       })
 
-      const { data: { connector, ...restData } = {}, ...rest } =
-        result.current.account[0]
-      expect(connector).toBeDefined()
-      expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
           "data": {
-            "address": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
-            "ens": undefined,
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
           },
-          "error": undefined,
-          "loading": false,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
     })
 
-    it('fetches ens', async () => {
-      const { result } = renderHook(() =>
-        useAccountWithConnect({ account: { fetchEns: true } }),
-      )
+    it('is not connected', async () => {
+      const { result, waitFor } = renderHook(() => useAccount())
 
-      await actHook(async () => {
-        const mockConnector = result.current.connect[0].data.connectors[0]
-        await result.current.connect[1](mockConnector)
-      })
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      const { data: { connector, ...restData } = {}, ...rest } =
-        result.current.account[0]
-      expect(connector).toBeDefined()
-      expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
         {
-          "data": {
-            "address": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
-            "ens": undefined,
-          },
-          "error": undefined,
-          "loading": false,
+          "data": null,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
     })
   })
 
-  it('disconnects', async () => {
-    const { result } = renderHook(() => useAccountWithConnect())
+  describe('behavior', () => {
+    it('updates on connect and disconnect', async () => {
+      const utils = renderHook(() => useAccountWithConnectAndDisconnect())
+      const { result, waitFor } = utils
 
-    await actHook(async () => {
-      const mockConnector = result.current.connect[0].data.connectors[0]
-      await result.current.connect[1](mockConnector)
+      await actConnect({ utils })
+
+      await waitFor(() => expect(result.current.account.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current.account
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+
+      await actDisconnect({ utils })
+
+      await waitFor(() => expect(result.current.account.isSuccess).toBeTruthy())
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal: _, ...res2 } = result.current.account
+      expect(res2).toMatchInlineSnapshot(`
+        {
+          "data": null,
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
     })
-
-    const { data: { connector, ...restData } = {}, ...rest } =
-      result.current.account[0]
-    expect(connector).toBeDefined()
-    expect({ data: restData, ...rest }).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "address": "0x012363D61BDC53D0290A0f25e9C89F8257550FB8",
-          "ens": undefined,
-        },
-        "error": undefined,
-        "loading": false,
-      }
-    `)
-
-    actHook(() => {
-      result.current.account[1]()
-    })
-
-    expect(result.current.account[0]).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": undefined,
-        "loading": false,
-      }
-    `)
   })
 })
