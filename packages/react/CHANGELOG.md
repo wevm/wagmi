@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.3.0-next.21
+
+### Patch Changes
+
+- showtime
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.18
+
 ## 0.3.0-next.20
 
 ### Patch Changes

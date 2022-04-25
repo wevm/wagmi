@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.18
+
+### Patch Changes
+
+- showtime
+
 ## 0.2.0-next.17
 
 ### Patch Changes
