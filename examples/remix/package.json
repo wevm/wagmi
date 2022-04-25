@@ -20,7 +20,7 @@
     "react-dom": "18.0.0",
     "remix": "^1.4.1",
     "safe-event-emitter": "^1.0.1",
-    "wagmi": "0.3.0-next.21"
+    "wagmi": "0.3.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.4.1",
