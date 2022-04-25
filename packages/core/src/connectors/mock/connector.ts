@@ -76,7 +76,7 @@ export class MockConnector extends Connector<
     try {
       const provider = await this.getProvider()
       const account = await provider.getAccounts()
-      return !!account
+      return this.options.flags?.isAuthorized ?? !!account
     } catch {
       return false
     }
@@ -90,7 +90,7 @@ export class MockConnector extends Connector<
       chains.find((x) => x.id === chainId) ?? {
         id: chainId,
         name: `Chain ${chainId}`,
-        rpcUrls: { default: [] },
+        rpcUrls: { default: '' },
       }
     )
   }

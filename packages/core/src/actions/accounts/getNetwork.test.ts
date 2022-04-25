@@ -210,9 +210,7 @@ describe('getNetwork', () => {
             },
             "rpcUrls": {
               "alchemy": "https://opt-kovan.g.alchemy.com/v2",
-              "default": [
-                "https://kovan.optimism.io",
-              ],
+              "default": "https://kovan.optimism.io",
               "infura": "https://optimism-kovan.infura.io/v3",
             },
             "testnet": true,

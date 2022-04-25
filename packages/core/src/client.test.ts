@@ -11,11 +11,62 @@ describe('createClient', () => {
 
   describe('config', () => {
     describe('autoConnect', () => {
-      it('true', async () => {
-        const client = createClient({ autoConnect: true })
-        expect(client.status).toMatchInlineSnapshot(`"connecting"`)
-        await client.autoConnect()
-        expect(client.status).toMatchInlineSnapshot(`"disconnected"`)
+      describe('true', () => {
+        it('disconnected', async () => {
+          const client = createClient({ autoConnect: true })
+          expect(client.status).toMatchInlineSnapshot(`"connecting"`)
+          await client.autoConnect()
+          expect(client.status).toMatchInlineSnapshot(`"disconnected"`)
+        })
+
+        it('connected', async () => {
+          const client = createClient({
+            autoConnect: true,
+            connectors: [
+              new MockConnector({
+                options: {
+                  flags: { isAuthorized: true },
+                  signer: getSigners()[0],
+                },
+              }),
+            ],
+          })
+          expect(client.status).toMatchInlineSnapshot(`"connecting"`)
+          await client.autoConnect()
+          expect(client.status).toMatchInlineSnapshot(`"connected"`)
+        })
+
+        it('reconnected', async () => {
+          const localStorage: Record<string, any> = {}
+          const storage = createStorage({
+            storage: {
+              getItem: (key) => localStorage[key],
+              setItem: (key, value) =>
+                (localStorage[key] = JSON.stringify(value)),
+              removeItem: (key) => delete localStorage[key],
+            },
+          })
+          storage.setItem('state', {
+            data: {
+              account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            },
+          })
+          const client = createClient({
+            autoConnect: true,
+            connectors: [
+              new MockConnector({
+                options: {
+                  flags: { isAuthorized: true },
+                  signer: getSigners()[0],
+                },
+              }),
+            ],
+            storage,
+          })
+          expect(client.status).toMatchInlineSnapshot(`"reconnecting"`)
+          await client.autoConnect()
+          expect(client.status).toMatchInlineSnapshot(`"connected"`)
+        })
       })
 
       it('false', () => {

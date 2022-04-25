@@ -8,6 +8,7 @@ import { UserRejectedRequestError } from '../../errors'
 
 export type MockProviderOptions = {
   flags?: {
+    isAuthorized?: boolean
     failConnect?: boolean
     failSwitchChain?: boolean
     noSwitchChain?: boolean

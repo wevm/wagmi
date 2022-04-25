@@ -91,8 +91,9 @@ export class Client<
     if (autoConnect) {
       try {
         const rawState = storage.getItem('state', '')
-        const data: Data<TProvider> | undefined = JSON.parse(rawState || '{}')
-          ?.state?.data
+        const data: Data<TProvider> | undefined = JSON.parse(
+          rawState || '{}',
+        )?.data
         // If account exists in localStorage, set status to reconnecting
         status = data?.account ? 'reconnecting' : 'connecting'
         chainId = data?.chain?.id
