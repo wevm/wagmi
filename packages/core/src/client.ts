@@ -48,6 +48,8 @@ export type State<
   webSocketProvider?: TWebSocketProvider
 }
 
+const storeKey = 'store'
+
 export class Client<
   TProvider extends BaseProvider = BaseProvider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
@@ -90,10 +92,9 @@ export class Client<
     let chainId: number | undefined
     if (autoConnect) {
       try {
-        const rawState = storage.getItem('state', '')
-        const data: Data<TProvider> | undefined = JSON.parse(
-          rawState || '{}',
-        )?.data
+        const rawState = storage.getItem(storeKey, '')
+        const data: Data<TProvider> | undefined = JSON.parse(rawState || '{}')
+          ?.state?.data
         // If account exists in localStorage, set status to reconnecting
         status = data?.account ? 'reconnecting' : 'connecting'
         chainId = data?.chain?.id
@@ -125,7 +126,7 @@ export class Client<
             webSocketProvider: webSocketProvider_,
           }),
           {
-            name: 'state',
+            name: storeKey,
             getStorage: () => storage,
             partialize: (state) => ({
               ...(autoConnect && {

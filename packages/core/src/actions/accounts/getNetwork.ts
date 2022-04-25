@@ -17,7 +17,7 @@ export function getNetwork(): GetNetworkResult {
   const activeChains = client.chains ?? []
   const activeChain = [...activeChains, ...allChains].find(
     (x) => x.id === chainId,
-  ) ?? { id: chainId, name: `Chain ${chainId}`, rpcUrls: { default: [] } }
+  ) ?? { id: chainId, name: `Chain ${chainId}`, rpcUrls: { default: '' } }
 
   return {
     chain: chainId

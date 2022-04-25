@@ -46,9 +46,11 @@ describe('createClient', () => {
               removeItem: (key) => delete localStorage[key],
             },
           })
-          storage.setItem('state', {
-            data: {
-              account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          storage.setItem('store', {
+            state: {
+              data: {
+                account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+              },
             },
           })
           const client = createClient({
