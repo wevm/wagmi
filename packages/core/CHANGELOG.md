@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.0-next.17
+
+### Patch Changes
+
+- update block explorers and rpc urls structure
+
 ## 0.2.0-next.16
 
 ### Patch Changes

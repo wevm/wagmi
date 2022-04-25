@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.3.0-next.20
+
+### Patch Changes
+
+- update block explorers and rpc urls structure
+
+- Updated dependencies []:
+  - @wagmi/core@0.2.0-next.17
+
 ## 0.3.0-next.19
 
 ### Minor Changes
