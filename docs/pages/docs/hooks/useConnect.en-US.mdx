@@ -26,7 +26,7 @@ function App() {
       {activeConnector && <div>Connected to {activeConnector.name}</div>}
 
       {connectors.map((x) => (
-        <button disabled={x.ready} key={x.id} onClick={() => connect(x)}>
+        <button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>
           {x.name}
           {isConnecting && pendingConnector.id === x.id && ' (connecting)'}
         </button>
