@@ -15,4 +15,7 @@ module.exports = {
       path: 'packages/react/dist/*.esm.js',
     },
   ],
+  ci: {
+    trackBranches: ["main"],
+  },
 }

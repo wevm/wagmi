@@ -39,6 +39,7 @@ module.exports = {
       testRegex: 'packages/react/.*\\.test\\.ts(x)?$',
     },
   ],
+  reporters: ['default', 'github-actions'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
