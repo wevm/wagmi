@@ -31,24 +31,14 @@ export class WalletConnectConnector extends Connector<
 
   async connect() {
     try {
-      const provider = await this.getProvider(true)
-      provider.on('accountsChanged', this.onAccountsChanged)
-      provider.on('chainChanged', this.onChainChanged)
-      provider.on('disconnect', this.onDisconnect)
-
       // Defer message to the next tick to ensure wallet connect data (provided by `.enable()`) is available
       setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
 
-      const accounts = await provider.enable()
+      const { accounts, provider } = await this.enable()
+
       const account = getAddress(accounts[0])
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
-
-      // Not all WalletConnect options support programmatic chain switching
-      // Only enable for wallet options that do
-      const walletName = provider.connector?.peerMeta?.name ?? ''
-      if (switchChainAllowedRegex.test(walletName))
-        this.switchChain = this.#switchChain
 
       return {
         account,
@@ -66,12 +56,36 @@ export class WalletConnectConnector extends Connector<
     const provider = await this.getProvider()
     await provider.disconnect()
 
-    provider.removeListener('accountsChanged', this.onAccountsChanged)
-    provider.removeListener('chainChanged', this.onChainChanged)
-    provider.removeListener('disconnect', this.onDisconnect)
+    await this.disable()
 
     typeof localStorage !== 'undefined' &&
       localStorage.removeItem('walletconnect')
+  }
+
+  async disable() {
+    const provider = await this.getProvider()
+    provider.removeListener('accountsChanged', this.onAccountsChanged)
+    provider.removeListener('chainChanged', this.onChainChanged)
+    provider.removeListener('disconnect', this.onDisconnect)
+  }
+
+  async enable() {
+    const provider = await this.getProvider(true)
+
+    provider.on('accountsChanged', this.onAccountsChanged)
+    provider.on('chainChanged', this.onChainChanged)
+    provider.on('disconnect', this.onDisconnect)
+
+    const accounts = await provider.enable()
+
+    // Not all WalletConnect options support programmatic chain switching
+    // Only enable for wallet options that do
+    const walletName = provider.connector?.peerMeta?.name ?? ''
+    console.log('test', walletName)
+    if (switchChainAllowedRegex.test(walletName))
+      this.switchChain = this.#switchChain
+
+    return { accounts, provider }
   }
 
   async getAccount() {

@@ -5,6 +5,7 @@ import type {
   CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
+import { AddressString } from '@coinbase/wallet-sdk/dist/types'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
@@ -33,7 +34,8 @@ type Options = CoinbaseWalletSDKOptions & {
 
 export class CoinbaseWalletConnector extends Connector<
   CoinbaseWalletProvider,
-  Options
+  Options,
+  AddressString[]
 > {
   readonly id = 'coinbaseWallet'
   readonly name = 'Coinbase Wallet'
@@ -49,14 +51,10 @@ export class CoinbaseWalletConnector extends Connector<
 
   async connect() {
     try {
-      const provider = await this.getProvider()
-      provider.on('accountsChanged', this.onAccountsChanged)
-      provider.on('chainChanged', this.onChainChanged)
-      provider.on('disconnect', this.onDisconnect)
-
       this.emit('message', { type: 'connecting' })
 
-      const accounts = await provider.enable()
+      const { accounts, provider } = await this.enable()
+
       const account = getAddress(accounts[0])
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
@@ -77,10 +75,9 @@ export class CoinbaseWalletConnector extends Connector<
   async disconnect() {
     if (!this.#provider) return
 
+    await this.disable()
+
     const provider = await this.getProvider()
-    provider.removeListener('accountsChanged', this.onAccountsChanged)
-    provider.removeListener('chainChanged', this.onChainChanged)
-    provider.removeListener('disconnect', this.onDisconnect)
     provider.disconnect()
     provider.close()
 
@@ -93,6 +90,25 @@ export class CoinbaseWalletConnector extends Connector<
         localStorage.removeItem(key)
       }
     }
+  }
+
+  async disable() {
+    const provider = await this.getProvider()
+    provider.removeListener('accountsChanged', this.onAccountsChanged)
+    provider.removeListener('chainChanged', this.onChainChanged)
+    provider.removeListener('disconnect', this.onDisconnect)
+  }
+
+  async enable() {
+    const provider = await this.getProvider()
+
+    provider.on('accountsChanged', this.onAccountsChanged)
+    provider.on('chainChanged', this.onChainChanged)
+    provider.on('disconnect', this.onDisconnect)
+
+    const accounts = await provider.enable()
+
+    return { accounts, provider }
   }
 
   async getAccount() {

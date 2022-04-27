@@ -21,14 +21,10 @@ export class MockConnector extends Connector<
   }
 
   async connect() {
-    const provider = await this.getProvider()
-    provider.on('accountsChanged', this.onAccountsChanged)
-    provider.on('chainChanged', this.onChainChanged)
-    provider.on('disconnect', this.onDisconnect)
-
     this.emit('message', { type: 'connecting' })
 
-    const accounts = await provider.enable()
+    const { accounts, provider } = await this.enable()
+
     const account = getAddress(accounts[0])
     const id = normalizeChainId(provider._network.chainId)
     const unsupported = this.isChainUnsupported(id)
@@ -43,9 +39,26 @@ export class MockConnector extends Connector<
     const provider = await this.getProvider()
     await provider.disconnect()
 
+    await this.disable()
+  }
+
+  async disable() {
+    const provider = await this.getProvider()
     provider.removeListener('accountsChanged', this.onAccountsChanged)
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
+  }
+
+  async enable() {
+    const provider = await this.getProvider()
+
+    provider.on('accountsChanged', this.onAccountsChanged)
+    provider.on('chainChanged', this.onChainChanged)
+    provider.on('disconnect', this.onDisconnect)
+
+    const accounts = await provider.enable()
+
+    return { accounts, provider }
   }
 
   async getAccount() {

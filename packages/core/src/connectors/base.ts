@@ -21,6 +21,7 @@ export interface ConnectorEvents<Provider = any> {
 export abstract class Connector<
   Provider = any,
   Options = any,
+  Accounts = any,
 > extends EventEmitter<ConnectorEvents<Provider>> {
   /** Unique connector id */
   abstract readonly id: string
@@ -47,6 +48,8 @@ export abstract class Connector<
 
   abstract connect(): Promise<Required<ConnectorData>>
   abstract disconnect(): Promise<void>
+  abstract disable(): Promise<void>
+  abstract enable(): Promise<{ accounts?: Accounts; provider: Provider }>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
   abstract getProvider(create?: boolean): Promise<Provider>

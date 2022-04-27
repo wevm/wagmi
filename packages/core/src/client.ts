@@ -292,11 +292,14 @@ export class Client<
               : x.connectors
 
             let connector = x.connector
-            if (prevChainId && chainId !== prevChainId) {
+            if (prevChainId) {
               connector = connectors_.find(
                 (connector) => connector.id === this.connector?.id,
               )
-              if (chainId) connector?.connect()
+              if (chainId) {
+                x.connector?.disable()
+                connector?.enable()
+              }
             }
 
             return {

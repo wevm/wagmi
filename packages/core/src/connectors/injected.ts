@@ -50,16 +50,7 @@ export class InjectedConnector extends Connector<
 
   async connect() {
     try {
-      const provider = await this.getProvider()
-      if (!provider) throw new ConnectorNotFoundError()
-
-      if (provider.on) {
-        provider.on('accountsChanged', this.onAccountsChanged)
-        provider.on('chainChanged', this.onChainChanged)
-        provider.on('disconnect', this.onDisconnect)
-      }
-
-      this.emit('message', { type: 'connecting' })
+      const { provider } = await this.enable()
 
       const account = await this.getAccount()
       const id = await this.getChainId()
@@ -77,14 +68,31 @@ export class InjectedConnector extends Connector<
   }
 
   async disconnect() {
+    await this.disable()
+
+    if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
+  }
+
+  async disable() {
     const provider = await this.getProvider()
     if (!provider?.removeListener) return
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
+  }
 
-    if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
+  async enable() {
+    const provider = await this.getProvider()
+    if (!provider) throw new ConnectorNotFoundError()
+
+    if (provider.on) {
+      provider.on('accountsChanged', this.onAccountsChanged)
+      provider.on('chainChanged', this.onChainChanged)
+      provider.on('disconnect', this.onDisconnect)
+    }
+
+    return { provider }
   }
 
   async getAccount() {
