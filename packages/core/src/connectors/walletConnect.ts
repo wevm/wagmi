@@ -12,9 +12,12 @@ import { Connector } from './base'
 
 const switchChainAllowedRegex = /(rainbow)/i
 
+type Accounts = string[]
+
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider,
-  IWCEthRpcConnectionOptions
+  IWCEthRpcConnectionOptions,
+  Accounts
 > {
   readonly id = 'walletConnect'
   readonly name = 'WalletConnect'
@@ -76,7 +79,7 @@ export class WalletConnectConnector extends Connector<
     provider.on('chainChanged', this.onChainChanged)
     provider.on('disconnect', this.onDisconnect)
 
-    const accounts = await provider.enable()
+    const accounts: Accounts = await provider.enable()
 
     // Not all WalletConnect options support programmatic chain switching
     // Only enable for wallet options that do
