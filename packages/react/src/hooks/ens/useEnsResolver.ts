@@ -31,7 +31,7 @@ export function useEnsResolver({
   chainId: chainId_,
   enabled = true,
   name,
-  staleTime = 60 * 60 * 24, // 24 hours
+  staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,

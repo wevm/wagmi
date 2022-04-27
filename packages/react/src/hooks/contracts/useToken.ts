@@ -28,7 +28,7 @@ export function useToken({
   formatUnits = 'ether',
   cacheTime,
   enabled = true,
-  staleTime = 60 * 60 * 24, // 24 hours
+  staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,
