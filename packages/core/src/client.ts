@@ -285,17 +285,30 @@ export class Client<
     if (subscribeConnectors || subscribeProvider || subscribeWebSocketProvider)
       this.store.subscribe(
         ({ data }) => data?.chain?.id,
-        (chainId) => {
-          this.setState((x) => ({
-            ...x,
-            connectors: subscribeConnectors
+        (chainId, prevChainId) => {
+          this.setState((x) => {
+            const connectors_ = subscribeConnectors
               ? connectors({ chainId })
-              : x.connectors,
-            provider: subscribeProvider ? provider({ chainId }) : x.provider,
-            webSocketProvider: subscribeWebSocketProvider
-              ? webSocketProvider({ chainId })
-              : x.webSocketProvider,
-          }))
+              : x.connectors
+
+            let connector = x.connector
+            if (prevChainId && chainId !== prevChainId) {
+              connector = connectors_.find(
+                (connector) => connector.id === this.connector?.id,
+              )
+              if (chainId) connector?.connect()
+            }
+
+            return {
+              ...x,
+              connector,
+              connectors: connectors_,
+              provider: subscribeProvider ? provider({ chainId }) : x.provider,
+              webSocketProvider: subscribeWebSocketProvider
+                ? webSocketProvider({ chainId })
+                : x.webSocketProvider,
+            }
+          })
         },
       )
   }
