@@ -2,6 +2,10 @@ name: Bug Report
 description: File a bug/issue
 title: '[bug] <title>'
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report! The more info you provide, the more we can help you. If you are a [Sponsor](https://github.com/sponsors/tmm?metadata_campaign=gh_issue), your issues are prioritized.
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?
@@ -44,9 +48,7 @@ body:
       label: Link to Minimal Reproducible Example (CodeSandbox, StackBlitz, etc.)
       description: |
         This makes investigating issues and helping you out significantly easier! For most issues, you will likely get asked to provide one so why not add one now :)
-
-        Tip: Use the [`wagmi` CodeSandbox template](https://codesandbox.io/s/wagmi-template-d2ct0) to get started quickly.
-      placeholder: https://codesandbox.io/s/wagmi-template-d2ct0
+      placeholder: https://codesandbox.io
     validations:
       required: false
 
