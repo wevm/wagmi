@@ -32,6 +32,8 @@ it('should expose correct exports', () => {
       "useToken",
       "useWaitForTransaction",
       "useWebSocketProvider",
+      "deserialize",
+      "serialize",
       "Client",
       "Connector",
       "WagmiClient",

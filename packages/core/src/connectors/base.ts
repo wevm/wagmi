@@ -70,12 +70,6 @@ export abstract class Connector<
     return []
   }
 
-  protected getRpcUrls(chain: Chain) {
-    return typeof chain.rpcUrls.default === 'string'
-      ? [chain.rpcUrls.default]
-      : chain.rpcUrls.default
-  }
-
   protected isChainUnsupported(chainId: number) {
     return !this.chains.some((x) => x.id === chainId)
   }

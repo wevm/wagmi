@@ -7,7 +7,7 @@ export type GetContractArgs = {
   /** Contract interface or ABI */
   contractInterface: ContractInterface
   /** Signer or provider to attach to contract */
-  signerOrProvider?: Signer | Provider
+  signerOrProvider?: Signer | Provider | null
 }
 
 export function getContract<T = Contract>({
@@ -16,6 +16,12 @@ export function getContract<T = Contract>({
   signerOrProvider,
 }: GetContractArgs) {
   return <T>(
-    (<unknown>new Contract(addressOrName, contractInterface, signerOrProvider))
+    (<unknown>(
+      new Contract(
+        addressOrName,
+        contractInterface,
+        <Signer | Provider | undefined>signerOrProvider,
+      )
+    ))
   )
 }

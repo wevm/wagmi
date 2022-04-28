@@ -1,12 +1,11 @@
 import { BigNumber } from 'ethers'
 
 import { deserialize } from './deserialize'
-import { serialize } from './serialize'
 
 describe('deserialize', () => {
   it('deserializes', () => {
     const deserializedCache = deserialize(
-      serialize({
+      JSON.stringify({
         some: 'complex',
         object: {
           that: 'has',

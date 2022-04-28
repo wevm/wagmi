@@ -39,6 +39,8 @@ export {
   useWebSocketProvider,
 } from './hooks'
 
+export { deserialize, serialize } from './utils'
+
 export {
   Client,
   Connector,
