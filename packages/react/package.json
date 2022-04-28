@@ -2,7 +2,7 @@
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
   "license": "WAGMIT",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "awkweb.eth",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.0.8",
-    "@wagmi/core": "0.2.0",
+    "@wagmi/core": "0.2.1",
     "@walletconnect/ethereum-provider": "1.7.5",
     "react-query": "^4.0.0-beta.7",
     "use-sync-external-store": "^1.0.0"
