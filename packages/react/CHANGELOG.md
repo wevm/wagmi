@@ -1,5 +1,15 @@
 # wagmi
 
+## 0.3.1
+
+### Patch Changes
+
+- [`afc4607`](https://github.com/tmm/wagmi/commit/afc46071e91601ab8a2b465524da796cd60b6ad4) Thanks [@tmm](https://github.com/tmm)! - - Fix time scaling e9593df
+  - Use fully-specified path for use-sync-external-store import 7b235c1
+  - Update serialize 236fc17
+- Updated dependencies [[`afc4607`](https://github.com/tmm/wagmi/commit/afc46071e91601ab8a2b465524da796cd60b6ad4)]:
+  - @wagmi/core@0.2.1
+
 ## 0.3.0
 
 ### Minor Changes
