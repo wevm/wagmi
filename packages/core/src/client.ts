@@ -5,6 +5,7 @@ import { persist, subscribeWithSelector } from 'zustand/middleware'
 
 import { Connector, ConnectorData, InjectedConnector } from './connectors'
 import { WagmiStorage, createStorage, noopStorage } from './storage'
+import { warn } from './utils'
 
 export type ClientConfig<
   TProvider extends BaseProvider = BaseProvider,
@@ -316,5 +317,9 @@ export function getClient<
   TProvider extends BaseProvider = BaseProvider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >() {
+  if (!client) {
+    warn('No client defined. Falling back to default client.')
+    return new Client<TProvider, TWebSocketProvider>()
+  }
   return client as unknown as Client<TProvider, TWebSocketProvider>
 }
