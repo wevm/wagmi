@@ -46,10 +46,10 @@ function Profile() {
     return (
       <div>
         Connected to {data.address}
-        <button onClick={disconnect}>Disconnect</button>
+        <button onClick={() => disconnect()}>Disconnect</button>
       </div>
     )
-  return <button onClick={connect}>Connect Wallet</button>
+  return <button onClick={() => connect()}>Connect Wallet</button>
 }
 ```
 
