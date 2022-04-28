@@ -1,137 +1,120 @@
-const LIMIT_REPLACE_NODE = '[...]'
-const CIRCULAR_REPLACE_NODE = '[Circular]'
-
-const arr: any[] = []
-const replacerStack: any[] = []
-
-type Options = { depthLimit?: number; edgesLimit?: number }
-const defaultOptions: Options = {
-  depthLimit: Number.MAX_SAFE_INTEGER,
-  edgesLimit: Number.MAX_SAFE_INTEGER,
+/**
+ * @function getReferenceKey
+ *
+ * @description
+ * get the reference key for the circular value
+ *
+ * @param keys the keys to build the reference key from
+ * @param cutoff the maximum number of keys to include
+ * @returns the reference key
+ */
+function getReferenceKey(keys: string[], cutoff: number) {
+  return keys.slice(0, cutoff).join('.') || '.'
 }
 
-// Regular stringify
-export function serialize(
-  obj: Record<string, any>,
-  replacer?: Replacer,
-  spacer?: string | number,
-  options: Options = defaultOptions,
-) {
-  decirc(obj, '', 0, [], undefined, 0, options)
+/**
+ * @function getCutoff
+ *
+ * @description
+ * faster `Array.prototype.indexOf` implementation build for slicing / splicing
+ *
+ * @param array the array to match the value in
+ * @param value the value to match
+ * @returns the matching index, or -1
+ */
+function getCutoff(array: any[], value: any) {
+  const { length } = array
 
-  let res: string
-  try {
-    if (replacerStack.length === 0) {
-      res = JSON.stringify(obj, replacer, spacer)
-    } else {
-      res = JSON.stringify(obj, replaceGetterValues(replacer), spacer)
-    }
-  } catch (_) {
-    return JSON.stringify(
-      '[unable to serialize, circular reference is too complex to analyze]',
-    )
-  } finally {
-    while (arr.length !== 0) {
-      const part = arr.pop()
-      if (part.length === 4) {
-        Object.defineProperty(part[0], part[1], part[3])
-      } else {
-        part[0][part[1]] = part[2]
-      }
+  for (let index = 0; index < length; ++index) {
+    if (array[index] === value) {
+      return index + 1
     }
   }
 
-  return res
+  return 0
 }
 
-function setReplace(
-  replace: string,
-  val: any,
-  k: string | number,
-  parent: any,
-) {
-  const propertyDescriptor = Object.getOwnPropertyDescriptor(parent, k)
-  if (propertyDescriptor?.get !== undefined) {
-    if (propertyDescriptor.configurable) {
-      Object.defineProperty(parent, k, { value: replace })
-      arr.push([parent, k, val, propertyDescriptor])
-    } else {
-      replacerStack.push([val, k, replace])
-    }
-  } else {
-    parent[k] = replace
-    arr.push([parent, k, val])
-  }
-}
+type StandardReplacer = (key: string, value: any) => any
+type CircularReplacer = (key: string, value: any, referenceKey: string) => any
 
-function decirc(
-  val: any,
-  k: number | string,
-  edgeIndex: number,
-  stack: any[],
-  parent: any,
-  depth: number,
-  options: Options,
-) {
-  depth += 1
-  let i: number
-  if (typeof val === 'object' && val !== null) {
-    for (i = 0; i < stack.length; i++) {
-      if (stack[i] === val) {
-        setReplace(CIRCULAR_REPLACE_NODE, val, k, parent)
-        return
-      }
-    }
+/**
+ * @function createReplacer
+ *
+ * @description
+ * create a replacer method that handles circular values
+ *
+ * @param [replacer] a custom replacer to use for non-circular values
+ * @param [circularReplacer] a custom replacer to use for circular methods
+ * @returns the value to stringify
+ */
+function createReplacer(
+  replacer?: StandardReplacer | null | undefined,
+  circularReplacer?: CircularReplacer | null | undefined,
+): StandardReplacer {
+  const hasReplacer = typeof replacer === 'function'
+  const hasCircularReplacer = typeof circularReplacer === 'function'
 
-    if (
-      typeof options.depthLimit !== 'undefined' &&
-      depth > options.depthLimit
-    ) {
-      setReplace(LIMIT_REPLACE_NODE, val, k, parent)
-      return
-    }
+  const cache: any[] = []
+  const keys: string[] = []
 
-    if (
-      typeof options.edgesLimit !== 'undefined' &&
-      edgeIndex + 1 > options.edgesLimit
-    ) {
-      setReplace(LIMIT_REPLACE_NODE, val, k, parent)
-      return
-    }
+  return function replace(this: any, key: string, value: any) {
+    if (typeof value === 'object') {
+      if (cache.length) {
+        const thisCutoff = getCutoff(cache, this)
 
-    stack.push(val)
-    // Optimize for Arrays. Big arrays could kill the performance otherwise!
-    if (Array.isArray(val)) {
-      for (i = 0; i < val.length; i++) {
-        decirc(val[i], i, i, stack, val, depth, options)
-      }
-    } else {
-      const keys = Object.keys(val)
-      for (i = 0; i < keys.length; i++) {
-        const key = keys[i]
-        decirc(val[key], key, i, stack, val, depth, options)
-      }
-    }
-    stack.pop()
-  }
-}
-
-type Replacer = (key: string, value: any) => string
-
-// wraps replacer function to handle values we couldn't replace
-// and mark them as replaced value
-function replaceGetterValues(replacer: Replacer = (_k, v) => v) {
-  return (key: string, val: any) => {
-    if (replacerStack.length > 0) {
-      for (let i = 0; i < replacerStack.length; i++) {
-        const part = replacerStack[i]
-        if (part[1] === key && part[0] === val) {
-          val = part[2]
-          replacerStack.splice(i, 1)
-          break
+        if (thisCutoff === 0) {
+          cache[cache.length] = this
+        } else {
+          cache.splice(thisCutoff)
+          keys.splice(thisCutoff)
         }
+
+        keys[keys.length] = key
+
+        const valueCutoff = getCutoff(cache, value)
+
+        if (valueCutoff !== 0) {
+          return hasCircularReplacer
+            ? circularReplacer.call(
+                this,
+                key,
+                value,
+                getReferenceKey(keys, valueCutoff),
+              )
+            : `[ref=${getReferenceKey(keys, valueCutoff)}]`
+        }
+      } else {
+        cache[0] = value
+        keys[0] = key
       }
     }
-    return replacer.apply(key, val)
+
+    return hasReplacer ? replacer.call(this, key, value) : value
   }
+}
+
+/**
+ * @function stringify
+ *
+ * @description
+ * strinigifer that handles circular values
+ * Forked from https://github.com/planttheidea/fast-stringify
+ *
+ * @param value to stringify
+ * @param [replacer] a custom replacer function for handling standard values
+ * @param [indent] the number of spaces to indent the output by
+ * @param [circularReplacer] a custom replacer function for handling circular values
+ * @returns the stringified output
+ */
+export function serialize(
+  value: any,
+  replacer?: StandardReplacer | null | undefined,
+  indent?: number | null | undefined,
+  circularReplacer?: CircularReplacer | null | undefined,
+) {
+  return JSON.stringify(
+    value,
+    createReplacer(replacer, circularReplacer),
+    indent ?? undefined,
+  )
 }

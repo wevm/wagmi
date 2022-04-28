@@ -1,8 +1,7 @@
-import { Signer, providers } from 'ethers'
 import { erc20ABI } from '@wagmi/core'
 
 import { getProvider, renderHook } from '../../../test'
-import { useContract } from './useContract'
+import { UseContractConfig, useContract } from './useContract'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
@@ -20,7 +19,7 @@ describe('useContract', () => {
 
   describe('behavior', () => {
     it('changes config', async () => {
-      let signerOrProvider: Signer | providers.Provider | undefined = undefined
+      let signerOrProvider: UseContractConfig['signerOrProvider'] = undefined
       const { result, rerender } = renderHook(() =>
         useContract({
           addressOrName: uniContractAddress,

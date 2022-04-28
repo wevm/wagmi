@@ -167,8 +167,12 @@ describe('createClient', () => {
 })
 
 describe('getClient', () => {
-  it('returns client', () => {
-    createClient()
+  it('returns default client', () => {
     expect(getClient()).toBeDefined()
+  })
+
+  it('returns created client', () => {
+    const client = createClient()
+    expect(getClient()).toEqual(client)
   })
 })
