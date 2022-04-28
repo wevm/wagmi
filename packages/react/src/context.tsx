@@ -33,7 +33,7 @@ export function createClient<
   queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        cacheTime: 60 * 60 * 24, // 24 hours
+        cacheTime: 1_000 * 60 * 60 * 24, // 24 hours
         networkMode: 'offlineFirst',
         refetchOnWindowFocus: false,
         retry: 0,
