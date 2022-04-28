@@ -38,7 +38,7 @@ importers:
       ethers: ^5.6.4
       hardhat: ^2.9.3
       husky: ^7.0.4
-      jest: '28'
+      jest: ^28.0.1
       jest-environment-jsdom: ^28.0.1
       jest-watch-typeahead: ^1.1.0
       lint-staged: ^12.4.1
@@ -297,13 +297,13 @@ importers:
       react-17: npm:react@^17.0.2
       react-dom: ^18.0.0
       react-dom-17: npm:react-dom@^17.0.2
-      react-query: ^4.0.0-beta.6
+      react-query: ^4.0.0-beta.7
       use-sync-external-store: ^1.0.0
     dependencies:
       '@coinbase/wallet-sdk': 3.0.8_@babel+core@7.17.9
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.5
-      react-query: 4.0.0-beta.6_react-dom@18.0.0+react@18.0.0
+      react-query: 4.0.0-beta.7_react-dom@18.0.0+react@18.0.0
       use-sync-external-store: 1.0.0_react@18.0.0
     devDependencies:
       '@testing-library/react': 13.1.1_react-dom@18.0.0+react@18.0.0
@@ -8807,6 +8807,7 @@ packages:
 
   /graceful-fs/4.2.10:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
+    dev: true
 
   /graceful-fs/4.2.9:
     resolution: {integrity: sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==}
@@ -10448,14 +10449,14 @@ packages:
   /jsonfile/4.0.0:
     resolution: {integrity: sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss=}
     optionalDependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.9
 
   /jsonfile/6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
     dependencies:
       universalify: 2.0.0
     optionalDependencies:
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.9
     dev: true
 
   /jsonify/0.0.0:
@@ -12916,8 +12917,8 @@ packages:
     resolution: {integrity: sha512-yUcBYdBBbo3QiPsgYDcfQcIkGZHfxOaoE6HLSnr1sPzMhdyxusbfKOSUbSd/ocGi32dxcj366PsTj+5oggeKKw==}
     dev: true
 
-  /react-query/4.0.0-beta.6_react-dom@18.0.0+react@18.0.0:
-    resolution: {integrity: sha512-XsaBcqieRaD5mCm/tgnmqYfuaievNQU0xsl3Qj815nT2xSiPJpJZfAoeJoGAMpsLcTTNjuhicrbD473fhhPLBw==}
+  /react-query/4.0.0-beta.7_react-dom@18.0.0+react@18.0.0:
+    resolution: {integrity: sha512-hovLEuiOfEPnQAJ3yfIK9qoW1fFdf7BQ9Wn7ALPueIO1McBhCMqtwEWHxL6DSKk8bgeDjMFBzDnZmQPXCiq7VA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: '*'
