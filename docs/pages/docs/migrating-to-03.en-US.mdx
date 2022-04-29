@@ -509,7 +509,7 @@ const [{ data, error, loading }, sendTransaction] = useTransaction({
 ##### After
 
 ```tsx
-const { data, error, isLoading, sendTransactionAsync } = useTransaction({
+const { data, error, isLoading, sendTransactionAsync } = useSendTransaction({
   request: {
     to: 'awkweb.eth',
     value: BigNumber.from('1000000000000000000'), // 1 ETH
