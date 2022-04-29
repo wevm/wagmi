@@ -111,7 +111,7 @@ export function useContractRead(
       const unwatch = watchReadContract(
         contractConfig,
         functionName,
-        { args, overrides, listenToBlock: watch && !cacheOnBlock },
+        { args, chainId, overrides, listenToBlock: watch && !cacheOnBlock },
         (result) => client.setQueryData(queryKey_, result),
       )
       return unwatch
@@ -119,6 +119,7 @@ export function useContractRead(
   }, [
     args,
     cacheOnBlock,
+    chainId,
     client,
     contractConfig,
     enabled,

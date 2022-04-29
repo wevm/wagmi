@@ -21,7 +21,9 @@ export function getProvider({ chainId }: { chainId?: number } = {}) {
   const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
   const network = getNetwork(chain)
   const url = chain_.hardhat.rpcUrls.default.toString()
-  return new EthersProviderWrapper(url, network)
+  const provider = new EthersProviderWrapper(url, network)
+  provider.pollingInterval = 1_000
+  return provider
 }
 
 class EthersWebSocketProviderWrapper extends providers.WebSocketProvider {
