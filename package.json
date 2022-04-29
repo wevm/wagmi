@@ -11,7 +11,7 @@
     "dev:example:next": "pnpm build && pnpm --filter example-next dev",
     "dev:example:remix": "pnpm build && pnpm --filter example-remix dev",
     "dev:example:vite-react": "pnpm build && pnpm --filter example-vite-react dev",
-    "hardhat:dev": "pnpx hardhat node --config .config/hardhat.config.ts",
+    "hardhat:dev": "pnpm hardhat node --config .config/hardhat.config.ts",
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
