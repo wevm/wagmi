@@ -27,7 +27,7 @@ const config = {
       {
         source: '/guides/:path*',
         destination: '/examples/:path*',
-        statusCode: 301,
+        permanent: true,
       },
     ]
   },
