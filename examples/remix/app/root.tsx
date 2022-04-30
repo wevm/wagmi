@@ -56,9 +56,7 @@ export default function App() {
           chains,
           options: {
             qrcode: true,
-            rpc: {
-              [chain.id]: rpcUrl,
-            },
+            rpc: { [chain.id]: rpcUrl },
           },
         }),
       ]

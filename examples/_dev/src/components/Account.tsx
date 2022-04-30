@@ -13,8 +13,11 @@ import { WriteContract } from './WriteContract'
 export const Account = () => {
   const isMounted = useIsMounted()
   const account = useAccount()
-  const ensAvatar = useEnsAvatar({ addressOrName: account.data?.address })
-  const ensName = useEnsName({ address: account.data?.address })
+  const ensAvatar = useEnsAvatar({
+    addressOrName: account.data?.address,
+    chainId: 1,
+  })
+  const ensName = useEnsName({ address: account.data?.address, chainId: 1 })
   const disconnect = useDisconnect()
 
   return (

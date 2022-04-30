@@ -23,6 +23,7 @@ const GetAlive = () => {
       contractInterface: wagmigotchiABI,
     },
     'getAlive',
+    { chainId: 1 },
   )
 
   return (
@@ -47,7 +48,7 @@ const Love = () => {
       contractInterface: wagmigotchiABI,
     },
     'love',
-    { args: [address], enabled: Boolean(address) },
+    { args: [address], chainId: 1, enabled: Boolean(address) },
   )
 
   const [value, setValue] = useState('')
