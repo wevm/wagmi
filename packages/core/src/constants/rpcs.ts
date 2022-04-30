@@ -3,7 +3,7 @@ import { ChainName } from './chains'
 export const defaultAlchemyId = '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC'
 export const defaultInfuraId = '84842078b09946638c03157f83405213'
 
-export type RpcProviderName = 'alchemy' | 'infura' | 'ankr'
+export type RpcProviderName = 'alchemy' | 'ankr' | 'infura'
 
 type AlchemyChains = Extract<
   ChainName,

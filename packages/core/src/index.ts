@@ -98,6 +98,7 @@ export type { ConnectorData, ConnectorEvents } from './connectors'
 export {
   alchemyRpcUrls,
   allChains,
+  ankrRpcUrls,
   chain,
   chainId,
   defaultChains,
@@ -106,7 +107,6 @@ export {
   erc721ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
-  ankrRpcUrls,
   units,
 } from './constants'
 
