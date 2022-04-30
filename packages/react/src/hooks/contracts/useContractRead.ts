@@ -99,9 +99,7 @@ export function useContractRead(
 
   const enabled = React.useMemo(() => {
     let enabled = Boolean(enabled_ && contractConfig && functionName)
-    if (cacheOnBlock) {
-      enabled = Boolean(enabled && blockNumber)
-    }
+    if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled
   }, [blockNumber, cacheOnBlock, contractConfig, enabled_, functionName])
 
