@@ -61,20 +61,9 @@ export const infuraRpcUrls: Record<InfuraChains, string> = {
   arbitrumRinkeby: 'https://arbitrum-rinkeby.infura.io/v3',
 } as const
 
-type AnkrChains = Extract<
-  ChainName,
-  | 'mainnet'
-  | 'goerli'
-  | 'ropsten'
-  | 'rinkeby'
-  | 'polygon'
-  | 'arbitrum'
->
+type AnkrChains = Extract<ChainName, 'mainnet' | 'polygon' | 'arbitrum'>
 export const ankrRpcUrls: Record<AnkrChains, string> = {
   mainnet: 'https://rpc.ankr.com/eth',
-  goerli: 'https://rpc.ankr.com/eth_goerli',
-  ropsten: 'https://rpc.ankr.com/eth_ropsten',
-  rinkeby: 'https://rpc.ankr.com/eth_rinkeby',
   polygon: 'https://rpc.ankr.com/polygon',
   arbitrum: 'https://rpc.ankr.com/arbitrum',
 } as const

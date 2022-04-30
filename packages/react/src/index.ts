@@ -46,6 +46,7 @@ export {
   Connector,
   WagmiClient,
   alchemyRpcUrls,
+  ankrRpcUrls,
   allChains,
   chain,
   chainId,
