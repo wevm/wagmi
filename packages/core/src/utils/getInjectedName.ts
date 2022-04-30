@@ -1,4 +1,4 @@
-const injectedProvidersLookup: Record<keyof InjectedProviders, string> = {
+const injectedProvidersLookup: Record<keyof InjectedProviderFlags, string> = {
   isMetaMask: 'MetaMask',
   // Place other options below in alphabetical order
   isBraveWallet: 'Brave Wallet',

@@ -15,9 +15,11 @@ import {
 import { Connector } from './base'
 import { getClient } from '../client'
 
-type InjectedConnectorOptions = {
+export type InjectedConnectorOptions = {
+  /** Name of connector instead of trying to detect from window */
+  name?: string | ((detectedName: string) => string)
   /**
-   * MetaMask and other injected providers do not support programmatic disconnect.
+   * Injected providers (e.g. MetaMask) do not always support programmatic disconnect.
    * This flag simulates the disconnect behavior by keeping track of connection status in storage.
    * @see https://github.com/MetaMask/metamask-extension/issues/10353
    * @default true
@@ -31,7 +33,7 @@ export class InjectedConnector extends Connector<
   Window['ethereum'],
   InjectedConnectorOptions | undefined
 > {
-  readonly id = 'injected'
+  readonly id: string
   readonly name: string
   readonly ready = typeof window != 'undefined' && !!window.ethereum
 
@@ -44,7 +46,17 @@ export class InjectedConnector extends Connector<
     super({ ...config, options: { shimDisconnect: true, ...config?.options } })
 
     let name = 'Injected'
-    if (typeof window !== 'undefined') name = getInjectedName(window.ethereum)
+    if (typeof window !== 'undefined') {
+      const overrideName = config?.options?.name
+      const detectedName = getInjectedName(window.ethereum)
+      if (overrideName)
+        name =
+          typeof overrideName === 'function'
+            ? overrideName(detectedName)
+            : overrideName
+      else name = detectedName
+    }
+    this.id = 'injected'
     this.name = name
   }
 
