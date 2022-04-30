@@ -4,7 +4,10 @@ import { Result } from 'ethers/lib/utils'
 import { getProvider } from '../providers'
 import { GetContractArgs, getContract } from './getContract'
 
-export type ReadContractArgs = GetContractArgs
+export type ReadContractArgs = Pick<
+  GetContractArgs,
+  'addressOrName' | 'contractInterface'
+>
 export type ReadContractConfig = {
   /** Arguments to pass contract method */
   args?: any | any[]
