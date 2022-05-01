@@ -58,11 +58,12 @@ declare global {
     | { method: 'wallet_watchAsset'; params: WatchAssetParams }
 
   type InjectedProviderFlags = {
-    isMetaMask: true
     isBraveWallet?: true
     isCoinbaseWallet?: true
     isFrame?: true
+    isMetaMask: true
     isTally?: true
+    isTrust?: true
   }
 
   type InjectedProviders = InjectedProviderFlags & {

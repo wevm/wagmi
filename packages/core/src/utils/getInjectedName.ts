@@ -1,23 +1,18 @@
-const injectedProvidersLookup: Record<keyof InjectedProviderFlags, string> = {
-  isMetaMask: 'MetaMask',
-  // Place other options below in alphabetical order
-  isBraveWallet: 'Brave Wallet',
-  isCoinbaseWallet: 'Coinbase Wallet',
-  isFrame: 'Frame',
-  isTally: 'Tally',
-}
-const injectedOptions = Object.entries(injectedProvidersLookup)
-
 export function getInjectedName(ethereum?: Window['ethereum']) {
   if (!ethereum) return 'Injected'
 
   const getName = (provider: Ethereum) => {
-    for (const [key, val] of injectedOptions) {
-      if (provider[<keyof InjectedProviders>key]) return val
-    }
+    if (provider.isMetaMask && !provider.isBraveWallet) return 'MetaMask'
+    if (provider.isBraveWallet) return 'Brave Wallet'
+    if (provider.isCoinbaseWallet) return 'Coinbase Wallet'
+    if (provider.isFrame) return 'Frame'
+    if (provider.isTally) return 'Tally'
+    if (provider.isTrust) return 'Trust Wallet'
   }
 
   if (ethereum.providers?.length) {
+    // Deduplicated names using Set
+    // Coinbase Wallet puts multiple providers in `ethereum.providers`
     const nameSet = new Set<string>()
     let unknownCount = 1
     for (const provider of ethereum.providers) {
