@@ -2,10 +2,10 @@ import * as React from 'react'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { providers } from 'ethers/lib/ethers'
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string

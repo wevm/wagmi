@@ -9,7 +9,7 @@ export function App() {
     <>
       <Connect />
 
-      {data?.address && (
+      {data && (
         <>
           <Account />
           <NetworkSwitcher />

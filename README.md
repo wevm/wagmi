@@ -30,7 +30,7 @@ React Hooks for Ethereum
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
-- 💼 Built-in wallet connectors for Injected (e.g. MetaMask), WalletConnect, and Coinbase Wallet
+- 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and Injected
 - 👟 Caching, request deduplication, and persistence
 - 🌀 Auto-refresh data on wallet, block, and network changes
 - 🦄 TypeScript ready
@@ -99,7 +99,7 @@ We've only scratched the surface for what you can do with wagmi!
 Check out the following places for more wagmi-related content:
 
 - Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
-- Follow [@awkweb](https://twitter.com/awkweb) on Twitter for project updates
+- Follow [@awkweb](https://twitter.com/awkweb) and [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
 - Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
 - Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) using wagmi
 
@@ -107,9 +107,9 @@ Check out the following places for more wagmi-related content:
 
 If you find wagmi useful, please consider supporting development. Thank you 🙏
 
-- [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
 - [GitHub Sponsors](https://github.com/sponsors/tmm?metadata_campaign=gh_readme_support)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
+- [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
 
 ## Contributing
 

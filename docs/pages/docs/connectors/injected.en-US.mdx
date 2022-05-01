@@ -66,7 +66,7 @@ const connector = new InjectedConnector({
 })
 ```
 
-`name` can also be set to a function, which has the `detectedName` as the first parameter. `detectedName` can be a list of multiple detected names (e.g. there are multiple injected wallets detected).
+`name` can also be set to a function, which has the `detectedName` as the first parameter. `detectedName` can be a list of multiple detected names if there are multiple injected wallets detected.
 
 ```ts {5-10}
 import { InjectedConnector } from 'wagmi/connectors/injected'

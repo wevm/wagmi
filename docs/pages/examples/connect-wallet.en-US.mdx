@@ -16,6 +16,7 @@ First, we create a new wagmi client set up with the Injected (i.e. MetaMask), Wa
 import { Provider, chain, createClient } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 // API key for Ethereum node
@@ -34,8 +35,9 @@ const client = createClient({
       ? `${chain.rpcUrls.alchemy}/${alchemyId}`
       : chain.rpcUrls.default
     return [
-      new InjectedConnector(),
+      new MetaMaskConnector({ chains }),
       new CoinbaseWalletConnector({
+        chains,
         options: {
           appName: 'wagmi',
           chainId: chain.id,
@@ -43,12 +45,15 @@ const client = createClient({
         },
       }),
       new WalletConnectConnector({
+        chains,
         options: {
           qrcode: true,
-          rpc: {
-            [chain.id]: rpcUrl,
-          },
+          rpc: { [chain.id]: rpcUrl },
         },
+      }),
+      new InjectedConnector({
+        chains,
+        options: { name: 'Injected' },
       }),
     ]
   },

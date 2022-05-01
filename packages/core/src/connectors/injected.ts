@@ -16,7 +16,7 @@ import { Connector } from './base'
 import { getClient } from '../client'
 
 export type InjectedConnectorOptions = {
-  /** Name of connector instead of trying to detect from browser. */
+  /** Name of connector */
   name?: string | ((detectedName: string | string[]) => string)
   /**
    * MetaMask and other injected providers do not support programmatic disconnect.

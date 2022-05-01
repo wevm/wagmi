@@ -11,9 +11,10 @@ import {
 import type { MetaFunction } from 'remix'
 
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 export function loader() {
   require('dotenv').config()
@@ -43,7 +44,7 @@ export default function App() {
         ? `${chain.rpcUrls.alchemy}/${alchemyId}`
         : chain.rpcUrls.default
       return [
-        new InjectedConnector({ chains }),
+        new MetaMaskConnector({ chains }),
         new CoinbaseWalletConnector({
           chains,
           options: {
@@ -59,6 +60,7 @@ export default function App() {
             rpc: { [chain.id]: rpcUrl },
           },
         }),
+        new InjectedConnector({ chains, options: { name: 'Injected' } }),
       ]
     },
     provider({ chainId }) {
