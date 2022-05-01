@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { providers } from 'ethers'
 import {
   Links,
@@ -35,45 +36,51 @@ const isChainSupported = (chainId?: number) =>
 export default function App() {
   const { alchemyId } = useLoaderData()
 
-  const client = createClient({
-    autoConnect: true,
-    connectors({ chainId }) {
-      const chain = chains.find((x) => x.id === chainId) ?? defaultChain
-      const rpcUrl = chain.rpcUrls.alchemy
-        ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-        : chain.rpcUrls.default
-      return [
-        new InjectedConnector({ chains }),
-        new CoinbaseWalletConnector({
-          chains,
-          options: {
-            appName: 'wagmi',
-            chainId: chain.id,
-            jsonRpcUrl: rpcUrl,
-          },
-        }),
-        new WalletConnectConnector({
-          chains,
-          options: {
-            qrcode: true,
-            rpc: { [chain.id]: rpcUrl },
-          },
-        }),
-      ]
-    },
-    provider({ chainId }) {
-      return new providers.AlchemyProvider(
-        isChainSupported(chainId) ? chainId : defaultChain.id,
-        alchemyId,
-      )
-    },
-    webSocketProvider({ chainId }) {
-      return new providers.AlchemyWebSocketProvider(
-        isChainSupported(chainId) ? chainId : defaultChain.id,
-        alchemyId,
-      )
-    },
-  })
+  const client = useMemo(
+    () =>
+      createClient({
+        autoConnect: true,
+        connectors({ chainId }) {
+          const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+          const rpcUrl = chain.rpcUrls.alchemy
+            ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+            : chain.rpcUrls.default
+          return [
+            new InjectedConnector({ chains }),
+            new CoinbaseWalletConnector({
+              chains,
+              options: {
+                appName: 'wagmi',
+                chainId: chain.id,
+                jsonRpcUrl: rpcUrl,
+              },
+            }),
+            new WalletConnectConnector({
+              chains,
+              options: {
+                qrcode: true,
+                rpc: {
+                  [chain.id]: rpcUrl,
+                },
+              },
+            }),
+          ]
+        },
+        provider({ chainId }) {
+          return new providers.AlchemyProvider(
+            isChainSupported(chainId) ? chainId : defaultChain.id,
+            alchemyId,
+          )
+        },
+        webSocketProvider({ chainId }) {
+          return new providers.AlchemyWebSocketProvider(
+            isChainSupported(chainId) ? chainId : defaultChain.id,
+            alchemyId,
+          )
+        },
+      }),
+    [alchemyId],
+  )
 
   return (
     <html lang="en">
