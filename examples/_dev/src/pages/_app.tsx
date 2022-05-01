@@ -43,7 +43,14 @@ const client = createClient({
       }),
       new InjectedConnector({
         chains,
-        options: { name: 'Injected' },
+        options: {
+          name: (detectedName) =>
+            `Injected (${
+              typeof detectedName === 'string'
+                ? detectedName
+                : detectedName.join(', ')
+            })`,
+        },
       }),
     ]
   },

@@ -16,10 +16,10 @@ import { Connector } from './base'
 import { getClient } from '../client'
 
 export type InjectedConnectorOptions = {
-  /** Name of connector instead of trying to detect from window */
-  name?: string | ((detectedName: string) => string)
+  /** Name of connector instead of trying to detect from browser. */
+  name?: string | ((detectedName: string | string[]) => string)
   /**
-   * Injected providers (e.g. MetaMask) do not always support programmatic disconnect.
+   * MetaMask and other injected providers do not support programmatic disconnect.
    * This flag simulates the disconnect behavior by keeping track of connection status in storage.
    * @see https://github.com/MetaMask/metamask-extension/issues/10353
    * @default true
@@ -54,7 +54,8 @@ export class InjectedConnector extends Connector<
           typeof overrideName === 'function'
             ? overrideName(detectedName)
             : overrideName
-      else name = detectedName
+      else
+        name = typeof detectedName === 'string' ? detectedName : detectedName[0]
     }
     this.id = 'injected'
     this.name = name
