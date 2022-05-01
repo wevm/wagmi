@@ -36,9 +36,6 @@ export class MetaMaskConnector extends InjectedConnector {
   #getReady(ethereum?: Ethereum) {
     const isMetaMask = !!ethereum?.isMetaMask
     // Brave Wallet tries to make itself look like MetaMask
-    // Agressively try matching against these properties unique to MetaMask
-    if (isMetaMask && !!ethereum._events?.connect && !!ethereum._state)
-      return ethereum
     if (isMetaMask && !ethereum.isBraveWallet) return ethereum
   }
 

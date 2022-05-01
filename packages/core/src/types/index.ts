@@ -61,7 +61,7 @@ declare global {
     isBraveWallet?: true
     isCoinbaseWallet?: true
     isFrame?: true
-    isMetaMask: true
+    isMetaMask?: true
     isTally?: true
     isTrust?: true
   }
