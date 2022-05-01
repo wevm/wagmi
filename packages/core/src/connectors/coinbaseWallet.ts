@@ -67,7 +67,6 @@ export class CoinbaseWalletConnector extends Connector<
         ),
       }
     } catch (error) {
-      console.log(error)
       if (
         /(user closed modal|accounts received is empty)/i.test(
           (<ProviderRpcError>error).message,
