@@ -214,7 +214,7 @@ export function Profile() {
     error?: Error
     loading?: boolean
   }>({})
-  const [, signMessage] = useSignMessage()
+  const { signMessageAsync } = useSignMessage()
 
   const signIn = React.useCallback(async () => {
     try {
@@ -234,8 +234,7 @@ export function Profile() {
         chainId,
         nonce: await nonceRes.text(),
       })
-      const signRes = await signMessage({ message: message.prepareMessage() })
-      if (signRes.error) throw signRes.error
+      const signature = await signMessageAsync({ message: message.prepareMessage() })
 
       // Verify signature
       const verifyRes = await fetch('/api/verify', {
@@ -243,7 +242,7 @@ export function Profile() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message, signature: signRes.data }),
+        body: JSON.stringify({ message, signature }),
       })
       if (!verifyRes.ok) throw new Error('Error verifying message')
 

@@ -37,9 +37,7 @@ const client = createClient({
         chains,
         options: {
           qrcode: true,
-          rpc: {
-            [chain.id]: rpcUrl,
-          },
+          rpc: { [chain.id]: rpcUrl },
         },
       }),
     ]

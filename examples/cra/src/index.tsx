@@ -1,14 +1,23 @@
 import * as React from 'react'
-import type { AppProps } from 'next/app'
+import * as ReactDOM from 'react-dom/client'
 import { providers } from 'ethers'
-import NextHead from 'next/head'
 
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
-const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
+import { Buffer } from 'buffer'
+
+import { App } from './App'
+import reportWebVitals from './reportWebVitals'
+
+// polyfill Buffer for client
+if (!window.Buffer) {
+  window.Buffer = Buffer
+}
+
+const alchemyId = process.env.REACT_APP_ALCHEMY_ID as string
 const chains = defaultChains
 const defaultChain = chain.mainnet
 
@@ -55,16 +64,13 @@ const client = createClient({
   },
 })
 
-function App({ Component, pageProps }: AppProps) {
-  return (
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+root.render(
+  <React.StrictMode>
     <Provider client={client}>
-      <NextHead>
-        <title>wagmi</title>
-      </NextHead>
-
-      <Component {...pageProps} />
+      <App />
     </Provider>
-  )
-}
+  </React.StrictMode>,
+)
 
-export default App
+reportWebVitals()
