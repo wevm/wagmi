@@ -1,5 +1,18 @@
 # wagmi
 
+## 0.3.2
+
+### Patch Changes
+
+- [`018c2a1`](https://github.com/tmm/wagmi/commit/018c2a11b22ee513571cc7f83fd63f7eb169ee70) Thanks [@tmm](https://github.com/tmm)! - - warn and fallback to default client #380
+
+  - remove signerOrProvider option from read contract #390
+
+  - MetaMaskConnector #391
+
+- Updated dependencies [[`018c2a1`](https://github.com/tmm/wagmi/commit/018c2a11b22ee513571cc7f83fd63f7eb169ee70)]:
+  - @wagmi/core@0.2.2
+
 ## 0.3.1
 
 ### Patch Changes
