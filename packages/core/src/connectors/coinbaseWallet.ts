@@ -37,8 +37,7 @@ export class CoinbaseWalletConnector extends Connector<
 > {
   readonly id = 'coinbaseWallet'
   readonly name = 'Coinbase Wallet'
-  readonly ready =
-    typeof window !== 'undefined' && !window.ethereum?.isCoinbaseWallet
+  readonly ready = true
 
   #client?: CoinbaseWalletSDK
   #provider?: CoinbaseWalletProvider
@@ -68,7 +67,11 @@ export class CoinbaseWalletConnector extends Connector<
         ),
       }
     } catch (error) {
-      if (/user closed modal/i.test((<ProviderRpcError>error).message))
+      if (
+        /(user closed modal|accounts received is empty)/i.test(
+          (<ProviderRpcError>error).message,
+        )
+      )
         throw new UserRejectedRequestError()
       throw error
     }

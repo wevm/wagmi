@@ -1,0 +1,58 @@
+# MetaMask
+
+The `MetaMaskConnector` supports connecting with MetaMask.
+
+```ts
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+```
+
+## Usage
+
+```ts
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+
+const connector = new MetaMaskConnector()
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { chain } from 'wagmi'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+
+const connector = new MetaMaskConnector({
+  chains: [chain.mainnet, chain.optimism],
+})
+```
+
+### options (optional)
+
+Options for configuring the connector.
+
+```ts {4-6}
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+
+const connector = new MetaMaskConnector({
+  options: {
+    shimDisconnect: true,
+  },
+})
+```
+
+#### shimDisconnect
+
+MetaMask [does not support programmatic disconnect](https://github.com/MetaMask/metamask-extension/issues/10353). This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
+
+```ts {5}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    shimDisconnect: false,
+  },
+})
+```

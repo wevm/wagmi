@@ -57,12 +57,29 @@ declare global {
     | { method: 'wallet_switchEthereumChain'; params: [{ chainId: string }] }
     | { method: 'wallet_watchAsset'; params: WatchAssetParams }
 
-  type InjectedProviders = {
+  type InjectedProviderFlags = {
     isBraveWallet?: true
     isCoinbaseWallet?: true
     isFrame?: true
     isMetaMask?: true
     isTally?: true
+    isTrust?: true
+  }
+
+  type InjectedProviders = InjectedProviderFlags & {
+    isMetaMask: true
+    /** Only exists in MetaMask as of 2022/04/03 */
+    _events: {
+      connect?: () => void
+    }
+    /** Only exists in MetaMask as of 2022/04/03 */
+    _state?: {
+      accounts?: string[]
+      initialized?: boolean
+      isConnected?: boolean
+      isPermanentlyDisconnected?: boolean
+      isUnlocked?: boolean
+    }
   }
 
   interface Ethereum extends InjectedProviders {

@@ -52,6 +52,37 @@ const connector = new InjectedConnector({
 })
 ```
 
+#### name
+
+Name of connector instead of trying to detect from browser.
+
+```ts {5}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    name: 'Injected',
+  },
+})
+```
+
+`name` can also be set to a function, which has the `detectedName` as the first parameter. `detectedName` can be a list of multiple detected names if there are multiple injected wallets detected.
+
+```ts {5-10}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    name: (detectedName) =>
+      `Injected (${
+        typeof detectedName === 'string'
+          ? detectedName
+          : detectedName.join(', ')
+      })`,
+  },
+})
+```
+
 #### shimDisconnect
 
 MetaMask and other injected providers [do not support programmatic disconnect](https://github.com/MetaMask/metamask-extension/issues/10353). This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
