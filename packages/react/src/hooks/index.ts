@@ -25,4 +25,4 @@ export { useProvider, useWebSocketProvider } from './providers'
 
 export { useSendTransaction, useWaitForTransaction } from './transactions'
 
-export { useChainId } from './utils'
+export { useChainId, useQuery } from './utils'
