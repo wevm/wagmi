@@ -1,12 +1,10 @@
 export class WrappedError extends Error {
   // The original error from the catch block before rethrowing
-  readonly originalError: Error | undefined
+  readonly originalError: unknown
 
   constructor(originalError: unknown) {
     super()
-    if (originalError instanceof Error) {
-      this.originalError = originalError
-    }
+    this.originalError = originalError
   }
 }
 
