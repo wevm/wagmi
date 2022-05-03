@@ -1,8 +1,8 @@
-export class WagmiError extends Error {
+export class WrappedError extends Error {
   // The original error from the catch block before rethrowing
   readonly originalError: Error | undefined
 
-  constructor(originalError?: unknown) {
+  constructor(originalError: unknown) {
     super()
     if (originalError instanceof Error) {
       this.originalError = originalError
@@ -10,37 +10,37 @@ export class WagmiError extends Error {
   }
 }
 
-export class AddChainError extends WagmiError {
+export class AddChainError extends Error {
   name = 'AddChainError'
   message = 'Error adding chain'
 }
 
-export class ChainNotConfiguredError extends WagmiError {
+export class ChainNotConfiguredError extends Error {
   name = 'ChainNotConfigured'
   message = 'Chain not configured'
 }
 
-export class ConnectorAlreadyConnectedError extends WagmiError {
+export class ConnectorAlreadyConnectedError extends Error {
   name = 'ConnectorAlreadyConnectedError'
   message = 'Connector already connected'
 }
 
-export class ConnectorNotFoundError extends WagmiError {
+export class ConnectorNotFoundError extends Error {
   name = 'ConnectorNotFoundError'
   message = 'Connector not found'
 }
 
-export class SwitchChainError extends WagmiError {
+export class SwitchChainError extends WrappedError {
   name = 'SwitchChainError'
   message = 'Error switching chain'
 }
 
-export class SwitchChainNotSupportedError extends WagmiError {
+export class SwitchChainNotSupportedError extends Error {
   name = 'SwitchChainNotSupportedError'
   message = 'Switch chain not supported by connector'
 }
 
-export class UserRejectedRequestError extends WagmiError {
+export class UserRejectedRequestError extends WrappedError {
   name = 'UserRejectedRequestError'
   message = 'User rejected request'
 }

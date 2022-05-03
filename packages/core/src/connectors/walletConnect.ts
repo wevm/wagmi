@@ -57,7 +57,7 @@ export class WalletConnectConnector extends Connector<
       }
     } catch (error) {
       if (/user closed modal/i.test((<ProviderRpcError>error).message))
-        throw new UserRejectedRequestError()
+        throw new UserRejectedRequestError(error)
       throw error
     }
   }

@@ -36,7 +36,8 @@ export class MockProvider extends providers.BaseProvider {
   }
 
   async enable() {
-    if (this.#options.flags?.failConnect) throw new UserRejectedRequestError()
+    if (this.#options.flags?.failConnect)
+      throw new UserRejectedRequestError(undefined)
     if (!this.#signer) this.#signer = this.#options.signer
     const address = await this.#signer.getAddress()
     this.events.emit('accountsChanged', [address])
@@ -62,7 +63,7 @@ export class MockProvider extends providers.BaseProvider {
 
   async switchChain(chainId: number) {
     if (this.#options.flags?.failSwitchChain)
-      throw new UserRejectedRequestError()
+      throw new UserRejectedRequestError(undefined)
     this.#options.network = chainId
     this.network.chainId = chainId
     this.events.emit('chainChanged', chainId)
