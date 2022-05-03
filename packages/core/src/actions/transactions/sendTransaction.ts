@@ -25,7 +25,7 @@ export async function sendTransaction(
   } catch (error_) {
     let error: Error = <Error>error_
     if ((<ProviderRpcError>error_).code === 4001)
-      error = new UserRejectedRequestError()
+      error = new UserRejectedRequestError(error_)
     throw error
   }
 }

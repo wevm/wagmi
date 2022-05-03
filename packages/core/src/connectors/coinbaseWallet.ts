@@ -72,7 +72,7 @@ export class CoinbaseWalletConnector extends Connector<
           (<ProviderRpcError>error).message,
         )
       )
-        throw new UserRejectedRequestError()
+        throw new UserRejectedRequestError(error)
       throw error
     }
   }
@@ -166,7 +166,7 @@ export class CoinbaseWalletConnector extends Connector<
       if ((<ProviderRpcError>error).code === 4902) {
         try {
           const chain = this.chains.find((x) => x.id === chainId)
-          if (!chain) throw new ChainNotConfiguredError()
+          if (!chain) throw new ChainNotConfiguredError(error)
           await provider.request({
             method: 'wallet_addEthereumChain',
             params: [
@@ -181,11 +181,11 @@ export class CoinbaseWalletConnector extends Connector<
           })
           return chain
         } catch (addError) {
-          throw new AddChainError()
+          throw new AddChainError(addError)
         }
       } else if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
-      else throw new SwitchChainError()
+        throw new UserRejectedRequestError(error)
+      else throw new SwitchChainError(error)
     }
   }
 

@@ -137,8 +137,8 @@ export class WalletConnectConnector extends Connector<
       const message =
         typeof error === 'string' ? error : (<ProviderRpcError>error)?.message
       if (/user rejected request/i.test(message))
-        throw new UserRejectedRequestError()
-      else throw new SwitchChainError()
+        throw new UserRejectedRequestError(error)
+      else throw new SwitchChainError(error)
     }
   }
 
