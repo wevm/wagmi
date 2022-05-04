@@ -13,7 +13,7 @@ The example below uses [`useConnect`](/docs/hooks/useConnect), [`useAccount`](/d
 First, we create a new wagmi client set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors:
 
 ```tsx
-import { Provider, chain, createClient } from 'wagmi'
+import { Provider, chain, createClient, defaultChains } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
