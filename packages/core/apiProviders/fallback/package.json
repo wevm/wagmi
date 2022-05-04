@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-core-apiProviders-fallback.cjs.js",
+  "module": "dist/wagmi-core-apiProviders-fallback.esm.js"
+}

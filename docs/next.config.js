@@ -6,6 +6,8 @@ const withNextra = require('nextra')({
   unstable_staticImage: true,
 })
 
+const withPreconstruct = require('@preconstruct/next')
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -33,4 +35,4 @@ const config = {
   },
 }
 
-module.exports = withBundleAnalyzer(withNextra(config))
+module.exports = withPreconstruct(withBundleAnalyzer(withNextra(config)))

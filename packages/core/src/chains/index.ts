@@ -1,0 +1,1 @@
+export { configureChains } from './configureChains'

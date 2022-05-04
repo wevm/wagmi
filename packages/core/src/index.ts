@@ -84,6 +84,10 @@ export type {
   WriteContractResult,
 } from './actions'
 
+export type { ApiProvider } from './apiProviders'
+
+export { configureChains } from './chains'
+
 export {
   createClient,
   createClient as createWagmiClient,

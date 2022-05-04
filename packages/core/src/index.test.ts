@@ -34,6 +34,7 @@ it('should expose correct exports', () => {
       "watchSigner",
       "watchWebSocketProvider",
       "writeContract",
+      "configureChains",
       "createClient",
       "createWagmiClient",
       "Client",

@@ -199,6 +199,7 @@ export class Client<
   clearState() {
     this.setState((x) => ({
       ...x,
+      chains: undefined,
       connector: undefined,
       data: undefined,
       error: undefined,
@@ -278,20 +279,16 @@ export class Client<
       },
     )
 
-    const { connectors, provider, webSocketProvider } = this.config
-    const subscribeConnectors = typeof connectors === 'function'
+    const { provider, webSocketProvider } = this.config
     const subscribeProvider = typeof provider === 'function'
     const subscribeWebSocketProvider = typeof webSocketProvider === 'function'
 
-    if (subscribeConnectors || subscribeProvider || subscribeWebSocketProvider)
+    if (subscribeProvider || subscribeWebSocketProvider)
       this.store.subscribe(
         ({ data }) => data?.chain?.id,
         (chainId) => {
           this.setState((x) => ({
             ...x,
-            connectors: subscribeConnectors
-              ? connectors({ chainId })
-              : x.connectors,
             provider: subscribeProvider ? provider({ chainId }) : x.provider,
             webSocketProvider: subscribeWebSocketProvider
               ? webSocketProvider({ chainId })
