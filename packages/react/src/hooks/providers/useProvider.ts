@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { BaseProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import { GetProviderArgs, getProvider, watchProvider } from '@wagmi/core'
 
 import { useClient } from '../../context'
@@ -7,7 +7,7 @@ import { useForceUpdate } from '../utils'
 
 export type UseProviderArgs = Partial<GetProviderArgs>
 
-export function useProvider<TProvider extends BaseProvider>({
+export function useProvider<TProvider extends providers.BaseProvider>({
   chainId,
 }: UseProviderArgs = {}) {
   const forceUpdate = useForceUpdate()

@@ -1,4 +1,3 @@
-import type { ExternalProvider } from '@ethersproject/providers'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
@@ -129,9 +128,9 @@ export class InjectedConnector extends Connector<
       this.getProvider(),
       this.getAccount(),
     ])
-    return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
-      account,
-    )
+    return new providers.Web3Provider(
+      <providers.ExternalProvider>provider,
+    ).getSigner(account)
   }
 
   async isAuthorized() {

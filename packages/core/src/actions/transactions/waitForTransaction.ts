@@ -1,7 +1,4 @@
-import type {
-  TransactionReceipt,
-  TransactionResponse,
-} from '@ethersproject/providers'
+import { providers } from 'ethers'
 
 import { getProvider } from '../providers'
 
@@ -21,10 +18,10 @@ export type WaitForTransactionArgs = {
    */
   timeout?: number
   /** Function resolving to transaction receipt */
-  wait?: TransactionResponse['wait']
+  wait?: providers.TransactionResponse['wait']
 }
 
-export type WaitForTransactionResult = TransactionReceipt
+export type WaitForTransactionResult = providers.TransactionReceipt
 
 export async function waitForTransaction({
   chainId,
@@ -33,7 +30,7 @@ export async function waitForTransaction({
   timeout,
   wait: wait_,
 }: WaitForTransactionArgs): Promise<WaitForTransactionResult> {
-  let promise: Promise<TransactionReceipt>
+  let promise: Promise<providers.TransactionReceipt>
   if (hash) {
     const provider = getProvider({ chainId })
     promise = provider.waitForTransaction(hash, confirmations, timeout)

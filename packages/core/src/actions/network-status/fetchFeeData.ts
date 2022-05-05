@@ -1,5 +1,4 @@
-import type { FeeData } from '@ethersproject/providers'
-import { BigNumberish } from 'ethers/lib/ethers'
+import { BigNumberish, providers } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 
 import { Unit } from '../../types'
@@ -12,7 +11,7 @@ export type FetchFeeDataArgs = {
   chainId?: number
 }
 
-export type FetchFeeDataResult = FeeData & {
+export type FetchFeeDataResult = providers.FeeData & {
   formatted: {
     gasPrice: string
     maxFeePerGas: string

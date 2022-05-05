@@ -1,4 +1,4 @@
-import type { BaseProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 
 import { Client, client } from '../../client'
 import { Connector, ConnectorData } from '../../connectors'
@@ -9,18 +9,19 @@ export type ConnectArgs = {
   connector: Connector
 }
 
-type Data<TProvider extends BaseProvider = BaseProvider> = Required<
-  ConnectorData<TProvider>
->
+type Data<TProvider extends providers.BaseProvider = providers.BaseProvider> =
+  Required<ConnectorData<TProvider>>
 
-export type ConnectResult<TProvider extends BaseProvider = BaseProvider> = {
+export type ConnectResult<
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+> = {
   account: Data<TProvider>['account']
   chain: Data<TProvider>['chain']
   connector: Client<TProvider>['connector']
   provider: Data<TProvider>['provider']
 }
 
-export async function connect<TProvider extends BaseProvider>({
+export async function connect<TProvider extends providers.BaseProvider>({
   connector,
 }: ConnectArgs): Promise<ConnectResult<TProvider>> {
   const activeConnector = client.connector

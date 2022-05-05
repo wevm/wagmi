@@ -1,6 +1,5 @@
-import { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
 import { act } from '@testing-library/react'
-import { Contract } from 'ethers/lib/ethers'
+import { Contract, providers } from 'ethers'
 
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
@@ -11,7 +10,7 @@ import { renderHook } from '.'
 type Config = Partial<ClientConfig>
 
 export function setupWagmiClient(config: Config = {}) {
-  return createClient<BaseProvider, WebSocketProvider>({
+  return createClient<providers.BaseProvider, providers.WebSocketProvider>({
     connectors: [
       new MockConnector({
         options: {

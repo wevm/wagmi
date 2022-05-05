@@ -1,5 +1,4 @@
-import type { Provider } from '@ethersproject/providers'
-import { Contract, ContractInterface, Signer } from 'ethers/lib/ethers'
+import { Contract, ContractInterface, Signer, providers } from 'ethers'
 
 export type GetContractArgs = {
   /** Contract address or ENS name */
@@ -7,7 +6,7 @@ export type GetContractArgs = {
   /** Contract interface or ABI */
   contractInterface: ContractInterface
   /** Signer or provider to attach to contract */
-  signerOrProvider?: Signer | Provider | null
+  signerOrProvider?: Signer | providers.Provider | null
 }
 
 export function getContract<T = Contract>({
@@ -20,7 +19,7 @@ export function getContract<T = Contract>({
       new Contract(
         addressOrName,
         contractInterface,
-        <Signer | Provider | undefined>signerOrProvider,
+        <Signer | providers.Provider | undefined>signerOrProvider,
       )
     ))
   )
