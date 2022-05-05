@@ -25,6 +25,7 @@ it('should expose correct exports', () => {
       "useFeeData",
       "useNetwork",
       "useProvider",
+      "useQuery",
       "useSendTransaction",
       "useSignMessage",
       "useSignTypedData",
