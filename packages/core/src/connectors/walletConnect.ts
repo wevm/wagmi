@@ -1,6 +1,5 @@
 import { providers } from 'ethers'
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
-import type { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
@@ -11,9 +10,13 @@ import { Connector } from './base'
 
 const switchChainAllowedRegex = /(metamask|rainbow)/i
 
+type WalletConnectOptions = ConstructorParameters<
+  typeof WalletConnectProvider
+>[0]
+
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider,
-  IWCEthRpcConnectionOptions
+  WalletConnectOptions
 > {
   readonly id = 'walletConnect'
   readonly name = 'WalletConnect'
@@ -21,10 +24,7 @@ export class WalletConnectConnector extends Connector<
 
   #provider?: WalletConnectProvider
 
-  constructor(config: {
-    chains?: Chain[]
-    options: IWCEthRpcConnectionOptions
-  }) {
+  constructor(config: { chains?: Chain[]; options: WalletConnectOptions }) {
     super(config)
   }
 
