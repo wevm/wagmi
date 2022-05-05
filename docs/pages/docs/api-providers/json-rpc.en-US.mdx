@@ -1,0 +1,56 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# JSON RPC
+
+The `jsonRpcProvider` configures the chains with the RPC URLs that you specify and also provides an [ethers.js `StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider).
+
+```ts
+import { jsonRpcProvider } from 'wagmi/apiProviders/jsonRpc'
+```
+
+## Usage
+
+```ts
+import { configureChains, chain } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/apiProviders/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    apiProvider.jsonRpc((chain) => ({
+      rpcUrl: `https://${chain.id}.example.com`,
+    })),
+  ],
+)
+```
+
+## Return Value
+
+```ts
+{
+  chains: Chain[],
+  provider: StaticJsonRpcProvider,
+  webSocketProvider: WebSocketProvider
+}
+```
+
+## Configuration
+
+### getRpcUrls
+
+A callback function that provides the `chain` and expects to receive an `rpcUrl` and optionally a `webSocketRpcUrl`.
+
+```tsx {8-9}
+import { configureChains, chain } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/apiProviders/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    apiProvider.jsonRpc((chain) => ({
+      rpcUrl: `https://${chain.id}.example.com`,
+      webSocketRpcUrl: `wss://${chain.id}.example.com`,
+    })),
+  ],
+)
+```
