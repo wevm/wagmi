@@ -1,8 +1,6 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { Signer } from 'ethers/lib/ethers'
+import { Signer, providers } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
-import type { Listener } from '@ethersproject/providers'
-import { providers } from 'ethers'
 
 import { UserRejectedRequestError } from '../../errors'
 
@@ -77,19 +75,19 @@ export class MockProvider extends providers.BaseProvider {
     return true
   }
 
-  on(event: Event, listener: Listener) {
+  on(event: Event, listener: providers.Listener) {
     this.events.on(event, listener)
     return this
   }
-  once(event: Event, listener: Listener) {
+  once(event: Event, listener: providers.Listener) {
     this.events.once(event, listener)
     return this
   }
-  removeListener(event: Event, listener: Listener) {
+  removeListener(event: Event, listener: providers.Listener) {
     this.events.removeListener(event, listener)
     return this
   }
-  off(event: Event, listener: Listener) {
+  off(event: Event, listener: providers.Listener) {
     this.events.off(event, listener)
     return this
   }

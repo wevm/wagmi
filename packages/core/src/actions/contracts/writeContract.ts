@@ -1,5 +1,4 @@
-import type { TransactionResponse } from '@ethersproject/providers'
-import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
+import { CallOverrides, Contract as EthersContract, providers } from 'ethers'
 
 import { getClient } from '../../client'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
@@ -13,7 +12,7 @@ export type WriteContractConfig = {
   overrides?: CallOverrides
 }
 
-export type WriteContractResult = TransactionResponse
+export type WriteContractResult = providers.TransactionResponse
 
 export async function writeContract<
   Contract extends EthersContract = EthersContract,
@@ -39,7 +38,9 @@ export async function writeContract<
       console.warn(
         `"${functionName}" does not in interface for contract "${contractConfig.addressOrName}"`,
       )
-    const response = (await contractFunction(...params)) as TransactionResponse
+    const response = (await contractFunction(
+      ...params,
+    )) as providers.TransactionResponse
     return response
   } catch (error_) {
     let error: Error = <Error>error_

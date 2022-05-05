@@ -1,17 +1,14 @@
-import type {
-  TransactionRequest,
-  TransactionResponse,
-} from '@ethersproject/providers'
+import { providers } from 'ethers'
 
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 import { fetchSigner } from '../accounts'
 
 export type SendTransactionArgs = {
   /** Object to use when creating transaction */
-  request: TransactionRequest
+  request: providers.TransactionRequest
 }
 
-export type SendTransactionResult = TransactionResponse
+export type SendTransactionResult = providers.TransactionResponse
 
 export async function sendTransaction(
   args: SendTransactionArgs,

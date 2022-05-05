@@ -1,4 +1,3 @@
-import type { ExternalProvider } from '@ethersproject/providers'
 import { providers } from 'ethers'
 import type {
   CoinbaseWalletProvider,
@@ -63,7 +62,7 @@ export class CoinbaseWalletConnector extends Connector<
         account,
         chain: { id, unsupported },
         provider: new providers.Web3Provider(
-          <ExternalProvider>(<unknown>provider),
+          <providers.ExternalProvider>(<unknown>provider),
         ),
       }
     } catch (error) {
@@ -131,7 +130,7 @@ export class CoinbaseWalletConnector extends Connector<
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <ExternalProvider>(<unknown>provider),
+      <providers.ExternalProvider>(<unknown>provider),
     ).getSigner(account)
   }
 

@@ -1,7 +1,5 @@
-import type { ExternalProvider } from '@ethersproject/providers'
 import { providers } from 'ethers'
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
-import type { IWCEthRpcConnectionOptions } from '@walletconnect/types'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
@@ -12,9 +10,13 @@ import { Connector } from './base'
 
 const switchChainAllowedRegex = /(metamask|rainbow)/i
 
+type WalletConnectOptions = ConstructorParameters<
+  typeof WalletConnectProvider
+>[0]
+
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider,
-  IWCEthRpcConnectionOptions
+  WalletConnectOptions
 > {
   readonly id = 'walletConnect'
   readonly name = 'WalletConnect'
@@ -22,10 +24,7 @@ export class WalletConnectConnector extends Connector<
 
   #provider?: WalletConnectProvider
 
-  constructor(config: {
-    chains?: Chain[]
-    options: IWCEthRpcConnectionOptions
-  }) {
+  constructor(config: { chains?: Chain[]; options: WalletConnectOptions }) {
     super(config)
   }
 
@@ -53,7 +52,9 @@ export class WalletConnectConnector extends Connector<
       return {
         account,
         chain: { id, unsupported },
-        provider: new providers.Web3Provider(<ExternalProvider>provider),
+        provider: new providers.Web3Provider(
+          <providers.ExternalProvider>provider,
+        ),
       }
     } catch (error) {
       if (/user closed modal/i.test((<ProviderRpcError>error).message))
@@ -102,9 +103,9 @@ export class WalletConnectConnector extends Connector<
       this.getProvider(),
       this.getAccount(),
     ])
-    return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
-      account,
-    )
+    return new providers.Web3Provider(
+      <providers.ExternalProvider>provider,
+    ).getSigner(account)
   }
 
   async isAuthorized() {
