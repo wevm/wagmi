@@ -4,6 +4,7 @@ import NextHead from 'next/head'
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { OperaConnector } from 'wagmi/connectors/opera'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { providers } from 'ethers/lib/ethers'
@@ -25,6 +26,7 @@ const client = createClient({
       : chain.rpcUrls.default
     return [
       new MetaMaskConnector({ chains }),
+      new OperaConnector({ chains }),
       new CoinbaseWalletConnector({
         chains,
         options: {

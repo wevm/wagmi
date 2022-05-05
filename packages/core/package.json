@@ -23,6 +23,10 @@
       "module": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.esm.js",
       "default": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.cjs.js"
     },
+    "./connectors/opera": {
+      "module": "./connectors/opera/dist/wagmi-core-connectors-opera.esm.js",
+      "default": "./connectors/opera/dist/wagmi-core-connectors-opera.cjs.js"
+    },
     "./connectors/mock": {
       "module": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
       "default": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js"
@@ -41,6 +45,7 @@
       "index.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/metaMask.ts",
+      "connectors/opera.ts",
       "connectors/walletConnect.ts",
       "connectors/mock/index.ts"
     ]

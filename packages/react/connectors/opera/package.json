@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-connectors-opera.cjs.js",
+  "module": "dist/wagmi-connectors-opera.esm.js"
+}
