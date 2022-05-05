@@ -39,7 +39,6 @@ it('should expose correct exports', () => {
       "WagmiClient",
       "alchemyRpcUrls",
       "allChains",
-      "apiProvider",
       "chain",
       "chainId",
       "configureChains",

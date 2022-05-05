@@ -88,7 +88,7 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Localhost\\".
 
-          You may need to add \`fallback\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
         `)
       })
     })
@@ -145,7 +145,7 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Localhost\\".
 
-          You may need to add \`fallback\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
         `)
       })
     })
@@ -195,7 +195,7 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Polygon\\".
 
-          You may need to add \`fallback\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
         `)
       })
     })
@@ -256,7 +256,7 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Ethereum\\".
 
-          You may need to add \`fallback\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
         `)
       })
     })
@@ -329,7 +329,7 @@ describe('configureChains', () => {
       ).toThrowErrorMatchingInlineSnapshot(`
         "Could not find valid API provider configuration for chain \\"Avalanche\\".
 
-        You may need to add \`fallback\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+        You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
       `)
     })
   })
