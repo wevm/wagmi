@@ -10,7 +10,7 @@ import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
-const switchChainAllowedRegex = /(rainbow)/i
+const switchChainAllowedRegex = /(metamask|rainbow)/i
 
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider,
