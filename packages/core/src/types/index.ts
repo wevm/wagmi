@@ -64,6 +64,7 @@ declare global {
     isMetaMask?: true
     isTally?: true
     isTrust?: true
+    isTokenary?: true
   }
 
   type InjectedProviders = InjectedProviderFlags & {

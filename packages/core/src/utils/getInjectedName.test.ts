@@ -4,6 +4,7 @@ describe.each`
   ethereum                                                             | expected
   ${undefined}                                                         | ${'Injected'}
   ${{ isBraveWallet: true, isMetaMask: true }}                         | ${'Brave Wallet'}
+  ${{ isTokenary: true, isMetaMask: true }}                            | ${'Tokenary'}
   ${{ isMetaMask: true }}                                              | ${'MetaMask'}
   ${{ isBraveWallet: true }}                                           | ${'Brave Wallet'}
   ${{ isCoinbaseWallet: true }}                                        | ${'Coinbase Wallet'}
