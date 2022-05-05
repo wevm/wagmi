@@ -63,6 +63,7 @@ declare global {
     isFrame?: true
     isMetaMask?: true
     isTally?: true
+    isTokenary?: true
     isTrust?: true
   }
 
