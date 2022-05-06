@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.4
+
+### Patch Changes
+
+- [#421](https://github.com/tmm/wagmi/pull/421) [`a232b3f`](https://github.com/tmm/wagmi/commit/a232b3ff5cc41e882c4d2a34c599a8cb670edd2b) Thanks [@tmm](https://github.com/tmm)! - fix erc721 abi
+
 ## 0.2.3
 
 ### Patch Changes
