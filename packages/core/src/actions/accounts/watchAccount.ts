@@ -1,13 +1,13 @@
-import type { BaseProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 
 import { getClient } from '../../client'
 import { GetAccountResult, getAccount } from './getAccount'
 
 export type WatchAccountCallback<
-  TProvider extends BaseProvider = BaseProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
 > = (data: GetAccountResult<TProvider>) => void
 
-export function watchAccount<TProvider extends BaseProvider>(
+export function watchAccount<TProvider extends providers.BaseProvider>(
   callback: WatchAccountCallback<TProvider>,
 ) {
   const client = getClient()

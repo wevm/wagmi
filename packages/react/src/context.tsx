@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import {
   WagmiClient,
   ClientConfig as WagmiClientConfig,
@@ -12,23 +12,24 @@ import { createWebStoragePersister } from 'react-query/createWebStoragePersister
 import { deserialize, serialize } from './utils'
 
 export type DecoratedWagmiClient<
-  TProvider extends BaseProvider = BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 > = WagmiClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
 export const Context = React.createContext<
-  DecoratedWagmiClient<BaseProvider, WebSocketProvider> | undefined
+  | DecoratedWagmiClient<providers.BaseProvider, providers.WebSocketProvider>
+  | undefined
 >(undefined)
 
 export type ClientConfig<
-  TProvider extends BaseProvider = BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 > = WagmiClientConfig<TProvider, TWebSocketProvider> & {
   queryClient?: QueryClient
   persister?: Persister
 }
 export function createClient<
-  TProvider extends BaseProvider,
-  TWebSocketProvider extends WebSocketProvider,
+  TProvider extends providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider,
 >({
   queryClient = new QueryClient({
     defaultOptions: {
@@ -66,15 +67,15 @@ export function createClient<
 }
 
 export type ProviderProps<
-  TProvider extends BaseProvider = BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 > = {
   /** React-decorated WagmiClient instance */
   client?: DecoratedWagmiClient<TProvider, TWebSocketProvider>
 }
 export function Provider<
-  TProvider extends BaseProvider,
-  TWebSocketProvider extends WebSocketProvider,
+  TProvider extends providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider,
 >({
   children,
   client = createClient<TProvider, TWebSocketProvider>(),
@@ -98,8 +99,8 @@ export function Provider<
 }
 
 export function useClient<
-  TProvider extends BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 >() {
   const client = React.useContext(Context) as unknown as DecoratedWagmiClient<
     TProvider,

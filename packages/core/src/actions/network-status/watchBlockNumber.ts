@@ -1,4 +1,4 @@
-import type { BaseProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 
 import { getClient } from '../../client'
 import { FetchBlockNumberResult, fetchBlockNumber } from './fetchBlockNumber'
@@ -12,8 +12,8 @@ export function watchBlockNumber(
   args: WatchBlockNumberArgs,
   callback: WatchBlockNumberCallback,
 ) {
-  let prevProvider: BaseProvider
-  const createListener = (provider: BaseProvider) => {
+  let prevProvider: providers.BaseProvider
+  const createListener = (provider: providers.BaseProvider) => {
     if (prevProvider) {
       prevProvider?.off('block', callback)
     }

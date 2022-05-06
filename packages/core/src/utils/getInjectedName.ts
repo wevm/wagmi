@@ -2,16 +2,17 @@ export function getInjectedName(ethereum?: Window['ethereum']) {
   if (!ethereum) return 'Injected'
 
   const getName = (provider: Ethereum) => {
-    if (provider.isMetaMask && !provider.isBraveWallet) return 'MetaMask'
     if (provider.isBraveWallet) return 'Brave Wallet'
     if (provider.isCoinbaseWallet) return 'Coinbase Wallet'
     if (provider.isFrame) return 'Frame'
     if (provider.isTally) return 'Tally'
+    if (provider.isTokenary) return 'Tokenary'
     if (provider.isTrust) return 'Trust Wallet'
+    if (provider.isMetaMask) return 'MetaMask'
   }
 
   if (ethereum.providers?.length) {
-    // Deduplicated names using Set
+    // Deduplicate names using Set
     // Coinbase Wallet puts multiple providers in `ethereum.providers`
     const nameSet = new Set<string>()
     let unknownCount = 1

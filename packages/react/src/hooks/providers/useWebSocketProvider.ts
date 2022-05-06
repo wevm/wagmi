@@ -1,4 +1,4 @@
-import { WebSocketProvider } from '@ethersproject/providers'
+import { providers } from 'ethers'
 import {
   GetWebSocketProviderArgs,
   getWebSocketProvider,
@@ -12,7 +12,7 @@ import { useForceUpdate } from '../utils'
 export type UseWebSocketProviderArgs = Partial<GetWebSocketProviderArgs>
 
 export function useWebSocketProvider<
-  TWebSocketProvider extends WebSocketProvider,
+  TWebSocketProvider extends providers.WebSocketProvider,
 >({ chainId }: UseWebSocketProviderArgs = {}) {
   const forceUpdate = useForceUpdate()
   const client = useClient()

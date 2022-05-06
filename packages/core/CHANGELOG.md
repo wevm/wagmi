@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.2.3
+
+### Patch Changes
+
+- [#412](https://github.com/tmm/wagmi/pull/412) [`80bef4f`](https://github.com/tmm/wagmi/commit/80bef4ff3f714b0b8f896f1b4b658acc7266299b) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Import providers from `ethers` peer dependency rather than `@ethersproject/providers` to avoid multiple conflicting versions being installed
+
 ## 0.2.2
 
 ### Patch Changes

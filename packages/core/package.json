@@ -2,7 +2,7 @@
   "name": "@wagmi/core",
   "description": "Vanilla JS library for Ethereum",
   "license": "WAGMIT",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "author": "awkweb.eth",
   "ethereum": "awkweb.eth",
   "repository": "tmm/wagmi",
