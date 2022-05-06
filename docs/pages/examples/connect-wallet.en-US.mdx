@@ -16,18 +16,20 @@ First, we create a new wagmi client set up with the Injected (i.e. MetaMask), Wa
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
 
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { fallbackProvider } from 'wagmi/apiProviders/fallback'
+import { defaultProvider } from 'wagmi/apiProviders/default'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
+const alchemyId = process.env.ALCHEMY_ID
+
 // Configure chains & providers with the Alchemy API provider.
 // Two popular API providers are Alchemy (alchemy.com) and Infura (infura.io)
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider(process.env.ALCHEMY_ID),
-  fallbackProvider(),
+  alchemyProvider({ alchemyId }),
+  defaultProvider(),
 ])
 
 // Set up connectors

@@ -3,5 +3,5 @@
   "alchemy": "Alchemy",
   "infura": "Infura",
   "json-rpc": "JSON RPC",
-  "fallback": "Fallback"
+  "default": "Default"
 }

@@ -18,8 +18,10 @@ if (!window.Buffer) {
   window.Buffer = Buffer
 }
 
+const alchemyId = process.env.REACT_APP_ALCHEMY_ID
+
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider(process.env.NEXT_PUBLIC_ALCHEMY_ID),
+  alchemyProvider({ alchemyId }),
 ])
 
 const client = createClient({

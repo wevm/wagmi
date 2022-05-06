@@ -40,8 +40,6 @@ export const Account = () => {
         )}
       </div>
 
-      <WriteContract />
-
       {false && (
         <>
           {true && (

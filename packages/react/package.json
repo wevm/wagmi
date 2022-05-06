@@ -20,17 +20,17 @@
       "module": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.esm.js",
       "default": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.cjs.js"
     },
-    "./apiProviders/fallback": {
-      "module": "./apiProviders/fallback/dist/wagmi-core-apiProviders-fallback.esm.js",
-      "default": "./apiProviders/fallback/dist/wagmi-core-apiProviders-fallback.cjs.js"
+    "./apiProviders/default": {
+      "module": "./apiProviders/default/dist/wagmi-core-apiProviders-default.esm.js",
+      "default": "./apiProviders/default/dist/wagmi-core-apiProviders-default.cjs.js"
     },
     "./apiProviders/infura": {
       "module": "./apiProviders/infura/dist/wagmi-core-apiProviders-infura.esm.js",
       "default": "./apiProviders/infura/dist/wagmi-core-apiProviders-infura.cjs.js"
     },
-    "./apiProviders/jsonRpc": {
-      "module": "./apiProviders/jsonRpc/dist/wagmi-core-apiProviders-jsonRpc.esm.js",
-      "default": "./apiProviders/jsonRpc/dist/wagmi-core-apiProviders-jsonRpc.cjs.js"
+    "./apiProviders/staticJsonRpc": {
+      "module": "./apiProviders/staticJsonRpc/dist/wagmi-core-apiProviders-staticJsonRpc.esm.js",
+      "default": "./apiProviders/staticJsonRpc/dist/wagmi-core-apiProviders-staticJsonRpc.cjs.js"
     },
     "./connectors/coinbaseWallet": {
       "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
@@ -58,9 +58,9 @@
     "entrypoints": [
       "index.ts",
       "apiProviders/alchemy.ts",
-      "apiProviders/fallback.ts",
+      "apiProviders/default.ts",
       "apiProviders/infura.ts",
-      "apiProviders/jsonRpc.ts",
+      "apiProviders/staticJsonRpc.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/injected.ts",
       "connectors/metaMask.ts",

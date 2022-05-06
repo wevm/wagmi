@@ -19,12 +19,14 @@ import { configureChains } from 'wagmi'
 ```ts
 import { configureChains, defaultChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { fallbackProvider } from 'wagmi/apiProviders/fallback'
+import { defaultProvider } from 'wagmi/apiProviders/default'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
+const alchemyId = process.env.ALCHEMY_ID
+
 const { chains, provider } = configureChains(defaultChains, [
-  alchemyProvider(process.env.ALCHEMY_ID),
-  fallbackProvider(),
+  alchemyProvider({ alchemyId }),
+  defaultProvider(),
 ])
 
 const wagmiClient = createClient({
@@ -35,8 +37,13 @@ const wagmiClient = createClient({
 ```
 
 <Callout emoji="🔗">
-  The `fallbackProvider` ensures that your chains always have an RPC URL to fall
+  The `defaultProvider` ensures that your chains always have an RPC URL to fall
   back on (in case Alchemy does not support the chain).
+</Callout>
+
+<Callout emoji="⚠️">
+  If a user has their wallet connected to a chain that is unsupported by your
+  app, the `provider` will use the first chain listed in the `chains` array.
 </Callout>
 
 ### Multiple API providers
@@ -46,7 +53,9 @@ The `configureChains` function accepts multiple API Providers. This is useful if
 ```ts
 import { Chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { jsonRpcProvider } from 'wagmi/apiProviders/jsonRpc'
+import { staticJsonRpcProvider } from 'wagmi/apiProviders/staticJsonRpc'
+
+const alchemyId = process.env.ALCHEMY_ID
 
 const avalancheChain: Chain = {
   id: 43_114,
@@ -69,8 +78,10 @@ const avalancheChain: Chain = {
 const { provider, chains } = configureChains(
   [chain.mainnet, avalancheChain],
   [
-    alchemyProvider(process.env.ALCHEMY_ID),
-    jsonRpcProvider((chain) => ({ rpcUrl: chain.rpcUrls.default })),
+    alchemyProvider({ alchemyId }),
+    staticJsonRpcProvider({
+      rpcUrls: (chain) => ({ rpcUrl: chain.rpcUrls.default }),
+    }),
   ],
 )
 ```
@@ -83,11 +94,11 @@ Chains that need to be configured.
 
 ```ts {5}
 import { chain, configureChains } from 'wagmi'
-import { fallbackProvider } from 'wagmi/apiProviders/fallback'
+import { defaultProvider } from 'wagmi/apiProviders/default'
 
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
-  [fallbackProvider()],
+  [defaultProvider()],
 )
 ```
 
@@ -100,10 +111,12 @@ If an API provider does not support a chain, it will fall back onto the next one
 ```ts {7}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { fallbackProvider } from 'wagmi/apiProviders/fallback'
+import { defaultProvider } from 'wagmi/apiProviders/default'
+
+const alchemyId = process.env.ALCHEMY_ID
 
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
-  [alchemyProvider(process.env.ALCHEMY_ID), fallbackProvider()],
+  [alchemyProvider({ alchemyId }), defaultProvider()],
 )
 ```

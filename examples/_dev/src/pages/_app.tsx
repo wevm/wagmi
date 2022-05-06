@@ -8,15 +8,19 @@ import {
   createClient,
   defaultChains,
 } from 'wagmi'
+
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
+
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
+
 const { chains, provider, webSocketProvider } = configureChains(
   [...defaultChains, chain.optimism],
-  [alchemyProvider(process.env.NEXT_PUBLIC_ALCHEMY_ID)],
+  [alchemyProvider({ alchemyId })],
 )
 
 const client = createClient({

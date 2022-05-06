@@ -44,7 +44,8 @@ export const configureChains = <
       throw new Error(
         [
           `Could not find valid API provider configuration for chain "${chain.name}".\n`,
-          'You may need to add `fallbackProvider` to `configureChains` so that the chain can fall back to the public RPC URL.',
+          "You may need to add `staticJsonRpcProvider` to `configureChains` with the chain's RPC URLs.",
+          'Read more: https://wagmi.sh/docs/api-providers/json-rpc',
         ].join('\n'),
       )
     }

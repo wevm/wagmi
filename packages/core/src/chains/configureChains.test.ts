@@ -1,9 +1,10 @@
-import nock, { cleanAll } from 'nock'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
 
 import { alchemyProvider } from '../apiProviders/alchemy'
-import { fallbackProvider } from '../apiProviders/fallback'
+import { defaultProvider } from '../apiProviders/default'
 import { infuraProvider } from '../apiProviders/infura'
-import { jsonRpcProvider } from '../apiProviders/jsonRpc'
+import { staticJsonRpcProvider } from '../apiProviders/staticJsonRpc'
 
 import { chain } from '../constants'
 import { Chain } from '../types'
@@ -30,13 +31,26 @@ const avalancheChain: Chain = {
   testnet: false,
 }
 
+const handlers = [
+  chain.mainnet,
+  chain.polygon,
+  chain.optimism,
+  chain.arbitrum,
+].map((chain) => {
+  return rest.get(`https://${chain.id}.example.com`, (_req, res, ctx) => {
+    res(ctx.status(200))
+  })
+})
+
+const server = setupServer(...handlers)
+
 describe('configureChains', () => {
   describe('single API provider', () => {
     describe('alchemy', () => {
       it('populate with configuration if all chains support Alchemy', () => {
         const { chains, provider, webSocketProvider } = configureChains(
           [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
-          [alchemyProvider(alchemyId)],
+          [alchemyProvider({ alchemyId })],
         )
 
         expect(chains.map((chain) => chain.rpcUrls.default))
@@ -83,12 +97,13 @@ describe('configureChains', () => {
               chain.localhost,
             ],
 
-            [alchemyProvider(alchemyId)],
+            [alchemyProvider({ alchemyId })],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Localhost\\".
 
-          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
         `)
       })
     })
@@ -97,7 +112,7 @@ describe('configureChains', () => {
       it('populate with Infura configuration if all chains support Infura', () => {
         const { chains, provider, webSocketProvider } = configureChains(
           [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
-          [infuraProvider(infuraId)],
+          [infuraProvider({ infuraId })],
         )
 
         expect(chains.map((chain) => chain.rpcUrls.default))
@@ -140,21 +155,28 @@ describe('configureChains', () => {
               chain.localhost,
             ],
 
-            [infuraProvider(infuraId)],
+            [infuraProvider({ infuraId })],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Localhost\\".
 
-          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
         `)
       })
     })
 
-    describe('fallback', () => {
-      it('populate with fallback configuration if all chains have a default RPC URL', () => {
+    describe('default', () => {
+      it('populate with default configuration if all chains have a default RPC URL', () => {
         const { chains, provider } = configureChains(
-          [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
-          [fallbackProvider()],
+          [
+            chain.mainnet,
+            chain.polygon,
+            chain.optimism,
+            chain.arbitrum,
+            avalancheChain,
+          ],
+          [defaultProvider()],
         )
 
         expect(chains.map((chain) => chain.rpcUrls.default))
@@ -164,17 +186,33 @@ describe('configureChains', () => {
             "https://polygon-rpc.com",
             "https://mainnet.optimism.io",
             "https://arb1.arbitrum.io/rpc",
+            "https://api.avax.network/ext/bc/C/rpc",
           ]
         `)
 
-        expect(
-          provider({ chainId: chain.mainnet.id }).connection.url,
-        ).toMatchInlineSnapshot(
-          '"https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC"',
-        )
-        expect(
-          provider({ chainId: chain.polygon.id }).connection.url,
-        ).toMatchInlineSnapshot('"https://polygon-rpc.com"')
+        expect(provider({ chainId: chain.mainnet.id }).network)
+          .toMatchInlineSnapshot(`
+          {
+            "_defaultProvider": [Function],
+            "chainId": 1,
+            "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+            "name": "homestead",
+          }
+        `)
+        expect(provider({ chainId: chain.polygon.id }).network)
+          .toMatchInlineSnapshot(`
+          {
+            "chainId": 137,
+            "name": "Polygon",
+          }
+        `)
+        expect(provider({ chainId: avalancheChain.id }).network)
+          .toMatchInlineSnapshot(`
+          {
+            "chainId": 43114,
+            "name": "Avalanche",
+          }
+        `)
       })
 
       it('throws an error if a chain does not have a default RPC URL', () => {
@@ -190,37 +228,38 @@ describe('configureChains', () => {
               chain.localhost,
             ],
 
-            [fallbackProvider()],
+            [defaultProvider()],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Polygon\\".
 
-          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
         `)
       })
     })
 
-    describe('jsonRpc', () => {
+    describe('staticJsonRpc', () => {
       beforeAll(() => {
-        ;[chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum].forEach(
-          (chain) => {
-            nock(`https://${chain.id}.example.com`).get('/').reply(200, {})
-          },
-        )
+        server.listen()
       })
 
+      afterEach(() => server.resetHandlers())
+
       afterAll(() => {
-        cleanAll()
+        server.close()
       })
 
       it('populate with provided RPC URLs for JSON RPC API provider', () => {
         const { chains, provider } = configureChains(
           [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
           [
-            jsonRpcProvider((chain) => ({
-              rpcUrl: `https://${chain.id}.example.com`,
-              webSocketRpcUrl: `wss://${chain.id}.example.com`,
-            })),
+            staticJsonRpcProvider({
+              rpcUrls: (chain) => ({
+                rpcUrl: `https://${chain.id}.example.com`,
+                webSocketRpcUrl: `wss://${chain.id}.example.com`,
+              }),
+            }),
           ],
         )
 
@@ -247,16 +286,20 @@ describe('configureChains', () => {
           configureChains(
             [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
             [
-              jsonRpcProvider((chain) => ({
-                rpcUrl: chain.id === 1 ? '' : `https://${chain.id}.example.com`,
-                webSocketRpcUrl: `wss://${chain.id}.example.com`,
-              })),
+              staticJsonRpcProvider({
+                rpcUrls: (chain) => ({
+                  rpcUrl:
+                    chain.id === 1 ? '' : `https://${chain.id}.example.com`,
+                  webSocketRpcUrl: `wss://${chain.id}.example.com`,
+                }),
+              }),
             ],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Ethereum\\".
 
-          You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
         `)
       })
     })
@@ -276,9 +319,11 @@ describe('configureChains', () => {
       const { chains, provider } = configureChains(
         [chain.mainnet, polygon, chain.optimism, arbitrum, avalancheChain],
         [
-          alchemyProvider(alchemyId),
-          infuraProvider(infuraId),
-          jsonRpcProvider((chain) => ({ rpcUrl: chain.rpcUrls.default })),
+          alchemyProvider({ alchemyId }),
+          infuraProvider({ infuraId }),
+          staticJsonRpcProvider({
+            rpcUrls: (chain) => ({ rpcUrl: chain.rpcUrls.default }),
+          }),
         ],
       )
 
@@ -318,18 +363,21 @@ describe('configureChains', () => {
           ],
 
           [
-            alchemyProvider(alchemyId),
-            infuraProvider(infuraId),
-            jsonRpcProvider((chain) => ({
-              rpcUrl:
-                chain.id === avalancheChain.id ? '' : chain.rpcUrls.default,
-            })),
+            alchemyProvider({ alchemyId }),
+            infuraProvider({ infuraId }),
+            staticJsonRpcProvider({
+              rpcUrls: (chain) => ({
+                rpcUrl:
+                  chain.id === avalancheChain.id ? '' : chain.rpcUrls.default,
+              }),
+            }),
           ],
         ),
       ).toThrowErrorMatchingInlineSnapshot(`
         "Could not find valid API provider configuration for chain \\"Avalanche\\".
 
-        You may need to add \`fallbackProvider\` to \`configureChains\` so that the chain can fall back to the public RPC URL."
+        You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+        Read more: https://wagmi.sh/docs/api-providers/json-rpc"
       `)
     })
   })

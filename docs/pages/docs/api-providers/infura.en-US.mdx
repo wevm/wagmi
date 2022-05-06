@@ -14,9 +14,11 @@ import { infuraProvider } from 'wagmi/apiProviders/infura'
 import { configureChains, chain } from 'wagmi'
 import { infuraProvider } from 'wagmi/apiProviders/infura'
 
+const infuraId = process.env.INFURA_ID
+
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
-  [apiProvider.infura(process.env.INFURA_ID)],
+  [infuraProvider({ infuraId })],
 )
 ```
 
@@ -44,6 +46,6 @@ import { infuraProvider } from 'wagmi/apiProviders/infura'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
-  [apiProvider.infura(process.env.INFURA_ID)],
+  [infuraProvider({ infuraId })],
 )
 ```

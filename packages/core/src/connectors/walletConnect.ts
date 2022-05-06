@@ -90,7 +90,7 @@ export class WalletConnectConnector extends Connector<
 
   async getProvider(create?: boolean) {
     if (!this.#provider || create) {
-      const rpc = !this.options.infuraId
+      const rpc = !this.options?.infuraId
         ? this.chains.reduce(
             (rpc, chain) => ({
               ...rpc,
@@ -103,7 +103,10 @@ export class WalletConnectConnector extends Connector<
       const WalletConnectProvider = (
         await import('@walletconnect/ethereum-provider')
       ).default
-      this.#provider = new WalletConnectProvider({ ...this.options, rpc })
+      this.#provider = new WalletConnectProvider({
+        ...this.options,
+        rpc: { ...rpc, ...this.options?.rpc },
+      })
     }
     return this.#provider
   }

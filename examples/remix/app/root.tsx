@@ -34,7 +34,7 @@ export default function App() {
   const client = useMemo(() => {
     const { chains, provider, webSocketProvider } = configureChains(
       defaultChains,
-      [alchemyProvider(alchemyId)],
+      [alchemyProvider({ alchemyId })],
     )
 
     return createClient({

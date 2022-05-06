@@ -14,9 +14,11 @@ import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 import { configureChains, chain } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 
+const alchemyId = process.env.ALCHEMY_ID
+
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
-  [apiProvider.alchemy(process.env.ALCHEMY_ID)],
+  [alchemyProvider({ alchemyId })],
 )
 ```
 
@@ -44,6 +46,6 @@ import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
-  [apiProvider.alchemy(process.env.ALCHEMY_ID)],
+  [alchemyProvider(process.env.ALCHEMY_ID)],
 )
 ```
