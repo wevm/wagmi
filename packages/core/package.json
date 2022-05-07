@@ -19,9 +19,9 @@
       "module": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.esm.js",
       "default": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.cjs.js"
     },
-    "./apiProviders/default": {
-      "module": "./apiProviders/default/dist/wagmi-core-apiProviders-default.esm.js",
-      "default": "./apiProviders/default/dist/wagmi-core-apiProviders-default.cjs.js"
+    "./apiProviders/public": {
+      "module": "./apiProviders/public/dist/wagmi-core-apiProviders-public.esm.js",
+      "default": "./apiProviders/public/dist/wagmi-core-apiProviders-public.cjs.js"
     },
     "./apiProviders/infura": {
       "module": "./apiProviders/infura/dist/wagmi-core-apiProviders-infura.esm.js",
@@ -57,7 +57,7 @@
     "entrypoints": [
       "index.ts",
       "apiProviders/alchemy.ts",
-      "apiProviders/default.ts",
+      "apiProviders/public.ts",
       "apiProviders/infura.ts",
       "apiProviders/staticJsonRpc.ts",
       "connectors/coinbaseWallet.ts",

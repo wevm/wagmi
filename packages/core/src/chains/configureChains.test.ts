@@ -2,7 +2,7 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
 import { alchemyProvider } from '../apiProviders/alchemy'
-import { defaultProvider } from '../apiProviders/default'
+import { publicProvider } from '../apiProviders/public'
 import { infuraProvider } from '../apiProviders/infura'
 import { staticJsonRpcProvider } from '../apiProviders/staticJsonRpc'
 
@@ -176,7 +176,7 @@ describe('configureChains', () => {
             chain.arbitrum,
             avalancheChain,
           ],
-          [defaultProvider()],
+          [publicProvider()],
         )
 
         expect(chains.map((chain) => chain.rpcUrls.default))
@@ -228,7 +228,7 @@ describe('configureChains', () => {
               chain.localhost,
             ],
 
-            [defaultProvider()],
+            [publicProvider()],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid API provider configuration for chain \\"Polygon\\".

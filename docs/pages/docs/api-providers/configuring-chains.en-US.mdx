@@ -19,14 +19,14 @@ import { configureChains } from 'wagmi'
 ```ts
 import { configureChains, defaultChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { defaultProvider } from 'wagmi/apiProviders/default'
+import { publicProvider } from 'wagmi/apiProviders/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 const alchemyId = process.env.ALCHEMY_ID
 
 const { chains, provider } = configureChains(defaultChains, [
   alchemyProvider({ alchemyId }),
-  defaultProvider(),
+  publicProvider(),
 ])
 
 const wagmiClient = createClient({
@@ -37,7 +37,7 @@ const wagmiClient = createClient({
 ```
 
 <Callout emoji="🔗">
-  The `defaultProvider` ensures that your chains always have an RPC URL to fall
+  The `publicProvider` ensures that your chains always have an RPC URL to fall
   back on (in case Alchemy does not support the chain).
 </Callout>
 
@@ -94,11 +94,11 @@ Chains that need to be configured.
 
 ```ts {5}
 import { chain, configureChains } from 'wagmi'
-import { defaultProvider } from 'wagmi/apiProviders/default'
+import { publicProvider } from 'wagmi/apiProviders/public'
 
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
-  [defaultProvider()],
+  [publicProvider()],
 )
 ```
 
@@ -111,12 +111,12 @@ If an API provider does not support a chain, it will fall back onto the next one
 ```ts {7}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { defaultProvider } from 'wagmi/apiProviders/default'
+import { publicProvider } from 'wagmi/apiProviders/public'
 
 const alchemyId = process.env.ALCHEMY_ID
 
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
-  [alchemyProvider({ alchemyId }), defaultProvider()],
+  [alchemyProvider({ alchemyId }), publicProvider()],
 )
 ```
