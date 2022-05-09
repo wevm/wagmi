@@ -8,9 +8,13 @@ import { useIsMounted } from '../../hooks'
 export function Account() {
   const isMounted = useIsMounted()
   const { data: accountData } = useAccount()
-  const { data: ensNameData } = useEnsName({ address: accountData?.address })
+  const { data: ensNameData } = useEnsName({
+    address: accountData?.address,
+    chainId: 1,
+  })
   const { data: ensAvatarData } = useEnsAvatar({
     addressOrName: accountData?.address,
+    chainId: 1,
   })
   const { disconnect } = useDisconnect()
 
