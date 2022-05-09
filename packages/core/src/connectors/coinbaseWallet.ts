@@ -114,7 +114,7 @@ export class CoinbaseWalletConnector extends Connector<
 
   async getProvider() {
     if (!this.#provider) {
-      const { CoinbaseWalletSDK } = await import('@coinbase/wallet-sdk')
+      const CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
       this.#client = new CoinbaseWalletSDK(this.options)
       this.#provider = this.#client.makeWeb3Provider(
         this.options.jsonRpcUrl,

@@ -53,20 +53,20 @@
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.0.11",
     "@wagmi/core": "^0.2.4",
-    "@walletconnect/ethereum-provider": "^1.7.5",
-    "react-query": "^4.0.0-beta.7",
+    "@walletconnect/ethereum-provider": "^1.7.8",
+    "react-query": "4.0.0-beta.9",
     "use-sync-external-store": "^1.1.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^13.0.0",
+    "@testing-library/react": "^13.2.0",
     "@testing-library/react-hooks": "^7.0.2",
-    "@types/react": "^18.0.5",
+    "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "@types/use-sync-external-store": "^0.0.3",
-    "ethers": "^5.6.4",
+    "ethers": "^5.6.5",
     "react": "^18.1.0",
     "react-17": "npm:react@^17.0.2",
-    "react-dom": "^18.0.0",
+    "react-dom": "^18.1.0",
     "react-dom-17": "npm:react-dom@^17.0.2"
   },
   "keywords": [
