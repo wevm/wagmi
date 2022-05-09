@@ -5,6 +5,7 @@ export function getInjectedName(ethereum?: Window['ethereum']) {
     if (provider.isBraveWallet) return 'Brave Wallet'
     if (provider.isCoinbaseWallet) return 'Coinbase Wallet'
     if (provider.isFrame) return 'Frame'
+    if (provider.isOpera) return 'Opera'
     if (provider.isTally) return 'Tally'
     if (provider.isTokenary) return 'Tokenary'
     if (provider.isTrust) return 'Trust Wallet'
