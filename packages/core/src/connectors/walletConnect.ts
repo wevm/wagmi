@@ -8,7 +8,13 @@ import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
-const switchChainAllowedRegex = /(metamask|rainbow)/i
+/**
+ * Wallets that support chain switching through WalletConnect
+ * - imToken (token.im)
+ * - MetaMask (metamask.io)
+ * - Rainbow (rainbow.me)
+ */
+const switchChainAllowedRegex = /(imtoken|metamask|rainbow)/i
 
 type WalletConnectOptions = ConstructorParameters<
   typeof WalletConnectProvider
