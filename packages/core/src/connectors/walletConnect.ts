@@ -8,7 +8,7 @@ import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
-const switchChainAllowedRegex = /(metamask|rainbow)/i
+const switchChainAllowedRegex = /(metamask|rainbow|imtoken)/i
 
 type WalletConnectOptions = ConstructorParameters<
   typeof WalletConnectProvider
