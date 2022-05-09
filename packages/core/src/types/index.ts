@@ -48,15 +48,6 @@ declare global {
     }
   }
 
-  type RequestArguments =
-    | { method: 'eth_accounts' }
-    | { method: 'eth_chainId' }
-    | { method: 'eth_requestAccounts' }
-    | { method: 'personal_sign'; params: [string, string] }
-    | { method: 'wallet_addEthereumChain'; params: AddEthereumChainParameter[] }
-    | { method: 'wallet_switchEthereumChain'; params: [{ chainId: string }] }
-    | { method: 'wallet_watchAsset'; params: WatchAssetParams }
-
   type InjectedProviderFlags = {
     isBraveWallet?: true
     isCoinbaseWallet?: true
@@ -87,8 +78,30 @@ declare global {
   interface Ethereum extends InjectedProviders {
     on?: (...args: any[]) => void
     removeListener?: (...args: any[]) => void
-    request<T = any>(args: RequestArguments): Promise<T>
     providers?: Ethereum[]
+
+    // RPC Request API Methods
+    // https://docs.metamask.io/guide/rpc-api.html
+    request(args: { method: 'eth_accounts' }): Promise<string[]>
+    request(args: { method: 'eth_chainId' }): Promise<string>
+    request(args: { method: 'eth_requestAccounts' }): Promise<string[]>
+    request(args: {
+      method: 'personal_sign'
+      params: [string, string]
+    }): Promise<string>
+    request(args: {
+      method: 'wallet_addEthereumChain'
+      params: AddEthereumChainParameter[]
+    }): Promise<null>
+    request(args: {
+      method: 'wallet_switchEthereumChain'
+      params: [{ chainId: string }]
+    }): Promise<null>
+    request(args: {
+      method: 'wallet_watchAsset'
+      params: WatchAssetParams
+    }): Promise<boolean>
+    request(args: { method: 'web3_clientVersion' }): Promise<string>
   }
 
   interface Window {

@@ -12,6 +12,7 @@ export function getInjectedName(ethereum?: Window['ethereum']) {
     if (provider.isMetaMask) return 'MetaMask'
   }
 
+  // Some injected providers detect multiple other providers and create a list at `ethers.providers`
   if (ethereum.providers?.length) {
     // Deduplicate names using Set
     // Coinbase Wallet puts multiple providers in `ethereum.providers`
