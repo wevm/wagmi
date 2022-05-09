@@ -31,7 +31,7 @@ function App() {
         <button
           disabled={!switchNetwork || x.id === activeChain?.id}
           key={x.id}
-          onClick={() => network.switchNetwork?.(x.id)}
+          onClick={() => switchNetwork?.(x.id)}
         >
           {x.name}
           {isLoading && pendingChainId === x.id && ' (switching)'}
