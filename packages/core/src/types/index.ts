@@ -62,6 +62,7 @@ declare global {
     isCoinbaseWallet?: true
     isFrame?: true
     isMetaMask?: true
+    isOpera?: true
     isTally?: true
     isTokenary?: true
     isTrust?: true
