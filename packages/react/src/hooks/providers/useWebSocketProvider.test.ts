@@ -2,7 +2,6 @@ import {
   getWebSocketProvider,
   renderHook,
   setupWagmiClient,
-  wrapper,
 } from '../../../test'
 import { useWebSocketProvider } from './useWebSocketProvider'
 
@@ -13,7 +12,6 @@ describe('useWebSocketProvider', () => {
     })
     await client.webSocketProvider?.destroy()
     const { result } = renderHook(() => useWebSocketProvider(), {
-      wrapper,
       initialProps: { client },
     })
     expect(result.current).toMatchInlineSnapshot(
@@ -29,10 +27,7 @@ describe('useWebSocketProvider', () => {
       await client.webSocketProvider?.destroy()
       const { result } = renderHook(
         () => useWebSocketProvider({ chainId: 1 }),
-        {
-          wrapper,
-          initialProps: { client },
-        },
+        { initialProps: { client } },
       )
       await result.current?.destroy()
       expect(result.current).toMatchInlineSnapshot(

@@ -6,7 +6,6 @@ import {
   actNetwork,
   renderHook,
   setupWagmiClient,
-  wrapper,
 } from '../../../test'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
@@ -29,7 +28,6 @@ describe('useSigner', () => {
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useSigner(), {
-        wrapper,
         initialProps: { client },
       })
 
