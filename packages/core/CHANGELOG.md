@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.2.5
+
+### Patch Changes
+
+- [`4e03666`](https://github.com/tmm/wagmi/commit/4e03666428d42fc9186c617001b5eb356229677e) Thanks [@tmm](https://github.com/tmm)! - bump dependencies #429
+  add imToken support for WC switch chains #432
+  fix MetaMask and Brave Wallet collision #436
+
 ## 0.2.4
 
 ### Patch Changes
