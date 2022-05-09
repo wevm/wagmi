@@ -301,8 +301,9 @@ describe('useNetwork', () => {
                   "url": "https://rinkeby.etherscan.io",
                 },
               },
+              "displayName": "Rinkeby",
               "id": 4,
-              "name": "Rinkeby",
+              "name": "rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Rinkeby Ether",

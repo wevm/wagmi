@@ -44,8 +44,10 @@ If no Alchemy ID is provided, it will use the public Alchemy ID. It is recommend
 import { configureChains, chain } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 
+const alchemyId = process.env.ALCHEMY_ID
+
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
-  [alchemyProvider(process.env.ALCHEMY_ID)],
+  [alchemyProvider({ alchemyId })],
 )
 ```

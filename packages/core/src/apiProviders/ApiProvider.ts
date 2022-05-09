@@ -4,7 +4,7 @@ import { Chain } from '../types'
 
 export type ApiProvider<
   Provider extends providers.BaseProvider = providers.BaseProvider,
-  WebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  WebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = (chain: Chain) => {
   chain: Chain
   provider: () => Provider

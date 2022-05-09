@@ -4,7 +4,7 @@ import { defaultInfuraId } from '../constants/rpcs'
 
 import { ApiProvider } from './ApiProvider'
 
-export const infuraProvider = ({
+export function infuraProvider({
   infuraId = defaultInfuraId,
   pollingInterval,
 }: {
@@ -13,7 +13,7 @@ export const infuraProvider = ({
 } = {}): ApiProvider<
   providers.InfuraProvider,
   providers.InfuraWebSocketProvider
-> => {
+> {
   return function (chain) {
     if (!chain.rpcUrls.infura) return null
     return {

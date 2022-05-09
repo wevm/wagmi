@@ -4,38 +4,38 @@ import { Chain } from '../types'
 
 import { ApiProvider } from './ApiProvider'
 
-export const staticJsonRpcProvider = ({
+export function staticJsonRpcProvider({
   pollingInterval,
   rpcUrls,
 }: {
   pollingInterval?: number
-  rpcUrls: (chain: Chain) => { rpcUrl: string; webSocketRpcUrl?: string }
-}): ApiProvider<
-  providers.StaticJsonRpcProvider,
-  providers.WebSocketProvider
-> => {
+  rpcUrls: (chain: Chain) => { rpcUrl: string; webSocketRpcUrl?: string } | null
+}): ApiProvider<providers.StaticJsonRpcProvider, providers.WebSocketProvider> {
   return function (chain) {
-    const { rpcUrl, webSocketRpcUrl } = rpcUrls(chain)
-    if (rpcUrl === '') return null
+    const rpcConfig = rpcUrls(chain)
+    if (!rpcConfig || rpcConfig.rpcUrl === '') return null
     return {
       chain: {
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: rpcUrl,
+          default: rpcConfig.rpcUrl,
         },
       },
       provider: () => {
-        const provider = new providers.StaticJsonRpcProvider(rpcUrl, {
+        const provider = new providers.StaticJsonRpcProvider(rpcConfig.rpcUrl, {
           chainId: chain.id,
           name: chain.name,
         })
         if (pollingInterval) provider.pollingInterval = pollingInterval
         return provider
       },
-      ...(webSocketRpcUrl && {
+      ...(rpcConfig.webSocketRpcUrl && {
         webSocketProvider: () =>
-          new providers.WebSocketProvider(webSocketRpcUrl, chain.id),
+          new providers.WebSocketProvider(
+            rpcConfig.webSocketRpcUrl as string,
+            chain.id,
+          ),
       }),
     }
   }

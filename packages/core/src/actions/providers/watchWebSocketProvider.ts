@@ -8,11 +8,11 @@ import {
 } from './getWebSocketProvider'
 
 export type WatchWebSocketProviderCallback<
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = (webSocketProvider: GetWebSocketProviderResult<TWebSocketProvider>) => void
 
 export function watchWebSocketProvider<
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 >(
   args: GetWebSocketProviderArgs,
   callback: WatchWebSocketProviderCallback<TWebSocketProvider>,

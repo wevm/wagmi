@@ -7,7 +7,8 @@ import {
 
 export type Chain = {
   id: number
-  name: AddEthereumChainParameter['chainName']
+  name: string
+  displayName: AddEthereumChainParameter['chainName']
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
   rpcUrls: { [key in RpcProviderName]?: string } & {
     [key: string]: string

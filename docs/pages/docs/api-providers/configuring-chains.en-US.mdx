@@ -50,12 +50,18 @@ const wagmiClient = createClient({
 
 The `configureChains` function accepts multiple API Providers. This is useful if not all your chains support a single API provider. For example, you may want to use [Alchemy](https://alchemy.com) for Ethereum, and [avax.network](https://avax.network) for Avalanche.
 
+`configureChains` wraps the API providers that you provide into an [ethers.js `FallbackProvider`](https://docs.ethers.io/v5/api/providers/other/#FallbackProvider), that comes with support for:
+
+- Falling back to another provider if a provider goes down (e.g. If Infura goes down, we can fall back to Alchemy)
+- Ensuring the responses are legitimate by setting a `targetQuorum`.
+
 ```ts
 import { Chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 import { staticJsonRpcProvider } from 'wagmi/apiProviders/staticJsonRpc'
 
 const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
 
 const avalancheChain: Chain = {
   id: 43_114,
@@ -79,14 +85,45 @@ const { provider, chains } = configureChains(
   [chain.mainnet, avalancheChain],
   [
     alchemyProvider({ alchemyId }),
+    infuraProvider({ infuraId }),
     staticJsonRpcProvider({
-      rpcUrls: (chain) => ({ rpcUrl: chain.rpcUrls.default }),
+      rpcUrls: (chain) => {
+        if (chain.id !== avalancheChain.id) return null
+        return { rpcUrl: chain.rpcUrls.default }
+      },
     }),
   ],
 )
 ```
 
-## Configuration
+#### Quorum
+
+If the `targetQuorum` option is set to a value greater than `1`, it will dispatch interactions to multiple API providers, in which the responses are verified by comparing them to each other. If the quorum is reached, then the result will be returned to the consumer.
+
+```tsx
+const { provider, chains } = configureChains(
+  [chain.mainnet, avalancheChain],
+  [
+    alchemyProvider({ alchemyId }),
+    infuraProvider({ infuraId }),
+    staticJsonRpcProvider({
+      rpcUrls: (chain) => {
+        if (chain.id !== avalancheChain.id) return null
+        return { rpcUrl: chain.rpcUrls.default }
+      },
+    }),
+  ],
+  { targetQuorum: 2 },
+)
+```
+
+By default, for a given chain, it will _attempt_ to set the quorum value, but if the `targetQuorum` value is greater than the number of providers for the chain, it will default to the number of providers.
+
+For instance, in the example provided above `targetQuorum = 2`, however there is only 1 available provider for Avalanche (`staticJsonRpcProvider`), so the quorum will get set to `1`.
+
+To guarentee a static quorum, you can provide a `minQuorum` as an config option.
+
+## Arguments
 
 ### chains
 
@@ -118,5 +155,53 @@ const alchemyId = process.env.ALCHEMY_ID
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
   [alchemyProvider({ alchemyId }), publicProvider()],
+)
+```
+
+### Configuration
+
+#### targetQuorum (optional)
+
+Sets the target quorum. Defaults to `1`.
+
+```ts {7}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
+import { publicProvider } from 'wagmi/apiProviders/public'
+
+const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
+
+const { chains } = configureChains(
+  [chain.mainnet, chain.optimism],
+  [
+    alchemyProvider({ alchemyId }),
+    infuraProvider({ infuraId }),
+    publicProvider(),
+  ],
+  { targetQuorum: 3 },
+)
+```
+
+#### minQuorum (optional)
+
+Sets the minimum quorum that must be accepted by the API providers. Defaults to `1`.
+
+```ts {7}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
+import { publicProvider } from 'wagmi/apiProviders/public'
+
+const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
+
+const { chains } = configureChains(
+  [chain.mainnet, chain.optimism],
+  [
+    alchemyProvider({ alchemyId }),
+    infuraProvider({ infuraId }),
+    publicProvider(),
+  ],
+  { targetQuorum: 3, minQuorum: 2 },
 )
 ```

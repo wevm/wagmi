@@ -143,7 +143,8 @@ export class WalletConnectConnector extends Connector<
       return (
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
-          name: `Chain ${id}`,
+          name: `${id}`,
+          displayName: `Chain ${id}`,
           rpcUrls: { default: '' },
         }
       )

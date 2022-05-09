@@ -8,11 +8,11 @@ export type GetWebSocketProviderArgs = {
 }
 
 export type GetWebSocketProviderResult<
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = TWebSocketProvider | undefined
 
 export function getWebSocketProvider<
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 >({
   chainId,
 }: GetWebSocketProviderArgs = {}): GetWebSocketProviderResult<TWebSocketProvider> {

@@ -15,9 +15,8 @@ export const Account = () => {
   const account = useAccount()
   const ensAvatar = useEnsAvatar({
     addressOrName: account.data?.address,
-    chainId: 1,
   })
-  const ensName = useEnsName({ address: account.data?.address, chainId: 1 })
+  const ensName = useEnsName({ address: account.data?.address })
   const disconnect = useDisconnect()
 
   return (

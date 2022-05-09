@@ -4,7 +4,7 @@ import { defaultAlchemyId } from '../constants'
 
 import { ApiProvider } from './ApiProvider'
 
-export const alchemyProvider = ({
+export function alchemyProvider({
   alchemyId = defaultAlchemyId,
   pollingInterval,
 }: {
@@ -13,7 +13,7 @@ export const alchemyProvider = ({
 } = {}): ApiProvider<
   providers.AlchemyProvider,
   providers.AlchemyWebSocketProvider
-> => {
+> {
   return function (chain) {
     if (!chain.rpcUrls.alchemy) return null
     return {

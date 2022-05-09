@@ -25,8 +25,9 @@ describe('switchNetwork', () => {
               "url": "https://kovan-optimistic.etherscan.io",
             },
           },
+          "displayName": "Optimism Kovan",
           "id": 69,
-          "name": "Optimism Kovan",
+          "name": "optimism-kovan",
           "nativeCurrency": {
             "decimals": 18,
             "name": "Kovan Ether",

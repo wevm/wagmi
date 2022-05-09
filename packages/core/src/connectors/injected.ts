@@ -167,7 +167,8 @@ export class InjectedConnector extends Connector<
       return (
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
-          name: `Chain ${id}`,
+          name: `${id}`,
+          displayName: `Chain ${id}`,
           rpcUrls: { default: '' },
         }
       )
@@ -182,7 +183,7 @@ export class InjectedConnector extends Connector<
             params: [
               {
                 chainId: id,
-                chainName: chain.name,
+                chainName: chain.displayName,
                 nativeCurrency: chain.nativeCurrency,
                 rpcUrls: [chain.rpcUrls.default],
                 blockExplorerUrls: this.getBlockExplorerUrls(chain),

@@ -10,6 +10,7 @@ export {
   defaultChains,
   defaultL2Chains,
 } from './chains'
+export type { ChainName } from './chains'
 
 export {
   alchemyRpcUrls,

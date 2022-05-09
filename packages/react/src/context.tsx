@@ -13,7 +13,7 @@ import { deserialize, serialize } from './utils'
 
 export type DecoratedWagmiClient<
   TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = WagmiClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
 export const Context = React.createContext<
   | DecoratedWagmiClient<providers.BaseProvider, providers.WebSocketProvider>
@@ -22,14 +22,14 @@ export const Context = React.createContext<
 
 export type ClientConfig<
   TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = WagmiClientConfig<TProvider, TWebSocketProvider> & {
   queryClient?: QueryClient
   persister?: Persister
 }
 export function createClient<
   TProvider extends providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider,
 >({
   queryClient = new QueryClient({
     defaultOptions: {
@@ -68,14 +68,14 @@ export function createClient<
 
 export type ProviderProps<
   TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = {
   /** React-decorated WagmiClient instance */
   client?: DecoratedWagmiClient<TProvider, TWebSocketProvider>
 }
 export function Provider<
   TProvider extends providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider,
 >({
   children,
   client = createClient<TProvider, TWebSocketProvider>(),
@@ -100,7 +100,7 @@ export function Provider<
 
 export function useClient<
   TProvider extends providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 >() {
   const client = React.useContext(Context) as unknown as DecoratedWagmiClient<
     TProvider,

@@ -89,7 +89,8 @@ export class MockConnector extends Connector<
     return (
       chains.find((x) => x.id === chainId) ?? {
         id: chainId,
-        name: `Chain ${chainId}`,
+        name: `${chainId}`,
+        displayName: `Chain ${chainId}`,
         rpcUrls: { default: '' },
       }
     )
