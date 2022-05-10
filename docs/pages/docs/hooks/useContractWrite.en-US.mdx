@@ -79,7 +79,7 @@ Arguments to pass to function call. Accepts `any | any[]`.
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
+  const {write} = useContractWrite(
     {
       addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
       contractInterface: wagmigotchiABI,
@@ -91,6 +91,21 @@ function App() {
   )
 }
 ```
+
+```tsx {11}
+  return (
+    <div>
+      <button
+        onClick={() => {
+          write();
+        }}
+      >
+        mint
+      </button>
+    </div>
+  );
+  ```
+
 
 #### overrides (optional)
 
