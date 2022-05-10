@@ -8,7 +8,6 @@ import {
   getSigners,
   renderHook,
   setupWagmiClient,
-  wrapper,
 } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
@@ -34,7 +33,6 @@ describe('useNetwork', () => {
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useNetwork(), {
-        wrapper,
         initialProps: { client },
       })
 

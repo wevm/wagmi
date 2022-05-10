@@ -30,6 +30,7 @@ export {
   useFeeData,
   useNetwork,
   useProvider,
+  useQuery,
   useSendTransaction,
   useSignMessage,
   useSignTypedData,

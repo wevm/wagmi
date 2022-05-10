@@ -1,4 +1,3 @@
-import type { ExternalProvider } from '@ethersproject/providers'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
@@ -103,7 +102,7 @@ export class InjectedConnector extends Connector<
   async getAccount() {
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
-    const accounts = await provider.request<string[]>({
+    const accounts = await provider.request({
       method: 'eth_requestAccounts',
     })
     // return checksum address
@@ -114,7 +113,7 @@ export class InjectedConnector extends Connector<
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     return await provider
-      .request<string>({ method: 'eth_chainId' })
+      .request({ method: 'eth_chainId' })
       .then(normalizeChainId)
   }
 
@@ -129,9 +128,9 @@ export class InjectedConnector extends Connector<
       this.getProvider(),
       this.getAccount(),
     ])
-    return new providers.Web3Provider(<ExternalProvider>provider).getSigner(
-      account,
-    )
+    return new providers.Web3Provider(
+      <providers.ExternalProvider>provider,
+    ).getSigner(account)
   }
 
   async isAuthorized() {
@@ -144,7 +143,7 @@ export class InjectedConnector extends Connector<
 
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
-      const accounts = await provider.request<string[]>({
+      const accounts = await provider.request({
         method: 'eth_accounts',
       })
       const account = accounts[0]

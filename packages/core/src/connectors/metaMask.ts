@@ -28,15 +28,22 @@ export class MetaMaskConnector extends InjectedConnector {
   }
 
   async getProvider() {
-    if (typeof window !== 'undefined')
+    if (typeof window !== 'undefined') {
+      // TODO: Fallback to `ethereum#initialized` event for async injection
+      // https://github.com/MetaMask/detect-provider#synchronous-and-asynchronous-injection=
       this.#provider = this.#findProvider(window.ethereum)
+    }
     return this.#provider
   }
 
   #getReady(ethereum?: Ethereum) {
     const isMetaMask = !!ethereum?.isMetaMask
-    // Brave Wallet tries to make itself look like MetaMask
-    if (isMetaMask && !ethereum.isBraveWallet) return ethereum
+    if (!isMetaMask) return
+    // Brave tries to make itself look like MetaMask
+    // Could also try RPC `web3_clientVersion` if following is unreliable
+    if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return
+    if (ethereum.isTokenary) return
+    return ethereum
   }
 
   #findProvider(ethereum?: Ethereum) {

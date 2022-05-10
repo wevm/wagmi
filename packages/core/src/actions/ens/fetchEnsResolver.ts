@@ -1,4 +1,4 @@
-import type { Resolver } from '@ethersproject/providers'
+import { providers } from 'ethers'
 
 import { getProvider } from '../providers'
 
@@ -9,7 +9,7 @@ export type FetchEnsResolverArgs = {
   name: string
 }
 
-export type FetchEnsResolverResult = Resolver | null
+export type FetchEnsResolverResult = providers.Resolver | null
 
 export async function fetchEnsResolver({
   chainId,

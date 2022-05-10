@@ -1,5 +1,4 @@
-import type { BaseProvider, WebSocketProvider } from '@ethersproject/providers'
-import { getDefaultProvider } from 'ethers'
+import { getDefaultProvider, providers } from 'ethers'
 import { Mutate, StoreApi, default as create } from 'zustand/vanilla'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 
@@ -8,8 +7,8 @@ import { WagmiStorage, createStorage, noopStorage } from './storage'
 import { warn } from './utils'
 
 export type ClientConfig<
-  TProvider extends BaseProvider = BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 > = {
   /** Enables reconnecting to last used connector on init */
   autoConnect?: boolean
@@ -34,10 +33,11 @@ export type ClientConfig<
     | TWebSocketProvider
 }
 
-export type Data<TProvider extends BaseProvider> = ConnectorData<TProvider>
+export type Data<TProvider extends providers.BaseProvider> =
+  ConnectorData<TProvider>
 export type State<
-  TProvider extends BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 > = {
   chains?: Connector['chains']
   connector?: Connector
@@ -52,8 +52,8 @@ export type State<
 const storeKey = 'store'
 
 export class Client<
-  TProvider extends BaseProvider = BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 > {
   config: Partial<ClientConfig<TProvider, TWebSocketProvider>>
   storage: WagmiStorage
@@ -302,20 +302,23 @@ export class Client<
   }
 }
 
-export let client: Client<BaseProvider, WebSocketProvider>
+export let client: Client<providers.BaseProvider, providers.WebSocketProvider>
 
 export function createClient<
-  TProvider extends BaseProvider = BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 >(config?: ClientConfig<TProvider, TWebSocketProvider>) {
   const client_ = new Client<TProvider, TWebSocketProvider>(config)
-  client = client_ as unknown as Client<BaseProvider, WebSocketProvider>
+  client = client_ as unknown as Client<
+    providers.BaseProvider,
+    providers.WebSocketProvider
+  >
   return client_
 }
 
 export function getClient<
-  TProvider extends BaseProvider = BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 >() {
   if (!client) {
     warn('No client defined. Falling back to default client.')

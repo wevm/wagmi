@@ -1,0 +1,71 @@
+# Create Custom Connector
+
+wagmi has a number of [built-in](/docs/connectors/injected) [Connectors](/docs/connectors/walletconnect) that cover support for tens of millions of wallets. If none of the built-in connectors work for your app, you can create a custom Connector. Creating a custom Connector is surpisingly easy to do.
+
+## Prerequisite: Decide What Type of Connector to Create
+
+You can ask yourself the following questions to decide what type of connector to create:
+
+- **Do you want to create a connector for an [injected](/docs/connectors/injected) wallet (e.g. browser wallet or extension)?** You can likely extend the `InjectedConnector` class. The `MetaMaskConnector` is a good example of this (check out the [source code](https://github.com/tmm/wagmi/blob/main/packages/core/src/connectors/metaMask.ts) for more info).
+- **Do you want to create a non-injected connector (e.g. wrap an existing SDK)?** Both `WalletConnectConnector` and `CoinbaseWalletConnector` wrap underlying SDKs and are good examples of this. Continue reading to learn more!
+
+## Step 1: Extend Connector
+
+Create a new class that extends `Connector` and implement required methods. `Connector` is exported by both `wagmi` and `@wagmi/core` packages.
+
+```ts
+import { Connector, Chain } from 'wagmi'
+import { CoolWalletOptions, CoolWalletProvider } from 'cool-wallet-sdk'
+
+export class CoolWalletConnector extends Connector<
+  CoolWalletProvider,
+  CoolWalletOptions
+> {
+  readonly id = 'coolWallet'
+  readonly name = 'Cool Wallet'
+  readonly ready = true
+
+  #provider?: CoolWalletProvider
+
+  constructor(config: { chains?: Chain[]; options: CoolWalletOptions }) {
+    super(config)
+  }
+
+  async getProvider() {
+    if (!this.#provider) {
+      this.#provider = new CoolWalletProvider(this.options)
+    }
+    return this.#provider
+  }
+
+  // Implement other methods
+  // connect, disconnect, getAccount, etc.
+}
+```
+
+## Step 2: Use Connector
+
+Once your custom Connector class is set up, you are ready to use it! You can plug it in anywhere built-in connectors work.
+
+```ts
+import { defaultChains, createClient } from 'wagmi'
+
+import { CoolWalletConnector } from './CoolWalletConnector'
+
+const connector = new CoolWalletConnector({
+  chains: defaultChains,
+  options: {
+    // Custom connector options
+  },
+})
+
+const client = createClient({
+  connectors: [connector],
+})
+```
+
+## Step 3: Share With Others
+
+Congrats! You created a custom wagmi Connector! Others might benefit from this work and knowledge. You are welcome to publish your custom Connector as a standalone package or tell folks about it by [creating a new GitHub Discussion](https://github.com/tmm/wagmi/discussions/new?category=show-and-tell).
+
+If the Connector covers a unique/useful use-case and enough folks are interested, it might make sense for your custom Connector to be built into wagmi. You can [start a new discussion](https://github.com/tmm/wagmi/discussions/new?category=ideas) to tell us more about the use-case, and why it should be included. It's not always possible to add new built-in connectors to wagmi as they increase the surface area for the core team, but it could make sense!

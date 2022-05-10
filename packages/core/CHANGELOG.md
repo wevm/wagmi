@@ -1,5 +1,25 @@
 # @wagmi/core
 
+## 0.2.5
+
+### Patch Changes
+
+- [`4e03666`](https://github.com/tmm/wagmi/commit/4e03666428d42fc9186c617001b5eb356229677e) Thanks [@tmm](https://github.com/tmm)! - bump dependencies #429
+  add imToken support for WC switch chains #432
+  fix MetaMask and Brave Wallet collision #436
+
+## 0.2.4
+
+### Patch Changes
+
+- [#421](https://github.com/tmm/wagmi/pull/421) [`a232b3f`](https://github.com/tmm/wagmi/commit/a232b3ff5cc41e882c4d2a34c599a8cb670edd2b) Thanks [@tmm](https://github.com/tmm)! - fix erc721 abi
+
+## 0.2.3
+
+### Patch Changes
+
+- [#412](https://github.com/tmm/wagmi/pull/412) [`80bef4f`](https://github.com/tmm/wagmi/commit/80bef4ff3f714b0b8f896f1b4b658acc7266299b) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Import providers from `ethers` peer dependency rather than `@ethersproject/providers` to avoid multiple conflicting versions being installed
+
 ## 0.2.2
 
 ### Patch Changes
