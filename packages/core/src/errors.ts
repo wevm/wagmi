@@ -99,3 +99,11 @@ export class UserRejectedRequestError extends ProviderRpcError {
     super(4001, 'User rejected request', error)
   }
 }
+
+export class ResourceUnavailableError extends RpcError {
+  name = 'ResourceUnavailable'
+
+  constructor(error: unknown) {
+    super(-32002, 'Resource unavailable', error)
+  }
+}

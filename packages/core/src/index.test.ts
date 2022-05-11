@@ -56,6 +56,7 @@ it('should expose correct exports', () => {
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
       "ProviderRpcError",
+      "ResourceUnavailableError",
       "RpcError",
       "SwitchChainError",
       "SwitchChainNotSupportedError",

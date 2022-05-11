@@ -63,6 +63,7 @@ export {
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
   ProviderRpcError,
+  ResourceUnavailableError,
   RpcError,
   SwitchChainError,
   SwitchChainNotSupportedError,
