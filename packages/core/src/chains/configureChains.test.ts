@@ -510,9 +510,7 @@ describe('configureChains', () => {
 
       expect(() =>
         provider({ chainId: chain.mainnet.id }).getBlockNumber(),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"quorum will always fail; larger than total weight (argument=\\"quorum\\", value=4, code=INVALID_ARGUMENT, version=providers/5.6.4)"`,
-      )
+      ).toThrowError()
     })
   })
 })
