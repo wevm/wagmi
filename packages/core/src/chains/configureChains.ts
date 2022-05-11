@@ -79,6 +79,7 @@ export function configureChains<
             ? chainId
             : defaultChains[0].id
         ]
+      if (chainProviders.length === 1) return chainProviders[0]()
       return fallbackProvider(targetQuorum, minQuorum, chainProviders)
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
@@ -90,6 +91,8 @@ export function configureChains<
         ]
 
       if (!chainWebSocketProviders) return undefined
+      if (chainWebSocketProviders.length === 1)
+        return chainWebSocketProviders[0]()
       return fallbackProvider(targetQuorum, minQuorum, chainWebSocketProviders)
     },
   }

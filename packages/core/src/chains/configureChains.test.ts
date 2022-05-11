@@ -1,3 +1,4 @@
+import { providers } from 'ethers'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
@@ -137,6 +138,13 @@ describe('configureChains', () => {
         `)
       })
 
+      it('provides an AlchemyProvider instance to provider', async () => {
+        expect(
+          provider({ chainId: chain.mainnet.id }) instanceof
+            providers.AlchemyProvider,
+        ).toBeTruthy()
+      })
+
       defaultChains.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
           await provider({ chainId: chain.id }).getBlockNumber()
@@ -175,6 +183,13 @@ describe('configureChains', () => {
             "https://arbitrum-mainnet.infura.io/v3/84842078b09946638c03157f83405213",
           ]
         `)
+      })
+
+      it('provides an InfuraProvider instance to provider', async () => {
+        expect(
+          provider({ chainId: chain.mainnet.id }) instanceof
+            providers.InfuraProvider,
+        ).toBeTruthy()
       })
 
       defaultChains.forEach((chain) => {
@@ -218,6 +233,13 @@ describe('configureChains', () => {
         `)
       })
 
+      it('provides a StaticJsonRpcProvider instance', async () => {
+        expect(
+          provider({ chainId: chain.mainnet.id }) instanceof
+            providers.StaticJsonRpcProvider,
+        ).toBeTruthy()
+      })
+
       defaultChainsWithAvalanche.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
           await provider({ chainId: chain.id }).getBlockNumber()
@@ -250,15 +272,15 @@ describe('configureChains', () => {
     })
 
     describe('staticJsonRpc', () => {
-      it('configure chains with provided RPC URLs for JSON RPC API provider', async () => {
-        const { chains } = configureChains(defaultChainsWithAvalanche, [
-          staticJsonRpcProvider({
-            rpcUrls: (chain) => ({
-              rpcUrl: `https://${chain.network}.example.com`,
-            }),
+      const { chains, provider } = configureChains(defaultChainsWithAvalanche, [
+        staticJsonRpcProvider({
+          rpcUrls: (chain) => ({
+            rpcUrl: `https://${chain.network}.example.com`,
           }),
-        ])
+        }),
+      ])
 
+      it('configure chains with provided RPC URLs for JSON RPC API provider', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default))
           .toMatchInlineSnapshot(`
           [
@@ -269,6 +291,13 @@ describe('configureChains', () => {
             "https://avalanche.example.com",
           ]
         `)
+      })
+
+      it('provides a StaticJsonRpcProvider instance', async () => {
+        expect(
+          provider({ chainId: chain.mainnet.id }) instanceof
+            providers.StaticJsonRpcProvider,
+        ).toBeTruthy()
       })
 
       defaultChainsWithAvalanche.forEach((chain) => {
@@ -346,6 +375,13 @@ describe('configureChains', () => {
           "https://api.avax.network/ext/bc/C/rpc",
         ]
       `)
+    })
+
+    it('provides a FallbackProvider instance', async () => {
+      expect(
+        provider({ chainId: chain.mainnet.id }) instanceof
+          providers.FallbackProvider,
+      ).toBeTruthy()
     })
 
     it('configures provider with correct fallback', async () => {
