@@ -9,6 +9,8 @@ import {
   ChainNotConfiguredError,
   ConnectorNotFoundError,
   ProviderRpcError,
+  ResourceUnavailableError,
+  RpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
@@ -85,6 +87,8 @@ export class InjectedConnector extends Connector<
     } catch (error) {
       if (this.#isUserRejectedRequestError(error))
         throw new UserRejectedRequestError(error)
+      if ((<RpcError>error).code === -32002)
+        throw new ResourceUnavailableError(error)
       throw error
     }
   }
