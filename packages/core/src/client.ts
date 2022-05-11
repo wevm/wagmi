@@ -241,7 +241,12 @@ export class Client<
     }
 
     // If connecting didn't succeed, set to disconnected
-    if (!connected) this.setState((x) => ({ ...x, status: 'disconnected' }))
+    if (!connected)
+      this.setState((x) => ({
+        ...x,
+        data: undefined,
+        status: 'disconnected',
+      }))
 
     return this.data
   }
