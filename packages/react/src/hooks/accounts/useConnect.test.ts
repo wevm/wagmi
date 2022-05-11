@@ -1,13 +1,7 @@
 import { connect } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
-import {
-  act,
-  getSigners,
-  renderHook,
-  setupWagmiClient,
-  wrapper,
-} from '../../../test'
+import { act, getSigners, renderHook, setupWagmiClient } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
@@ -38,7 +32,6 @@ describe('useConnect', () => {
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useConnect(), {
-        wrapper,
         initialProps: { client },
       })
       await waitFor(() => expect(result.current.isConnected).toBeTruthy())
@@ -456,7 +449,6 @@ describe('useConnect', () => {
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useConnect(), {
-        wrapper,
         initialProps: { client },
       })
 

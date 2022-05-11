@@ -5,7 +5,6 @@ import {
   actDisconnect,
   renderHook,
   setupWagmiClient,
-  wrapper,
 } from '../../../test'
 import { UseAccountConfig, useAccount } from './useAccount'
 import { useConnect } from './useConnect'
@@ -26,7 +25,6 @@ describe('useAccount', () => {
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useAccount(), {
-        wrapper,
         initialProps: { client },
       })
 

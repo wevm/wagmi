@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {
+  RenderHookOptions,
   renderHook as defaultRenderHook,
   waitFor,
 } from '@testing-library/react'
@@ -37,11 +38,6 @@ export function wrapper(props: Props) {
   return <Provider client={client} {...props} />
 }
 
-type RenderHookOptions<Props> = {
-  initialProps?: Props
-  wrapper?: typeof wrapper
-}
-
 export function renderHook<TResult, TProps>(
   hook: (props: TProps) => TResult,
   {
@@ -52,8 +48,7 @@ export function renderHook<TResult, TProps>(
   let options: RenderHookOptions<TProps & ProviderProps>
   if (reactVersion === '18')
     options = {
-      wrapper: (props) =>
-        (wrapper_ ?? wrapper)({ ...props, ...options_?.initialProps }),
+      wrapper: (props) => wrapper({ ...props, ...options_?.initialProps }),
       ...options_,
     }
   else
