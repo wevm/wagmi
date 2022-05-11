@@ -10,6 +10,7 @@ import { allChains } from '../constants'
 import {
   AddChainError,
   ChainNotConfiguredError,
+  ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
@@ -71,7 +72,7 @@ export class CoinbaseWalletConnector extends Connector<
           (<ProviderRpcError>error).message,
         )
       )
-        throw new UserRejectedRequestError()
+        throw new UserRejectedRequestError(error)
       throw error
     }
   }
@@ -161,11 +162,12 @@ export class CoinbaseWalletConnector extends Connector<
         }
       )
     } catch (error) {
+      const chain = this.chains.find((x) => x.id === chainId)
+      if (!chain) throw new ChainNotConfiguredError()
+
       // Indicates chain is not added to provider
       if ((<ProviderRpcError>error).code === 4902) {
         try {
-          const chain = this.chains.find((x) => x.id === chainId)
-          if (!chain) throw new ChainNotConfiguredError()
           await provider.request({
             method: 'wallet_addEthereumChain',
             params: [
@@ -180,11 +182,15 @@ export class CoinbaseWalletConnector extends Connector<
           })
           return chain
         } catch (addError) {
+          if (this.#isUserRejectedRequestError(addError))
+            throw new UserRejectedRequestError(addError)
           throw new AddChainError()
         }
-      } else if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
-      else throw new SwitchChainError()
+      }
+
+      if (this.#isUserRejectedRequestError(error))
+        throw new UserRejectedRequestError(error)
+      throw new SwitchChainError(error)
     }
   }
 
@@ -227,5 +233,9 @@ export class CoinbaseWalletConnector extends Connector<
 
   protected onDisconnect = () => {
     this.emit('disconnect')
+  }
+
+  #isUserRejectedRequestError(error: unknown) {
+    return /(user rejected)/i.test((<Error>error).message)
   }
 }

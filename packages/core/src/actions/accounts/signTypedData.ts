@@ -1,6 +1,10 @@
 import type { providers } from 'ethers'
 
-import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
+import {
+  ConnectorNotFoundError,
+  ProviderRpcError,
+  UserRejectedRequestError,
+} from '../../errors'
 import { fetchSigner } from './fetchSigner'
 
 type SignTypedData = Parameters<providers.JsonRpcSigner['_signTypedData']>
@@ -28,10 +32,9 @@ export async function signTypedData(
       args.types,
       args.value,
     )
-  } catch (error_) {
-    let error: Error = <Error>error_
-    if ((<ProviderRpcError>error_).code === 4001)
-      error = new UserRejectedRequestError()
+  } catch (error) {
+    if ((<ProviderRpcError>error).code === 4001)
+      throw new UserRejectedRequestError(error)
     throw error
   }
 }

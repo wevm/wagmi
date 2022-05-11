@@ -1,7 +1,11 @@
 import { CallOverrides, Contract as EthersContract, providers } from 'ethers'
 
 import { getClient } from '../../client'
-import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
+import {
+  ConnectorNotFoundError,
+  ProviderRpcError,
+  UserRejectedRequestError,
+} from '../../errors'
 import { GetContractArgs, getContract } from './getContract'
 
 export type WriteContractArgs = GetContractArgs
@@ -42,10 +46,9 @@ export async function writeContract<
       ...params,
     )) as providers.TransactionResponse
     return response
-  } catch (error_) {
-    let error: Error = <Error>error_
-    if ((<ProviderRpcError>error_).code === 4001)
-      error = new UserRejectedRequestError()
+  } catch (error) {
+    if ((<ProviderRpcError>error).code === 4001)
+      throw new UserRejectedRequestError(error)
     throw error
   }
 }

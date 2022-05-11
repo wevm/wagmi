@@ -58,6 +58,15 @@ export {
   erc721ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
+  AddChainError,
+  ChainNotConfiguredError,
+  ConnectorAlreadyConnectedError,
+  ConnectorNotFoundError,
+  ProviderRpcError,
+  RpcError,
+  SwitchChainError,
+  SwitchChainNotSupportedError,
+  UserRejectedRequestError,
 } from '@wagmi/core'
 export type {
   Chain,

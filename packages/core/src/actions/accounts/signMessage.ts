@@ -1,6 +1,10 @@
 import { Bytes } from 'ethers/lib/utils'
 
-import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
+import {
+  ConnectorNotFoundError,
+  ProviderRpcError,
+  UserRejectedRequestError,
+} from '../../errors'
 import { fetchSigner } from './fetchSigner'
 
 export type SignMessageArgs = {
@@ -18,10 +22,9 @@ export async function signMessage(
     const signer = await fetchSigner()
     if (!signer) throw new ConnectorNotFoundError()
     return await signer.signMessage(args.message)
-  } catch (error_) {
-    let error: Error = <Error>error_
-    if ((<ProviderRpcError>error_).code === 4001)
-      error = new UserRejectedRequestError()
+  } catch (error) {
+    if ((<ProviderRpcError>error).code === 4001)
+      throw new UserRejectedRequestError(error)
     throw error
   }
 }

@@ -3,7 +3,11 @@ import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { allChains } from '../constants'
-import { SwitchChainError, UserRejectedRequestError } from '../errors'
+import {
+  ProviderRpcError,
+  SwitchChainError,
+  UserRejectedRequestError,
+} from '../errors'
 import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
@@ -64,7 +68,7 @@ export class WalletConnectConnector extends Connector<
       }
     } catch (error) {
       if (/user closed modal/i.test((<ProviderRpcError>error).message))
-        throw new UserRejectedRequestError()
+        throw new UserRejectedRequestError(error)
       throw error
     }
   }
@@ -144,8 +148,8 @@ export class WalletConnectConnector extends Connector<
       const message =
         typeof error === 'string' ? error : (<ProviderRpcError>error)?.message
       if (/user rejected request/i.test(message))
-        throw new UserRejectedRequestError()
-      else throw new SwitchChainError()
+        throw new UserRejectedRequestError(error)
+      throw new SwitchChainError(error)
     }
   }
 

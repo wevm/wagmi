@@ -50,6 +50,15 @@ it('should expose correct exports', () => {
       "erc721ABI",
       "etherscanBlockExplorers",
       "infuraRpcUrls",
+      "AddChainError",
+      "ChainNotConfiguredError",
+      "ConnectorAlreadyConnectedError",
+      "ConnectorNotFoundError",
+      "ProviderRpcError",
+      "RpcError",
+      "SwitchChainError",
+      "SwitchChainNotSupportedError",
+      "UserRejectedRequestError",
     ]
   `)
 })

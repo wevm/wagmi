@@ -8,6 +8,7 @@ import {
   AddChainError,
   ChainNotConfiguredError,
   ConnectorNotFoundError,
+  ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
@@ -82,8 +83,8 @@ export class InjectedConnector extends Connector<
 
       return { account, chain: { id, unsupported }, provider }
     } catch (error) {
-      if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
+      if (this.#isUserRejectedRequestError(error))
+        throw new UserRejectedRequestError(error)
       throw error
     }
   }
@@ -172,11 +173,12 @@ export class InjectedConnector extends Connector<
         }
       )
     } catch (error) {
+      const chain = this.chains.find((x) => x.id === chainId)
+      if (!chain) throw new ChainNotConfiguredError()
+
       // Indicates chain is not added to provider
       if ((<ProviderRpcError>error).code === 4902) {
         try {
-          const chain = this.chains.find((x) => x.id === chainId)
-          if (!chain) throw new ChainNotConfiguredError()
           await provider.request({
             method: 'wallet_addEthereumChain',
             params: [
@@ -191,11 +193,15 @@ export class InjectedConnector extends Connector<
           })
           return chain
         } catch (addError) {
+          if (this.#isUserRejectedRequestError(addError))
+            throw new UserRejectedRequestError(error)
           throw new AddChainError()
         }
-      } else if ((<ProviderRpcError>error).code === 4001)
-        throw new UserRejectedRequestError()
-      else throw new SwitchChainError()
+      }
+
+      if (this.#isUserRejectedRequestError(error))
+        throw new UserRejectedRequestError(error)
+      throw new SwitchChainError(error)
     }
   }
 
@@ -240,5 +246,9 @@ export class InjectedConnector extends Connector<
   protected onDisconnect = () => {
     this.emit('disconnect')
     if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
+  }
+
+  #isUserRejectedRequestError(error: unknown) {
+    return (<ProviderRpcError>error).code === 4001
   }
 }
