@@ -26,25 +26,33 @@ export type Unit = typeof units[number]
 
 declare global {
   type AddEthereumChainParameter = {
-    chainId: string // A 0x-prefixed hexadecimal string
+    /** A 0x-prefixed hexadecimal string */
+    chainId: string
     chainName: string
     nativeCurrency?: {
       name: string
-      symbol: string // 2-6 characters long
+      /** 2-6 characters long */
+      symbol: string
       decimals: number
     }
     rpcUrls: string[]
     blockExplorerUrls?: string[]
-    iconUrls?: string[] // Currently ignored.
+    /** Currently ignored. */
+    iconUrls?: string[]
   }
 
   type WatchAssetParams = {
-    type: 'ERC20' // In the future, other standards will be supported
+    /** In the future, other standards will be supported */
+    type: 'ERC20'
     options: {
-      address: string // The address of the token contract
-      decimals: number // The number of token decimals
-      image?: string // A string url of the token logo
-      symbol: string // A ticker symbol or shorthand, up to 5 characters
+      /** Address of token contract */
+      address: string
+      /** Number of token decimals */
+      decimals: number
+      /** String url of token logo */
+      image?: string
+      /** A ticker symbol or shorthand, up to 5 characters */
+      symbol: string
     }
   }
 
@@ -80,37 +88,48 @@ declare global {
     removeListener?: (...args: any[]) => void
     providers?: Ethereum[]
 
-    // RPC Request API Methods
-    // https://docs.metamask.io/guide/rpc-api.html
-    request(args: { method: 'eth_accounts' }): Promise<string[]>
-    request(args: { method: 'eth_chainId' }): Promise<string>
-    request(args: { method: 'eth_requestAccounts' }): Promise<string[]>
-    request(args: {
-      method: 'personal_sign'
-      params: [string, string]
-    }): Promise<string>
-    request(args: {
-      method: 'wallet_addEthereumChain'
-      params: AddEthereumChainParameter[]
-    }): Promise<null>
-    request(args: {
-      method: 'wallet_switchEthereumChain'
-      params: [{ chainId: string }]
-    }): Promise<null>
+    /**
+     * EIP-747: Add wallet_watchAsset to Provider
+     * https://eips.ethereum.org/EIPS/eip-747
+     */
     request(args: {
       method: 'wallet_watchAsset'
       params: WatchAssetParams
     }): Promise<boolean>
+
+    /**
+     * EIP-1193: Ethereum Provider JavaScript API
+     * https://eips.ethereum.org/EIPS/eip-1193
+     */
+    request(args: { method: 'eth_accounts' }): Promise<string[]>
+    request(args: { method: 'eth_chainId' }): Promise<string>
+    request(args: { method: 'eth_requestAccounts' }): Promise<string[]>
+
+    /**
+     * EIP-1474: Remote procedure call specification
+     * https://eips.ethereum.org/EIPS/eip-1474
+     */
     request(args: { method: 'web3_clientVersion' }): Promise<string>
+
+    /**
+     * EIP-3085: Wallet Add Ethereum Chain RPC Method
+     * https://eips.ethereum.org/EIPS/eip-3085
+     */
+    request(args: {
+      method: 'wallet_addEthereumChain'
+      params: AddEthereumChainParameter[]
+    }): Promise<null>
+    /**
+     * EIP-3326: Wallet Switch Ethereum Chain RPC Method
+     * https://eips.ethereum.org/EIPS/eip-3326
+     */
+    request(args: {
+      method: 'wallet_switchEthereumChain'
+      params: [{ chainId: string }]
+    }): Promise<null>
   }
 
   interface Window {
     ethereum?: Ethereum
-  }
-
-  interface ProviderRpcError extends Error {
-    code: 4001 | 4902
-    data?: unknown
-    message: string
   }
 }

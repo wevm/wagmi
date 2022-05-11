@@ -114,6 +114,8 @@ export {
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
+  ProviderRpcError,
+  RpcError,
   SwitchChainError,
   SwitchChainNotSupportedError,
   UserRejectedRequestError,
