@@ -145,7 +145,7 @@ The API providers the app supports.
 
 If an API provider does not support a chain, it will fall back onto the next one in the array. If no RPC URLs are found, `configureChains` will throw an error.
 
-```ts {7}
+```ts {9}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 import { publicProvider } from 'wagmi/apiProviders/public'
@@ -164,7 +164,7 @@ const { chains } = configureChains(
 
 Sets the target quorum. Defaults to `1`.
 
-```ts {7}
+```ts {15}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 import { publicProvider } from 'wagmi/apiProviders/public'
@@ -187,7 +187,7 @@ const { chains } = configureChains(
 
 Sets the minimum quorum that must be accepted by the API providers. Defaults to `1`.
 
-```ts {7}
+```ts {15}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 import { publicProvider } from 'wagmi/apiProviders/public'
