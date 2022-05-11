@@ -50,6 +50,11 @@ export class ProviderRpcError<T = undefined> extends RpcError<T> {
     /** Other useful information about error */
     data?: T,
   ) {
+    if (!(Number.isInteger(code) && code >= 1000 && code <= 4999))
+      throw new Error(
+        '"code" must be an integer such that: 1000 <= code <= 4999',
+      )
+
     super(code, message, internal, data)
   }
 }
