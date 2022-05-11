@@ -19,8 +19,8 @@ export function getNetwork(): GetNetworkResult {
     (x) => x.id === chainId,
   ) ?? {
     id: chainId,
-    name: `${chainId}`,
-    displayName: `Chain ${chainId}`,
+    name: `Chain ${chainId}`,
+    network: `${chainId}`,
     rpcUrls: { default: '' },
   }
 

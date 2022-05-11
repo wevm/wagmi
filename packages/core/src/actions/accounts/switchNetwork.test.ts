@@ -25,14 +25,14 @@ describe('switchNetwork', () => {
               "url": "https://kovan-optimistic.etherscan.io",
             },
           },
-          "displayName": "Optimism Kovan",
           "id": 69,
-          "name": "optimism-kovan",
+          "name": "Optimism Kovan",
           "nativeCurrency": {
             "decimals": 18,
             "name": "Kovan Ether",
             "symbol": "KOR",
           },
+          "network": "optimism-kovan",
           "rpcUrls": {
             "alchemy": "https://opt-kovan.g.alchemy.com/v2",
             "default": "https://kovan.optimism.io",

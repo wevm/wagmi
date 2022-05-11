@@ -19,8 +19,8 @@ const avalancheChain: Chain = {
     etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
   },
   id: 43_114,
-  name: 'avalanche',
-  displayName: 'Avalanche',
+  name: 'Avalanche',
+  network: 'avalanche',
   nativeCurrency: {
     decimals: 18,
     name: 'Avalanche',
@@ -93,7 +93,7 @@ const jsonRpcListener = jest.fn()
 const jsonRpcHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: jsonRpcListener,
-  rpcUrl: (chain) => `https://${chain.name}.example.com`,
+  rpcUrl: (chain) => `https://${chain.network}.example.com`,
 })
 const server = setupServer(
   ...alchemyHandlers,
@@ -138,7 +138,7 @@ describe('configureChains', () => {
       })
 
       defaultChains.forEach((chain) => {
-        it(`configures provider for ${chain.name}`, async () => {
+        it(`configures provider for ${chain.network}`, async () => {
           await provider({ chainId: chain.id }).getBlockNumber()
           expect(alchemyListener).toBeCalledTimes(1)
         })
@@ -178,7 +178,7 @@ describe('configureChains', () => {
       })
 
       defaultChains.forEach((chain) => {
-        it(`configures provider for ${chain.name}`, async () => {
+        it(`configures provider for ${chain.network}`, async () => {
           await provider({ chainId: chain.id }).getBlockNumber()
           expect(infuraListener).toBeCalledTimes(1)
         })
@@ -219,7 +219,7 @@ describe('configureChains', () => {
       })
 
       defaultChainsWithAvalanche.forEach((chain) => {
-        it(`configures provider for ${chain.name}`, async () => {
+        it(`configures provider for ${chain.network}`, async () => {
           await provider({ chainId: chain.id }).getBlockNumber()
           expect(publicListener).toBeCalledTimes(1)
         })
@@ -254,7 +254,7 @@ describe('configureChains', () => {
         const { chains } = configureChains(defaultChainsWithAvalanche, [
           staticJsonRpcProvider({
             rpcUrls: (chain) => ({
-              rpcUrl: `https://${chain.name}.example.com`,
+              rpcUrl: `https://${chain.network}.example.com`,
             }),
           }),
         ])
@@ -272,11 +272,11 @@ describe('configureChains', () => {
       })
 
       defaultChainsWithAvalanche.forEach((chain) => {
-        it(`configures provider for ${chain.name}`, async () => {
+        it(`configures provider for ${chain.network}`, async () => {
           const { provider } = configureChains(defaultChainsWithAvalanche, [
             staticJsonRpcProvider({
               rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.name}.example.com`,
+                rpcUrl: `https://${chain.network}.example.com`,
               }),
             }),
           ])
@@ -291,7 +291,7 @@ describe('configureChains', () => {
             staticJsonRpcProvider({
               rpcUrls: (chain) => ({
                 rpcUrl:
-                  chain.id === 1 ? '' : `https://${chain.name}.example.com`,
+                  chain.id === 1 ? '' : `https://${chain.network}.example.com`,
                 webSocketRpcUrl: `wss://${chain.id}.example.com`,
               }),
             }),
@@ -384,7 +384,7 @@ describe('configureChains', () => {
 
   describe('quorum', () => {
     defaultChains.forEach((chain) => {
-      describe(`targets the quorum value for ${chain.name}`, () => {
+      describe(`targets the quorum value for ${chain.network}`, () => {
         it('targetQuorum = 1', async () => {
           const { provider } = configureChains(
             defaultChains,
@@ -393,7 +393,7 @@ describe('configureChains', () => {
               infuraProvider({ infuraId }),
               staticJsonRpcProvider({
                 rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.name}.example.com`,
+                  rpcUrl: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -414,7 +414,7 @@ describe('configureChains', () => {
               infuraProvider({ infuraId }),
               staticJsonRpcProvider({
                 rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.name}.example.com`,
+                  rpcUrl: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -435,7 +435,7 @@ describe('configureChains', () => {
               infuraProvider({ infuraId }),
               staticJsonRpcProvider({
                 rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.name}.example.com`,
+                  rpcUrl: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -449,7 +449,7 @@ describe('configureChains', () => {
         })
       })
 
-      it(`sets minimum quorum for ${chain.name}`, async () => {
+      it(`sets minimum quorum for ${chain.network}`, async () => {
         const { provider } = configureChains(
           defaultChains,
           [
@@ -457,7 +457,7 @@ describe('configureChains', () => {
             infuraProvider({ infuraId }),
             staticJsonRpcProvider({
               rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.name}.example.com`,
+                rpcUrl: `https://${chain.network}.example.com`,
               }),
             }),
           ],
@@ -480,7 +480,7 @@ describe('configureChains', () => {
             infuraProvider({ infuraId }),
             staticJsonRpcProvider({
               rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.name}.example.com`,
+                rpcUrl: `https://${chain.network}.example.com`,
               }),
             }),
           ],
@@ -500,7 +500,7 @@ describe('configureChains', () => {
           infuraProvider({ infuraId }),
           staticJsonRpcProvider({
             rpcUrls: (chain) => ({
-              rpcUrl: `https://${chain.name}.example.com`,
+              rpcUrl: `https://${chain.network}.example.com`,
             }),
           }),
         ],

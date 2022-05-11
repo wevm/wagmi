@@ -16,7 +16,7 @@ export function publicProvider({
           chain.rpcUrls.default,
           {
             chainId: chain.id,
-            name: chain.name,
+            name: chain.network,
           },
         )
         if (pollingInterval) provider.pollingInterval = pollingInterval

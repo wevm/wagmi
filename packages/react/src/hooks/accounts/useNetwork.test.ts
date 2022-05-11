@@ -301,14 +301,14 @@ describe('useNetwork', () => {
                   "url": "https://rinkeby.etherscan.io",
                 },
               },
-              "displayName": "Rinkeby",
               "id": 4,
-              "name": "rinkeby",
+              "name": "Rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Rinkeby Ether",
                 "symbol": "rETH",
               },
+              "network": "rinkeby",
               "rpcUrls": {
                 "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
                 "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",

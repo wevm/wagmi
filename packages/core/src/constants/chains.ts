@@ -36,8 +36,8 @@ export const chainId = {
 export const chain: Record<ChainName, Chain> = {
   mainnet: {
     id: chainId.mainnet,
-    name: 'homestead',
-    displayName: 'Ethereum',
+    name: 'Ethereum',
+    network: 'homestead',
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.mainnet,
@@ -51,8 +51,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   ropsten: {
     id: chainId.ropsten,
-    name: 'ropsten',
-    displayName: 'Ropsten',
+    name: 'Ropsten',
+    network: 'ropsten',
     nativeCurrency: { name: 'Ropsten Ether', symbol: 'ropETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.ropsten,
@@ -67,8 +67,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   rinkeby: {
     id: chainId.rinkeby,
-    name: 'rinkeby',
-    displayName: 'Rinkeby',
+    name: 'Rinkeby',
+    network: 'rinkeby',
     nativeCurrency: { name: 'Rinkeby Ether', symbol: 'rETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.rinkeby,
@@ -83,8 +83,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   goerli: {
     id: chainId.goerli,
-    name: 'goerli',
-    displayName: 'Goerli',
+    name: 'Goerli',
+    network: 'goerli',
     nativeCurrency: { name: 'Goerli Ether', symbol: 'gETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.goerli,
@@ -99,8 +99,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   kovan: {
     id: chainId.kovan,
-    name: 'kovan',
-    displayName: 'Kovan',
+    name: 'Kovan',
+    network: 'kovan',
     nativeCurrency: { name: 'Kovan Ether', symbol: 'kETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.kovan,
@@ -115,8 +115,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   optimism: {
     id: chainId.optimism,
-    name: 'optimism',
-    displayName: 'Optimism',
+    name: 'Optimism',
+    network: 'optimism',
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.optimism,
@@ -130,8 +130,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   optimismKovan: {
     id: chainId.optimismKovan,
-    name: 'optimism-kovan',
-    displayName: 'Optimism Kovan',
+    name: 'Optimism Kovan',
+    network: 'optimism-kovan',
     nativeCurrency: {
       name: 'Kovan Ether',
       symbol: 'KOR',
@@ -150,8 +150,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   polygon: {
     id: chainId.polygon,
-    name: 'matic',
-    displayName: 'Polygon',
+    name: 'Polygon',
+    network: 'matic',
     nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.polygon,
@@ -165,8 +165,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   polygonMumbai: {
     id: chainId.polygonMumbai,
-    name: 'maticmum',
-    displayName: 'Polygon Mumbai',
+    name: 'Polygon Mumbai',
+    network: 'maticmum',
     nativeCurrency: {
       name: 'MATIC',
       symbol: 'MATIC',
@@ -185,8 +185,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   arbitrum: {
     id: chainId.arbitrum,
-    name: 'arbitrum',
-    displayName: 'Arbitrum',
+    name: 'Arbitrum',
+    network: 'arbitrum',
     nativeCurrency: { name: 'Ether', symbol: 'AETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.arbitrum,
@@ -204,8 +204,8 @@ export const chain: Record<ChainName, Chain> = {
   },
   arbitrumRinkeby: {
     id: chainId.arbitrumRinkeby,
-    name: 'arbitrum-rinkeby',
-    displayName: 'Arbitrum Rinkeby',
+    name: 'Arbitrum Rinkeby',
+    network: 'arbitrum-rinkeby',
     nativeCurrency: {
       name: 'Arbitrum Rinkeby Ether',
       symbol: 'ARETH',
@@ -228,16 +228,16 @@ export const chain: Record<ChainName, Chain> = {
   },
   localhost: {
     id: chainId.localhost,
-    name: 'localhost',
-    displayName: 'Localhost',
+    name: 'Localhost',
+    network: 'localhost',
     rpcUrls: {
       default: 'http://127.0.0.1:8545',
     },
   },
   hardhat: {
     id: chainId.hardhat,
-    name: 'hardhat',
-    displayName: 'Hardhat',
+    name: 'Hardhat',
+    network: 'hardhat',
     rpcUrls: {
       default: 'http://127.0.0.1:8545',
     },

@@ -25,7 +25,7 @@ export function staticJsonRpcProvider({
       provider: () => {
         const provider = new providers.StaticJsonRpcProvider(rpcConfig.rpcUrl, {
           chainId: chain.id,
-          name: chain.name,
+          name: chain.network,
         })
         if (pollingInterval) provider.pollingInterval = pollingInterval
         return provider

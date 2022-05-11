@@ -22,8 +22,8 @@ import { publicProvider } from '../../../../packages/react/apiProviders/public'
 
 const avalanche: Chain = {
   id: 43_114,
-  name: 'avalanche',
-  displayName: 'Avalanche',
+  name: 'Avalanche',
+  network: 'avalanche',
   nativeCurrency: {
     decimals: 18,
     name: 'Avalanche',

@@ -98,7 +98,7 @@ export class WalletConnectConnector extends Connector<
             }),
             {},
           )
-        : undefined
+        : {}
 
       const WalletConnectProvider = (
         await import('@walletconnect/ethereum-provider')
@@ -143,8 +143,8 @@ export class WalletConnectConnector extends Connector<
       return (
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
-          name: `${id}`,
-          displayName: `Chain ${id}`,
+          name: `Chain ${id}`,
+          network: `${id}`,
           rpcUrls: { default: '' },
         }
       )
