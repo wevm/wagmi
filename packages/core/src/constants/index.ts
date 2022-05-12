@@ -14,6 +14,8 @@ export {
 export {
   alchemyRpcUrls,
   defaultAlchemyId,
+  ankrRpcUrls,
+  defaultAnkrId,
   infuraRpcUrls,
   defaultInfuraId,
 } from './rpcs'

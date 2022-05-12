@@ -1,9 +1,11 @@
 import { ChainName } from './chains'
 
 export const defaultAlchemyId = '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC'
+export const defaultAnkrId =
+  '9f7d929b018cdffb338517efa06f58359e86ff1ffd350bc889738523659e7972'
 export const defaultInfuraId = '84842078b09946638c03157f83405213'
 
-export type RpcProviderName = 'alchemy' | 'infura'
+export type RpcProviderName = 'alchemy' | 'ankr' | 'infura'
 
 type AlchemyChains = Extract<
   ChainName,
@@ -31,6 +33,19 @@ export const alchemyRpcUrls: Record<AlchemyChains, string> = {
   polygonMumbai: 'https://polygon-mumbai.g.alchemy.com/v2',
   arbitrum: 'https://arb-mainnet.g.alchemy.com/v2',
   arbitrumRinkeby: 'https://arb-rinkeby.g.alchemy.com/v2',
+} as const
+
+type AnkrChains = Extract<
+  ChainName,
+  'mainnet' | 'ropsten' | 'rinkeby' | 'goerli' | 'polygon' | 'arbitrum'
+>
+export const ankrRpcUrls: Record<AnkrChains, string> = {
+  mainnet: 'https://rpc.ankr.com/eth',
+  ropsten: 'htps://rpc.ankr.com/eth_ropsten',
+  rinkeby: 'https://rpc.ankr.com/eth_rinkeby',
+  goerli: 'https://rpc.ankr.com/eth_goerli',
+  polygon: 'https://rpc.ankr.com/polygon',
+  arbitrum: 'https://rpc.ankr.com/arbitrum',
 } as const
 
 type InfuraChains = Extract<
