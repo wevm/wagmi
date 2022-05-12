@@ -100,10 +100,23 @@ export class WalletConnectConnector extends Connector<
 
   async getProvider(create?: boolean) {
     if (!this.#provider || create) {
+      const rpc = !this.options?.infuraId
+        ? this.chains.reduce(
+            (rpc, chain) => ({
+              ...rpc,
+              [chain.id]: chain.rpcUrls.default,
+            }),
+            {},
+          )
+        : {}
+
       const WalletConnectProvider = (
         await import('@walletconnect/ethereum-provider')
       ).default
-      this.#provider = new WalletConnectProvider(this.options)
+      this.#provider = new WalletConnectProvider({
+        ...this.options,
+        rpc: { ...rpc, ...this.options?.rpc },
+      })
     }
     return this.#provider
   }
@@ -141,6 +154,7 @@ export class WalletConnectConnector extends Connector<
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
+          network: `${id}`,
           rpcUrls: { default: '' },
         }
       )

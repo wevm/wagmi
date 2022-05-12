@@ -1,70 +1,92 @@
 import * as React from 'react'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import {
+  Chain,
+  Provider,
+  chain,
+  configureChains,
+  createClient,
+  defaultChains,
+} from 'wagmi'
+
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-import { providers } from 'ethers/lib/ethers'
 
-const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID as string
+import { alchemyProvider } from '../../../../packages/react/apiProviders/alchemy'
+import { infuraProvider } from '../../../../packages/react/apiProviders/infura'
+import { staticJsonRpcProvider } from '../../../../packages/react/apiProviders/staticJsonRpc'
+import { publicProvider } from '../../../../packages/react/apiProviders/public'
 
-const chains = [...defaultChains, chain.optimism]
-const defaultChain = chain.mainnet
+const avalanche: Chain = {
+  id: 43_114,
+  name: 'Avalanche',
+  network: 'avalanche',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Avalanche',
+    symbol: 'AVAX',
+  },
+  rpcUrls: {
+    default: 'https://api.avax.network/ext/bc/C/rpc',
+  },
+  blockExplorers: {
+    default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
+    etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
+  },
+  testnet: false,
+}
 
-const isChainSupported = (chainId?: number) =>
-  chains.some((x) => x.id === chainId)
+const { chains, provider, webSocketProvider } = configureChains(
+  [...defaultChains, chain.optimism, avalanche],
+  [
+    alchemyProvider(),
+    infuraProvider(),
+    staticJsonRpcProvider({
+      rpcUrls: (chain) => {
+        if (chain.id !== avalanche.id) return null
+        return {
+          rpcUrl: chain.rpcUrls.default,
+        }
+      },
+    }),
+    publicProvider(),
+  ],
+  { targetQuorum: 3 },
+)
 
 const client = createClient({
   autoConnect: true,
-  connectors({ chainId }) {
-    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
-    const rpcUrl = chain.rpcUrls.alchemy
-      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-      : chain.rpcUrls.default
-    return [
-      new MetaMaskConnector({ chains }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: 'wagmi',
-          jsonRpcUrl: rpcUrl,
-        },
-      }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          qrcode: true,
-          rpc: {
-            [chain.id]: rpcUrl,
-          },
-        },
-      }),
-      new InjectedConnector({
-        chains,
-        options: {
-          name: (detectedName) =>
-            `Injected (${
-              typeof detectedName === 'string'
-                ? detectedName
-                : detectedName.join(', ')
-            })`,
-        },
-      }),
-    ]
-  },
-  provider({ chainId }) {
-    return new providers.AlchemyProvider(
-      isChainSupported(chainId) ? chainId : defaultChain.id,
-    )
-  },
-  webSocketProvider({ chainId }) {
-    return new providers.AlchemyWebSocketProvider(
-      isChainSupported(chainId) ? chainId : defaultChain.id,
-      alchemyId,
-    )
-  },
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: 'wagmi',
+      },
+    }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        qrcode: true,
+      },
+    }),
+    new InjectedConnector({
+      chains,
+      options: {
+        name: (detectedName) =>
+          `Injected (${
+            typeof detectedName === 'string'
+              ? detectedName
+              : detectedName.join(', ')
+          })`,
+      },
+    }),
+  ],
+  provider,
+  webSocketProvider,
 })
 
 const App = ({ Component, pageProps }: AppProps) => {

@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-core-apiProviders-staticJsonRpc.cjs.js",
+  "module": "dist/wagmi-core-apiProviders-staticJsonRpc.esm.js"
+}

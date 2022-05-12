@@ -37,6 +37,7 @@ export const chain: Record<ChainName, Chain> = {
   mainnet: {
     id: chainId.mainnet,
     name: 'Ethereum',
+    network: 'homestead',
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.mainnet,
@@ -51,6 +52,7 @@ export const chain: Record<ChainName, Chain> = {
   ropsten: {
     id: chainId.ropsten,
     name: 'Ropsten',
+    network: 'ropsten',
     nativeCurrency: { name: 'Ropsten Ether', symbol: 'ropETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.ropsten,
@@ -66,6 +68,7 @@ export const chain: Record<ChainName, Chain> = {
   rinkeby: {
     id: chainId.rinkeby,
     name: 'Rinkeby',
+    network: 'rinkeby',
     nativeCurrency: { name: 'Rinkeby Ether', symbol: 'rETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.rinkeby,
@@ -81,6 +84,7 @@ export const chain: Record<ChainName, Chain> = {
   goerli: {
     id: chainId.goerli,
     name: 'Goerli',
+    network: 'goerli',
     nativeCurrency: { name: 'Goerli Ether', symbol: 'gETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.goerli,
@@ -96,6 +100,7 @@ export const chain: Record<ChainName, Chain> = {
   kovan: {
     id: chainId.kovan,
     name: 'Kovan',
+    network: 'kovan',
     nativeCurrency: { name: 'Kovan Ether', symbol: 'kETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.kovan,
@@ -111,6 +116,7 @@ export const chain: Record<ChainName, Chain> = {
   optimism: {
     id: chainId.optimism,
     name: 'Optimism',
+    network: 'optimism',
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.optimism,
@@ -125,6 +131,7 @@ export const chain: Record<ChainName, Chain> = {
   optimismKovan: {
     id: chainId.optimismKovan,
     name: 'Optimism Kovan',
+    network: 'optimism-kovan',
     nativeCurrency: {
       name: 'Kovan Ether',
       symbol: 'KOR',
@@ -144,6 +151,7 @@ export const chain: Record<ChainName, Chain> = {
   polygon: {
     id: chainId.polygon,
     name: 'Polygon',
+    network: 'matic',
     nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.polygon,
@@ -158,6 +166,7 @@ export const chain: Record<ChainName, Chain> = {
   polygonMumbai: {
     id: chainId.polygonMumbai,
     name: 'Polygon Mumbai',
+    network: 'maticmum',
     nativeCurrency: {
       name: 'MATIC',
       symbol: 'MATIC',
@@ -177,6 +186,7 @@ export const chain: Record<ChainName, Chain> = {
   arbitrum: {
     id: chainId.arbitrum,
     name: 'Arbitrum',
+    network: 'arbitrum',
     nativeCurrency: { name: 'Ether', symbol: 'AETH', decimals: 18 },
     rpcUrls: {
       alchemy: alchemyRpcUrls.arbitrum,
@@ -195,6 +205,7 @@ export const chain: Record<ChainName, Chain> = {
   arbitrumRinkeby: {
     id: chainId.arbitrumRinkeby,
     name: 'Arbitrum Rinkeby',
+    network: 'arbitrum-rinkeby',
     nativeCurrency: {
       name: 'Arbitrum Rinkeby Ether',
       symbol: 'ARETH',
@@ -218,6 +229,7 @@ export const chain: Record<ChainName, Chain> = {
   localhost: {
     id: chainId.localhost,
     name: 'Localhost',
+    network: 'localhost',
     rpcUrls: {
       default: 'http://127.0.0.1:8545',
     },
@@ -225,6 +237,7 @@ export const chain: Record<ChainName, Chain> = {
   hardhat: {
     id: chainId.hardhat,
     name: 'Hardhat',
+    network: 'hardhat',
     rpcUrls: {
       default: 'http://127.0.0.1:8545',
     },

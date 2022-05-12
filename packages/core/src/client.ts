@@ -8,7 +8,7 @@ import { warn } from './utils'
 
 export type ClientConfig<
   TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = {
   /** Enables reconnecting to last used connector on init */
   autoConnect?: boolean
@@ -37,7 +37,7 @@ export type Data<TProvider extends providers.BaseProvider> =
   ConnectorData<TProvider>
 export type State<
   TProvider extends providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > = {
   chains?: Connector['chains']
   connector?: Connector
@@ -53,7 +53,7 @@ const storeKey = 'store'
 
 export class Client<
   TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 > {
   config: Partial<ClientConfig<TProvider, TWebSocketProvider>>
   storage: WagmiStorage
@@ -199,6 +199,7 @@ export class Client<
   clearState() {
     this.setState((x) => ({
       ...x,
+      chains: undefined,
       connector: undefined,
       data: undefined,
       error: undefined,
@@ -283,20 +284,16 @@ export class Client<
       },
     )
 
-    const { connectors, provider, webSocketProvider } = this.config
-    const subscribeConnectors = typeof connectors === 'function'
+    const { provider, webSocketProvider } = this.config
     const subscribeProvider = typeof provider === 'function'
     const subscribeWebSocketProvider = typeof webSocketProvider === 'function'
 
-    if (subscribeConnectors || subscribeProvider || subscribeWebSocketProvider)
+    if (subscribeProvider || subscribeWebSocketProvider)
       this.store.subscribe(
         ({ data }) => data?.chain?.id,
         (chainId) => {
           this.setState((x) => ({
             ...x,
-            connectors: subscribeConnectors
-              ? connectors({ chainId })
-              : x.connectors,
             provider: subscribeProvider ? provider({ chainId }) : x.provider,
             webSocketProvider: subscribeWebSocketProvider
               ? webSocketProvider({ chainId })
@@ -311,7 +308,7 @@ export let client: Client<providers.BaseProvider, providers.WebSocketProvider>
 
 export function createClient<
   TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 >(config?: ClientConfig<TProvider, TWebSocketProvider>) {
   const client_ = new Client<TProvider, TWebSocketProvider>(config)
   client = client_ as unknown as Client<
@@ -323,7 +320,7 @@ export function createClient<
 
 export function getClient<
   TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
 >() {
   if (!client) {
     warn('No client defined. Falling back to default client.')

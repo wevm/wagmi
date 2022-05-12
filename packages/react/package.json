@@ -16,6 +16,22 @@
       "module": "./dist/wagmi.esm.js",
       "default": "./dist/wagmi.cjs.js"
     },
+    "./apiProviders/alchemy": {
+      "module": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.esm.js",
+      "default": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.cjs.js"
+    },
+    "./apiProviders/public": {
+      "module": "./apiProviders/public/dist/wagmi-core-apiProviders-public.esm.js",
+      "default": "./apiProviders/public/dist/wagmi-core-apiProviders-public.cjs.js"
+    },
+    "./apiProviders/infura": {
+      "module": "./apiProviders/infura/dist/wagmi-core-apiProviders-infura.esm.js",
+      "default": "./apiProviders/infura/dist/wagmi-core-apiProviders-infura.cjs.js"
+    },
+    "./apiProviders/staticJsonRpc": {
+      "module": "./apiProviders/staticJsonRpc/dist/wagmi-core-apiProviders-staticJsonRpc.esm.js",
+      "default": "./apiProviders/staticJsonRpc/dist/wagmi-core-apiProviders-staticJsonRpc.cjs.js"
+    },
     "./connectors/coinbaseWallet": {
       "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
       "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
@@ -34,12 +50,17 @@
     }
   },
   "files": [
+    "/apiProviders",
     "/dist",
     "/connectors"
   ],
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "apiProviders/alchemy.ts",
+      "apiProviders/public.ts",
+      "apiProviders/infura.ts",
+      "apiProviders/staticJsonRpc.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/injected.ts",
       "connectors/metaMask.ts",

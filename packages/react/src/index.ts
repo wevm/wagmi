@@ -50,6 +50,7 @@ export {
   allChains,
   chain,
   chainId,
+  configureChains,
   createStorage,
   createWagmiStorage,
   defaultChains,
@@ -70,6 +71,7 @@ export {
   UserRejectedRequestError,
 } from '@wagmi/core'
 export type {
+  ApiProvider,
   Chain,
   ConnectorData,
   ConnectorEvents,

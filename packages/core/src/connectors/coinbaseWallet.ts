@@ -115,12 +115,15 @@ export class CoinbaseWalletConnector extends Connector<
 
   async getProvider() {
     if (!this.#provider) {
+      const chain =
+        this.chains.find((chain) => chain.id === this.options.chainId) ||
+        this.chains[0]
+      const chainId = this.options.chainId || chain.id
+      const jsonRpcUrl = this.options.jsonRpcUrl || chain.rpcUrls.default
+
       const CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
       this.#client = new CoinbaseWalletSDK(this.options)
-      this.#provider = this.#client.makeWeb3Provider(
-        this.options.jsonRpcUrl,
-        this.options.chainId,
-      )
+      this.#provider = this.#client.makeWeb3Provider(jsonRpcUrl, chainId)
     }
     return this.#provider
   }
@@ -158,6 +161,7 @@ export class CoinbaseWalletConnector extends Connector<
         chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
+          network: `${id}`,
           rpcUrls: { default: '' },
         }
       )

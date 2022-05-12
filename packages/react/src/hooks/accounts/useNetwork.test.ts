@@ -306,6 +306,7 @@ describe('useNetwork', () => {
                 "name": "Rinkeby Ether",
                 "symbol": "rETH",
               },
+              "network": "rinkeby",
               "rpcUrls": {
                 "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
                 "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",

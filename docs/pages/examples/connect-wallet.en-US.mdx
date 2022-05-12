@@ -14,49 +14,48 @@ First, we create a new wagmi client set up with the Injected (i.e. MetaMask), Wa
 
 ```tsx
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
+
+import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
+import { publicProvider } from 'wagmi/apiProviders/public'
+
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-// API key for Ethereum node
-// Two popular services are Alchemy (alchemy.com) and Infura (infura.io)
 const alchemyId = process.env.ALCHEMY_ID
 
-const chains = defaultChains
-const defaultChain = chain.mainnet
+// Configure chains & providers with the Alchemy API provider.
+// Two popular API providers are Alchemy (alchemy.com) and Infura (infura.io)
+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+  alchemyProvider({ alchemyId }),
+  publicProvider(),
+])
 
-// Set up connectors
+// Set up client
 const client = createClient({
   autoConnect: true,
-  connectors({ chainId }) {
-    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
-    const rpcUrl = chain.rpcUrls.alchemy
-      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-      : chain.rpcUrls.default
-    return [
-      new MetaMaskConnector({ chains }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: 'wagmi',
-          chainId: chain.id,
-          jsonRpcUrl: rpcUrl,
-        },
-      }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          qrcode: true,
-          rpc: { [chain.id]: rpcUrl },
-        },
-      }),
-      new InjectedConnector({
-        chains,
-        options: { name: 'Injected' },
-      }),
-    ]
-  },
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: 'wagmi',
+      },
+    }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        qrcode: true,
+      },
+    }),
+    new InjectedConnector({
+      chains,
+      options: { name: 'Injected' },
+    }),
+  ],
+  provider,
+  webSocketProvider,
 })
 
 // Pass client to React Context Provider

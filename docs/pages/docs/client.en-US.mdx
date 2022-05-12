@@ -55,27 +55,6 @@ const client = createClient({
 })
 ```
 
-`connectors` also accepts a function that receives basic data about the current connection. For example, this is useful if you want to make your connectors aware of the active chain.
-
-```ts {5-15}
-import { createClient } from 'wagmi'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-
-const client = createClient({
-  connectors(config) {
-    return [
-      new InjectedConnector(),
-      new CoinbaseWalletConnector({
-        options: {
-          appName: 'wagmi',
-          chainId: config.chainId,
-        },
-      }),
-    ]
-  },
-})
-```
-
 ### provider (optional)
 
 ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network. Defaults to `(config) => getDefaultProvider(config.chainId)`.

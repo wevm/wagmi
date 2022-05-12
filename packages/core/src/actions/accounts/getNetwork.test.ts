@@ -42,6 +42,7 @@ describe('getNetwork', () => {
               "name": "Ether",
               "symbol": "ETH",
             },
+            "network": "homestead",
             "rpcUrls": {
               "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
               "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -68,6 +69,7 @@ describe('getNetwork', () => {
                 "name": "Ether",
                 "symbol": "ETH",
               },
+              "network": "homestead",
               "rpcUrls": {
                 "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
                 "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -92,6 +94,7 @@ describe('getNetwork', () => {
                 "name": "Ropsten Ether",
                 "symbol": "ropETH",
               },
+              "network": "ropsten",
               "rpcUrls": {
                 "alchemy": "https://eth-ropsten.alchemyapi.io/v2",
                 "default": "https://eth-ropsten.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -117,6 +120,7 @@ describe('getNetwork', () => {
                 "name": "Rinkeby Ether",
                 "symbol": "rETH",
               },
+              "network": "rinkeby",
               "rpcUrls": {
                 "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
                 "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -142,6 +146,7 @@ describe('getNetwork', () => {
                 "name": "Goerli Ether",
                 "symbol": "gETH",
               },
+              "network": "goerli",
               "rpcUrls": {
                 "alchemy": "https://eth-goerli.alchemyapi.io/v2",
                 "default": "https://eth-goerli.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -167,6 +172,7 @@ describe('getNetwork', () => {
                 "name": "Kovan Ether",
                 "symbol": "kETH",
               },
+              "network": "kovan",
               "rpcUrls": {
                 "alchemy": "https://eth-kovan.alchemyapi.io/v2",
                 "default": "https://eth-kovan.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -208,6 +214,7 @@ describe('getNetwork', () => {
               "name": "Kovan Ether",
               "symbol": "KOR",
             },
+            "network": "optimism-kovan",
             "rpcUrls": {
               "alchemy": "https://opt-kovan.g.alchemy.com/v2",
               "default": "https://kovan.optimism.io",
@@ -235,6 +242,7 @@ describe('getNetwork', () => {
                 "name": "Ether",
                 "symbol": "ETH",
               },
+              "network": "homestead",
               "rpcUrls": {
                 "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
                 "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -259,6 +267,7 @@ describe('getNetwork', () => {
                 "name": "Ropsten Ether",
                 "symbol": "ropETH",
               },
+              "network": "ropsten",
               "rpcUrls": {
                 "alchemy": "https://eth-ropsten.alchemyapi.io/v2",
                 "default": "https://eth-ropsten.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -284,6 +293,7 @@ describe('getNetwork', () => {
                 "name": "Rinkeby Ether",
                 "symbol": "rETH",
               },
+              "network": "rinkeby",
               "rpcUrls": {
                 "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
                 "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -309,6 +319,7 @@ describe('getNetwork', () => {
                 "name": "Goerli Ether",
                 "symbol": "gETH",
               },
+              "network": "goerli",
               "rpcUrls": {
                 "alchemy": "https://eth-goerli.alchemyapi.io/v2",
                 "default": "https://eth-goerli.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -334,6 +345,7 @@ describe('getNetwork', () => {
                 "name": "Kovan Ether",
                 "symbol": "kETH",
               },
+              "network": "kovan",
               "rpcUrls": {
                 "alchemy": "https://eth-kovan.alchemyapi.io/v2",
                 "default": "https://eth-kovan.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",

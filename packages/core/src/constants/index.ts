@@ -11,7 +11,12 @@ export {
   defaultL2Chains,
 } from './chains'
 
-export { alchemyRpcUrls, infuraRpcUrls } from './rpcs'
+export {
+  alchemyRpcUrls,
+  defaultAlchemyId,
+  infuraRpcUrls,
+  defaultInfuraId,
+} from './rpcs'
 export type { RpcProviderName } from './rpcs'
 
 export { units } from './units'

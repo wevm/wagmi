@@ -42,6 +42,7 @@ it('should expose correct exports', () => {
       "allChains",
       "chain",
       "chainId",
+      "configureChains",
       "createStorage",
       "createWagmiStorage",
       "defaultChains",

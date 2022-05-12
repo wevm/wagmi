@@ -32,6 +32,7 @@ describe('switchNetwork', () => {
             "name": "Kovan Ether",
             "symbol": "KOR",
           },
+          "network": "optimism-kovan",
           "rpcUrls": {
             "alchemy": "https://opt-kovan.g.alchemy.com/v2",
             "default": "https://kovan.optimism.io",

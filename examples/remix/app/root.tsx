@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { providers } from 'ethers'
 import {
   Links,
   LiveReload,
@@ -11,7 +10,8 @@ import {
 } from 'remix'
 import type { MetaFunction } from 'remix'
 
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { Provider, configureChains, createClient, defaultChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -28,60 +28,37 @@ export const meta: MetaFunction = () => {
   return { title: 'wagmi' }
 }
 
-const chains = defaultChains
-const defaultChain = chain.mainnet
-
-const isChainSupported = (chainId?: number) =>
-  chains.some((x) => x.id === chainId)
-
 export default function App() {
   const { alchemyId } = useLoaderData()
 
-  const client = useMemo(
-    () =>
-      createClient({
-        autoConnect: true,
-        connectors({ chainId }) {
-          const chain = chains.find((x) => x.id === chainId) ?? defaultChain
-          const rpcUrl = chain.rpcUrls.alchemy
-            ? `${chain.rpcUrls.alchemy}/${alchemyId}`
-            : chain.rpcUrls.default
-          return [
-            new InjectedConnector({ chains }),
-            new CoinbaseWalletConnector({
-              chains,
-              options: {
-                appName: 'wagmi',
-                chainId: chain.id,
-                jsonRpcUrl: rpcUrl,
-              },
-            }),
-            new WalletConnectConnector({
-              chains,
-              options: {
-                qrcode: true,
-                rpc: {
-                  [chain.id]: rpcUrl,
-                },
-              },
-            }),
-          ]
-        },
-        provider({ chainId }) {
-          return new providers.AlchemyProvider(
-            isChainSupported(chainId) ? chainId : defaultChain.id,
-            alchemyId,
-          )
-        },
-        webSocketProvider({ chainId }) {
-          return new providers.AlchemyWebSocketProvider(
-            isChainSupported(chainId) ? chainId : defaultChain.id,
-            alchemyId,
-          )
-        },
-      }),
-    [alchemyId],
-  )
+  const client = useMemo(() => {
+    const { chains, provider, webSocketProvider } = configureChains(
+      defaultChains,
+      [alchemyProvider({ alchemyId })],
+    )
+
+    return createClient({
+      autoConnect: true,
+      connectors: [
+        new MetaMaskConnector({ chains }),
+        new InjectedConnector({ chains }),
+        new CoinbaseWalletConnector({
+          chains,
+          options: {
+            appName: 'wagmi',
+          },
+        }),
+        new WalletConnectConnector({
+          chains,
+          options: {
+            qrcode: true,
+          },
+        }),
+      ],
+      provider,
+      webSocketProvider,
+    })
+  }, [alchemyId])
 
   return (
     <html lang="en">
