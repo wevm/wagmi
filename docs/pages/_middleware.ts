@@ -3,6 +3,7 @@ import { locales } from 'nextra/locales'
 
 const redirects: Record<string, string> = {
   '/docs/migrating-to-030': '/docs/migrating-to-03',
+  '/docs/provider': '/docs/wagmi-provider',
 }
 
 export function middleware(request: NextRequest) {
