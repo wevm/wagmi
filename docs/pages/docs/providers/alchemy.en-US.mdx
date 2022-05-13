@@ -1,0 +1,53 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Alchemy
+
+The `alchemyProvider` configures the chains with Alchemy RPC URLs and also provides an [ethers.js `AlchemyProvider`](https://docs.ethers.io/v5/api/providers/api-providers/#AlchemyProvider).
+
+```ts
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+```
+
+## Usage
+
+```ts
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
+const alchemyId = process.env.ALCHEMY_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [alchemyProvider({ alchemyId })],
+)
+```
+
+## Return Value
+
+```ts
+{
+  chains: Chain[],
+  provider: AlchemyProvider,
+  webSocketProvider: AlchemyWebSocketProvider
+}
+```
+
+## Configuration
+
+### alchemyId (optional)
+
+Your Alchemy ID from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/).
+
+If no Alchemy ID is provided, it will use the public Alchemy ID. It is recommended to provide your own Alchemy ID to prevent being rate-limited.
+
+```ts {8}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
+const alchemyId = process.env.ALCHEMY_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [alchemyProvider({ alchemyId })],
+)
+```

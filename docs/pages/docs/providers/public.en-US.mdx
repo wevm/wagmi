@@ -1,0 +1,38 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Public
+
+The `publicProvider` configures the chains with a public RPC URL and also provides an [ethers.js `getpublicProvider`](https://docs.ethers.io/v5/api/providers/#providers-getpublicProvider).
+
+```ts
+import { publicProvider } from 'wagmi/providers/public'
+```
+
+## Usage
+
+```ts
+import { chain, configureChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [publicProvider()],
+)
+```
+
+<Callout emoji="⚠️">
+  Only having `publicProvider` in your providers will make the chain use the
+  public RPC URL which could lead to rate-limiting. It is recommended to also
+  include another provider in your list (such as: `alchemyProvider`,
+  `infuraProvider` or `staticJsonRpcProvider`).
+</Callout>
+
+## Return Value
+
+```ts
+{
+  chains: Chain[],
+  provider: BaseProvider,
+  webSocketProvider: WebSocketProvider
+}
+```

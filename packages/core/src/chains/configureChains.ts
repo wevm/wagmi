@@ -1,8 +1,6 @@
 import { providers } from 'ethers'
 
-import { Chain } from '../types'
-
-import { ApiProvider } from '../apiProviders/ApiProvider'
+import { Chain, ChainProvider } from '../types'
 
 type ConfigureChainsConfig =
   | {
@@ -15,26 +13,26 @@ type ConfigureChainsConfig =
     }
 
 export function configureChains<
-  Provider extends providers.BaseProvider = providers.BaseProvider,
-  WebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TProvider extends providers.BaseProvider = providers.BaseProvider,
+  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
 >(
   defaultChains: Chain[],
-  apiProviders: ApiProvider<Provider, WebSocketProvider>[],
+  providers: ChainProvider<TProvider, TWebSocketProvider>[],
   { targetQuorum = 1, minQuorum = 1 }: ConfigureChainsConfig = {},
 ) {
   if (targetQuorum < minQuorum)
     throw new Error('quorum cannot be lower than minQuorum')
 
   let chains: Chain[] = []
-  const providers_: { [chainId: number]: (() => Provider)[] } = {}
+  const providers_: { [chainId: number]: (() => TProvider)[] } = {}
   const webSocketProviders_: {
-    [chainId: number]: (() => WebSocketProvider)[]
+    [chainId: number]: (() => TWebSocketProvider)[]
   } = {}
 
   for (const chain of defaultChains) {
     let configExists = false
-    for (const apiProvider of apiProviders) {
-      const apiConfig = apiProvider(chain)
+    for (const provider of providers) {
+      const apiConfig = provider(chain)
 
       // If no API configuration was found (ie. no RPC URL) for
       // this provider, then we skip and check the next one.
@@ -57,14 +55,14 @@ export function configureChains<
       }
     }
 
-    // If no API configuration was found across the API providers
+    // If no API configuration was found across the providers
     // then we throw an error to the consumer.
     if (!configExists) {
       throw new Error(
         [
-          `Could not find valid API provider configuration for chain "${chain.name}".\n`,
+          `Could not find valid provider configuration for chain "${chain.name}".\n`,
           "You may need to add `staticJsonRpcProvider` to `configureChains` with the chain's RPC URLs.",
-          'Read more: https://wagmi.sh/docs/api-providers/json-rpc',
+          'Read more: https://wagmi.sh/docs/providers/json-rpc',
         ].join('\n'),
       )
     }

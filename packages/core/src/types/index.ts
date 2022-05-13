@@ -1,3 +1,5 @@
+import { providers } from 'ethers'
+
 import {
   BlockExplorer,
   BlockExplorerName,
@@ -22,6 +24,15 @@ export type Chain = {
   }
   testnet?: boolean
 }
+
+export type ChainProvider<
+  Provider extends providers.BaseProvider = providers.BaseProvider,
+  WebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+> = (chain: Chain) => {
+  chain: Chain
+  provider: () => Provider
+  webSocketProvider?: () => WebSocketProvider
+} | null
 
 export type Unit = typeof units[number]
 

@@ -15,10 +15,10 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-import { alchemyProvider } from '../../../../packages/react/apiProviders/alchemy'
-import { infuraProvider } from '../../../../packages/react/apiProviders/infura'
-import { staticJsonRpcProvider } from '../../../../packages/react/apiProviders/staticJsonRpc'
-import { publicProvider } from '../../../../packages/react/apiProviders/public'
+import { alchemyProvider } from '../../../../packages/react/providers/alchemy'
+import { infuraProvider } from '../../../../packages/react/providers/infura'
+import { staticJsonRpcProvider } from '../../../../packages/react/providers/staticJsonRpc'
+import { publicProvider } from '../../../../packages/react/providers/public'
 
 const avalanche: Chain = {
   id: 43_114,

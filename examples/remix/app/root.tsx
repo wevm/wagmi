@@ -11,7 +11,7 @@ import {
 import type { MetaFunction } from 'remix'
 
 import { Provider, configureChains, createClient, defaultChains } from 'wagmi'
-import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'

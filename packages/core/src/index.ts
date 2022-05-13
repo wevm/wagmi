@@ -84,8 +84,6 @@ export type {
   WriteContractResult,
 } from './actions'
 
-export type { ApiProvider } from './apiProviders'
-
 export { configureChains } from './chains'
 
 export {
@@ -133,6 +131,6 @@ export {
 } from './storage'
 export type { WagmiStorage as Storage, WagmiStorage } from './storage'
 
-export type { Chain, Unit } from './types'
+export type { Chain, ChainProvider, Unit } from './types'
 
 export { normalizeChainId } from './utils'

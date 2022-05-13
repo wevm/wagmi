@@ -2,10 +2,10 @@ import { providers } from 'ethers'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import { alchemyProvider } from '../apiProviders/alchemy'
-import { publicProvider } from '../apiProviders/public'
-import { infuraProvider } from '../apiProviders/infura'
-import { staticJsonRpcProvider } from '../apiProviders/staticJsonRpc'
+import { alchemyProvider } from '../providers/alchemy'
+import { publicProvider } from '../providers/public'
+import { infuraProvider } from '../providers/infura'
+import { staticJsonRpcProvider } from '../providers/staticJsonRpc'
 
 import { chain, defaultAlchemyId, defaultInfuraId } from '../constants'
 import { Chain } from '../types'
@@ -120,7 +120,7 @@ describe('configureChains', () => {
     server.close()
   })
 
-  describe('single API provider', () => {
+  describe('single provider', () => {
     describe('alchemy', () => {
       const { chains, provider } = configureChains(defaultChains, [
         alchemyProvider({ alchemyId }),
@@ -160,10 +160,10 @@ describe('configureChains', () => {
             [alchemyProvider({ alchemyId })],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Could not find valid API provider configuration for chain \\"Avalanche\\".
+          "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
@@ -207,10 +207,10 @@ describe('configureChains', () => {
             [infuraProvider({ infuraId })],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Could not find valid API provider configuration for chain \\"Avalanche\\".
+          "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
@@ -263,10 +263,10 @@ describe('configureChains', () => {
             [publicProvider()],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Could not find valid API provider configuration for chain \\"Polygon\\".
+          "Could not find valid provider configuration for chain \\"Polygon\\".
 
           You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
@@ -280,7 +280,7 @@ describe('configureChains', () => {
         }),
       ])
 
-      it('configure chains with provided RPC URLs for JSON RPC API provider', async () => {
+      it('configure chains with provided RPC URLs for JSON RPC provider', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default))
           .toMatchInlineSnapshot(`
           [
@@ -326,16 +326,16 @@ describe('configureChains', () => {
             }),
           ]),
         ).toThrowErrorMatchingInlineSnapshot(`
-          "Could not find valid API provider configuration for chain \\"Ethereum\\".
+          "Could not find valid provider configuration for chain \\"Ethereum\\".
 
           You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/api-providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
   })
 
-  describe('multiple API providers', () => {
+  describe('multiple providers', () => {
     const polygon = {
       ...chain.polygon,
       rpcUrls: { ...chain.polygon.rpcUrls, alchemy: '' },
@@ -410,10 +410,10 @@ describe('configureChains', () => {
           ],
         ),
       ).toThrowErrorMatchingInlineSnapshot(`
-        "Could not find valid API provider configuration for chain \\"Avalanche\\".
+        "Could not find valid provider configuration for chain \\"Avalanche\\".
 
         You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-        Read more: https://wagmi.sh/docs/api-providers/json-rpc"
+        Read more: https://wagmi.sh/docs/providers/json-rpc"
       `)
     })
   })

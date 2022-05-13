@@ -6,7 +6,7 @@
 
 **Passing a function to `connectors` has been deprecated.**
 
-If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](https://wagmi.sh/docs/api-providers/configuring-chains).
+If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](https://wagmi.sh/docs/providers/configuring-chains).
 
 ### Before
 
@@ -61,8 +61,8 @@ const client = createClient({
 ```tsx
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
 
-import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { publicProvider } from 'wagmi/apiProviders/public'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
