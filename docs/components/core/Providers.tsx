@@ -12,7 +12,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-import { alchemyProvider } from '../../../packages/core/providers/alchemy'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
 
