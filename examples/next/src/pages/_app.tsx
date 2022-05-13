@@ -2,7 +2,12 @@ import * as React from 'react'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 
-import { Provider, configureChains, createClient, defaultChains } from 'wagmi'
+import {
+  WagmiProvider,
+  configureChains,
+  createClient,
+  defaultChains,
+} from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -39,13 +44,13 @@ const client = createClient({
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider client={client}>
+    <WagmiProvider client={client}>
       <NextHead>
         <title>wagmi</title>
       </NextHead>
 
       <Component {...pageProps} />
-    </Provider>
+    </WagmiProvider>
   )
 }
 

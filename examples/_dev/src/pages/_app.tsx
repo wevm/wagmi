@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import {
   Chain,
-  Provider,
+  WagmiProvider,
   chain,
   configureChains,
   createClient,
@@ -96,9 +96,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>wagmi</title>
       </NextHead>
 
-      <Provider client={client}>
+      <WagmiProvider client={client}>
         <Component {...pageProps} />
-      </Provider>
+      </WagmiProvider>
     </>
   )
 }

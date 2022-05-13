@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import { providers } from 'ethers'
 
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { WagmiProvider, chain, createClient, defaultChains } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -60,8 +60,8 @@ const client = createClient({
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Provider client={client}>
+    <WagmiProvider client={client}>
       <App />
-    </Provider>
+    </WagmiProvider>
   </React.StrictMode>,
 )

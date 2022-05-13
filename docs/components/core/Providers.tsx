@@ -1,6 +1,11 @@
 import * as React from 'react'
 
-import { Provider, configureChains, createClient, defaultChains } from 'wagmi'
+import {
+  WagmiProvider,
+  configureChains,
+  createClient,
+  defaultChains,
+} from 'wagmi'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -45,5 +50,5 @@ type Props = {
 }
 
 export function Providers({ children }: Props) {
-  return <Provider client={client}>{children}</Provider>
+  return <WagmiProvider client={client}>{children}</WagmiProvider>
 }
