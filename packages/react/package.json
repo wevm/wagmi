@@ -16,22 +16,6 @@
       "module": "./dist/wagmi.esm.js",
       "default": "./dist/wagmi.cjs.js"
     },
-    "./apiProviders/alchemy": {
-      "module": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.esm.js",
-      "default": "./apiProviders/alchemy/dist/wagmi-core-apiProviders-alchemy.cjs.js"
-    },
-    "./apiProviders/public": {
-      "module": "./apiProviders/public/dist/wagmi-core-apiProviders-public.esm.js",
-      "default": "./apiProviders/public/dist/wagmi-core-apiProviders-public.cjs.js"
-    },
-    "./apiProviders/infura": {
-      "module": "./apiProviders/infura/dist/wagmi-core-apiProviders-infura.esm.js",
-      "default": "./apiProviders/infura/dist/wagmi-core-apiProviders-infura.cjs.js"
-    },
-    "./apiProviders/staticJsonRpc": {
-      "module": "./apiProviders/staticJsonRpc/dist/wagmi-core-apiProviders-staticJsonRpc.esm.js",
-      "default": "./apiProviders/staticJsonRpc/dist/wagmi-core-apiProviders-staticJsonRpc.cjs.js"
-    },
     "./connectors/coinbaseWallet": {
       "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
       "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
@@ -47,24 +31,40 @@
     "./connectors/walletConnect": {
       "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js",
       "default": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.cjs.js"
+    },
+    "./providers/alchemy": {
+      "module": "./providers/alchemy/dist/wagmi-providers-alchemy.esm.js",
+      "default": "./providers/alchemy/dist/wagmi-providers-alchemy.cjs.js"
+    },
+    "./providers/public": {
+      "module": "./providers/public/dist/wagmi-providers-public.esm.js",
+      "default": "./providers/public/dist/wagmi-providers-public.cjs.js"
+    },
+    "./providers/infura": {
+      "module": "./providers/infura/dist/wagmi-providers-infura.esm.js",
+      "default": "./providers/infura/dist/wagmi-providers-infura.cjs.js"
+    },
+    "./providers/staticJsonRpc": {
+      "module": "./providers/staticJsonRpc/dist/wagmi-providers-staticJsonRpc.esm.js",
+      "default": "./providers/staticJsonRpc/dist/wagmi-providers-staticJsonRpc.cjs.js"
     }
   },
   "files": [
-    "/apiProviders",
+    "/connectors",
     "/dist",
-    "/connectors"
+    "/providers"
   ],
   "preconstruct": {
     "entrypoints": [
       "index.ts",
-      "apiProviders/alchemy.ts",
-      "apiProviders/public.ts",
-      "apiProviders/infura.ts",
-      "apiProviders/staticJsonRpc.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/injected.ts",
       "connectors/metaMask.ts",
-      "connectors/walletConnect.ts"
+      "connectors/walletConnect.ts",
+      "providers/alchemy.ts",
+      "providers/public.ts",
+      "providers/infura.ts",
+      "providers/staticJsonRpc.ts"
     ]
   },
   "peerDependencies": {

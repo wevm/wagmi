@@ -1,13 +1,18 @@
 import * as React from 'react'
 
-import { Provider, configureChains, createClient, defaultChains } from 'wagmi'
+import {
+  WagmiProvider,
+  configureChains,
+  createClient,
+  defaultChains,
+} from 'wagmi'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-import { alchemyProvider } from '../../../packages/core/apiProviders/alchemy'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
 
@@ -45,5 +50,5 @@ type Props = {
 }
 
 export function Providers({ children }: Props) {
-  return <Provider client={client}>{children}</Provider>
+  return <WagmiProvider client={client}>{children}</WagmiProvider>
 }

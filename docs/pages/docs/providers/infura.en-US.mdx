@@ -1,0 +1,51 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# Infura
+
+The `infuraProvider` configures the chains with Infura RPC URLs and also provides an [ethers.js `InfuraProvider`](https://docs.ethers.io/v5/api/providers/api-providers/#InfuraProvider).
+
+```ts
+import { infuraProvider } from 'wagmi/providers/infura'
+```
+
+## Usage
+
+```ts
+import { chain, configureChains } from 'wagmi'
+import { infuraProvider } from 'wagmi/providers/infura'
+
+const infuraId = process.env.INFURA_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [infuraProvider({ infuraId })],
+)
+```
+
+## Return Value
+
+```ts
+{
+  chains: Chain[],
+  provider: InfuraProvider,
+  webSocketProvider: InfuraWebSocketProvider
+}
+```
+
+## Configuration
+
+### infuraId (optional)
+
+Your Infura ID from the [Infura Dashboard](https://infura.io/login).
+
+If no Infura ID is provided, it will use the public Infura ID. It is recommended to provide your own Infura ID to prevent being rate-limited.
+
+```ts {6}
+import { chain, configureChains } from 'wagmi'
+import { infuraProvider } from 'wagmi/providers/infura'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [infuraProvider({ infuraId })],
+)
+```

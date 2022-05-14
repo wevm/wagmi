@@ -13,10 +13,10 @@ The example below uses [`useConnect`](/docs/hooks/useConnect), [`useAccount`](/d
 First, we create a new wagmi client set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors:
 
 ```tsx
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { WagmiProvider, createClient, defaultChains } from 'wagmi'
 
-import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { publicProvider } from 'wagmi/apiProviders/public'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -25,8 +25,8 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const alchemyId = process.env.ALCHEMY_ID
 
-// Configure chains & providers with the Alchemy API provider.
-// Two popular API providers are Alchemy (alchemy.com) and Infura (infura.io)
+// Configure chains & providers with the Alchemy provider.
+// Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
   alchemyProvider({ alchemyId }),
   publicProvider(),
@@ -61,9 +61,9 @@ const client = createClient({
 // Pass client to React Context Provider
 function App() {
   return (
-    <Provider client={client}>
+    <WagmiProvider client={client}>
       <Profile />
-    </Provider>
+    </WagmiProvider>
   )
 }
 ```

@@ -18,15 +18,15 @@ import { Header } from '../components/docs'
 ## Overview
 
 ```tsx
-import { Provider, createClient } from 'wagmi'
+import { WagmiProvider, createClient } from 'wagmi'
 
 const client = createClient()
 
 function App() {
   return (
-    <Provider client={client}>
+    <WagmiProvider client={client}>
       <Profile />
-    </Provider>
+    </WagmiProvider>
   )
 }
 ```

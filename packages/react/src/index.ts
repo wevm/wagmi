@@ -71,8 +71,8 @@ export {
   UserRejectedRequestError,
 } from '@wagmi/core'
 export type {
-  ApiProvider,
   Chain,
+  ChainProvider,
   ConnectorData,
   ConnectorEvents,
   Storage,

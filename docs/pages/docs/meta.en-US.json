@@ -1,10 +1,10 @@
 {
   "getting-started": "Getting Started",
   "comparison": "Library Comparison",
-  "migrating-to-03": "Migrating to 0.3.x",
+  "migrating-to-03": "Migrating to >=0.3.x",
   "client": "Client",
-  "provider": "Provider",
-  "api-providers": "API Providers",
+  "wagmi-provider": "WagmiProvider",
+  "providers": "Providers",
   "connectors": "Connectors",
   "hooks": "Hooks",
   "constants": "Constants"

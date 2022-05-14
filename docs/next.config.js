@@ -6,11 +6,15 @@ const withNextra = require('nextra')({
   unstable_staticImage: true,
 })
 
-const withPreconstruct = require('@preconstruct/next')
-
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+
+// Only use preconstruct for development
+const withPreconstruct =
+  process.env.NODE_ENV === 'development'
+    ? require('@preconstruct/next')
+    : (config) => config
 
 /** @type {import('next').NextConfig} */
 const config = {

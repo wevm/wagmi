@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-providers-public.cjs.js",
+  "module": "dist/wagmi-providers-public.esm.js"
+}

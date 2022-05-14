@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import {
   Chain,
-  Provider,
+  WagmiProvider,
   chain,
   configureChains,
   createClient,
@@ -15,10 +15,10 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-import { alchemyProvider } from '../../../../packages/react/apiProviders/alchemy'
-import { infuraProvider } from '../../../../packages/react/apiProviders/infura'
-import { staticJsonRpcProvider } from '../../../../packages/react/apiProviders/staticJsonRpc'
-import { publicProvider } from '../../../../packages/react/apiProviders/public'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { staticJsonRpcProvider } from 'wagmi/providers/staticJsonRpc'
+import { publicProvider } from 'wagmi/providers/public'
 
 const avalanche: Chain = {
   id: 43_114,
@@ -96,9 +96,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>wagmi</title>
       </NextHead>
 
-      <Provider client={client}>
+      <WagmiProvider client={client}>
         <Component {...pageProps} />
-      </Provider>
+      </WagmiProvider>
     </>
   )
 }

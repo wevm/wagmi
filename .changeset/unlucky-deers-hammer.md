@@ -5,17 +5,17 @@
 
 Add `configureChains` API.
 
-The `configureChains` function allows you to configure your chains with a selected API provider (Alchemy, Infura, JSON RPC, Public RPC URLs). This means you don't have to worry about deriving your own RPC URLs for each chain, or instantiating a Ethereum Provider.
+The `configureChains` function allows you to configure your chains with a selected provider (Alchemy, Infura, JSON RPC, Public RPC URLs). This means you don't have to worry about deriving your own RPC URLs for each chain, or instantiating a Ethereum Provider.
 
-`configureChains` accepts 3 parameters: an array of chains, and an array of API providers, and a config object.
+`configureChains` accepts 3 parameters: an array of chains, and an array of providers, and a config object.
 
-[Learn more about configuring chains & API providers.](https://wagmi.sh/docs/api-providers/configuring-chains)
+[Learn more about configuring chains & providers.](https://wagmi.sh/docs/providers/configuring-chains)
 
 ### Before
 
 ```tsx
 import { providers } from 'ethers'
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { WagmiProvider, chain, createClient, defaultChains } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -63,10 +63,10 @@ const client = createClient({
 ### After
 
 ```tsx
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { WagmiProvider, chain, createClient, defaultChains } from 'wagmi'
 
-import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
-import { publicProvider } from 'wagmi/apiProviders/public'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'

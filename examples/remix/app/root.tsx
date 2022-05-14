@@ -10,8 +10,13 @@ import {
 } from 'remix'
 import type { MetaFunction } from 'remix'
 
-import { Provider, configureChains, createClient, defaultChains } from 'wagmi'
-import { alchemyProvider } from 'wagmi/apiProviders/alchemy'
+import {
+  WagmiProvider,
+  configureChains,
+  createClient,
+  defaultChains,
+} from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -70,9 +75,9 @@ export default function App() {
         <script> var global = global || window; </script>
       </head>
       <body>
-        <Provider client={client}>
+        <WagmiProvider client={client}>
           <Outlet />
-        </Provider>
+        </WagmiProvider>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
