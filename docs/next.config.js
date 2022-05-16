@@ -10,11 +10,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-// Only use preconstruct for development
-const withPreconstruct =
-  process.env.NODE_ENV === 'development'
-    ? require('@preconstruct/next')
-    : (config) => config
+const withPreconstruct = require('@preconstruct/next')
 
 /** @type {import('next').NextConfig} */
 const config = {
@@ -39,4 +35,6 @@ const config = {
   },
 }
 
-module.exports = withPreconstruct(withBundleAnalyzer(withNextra(config)))
+if (process.env.NODE_ENV === 'development')
+  module.exports = withPreconstruct(withBundleAnalyzer(withNextra(config)))
+else module.exports = withBundleAnalyzer(withNextra(config))
