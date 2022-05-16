@@ -14,6 +14,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { MagicConnector } from 'wagmi/connectors/magic'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
@@ -82,6 +83,12 @@ const client = createClient({
               ? detectedName
               : detectedName.join(', ')
           })`,
+      },
+    }),
+    new MagicConnector({
+      chains,
+      options: {
+        apiKey: process.env.NEXT_PUBLIC_MAGIC_API_KEY,
       },
     }),
   ],

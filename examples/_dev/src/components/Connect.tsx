@@ -15,6 +15,12 @@ export const Connect = () => {
     pendingConnector,
   } = useConnect()
 
+  const connectMagic = (magic) => {
+    const email = prompt('enter your email')
+    magic.loginWithMagicLink({ email, showUI: true })
+    connect(magic)
+  }
+
   return (
     <div>
       <div>
@@ -24,7 +30,7 @@ export const Connect = () => {
               !x.ready || isReconnecting || activeConnector?.id === x.id
             }
             key={x.name}
-            onClick={() => connect(x)}
+            onClick={() => (x.id === 'magic' ? connectMagic(x) : connect(x))}
           >
             {x.id === 'injected' ? (isMounted ? x.name : x.id) : x.name}
             {isMounted && !x.ready && ' (unsupported)'}

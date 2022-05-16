@@ -19,6 +19,10 @@
       "module": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
       "default": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js"
     },
+    "./connectors/magic": {
+      "module": "./connectors/magic/dist/wagmi-core-connectors-magic.esm.js",
+      "default": "./connectors/magic/dist/wagmi-core-connectors-magic.cjs.js"
+    },
     "./connectors/metaMask": {
       "module": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.esm.js",
       "default": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.cjs.js"
@@ -57,6 +61,7 @@
     "entrypoints": [
       "index.ts",
       "connectors/coinbaseWallet.ts",
+      "connectors/magic.ts",
       "connectors/metaMask.ts",
       "connectors/walletConnect.ts",
       "connectors/mock/index.ts",
@@ -69,13 +74,17 @@
   "peerDependencies": {
     "@coinbase/wallet-sdk": ">=3.0.6",
     "@walletconnect/ethereum-provider": ">=1.7.5",
-    "ethers": ">=5.5.1"
+    "ethers": ">=5.5.1",
+    "magic-sdk": ">=8.1.1"
   },
   "peerDependenciesMeta": {
     "@coinbase/wallet-sdk": {
       "optional": true
     },
     "@walletconnect/ethereum-provider": {
+      "optional": true
+    },
+    "magic-sdk": {
       "optional": true
     }
   },
@@ -86,7 +95,8 @@
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.1.0",
     "@walletconnect/ethereum-provider": "^1.7.8",
-    "ethers": "^5.6.5"
+    "ethers": "^5.6.5",
+    "magic-sdk": "^8.1.1"
   },
   "keywords": [
     "eth",

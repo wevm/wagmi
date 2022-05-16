@@ -1,0 +1,69 @@
+# Magic
+
+The `MagicConnector` wraps the [Magic SDK](https://magic.link/) and supports several authentication options for easy Web3 onboarding.
+
+```ts
+import { MagicConnector } from 'wagmi/connectors/magic'
+```
+
+## Usage
+
+```ts
+import { MagicConnector } from 'wagmi/connectors/magic'
+
+const connector = new MagicConnector({
+  options: {
+    apiKey: <MAGIC_API_KEY>,
+  },
+})
+```
+
+Before connecting you must select one of the available [auth modules](https://magic.link/docs/api-reference/client-side-sdks/web#auth-module).
+
+```ts
+connector.loginWithMagicLink({ showUI, email, redirectURI })
+
+connector.loginWithEmailOTP({ email })
+
+connector.loginWithSMS({ phoneNumber })
+
+connector.loginWithCredential(credentialOrQueryString?)
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { chain } from 'wagmi'
+import { MagicConnector } from 'wagmi/connectors/magic'
+
+const connector = new MagicConnector({
+  chains: [chain.mainnet, chain.optimism],
+  options: {
+    apiKey: <MAGIC_API_KEY>,
+  },
+})
+```
+
+### options
+
+Options to pass to the [Magic SDK](https://magic.link/docs/api-reference/client-side-sdks/web).
+
+```ts {4-12}
+import { MagicConnector } from 'wagmi/connectors/magic'
+
+const connector = new MagicConnector({
+  options: {
+    apiKey: <MAGIC_API_KEY>,
+    locale: 'en',
+    testMode: false,
+    network: {
+      rpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+      chainId: 1,
+    }
+  },
+})
+```

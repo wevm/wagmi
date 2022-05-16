@@ -1,6 +1,7 @@
 {
   "injected": "Injected",
   "coinbase-wallet": "Coinbase Wallet",
+  "magic": "Magic",
   "metamask": "MetaMask",
   "walletconnect": "WalletConnect"
 }

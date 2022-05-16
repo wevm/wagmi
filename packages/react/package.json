@@ -34,6 +34,10 @@
       "module": "./connectors/injected/dist/wagmi-connectors-injected.esm.js",
       "default": "./connectors/injected/dist/wagmi-connectors-injected.cjs.js"
     },
+    "./connectors/magic": {
+      "module": "./connectors/magic/dist/wagmi-connectors-magic.esm.js",
+      "default": "./connectors/magic/dist/wagmi-connectors-magic.cjs.js"
+    },
     "./connectors/metaMask": {
       "module": "./connectors/metaMask/dist/wagmi-connectors-metaMask.esm.js",
       "default": "./connectors/metaMask/dist/wagmi-connectors-metaMask.cjs.js"
@@ -69,6 +73,7 @@
       "index.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/injected.ts",
+      "connectors/magic.ts",
       "connectors/metaMask.ts",
       "connectors/walletConnect.ts",
       "providers/alchemy.ts",
@@ -85,6 +90,7 @@
     "@coinbase/wallet-sdk": "^3.1.0",
     "@wagmi/core": "^0.2.5",
     "@walletconnect/ethereum-provider": "^1.7.8",
+    "magic-sdk": "^8.1.1",
     "react-query": "4.0.0-beta.12",
     "use-sync-external-store": "^1.1.0"
   },

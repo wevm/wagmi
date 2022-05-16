@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-core-connectors-magic.cjs.js",
+  "module": "dist/wagmi-core-connectors-magic.esm.js"
+}
