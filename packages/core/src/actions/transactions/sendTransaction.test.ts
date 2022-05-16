@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers/lib/ethers'
 import { parseEther } from 'ethers/lib/utils'
 
-import { getSigners, setupWagmiClient } from '../../../test'
+import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
 import { connect } from '../accounts'
 import { sendTransaction } from './sendTransaction'
@@ -9,7 +9,7 @@ import { sendTransaction } from './sendTransaction'
 describe('sendTransaction', () => {
   let client: Client
   beforeEach(() => {
-    client = setupWagmiClient()
+    client = setupClient()
   })
 
   describe('args', () => {

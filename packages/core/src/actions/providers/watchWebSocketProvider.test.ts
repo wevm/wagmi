@@ -1,4 +1,4 @@
-import { getWebSocketProvider, setupWagmiClient } from '../../../test'
+import { getWebSocketProvider, setupClient } from '../../../test'
 import { connect } from '../accounts/connect'
 import { disconnect } from '../accounts/disconnect'
 import { GetWebSocketProviderResult } from './getWebSocketProvider'
@@ -6,7 +6,7 @@ import { watchWebSocketProvider } from './watchWebSocketProvider'
 
 describe('watchWebSocketProvider', () => {
   it('callback receives data', async () => {
-    const client = setupWagmiClient({ webSocketProvider: getWebSocketProvider })
+    const client = setupClient({ webSocketProvider: getWebSocketProvider })
     await client.webSocketProvider?.destroy()
 
     const providers: GetWebSocketProviderResult[] = []

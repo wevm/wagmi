@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { chain } from '../../constants'
 import { fetchEnsAvatar } from './fetchEnsAvatar'
 
@@ -54,7 +54,7 @@ describe('fetchEnsAvatar', () => {
     }),
   )
 
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   afterEach(() => server.resetHandlers())
 

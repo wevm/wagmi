@@ -1,8 +1,8 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { fetchFeeData } from './fetchFeeData'
 
 describe('fetchFeeData', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   it('default', async () => {
     const result = await fetchFeeData()

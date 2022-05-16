@@ -26,13 +26,16 @@ export type Chain = {
 }
 
 export type ChainProvider<
-  Provider extends providers.BaseProvider = providers.BaseProvider,
-  WebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = (chain: Chain) => {
   chain: Chain
-  provider: () => Provider
-  webSocketProvider?: () => WebSocketProvider
+  provider: () => TProvider
+  webSocketProvider?: () => TWebSocketProvider
 } | null
+
+export type Provider = providers.BaseProvider
+export type WebSocketProvider = providers.WebSocketProvider
 
 export type Unit = typeof units[number]
 

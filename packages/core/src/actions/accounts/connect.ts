@@ -1,27 +1,25 @@
-import { providers } from 'ethers'
-
 import { Client, client } from '../../client'
 import { Connector, ConnectorData } from '../../connectors'
 import { ConnectorAlreadyConnectedError } from '../../errors'
+import { Provider } from '../../types'
 
 export type ConnectArgs = {
   /** Connector to connect */
   connector: Connector
 }
 
-type Data<TProvider extends providers.BaseProvider = providers.BaseProvider> =
-  Required<ConnectorData<TProvider>>
+type Data<TProvider extends Provider = Provider> = Required<
+  ConnectorData<TProvider>
+>
 
-export type ConnectResult<
-  TProvider extends providers.BaseProvider = providers.BaseProvider,
-> = {
+export type ConnectResult<TProvider extends Provider = Provider> = {
   account: Data<TProvider>['account']
   chain: Data<TProvider>['chain']
   connector: Client<TProvider>['connector']
   provider: Data<TProvider>['provider']
 }
 
-export async function connect<TProvider extends providers.BaseProvider>({
+export async function connect<TProvider extends Provider = Provider>({
   connector,
 }: ConnectArgs): Promise<ConnectResult<TProvider>> {
   const activeConnector = client.connector

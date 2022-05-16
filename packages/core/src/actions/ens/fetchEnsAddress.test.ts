@@ -1,9 +1,9 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { fetchEnsAddress } from './fetchEnsAddress'
 
 describe('fetchEnsAddress', () => {
   describe('args', () => {
-    beforeEach(() => setupWagmiClient())
+    beforeEach(() => setupClient())
 
     it('chainId', async () => {
       expect(

@@ -1,4 +1,4 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { connect } from './connect'
 import { GetNetworkResult } from './getNetwork'
 import { switchNetwork } from './switchNetwork'
@@ -6,7 +6,7 @@ import { watchNetwork } from './watchNetwork'
 
 describe('watchNetwork', () => {
   it('callback receives data', async () => {
-    const client = setupWagmiClient()
+    const client = setupClient()
 
     await connect({ connector: client.connectors[0] })
 

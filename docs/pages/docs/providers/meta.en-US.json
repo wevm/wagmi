@@ -2,6 +2,6 @@
   "configuring-chains": "Configuring Chains",
   "alchemy": "Alchemy",
   "infura": "Infura",
-  "json-rpc": "JSON RPC",
-  "public": "Public"
+  "public": "Public",
+  "staticJsonRpc": "JSON RPC"
 }

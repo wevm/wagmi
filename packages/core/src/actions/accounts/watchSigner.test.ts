@@ -1,14 +1,14 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { connect } from './connect'
 import { disconnect } from './disconnect'
 import { switchNetwork } from './switchNetwork'
 import { watchSigner } from './watchSigner'
 
 describe('watchSigner', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   it('listens to account changes', async () => {
-    const client = setupWagmiClient()
+    const client = setupClient()
 
     let counter = 0
     const unsubscribe = watchSigner((data) => {
@@ -31,7 +31,7 @@ describe('watchSigner', () => {
   })
 
   it('listens to chain changes', async () => {
-    const client = setupWagmiClient()
+    const client = setupClient()
 
     let counter = 0
     const unwatch = watchSigner((data) => {

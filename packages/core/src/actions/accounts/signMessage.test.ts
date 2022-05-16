@@ -1,6 +1,6 @@
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
 
-import { getSigners, setupWagmiClient } from '../../../test'
+import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { signMessage } from './signMessage'
@@ -15,7 +15,7 @@ const messages = {
 }
 
 describe('signMessage', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   describe('args', () => {
     describe('message', () => {

@@ -1,13 +1,9 @@
-import {
-  getWebSocketProvider,
-  renderHook,
-  setupWagmiClient,
-} from '../../../test'
+import { getWebSocketProvider, renderHook, setupClient } from '../../../test'
 import { useWebSocketProvider } from './useWebSocketProvider'
 
 describe('useWebSocketProvider', () => {
   it('mounts', async () => {
-    const client = setupWagmiClient({
+    const client = setupClient({
       webSocketProvider: getWebSocketProvider,
     })
     await client.webSocketProvider?.destroy()
@@ -21,7 +17,7 @@ describe('useWebSocketProvider', () => {
 
   describe('configuration', () => {
     it('chainId', async () => {
-      const client = setupWagmiClient({
+      const client = setupClient({
         webSocketProvider: getWebSocketProvider,
       })
       await client.webSocketProvider?.destroy()

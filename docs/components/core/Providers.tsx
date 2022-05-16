@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import {
-  WagmiProvider,
+  ClientProvider,
   configureChains,
   createClient,
   defaultChains,
@@ -50,5 +50,5 @@ type Props = {
 }
 
 export function Providers({ children }: Props) {
-  return <WagmiProvider client={client}>{children}</WagmiProvider>
+  return <ClientProvider client={client}>{children}</ClientProvider>
 }

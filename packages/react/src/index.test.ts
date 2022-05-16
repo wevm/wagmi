@@ -4,11 +4,9 @@ it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
       "createClient",
-      "createWagmiClient",
-      "Provider",
+      "ClientProvider",
       "WagmiProvider",
       "useClient",
-      "useWagmiClient",
       "useAccount",
       "useBalance",
       "useBlockNumber",
@@ -37,14 +35,12 @@ it('should expose correct exports', () => {
       "serialize",
       "Client",
       "Connector",
-      "WagmiClient",
       "alchemyRpcUrls",
       "allChains",
       "chain",
       "chainId",
       "configureChains",
       "createStorage",
-      "createWagmiStorage",
       "defaultChains",
       "defaultL2Chains",
       "erc20ABI",
@@ -65,6 +61,6 @@ it('should expose correct exports', () => {
   `)
 })
 
-it('should alias Provider as WagmiProvider', () => {
-  expect(Exports.Provider).toBe(Exports.WagmiProvider)
+it('should alias "ClientProvider" as "WagmiProvider"', () => {
+  expect(Exports.ClientProvider).toBe(Exports.WagmiProvider)
 })

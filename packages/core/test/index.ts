@@ -4,7 +4,7 @@ import { getProvider, getSigners } from './utils'
 
 type Config = Partial<ClientConfig>
 
-export function setupWagmiClient(config: Config = {}) {
+export function setupClient(config: Config = {}) {
   return createClient({
     connectors: [
       new MockConnector({

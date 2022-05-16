@@ -1,4 +1,4 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { connect } from '../accounts/connect'
 import { disconnect } from '../accounts/disconnect'
 import { GetProviderResult } from './getProvider'
@@ -6,7 +6,7 @@ import { watchProvider } from './watchProvider'
 
 describe('watchProvider', () => {
   it('callback receives data', async () => {
-    const client = setupWagmiClient()
+    const client = setupClient()
 
     const providers: GetProviderResult[] = []
     const unwatch = watchProvider({}, (provider) => providers.push(provider))

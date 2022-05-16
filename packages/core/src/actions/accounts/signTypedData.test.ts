@@ -1,6 +1,6 @@
 import { verifyTypedData } from 'ethers/lib/utils'
 
-import { getSigners, setupWagmiClient } from '../../../test'
+import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { signTypedData } from './signTypedData'
@@ -44,7 +44,7 @@ const value = {
 }
 
 describe('signTypedData', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   describe('args', () => {
     it('domain, types, and value', async () => {

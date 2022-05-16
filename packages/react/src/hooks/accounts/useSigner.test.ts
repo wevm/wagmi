@@ -5,7 +5,7 @@ import {
   actDisconnect,
   actNetwork,
   renderHook,
-  setupWagmiClient,
+  setupClient,
 } from '../../../test'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
@@ -24,7 +24,7 @@ function useSignerWithAccount() {
 describe('useSigner', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      const client = setupWagmiClient()
+      const client = setupClient()
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useSigner(), {

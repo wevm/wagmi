@@ -1,9 +1,9 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { fetchBalance } from './fetchBalance'
 
 describe('fetchBalance', () => {
   describe('args', () => {
-    beforeEach(() => setupWagmiClient())
+    beforeEach(() => setupClient())
 
     describe('addressOrName', () => {
       it('address', async () => {

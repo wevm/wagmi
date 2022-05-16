@@ -1,4 +1,4 @@
-import { getSigners, setupWagmiClient } from '../../../test'
+import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { fetchSigner } from './fetchSigner'
@@ -8,7 +8,7 @@ const connector = new MockConnector({
 })
 
 describe('fetchSigner', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   describe('behavior', () => {
     it('not connected', async () => {

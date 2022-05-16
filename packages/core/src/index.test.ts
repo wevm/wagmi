@@ -36,9 +36,7 @@ it('should expose correct exports', () => {
       "writeContract",
       "configureChains",
       "createClient",
-      "createWagmiClient",
       "Client",
-      "WagmiClient",
       "Connector",
       "InjectedConnector",
       "alchemyRpcUrls",
@@ -63,7 +61,6 @@ it('should expose correct exports', () => {
       "SwitchChainNotSupportedError",
       "UserRejectedRequestError",
       "createStorage",
-      "createWagmiStorage",
       "noopStorage",
       "normalizeChainId",
     ]

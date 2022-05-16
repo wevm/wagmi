@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { Chain, ChainProvider } from '../types'
+import { Chain, ChainProvider, Provider, WebSocketProvider } from '../types'
 
 type ConfigureChainsConfig =
   | {
@@ -13,8 +13,8 @@ type ConfigureChainsConfig =
     }
 
 export function configureChains<
-  TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.WebSocketProvider = providers.WebSocketProvider,
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >(
   defaultChains: Chain[],
   providers: ChainProvider<TProvider, TWebSocketProvider>[],
@@ -91,9 +91,11 @@ export function configureChains<
       if (!chainWebSocketProviders) return undefined
       if (chainWebSocketProviders.length === 1)
         return chainWebSocketProviders[0]()
-      return fallbackProvider(targetQuorum, minQuorum, chainWebSocketProviders)
+      // WebSockets do not work with `fallbackProvider`
+      // Default to first available
+      return chainWebSocketProviders[0]()
     },
-  }
+  } as const
 }
 
 function fallbackProvider(
@@ -109,13 +111,15 @@ function fallbackProvider(
       })),
       targetQuorum,
     )
-  } catch (err: any) {
+  } catch (error: any) {
     if (
-      err.message.includes('quorum will always fail; larger than total weight')
+      error?.message?.includes(
+        'quorum will always fail; larger than total weight',
+      )
     ) {
-      if (targetQuorum === minQuorum) throw err
+      if (targetQuorum === minQuorum) throw error
       return fallbackProvider(targetQuorum - 1, minQuorum, providers_)
     }
-    throw err
+    throw error
   }
 }

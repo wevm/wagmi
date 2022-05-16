@@ -1,6 +1,5 @@
-import { providers } from 'ethers'
-
 import { getClient } from '../../client'
+import { WebSocketProvider } from '../../types'
 import {
   GetWebSocketProviderArgs,
   GetWebSocketProviderResult,
@@ -8,11 +7,11 @@ import {
 } from './getWebSocketProvider'
 
 export type WatchWebSocketProviderCallback<
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = (webSocketProvider: GetWebSocketProviderResult<TWebSocketProvider>) => void
 
 export function watchWebSocketProvider<
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >(
   args: GetWebSocketProviderArgs,
   callback: WatchWebSocketProviderCallback<TWebSocketProvider>,
