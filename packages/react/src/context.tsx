@@ -67,22 +67,20 @@ export const Context = React.createContext<
   Client<Provider, WebSocketProvider> | undefined
 >(undefined)
 
-export type ClientProviderProps<
+export type WagmiConfigProps<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
   /** React-decorated Client instance */
   client?: Client<TProvider, TWebSocketProvider>
 }
-export function ClientProvider<
+export function WagmiConfig<
   TProvider extends Provider,
   TWebSocketProvider extends WebSocketProvider,
 >({
   children,
   client = createClient<TProvider, TWebSocketProvider>(),
-}: React.PropsWithChildren<
-  ClientProviderProps<TProvider, TWebSocketProvider>
->) {
+}: React.PropsWithChildren<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
   // Attempt to connect on mount
   React.useEffect(() => {
     ;(async () => {
@@ -112,8 +110,8 @@ export function useClient<
   if (!client)
     throw new Error(
       [
-        '`useClient` must be used within `ClientProvider`.\n',
-        'Read more: https://wagmi.sh/docs/ClientProvider',
+        '`useClient` must be used within `WagmiConfig`.\n',
+        'Read more: https://wagmi.sh/docs/WagmiConfig',
       ].join('\n'),
     )
   return client

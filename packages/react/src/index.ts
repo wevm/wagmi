@@ -1,10 +1,5 @@
-export {
-  createClient,
-  ClientProvider,
-  ClientProvider as WagmiProvider,
-  useClient,
-} from './context'
-export type { CreateClientConfig, ClientProviderProps } from './context'
+export { createClient, WagmiConfig, useClient } from './context'
+export type { CreateClientConfig, WagmiConfigProps } from './context'
 
 export {
   useAccount,

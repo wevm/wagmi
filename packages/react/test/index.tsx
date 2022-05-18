@@ -7,7 +7,7 @@ import {
 import '@testing-library/jest-dom/extend-expect'
 import { QueryClient } from 'react-query'
 
-import { ClientProvider, ClientProviderProps } from '../src'
+import { WagmiConfig, WagmiConfigProps } from '../src'
 import { setupClient } from './utils'
 import { reactVersion } from './setup'
 
@@ -28,14 +28,14 @@ export const queryClient = new QueryClient({
   },
 })
 
-type Props = ClientProviderProps & {
+type Props = WagmiConfigProps & {
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
 export function wrapper(props: Props) {
   const client = props.client ?? setupClient({ queryClient })
-  return <ClientProvider client={client} {...props} />
+  return <WagmiConfig client={client} {...props} />
 }
 
 export function renderHook<TResult, TProps>(
@@ -43,9 +43,9 @@ export function renderHook<TResult, TProps>(
   {
     wrapper: wrapper_,
     ...options_
-  }: RenderHookOptions<TProps & ClientProviderProps> | undefined = {},
+  }: RenderHookOptions<TProps & WagmiConfigProps> | undefined = {},
 ) {
-  let options: RenderHookOptions<TProps & ClientProviderProps>
+  let options: RenderHookOptions<TProps & WagmiConfigProps>
   if (reactVersion === '18')
     options = {
       wrapper: (props) => wrapper({ ...props, ...options_?.initialProps }),

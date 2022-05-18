@@ -55,15 +55,15 @@ npm install wagmi ethers
 Connect a wallet in under 60 seconds. LFG.
 
 ```tsx
-import { ClientProvider, createClient } from 'wagmi'
+import { WagmiConfig, createClient } from 'wagmi'
 
 const client = createClient()
 
 function App() {
   return (
-    <ClientProvider client={client}>
+    <WagmiConfig client={client}>
       <Profile />
-    </ClientProvider>
+    </WagmiConfig>
   )
 }
 ```

@@ -11,7 +11,7 @@ import {
 import type { MetaFunction } from 'remix'
 
 import {
-  ClientProvider,
+  WagmiConfig,
   configureChains,
   createClient,
   defaultChains,
@@ -75,9 +75,9 @@ export default function App() {
         <script> var global = global || window; </script>
       </head>
       <body>
-        <ClientProvider client={client}>
+        <WagmiConfig client={client}>
           <Outlet />
-        </ClientProvider>
+        </WagmiConfig>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}

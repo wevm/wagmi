@@ -4,8 +4,7 @@ it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
       "createClient",
-      "ClientProvider",
-      "WagmiProvider",
+      "WagmiConfig",
       "useClient",
       "useAccount",
       "useBalance",
@@ -59,8 +58,4 @@ it('should expose correct exports', () => {
       "UserRejectedRequestError",
     ]
   `)
-})
-
-it('should alias "ClientProvider" as "WagmiProvider"', () => {
-  expect(Exports.ClientProvider).toBe(Exports.WagmiProvider)
 })

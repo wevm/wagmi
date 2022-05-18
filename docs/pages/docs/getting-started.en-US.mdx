@@ -26,23 +26,23 @@ const client = createClient()
   provider, and more, are [all configurable](/docs/client).
 </Callout>
 
-Next, wrap your app with the [`ClientProvider`](/docs/ClientProvider) component, passing `client` to it.
+Next, wrap your app with the [`WagmiConfig`](/docs/WagmiConfig) component, passing `client` to it.
 
 ```tsx {7-9}
-import { ClientProvider, createClient } from 'wagmi'
+import { WagmiConfig, createClient } from 'wagmi'
 
 const client = createClient()
 
 function App() {
   return (
-    <ClientProvider client={client}>
+    <WagmiConfig client={client}>
       <YourRoutes />
-    </ClientProvider>
+    </WagmiConfig>
   )
 }
 ```
 
-Finally, use hooks! Every component inside the `ClientProvider` is now set up to use the wagmi hooks.
+Finally, use hooks! Every component inside the `WagmiConfig` is now set up to use the wagmi hooks.
 
 ```tsx {5,6,7-9}
 import { useAccount, useConnect, useEnsName } from 'wagmi'
