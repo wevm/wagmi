@@ -122,15 +122,12 @@ export class CoinbaseWalletConnector extends Connector<
       const jsonRpcUrl = this.options.jsonRpcUrl || chain.rpcUrls.default
 
       let CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
-
-      // Workaround for import errors in Vite
-      if (!CoinbaseWalletSDK.constructor) {
-        CoinbaseWalletSDK = (
-          CoinbaseWalletSDK as unknown as {
-            default: typeof CoinbaseWalletSDK
-          }
-        ).default
-      }
+      // Workaround for Vite dev import errors
+      // https://github.com/vitejs/vite/issues/7112
+      if (!CoinbaseWalletSDK.constructor)
+        CoinbaseWalletSDK = (<{ default: typeof CoinbaseWalletSDK }>(
+          (<unknown>CoinbaseWalletSDK)
+        )).default
 
       this.#client = new CoinbaseWalletSDK(this.options)
       this.#provider = this.#client.makeWeb3Provider(jsonRpcUrl, chainId)
