@@ -86,7 +86,7 @@ describe('useClient', () => {
         renderHook(() => useClient(), { wrapper })
       } catch (error) {
         expect(error).toMatchInlineSnapshot(
-          `[Error: Must be used within WagmiProvider]`,
+          `[Error: Must be used within WagmiConfig]`,
         )
       }
     })

@@ -86,13 +86,8 @@ export type {
 
 export { configureChains } from './chains'
 
-export {
-  createClient,
-  createClient as createWagmiClient,
-  Client,
-  Client as WagmiClient,
-} from './client'
-export type { ClientConfig, ClientConfig as WagmiClientConfig } from './client'
+export { createClient, Client } from './client'
+export type { ClientConfig } from './client'
 
 export { Connector, InjectedConnector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
@@ -124,13 +119,15 @@ export {
   UserRejectedRequestError,
 } from './errors'
 
-export {
-  createStorage,
-  createStorage as createWagmiStorage,
-  noopStorage,
-} from './storage'
-export type { WagmiStorage as Storage, WagmiStorage } from './storage'
+export { createStorage, noopStorage } from './storage'
+export type { ClientStorage as Storage } from './storage'
 
-export type { Chain, ChainProvider, Unit } from './types'
+export type {
+  Chain,
+  ChainProvider,
+  Provider,
+  Unit,
+  WebSocketProvider,
+} from './types'
 
 export { normalizeChainId } from './utils'

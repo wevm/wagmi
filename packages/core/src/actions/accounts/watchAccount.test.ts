@@ -1,4 +1,4 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { connect } from './connect'
 import { disconnect } from './disconnect'
 import { GetAccountResult } from './getAccount'
@@ -6,7 +6,7 @@ import { watchAccount } from './watchAccount'
 
 describe('watchAccount', () => {
   it('callback receives data', async () => {
-    const client = setupWagmiClient()
+    const client = setupClient()
 
     const accounts: GetAccountResult[] = []
     const unwatch = watchAccount((data) => accounts.push(data))

@@ -1,7 +1,7 @@
 import { connect } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
-import { act, getSigners, renderHook, setupWagmiClient } from '../../../test'
+import { act, getSigners, renderHook, setupClient } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
@@ -28,7 +28,7 @@ function useConnectWithDisconnect(
 describe('useConnect', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      const client = setupWagmiClient()
+      const client = setupClient()
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useConnect(), {
@@ -445,7 +445,7 @@ describe('useConnect', () => {
     })
 
     it('status lifecycle', async () => {
-      const client = setupWagmiClient({ autoConnect: true })
+      const client = setupClient({ autoConnect: true })
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useConnect(), {

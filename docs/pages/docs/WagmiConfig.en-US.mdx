@@ -1,21 +1,27 @@
-# WagmiProvider
+# WagmiConfig
 
-The `WagmiProvider` manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html) (not to be confused with an [ethers Provider](https://docs.ethers.io/v5/api/providers/) of course).
+The `WagmiConfig` manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html) (not to be confused with an [ethers Provider](https://docs.ethers.io/v5/api/providers/) of course).
 
-```tsx
+```ts
+import { WagmiConfig } from 'wagmi'
+```
+
+`WagmiConfig` is also aliased as `WagmiProvider` if you want to use that instead.
+
+```ts
 import { WagmiProvider } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { WagmiProvider } from 'wagmi'
+import { WagmiConfig } from 'wagmi'
 
 function App() {
   return (
-    <WagmiProvider>
+    <WagmiConfig>
       <YourRoutes />
-    </WagmiProvider>
+    </WagmiConfig>
   )
 }
 ```
@@ -28,7 +34,7 @@ A wagmi [`Client`](/docs/client) instance that consists of configuration options
 
 ```tsx {4-9,13}
 import { providers } from 'ethers'
-import { WagmiProvider, createClient } from 'wagmi'
+import { WagmiConfig, createClient } from 'wagmi'
 
 const client = createClient({
   autoConnect: true,
@@ -39,9 +45,9 @@ const client = createClient({
 
 function App() {
   return (
-    <WagmiProvider client={client}>
+    <WagmiConfig client={client}>
       <YourRoutes />
-    </WagmiProvider>
+    </WagmiConfig>
   )
 }
 ```

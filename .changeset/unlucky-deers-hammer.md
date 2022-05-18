@@ -15,7 +15,7 @@ The `configureChains` function allows you to configure your chains with a select
 
 ```tsx
 import { providers } from 'ethers'
-import { WagmiProvider, chain, createClient, defaultChains } from 'wagmi'
+import { chain, createClient, defaultChains } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -63,7 +63,7 @@ const client = createClient({
 ### After
 
 ```tsx
-import { WagmiProvider, chain, createClient, defaultChains } from 'wagmi'
+import { chain, createClient, defaultChains } from 'wagmi'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'

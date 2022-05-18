@@ -1,8 +1,8 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { fetchBlockNumber } from './fetchBlockNumber'
 
 describe('fetchBlockNumber', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   it('default', async () => {
     expect(await fetchBlockNumber()).toBeDefined()

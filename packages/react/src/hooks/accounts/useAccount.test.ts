@@ -4,7 +4,7 @@ import {
   actConnect,
   actDisconnect,
   renderHook,
-  setupWagmiClient,
+  setupClient,
 } from '../../../test'
 import { UseAccountConfig, useAccount } from './useAccount'
 import { useConnect } from './useConnect'
@@ -21,7 +21,7 @@ function useAccountWithConnectAndDisconnect(config: UseAccountConfig = {}) {
 describe('useAccount', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      const client = setupWagmiClient()
+      const client = setupClient()
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useAccount(), {

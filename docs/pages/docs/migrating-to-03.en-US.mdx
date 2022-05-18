@@ -11,13 +11,11 @@ If you are coming from an earlier version of `wagmi`, in order to update to vers
 
 ## 0.4.x Breaking changes
 
-### The `connectors` option on `createClient` no longer reacts to chain switching.
-
-**Passing a function to connectors has now been deprecated.**
+### Passing a function to `createClient` `connectors` has now been deprecated.
 
 If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](https://wagmi.sh/docs/providers/configuring-chains).
 
-### Before
+#### Before
 
 ```tsx {15-42}
 import { providers } from 'ethers'
@@ -65,7 +63,7 @@ const client = createClient({
 })
 ```
 
-### After
+#### After
 
 ```tsx {20-38}
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
@@ -108,6 +106,16 @@ const client = createClient({
   ],
 })
 ```
+
+### Duplicate named exports were removed
+
+Duplicate exports with different names and the same functionality were removed to simplify the public API. In addition, confusing exports were renamed to be more descriptive.
+
+- `createWagmiClient` alias was removed. Use `createClient` instead.
+- `useWagmiClient` alias was removed. Use `useClient` instead.
+- `WagmiClient` alias was removed. Use `Client` instead.
+- `createWagmiStorage` alias was removed. Use `createStorage` instead.
+- `Provider` was renamed and `WagmiProvider` alias was removed. Use `WagmiConfig` instead.
 
 ## 0.3.x Breaking changes
 

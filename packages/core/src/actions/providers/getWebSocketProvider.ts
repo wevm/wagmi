@@ -1,6 +1,5 @@
-import { providers } from 'ethers'
-
 import { getClient } from '../../client'
+import { WebSocketProvider } from '../../types'
 
 export type GetWebSocketProviderArgs = {
   /** Chain id to use for provider */
@@ -8,11 +7,11 @@ export type GetWebSocketProviderArgs = {
 }
 
 export type GetWebSocketProviderResult<
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = TWebSocketProvider | undefined
 
 export function getWebSocketProvider<
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >({
   chainId,
 }: GetWebSocketProviderArgs = {}): GetWebSocketProviderResult<TWebSocketProvider> {

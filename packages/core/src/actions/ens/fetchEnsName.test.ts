@@ -1,8 +1,8 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { fetchEnsName } from './fetchEnsName'
 
 describe('fetchEnsName', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   describe('args', () => {
     describe('address', () => {

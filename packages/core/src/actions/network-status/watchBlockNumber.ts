@@ -1,6 +1,5 @@
-import { providers } from 'ethers'
-
 import { getClient } from '../../client'
+import { Provider } from '../../types'
 import { FetchBlockNumberResult, fetchBlockNumber } from './fetchBlockNumber'
 
 export type WatchBlockNumberArgs = { listen: boolean }
@@ -12,13 +11,13 @@ export function watchBlockNumber(
   args: WatchBlockNumberArgs,
   callback: WatchBlockNumberCallback,
 ) {
-  let prevProvider: providers.BaseProvider
-  const createListener = (provider: providers.BaseProvider) => {
-    if (prevProvider) {
-      prevProvider?.off('block', callback)
+  let previousProvider: Provider
+  const createListener = (provider: Provider) => {
+    if (previousProvider) {
+      previousProvider?.off('block', callback)
     }
     provider.on('block', callback)
-    prevProvider = provider
+    previousProvider = provider
   }
 
   const client = getClient()

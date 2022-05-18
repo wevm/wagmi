@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import {
   Chain,
-  WagmiProvider,
+  WagmiConfig,
   chain,
   configureChains,
   createClient,
@@ -19,6 +19,9 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { staticJsonRpcProvider } from 'wagmi/providers/staticJsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
+
+const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
+const infuraId = process.env.NEXT_PUBLIC_INFURA_ID
 
 const avalanche: Chain = {
   id: 43_114,
@@ -42,8 +45,8 @@ const avalanche: Chain = {
 const { chains, provider, webSocketProvider } = configureChains(
   [...defaultChains, chain.optimism, avalanche],
   [
-    alchemyProvider(),
-    infuraProvider(),
+    alchemyProvider({ alchemyId }),
+    infuraProvider({ infuraId }),
     staticJsonRpcProvider({
       rpcUrls: (chain) => {
         if (chain.id !== avalanche.id) return null
@@ -54,7 +57,7 @@ const { chains, provider, webSocketProvider } = configureChains(
     }),
     publicProvider(),
   ],
-  { targetQuorum: 3 },
+  { targetQuorum: 1 },
 )
 
 const client = createClient({
@@ -96,9 +99,9 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>wagmi</title>
       </NextHead>
 
-      <WagmiProvider client={client}>
+      <WagmiConfig client={client}>
         <Component {...pageProps} />
-      </WagmiProvider>
+      </WagmiConfig>
     </>
   )
 }

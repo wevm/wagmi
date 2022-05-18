@@ -3,7 +3,7 @@
   "comparison": "Library Comparison",
   "migrating-to-03": "Migrating to >=0.3.x",
   "client": "Client",
-  "wagmi-provider": "WagmiProvider",
+  "WagmiConfig": "WagmiConfig",
   "providers": "Providers",
   "connectors": "Connectors",
   "hooks": "Hooks",

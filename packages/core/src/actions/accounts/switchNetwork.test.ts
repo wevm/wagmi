@@ -1,4 +1,4 @@
-import { getSigners, setupWagmiClient } from '../../../test'
+import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
@@ -8,7 +8,7 @@ const connector = new MockConnector({
 })
 
 describe('switchNetwork', () => {
-  beforeEach(() => setupWagmiClient())
+  beforeEach(() => setupClient())
 
   describe('args', () => {
     it('chainId', async () => {

@@ -1,4 +1,4 @@
-import { getSigners, setupWagmiClient } from '../../../test'
+import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
@@ -11,7 +11,7 @@ const connector = new MockConnector({
 describe('disconnect', () => {
   let client: Client
   beforeEach(() => {
-    client = setupWagmiClient()
+    client = setupClient()
   })
 
   describe('behavior', () => {

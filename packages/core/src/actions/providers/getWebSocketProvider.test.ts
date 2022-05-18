@@ -1,12 +1,12 @@
 import {
   getWebSocketProvider as getWebSocketProvider_,
-  setupWagmiClient,
+  setupClient,
 } from '../../../test'
 import { getWebSocketProvider } from './getWebSocketProvider'
 
 describe('getWebSocketProvider', () => {
   it('default', async () => {
-    const client = setupWagmiClient({
+    const client = setupClient({
       webSocketProvider: getWebSocketProvider_,
     })
     expect(getWebSocketProvider()).toMatchInlineSnapshot(

@@ -1,4 +1,4 @@
-import type { providers } from 'ethers'
+import { BigNumberish, BytesLike, providers } from 'ethers'
 
 import {
   ConnectorNotFoundError,
@@ -7,15 +7,26 @@ import {
 } from '../../errors'
 import { fetchSigner } from './fetchSigner'
 
-type SignTypedData = Parameters<providers.JsonRpcSigner['_signTypedData']>
+export interface TypedDataDomain {
+  name?: string
+  version?: string
+  chainId?: BigNumberish
+  verifyingContract?: string
+  salt?: BytesLike
+}
+
+export interface TypedDataField {
+  name: string
+  type: string
+}
 
 export type SignTypedDataArgs = {
   /** Domain or domain signature for origin or contract */
-  domain: SignTypedData[0]
+  domain: TypedDataDomain
   /** Named list of all type definitions */
-  types: SignTypedData[1]
+  types: Record<string, Array<TypedDataField>>
   /** Data to sign */
-  value: SignTypedData[2]
+  value: Record<string, any>
 }
 
 export type SignTypedDataResult = string

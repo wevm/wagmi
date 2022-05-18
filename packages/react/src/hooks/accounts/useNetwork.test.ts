@@ -7,7 +7,7 @@ import {
   actDisconnect,
   getSigners,
   renderHook,
-  setupWagmiClient,
+  setupClient,
 } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
@@ -29,7 +29,7 @@ function useNetworkWithConnectAndDisconnect(
 describe('useNetwork', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      const client = setupWagmiClient()
+      const client = setupClient()
       await connect({ connector: client.connectors[0] })
 
       const { result, waitFor } = renderHook(() => useNetwork(), {

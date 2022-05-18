@@ -6,16 +6,6 @@ const withNextra = require('nextra')({
   unstable_staticImage: true,
 })
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
-
-// Only use preconstruct for development
-const withPreconstruct =
-  process.env.NODE_ENV === 'development'
-    ? require('@preconstruct/next')
-    : (config) => config
-
 /** @type {import('next').NextConfig} */
 const config = {
   i18n: {
@@ -37,6 +27,18 @@ const config = {
       },
     ]
   },
+  typescript: {
+    // Disable type checking since eslint handles this
+    ignoreBuildErrors: true,
+  },
 }
 
-module.exports = withPreconstruct(withBundleAnalyzer(withNextra(config)))
+if (process.env.NODE_ENV === 'development') {
+  const withPreconstruct = require('@preconstruct/next')
+  module.exports = withPreconstruct(withNextra(config))
+} else {
+  const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  })
+  module.exports = withBundleAnalyzer(withNextra(config))
+}

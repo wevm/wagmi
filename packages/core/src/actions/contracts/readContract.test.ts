@@ -1,4 +1,4 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { readContract } from './readContract'
 
 const wagmigotchiContractConfig = {
@@ -46,7 +46,7 @@ const mlootContractConfig = {
 
 describe('readContract', () => {
   describe('args', () => {
-    beforeEach(() => setupWagmiClient())
+    beforeEach(() => setupClient())
 
     it('chainId', async () => {
       expect(

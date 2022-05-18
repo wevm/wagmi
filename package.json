@@ -2,7 +2,6 @@
   "name": "root",
   "scripts": {
     "build": "preconstruct build",
-    "build:docs": "pnpm --filter docs build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "preconstruct dev",
@@ -45,8 +44,6 @@
     "@babel/preset-typescript": "^7.16.7",
     "@changesets/changelog-github": "^0.4.4",
     "@changesets/cli": "^2.22.0",
-    "@ethersproject/abstract-provider": "^5.6.0",
-    "@ethersproject/abstract-signer": "^5.6.0",
     "@ethersproject/providers": "^5.6.5",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@preconstruct/cli": "^2.1.5",

@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { providers } from 'ethers'
 import {
-  WagmiClient,
-  ClientConfig as WagmiClientConfig,
-  createClient as createWagmiClient,
+  ClientConfig,
+  Provider,
+  Client as VanillaClient,
+  WebSocketProvider,
+  createClient as createVanillaClient,
 } from '@wagmi/core'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { Persister, persistQueryClient } from 'react-query/persistQueryClient'
@@ -11,25 +12,16 @@ import { createWebStoragePersister } from 'react-query/createWebStoragePersister
 
 import { deserialize, serialize } from './utils'
 
-export type DecoratedWagmiClient<
-  TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
-> = WagmiClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
-export const Context = React.createContext<
-  | DecoratedWagmiClient<providers.BaseProvider, providers.WebSocketProvider>
-  | undefined
->(undefined)
-
-export type ClientConfig<
-  TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
-> = WagmiClientConfig<TProvider, TWebSocketProvider> & {
+export type CreateClientConfig<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = ClientConfig<TProvider, TWebSocketProvider> & {
   queryClient?: QueryClient
   persister?: Persister
 }
 export function createClient<
-  TProvider extends providers.BaseProvider,
-  TWebSocketProvider extends providers.BaseProvider,
+  TProvider extends Provider,
+  TWebSocketProvider extends WebSocketProvider,
 >({
   queryClient = new QueryClient({
     defaultOptions: {
@@ -53,8 +45,8 @@ export function createClient<
       })
     : undefined,
   ...config
-}: ClientConfig<TProvider, TWebSocketProvider> = {}) {
-  const client = createWagmiClient<TProvider, TWebSocketProvider>(config)
+}: CreateClientConfig<TProvider, TWebSocketProvider> = {}) {
+  const client = createVanillaClient<TProvider, TWebSocketProvider>(config)
   if (persister)
     persistQueryClient({
       queryClient,
@@ -66,20 +58,29 @@ export function createClient<
   return Object.assign(client, { queryClient })
 }
 
-export type ProviderProps<
-  TProvider extends providers.BaseProvider = providers.BaseProvider,
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+export type Client<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+> = VanillaClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
+
+export const Context = React.createContext<
+  Client<Provider, WebSocketProvider> | undefined
+>(undefined)
+
+export type WagmiConfigProps<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
-  /** React-decorated WagmiClient instance */
-  client?: DecoratedWagmiClient<TProvider, TWebSocketProvider>
+  /** React-decorated Client instance */
+  client?: Client<TProvider, TWebSocketProvider>
 }
-export function Provider<
-  TProvider extends providers.BaseProvider,
-  TWebSocketProvider extends providers.BaseProvider,
+export function WagmiConfig<
+  TProvider extends Provider,
+  TWebSocketProvider extends WebSocketProvider,
 >({
   children,
   client = createClient<TProvider, TWebSocketProvider>(),
-}: React.PropsWithChildren<ProviderProps<TProvider, TWebSocketProvider>>) {
+}: React.PropsWithChildren<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
   // Attempt to connect on mount
   React.useEffect(() => {
     ;(async () => {
@@ -90,7 +91,7 @@ export function Provider<
   }, [])
 
   return (
-    <Context.Provider value={client as unknown as DecoratedWagmiClient}>
+    <Context.Provider value={client as unknown as Client}>
       <QueryClientProvider client={client.queryClient}>
         {children}
       </QueryClientProvider>
@@ -99,13 +100,19 @@ export function Provider<
 }
 
 export function useClient<
-  TProvider extends providers.BaseProvider,
-  TWebSocketProvider extends providers.BaseProvider = providers.WebSocketProvider,
+  TProvider extends Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >() {
-  const client = React.useContext(Context) as unknown as DecoratedWagmiClient<
+  const client = React.useContext(Context) as unknown as Client<
     TProvider,
     TWebSocketProvider
   >
-  if (!client) throw Error('Must be used within WagmiProvider')
+  if (!client)
+    throw new Error(
+      [
+        '`useClient` must be used within `WagmiConfig`.\n',
+        'Read more: https://wagmi.sh/docs/WagmiConfig',
+      ].join('\n'),
+    )
   return client
 }

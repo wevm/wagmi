@@ -1,9 +1,9 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { getProvider } from './getProvider'
 
 describe('getProvider', () => {
   it('default', async () => {
-    setupWagmiClient()
+    setupClient()
     expect(getProvider()).toMatchInlineSnapshot(
       `"<Provider network={31337} />"`,
     )
@@ -11,7 +11,7 @@ describe('getProvider', () => {
 
   describe('args', () => {
     it('chainId', async () => {
-      setupWagmiClient()
+      setupClient()
       expect(getProvider({ chainId: 1 })).toMatchInlineSnapshot(
         `"<Provider network={1} />"`,
       )

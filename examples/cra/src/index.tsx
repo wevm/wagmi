@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 
 import {
-  WagmiProvider,
+  WagmiConfig,
   configureChains,
   createClient,
   defaultChains,
@@ -54,9 +54,9 @@ const client = createClient({
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <WagmiProvider client={client}>
+    <WagmiConfig client={client}>
       <App />
-    </WagmiProvider>
+    </WagmiConfig>
   </React.StrictMode>,
 )
 

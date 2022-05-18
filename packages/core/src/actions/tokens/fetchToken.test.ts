@@ -1,9 +1,9 @@
-import { setupWagmiClient } from '../../../test'
+import { setupClient } from '../../../test'
 import { fetchToken } from './fetchToken'
 
 describe('fetchToken', () => {
   describe('args', () => {
-    beforeEach(() => setupWagmiClient())
+    beforeEach(() => setupClient())
 
     describe('address', () => {
       it('has token', async () => {
