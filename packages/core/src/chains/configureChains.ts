@@ -1,8 +1,14 @@
 import { providers } from 'ethers'
 
-import { Chain, ChainProvider, Provider, WebSocketProvider } from '../types'
+import {
+  Chain,
+  ChainProvider,
+  Provider,
+  ProviderWithFallbackConfig,
+  WebSocketProvider,
+} from '../types'
 
-type ConfigureChainsConfig =
+export type ConfigureChainsConfig = { stallTimeout?: number } & (
   | {
       targetQuorum?: number
       minQuorum?: never
@@ -11,6 +17,7 @@ type ConfigureChainsConfig =
       targetQuorum: number
       minQuorum?: number
     }
+)
 
 export function configureChains<
   TProvider extends Provider = Provider,
@@ -18,13 +25,15 @@ export function configureChains<
 >(
   defaultChains: Chain[],
   providers: ChainProvider<TProvider, TWebSocketProvider>[],
-  { targetQuorum = 1, minQuorum = 1 }: ConfigureChainsConfig = {},
+  { minQuorum = 1, targetQuorum = 1, stallTimeout }: ConfigureChainsConfig = {},
 ) {
   if (targetQuorum < minQuorum)
     throw new Error('quorum cannot be lower than minQuorum')
 
   let chains: Chain[] = []
-  const providers_: { [chainId: number]: (() => TProvider)[] } = {}
+  const providers_: {
+    [chainId: number]: (() => ProviderWithFallbackConfig<TProvider>)[]
+  } = {}
   const webSocketProviders_: {
     [chainId: number]: (() => TWebSocketProvider)[]
   } = {}
@@ -61,7 +70,7 @@ export function configureChains<
       throw new Error(
         [
           `Could not find valid provider configuration for chain "${chain.name}".\n`,
-          "You may need to add `staticJsonRpcProvider` to `configureChains` with the chain's RPC URLs.",
+          "You may need to add `jsonRpcProvider` to `configureChains` with the chain's RPC URLs.",
           'Read more: https://wagmi.sh/docs/providers/json-rpc',
         ].join('\n'),
       )
@@ -77,8 +86,10 @@ export function configureChains<
             ? chainId
             : defaultChains[0].id
         ]
-      if (chainProviders.length === 1) return chainProviders[0]()
-      return fallbackProvider(targetQuorum, minQuorum, chainProviders)
+      if (chainProviders.length === 1) return chainProviders[0]() as TProvider
+      return fallbackProvider(targetQuorum, minQuorum, chainProviders, {
+        stallTimeout,
+      })
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
       const chainWebSocketProviders =
@@ -101,14 +112,20 @@ export function configureChains<
 function fallbackProvider(
   targetQuorum: number,
   minQuorum: number,
-  providers_: (() => providers.Provider)[],
+  providers_: (() => ProviderWithFallbackConfig<Provider>)[],
+  { stallTimeout }: { stallTimeout?: number },
 ): providers.FallbackProvider {
   try {
     return new providers.FallbackProvider(
-      providers_.map((chainProvider, index) => ({
-        provider: chainProvider(),
-        priority: index,
-      })),
+      providers_.map((chainProvider, index) => {
+        const provider = chainProvider()
+        return {
+          provider,
+          priority: provider.priority ?? index,
+          stallTimeout: provider.stallTimeout ?? stallTimeout,
+          weight: provider.weight,
+        }
+      }),
       targetQuorum,
     )
   } catch (error: any) {
@@ -118,7 +135,9 @@ function fallbackProvider(
       )
     ) {
       if (targetQuorum === minQuorum) throw error
-      return fallbackProvider(targetQuorum - 1, minQuorum, providers_)
+      return fallbackProvider(targetQuorum - 1, minQuorum, providers_, {
+        stallTimeout,
+      })
     }
     throw error
   }

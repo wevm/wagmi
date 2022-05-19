@@ -1,12 +1,17 @@
 import { providers } from 'ethers'
 
-import { ChainProvider } from '../types'
+import { ChainProvider, FallbackProviderConfig } from '../types'
+
+export type PublicProviderConfig = FallbackProviderConfig & {
+  pollingInterval?: number
+}
 
 export function publicProvider({
   pollingInterval,
-}: {
-  pollingInterval?: number
-} = {}): ChainProvider<providers.StaticJsonRpcProvider> {
+  priority,
+  stallTimeout,
+  weight,
+}: PublicProviderConfig = {}): ChainProvider<providers.StaticJsonRpcProvider> {
   return function (chain) {
     if (!chain.rpcUrls.default) return null
     return {
@@ -20,7 +25,7 @@ export function publicProvider({
           },
         )
         if (pollingInterval) provider.pollingInterval = pollingInterval
-        return provider
+        return Object.assign(provider, { priority, stallTimeout, weight })
       },
     }
   }

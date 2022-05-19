@@ -5,7 +5,7 @@ import { setupServer } from 'msw/node'
 import { alchemyProvider } from '../providers/alchemy'
 import { publicProvider } from '../providers/public'
 import { infuraProvider } from '../providers/infura'
-import { staticJsonRpcProvider } from '../providers/staticJsonRpc'
+import { jsonRpcProvider } from '../providers/jsonRpc'
 
 import { chain, defaultAlchemyId, defaultInfuraId } from '../constants'
 import { Chain } from '../types'
@@ -162,7 +162,7 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
-          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
           Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
@@ -209,7 +209,7 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
-          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
           Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
@@ -265,17 +265,17 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid provider configuration for chain \\"Polygon\\".
 
-          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
           Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
 
-    describe('staticJsonRpc', () => {
+    describe('jsonRpc', () => {
       const { chains, provider } = configureChains(defaultChainsWithAvalanche, [
-        staticJsonRpcProvider({
-          rpcUrls: (chain) => ({
-            rpcUrl: `https://${chain.network}.example.com`,
+        jsonRpcProvider({
+          rpc: (chain) => ({
+            http: `https://${chain.network}.example.com`,
           }),
         }),
       ])
@@ -295,17 +295,30 @@ describe('configureChains', () => {
 
       it('provides a StaticJsonRpcProvider instance', async () => {
         expect(
-          provider({ chainId: chain.mainnet.id }) instanceof
-            providers.StaticJsonRpcProvider,
-        ).toBeTruthy()
+          provider({ chainId: chain.mainnet.id }).constructor.name,
+        ).toEqual('StaticJsonRpcProvider')
+      })
+
+      it('provides a JsonRpcProvider instance if `static` option is falsy', async () => {
+        const { provider } = configureChains(defaultChainsWithAvalanche, [
+          jsonRpcProvider({
+            rpc: (chain) => ({
+              http: `https://${chain.network}.example.com`,
+            }),
+            static: false,
+          }),
+        ])
+        expect(
+          provider({ chainId: chain.mainnet.id }).constructor.name,
+        ).toEqual('JsonRpcProvider')
       })
 
       defaultChainsWithAvalanche.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
           const { provider } = configureChains(defaultChainsWithAvalanche, [
-            staticJsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.network}.example.com`,
+            jsonRpcProvider({
+              rpc: (chain) => ({
+                http: `https://${chain.network}.example.com`,
               }),
             }),
           ])
@@ -314,12 +327,12 @@ describe('configureChains', () => {
         })
       })
 
-      it('throws an error if rpcUrl returns empty string for a chain', () => {
+      it('throws an error if rpc.http returns empty string for a chain', () => {
         expect(() =>
           configureChains(defaultChainsWithAvalanche, [
-            staticJsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl:
+            jsonRpcProvider({
+              rpc: (chain) => ({
+                http:
                   chain.id === 1 ? '' : `https://${chain.network}.example.com`,
                 webSocketRpcUrl: `wss://${chain.id}.example.com`,
               }),
@@ -328,7 +341,7 @@ describe('configureChains', () => {
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid provider configuration for chain \\"Ethereum\\".
 
-          You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+          You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
           Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
@@ -356,10 +369,10 @@ describe('configureChains', () => {
     const { chains, provider } = configureChains(defaultChains, [
       alchemyProvider({ alchemyId }),
       infuraProvider({ infuraId }),
-      staticJsonRpcProvider({
-        rpcUrls: (chain) => {
+      jsonRpcProvider({
+        rpc: (chain) => {
           if (chain.id !== avalancheChain.id) return null
-          return { rpcUrl: chain.rpcUrls.default }
+          return { http: chain.rpcUrls.default }
         },
       }),
     ])
@@ -401,9 +414,9 @@ describe('configureChains', () => {
           [
             alchemyProvider({ alchemyId }),
             infuraProvider({ infuraId }),
-            staticJsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl:
+            jsonRpcProvider({
+              rpc: (chain) => ({
+                http:
                   chain.id === avalancheChain.id ? '' : chain.rpcUrls.default,
               }),
             }),
@@ -412,7 +425,7 @@ describe('configureChains', () => {
       ).toThrowErrorMatchingInlineSnapshot(`
         "Could not find valid provider configuration for chain \\"Avalanche\\".
 
-        You may need to add \`staticJsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
+        You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
         Read more: https://wagmi.sh/docs/providers/json-rpc"
       `)
     })
@@ -427,9 +440,9 @@ describe('configureChains', () => {
             [
               alchemyProvider({ alchemyId }),
               infuraProvider({ infuraId }),
-              staticJsonRpcProvider({
-                rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.network}.example.com`,
+              jsonRpcProvider({
+                rpc: (chain) => ({
+                  http: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -448,9 +461,9 @@ describe('configureChains', () => {
             [
               alchemyProvider({ alchemyId }),
               infuraProvider({ infuraId }),
-              staticJsonRpcProvider({
-                rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.network}.example.com`,
+              jsonRpcProvider({
+                rpc: (chain) => ({
+                  http: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -469,9 +482,9 @@ describe('configureChains', () => {
             [
               alchemyProvider({ alchemyId }),
               infuraProvider({ infuraId }),
-              staticJsonRpcProvider({
-                rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.network}.example.com`,
+              jsonRpcProvider({
+                rpc: (chain) => ({
+                  http: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -491,9 +504,9 @@ describe('configureChains', () => {
           [
             alchemyProvider({ alchemyId }),
             infuraProvider({ infuraId }),
-            staticJsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.network}.example.com`,
+            jsonRpcProvider({
+              rpc: (chain) => ({
+                http: `https://${chain.network}.example.com`,
               }),
             }),
           ],
@@ -514,9 +527,9 @@ describe('configureChains', () => {
           [
             alchemyProvider({ alchemyId }),
             infuraProvider({ infuraId }),
-            staticJsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.network}.example.com`,
+            jsonRpcProvider({
+              rpc: (chain) => ({
+                http: `https://${chain.network}.example.com`,
               }),
             }),
           ],
@@ -534,9 +547,9 @@ describe('configureChains', () => {
         [
           alchemyProvider({ alchemyId }),
           infuraProvider({ infuraId }),
-          staticJsonRpcProvider({
-            rpcUrls: (chain) => ({
-              rpcUrl: `https://${chain.network}.example.com`,
+          jsonRpcProvider({
+            rpc: (chain) => ({
+              http: `https://${chain.network}.example.com`,
             }),
           }),
         ],
@@ -547,6 +560,109 @@ describe('configureChains', () => {
       expect(() =>
         provider({ chainId: chain.mainnet.id }).getBlockNumber(),
       ).toThrowError()
+    })
+  })
+
+  describe('fallback config', () => {
+    it('assigns fallback config passed to configureChains', () => {
+      const { provider } = configureChains(
+        defaultChains,
+        [
+          alchemyProvider({
+            alchemyId,
+          }),
+          infuraProvider({
+            infuraId,
+          }),
+          jsonRpcProvider({
+            rpc: (chain) => ({
+              http: `https://${chain.network}.example.com`,
+            }),
+          }),
+        ],
+        { stallTimeout: 5000 },
+      )
+
+      expect(
+        (
+          provider({ chainId: chain.mainnet.id }) as providers.FallbackProvider
+        ).providerConfigs.map(({ priority, stallTimeout, weight }) => ({
+          priority,
+          stallTimeout,
+          weight,
+        })),
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "priority": 0,
+            "stallTimeout": 5000,
+            "weight": 1,
+          },
+          {
+            "priority": 1,
+            "stallTimeout": 5000,
+            "weight": 1,
+          },
+          {
+            "priority": 2,
+            "stallTimeout": 5000,
+            "weight": 1,
+          },
+        ]
+      `)
+    })
+
+    it('assigns fallback config passed to providers', () => {
+      const { provider } = configureChains(defaultChains, [
+        alchemyProvider({
+          alchemyId,
+          priority: 1,
+          stallTimeout: 2000,
+          weight: 1,
+        }),
+        infuraProvider({
+          infuraId,
+          priority: 2,
+          stallTimeout: 3000,
+          weight: 2,
+        }),
+        jsonRpcProvider({
+          rpc: (chain) => ({
+            http: `https://${chain.network}.example.com`,
+          }),
+          priority: 3,
+          stallTimeout: 5000,
+          weight: 3,
+        }),
+      ])
+
+      expect(
+        (
+          provider({ chainId: chain.mainnet.id }) as providers.FallbackProvider
+        ).providerConfigs.map(({ priority, stallTimeout, weight }) => ({
+          priority,
+          stallTimeout,
+          weight,
+        })),
+      ).toMatchInlineSnapshot(`
+        [
+          {
+            "priority": 1,
+            "stallTimeout": 2000,
+            "weight": 1,
+          },
+          {
+            "priority": 2,
+            "stallTimeout": 3000,
+            "weight": 2,
+          },
+          {
+            "priority": 3,
+            "stallTimeout": 5000,
+            "weight": 3,
+          },
+        ]
+      `)
     })
   })
 })

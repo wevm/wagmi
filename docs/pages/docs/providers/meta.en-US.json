@@ -3,5 +3,5 @@
   "alchemy": "Alchemy",
   "infura": "Infura",
   "public": "Public",
-  "staticJsonRpc": "JSON RPC"
+  "jsonRpc": "JSON RPC"
 }

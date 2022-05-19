@@ -1,15 +1,20 @@
 import { providers } from 'ethers'
 
 import { defaultInfuraId } from '../constants/rpcs'
-import { ChainProvider } from '../types'
+import { ChainProvider, FallbackProviderConfig } from '../types'
+
+export type InfuraProviderConfig = FallbackProviderConfig & {
+  infuraId?: string
+  pollingInterval?: number
+}
 
 export function infuraProvider({
   infuraId = defaultInfuraId,
   pollingInterval,
-}: {
-  infuraId?: string
-  pollingInterval?: number
-} = {}): ChainProvider<
+  priority,
+  stallTimeout,
+  weight,
+}: InfuraProviderConfig = {}): ChainProvider<
   providers.InfuraProvider,
   providers.InfuraWebSocketProvider
 > {
@@ -26,7 +31,7 @@ export function infuraProvider({
       provider: () => {
         const provider = new providers.InfuraProvider(chain.id, infuraId)
         if (pollingInterval) provider.pollingInterval = pollingInterval
-        return provider
+        return Object.assign(provider, { priority, stallTimeout, weight })
       },
       webSocketProvider: () =>
         new providers.InfuraWebSocketProvider(chain.id, infuraId),

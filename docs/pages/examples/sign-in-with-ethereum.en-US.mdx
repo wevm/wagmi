@@ -234,7 +234,9 @@ export function Profile() {
         chainId,
         nonce: await nonceRes.text(),
       })
-      const signature = await signMessageAsync({ message: message.prepareMessage() })
+      const signature = await signMessageAsync({
+        message: message.prepareMessage(),
+      })
 
       // Verify signature
       const verifyRes = await fetch('/api/verify', {
@@ -309,7 +311,7 @@ This guide splits SIWE into two steps: Connect wallet and sign SIWE message. If 
 
 ```ts
 try {
-  const res = await connect(connector) // connect from useConnect
+  const res = await connectAsync(connector) // `connectAsync` from `useConnect`
   if (!res.data) throw res.error ?? new Error('Something went wrong')
 
   const nonceRes = await fetch('/api/nonce')

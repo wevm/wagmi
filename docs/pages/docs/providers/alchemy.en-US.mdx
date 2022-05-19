@@ -51,3 +51,79 @@ const { chains, provider } = configureChains(
   [alchemyProvider({ alchemyId })],
 )
 ```
+
+### pollingInterval (optional)
+
+The frequency in milliseconds at which the provider polls.
+
+```ts {8}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
+const alchemyId = process.env.ALCHEMY_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [alchemyProvider({ alchemyId, pollingInterval: 5000 })],
+)
+```
+
+### priority (optional)
+
+The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
+
+```ts {10-11}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
+const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    alchemyProvider({ alchemyId, priority: 0 }),
+    infuraProvider({ infuraId, priority: 1 }),
+  ],
+)
+```
+
+### stallTimeout (optional)
+
+The timeout in milliseconds after which another provider will be attempted.
+
+```ts {10-11}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
+const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    alchemyProvider({ alchemyId, stallTimeout: 1000 }),
+    infuraProvider({ infuraId, stallTimeout: 1000 }),
+  ],
+)
+```
+
+### weight (optional)
+
+The weight a response from this provider provides. This can be used if a given provider is more trusted.
+
+```ts {10-11}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+
+const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    alchemyProvider({ alchemyId, weight: 1 }),
+    infuraProvider({ infuraId, weight: 2 }),
+  ],
+)
+```

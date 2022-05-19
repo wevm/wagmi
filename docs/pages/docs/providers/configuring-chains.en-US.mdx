@@ -58,7 +58,7 @@ The `configureChains` function accepts multiple providers. This is useful if not
 ```ts
 import { Chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { staticJsonRpcProvider } from 'wagmi/providers/staticJsonRpc'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const alchemyId = process.env.ALCHEMY_ID
 const infuraId = process.env.INFURA_ID
@@ -86,10 +86,10 @@ const { provider, chains } = configureChains(
   [
     alchemyProvider({ alchemyId }),
     infuraProvider({ infuraId }),
-    staticJsonRpcProvider({
-      rpcUrls: (chain) => {
+    jsonRpcProvider({
+      rpc: (chain) => {
         if (chain.id !== avalancheChain.id) return null
-        return { rpcUrl: chain.rpcUrls.default }
+        return { http: chain.rpcUrls.default }
       },
     }),
   ],
@@ -106,10 +106,10 @@ const { provider, chains } = configureChains(
   [
     alchemyProvider({ alchemyId }),
     infuraProvider({ infuraId }),
-    staticJsonRpcProvider({
-      rpcUrls: (chain) => {
+    jsonRpcProvider({
+      rpc: (chain) => {
         if (chain.id !== avalancheChain.id) return null
-        return { rpcUrl: chain.rpcUrls.default }
+        return { http: chain.rpcUrls.default }
       },
     }),
   ],
@@ -119,7 +119,7 @@ const { provider, chains } = configureChains(
 
 By default, for a given chain, it will _attempt_ to set the quorum value, but if the `targetQuorum` value is greater than the number of providers for the chain, it will default to the number of providers.
 
-For instance, in the example provided above `targetQuorum = 2`, however there is only 1 available provider for Avalanche (`staticJsonRpcProvider`), so the quorum will get set to `1`.
+For instance, in the example provided above `targetQuorum = 2`, however there is only 1 available provider for Avalanche (`jsonRpcProvider`), so the quorum will get set to `1`.
 
 To guarentee a static quorum, you can provide a `minQuorum` as an config option.
 
@@ -203,5 +203,28 @@ const { chains } = configureChains(
     publicProvider(),
   ],
   { targetQuorum: 3, minQuorum: 2 },
+)
+```
+
+#### stallTimeout (optional)
+
+The timeout in milliseconds after which another provider will be attempted.
+
+```ts {15}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
+
+const { chains } = configureChains(
+  [chain.mainnet, chain.optimism],
+  [
+    alchemyProvider({ alchemyId }),
+    infuraProvider({ infuraId }),
+    publicProvider(),
+  ],
+  { stallTimeout: 5000 },
 )
 ```

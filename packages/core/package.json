@@ -43,9 +43,9 @@
       "module": "./providers/infura/dist/wagmi-core-providers-infura.esm.js",
       "default": "./providers/infura/dist/wagmi-core-providers-infura.cjs.js"
     },
-    "./providers/staticJsonRpc": {
-      "module": "./providers/staticJsonRpc/dist/wagmi-core-providers-staticJsonRpc.esm.js",
-      "default": "./providers/staticJsonRpc/dist/wagmi-core-providers-staticJsonRpc.cjs.js"
+    "./providers/jsonRpc": {
+      "module": "./providers/jsonRpc/dist/wagmi-core-providers-jsonRpc.esm.js",
+      "default": "./providers/jsonRpc/dist/wagmi-core-providers-jsonRpc.cjs.js"
     }
   },
   "files": [
@@ -63,7 +63,7 @@
       "providers/alchemy.ts",
       "providers/public.ts",
       "providers/infura.ts",
-      "providers/staticJsonRpc.ts"
+      "providers/jsonRpc.ts"
     ]
   },
   "peerDependencies": {

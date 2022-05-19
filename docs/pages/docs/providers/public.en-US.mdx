@@ -24,7 +24,7 @@ const { chains, provider } = configureChains(
   Only having `publicProvider` in your providers will make the chain use the
   public RPC URL which could lead to rate-limiting. It is recommended to also
   include another provider in your list (such as: `alchemyProvider`,
-  `infuraProvider` or `staticJsonRpcProvider`).
+  `infuraProvider` or `jsonRpcProvider`).
 </Callout>
 
 ## Return Value
@@ -35,4 +35,74 @@ const { chains, provider } = configureChains(
   provider: BaseProvider,
   webSocketProvider: WebSocketProvider
 }
+```
+
+## Configuration
+
+### pollingInterval (optional)
+
+The frequency in milliseconds at which the provider polls.
+
+```ts {6}
+import { chain, configureChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [publicProvider({ pollingInterval: 5000 })],
+)
+```
+
+### priority (optional)
+
+The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
+
+```ts {9-10}
+import { chain, configureChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const alchemyId = process.env.ALCHEMY_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    alchemyProvider({ alchemyId, priority: 0 }),
+    publicProvider({ priority: 1 }),
+  ],
+)
+```
+
+### stallTimeout (optional)
+
+The timeout in milliseconds after which another provider will be attempted.
+
+```ts {9-10}
+import { chain, configureChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const alchemyId = process.env.ALCHEMY_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    alchemyProvider({ alchemyId, stallTimeout: 1000 }),
+    publicProvider({ stallTimeout: 1000 }),
+  ],
+)
+```
+
+### weight (optional)
+
+The weight a response from this provider provides. This can be used if a given provider is more trusted.
+
+```ts {8}
+import { chain, configureChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const alchemyId = process.env.ALCHEMY_ID
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [alchemyProvider({ alchemyId, weight: 1 }), publicProvider({ weight: 2 })],
+)
 ```

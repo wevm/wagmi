@@ -17,7 +17,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
-import { staticJsonRpcProvider } from 'wagmi/providers/staticJsonRpc'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
@@ -47,11 +47,11 @@ const { chains, provider, webSocketProvider } = configureChains(
   [
     alchemyProvider({ alchemyId }),
     infuraProvider({ infuraId }),
-    staticJsonRpcProvider({
-      rpcUrls: (chain) => {
+    jsonRpcProvider({
+      rpc: (chain) => {
         if (chain.id !== avalanche.id) return null
         return {
-          rpcUrl: chain.rpcUrls.default,
+          http: chain.rpcUrls.default,
         }
       },
     }),

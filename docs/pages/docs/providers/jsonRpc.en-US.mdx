@@ -1,0 +1,173 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# JSON RPC
+
+The `jsonRpcProvider` configures the chains with the RPC URLs that you specify and also provides an [ethers.js `StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider).
+
+```ts
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+```
+
+## Usage
+
+```ts
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+      }),
+    }),
+  ],
+)
+```
+
+## Return Value
+
+```ts
+{
+  chains: Chain[],
+  provider: JsonRpcProvider,
+  webSocketProvider: WebSocketProvider
+}
+```
+
+## Configuration
+
+### rpc
+
+Accepts a function which provides the `chain` and expects to receive a `http` URL and optionally a `webSocket` URL.
+
+```tsx {8-11}
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
+      }),
+    }),
+  ],
+)
+```
+
+### pollingInterval (optional)
+
+The frequency in milliseconds at which the provider polls.
+
+```tsx {8}
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      pollingInterval: 5000,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
+      }),
+    }),
+  ],
+)
+```
+
+### priority (optional)
+
+The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
+
+```ts {8}
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      priority: 0,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
+      }),
+    }),
+    alchemyProvider({ priority: 1 }),
+  ],
+)
+```
+
+### stallTimeout (optional)
+
+The timeout in milliseconds after which another provider will be attempted.
+
+```ts {12}
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
+      }),
+      stallTimeout: 1000,
+    }),
+    alchemyProvider({ priority: 1, stallTimeout: 1000 }),
+  ],
+)
+```
+
+### static (optional)
+
+Flag to indicate if the provider should return a [`StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider) or [`JsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#JsonRpcProvider). Defaults to `true`.
+
+```tsx {12}
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
+      }),
+      static: false,
+    }),
+  ],
+)
+```
+
+### weight (optional)
+
+The weight a response from this provider provides. This can be used if a given provider is more trusted.
+
+```ts {12}
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
+      }),
+      weight: 1,
+    }),
+    alchemyProvider({ priority: 1, weight: 2 }),
+  ],
+)
+```
