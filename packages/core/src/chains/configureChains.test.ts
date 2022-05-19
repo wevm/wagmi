@@ -163,7 +163,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/jsonRpc"
         `)
       })
     })
@@ -210,7 +210,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/jsonRpc"
         `)
       })
     })
@@ -266,7 +266,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Polygon\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/jsonRpc"
         `)
       })
     })
@@ -342,7 +342,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Ethereum\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/json-rpc"
+          Read more: https://wagmi.sh/docs/providers/jsonRpc"
         `)
       })
     })
@@ -426,7 +426,7 @@ describe('configureChains', () => {
         "Could not find valid provider configuration for chain \\"Avalanche\\".
 
         You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-        Read more: https://wagmi.sh/docs/providers/json-rpc"
+        Read more: https://wagmi.sh/docs/providers/jsonRpc"
       `)
     })
   })

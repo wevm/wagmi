@@ -71,7 +71,7 @@ export function configureChains<
         [
           `Could not find valid provider configuration for chain "${chain.name}".\n`,
           "You may need to add `jsonRpcProvider` to `configureChains` with the chain's RPC URLs.",
-          'Read more: https://wagmi.sh/docs/providers/json-rpc',
+          'Read more: https://wagmi.sh/docs/providers/jsonRpc',
         ].join('\n'),
       )
     }
