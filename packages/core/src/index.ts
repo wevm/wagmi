@@ -85,6 +85,7 @@ export type {
 } from './actions'
 
 export { configureChains } from './chains'
+export type { ConfigureChainsConfig } from './chains'
 
 export { createClient, Client } from './client'
 export type { ClientConfig } from './client'
@@ -125,6 +126,8 @@ export type { ClientStorage as Storage } from './storage'
 export type {
   Chain,
   ChainProvider,
+  FallbackProviderConfig,
+  ProviderWithFallbackConfig,
   Provider,
   Unit,
   WebSocketProvider,

@@ -30,9 +30,16 @@ export type ChainProvider<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = (chain: Chain) => {
   chain: Chain
-  provider: () => TProvider
+  provider: () => ProviderWithFallbackConfig<TProvider>
   webSocketProvider?: () => TWebSocketProvider
 } | null
+
+export type FallbackProviderConfig = Omit<
+  providers.FallbackProviderConfig,
+  'provider'
+>
+export type ProviderWithFallbackConfig<TProvider extends Provider = Provider> =
+  TProvider & FallbackProviderConfig
 
 export type Provider = providers.BaseProvider
 export type WebSocketProvider = providers.WebSocketProvider

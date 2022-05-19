@@ -1,15 +1,20 @@
 import { providers } from 'ethers'
 
 import { defaultAlchemyId } from '../constants'
-import { ChainProvider } from '../types'
+import { ChainProvider, FallbackProviderConfig } from '../types'
+
+export type AlchemyProviderConfig = FallbackProviderConfig & {
+  alchemyId?: string
+  pollingInterval?: number
+}
 
 export function alchemyProvider({
   alchemyId = defaultAlchemyId,
   pollingInterval,
-}: {
-  alchemyId?: string
-  pollingInterval?: number
-} = {}): ChainProvider<
+  priority,
+  stallTimeout,
+  weight,
+}: AlchemyProviderConfig = {}): ChainProvider<
   providers.AlchemyProvider,
   providers.AlchemyWebSocketProvider
 > {
@@ -26,7 +31,7 @@ export function alchemyProvider({
       provider: () => {
         const provider = new providers.AlchemyProvider(chain.id, alchemyId)
         if (pollingInterval) provider.pollingInterval = pollingInterval
-        return provider
+        return Object.assign(provider, { priority, stallTimeout, weight })
       },
       webSocketProvider: () =>
         new providers.AlchemyWebSocketProvider(chain.id, alchemyId),
