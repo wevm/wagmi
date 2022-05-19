@@ -163,7 +163,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/jsonRpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
@@ -210,7 +210,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/jsonRpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
@@ -266,7 +266,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Polygon\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/jsonRpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
@@ -274,8 +274,8 @@ describe('configureChains', () => {
     describe('jsonRpc', () => {
       const { chains, provider } = configureChains(defaultChainsWithAvalanche, [
         jsonRpcProvider({
-          rpcUrls: (chain) => ({
-            rpcUrl: `https://${chain.network}.example.com`,
+          rpc: (chain) => ({
+            http: `https://${chain.network}.example.com`,
           }),
         }),
       ])
@@ -302,8 +302,8 @@ describe('configureChains', () => {
       it('provides a JsonRpcProvider instance if `static` option is falsy', async () => {
         const { provider } = configureChains(defaultChainsWithAvalanche, [
           jsonRpcProvider({
-            rpcUrls: (chain) => ({
-              rpcUrl: `https://${chain.network}.example.com`,
+            rpc: (chain) => ({
+              http: `https://${chain.network}.example.com`,
             }),
             static: false,
           }),
@@ -317,8 +317,8 @@ describe('configureChains', () => {
         it(`configures provider for ${chain.network}`, async () => {
           const { provider } = configureChains(defaultChainsWithAvalanche, [
             jsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.network}.example.com`,
+              rpc: (chain) => ({
+                http: `https://${chain.network}.example.com`,
               }),
             }),
           ])
@@ -327,12 +327,12 @@ describe('configureChains', () => {
         })
       })
 
-      it('throws an error if rpcUrl returns empty string for a chain', () => {
+      it('throws an error if rpc.http returns empty string for a chain', () => {
         expect(() =>
           configureChains(defaultChainsWithAvalanche, [
             jsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl:
+              rpc: (chain) => ({
+                http:
                   chain.id === 1 ? '' : `https://${chain.network}.example.com`,
                 webSocketRpcUrl: `wss://${chain.id}.example.com`,
               }),
@@ -342,7 +342,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Ethereum\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/docs/providers/jsonRpc"
+          Read more: https://wagmi.sh/docs/providers/json-rpc"
         `)
       })
     })
@@ -370,9 +370,9 @@ describe('configureChains', () => {
       alchemyProvider({ alchemyId }),
       infuraProvider({ infuraId }),
       jsonRpcProvider({
-        rpcUrls: (chain) => {
+        rpc: (chain) => {
           if (chain.id !== avalancheChain.id) return null
-          return { rpcUrl: chain.rpcUrls.default }
+          return { http: chain.rpcUrls.default }
         },
       }),
     ])
@@ -415,8 +415,8 @@ describe('configureChains', () => {
             alchemyProvider({ alchemyId }),
             infuraProvider({ infuraId }),
             jsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl:
+              rpc: (chain) => ({
+                http:
                   chain.id === avalancheChain.id ? '' : chain.rpcUrls.default,
               }),
             }),
@@ -426,7 +426,7 @@ describe('configureChains', () => {
         "Could not find valid provider configuration for chain \\"Avalanche\\".
 
         You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-        Read more: https://wagmi.sh/docs/providers/jsonRpc"
+        Read more: https://wagmi.sh/docs/providers/json-rpc"
       `)
     })
   })
@@ -441,8 +441,8 @@ describe('configureChains', () => {
               alchemyProvider({ alchemyId }),
               infuraProvider({ infuraId }),
               jsonRpcProvider({
-                rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.network}.example.com`,
+                rpc: (chain) => ({
+                  http: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -462,8 +462,8 @@ describe('configureChains', () => {
               alchemyProvider({ alchemyId }),
               infuraProvider({ infuraId }),
               jsonRpcProvider({
-                rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.network}.example.com`,
+                rpc: (chain) => ({
+                  http: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -483,8 +483,8 @@ describe('configureChains', () => {
               alchemyProvider({ alchemyId }),
               infuraProvider({ infuraId }),
               jsonRpcProvider({
-                rpcUrls: (chain) => ({
-                  rpcUrl: `https://${chain.network}.example.com`,
+                rpc: (chain) => ({
+                  http: `https://${chain.network}.example.com`,
                 }),
               }),
             ],
@@ -505,8 +505,8 @@ describe('configureChains', () => {
             alchemyProvider({ alchemyId }),
             infuraProvider({ infuraId }),
             jsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.network}.example.com`,
+              rpc: (chain) => ({
+                http: `https://${chain.network}.example.com`,
               }),
             }),
           ],
@@ -528,8 +528,8 @@ describe('configureChains', () => {
             alchemyProvider({ alchemyId }),
             infuraProvider({ infuraId }),
             jsonRpcProvider({
-              rpcUrls: (chain) => ({
-                rpcUrl: `https://${chain.network}.example.com`,
+              rpc: (chain) => ({
+                http: `https://${chain.network}.example.com`,
               }),
             }),
           ],
@@ -548,8 +548,8 @@ describe('configureChains', () => {
           alchemyProvider({ alchemyId }),
           infuraProvider({ infuraId }),
           jsonRpcProvider({
-            rpcUrls: (chain) => ({
-              rpcUrl: `https://${chain.network}.example.com`,
+            rpc: (chain) => ({
+              http: `https://${chain.network}.example.com`,
             }),
           }),
         ],
@@ -575,8 +575,8 @@ describe('configureChains', () => {
             infuraId,
           }),
           jsonRpcProvider({
-            rpcUrls: (chain) => ({
-              rpcUrl: `https://${chain.network}.example.com`,
+            rpc: (chain) => ({
+              http: `https://${chain.network}.example.com`,
             }),
           }),
         ],
@@ -627,8 +627,8 @@ describe('configureChains', () => {
           weight: 2,
         }),
         jsonRpcProvider({
-          rpcUrls: (chain) => ({
-            rpcUrl: `https://${chain.network}.example.com`,
+          rpc: (chain) => ({
+            http: `https://${chain.network}.example.com`,
           }),
           priority: 3,
           stallTimeout: 5000,

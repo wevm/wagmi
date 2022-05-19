@@ -18,8 +18,8 @@ const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
-      rpcUrls: (chain) => ({
-        rpcUrl: `https://${chain.id}.example.com`,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
       }),
     }),
   ],
@@ -38,9 +38,9 @@ const { chains, provider } = configureChains(
 
 ## Configuration
 
-### rpcUrls
+### rpc
 
-Accepts a function which provides the `chain` and expects to receive a `rpcUrl` and optionally a `webSocketRpcUrl`.
+Accepts a function which provides the `chain` and expects to receive a `http` URL and optionally a `webSocket` URL.
 
 ```tsx {8-11}
 import { chain, configureChains } from 'wagmi'
@@ -50,9 +50,9 @@ const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
-      rpcUrls: (chain) => ({
-        rpcUrl: `https://${chain.id}.example.com`,
-        webSocketRpcUrl: `wss://${chain.id}.example.com`,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
       }),
     }),
   ],
@@ -72,9 +72,9 @@ const { chains, provider } = configureChains(
   [
     jsonRpcProvider({
       pollingInterval: 5000,
-      rpcUrls: (chain) => ({
-        rpcUrl: `https://${chain.id}.example.com`,
-        webSocketRpcUrl: `wss://${chain.id}.example.com`,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
       }),
     }),
   ],
@@ -94,9 +94,9 @@ const { chains, provider } = configureChains(
   [
     jsonRpcProvider({
       priority: 0,
-      rpcUrls: (chain) => ({
-        rpcUrl: `https://${chain.id}.example.com`,
-        webSocketRpcUrl: `wss://${chain.id}.example.com`,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
       }),
     }),
     alchemyProvider({ priority: 1 }),
@@ -116,9 +116,9 @@ const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
-      rpcUrls: (chain) => ({
-        rpcUrl: `https://${chain.id}.example.com`,
-        webSocketRpcUrl: `wss://${chain.id}.example.com`,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
       }),
       stallTimeout: 1000,
     }),
@@ -139,9 +139,9 @@ const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
-      rpcUrls: (chain) => ({
-        rpcUrl: `https://${chain.id}.example.com`,
-        webSocketRpcUrl: `wss://${chain.id}.example.com`,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
       }),
       static: false,
     }),
@@ -161,9 +161,9 @@ const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
-      rpcUrls: (chain) => ({
-        rpcUrl: `https://${chain.id}.example.com`,
-        webSocketRpcUrl: `wss://${chain.id}.example.com`,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
       }),
       weight: 1,
     }),

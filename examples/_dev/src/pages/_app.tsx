@@ -48,10 +48,10 @@ const { chains, provider, webSocketProvider } = configureChains(
     alchemyProvider({ alchemyId }),
     infuraProvider({ infuraId }),
     jsonRpcProvider({
-      rpcUrls: (chain) => {
+      rpc: (chain) => {
         if (chain.id !== avalanche.id) return null
         return {
-          rpcUrl: chain.rpcUrls.default,
+          http: chain.rpcUrls.default,
         }
       },
     }),

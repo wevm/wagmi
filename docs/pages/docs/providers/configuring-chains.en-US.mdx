@@ -87,9 +87,9 @@ const { provider, chains } = configureChains(
     alchemyProvider({ alchemyId }),
     infuraProvider({ infuraId }),
     jsonRpcProvider({
-      rpcUrls: (chain) => {
+      rpc: (chain) => {
         if (chain.id !== avalancheChain.id) return null
-        return { rpcUrl: chain.rpcUrls.default }
+        return { http: chain.rpcUrls.default }
       },
     }),
   ],
@@ -107,9 +107,9 @@ const { provider, chains } = configureChains(
     alchemyProvider({ alchemyId }),
     infuraProvider({ infuraId }),
     jsonRpcProvider({
-      rpcUrls: (chain) => {
+      rpc: (chain) => {
         if (chain.id !== avalancheChain.id) return null
-        return { rpcUrl: chain.rpcUrls.default }
+        return { http: chain.rpcUrls.default }
       },
     }),
   ],
