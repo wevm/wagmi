@@ -5,6 +5,7 @@ it('should expose correct exports', () => {
     [
       "createClient",
       "WagmiConfig",
+      "WagmiProvider",
       "useClient",
       "useAccount",
       "useBalance",
@@ -58,4 +59,8 @@ it('should expose correct exports', () => {
       "UserRejectedRequestError",
     ]
   `)
+})
+
+it('should alias "WagmiConfig" as "WagmiProvider"', () => {
+  expect(Exports.WagmiConfig).toBe(Exports.WagmiProvider)
 })
