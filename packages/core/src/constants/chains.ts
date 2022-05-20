@@ -12,6 +12,7 @@ export type ChainName =
   | 'mainnet'
   | 'optimism'
   | 'optimismKovan'
+  | 'gnosis'
   | 'polygon'
   | 'polygonMumbai'
   | 'rinkeby'
@@ -25,6 +26,7 @@ export const chainId = {
   kovan: 42,
   optimism: 10,
   optimismKovan: 69,
+  gnosis: 100,
   polygon: 137,
   polygonMumbai: 80_001,
   arbitrum: 42_161,
@@ -147,6 +149,17 @@ export const chain: Record<ChainName, Chain> = {
       default: etherscanBlockExplorers.optimismKovan,
     },
     testnet: true,
+  },
+  gnosis: {
+    id: chainId.gnosis,
+    name: 'Gnosis Chain',
+    network: 'gnosis-chain',
+    nativeCurrency: { name: 'xDai', symbol: 'xDAI', decimals: 18 },
+    rpcUrls: { default: 'https://rpc.gnosischain.com' },
+    blockExplorers: {
+      etherscan: etherscanBlockExplorers.gnosis,
+      default: etherscanBlockExplorers.gnosis,
+    },
   },
   polygon: {
     id: chainId.polygon,
