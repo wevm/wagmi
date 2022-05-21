@@ -207,7 +207,7 @@ import { SiweMessage } from 'siwe'
 
 export function Profile() {
   const { data: accountData } = useAccount()
-  const { data: networkData } = useNetwork()
+  const { activeChain } = useNetwork()
 
   const [state, setState] = React.useState<{
     address?: string
@@ -219,7 +219,7 @@ export function Profile() {
   const signIn = React.useCallback(async () => {
     try {
       const address = accountData?.address
-      const chainId = networkData?.chain?.id
+      const chainId = activeChain?.id
       if (!address || !chainId) return
 
       setState((x) => ({ ...x, error: undefined, loading: true }))
