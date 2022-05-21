@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.3.1
+
+### Patch Changes
+
+- [#484](https://github.com/tmm/wagmi/pull/484) [`1b9a503`](https://github.com/tmm/wagmi/commit/1b9a5033d51c6655b4f6570c490da6e0e9a29da9) Thanks [@tmm](https://github.com/tmm)! - export React Context
+
 ## 0.3.0
 
 ### Minor Changes
