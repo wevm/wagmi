@@ -13,16 +13,19 @@ export class MetaMaskConnector extends InjectedConnector {
 
   #provider?: Window['ethereum']
 
-  constructor(config?: {
+  constructor({
+    chains,
+    options,
+  }: {
     chains?: Chain[]
     options?: MetaMaskConnectorOptions
-  }) {
+  } = {}) {
     super({
-      ...config,
+      chains,
       options: {
         name: 'MetaMask',
         shimDisconnect: true,
-        ...config?.options,
+        ...options,
       },
     })
   }

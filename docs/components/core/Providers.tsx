@@ -38,7 +38,10 @@ const client = createClient({
     }),
     new InjectedConnector({
       chains,
-      options: { name: 'Injected' },
+      options: {
+        name: 'Injected',
+        shimDisconnect: true,
+      },
     }),
   ],
   provider,

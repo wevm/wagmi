@@ -51,7 +51,10 @@
         }),
         new InjectedConnector({
           chains,
-          options: { name: 'Injected' },
+          options: {
+            name: 'Injected',
+            shimDisconnect: true,
+          },
         }),
       ]
     },
@@ -96,7 +99,10 @@
       }),
       new InjectedConnector({
         chains,
-        options: { name: 'Injected' },
+        options: {
+          name: 'Injected',
+          shimDisconnect: true,
+        },
       }),
     ],
   })
@@ -159,7 +165,10 @@
         }),
         new InjectedConnector({
           chains,
-          options: { name: 'Injected' },
+          options: {
+            name: 'Injected',
+            shimDisconnect: true,
+          },
         }),
       ]
     },
@@ -206,7 +215,10 @@
       }),
       new InjectedConnector({
         chains,
-        options: { name: 'Injected' },
+        options: {
+          name: 'Injected',
+          shimDisconnect: true,
+        },
       }),
     ],
     provider,

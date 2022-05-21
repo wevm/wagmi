@@ -85,6 +85,7 @@ const client = createClient({
               ? detectedName
               : detectedName.join(', ')
           })`,
+        shimDisconnect: true,
       },
     }),
   ],

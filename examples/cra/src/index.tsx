@@ -45,7 +45,13 @@ const client = createClient({
         qrcode: true,
       },
     }),
-    new InjectedConnector({ chains, options: { name: 'Injected' } }),
+    new InjectedConnector({
+      chains,
+      options: {
+        name: 'Injected',
+        shimDisconnect: true,
+      },
+    }),
   ],
   provider,
   webSocketProvider,
