@@ -100,7 +100,6 @@ export async function getUnclaimedTokenId(
       await contract.ownerOf(randomTokenId)
     } catch (error) {
       return randomTokenId
-      break
     }
     attempts += 1
   }
