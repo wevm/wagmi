@@ -1,10 +1,8 @@
 <p>
-  <a href="https://wagmi.sh/#gh-light-mode-only" target="_blank">
-    <img src="./.github/logo-light.svg" alt="wagmi" width="auto" height="60">
-  </a>
-  <a href="https://wagmi.sh/#gh-dark-mode-only" target="_blank">
-    <img src="./.github/logo-dark.svg" alt="wagmi" width="auto" height="60">
-  </a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tmm/wagmi/main/.github/logo-dark.svg">
+    <img alt="wagmi logo" src="https://raw.githubusercontent.com/tmm/wagmi/main/.github/logo-light.svg" width="auto" height="60">
+  </picture>
 </p>
 
 React Hooks for Ethereum

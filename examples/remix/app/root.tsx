@@ -46,7 +46,6 @@ export default function App() {
       autoConnect: true,
       connectors: [
         new MetaMaskConnector({ chains }),
-        new InjectedConnector({ chains }),
         new CoinbaseWalletConnector({
           chains,
           options: {
@@ -57,6 +56,13 @@ export default function App() {
           chains,
           options: {
             qrcode: true,
+          },
+        }),
+        new InjectedConnector({
+          chains,
+          options: {
+            name: 'Injected',
+            shimDisconnect: true,
           },
         }),
       ],

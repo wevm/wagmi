@@ -67,27 +67,22 @@ export class Client<
 
   #lastUsedConnector?: string | null
 
-  constructor(config: ClientConfig<TProvider, TWebSocketProvider> = {}) {
-    // Set default values for config
-    const autoConnect = config.autoConnect ?? false
-    const connectors = config.connectors ?? [new InjectedConnector()]
-    const provider =
-      config.provider ??
-      ((config) => {
-        try {
-          return <TProvider>getDefaultProvider(config.chainId)
-        } catch {
-          return <TProvider>getDefaultProvider()
-        }
-      })
-    const storage =
-      config.storage ??
-      createStorage({
-        storage:
-          typeof window !== 'undefined' ? window.localStorage : noopStorage,
-      })
-    const webSocketProvider = config.webSocketProvider
-
+  constructor({
+    autoConnect = false,
+    connectors = [new InjectedConnector()],
+    provider = (config) => {
+      try {
+        return <TProvider>getDefaultProvider(config.chainId)
+      } catch {
+        return <TProvider>getDefaultProvider()
+      }
+    },
+    storage = createStorage({
+      storage:
+        typeof window !== 'undefined' ? window.localStorage : noopStorage,
+    }),
+    webSocketProvider,
+  }: ClientConfig<TProvider, TWebSocketProvider> = {}) {
     // Check status for autoConnect flag
     let status: State<TProvider, TWebSocketProvider>['status'] = 'disconnected'
     let chainId: number | undefined

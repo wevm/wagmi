@@ -41,15 +41,18 @@ export class InjectedConnector extends Connector<
 
   #provider?: Window['ethereum']
 
-  constructor(config?: {
+  constructor({
+    chains,
+    options = { shimDisconnect: true },
+  }: {
     chains?: Chain[]
     options?: InjectedConnectorOptions
-  }) {
-    super({ ...config, options: { shimDisconnect: true, ...config?.options } })
+  } = {}) {
+    super({ chains, options })
 
     let name = 'Injected'
     if (typeof window !== 'undefined') {
-      const overrideName = config?.options?.name
+      const overrideName = options.name
       const detectedName = getInjectedName(window.ethereum)
       if (overrideName)
         name =

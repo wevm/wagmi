@@ -86,16 +86,6 @@ export class CoinbaseWalletConnector extends Connector<
     provider.removeListener('disconnect', this.onDisconnect)
     provider.disconnect()
     provider.close()
-
-    if (typeof localStorage !== 'undefined') {
-      let n = localStorage.length
-      while (n--) {
-        const key = localStorage.key(n)
-        if (!key) continue
-        if (!/-walletlink/.test(key)) continue
-        localStorage.removeItem(key)
-      }
-    }
   }
 
   async getAccount() {
