@@ -3,9 +3,10 @@ import * as Exports from './'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "createClient",
-      "WagmiConfig",
+      "Context",
       "WagmiProvider",
+      "WagmiConfig",
+      "createClient",
       "useClient",
       "useAccount",
       "useBalance",
