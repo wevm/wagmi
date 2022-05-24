@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.3.2
+
+### Patch Changes
+
+- [`17212da`](https://github.com/tmm/wagmi/commit/17212da601640110d2835300e6433d1433db212e) Thanks [@jxom](https://github.com/jxom)! - Made the `defaultChains` type generic in `configureChains`.
+
 ## 0.3.1
 
 ### Patch Changes
