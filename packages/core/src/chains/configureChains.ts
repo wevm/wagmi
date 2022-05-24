@@ -22,15 +22,16 @@ export type ConfigureChainsConfig = { stallTimeout?: number } & (
 export function configureChains<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TChain extends Chain = Chain,
 >(
-  defaultChains: Chain[],
-  providers: ChainProvider<TProvider, TWebSocketProvider>[],
+  defaultChains: TChain[],
+  providers: ChainProvider<TProvider, TWebSocketProvider, TChain>[],
   { minQuorum = 1, targetQuorum = 1, stallTimeout }: ConfigureChainsConfig = {},
 ) {
   if (targetQuorum < minQuorum)
     throw new Error('quorum cannot be lower than minQuorum')
 
-  let chains: Chain[] = []
+  let chains: TChain[] = []
   const providers_: {
     [chainId: number]: (() => ProviderWithFallbackConfig<TProvider>)[]
   } = {}
