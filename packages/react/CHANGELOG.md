@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.4.2
+
+### Patch Changes
+
+- [`9ede86f`](https://github.com/tmm/wagmi/commit/9ede86f2f2f69312d10cf111571ae7e8581decc0) Thanks [@jxom](https://github.com/jxom)! - Upgrade `@wagmi/core`
+
 ## 0.4.1
 
 ### Patch Changes
