@@ -46,7 +46,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: pnpm i
       - name: Link Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit == 'true'
+        # if: steps.cache-node-modules.outputs.cache-hit == 'true'
         run: pnpm dev
 
   lint:
