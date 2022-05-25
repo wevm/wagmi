@@ -1,0 +1,15 @@
+export {
+  arbitrum,
+  arbitrumRinkeby,
+  goerli,
+  hardhat,
+  kovan,
+  localhost,
+  mainnet,
+  optimism,
+  optimismKovan,
+  polygon,
+  polygonMumbai,
+  rinkeby,
+  ropsten,
+} from '@wagmi/core/chains'

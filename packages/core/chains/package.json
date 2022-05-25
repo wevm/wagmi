@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-core-chains.cjs.js",
+  "module": "dist/wagmi-core-chains.esm.js"
+}

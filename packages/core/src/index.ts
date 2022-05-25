@@ -84,9 +84,6 @@ export type {
   WriteContractResult,
 } from './actions'
 
-export { configureChains } from './chains'
-export type { ConfigureChainsConfig } from './chains'
-
 export { createClient, Client } from './client'
 export type { ClientConfig } from './client'
 
@@ -133,4 +130,5 @@ export type {
   WebSocketProvider,
 } from './types'
 
-export { normalizeChainId } from './utils'
+export { configureChains, normalizeChainId } from './utils'
+export type { ConfigureChainsConfig } from './utils'
