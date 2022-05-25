@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.3.3
+
+### Patch Changes
+
+- [#486](https://github.com/tmm/wagmi/pull/486) [`dbfe3dd`](https://github.com/tmm/wagmi/commit/dbfe3dd320d178d6854a8096101200c1508786bb) Thanks [@tmm](https://github.com/tmm)! - add chains entrypoint
+
 ## 0.3.2
 
 ### Patch Changes
