@@ -1,7 +1,6 @@
 export {
   arbitrum,
   arbitrumRinkeby,
-  avalanche,
   goerli,
   hardhat,
   kovan,

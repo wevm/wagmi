@@ -1,4 +1,4 @@
-import { ChainName } from '../chains'
+import { ChainName } from './chains'
 
 export type BlockExplorerName = 'etherscan'
 export type BlockExplorer = { name: string; url: string }

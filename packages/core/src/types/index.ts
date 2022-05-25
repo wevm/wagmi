@@ -12,7 +12,7 @@ export type Chain = {
   id: number
   /** Human-readable name */
   name: string
-  /** ethers internal network name */
+  /** Internal network name */
   network: string
   /** Currency used by chain */
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']

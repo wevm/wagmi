@@ -84,8 +84,6 @@ export type {
   WriteContractResult,
 } from './actions'
 
-export { chainId } from './chains'
-
 export { createClient, Client } from './client'
 export type { ClientConfig } from './client'
 
@@ -96,6 +94,7 @@ export {
   alchemyRpcUrls,
   allChains,
   chain,
+  chainId,
   defaultChains,
   defaultL2Chains,
   erc20ABI,
