@@ -2,7 +2,7 @@
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
   "license": "WAGMIT",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "repository": "tmm/wagmi",
   "author": "awkweb.eth",
   "homepage": "https://wagmi.sh",
@@ -26,6 +26,10 @@
       "module": "./dist/wagmi.esm.js",
       "default": "./dist/wagmi.cjs.js"
     },
+    "./chains": {
+      "module": "./chains/dist/wagmi-chains.esm.js",
+      "default": "./chains/dist/wagmi-chains.cjs.js"
+    },
     "./connectors/coinbaseWallet": {
       "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
       "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
@@ -46,10 +50,6 @@
       "module": "./providers/alchemy/dist/wagmi-providers-alchemy.esm.js",
       "default": "./providers/alchemy/dist/wagmi-providers-alchemy.cjs.js"
     },
-    "./providers/public": {
-      "module": "./providers/public/dist/wagmi-providers-public.esm.js",
-      "default": "./providers/public/dist/wagmi-providers-public.cjs.js"
-    },
     "./providers/infura": {
       "module": "./providers/infura/dist/wagmi-providers-infura.esm.js",
       "default": "./providers/infura/dist/wagmi-providers-infura.cjs.js"
@@ -57,9 +57,14 @@
     "./providers/jsonRpc": {
       "module": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.esm.js",
       "default": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.cjs.js"
+    },
+    "./providers/public": {
+      "module": "./providers/public/dist/wagmi-providers-public.esm.js",
+      "default": "./providers/public/dist/wagmi-providers-public.cjs.js"
     }
   },
   "files": [
+    "/chains",
     "/connectors",
     "/dist",
     "/providers"
@@ -67,6 +72,7 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "chains.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/injected.ts",
       "connectors/metaMask.ts",
@@ -83,9 +89,9 @@
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.1.0",
-    "@wagmi/core": "^0.3.1",
+    "@wagmi/core": "^0.3.3",
     "@walletconnect/ethereum-provider": "^1.7.8",
-    "react-query": "4.0.0-beta.12",
+    "react-query": "^4.0.0-beta.15",
     "use-sync-external-store": "^1.1.0"
   },
   "devDependencies": {

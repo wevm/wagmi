@@ -36,7 +36,6 @@ it('should expose correct exports', () => {
       "watchSigner",
       "watchWebSocketProvider",
       "writeContract",
-      "configureChains",
       "createClient",
       "Client",
       "Connector",
@@ -64,6 +63,7 @@ it('should expose correct exports', () => {
       "UserRejectedRequestError",
       "createStorage",
       "noopStorage",
+      "configureChains",
       "normalizeChainId",
     ]
   `)

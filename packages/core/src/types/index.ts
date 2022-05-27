@@ -8,32 +8,41 @@ import {
 } from '../constants'
 
 export type Chain = {
+  /** ID in number form */
   id: number
-  name: AddEthereumChainParameter['chainName']
+  /** Human-readable name */
+  name: string
+  /** Internal network name */
   network: string
+  /** Currency used by chain */
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
+  /** Collection of RPC endpoints */
   rpcUrls: { [key in RpcProviderName]?: string } & {
     [key: string]: string
     default: string
   }
+  /** Collection of block explorers */
   blockExplorers?: {
-    [key in BlockExplorerName]: BlockExplorer
+    [key in BlockExplorerName]?: BlockExplorer
   } & {
     [key: string]: BlockExplorer
     default: BlockExplorer
   }
+  /** Chain multicall contract */
   multicall?: {
     address: string
     blockCreated: number
   }
+  /** Flag for test networks */
   testnet?: boolean
 }
 
 export type ChainProvider<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
-> = (chain: Chain) => {
-  chain: Chain
+  TChain extends Chain = Chain,
+> = (chain: TChain) => {
+  chain: TChain
   provider: () => ProviderWithFallbackConfig<TProvider>
   webSocketProvider?: () => TWebSocketProvider
 } | null

@@ -1,5 +1,20 @@
 # wagmi
 
+## 0.4.3
+
+### Patch Changes
+
+- [#486](https://github.com/tmm/wagmi/pull/486) [`dbfe3dd`](https://github.com/tmm/wagmi/commit/dbfe3dd320d178d6854a8096101200c1508786bb) Thanks [@tmm](https://github.com/tmm)! - add chains entrypoint
+
+- Updated dependencies [[`dbfe3dd`](https://github.com/tmm/wagmi/commit/dbfe3dd320d178d6854a8096101200c1508786bb)]:
+  - @wagmi/core@0.3.3
+
+## 0.4.2
+
+### Patch Changes
+
+- [`b1a2e58`](https://github.com/tmm/wagmi/commit/b1a2e5830e325be448bf865aeccda60217fc8d75) Thanks [@jxom](https://github.com/jxom)! - Made the `defaultChains` type generic in `configureChains`.
+
 ## 0.4.1
 
 ### Patch Changes
