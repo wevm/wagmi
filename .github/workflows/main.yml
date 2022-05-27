@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16]
-        pnpm-version: [6.24.2]
+        pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2.2.1
@@ -55,8 +55,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14]
-        pnpm-version: [6.24.2]
+        node-version: [16]
+        pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2.2.1
@@ -86,8 +86,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14]
-        pnpm-version: [6.24.2]
+        node-version: [16]
+        pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2.2.1
@@ -120,8 +120,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14]
-        pnpm-version: [6.24.2]
+        node-version: [16]
+        pnpm-version: [7]
         react-version: [17, 18]
     steps:
       - uses: actions/checkout@v3
