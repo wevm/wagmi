@@ -32,6 +32,7 @@ it('should expose correct exports', () => {
       "watchNetwork",
       "watchProvider",
       "watchReadContract",
+      "watchReadContracts",
       "watchSigner",
       "watchWebSocketProvider",
       "writeContract",

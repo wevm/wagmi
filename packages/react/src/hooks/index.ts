@@ -13,7 +13,9 @@ export {
   useContract,
   useContractEvent,
   useContractRead,
+  useContractReads,
   useContractWrite,
+  useInfiniteContractReads,
   useToken,
 } from './contracts'
 
@@ -25,4 +27,4 @@ export { useProvider, useWebSocketProvider } from './providers'
 
 export { useSendTransaction, useWaitForTransaction } from './transactions'
 
-export { useChainId, useQuery } from './utils'
+export { useChainId, useBaseQuery, useQuery, useInfiniteQuery } from './utils'

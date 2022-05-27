@@ -2,70 +2,31 @@ import * as React from 'react'
 import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
 
 import {
-  QueryFunction,
   QueryKey,
   QueryObserver,
-  QueryObserverResult,
   UseBaseQueryOptions,
-  UseQueryOptions,
   notifyManager,
   useIsRestoring,
   useQueryClient,
   useQueryErrorResetBoundary,
 } from 'react-query'
 
-type QueryResult<TData, TError> = Pick<
-  QueryObserverResult<TData, TError>,
-  | 'data'
-  | 'error'
-  | 'fetchStatus'
-  | 'isError'
-  | 'isFetched'
-  | 'isFetching'
-  | 'isLoading'
-  | 'isRefetching'
-  | 'isSuccess'
-  | 'refetch'
-> & {
-  isIdle: boolean
-  status: 'idle' | 'loading' | 'success' | 'error'
-  internal: Pick<
-    QueryObserverResult,
-    | 'dataUpdatedAt'
-    | 'errorUpdatedAt'
-    | 'failureCount'
-    | 'isFetchedAfterMount'
-    | 'isLoadingError'
-    | 'isPaused'
-    | 'isPlaceholderData'
-    | 'isPreviousData'
-    | 'isRefetchError'
-    | 'isStale'
-    | 'remove'
-  >
-}
-
-export function useQuery<
+export function useBaseQuery<
   TQueryFnData,
   TError,
   TData,
   TQueryData,
   TQueryKey extends QueryKey,
 >(
-  queryKey: TQueryKey,
-  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
-  options_?: Omit<
-    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'queryKey' | 'queryFn'
-  >,
-) {
-  const options = { queryKey, queryFn, ...options_ } as UseBaseQueryOptions<
+  options: UseBaseQueryOptions<
     TQueryFnData,
     TError,
     TData,
     TQueryData,
     TQueryKey
-  >
+  >,
+  Observer: typeof QueryObserver,
+) {
   const queryClient = useQueryClient({ context: options.context })
   const isRestoring = useIsRestoring()
   const errorResetBoundary = useQueryErrorResetBoundary()
@@ -112,36 +73,13 @@ export function useQuery<
 
   const [observer] = React.useState(
     () =>
-      new QueryObserver<TQueryFnData, TError, TData, TQueryData, TQueryKey>(
+      new Observer<TQueryFnData, TError, TData, TQueryData, TQueryKey>(
         queryClient,
         defaultedOptions,
       ),
   )
 
-  const {
-    data,
-    dataUpdatedAt,
-    error,
-    errorUpdatedAt,
-    failureCount,
-    fetchStatus,
-    isError,
-    isFetched,
-    isFetchedAfterMount,
-    isFetching,
-    isLoading,
-    isLoadingError,
-    isPaused,
-    isPlaceholderData,
-    isPreviousData,
-    isRefetchError,
-    isRefetching,
-    isStale,
-    isSuccess,
-    refetch,
-    remove,
-    status: status_,
-  } = observer.getOptimisticResult(defaultedOptions)
+  const result = observer.getOptimisticResult(defaultedOptions)
 
   useSyncExternalStore(
     React.useCallback(
@@ -166,7 +104,12 @@ export function useQuery<
   }, [defaultedOptions, observer])
 
   // Handle suspense
-  if (defaultedOptions.suspense && isLoading && isFetching && !isRestoring) {
+  if (
+    defaultedOptions.suspense &&
+    result.isLoading &&
+    result.isFetching &&
+    !isRestoring
+  ) {
     throw observer
       .fetchOptimistic(defaultedOptions)
       .then(({ data }) => {
@@ -182,82 +125,32 @@ export function useQuery<
 
   // Handle error boundary
   if (
-    isError &&
+    result.isError &&
     !errorResetBoundary.isReset() &&
-    !isFetching &&
+    !result.isFetching &&
     shouldThrowError(defaultedOptions.useErrorBoundary, [
-      error,
+      result.error,
       observer.getCurrentQuery(),
     ])
   ) {
-    throw error
+    throw result.error
   }
 
-  const status =
-    status_ === 'loading' && fetchStatus === 'idle' ? 'idle' : status_
-
+  const status: 'idle' | 'loading' | 'success' | 'error' =
+    result.status === 'loading' && result.fetchStatus === 'idle'
+      ? 'idle'
+      : result.status
   const isIdle = status === 'idle'
-  const isLoading_ = status === 'loading' && fetchStatus === 'fetching'
+  const isLoading = status === 'loading' && result.fetchStatus === 'fetching'
 
-  const result: QueryResult<TData, TError> = {
-    data,
-    error,
-    fetchStatus,
-    isError,
-    isFetched,
-    isFetching,
+  return {
+    ...result,
+    defaultedOptions,
     isIdle,
-    isLoading: isLoading_,
-    isRefetching,
-    isSuccess,
-    refetch,
+    isLoading,
+    observer,
     status,
-    internal: {
-      dataUpdatedAt,
-      errorUpdatedAt,
-      failureCount,
-      isFetchedAfterMount,
-      isLoadingError,
-      isPaused,
-      isPlaceholderData,
-      isPreviousData,
-      isRefetchError,
-      isStale,
-      remove,
-    },
   }
-
-  // Handle result property usage tracking
-  return !defaultedOptions.notifyOnChangeProps
-    ? trackResult(result, observer)
-    : result
-}
-
-function trackResult<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  result: QueryResult<TData, TError>,
-  observer: QueryObserver<TQueryFnData, TError, TData, TQueryData, TQueryKey>,
-): QueryResult<TData, TError> {
-  const trackedResult = {} as QueryResult<TData, TError>
-
-  Object.keys(result).forEach((key) => {
-    Object.defineProperty(trackedResult, key, {
-      configurable: false,
-      enumerable: true,
-      get: () => {
-        // @ts-expect-error – aware we are mutating private `trackedProps` property.
-        observer.trackedProps.add(key as keyof QueryResult<TData, TError>)
-        return result[key as keyof QueryResult<TData, TError>]
-      },
-    })
-  })
-
-  return trackedResult
 }
 
 function shouldThrowError<T extends (...args: any[]) => boolean>(

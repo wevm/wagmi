@@ -22,6 +22,12 @@ export {
 } from './watchReadContract'
 
 export {
+  watchReadContracts,
+  type WatchReadContractsConfig,
+  type WatchReadContractsResult,
+} from './watchReadContracts'
+
+export {
   writeContract,
   type WriteContractConfig,
   type WriteContractResult,

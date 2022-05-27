@@ -37,6 +37,7 @@ export {
   readContracts,
   watchContractEvent,
   watchReadContract,
+  watchReadContracts,
   writeContract,
   type GetContractArgs,
   type ReadContractConfig,
@@ -46,6 +47,8 @@ export {
   type ReadContractsResult,
   type WatchReadContractConfig,
   type WatchReadContractResult,
+  type WatchReadContractsConfig,
+  type WatchReadContractsResult,
   type WriteContractConfig,
   type WriteContractResult,
 } from './contracts'

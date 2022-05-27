@@ -19,14 +19,14 @@ export type ReadContractsConfig = {
 export type ReadContractsResult = Result[]
 
 export async function readContracts(
-  readContractsConfig: ReadContractsArgs,
+  readContractsArgs: ReadContractsArgs,
   { chainId, overrides }: ReadContractsConfig = {},
 ): Promise<ReadContractsResult> {
   try {
-    return await multicall(readContractsConfig, { chainId })
+    return await multicall(readContractsArgs, { chainId })
   } catch {
     return Promise.all(
-      readContractsConfig.map((config) =>
+      readContractsArgs.map((config) =>
         readContract({ ...config, chainId, overrides }),
       ),
     )
