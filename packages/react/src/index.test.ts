@@ -48,6 +48,7 @@ it('should expose correct exports', () => {
       "erc721ABI",
       "etherscanBlockExplorers",
       "infuraRpcUrls",
+      "readContracts",
       "AddChainError",
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",

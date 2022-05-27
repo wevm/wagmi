@@ -4,29 +4,34 @@ import { ethers } from 'ethers'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { UseContractConfig, useContract } from './useContract'
 
-export type UseContractEventConfig = {
+export type UseContractEventConfig<
+  Contract extends ethers.Contract = ethers.Contract,
+> = UseContractConfig & {
+  /** Event name to listen to */
+  eventName: Parameters<Contract['on']>[0]
+  /** Callback function when event is called */
+  listener: Parameters<Contract['on']>[1]
   /** Chain id to use for provider */
   chainId?: number
   /** Receive only a single event */
   once?: boolean
 }
 
-export const useContractEvent = <
-  Contract extends ethers.Contract = ethers.Contract,
->(
-  /** Contract configuration */
-  contractConfig: UseContractConfig,
-  /** Event name to listen to */
-  eventName: Parameters<Contract['on']>[0],
-  /** Callback function when event is called */
-  listener: Parameters<Contract['on']>[1],
-  { chainId, once }: UseContractEventConfig = {},
-) => {
+export const useContractEvent = <Contract extends ethers.Contract>({
+  addressOrName,
+  chainId,
+  contractInterface,
+  listener,
+  eventName,
+  signerOrProvider,
+  once,
+}: UseContractEventConfig<Contract>) => {
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
   const contract = useContract<Contract>({
-    signerOrProvider: webSocketProvider ?? provider,
-    ...contractConfig,
+    addressOrName,
+    contractInterface,
+    signerOrProvider: webSocketProvider ?? provider ?? signerOrProvider,
   })
   const listenerRef = React.useRef(listener)
   listenerRef.current = listener

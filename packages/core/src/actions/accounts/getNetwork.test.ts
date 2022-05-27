@@ -15,7 +15,37 @@ describe('getNetwork', () => {
       expect(getNetwork()).toMatchInlineSnapshot(`
         {
           "chain": undefined,
-          "chains": [],
+          "chains": [
+            {
+              "blockExplorers": {
+                "default": {
+                  "name": "Etherscan",
+                  "url": "https://etherscan.io",
+                },
+                "etherscan": {
+                  "name": "Etherscan",
+                  "url": "https://etherscan.io",
+                },
+              },
+              "id": 1,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 14353601,
+              },
+              "name": "Ethereum",
+              "nativeCurrency": {
+                "decimals": 18,
+                "name": "Ether",
+                "symbol": "ETH",
+              },
+              "network": "homestead",
+              "rpcUrls": {
+                "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
+                "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "infura": "https://mainnet.infura.io/v3",
+              },
+            },
+          ],
         }
       `)
     })
@@ -36,6 +66,10 @@ describe('getNetwork', () => {
               },
             },
             "id": 1,
+            "multicall": {
+              "address": "0xca11bde05977b3631167028862be2a173976ca11",
+              "blockCreated": 14353601,
+            },
             "name": "Ethereum",
             "nativeCurrency": {
               "decimals": 18,
@@ -63,6 +97,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 1,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 14353601,
+              },
               "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
@@ -88,6 +126,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 3,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 12063863,
+              },
               "name": "Ropsten",
               "nativeCurrency": {
                 "decimals": 18,
@@ -114,6 +156,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 4,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 10299530,
+              },
               "name": "Rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
@@ -140,6 +186,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 5,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 6507670,
+              },
               "name": "Goerli",
               "nativeCurrency": {
                 "decimals": 18,
@@ -166,6 +216,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 42,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 30285908,
+              },
               "name": "Kovan",
               "nativeCurrency": {
                 "decimals": 18,
@@ -197,30 +251,12 @@ describe('getNetwork', () => {
       expect(getNetwork()).toMatchInlineSnapshot(`
         {
           "chain": {
-            "blockExplorers": {
-              "default": {
-                "name": "Etherscan",
-                "url": "https://kovan-optimistic.etherscan.io",
-              },
-              "etherscan": {
-                "name": "Etherscan",
-                "url": "https://kovan-optimistic.etherscan.io",
-              },
-            },
             "id": 69,
-            "name": "Optimism Kovan",
-            "nativeCurrency": {
-              "decimals": 18,
-              "name": "Kovan Ether",
-              "symbol": "KOR",
-            },
-            "network": "optimism-kovan",
+            "name": "Chain 69",
+            "network": "69",
             "rpcUrls": {
-              "alchemy": "https://opt-kovan.g.alchemy.com/v2",
-              "default": "https://kovan.optimism.io",
-              "infura": "https://optimism-kovan.infura.io/v3",
+              "default": "",
             },
-            "testnet": true,
             "unsupported": true,
           },
           "chains": [
@@ -236,6 +272,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 1,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 14353601,
+              },
               "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
@@ -261,6 +301,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 3,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 12063863,
+              },
               "name": "Ropsten",
               "nativeCurrency": {
                 "decimals": 18,
@@ -287,6 +331,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 4,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 10299530,
+              },
               "name": "Rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
@@ -313,6 +361,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 5,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 6507670,
+              },
               "name": "Goerli",
               "nativeCurrency": {
                 "decimals": 18,
@@ -339,6 +391,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 42,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 30285908,
+              },
               "name": "Kovan",
               "nativeCurrency": {
                 "decimals": 18,

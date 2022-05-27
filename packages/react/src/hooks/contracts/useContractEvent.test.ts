@@ -1,4 +1,4 @@
-import { WriteContractArgs, erc20ABI } from '@wagmi/core'
+import { erc20ABI } from '@wagmi/core'
 
 import {
   act,
@@ -13,7 +13,6 @@ import {
   UseWaitForTransactionConfig,
   useWaitForTransaction,
 } from '../transactions/useWaitForTransaction'
-import { UseContractConfig } from './useContract'
 import { UseContractEventConfig, useContractEvent } from './useContractEvent'
 import {
   UseContractWriteArgs,
@@ -105,31 +104,17 @@ const mlootContractConfig = {
 
 function useContractEventWithWrite(config: {
   contractEvent: {
-    contractConfig: UseContractConfig
-    eventName: string
-    listener: (...event: Array<any>) => void
-    config?: UseContractEventConfig
+    config: UseContractEventConfig
   }
   contractWrite: {
-    contractConfig: WriteContractArgs
-    functionName: string
-    config?: UseContractWriteArgs & UseContractWriteConfig
+    config: UseContractWriteArgs & UseContractWriteConfig
   }
   waitForTransaction?: UseWaitForTransactionArgs & UseWaitForTransactionConfig
 }) {
   return {
     connect: useConnect(),
-    contractEvent: useContractEvent(
-      config.contractEvent.contractConfig,
-      config.contractEvent.eventName,
-      config.contractEvent.listener,
-      config.contractEvent.config,
-    ),
-    contractWrite: useContractWrite(
-      config.contractWrite.contractConfig,
-      config.contractWrite.functionName,
-      config.contractWrite.config,
-    ),
+    contractEvent: useContractEvent(config.contractEvent.config),
+    contractWrite: useContractWrite(config.contractWrite.config),
     waitForTransaction: useWaitForTransaction(config.waitForTransaction),
   }
 }
@@ -140,14 +125,12 @@ describe('useContractEvent', () => {
   it('mounts', () => {
     const listener = jest.fn()
     renderHook(() =>
-      useContractEvent(
-        {
-          addressOrName: uniContractAddress,
-          contractInterface: erc20ABI,
-        },
-        'Transfer',
+      useContractEvent({
+        addressOrName: uniContractAddress,
+        contractInterface: erc20ABI,
+        eventName: 'Transfer',
         listener,
-      ),
+      }),
     )
     expect(listener).toHaveBeenCalledTimes(0)
   })
@@ -169,14 +152,14 @@ describe('useContractEvent', () => {
         const utils = renderHook(() =>
           useContractEventWithWrite({
             contractEvent: {
-              contractConfig: mlootContractConfig,
-              eventName: 'Approval',
-              listener,
+              config: {
+                ...mlootContractConfig,
+                eventName: 'Approval',
+                listener,
+              },
             },
             contractWrite: {
-              contractConfig: mlootContractConfig,
-              functionName,
-              config: { args },
+              config: { ...mlootContractConfig, functionName, args },
             },
             waitForTransaction: { hash },
           }),

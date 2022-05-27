@@ -48,6 +48,10 @@ export const chain: Record<ChainName, Chain> = {
       etherscan: etherscanBlockExplorers.mainnet,
       default: etherscanBlockExplorers.mainnet,
     },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 14353601,
+    },
   },
   ropsten: {
     id: chainId.ropsten,
@@ -62,6 +66,10 @@ export const chain: Record<ChainName, Chain> = {
     blockExplorers: {
       etherscan: etherscanBlockExplorers.ropsten,
       default: etherscanBlockExplorers.ropsten,
+    },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 12063863,
     },
     testnet: true,
   },
@@ -79,6 +87,10 @@ export const chain: Record<ChainName, Chain> = {
       etherscan: etherscanBlockExplorers.rinkeby,
       default: etherscanBlockExplorers.rinkeby,
     },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 10299530,
+    },
     testnet: true,
   },
   goerli: {
@@ -94,6 +106,10 @@ export const chain: Record<ChainName, Chain> = {
     blockExplorers: {
       etherscan: etherscanBlockExplorers.goerli,
       default: etherscanBlockExplorers.goerli,
+    },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 6507670,
     },
     testnet: true,
   },
@@ -111,6 +127,10 @@ export const chain: Record<ChainName, Chain> = {
       etherscan: etherscanBlockExplorers.kovan,
       default: etherscanBlockExplorers.kovan,
     },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 30285908,
+    },
     testnet: true,
   },
   optimism: {
@@ -126,6 +146,10 @@ export const chain: Record<ChainName, Chain> = {
     blockExplorers: {
       etherscan: etherscanBlockExplorers.optimism,
       default: etherscanBlockExplorers.optimism,
+    },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 4286263,
     },
   },
   optimismKovan: {
@@ -146,6 +170,10 @@ export const chain: Record<ChainName, Chain> = {
       etherscan: etherscanBlockExplorers.optimismKovan,
       default: etherscanBlockExplorers.optimismKovan,
     },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 1418387,
+    },
     testnet: true,
   },
   polygon: {
@@ -161,6 +189,10 @@ export const chain: Record<ChainName, Chain> = {
     blockExplorers: {
       etherscan: etherscanBlockExplorers.polygon,
       default: etherscanBlockExplorers.polygon,
+    },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 25770160,
     },
   },
   polygonMumbai: {
@@ -181,6 +213,10 @@ export const chain: Record<ChainName, Chain> = {
       etherscan: etherscanBlockExplorers.polygonMumbai,
       default: etherscanBlockExplorers.polygonMumbai,
     },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 25444704,
+    },
     testnet: true,
   },
   arbitrum: {
@@ -200,6 +236,10 @@ export const chain: Record<ChainName, Chain> = {
       },
       etherscan: etherscanBlockExplorers.arbitrum,
       default: etherscanBlockExplorers.arbitrum,
+    },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 7654707,
     },
   },
   arbitrumRinkeby: {
@@ -223,6 +263,10 @@ export const chain: Record<ChainName, Chain> = {
       },
       etherscan: etherscanBlockExplorers.arbitrumRinkeby,
       default: etherscanBlockExplorers.arbitrumRinkeby,
+    },
+    multicall: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 10228837,
     },
     testnet: true,
   },

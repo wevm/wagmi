@@ -22,6 +22,10 @@ export type Chain = {
     [key: string]: BlockExplorer
     default: BlockExplorer
   }
+  multicall?: {
+    address: string
+    blockCreated: number
+  }
   testnet?: boolean
 }
 

@@ -29,20 +29,23 @@ export {
   type WatchSignerCallback,
 } from './accounts'
 
+export { getChains, type GetChainsResult } from './chains'
+
 export {
   getContract,
   readContract,
+  readContracts,
   watchContractEvent,
   watchReadContract,
   writeContract,
   type GetContractArgs,
-  type ReadContractArgs,
   type ReadContractConfig,
   type ReadContractResult,
-  type WatchReadContractArgs,
+  type ReadContractsArgs,
+  type ReadContractsConfig,
+  type ReadContractsResult,
   type WatchReadContractConfig,
   type WatchReadContractResult,
-  type WriteContractArgs,
   type WriteContractConfig,
   type WriteContractResult,
 } from './contracts'

@@ -50,7 +50,9 @@ describe('readContract', () => {
 
     it('chainId', async () => {
       expect(
-        await readContract(wagmigotchiContractConfig, 'love', {
+        await readContract({
+          ...wagmigotchiContractConfig,
+          functionName: 'love',
           args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
           chainId: 1,
         }),
@@ -64,7 +66,9 @@ describe('readContract', () => {
 
     it('contract args', async () => {
       expect(
-        await readContract(wagmigotchiContractConfig, 'love', {
+        await readContract({
+          ...wagmigotchiContractConfig,
+          functionName: 'love',
           args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
         }),
       ).toMatchInlineSnapshot(`
@@ -77,7 +81,9 @@ describe('readContract', () => {
 
     it('overrides', async () => {
       expect(
-        await readContract(wagmigotchiContractConfig, 'love', {
+        await readContract({
+          ...wagmigotchiContractConfig,
+          functionName: 'love',
           args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
           overrides: {},
         }),
@@ -93,7 +99,9 @@ describe('readContract', () => {
   describe('behavior', () => {
     it('can use multiple args', async () => {
       expect(
-        await readContract(mlootContractConfig, 'tokenOfOwnerByIndex', {
+        await readContract({
+          ...mlootContractConfig,
+          functionName: 'tokenOfOwnerByIndex',
           args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
         }),
       ).toMatchInlineSnapshot(`

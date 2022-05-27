@@ -4,15 +4,15 @@ import { Result } from 'ethers/lib/utils'
 import { getProvider } from '../providers'
 import { GetContractArgs, getContract } from './getContract'
 
-export type ReadContractArgs = Pick<
-  GetContractArgs,
-  'addressOrName' | 'contractInterface'
->
 export type ReadContractConfig = {
+  addressOrName: GetContractArgs['addressOrName']
   /** Arguments to pass contract method */
   args?: any | any[]
   /** Chain id to use for provider */
   chainId?: number
+  contractInterface: GetContractArgs['contractInterface']
+  /** Function to invoke on the contract */
+  functionName: string
   /** Call overrides */
   overrides?: CallOverrides
 }
@@ -20,15 +20,19 @@ export type ReadContractResult = Result
 
 export async function readContract<
   Contract extends EthersContract = EthersContract,
->(
-  contractConfig: ReadContractArgs,
-  functionName: string,
-  { args, chainId, overrides }: ReadContractConfig = {},
-): Promise<Result> {
+>({
+  addressOrName,
+  args,
+  chainId,
+  contractInterface,
+  functionName,
+  overrides,
+}: ReadContractConfig): Promise<ReadContractResult> {
   const provider = getProvider({ chainId })
   const contract = getContract<Contract>({
+    addressOrName,
+    contractInterface,
     signerOrProvider: provider,
-    ...contractConfig,
   })
 
   const params = [
@@ -39,7 +43,7 @@ export async function readContract<
   const contractFunction = contract[functionName]
   if (!contractFunction)
     console.warn(
-      `"${functionName}" does not in interface for contract "${contractConfig.addressOrName}"`,
+      `"${functionName}" is not in the interface for contract "${addressOrName}"`,
     )
   const response = (await contractFunction?.(...params)) as Result
   return response

@@ -50,7 +50,7 @@ export async function fetchBalance({
     }
   }
 
-  const chains = [...(client.connector?.chains ?? []), ...allChains]
+  const chains = [...allChains, ...client.chains]
   const value = await provider.getBalance(addressOrName)
   const chain = chains.find((x) => x.id === provider.network.chainId)
   return {

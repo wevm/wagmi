@@ -32,6 +32,10 @@ describe('watchNetwork', () => {
               },
             },
             "id": 4,
+            "multicall": {
+              "address": "0xca11bde05977b3631167028862be2a173976ca11",
+              "blockCreated": 10299530,
+            },
             "name": "Rinkeby",
             "nativeCurrency": {
               "decimals": 18,
@@ -60,6 +64,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 1,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 14353601,
+              },
               "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
@@ -85,6 +93,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 3,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 12063863,
+              },
               "name": "Ropsten",
               "nativeCurrency": {
                 "decimals": 18,
@@ -111,6 +123,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 4,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 10299530,
+              },
               "name": "Rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
@@ -137,6 +153,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 5,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 6507670,
+              },
               "name": "Goerli",
               "nativeCurrency": {
                 "decimals": 18,
@@ -163,6 +183,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 42,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 30285908,
+              },
               "name": "Kovan",
               "nativeCurrency": {
                 "decimals": 18,
@@ -192,6 +216,10 @@ describe('watchNetwork', () => {
               },
             },
             "id": 1,
+            "multicall": {
+              "address": "0xca11bde05977b3631167028862be2a173976ca11",
+              "blockCreated": 14353601,
+            },
             "name": "Ethereum",
             "nativeCurrency": {
               "decimals": 18,
@@ -219,6 +247,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 1,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 14353601,
+              },
               "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
@@ -244,6 +276,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 3,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 12063863,
+              },
               "name": "Ropsten",
               "nativeCurrency": {
                 "decimals": 18,
@@ -270,6 +306,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 4,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 10299530,
+              },
               "name": "Rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
@@ -296,6 +336,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 5,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 6507670,
+              },
               "name": "Goerli",
               "nativeCurrency": {
                 "decimals": 18,
@@ -322,6 +366,10 @@ describe('watchNetwork', () => {
                 },
               },
               "id": 42,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 30285908,
+              },
               "name": "Kovan",
               "nativeCurrency": {
                 "decimals": 18,

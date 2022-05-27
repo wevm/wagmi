@@ -52,6 +52,7 @@ export {
   erc721ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
+  readContracts,
   AddChainError,
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,

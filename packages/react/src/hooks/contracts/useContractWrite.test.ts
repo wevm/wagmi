@@ -1,5 +1,3 @@
-import { WriteContractArgs } from '@wagmi/core'
-
 import {
   act,
   actConnect,
@@ -15,13 +13,11 @@ import {
 } from './useContractWrite'
 
 function useContractWriteWithConnect(
-  contractConfig: WriteContractArgs,
-  functionName: string,
-  config: UseContractWriteArgs & UseContractWriteConfig = {},
+  config: UseContractWriteArgs & UseContractWriteConfig,
 ) {
   return {
     connect: useConnect(),
-    contractWrite: useContractWrite(contractConfig, functionName, config),
+    contractWrite: useContractWrite(config),
   }
 }
 
@@ -86,7 +82,7 @@ const timeout = 15_000
 describe('useContractWrite', () => {
   it('mounts', () => {
     const { result } = renderHook(() =>
-      useContractWrite(mlootContractConfig, 'claim'),
+      useContractWrite({ ...mlootContractConfig, functionName: 'claim' }),
     )
     expect(result.current).toMatchInlineSnapshot(`
       {
@@ -114,7 +110,9 @@ describe('useContractWrite', () => {
         )
         if (!tokenId) return
         const utils = renderHook(() =>
-          useContractWriteWithConnect(mlootContractConfig, 'claim', {
+          useContractWriteWithConnect({
+            ...mlootContractConfig,
+            functionName: 'claim',
             args: tokenId,
           }),
         )
@@ -136,7 +134,10 @@ describe('useContractWrite', () => {
         )
         if (!tokenId) return
         const utils = renderHook(() =>
-          useContractWriteWithConnect(mlootContractConfig, 'claim'),
+          useContractWriteWithConnect({
+            ...mlootContractConfig,
+            functionName: 'claim',
+          }),
         )
         const { result, waitFor } = utils
         await actConnect({ utils })
@@ -154,7 +155,9 @@ describe('useContractWrite', () => {
 
       it('fails', async () => {
         const utils = renderHook(() =>
-          useContractWriteWithConnect(mlootContractConfig, 'claim', {
+          useContractWriteWithConnect({
+            ...mlootContractConfig,
+            functionName: 'claim',
             args: 1,
           }),
         )
@@ -180,7 +183,10 @@ describe('useContractWrite', () => {
         )
         if (!tokenId) return
         const utils = renderHook(() =>
-          useContractWriteWithConnect(mlootContractConfig, 'claim'),
+          useContractWriteWithConnect({
+            ...mlootContractConfig,
+            functionName: 'claim',
+          }),
         )
         const { result, waitFor } = utils
         await actConnect({ utils })
@@ -199,7 +205,10 @@ describe('useContractWrite', () => {
 
       it('throws error', async () => {
         const utils = renderHook(() =>
-          useContractWriteWithConnect(mlootContractConfig, 'claim'),
+          useContractWriteWithConnect({
+            ...mlootContractConfig,
+            functionName: 'claim',
+          }),
         )
         const { result, waitFor } = utils
         await actConnect({ utils })
@@ -231,7 +240,9 @@ describe('useContractWrite', () => {
       let functionName = 'claim'
       let args: any | any[] = tokenId
       const utils = renderHook(() =>
-        useContractWriteWithConnect(mlootContractConfig, functionName, {
+        useContractWriteWithConnect({
+          ...mlootContractConfig,
+          functionName,
           args,
         }),
       )
