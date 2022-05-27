@@ -57,6 +57,8 @@ export function renderHook<TResult, TProps>(
       ...options_,
     }
 
+  queryClient.clear()
+
   const utils = defaultRenderHook<TResult, TProps>(hook, options)
   return {
     ...utils,
