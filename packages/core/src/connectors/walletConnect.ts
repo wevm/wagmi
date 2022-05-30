@@ -100,6 +100,7 @@ export class WalletConnectConnector extends Connector<
 
   async getProvider(create?: boolean) {
     if (!this.#provider || create) {
+      const chainId = this.options?.chainId || this.chains[0].id
       const rpc = !this.options?.infuraId
         ? this.chains.reduce(
             (rpc, chain) => ({
@@ -115,6 +116,7 @@ export class WalletConnectConnector extends Connector<
       ).default
       this.#provider = new WalletConnectProvider({
         ...this.options,
+        chainId,
         rpc: { ...rpc, ...this.options?.rpc },
       })
     }
