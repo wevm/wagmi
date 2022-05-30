@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   ReadContractResult,
-  ReadContractsArgs,
   ReadContractsConfig,
   readContracts,
   watchReadContracts,
@@ -12,7 +11,6 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 
-export type UseContractReadsArgs = ReadContractsArgs
 export type UseContractReadsConfig = QueryConfig<ReadContractResult, Error> &
   ReadContractsConfig & {
     /** If set to `true`, the cache will depend on the block number */
@@ -21,15 +19,14 @@ export type UseContractReadsConfig = QueryConfig<ReadContractResult, Error> &
     watch?: boolean
   }
 
-export const queryKey = ([
-  readContractsArgs,
-  { chainId, overrides },
-  { blockNumber },
-]: [ReadContractsArgs, ReadContractsConfig, { blockNumber?: number }]) =>
+export const queryKey = ([{ chainId, contracts, overrides }, { blockNumber }]: [
+  ReadContractsConfig,
+  { blockNumber?: number },
+]) =>
   [
     {
       entity: 'readContracts',
-      readContractsArgs,
+      contracts,
       blockNumber,
       chainId,
       overrides,
@@ -37,31 +34,30 @@ export const queryKey = ([
   ] as const
 
 const queryFn = ({
-  queryKey: [{ readContractsArgs, chainId, overrides }],
+  queryKey: [{ contracts, chainId, overrides }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return readContracts(readContractsArgs, {
+  return readContracts({
     chainId,
+    contracts,
     overrides,
   })
 }
 
-export function useContractReads(
-  readContractsArgs: UseContractReadsArgs,
-  {
-    cacheOnBlock = false,
-    cacheTime,
-    chainId: chainId_,
-    enabled: enabled_ = true,
-    keepPreviousData,
-    onError,
-    onSettled,
-    onSuccess,
-    overrides,
-    staleTime,
-    suspense,
-    watch,
-  }: UseContractReadsConfig = {},
-) {
+export function useContractReads({
+  cacheOnBlock = false,
+  cacheTime,
+  contracts,
+  chainId: chainId_,
+  enabled: enabled_ = true,
+  keepPreviousData,
+  onError,
+  onSettled,
+  onSuccess,
+  overrides,
+  staleTime,
+  suspense,
+  watch,
+}: UseContractReadsConfig) {
   const chainId = useChainId({ chainId: chainId_ })
   const { data: blockNumber } = useBlockNumber({
     enabled: watch || cacheOnBlock,
@@ -69,13 +65,12 @@ export function useContractReads(
   })
 
   const queryKey_ = React.useMemo(
-    () =>
-      queryKey([readContractsArgs, { chainId, overrides }, { blockNumber }]),
+    () => queryKey([{ chainId, contracts, overrides }, { blockNumber }]),
     [],
   )
 
   const enabled = React.useMemo(() => {
-    let enabled = Boolean(enabled_ && readContractsArgs.length > 0)
+    let enabled = Boolean(enabled_ && contracts.length > 0)
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled
   }, [blockNumber, cacheOnBlock, enabled_])
@@ -84,9 +79,9 @@ export function useContractReads(
   React.useEffect(() => {
     if (enabled) {
       const unwatch = watchReadContracts(
-        readContractsArgs,
         {
           chainId,
+          contracts,
           overrides,
           listenToBlock: watch && !cacheOnBlock,
         },

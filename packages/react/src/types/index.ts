@@ -24,7 +24,6 @@ export type InfiniteQueryConfig<Data, Error> = Pick<
   UseInfiniteQueryOptions<Data, Error>,
   | 'cacheTime'
   | 'enabled'
-  | 'getPreviousPageParam'
   | 'getNextPageParam'
   | 'keepPreviousData'
   | 'staleTime'

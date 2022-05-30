@@ -14,16 +14,13 @@ type UseInfiniteQueryResult<TData, TError> = Pick<
   InfiniteQueryObserverResult<TData, TError>,
   | 'data'
   | 'error'
-  | 'isFetchingNextPage'
-  | 'isFetchingPreviousPage'
   | 'fetchNextPage'
-  | 'fetchPreviousPage'
-  | 'hasNextPage'
-  | 'hasPreviousPage'
   | 'fetchStatus'
+  | 'hasNextPage'
   | 'isError'
   | 'isFetched'
   | 'isFetching'
+  | 'isFetchingNextPage'
   | 'isLoading'
   | 'isRefetching'
   | 'isSuccess'
@@ -138,11 +135,8 @@ export function useInfiniteQuery<
     errorUpdatedAt,
     defaultedOptions,
     fetchNextPage,
-    fetchPreviousPage,
     isFetchingNextPage,
-    isFetchingPreviousPage,
     hasNextPage,
-    hasPreviousPage,
     failureCount,
     fetchStatus,
     isIdle,
@@ -172,12 +166,9 @@ export function useInfiniteQuery<
     data,
     error,
     fetchNextPage,
-    fetchPreviousPage,
     fetchStatus,
     isFetchingNextPage,
-    isFetchingPreviousPage,
     hasNextPage,
-    hasPreviousPage,
     isError,
     isFetched,
     isFetching,

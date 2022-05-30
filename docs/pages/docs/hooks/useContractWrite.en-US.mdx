@@ -41,17 +41,13 @@ function App() {
 }
 ```
 
-## Arguments
+## Configuration
 
-### contractConfig
+### addressOrName
 
-See [useContract](/docs/hooks/useContract) for more info.
+Contract address or ENS name.
 
-### functionName
-
-Name of function to call.
-
-```tsx {9}
+```tsx {5}
 import { useContractWrite } from 'wagmi'
 
 function App() {
@@ -65,9 +61,43 @@ function App() {
 }
 ```
 
-### Configuration
+### contractInterface
 
-#### args (optional)
+Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+
+```tsx {6}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### functionName
+
+Name of function to call.
+
+```tsx {7}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### args (optional)
 
 Arguments to pass to function call. Accepts `any | any[]`.
 
@@ -84,7 +114,7 @@ function App() {
 }
 ```
 
-#### overrides (optional)
+### overrides (optional)
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
@@ -101,7 +131,7 @@ function App() {
 }
 ```
 
-#### onError (optional)
+### onError (optional)
 
 Function to invoke when an error is thrown while attempting to write.
 
@@ -120,7 +150,7 @@ function App() {
 }
 ```
 
-#### onMutate (optional)
+### onMutate (optional)
 
 Function fires before write function and is passed same variables write function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a write failure.
 
@@ -139,7 +169,7 @@ function App() {
 }
 ```
 
-#### onSettled (optional)
+### onSettled (optional)
 
 Function to invoke when write is settled (either successfully written, or an error has thrown).
 
@@ -158,7 +188,7 @@ function App() {
 }
 ```
 
-#### onSuccess (optional)
+### onSuccess (optional)
 
 Function to invoke when write is successful
 

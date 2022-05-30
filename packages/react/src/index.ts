@@ -9,12 +9,14 @@ export {
 export type { CreateClientConfig, WagmiConfigProps } from './context'
 
 export {
+  paginatedIndexesConfig,
   useAccount,
   useBalance,
   useBlockNumber,
   useConnect,
   useContract,
   useContractEvent,
+  useContractInfiniteReads,
   useContractRead,
   useContractReads,
   useContractWrite,
@@ -24,7 +26,6 @@ export {
   useEnsName,
   useEnsResolver,
   useFeeData,
-  useInfiniteContractReads,
   useInfiniteQuery,
   useNetwork,
   useProvider,

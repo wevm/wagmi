@@ -1,9 +1,10 @@
-import { BigNumber, Contract } from 'ethers/lib/ethers'
+import { BigNumber } from 'ethers/lib/ethers'
 import { formatUnits } from 'ethers/lib/utils'
 
 import { getClient } from '../../client'
 import { allChains, erc20ABI } from '../../constants'
 import { Unit } from '../../types'
+import { readContracts } from '../contracts'
 import { getProvider } from '../providers'
 
 export type FetchBalanceArgs = {
@@ -35,12 +36,23 @@ export async function fetchBalance({
   const provider = getProvider({ chainId })
 
   if (token) {
-    const contract = new Contract(token, erc20ABI, provider)
-    const [value, decimals, symbol] = await Promise.all([
-      contract.balanceOf(addressOrName),
-      contract.decimals(),
-      contract.symbol(),
-    ])
+    const erc20Config = {
+      addressOrName: token,
+      contractInterface: erc20ABI,
+    }
+    const [value, decimals, symbol] = await readContracts<
+      [BigNumber, number, string]
+    >({
+      chainId,
+      contracts: [
+        { ...erc20Config, functionName: 'balanceOf', args: [addressOrName] },
+        { ...erc20Config, functionName: 'decimals' },
+        {
+          ...erc20Config,
+          functionName: 'symbol',
+        },
+      ],
+    })
     return {
       decimals,
       formatted: formatUnits(value, unit),

@@ -1,5 +1,5 @@
 import { setupClient } from '../../../test'
-import { ReadContractsArgs, readContracts } from './readContracts'
+import { ReadContractsConfig, readContracts } from './readContracts'
 
 import * as readContract from './readContract'
 import * as multicall from './multicall'
@@ -64,7 +64,7 @@ describe('readContracts', () => {
 
   it('default', async () => {
     const spy = jest.spyOn(multicall, 'multicall')
-    const contracts: ReadContractsArgs = [
+    const contracts: ReadContractsConfig['contracts'] = [
       {
         ...wagmigotchiContractConfig,
         functionName: 'love',
@@ -82,9 +82,14 @@ describe('readContracts', () => {
         args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
       },
     ]
-    const results = await readContracts(contracts)
+    const results = await readContracts({ contracts })
 
-    expect(spy).toHaveBeenCalledWith(contracts, { chainId: undefined })
+    expect(spy).toHaveBeenCalledWith({
+      allowFailure: true,
+      contracts,
+      chainId: undefined,
+      overrides: undefined,
+    })
     expect(results).toMatchInlineSnapshot(`
       [
         {
@@ -107,7 +112,7 @@ describe('readContracts', () => {
   it('falls back to readContract if multicall is not available', async () => {
     const spy = jest.spyOn(readContract, 'readContract')
     const chainId = chain.polygon.id
-    const contracts: ReadContractsArgs = [
+    const contracts: ReadContractsConfig['contracts'] = [
       {
         ...wagmigotchiContractConfig,
         functionName: 'love',
@@ -125,8 +130,9 @@ describe('readContracts', () => {
         args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
       },
     ]
-    const results = await readContracts(contracts, {
+    const results = await readContracts({
       chainId: chain.polygon.id,
+      contracts,
     })
 
     for (const contract of contracts) {

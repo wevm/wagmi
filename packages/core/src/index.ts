@@ -62,7 +62,6 @@ export type {
   GetWebSocketProviderResult,
   ReadContractConfig,
   ReadContractResult,
-  ReadContractsArgs,
   ReadContractsConfig,
   ReadContractsResult,
   SendTransactionArgs,

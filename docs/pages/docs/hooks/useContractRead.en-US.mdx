@@ -14,13 +14,11 @@ The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb5
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-  )
+  const { data, isError, isLoading } = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+  })
 }
 ```
 
@@ -45,17 +43,45 @@ function App() {
 }
 ```
 
-## Arguments
+## Configuration
 
-### contractConfig
+### addressOrName
 
-See [useContract](/docs/hooks/useContract) for more info.
+Contract address or ENS name.
+
+```tsx {5}
+import { useContract } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
+}
+```
+
+### contractInterface
+
+Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+
+```tsx {6}
+import { useContract } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
+}
+```
 
 ### functionName
 
 Name of function to call.
 
-```tsx {9}
+```tsx {7}
 import { useContractRead } from 'wagmi'
 
 function App() {
@@ -67,9 +93,7 @@ function App() {
 }
 ```
 
-### Configuration
-
-#### args (optional)
+### args (optional)
 
 Arguments to pass to function call. Accepts `any | any[]`.
 
@@ -86,7 +110,7 @@ function App() {
 }
 ```
 
-#### chainId (optional)
+### chainId (optional)
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
 
@@ -103,7 +127,7 @@ function App() {
 }
 ```
 
-#### overrides (optional)
+### overrides (optional)
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
@@ -120,7 +144,7 @@ function App() {
 }
 ```
 
-#### cacheOnBlock (optional)
+### cacheOnBlock (optional)
 
 Caches & persists the return data against the current block. Data will be considered stale when a new block arrives.
 
@@ -137,7 +161,7 @@ function App() {
 }
 ```
 
-#### watch (optional)
+### watch (optional)
 
 Watches and refreshes data for new blocks.
 
@@ -154,7 +178,7 @@ function App() {
 }
 ```
 
-#### cacheTime (optional)
+### cacheTime (optional)
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
@@ -171,7 +195,7 @@ function App() {
 }
 ```
 
-#### enabled (optional)
+### enabled (optional)
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
@@ -188,7 +212,7 @@ function App() {
 }
 ```
 
-#### staleTime (optional)
+### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
@@ -205,7 +229,7 @@ function App() {
 }
 ```
 
-#### suspense (optional)
+### suspense (optional)
 
 Set this to `true` to enable suspense mode.
 
@@ -222,7 +246,7 @@ function App() {
 }
 ```
 
-#### onSuccess (optional)
+### onSuccess (optional)
 
 Function to invoke when fetching new data is successful.
 
@@ -241,7 +265,7 @@ function App() {
 }
 ```
 
-#### onError (optional)
+### onError (optional)
 
 Function to invoke when an error is thrown while fetching new data.
 
@@ -260,7 +284,7 @@ function App() {
 }
 ```
 
-#### onSettled (optional)
+### onSettled (optional)
 
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 

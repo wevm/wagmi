@@ -7,37 +7,33 @@ import { getChains } from '../chains'
 import { multicallInterface } from '../../constants'
 import { ReadContractConfig } from './readContract'
 
-export type MulticallArgs = {
-  addressOrName: ReadContractConfig['addressOrName']
-  /** Allows the contract read to fail silently */
-  allowFailure?: boolean
-  args?: ReadContractConfig['args']
-  contractInterface: ReadContractConfig['contractInterface']
-  functionName: ReadContractConfig['functionName']
-}[]
 export type MulticallConfig = {
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Chain id to use for provider */
   chainId?: number
+  contracts: {
+    addressOrName: ReadContractConfig['addressOrName']
+    args?: ReadContractConfig['args']
+    contractInterface: ReadContractConfig['contractInterface']
+    functionName: ReadContractConfig['functionName']
+  }[]
   /** Call overrides */
   overrides?: CallOverrides
 }
-export type MulticallResult = Result[]
+export type MulticallResult<Data extends any[] = Result[]> = Data
 
 type AggregateResult = {
   success: boolean
   returnData: string
 }[]
 
-export async function multicall(
-  multicallArgs: MulticallArgs,
-  {
-    allowFailure: globalAllowFailure = true,
-    chainId,
-    overrides,
-  }: MulticallConfig = {},
-): Promise<MulticallResult> {
+export async function multicall<Data extends any[] = Result[]>({
+  allowFailure = true,
+  chainId,
+  contracts,
+  overrides,
+}: MulticallConfig): Promise<MulticallResult<Data>> {
   const { chains } = getChains()
   const chain = chains.find((chain) => chain.id === chainId) || chains[0]
   if (!chain?.multicall) {
@@ -58,14 +54,8 @@ export async function multicall(
     contractInterface: multicallInterface,
     signerOrProvider: provider,
   })
-  const calls = multicallArgs.map(
-    ({
-      addressOrName,
-      contractInterface,
-      functionName,
-      allowFailure,
-      ...config
-    }) => {
+  const calls = contracts.map(
+    ({ addressOrName, contractInterface, functionName, ...config }) => {
       const { args } = config || {}
       const contract = getContract({
         addressOrName,
@@ -82,7 +72,7 @@ export async function multicall(
         )
       return {
         target: addressOrName,
-        allowFailure: allowFailure ?? globalAllowFailure,
+        allowFailure: allowFailure,
         callData,
       }
     },
@@ -93,7 +83,7 @@ export async function multicall(
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
     if (!success) return undefined
-    const { addressOrName, contractInterface, functionName } = multicallArgs[i]
+    const { addressOrName, contractInterface, functionName } = contracts[i]
     const contract = getContract({
       addressOrName,
       contractInterface,
@@ -103,5 +93,5 @@ export async function multicall(
       returnData,
     )
     return Array.isArray(result) ? result[0] : result
-  })
+  }) as Data
 }

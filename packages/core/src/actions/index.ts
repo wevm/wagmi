@@ -42,7 +42,6 @@ export {
   type GetContractArgs,
   type ReadContractConfig,
   type ReadContractResult,
-  type ReadContractsArgs,
   type ReadContractsConfig,
   type ReadContractsResult,
   type WatchReadContractConfig,

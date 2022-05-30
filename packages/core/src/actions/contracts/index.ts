@@ -8,7 +8,6 @@ export {
 
 export {
   readContracts,
-  type ReadContractsArgs,
   type ReadContractsConfig,
   type ReadContractsResult,
 } from './readContracts'

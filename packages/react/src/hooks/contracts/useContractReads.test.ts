@@ -1,5 +1,5 @@
 import { act, renderHook } from '../../../test'
-import { UseContractReadsArgs, useContractReads } from './useContractReads'
+import { UseContractReadsConfig, useContractReads } from './useContractReads'
 
 const wagmigotchiContractConfig = {
   addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
@@ -51,7 +51,7 @@ const mlootContractConfig = {
   ],
 }
 
-const contracts: UseContractReadsArgs = [
+const contracts: UseContractReadsConfig['contracts'] = [
   {
     ...wagmigotchiContractConfig,
     functionName: 'love',
@@ -72,7 +72,9 @@ const contracts: UseContractReadsArgs = [
 
 describe('useContractRead', () => {
   it('mounts', async () => {
-    const { result, waitFor } = renderHook(() => useContractReads(contracts))
+    const { result, waitFor } = renderHook(() =>
+      useContractReads({ contracts }),
+    )
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
@@ -113,7 +115,7 @@ describe('useContractRead', () => {
   describe('configuration', () => {
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
-        useContractReads(contracts, { chainId: 1 }),
+        useContractReads({ contracts, chainId: 1 }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -154,7 +156,7 @@ describe('useContractRead', () => {
 
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
-        useContractReads(contracts, { enabled: false }),
+        useContractReads({ contracts, enabled: false }),
       )
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
@@ -183,7 +185,7 @@ describe('useContractRead', () => {
   describe('return value', () => {
     it('refetch', async () => {
       const { result } = renderHook(() =>
-        useContractReads(contracts, { enabled: false }),
+        useContractReads({ contracts, enabled: false }),
       )
 
       await act(async () => {

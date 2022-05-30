@@ -16,10 +16,11 @@ export type ReadContractConfig = {
   /** Call overrides */
   overrides?: CallOverrides
 }
-export type ReadContractResult = Result
+export type ReadContractResult<Data = Result> = Data
 
 export async function readContract<
   Contract extends EthersContract = EthersContract,
+  Data = Result,
 >({
   addressOrName,
   args,
@@ -27,7 +28,7 @@ export async function readContract<
   contractInterface,
   functionName,
   overrides,
-}: ReadContractConfig): Promise<ReadContractResult> {
+}: ReadContractConfig): Promise<ReadContractResult<Data>> {
   const provider = getProvider({ chainId })
   const contract = getContract<Contract>({
     addressOrName,
@@ -45,6 +46,6 @@ export async function readContract<
     console.warn(
       `"${functionName}" is not in the interface for contract "${addressOrName}"`,
     )
-  const response = (await contractFunction?.(...params)) as Result
+  const response = (await contractFunction?.(...params)) as Data
   return response
 }
