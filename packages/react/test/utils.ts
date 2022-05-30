@@ -2,7 +2,12 @@ import { act } from '@testing-library/react'
 import { Contract } from 'ethers'
 
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { Connector, Provider, WebSocketProvider } from '@wagmi/core'
+import {
+  Connector,
+  Provider,
+  WebSocketProvider,
+  defaultChains,
+} from '@wagmi/core'
 
 import { getProvider, getSigners } from '../../core/test/utils'
 import { renderHook } from '.'
@@ -12,6 +17,7 @@ type Config = Partial<CreateClientConfig>
 
 export function setupClient(config: Config = {}) {
   return createClient<Provider, WebSocketProvider>({
+    chains: defaultChains,
     connectors: [
       new MockConnector({
         options: {

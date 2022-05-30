@@ -3,9 +3,9 @@ import { Result } from 'ethers/lib/utils'
 
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
-import { getChains } from '../chains'
 import { multicallInterface } from '../../constants'
 import { ReadContractConfig } from './readContract'
+import { getClient } from '../../client'
 
 export type MulticallConfig = {
   /** Failures in the multicall will fail silently */
@@ -34,7 +34,7 @@ export async function multicall<Data extends any[] = Result[]>({
   contracts,
   overrides,
 }: MulticallConfig): Promise<MulticallResult<Data>> {
-  const { chains } = getChains()
+  const { chains } = getClient()
   const chain = chains.find((chain) => chain.id === chainId) || chains[0]
   if (!chain?.multicall) {
     throw new Error(`Chain "${chain.name}" does not support multicall.`)

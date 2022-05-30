@@ -19,6 +19,7 @@ const isChainSupported = (chainId?: number) =>
 
 const client = createClient({
   autoConnect: true,
+  chains,
   connectors({ chainId }) {
     const chain = chains.find((x) => x.id === chainId) ?? defaultChain
     const rpcUrl = chain.rpcUrls.alchemy

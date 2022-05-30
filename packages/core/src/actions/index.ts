@@ -29,8 +29,6 @@ export {
   type WatchSignerCallback,
 } from './accounts'
 
-export { getChains, type GetChainsResult } from './chains'
-
 export {
   getContract,
   readContract,

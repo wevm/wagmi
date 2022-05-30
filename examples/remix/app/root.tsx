@@ -44,6 +44,7 @@ export default function App() {
 
     return createClient({
       autoConnect: true,
+      chains,
       connectors: [
         new MetaMaskConnector({ chains }),
         new CoinbaseWalletConnector({

@@ -60,6 +60,7 @@ const connector = new CoolWalletConnector({
 })
 
 const client = createClient({
+  chains: defaultChains,
   connectors: [connector],
 })
 ```
