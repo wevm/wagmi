@@ -264,6 +264,86 @@ describe('useConnect', () => {
         `)
       })
 
+      it('connects to unsupported chain', async () => {
+        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+
+        await act(async () => {
+          result.current.connect({ chainId: 69 })
+        })
+
+        await waitFor(() => result.current.isConnected)
+
+        expect(result.current).toMatchInlineSnapshot(`
+          {
+            "activeConnector": "<MockConnector>",
+            "connect": [Function],
+            "connectAsync": [Function],
+            "connectors": [
+              "<MockConnector>",
+            ],
+            "data": {
+              "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+              "chain": {
+                "id": 69,
+                "unsupported": true,
+              },
+              "connector": "<MockConnector>",
+              "provider": "<MockProvider>",
+            },
+            "error": null,
+            "isConnected": true,
+            "isConnecting": false,
+            "isDisconnected": false,
+            "isError": false,
+            "isIdle": false,
+            "isReconnecting": false,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "connected",
+          }
+        `)
+      })
+
+      it('connects to supported chain', async () => {
+        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+
+        await act(async () => {
+          result.current.connect({ chainId: 3 })
+        })
+
+        await waitFor(() => result.current.isConnected)
+
+        expect(result.current).toMatchInlineSnapshot(`
+          {
+            "activeConnector": "<MockConnector>",
+            "connect": [Function],
+            "connectAsync": [Function],
+            "connectors": [
+              "<MockConnector>",
+            ],
+            "data": {
+              "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+              "chain": {
+                "id": 3,
+                "unsupported": false,
+              },
+              "connector": "<MockConnector>",
+              "provider": "<MockProvider>",
+            },
+            "error": null,
+            "isConnected": true,
+            "isConnecting": false,
+            "isDisconnected": false,
+            "isError": false,
+            "isIdle": false,
+            "isReconnecting": false,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "connected",
+          }
+        `)
+      })
+
       it('fails', async () => {
         const { result, waitFor } = renderHook(() =>
           useConnect({
@@ -320,6 +400,68 @@ describe('useConnect', () => {
         await waitFor(() => result.current.isConnected)
       })
 
+      it('uses deferred args', async () => {
+        const { result } = renderHook(() => useConnect())
+
+        await act(async () => {
+          const mockConnector = result.current.connectors[0]
+          const res = await result.current.connectAsync(mockConnector)
+          expect(res).toMatchInlineSnapshot(`
+            {
+              "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+              "chain": {
+                "id": 1,
+                "unsupported": false,
+              },
+              "connector": "<MockConnector>",
+              "provider": "<MockProvider>",
+            }
+          `)
+        })
+      })
+
+      it('connects to unsupported chain', async () => {
+        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+
+        await act(async () => {
+          const res = await result.current.connectAsync({ chainId: 69 })
+          expect(res).toMatchInlineSnapshot(`
+            {
+              "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+              "chain": {
+                "id": 69,
+                "unsupported": true,
+              },
+              "connector": "<MockConnector>",
+              "provider": "<MockProvider>",
+            }
+          `)
+        })
+
+        await waitFor(() => result.current.isConnected)
+      })
+
+      it('connects to supported chain', async () => {
+        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+
+        await act(async () => {
+          const res = await result.current.connectAsync({ chainId: 3 })
+          expect(res).toMatchInlineSnapshot(`
+            {
+              "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+              "chain": {
+                "id": 3,
+                "unsupported": false,
+              },
+              "connector": "<MockConnector>",
+              "provider": "<MockProvider>",
+            }
+          `)
+        })
+
+        await waitFor(() => result.current.isConnected)
+      })
+
       it('throws error', async () => {
         const { result, waitFor } = renderHook(() =>
           useConnect({ connector: connectorFail }),
@@ -342,9 +484,9 @@ describe('useConnect', () => {
     it('connects to unsupported chain', async () => {
       const { result, waitFor } = renderHook(() =>
         useConnect({
+          chainId: 69,
           connector: new MockConnector({
             options: {
-              network: 69,
               signer: getSigners()[0],
             },
           }),
@@ -353,7 +495,34 @@ describe('useConnect', () => {
 
       await act(async () => result.current.connect())
       await waitFor(() => result.current.isConnected)
-      expect(result.current.data?.chain.unsupported).toBeTruthy()
+      expect(result.current.data?.chain).toMatchInlineSnapshot(`
+        {
+          "id": 69,
+          "unsupported": true,
+        }
+      `)
+    })
+
+    it('connects to a supported chain', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useConnect({
+          chainId: 3,
+          connector: new MockConnector({
+            options: {
+              signer: getSigners()[0],
+            },
+          }),
+        }),
+      )
+
+      await act(async () => result.current.connect())
+      await waitFor(() => result.current.isConnected)
+      expect(result.current.data?.chain).toMatchInlineSnapshot(`
+        {
+          "id": 3,
+          "unsupported": false,
+        }
+      `)
     })
 
     it('is already connected', async () => {

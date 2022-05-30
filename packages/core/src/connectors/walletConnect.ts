@@ -38,9 +38,9 @@ export class WalletConnectConnector extends Connector<
     super(config)
   }
 
-  async connect() {
+  async connect({ chainId }: { chainId?: number } = {}) {
     try {
-      const provider = await this.getProvider(true)
+      const provider = await this.getProvider(true, { chainId })
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -98,9 +98,13 @@ export class WalletConnectConnector extends Connector<
     return chainId
   }
 
-  async getProvider(create?: boolean) {
+  async getProvider(
+    create?: boolean,
+    {
+      chainId = this.options?.chainId || this.chains[0].id,
+    }: { chainId?: number } = {},
+  ) {
     if (!this.#provider || create) {
-      const chainId = this.options?.chainId || this.chains[0].id
       const rpc = !this.options?.infuraId
         ? this.chains.reduce(
             (rpc, chain) => ({

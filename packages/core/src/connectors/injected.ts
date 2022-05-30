@@ -66,7 +66,7 @@ export class InjectedConnector extends Connector<
     this.name = name
   }
 
-  async connect() {
+  async connect({ chainId = this.chains[0].id }: { chainId?: number } = {}) {
     try {
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
@@ -82,6 +82,10 @@ export class InjectedConnector extends Connector<
       const account = await this.getAccount()
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
+
+      if (id !== chainId) {
+        this.switchChain(chainId)
+      }
 
       if (this.options?.shimDisconnect)
         getClient().storage?.setItem(shimKey, true)

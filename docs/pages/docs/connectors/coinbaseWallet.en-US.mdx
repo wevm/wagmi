@@ -38,6 +38,8 @@ const connector = new CoinbaseWalletConnector({
 })
 ```
 
+Note: Upon connection, the connector will attempt to connect to the first chain in the array unless otherwise specified by a [`chainId` config on useConnect](/docs/hooks/useConnect#chainid-optional).
+
 ### options
 
 Options to pass to the [Coinbase Wallet SDK](https://docs.cloud.coinbase.com/wallet-sdk/docs).

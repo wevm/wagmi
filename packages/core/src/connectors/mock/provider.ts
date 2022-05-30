@@ -11,7 +11,7 @@ export type MockProviderOptions = {
     failSwitchChain?: boolean
     noSwitchChain?: boolean
   }
-  network?: number | string
+  network?: number
   signer: Signer
 }
 
@@ -29,7 +29,7 @@ export class MockProvider extends providers.BaseProvider {
   #signer?: Signer
 
   constructor(options: MockProviderOptions) {
-    super(options.network ?? 1)
+    super({ name: 'Network', chainId: options.network ?? 1 })
     this.#options = options
   }
 

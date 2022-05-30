@@ -46,7 +46,7 @@ export class CoinbaseWalletConnector extends Connector<
     super(config)
   }
 
-  async connect() {
+  async connect({ chainId = this.chains[0].id }: { chainId?: number } = {}) {
     try {
       const provider = await this.getProvider()
       provider.on('accountsChanged', this.onAccountsChanged)
@@ -59,6 +59,11 @@ export class CoinbaseWalletConnector extends Connector<
       const account = getAddress(accounts[0])
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
+
+      if (id !== chainId) {
+        this.switchChain(chainId)
+      }
+
       return {
         account,
         chain: { id, unsupported },
