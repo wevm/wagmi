@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.4.4
+
+### Patch Changes
+
+- [`c4deb66`](https://github.com/tmm/wagmi/commit/c4deb6655a52e4cc4e5b3fd82202db11d6106848) Thanks [@jxom](https://github.com/jxom)! - infer `options.chainId` config from `chains` on WalletConnectConnector
+
+- Updated dependencies [[`c4deb66`](https://github.com/tmm/wagmi/commit/c4deb6655a52e4cc4e5b3fd82202db11d6106848)]:
+  - @wagmi/core@0.3.4
+
 ## 0.4.3
 
 ### Patch Changes
