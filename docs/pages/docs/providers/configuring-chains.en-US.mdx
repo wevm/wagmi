@@ -66,6 +66,7 @@ const infuraId = process.env.INFURA_ID
 const avalancheChain: Chain = {
   id: 43_114,
   name: 'Avalanche',
+  network: 'avalanche',
   nativeCurrency: {
     decimals: 18,
     name: 'Avalanche',
@@ -76,7 +77,7 @@ const avalancheChain: Chain = {
   },
   blockExplorers: {
     default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
-    snowtrace: { name: 'SnowTrace', url: 'https://snowtrace.io' },
+    etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
   },
   testnet: false,
 }
