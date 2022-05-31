@@ -1,5 +1,20 @@
 # wagmi
 
+## 0.4.5
+
+### Patch Changes
+
+- [`01cc47b`](https://github.com/tmm/wagmi/commit/01cc47b2385c78d82bc799c2dedacb2a42457e2f) Thanks [@jxom](https://github.com/jxom)! - Update `react-query` to `4.0.0-beta.19`
+
+## 0.4.4
+
+### Patch Changes
+
+- [`c4deb66`](https://github.com/tmm/wagmi/commit/c4deb6655a52e4cc4e5b3fd82202db11d6106848) Thanks [@jxom](https://github.com/jxom)! - infer `options.chainId` config from `chains` on WalletConnectConnector
+
+- Updated dependencies [[`c4deb66`](https://github.com/tmm/wagmi/commit/c4deb6655a52e4cc4e5b3fd82202db11d6106848)]:
+  - @wagmi/core@0.3.4
+
 ## 0.4.3
 
 ### Patch Changes
