@@ -59,13 +59,15 @@ export class CoinbaseWalletConnector extends Connector<
       const account = getAddress(accounts[0])
 
       let id = await this.getChainId()
-      const unsupported = this.isChainUnsupported(chainId ?? id)
+      let unsupported = this.isChainUnsupported(id)
       if (chainId && id !== chainId) {
         const chain = await this.switchChain(chainId)
         id = chain.id
+        unsupported = this.isChainUnsupported(id)
       } else if (unsupported) {
         const chain = await this.switchChain(this.chains[0].id)
         id = chain.id
+        unsupported = this.isChainUnsupported(id)
       }
 
       return {

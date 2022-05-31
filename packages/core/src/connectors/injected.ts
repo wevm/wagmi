@@ -82,13 +82,15 @@ export class InjectedConnector extends Connector<
       const account = await this.getAccount()
 
       let id = await this.getChainId()
-      const unsupported = this.isChainUnsupported(chainId ?? id)
+      let unsupported = this.isChainUnsupported(id)
       if (chainId && id !== chainId) {
         const chain = await this.switchChain(chainId)
         id = chain.id
+        unsupported = this.isChainUnsupported(id)
       } else if (unsupported) {
         const chain = await this.switchChain(this.chains[0].id)
         id = chain.id
+        unsupported = this.isChainUnsupported(id)
       }
 
       if (this.options?.shimDisconnect)
