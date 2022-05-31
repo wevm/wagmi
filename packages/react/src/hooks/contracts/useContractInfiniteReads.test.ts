@@ -50,7 +50,7 @@ const mlootContractConfig = {
   ],
 }
 
-describe('useContractRead', () => {
+describe('useContractInfiniteReads', () => {
   jest.setTimeout(15_000)
 
   it('mounts', async () => {
@@ -66,7 +66,9 @@ describe('useContractRead', () => {
       }),
     )
 
-    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+      timeout: 15_000,
+    })
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
@@ -117,7 +119,9 @@ describe('useContractRead', () => {
         }),
       )
 
-      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+        timeout: 15_000,
+      })
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
