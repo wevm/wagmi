@@ -56,6 +56,7 @@ export class Client<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > {
   config: Partial<ClientConfig<TProvider, TWebSocketProvider>>
+  lastUsedChainId?: number | null
   storage: ClientStorage
   store: Mutate<
     StoreApi<State<TProvider, TWebSocketProvider>>,
@@ -65,6 +66,7 @@ export class Client<
     ]
   >
 
+  #autoConnecting?: boolean
   #lastUsedConnector?: string | null
 
   constructor({
@@ -147,6 +149,7 @@ export class Client<
       webSocketProvider,
     }
     this.storage = storage
+    this.lastUsedChainId = storage?.getItem('chainId')
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
   }
@@ -204,11 +207,15 @@ export class Client<
 
   async destroy() {
     if (this.connector) await this.connector.disconnect?.()
+    this.#autoConnecting = false
     this.clearState()
     this.store.destroy()
   }
 
   async autoConnect() {
+    if (this.#autoConnecting) return
+    this.#autoConnecting = true
+
     if (!this.connectors.length) return
 
     // Try last used connector first
@@ -224,12 +231,17 @@ export class Client<
       const isAuthorized = await connector.isAuthorized()
       if (!isAuthorized) continue
 
-      const data = await connector.connect()
+      let data: ConnectorData
+      try {
+        data = await connector.connect()
+      } catch {
+        // Swallow connect errors
+      }
       this.setState((x) => ({
         ...x,
         connector,
         chains: connector?.chains,
-        data,
+        data: data || x.data,
         status: 'connected',
       }))
       connected = true
@@ -244,11 +256,17 @@ export class Client<
         status: 'disconnected',
       }))
 
+    this.#autoConnecting = false
+
     return this.data
   }
 
   setLastUsedConnector(lastUsedConnector: string | null = null) {
     this.storage?.setItem('wallet', lastUsedConnector)
+  }
+
+  setLastUsedChainId(chainId: number | null = null) {
+    this.storage?.setItem('chainId', chainId)
   }
 
   #addEffects() {
@@ -287,6 +305,9 @@ export class Client<
       this.store.subscribe(
         ({ data }) => data?.chain?.id,
         (chainId) => {
+          if (chainId) {
+            this.setLastUsedChainId(chainId)
+          }
           this.setState((x) => ({
             ...x,
             provider: subscribeProvider ? provider({ chainId }) : x.provider,

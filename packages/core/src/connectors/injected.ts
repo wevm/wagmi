@@ -66,7 +66,7 @@ export class InjectedConnector extends Connector<
     this.name = name
   }
 
-  async connect({ chainId = this.chains[0].id }: { chainId?: number } = {}) {
+  async connect({ chainId }: { chainId?: number } = {}) {
     try {
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
@@ -80,11 +80,15 @@ export class InjectedConnector extends Connector<
       this.emit('message', { type: 'connecting' })
 
       const account = await this.getAccount()
-      const id = await this.getChainId()
-      const unsupported = this.isChainUnsupported(id)
 
-      if (id !== chainId) {
-        this.switchChain(chainId)
+      let id = await this.getChainId()
+      const unsupported = this.isChainUnsupported(chainId ?? id)
+      if (chainId && id !== chainId) {
+        const chain = await this.switchChain(chainId)
+        id = chain.id
+      } else if (unsupported) {
+        const chain = await this.switchChain(this.chains[0].id)
+        id = chain.id
       }
 
       if (this.options?.shimDisconnect)

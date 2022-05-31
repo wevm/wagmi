@@ -11,6 +11,7 @@ import {
 import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
+import { getClient } from '../client'
 
 /**
  * Wallets that support chain switching through WalletConnect
@@ -38,8 +39,19 @@ export class WalletConnectConnector extends Connector<
     super(config)
   }
 
-  async connect({ chainId }: { chainId?: number } = {}) {
+  async connect({ chainId: chainId_ }: { chainId?: number } = {}) {
     try {
+      let chainId = chainId_
+      if (!chainId_) {
+        const client = getClient()
+        if (
+          client.lastUsedChainId &&
+          !this.isChainUnsupported(client.lastUsedChainId)
+        ) {
+          chainId = client.lastUsedChainId
+        }
+      }
+
       const provider = await this.getProvider(true, { chainId })
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)

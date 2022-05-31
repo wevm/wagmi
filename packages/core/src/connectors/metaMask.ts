@@ -11,6 +11,7 @@ export class MetaMaskConnector extends InjectedConnector {
   readonly ready =
     typeof window != 'undefined' && !!this.#findProvider(window.ethereum)
 
+  #switchingChains?: boolean
   #provider?: Window['ethereum']
 
   constructor({
@@ -28,6 +29,18 @@ export class MetaMaskConnector extends InjectedConnector {
         ...options,
       },
     })
+
+    // We need this as MetaMask can emit the "disconnect" event
+    // upon switching chains. This workaround ensures that the
+    // user currently isn't in the process of switching chains.
+    const onDisconnect = this.onDisconnect
+    super.onDisconnect = () => {
+      if (this.#switchingChains) {
+        this.#switchingChains = false
+        return
+      }
+      onDisconnect()
+    }
   }
 
   async getProvider() {
@@ -37,6 +50,11 @@ export class MetaMaskConnector extends InjectedConnector {
       this.#provider = this.#findProvider(window.ethereum)
     }
     return this.#provider
+  }
+
+  async switchChain(chainId: number): Promise<Chain> {
+    this.#switchingChains = true
+    return super.switchChain(chainId)
   }
 
   #getReady(ethereum?: Ethereum) {

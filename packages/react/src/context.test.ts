@@ -22,6 +22,7 @@ describe('useClient', () => {
             },
             "webSocketProvider": undefined,
           },
+          "lastUsedChainId": null,
           "queryClient": QueryClient {
             "defaultOptions": {
               "queries": {
