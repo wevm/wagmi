@@ -16,6 +16,20 @@ const connector = new MetaMaskConnector()
 
 ## Configuration
 
+### allowConnectToUnsupportedChain
+
+Allows the user to connect to an unsupported chain (a chain that isn't listed in `chains`). If `false`, then the connector will prompt the user to switch network on connection. Defaults to `true`.
+
+```ts {5}
+import { chain } from 'wagmi'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+
+const connector = new MetaMaskConnector({
+  allowConnectToUnsupportedChain: false,
+  chains: [chain.mainnet, chain.optimism],
+})
+```
+
 ### chains (optional)
 
 Chains supported by app. Defaults to `defaultChains`.
@@ -29,8 +43,6 @@ const connector = new MetaMaskConnector({
 })
 ```
 
-Note: Upon connection, the connector will attempt to connect to the first chain in the array unless otherwise specified by a [`chainId` config on useConnect](/docs/hooks/useConnect#chainid-optional).
-
 ### options (optional)
 
 Options for configuring the connector.
@@ -41,6 +53,20 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 const connector = new MetaMaskConnector({
   options: {
     shimDisconnect: true,
+  },
+})
+```
+
+#### shimChainChangedDisconnect
+
+MetaMask emits the `"disconnect"` event when chain is changed. This flag prevents the `"disconnect"` event from being emitted upon switching chains. Defaults to `true`.
+
+```ts {5}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    shimChainChangedDisconnect: false,
   },
 })
 ```
