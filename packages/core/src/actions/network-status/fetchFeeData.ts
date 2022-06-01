@@ -13,9 +13,9 @@ export type FetchFeeDataArgs = {
 
 export type FetchFeeDataResult = providers.FeeData & {
   formatted: {
-    gasPrice: string
-    maxFeePerGas: string
-    maxPriorityFeePerGas: string
+    gasPrice: string | null
+    maxFeePerGas: string | null
+    maxPriorityFeePerGas: string | null
   }
 }
 
@@ -26,12 +26,15 @@ export async function fetchFeeData({
   const provider = getProvider({ chainId })
   const feeData = await provider.getFeeData()
   const formatted = {
-    gasPrice: formatUnits(<BigNumberish>feeData.gasPrice, units),
-    maxFeePerGas: formatUnits(<BigNumberish>feeData.maxFeePerGas, units),
-    maxPriorityFeePerGas: formatUnits(
-      <BigNumberish>feeData.maxPriorityFeePerGas,
-      units,
-    ),
+    gasPrice: feeData.gasPrice
+      ? formatUnits(<BigNumberish>feeData.gasPrice, units)
+      : null,
+    maxFeePerGas: feeData.maxFeePerGas
+      ? formatUnits(<BigNumberish>feeData.maxFeePerGas, units)
+      : null,
+    maxPriorityFeePerGas: feeData.maxPriorityFeePerGas
+      ? formatUnits(<BigNumberish>feeData.maxPriorityFeePerGas, units)
+      : null,
   }
   return { ...feeData, formatted }
 }
