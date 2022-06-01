@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.3.5
+
+### Patch Changes
+
+- [#543](https://github.com/tmm/wagmi/pull/543) [`4d489fd`](https://github.com/tmm/wagmi/commit/4d489fd630dd8c00440bdaf4d646de662c41ff52) Thanks [@tmm](https://github.com/tmm)! - fix fee data formatting for null values
+
 ## 0.3.4
 
 ### Patch Changes
