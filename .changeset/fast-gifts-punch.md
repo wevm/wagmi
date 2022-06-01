@@ -37,7 +37,7 @@ readContract({
   args: [0],
 })
 
-watchRContract(
+watchReadContract(
   {
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
