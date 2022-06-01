@@ -3,9 +3,9 @@ import { providers } from 'ethers'
 import {
   Chain,
   ChainProvider,
-  Provider,
+  ChainProviderFn,
+  ChainWebSocketProvider,
   ProviderWithFallbackConfig,
-  WebSocketProvider,
 } from '../types'
 
 export type ConfigureChainsConfig = { stallTimeout?: number } & (
@@ -20,12 +20,12 @@ export type ConfigureChainsConfig = { stallTimeout?: number } & (
 )
 
 export function configureChains<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends ChainProvider = ChainProvider,
+  TWebSocketProvider extends ChainWebSocketProvider = ChainWebSocketProvider,
   TChain extends Chain = Chain,
 >(
   defaultChains: TChain[],
-  providers: ChainProvider<TProvider, TWebSocketProvider, TChain>[],
+  providers: ChainProviderFn<TProvider, TWebSocketProvider, TChain>[],
   { minQuorum = 1, targetQuorum = 1, stallTimeout }: ConfigureChainsConfig = {},
 ) {
   if (targetQuorum < minQuorum)
@@ -87,10 +87,17 @@ export function configureChains<
             ? chainId
             : defaultChains[0].id
         ]
-      if (chainProviders.length === 1) return chainProviders[0]() as TProvider
-      return fallbackProvider(targetQuorum, minQuorum, chainProviders, {
-        stallTimeout,
-      })
+
+      if (chainProviders.length === 1)
+        return Object.assign(chainProviders[0](), { chains }) as TProvider & {
+          chains: TChain[]
+        }
+      return Object.assign(
+        fallbackProvider(targetQuorum, minQuorum, chainProviders, {
+          stallTimeout,
+        }),
+        { chains },
+      )
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
       const chainWebSocketProviders =
@@ -102,10 +109,10 @@ export function configureChains<
 
       if (!chainWebSocketProviders) return undefined
       if (chainWebSocketProviders.length === 1)
-        return chainWebSocketProviders[0]()
+        return Object.assign(chainWebSocketProviders[0](), { chains })
       // WebSockets do not work with `fallbackProvider`
       // Default to first available
-      return chainWebSocketProviders[0]()
+      return Object.assign(chainWebSocketProviders[0](), { chains })
     },
   } as const
 }
@@ -113,7 +120,7 @@ export function configureChains<
 function fallbackProvider(
   targetQuorum: number,
   minQuorum: number,
-  providers_: (() => ProviderWithFallbackConfig<Provider>)[],
+  providers_: (() => ProviderWithFallbackConfig<ChainProvider>)[],
   { stallTimeout }: { stallTimeout?: number },
 ): providers.FallbackProvider {
   try {

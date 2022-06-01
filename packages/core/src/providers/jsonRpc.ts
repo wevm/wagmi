@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { Chain, ChainProvider, FallbackProviderConfig } from '../types'
+import { Chain, ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type JsonRpcProviderConfig = FallbackProviderConfig & {
   pollingInterval?: number
@@ -15,7 +15,7 @@ export function jsonRpcProvider({
   stallTimeout,
   static: static_ = true,
   weight,
-}: JsonRpcProviderConfig): ChainProvider<
+}: JsonRpcProviderConfig): ChainProviderFn<
   providers.JsonRpcProvider,
   providers.WebSocketProvider
 > {

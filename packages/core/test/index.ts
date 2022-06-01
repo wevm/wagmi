@@ -1,8 +1,8 @@
-import { ClientConfig, createClient, defaultChains } from '../src'
+import { Chain, ClientConfig, createClient, defaultChains } from '../src'
 import { MockConnector } from '../src/connectors/mock'
 import { getProvider, getSigners } from './utils'
 
-type Config = Partial<ClientConfig>
+type Config = Partial<ClientConfig> & { chains?: Chain[] }
 
 export function setupClient(config: Config = {}) {
   return createClient({
@@ -14,7 +14,7 @@ export function setupClient(config: Config = {}) {
         },
       }),
     ],
-    provider: getProvider,
+    provider: ({ chainId }) => getProvider({ chainId, chains: config.chains }),
     ...config,
   })
 }

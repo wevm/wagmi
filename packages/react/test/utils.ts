@@ -17,7 +17,6 @@ type Config = Partial<CreateClientConfig>
 
 export function setupClient(config: Config = {}) {
   return createClient<Provider, WebSocketProvider>({
-    chains: defaultChains,
     connectors: [
       new MockConnector({
         options: {
@@ -25,7 +24,7 @@ export function setupClient(config: Config = {}) {
         },
       }),
     ],
-    provider: getProvider,
+    provider: ({ chainId }) => getProvider({ chainId, chains: defaultChains }),
     ...config,
   })
 }

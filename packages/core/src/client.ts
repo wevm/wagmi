@@ -3,7 +3,7 @@ import { persist, subscribeWithSelector } from 'zustand/middleware'
 
 import { Connector, ConnectorData, InjectedConnector } from './connectors'
 import { ClientStorage, createStorage, noopStorage } from './storage'
-import { Chain, Provider, WebSocketProvider } from './types'
+import { Provider, WebSocketProvider } from './types'
 
 export type ClientConfig<
   TProvider extends Provider = Provider,
@@ -11,7 +11,6 @@ export type ClientConfig<
 > = {
   /** Enables reconnecting to last used connector on init */
   autoConnect?: boolean
-  chains: Chain[]
   /**
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
@@ -38,7 +37,7 @@ export type State<
   TProvider extends Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
-  chains: Connector['chains']
+  chains?: Connector['chains']
   connector?: Connector
   connectors: Connector[]
   data?: Data<TProvider>
@@ -68,7 +67,6 @@ export class Client<
 
   constructor({
     autoConnect = false,
-    chains,
     connectors = [new InjectedConnector()],
     provider,
     storage = createStorage({
@@ -110,7 +108,6 @@ export class Client<
           [['zustand/subscribeWithSelector', never]]
         >(
           () => ({
-            chains,
             connectors: connectors_,
             provider: provider_,
             status,
@@ -222,7 +219,7 @@ export class Client<
       this.setState((x) => ({
         ...x,
         connector,
-        chains: connector?.chains || this.config.chains,
+        chains: connector?.chains,
         data,
         status: 'connected',
       }))

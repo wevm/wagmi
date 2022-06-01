@@ -6,11 +6,13 @@ import { MockConnector } from './connectors/mock'
 import { defaultChains } from './constants'
 import { createStorage } from './storage'
 
+const provider = () =>
+  Object.assign(getDefaultProvider(), { chains: defaultChains })
+
 describe('createClient', () => {
   it('returns client', () => {
     const client = createClient({
-      chains: defaultChains,
-      provider: getDefaultProvider(),
+      provider,
     })
     expect(client).toBeInstanceOf(Client)
   })
@@ -21,8 +23,7 @@ describe('createClient', () => {
         it('disconnected', async () => {
           const client = createClient({
             autoConnect: true,
-            chains: defaultChains,
-            provider: getDefaultProvider(),
+            provider,
           })
           expect(client.status).toMatchInlineSnapshot(`"connecting"`)
           await client.autoConnect()
@@ -32,7 +33,6 @@ describe('createClient', () => {
         it('connected', async () => {
           const client = createClient({
             autoConnect: true,
-            chains: defaultChains,
             connectors: [
               new MockConnector({
                 options: {
@@ -41,7 +41,7 @@ describe('createClient', () => {
                 },
               }),
             ],
-            provider: getDefaultProvider(),
+            provider,
           })
           expect(client.status).toMatchInlineSnapshot(`"connecting"`)
           await client.autoConnect()
@@ -67,7 +67,6 @@ describe('createClient', () => {
           })
           const client = createClient({
             autoConnect: true,
-            chains: defaultChains,
             connectors: [
               new MockConnector({
                 options: {
@@ -76,7 +75,7 @@ describe('createClient', () => {
                 },
               }),
             ],
-            provider: getDefaultProvider(),
+            provider,
             storage,
           })
           expect(client.status).toMatchInlineSnapshot(`"reconnecting"`)
@@ -88,8 +87,7 @@ describe('createClient', () => {
       it('false', () => {
         const client = createClient({
           autoConnect: false,
-          chains: defaultChains,
-          provider: getDefaultProvider(),
+          provider,
         })
         expect(client.status).toMatchInlineSnapshot(`"disconnected"`)
       })
@@ -98,8 +96,7 @@ describe('createClient', () => {
     describe('connectors', () => {
       it('default', () => {
         const client = createClient({
-          chains: defaultChains,
-          provider: getDefaultProvider(),
+          provider,
         })
         expect(client.connectors.map((x) => x.name)).toMatchInlineSnapshot(`
           [
@@ -110,7 +107,6 @@ describe('createClient', () => {
 
       it('custom', () => {
         const client = createClient({
-          chains: defaultChains,
           connectors: [
             new MockConnector({
               options: {
@@ -118,7 +114,7 @@ describe('createClient', () => {
               },
             }),
           ],
-          provider: getDefaultProvider(),
+          provider,
         })
         expect(client.connectors.map((x) => x.name)).toMatchInlineSnapshot(`
           [
@@ -131,16 +127,14 @@ describe('createClient', () => {
     describe('provider', () => {
       it('default', () => {
         const client = createClient({
-          chains: defaultChains,
-          provider: getDefaultProvider(),
+          provider,
         })
         expect(client.provider).toBeDefined()
       })
 
       it('custom', () => {
         const client = createClient({
-          chains: defaultChains,
-          provider: getProvider,
+          provider: getProvider(),
         })
         expect(client.provider).toMatchInlineSnapshot(
           `"<Provider network={31337} />"`,
@@ -151,8 +145,7 @@ describe('createClient', () => {
     describe('storage', () => {
       it('default', () => {
         const client = createClient({
-          chains: defaultChains,
-          provider: getDefaultProvider(),
+          provider,
         })
         expect(client.storage).toMatchInlineSnapshot(`
           {
@@ -165,8 +158,7 @@ describe('createClient', () => {
 
       it('custom', () => {
         const client = createClient({
-          chains: defaultChains,
-          provider: getDefaultProvider(),
+          provider,
           storage: createStorage({
             storage: window.localStorage,
           }),
@@ -184,17 +176,15 @@ describe('createClient', () => {
     describe('webSocketProvider', () => {
       it('default', () => {
         const client = createClient({
-          chains: defaultChains,
-          provider: getDefaultProvider(),
+          provider,
         })
         expect(client.webSocketProvider).toBeUndefined()
       })
 
       it('custom', async () => {
         const client = createClient({
-          chains: defaultChains,
-          provider: getDefaultProvider(),
-          webSocketProvider: getWebSocketProvider,
+          provider,
+          webSocketProvider: getWebSocketProvider(),
         })
         await client.webSocketProvider?.destroy()
         expect(client.webSocketProvider).toMatchInlineSnapshot(
@@ -212,8 +202,7 @@ describe('getClient', () => {
 
   it('returns created client', () => {
     const client = createClient({
-      chains: defaultChains,
-      provider: getDefaultProvider(),
+      provider,
     })
     expect(getClient()).toEqual(client)
   })

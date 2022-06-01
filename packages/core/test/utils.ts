@@ -17,13 +17,16 @@ class EthersProviderWrapper extends providers.StaticJsonRpcProvider {
   }
 }
 
-export function getProvider({ chainId }: { chainId?: number } = {}) {
+export function getProvider({
+  chains = allChains,
+  chainId,
+}: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
   const network = getNetwork(chain)
   const url = chain_.hardhat.rpcUrls.default.toString()
   const provider = new EthersProviderWrapper(url, network)
   provider.pollingInterval = 1_000
-  return provider
+  return Object.assign(provider, { chains })
 }
 
 class EthersWebSocketProviderWrapper extends providers.WebSocketProvider {
@@ -32,11 +35,16 @@ class EthersWebSocketProviderWrapper extends providers.WebSocketProvider {
   }
 }
 
-export function getWebSocketProvider({ chainId }: { chainId?: number } = {}) {
+export function getWebSocketProvider({
+  chains = allChains,
+  chainId,
+}: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
   const network = getNetwork(chain)
   const url = chain_.hardhat.rpcUrls.default.toString().replace('http', 'ws')
-  return new EthersWebSocketProviderWrapper(url, network)
+  return Object.assign(new EthersWebSocketProviderWrapper(url, network), {
+    chains,
+  })
 }
 
 // TODO: Figure out why this is flaky

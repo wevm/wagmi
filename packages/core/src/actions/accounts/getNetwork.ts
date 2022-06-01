@@ -2,6 +2,7 @@ import { getClient } from '../../client'
 import { Chain } from '../../types'
 
 export type GetNetworkResult = {
+  activeChains?: Chain
   chain?: Chain & {
     id: number
     unsupported?: boolean
@@ -12,9 +13,11 @@ export type GetNetworkResult = {
 export function getNetwork(): GetNetworkResult {
   const client = getClient()
 
-  const chains = client.chains
   const chainId = client.data?.chain?.id
-  const activeChain = chains.find((x) => x.id === chainId) ?? {
+  const activeChains = client.chains ?? []
+  const activeChain = [...client.provider.chains, ...activeChains].find(
+    (x) => x.id === chainId,
+  ) ?? {
     id: chainId,
     name: `Chain ${chainId}`,
     network: `${chainId}`,
@@ -29,6 +32,6 @@ export function getNetwork(): GetNetworkResult {
           id: chainId,
         }
       : undefined,
-    chains,
+    chains: activeChains,
   }
 }

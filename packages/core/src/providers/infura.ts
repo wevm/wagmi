@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
 import { defaultInfuraId } from '../constants/rpcs'
-import { ChainProvider, FallbackProviderConfig } from '../types'
+import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type InfuraProviderConfig = FallbackProviderConfig & {
   infuraId?: string
@@ -14,7 +14,7 @@ export function infuraProvider({
   priority,
   stallTimeout,
   weight,
-}: InfuraProviderConfig = {}): ChainProvider<
+}: InfuraProviderConfig = {}): ChainProviderFn<
   providers.InfuraProvider,
   providers.InfuraWebSocketProvider
 > {

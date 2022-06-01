@@ -37,9 +37,12 @@ export type Chain = {
   testnet?: boolean
 }
 
-export type ChainProvider<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+export type ChainProvider = providers.BaseProvider
+export type ChainWebSocketProvider = providers.WebSocketProvider
+
+export type ChainProviderFn<
+  TProvider extends ChainProvider = ChainProvider,
+  TWebSocketProvider extends ChainWebSocketProvider = ChainWebSocketProvider,
   TChain extends Chain = Chain,
 > = (chain: TChain) => {
   chain: TChain
@@ -51,11 +54,14 @@ export type FallbackProviderConfig = Omit<
   providers.FallbackProviderConfig,
   'provider'
 >
-export type ProviderWithFallbackConfig<TProvider extends Provider = Provider> =
-  TProvider & FallbackProviderConfig
+export type ProviderWithFallbackConfig<
+  TProvider extends ChainProvider = ChainProvider,
+> = TProvider & FallbackProviderConfig
 
-export type Provider = providers.BaseProvider
-export type WebSocketProvider = providers.WebSocketProvider
+export type Provider = providers.BaseProvider & { chains: Chain[] }
+export type WebSocketProvider = providers.WebSocketProvider & {
+  chains: Chain[]
+}
 
 export type Unit = typeof units[number]
 

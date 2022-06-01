@@ -125,7 +125,7 @@ export type { ClientStorage as Storage } from './storage'
 
 export type {
   Chain,
-  ChainProvider,
+  ChainProviderFn,
   FallbackProviderConfig,
   ProviderWithFallbackConfig,
   Provider,
