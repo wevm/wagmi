@@ -246,6 +246,36 @@ function App() {
 }
 ```
 
+#### chainId
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {12,19}
+import { useContractReads, chain } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+        chainId: chain.mainnet.id,
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+        chainId: chain.mainnet.id,
+      },
+    ],
+  })
+}
+```
+
 ### getNextPageParam (optional)
 
 Derives the `param` provided to `contracts`. Provides the last page of the infinite list and an array of pages.
@@ -303,35 +333,6 @@ function App() {
       },
     ],
     allowFailure: false,
-  })
-}
-```
-
-### chainId (optional)
-
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
-
-```tsx {20}
-import { useContractReads, chain } from 'wagmi'
-
-function App() {
-  const { data, isError, isLoading } = useContractInfiniteReads({
-    cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
-    chainId: chain.mainnet.id,
   })
 }
 ```

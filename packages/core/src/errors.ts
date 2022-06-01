@@ -64,6 +64,10 @@ export class AddChainError extends Error {
   message = 'Error adding chain'
 }
 
+export class ChainDoesNotSupportMulticallError extends Error {
+  name = 'ChainDoesNotSupportMulticall'
+}
+
 export class ChainNotConfiguredError extends Error {
   name = 'ChainNotConfigured'
   message = 'Chain not configured'

@@ -168,7 +168,7 @@ describe('readContracts', () => {
         await multicall({ contracts, chainId: chain.polygon.id })
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[Error: Chain "Polygon" does not support multicall.]`,
+          `[ChainDoesNotSupportMulticall: Chain "Polygon" does not support multicall.]`,
         )
       }
     })
@@ -178,7 +178,7 @@ describe('readContracts', () => {
         await multicall({ contracts, overrides: { blockTag: 1 } })
       } catch (err) {
         expect(err).toMatchInlineSnapshot(
-          `[Error: Chain "Ethereum" does not support multicall on block 1]`,
+          `[ChainDoesNotSupportMulticall: Chain "Ethereum" does not support multicall on block 1]`,
         )
       }
     })

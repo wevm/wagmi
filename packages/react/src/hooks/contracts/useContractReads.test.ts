@@ -115,7 +115,9 @@ describe('useContractRead', () => {
   describe('configuration', () => {
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
-        useContractReads({ contracts, chainId: 1 }),
+        useContractReads({
+          contracts: contracts.map((contract) => ({ ...contract, chainId: 1 })),
+        }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())

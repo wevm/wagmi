@@ -9,7 +9,7 @@ import { useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId, useQuery } from '../utils'
+import { useQuery } from '../utils'
 
 export type UseContractReadsConfig = QueryConfig<ReadContractResult, Error> &
   ReadContractsConfig & {
@@ -19,7 +19,7 @@ export type UseContractReadsConfig = QueryConfig<ReadContractResult, Error> &
     watch?: boolean
   }
 
-export const queryKey = ([{ chainId, contracts, overrides }, { blockNumber }]: [
+export const queryKey = ([{ contracts, overrides }, { blockNumber }]: [
   ReadContractsConfig,
   { blockNumber?: number },
 ]) =>
@@ -28,16 +28,14 @@ export const queryKey = ([{ chainId, contracts, overrides }, { blockNumber }]: [
       entity: 'readContracts',
       contracts,
       blockNumber,
-      chainId,
       overrides,
     },
   ] as const
 
 const queryFn = ({
-  queryKey: [{ contracts, chainId, overrides }],
+  queryKey: [{ contracts, overrides }],
 }: QueryFunctionArgs<typeof queryKey>) => {
   return readContracts({
-    chainId,
     contracts,
     overrides,
   })
@@ -47,7 +45,6 @@ export function useContractReads({
   cacheOnBlock = false,
   cacheTime,
   contracts,
-  chainId: chainId_,
   enabled: enabled_ = true,
   keepPreviousData,
   onError,
@@ -58,14 +55,13 @@ export function useContractReads({
   suspense,
   watch,
 }: UseContractReadsConfig) {
-  const chainId = useChainId({ chainId: chainId_ })
   const { data: blockNumber } = useBlockNumber({
     enabled: watch || cacheOnBlock,
     watch,
   })
 
   const queryKey_ = React.useMemo(
-    () => queryKey([{ chainId, contracts, overrides }, { blockNumber }]),
+    () => queryKey([{ contracts, overrides }, { blockNumber }]),
     [],
   )
 
@@ -80,7 +76,6 @@ export function useContractReads({
     if (enabled) {
       const unwatch = watchReadContracts(
         {
-          chainId,
           contracts,
           overrides,
           listenToBlock: watch && !cacheOnBlock,
@@ -89,7 +84,7 @@ export function useContractReads({
       )
       return unwatch
     }
-  }, [cacheOnBlock, chainId, client, enabled, overrides, queryKey_, watch])
+  }, [cacheOnBlock, client, enabled, overrides, queryKey_, watch])
 
   return useQuery(queryKey_, queryFn, {
     cacheTime,

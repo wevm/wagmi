@@ -1,17 +1,19 @@
 import { CallOverrides } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
+import { ChainDoesNotSupportMulticallError } from '../../errors'
+
+import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { ReadContractConfig, readContract } from './readContract'
 
 export type ReadContractsConfig = {
   /** Failures will fail silently */
   allowFailure?: boolean
-  /** Chain id to use for provider */
-  chainId?: number
   contracts: {
     addressOrName: ReadContractConfig['addressOrName']
     args?: ReadContractConfig['args']
+    chainId?: ReadContractConfig['chainId']
     contractInterface: ReadContractConfig['contractInterface']
     functionName: ReadContractConfig['functionName']
   }[]
@@ -22,20 +24,43 @@ export type ReadContractsResult<Data extends any[] = Result[]> = Data
 
 export async function readContracts<Data extends any[] = Result[]>({
   allowFailure = true,
-  chainId,
   contracts,
   overrides,
 }: ReadContractsConfig): Promise<ReadContractsResult<Data>> {
   try {
-    return await multicall<Data>({
-      allowFailure,
-      chainId,
-      contracts,
-      overrides,
-    })
+    const provider = getProvider()
+    const contractsByChainId = contracts.reduce<{
+      [chainId: number]: ReadContractsConfig['contracts']
+    }>((contracts, contract) => {
+      const chainId = contract.chainId ?? provider.chains[0].id
+      return {
+        ...contracts,
+        [chainId]: [...(contracts[chainId] || []), contract],
+      }
+    }, {})
+    const promises = Object.entries(contractsByChainId).map(
+      ([chainId, contracts]) =>
+        multicall<Data>({
+          allowFailure,
+          chainId: parseInt(chainId),
+          contracts,
+          overrides,
+        }),
+    )
+    if (allowFailure) {
+      return (await Promise.allSettled(promises))
+        .map((result) => {
+          if (result.status === 'fulfilled') return result.value
+          if (result.reason instanceof ChainDoesNotSupportMulticallError)
+            throw result.reason
+          return null
+        })
+        .flat() as Data
+    }
+    return (await Promise.all(promises)).flat() as Data
   } catch (err) {
     const promises = contracts.map((contract) =>
-      readContract({ ...contract, chainId, overrides }),
+      readContract({ ...contract, overrides }),
     )
     if (allowFailure) {
       return (await Promise.allSettled(promises)).map((result) =>

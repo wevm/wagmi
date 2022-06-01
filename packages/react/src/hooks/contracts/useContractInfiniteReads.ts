@@ -6,7 +6,7 @@ import {
 } from '@wagmi/core'
 
 import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
-import { useChainId, useInfiniteQuery } from '../utils'
+import { useInfiniteQuery } from '../utils'
 
 export type UseContractInfiniteReadsConfig<TPageParam = any> =
   InfiniteQueryConfig<ReadContractResult, Error> &
@@ -41,10 +41,9 @@ export const paginatedIndexesConfig = (
   }
 }
 
-export const queryKey = ([{ cacheKey, chainId, overrides }]: [
+export const queryKey = ([{ cacheKey, overrides }]: [
   {
     cacheKey: UseContractInfiniteReadsConfig['cacheKey']
-    chainId: UseContractInfiniteReadsConfig['chainId']
     overrides: UseContractInfiniteReadsConfig['overrides']
   },
 ]) =>
@@ -52,7 +51,6 @@ export const queryKey = ([{ cacheKey, chainId, overrides }]: [
     {
       entity: 'readContractsInfinite',
       cacheKey,
-      chainId,
       overrides,
     },
   ] as const
@@ -64,11 +62,10 @@ const queryFn =
     contracts: UseContractInfiniteReadsConfig<TPageParam>['contracts']
   }) =>
   ({
-    queryKey: [{ chainId, overrides }],
+    queryKey: [{ overrides }],
     pageParam,
   }: QueryFunctionArgs<typeof queryKey>) => {
     return readContracts({
-      chainId,
       contracts: contracts(pageParam || undefined),
       overrides,
     })
@@ -77,7 +74,6 @@ const queryFn =
 export function useContractInfiniteReads<TPageParam = any>({
   cacheKey,
   cacheTime,
-  chainId: chainId_,
   contracts,
   enabled: enabled_ = true,
   getNextPageParam,
@@ -89,12 +85,7 @@ export function useContractInfiniteReads<TPageParam = any>({
   staleTime,
   suspense,
 }: UseContractInfiniteReadsConfig<TPageParam>) {
-  const chainId = useChainId({ chainId: chainId_ })
-
-  const queryKey_ = React.useMemo(
-    () => queryKey([{ cacheKey, chainId, overrides }]),
-    [],
-  )
+  const queryKey_ = React.useMemo(() => queryKey([{ cacheKey, overrides }]), [])
 
   const enabled = React.useMemo(() => {
     const enabled = Boolean(enabled_ && contracts)

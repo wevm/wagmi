@@ -39,11 +39,11 @@ export async function fetchBalance({
     const erc20Config = {
       addressOrName: token,
       contractInterface: erc20ABI,
+      chainId,
     }
     const [value, decimals, symbol] = await readContracts<
       [BigNumber, number, string]
     >({
-      chainId,
       contracts: [
         { ...erc20Config, functionName: 'balanceOf', args: [addressOrName] },
         { ...erc20Config, functionName: 'decimals' },
