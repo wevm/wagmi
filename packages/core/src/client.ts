@@ -231,12 +231,7 @@ export class Client<
       const isAuthorized = await connector.isAuthorized()
       if (!isAuthorized) continue
 
-      let data: ConnectorData
-      try {
-        data = await connector.connect()
-      } catch {
-        // Swallow connect errors
-      }
+      const data = await connector.connect({ switchChain: false })
       this.setState((x) => ({
         ...x,
         connector,

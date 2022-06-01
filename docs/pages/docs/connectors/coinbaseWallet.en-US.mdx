@@ -21,16 +21,16 @@ const connector = new CoinbaseWalletConnector({
 
 ## Configuration
 
-### allowConnectToUnsupportedChain
+### switchChainOnConnect
 
-Allows the user to connect to an unsupported chain (a chain that isn't listed in `chains`). If `false`, then the connector will prompt the user to switch network on connection. Defaults to `true`.
+If `true`, the connector will prompt the user to switch network on connection. Defaults to `false`.
 
 ```ts {5}
 import { chain } from 'wagmi'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const connector = new CoinbaseWalletConnector({
-  allowConnectToUnsupportedChain: false,
+  switchChainOnConnect: true,
   chains: [chain.mainnet, chain.optimism],
 })
 ```

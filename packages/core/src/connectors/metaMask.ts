@@ -22,13 +22,13 @@ export class MetaMaskConnector extends InjectedConnector {
   #provider?: Window['ethereum']
 
   constructor({
-    allowConnectToUnsupportedChain = true,
     chains,
     options: options_,
+    switchChainOnConnect = false,
   }: {
-    allowConnectToUnsupportedChain?: boolean
     chains?: Chain[]
     options?: MetaMaskConnectorOptions
+    switchChainOnConnect?: boolean
   } = {}) {
     const options = {
       name: 'MetaMask',
@@ -37,9 +37,9 @@ export class MetaMaskConnector extends InjectedConnector {
       ...options_,
     }
     super({
-      allowConnectToUnsupportedChain,
       chains,
       options,
+      switchChainOnConnect,
     })
 
     // We need this as MetaMask can emit the "disconnect" event

@@ -47,6 +47,7 @@ export abstract class Connector<
 
   abstract connect(config?: {
     chainId?: number
+    switchChain?: boolean
   }): Promise<Required<ConnectorData>>
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
