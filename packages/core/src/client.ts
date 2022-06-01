@@ -66,7 +66,7 @@ export class Client<
     ]
   >
 
-  #autoConnecting?: boolean
+  #isAutoConnecting?: boolean
   #lastUsedConnector?: string | null
 
   constructor({
@@ -207,14 +207,14 @@ export class Client<
 
   async destroy() {
     if (this.connector) await this.connector.disconnect?.()
-    this.#autoConnecting = false
+    this.#isAutoConnecting = false
     this.clearState()
     this.store.destroy()
   }
 
   async autoConnect() {
-    if (this.#autoConnecting) return
-    this.#autoConnecting = true
+    if (this.#isAutoConnecting) return
+    this.#isAutoConnecting = true
 
     if (!this.connectors.length) return
 
@@ -256,7 +256,7 @@ export class Client<
         status: 'disconnected',
       }))
 
-    this.#autoConnecting = false
+    this.#isAutoConnecting = false
 
     return this.data
   }

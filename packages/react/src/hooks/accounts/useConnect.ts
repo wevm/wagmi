@@ -74,36 +74,42 @@ export function useConnect({
 
   const connect = React.useCallback(
     (connectorOrArgs?: Partial<ConnectArgs> | ConnectArgs['connector']) => {
+      let config: Partial<ConnectArgs>
       if (connectorOrArgs instanceof Connector) {
         const connector_ = connectorOrArgs
-        return mutate(<ConnectArgs>{
+        config = {
           chainId,
           connector: connector_ ?? connector,
-        })
+        }
+      } else {
+        const args = connectorOrArgs
+        config = {
+          chainId: args?.chainId ?? chainId,
+          connector: args?.connector ?? connector,
+        }
       }
-      const args = connectorOrArgs
-      return mutate(<ConnectArgs>{
-        chainId: args?.chainId ?? chainId,
-        connector: args?.connector ?? connector,
-      })
+      return mutate(<ConnectArgs>config)
     },
     [connector, mutate],
   )
 
   const connectAsync = React.useCallback(
     (connectorOrArgs?: Partial<ConnectArgs> | ConnectArgs['connector']) => {
+      let config: Partial<ConnectArgs>
       if (connectorOrArgs instanceof Connector) {
         const connector_ = connectorOrArgs
-        return mutateAsync(<ConnectArgs>{
+        config = {
           chainId,
           connector: connector_ ?? connector,
-        })
+        }
+      } else {
+        const args = connectorOrArgs
+        config = {
+          chainId: args?.chainId ?? chainId,
+          connector: args?.connector ?? connector,
+        }
       }
-      const args = connectorOrArgs
-      return mutateAsync(<ConnectArgs>{
-        chainId: args?.chainId ?? chainId,
-        connector: args?.connector ?? connector,
-      })
+      return mutateAsync(<ConnectArgs>config)
     },
     [connector, mutateAsync],
   )

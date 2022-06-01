@@ -35,6 +35,7 @@ export class CoinbaseWalletConnector extends Connector<
   CoinbaseWalletProvider,
   Options
 > {
+  readonly allowConnectToUnsupportedChain?: boolean
   readonly id = 'coinbaseWallet'
   readonly name = 'Coinbase Wallet'
   readonly ready = true
@@ -42,8 +43,18 @@ export class CoinbaseWalletConnector extends Connector<
   #client?: CoinbaseWalletSDK
   #provider?: CoinbaseWalletProvider
 
-  constructor(config: { chains?: Chain[]; options: Options }) {
-    super(config)
+  constructor({
+    allowConnectToUnsupportedChain = true,
+    chains,
+    options,
+  }: {
+    allowConnectToUnsupportedChain?: boolean
+    chains?: Chain[]
+    options: Options
+  }) {
+    super({ chains, options })
+
+    this.allowConnectToUnsupportedChain = allowConnectToUnsupportedChain
   }
 
   async connect({ chainId = this.chains[0].id }: { chainId?: number } = {}) {
@@ -64,7 +75,7 @@ export class CoinbaseWalletConnector extends Connector<
         const chain = await this.switchChain(chainId)
         id = chain.id
         unsupported = this.isChainUnsupported(id)
-      } else if (unsupported) {
+      } else if (!this.allowConnectToUnsupportedChain && unsupported) {
         const chain = await this.switchChain(this.chains[0].id)
         id = chain.id
         unsupported = this.isChainUnsupported(id)

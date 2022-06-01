@@ -21,7 +21,7 @@ export class MockConnector extends Connector<
   }
 
   async connect({ chainId = this.chains[0].id }: { chainId?: number } = {}) {
-    const provider = await this.getProvider(true, { network: chainId })
+    const provider = await this.getProvider({ chainId })
     provider.on('accountsChanged', this.onAccountsChanged)
     provider.on('chainChanged', this.onChainChanged)
     provider.on('disconnect', this.onDisconnect)
@@ -62,12 +62,9 @@ export class MockConnector extends Connector<
     return normalizeChainId(provider.network.chainId)
   }
 
-  async getProvider(
-    _create = true,
-    options: Partial<MockProviderOptions> = {},
-  ) {
-    if (!this.#provider || options.network)
-      this.#provider = new MockProvider({ ...this.options, ...options })
+  async getProvider({ chainId }: { chainId?: number } = {}) {
+    if (!this.#provider || chainId)
+      this.#provider = new MockProvider({ ...this.options, chainId })
     return this.#provider
   }
 

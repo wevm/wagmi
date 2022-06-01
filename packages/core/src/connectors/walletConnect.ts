@@ -8,10 +8,10 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
+import { getClient } from '../client'
 import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
-import { getClient } from '../client'
 
 /**
  * Wallets that support chain switching through WalletConnect
@@ -52,7 +52,7 @@ export class WalletConnectConnector extends Connector<
         }
       }
 
-      const provider = await this.getProvider(true, { chainId })
+      const provider = await this.getProvider({ create: true, chainId })
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -110,12 +110,10 @@ export class WalletConnectConnector extends Connector<
     return chainId
   }
 
-  async getProvider(
-    create?: boolean,
-    {
-      chainId = this.options?.chainId || this.chains[0].id,
-    }: { chainId?: number } = {},
-  ) {
+  async getProvider({
+    create = false,
+    chainId = this.options?.chainId || this.chains[0].id,
+  } = {}) {
     if (!this.#provider || create) {
       const rpc = !this.options?.infuraId
         ? this.chains.reduce(

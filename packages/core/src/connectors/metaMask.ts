@@ -4,7 +4,14 @@ import { InjectedConnector, InjectedConnectorOptions } from './injected'
 export type MetaMaskConnectorOptions = Pick<
   InjectedConnectorOptions,
   'shimDisconnect'
->
+> & {
+  /**
+   * MetaMask 10.9.3 emits disconnect event when chain is changed.
+   * This flag prevents the `"disconnect"` event from being emitted upon switching chains.
+   * @see https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334
+   */
+  shimChainChangedDisconnect?: boolean
+}
 
 export class MetaMaskConnector extends InjectedConnector {
   readonly id = 'metaMask'
@@ -15,31 +22,38 @@ export class MetaMaskConnector extends InjectedConnector {
   #provider?: Window['ethereum']
 
   constructor({
+    allowConnectToUnsupportedChain = true,
     chains,
-    options,
+    options: options_,
   }: {
+    allowConnectToUnsupportedChain?: boolean
     chains?: Chain[]
     options?: MetaMaskConnectorOptions
   } = {}) {
+    const options = {
+      name: 'MetaMask',
+      shimDisconnect: true,
+      shimChainChangedDisconnect: true,
+      ...options_,
+    }
     super({
+      allowConnectToUnsupportedChain,
       chains,
-      options: {
-        name: 'MetaMask',
-        shimDisconnect: true,
-        ...options,
-      },
+      options,
     })
 
     // We need this as MetaMask can emit the "disconnect" event
     // upon switching chains. This workaround ensures that the
     // user currently isn't in the process of switching chains.
-    const onDisconnect = this.onDisconnect
-    super.onDisconnect = () => {
-      if (this.#switchingChains) {
-        this.#switchingChains = false
-        return
+    if (options.shimChainChangedDisconnect) {
+      const onDisconnect = this.onDisconnect
+      super.onDisconnect = () => {
+        if (this.#switchingChains) {
+          this.#switchingChains = false
+          return
+        }
+        onDisconnect()
       }
-      onDisconnect()
     }
   }
 

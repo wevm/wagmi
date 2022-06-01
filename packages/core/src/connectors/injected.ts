@@ -35,6 +35,7 @@ export class InjectedConnector extends Connector<
   Window['ethereum'],
   InjectedConnectorOptions | undefined
 > {
+  readonly allowConnectToUnsupportedChain?: boolean
   readonly id: string
   readonly name: string
   readonly ready = typeof window != 'undefined' && !!window.ethereum
@@ -42,9 +43,11 @@ export class InjectedConnector extends Connector<
   #provider?: Window['ethereum']
 
   constructor({
+    allowConnectToUnsupportedChain = true,
     chains,
     options = { shimDisconnect: true },
   }: {
+    allowConnectToUnsupportedChain?: boolean
     chains?: Chain[]
     options?: InjectedConnectorOptions
   } = {}) {
@@ -62,6 +65,7 @@ export class InjectedConnector extends Connector<
       else
         name = typeof detectedName === 'string' ? detectedName : detectedName[0]
     }
+    this.allowConnectToUnsupportedChain = allowConnectToUnsupportedChain
     this.id = 'injected'
     this.name = name
   }
@@ -87,7 +91,7 @@ export class InjectedConnector extends Connector<
         const chain = await this.switchChain(chainId)
         id = chain.id
         unsupported = this.isChainUnsupported(id)
-      } else if (unsupported) {
+      } else if (!this.allowConnectToUnsupportedChain && unsupported) {
         const chain = await this.switchChain(this.chains[0].id)
         id = chain.id
         unsupported = this.isChainUnsupported(id)
