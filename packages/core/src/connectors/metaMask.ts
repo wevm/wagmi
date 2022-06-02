@@ -24,11 +24,9 @@ export class MetaMaskConnector extends InjectedConnector {
   constructor({
     chains,
     options: options_,
-    switchChainOnConnect = false,
   }: {
     chains?: Chain[]
     options?: MetaMaskConnectorOptions
-    switchChainOnConnect?: boolean
   } = {}) {
     const options = {
       name: 'MetaMask',
@@ -39,7 +37,6 @@ export class MetaMaskConnector extends InjectedConnector {
     super({
       chains,
       options,
-      switchChainOnConnect,
     })
 
     // We need this as MetaMask can emit the "disconnect" event

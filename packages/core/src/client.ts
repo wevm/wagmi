@@ -232,7 +232,7 @@ export class Client<
       const isAuthorized = await connector.isAuthorized()
       if (!isAuthorized) continue
 
-      const data = await connector.connect({ switchChain: false })
+      const data = await connector.connect()
       this.setState((x) => ({
         ...x,
         connector,
