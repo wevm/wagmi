@@ -388,7 +388,7 @@ describe('useConnect', () => {
             {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
-                "id": 1,
+                "id": 3,
                 "unsupported": false,
               },
               "connector": "<MockConnector>",
@@ -559,7 +559,7 @@ describe('useConnect', () => {
           "data": {
             "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chain": {
-              "id": 1,
+              "id": 3,
               "unsupported": false,
             },
             "connector": "<MockConnector>",
@@ -593,7 +593,7 @@ describe('useConnect', () => {
           "data": {
             "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chain": {
-              "id": 1,
+              "id": 3,
               "unsupported": false,
             },
             "connector": "<MockConnector>",
