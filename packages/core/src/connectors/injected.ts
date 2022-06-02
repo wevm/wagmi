@@ -21,6 +21,12 @@ export type InjectedConnectorOptions = {
   /** Name of connector */
   name?: string | ((detectedName: string | string[]) => string)
   /**
+   * MetaMask 10.9.3 emits disconnect event when chain is changed.
+   * This flag prevents the `"disconnect"` event from being emitted upon switching chains.
+   * @see https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334
+   */
+  shimChainChangedDisconnect?: boolean
+  /**
    * MetaMask and other injected providers do not support programmatic disconnect.
    * This flag simulates the disconnect behavior by keeping track of connection status in storage.
    * @see https://github.com/MetaMask/metamask-extension/issues/10353
@@ -40,6 +46,7 @@ export class InjectedConnector extends Connector<
   readonly ready = typeof window != 'undefined' && !!window.ethereum
 
   #provider?: Window['ethereum']
+  #switchingChains?: boolean
 
   constructor({
     chains,
@@ -66,7 +73,7 @@ export class InjectedConnector extends Connector<
     this.name = name
   }
 
-  async connect() {
+  async connect({ chainId }: { chainId?: number } = {}) {
     try {
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
@@ -80,8 +87,14 @@ export class InjectedConnector extends Connector<
       this.emit('message', { type: 'connecting' })
 
       const account = await this.getAccount()
-      const id = await this.getChainId()
-      const unsupported = this.isChainUnsupported(id)
+      // Switch to chain if provided
+      let id = await this.getChainId()
+      let unsupported = this.isChainUnsupported(id)
+      if (chainId && id !== chainId) {
+        const chain = await this.switchChain(chainId)
+        id = chain.id
+        unsupported = this.isChainUnsupported(id)
+      }
 
       if (this.options?.shimDisconnect)
         getClient().storage?.setItem(shimKey, true)
@@ -162,6 +175,8 @@ export class InjectedConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
+    if (this.options?.shimChainChangedDisconnect) this.#switchingChains = true
+
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     const id = hexValue(chainId)
@@ -252,6 +267,14 @@ export class InjectedConnector extends Connector<
   }
 
   protected onDisconnect = () => {
+    // We need this as MetaMask can emit the "disconnect" event
+    // upon switching chains. This workaround ensures that the
+    // user currently isn't in the process of switching chains.
+    if (this.options?.shimChainChangedDisconnect && this.#switchingChains) {
+      this.#switchingChains = false
+      return
+    }
+
     this.emit('disconnect')
     if (this.options?.shimDisconnect) getClient().storage?.removeItem(shimKey)
   }

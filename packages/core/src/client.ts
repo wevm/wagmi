@@ -65,6 +65,7 @@ export class Client<
     ]
   >
 
+  #isAutoConnecting?: boolean
   #lastUsedConnector?: string | null
 
   constructor({
@@ -166,6 +167,9 @@ export class Client<
   get error() {
     return this.store.getState().error
   }
+  get lastUsedChainId() {
+    return this.data?.chain?.id
+  }
   get provider() {
     return this.store.getState().provider
   }
@@ -204,11 +208,15 @@ export class Client<
 
   async destroy() {
     if (this.connector) await this.connector.disconnect?.()
+    this.#isAutoConnecting = false
     this.clearState()
     this.store.destroy()
   }
 
   async autoConnect() {
+    if (this.#isAutoConnecting) return
+    this.#isAutoConnecting = true
+
     if (!this.connectors.length) return
 
     // Try last used connector first
@@ -243,6 +251,8 @@ export class Client<
         data: undefined,
         status: 'disconnected',
       }))
+
+    this.#isAutoConnecting = false
 
     return this.data
   }
