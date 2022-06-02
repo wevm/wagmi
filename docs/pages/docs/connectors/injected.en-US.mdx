@@ -25,20 +25,6 @@ const connector = new InjectedConnector()
 
 ## Configuration
 
-### switchChainOnConnect
-
-If `true`, the connector will prompt the user to switch network on connection. Defaults to `false`.
-
-```ts {5}
-import { chain } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-
-const connector = new InjectedConnector({
-  switchChainOnConnect: true,
-  chains: [chain.mainnet, chain.optimism],
-})
-```
-
 ### chains (optional)
 
 Chains supported by app. Defaults to `defaultChains`.
@@ -93,6 +79,20 @@ const connector = new InjectedConnector({
           ? detectedName
           : detectedName.join(', ')
       })`,
+  },
+})
+```
+
+#### shimChainChangedDisconnect
+
+Certain versions of MetaMask [emit the `"disconnect"` event when chain is changed](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334). This flag prevents the `"disconnect"` event from being emitted upon switching chains. Defaults to `false`.
+
+```ts {5}
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    shimChainChangedDisconnect: true,
   },
 })
 ```

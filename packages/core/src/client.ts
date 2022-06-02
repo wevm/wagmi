@@ -261,10 +261,6 @@ export class Client<
     this.storage?.setItem('wallet', lastUsedConnector)
   }
 
-  setLastUsedChainId(chainId: number | null = null) {
-    this.storage?.setItem('chainId', chainId)
-  }
-
   #addEffects() {
     const onChange = (data: Data<TProvider>) => {
       this.setState((x) => ({
@@ -301,9 +297,6 @@ export class Client<
       this.store.subscribe(
         ({ data }) => data?.chain?.id,
         (chainId) => {
-          if (chainId) {
-            this.setLastUsedChainId(chainId)
-          }
           this.setState((x) => ({
             ...x,
             provider: subscribeProvider ? provider({ chainId }) : x.provider,

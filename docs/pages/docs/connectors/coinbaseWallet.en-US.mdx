@@ -21,20 +21,6 @@ const connector = new CoinbaseWalletConnector({
 
 ## Configuration
 
-### switchChainOnConnect
-
-If `true`, the connector will prompt the user to switch network on connection. Defaults to `false`.
-
-```ts {5}
-import { chain } from 'wagmi'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-
-const connector = new CoinbaseWalletConnector({
-  switchChainOnConnect: true,
-  chains: [chain.mainnet, chain.optimism],
-})
-```
-
 ### chains (optional)
 
 Chains supported by app. Defaults to `defaultChains`.

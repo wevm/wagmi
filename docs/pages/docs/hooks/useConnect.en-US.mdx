@@ -43,8 +43,12 @@ function App() {
 ```tsx
 {
   activeConnector: Connector
-  connect: (connectorOrConfig: Connector | { connector?: Connector, chainId?: number }) => void
-  connectAsync: (connectorOrConfig: Connector | { connector?: Connector, chainId?: number }) => Promise<{
+  connect: (
+    connectorOrConfig: Connector | { connector?: Connector; chainId?: number },
+  ) => void
+  connectAsync: (
+    connectorOrConfig: Connector | { connector?: Connector; chainId?: number },
+  ) => Promise<{
     address: string
     chain: {
       id: number
@@ -85,15 +89,15 @@ function App() {
 
 ### chainId (optional)
 
-Chain ID to connect
+Chain ID to connect.
 
 ```tsx {6}
-import { useConnect, chain } from 'wagmi'
+import { chain, useConnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function App() {
   const connect = useConnect({
-    chainId: chain.polygon.id,
+    chainId: chain.optimism.id,
   })
 }
 ```
