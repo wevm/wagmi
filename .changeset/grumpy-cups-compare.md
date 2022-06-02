@@ -25,8 +25,8 @@ function App() {
   const connect = useConnect()
 
   return (
-    <button onClick={() => connect({ chainId: chain.polygon.id })}>
-      Connect to Polygon
+    <button onClick={() => connect({ chainId: chain.optimism.id })}>
+      Connect to Optimism
     </button>
   )
 }
