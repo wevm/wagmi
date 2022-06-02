@@ -90,7 +90,7 @@ export function useConnect({
       }
       return mutate(<ConnectArgs>config)
     },
-    [connector, mutate],
+    [chainId, connector, mutate],
   )
 
   const connectAsync = React.useCallback(
@@ -111,7 +111,7 @@ export function useConnect({
       }
       return mutateAsync(<ConnectArgs>config)
     },
-    [connector, mutateAsync],
+    [chainId, connector, mutateAsync],
   )
 
   let status_:
