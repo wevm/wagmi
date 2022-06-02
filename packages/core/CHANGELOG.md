@@ -1,5 +1,23 @@
 # @wagmi/core
 
+## 0.3.6
+
+### Patch Changes
+
+- [#526](https://github.com/tmm/wagmi/pull/526) [`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f) Thanks [@jxom](https://github.com/jxom)! - Added `shimChainChangedDisconnect` option to `InjectedConnector`. Defaults to `true` for `MetaMaskConnector`.
+
+* [#526](https://github.com/tmm/wagmi/pull/526) [`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f) Thanks [@jxom](https://github.com/jxom)! - Added `lastUsedChainId` property to the wagmi `Client`.
+
+- [#526](https://github.com/tmm/wagmi/pull/526) [`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f) Thanks [@jxom](https://github.com/jxom)! - Added `chainId` config option to the `connect` action.
+
+  Example:
+
+  ```tsx
+  import { connect } from '@wagmi/core'
+
+  await connect({ chainId: 69 })
+  ```
+
 ## 0.3.5
 
 ### Patch Changes
