@@ -20,7 +20,7 @@ export class MockConnector extends Connector<
     super(config)
   }
 
-  async connect({ chainId = this.chains[0].id }: { chainId?: number } = {}) {
+  async connect({ chainId }: { chainId?: number } = {}) {
     const provider = await this.getProvider({ chainId })
     provider.on('accountsChanged', this.onAccountsChanged)
     provider.on('chainChanged', this.onChainChanged)

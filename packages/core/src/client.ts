@@ -56,7 +56,6 @@ export class Client<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > {
   config: Partial<ClientConfig<TProvider, TWebSocketProvider>>
-  lastUsedChainId?: number | null
   storage: ClientStorage
   store: Mutate<
     StoreApi<State<TProvider, TWebSocketProvider>>,
@@ -149,7 +148,6 @@ export class Client<
       webSocketProvider,
     }
     this.storage = storage
-    this.lastUsedChainId = storage?.getItem('chainId')
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
   }
@@ -168,6 +166,9 @@ export class Client<
   }
   get error() {
     return this.store.getState().error
+  }
+  get lastUsedChainId() {
+    return this.data?.chain?.id
   }
   get provider() {
     return this.store.getState().provider
@@ -236,7 +237,7 @@ export class Client<
         ...x,
         connector,
         chains: connector?.chains,
-        data: data || x.data,
+        data,
         status: 'connected',
       }))
       connected = true

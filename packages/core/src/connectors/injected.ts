@@ -38,18 +38,15 @@ export class InjectedConnector extends Connector<
   readonly id: string
   readonly name: string
   readonly ready = typeof window != 'undefined' && !!window.ethereum
-  readonly switchChainOnConnect?: boolean
 
   #provider?: Window['ethereum']
 
   constructor({
     chains,
     options = { shimDisconnect: true },
-    switchChainOnConnect = true,
   }: {
     chains?: Chain[]
     options?: InjectedConnectorOptions
-    switchChainOnConnect?: boolean
   } = {}) {
     super({ chains, options })
 
@@ -65,15 +62,11 @@ export class InjectedConnector extends Connector<
       else
         name = typeof detectedName === 'string' ? detectedName : detectedName[0]
     }
-    this.switchChainOnConnect = switchChainOnConnect
     this.id = 'injected'
     this.name = name
   }
 
-  async connect({
-    chainId,
-    switchChain = this.switchChainOnConnect,
-  }: { chainId?: number; switchChain?: boolean } = {}) {
+  async connect({ chainId }: { chainId?: number } = {}) {
     try {
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
@@ -87,15 +80,11 @@ export class InjectedConnector extends Connector<
       this.emit('message', { type: 'connecting' })
 
       const account = await this.getAccount()
-
+      // Switch to chain if provided
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
       if (chainId && id !== chainId) {
         const chain = await this.switchChain(chainId)
-        id = chain.id
-        unsupported = this.isChainUnsupported(id)
-      } else if (switchChain && unsupported) {
-        const chain = await this.switchChain(this.chains[0].id)
         id = chain.id
         unsupported = this.isChainUnsupported(id)
       }
