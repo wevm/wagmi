@@ -94,6 +94,6 @@ export async function multicall<Data extends any[] = Result[]>({
       functionName,
       returnData,
     )
-    return Array.isArray(result) ? result[0] : result
+    return Array.isArray(result) && result.length === 1 ? result[0] : result
   }) as Data
 }
