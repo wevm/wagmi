@@ -14,8 +14,6 @@ export type Chain = {
   name: string
   /** Internal network name */
   network: string
-  /** ENS registry address */
-  ensAddress?: string
   /** Currency used by chain */
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
   /** Collection of RPC endpoints */
@@ -29,6 +27,10 @@ export type Chain = {
   } & {
     [key: string]: BlockExplorer
     default: BlockExplorer
+  }
+  /** ENS registry */
+  ens?: {
+    address: string
   }
   /** Chain multicall contract */
   multicall?: {

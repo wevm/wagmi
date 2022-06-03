@@ -13,12 +13,11 @@ import {
 } from 'wagmi'
 +import { publicProvider } from 'wagmi/providers/public'
 
-+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
++const { provider, webSocketProvider } = configureChains(defaultChains, [
 + publicProvider(),
 +])
 
 +const client = createClient({
-+ chains,
 + provider,
 + webSocketProvider,
 +})

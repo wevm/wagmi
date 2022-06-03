@@ -30,12 +30,11 @@ A wagmi [`Client`](/docs/client) instance that consists of configuration options
 import { createClient, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+const { provider, webSocketProvider } = configureChains(defaultChains, [
   publicProvider(),
 ])
 
 const client = createClient({
-  chains,
   provider,
   webSocketProvider,
 })

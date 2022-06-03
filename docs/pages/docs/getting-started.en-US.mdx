@@ -34,7 +34,7 @@ Note: In a production app, it is not recommended to only pass `publicProvider` t
 
 Next, create a wagmi `Client` instance using [`createClient`](/docs/client), and pass the result from `configureChains` to it.
 
-```tsx {14-19}
+```tsx {14-18}
 import {
   WagmiConfig,
   createClient,
@@ -50,7 +50,6 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 const client = createClient({
   autoConnect: true,
-  chains,
   provider,
   webSocketProvider,
 })
@@ -62,10 +61,9 @@ const client = createClient({
 
 Finally, wrap your app with the [`WagmiConfig`](/docs/WagmiConfig) component, passing `client` to it.
 
-```tsx {10-12}
+```tsx {9-11}
 const client = createClient({
   autoConnect: true,
-  chains,
   provider,
   webSocketProvider,
 })

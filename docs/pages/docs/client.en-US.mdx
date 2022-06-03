@@ -12,69 +12,17 @@ import { createClient } from 'wagmi'
 import { createClient, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+const { provider, webSocketProvider } = configureChains(defaultChains, [
   publicProvider(),
 ])
 
 const client = createClient({
-  chains,
   provider,
   webSocketProvider,
 })
 ```
 
 ## Configuration
-
-### chains
-
-Chains that your app uses.
-
-```ts {7,12}
-import { createClient, configureChains, chain } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-
-const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [publicProvider()],
-)
-
-const client = createClient({
-  chains,
-  connectors: [
-    new InjectedConnector({ chains }),
-    new WalletConnectConnector({
-      chains,
-      options: {
-        qrcode: true,
-      },
-    }),
-  ],
-  provider,
-  webSocketProvider,
-})
-```
-
-### provider
-
-ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.
-
-```ts {11}
-import { createClient, configureChains, defaultChains } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
-])
-
-const client = createClient({
-  autoConnect: true
-  chains,
-  provider,
-  webSocketProvider,
-})
-```
 
 ### autoConnect (optional)
 
@@ -84,15 +32,13 @@ Enables reconnecting to last used connector on mount. Defaults to `false`.
 import { createClient, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+const { provider } = configureChains(defaultChains, [
   publicProvider(),
 ])
 
 const client = createClient({
   autoConnect: true
-  chains,
   provider,
-  webSocketProvider,
 })
 ```
 
@@ -100,18 +46,15 @@ const client = createClient({
 
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
-```ts {13-19}
+```ts {9-17}
 import { createClient, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
-])
+const { chains, provider } = configureChains(defaultChains, [publicProvider()])
 
 const client = createClient({
-  chains,
   connectors: [
     new InjectedConnector({ chains }),
     new WalletConnectConnector({
@@ -121,6 +64,22 @@ const client = createClient({
       },
     }),
   ],
+  provider,
+})
+```
+
+### provider
+
+ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.
+
+```ts {9}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { provider } = configureChains(defaultChains, [publicProvider()])
+
+const client = createClient({
+  provider,
 })
 ```
 
@@ -128,20 +87,15 @@ const client = createClient({
 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
-```ts {12}
+```ts {10}
 import { createClient, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
-])
+const { provider } = configureChains(defaultChains, [publicProvider()])
 
 const client = createClient({
-  autoConnect: true
-  chains,
   provider,
   storage: createStorage({ storage: window.localStorage }),
-  webSocketProvider,
 })
 ```
 
@@ -149,17 +103,15 @@ const client = createClient({
 
 ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
-```ts {12}
+```ts {10}
 import { createClient, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+const { provider, webSocketProvider } = configureChains(defaultChains, [
   publicProvider(),
 ])
 
 const client = createClient({
-  autoConnect: true
-  chains,
   provider,
   webSocketProvider,
 })

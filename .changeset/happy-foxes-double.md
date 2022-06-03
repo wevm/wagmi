@@ -13,7 +13,7 @@ import {
 } from 'wagmi'
 +import { publicProvider } from 'wagmi/providers/publicProvider'
 
-+const { chains, provider } = configureChains(defaultChains, [
++const { provider } = configureChains(defaultChains, [
 + publicProvider
 +])
 

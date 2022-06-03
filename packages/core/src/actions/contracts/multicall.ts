@@ -37,19 +37,18 @@ export async function multicall<Data extends any[] = Result[]>({
   const provider = getProvider({ chainId })
   const chain =
     provider.chains.find((chain) => chain.id === chainId) || provider.chains[0]
-  if (!chain?.multicall) {
+  if (!chain?.multicall)
     throw new ChainDoesNotSupportMulticallError(
       `Chain "${chain.name}" does not support multicall.`,
     )
-  }
+
   if (
     typeof overrides?.blockTag === 'number' &&
     overrides?.blockTag < chain.multicall.blockCreated
-  ) {
+  )
     throw new ChainDoesNotSupportMulticallError(
       `Chain "${chain.name}" does not support multicall on block ${overrides.blockTag}`,
     )
-  }
 
   const multicallContract = getContract({
     addressOrName: chain.multicall.address,

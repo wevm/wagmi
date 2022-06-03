@@ -35,7 +35,7 @@ export function jsonRpcProvider({
           ? providers.StaticJsonRpcProvider
           : providers.JsonRpcProvider
         const provider = new RpcProvider(rpcConfig.http, {
-          ensAddress: chain.ensAddress,
+          ensAddress: chain.ens?.address,
           chainId: chain.id,
           name: chain.network,
         })

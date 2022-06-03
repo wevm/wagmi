@@ -23,7 +23,6 @@ export const mainnet: Chain = {
   id: chainId.mainnet,
   name: 'Ethereum',
   network: 'homestead',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.mainnet,
@@ -33,6 +32,9 @@ export const mainnet: Chain = {
   blockExplorers: {
     etherscan: etherscanBlockExplorers.mainnet,
     default: etherscanBlockExplorers.mainnet,
+  },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   },
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
@@ -44,7 +46,6 @@ export const ropsten: Chain = {
   id: chainId.ropsten,
   name: 'Ropsten',
   network: 'ropsten',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Ropsten Ether', symbol: 'ropETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.ropsten,
@@ -54,6 +55,9 @@ export const ropsten: Chain = {
   blockExplorers: {
     etherscan: etherscanBlockExplorers.ropsten,
     default: etherscanBlockExplorers.ropsten,
+  },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   },
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
@@ -66,7 +70,6 @@ export const rinkeby: Chain = {
   id: chainId.rinkeby,
   name: 'Rinkeby',
   network: 'rinkeby',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Rinkeby Ether', symbol: 'rETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.rinkeby,
@@ -76,6 +79,9 @@ export const rinkeby: Chain = {
   blockExplorers: {
     etherscan: etherscanBlockExplorers.rinkeby,
     default: etherscanBlockExplorers.rinkeby,
+  },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   },
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
@@ -88,7 +94,6 @@ export const goerli: Chain = {
   id: chainId.goerli,
   name: 'Goerli',
   network: 'goerli',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Goerli Ether', symbol: 'gETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.goerli,
@@ -98,6 +103,9 @@ export const goerli: Chain = {
   blockExplorers: {
     etherscan: etherscanBlockExplorers.goerli,
     default: etherscanBlockExplorers.goerli,
+  },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   },
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
