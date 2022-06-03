@@ -43,10 +43,16 @@ export class CoinbaseWalletConnector extends Connector<
   #provider?: CoinbaseWalletProvider
 
   constructor({ chains, options }: { chains?: Chain[]; options: Options }) {
-    super({ chains, options })
+    super({
+      chains,
+      options: {
+        reloadOnDisconnect: false,
+        ...options,
+      },
+    })
   }
 
-  async connect({ chainId }: { chainId?: number }) {
+  async connect({ chainId }: { chainId?: number } = {}) {
     try {
       const provider = await this.getProvider()
       provider.on('accountsChanged', this.onAccountsChanged)

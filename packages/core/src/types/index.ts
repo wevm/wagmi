@@ -14,6 +14,8 @@ export type Chain = {
   name: string
   /** Internal network name */
   network: string
+  /** ENS registry address */
+  ensAddress?: string
   /** Currency used by chain */
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
   /** Collection of RPC endpoints */
