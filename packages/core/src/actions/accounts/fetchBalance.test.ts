@@ -85,24 +85,46 @@ describe('fetchBalance', () => {
       `)
     })
 
-    it('token', async () => {
-      expect(
-        await fetchBalance({
-          addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-          token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-        }),
-      ).toMatchInlineSnapshot(`
-        {
-          "decimals": 18,
-          "formatted": "18.0553",
-          "symbol": "UNI",
-          "unit": "ether",
-          "value": {
-            "hex": "0xfa914fb05d1c4000",
-            "type": "BigNumber",
-          },
-        }
-      `)
+    describe('token', () => {
+      it('address', async () => {
+        expect(
+          await fetchBalance({
+            addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+          }),
+        ).toMatchInlineSnapshot(`
+          {
+            "decimals": 18,
+            "formatted": "18.0553",
+            "symbol": "UNI",
+            "unit": "ether",
+            "value": {
+              "hex": "0xfa914fb05d1c4000",
+              "type": "BigNumber",
+            },
+          }
+        `)
+      })
+
+      it('name', async () => {
+        expect(
+          await fetchBalance({
+            addressOrName: 'awkweb.eth',
+            token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+          }),
+        ).toMatchInlineSnapshot(`
+          {
+            "decimals": 18,
+            "formatted": "18.0553",
+            "symbol": "UNI",
+            "unit": "ether",
+            "value": {
+              "hex": "0xfa914fb05d1c4000",
+              "type": "BigNumber",
+            },
+          }
+        `)
+      })
     })
   })
 })

@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers/lib/ethers'
-import { formatUnits } from 'ethers/lib/utils'
+import { formatUnits, isAddress } from 'ethers/lib/utils'
 
 import { getClient } from '../../client'
 import { erc20ABI } from '../../constants'
@@ -20,7 +20,7 @@ export type FetchBalanceArgs = {
 
 export type FetchBalanceResult = {
   decimals: number
-  formatted: string
+  formatted: string | null
   symbol: string
   unit: Unit | number
   value: BigNumber
@@ -41,11 +41,17 @@ export async function fetchBalance({
       contractInterface: erc20ABI,
       chainId,
     }
+
+    // Convert ENS name to address if required
+    const resolvedAddress = isAddress(addressOrName)
+      ? addressOrName
+      : await provider.resolveName(addressOrName)
+
     const [value, decimals, symbol] = await readContracts<
       [BigNumber, number, string]
     >({
       contracts: [
-        { ...erc20Config, functionName: 'balanceOf', args: [addressOrName] },
+        { ...erc20Config, functionName: 'balanceOf', args: resolvedAddress },
         { ...erc20Config, functionName: 'decimals' },
         {
           ...erc20Config,
@@ -55,7 +61,7 @@ export async function fetchBalance({
     })
     return {
       decimals,
-      formatted: formatUnits(value, unit),
+      formatted: value ? formatUnits(value, unit) : null,
       symbol,
       unit,
       value,
