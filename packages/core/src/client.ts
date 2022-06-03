@@ -15,11 +15,8 @@ export type ClientConfig<
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
    */
-  connectors?: ((config: { chainId?: number }) => Connector[]) | Connector[]
-  /**
-   * Interface for connecting to network
-   * @default (config) => getDefaultProvider(config.chainId)
-   */
+  connectors?: Connector[]
+  /** Interface for connecting to network */
   provider: ((config: { chainId?: number }) => TProvider) | TProvider
   /**
    * Custom storage for data persistance
@@ -91,16 +88,6 @@ export class Client<
       } catch (_error) {}
     }
 
-    // Evaluate initial store values
-    const connectors_ =
-      typeof connectors === 'function' ? connectors({ chainId }) : connectors
-    const provider_ =
-      typeof provider === 'function' ? provider({ chainId }) : provider
-    const webSocketProvider_ =
-      typeof webSocketProvider === 'function'
-        ? webSocketProvider({ chainId })
-        : webSocketProvider
-
     // Create store
     this.store = create(
       subscribeWithSelector(
@@ -109,10 +96,14 @@ export class Client<
           [['zustand/subscribeWithSelector', never]]
         >(
           () => ({
-            connectors: connectors_,
-            provider: provider_,
+            connectors,
+            provider:
+              typeof provider === 'function' ? provider({ chainId }) : provider,
             status,
-            webSocketProvider: webSocketProvider_,
+            webSocketProvider:
+              typeof webSocketProvider === 'function'
+                ? webSocketProvider({ chainId })
+                : webSocketProvider,
           }),
           {
             name: storeKey,
