@@ -37,6 +37,7 @@ export function jsonRpcProvider({
         const provider = new RpcProvider(rpcConfig.http, {
           chainId: chain.id,
           name: chain.network,
+          ensAddress: chain.ensAddress,
         })
         if (pollingInterval) provider.pollingInterval = pollingInterval
         return Object.assign(provider, { priority, stallTimeout, weight })

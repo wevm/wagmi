@@ -30,6 +30,8 @@ export type Chain = {
   }
   /** Flag for test networks */
   testnet?: boolean
+  /** Custom ENS registry address */
+  ensAddress?: string
 }
 
 export type ChainProvider<
