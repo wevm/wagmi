@@ -14,11 +14,11 @@ describe('watchWebSocketProvider', () => {
       providers.push(provider),
     )
 
-    await connect({ connector: client.connectors[0] })
+    await connect({ connector: client.connectors[0]! })
     await client.webSocketProvider?.destroy()
     await disconnect()
     await client.webSocketProvider?.destroy()
-    await connect({ connector: client.connectors[0] })
+    await connect({ connector: client.connectors[0]! })
     await client.webSocketProvider?.destroy()
     unwatch()
 

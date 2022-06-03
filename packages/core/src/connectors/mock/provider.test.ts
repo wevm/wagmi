@@ -8,7 +8,7 @@ describe('MockProvider', () => {
   let signer: Signer
   beforeEach(() => {
     const signers = getSigners()
-    signer = signers[0]
+    signer = signers[0]!
     provider = new MockProvider({ signer })
   })
 
@@ -25,7 +25,7 @@ describe('MockProvider', () => {
 
     it('fails', async () => {
       const signers = getSigners()
-      signer = signers[0]
+      signer = signers[0]!
       const provider = new MockProvider({
         flags: { failConnect: true },
         signer,

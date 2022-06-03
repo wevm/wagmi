@@ -4,7 +4,7 @@ import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 describe('switchNetwork', () => {
@@ -50,7 +50,7 @@ describe('switchNetwork', () => {
         connector: new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0],
+            signer: getSigners()[0]!,
           },
         }),
       })
@@ -64,7 +64,7 @@ describe('switchNetwork', () => {
         connector: new MockConnector({
           options: {
             flags: { noSwitchChain: true },
-            signer: getSigners()[0],
+            signer: getSigners()[0]!,
           },
         }),
       })

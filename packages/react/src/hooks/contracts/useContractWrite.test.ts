@@ -246,8 +246,8 @@ describe('useContractWrite', () => {
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
 
-      const from = await getSigners()[0].getAddress()
-      const to = await getSigners()[1].getAddress()
+      const from = await getSigners()[0]?.getAddress()
+      const to = await getSigners()[1]?.getAddress()
       functionName = 'transferFrom'
       args = [from, to, tokenId]
       rerender()

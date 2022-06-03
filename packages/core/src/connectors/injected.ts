@@ -67,7 +67,10 @@ export class InjectedConnector extends Connector<
             ? overrideName(detectedName)
             : overrideName
       else
-        name = typeof detectedName === 'string' ? detectedName : detectedName[0]
+        name =
+          typeof detectedName === 'string'
+            ? detectedName
+            : <string>detectedName[0]
     }
     this.id = 'injected'
     this.name = name
@@ -127,7 +130,7 @@ export class InjectedConnector extends Connector<
       method: 'eth_requestAccounts',
     })
     // return checksum address
-    return getAddress(accounts[0])
+    return getAddress(<string>accounts[0])
   }
 
   async getChainId() {
@@ -257,7 +260,7 @@ export class InjectedConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(accounts[0]) })
+    else this.emit('change', { account: getAddress(<string>accounts[0]) })
   }
 
   protected onChainChanged = (chainId: number | string) => {

@@ -195,7 +195,7 @@ describe('useContractEvent', () => {
           expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
         )
 
-        const to = await getSigners()[1].getAddress()
+        const to = await getSigners()[1]?.getAddress()
         functionName = 'approve'
         args = [to, tokenId]
         rerender()

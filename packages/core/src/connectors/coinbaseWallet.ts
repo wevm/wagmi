@@ -56,7 +56,7 @@ export class CoinbaseWalletConnector extends Connector<
       this.emit('message', { type: 'connecting' })
 
       const accounts = await provider.enable()
-      const account = getAddress(accounts[0])
+      const account = getAddress(<string>accounts[0])
       // Switch to chain if provided
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
@@ -101,7 +101,7 @@ export class CoinbaseWalletConnector extends Connector<
       method: 'eth_accounts',
     })
     // return checksum address
-    return getAddress(accounts[0])
+    return getAddress(<string>accounts[0])
   }
 
   async getChainId() {
@@ -115,8 +115,8 @@ export class CoinbaseWalletConnector extends Connector<
       const chain =
         this.chains.find((chain) => chain.id === this.options.chainId) ||
         this.chains[0]
-      const chainId = this.options.chainId || chain.id
-      const jsonRpcUrl = this.options.jsonRpcUrl || chain.rpcUrls.default
+      const chainId = this.options.chainId || chain?.id
+      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
 
       let CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
       // Workaround for Vite dev import errors
@@ -230,7 +230,7 @@ export class CoinbaseWalletConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(accounts[0]) })
+    else this.emit('change', { account: getAddress(<string>accounts[0]) })
   }
 
   protected onChainChanged = (chainId: number | string) => {

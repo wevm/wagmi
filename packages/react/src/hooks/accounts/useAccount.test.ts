@@ -22,7 +22,7 @@ describe('useAccount', () => {
   describe('mounts', () => {
     it('is connected', async () => {
       const client = setupClient()
-      await connect({ connector: client.connectors[0] })
+      await connect({ connector: client.connectors[0]! })
 
       const { result, waitFor } = renderHook(() => useAccount(), {
         initialProps: { client },

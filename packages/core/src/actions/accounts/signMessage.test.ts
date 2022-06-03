@@ -6,7 +6,7 @@ import { connect } from './connect'
 import { signMessage } from './signMessage'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 const messages = {

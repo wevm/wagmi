@@ -29,7 +29,7 @@ export class MockConnector extends Connector<
     this.emit('message', { type: 'connecting' })
 
     const accounts = await provider.enable()
-    const account = getAddress(accounts[0])
+    const account = getAddress(<string>accounts[0])
     const id = normalizeChainId(provider._network.chainId)
     const unsupported = this.isChainUnsupported(id)
     const data = { account, chain: { id, unsupported }, provider }
@@ -109,7 +109,7 @@ export class MockConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(accounts[0]) })
+    else this.emit('change', { account: getAddress(<string>accounts[0]) })
   }
 
   protected onChainChanged = (chainId: number | string) => {

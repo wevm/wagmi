@@ -3,7 +3,7 @@ import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 describe('connect', () => {
@@ -61,7 +61,7 @@ describe('connect', () => {
           connector: new MockConnector({
             options: {
               flags: { failConnect: true },
-              signer: getSigners()[0],
+              signer: getSigners()[0]!,
             },
           }),
         }),

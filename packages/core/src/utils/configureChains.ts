@@ -28,6 +28,7 @@ export function configureChains<
   providers: ChainProvider<TProvider, TWebSocketProvider, TChain>[],
   { minQuorum = 1, targetQuorum = 1, stallTimeout }: ConfigureChainsConfig = {},
 ) {
+  if (!defaultChains.length) throw new Error('must have at least one chain')
   if (targetQuorum < minQuorum)
     throw new Error('quorum cannot be lower than minQuorum')
 
@@ -81,31 +82,32 @@ export function configureChains<
   return {
     chains,
     provider: ({ chainId }: { chainId?: number }) => {
-      const chainProviders =
-        providers_[
-          chainId && chains.some((x) => x.id === chainId)
-            ? chainId
-            : defaultChains[0].id
-        ]
-      if (chainProviders.length === 1) return chainProviders[0]() as TProvider
+      const activeChainId =
+        chainId && chains.some((x) => x.id === chainId)
+          ? chainId
+          : <number>defaultChains[0]?.id
+      const chainProviders = providers_[activeChainId]
+
+      if (!chainProviders)
+        throw new Error(`No providers configured for chain "${activeChainId}"`)
+      if (chainProviders.length === 1) return <TProvider>chainProviders[0]?.()
       return fallbackProvider(targetQuorum, minQuorum, chainProviders, {
         stallTimeout,
       })
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
-      const chainWebSocketProviders =
-        webSocketProviders_[
-          chainId && chains.some((x) => x.id === chainId)
-            ? chainId
-            : defaultChains[0].id
-        ]
+      const activeChainId =
+        chainId && chains.some((x) => x.id === chainId)
+          ? chainId
+          : <number>defaultChains[0]?.id
+      const chainWebSocketProviders = webSocketProviders_[activeChainId]
 
       if (!chainWebSocketProviders) return undefined
       if (chainWebSocketProviders.length === 1)
-        return chainWebSocketProviders[0]()
+        return chainWebSocketProviders[0]?.()
       // WebSockets do not work with `fallbackProvider`
       // Default to first available
-      return chainWebSocketProviders[0]()
+      return chainWebSocketProviders[0]?.()
     },
   } as const
 }

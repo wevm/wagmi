@@ -25,7 +25,7 @@ describe('watchSigner', () => {
       counter += 1
     })
 
-    await connect({ connector: client.connectors[0] })
+    await connect({ connector: client.connectors[0]! })
     await disconnect()
     unsubscribe()
   })
@@ -56,7 +56,7 @@ describe('watchSigner', () => {
       counter += 1
     })
 
-    await connect({ connector: client.connectors[0] })
+    await connect({ connector: client.connectors[0]! })
     await switchNetwork({ chainId: 4 })
     unwatch()
   })
