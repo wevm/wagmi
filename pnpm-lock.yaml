@@ -299,7 +299,7 @@ importers:
 
   packages/core:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.1.0
+      '@coinbase/wallet-sdk': ^3.2.0
       '@walletconnect/ethereum-provider': ^1.7.8
       ethers: ^5.6.5
       eventemitter3: ^4.0.7
@@ -308,13 +308,13 @@ importers:
       eventemitter3: 4.0.7
       zustand: 4.0.0-rc.1
     devDependencies:
-      '@coinbase/wallet-sdk': 3.1.0
+      '@coinbase/wallet-sdk': 3.2.0
       '@walletconnect/ethereum-provider': 1.7.8
       ethers: 5.6.5
 
   packages/react:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.1.0
+      '@coinbase/wallet-sdk': ^3.2.0
       '@testing-library/react': ^13.2.0
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^18.0.9
@@ -330,7 +330,7 @@ importers:
       react-query: ^4.0.0-beta.19
       use-sync-external-store: ^1.1.0
     dependencies:
-      '@coinbase/wallet-sdk': 3.1.0
+      '@coinbase/wallet-sdk': 3.2.0
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.8
       react-query: 4.0.0-beta.19_ef5jwxihqo6n7gxfmzogljlgcm
@@ -3417,8 +3417,8 @@ packages:
       prettier: 1.19.1
     dev: true
 
-  /@coinbase/wallet-sdk/3.1.0:
-    resolution: {integrity: sha512-8IGfVklv/CMfCT4qd9KfL0IwlINsIgSlW1oQB/or8uSY9wAqoY8lIoQVpOyFx7YDK094Xfd9alhulZtRZNJBjw==}
+  /@coinbase/wallet-sdk/3.2.0:
+    resolution: {integrity: sha512-uw9rdsfzXsdmC9FblMt2UH4094vLl9h3i1za5A2MaC8Ak1X/E1QbGr1oi64QAx9HD+M75zmy506F+zT0/s5dpQ==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
@@ -5934,7 +5934,7 @@ packages:
   /@types/bn.js/4.11.6:
     resolution: {integrity: sha512-pqr857jrp2kPuO9uRjZ3PwnJTjoQy+fcdxvBTvHm6dkmEL9q+hDD/2j/0ELOBPtPnS8LjCX0gI9nbl8lVkadpg==}
     dependencies:
-      '@types/node': 17.0.33
+      '@types/node': 17.0.39
 
   /@types/bn.js/5.1.0:
     resolution: {integrity: sha512-QSSVYj7pYFN49kW77o2s9xTCwZ8F2xLbjLLSEVh8D2F4JUhZtPAGOFLTD+ffqksBx/u4cE/KImFjyhqCjn/LIA==}
@@ -6212,6 +6212,10 @@ packages:
 
   /@types/node/17.0.33:
     resolution: {integrity: sha512-miWq2m2FiQZmaHfdZNcbpp9PuXg34W5JZ5CrJ/BaS70VuhoJENBEQybeiYSaPBRNq6KQGnjfEnc/F3PN++D+XQ==}
+    dev: true
+
+  /@types/node/17.0.39:
+    resolution: {integrity: sha512-JDU3YLlnPK3WDao6/DlXLOgSNpG13ct+CwIO17V8q0/9fWJyeMJJ/VyZ1lv8kDprihvZMydzVwf0tQOqGiY2Nw==}
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
