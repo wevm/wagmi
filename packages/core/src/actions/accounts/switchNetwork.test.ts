@@ -1,9 +1,11 @@
 import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
+import { allChains } from '../../constants'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
 
 const connector = new MockConnector({
+  chains: allChains,
   options: { signer: getSigners()[0] },
 })
 

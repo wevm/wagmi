@@ -2,7 +2,6 @@ import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import { Chain } from '../types'
-import { allChains } from '../constants'
 import { getInjectedName, normalizeChainId } from '../utils'
 import {
   AddChainError,
@@ -186,9 +185,8 @@ export class InjectedConnector extends Connector<
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
-      const chains = [...this.chains, ...allChains]
       return (
-        chains.find((x) => x.id === chainId) ?? {
+        this.chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
