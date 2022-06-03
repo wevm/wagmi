@@ -27,15 +27,23 @@ describe('connect', () => {
 
   describe('behavior', () => {
     it('connects to unsupported chain', async () => {
-      const result = await connect({
-        connector: new MockConnector({
-          options: {
-            network: 69,
-            signer: getSigners()[0],
-          },
-        }),
-      })
-      expect(result.chain.unsupported).toBeTruthy()
+      const result = await connect({ chainId: 69, connector })
+      expect(result.chain).toMatchInlineSnapshot(`
+        {
+          "id": 69,
+          "unsupported": true,
+        }
+      `)
+    })
+
+    it('connects to supported chain', async () => {
+      const result = await connect({ chainId: 3, connector })
+      expect(result.chain).toMatchInlineSnapshot(`
+        {
+          "id": 3,
+          "unsupported": false,
+        }
+      `)
     })
 
     it('is already connected', async () => {

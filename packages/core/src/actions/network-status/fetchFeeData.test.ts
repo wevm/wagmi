@@ -39,7 +39,7 @@ describe('fetchFeeData', () => {
           "formatted",
         ]
       `)
-      expect(result.formatted.gasPrice.includes('.')).toBeTruthy()
+      expect(result.formatted.gasPrice?.includes('.')).toBeTruthy()
     })
   })
 })
