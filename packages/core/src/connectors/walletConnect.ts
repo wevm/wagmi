@@ -8,6 +8,7 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
+import { getClient } from '../client'
 import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
@@ -38,9 +39,19 @@ export class WalletConnectConnector extends Connector<
     super(config)
   }
 
-  async connect() {
+  async connect({ chainId }: { chainId?: number } = {}) {
     try {
-      const provider = await this.getProvider(true)
+      let targetChainId = chainId
+      if (!targetChainId) {
+        const lastUsedChainId = getClient().lastUsedChainId
+        if (lastUsedChainId && !this.isChainUnsupported(lastUsedChainId))
+          targetChainId = lastUsedChainId
+      }
+
+      const provider = await this.getProvider({
+        chainId: targetChainId,
+        create: true,
+      })
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -98,15 +109,14 @@ export class WalletConnectConnector extends Connector<
     return chainId
   }
 
-  async getProvider(create?: boolean) {
+  async getProvider({
+    chainId = this.options?.chainId || this.chains[0].id,
+    create = false,
+  } = {}) {
     if (!this.#provider || create) {
-      const chainId = this.options?.chainId || this.chains[0].id
       const rpc = !this.options?.infuraId
         ? this.chains.reduce(
-            (rpc, chain) => ({
-              ...rpc,
-              [chain.id]: chain.rpcUrls.default,
-            }),
+            (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
             {},
           )
         : {}

@@ -43,14 +43,28 @@ const connector = new MetaMaskConnector({
 })
 ```
 
+#### shimChainChangedDisconnect
+
+Certain versions of MetaMask [emit the `"disconnect"` event when chain is changed](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334). This flag prevents the `"disconnect"` event from being emitted upon switching chains. Defaults to `true`.
+
+```ts {5}
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+
+const connector = new MetaMaskConnector({
+  options: {
+    shimChainChangedDisconnect: false,
+  },
+})
+```
+
 #### shimDisconnect
 
 MetaMask [does not support programmatic disconnect](https://github.com/MetaMask/metamask-extension/issues/10353). This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
 
 ```ts {5}
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 
-const connector = new InjectedConnector({
+const connector = new MetaMaskConnector({
   options: {
     shimDisconnect: false,
   },

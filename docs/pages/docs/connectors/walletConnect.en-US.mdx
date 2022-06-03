@@ -36,6 +36,8 @@ const connector = new WalletConnectConnector({
 })
 ```
 
+Note: Upon connection, the connector will connect to the previously connected chain unless otherwise specified by a [`chainId` config on useConnect](/docs/hooks/useConnect#chainid-optional).
+
 ### options
 
 Options to pass to the [WalletConnect Ethereum Provider](https://walletconnect.com).

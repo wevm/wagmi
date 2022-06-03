@@ -45,11 +45,16 @@ export abstract class Connector<
     this.options = options
   }
 
-  abstract connect(): Promise<Required<ConnectorData>>
+  abstract connect(config?: {
+    chainId?: number
+  }): Promise<Required<ConnectorData>>
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
-  abstract getProvider(create?: boolean): Promise<Provider>
+  abstract getProvider(config?: {
+    chainId?: number
+    create?: boolean
+  }): Promise<Provider>
   abstract getSigner(): Promise<Signer>
   abstract isAuthorized(): Promise<boolean>
   switchChain?(chainId: number): Promise<Chain>
@@ -64,9 +69,13 @@ export abstract class Connector<
   protected abstract onDisconnect(error: Error): void
 
   protected getBlockExplorerUrls(chain: Chain) {
-    const blockExplorer = chain.blockExplorers?.default
-    if (Array.isArray(blockExplorer)) return blockExplorer.map((x) => x.url)
-    if (blockExplorer?.url) return [blockExplorer.url]
+    const { default: blockExplorer, ...blockExplorers } =
+      chain.blockExplorers ?? {}
+    if (blockExplorer)
+      return [
+        blockExplorer.url,
+        ...Object.values(blockExplorers).map((x) => x.url),
+      ]
     return []
   }
 

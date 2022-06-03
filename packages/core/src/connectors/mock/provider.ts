@@ -5,13 +5,13 @@ import { getAddress } from 'ethers/lib/utils'
 import { UserRejectedRequestError } from '../../errors'
 
 export type MockProviderOptions = {
+  chainId?: number
   flags?: {
     isAuthorized?: boolean
     failConnect?: boolean
     failSwitchChain?: boolean
     noSwitchChain?: boolean
   }
-  network?: number | string
   signer: Signer
 }
 
@@ -29,7 +29,7 @@ export class MockProvider extends providers.BaseProvider {
   #signer?: Signer
 
   constructor(options: MockProviderOptions) {
-    super(options.network ?? 1)
+    super({ name: 'Network', chainId: options.chainId ?? 1 })
     this.#options = options
   }
 
@@ -62,7 +62,7 @@ export class MockProvider extends providers.BaseProvider {
   async switchChain(chainId: number) {
     if (this.#options.flags?.failSwitchChain)
       throw new UserRejectedRequestError(new Error('Failed to switch chain'))
-    this.#options.network = chainId
+    this.#options.chainId = chainId
     this.network.chainId = chainId
     this.events.emit('chainChanged', chainId)
   }

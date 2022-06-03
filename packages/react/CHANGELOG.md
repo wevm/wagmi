@@ -1,5 +1,53 @@
 # wagmi
 
+## 0.4.7
+
+### Patch Changes
+
+- [#526](https://github.com/tmm/wagmi/pull/526) [`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f) Thanks [@jxom](https://github.com/jxom)! - Added `shimChainChangedDisconnect` option to `InjectedConnector`. Defaults to `true` for `MetaMaskConnector`.
+
+* [#526](https://github.com/tmm/wagmi/pull/526) [`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f) Thanks [@jxom](https://github.com/jxom)! - Added `chainId` config option to `useConnect()` & `connect()`. Consumers can now pick what chain they want their user to be connected to.
+
+  Examples:
+
+  ```tsx
+  import { useConnect, chain } from 'wagmi'
+  import { InjectedConnector } from 'wagmi/connectors/injected'
+
+  function App() {
+    const connect = useConnect({
+      chainId: chain.polygon.id,
+    })
+  }
+  ```
+
+  ```tsx
+  import { useConnect, chain } from 'wagmi'
+  import { InjectedConnector } from 'wagmi/connectors/injected'
+
+  function App() {
+    const connect = useConnect()
+
+    return (
+      <button onClick={() => connect({ chainId: chain.optimism.id })}>
+        Connect to Optimism
+      </button>
+    )
+  }
+  ```
+
+* Updated dependencies [[`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f), [`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f), [`e95c5f9`](https://github.com/tmm/wagmi/commit/e95c5f91859e57d079b962a72d06b93dce004d2f)]:
+  - @wagmi/core@0.3.6
+
+## 0.4.6
+
+### Patch Changes
+
+- [#543](https://github.com/tmm/wagmi/pull/543) [`4d489fd`](https://github.com/tmm/wagmi/commit/4d489fd630dd8c00440bdaf4d646de662c41ff52) Thanks [@tmm](https://github.com/tmm)! - fix fee data formatting for null values
+
+- Updated dependencies [[`4d489fd`](https://github.com/tmm/wagmi/commit/4d489fd630dd8c00440bdaf4d646de662c41ff52)]:
+  - @wagmi/core@0.3.5
+
 ## 0.4.5
 
 ### Patch Changes

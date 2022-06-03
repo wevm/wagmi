@@ -17,7 +17,6 @@ const infuraId = defaultInfuraId
 const avalancheChain: Chain = {
   blockExplorers: {
     default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
-    etherscan: { name: 'SnowTrace', url: 'https://snowtrace.io' },
   },
   id: 43_114,
   name: 'Avalanche',

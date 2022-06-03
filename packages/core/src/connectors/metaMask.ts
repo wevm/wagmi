@@ -3,7 +3,7 @@ import { InjectedConnector, InjectedConnectorOptions } from './injected'
 
 export type MetaMaskConnectorOptions = Pick<
   InjectedConnectorOptions,
-  'shimDisconnect'
+  'shimChainChangedDisconnect' | 'shimDisconnect'
 >
 
 export class MetaMaskConnector extends InjectedConnector {
@@ -15,18 +15,20 @@ export class MetaMaskConnector extends InjectedConnector {
 
   constructor({
     chains,
-    options,
+    options: options_,
   }: {
     chains?: Chain[]
     options?: MetaMaskConnectorOptions
   } = {}) {
+    const options = {
+      name: 'MetaMask',
+      shimDisconnect: true,
+      shimChainChangedDisconnect: true,
+      ...options_,
+    }
     super({
       chains,
-      options: {
-        name: 'MetaMask',
-        shimDisconnect: true,
-        ...options,
-      },
+      options,
     })
   }
 

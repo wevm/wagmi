@@ -211,9 +211,9 @@ describe('getNetwork', () => {
 
     it('unsupported chain', async () => {
       await connect({
+        chainId: 69,
         connector: new MockConnector({
           options: {
-            network: 69,
             signer: getSigners()[0],
           },
         }),
