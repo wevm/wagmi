@@ -35,6 +35,7 @@ describe('getNetwork', () => {
                 "url": "https://etherscan.io",
               },
             },
+            "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
             "id": 1,
             "name": "Ethereum",
             "nativeCurrency": {
@@ -62,6 +63,7 @@ describe('getNetwork', () => {
                   "url": "https://etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 1,
               "name": "Ethereum",
               "nativeCurrency": {
@@ -87,6 +89,7 @@ describe('getNetwork', () => {
                   "url": "https://ropsten.etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 3,
               "name": "Ropsten",
               "nativeCurrency": {
@@ -113,6 +116,7 @@ describe('getNetwork', () => {
                   "url": "https://rinkeby.etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 4,
               "name": "Rinkeby",
               "nativeCurrency": {
@@ -139,6 +143,7 @@ describe('getNetwork', () => {
                   "url": "https://goerli.etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 5,
               "name": "Goerli",
               "nativeCurrency": {
@@ -235,6 +240,7 @@ describe('getNetwork', () => {
                   "url": "https://etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 1,
               "name": "Ethereum",
               "nativeCurrency": {
@@ -260,6 +266,7 @@ describe('getNetwork', () => {
                   "url": "https://ropsten.etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 3,
               "name": "Ropsten",
               "nativeCurrency": {
@@ -286,6 +293,7 @@ describe('getNetwork', () => {
                   "url": "https://rinkeby.etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 4,
               "name": "Rinkeby",
               "nativeCurrency": {
@@ -312,6 +320,7 @@ describe('getNetwork', () => {
                   "url": "https://goerli.etherscan.io",
                 },
               },
+              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               "id": 5,
               "name": "Goerli",
               "nativeCurrency": {
