@@ -10,7 +10,7 @@ import { useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId, useQuery } from '../utils'
+import { parseContractResult, useChainId, useQuery } from '../utils'
 
 type UseContractReadArgs = Partial<ReadContractConfig> & {
   /** If set to `true`, the cache will depend on the block number */
@@ -127,7 +127,7 @@ export function useContractRead(
     watch,
   ])
 
-  return useQuery(queryKey_, queryFn, {
+  const contractReadQuery = useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
     staleTime,
@@ -136,4 +136,19 @@ export function useContractRead(
     onSettled,
     onSuccess,
   })
+
+  const data = React.useMemo(
+    () =>
+      parseContractResult({
+        contractInterface: contractConfig.contractInterface,
+        data: contractReadQuery.data,
+        functionName,
+      }),
+    [contractReadQuery.data],
+  )
+
+  return {
+    ...contractReadQuery,
+    data,
+  }
 }
