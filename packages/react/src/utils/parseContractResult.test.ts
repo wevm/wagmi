@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers'
 
 import { parseContractResult } from './parseContractResult'
 
-const contractInterface = [
+const gmContractInterface = [
   {
     inputs: [
       {
@@ -29,6 +29,16 @@ const contractInterface = [
   },
 ]
 
+const wagmigotchiContractConfig = [
+  {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'love',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+]
+
 describe('parseContractResult', () => {
   it('should parse the data to an ethers Result if there are no named keys', () => {
     const data = [
@@ -37,11 +47,22 @@ describe('parseContractResult', () => {
     ]
     expect(
       parseContractResult({
-        contractInterface,
+        contractInterface: gmContractInterface,
         data,
 
         functionName: 'gms',
       }),
     ).toEqual(Object.assign(data, { timestamp: data[0], sender: data[1] }))
+  })
+
+  it('should return the data if in sync with ethers Result', () => {
+    const data = [69]
+    expect(
+      parseContractResult({
+        contractInterface: wagmigotchiContractConfig,
+        data,
+        functionName: 'love',
+      }),
+    ).toEqual(data)
   })
 })
