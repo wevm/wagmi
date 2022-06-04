@@ -9,9 +9,9 @@ import {
 import { useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { parseContractResult } from '../../utils'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
-import { parseContractResult } from '../../utils'
 
 type UseContractReadArgs = Partial<ReadContractConfig> & {
   /** If set to `true`, the cache will depend on the block number */
