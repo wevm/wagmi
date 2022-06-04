@@ -82,6 +82,7 @@ export function useContractInfiniteReads<TPageParam = any>({
   onSettled,
   onSuccess,
   overrides,
+  select,
   staleTime,
   suspense,
 }: UseContractInfiniteReadsConfig<TPageParam>) {
@@ -97,6 +98,7 @@ export function useContractInfiniteReads<TPageParam = any>({
     enabled,
     keepPreviousData,
     getNextPageParam,
+    select,
     staleTime,
     suspense,
     onError,

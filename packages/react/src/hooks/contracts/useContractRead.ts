@@ -69,6 +69,7 @@ export function useContractRead({
   cacheOnBlock = false,
   cacheTime,
   enabled: enabled_ = true,
+  select,
   staleTime,
   suspense,
   watch,
@@ -147,6 +148,7 @@ export function useContractRead({
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
+    select,
     staleTime,
     suspense,
     onError,
