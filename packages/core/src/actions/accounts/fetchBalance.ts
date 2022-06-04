@@ -1,5 +1,5 @@
-import { BigNumber } from 'ethers/lib/ethers'
-import { formatUnits, isAddress } from 'ethers/lib/utils'
+import { BigNumber, logger } from 'ethers/lib/ethers'
+import { Logger, formatUnits, isAddress } from 'ethers/lib/utils'
 
 import { getClient } from '../../client'
 import { erc20ABI } from '../../constants'
@@ -43,9 +43,21 @@ export async function fetchBalance({
     }
 
     // Convert ENS name to address if required
-    const resolvedAddress = isAddress(addressOrName)
-      ? addressOrName
-      : await provider.resolveName(addressOrName)
+    let resolvedAddress: string
+    if (isAddress(addressOrName)) resolvedAddress = addressOrName
+    else {
+      const address = await provider.resolveName(addressOrName)
+      // Same error `provider.getBalance` throws for invalid ENS name
+      if (!address)
+        logger.throwError(
+          'ENS name not configured',
+          Logger.errors.UNSUPPORTED_OPERATION,
+          {
+            operation: `resolveName(${JSON.stringify(addressOrName)})`,
+          },
+        )
+      resolvedAddress = address
+    }
 
     const [value, decimals, symbol] = await readContracts<
       [BigNumber, number, string]
@@ -61,7 +73,7 @@ export async function fetchBalance({
     })
     return {
       decimals,
-      formatted: value ? formatUnits(value, unit) : null,
+      formatted: formatUnits(value, unit),
       symbol,
       unit,
       value,
