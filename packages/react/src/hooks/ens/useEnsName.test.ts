@@ -88,7 +88,7 @@ describe('useEnsName', () => {
       })
 
       it('does not have name', async () => {
-        const address = await getSigners()[0].getAddress()
+        const address = await getSigners()[0]?.getAddress()
         const { result, waitFor } = renderHook(() => useEnsName({ address }))
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())

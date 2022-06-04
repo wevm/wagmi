@@ -6,7 +6,7 @@ import { connect } from './connect'
 import { signTypedData } from './signTypedData'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 // All properties on a domain are optional

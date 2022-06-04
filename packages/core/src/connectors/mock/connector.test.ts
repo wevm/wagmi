@@ -8,7 +8,7 @@ describe('MockConnector', () => {
   let signer: Signer
   beforeEach(() => {
     const signers = getSigners()
-    signer = signers[0]
+    signer = signers[0]!
     connector = new MockConnector({
       options: { signer },
     })

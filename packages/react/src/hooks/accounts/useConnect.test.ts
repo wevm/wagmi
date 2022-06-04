@@ -6,13 +6,13 @@ import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 const connectorFail = new MockConnector({
   options: {
     flags: { failConnect: true },
-    signer: getSigners()[0],
+    signer: getSigners()[0]!,
   },
 })
 
@@ -29,7 +29,7 @@ describe('useConnect', () => {
   describe('mounts', () => {
     it('is connected', async () => {
       const client = setupClient()
-      await connect({ connector: client.connectors[0] })
+      await connect({ connector: client.connectors[0]! })
 
       const { result, waitFor } = renderHook(() => useConnect(), {
         initialProps: { client },
@@ -487,7 +487,7 @@ describe('useConnect', () => {
           chainId: 69,
           connector: new MockConnector({
             options: {
-              signer: getSigners()[0],
+              signer: getSigners()[0]!,
             },
           }),
         }),
@@ -509,7 +509,7 @@ describe('useConnect', () => {
           chainId: 3,
           connector: new MockConnector({
             options: {
-              signer: getSigners()[0],
+              signer: getSigners()[0]!,
             },
           }),
         }),
@@ -615,7 +615,7 @@ describe('useConnect', () => {
 
     it('status lifecycle', async () => {
       const client = setupClient({ autoConnect: true })
-      await connect({ connector: client.connectors[0] })
+      await connect({ connector: client.connectors[0]! })
 
       const { result, waitFor } = renderHook(() => useConnect(), {
         initialProps: { client },

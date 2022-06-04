@@ -37,7 +37,7 @@ describe('createClient', () => {
               new MockConnector({
                 options: {
                   flags: { isAuthorized: true },
-                  signer: getSigners()[0],
+                  signer: getSigners()[0]!,
                 },
               }),
             ],
@@ -71,7 +71,7 @@ describe('createClient', () => {
               new MockConnector({
                 options: {
                   flags: { isAuthorized: true },
-                  signer: getSigners()[0],
+                  signer: getSigners()[0]!,
                 },
               }),
             ],
@@ -110,7 +110,7 @@ describe('createClient', () => {
           connectors: [
             new MockConnector({
               options: {
-                signer: getSigners()[0],
+                signer: getSigners()[0]!,
               },
             }),
           ],

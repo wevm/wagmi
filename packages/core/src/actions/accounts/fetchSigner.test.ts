@@ -4,7 +4,7 @@ import { connect } from './connect'
 import { fetchSigner } from './fetchSigner'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 describe('fetchSigner', () => {

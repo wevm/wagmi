@@ -27,7 +27,8 @@ export function getInjectedName(ethereum?: Window['ethereum']) {
       nameSet.add(name)
     }
     const names = [...nameSet]
-    return names.length ? names : names[0]
+    if (names.length) return names
+    return names[0] ?? 'Injected'
   }
 
   return getName(ethereum) ?? 'Injected'
