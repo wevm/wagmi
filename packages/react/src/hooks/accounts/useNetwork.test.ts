@@ -30,7 +30,7 @@ describe('useNetwork', () => {
   describe('mounts', () => {
     it('is connected', async () => {
       const client = setupClient()
-      await connect({ connector: client.connectors[0] })
+      await connect({ connector: client.connectors[0]! })
 
       const { result, waitFor } = renderHook(() => useNetwork(), {
         initialProps: { client },
@@ -195,7 +195,7 @@ describe('useNetwork', () => {
         const connector = new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0],
+            signer: getSigners()[0]!,
           },
         })
         const utils = renderHook(() =>
@@ -327,7 +327,7 @@ describe('useNetwork', () => {
         const connector = new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0],
+            signer: getSigners()[0]!,
           },
         })
         const utils = renderHook(() =>
@@ -369,7 +369,7 @@ describe('useNetwork', () => {
       const connector = new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer: getSigners()[0],
+          signer: getSigners()[0]!,
         },
       })
       const utils = renderHook(() =>

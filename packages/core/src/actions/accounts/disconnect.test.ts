@@ -5,7 +5,7 @@ import { connect } from './connect'
 import { disconnect } from './disconnect'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 describe('disconnect', () => {

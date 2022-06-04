@@ -9,7 +9,7 @@ export function setupClient(config: Config = {}) {
     connectors: [
       new MockConnector({
         options: {
-          signer: getSigners()[0],
+          signer: getSigners()[0]!,
         },
       }),
     ],

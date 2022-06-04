@@ -4,7 +4,7 @@ import { connect } from './connect'
 import { getNetwork } from './getNetwork'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0] },
+  options: { signer: getSigners()[0]! },
 })
 
 describe('getNetwork', () => {
@@ -195,7 +195,7 @@ describe('getNetwork', () => {
         chainId: 69,
         connector: new MockConnector({
           options: {
-            signer: getSigners()[0],
+            signer: getSigners()[0]!,
           },
         }),
       })

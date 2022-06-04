@@ -14,11 +14,11 @@ describe('sendTransaction', () => {
 
   describe('args', () => {
     it('request', async () => {
-      await connect({ connector: client.connectors[0] })
+      await connect({ connector: client.connectors[0]! })
 
       const signers = getSigners()
       const to = signers[1]
-      const toAddress = await to.getAddress()
+      const toAddress = await to?.getAddress()
       const fromAddress = client.data?.account
 
       const result = await sendTransaction({
@@ -42,7 +42,7 @@ describe('sendTransaction', () => {
     })
 
     it('fails on insufficient balance', async () => {
-      await connect({ connector: client.connectors[0] })
+      await connect({ connector: client.connectors[0]! })
 
       try {
         await sendTransaction({

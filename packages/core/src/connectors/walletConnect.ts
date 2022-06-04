@@ -60,7 +60,7 @@ export class WalletConnectConnector extends Connector<
       setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
 
       const accounts = await provider.enable()
-      const account = getAddress(accounts[0])
+      const account = getAddress(<string>accounts[0])
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
 
@@ -100,7 +100,7 @@ export class WalletConnectConnector extends Connector<
     const provider = await this.getProvider()
     const accounts = provider.accounts
     // return checksum address
-    return getAddress(accounts[0])
+    return getAddress(<string>accounts[0])
   }
 
   async getChainId() {
@@ -110,7 +110,7 @@ export class WalletConnectConnector extends Connector<
   }
 
   async getProvider({
-    chainId = this.options?.chainId || this.chains[0].id,
+    chainId = this.options?.chainId || this.chains[0]?.id,
     create = false,
   } = {}) {
     if (!this.#provider || create) {
@@ -181,7 +181,7 @@ export class WalletConnectConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(accounts[0]) })
+    else this.emit('change', { account: getAddress(<string>accounts[0]) })
   }
 
   protected onChainChanged = (chainId: number | string) => {

@@ -11,9 +11,9 @@ describe('watchProvider', () => {
     const providers: GetProviderResult[] = []
     const unwatch = watchProvider({}, (provider) => providers.push(provider))
 
-    await connect({ connector: client.connectors[0] })
+    await connect({ connector: client.connectors[0]! })
     await disconnect()
-    await connect({ connector: client.connectors[0] })
+    await connect({ connector: client.connectors[0]! })
     unwatch()
 
     expect(providers).toMatchInlineSnapshot(`
