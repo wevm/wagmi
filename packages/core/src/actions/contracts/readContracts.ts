@@ -32,7 +32,7 @@ export async function readContracts<Data extends any[] = Result[]>({
     const contractsByChainId = contracts.reduce<{
       [chainId: number]: ReadContractsConfig['contracts']
     }>((contracts, contract) => {
-      const chainId = contract.chainId ?? provider.chains[0].id
+      const chainId = contract.chainId ?? provider.network.chainId
       return {
         ...contracts,
         [chainId]: [...(contracts[chainId] || []), contract],

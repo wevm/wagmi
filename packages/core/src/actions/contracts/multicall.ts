@@ -7,17 +7,19 @@ import { multicallInterface } from '../../constants'
 import { ReadContractConfig } from './readContract'
 import { ChainDoesNotSupportMulticallError } from '../../errors'
 
+type MulticallContract = {
+  addressOrName: ReadContractConfig['addressOrName']
+  args?: ReadContractConfig['args']
+  contractInterface: ReadContractConfig['contractInterface']
+  functionName: ReadContractConfig['functionName']
+}
+
 export type MulticallConfig = {
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Chain id to use for provider */
   chainId?: number
-  contracts: {
-    addressOrName: ReadContractConfig['addressOrName']
-    args?: ReadContractConfig['args']
-    contractInterface: ReadContractConfig['contractInterface']
-    functionName: ReadContractConfig['functionName']
-  }[]
+  contracts: MulticallContract[]
   /** Call overrides */
   overrides?: CallOverrides
 }
@@ -37,6 +39,8 @@ export async function multicall<Data extends any[] = Result[]>({
   const provider = getProvider({ chainId })
   const chain =
     provider.chains.find((chain) => chain.id === chainId) || provider.chains[0]
+  if (!chain) throw new Error(`No chain found with id "${chainId}"`)
+
   if (!chain?.multicall)
     throw new ChainDoesNotSupportMulticallError(
       `Chain "${chain.name}" does not support multicall.`,
@@ -84,7 +88,9 @@ export async function multicall<Data extends any[] = Result[]>({
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
     if (!success) return undefined
-    const { addressOrName, contractInterface, functionName } = contracts[i]
+    const { addressOrName, contractInterface, functionName } = <
+      MulticallContract
+    >contracts[i]
     const contract = getContract({
       addressOrName,
       contractInterface,
