@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.4.9
+
+### Patch Changes
+
+- [#555](https://github.com/tmm/wagmi/pull/555) [`8bf014d`](https://github.com/tmm/wagmi/commit/8bf014d8167e9f9feb1fd91488aab42dd51c92af) Thanks [@tmm](https://github.com/tmm)! - wire up `useEnsName` `chainId`
+
 ## 0.4.8
 
 ### Patch Changes
