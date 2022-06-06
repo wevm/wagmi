@@ -128,28 +128,19 @@ export function useContractRead(
     watch,
   ])
 
-  const contractReadQuery = useQuery(queryKey_, queryFn, {
+  return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
+    select: (data) =>
+      parseContractResult({
+        contractInterface: contractConfig.contractInterface,
+        data,
+        functionName,
+      }),
     staleTime,
     suspense,
     onError,
     onSettled,
     onSuccess,
   })
-
-  const data = React.useMemo(
-    () =>
-      parseContractResult({
-        contractInterface: contractConfig.contractInterface,
-        data: contractReadQuery.data,
-        functionName,
-      }),
-    [contractReadQuery.data],
-  )
-
-  return {
-    ...contractReadQuery,
-    data,
-  }
 }

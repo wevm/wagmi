@@ -7,7 +7,7 @@ export function parseContractResult({
   functionName,
 }: {
   contractInterface: ContractInterface
-  data: Result | undefined
+  data: Result
   functionName: string
 }) {
   if (data && Array.isArray(data) && Object.keys(data).length === data.length) {
