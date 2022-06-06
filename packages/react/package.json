@@ -91,7 +91,7 @@
     "@coinbase/wallet-sdk": "^3.2.0",
     "@wagmi/core": "^0.3.7",
     "@walletconnect/ethereum-provider": "^1.7.8",
-    "react-query": "^4.0.0-beta.19",
+    "react-query": "^4.0.0-beta.22",
     "use-sync-external-store": "^1.1.0"
   },
   "devDependencies": {

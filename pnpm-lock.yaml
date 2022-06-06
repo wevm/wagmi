@@ -127,7 +127,7 @@ importers:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       siwe: 1.1.6_ethers@5.6.5
-      wagmi: link:../packages/react
+      wagmi: 0.4.9_yyarstpzwf4qtidwcbhsprlobu
     devDependencies:
       '@next/bundle-analyzer': 12.1.6
       '@preconstruct/next': 4.0.0
@@ -160,7 +160,7 @@ importers:
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      wagmi: link:../../packages/react
+      wagmi: 0.4.9_yyarstpzwf4qtidwcbhsprlobu
     devDependencies:
       '@preconstruct/next': 4.0.0
       '@types/node': 17.0.31
@@ -199,7 +199,7 @@ importers:
       react-scripts: 5.0.1_oxzyc36t6ywqirvp35nas5bcte
       typescript: 4.6.4
       util: 0.12.4
-      wagmi: link:../../packages/react
+      wagmi: 0.4.9_yyarstpzwf4qtidwcbhsprlobu
       web-vitals: 2.1.4
 
   examples/next:
@@ -220,7 +220,7 @@ importers:
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      wagmi: link:../../packages/react
+      wagmi: 0.4.9_yyarstpzwf4qtidwcbhsprlobu
     devDependencies:
       '@types/node': 17.0.31
       '@types/react': 18.0.9
@@ -259,7 +259,7 @@ importers:
       react-dom: 18.1.0_react@18.1.0
       remix: 1.4.3
       safe-event-emitter: 1.0.1
-      wagmi: link:../../packages/react
+      wagmi: 0.4.9_yyarstpzwf4qtidwcbhsprlobu
     devDependencies:
       '@remix-run/dev': 1.4.3_ef5jwxihqo6n7gxfmzogljlgcm
       '@types/react': 18.0.9
@@ -289,7 +289,7 @@ importers:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       util: 0.12.4
-      wagmi: link:../../packages/react
+      wagmi: 0.4.9_yyarstpzwf4qtidwcbhsprlobu
     devDependencies:
       '@types/react': 18.0.9
       '@types/react-dom': 18.0.3
@@ -327,13 +327,13 @@ importers:
       react-17: npm:react@^17.0.2
       react-dom: ^18.1.0
       react-dom-17: npm:react-dom@^17.0.2
-      react-query: ^4.0.0-beta.19
+      react-query: ^4.0.0-beta.22
       use-sync-external-store: ^1.1.0
     dependencies:
       '@coinbase/wallet-sdk': 3.2.0
-      '@wagmi/core': link:../core
+      '@wagmi/core': 0.3.7_dou5rdujf7xqxc6srkylcprxuu
       '@walletconnect/ethereum-provider': 1.7.8
-      react-query: 4.0.0-beta.19_ef5jwxihqo6n7gxfmzogljlgcm
+      react-query: 4.0.0-beta.23_ef5jwxihqo6n7gxfmzogljlgcm
       use-sync-external-store: 1.1.0_react@18.1.0
     devDependencies:
       '@testing-library/react': 13.2.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -5149,6 +5149,7 @@ packages:
       xdm: 2.1.0
     transitivePeerDependencies:
       - '@babel/preset-env'
+      - bluebird
       - bufferutil
       - encoding
       - react
@@ -6788,6 +6789,28 @@ packages:
       - supports-color
     dev: true
 
+  /@wagmi/core/0.3.7_dou5rdujf7xqxc6srkylcprxuu:
+    resolution: {integrity: sha512-RJAaypcQK0OA/ezpgNz4Smk4rUUMf9IXapLR2PtDLUWjJxI2Xw5l+Pq4t6xOvJt6fNO1GKM0iRjUaUN37py0+w==}
+    peerDependencies:
+      '@coinbase/wallet-sdk': '>=3.2.0'
+      '@walletconnect/ethereum-provider': '>=1.7.5'
+      ethers: '>=5.5.1'
+    peerDependenciesMeta:
+      '@coinbase/wallet-sdk':
+        optional: true
+      '@walletconnect/ethereum-provider':
+        optional: true
+    dependencies:
+      '@coinbase/wallet-sdk': 3.2.0
+      '@walletconnect/ethereum-provider': 1.7.8
+      ethers: 5.6.5
+      eventemitter3: 4.0.7
+      zustand: 4.0.0-rc.1_react@18.1.0
+    transitivePeerDependencies:
+      - immer
+      - react
+    dev: false
+
   /@walletconnect/browser-utils/1.7.8:
     resolution: {integrity: sha512-iCL0XCWOZaABIc0lqA79Vyaybr3z26nt8mxiwvfrG8oaKUf5Y21Of4dj+wIXQ4Hhblre6SgDlU0Ffb39+1THOw==}
     dependencies:
@@ -8083,6 +8106,8 @@ packages:
       snapdragon-node: 2.1.1
       split-string: 3.1.0
       to-regex: 3.0.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /braces/3.0.2:
@@ -8278,6 +8303,8 @@ packages:
       ssri: 8.0.1
       tar: 6.1.11
       unique-filename: 1.1.1
+    transitivePeerDependencies:
+      - bluebird
     dev: true
 
   /cache-base/1.0.1:
@@ -11455,6 +11482,8 @@ packages:
       regex-not: 1.0.2
       snapdragon: 0.8.2
       to-regex: 3.0.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /expect/27.5.1:
@@ -11557,6 +11586,8 @@ packages:
       regex-not: 1.0.2
       snapdragon: 0.8.2
       to-regex: 3.0.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /fast-deep-equal/2.0.1:
@@ -15694,6 +15725,8 @@ packages:
       regex-not: 1.0.2
       snapdragon: 0.8.2
       to-regex: 3.0.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /micromatch/4.0.4:
@@ -16019,6 +16052,8 @@ packages:
       regex-not: 1.0.2
       snapdragon: 0.8.2
       to-regex: 3.0.2
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /natural-compare/1.4.0:
@@ -17660,6 +17695,11 @@ packages:
 
   /promise-inflight/1.0.1:
     resolution: {integrity: sha1-mEcocL8igTL8vdhoEputEsPAKeM=}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
     dev: true
 
   /promise/8.1.0:
@@ -17911,6 +17951,27 @@ packages:
 
   /react-query/4.0.0-beta.19_ef5jwxihqo6n7gxfmzogljlgcm:
     resolution: {integrity: sha512-0QR8coF2WFih9p7s25h+QM9HDhlyr6Q1Pj8dWe0j1qjxku3egt0v7W9XqHiovZlIYlwyChOBeQ/3wQqWdUfUWg==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.17.9
+      '@types/use-sync-external-store': 0.0.3
+      broadcast-channel: 3.7.0
+      match-sorter: 6.3.1
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+      use-sync-external-store: 1.1.0_react@18.1.0
+    dev: false
+
+  /react-query/4.0.0-beta.23_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-e6mNBVAYGy0M1OwX0mhRB/lCkOedKeqTUrbPjNCqvm8hQGUsJJobqfHVvTv8o6JJaOO2MFcxKF4vZM+PEKbHZA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: '*'
@@ -19033,6 +19094,8 @@ packages:
       source-map: 0.5.7
       source-map-resolve: 0.5.3
       use: 3.1.1
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /sockjs/0.3.24:
@@ -20536,6 +20599,31 @@ packages:
       xml-name-validator: 4.0.0
     dev: true
 
+  /wagmi/0.4.9_yyarstpzwf4qtidwcbhsprlobu:
+    resolution: {integrity: sha512-jXBKSzxGRXTgrK9kGRPNziRWmPu1QRz5FbANyeeUcEeZ0agAZnObkMJSIJJxrajjO6vldscMaVtrAC9bODArPQ==}
+    peerDependencies:
+      ethers: '>=5.5.1'
+      react: '>=17.0.0'
+    dependencies:
+      '@coinbase/wallet-sdk': 3.2.0
+      '@wagmi/core': 0.3.7_dou5rdujf7xqxc6srkylcprxuu
+      '@walletconnect/ethereum-provider': 1.7.8
+      ethers: 5.6.5
+      react: 18.1.0
+      react-query: 4.0.0-beta.19_ef5jwxihqo6n7gxfmzogljlgcm
+      use-sync-external-store: 1.1.0_react@18.1.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - react-dom
+      - react-native
+      - supports-color
+      - utf-8-validate
+    dev: false
+
   /wait-on/6.0.0_debug@4.3.2:
     resolution: {integrity: sha512-tnUJr9p5r+bEYXPUdRseolmz5XqJTTj98JgOsfBn7Oz2dxfE2g3zw1jE+Mo8lopM3j3et/Mq1yW7kKX6qw7RVw==}
     engines: {node: '>=10.0.0'}
@@ -21358,6 +21446,22 @@ packages:
         optional: true
     dependencies:
       use-sync-external-store: 1.1.0
+    dev: false
+
+  /zustand/4.0.0-rc.1_react@18.1.0:
+    resolution: {integrity: sha512-qgcs7zLqBdHu0PuT3GW4WCIY5SgXdsv30GQMu9Qpp1BA2aS+sNS8l4x0hWuyEhjXkN+701aGWawhKDv6oWJAcw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.1.0
+      use-sync-external-store: 1.1.0_react@18.1.0
     dev: false
 
   /zwitch/2.0.2:
