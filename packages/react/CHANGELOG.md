@@ -1,5 +1,13 @@
 # wagmi
 
+## 0.4.10
+
+### Patch Changes
+
+- [`20a1ab7`](https://github.com/tmm/wagmi/commit/20a1ab7bd02a24c4f1ea02be1bc3ecfbe4abc584) Thanks [@jxom](https://github.com/jxom)! - Updated to `react-query@4.0.0-beta.23`
+
+* [`20a1ab7`](https://github.com/tmm/wagmi/commit/20a1ab7bd02a24c4f1ea02be1bc3ecfbe4abc584) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue in `useContractRead` where contract structs wouldn't be parsed back to an ethers `Result` correctly.
+
 ## 0.4.9
 
 ### Patch Changes
