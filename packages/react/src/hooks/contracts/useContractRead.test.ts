@@ -1,48 +1,10 @@
-import { act, renderHook } from '../../../test'
+import {
+  act,
+  mlootContractConfig,
+  renderHook,
+  wagmigotchiContractConfig,
+} from '../../../test'
 import { useContractRead } from './useContractRead'
-
-const wagmigotchiContractConfig = {
-  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  contractInterface: [
-    {
-      inputs: [{ internalType: 'address', name: '', type: 'address' }],
-      name: 'love',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  ],
-}
-
-const mlootContractConfig = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: [
-    {
-      inputs: [
-        {
-          internalType: 'address',
-          name: 'owner',
-          type: 'address',
-        },
-        {
-          internalType: 'uint256',
-          name: 'index',
-          type: 'uint256',
-        },
-      ],
-      name: 'tokenOfOwnerByIndex',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  ],
-}
 
 describe('useContractRead', () => {
   it('mounts', async () => {

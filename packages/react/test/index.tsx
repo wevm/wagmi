@@ -79,4 +79,6 @@ export {
   getProvider,
   getWebSocketProvider,
   getSigners,
-} from '../../core/test/utils'
+  wagmigotchiContractConfig,
+  mlootContractConfig,
+} from '../../core/test'
