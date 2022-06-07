@@ -31,6 +31,7 @@ export const chainId = {
   arbitrumRinkeby: 421_611,
   localhost: 1_337,
   hardhat: 31_337,
+  foundry: 31337
 } as const
 
 export const chain: Record<ChainName, Chain> = {
@@ -225,6 +226,13 @@ export const chain: Record<ChainName, Chain> = {
   hardhat: {
     id: chainId.hardhat,
     name: 'Hardhat',
+    rpcUrls: {
+      default: 'http://127.0.0.1:8545',
+    },
+  },
+  foundry: {
+    id: chainId.foundry,
+    name: 'Foundry',
     rpcUrls: {
       default: 'http://127.0.0.1:8545',
     },
