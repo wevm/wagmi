@@ -52,7 +52,7 @@ export function useContractReads({
   onSettled,
   onSuccess,
   overrides,
-  select = (data) => data,
+  select,
   staleTime,
   suspense,
   watch,
@@ -93,20 +93,20 @@ export function useContractReads({
     enabled,
     keepPreviousData,
     staleTime,
-    select: (data) =>
-      select(
-        data.map((data, i) =>
-          contracts[i]
-            ? parseContractResult({
-                contractInterface: (<typeof contracts[number]>contracts[i])
-                  ?.contractInterface,
-                functionName: (<typeof contracts[number]>contracts[i])
-                  ?.functionName,
-                data,
-              })
-            : data,
-        ),
-      ),
+    select: (data) => {
+      const result = data.map((data, i) =>
+        contracts[i]
+          ? parseContractResult({
+              contractInterface: (<typeof contracts[number]>contracts[i])
+                ?.contractInterface,
+              functionName: (<typeof contracts[number]>contracts[i])
+                ?.functionName,
+              data,
+            })
+          : data,
+      )
+      return select ? select(result) : result
+    },
     suspense,
     onError,
     onSettled,

@@ -20,7 +20,7 @@ export type FetchBalanceArgs = {
 
 export type FetchBalanceResult = {
   decimals: number
-  formatted: string | null
+  formatted: string
   symbol: string
   unit: Unit | number
   value: BigNumber

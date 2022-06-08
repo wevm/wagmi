@@ -70,7 +70,7 @@ export function useContractRead({
   cacheOnBlock = false,
   cacheTime,
   enabled: enabled_ = true,
-  select = (data) => data,
+  select,
   staleTime,
   suspense,
   watch,
@@ -149,14 +149,14 @@ export function useContractRead({
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
-    select: (data) =>
-      select(
-        parseContractResult({
-          contractInterface,
-          data,
-          functionName,
-        }),
-      ),
+    select: (data) => {
+      const result = parseContractResult({
+        contractInterface,
+        data,
+        functionName,
+      })
+      return select ? select(result) : result
+    },
     staleTime,
     suspense,
     onError,
