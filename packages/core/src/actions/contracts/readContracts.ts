@@ -7,16 +7,18 @@ import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { ReadContractConfig, readContract } from './readContract'
 
+export type ReadContractsContract = {
+  addressOrName: ReadContractConfig['addressOrName']
+  args?: ReadContractConfig['args']
+  chainId?: ReadContractConfig['chainId']
+  contractInterface: ReadContractConfig['contractInterface']
+  functionName: ReadContractConfig['functionName']
+}
+
 export type ReadContractsConfig = {
   /** Failures will fail silently */
   allowFailure?: boolean
-  contracts: {
-    addressOrName: ReadContractConfig['addressOrName']
-    args?: ReadContractConfig['args']
-    chainId?: ReadContractConfig['chainId']
-    contractInterface: ReadContractConfig['contractInterface']
-    functionName: ReadContractConfig['functionName']
-  }[]
+  contracts: ReadContractsContract[]
   /** Call overrides */
   overrides?: CallOverrides
 }

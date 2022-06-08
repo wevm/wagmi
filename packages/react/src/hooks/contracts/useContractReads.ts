@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {
-  ReadContractResult,
   ReadContractsConfig,
+  ReadContractsResult,
   readContracts,
   watchReadContracts,
 } from '@wagmi/core'
@@ -10,8 +10,9 @@ import { useQueryClient } from 'react-query'
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useQuery } from '../utils'
+import { parseContractResult } from '../../utils'
 
-export type UseContractReadsConfig = QueryConfig<ReadContractResult, Error> &
+export type UseContractReadsConfig = QueryConfig<ReadContractsResult, Error> &
   ReadContractsConfig & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
@@ -51,7 +52,7 @@ export function useContractReads({
   onSettled,
   onSuccess,
   overrides,
-  select,
+  select = (data) => data,
   staleTime,
   suspense,
   watch,
@@ -92,7 +93,20 @@ export function useContractReads({
     enabled,
     keepPreviousData,
     staleTime,
-    select,
+    select: (data) =>
+      select(
+        data.map((data, i) =>
+          contracts[i]
+            ? parseContractResult({
+                contractInterface: (<typeof contracts[number]>contracts[i])
+                  ?.contractInterface,
+                functionName: (<typeof contracts[number]>contracts[i])
+                  ?.functionName,
+                data,
+              })
+            : data,
+        ),
+      ),
     suspense,
     onError,
     onSettled,
