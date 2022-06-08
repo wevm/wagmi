@@ -8,6 +8,7 @@ import {
 import { useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { parseContractResult } from '../../utils'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 
@@ -69,7 +70,7 @@ export function useContractRead({
   cacheOnBlock = false,
   cacheTime,
   enabled: enabled_ = true,
-  select,
+  select = (data) => data,
   staleTime,
   suspense,
   watch,
@@ -148,7 +149,14 @@ export function useContractRead({
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
-    select,
+    select: (data) =>
+      select(
+        parseContractResult({
+          contractInterface,
+          data,
+          functionName,
+        }),
+      ),
     staleTime,
     suspense,
     onError,

@@ -16,10 +16,10 @@ export const queryKey = ({
 }) => [{ entity: 'ensName', address, chainId }] as const
 
 const queryFn = ({
-  queryKey: [{ address }],
+  queryKey: [{ address, chainId }],
 }: QueryFunctionArgs<typeof queryKey>) => {
   if (!address) throw new Error('address is required')
-  return fetchEnsName({ address })
+  return fetchEnsName({ address, chainId })
 }
 
 export function useEnsName({
