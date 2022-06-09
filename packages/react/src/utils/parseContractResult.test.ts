@@ -42,7 +42,7 @@ describe('parseContractResult', () => {
         data,
         functionName: 'gms',
       })
-      expect(result).toEqual(data)
+      expect(JSON.stringify(result)).toEqual(JSON.stringify(data))
       expect(Object.keys(result).length !== data.length).toBeTruthy()
       expect(result.timestamp).toEqual(data[0])
       expect(result.sender).toEqual(data[1])
@@ -148,9 +148,6 @@ describe('parseContractResult', () => {
         functionName: 'addresses',
       })
       expect(result).toEqual(data)
-      expect(Object.keys(result).length !== data.length).toBeTruthy()
-      expect(result.addresses[0]).toEqual(data[0])
-      expect(result.addresses[1]).toEqual(data[1])
     })
   })
 
@@ -232,7 +229,7 @@ describe('parseContractResult', () => {
         ],
         [
           BigNumber.from(1654322662),
-          '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+          '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
         ],
       ]
       const result = parseContractResult({
@@ -242,11 +239,11 @@ describe('parseContractResult', () => {
       })
 
       expect(Object.keys(result).length === data.length).toBeTruthy()
-      expect(result[0]).toEqual(data[0])
+      expect(JSON.stringify(result[0])).toEqual(JSON.stringify(data[0]))
       expect(Object.keys(result[0]).length !== data[0]?.length).toBeTruthy()
       expect(result[0].timestamp).toEqual(data?.[0]?.[0])
       expect(result[0].sender).toEqual(data?.[0]?.[1])
-      expect(result[1]).toEqual(data[1])
+      expect(JSON.stringify(result[1])).toEqual(JSON.stringify(data[1]))
       expect(Object.keys(result[1]).length !== data[1]?.length).toBeTruthy()
       expect(result[1].timestamp).toEqual(data[1]?.[0])
       expect(result[1].sender).toEqual(data[1]?.[1])
@@ -267,11 +264,11 @@ describe('parseContractResult', () => {
         Object.assign(
           [
             BigNumber.from(1654322662),
-            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+            '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
           ],
           {
             timestamp: BigNumber.from(1654322662),
-            sender: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+            sender: '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
           },
         ),
       ]
@@ -282,7 +279,7 @@ describe('parseContractResult', () => {
       })
 
       expect(Object.keys(result).length === data.length).toBeTruthy()
-      expect(result[0]).toEqual(data[0])
+      expect(JSON.stringify(result[0])).toEqual(JSON.stringify(data[0]))
       expect(Object.keys(result[0]).length !== data[0]?.length).toBeTruthy()
       expect(result[0].timestamp).toEqual(data?.[0]?.timestamp)
       expect(result[0].sender).toEqual(data?.[0]?.sender)
@@ -351,7 +348,7 @@ describe('parseContractResult', () => {
           BigNumber.from(1654322661),
           [
             '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+            '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
           ],
           [
             [
@@ -368,7 +365,7 @@ describe('parseContractResult', () => {
           BigNumber.from(1654322662),
           [
             '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+            '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
           ],
           [
             [
@@ -389,20 +386,28 @@ describe('parseContractResult', () => {
       })
 
       expect(Object.keys(result).length === data.length).toBeTruthy()
-      expect(result[0]).toEqual(data[0])
+      expect(JSON.stringify(result[0])).toEqual(JSON.stringify(data[0]))
       expect(Object.keys(result[0]).length !== data[0]?.length).toBeTruthy()
       expect(result[0].timestamp).toEqual(data?.[0]?.[0])
       expect(result[0].senders).toEqual(data?.[0]?.[1])
-      expect(result[0].gms).toEqual(data?.[0]?.[2])
-      expect(result[0].gms[0]).toEqual(data?.[0]?.[2]?.[0])
+      expect(JSON.stringify(result[0].gms)).toEqual(
+        JSON.stringify(data?.[0]?.[2]),
+      )
+      expect(JSON.stringify(result[0].gms[0])).toEqual(
+        JSON.stringify(data?.[0]?.[2]?.[0]),
+      )
       expect(result[0].gms[0].timestamp).toEqual(data?.[0]?.[2]?.[0]?.[0])
       expect(result[0].gms[0].sender).toEqual(data?.[0]?.[2]?.[0]?.[1])
-      expect(result[1]).toEqual(data[1])
+      expect(JSON.stringify(result[1])).toEqual(JSON.stringify(data[1]))
       expect(Object.keys(result[1]).length !== data[1]?.length).toBeTruthy()
       expect(result[1].timestamp).toEqual(data[1]?.[0])
       expect(result[1].senders).toEqual(data[1]?.[1])
-      expect(result[1].gms).toEqual(data?.[1]?.[2])
-      expect(result[1].gms[0]).toEqual(data?.[1]?.[2]?.[0])
+      expect(JSON.stringify(result[1].gms)).toEqual(
+        JSON.stringify(data?.[1]?.[2]),
+      )
+      expect(JSON.stringify(result[1].gms[0])).toEqual(
+        JSON.stringify(data?.[1]?.[2]?.[0]),
+      )
       expect(result[1].gms[0].timestamp).toEqual(data?.[1]?.[2]?.[0]?.[0])
       expect(result[1].gms[0].sender).toEqual(data?.[1]?.[2]?.[0]?.[1])
     })
@@ -412,7 +417,10 @@ describe('parseContractResult', () => {
         Object.assign(
           [
             BigNumber.from(1654322661),
-            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+            [
+              '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
+            ],
             [
               [
                 BigNumber.from(1654322661),
@@ -426,7 +434,10 @@ describe('parseContractResult', () => {
           ],
           {
             timestamp: BigNumber.from(1654322661),
-            sender: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+            senders: [
+              '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
+            ],
             gms: [
               Object.assign(
                 [
@@ -454,7 +465,10 @@ describe('parseContractResult', () => {
         Object.assign(
           [
             BigNumber.from(1654322662),
-            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+            [
+              '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
+            ],
             [
               [
                 BigNumber.from(1654322661),
@@ -468,7 +482,10 @@ describe('parseContractResult', () => {
           ],
           {
             timestamp: BigNumber.from(1654322662),
-            sender: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+            senders: [
+              '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
+            ],
             gms: [
               Object.assign(
                 [
@@ -501,13 +518,13 @@ describe('parseContractResult', () => {
       })
 
       expect(Object.keys(result).length === data.length).toBeTruthy()
-      expect(result[0]).toEqual(data[0])
+      expect(JSON.stringify(result[0])).toEqual(JSON.stringify(data[0]))
       expect(Object.keys(result[0]).length !== data[0]?.length).toBeTruthy()
       expect(result[0].timestamp).toEqual(data?.[0]?.timestamp)
       expect(result[0].sender).toEqual(data?.[0]?.sender)
       expect(result[0].gms[0].timestamp).toEqual(data[0].gms[0].timestamp)
       expect(result[0].gms[0].sender).toEqual(data[0].gms[0].sender)
-      expect(result[1]).toEqual(data[1])
+      expect(JSON.stringify(result[1])).toEqual(JSON.stringify(data[1]))
       expect(Object.keys(result[1]).length !== data[1]?.length).toBeTruthy()
       expect(result[1].timestamp).toEqual(data[1]?.timestamp)
       expect(result[1].sender).toEqual(data[1]?.sender)
