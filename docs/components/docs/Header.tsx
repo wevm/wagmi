@@ -1,4 +1,6 @@
 import { useRouter } from 'next/router'
+// eslint-disable-next-line import/no-unresolved
+import Callout from 'nextra-theme-docs/callout'
 
 import { LogoType } from '../core'
 
@@ -6,13 +8,35 @@ const TITLE_WITH_TRANSLATIONS: Record<string, string> = {
   'en-US': 'React Hooks for Ethereum',
 }
 
-export function Header() {
+type Props = {
+  showGitcoinBanner?: boolean
+}
+
+export function Header({ showGitcoinBanner }: Props) {
   const { locale, defaultLocale = 'en-US' } = useRouter()
   const resolvedLocale = locale || defaultLocale
   const title = TITLE_WITH_TRANSLATIONS[resolvedLocale]
 
   return (
     <header className="mb-10 flex flex-col items-center">
+      {showGitcoinBanner && (
+        <div className="mb-4">
+          <Callout emoji="🚀">
+            wagmi is participating in Gitcoin Grant Round 14 until June 23.
+            Please consider supporting development. Funds will be matched with
+            Quadratic Funding. Go{' '}
+            <a
+              target="_blank"
+              href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+              rel="noopener noreferrer"
+            >
+              here
+            </a>{' '}
+            to contribute :)
+          </Callout>
+        </div>
+      )}
+
       <div className="mt-8 w-auto h-12 md:h-14">
         <h1 className="sr-only">wagmi</h1>
         <LogoType />
