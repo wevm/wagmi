@@ -3,138 +3,35 @@ import { Result } from 'ethers/lib/utils'
 
 import { parseContractResult } from './parseContractResult'
 
-const contractInterface = [
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'gms',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'timestamp',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'withoutNames',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'simpleTuples',
-    outputs: [
-      {
-        components: [
-          {
-            internalType: 'uint256',
-            name: 'timestamp',
-            type: 'uint256',
-          },
-          {
-            internalType: 'address',
-            name: 'sender',
-            type: 'address',
-          },
-        ],
-        internalType: 'struct Gms[]',
-        name: '',
-        type: 'tuple[]',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'complexTuples',
-    outputs: [
-      {
-        components: [
-          {
-            internalType: 'uint256',
-            name: 'timestamp',
-            type: 'uint256',
-          },
-          {
-            internalType: 'address',
-            name: 'sender',
-            type: 'address',
-          },
-          {
-            components: [
-              {
-                internalType: 'uint256',
-                name: 'timestamp',
-                type: 'uint256',
-              },
-              {
-                internalType: 'address',
-                name: 'sender',
-                type: 'address',
-              },
-            ],
-            internalType: 'struct Gms[]',
-            name: 'gms',
-            type: 'tuple[]',
-          },
-        ],
-        internalType: 'struct Gms[]',
-        name: '',
-        type: 'tuple[]',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-]
-
 describe('parseContractResult', () => {
-  describe('gms', () => {
+  describe('struct', () => {
+    const contractInterface = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'gms',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: 'timestamp',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: 'sender',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+
     it('should parse the data to an ethers Result if there are no named keys', () => {
       const data = [
         BigNumber.from(1654322661),
@@ -174,7 +71,159 @@ describe('parseContractResult', () => {
     })
   })
 
-  describe('simpleTuples', () => {
+  describe('struct with no named attributes', () => {
+    const contractInterface = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'withoutNames',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+          {
+            internalType: 'address',
+            name: '',
+            type: 'address',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+
+    it('should parse the data to an ethers Result', () => {
+      const data = [
+        BigNumber.from(1654322661),
+        '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+      ]
+      const result = parseContractResult({
+        contractInterface,
+        data,
+        functionName: 'withoutNames',
+      })
+      expect(result).toEqual(data)
+      expect(Object.keys(result).length === data.length).toBeTruthy()
+    })
+  })
+
+  describe('array', () => {
+    const contractInterface = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'addresses',
+        outputs: [
+          {
+            internalType: 'address[]',
+            name: 'addresses',
+            type: 'address[]',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+
+    it('should parse the data to an ethers Result', () => {
+      const data = [
+        '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+        '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      ]
+      const result = parseContractResult({
+        contractInterface,
+        data,
+        functionName: 'addresses',
+      })
+      expect(result).toEqual(data)
+      expect(Object.keys(result).length !== data.length).toBeTruthy()
+      expect(result.addresses[0]).toEqual(data[0])
+      expect(result.addresses[1]).toEqual(data[1])
+    })
+  })
+
+  describe('array with no named attributes', () => {
+    const contractInterface = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'indexes',
+        outputs: [
+          {
+            internalType: 'uint256[]',
+            name: '',
+            type: 'uint256[]',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+
+    it('should parse the data to an ethers Result', () => {
+      const data = [BigNumber.from(1), BigNumber.from(2), BigNumber.from(3)]
+      const result = parseContractResult({
+        contractInterface,
+        data,
+        functionName: 'indexes',
+      })
+      expect(result).toEqual(data)
+      expect(Object.keys(result).length === data.length).toBeTruthy()
+    })
+  })
+
+  describe('array of simple tuples', () => {
+    const contractInterface = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'simpleTuples',
+        outputs: [
+          {
+            components: [
+              {
+                internalType: 'uint256',
+                name: 'timestamp',
+                type: 'uint256',
+              },
+              {
+                internalType: 'address',
+                name: 'sender',
+                type: 'address',
+              },
+            ],
+            internalType: 'struct Gms[]',
+            name: '',
+            type: 'tuple[]',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+
     it('should parse the data to an ethers Result if there are no named keys', () => {
       const data: [BigNumber, string][] = [
         [
@@ -229,7 +278,7 @@ describe('parseContractResult', () => {
       const result = parseContractResult({
         contractInterface,
         data,
-        functionName: 'complexTuples',
+        functionName: 'simpleTuples',
       })
 
       expect(Object.keys(result).length === data.length).toBeTruthy()
@@ -244,12 +293,66 @@ describe('parseContractResult', () => {
     })
   })
 
-  describe('complexTuples', () => {
+  describe('array of complex tuples', () => {
+    const contractInterface = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'complexTuples',
+        outputs: [
+          {
+            components: [
+              {
+                internalType: 'uint256',
+                name: 'timestamp',
+                type: 'uint256',
+              },
+              {
+                internalType: 'address[]',
+                name: 'senders',
+                type: 'address[]',
+              },
+              {
+                components: [
+                  {
+                    internalType: 'uint256',
+                    name: 'timestamp',
+                    type: 'uint256',
+                  },
+                  {
+                    internalType: 'address',
+                    name: 'sender',
+                    type: 'address',
+                  },
+                ],
+                internalType: 'struct Gms[]',
+                name: 'gms',
+                type: 'tuple[]',
+              },
+            ],
+            internalType: 'struct Gms[]',
+            name: '',
+            type: 'tuple[]',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+
     it('should parse the data to an ethers Result if there are no named keys', () => {
-      const data: [BigNumber, string, [BigNumber, string][]][] = [
+      const data: [BigNumber, string[], [BigNumber, string][]][] = [
         [
           BigNumber.from(1654322661),
-          '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+          [
+            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+          ],
           [
             [
               BigNumber.from(1654322661),
@@ -263,7 +366,10 @@ describe('parseContractResult', () => {
         ],
         [
           BigNumber.from(1654322662),
-          '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+          [
+            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AD',
+          ],
           [
             [
               BigNumber.from(1654322661),
@@ -286,7 +392,7 @@ describe('parseContractResult', () => {
       expect(result[0]).toEqual(data[0])
       expect(Object.keys(result[0]).length !== data[0]?.length).toBeTruthy()
       expect(result[0].timestamp).toEqual(data?.[0]?.[0])
-      expect(result[0].sender).toEqual(data?.[0]?.[1])
+      expect(result[0].senders).toEqual(data?.[0]?.[1])
       expect(result[0].gms).toEqual(data?.[0]?.[2])
       expect(result[0].gms[0]).toEqual(data?.[0]?.[2]?.[0])
       expect(result[0].gms[0].timestamp).toEqual(data?.[0]?.[2]?.[0]?.[0])
@@ -294,7 +400,7 @@ describe('parseContractResult', () => {
       expect(result[1]).toEqual(data[1])
       expect(Object.keys(result[1]).length !== data[1]?.length).toBeTruthy()
       expect(result[1].timestamp).toEqual(data[1]?.[0])
-      expect(result[1].sender).toEqual(data[1]?.[1])
+      expect(result[1].senders).toEqual(data[1]?.[1])
       expect(result[1].gms).toEqual(data?.[1]?.[2])
       expect(result[1].gms[0]).toEqual(data?.[1]?.[2]?.[0])
       expect(result[1].gms[0].timestamp).toEqual(data?.[1]?.[2]?.[0]?.[0])
@@ -407,22 +513,6 @@ describe('parseContractResult', () => {
       expect(result[1].sender).toEqual(data[1]?.sender)
       expect(result[1].gms[0].timestamp).toEqual(data[1].gms[0].timestamp)
       expect(result[1].gms[0].sender).toEqual(data[1].gms[0].sender)
-    })
-  })
-
-  describe('withoutNames', () => {
-    it('should parse the data to an ethers Result if there are no named keys', () => {
-      const data = [
-        BigNumber.from(1654322661),
-        '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-      ]
-      const result = parseContractResult({
-        contractInterface,
-        data,
-        functionName: 'withoutNames',
-      })
-      expect(result).toEqual(data)
-      expect(Object.keys(result).length === data.length).toBeTruthy()
     })
   })
 })

@@ -56,23 +56,33 @@ function getFunctionData({
       ? data
       : [data]
   const result = data_.map((data) => {
-    const dataObject = outputs?.reduce(
-      (dataObject, output, i) =>
-        output.name
-          ? {
-              ...dataObject,
-              [output.name]:
-                output.type === 'tuple[]'
-                  ? getFunctionData({
-                      data: data[i],
-                      outputs: output.components,
-                      isTuple: true,
-                    })
-                  : data[i],
-            }
-          : dataObject,
-      {},
-    )
+    let dataObject
+    if (
+      outputs?.[0]?.baseType === 'array' &&
+      outputs?.[0]?.type !== 'tuple[]' &&
+      outputs?.[0]?.name
+    ) {
+      dataObject = { [outputs?.[0]?.name]: [...data] }
+    } else {
+      dataObject = outputs?.reduce(
+        (dataObject, output, i) =>
+          output.name
+            ? {
+                ...dataObject,
+                [output.name]:
+                  output.type === 'tuple[]'
+                    ? getFunctionData({
+                        data: data[i],
+                        outputs: output.components,
+                        isTuple: true,
+                      })
+                    : data[i],
+              }
+            : dataObject,
+        {},
+      )
+    }
+
     return Object.assign(data, dataObject)
   })
 
