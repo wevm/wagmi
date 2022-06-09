@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.4.11
+
+### Patch Changes
+
+- [#566](https://github.com/tmm/wagmi/pull/566) [`8713c00`](https://github.com/tmm/wagmi/commit/8713c00f70fcac3afef4ba183e3c87c6d3cbbf65) Thanks [@jxom](https://github.com/jxom)! - Fixed `parseContractResult` breaking `useContractRead` for more complex contract types
+
 ## 0.4.10
 
 ### Patch Changes
