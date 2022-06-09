@@ -1,5 +1,9 @@
 import { Contract, ContractInterface } from 'ethers/lib/ethers'
-import { FunctionFragment, Result } from 'ethers/lib/utils'
+import { Result } from 'ethers/lib/utils'
+
+function isPlainArray(value: unknown) {
+  return Array.isArray(value) && Object.keys(value).length === value.length
+}
 
 export function parseContractResult({
   contractInterface,
@@ -10,19 +14,19 @@ export function parseContractResult({
   data: Result
   functionName: string
 }) {
-  if (data && Array.isArray(data) && Object.keys(data).length === data.length) {
-    const { fragments } = Contract.getInterface(contractInterface)
-    const functionFragment = FunctionFragment.from(
-      fragments.find((fragment) => fragment.name === functionName) || {},
+  if (data && isPlainArray(data)) {
+    const iface = Contract.getInterface(contractInterface)
+    const fragment = iface.getFunction(functionName)
+
+    const isArray = fragment?.outputs?.[0]?.baseType === 'array'
+
+    const data_ = isArray ? [data] : data
+    const encodedResult = iface.encodeFunctionResult(functionName, data_)
+    const decodedResult = iface.decodeFunctionResult(
+      functionName,
+      encodedResult,
     )
-    const dataObject = functionFragment.outputs?.reduce(
-      (dataObject, output, i) => ({
-        ...dataObject,
-        [output.name]: data[i],
-      }),
-      {},
-    )
-    return Object.assign(data, dataObject)
+    return isArray ? decodedResult[0] : decodedResult
   }
   return data
 }
