@@ -18,7 +18,9 @@ export function parseContractResult({
     const iface = Contract.getInterface(contractInterface)
     const fragment = iface.getFunction(functionName)
 
-    const isArray = fragment?.outputs?.[0]?.baseType === 'array'
+    const isArray =
+      fragment?.outputs?.[0]?.baseType === 'array' ||
+      fragment?.outputs?.[0]?.baseType === 'tuple'
 
     const data_ = isArray ? [data] : data
     const encodedResult = iface.encodeFunctionResult(functionName, data_)
