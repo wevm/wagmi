@@ -46,7 +46,6 @@ export class CoinbaseWalletConnector extends Connector<
     super({
       chains,
       options: {
-        reloadOnDisconnect: false,
         ...options,
       },
     })
