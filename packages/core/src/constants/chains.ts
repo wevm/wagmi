@@ -16,6 +16,7 @@ export const chainId = {
   arbitrumRinkeby: 421_611,
   localhost: 1_337,
   hardhat: 31_337,
+  foundry: 31_337,
 } as const
 export type ChainName = keyof typeof chainId
 
@@ -244,6 +245,15 @@ export const hardhat: Chain = {
   },
 }
 
+export const foundry: Chain = {
+  id: chainId.hardhat,
+  name: 'Foundry',
+  network: 'foundry',
+  rpcUrls: {
+    default: 'http://127.0.0.1:8545',
+  },
+}
+
 /**
  * Common chains for convenience
  * Should not contain all possible chains
@@ -262,6 +272,7 @@ export const chain = {
   arbitrumRinkeby,
   localhost,
   hardhat,
+  foundry,
 } as const
 export const allChains = Object.values(chain)
 
