@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.4.12
+
+### Patch Changes
+
+- [#570](https://github.com/tmm/wagmi/pull/570) [`0e3fe15`](https://github.com/tmm/wagmi/commit/0e3fe15445377f35d6f4142b49bf1c96bfeb62cd) Thanks [@tmm](https://github.com/tmm)! - adds chain for [Foundry](https://github.com/foundry-rs)
+
+- Updated dependencies [[`0e3fe15`](https://github.com/tmm/wagmi/commit/0e3fe15445377f35d6f4142b49bf1c96bfeb62cd)]:
+  - @wagmi/core@0.3.8
+
 ## 0.4.11
 
 ### Patch Changes
