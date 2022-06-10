@@ -96,7 +96,7 @@ function App() {
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
-```tsx {11}
+```tsx {11-14}
 import { useContractWrite } from 'wagmi'
 
 function App() {
@@ -107,7 +107,10 @@ function App() {
     },
     'feed',
     {
-      overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+      overrides: {
+        from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+        value: ethers.utils.parseEther('0.01'),
+      },
     },
   )
 }
