@@ -12,6 +12,12 @@ import { chain } from 'wagmi'
 const defaultL2Chains = [chain.optimism, chain.arbitrumOne]
 ```
 
+You can also import individual chains from the tree shakeable `wagmi/chains` entrypoint:
+
+```ts
+import { mainnet, optimism } from 'wagmi/chains'
+```
+
 ## Default Groups
 
 wagmi has built-in chain groups for convenience:
