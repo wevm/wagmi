@@ -92,7 +92,15 @@ export function useContractWrite({
         signerOrProvider,
         ...(overrideConfig || { args, overrides }),
       }),
-    [args, mutate, overrides],
+    [
+      addressOrName,
+      args,
+      contractInterface,
+      functionName,
+      mutate,
+      overrides,
+      signerOrProvider,
+    ],
   )
 
   const writeAsync = React.useCallback(
@@ -104,7 +112,15 @@ export function useContractWrite({
         signerOrProvider,
         ...(overrideConfig || { args, overrides }),
       }),
-    [args, mutateAsync, overrides],
+    [
+      addressOrName,
+      args,
+      contractInterface,
+      functionName,
+      mutateAsync,
+      overrides,
+      signerOrProvider,
+    ],
   )
 
   return {

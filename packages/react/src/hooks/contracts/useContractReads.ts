@@ -64,14 +64,14 @@ export function useContractReads({
 
   const queryKey_ = React.useMemo(
     () => queryKey([{ contracts, overrides }, { blockNumber }]),
-    [],
+    [blockNumber, contracts, overrides],
   )
 
   const enabled = React.useMemo(() => {
     let enabled = Boolean(enabled_ && contracts.length > 0)
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled
-  }, [blockNumber, cacheOnBlock, enabled_])
+  }, [blockNumber, cacheOnBlock, contracts, enabled_])
 
   const client = useQueryClient()
   React.useEffect(() => {
@@ -86,7 +86,7 @@ export function useContractReads({
       )
       return unwatch
     }
-  }, [cacheOnBlock, client, enabled, overrides, queryKey_, watch])
+  }, [cacheOnBlock, client, contracts, enabled, overrides, queryKey_, watch])
 
   return useQuery(queryKey_, queryFn, {
     cacheTime,

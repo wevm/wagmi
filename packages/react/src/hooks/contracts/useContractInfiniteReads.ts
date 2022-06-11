@@ -86,12 +86,15 @@ export function useContractInfiniteReads<TPageParam = any>({
   staleTime,
   suspense,
 }: UseContractInfiniteReadsConfig<TPageParam>) {
-  const queryKey_ = React.useMemo(() => queryKey([{ cacheKey, overrides }]), [])
+  const queryKey_ = React.useMemo(
+    () => queryKey([{ cacheKey, overrides }]),
+    [cacheKey, overrides],
+  )
 
   const enabled = React.useMemo(() => {
     const enabled = Boolean(enabled_ && contracts)
     return enabled
-  }, [enabled_])
+  }, [contracts, enabled_])
 
   return useInfiniteQuery(queryKey_, queryFn({ contracts }), {
     cacheTime,
