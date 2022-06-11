@@ -139,7 +139,7 @@ function App() {
 Contract address or ENS name.
 
 ```tsx {8,14}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -167,7 +167,7 @@ function App() {
 Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
 
 ```tsx {9,15}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -195,7 +195,7 @@ function App() {
 Name of function to call.
 
 ```tsx {10,16}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -223,7 +223,7 @@ function App() {
 Arguments to pass to function call. Accepts `any | any[]`.
 
 ```tsx {11,17}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -283,7 +283,7 @@ Derives the `param` provided to `contracts`. Provides the last page of the infin
 If there is no next page available, return `undefined`.
 
 ```tsx {21-22}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -313,7 +313,7 @@ function App() {
 If a contract read fails while fetching, it will fail silently and not throw an error.
 
 ```tsx {20}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -342,7 +342,7 @@ function App() {
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
 ```tsx {20}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -371,7 +371,7 @@ function App() {
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {20}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -400,7 +400,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {20}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -429,7 +429,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
 ```tsx {20}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -453,12 +453,41 @@ function App() {
 }
 ```
 
+### select (optional)
+
+Transform or select a part of the data returned by the contract.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    select: (data) => transform(data),
+  })
+}
+```
+
 ### suspense (optional)
 
 Set this to `true` to enable suspense mode.
 
 ```tsx {20}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -487,7 +516,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {20-22}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -518,7 +547,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {20-22}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
@@ -549,7 +578,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {20-22}
-import { useContractReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({

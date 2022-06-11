@@ -370,6 +370,30 @@ function App() {
 }
 ```
 
+### select (optional)
+
+Transform or select a part of the data returned by the contract.
+
+```tsx {15}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    select: (data) => transform(data),
+  })
+}
+```
+
 ### suspense (optional)
 
 Set this to `true` to enable suspense mode.
