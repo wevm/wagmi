@@ -39,7 +39,9 @@ jobs:
         with:
           path: |
             node_modules
-            packages/**/node_modules
+            examples/*/node_modules
+            docs/node_modules
+            packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install Dependencies
@@ -72,7 +74,9 @@ jobs:
         with:
           path: |
             node_modules
-            packages/**/node_modules
+            examples/*/node_modules
+            docs/node_modules
+            packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Lint code
@@ -103,7 +107,9 @@ jobs:
         with:
           path: |
             node_modules
-            packages/**/node_modules
+            examples/*/node_modules
+            docs/node_modules
+            packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build
@@ -138,7 +144,9 @@ jobs:
         with:
           path: |
             node_modules
-            packages/**/node_modules
+            examples/*/node_modules
+            docs/node_modules
+            packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Test
