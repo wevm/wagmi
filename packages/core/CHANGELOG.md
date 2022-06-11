@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.3.8
+
+### Patch Changes
+
+- [#570](https://github.com/tmm/wagmi/pull/570) [`0e3fe15`](https://github.com/tmm/wagmi/commit/0e3fe15445377f35d6f4142b49bf1c96bfeb62cd) Thanks [@tmm](https://github.com/tmm)! - adds chain for [Foundry](https://github.com/foundry-rs)
+
 ## 0.3.7
 
 ### Patch Changes
