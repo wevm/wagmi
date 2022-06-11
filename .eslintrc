@@ -69,7 +69,12 @@
       }
     }
   ],
-  "ignorePatterns": ["node_modules", "dist", "build", "CHANGELOG.md"],
+  "ignorePatterns": [
+    "CHANGELOG.md",
+    "build",
+    "dist",
+    "node_modules"
+  ],
   "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx", ".d.ts"]

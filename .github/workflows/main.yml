@@ -39,8 +39,8 @@ jobs:
         with:
           path: |
             node_modules
-            examples/*/node_modules
             docs/node_modules
+            examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
@@ -74,8 +74,8 @@ jobs:
         with:
           path: |
             node_modules
-            examples/*/node_modules
             docs/node_modules
+            examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
@@ -107,8 +107,8 @@ jobs:
         with:
           path: |
             node_modules
-            examples/*/node_modules
             docs/node_modules
+            examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
@@ -144,8 +144,8 @@ jobs:
         with:
           path: |
             node_modules
-            examples/*/node_modules
             docs/node_modules
+            examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
