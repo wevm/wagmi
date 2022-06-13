@@ -72,7 +72,7 @@ export class ChainDoesNotSupportMulticallError extends Error {
   constructor({ blockNumber, chain }: { blockNumber?: number; chain: Chain }) {
     super(
       `Chain "${chain.name}" does not support multicall${
-        blockNumber ? `on block ${blockNumber}` : ''
+        blockNumber ? ` on block ${blockNumber}` : ''
       }.`,
     )
   }

@@ -63,7 +63,6 @@ export async function readContracts<Data extends any[] = Result[]>({
     }
     return (await Promise.all(promises)).flat() as Data
   } catch (err) {
-    console.log('test')
     const promises = contracts.map((contract) =>
       readContract({ ...contract, overrides }),
     )
