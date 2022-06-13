@@ -2,10 +2,10 @@ import { providers } from 'ethers'
 
 import {
   Chain,
-  ChainProvider,
   ChainProviderFn,
-  ChainWebSocketProvider,
+  Provider,
   ProviderWithFallbackConfig,
+  WebSocketProvider,
 } from '../types'
 
 export type ConfigureChainsConfig = { stallTimeout?: number } & (
@@ -20,8 +20,8 @@ export type ConfigureChainsConfig = { stallTimeout?: number } & (
 )
 
 export function configureChains<
-  TProvider extends ChainProvider = ChainProvider,
-  TWebSocketProvider extends ChainWebSocketProvider = ChainWebSocketProvider,
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
   TChain extends Chain = Chain,
 >(
   defaultChains: TChain[],
@@ -91,7 +91,9 @@ export function configureChains<
       if (!chainProviders)
         throw new Error(`No providers configured for chain "${activeChainId}"`)
       if (chainProviders.length === 1)
-        return Object.assign(chainProviders[0]?.(), { chains }) as TProvider & {
+        return Object.assign(chainProviders[0]?.() || {}, {
+          chains,
+        }) as TProvider & {
           chains: TChain[]
         }
       return Object.assign(
@@ -110,10 +112,10 @@ export function configureChains<
 
       if (!chainWebSocketProviders) return undefined
       if (chainWebSocketProviders.length === 1)
-        return Object.assign(chainWebSocketProviders[0]?.(), { chains })
+        return Object.assign(chainWebSocketProviders[0]?.() || {}, { chains })
       // WebSockets do not work with `fallbackProvider`
       // Default to first available
-      return Object.assign(chainWebSocketProviders[0]?.(), { chains })
+      return Object.assign(chainWebSocketProviders[0]?.() || {}, { chains })
     },
   } as const
 }
@@ -121,7 +123,7 @@ export function configureChains<
 function fallbackProvider(
   targetQuorum: number,
   minQuorum: number,
-  providers_: (() => ProviderWithFallbackConfig<ChainProvider>)[],
+  providers_: (() => ProviderWithFallbackConfig<Provider>)[],
   { stallTimeout }: { stallTimeout?: number },
 ): providers.FallbackProvider {
   try {
