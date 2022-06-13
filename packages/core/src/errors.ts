@@ -98,7 +98,7 @@ export class ProviderChainsNotFound extends Error {
   message = [
     'No chains were found on the wagmi provider. Some functions that require a chain may not work.',
     '',
-    'Please assign a list of chains to the provider in `createClient`.',
+    'It is recommended to add a list of chains to the provider in `createClient`.',
     '',
     'Example:',
     '',
