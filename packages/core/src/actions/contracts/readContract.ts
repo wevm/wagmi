@@ -39,7 +39,7 @@ export async function readContract<
   const contractFunction = contract[functionName]
   if (!contractFunction)
     console.warn(
-      `"${functionName}" does not in interface for contract "${contractConfig.addressOrName}"`,
+      `"${functionName}" does not exist in interface for contract "${contractConfig.addressOrName}"`,
     )
   const response = (await contractFunction?.(...params)) as Result
   return response
