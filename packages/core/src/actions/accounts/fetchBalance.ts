@@ -62,6 +62,7 @@ export async function fetchBalance({
     const [value, decimals, symbol] = await readContracts<
       [BigNumber, number, string]
     >({
+      allowFailure: false,
       contracts: [
         { ...erc20Config, functionName: 'balanceOf', args: resolvedAddress },
         { ...erc20Config, functionName: 'decimals' },
