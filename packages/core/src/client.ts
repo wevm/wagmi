@@ -4,6 +4,7 @@ import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { Connector, ConnectorData, InjectedConnector } from './connectors'
 import { ClientStorage, createStorage, noopStorage } from './storage'
 import { Provider, WebSocketProvider } from './types'
+import { ProviderChainsNotFound } from './errors'
 
 export type ClientConfig<
   TProvider extends Provider = Provider,
@@ -88,6 +89,12 @@ export class Client<
       } catch (_error) {}
     }
 
+    const provider_ =
+      typeof provider === 'function' ? provider({ chainId }) : provider
+    if (!provider_.chains) {
+      console.warn(new ProviderChainsNotFound())
+    }
+
     // Create store
     this.store = create(
       subscribeWithSelector(
@@ -97,8 +104,7 @@ export class Client<
         >(
           () => ({
             connectors,
-            provider:
-              typeof provider === 'function' ? provider({ chainId }) : provider,
+            provider: provider_,
             status,
             webSocketProvider:
               typeof webSocketProvider === 'function'

@@ -1,3 +1,5 @@
+import { Chain } from './types'
+
 /**
  * Error subclass implementing JSON RPC 2.0 errors and Ethereum RPC errors per EIP-1474.
  * @see https://eips.ethereum.org/EIPS/eip-1474
@@ -66,6 +68,14 @@ export class AddChainError extends Error {
 
 export class ChainDoesNotSupportMulticallError extends Error {
   name = 'ChainDoesNotSupportMulticall'
+
+  constructor({ blockNumber, chain }: { blockNumber?: number; chain: Chain }) {
+    super(
+      `Chain "${chain.name}" does not support multicall${
+        blockNumber ? `on block ${blockNumber}` : ''
+      }.`,
+    )
+  }
 }
 
 export class ChainNotConfiguredError extends Error {
@@ -81,6 +91,26 @@ export class ConnectorAlreadyConnectedError extends Error {
 export class ConnectorNotFoundError extends Error {
   name = 'ConnectorNotFoundError'
   message = 'Connector not found'
+}
+
+export class ProviderChainsNotFound extends Error {
+  name = 'ProviderChainsNotFound'
+  message = [
+    'No chains were found on the wagmi provider. Some functions that require a chain may not work.',
+    '',
+    'Please assign a list of chains to the provider in `createClient`.',
+    '',
+    'Example:',
+    '',
+    '```',
+    "import { getDefaultProvider } from 'ethers'",
+    "import { chain, createClient } from 'wagmi'",
+    '',
+    'createClient({',
+    '  provider: Object.assign(getDefaultProvider(), { chains: [chain.mainnet] })',
+    '})',
+    '```',
+  ].join('\n')
 }
 
 export class SwitchChainError extends ProviderRpcError {

@@ -53,14 +53,17 @@ export async function readContracts<Data extends any[] = Result[]>({
       return (await Promise.allSettled(promises))
         .map((result) => {
           if (result.status === 'fulfilled') return result.value
-          if (result.reason instanceof ChainDoesNotSupportMulticallError)
+          if (result.reason instanceof ChainDoesNotSupportMulticallError) {
+            console.warn(result.reason)
             throw result.reason
+          }
           return null
         })
         .flat() as Data
     }
     return (await Promise.all(promises)).flat() as Data
   } catch (err) {
+    console.log('test')
     const promises = contracts.map((contract) =>
       readContract({ ...contract, overrides }),
     )

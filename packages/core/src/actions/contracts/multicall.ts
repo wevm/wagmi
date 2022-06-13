@@ -5,7 +5,10 @@ import { getProvider } from '../providers'
 import { getContract } from './getContract'
 import { multicallInterface } from '../../constants'
 import { ReadContractConfig } from './readContract'
-import { ChainDoesNotSupportMulticallError } from '../../errors'
+import {
+  ChainDoesNotSupportMulticallError,
+  ProviderChainsNotFound,
+} from '../../errors'
 
 type MulticallContract = {
   addressOrName: ReadContractConfig['addressOrName']
@@ -37,22 +40,21 @@ export async function multicall<Data extends any[] = Result[]>({
   overrides,
 }: MulticallConfig): Promise<MulticallResult<Data>> {
   const provider = getProvider({ chainId })
+  if (!provider.chains) throw new ProviderChainsNotFound()
+
   const chain =
     provider.chains.find((chain) => chain.id === chainId) || provider.chains[0]
-  if (!chain) throw new Error(`No chain found with id "${chainId}"`)
-
-  if (!chain?.multicall)
-    throw new ChainDoesNotSupportMulticallError(
-      `Chain "${chain.name}" does not support multicall.`,
-    )
+  if (!chain) throw new ProviderChainsNotFound()
+  if (!chain?.multicall) throw new ChainDoesNotSupportMulticallError({ chain })
 
   if (
     typeof overrides?.blockTag === 'number' &&
     overrides?.blockTag < chain.multicall.blockCreated
   )
-    throw new ChainDoesNotSupportMulticallError(
-      `Chain "${chain.name}" does not support multicall on block ${overrides.blockTag}`,
-    )
+    throw new ChainDoesNotSupportMulticallError({
+      blockNumber: overrides?.blockTag,
+      chain,
+    })
 
   const multicallContract = getContract({
     addressOrName: chain.multicall.address,
