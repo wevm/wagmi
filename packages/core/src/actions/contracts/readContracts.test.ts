@@ -10,11 +10,12 @@ import * as multicall from './multicall'
 import { chain } from '../../constants'
 
 describe('readContracts', () => {
-  beforeEach(() =>
+  beforeEach(() => {
     setupClient({
       chains: [chain.mainnet, { ...chain.polygon, multicall: undefined }],
-    }),
-  )
+    })
+    console.warn = jest.fn()
+  })
 
   it('default', async () => {
     const spy = jest.spyOn(multicall, 'multicall')

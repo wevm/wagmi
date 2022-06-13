@@ -96,8 +96,8 @@ describe('readContracts', () => {
     })
 
     it('allowFailure', async () => {
-      try {
-        await multicall({
+      await expect(
+        multicall({
           allowFailure: false,
           contracts: [
             ...contracts,
@@ -107,34 +107,28 @@ describe('readContracts', () => {
               args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
             },
           ],
-        })
-      } catch (err) {
-        expect(err).toMatchInlineSnapshot(
-          `[Error: call revert exception; VM Exception while processing transaction: reverted with reason string "Multicall3: call failed" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="aggregate3((address,bool,bytes)[])", data="0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000174d756c746963616c6c333a2063616c6c206661696c6564000000000000000000", errorArgs=["Multicall3: call failed"], errorName="Error", errorSignature="Error(string)", reason="Multicall3: call failed", code=CALL_EXCEPTION, version=abi/5.6.1)]`,
-        )
-      }
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"call revert exception; VM Exception while processing transaction: reverted with reason string \\"Multicall3: call failed\\" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"aggregate3((address,bool,bytes)[])\\", data=\\"0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000174d756c746963616c6c333a2063616c6c206661696c6564000000000000000000\\", errorArgs=[\\"Multicall3: call failed\\"], errorName=\\"Error\\", errorSignature=\\"Error(string)\\", reason=\\"Multicall3: call failed\\", code=CALL_EXCEPTION, version=abi/5.6.1)"`,
+      )
     })
   })
 
   describe('errors', () => {
     it('should throw if the chain does not support multicall', async () => {
-      try {
-        await multicall({ contracts, chainId: chain.polygon.id })
-      } catch (err) {
-        expect(err).toMatchInlineSnapshot(
-          `[ChainDoesNotSupportMulticall: Chain "Polygon" does not support multicall.]`,
-        )
-      }
+      await expect(
+        multicall({ contracts, chainId: chain.polygon.id }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Chain \\"Polygon\\" does not support multicall."`,
+      )
     })
 
     it('should throw if the chain has not deployed multicall on block', async () => {
-      try {
-        await multicall({ contracts, overrides: { blockTag: 1 } })
-      } catch (err) {
-        expect(err).toMatchInlineSnapshot(
-          `[ChainDoesNotSupportMulticall: Chain "Ethereum" does not support multicall on block 1.]`,
-        )
-      }
+      await expect(
+        multicall({ contracts, overrides: { blockTag: 1 } }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Chain \\"Ethereum\\" does not support multicall on block 1."`,
+      )
     })
   })
 })

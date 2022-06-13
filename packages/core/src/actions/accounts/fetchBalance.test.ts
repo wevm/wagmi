@@ -3,7 +3,10 @@ import { fetchBalance } from './fetchBalance'
 
 describe('fetchBalance', () => {
   describe('args', () => {
-    beforeEach(() => setupClient())
+    beforeEach(() => {
+      console.warn = jest.fn()
+      setupClient()
+    })
 
     describe('addressOrName', () => {
       it('address', async () => {
