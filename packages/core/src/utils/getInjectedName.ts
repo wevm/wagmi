@@ -4,6 +4,7 @@ export function getInjectedName(ethereum?: Window['ethereum']) {
   const getName = (provider: Ethereum) => {
     if (provider.isBraveWallet) return 'Brave Wallet'
     if (provider.isCoinbaseWallet) return 'Coinbase Wallet'
+    if (provider.isExodus) return 'Exodus'
     if (provider.isFrame) return 'Frame'
     if (provider.isOpera) return 'Opera'
     if (provider.isTally) return 'Tally'
