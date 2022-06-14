@@ -1,9 +1,8 @@
-import { connect } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
-import { act, getSigners, renderHook, setupClient } from '../../../test'
+import { act, getSigners, renderHook } from '../../../test'
+import { useAccount } from './useAccount'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
-import { useDisconnect } from './useDisconnect'
 
 const connector = new MockConnector({
   options: { signer: getSigners()[0]! },
@@ -16,95 +15,34 @@ const connectorFail = new MockConnector({
   },
 })
 
-function useConnectWithDisconnect(
-  config: UseConnectArgs & UseConnectConfig = {},
-) {
+function useConnectWithAccount(config: UseConnectArgs & UseConnectConfig = {}) {
   return {
+    account: useAccount(),
     connect: useConnect(config),
-    disconnect: useDisconnect(),
   }
 }
 
 describe('useConnect', () => {
-  describe('mounts', () => {
-    it('is connected', async () => {
-      const client = setupClient()
-      await connect({ connector: client.connectors[0]! })
-
-      const { result, waitFor } = renderHook(() => useConnect(), {
-        initialProps: { client },
-      })
-      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "activeConnector": "<MockConnector>",
-          "connect": [Function],
-          "connectAsync": [Function],
-          "connectors": [
-            "<MockConnector>",
-          ],
-          "data": undefined,
-          "error": null,
-          "isConnected": true,
-          "isConnecting": false,
-          "isDisconnected": false,
-          "isError": false,
-          "isIdle": false,
-          "isReconnecting": false,
-          "pendingConnector": undefined,
-          "reset": [Function],
-          "status": "connected",
-        }
-      `)
-    })
-
-    it('is not connected', async () => {
-      const { result, waitFor } = renderHook(() => useConnect())
-
-      await waitFor(() => expect(result.current.isDisconnected).toBeTruthy())
-
-      expect(result.current).toMatchInlineSnapshot(`
-        {
-          "activeConnector": undefined,
-          "connect": [Function],
-          "connectAsync": [Function],
-          "connectors": [
-            "<MockConnector>",
-          ],
-          "data": undefined,
-          "error": null,
-          "isConnected": false,
-          "isConnecting": false,
-          "isDisconnected": true,
-          "isError": false,
-          "isIdle": false,
-          "isReconnecting": false,
-          "pendingConnector": undefined,
-          "reset": [Function],
-          "status": "disconnected",
-        }
-      `)
-    })
-  })
-
   describe('configuration', () => {
     describe('connector', () => {
       it('connects', async () => {
-        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+        const { result, waitFor } = renderHook(() =>
+          useConnectWithAccount({ connector }),
+        )
 
-        await act(async () => result.current.connect())
-        await waitFor(() => expect(result.current.isConnected).toBeTruthy())
+        await act(async () => result.current.connect.connect())
+        await waitFor(() =>
+          expect(result.current.connect.isSuccess).toBeTruthy(),
+        )
 
-        expect(result.current).toMatchInlineSnapshot(`
+        expect(result.current.connect).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "connect": [Function],
             "connectAsync": [Function],
             "connectors": [
               "<MockConnector>",
             ],
+            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -115,14 +53,26 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
+            "failureCount": 0,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isPaused": false,
+            "isSuccess": true,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "success",
+          }
+        `)
+        expect(result.current.account).toMatchInlineSnapshot(`
+          {
+            "activeConnector": "<MockConnector>",
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
             "isConnected": true,
             "isConnecting": false,
             "isDisconnected": false,
-            "isError": false,
-            "isIdle": false,
             "isReconnecting": false,
-            "pendingConnector": "<MockConnector>",
-            "reset": [Function],
             "status": "connected",
           }
         `)
@@ -130,50 +80,62 @@ describe('useConnect', () => {
 
       it('fails connect', async () => {
         const { result, waitFor } = renderHook(() =>
-          useConnect({
+          useConnectWithAccount({
             connector: connectorFail,
           }),
         )
 
         await act(async () => {
-          result.current.connect()
+          result.current.connect.connect()
         })
-        await waitFor(() => expect(result.current.isError).toBeTruthy())
+        await waitFor(() => expect(result.current.connect.isError).toBeTruthy())
 
-        expect(result.current).toMatchInlineSnapshot(`
+        expect(result.current.connect).toMatchInlineSnapshot(`
           {
-            "activeConnector": undefined,
             "connect": [Function],
             "connectAsync": [Function],
             "connectors": [
               "<MockConnector>",
             ],
+            "context": undefined,
             "data": undefined,
             "error": [UserRejectedRequestError: User rejected request],
+            "failureCount": 1,
+            "isError": true,
+            "isIdle": false,
+            "isLoading": false,
+            "isPaused": false,
+            "isSuccess": false,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "error",
+          }
+        `)
+        expect(result.current.account).toMatchInlineSnapshot(`
+          {
+            "activeConnector": undefined,
+            "address": undefined,
+            "connector": undefined,
             "isConnected": false,
             "isConnecting": false,
             "isDisconnected": true,
-            "isError": true,
-            "isIdle": false,
             "isReconnecting": false,
-            "pendingConnector": "<MockConnector>",
-            "reset": [Function],
             "status": "disconnected",
           }
         `)
       })
     })
 
-    it('onConnect', async () => {
-      const onConnect = jest.fn()
+    it('onSuccess', async () => {
+      const onSuccess = jest.fn()
       const { result, waitFor } = renderHook(() =>
-        useConnect({ connector, onConnect }),
+        useConnect({ connector, onSuccess }),
       )
 
       await act(async () => result.current.connect())
-      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      expect(onConnect).toBeCalledWith(
+      expect(onSuccess).toBeCalledWith(
         result.current.data,
         { connector },
         undefined,
@@ -185,22 +147,24 @@ describe('useConnect', () => {
     describe('connect', () => {
       it('uses configuration', async () => {
         const { result, waitFor } = renderHook(() =>
-          useConnect({
+          useConnectWithAccount({
             connector,
           }),
         )
 
-        await act(async () => result.current.connect())
-        await waitFor(() => expect(result.current.isConnected).toBeTruthy())
+        await act(async () => result.current.connect.connect())
+        await waitFor(() =>
+          expect(result.current.connect.isSuccess).toBeTruthy(),
+        )
 
-        expect(result.current).toMatchInlineSnapshot(`
+        expect(result.current.connect).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "connect": [Function],
             "connectAsync": [Function],
             "connectors": [
               "<MockConnector>",
             ],
+            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -211,36 +175,50 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
+            "failureCount": 0,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isPaused": false,
+            "isSuccess": true,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "success",
+          }
+        `)
+        expect(result.current.account).toMatchInlineSnapshot(`
+          {
+            "activeConnector": "<MockConnector>",
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
             "isConnected": true,
             "isConnecting": false,
             "isDisconnected": false,
-            "isError": false,
-            "isIdle": false,
             "isReconnecting": false,
-            "pendingConnector": "<MockConnector>",
-            "reset": [Function],
             "status": "connected",
           }
         `)
       })
 
       it('uses deferred args', async () => {
-        const { result, waitFor } = renderHook(() => useConnect())
+        const { result, waitFor } = renderHook(() => useConnectWithAccount())
 
         await act(async () => {
-          const mockConnector = result.current.connectors[0]
-          result.current.connect(mockConnector)
+          const mockConnector = result.current.connect.connectors[0]
+          result.current.connect.connect(mockConnector)
         })
-        await waitFor(() => expect(result.current.isConnected).toBeTruthy())
+        await waitFor(() =>
+          expect(result.current.connect.isSuccess).toBeTruthy(),
+        )
 
-        expect(result.current).toMatchInlineSnapshot(`
+        expect(result.current.connect).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "connect": [Function],
             "connectAsync": [Function],
             "connectors": [
               "<MockConnector>",
             ],
+            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -251,36 +229,50 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
+            "failureCount": 0,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isPaused": false,
+            "isSuccess": true,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "success",
+          }
+        `)
+        expect(result.current.account).toMatchInlineSnapshot(`
+          {
+            "activeConnector": "<MockConnector>",
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
             "isConnected": true,
             "isConnecting": false,
             "isDisconnected": false,
-            "isError": false,
-            "isIdle": false,
             "isReconnecting": false,
-            "pendingConnector": "<MockConnector>",
-            "reset": [Function],
             "status": "connected",
           }
         `)
       })
 
       it('connects to unsupported chain', async () => {
-        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+        const { result, waitFor } = renderHook(() =>
+          useConnectWithAccount({ connector }),
+        )
 
         await act(async () => {
-          result.current.connect({ chainId: 69 })
+          result.current.connect.connect({ chainId: 69 })
         })
 
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => result.current.connect.isSuccess)
 
-        expect(result.current).toMatchInlineSnapshot(`
+        expect(result.current.connect).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "connect": [Function],
             "connectAsync": [Function],
             "connectors": [
               "<MockConnector>",
             ],
+            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -291,36 +283,50 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
+            "failureCount": 0,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isPaused": false,
+            "isSuccess": true,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "success",
+          }
+        `)
+        expect(result.current.account).toMatchInlineSnapshot(`
+          {
+            "activeConnector": "<MockConnector>",
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
             "isConnected": true,
             "isConnecting": false,
             "isDisconnected": false,
-            "isError": false,
-            "isIdle": false,
             "isReconnecting": false,
-            "pendingConnector": "<MockConnector>",
-            "reset": [Function],
             "status": "connected",
           }
         `)
       })
 
       it('connects to supported chain', async () => {
-        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+        const { result, waitFor } = renderHook(() =>
+          useConnectWithAccount({ connector }),
+        )
 
         await act(async () => {
-          result.current.connect({ chainId: 3 })
+          result.current.connect.connect({ chainId: 3 })
         })
 
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => result.current.connect.isSuccess)
 
-        expect(result.current).toMatchInlineSnapshot(`
+        expect(result.current.connect).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "connect": [Function],
             "connectAsync": [Function],
             "connectors": [
               "<MockConnector>",
             ],
+            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -331,14 +337,26 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
+            "failureCount": 0,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isPaused": false,
+            "isSuccess": true,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "success",
+          }
+        `)
+        expect(result.current.account).toMatchInlineSnapshot(`
+          {
+            "activeConnector": "<MockConnector>",
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "connector": "<MockConnector>",
             "isConnected": true,
             "isConnecting": false,
             "isDisconnected": false,
-            "isError": false,
-            "isIdle": false,
             "isReconnecting": false,
-            "pendingConnector": "<MockConnector>",
-            "reset": [Function],
             "status": "connected",
           }
         `)
@@ -346,32 +364,44 @@ describe('useConnect', () => {
 
       it('fails', async () => {
         const { result, waitFor } = renderHook(() =>
-          useConnect({
+          useConnectWithAccount({
             connector: connectorFail,
           }),
         )
 
-        await act(async () => result.current.connect())
-        await waitFor(() => expect(result.current.isError).toBeTruthy())
+        await act(async () => result.current.connect.connect())
+        await waitFor(() => expect(result.current.connect.isError).toBeTruthy())
 
-        expect(result.current).toMatchInlineSnapshot(`
+        expect(result.current.connect).toMatchInlineSnapshot(`
           {
-            "activeConnector": undefined,
             "connect": [Function],
             "connectAsync": [Function],
             "connectors": [
               "<MockConnector>",
             ],
+            "context": undefined,
             "data": undefined,
             "error": [UserRejectedRequestError: User rejected request],
+            "failureCount": 1,
+            "isError": true,
+            "isIdle": false,
+            "isLoading": false,
+            "isPaused": false,
+            "isSuccess": false,
+            "pendingConnector": "<MockConnector>",
+            "reset": [Function],
+            "status": "error",
+          }
+        `)
+        expect(result.current.account).toMatchInlineSnapshot(`
+          {
+            "activeConnector": undefined,
+            "address": undefined,
+            "connector": undefined,
             "isConnected": false,
             "isConnecting": false,
             "isDisconnected": true,
-            "isError": true,
-            "isIdle": false,
             "isReconnecting": false,
-            "pendingConnector": "<MockConnector>",
-            "reset": [Function],
             "status": "disconnected",
           }
         `)
@@ -380,10 +410,12 @@ describe('useConnect', () => {
 
     describe('connectAsync', () => {
       it('uses configuration', async () => {
-        const { result, waitFor } = renderHook(() => useConnect({ connector }))
+        const { result, waitFor } = renderHook(() =>
+          useConnectWithAccount({ connector }),
+        )
 
         await act(async () => {
-          const res = await result.current.connectAsync()
+          const res = await result.current.connect.connectAsync()
           expect(res).toMatchInlineSnapshot(`
             {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -397,15 +429,15 @@ describe('useConnect', () => {
           `)
         })
 
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => result.current.connect.isSuccess)
       })
 
       it('uses deferred args', async () => {
-        const { result } = renderHook(() => useConnect())
+        const { result } = renderHook(() => useConnectWithAccount())
 
         await act(async () => {
-          const mockConnector = result.current.connectors[0]
-          const res = await result.current.connectAsync(mockConnector)
+          const mockConnector = result.current.connect.connectors[0]
+          const res = await result.current.connect.connectAsync(mockConnector)
           expect(res).toMatchInlineSnapshot(`
             {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -438,7 +470,7 @@ describe('useConnect', () => {
           `)
         })
 
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => result.current.isSuccess)
       })
 
       it('connects to supported chain', async () => {
@@ -459,7 +491,7 @@ describe('useConnect', () => {
           `)
         })
 
-        await waitFor(() => result.current.isConnected)
+        await waitFor(() => result.current.isSuccess)
       })
 
       it('throws error', async () => {
@@ -494,7 +526,7 @@ describe('useConnect', () => {
       )
 
       await act(async () => result.current.connect())
-      await waitFor(() => result.current.isConnected)
+      await waitFor(() => result.current.isSuccess)
       expect(result.current.data?.chain).toMatchInlineSnapshot(`
         {
           "id": 69,
@@ -516,115 +548,13 @@ describe('useConnect', () => {
       )
 
       await act(async () => result.current.connect())
-      await waitFor(() => result.current.isConnected)
+      await waitFor(() => result.current.isSuccess)
       expect(result.current.data?.chain).toMatchInlineSnapshot(`
         {
           "id": 3,
           "unsupported": false,
         }
       `)
-    })
-
-    it('is already connected', async () => {
-      const { result, waitFor } = renderHook(() => useConnect())
-
-      await act(async () => result.current.connect(connector))
-      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
-
-      await act(async () => result.current.connect(connector))
-
-      await waitFor(() => expect(result.current.isError).toBeTruthy())
-      expect(result.current.error).toMatchInlineSnapshot(
-        `[ConnectorAlreadyConnectedError: Connector already connected]`,
-      )
-    })
-
-    it('updates on disconnect', async () => {
-      const { result, waitFor } = renderHook(() =>
-        useConnectWithDisconnect({ connector }),
-      )
-
-      await act(async () => result.current.connect.connect(connector))
-      await waitFor(() =>
-        expect(result.current.connect.isConnected).toBeTruthy(),
-      )
-      expect(result.current.connect).toMatchInlineSnapshot(`
-        {
-          "activeConnector": "<MockConnector>",
-          "connect": [Function],
-          "connectAsync": [Function],
-          "connectors": [
-            "<MockConnector>",
-          ],
-          "data": {
-            "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "chain": {
-              "id": 3,
-              "unsupported": false,
-            },
-            "connector": "<MockConnector>",
-            "provider": "<MockProvider>",
-          },
-          "error": null,
-          "isConnected": true,
-          "isConnecting": false,
-          "isDisconnected": false,
-          "isError": false,
-          "isIdle": false,
-          "isReconnecting": false,
-          "pendingConnector": "<MockConnector>",
-          "reset": [Function],
-          "status": "connected",
-        }
-      `)
-
-      await act(async () => result.current.disconnect.disconnect())
-      await waitFor(() =>
-        expect(result.current.disconnect.isSuccess).toBeTruthy(),
-      )
-      expect(result.current.connect).toMatchInlineSnapshot(`
-        {
-          "activeConnector": undefined,
-          "connect": [Function],
-          "connectAsync": [Function],
-          "connectors": [
-            "<MockConnector>",
-          ],
-          "data": {
-            "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "chain": {
-              "id": 3,
-              "unsupported": false,
-            },
-            "connector": "<MockConnector>",
-            "provider": "<MockProvider>",
-          },
-          "error": null,
-          "isConnected": false,
-          "isConnecting": false,
-          "isDisconnected": true,
-          "isError": false,
-          "isIdle": false,
-          "isReconnecting": false,
-          "pendingConnector": "<MockConnector>",
-          "reset": [Function],
-          "status": "disconnected",
-        }
-      `)
-    })
-
-    it('status lifecycle', async () => {
-      const client = setupClient({ autoConnect: true })
-      await connect({ connector: client.connectors[0]! })
-
-      const { result, waitFor } = renderHook(() => useConnect(), {
-        initialProps: { client },
-      })
-
-      await waitFor(() => expect(result.current.isConnecting).toBeTruthy())
-      expect(result.current.status).toMatchInlineSnapshot(`"connecting"`)
-      await waitFor(() => expect(result.current.isConnected).toBeTruthy())
-      expect(result.current.status).toMatchInlineSnapshot(`"connected"`)
     })
   })
 })

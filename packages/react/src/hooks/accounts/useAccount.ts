@@ -2,13 +2,13 @@ import * as React from 'react'
 import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
 import { useQueryClient } from 'react-query'
 
-import { QueryConfig } from '../../types'
-import { useQuery } from '../utils'
+import { useForceUpdate, useQuery } from '../utils'
+import { useClient } from '../../context'
 
-export type UseAccountConfig = Pick<
-  QueryConfig<GetAccountResult, Error>,
-  'suspense' | 'onError' | 'onSettled' | 'onSuccess'
->
+export type UseAccountConfig = {
+  onConnected?: () => void
+  onDisconnected?: () => void
+}
 
 export const queryKey = () => [{ entity: 'account' }] as const
 
@@ -18,20 +18,15 @@ const queryFn = () => {
   return null
 }
 
-export function useAccount({
-  suspense,
-  onError,
-  onSettled,
-  onSuccess,
-}: UseAccountConfig = {}) {
+// TODO
+// eslint-disable-next-line no-empty-pattern
+export function useAccount({}: UseAccountConfig = {}) {
+  const client = useClient()
+  const forceUpdate = useForceUpdate()
   const queryClient = useQueryClient()
 
-  const accountQuery = useQuery(queryKey(), queryFn, {
+  const { data } = useQuery<GetAccountResult | null>(queryKey(), queryFn, {
     staleTime: 0,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
   })
 
   React.useEffect(() => {
@@ -41,5 +36,31 @@ export function useAccount({
     return unwatch
   }, [queryClient])
 
-  return accountQuery
+  React.useEffect(() => {
+    // Trigger update when connector or status change
+    const unsubscribe = client.subscribe(
+      (state) => ({
+        connector: state.connector,
+        status: state.status,
+      }),
+      forceUpdate,
+      {
+        equalityFn: (selected, previous) =>
+          selected.connector === previous.connector &&
+          selected.status === previous.status,
+      },
+    )
+    return unsubscribe
+  }, [client, forceUpdate])
+
+  return {
+    activeConnector: client.connector,
+    address: data?.address,
+    connector: data?.connector,
+    isConnected: client.status === 'connected',
+    isConnecting: client.status === 'connecting',
+    isDisconnected: client.status === 'disconnected',
+    isReconnecting: client.status === 'reconnecting',
+    status: client.status,
+  }
 }

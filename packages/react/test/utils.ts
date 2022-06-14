@@ -39,7 +39,7 @@ export async function actConnect(config: {
   })
 
   const { waitFor } = utils
-  await waitFor(() => expect(getConnect(utils).isConnected).toBeTruthy())
+  await waitFor(() => expect(getConnect(utils).isSuccess).toBeTruthy())
 }
 
 export async function actDisconnect(config: {

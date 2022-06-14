@@ -32,7 +32,13 @@ export async function connect<TProvider extends Provider = Provider>({
   const data = await connector.connect({ chainId })
 
   client.setLastUsedConnector(connector.id)
-  client.setState((x) => ({ ...x, connector, chains: connector?.chains, data }))
+  client.setState((x) => ({
+    ...x,
+    connector,
+    chains: connector?.chains,
+    data,
+    status: 'connected',
+  }))
   client.storage.setItem('connected', true)
 
   return { ...data, connector }
