@@ -184,9 +184,9 @@ export const polygonMumbai: Chain = {
 
 export const arbitrum: Chain = {
   id: chainId.arbitrum,
-  name: 'Arbitrum',
+  name: 'Arbitrum One',
   network: 'arbitrum',
-  nativeCurrency: { name: 'Ether', symbol: 'AETH', decimals: 18 },
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.arbitrum,
     infura: infuraRpcUrls.arbitrum,
