@@ -1,7 +1,5 @@
 import { disconnect } from '@wagmi/core'
-import { useMutation, useQueryClient } from 'react-query'
-
-import { queryKey as accountQueryKey } from './useAccount'
+import { useMutation } from 'react-query'
 
 export type UseDisconnectConfig = {
   /** Function to invoke when an error is thrown while connecting. */
@@ -27,7 +25,6 @@ export function useDisconnect({
   onSettled,
   onSuccess,
 }: UseDisconnectConfig = {}) {
-  const queryClient = useQueryClient()
   const {
     error,
     isError,
@@ -55,8 +52,6 @@ export function useDisconnect({
         }
       : {}),
     onSuccess(_data, _variables, context) {
-      // Clear account cache
-      queryClient.removeQueries(accountQueryKey())
       // Pass on arguments
       onSuccess?.(context)
     },

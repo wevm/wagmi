@@ -66,7 +66,6 @@ describe('useConnect', () => {
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "connector": "<MockConnector>",
             "isConnected": true,
@@ -113,7 +112,6 @@ describe('useConnect', () => {
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
           {
-            "activeConnector": undefined,
             "address": undefined,
             "connector": undefined,
             "isConnected": false,
@@ -188,7 +186,6 @@ describe('useConnect', () => {
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "connector": "<MockConnector>",
             "isConnected": true,
@@ -242,7 +239,6 @@ describe('useConnect', () => {
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "connector": "<MockConnector>",
             "isConnected": true,
@@ -296,7 +292,6 @@ describe('useConnect', () => {
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "connector": "<MockConnector>",
             "isConnected": true,
@@ -350,7 +345,6 @@ describe('useConnect', () => {
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
           {
-            "activeConnector": "<MockConnector>",
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "connector": "<MockConnector>",
             "isConnected": true,
@@ -395,7 +389,6 @@ describe('useConnect', () => {
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
           {
-            "activeConnector": undefined,
             "address": undefined,
             "connector": undefined,
             "isConnected": false,

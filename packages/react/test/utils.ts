@@ -35,7 +35,7 @@ export async function actConnect(config: {
 
   await act(async () => {
     const connect = getConnect(utils)
-    connect.connect?.(connector ?? connect.connectors?.[0])
+    await connect.connectAsync?.(connector ?? connect.connectors?.[0])
   })
 
   const { waitFor } = utils
@@ -51,7 +51,7 @@ export async function actDisconnect(config: {
 
   await act(async () => {
     const disconnect = getDisconnect(utils)
-    disconnect.disconnect?.()
+    disconnect.disconnectAsync?.()
   })
 
   const { waitFor } = utils

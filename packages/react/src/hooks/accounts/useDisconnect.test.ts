@@ -55,7 +55,7 @@ describe('useDisconnect', () => {
       const { result, waitFor } = utils
 
       await actConnect({ utils })
-      expect(result.current.account.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `"<MockConnector>"`,
       )
 
@@ -64,7 +64,7 @@ describe('useDisconnect', () => {
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
 
-      expect(result.current.account.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `undefined`,
       )
       expect(result.current.disconnect).toMatchInlineSnapshot(`
@@ -87,7 +87,7 @@ describe('useDisconnect', () => {
       const { result, waitFor } = utils
 
       await actConnect({ utils })
-      expect(result.current.account.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `"<MockConnector>"`,
       )
 
@@ -96,7 +96,7 @@ describe('useDisconnect', () => {
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
 
-      expect(result.current.account.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `undefined`,
       )
       expect(result.current.disconnect).toMatchInlineSnapshot(`
