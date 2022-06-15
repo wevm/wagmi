@@ -37,7 +37,6 @@ function App() {
 
 ```tsx
 {
-  activeConnector: Connector
   connect: (
     connectorOrConfig: Connector | { connector?: Connector; chainId?: number },
   ) => void
@@ -63,20 +62,13 @@ function App() {
     provider: Provider
   }
   error?: Error
-  isConnected: boolean
-  isConnecting: boolean
-  isDisconnected: boolean
+  isError: boolean
   isIdle: boolean
-  isReconnecting: boolean
+  isLoading: boolean
+  isSuccess: boolean
   pendingConnector: Connector
   reset: () => void
-  status:
-    | 'error'
-    | 'idle'
-    | 'connected'
-    | 'connecting'
-    | 'disconnected'
-    | 'reconnecting'
+  status: 'idle' | 'error' | 'loading' | 'success'
 }
 ```
 
