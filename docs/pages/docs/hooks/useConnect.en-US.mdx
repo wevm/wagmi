@@ -9,26 +9,21 @@ import { useConnect } from 'wagmi'
 ## Usage
 
 ```tsx
-import { useConnect } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 
 function App() {
-  const {
-    activeConnector,
-    connect,
-    connectors,
-    error,
-    isConnecting,
-    pendingConnector,
-  } = useConnect()
+  const { connector } = useAccount()
+  const { connect, connectors, error, isLoading, pendingConnector } =
+    useConnect()
 
   return (
     <>
-      {activeConnector && <div>Connected to {activeConnector.name}</div>}
+      {connector && <div>Connected to {connector.name}</div>}
 
       {connectors.map((x) => (
         <button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>
           {x.name}
-          {isConnecting && pendingConnector?.id === x.id && ' (connecting)'}
+          {isLoading && pendingConnector?.id === x.id && ' (connecting)'}
         </button>
       ))}
 
@@ -117,38 +112,6 @@ function App() {
 }
 ```
 
-### onBeforeConnect (optional)
-
-Function to invoke before connect and is passed same variables connect function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a connect failure.
-
-```tsx {5-7}
-import { useConnect } from 'wagmi'
-
-function App() {
-  const connect = useConnect({
-    onBeforeConnect(connector) {
-      console.log('Before Connect', connector)
-    },
-  })
-}
-```
-
-### onConnect (optional)
-
-Function to invoke when connect is successful.
-
-```tsx {5-7}
-import { useConnect } from 'wagmi'
-
-function App() {
-  const connect = useConnect({
-    onConnect(data) {
-      console.log('Connect', data)
-    },
-  })
-}
-```
-
 ### onError (optional)
 
 Function to invoke when an error is thrown while connecting.
@@ -165,6 +128,22 @@ function App() {
 }
 ```
 
+### onMutate (optional)
+
+Function to invoke before connect and is passed same variables connect function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a connect failure.
+
+```tsx {5-7}
+import { useConnect } from 'wagmi'
+
+function App() {
+  const connect = useConnect({
+    onMutate(connector) {
+      console.log('Before Connect', connector)
+    },
+  })
+}
+```
+
 ### onSettled (optional)
 
 Function to invoke when connect is settled (either successfully connected, or an error has thrown).
@@ -176,6 +155,22 @@ function App() {
   const connect = useConnect({
     onSettled(data, error) {
       console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when connect is successful.
+
+```tsx {5-7}
+import { useConnect } from 'wagmi'
+
+function App() {
+  const connect = useConnect({
+    onSuccess(data) {
+      console.log('Connect', data)
     },
   })
 }

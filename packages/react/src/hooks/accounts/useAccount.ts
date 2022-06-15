@@ -5,6 +5,7 @@ import { useForceUpdate } from '../utils'
 import { useClient } from '../../context'
 
 export type UseAccountConfig = {
+  /** Function to invoke when connected */
   onConnected?: ({
     address,
     connector,
@@ -12,6 +13,7 @@ export type UseAccountConfig = {
     address?: GetAccountResult['address']
     connector?: GetAccountResult['connector']
   }) => void
+  /** Function to invoke when disconnected */
   onDisconnected?: () => void
 }
 
@@ -47,7 +49,7 @@ export function useAccount({
       },
     )
     return unsubscribe
-  }, [forceUpdate, subscribe])
+  }, [forceUpdate, onConnected, onDisconnected, subscribe])
 
   return {
     address,

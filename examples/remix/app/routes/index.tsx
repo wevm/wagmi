@@ -5,13 +5,13 @@ import { useIsMounted } from '../hooks'
 
 export default function Index() {
   const isMounted = useIsMounted()
-  const { data } = useAccount()
+  const { isConnected } = useAccount()
 
   return (
     <>
       <Connect />
 
-      {isMounted && data?.address && (
+      {isMounted && isConnected && (
         <>
           <Account />
           <NetworkSwitcher />

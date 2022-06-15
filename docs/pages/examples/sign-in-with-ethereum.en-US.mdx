@@ -206,7 +206,7 @@ import { useAccount, useNetwork, useSignMessage } from 'wagmi'
 import { SiweMessage } from 'siwe'
 
 export function Profile() {
-  const { data: accountData } = useAccount()
+  const { address, isConnected } = useAccount()
   const { activeChain } = useNetwork()
 
   const [state, setState] = React.useState<{
@@ -218,7 +218,6 @@ export function Profile() {
 
   const signIn = React.useCallback(async () => {
     try {
-      const address = accountData?.address
       const chainId = activeChain?.id
       if (!address || !chainId) return
 
@@ -271,7 +270,7 @@ export function Profile() {
     return () => window.removeEventListener('focus', handler)
   }, [])
 
-  if (accountData) {
+  if (isConnected) {
     return (
       <div>
         {/* Account content goes here */}

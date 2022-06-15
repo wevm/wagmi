@@ -7,20 +7,20 @@ import { useIsMounted } from '../../hooks'
 
 export function Account() {
   const isMounted = useIsMounted()
-  const { data: accountData } = useAccount()
+  const { address, connector } = useAccount()
   const { data: ensNameData } = useEnsName({
-    address: accountData?.address,
+    address,
     chainId: 1,
   })
   const { data: ensAvatarData } = useEnsAvatar({
-    addressOrName: accountData?.address,
+    addressOrName: address,
     chainId: 1,
   })
   const { disconnect } = useDisconnect()
 
-  if (!accountData?.address || !isMounted) return null
+  if (!address || !isMounted) return null
 
-  const formattedAddress = formatAddress(accountData.address)
+  const formattedAddress = formatAddress(address)
 
   return (
     <Stack
@@ -48,10 +48,8 @@ export function Account() {
             gap="1"
           >
             Connected to{' '}
-            <Skeleton loading={!(isMounted && accountData?.connector)}>
-              {isMounted && accountData?.connector
-                ? accountData.connector.name
-                : 'Wallet Name'}
+            <Skeleton loading={!(isMounted && connector)}>
+              {isMounted && connector ? connector.name : 'Wallet Name'}
             </Skeleton>
           </Box>
         </Stack>

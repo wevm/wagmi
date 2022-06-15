@@ -3,13 +3,13 @@ import { useAccount } from 'wagmi'
 import { Account, Connect, NetworkSwitcher } from './components'
 
 export function App() {
-  const { data } = useAccount()
+  const { isConnected } = useAccount()
 
   return (
     <>
       <Connect />
 
-      {data && (
+      {isConnected && (
         <>
           <Account />
           <NetworkSwitcher />

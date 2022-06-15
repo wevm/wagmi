@@ -8,7 +8,7 @@ import { formatAddress } from '../../lib/address'
 
 export function SignInWithEthereum() {
   const [address, setAddress] = React.useState<string>()
-  const { data: accountData } = useAccount()
+  const accountData = useAccount()
   const { activeChain } = useNetwork()
 
   React.useEffect(() => {
@@ -43,7 +43,7 @@ export function SignInWithEthereum() {
     </Stack>
   ) : null
 
-  if (accountData)
+  if (accountData.address)
     return (
       <PreviewWrapper>
         <Stack space="6">
