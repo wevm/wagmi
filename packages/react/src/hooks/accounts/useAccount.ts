@@ -1,17 +1,24 @@
 import * as React from 'react'
-import { getAccount, watchAccount } from '@wagmi/core'
+import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
 
 import { useForceUpdate } from '../utils'
 import { useClient } from '../../context'
 
 export type UseAccountConfig = {
-  onConnected?: () => void
+  onConnected?: ({
+    address,
+    connector,
+  }: {
+    address?: GetAccountResult['address']
+    connector?: GetAccountResult['connector']
+  }) => void
   onDisconnected?: () => void
 }
 
-// TODO
-// eslint-disable-next-line no-empty-pattern
-export function useAccount({}: UseAccountConfig = {}) {
+export function useAccount({
+  onConnected,
+  onDisconnected,
+}: UseAccountConfig = {}) {
   const forceUpdate = useForceUpdate()
 
   const { address, connector } = getAccount()
@@ -29,7 +36,12 @@ export function useAccount({}: UseAccountConfig = {}) {
       (state) => ({
         status: state.status,
       }),
-      forceUpdate,
+      ({ status }, { status: prevStatus }) => {
+        if (status === 'connected') onConnected?.(getAccount())
+        if (prevStatus !== 'connecting' && status === 'disconnected')
+          onDisconnected?.()
+        forceUpdate()
+      },
       {
         equalityFn: (selected, previous) => selected.status === previous.status,
       },

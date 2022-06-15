@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom'
 
+jest.retryTimes(3)
+
 // Make dates stable across runs
 Date.now = jest.fn(() => new Date(Date.UTC(2022, 1, 1)).valueOf())
 

@@ -104,6 +104,30 @@ describe('useAccount', () => {
       `)
     })
 
+    it('invokes callbacks on connect and disconnect', async () => {
+      const connectListener = jest.fn()
+      const disconnectListener = jest.fn()
+      const utils = renderHook(() =>
+        useAccountWithConnectAndDisconnect({
+          onConnected: connectListener,
+          onDisconnected: disconnectListener,
+        }),
+      )
+      const { result } = utils
+
+      await actConnect({ utils })
+
+      const { address, connector } = result.current.account
+      expect(disconnectListener).toBeCalledTimes(0)
+      expect(connectListener).toBeCalledTimes(1)
+      expect(connectListener).toBeCalledWith({ address, connector })
+
+      await actDisconnect({ utils })
+
+      expect(disconnectListener).toBeCalledTimes(1)
+      expect(connectListener).toBeCalledTimes(1)
+    })
+
     it('status lifecycle', async () => {
       const client = setupClient({ autoConnect: true })
 

@@ -32,7 +32,10 @@ describe('useConnect', () => {
 
         await act(async () => result.current.connect.connect())
         await waitFor(() =>
-          expect(result.current.connect.isSuccess).toBeTruthy(),
+          expect(
+            result.current.connect.isSuccess &&
+              result.current.account.isConnected,
+          ).toBeTruthy(),
         )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
@@ -87,7 +90,12 @@ describe('useConnect', () => {
         await act(async () => {
           result.current.connect.connect()
         })
-        await waitFor(() => expect(result.current.connect.isError).toBeTruthy())
+        await waitFor(() =>
+          expect(
+            result.current.connect.isError &&
+              result.current.account.isDisconnected,
+          ).toBeTruthy(),
+        )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
           {
@@ -152,7 +160,10 @@ describe('useConnect', () => {
 
         await act(async () => result.current.connect.connect())
         await waitFor(() =>
-          expect(result.current.connect.isSuccess).toBeTruthy(),
+          expect(
+            result.current.connect.isSuccess &&
+              result.current.account.isConnected,
+          ).toBeTruthy(),
         )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
@@ -205,7 +216,10 @@ describe('useConnect', () => {
           result.current.connect.connect(mockConnector)
         })
         await waitFor(() =>
-          expect(result.current.connect.isSuccess).toBeTruthy(),
+          expect(
+            result.current.connect.isSuccess &&
+              result.current.account.isConnected,
+          ).toBeTruthy(),
         )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
@@ -259,7 +273,11 @@ describe('useConnect', () => {
           result.current.connect.connect({ chainId: 69 })
         })
 
-        await waitFor(() => result.current.connect.isSuccess)
+        await waitFor(
+          () =>
+            result.current.connect.isSuccess &&
+            result.current.account.isConnected,
+        )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
           {
@@ -312,7 +330,11 @@ describe('useConnect', () => {
           result.current.connect.connect({ chainId: 3 })
         })
 
-        await waitFor(() => result.current.connect.isSuccess)
+        await waitFor(
+          () =>
+            result.current.connect.isSuccess &&
+            result.current.account.isConnected,
+        )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
           {
@@ -364,7 +386,12 @@ describe('useConnect', () => {
         )
 
         await act(async () => result.current.connect.connect())
-        await waitFor(() => expect(result.current.connect.isError).toBeTruthy())
+        await waitFor(() =>
+          expect(
+            result.current.connect.isError &&
+              result.current.account.isDisconnected,
+          ).toBeTruthy(),
+        )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
           {
@@ -422,7 +449,11 @@ describe('useConnect', () => {
           `)
         })
 
-        await waitFor(() => result.current.connect.isSuccess)
+        await waitFor(
+          () =>
+            result.current.connect.isSuccess &&
+            result.current.account.isConnected,
+        )
       })
 
       it('uses deferred args', async () => {
