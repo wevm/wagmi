@@ -36,13 +36,13 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
   const { disconnect } = useDisconnect()
 
-  if (address)
+  if (isConnected)
     return (
       <div>
         Connected to {address}

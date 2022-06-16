@@ -5,9 +5,9 @@ import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'
 
 export function ConnectWallet() {
-  const { address } = useAccount()
+  const { isConnected } = useAccount()
 
-  if (address)
+  if (isConnected)
     return (
       <PreviewWrapper>
         <Account />

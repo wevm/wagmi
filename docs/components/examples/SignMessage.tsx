@@ -9,7 +9,7 @@ import { Account, WalletSelector } from '../web3'
 export function SignMessage() {
   const recoveredAddress = React.useRef<string>()
 
-  const { address } = useAccount()
+  const { isConnected } = useAccount()
   const {
     data: signMessageData,
     error,
@@ -22,7 +22,7 @@ export function SignMessage() {
     },
   })
 
-  if (address)
+  if (isConnected)
     return (
       <PreviewWrapper>
         <Account />

@@ -4,7 +4,7 @@ import { useIsMounted } from '../hooks'
 
 export function Connect() {
   const isMounted = useIsMounted()
-  const { connector } = useAccount()
+  const { connector, isConnected } = useAccount()
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
   const { disconnect } = useDisconnect()
@@ -12,9 +12,9 @@ export function Connect() {
   return (
     <div>
       <div>
-        {connector && (
+        {isConnected && (
           <button onClick={() => disconnect()}>
-            Disconnect from {connector.name}
+            Disconnect from {connector?.name}
           </button>
         )}
 

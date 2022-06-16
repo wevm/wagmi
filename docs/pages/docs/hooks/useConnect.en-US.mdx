@@ -12,13 +12,13 @@ import { useConnect } from 'wagmi'
 import { useAccount, useConnect } from 'wagmi'
 
 function App() {
-  const { connector } = useAccount()
+  const { connector, isConnected } = useAccount()
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
 
   return (
     <>
-      {connector && <div>Connected to {connector.name}</div>}
+      {isConnected && <div>Connected to {connector.name}</div>}
 
       {connectors.map((x) => (
         <button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>

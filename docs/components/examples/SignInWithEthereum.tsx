@@ -43,7 +43,7 @@ export function SignInWithEthereum() {
     </Stack>
   ) : null
 
-  if (accountData.address)
+  if (accountData.isConnected)
     return (
       <PreviewWrapper>
         <Stack space="6">
