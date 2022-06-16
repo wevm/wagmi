@@ -120,7 +120,11 @@ describe('useAccount', () => {
       const { address, connector } = result.current.account
       expect(disconnectListener).toBeCalledTimes(0)
       expect(connectListener).toBeCalledTimes(1)
-      expect(connectListener).toBeCalledWith({ address, connector })
+      expect(connectListener).toBeCalledWith({
+        address,
+        connector,
+        isReconnected: false,
+      })
 
       await actDisconnect({ utils })
 

@@ -8,9 +8,11 @@ The following changes were made to the `useAccount` configuration:
 
 The `onConnected` callback is invoked when the account connects.
 
+It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
+
 ```tsx
 const account = useAccount({
-  onConnected({ address, connector }) {
+  onConnected({ address, connector, isReconnected }) {
     console.log('Connected')
   },
 })

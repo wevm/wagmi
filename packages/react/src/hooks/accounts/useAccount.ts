@@ -9,9 +9,11 @@ export type UseAccountConfig = {
   onConnected?: ({
     address,
     connector,
+    isReconnected,
   }: {
     address?: GetAccountResult['address']
     connector?: GetAccountResult['connector']
+    isReconnected: boolean
   }) => void
   /** Function to invoke when disconnected */
   onDisconnected?: () => void
@@ -39,7 +41,13 @@ export function useAccount({
         status: state.status,
       }),
       ({ status }, { status: prevStatus }) => {
-        if (status === 'connected') onConnected?.(getAccount())
+        const { address, connector } = getAccount()
+        if (status === 'connected')
+          onConnected?.({
+            address,
+            connector,
+            isReconnected: prevStatus === 'reconnecting',
+          })
         if (prevStatus !== 'connecting' && status === 'disconnected')
           onDisconnected?.()
         forceUpdate()
