@@ -15,7 +15,7 @@ export type ClientConfig<
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
    */
-  connectors?: Connector[]
+  connectors?: (() => Connector[]) | Connector[]
   /** Interface for connecting to network */
   provider: ((config: { chainId?: number }) => TProvider) | TProvider
   /**
@@ -96,7 +96,8 @@ export class Client<
           [['zustand/subscribeWithSelector', never]]
         >(
           () => ({
-            connectors,
+            connectors:
+              typeof connectors === 'function' ? connectors() : connectors,
             provider:
               typeof provider === 'function' ? provider({ chainId }) : provider,
             status,
