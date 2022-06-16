@@ -5,6 +5,15 @@
 
 Removed the `chainId` parameter from `connectors` function on `createClient`.
 
+```diff
+const client = createClient({
+- connectors({ chainId }) {
++ connectors() {
+    ...
+  }
+})
+```
+
 If you previously derived RPC URLs from the `chainId` on `connectors`, you can now remove that logic as `wagmi` now handles RPC URLs internally when used with `configureChains`.
 
 ```diff
