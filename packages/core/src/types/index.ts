@@ -91,6 +91,7 @@ declare global {
   type InjectedProviderFlags = {
     isBraveWallet?: true
     isCoinbaseWallet?: true
+    isExodus?: true
     isFrame?: true
     isMetaMask?: true
     isOpera?: true

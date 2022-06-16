@@ -6,6 +6,7 @@ describe.each`
   ${{ isBraveWallet: true }}                                           | ${'Brave Wallet'}
   ${{ isBraveWallet: true, isMetaMask: true }}                         | ${'Brave Wallet'}
   ${{ isCoinbaseWallet: true }}                                        | ${'Coinbase Wallet'}
+  ${{ isExodus: true }}                                                | ${'Exodus'}
   ${{ isFrame: true }}                                                 | ${'Frame'}
   ${{ isTally: true }}                                                 | ${'Tally'}
   ${{ isTokenary: true, isMetaMask: true }}                            | ${'Tokenary'}
