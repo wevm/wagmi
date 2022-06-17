@@ -3,7 +3,7 @@
 'wagmi': minor
 ---
 
-Removed the `chainId` parameter from `connectors` function on `createClient`.
+**Breaking:** Removed the `chainId` parameter from `connectors` function on `createClient`.
 
 ```diff
 const client = createClient({
