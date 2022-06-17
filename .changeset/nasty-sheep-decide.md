@@ -2,7 +2,7 @@
 'wagmi': minor
 ---
 
-The following changes were made to the `useAccount` return value:
+**Breaking**: The following changes were made to the `useAccount` return value:
 
 ### The `data` value is now `address` & `connector`
 

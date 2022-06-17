@@ -2,7 +2,7 @@
 'wagmi': minor
 ---
 
-The following changes were made to the `useAccount` configuration:
+**Breaking**: The following changes were made to the `useAccount` configuration:
 
 ## `onConnected` has been added
 
