@@ -40,13 +40,15 @@ function App() {
 
 Function to invoke when account connects.
 
+It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
+
 ```tsx {5-7}
 import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({
-    onConnected(account) {
-      console.log('Connected', account)
+    onConnected({ address, connector, isReconnected }) {
+      console.log('Connected', { address, connector, isReconnected })
     },
   })
 }
