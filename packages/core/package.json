@@ -86,7 +86,6 @@
     }
   },
   "dependencies": {
-    "eventemitter3": "^4.0.7",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {

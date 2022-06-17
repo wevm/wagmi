@@ -1,7 +1,7 @@
-import { default as EventEmitter } from 'eventemitter3'
 import { Signer, providers } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
 
+import { EventEmitter } from '../../utils/eventemitter'
 import { UserRejectedRequestError } from '../../errors'
 
 export type MockProviderOptions = {
