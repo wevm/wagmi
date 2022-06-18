@@ -17,7 +17,7 @@ export type UseDisconnectConfig = {
   onSuccess?: (context: unknown) => void | Promise<unknown>
 }
 
-export const mutationKey = [{ entity: 'disconnect' }]
+export const mutationKey = [{ entity: 'disconnect' }] as const
 
 const mutationFn = () => disconnect()
 
