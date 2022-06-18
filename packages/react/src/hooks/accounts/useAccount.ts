@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
 
-import { useForceUpdate } from '../utils'
 import { useClient } from '../../context'
+import { useForceUpdate } from '../utils'
 
 export type UseAccountConfig = {
   /** Function to invoke when connected */
-  onConnected?: ({
+  onConnected?({
     address,
     connector,
     isReconnected,
@@ -14,9 +14,9 @@ export type UseAccountConfig = {
     address?: GetAccountResult['address']
     connector?: GetAccountResult['connector']
     isReconnected: boolean
-  }) => void
+  }): void
   /** Function to invoke when disconnected */
-  onDisconnected?: () => void
+  onDisconnected?(): void
 }
 
 export function useAccount({
@@ -37,24 +37,27 @@ export function useAccount({
   React.useEffect(() => {
     // Trigger update when status changes
     const unsubscribe = subscribe(
-      (state) => ({
-        status: state.status,
-      }),
-      ({ status }, { status: prevStatus }) => {
-        const { address, connector } = getAccount()
-        if (status === 'connected')
-          onConnected?.({
+      (state) => state.status,
+      (status, prevStatus) => {
+        if (!!onConnected && status === 'connected') {
+          const { address, connector } = getAccount()
+          onConnected({
             address,
             connector,
             isReconnected: prevStatus === 'reconnecting',
           })
-        if (prevStatus !== 'connecting' && status === 'disconnected')
-          onDisconnected?.()
+        }
+
+        if (
+          !!onDisconnected &&
+          prevStatus !== 'connecting' &&
+          status === 'disconnected'
+        )
+          onDisconnected()
+
         forceUpdate()
       },
-      {
-        equalityFn: (selected, previous) => selected.status === previous.status,
-      },
+      { equalityFn: (selected, previous) => selected === previous },
     )
     return unsubscribe
   }, [forceUpdate, onConnected, onDisconnected, subscribe])
@@ -67,5 +70,5 @@ export function useAccount({
     isDisconnected: status === 'disconnected',
     isReconnecting: status === 'reconnecting',
     status: status,
-  }
+  } as const
 }
