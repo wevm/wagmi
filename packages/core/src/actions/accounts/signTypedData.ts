@@ -7,24 +7,17 @@ import {
 } from '../../errors'
 import { fetchSigner } from './fetchSigner'
 
-export interface TypedDataDomain {
-  name?: string
-  version?: string
-  chainId?: BigNumberish
-  verifyingContract?: string
-  salt?: BytesLike
-}
-
-export interface TypedDataField {
-  name: string
-  type: string
-}
-
 export type SignTypedDataArgs = {
   /** Domain or domain signature for origin or contract */
-  domain: TypedDataDomain
+  domain: {
+    name?: string
+    version?: string
+    chainId?: BigNumberish
+    verifyingContract?: string
+    salt?: BytesLike
+  }
   /** Named list of all type definitions */
-  types: Record<string, Array<TypedDataField>>
+  types: Record<string, Array<{ name: string; type: string }>>
   /** Data to sign */
   value: Record<string, any>
 }

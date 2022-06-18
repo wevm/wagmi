@@ -20,6 +20,7 @@
   "sideEffects": false,
   "main": "dist/wagmi.cjs.js",
   "module": "dist/wagmi.esm.js",
+  "types": "dist/wagmi.cjs.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
