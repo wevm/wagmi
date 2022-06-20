@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
+
 import { shallow } from '../../utils'
 
 const isObject = (obj: unknown) =>
@@ -46,8 +47,9 @@ export function useSyncExternalStoreWithTracked<Snapshot, Selection = Snapshot>(
               configurable: false,
               enumerable: true,
               get: () => {
-                if (!trackedKeys.current.includes(key))
+                if (!trackedKeys.current.includes(key)) {
                   trackedKeys.current.push(key)
+                }
                 return value
               },
             },
