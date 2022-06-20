@@ -10,6 +10,8 @@ describe.each`
   ${{ isFrame: true }}                                                 | ${'Frame'}
   ${{ isTally: true }}                                                 | ${'Tally'}
   ${{ isTokenary: true, isMetaMask: true }}                            | ${'Tokenary'}
+  ${{ isTokenPocket: true }}                                           | ${'TokenPocket'}
+  ${{ isTokenPocket: true, isMetaMask: true }}                         | ${'TokenPocket'}
   ${{ isTrust: true }}                                                 | ${'Trust Wallet'}
   ${{ isMetaMask: true }}                                              | ${'MetaMask'}
   ${{ providers: [{ isMetaMask: true }, { isCoinbaseWallet: true }] }} | ${['MetaMask', 'Coinbase Wallet']}

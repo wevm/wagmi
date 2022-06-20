@@ -98,6 +98,7 @@ declare global {
     isTally?: true
     isTokenary?: true
     isTrust?: true
+    isTokenPocket?: true
   }
 
   type InjectedProviders = InjectedProviderFlags & {

@@ -9,6 +9,7 @@ export function getInjectedName(ethereum?: Window['ethereum']) {
     if (provider.isOpera) return 'Opera'
     if (provider.isTally) return 'Tally'
     if (provider.isTokenary) return 'Tokenary'
+    if (provider.isTokenPocket) return 'TokenPocket'
     if (provider.isTrust) return 'Trust Wallet'
     if (provider.isMetaMask) return 'MetaMask'
   }
