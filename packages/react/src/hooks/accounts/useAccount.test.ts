@@ -109,8 +109,8 @@ describe('useAccount', () => {
       const disconnectListener = jest.fn()
       const utils = renderHook(() =>
         useAccountWithConnectAndDisconnect({
-          onConnected: connectListener,
-          onDisconnected: disconnectListener,
+          onConnect: connectListener,
+          onDisconnect: disconnectListener,
         }),
       )
       const { result } = utils

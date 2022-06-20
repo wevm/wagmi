@@ -36,7 +36,7 @@ function App() {
 
 ## Configuration
 
-### onConnected (optional)
+### onConnect (optional)
 
 Function to invoke when account connects.
 
@@ -47,14 +47,14 @@ import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({
-    onConnected({ address, connector, isReconnected }) {
+    onConnect({ address, connector, isReconnected }) {
       console.log('Connected', { address, connector, isReconnected })
     },
   })
 }
 ```
 
-### onDisconnected (optional)
+### onDisconnect (optional)
 
 Function to invoke when account disconnects.
 
@@ -63,7 +63,7 @@ import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({
-    onDisconnected() {
+    onDisconnect() {
       console.log('Disconnected')
     },
   })

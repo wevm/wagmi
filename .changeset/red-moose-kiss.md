@@ -4,27 +4,27 @@
 
 **Breaking**: The following changes were made to the `useAccount` configuration:
 
-## `onConnected` has been added
+## `onConnect` has been added
 
-The `onConnected` callback is invoked when the account connects.
+The `onConnect` callback is invoked when the account connects.
 
 It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
 
 ```tsx
 const account = useAccount({
-  onConnected({ address, connector, isReconnected }) {
+  onConnect({ address, connector, isReconnected }) {
     console.log('Connected')
   },
 })
 ```
 
-## `onDisconnected` has been added
+## `onDisconnect` has been added
 
-The `onDisconnected` callback is invoked when the account disconnected.
+The `onDisconnect` callback is invoked when the account disconnected.
 
 ```tsx
 const account = useAccount({
-  onDisconnected() {
+  onDisconnect() {
     console.log('Disconnected')
   },
 })

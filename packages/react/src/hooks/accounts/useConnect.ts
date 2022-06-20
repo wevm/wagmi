@@ -59,14 +59,8 @@ export function useConnect({
   React.useEffect(() => {
     // Trigger update when connectors change
     const unsubscribe = client.subscribe(
-      (state) => ({
-        connectors: state.connectors,
-      }),
+      (state) => state.connectors,
       forceUpdate,
-      {
-        equalityFn: (selected, previous) =>
-          selected.connectors === previous.connectors,
-      },
     )
     return unsubscribe
   }, [client, forceUpdate])

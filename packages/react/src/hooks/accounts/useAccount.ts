@@ -2,11 +2,11 @@ import * as React from 'react'
 import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
 
 import { useClient } from '../../context'
-import { useForceUpdate } from '../utils'
+import { useSyncExternalStoreWithTracked } from '../utils'
 
 export type UseAccountConfig = {
   /** Function to invoke when connected */
-  onConnected?({
+  onConnect?({
     address,
     connector,
     isReconnected,
@@ -16,32 +16,27 @@ export type UseAccountConfig = {
     isReconnected: boolean
   }): void
   /** Function to invoke when disconnected */
-  onDisconnected?(): void
+  onDisconnect?(): void
 }
 
-export function useAccount({
-  onConnected,
-  onDisconnected,
-}: UseAccountConfig = {}) {
-  const forceUpdate = useForceUpdate()
+export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
+  const account = useSyncExternalStoreWithTracked(
+    watchAccount,
+    getAccount,
+    // TODO(jxom): SSR
+    getAccount,
+  )
 
-  const { address, connector } = getAccount()
-  const { status, subscribe } = useClient()
-
-  React.useEffect(() => {
-    // Trigger update when account (address/connector) changes
-    const unwatch = watchAccount(forceUpdate)
-    return unwatch
-  }, [forceUpdate])
+  const { subscribe } = useClient()
 
   React.useEffect(() => {
     // Trigger update when status changes
     const unsubscribe = subscribe(
       (state) => state.status,
       (status, prevStatus) => {
-        if (!!onConnected && status === 'connected') {
+        if (!!onConnect && status === 'connected') {
           const { address, connector } = getAccount()
-          onConnected({
+          onConnect({
             address,
             connector,
             isReconnected: prevStatus === 'reconnecting',
@@ -49,26 +44,15 @@ export function useAccount({
         }
 
         if (
-          !!onDisconnected &&
+          !!onDisconnect &&
           prevStatus !== 'connecting' &&
           status === 'disconnected'
         )
-          onDisconnected()
-
-        forceUpdate()
+          onDisconnect()
       },
-      { equalityFn: (selected, previous) => selected === previous },
     )
     return unsubscribe
-  }, [forceUpdate, onConnected, onDisconnected, subscribe])
+  }, [onConnect, onDisconnect, subscribe])
 
-  return {
-    address,
-    connector,
-    isConnected: status === 'connected',
-    isConnecting: status === 'connecting',
-    isDisconnected: status === 'disconnected',
-    isReconnecting: status === 'reconnecting',
-    status: status,
-  } as const
+  return account
 }
