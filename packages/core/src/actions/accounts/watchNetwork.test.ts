@@ -43,7 +43,7 @@ describe('watchNetwork', () => {
             "nativeCurrency": {
               "decimals": 18,
               "name": "Rinkeby Ether",
-              "symbol": "rETH",
+              "symbol": "RIN",
             },
             "network": "rinkeby",
             "rpcUrls": {
@@ -110,7 +110,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Ropsten Ether",
-                "symbol": "ropETH",
+                "symbol": "ROP",
               },
               "network": "ropsten",
               "rpcUrls": {
@@ -143,7 +143,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Rinkeby Ether",
-                "symbol": "rETH",
+                "symbol": "RIN",
               },
               "network": "rinkeby",
               "rpcUrls": {
@@ -176,7 +176,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Goerli Ether",
-                "symbol": "gETH",
+                "symbol": "GOR",
               },
               "network": "goerli",
               "rpcUrls": {
@@ -206,7 +206,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Kovan Ether",
-                "symbol": "kETH",
+                "symbol": "KOV",
               },
               "network": "kovan",
               "rpcUrls": {
@@ -308,7 +308,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Ropsten Ether",
-                "symbol": "ropETH",
+                "symbol": "ROP",
               },
               "network": "ropsten",
               "rpcUrls": {
@@ -341,7 +341,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Rinkeby Ether",
-                "symbol": "rETH",
+                "symbol": "RIN",
               },
               "network": "rinkeby",
               "rpcUrls": {
@@ -374,7 +374,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Goerli Ether",
-                "symbol": "gETH",
+                "symbol": "GOR",
               },
               "network": "goerli",
               "rpcUrls": {
@@ -404,7 +404,7 @@ describe('watchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Kovan Ether",
-                "symbol": "kETH",
+                "symbol": "KOV",
               },
               "network": "kovan",
               "rpcUrls": {

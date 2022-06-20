@@ -6,9 +6,20 @@
   "repository": "tmm/wagmi",
   "author": "awkweb.eth",
   "ethereum": "awkweb.eth",
+  "funding": [
+    {
+      "type": "gitcoin",
+      "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/tmm"
+    }
+  ],
   "sideEffects": false,
   "main": "dist/wagmi-core.cjs.js",
   "module": "dist/wagmi-core.esm.js",
+  "types": "dist/wagmi-core.cjs.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {

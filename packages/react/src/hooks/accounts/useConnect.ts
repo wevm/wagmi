@@ -24,9 +24,8 @@ export type UseConnectConfig = {
   onSettled?: MutationOptions['onSettled']
 }
 
-export const mutationKey = (args: UseConnectArgs) => [
-  { entity: 'connect', ...args },
-]
+export const mutationKey = (args: UseConnectArgs) =>
+  [{ entity: 'connect', ...args }] as const
 
 const mutationFn = (args: UseConnectArgs) => {
   const { connector, chainId } = args

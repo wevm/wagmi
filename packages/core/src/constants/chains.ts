@@ -47,7 +47,8 @@ export const ropsten: Chain = {
   id: chainId.ropsten,
   name: 'Ropsten',
   network: 'ropsten',
-  nativeCurrency: { name: 'Ropsten Ether', symbol: 'ropETH', decimals: 18 },
+  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  nativeCurrency: { name: 'Ropsten Ether', symbol: 'ROP', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.ropsten,
     infura: infuraRpcUrls.ropsten,
@@ -71,7 +72,8 @@ export const rinkeby: Chain = {
   id: chainId.rinkeby,
   name: 'Rinkeby',
   network: 'rinkeby',
-  nativeCurrency: { name: 'Rinkeby Ether', symbol: 'rETH', decimals: 18 },
+  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  nativeCurrency: { name: 'Rinkeby Ether', symbol: 'RIN', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.rinkeby,
     infura: infuraRpcUrls.rinkeby,
@@ -95,7 +97,8 @@ export const goerli: Chain = {
   id: chainId.goerli,
   name: 'Goerli',
   network: 'goerli',
-  nativeCurrency: { name: 'Goerli Ether', symbol: 'gETH', decimals: 18 },
+  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  nativeCurrency: { name: 'Goerli Ether', symbol: 'GOR', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.goerli,
     infura: infuraRpcUrls.goerli,
@@ -119,7 +122,7 @@ export const kovan: Chain = {
   id: chainId.kovan,
   name: 'Kovan',
   network: 'kovan',
-  nativeCurrency: { name: 'Kovan Ether', symbol: 'kETH', decimals: 18 },
+  nativeCurrency: { name: 'Kovan Ether', symbol: 'KOV', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.kovan,
     infura: infuraRpcUrls.kovan,
@@ -228,9 +231,9 @@ export const polygonMumbai: Chain = {
 
 export const arbitrum: Chain = {
   id: chainId.arbitrum,
-  name: 'Arbitrum',
+  name: 'Arbitrum One',
   network: 'arbitrum',
-  nativeCurrency: { name: 'Ether', symbol: 'AETH', decimals: 18 },
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.arbitrum,
     infura: infuraRpcUrls.arbitrum,
