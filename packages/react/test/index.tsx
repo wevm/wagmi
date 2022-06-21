@@ -72,7 +72,7 @@ export {
   setupClient,
   actConnect,
   actDisconnect,
-  actNetwork,
+  actSwitchNetwork,
   getUnclaimedTokenId,
 } from './utils'
 export {

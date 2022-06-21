@@ -3,7 +3,7 @@ import { connect } from '@wagmi/core'
 import {
   actConnect,
   actDisconnect,
-  actNetwork,
+  actSwitchNetwork,
   renderHook,
   setupClient,
 } from '../../../test'
@@ -16,7 +16,7 @@ function useSignerWithAccount() {
   return {
     connect: useConnect(),
     disconnect: useDisconnect(),
-    network: useSwitchNetwork(),
+    switchNetwork: useSwitchNetwork(),
     signer: useSigner(),
   }
 }
@@ -173,7 +173,7 @@ describe('useSigner', () => {
         }
       `)
 
-      await actNetwork({ utils, chainId: 1 })
+      await actSwitchNetwork({ utils, chainId: 1 })
 
       await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
 

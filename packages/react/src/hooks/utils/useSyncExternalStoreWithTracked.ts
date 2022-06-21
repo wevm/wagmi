@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
-import { shallowEqual } from '../../utils'
+import { deepEqual } from '../../utils'
 
 const isPlainObject = (obj: unknown) =>
   typeof obj === 'object' && !Array.isArray(obj)
@@ -13,8 +13,7 @@ export function useSyncExternalStoreWithTracked<
   subscribe: (onStoreChange: () => void) => () => void,
   getSnapshot: () => Snapshot,
   getServerSnapshot: undefined | null | (() => Snapshot) = getSnapshot,
-  isEqual: (a: Selection, b: Selection) => boolean = (a, b) =>
-    shallowEqual(a, b),
+  isEqual: (a: Selection, b: Selection) => boolean = (a, b) => deepEqual(a, b),
 ) {
   const trackedKeys = useRef<string[]>([])
   const result = useSyncExternalStoreWithSelector(

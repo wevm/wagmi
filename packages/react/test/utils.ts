@@ -63,13 +63,13 @@ export async function actDisconnect(config: {
   await waitFor(() => expect(getDisconnect(utils).isSuccess).toBeTruthy())
 }
 
-export async function actNetwork(config: {
+export async function actSwitchNetwork(config: {
   chainId: number
   utils: ReturnType<typeof renderHook>
 }) {
   const chainId = config.chainId
   const getNetwork = (utils: ReturnType<typeof renderHook>) =>
-    (utils.result.current as any)?.network || utils.result.current
+    (utils.result.current as any)?.switchNetwork || utils.result.current
   const utils = config.utils
 
   await act(async () => {
