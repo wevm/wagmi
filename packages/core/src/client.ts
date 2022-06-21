@@ -1,10 +1,8 @@
-import { getDefaultProvider } from 'ethers'
 import { Mutate, StoreApi, default as create } from 'zustand/vanilla'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 
 import { Connector, ConnectorData, InjectedConnector } from './connectors'
 import { ClientStorage, createStorage, noopStorage } from './storage'
-import { warn } from './utils'
 import { Provider, WebSocketProvider } from './types'
 
 export type ClientConfig<
@@ -17,12 +15,9 @@ export type ClientConfig<
    * Connectors used for linking accounts
    * @default [new InjectedConnector()]
    */
-  connectors?: ((config: { chainId?: number }) => Connector[]) | Connector[]
-  /**
-   * Interface for connecting to network
-   * @default (config) => getDefaultProvider(config.chainId)
-   */
-  provider?: ((config: { chainId?: number }) => TProvider) | TProvider
+  connectors?: (() => Connector[]) | Connector[]
+  /** Interface for connecting to network */
+  provider: ((config: { chainId?: number }) => TProvider) | TProvider
   /**
    * Custom storage for data persistance
    * @default window.localStorage
@@ -71,19 +66,13 @@ export class Client<
   constructor({
     autoConnect = false,
     connectors = [new InjectedConnector()],
-    provider = (config) => {
-      try {
-        return <TProvider>getDefaultProvider(config.chainId)
-      } catch {
-        return <TProvider>getDefaultProvider()
-      }
-    },
+    provider,
     storage = createStorage({
       storage:
         typeof window !== 'undefined' ? window.localStorage : noopStorage,
     }),
     webSocketProvider,
-  }: ClientConfig<TProvider, TWebSocketProvider> = {}) {
+  }: ClientConfig<TProvider, TWebSocketProvider>) {
     // Check status for autoConnect flag
     let status: State<TProvider, TWebSocketProvider>['status'] = 'disconnected'
     let chainId: number | undefined
@@ -99,16 +88,6 @@ export class Client<
       } catch (_error) {}
     }
 
-    // Evaluate initial store values
-    const connectors_ =
-      typeof connectors === 'function' ? connectors({ chainId }) : connectors
-    const provider_ =
-      typeof provider === 'function' ? provider({ chainId }) : provider
-    const webSocketProvider_ =
-      typeof webSocketProvider === 'function'
-        ? webSocketProvider({ chainId })
-        : webSocketProvider
-
     // Create store
     this.store = create(
       subscribeWithSelector(
@@ -117,10 +96,15 @@ export class Client<
           [['zustand/subscribeWithSelector', never]]
         >(
           () => ({
-            connectors: connectors_,
-            provider: provider_,
+            connectors:
+              typeof connectors === 'function' ? connectors() : connectors,
+            provider:
+              typeof provider === 'function' ? provider({ chainId }) : provider,
             status,
-            webSocketProvider: webSocketProvider_,
+            webSocketProvider:
+              typeof webSocketProvider === 'function'
+                ? webSocketProvider({ chainId })
+                : webSocketProvider,
           }),
           {
             name: storeKey,
@@ -198,7 +182,6 @@ export class Client<
   clearState() {
     this.setState((x) => ({
       ...x,
-      chains: undefined,
       connector: undefined,
       data: undefined,
       error: undefined,
@@ -314,7 +297,7 @@ export let client: Client<Provider, WebSocketProvider>
 export function createClient<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
->(config?: ClientConfig<TProvider, TWebSocketProvider>) {
+>(config: ClientConfig<TProvider, TWebSocketProvider>) {
   const client_ = new Client<TProvider, TWebSocketProvider>(config)
   client = client_ as unknown as Client<Provider, WebSocketProvider>
   return client_
@@ -325,8 +308,9 @@ export function getClient<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >() {
   if (!client) {
-    warn('No client defined. Falling back to default client.')
-    return new Client<TProvider, TWebSocketProvider>()
+    throw new Error(
+      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/docs/client',
+    )
   }
   return client as unknown as Client<TProvider, TWebSocketProvider>
 }

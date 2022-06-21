@@ -14,8 +14,6 @@ export type Chain = {
   name: string
   /** Internal network name */
   network: string
-  /** ENS registry address */
-  ensAddress?: string
   /** Currency used by chain */
   nativeCurrency?: AddEthereumChainParameter['nativeCurrency']
   /** Collection of RPC endpoints */
@@ -30,11 +28,20 @@ export type Chain = {
     [key: string]: BlockExplorer
     default: BlockExplorer
   }
+  /** ENS registry */
+  ens?: {
+    address: string
+  }
+  /** Chain multicall contract */
+  multicall?: {
+    address: string
+    blockCreated: number
+  }
   /** Flag for test networks */
   testnet?: boolean
 }
 
-export type ChainProvider<
+export type ChainProviderFn<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
   TChain extends Chain = Chain,
@@ -51,8 +58,10 @@ export type FallbackProviderConfig = Omit<
 export type ProviderWithFallbackConfig<TProvider extends Provider = Provider> =
   TProvider & FallbackProviderConfig
 
-export type Provider = providers.BaseProvider
-export type WebSocketProvider = providers.WebSocketProvider
+export type Provider = providers.BaseProvider & { chains?: Chain[] }
+export type WebSocketProvider = providers.WebSocketProvider & {
+  chains?: Chain[]
+}
 
 export type Unit = typeof units[number]
 

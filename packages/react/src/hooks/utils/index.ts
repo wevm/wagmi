@@ -1,3 +1,3 @@
 export { useChainId } from './useChainId'
 export { useForceUpdate } from './useForceUpdate'
-export { useQuery } from './useQuery'
+export { useBaseQuery, useQuery, useInfiniteQuery } from './query'

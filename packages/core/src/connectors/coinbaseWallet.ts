@@ -6,7 +6,6 @@ import type {
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
-import { allChains } from '../constants'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -166,9 +165,8 @@ export class CoinbaseWalletConnector extends Connector<
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
-      const chains = [...this.chains, ...allChains]
       return (
-        chains.find((x) => x.id === chainId) ?? {
+        this.chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,

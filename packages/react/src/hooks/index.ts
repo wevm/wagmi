@@ -10,9 +10,12 @@ export {
 } from './accounts'
 
 export {
+  paginatedIndexesConfig,
   useContract,
   useContractEvent,
+  useContractInfiniteReads,
   useContractRead,
+  useContractReads,
   useContractWrite,
   useToken,
 } from './contracts'
@@ -25,4 +28,4 @@ export { useProvider, useWebSocketProvider } from './providers'
 
 export { useSendTransaction, useWaitForTransaction } from './transactions'
 
-export { useChainId, useQuery } from './utils'
+export { useChainId, useBaseQuery, useQuery, useInfiniteQuery } from './utils'

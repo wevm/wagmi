@@ -9,13 +9,16 @@ export {
 export type { CreateClientConfig, WagmiConfigProps } from './context'
 
 export {
+  paginatedIndexesConfig,
   useAccount,
   useBalance,
   useBlockNumber,
   useConnect,
   useContract,
   useContractEvent,
+  useContractInfiniteReads,
   useContractRead,
+  useContractReads,
   useContractWrite,
   useDisconnect,
   useEnsAddress,
@@ -23,6 +26,7 @@ export {
   useEnsName,
   useEnsResolver,
   useFeeData,
+  useInfiniteQuery,
   useNetwork,
   useProvider,
   useQuery,
@@ -52,6 +56,7 @@ export {
   erc721ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
+  readContracts,
   AddChainError,
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
@@ -65,7 +70,7 @@ export {
 } from '@wagmi/core'
 export type {
   Chain,
-  ChainProvider,
+  ChainProviderFn,
   ConnectorData,
   ConnectorEvents,
   Storage,

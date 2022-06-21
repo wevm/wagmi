@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
 import { defaultAlchemyId } from '../constants'
-import { ChainProvider, FallbackProviderConfig } from '../types'
+import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type AlchemyProviderConfig = FallbackProviderConfig & {
   alchemyId?: string
@@ -14,7 +14,7 @@ export function alchemyProvider({
   priority,
   stallTimeout,
   weight,
-}: AlchemyProviderConfig = {}): ChainProvider<
+}: AlchemyProviderConfig = {}): ChainProviderFn<
   providers.AlchemyProvider,
   providers.AlchemyWebSocketProvider
 > {

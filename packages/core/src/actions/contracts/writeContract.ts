@@ -8,9 +8,8 @@ import {
 } from '../../errors'
 import { GetContractArgs, getContract } from './getContract'
 
-export type WriteContractArgs = GetContractArgs
-
-export type WriteContractConfig = {
+export type WriteContractConfig = GetContractArgs & {
+  functionName: string
   /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
@@ -20,11 +19,14 @@ export type WriteContractResult = providers.TransactionResponse
 
 export async function writeContract<
   Contract extends EthersContract = EthersContract,
->(
-  contractConfig: WriteContractArgs,
-  functionName: string,
-  { args, overrides }: WriteContractConfig = {},
-): Promise<WriteContractResult> {
+>({
+  addressOrName,
+  args,
+  contractInterface,
+  functionName,
+  overrides,
+  signerOrProvider,
+}: WriteContractConfig): Promise<WriteContractResult> {
   const client = getClient()
   if (!client.connector) throw new ConnectorNotFoundError()
 
@@ -35,12 +37,16 @@ export async function writeContract<
 
   try {
     const signer = await client.connector.getSigner()
-    const contract = getContract<Contract>(contractConfig)
+    const contract = getContract<Contract>({
+      addressOrName,
+      contractInterface,
+      signerOrProvider,
+    })
     const contractWithSigner = contract.connect(signer)
     const contractFunction = contractWithSigner[functionName]
     if (!contractFunction)
       console.warn(
-        `"${functionName}" does not exist in interface for contract "${contractConfig.addressOrName}"`,
+        `"${functionName}" does not exist in interface for contract "${addressOrName}"`,
       )
     const response = (await contractFunction(
       ...params,

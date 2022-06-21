@@ -35,8 +35,14 @@ describe('getNetwork', () => {
                 "url": "https://etherscan.io",
               },
             },
-            "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+            "ens": {
+              "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+            },
             "id": 1,
+            "multicall": {
+              "address": "0xca11bde05977b3631167028862be2a173976ca11",
+              "blockCreated": 14353601,
+            },
             "name": "Ethereum",
             "nativeCurrency": {
               "decimals": 18,
@@ -63,8 +69,14 @@ describe('getNetwork', () => {
                   "url": "https://etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 1,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 14353601,
+              },
               "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
@@ -89,8 +101,14 @@ describe('getNetwork', () => {
                   "url": "https://ropsten.etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 3,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 12063863,
+              },
               "name": "Ropsten",
               "nativeCurrency": {
                 "decimals": 18,
@@ -116,8 +134,14 @@ describe('getNetwork', () => {
                   "url": "https://rinkeby.etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 4,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 10299530,
+              },
               "name": "Rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
@@ -143,8 +167,14 @@ describe('getNetwork', () => {
                   "url": "https://goerli.etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 5,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 6507670,
+              },
               "name": "Goerli",
               "nativeCurrency": {
                 "decimals": 18,
@@ -171,6 +201,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 42,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 30285908,
+              },
               "name": "Kovan",
               "nativeCurrency": {
                 "decimals": 18,
@@ -213,6 +247,10 @@ describe('getNetwork', () => {
               },
             },
             "id": 69,
+            "multicall": {
+              "address": "0xca11bde05977b3631167028862be2a173976ca11",
+              "blockCreated": 1418387,
+            },
             "name": "Optimism Kovan",
             "nativeCurrency": {
               "decimals": 18,
@@ -240,8 +278,14 @@ describe('getNetwork', () => {
                   "url": "https://etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 1,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 14353601,
+              },
               "name": "Ethereum",
               "nativeCurrency": {
                 "decimals": 18,
@@ -266,8 +310,14 @@ describe('getNetwork', () => {
                   "url": "https://ropsten.etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 3,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 12063863,
+              },
               "name": "Ropsten",
               "nativeCurrency": {
                 "decimals": 18,
@@ -293,8 +343,14 @@ describe('getNetwork', () => {
                   "url": "https://rinkeby.etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 4,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 10299530,
+              },
               "name": "Rinkeby",
               "nativeCurrency": {
                 "decimals": 18,
@@ -320,8 +376,14 @@ describe('getNetwork', () => {
                   "url": "https://goerli.etherscan.io",
                 },
               },
-              "ensAddress": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              "ens": {
+                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+              },
               "id": 5,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 6507670,
+              },
               "name": "Goerli",
               "nativeCurrency": {
                 "decimals": 18,
@@ -348,6 +410,10 @@ describe('getNetwork', () => {
                 },
               },
               "id": 42,
+              "multicall": {
+                "address": "0xca11bde05977b3631167028862be2a173976ca11",
+                "blockCreated": 30285908,
+              },
               "name": "Kovan",
               "nativeCurrency": {
                 "decimals": 18,

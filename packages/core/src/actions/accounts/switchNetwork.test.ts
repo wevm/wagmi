@@ -1,9 +1,11 @@
 import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
+import { allChains } from '../../constants'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
 
 const connector = new MockConnector({
+  chains: allChains,
   options: { signer: getSigners()[0]! },
 })
 
@@ -26,6 +28,10 @@ describe('switchNetwork', () => {
             },
           },
           "id": 69,
+          "multicall": {
+            "address": "0xca11bde05977b3631167028862be2a173976ca11",
+            "blockCreated": 1418387,
+          },
           "name": "Optimism Kovan",
           "nativeCurrency": {
             "decimals": 18,

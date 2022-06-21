@@ -2,7 +2,7 @@ import { providers } from 'ethers'
 
 import {
   Chain,
-  ChainProvider,
+  ChainProviderFn,
   Provider,
   ProviderWithFallbackConfig,
   WebSocketProvider,
@@ -25,7 +25,7 @@ export function configureChains<
   TChain extends Chain = Chain,
 >(
   defaultChains: TChain[],
-  providers: ChainProvider<TProvider, TWebSocketProvider, TChain>[],
+  providers: ChainProviderFn<TProvider, TWebSocketProvider, TChain>[],
   { minQuorum = 1, targetQuorum = 1, stallTimeout }: ConfigureChainsConfig = {},
 ) {
   if (!defaultChains.length) throw new Error('must have at least one chain')
@@ -90,10 +90,18 @@ export function configureChains<
 
       if (!chainProviders)
         throw new Error(`No providers configured for chain "${activeChainId}"`)
-      if (chainProviders.length === 1) return <TProvider>chainProviders[0]?.()
-      return fallbackProvider(targetQuorum, minQuorum, chainProviders, {
-        stallTimeout,
-      })
+      if (chainProviders.length === 1)
+        return Object.assign(chainProviders[0]?.() || {}, {
+          chains,
+        }) as TProvider & {
+          chains: TChain[]
+        }
+      return Object.assign(
+        fallbackProvider(targetQuorum, minQuorum, chainProviders, {
+          stallTimeout,
+        }),
+        { chains },
+      )
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
       const activeChainId =
@@ -104,10 +112,10 @@ export function configureChains<
 
       if (!chainWebSocketProviders) return undefined
       if (chainWebSocketProviders.length === 1)
-        return chainWebSocketProviders[0]?.()
+        return Object.assign(chainWebSocketProviders[0]?.() || {}, { chains })
       // WebSockets do not work with `fallbackProvider`
       // Default to first available
-      return chainWebSocketProviders[0]?.()
+      return Object.assign(chainWebSocketProviders[0]?.() || {}, { chains })
     },
   } as const
 }

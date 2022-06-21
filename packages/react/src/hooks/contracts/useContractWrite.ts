@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-  WriteContractArgs,
   WriteContractConfig,
   WriteContractResult,
   writeContract,
@@ -9,8 +8,11 @@ import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
-export type UseContractWriteArgs = Partial<WriteContractConfig>
-
+export type UseContractWriteArgs = WriteContractConfig
+export type UseContractWriteMutationArgs = Pick<
+  WriteContractConfig,
+  'args' | 'overrides'
+>
 export type UseContractWriteConfig = MutationConfig<
   WriteContractResult,
   Error,
@@ -18,32 +20,30 @@ export type UseContractWriteConfig = MutationConfig<
 >
 
 export const mutationKey = ([
-  contractConfig,
-  functionName,
-  { args, overrides },
-]: [WriteContractArgs, string, Partial<WriteContractConfig>]) =>
+  { addressOrName, args, contractInterface, overrides },
+]: [WriteContractConfig]) =>
   [
     {
       entity: 'writeContract',
+      addressOrName,
       args,
-      contractConfig,
-      functionName,
+      contractInterface,
       overrides,
     },
   ] as const
 
-export function useContractWrite(
-  contractConfig: WriteContractArgs,
-  functionName: string,
-  {
-    args,
-    overrides,
-    onError,
-    onMutate,
-    onSettled,
-    onSuccess,
-  }: UseContractWriteArgs & UseContractWriteConfig = {},
-) {
+export function useContractWrite({
+  addressOrName,
+  args,
+  contractInterface,
+  functionName,
+  overrides,
+  signerOrProvider,
+  onError,
+  onMutate,
+  onSettled,
+  onSuccess,
+}: UseContractWriteArgs & UseContractWriteConfig) {
   const {
     data,
     error,
@@ -57,9 +57,24 @@ export function useContractWrite(
     status,
     variables,
   } = useMutation(
-    mutationKey([contractConfig, functionName, { args, overrides }]),
+    mutationKey([
+      {
+        addressOrName,
+        args,
+        contractInterface,
+        functionName,
+        overrides,
+      },
+    ]),
     ({ args, overrides }) =>
-      writeContract(contractConfig, functionName, { args, overrides }),
+      writeContract({
+        addressOrName,
+        args,
+        contractInterface,
+        functionName,
+        overrides,
+        signerOrProvider,
+      }),
     {
       onError,
       onMutate,
@@ -69,15 +84,43 @@ export function useContractWrite(
   )
 
   const write = React.useCallback(
-    (overrideConfig?: WriteContractConfig) =>
-      mutate(overrideConfig || { args, overrides }),
-    [args, mutate, overrides],
+    (overrideConfig?: UseContractWriteMutationArgs) =>
+      mutate({
+        addressOrName,
+        contractInterface,
+        functionName,
+        signerOrProvider,
+        ...(overrideConfig || { args, overrides }),
+      }),
+    [
+      addressOrName,
+      args,
+      contractInterface,
+      functionName,
+      mutate,
+      overrides,
+      signerOrProvider,
+    ],
   )
 
   const writeAsync = React.useCallback(
-    (overrideConfig?: WriteContractConfig) =>
-      mutateAsync(overrideConfig || { args, overrides }),
-    [args, mutateAsync, overrides],
+    (overrideConfig?: UseContractWriteMutationArgs) =>
+      mutateAsync({
+        addressOrName,
+        contractInterface,
+        functionName,
+        signerOrProvider,
+        ...(overrideConfig || { args, overrides }),
+      }),
+    [
+      addressOrName,
+      args,
+      contractInterface,
+      functionName,
+      mutateAsync,
+      overrides,
+      signerOrProvider,
+    ],
   )
 
   return {

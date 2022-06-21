@@ -45,7 +45,7 @@ export function createClient<
       })
     : undefined,
   ...config
-}: CreateClientConfig<TProvider, TWebSocketProvider> = {}) {
+}: CreateClientConfig<TProvider, TWebSocketProvider>) {
   const client = createVanillaClient<TProvider, TWebSocketProvider>(config)
   if (persister)
     persistQueryClient({
@@ -72,14 +72,14 @@ export type WagmiConfigProps<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
   /** React-decorated Client instance */
-  client?: Client<TProvider, TWebSocketProvider>
+  client: Client<TProvider, TWebSocketProvider>
 }
 export function WagmiConfig<
   TProvider extends Provider,
   TWebSocketProvider extends WebSocketProvider,
 >({
   children,
-  client = createClient<TProvider, TWebSocketProvider>(),
+  client,
 }: React.PropsWithChildren<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
   // Attempt to connect on mount
   React.useEffect(() => {

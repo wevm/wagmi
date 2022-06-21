@@ -24,7 +24,6 @@ export const mainnet: Chain = {
   id: chainId.mainnet,
   name: 'Ethereum',
   network: 'homestead',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.mainnet,
@@ -35,13 +34,19 @@ export const mainnet: Chain = {
     etherscan: etherscanBlockExplorers.mainnet,
     default: etherscanBlockExplorers.mainnet,
   },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 14353601,
+  },
 }
 
 export const ropsten: Chain = {
   id: chainId.ropsten,
   name: 'Ropsten',
   network: 'ropsten',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Ropsten Ether', symbol: 'ROP', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.ropsten,
@@ -52,6 +57,13 @@ export const ropsten: Chain = {
     etherscan: etherscanBlockExplorers.ropsten,
     default: etherscanBlockExplorers.ropsten,
   },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 12063863,
+  },
   testnet: true,
 }
 
@@ -59,7 +71,6 @@ export const rinkeby: Chain = {
   id: chainId.rinkeby,
   name: 'Rinkeby',
   network: 'rinkeby',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Rinkeby Ether', symbol: 'RIN', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.rinkeby,
@@ -70,6 +81,13 @@ export const rinkeby: Chain = {
     etherscan: etherscanBlockExplorers.rinkeby,
     default: etherscanBlockExplorers.rinkeby,
   },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 10299530,
+  },
   testnet: true,
 }
 
@@ -77,7 +95,6 @@ export const goerli: Chain = {
   id: chainId.goerli,
   name: 'Goerli',
   network: 'goerli',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Goerli Ether', symbol: 'GOR', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.goerli,
@@ -87,6 +104,13 @@ export const goerli: Chain = {
   blockExplorers: {
     etherscan: etherscanBlockExplorers.goerli,
     default: etherscanBlockExplorers.goerli,
+  },
+  ens: {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 6507670,
   },
   testnet: true,
 }
@@ -105,6 +129,10 @@ export const kovan: Chain = {
     etherscan: etherscanBlockExplorers.kovan,
     default: etherscanBlockExplorers.kovan,
   },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 30285908,
+  },
   testnet: true,
 }
 
@@ -121,6 +149,10 @@ export const optimism: Chain = {
   blockExplorers: {
     etherscan: etherscanBlockExplorers.optimism,
     default: etherscanBlockExplorers.optimism,
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 4286263,
   },
 }
 
@@ -142,6 +174,10 @@ export const optimismKovan: Chain = {
     etherscan: etherscanBlockExplorers.optimismKovan,
     default: etherscanBlockExplorers.optimismKovan,
   },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 1418387,
+  },
   testnet: true,
 }
 
@@ -158,6 +194,10 @@ export const polygon: Chain = {
   blockExplorers: {
     etherscan: etherscanBlockExplorers.polygon,
     default: etherscanBlockExplorers.polygon,
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 25770160,
   },
 }
 
@@ -179,6 +219,10 @@ export const polygonMumbai: Chain = {
     etherscan: etherscanBlockExplorers.polygonMumbai,
     default: etherscanBlockExplorers.polygonMumbai,
   },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 25444704,
+  },
   testnet: true,
 }
 
@@ -199,6 +243,10 @@ export const arbitrum: Chain = {
     },
     etherscan: etherscanBlockExplorers.arbitrum,
     default: etherscanBlockExplorers.arbitrum,
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 7654707,
   },
 }
 
@@ -223,6 +271,10 @@ export const arbitrumRinkeby: Chain = {
     },
     etherscan: etherscanBlockExplorers.arbitrumRinkeby,
     default: etherscanBlockExplorers.arbitrumRinkeby,
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 10228837,
   },
   testnet: true,
 }
