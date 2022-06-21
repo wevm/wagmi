@@ -9,7 +9,7 @@ import { formatAddress } from '../../lib/address'
 export function SignInWithEthereum() {
   const [address, setAddress] = React.useState<string>()
   const accountData = useAccount()
-  const { activeChain } = useNetwork()
+  const { chain: activeChain } = useNetwork()
 
   React.useEffect(() => {
     const handler = async () => {

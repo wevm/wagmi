@@ -1,11 +1,11 @@
 import { actConnect, actNetwork, renderHook } from '../../../test'
-import { useConnect, useNetwork } from '../accounts'
+import { useConnect, useSwitchNetwork } from '../accounts'
 import { UseProviderArgs, useProvider } from './useProvider'
 
 function useProviderWithConnectAndNetwork(config: UseProviderArgs = {}) {
   return {
     connect: useConnect(),
-    network: useNetwork(),
+    network: useSwitchNetwork(),
     provider: useProvider(config),
   }
 }

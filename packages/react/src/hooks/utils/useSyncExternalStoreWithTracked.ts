@@ -1,41 +1,47 @@
 import { useRef } from 'react'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
-import { shallow } from '../../utils'
+import { shallowEqual } from '../../utils'
 
-const isObject = (obj: unknown) =>
+const isPlainObject = (obj: unknown) =>
   typeof obj === 'object' && !Array.isArray(obj)
 
-export function useSyncExternalStoreWithTracked<Snapshot, Selection = Snapshot>(
+export function useSyncExternalStoreWithTracked<
+  Snapshot extends Selection,
+  Selection = Snapshot,
+>(
   subscribe: (onStoreChange: () => void) => () => void,
   getSnapshot: () => Snapshot,
-  getServerSnapshot: undefined | null | (() => Snapshot),
-  selector: (snapshot: Snapshot) => Selection = (x) => x as any,
+  getServerSnapshot: undefined | null | (() => Snapshot) = getSnapshot,
+  isEqual: (a: Selection, b: Selection) => boolean = (a, b) =>
+    shallowEqual(a, b),
 ) {
   const trackedKeys = useRef<string[]>([])
   const result = useSyncExternalStoreWithSelector(
     subscribe,
     getSnapshot,
     getServerSnapshot,
-    selector,
+    (x) => x,
     (a, b) => {
-      if (isObject(a) && isObject(b)) {
-        if (trackedKeys.current.length > 0) {
-          let isEqual = true
-          for (const key of trackedKeys.current) {
-            isEqual =
-              (a as { [key: string]: any })[key] ===
-              (b as { [key: string]: any })[key]
-          }
-          return isEqual
+      if (
+        isPlainObject(a) &&
+        isPlainObject(b) &&
+        trackedKeys.current.length > 0
+      ) {
+        for (const key of trackedKeys.current) {
+          const equal = isEqual(
+            (a as { [key: string]: any })[key],
+            (b as { [key: string]: any })[key],
+          )
+          if (!equal) return false
         }
-        return shallow(a, b)
+        return true
       }
-      return a === b
+      return isEqual(a, b)
     },
   )
 
-  if (isObject(result)) {
+  if (isPlainObject(result)) {
     const trackedResult = { ...result }
     Object.defineProperties(
       trackedResult,

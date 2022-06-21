@@ -9,14 +9,14 @@ import {
 } from '../../../test'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
-import { useNetwork } from './useNetwork'
+import { useSwitchNetwork } from './useSwitchNetwork'
 import { useSigner } from './useSigner'
 
 function useSignerWithAccount() {
   return {
     connect: useConnect(),
     disconnect: useDisconnect(),
-    network: useNetwork(),
+    network: useSwitchNetwork(),
     signer: useSigner(),
   }
 }

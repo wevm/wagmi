@@ -20,9 +20,6 @@ function createExternalStore<State>(initialState: State) {
     getState() {
       return currentState
     },
-    getSubscriberCount() {
-      return listeners.size
-    },
   }
 }
 

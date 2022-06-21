@@ -207,7 +207,7 @@ import { SiweMessage } from 'siwe'
 
 export function Profile() {
   const { address, isConnected } = useAccount()
-  const { activeChain } = useNetwork()
+  const { chain: activeChain } = useNetwork()
 
   const [state, setState] = React.useState<{
     address?: string

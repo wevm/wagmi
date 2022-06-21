@@ -6,9 +6,9 @@ export const NetworkSwitcher = () => {
 
   return (
     <div>
-      {network.activeChain && <div>Using {network.activeChain.name}</div>}
+      {network.chain && <div>Using {network.chain.name}</div>}
 
-      {network.chains.map((x) => (
+      {/* {network.chains?.map((x) => (
         <button
           disabled={!network.switchNetwork || x.id === network.activeChain?.id}
           key={x.id}
@@ -19,11 +19,11 @@ export const NetworkSwitcher = () => {
             x.id === network.pendingChainId &&
             '…'}
         </button>
-      ))}
+      ))} */}
 
-      <div>
+      {/* <div>
         {network.error && (network.error?.message ?? 'Failed to switch')}
-      </div>
+      </div> */}
     </div>
   )
 }
