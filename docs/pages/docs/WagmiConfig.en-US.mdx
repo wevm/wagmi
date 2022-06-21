@@ -26,15 +26,17 @@ function App() {
 
 A wagmi [`Client`](/docs/client) instance that consists of configuration options. Defaults to `createClient()`.
 
-```tsx {4-9,13}
-import { providers } from 'ethers'
-import { WagmiConfig, createClient } from 'wagmi'
+```tsx {8-12,16}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+])
 
 const client = createClient({
-  autoConnect: true,
-  provider(config) {
-    return new providers.AlchemyProvider(config.chainId, 'Your Alchemy ID')
-  },
+  provider,
+  webSocketProvider,
 })
 
 function App() {

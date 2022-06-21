@@ -9,9 +9,17 @@ import { createClient } from 'wagmi'
 ## Usage
 
 ```ts
-import { createClient } from 'wagmi'
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
-const client = createClient()
+const { provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+])
+
+const client = createClient({
+  provider,
+  webSocketProvider,
+})
 ```
 
 ## Configuration
@@ -20,11 +28,17 @@ const client = createClient()
 
 Enables reconnecting to last used connector on mount. Defaults to `false`.
 
-```ts {4}
-import { createClient } from 'wagmi'
+```ts {9}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { provider } = configureChains(defaultChains, [
+  publicProvider(),
+])
 
 const client = createClient({
-  autoConnect: true,
+  autoConnect: true
+  provider,
 })
 ```
 
@@ -32,48 +46,55 @@ const client = createClient({
 
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
-```ts {6-13}
-import { createClient } from 'wagmi'
+```ts {9-17}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
+const { chains, provider } = configureChains(defaultChains, [publicProvider()])
+
 const client = createClient({
   connectors: [
-    new InjectedConnector(),
+    new InjectedConnector({ chains }),
     new WalletConnectConnector({
+      chains,
       options: {
         qrcode: true,
       },
     }),
   ],
+  provider,
 })
 ```
 
-### provider (optional)
+### provider
 
-ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network. Defaults to `(config) => getDefaultProvider(config.chainId)`.
+ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.
 
-```ts {5-7}
-import { providers } from 'ethers'
-import { createClient } from 'wagmi'
+```ts {9}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { provider } = configureChains(defaultChains, [publicProvider()])
 
 const client = createClient({
-  provider(config) {
-    return new providers.AlchemyProvider(config.chainId, 'Your Alchemy ID')
-  },
+  provider,
 })
 ```
-
-`provider` also accepts an ethers provider directly instead of using a function, but you likely want to use the function approach instead so your provider is aware of the active chain.
 
 ### storage (optional)
 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
-```ts {4}
-import { createClient, createStorage } from 'wagmi'
+```ts {10}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { provider } = configureChains(defaultChains, [publicProvider()])
 
 const client = createClient({
+  provider,
   storage: createStorage({ storage: window.localStorage }),
 })
 ```
@@ -82,18 +103,16 @@ const client = createClient({
 
 ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
-```ts {5-10}
-import { providers } from 'ethers'
-import { createClient } from 'wagmi'
+```ts {10}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { provider, webSocketProvider } = configureChains(defaultChains, [
+  publicProvider(),
+])
 
 const client = createClient({
-  webSocketProvider(config) {
-    return new providers.AlchemyWebSocketProvider(
-      config.chainId,
-      'Your Alchemy ID',
-    )
-  },
+  provider,
+  webSocketProvider,
 })
 ```
-
-`webSocketProvider` also accepts an ethers WebSocket provider directly instead of using a function, but you likely want to use the function approach instead so your WebSocket provider is aware of the active chain.

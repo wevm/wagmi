@@ -81,7 +81,7 @@ const avalancheChain: Chain = {
   testnet: false,
 }
 
-const { provider, chains } = configureChains(
+const { provider } = configureChains(
   [chain.mainnet, avalancheChain],
   [
     alchemyProvider({ alchemyId }),
@@ -101,7 +101,7 @@ const { provider, chains } = configureChains(
 If the `targetQuorum` option is set to a value greater than `1`, it will dispatch interactions to multiple providers, in which the responses are verified by comparing them to each other. If the quorum is reached, then the result will be returned to the consumer.
 
 ```tsx
-const { provider, chains } = configureChains(
+const { provider } = configureChains(
   [chain.mainnet, avalancheChain],
   [
     alchemyProvider({ alchemyId }),
