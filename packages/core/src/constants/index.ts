@@ -11,6 +11,8 @@ export {
   defaultL2Chains,
 } from './chains'
 
+export { multicallInterface } from './multicall'
+
 export {
   alchemyRpcUrls,
   defaultAlchemyId,

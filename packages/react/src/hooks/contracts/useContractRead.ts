@@ -1,6 +1,5 @@
 import * as React from 'react'
 import {
-  ReadContractArgs,
   ReadContractConfig,
   ReadContractResult,
   readContract,
@@ -13,7 +12,7 @@ import { parseContractResult } from '../../utils'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 
-type UseContractReadArgs = Partial<ReadContractConfig> & {
+type UseContractReadArgs = ReadContractConfig & {
   /** If set to `true`, the cache will depend on the block number */
   cacheOnBlock?: boolean
   /** Subscribe to changes */
@@ -23,56 +22,62 @@ type UseContractReadArgs = Partial<ReadContractConfig> & {
 export type UseContractReadConfig = QueryConfig<ReadContractResult, Error>
 
 export const queryKey = ([
-  contractConfig,
-  functionName,
-  { args, chainId, overrides },
+  { addressOrName, args, chainId, contractInterface, functionName, overrides },
   { blockNumber },
-]: [
-  ReadContractArgs,
-  string,
-  Partial<ReadContractConfig>,
-  { blockNumber?: number },
-]) =>
+]: [ReadContractConfig, { blockNumber?: number }]) =>
   [
     {
       entity: 'readContract',
+      addressOrName,
       args,
       blockNumber,
       chainId,
-      contractConfig,
+      contractInterface,
       functionName,
       overrides,
     },
   ] as const
 
 const queryFn = ({
-  queryKey: [{ args, chainId, contractConfig, functionName, overrides }],
+  queryKey: [
+    {
+      addressOrName,
+      args,
+      chainId,
+      contractInterface,
+      functionName,
+      overrides,
+    },
+  ],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return readContract(contractConfig, functionName, {
+  return readContract({
+    addressOrName,
     args,
     chainId,
+    contractInterface,
+    functionName,
     overrides,
   })
 }
 
-export function useContractRead(
-  contractConfig: ReadContractArgs,
-  functionName: string,
-  {
-    args,
-    chainId: chainId_,
-    overrides,
-    cacheOnBlock = false,
-    cacheTime,
-    enabled: enabled_ = true,
-    staleTime,
-    suspense,
-    watch,
-    onError,
-    onSettled,
-    onSuccess,
-  }: UseContractReadArgs & UseContractReadConfig = {},
-) {
+export function useContractRead({
+  addressOrName,
+  contractInterface,
+  functionName,
+  args,
+  chainId: chainId_,
+  overrides,
+  cacheOnBlock = false,
+  cacheTime,
+  enabled: enabled_ = true,
+  select,
+  staleTime,
+  suspense,
+  watch,
+  onError,
+  onSettled,
+  onSuccess,
+}: UseContractReadArgs & UseContractReadConfig) {
   const chainId = useChainId({ chainId: chainId_ })
   const { data: blockNumber } = useBlockNumber({
     enabled: watch || cacheOnBlock,
@@ -82,45 +87,58 @@ export function useContractRead(
   const queryKey_ = React.useMemo(
     () =>
       queryKey([
-        contractConfig,
-        functionName,
-        { args, chainId, overrides },
+        {
+          addressOrName,
+          args,
+          chainId,
+          contractInterface,
+          functionName,
+          overrides,
+        },
         { blockNumber: cacheOnBlock ? blockNumber : undefined },
       ]),
     [
+      addressOrName,
       args,
       blockNumber,
       cacheOnBlock,
       chainId,
-      contractConfig,
+      contractInterface,
       functionName,
       overrides,
     ],
   )
 
   const enabled = React.useMemo(() => {
-    let enabled = Boolean(enabled_ && contractConfig && functionName)
+    let enabled = Boolean(enabled_ && addressOrName && functionName)
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled
-  }, [blockNumber, cacheOnBlock, contractConfig, enabled_, functionName])
+  }, [addressOrName, blockNumber, cacheOnBlock, enabled_, functionName])
 
   const client = useQueryClient()
   React.useEffect(() => {
     if (enabled) {
       const unwatch = watchReadContract(
-        contractConfig,
-        functionName,
-        { args, chainId, overrides, listenToBlock: watch && !cacheOnBlock },
+        {
+          addressOrName,
+          args,
+          chainId,
+          contractInterface,
+          functionName,
+          overrides,
+          listenToBlock: watch && !cacheOnBlock,
+        },
         (result) => client.setQueryData(queryKey_, result),
       )
       return unwatch
     }
   }, [
+    addressOrName,
     args,
     cacheOnBlock,
     chainId,
     client,
-    contractConfig,
+    contractInterface,
     enabled,
     functionName,
     overrides,
@@ -131,12 +149,14 @@ export function useContractRead(
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
-    select: (data) =>
-      parseContractResult({
-        contractInterface: contractConfig.contractInterface,
+    select: (data) => {
+      const result = parseContractResult({
+        contractInterface,
         data,
         functionName,
-      }),
+      })
+      return select ? select(result) : result
+    },
     staleTime,
     suspense,
     onError,

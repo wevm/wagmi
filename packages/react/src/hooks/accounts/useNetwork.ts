@@ -20,9 +20,8 @@ export type UseNetworkConfig = MutationConfig<
   SwitchNetworkArgs
 >
 
-export const mutationKey = (args: UseNetworkArgs) => [
-  { entity: 'switchNetwork', ...args },
-]
+export const mutationKey = (args: UseNetworkArgs) =>
+  [{ entity: 'switchNetwork', ...args }] as const
 
 const mutationFn = (args: UseNetworkArgs) => {
   const { chainId } = args

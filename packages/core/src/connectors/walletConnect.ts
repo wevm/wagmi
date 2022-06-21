@@ -2,7 +2,6 @@ import { providers } from 'ethers'
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
-import { allChains } from '../constants'
 import {
   ProviderRpcError,
   SwitchChainError,
@@ -161,9 +160,8 @@ export class WalletConnectConnector extends Connector<
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: id }],
       })
-      const chains = [...this.chains, ...allChains]
       return (
-        chains.find((x) => x.id === chainId) ?? {
+        this.chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,

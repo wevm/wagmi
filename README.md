@@ -54,8 +54,12 @@ Connect a wallet in under 60 seconds. LFG.
 
 ```tsx
 import { WagmiConfig, createClient } from 'wagmi'
+import { getDefaultProvider } from 'ethers'
 
-const client = createClient()
+const client = createClient({
+  autoConnect: true,
+  provider: getDefaultProvider(),
+})
 
 function App() {
   return (
@@ -88,7 +92,9 @@ function Profile() {
 }
 ```
 
-In this example, we create a wagmi `Client` and pass it to the `WagmiConfig` React Context. Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
+In this example, we create a wagmi `Client` and pass it to the `WagmiConfig` React Context. The client is set up to use the ethers Default Provider and automatically connect to previously connected wallets.
+
+Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
 
 We've only scratched the surface for what you can do with wagmi!
 

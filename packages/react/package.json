@@ -20,6 +20,7 @@
   "sideEffects": false,
   "main": "dist/wagmi.cjs.js",
   "module": "dist/wagmi.esm.js",
+  "types": "dist/wagmi.cjs.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -88,7 +89,7 @@
     "react": ">=17.0.0"
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.2.0",
+    "@coinbase/wallet-sdk": "^3.3.0",
     "@wagmi/core": "^0.3.8",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "react-query": "^4.0.0-beta.23",

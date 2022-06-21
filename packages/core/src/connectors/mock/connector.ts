@@ -1,6 +1,5 @@
 import { getAddress } from 'ethers/lib/utils'
 
-import { allChains } from '../../constants'
 import { Chain } from '../../types'
 import { normalizeChainId } from '../../utils'
 import { Connector, ConnectorData } from '../base'
@@ -88,9 +87,8 @@ export class MockConnector extends Connector<
   async #switchChain(chainId: number) {
     const provider = await this.getProvider()
     await provider.switchChain(chainId)
-    const chains = [...this.chains, ...allChains]
     return (
-      chains.find((x) => x.id === chainId) ?? {
+      this.chains.find((x) => x.id === chainId) ?? {
         id: chainId,
         name: `Chain ${chainId}`,
         network: `${chainId}`,

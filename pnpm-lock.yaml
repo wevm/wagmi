@@ -299,7 +299,7 @@ importers:
 
   packages/core:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.2.0
+      '@coinbase/wallet-sdk': ^3.3.0
       '@walletconnect/ethereum-provider': ^1.7.8
       ethers: ^5.6.5
       eventemitter3: ^4.0.7
@@ -308,13 +308,13 @@ importers:
       eventemitter3: 4.0.7
       zustand: 4.0.0-rc.1
     devDependencies:
-      '@coinbase/wallet-sdk': 3.2.0
+      '@coinbase/wallet-sdk': 3.3.0
       '@walletconnect/ethereum-provider': 1.7.8
       ethers: 5.6.5
 
   packages/react:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.2.0
+      '@coinbase/wallet-sdk': ^3.3.0
       '@testing-library/react': ^13.2.0
       '@testing-library/react-hooks': ^7.0.2
       '@types/react': ^18.0.9
@@ -330,7 +330,7 @@ importers:
       react-query: ^4.0.0-beta.23
       use-sync-external-store: ^1.1.0
     dependencies:
-      '@coinbase/wallet-sdk': 3.2.0
+      '@coinbase/wallet-sdk': 3.3.0
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.8
       react-query: 4.0.0-beta.23_ef5jwxihqo6n7gxfmzogljlgcm
@@ -3417,13 +3417,14 @@ packages:
       prettier: 1.19.1
     dev: true
 
-  /@coinbase/wallet-sdk/3.2.0:
-    resolution: {integrity: sha512-uw9rdsfzXsdmC9FblMt2UH4094vLl9h3i1za5A2MaC8Ak1X/E1QbGr1oi64QAx9HD+M75zmy506F+zT0/s5dpQ==}
+  /@coinbase/wallet-sdk/3.3.0:
+    resolution: {integrity: sha512-Prmxs5eYRxe5i+kDSsny97oPG4Pa5PhLmNDx8f7UQrvlPowGy5Tg0gHOqCie6ck2shVMdW8sKJ+RCLIRZ9kIjA==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
       bind-decorator: 1.0.11
       bn.js: 5.2.0
+      buffer: 6.0.3
       clsx: 1.1.1
       eth-block-tracker: 4.4.3
       eth-json-rpc-filters: 4.2.2
@@ -3435,6 +3436,7 @@ packages:
       qs: 6.10.3
       rxjs: 6.6.7
       stream-browserify: 3.0.0
+      util: 0.12.4
     transitivePeerDependencies:
       - '@babel/core'
       - encoding
@@ -7633,7 +7635,6 @@ packages:
   /available-typed-arrays/1.0.5:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
-    dev: false
 
   /axe-core/4.4.1:
     resolution: {integrity: sha512-gd1kmb21kwNuWr6BQz8fv6GNECPBnUasepcoLbekws23NVBLODdsClRZ+bQ8+9Uomf3Sm3+Vwn0oYG9NvwnJCw==}
@@ -8278,7 +8279,6 @@ packages:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
-    dev: false
 
   /builtin-modules/3.2.0:
     resolution: {integrity: sha512-lGzLKcioL90C7wMczpkY0n/oART3MbBa8R9OFGE1rJxoVI86u4WAGfEk8Wjv10eKSyTHVGkSo3bvBylCEtk7LA==}
@@ -11895,7 +11895,6 @@ packages:
 
   /foreach/2.0.5:
     resolution: {integrity: sha1-C+4AUBiusmDQo6865ljdATbsG5k=}
-    dev: false
 
   /fork-ts-checker-webpack-plugin/6.5.2_a3uklltdpldphvn3k4mxkgnmza:
     resolution: {integrity: sha512-m5cUmF30xkZ7h4tWUgTAcEaKmUW7tfyUyTqNNOz7OxWJ0v1VWKTcOvH8FWHUwSjlW/356Ijc9vi3XfcPstpQKA==}
@@ -12926,7 +12925,6 @@ packages:
     dependencies:
       call-bind: 1.0.2
       has-tostringtag: 1.0.0
-    dev: false
 
   /is-arrayish/0.2.1:
     resolution: {integrity: sha1-d8mYQFJ6qOyxqLppe4BkWnqSap0=}
@@ -13086,7 +13084,6 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       has-tostringtag: 1.0.0
-    dev: false
 
   /is-glob/2.0.1:
     resolution: {integrity: sha512-a1dBeB19NXsf/E0+FHqkagizel/LQw2DjSQpvQrj3zT+jYPpaUCryPnrQajXKFLCMuf4I6FhRpaGtw4lPrG6Eg==}
@@ -13256,7 +13253,6 @@ packages:
       es-abstract: 1.20.0
       foreach: 2.0.5
       has-tostringtag: 1.0.0
-    dev: false
 
   /is-typedarray/1.0.0:
     resolution: {integrity: sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=}
@@ -20506,7 +20502,6 @@ packages:
       is-typed-array: 1.1.8
       safe-buffer: 5.2.1
       which-typed-array: 1.1.7
-    dev: false
 
   /utila/0.4.0:
     resolution: {integrity: sha1-ihagXURWV6Oupe7MWxKk+lN5dyw=}
@@ -20990,7 +20985,6 @@ packages:
       foreach: 2.0.5
       has-tostringtag: 1.0.0
       is-typed-array: 1.1.8
-    dev: false
 
   /which/1.3.1:
     resolution: {integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==}
