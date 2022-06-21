@@ -47,7 +47,6 @@ export const ropsten: Chain = {
   id: chainId.ropsten,
   name: 'Ropsten',
   network: 'ropsten',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Ropsten Ether', symbol: 'ROP', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.ropsten,
@@ -72,7 +71,6 @@ export const rinkeby: Chain = {
   id: chainId.rinkeby,
   name: 'Rinkeby',
   network: 'rinkeby',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Rinkeby Ether', symbol: 'RIN', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.rinkeby,
@@ -97,7 +95,6 @@ export const goerli: Chain = {
   id: chainId.goerli,
   name: 'Goerli',
   network: 'goerli',
-  ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   nativeCurrency: { name: 'Goerli Ether', symbol: 'GOR', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.goerli,
