@@ -14,7 +14,7 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
   | {
       address: Data<TProvider>['account']
       connector: Client<TProvider>['connector']
-      isConnected: false
+      isConnected: true
       isConnecting: false
       isDisconnected: false
       isReconnecting: true
@@ -58,7 +58,7 @@ export function getAccount<
       return {
         address: data?.account,
         connector,
-        isConnected: false,
+        isConnected: true,
         isConnecting: false,
         isDisconnected: false,
         isReconnecting: true,
