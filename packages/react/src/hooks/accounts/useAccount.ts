@@ -25,6 +25,8 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const { subscribe } = useClient()
 
   React.useEffect(() => {
+    if (!onConnect && !onDisconnect) return
+
     // Trigger update when status changes
     const unsubscribe = subscribe(
       (state) => state.status,

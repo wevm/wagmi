@@ -1,28 +1,13 @@
 import * as React from 'react'
 import { ConnectArgs, ConnectResult, Connector, connect } from '@wagmi/core'
-import { UseMutationOptions, useMutation } from 'react-query'
+import { useMutation } from 'react-query'
 
 import { useClient } from '../../context'
-import { useForceUpdate } from '../utils'
+import { MutationConfig } from '../../types'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 
-type MutationOptions = UseMutationOptions<ConnectResult, Error, ConnectArgs>
-export type UseConnectConfig = {
-  /** Chain to connect */
-  chainId?: number
-  /** Function to invoke when an error is thrown while connecting. */
-  onError?: MutationOptions['onError']
-  /**
-   * Function to invoke before connect and is passed same variables connect function would receive.
-   * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
-   */
-  onMutate?: MutationOptions['onMutate']
-  /** Function to invoke when connect is settled (either successfully connected, or an error has thrown). */
-  onSettled?: MutationOptions['onSettled']
-  /** Function to invoke when connect is successful. */
-  onSuccess?: MutationOptions['onSuccess']
-}
+export type UseConnectConfig = MutationConfig<ConnectResult, Error, ConnectArgs>
 
 export const mutationKey = (args: UseConnectArgs) =>
   [{ entity: 'connect', ...args }] as const
@@ -42,27 +27,25 @@ export function useConnect({
   onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
   const client = useClient()
-  const forceUpdate = useForceUpdate()
 
-  const { mutate, mutateAsync, variables, ...connectMutation } = useMutation(
-    mutationKey({ connector, chainId }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
-    },
-  )
-
-  React.useEffect(() => {
-    // Trigger update when connectors change
-    const unsubscribe = client.subscribe(
-      (state) => state.connectors,
-      forceUpdate,
-    )
-    return unsubscribe
-  }, [client, forceUpdate])
+  const {
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
+    mutate,
+    mutateAsync,
+    reset,
+    status,
+    variables,
+  } = useMutation(mutationKey({ connector, chainId }), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const connect = React.useCallback(
     (connectorOrArgs?: Partial<ConnectArgs> | ConnectArgs['connector']) => {
@@ -107,10 +90,18 @@ export function useConnect({
   )
 
   return {
-    ...connectMutation,
     connect,
     connectAsync,
     connectors: client.connectors,
+    data,
+    error,
+    isError,
+    isIdle,
+    isLoading,
+    isSuccess,
     pendingConnector: variables?.connector,
+    reset,
+    status,
+    variables,
   } as const
 }

@@ -45,7 +45,6 @@ describe('useConnect', () => {
             "connectors": [
               "<MockConnector>",
             ],
-            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -56,15 +55,17 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
-            "failureCount": 0,
             "isError": false,
             "isIdle": false,
             "isLoading": false,
-            "isPaused": false,
             "isSuccess": true,
             "pendingConnector": "<MockConnector>",
             "reset": [Function],
             "status": "success",
+            "variables": {
+              "chainId": undefined,
+              "connector": "<MockConnector>",
+            },
           }
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
@@ -104,18 +105,19 @@ describe('useConnect', () => {
             "connectors": [
               "<MockConnector>",
             ],
-            "context": undefined,
             "data": undefined,
             "error": [UserRejectedRequestError: User rejected request],
-            "failureCount": 1,
             "isError": true,
             "isIdle": false,
             "isLoading": false,
-            "isPaused": false,
             "isSuccess": false,
             "pendingConnector": "<MockConnector>",
             "reset": [Function],
             "status": "error",
+            "variables": {
+              "chainId": undefined,
+              "connector": "<MockConnector>",
+            },
           }
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
@@ -173,7 +175,6 @@ describe('useConnect', () => {
             "connectors": [
               "<MockConnector>",
             ],
-            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -184,15 +185,17 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
-            "failureCount": 0,
             "isError": false,
             "isIdle": false,
             "isLoading": false,
-            "isPaused": false,
             "isSuccess": true,
             "pendingConnector": "<MockConnector>",
             "reset": [Function],
             "status": "success",
+            "variables": {
+              "chainId": undefined,
+              "connector": "<MockConnector>",
+            },
           }
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
@@ -229,7 +232,6 @@ describe('useConnect', () => {
             "connectors": [
               "<MockConnector>",
             ],
-            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -240,15 +242,17 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
-            "failureCount": 0,
             "isError": false,
             "isIdle": false,
             "isLoading": false,
-            "isPaused": false,
             "isSuccess": true,
             "pendingConnector": "<MockConnector>",
             "reset": [Function],
             "status": "success",
+            "variables": {
+              "chainId": undefined,
+              "connector": "<MockConnector>",
+            },
           }
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
@@ -286,7 +290,6 @@ describe('useConnect', () => {
             "connectors": [
               "<MockConnector>",
             ],
-            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -297,15 +300,17 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
-            "failureCount": 0,
             "isError": false,
             "isIdle": false,
             "isLoading": false,
-            "isPaused": false,
             "isSuccess": true,
             "pendingConnector": "<MockConnector>",
             "reset": [Function],
             "status": "success",
+            "variables": {
+              "chainId": 69,
+              "connector": "<MockConnector>",
+            },
           }
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
@@ -343,7 +348,6 @@ describe('useConnect', () => {
             "connectors": [
               "<MockConnector>",
             ],
-            "context": undefined,
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
@@ -354,15 +358,17 @@ describe('useConnect', () => {
               "provider": "<MockProvider>",
             },
             "error": null,
-            "failureCount": 0,
             "isError": false,
             "isIdle": false,
             "isLoading": false,
-            "isPaused": false,
             "isSuccess": true,
             "pendingConnector": "<MockConnector>",
             "reset": [Function],
             "status": "success",
+            "variables": {
+              "chainId": 3,
+              "connector": "<MockConnector>",
+            },
           }
         `)
         expect(result.current.account).toMatchInlineSnapshot(`
@@ -400,18 +406,19 @@ describe('useConnect', () => {
             "connectors": [
               "<MockConnector>",
             ],
-            "context": undefined,
             "data": undefined,
             "error": [UserRejectedRequestError: User rejected request],
-            "failureCount": 1,
             "isError": true,
             "isIdle": false,
             "isLoading": false,
-            "isPaused": false,
             "isSuccess": false,
             "pendingConnector": "<MockConnector>",
             "reset": [Function],
             "status": "error",
+            "variables": {
+              "chainId": undefined,
+              "connector": "<MockConnector>",
+            },
           }
         `)
         expect(result.current.account).toMatchInlineSnapshot(`

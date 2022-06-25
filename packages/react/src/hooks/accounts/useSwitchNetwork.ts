@@ -37,11 +37,6 @@ export function useSwitchNetwork({
   const client = useClient()
   const forceUpdate = useForceUpdate()
 
-  React.useEffect(() => {
-    const unwatch = client.subscribe(({ connector }) => connector, forceUpdate)
-    return unwatch
-  }, [client, forceUpdate])
-
   const {
     data,
     error,
@@ -61,19 +56,32 @@ export function useSwitchNetwork({
     onSuccess,
   })
 
-  const switchNetwork_ = React.useCallback(
+  const switchNetwork = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
       mutate(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
     [chainId, mutate],
   )
 
-  const switchNetworkAsync_ = React.useCallback(
+  const switchNetworkAsync = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
       mutateAsync(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
     [chainId, mutateAsync],
   )
 
+  // Trigger update when connector changes since not all connectors support chain switching
+  React.useEffect(() => {
+    const unwatch = client.subscribe(
+      ({ chains, connector }) => ({
+        chains,
+        connector,
+      }),
+      forceUpdate,
+    )
+    return unwatch
+  }, [client, forceUpdate])
+
   return {
+    chains: client.chains ?? [],
     data,
     error,
     isError,
@@ -83,9 +91,9 @@ export function useSwitchNetwork({
     pendingChainId: variables?.chainId,
     reset,
     status,
-    switchNetwork: client.connector?.switchChain ? switchNetwork_ : undefined,
+    switchNetwork: client.connector?.switchChain ? switchNetwork : undefined,
     switchNetworkAsync: client.connector?.switchChain
-      ? switchNetworkAsync_
+      ? switchNetworkAsync
       : undefined,
     variables,
   } as const

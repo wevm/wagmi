@@ -3,7 +3,6 @@ import { Chain } from '../../types'
 
 export type GetNetworkResult = {
   chain?: Chain & {
-    id: number
     unsupported?: boolean
   }
   chains: Chain[]
@@ -32,5 +31,5 @@ export function getNetwork(): GetNetworkResult {
         }
       : undefined,
     chains: activeChains,
-  }
+  } as const
 }

@@ -44,7 +44,7 @@ export async function connect<TProvider extends Provider = Provider>({
     }))
     client.storage.setItem('connected', true)
 
-    return { ...data, connector }
+    return { ...data, connector } as const
   } catch (err) {
     client.setState((x) => ({ ...x, status: 'disconnected' }))
     throw err

@@ -13,8 +13,8 @@ import { WriteContract } from './WriteContract'
 export const Account = () => {
   const isMounted = useIsMounted()
   const account = useAccount({
-    onConnected: (data) => console.log('connected', data),
-    onDisconnected: () => console.log('disconnected'),
+    onConnect: (data) => console.log('connected', data),
+    onDisconnect: () => console.log('disconnected'),
   })
   const ensAvatar = useEnsAvatar({
     addressOrName: account?.address,

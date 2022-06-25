@@ -3,8 +3,8 @@ import { Provider } from '../../types'
 
 export type GetAccountResult<TProvider extends Provider = Provider> =
   | {
-      address: Data<TProvider>['account']
-      connector: Client<TProvider>['connector']
+      address: NonNullable<Data<TProvider>['account']>
+      connector: NonNullable<Client<TProvider>['connector']>
       isConnected: true
       isConnecting: false
       isDisconnected: false
@@ -14,7 +14,7 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
   | {
       address: Data<TProvider>['account']
       connector: Client<TProvider>['connector']
-      isConnected: true
+      isConnected: boolean
       isConnecting: false
       isDisconnected: false
       isReconnecting: true
@@ -46,24 +46,24 @@ export function getAccount<
   switch (status) {
     case 'connected':
       return {
-        address: data?.account,
-        connector,
+        address: data?.account as NonNullable<Data<TProvider>['account']>,
+        connector: connector as NonNullable<Client<TProvider>['connector']>,
         isConnected: true,
         isConnecting: false,
         isDisconnected: false,
         isReconnecting: false,
         status,
-      }
+      } as const
     case 'reconnecting':
       return {
         address: data?.account,
         connector,
-        isConnected: true,
+        isConnected: !!data?.account,
         isConnecting: false,
         isDisconnected: false,
         isReconnecting: true,
         status,
-      }
+      } as const
     case 'connecting':
       return {
         address: undefined,
@@ -73,7 +73,7 @@ export function getAccount<
         isDisconnected: false,
         isReconnecting: false,
         status,
-      }
+      } as const
     case 'disconnected':
       return {
         address: undefined,
@@ -83,6 +83,6 @@ export function getAccount<
         isDisconnected: true,
         isReconnecting: false,
         status,
-      }
+      } as const
   }
 }

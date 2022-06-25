@@ -54,7 +54,7 @@ describe('useNetwork', () => {
     })
   })
 
-  describe('behaviour', () => {
+  describe('behavior', () => {
     it('updates on connect and disconnect', async () => {
       const utils = renderHook(() => useNetworkWithConnectAndDisconnect())
       const { result } = utils

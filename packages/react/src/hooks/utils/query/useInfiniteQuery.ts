@@ -128,73 +128,44 @@ export function useInfiniteQuery<
   >,
 ): UseInfiniteQueryResult<TData, TError> {
   const parsedOptions = parseQueryArgs(arg1, arg2, arg3)
-  const {
-    data,
-    dataUpdatedAt,
-    error,
-    errorUpdatedAt,
-    defaultedOptions,
-    fetchNextPage,
-    isFetchingNextPage,
-    hasNextPage,
-    failureCount,
-    fetchStatus,
-    isIdle,
-    isError,
-    isFetched,
-    isFetchedAfterMount,
-    isFetching,
-    isLoading,
-    isLoadingError,
-    isPaused,
-    isPlaceholderData,
-    isPreviousData,
-    isRefetchError,
-    isRefetching,
-    isStale,
-    isSuccess,
-    observer,
-    refetch,
-    remove,
-    status,
-  } = useBaseQuery(
+  const baseQuery = useBaseQuery(
     parsedOptions,
     InfiniteQueryObserver as typeof QueryObserver,
-  ) as any
+  )
 
   const result = {
-    data,
-    error,
-    fetchNextPage,
-    fetchStatus,
-    hasNextPage,
-    isError,
-    isFetched,
-    isFetching,
-    isFetchingNextPage,
-    isIdle,
-    isLoading,
-    isRefetching,
-    isSuccess,
-    refetch,
-    status,
+    data: baseQuery.data,
+    error: baseQuery.error,
+    fetchNextPage: (<any>baseQuery).fetchNextPage,
+    fetchStatus: baseQuery.fetchStatus,
+    hasNextPage: (<any>baseQuery).hasNextPage,
+    isError: baseQuery.isError,
+    isFetched: baseQuery.isFetched,
+    isFetching: baseQuery.isFetching,
+    isFetchingNextPage: (<any>baseQuery).isFetchingNextPage,
+    isIdle: baseQuery.isIdle,
+    isLoading: baseQuery.isLoading,
+    isRefetching: baseQuery.isRefetching,
+    isSuccess: baseQuery.isSuccess,
+    refetch: baseQuery.refetch,
+    status: baseQuery.status,
     internal: {
-      dataUpdatedAt,
-      errorUpdatedAt,
-      failureCount,
-      isFetchedAfterMount,
-      isLoadingError,
-      isPaused,
-      isPlaceholderData,
-      isPreviousData,
-      isRefetchError,
-      isStale,
-      remove,
+      dataUpdatedAt: baseQuery.dataUpdatedAt,
+      errorUpdatedAt: baseQuery.errorUpdatedAt,
+      failureCount: baseQuery.failureCount,
+      isFetchedAfterMount: baseQuery.isFetchedAfterMount,
+      isLoadingError: baseQuery.isLoadingError,
+      isPaused: baseQuery.isPaused,
+      isPlaceholderData: baseQuery.isPlaceholderData,
+      isPreviousData: baseQuery.isPreviousData,
+      isRefetchError: baseQuery.isRefetchError,
+      isStale: baseQuery.isStale,
+      remove: baseQuery.remove,
     },
   }
 
   // Handle result property usage tracking
-  return !defaultedOptions.notifyOnChangeProps
-    ? trackResult(result, observer)
+  return !baseQuery.defaultedOptions.notifyOnChangeProps
+    ? trackResult(result, baseQuery.observer)
     : result
 }
