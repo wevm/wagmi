@@ -74,6 +74,20 @@ function App() {
 }
 ```
 
+### throwForSwitchChainNotSupported (optional)
+
+Flag that forces `switchNetwork` to be defined, even if the connected wallet does not support programmatic network switching.
+
+```tsx {5}
+import { useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const network = useSwitchNetwork({
+    throwForSwitchChainNotSupported: true,
+  })
+}
+```
+
 ### onError (optional)
 
 Function to invoke when an error is thrown while attempting to switch network.

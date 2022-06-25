@@ -51,10 +51,13 @@ export function useDisconnect({
           },
         }
       : {}),
-    onSuccess(_data, _variables, context) {
-      // Pass on arguments
-      onSuccess?.(context)
-    },
+    ...(onSuccess
+      ? {
+          onSuccess(_data, _variables, context) {
+            onSuccess(context)
+          },
+        }
+      : {}),
   })
 
   return {

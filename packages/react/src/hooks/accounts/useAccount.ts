@@ -25,6 +25,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const { subscribe } = useClient()
 
   React.useEffect(() => {
+    // No need to subscribe if these callbacks aren't defined
     if (!onConnect && !onDisconnect) return
 
     // Trigger update when status changes

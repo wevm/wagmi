@@ -16,7 +16,9 @@ export type UseSwitchNetworkConfig = MutationConfig<
   SwitchNetworkResult,
   Error,
   SwitchNetworkArgs
->
+> & {
+  throwForSwitchChainNotSupported?: boolean
+}
 
 export const mutationKey = (args: UseSwitchNetworkArgs) =>
   [{ entity: 'switchNetwork', ...args }] as const
@@ -29,6 +31,7 @@ const mutationFn = (args: UseSwitchNetworkArgs) => {
 
 export function useSwitchNetwork({
   chainId,
+  throwForSwitchChainNotSupported,
   onError,
   onMutate,
   onSettled,
@@ -56,13 +59,13 @@ export function useSwitchNetwork({
     onSuccess,
   })
 
-  const switchNetwork = React.useCallback(
+  const switchNetwork_ = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
       mutate(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
     [chainId, mutate],
   )
 
-  const switchNetworkAsync = React.useCallback(
+  const switchNetworkAsync_ = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
       mutateAsync(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
     [chainId, mutateAsync],
@@ -80,6 +83,14 @@ export function useSwitchNetwork({
     return unwatch
   }, [client, forceUpdate])
 
+  let switchNetwork
+  let switchNetworkAsync
+  const supportsSwitchChain = !!client.connector?.switchChain
+  if (throwForSwitchChainNotSupported || supportsSwitchChain) {
+    switchNetwork = switchNetwork_
+    switchNetworkAsync = switchNetworkAsync_
+  }
+
   return {
     chains: client.chains ?? [],
     data,
@@ -91,10 +102,8 @@ export function useSwitchNetwork({
     pendingChainId: variables?.chainId,
     reset,
     status,
-    switchNetwork: client.connector?.switchChain ? switchNetwork : undefined,
-    switchNetworkAsync: client.connector?.switchChain
-      ? switchNetworkAsync
-      : undefined,
+    switchNetwork,
+    switchNetworkAsync,
     variables,
   } as const
 }
