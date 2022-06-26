@@ -16,7 +16,7 @@ export function WalletSelectorWithSiwe() {
     async (connector: Connector) => {
       try {
         setState((x) => ({ ...x, loading: true }))
-        const res = await connectAsync(connector)
+        const res = await connectAsync({ connector })
 
         const nonceRes = await fetch('/api/nonce')
         const message = new SiweMessage({

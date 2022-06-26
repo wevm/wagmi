@@ -40,7 +40,9 @@ export async function actConnect(config: {
 
   await act(async () => {
     const connect = getConnect(utils)
-    await connect.connectAsync?.(connector ?? connect.connectors?.[0])
+    await connect.connectAsync?.({
+      connector: connector ?? connect.connectors?.[0],
+    })
   })
 
   const { waitFor } = utils

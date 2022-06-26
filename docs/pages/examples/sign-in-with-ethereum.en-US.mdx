@@ -310,7 +310,7 @@ This guide splits SIWE into two steps: Connect wallet and sign SIWE message. If 
 
 ```ts
 try {
-  const res = await connectAsync(connector) // `connectAsync` from `useConnect`
+  const res = await connectAsync({ connector }) // `connectAsync` from `useConnect`
   const nonceRes = await fetch('/api/nonce')
   const message = new SiweMessage({
     domain: window.location.host,
