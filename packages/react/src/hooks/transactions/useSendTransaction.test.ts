@@ -117,7 +117,7 @@ describe('useSendTransaction', () => {
         )
 
         expect(result.current.sendTransaction.error).toMatchInlineSnapshot(
-          `[SwitchChainNotSupportedError: "Mock" does not support automatic chain switching. Try switching from "Ethereum" to "Chain 10" in your wallet app.]`,
+          `[ChainMismatchError: Chain mismatch: Expected "Chain 10", received "Ethereum.]`,
         )
       })
     })

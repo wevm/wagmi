@@ -2,12 +2,12 @@ import { CallOverrides, Contract, providers } from 'ethers'
 
 import { getClient } from '../../client'
 import {
+  ChainMismatchError,
   ConnectorNotFoundError,
   ProviderRpcError,
   UserRejectedRequestError,
 } from '../../errors'
 import { Chain } from '../../types'
-import { switchNetwork } from '../accounts'
 import { GetContractArgs, getContract } from './getContract'
 
 export type WriteContractConfig = GetContractArgs & {
@@ -46,7 +46,19 @@ export async function writeContract<TContract extends Contract = Contract>({
     let chain: Chain | undefined
     if (chainId) {
       const activeChainId = await connector.getChainId()
-      if (chainId !== activeChainId) chain = await switchNetwork({ chainId })
+      // Try to switch chain to provided `chainId`
+      if (chainId !== activeChainId) {
+        if (connector.switchChain) chain = await connector.switchChain(chainId)
+        else
+          throw new ChainMismatchError({
+            activeChain:
+              connector.chains.find((x) => x.id === activeChainId)?.name ??
+              `Chain ${activeChainId}`,
+            targetChain:
+              connector.chains.find((x) => x.id === chainId)?.name ??
+              `Chain ${chainId}`,
+          })
+      }
     }
 
     const signer = await connector.getSigner({ chainId: chain?.id })

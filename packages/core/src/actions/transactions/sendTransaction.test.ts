@@ -59,7 +59,7 @@ describe('sendTransaction', () => {
             },
           }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"\\"Mock\\" does not support automatic chain switching. Try switching from \\"Ethereum\\" to \\"Chain 10\\" in your wallet app."`,
+          `"Chain mismatch: Expected \\"Chain 10\\", received \\"Ethereum."`,
         )
       })
     })

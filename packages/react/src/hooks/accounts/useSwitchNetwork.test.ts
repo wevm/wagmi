@@ -137,7 +137,7 @@ describe('useSwitchNetwork', () => {
       await waitFor(() => expect(result.current.network.isError).toBeTruthy())
 
       expect(result.current.network.error).toMatchInlineSnapshot(
-        `[SwitchChainNotSupportedError: "Mock" does not support automatic chain switching. Try switching from "Ethereum" to "Rinkeby" in your wallet app.]`,
+        `[SwitchChainNotSupportedError: "Mock" does not support automatic chain switching.]`,
       )
     })
   })

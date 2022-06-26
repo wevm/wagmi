@@ -83,12 +83,12 @@ describe('switchNetwork', () => {
       await expect(
         switchNetwork({ chainId: 4 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"\\"Mock\\" does not support automatic chain switching. Try switching from \\"Ethereum\\" to \\"Rinkeby\\" in your wallet app."`,
+        `"\\"Mock\\" does not support automatic chain switching."`,
       )
       await expect(
         switchNetwork({ chainId: 69 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"\\"Mock\\" does not support automatic chain switching. Try switching from \\"Ethereum\\" to \\"Chain 69\\" in your wallet app."`,
+        `"\\"Mock\\" does not support automatic chain switching."`,
       )
     })
   })
