@@ -16,7 +16,7 @@ export async function switchNetwork({
 }: SwitchNetworkArgs): Promise<SwitchNetworkResult> {
   const { connector } = getClient()
   if (!connector) throw new ConnectorNotFoundError()
-  if (!connector?.switchChain)
+  if (!connector.switchChain)
     throw new SwitchChainNotSupportedError({
       connector,
     })
