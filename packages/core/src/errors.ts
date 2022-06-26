@@ -1,3 +1,4 @@
+import { Connector } from './connectors'
 import { Chain } from './types'
 
 /**
@@ -123,7 +124,14 @@ export class SwitchChainError extends ProviderRpcError {
 
 export class SwitchChainNotSupportedError extends Error {
   name = 'SwitchChainNotSupportedError'
-  message = 'Switch chain not supported by connector'
+
+  constructor({ connector }: { connector?: Connector }) {
+    super(
+      `Switch chain not supported by ${
+        connector ? `"${connector.name}" ` : ''
+      }connector.`,
+    )
+  }
 }
 
 export class UserRejectedRequestError extends ProviderRpcError {

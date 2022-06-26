@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { useSyncExternalStore } from 'use-sync-external-store/shim/index.js'
-
 import {
   QueryKey,
   QueryObserver,
@@ -11,12 +9,15 @@ import {
   useQueryErrorResetBoundary,
 } from 'react-query'
 
+import { useSyncExternalStore } from '../useSyncExternalStore'
+import { shouldThrowError } from './utils'
+
 export function useBaseQuery<
   TQueryFnData,
-  TError,
-  TData,
-  TQueryData,
-  TQueryKey extends QueryKey,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
 >(
   options: UseBaseQueryOptions<
     TQueryFnData,
@@ -60,7 +61,7 @@ export function useBaseQuery<
     // Always set stale time when using suspense to prevent
     // fetching again when directly mounting after suspending
     if (typeof defaultedOptions.staleTime !== 'number') {
-      defaultedOptions.staleTime = 1000
+      defaultedOptions.staleTime = 1_000
     }
   }
 
@@ -150,17 +151,5 @@ export function useBaseQuery<
     isLoading,
     observer,
     status,
-  }
-}
-
-function shouldThrowError<T extends (...args: any[]) => boolean>(
-  _useErrorBoundary: boolean | T | undefined,
-  params: Parameters<T>,
-): boolean {
-  // Allow useErrorBoundary function to override throwing behavior on a per-error basis
-  if (typeof _useErrorBoundary === 'function') {
-    return _useErrorBoundary(...params)
-  }
-
-  return !!_useErrorBoundary
+  } as const
 }

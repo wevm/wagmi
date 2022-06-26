@@ -149,6 +149,271 @@ const client = createClient({
 })
 ```
 
+### `useAccount`
+
+#### Return value changes
+
+**The `data` value is now `address` & `connector`**
+
+```diff
+{
+- data?: {
+-   address: string
+-   connector: Connector
+- }
++ address?: string
++ connector?: Connector
+}
+```
+
+**Global connection status values have been added**
+
+The following global connection status values have been added:
+
+```diff
+{
++ isConnecting: boolean
++ isReconnecting: boolean
++ isConnected: boolean
++ isDisconnected: boolean
++ status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
+}
+```
+
+The `useAccount` hook is now aware of any connection event in your application, so now you can use these connection status values to determine if your user is connected, disconnected or connecting to a wallet on a global scope.
+
+**`error`, states & `refetch` values have been removed**
+
+Since the `useAccount` hook never dealt with asynchronous data, all of these values were
+redundant & unused.
+
+```diff
+{
+- error?: Error
+- isIdle: boolean
+- isLoading: boolean
+- isFetching: boolean
+- isSuccess: boolean
+- isError: boolean
+- isFetched: boolean
+- isRefetching: boolean
+- refetch: (options: {
+-   throwOnError: boolean
+-   cancelRefetch: boolean
+- }) => Promise<{
+-   address: string
+-   connector: Connector
+- }>
+- status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+**Summary of changes**
+
+Below is the whole diff of changes to the `useAccount` return value.
+
+```diff
+{
+- data?: {
+-   address: string
+-   connector: Connector
+- }
++ address?: string
++ connector?: Connector
+- error?: Error
+- isIdle: boolean
+- isLoading: boolean
+- isFetching: boolean
+- isSuccess: boolean
+- isError: boolean
+- isFetched: boolean
+- isRefetching: boolean
++ isConnecting: boolean
++ isReconnecting: boolean
++ isConnected: boolean
++ isDisconnected: boolean
+- refetch: (options: {
+-   throwOnError: boolean
+-   cancelRefetch: boolean
+- }) => Promise<{
+-   address: string
+-   connector: Connector
+- }>
+- status: 'idle' | 'error' | 'loading' | 'success'
++ status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
+}
+```
+
+#### Configuration changes
+
+**`onConnect` has been added**
+
+The `onConnect` callback is invoked when the account connects.
+
+It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
+
+```tsx
+const account = useAccount({
+  onConnect({ address, connector, isReconnected }) {
+    console.log('Connected')
+  },
+})
+```
+
+**`onDisconnect` has been added**
+
+The `onDisconnect` callback is invoked when the account disconnected.
+
+```tsx
+const account = useAccount({
+  onDisconnect() {
+    console.log('Disconnected')
+  },
+})
+```
+
+**`suspense` has been removed**
+
+The `useAccount` hook is a synchronous hook – so `suspense` never worked.
+
+```diff
+const account = useAccount({
+-  suspense: true,
+})
+```
+
+**`onError` has been removed**
+
+The `useAccount` hook never had any error definitions – so `onError` was never invoked.
+
+```diff
+const account = useAccount({
+- onError(error) {
+-   console.log('Error', error)
+- },
+})
+```
+
+**`onSettled` has been removed**
+
+The `useAccount` hook is a synchronous hook. `onSettled` was always invoked immediately.
+
+```diff
+const account = useAccount({
+- onSettled(data) {
+-   console.log('Settled', data)
+- },
+})
+```
+
+If you used `onSettled`, you can move the code beneath the `useAccount` hook:
+
+```diff
+const account = useAccount({
+- onSettled(data) {
+-   console.log('Address:', data.address)
+- },
+})
++ console.log('Address:', account.address)
+```
+
+**`onSuccess` has been removed**
+
+The `useAccount` hook is a synchronous hook. `onSuccess` was always invoked immediately.
+
+```diff
+const account = useAccount({
+- onSuccess(data) {
+-   console.log('Success', data)
+- },
+})
+```
+
+If you used `onSuccess`, you can move the code beneath the `useAccount` hook:
+
+```diff
+const account = useAccount({
+- onSuccess(data) {
+-   console.log('Address:', data.address)
+- },
+})
++ console.log('Address:', account.address)
+```
+
+### `useConnect`
+
+#### Return value changes
+
+**Connection status flags have been moved**
+
+The `isConnected`, `isConnecting`, `isReconnecting` & `isDisconnected` flags have been moved to the `useAccount` hook.
+
+```diff
+-import { useConnect } from 'wagmi'
++import { useAccount } from 'wagmi'
+
+function App() {
+  const {
+    isConnected,
+    isConnecting,
+    isConnecting,
+    isDisconnected
+- } = useConnect()
++ } = useAccount()
+}
+```
+
+**New `connect` mutation status flags have been added**
+
+The `isLoading`, `isSuccess` and `isError` flags have been added to `useConnect`.
+
+These flags represent the **local** async state of `useConnect`.
+
+**`activeConnector` has been removed**
+
+The `activeConnector` value has been removed. You can find the active connector on `useAccount`.
+
+```diff
+-import { useConnect } from 'wagmi'
++import { useAccount } from 'wagmi'
+
+function App() {
+- const { activeConnector } = useConnect()
++ const { connector } = useAccount()
+}
+```
+
+**`connector` parameter on `connect` & `connectAsync` has been removed**
+
+The `connector` parameter on `connect` & `connectAsync` now has to be in the config object parameter shape.
+
+```diff
+import { useConnect } from 'wagmi'
+
+function App() {
+  const { connect, connectors } = useConnect()
+
+  return (
+    <button
+-     onClick={() => connect(connectors[0])}
++     onClick={() => connect({ connector: connectors[0] })}
+    >
+      Connect
+    </button>
+  )
+}
+```
+
+#### Configuration changes
+
+**`onBeforeConnect` has been renamed**
+
+The `onBeforeConnect` callback has been renamed to `onMutate`
+
+**`onConnect` has been renamed**
+
+The `onConnect` callback has been renamed to `onSuccess`
+
 ### `useContractRead`
 
 The `useContractRead` hook parameters have been consolidated into a singular config parameter.
@@ -229,6 +494,64 @@ useContractEvent({
   eventName: 'Transfer',
   listener,
 })
+```
+
+### `useNetwork`
+
+The "switch network" functionality has been moved out of `useNetwork` into a new `useSwitchNetwork` hook.
+
+The `useNetwork` hook now accepts no configuration and only returns `chain` (renamed from `activeChain`) and `chains`.
+
+```diff
+import {
+  useNetwork
++ useSwitchNetwork
+} from 'wagmi'
+
+const {
+- activeChain
++ chain,
+  chains,
+- data,
+- error,
+- isError,
+- isIdle,
+- isLoading,
+- isSuccess,
+- pendingChainId,
+- switchNetwork,
+- switchNetworkAsync,
+- status,
+- reset,
+-} = useNetwork({
+- chainId: 69,
+- onError(error) {},
+- onMutate(args) {},
+- onSettled(data, error) {},
+- onSuccess(data) {}
+-})
++} = useNetwork()
+
++const {
++ chains,
++ data,
++ error,
++ isError,
++ isIdle,
++ isLoading,
++ isSuccess,
++ pendingChainId,
++ switchNetwork,
++ switchNetworkAsync,
++ status,
++ reset,
++} = useSwitchNetwork({
++ chainId: 69,
++ onError(error) {},
++ onMutate(args) {},
++ onSettled(data, error) {},
++ onSuccess(data) {}
++})
 ```
 
 ## 0.4.x Breaking changes

@@ -6,7 +6,7 @@ import { useIsMounted } from '../../hooks'
 
 export function WalletSelector() {
   const isMounted = useIsMounted()
-  const { connectors, isConnecting, connect, error, pendingConnector } =
+  const { connectors, isLoading, connect, error, pendingConnector } =
     useConnect()
 
   return (
@@ -18,10 +18,10 @@ export function WalletSelector() {
             width="full"
             variant="tertiary"
             center
-            loading={isConnecting && x.id === pendingConnector?.id}
+            loading={isLoading && x.id === pendingConnector?.id}
             disabled={isMounted ? !x.ready : false}
             key={x.id}
-            onClick={() => connect(x)}
+            onClick={() => connect({ connector: x })}
           >
             {x.name}
           </Button>

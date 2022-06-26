@@ -12,18 +12,21 @@ import { WriteContract } from './WriteContract'
 
 export const Account = () => {
   const isMounted = useIsMounted()
-  const account = useAccount()
-  const ensAvatar = useEnsAvatar({
-    addressOrName: account.data?.address,
+  const account = useAccount({
+    onConnect: (data) => console.log('connected', data),
+    onDisconnect: () => console.log('disconnected'),
   })
-  const ensName = useEnsName({ address: account.data?.address })
+  const ensAvatar = useEnsAvatar({
+    addressOrName: account?.address,
+  })
+  const ensName = useEnsName({ address: account?.address })
   const disconnect = useDisconnect()
 
   return (
     <div>
       <div>
-        {ensName.data ?? account.data?.address}
-        {ensName.data ? ` (${account.data?.address})` : null}
+        {ensName.data ?? account?.address}
+        {ensName.data ? ` (${account?.address})` : null}
       </div>
 
       {ensAvatar.data && (
@@ -31,11 +34,11 @@ export const Account = () => {
       )}
 
       <div>
-        {account.data?.address && (
+        {account?.address && (
           <button onClick={() => disconnect.disconnect()}>Disconnect</button>
         )}
-        {isMounted && account.data?.connector?.name && (
-          <span>Connected to {account.data.connector.name}</span>
+        {isMounted && account?.connector?.name && (
+          <span>Connected to {account.connector.name}</span>
         )}
       </div>
 

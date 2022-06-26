@@ -34,6 +34,7 @@ export {
   useSignMessage,
   useSignTypedData,
   useSigner,
+  useSwitchNetwork,
   useToken,
   useWaitForTransaction,
   useWebSocketProvider,

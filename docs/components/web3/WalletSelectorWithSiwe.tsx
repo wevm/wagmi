@@ -8,15 +8,15 @@ import { useIsMounted } from '../../hooks'
 export function WalletSelectorWithSiwe() {
   const isMounted = useIsMounted()
   const [state, setState] = React.useState<{ loading?: boolean }>({})
-  const { connectAsync, connectors, error, isConnecting, pendingConnector } =
+  const { connectAsync, connectors, error, isLoading, pendingConnector } =
     useConnect()
-  const resolvedLoading = isConnecting || state.loading
+  const resolvedLoading = isLoading || state.loading
 
   const handleConnect = React.useCallback(
     async (connector: Connector) => {
       try {
         setState((x) => ({ ...x, loading: true }))
-        const res = await connectAsync(connector)
+        const res = await connectAsync({ connector })
 
         const nonceRes = await fetch('/api/nonce')
         const message = new SiweMessage({

@@ -2,7 +2,7 @@ import { getAddress } from 'ethers/lib/utils'
 
 import { Chain } from '../../types'
 import { normalizeChainId } from '../../utils'
-import { Connector } from '../base'
+import { Connector, ConnectorData } from '../base'
 import { MockProvider, MockProviderOptions } from './provider'
 
 export class MockConnector extends Connector<
@@ -35,7 +35,9 @@ export class MockConnector extends Connector<
 
     if (!this.options.flags?.noSwitchChain) this.switchChain = this.#switchChain
 
-    return data
+    return new Promise<Required<ConnectorData>>((res) =>
+      setTimeout(() => res(data), 100),
+    )
   }
 
   async disconnect() {

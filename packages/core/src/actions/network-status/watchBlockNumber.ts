@@ -1,3 +1,5 @@
+import shallow from 'zustand/shallow'
+
 import { getClient } from '../../client'
 import { Provider } from '../../types'
 import { FetchBlockNumberResult, fetchBlockNumber } from './fetchBlockNumber'
@@ -34,9 +36,7 @@ export function watchBlockNumber(
       callback(await fetchBlockNumber())
     },
     {
-      equalityFn: (selected, previous) =>
-        selected.provider === previous.provider &&
-        selected.webSocketProvider === previous.webSocketProvider,
+      equalityFn: shallow,
     },
   )
   return () => {

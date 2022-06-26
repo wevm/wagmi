@@ -1,3 +1,5 @@
+export { useBaseQuery, useQuery, useInfiniteQuery } from './query'
 export { useChainId } from './useChainId'
 export { useForceUpdate } from './useForceUpdate'
-export { useBaseQuery, useQuery, useInfiniteQuery } from './query'
+export { useSyncExternalStore } from './useSyncExternalStore'
+export { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked'

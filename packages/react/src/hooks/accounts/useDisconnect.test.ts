@@ -51,11 +51,11 @@ describe('useDisconnect', () => {
 
   describe('return value', () => {
     it('disconnect', async () => {
-      const utils = renderHook(() => useDisconnectWithConnect())
+      const utils = renderHook(() => useDisconnectWithAccountAndConnect())
       const { result, waitFor } = utils
 
       await actConnect({ utils })
-      expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `"<MockConnector>"`,
       )
 
@@ -64,7 +64,7 @@ describe('useDisconnect', () => {
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
 
-      expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `undefined`,
       )
       expect(result.current.disconnect).toMatchInlineSnapshot(`
@@ -83,11 +83,11 @@ describe('useDisconnect', () => {
     })
 
     it('disconnectAsync', async () => {
-      const utils = renderHook(() => useDisconnectWithConnect())
+      const utils = renderHook(() => useDisconnectWithAccountAndConnect())
       const { result, waitFor } = utils
 
       await actConnect({ utils })
-      expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `"<MockConnector>"`,
       )
 
@@ -96,7 +96,7 @@ describe('useDisconnect', () => {
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
 
-      expect(result.current.connect.activeConnector).toMatchInlineSnapshot(
+      expect(result.current.account.connector).toMatchInlineSnapshot(
         `undefined`,
       )
       expect(result.current.disconnect).toMatchInlineSnapshot(`
@@ -122,12 +122,12 @@ describe('useDisconnect', () => {
 
       await actConnect({ utils })
 
-      expect(result.current.account.data).toMatchInlineSnapshot(`
-        {
-          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "connector": "<MockConnector>",
-        }
-      `)
+      expect(result.current.account.address).toMatchInlineSnapshot(
+        `"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`,
+      )
+      expect(result.current.account.connector).toMatchInlineSnapshot(
+        `"<MockConnector>"`,
+      )
 
       await act(async () => result.current.disconnect.disconnect())
 
@@ -135,7 +135,10 @@ describe('useDisconnect', () => {
         expect(result.current.disconnect.isSuccess).toBeTruthy(),
       )
       rerender()
-      expect(result.current.account.data).toMatchInlineSnapshot(`null`)
+      expect(result.current.account.address).toMatchInlineSnapshot(`undefined`)
+      expect(result.current.account.connector).toMatchInlineSnapshot(
+        `undefined`,
+      )
     })
   })
 })

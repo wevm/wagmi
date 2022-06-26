@@ -1,18 +1,26 @@
+import shallow from 'zustand/shallow'
+
 import { getClient } from '../../client'
+import { Chain } from '../../types'
 import { GetNetworkResult, getNetwork } from './getNetwork'
 
 export type WatchNetworkCallback = (data: GetNetworkResult) => void
 
-export function watchNetwork(callback: WatchNetworkCallback) {
+export type WatchNetworkConfig = {
+  selector?({ chainId, chains }: { chainId?: number; chains?: Chain[] }): any
+}
+
+export function watchNetwork(
+  callback: WatchNetworkCallback,
+  { selector = (x) => x }: WatchNetworkConfig = {},
+) {
   const client = getClient()
   const handleChange = () => callback(getNetwork())
   const unsubscribe = client.subscribe(
-    ({ data, chains }) => ({ chainId: data?.chain?.id, chains }),
+    ({ data, chains }) => selector({ chainId: data?.chain?.id, chains }),
     handleChange,
     {
-      equalityFn: (selected, previous) =>
-        selected.chainId === previous.chainId &&
-        selected.chains === previous.chains,
+      equalityFn: shallow,
     },
   )
   return unsubscribe

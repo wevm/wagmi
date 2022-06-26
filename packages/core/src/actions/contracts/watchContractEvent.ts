@@ -1,4 +1,5 @@
 import { Contract as EthersContract } from 'ethers/lib/ethers'
+import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
 import { getProvider, getWebSocketProvider } from '../providers'
@@ -46,9 +47,7 @@ export function watchContractEvent<
     }),
     watchEvent,
     {
-      equalityFn: (selected, previous) =>
-        selected.provider === previous.provider &&
-        selected.webSocketProvider === previous.webSocketProvider,
+      equalityFn: shallow,
     },
   )
 

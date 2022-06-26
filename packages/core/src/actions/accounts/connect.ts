@@ -29,11 +29,24 @@ export async function connect<TProvider extends Provider = Provider>({
   if (connector.id === activeConnector?.id)
     throw new ConnectorAlreadyConnectedError()
 
-  const data = await connector.connect({ chainId })
+  try {
+    client.setState((x) => ({ ...x, status: 'connecting' }))
 
-  client.setLastUsedConnector(connector.id)
-  client.setState((x) => ({ ...x, connector, chains: connector?.chains, data }))
-  client.storage.setItem('connected', true)
+    const data = await connector.connect({ chainId })
 
-  return { ...data, connector }
+    client.setLastUsedConnector(connector.id)
+    client.setState((x) => ({
+      ...x,
+      connector,
+      chains: connector?.chains,
+      data,
+      status: 'connected',
+    }))
+    client.storage.setItem('connected', true)
+
+    return { ...data, connector } as const
+  } catch (err) {
+    client.setState((x) => ({ ...x, status: 'disconnected' }))
+    throw err
+  }
 }

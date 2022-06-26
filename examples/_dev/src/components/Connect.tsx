@@ -1,34 +1,26 @@
 import * as React from 'react'
-import { useConnect } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 
 import { useIsMounted } from '../hooks'
 
 export const Connect = () => {
   const isMounted = useIsMounted()
-  const {
-    activeConnector,
-    connect,
-    connectors,
-    error,
-    isConnecting,
-    isReconnecting,
-    pendingConnector,
-  } = useConnect()
+  const { connector, isReconnecting } = useAccount()
+  const { connect, connectors, isLoading, error, pendingConnector } =
+    useConnect()
 
   return (
     <div>
       <div>
         {connectors.map((x) => (
           <button
-            disabled={
-              !x.ready || isReconnecting || activeConnector?.id === x.id
-            }
+            disabled={!x.ready || isReconnecting || connector?.id === x.id}
             key={x.name}
-            onClick={() => connect(x)}
+            onClick={() => connect({ connector: x })}
           >
             {x.id === 'injected' ? (isMounted ? x.name : x.id) : x.name}
             {isMounted && !x.ready && ' (unsupported)'}
-            {isConnecting && x.id === pendingConnector?.id && '…'}
+            {isLoading && x.id === pendingConnector?.id && '…'}
           </button>
         ))}
       </div>

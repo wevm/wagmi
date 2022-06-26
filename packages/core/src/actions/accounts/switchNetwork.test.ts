@@ -77,7 +77,7 @@ describe('switchNetwork', () => {
       await expect(
         switchNetwork({ chainId: 69 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"Switch chain not supported by connector"`,
+        `"Switch chain not supported by \\"Mock\\" connector."`,
       )
     })
   })

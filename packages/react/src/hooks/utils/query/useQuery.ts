@@ -86,64 +86,38 @@ export function useQuery<
   arg3?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): UseQueryResult<TData, TError> {
   const parsedOptions = parseQueryArgs(arg1, arg2, arg3)
-  const {
-    data,
-    dataUpdatedAt,
-    defaultedOptions,
-    error,
-    errorUpdatedAt,
-    failureCount,
-    fetchStatus,
-    isError,
-    isFetched,
-    isFetchedAfterMount,
-    isFetching,
-    isIdle,
-    isLoading,
-    isLoadingError,
-    isPaused,
-    isPlaceholderData,
-    isPreviousData,
-    isRefetchError,
-    isRefetching,
-    isStale,
-    isSuccess,
-    observer,
-    refetch,
-    remove,
-    status,
-  } = useBaseQuery(parsedOptions, QueryObserver)
+  const baseQuery = useBaseQuery(parsedOptions, QueryObserver)
 
   const result = {
-    data,
-    error,
-    fetchStatus,
-    isError,
-    isFetched,
-    isFetching,
-    isIdle,
-    isLoading,
-    isRefetching,
-    isSuccess,
-    refetch,
-    status,
+    data: baseQuery.data,
+    error: baseQuery.error,
+    fetchStatus: baseQuery.fetchStatus,
+    isError: baseQuery.isError,
+    isFetched: baseQuery.isFetched,
+    isFetching: baseQuery.isFetching,
+    isIdle: baseQuery.isIdle,
+    isLoading: baseQuery.isLoading,
+    isRefetching: baseQuery.isRefetching,
+    isSuccess: baseQuery.isSuccess,
+    refetch: baseQuery.refetch,
+    status: baseQuery.status,
     internal: {
-      dataUpdatedAt,
-      errorUpdatedAt,
-      failureCount,
-      isFetchedAfterMount,
-      isLoadingError,
-      isPaused,
-      isPlaceholderData,
-      isPreviousData,
-      isRefetchError,
-      isStale,
-      remove,
+      dataUpdatedAt: baseQuery.dataUpdatedAt,
+      errorUpdatedAt: baseQuery.errorUpdatedAt,
+      failureCount: baseQuery.failureCount,
+      isFetchedAfterMount: baseQuery.isFetchedAfterMount,
+      isLoadingError: baseQuery.isLoadingError,
+      isPaused: baseQuery.isPaused,
+      isPlaceholderData: baseQuery.isPlaceholderData,
+      isPreviousData: baseQuery.isPreviousData,
+      isRefetchError: baseQuery.isRefetchError,
+      isStale: baseQuery.isStale,
+      remove: baseQuery.remove,
     },
   }
 
   // Handle result property usage tracking
-  return !defaultedOptions.notifyOnChangeProps
-    ? trackResult(result, observer)
+  return !baseQuery.defaultedOptions.notifyOnChangeProps
+    ? trackResult(result, baseQuery.observer)
     : result
 }

@@ -40,11 +40,13 @@ export async function actConnect(config: {
 
   await act(async () => {
     const connect = getConnect(utils)
-    connect.connect?.(connector ?? connect.connectors?.[0])
+    await connect.connectAsync?.({
+      connector: connector ?? connect.connectors?.[0],
+    })
   })
 
   const { waitFor } = utils
-  await waitFor(() => expect(getConnect(utils).isConnected).toBeTruthy())
+  await waitFor(() => expect(getConnect(utils).isSuccess).toBeTruthy())
 }
 
 export async function actDisconnect(config: {
@@ -56,20 +58,20 @@ export async function actDisconnect(config: {
 
   await act(async () => {
     const disconnect = getDisconnect(utils)
-    disconnect.disconnect?.()
+    disconnect.disconnectAsync?.()
   })
 
   const { waitFor } = utils
   await waitFor(() => expect(getDisconnect(utils).isSuccess).toBeTruthy())
 }
 
-export async function actNetwork(config: {
+export async function actSwitchNetwork(config: {
   chainId: number
   utils: ReturnType<typeof renderHook>
 }) {
   const chainId = config.chainId
   const getNetwork = (utils: ReturnType<typeof renderHook>) =>
-    (utils.result.current as any)?.network || utils.result.current
+    (utils.result.current as any)?.switchNetwork || utils.result.current
   const utils = config.utils
 
   await act(async () => {

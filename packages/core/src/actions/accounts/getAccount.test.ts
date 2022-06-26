@@ -16,6 +16,11 @@ describe('getAccount', () => {
         {
           "address": undefined,
           "connector": undefined,
+          "isConnected": false,
+          "isConnecting": false,
+          "isDisconnected": true,
+          "isReconnecting": false,
+          "status": "disconnected",
         }
       `)
     })
@@ -26,6 +31,11 @@ describe('getAccount', () => {
         {
           "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "connector": "<MockConnector>",
+          "isConnected": true,
+          "isConnecting": false,
+          "isDisconnected": false,
+          "isReconnecting": false,
+          "status": "connected",
         }
       `)
     })

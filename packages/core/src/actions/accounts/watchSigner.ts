@@ -1,3 +1,5 @@
+import shallow from 'zustand/shallow'
+
 import { getClient } from '../../client'
 import { FetchSignerResult, fetchSigner } from './fetchSigner'
 
@@ -14,10 +16,7 @@ export function watchSigner(callback: WatchSignerCallback) {
     }),
     handleChange,
     {
-      equalityFn: (selected, previous) =>
-        selected.account === previous.account &&
-        selected.chainId === previous.chainId &&
-        selected.connector === previous.connector,
+      equalityFn: shallow,
     },
   )
   return unsubscribe

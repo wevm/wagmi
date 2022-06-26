@@ -1,11 +1,11 @@
-import { actConnect, actNetwork, renderHook } from '../../../test'
-import { useConnect, useNetwork } from '../accounts'
+import { actConnect, actSwitchNetwork, renderHook } from '../../../test'
+import { useConnect, useSwitchNetwork } from '../accounts'
 import { UseProviderArgs, useProvider } from './useProvider'
 
 function useProviderWithConnectAndNetwork(config: UseProviderArgs = {}) {
   return {
     connect: useConnect(),
-    network: useNetwork(),
+    switchNetwork: useSwitchNetwork(),
     provider: useProvider(config),
   }
 }
@@ -34,7 +34,7 @@ describe('useProvider', () => {
       )
 
       await actConnect({ utils })
-      await actNetwork({ utils, chainId: 4 })
+      await actSwitchNetwork({ utils, chainId: 4 })
 
       expect(result.current.provider).toMatchInlineSnapshot(
         `"<Provider network={4} />"`,

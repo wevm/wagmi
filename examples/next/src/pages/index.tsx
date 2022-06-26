@@ -6,13 +6,13 @@ import { useIsMounted } from '../hooks'
 
 function Page() {
   const isMounted = useIsMounted()
-  const { data } = useAccount()
+  const { isConnected } = useAccount()
 
   return (
     <>
       <Connect />
 
-      {isMounted && data && (
+      {isMounted && isConnected && (
         <>
           <Account />
           <NetworkSwitcher />

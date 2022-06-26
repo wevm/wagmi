@@ -206,8 +206,8 @@ import { useAccount, useNetwork, useSignMessage } from 'wagmi'
 import { SiweMessage } from 'siwe'
 
 export function Profile() {
-  const { data: accountData } = useAccount()
-  const { activeChain } = useNetwork()
+  const { address, isConnected } = useAccount()
+  const { chain: activeChain } = useNetwork()
 
   const [state, setState] = React.useState<{
     address?: string
@@ -218,7 +218,6 @@ export function Profile() {
 
   const signIn = React.useCallback(async () => {
     try {
-      const address = accountData?.address
       const chainId = activeChain?.id
       if (!address || !chainId) return
 
@@ -271,7 +270,7 @@ export function Profile() {
     return () => window.removeEventListener('focus', handler)
   }, [])
 
-  if (accountData) {
+  if (isConnected) {
     return (
       <div>
         {/* Account content goes here */}
@@ -311,7 +310,7 @@ This guide splits SIWE into two steps: Connect wallet and sign SIWE message. If 
 
 ```ts
 try {
-  const res = await connectAsync(connector) // `connectAsync` from `useConnect`
+  const res = await connectAsync({ connector }) // `connectAsync` from `useConnect`
   const nonceRes = await fetch('/api/nonce')
   const message = new SiweMessage({
     domain: window.location.host,
