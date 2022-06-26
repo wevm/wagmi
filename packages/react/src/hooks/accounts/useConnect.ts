@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { ConnectArgs, ConnectResult, Connector, connect } from '@wagmi/core'
+import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
 import { useMutation } from 'react-query'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
+import { useForceUpdate } from '../utils'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 
@@ -27,6 +28,16 @@ export function useConnect({
   onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
   const client = useClient()
+  const forceUpdate = useForceUpdate()
+
+  React.useEffect(() => {
+    // Trigger update when connectors change
+    const unsubscribe = client.subscribe(
+      (state) => state.connectors,
+      forceUpdate,
+    )
+    return unsubscribe
+  }, [client, forceUpdate])
 
   const {
     data,
@@ -48,43 +59,21 @@ export function useConnect({
   })
 
   const connect = React.useCallback(
-    (connectorOrArgs?: Partial<ConnectArgs> | ConnectArgs['connector']) => {
-      let config: Partial<ConnectArgs>
-      if (connectorOrArgs instanceof Connector) {
-        const connector_ = connectorOrArgs
-        config = {
-          chainId,
-          connector: connector_ ?? connector,
-        }
-      } else {
-        const args = connectorOrArgs
-        config = {
-          chainId: args?.chainId ?? chainId,
-          connector: args?.connector ?? connector,
-        }
-      }
-      return mutate(<ConnectArgs>config)
+    (args?: Partial<ConnectArgs>) => {
+      return mutate(<ConnectArgs>{
+        chainId: args?.chainId ?? chainId,
+        connector: args?.connector ?? connector,
+      })
     },
     [chainId, connector, mutate],
   )
 
   const connectAsync = React.useCallback(
-    (connectorOrArgs?: Partial<ConnectArgs> | ConnectArgs['connector']) => {
-      let config: Partial<ConnectArgs>
-      if (connectorOrArgs instanceof Connector) {
-        const connector_ = connectorOrArgs
-        config = {
-          chainId,
-          connector: connector_ ?? connector,
-        }
-      } else {
-        const args = connectorOrArgs
-        config = {
-          chainId: args?.chainId ?? chainId,
-          connector: args?.connector ?? connector,
-        }
-      }
-      return mutateAsync(<ConnectArgs>config)
+    (args?: Partial<ConnectArgs>) => {
+      return mutateAsync(<ConnectArgs>{
+        chainId: args?.chainId ?? chainId,
+        connector: args?.connector ?? connector,
+      })
     },
     [chainId, connector, mutateAsync],
   )

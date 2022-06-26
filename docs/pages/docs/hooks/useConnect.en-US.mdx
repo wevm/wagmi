@@ -12,18 +12,24 @@ import { useConnect } from 'wagmi'
 import { useAccount, useConnect } from 'wagmi'
 
 function App() {
-  const { connector, isConnected } = useAccount()
+  const { connector: activeConnector, isConnected } = useAccount()
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
 
   return (
     <>
-      {isConnected && <div>Connected to {connector.name}</div>}
+      {isConnected && <div>Connected to {activeConnector.name}</div>}
 
-      {connectors.map((x) => (
-        <button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>
-          {x.name}
-          {isLoading && pendingConnector?.id === x.id && ' (connecting)'}
+      {connectors.map((connector) => (
+        <button
+          disabled={!connector.ready}
+          key={connector.id}
+          onClick={() => connect({ connector })}
+        >
+          {connector.name}
+          {isLoading &&
+            pendingConnector?.id === connector.id &&
+            ' (connecting)'}
         </button>
       ))}
 
@@ -38,10 +44,10 @@ function App() {
 ```tsx
 {
   connect: (
-    connectorOrConfig: Connector | { connector?: Connector; chainId?: number },
+    config: { connector?: Connector; chainId?: number },
   ) => void
   connectAsync: (
-    connectorOrConfig: Connector | { connector?: Connector; chainId?: number },
+    config: { connector?: Connector; chainId?: number },
   ) => Promise<{
     address: string
     chain: {
@@ -80,7 +86,6 @@ Chain ID to connect.
 
 ```tsx {6}
 import { chain, useConnect } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function App() {
   const connect = useConnect({

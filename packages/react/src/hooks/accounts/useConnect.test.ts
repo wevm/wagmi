@@ -216,7 +216,7 @@ describe('useConnect', () => {
 
         await act(async () => {
           const mockConnector = result.current.connect.connectors[0]
-          result.current.connect.connect(mockConnector)
+          result.current.connect.connect({ connector: mockConnector })
         })
         await waitFor(() =>
           expect(
@@ -468,7 +468,9 @@ describe('useConnect', () => {
 
         await act(async () => {
           const mockConnector = result.current.connect.connectors[0]
-          const res = await result.current.connect.connectAsync(mockConnector)
+          const res = await result.current.connect.connectAsync({
+            connector: mockConnector,
+          })
           expect(res).toMatchInlineSnapshot(`
             {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",

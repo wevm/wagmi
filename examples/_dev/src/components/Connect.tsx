@@ -16,7 +16,7 @@ export const Connect = () => {
           <button
             disabled={!x.ready || isReconnecting || connector?.id === x.id}
             key={x.name}
-            onClick={() => connect(x)}
+            onClick={() => connect({ connector: x })}
           >
             {x.id === 'injected' ? (isMounted ? x.name : x.id) : x.name}
             {isMounted && !x.ready && ' (unsupported)'}

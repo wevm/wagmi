@@ -93,7 +93,7 @@ export function Profile() {
         <button
           disabled={!connector.ready}
           key={connector.id}
-          onClick={() => connect(connector)}
+          onClick={() => connect({ connector })}
         >
           {connector.name}
           {!connector.ready && ' (unsupported)'}
@@ -147,7 +147,7 @@ export function Profile() {
         <button
           disabled={!connector.ready}
           key={connector.id}
-          onClick={() => connect(connector)}
+          onClick={() => connect({ connector })}
         >
           {connector.name}
           {!connector.ready && ' (unsupported)'}

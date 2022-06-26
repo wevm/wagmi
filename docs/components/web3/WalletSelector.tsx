@@ -21,7 +21,7 @@ export function WalletSelector() {
             loading={isLoading && x.id === pendingConnector?.id}
             disabled={isMounted ? !x.ready : false}
             key={x.id}
-            onClick={() => connect(x)}
+            onClick={() => connect({ connector: x })}
           >
             {x.name}
           </Button>
