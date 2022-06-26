@@ -125,11 +125,17 @@ export class SwitchChainError extends ProviderRpcError {
 export class SwitchChainNotSupportedError extends Error {
   name = 'SwitchChainNotSupportedError'
 
-  constructor({ connector }: { connector?: Connector }) {
+  constructor({
+    activeChainName,
+    targetChainName,
+    connector,
+  }: {
+    activeChainName: string
+    connector: Connector
+    targetChainName: string
+  }) {
     super(
-      `Switch chain not supported by ${
-        connector ? `"${connector.name}" ` : ''
-      }connector.`,
+      `"${connector.name}" does not support automatic chain switching. Try switching from "${activeChainName}" to "${targetChainName}" in your wallet app.`,
     )
   }
 }

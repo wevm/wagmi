@@ -47,10 +47,7 @@ export class WalletConnectConnector extends Connector<
           targetChainId = lastUsedChainId
       }
 
-      const provider = await this.getProvider({
-        chainId: targetChainId,
-        create: true,
-      })
+      const provider = await this.getProvider({ chainId: targetChainId })
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
@@ -108,11 +105,8 @@ export class WalletConnectConnector extends Connector<
     return chainId
   }
 
-  async getProvider({
-    chainId = this.options?.chainId || this.chains[0]?.id,
-    create = false,
-  } = {}) {
-    if (!this.#provider || create) {
+  async getProvider({ chainId }: { chainId?: number } = {}) {
+    if (!this.#provider || chainId) {
       const rpc = !this.options?.infuraId
         ? this.chains.reduce(
             (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
@@ -132,9 +126,9 @@ export class WalletConnectConnector extends Connector<
     return this.#provider
   }
 
-  async getSigner() {
+  async getSigner({ chainId }: { chainId?: number } = {}) {
     const [provider, account] = await Promise.all([
-      this.getProvider(),
+      this.getProvider({ chainId }),
       this.getAccount(),
     ])
     return new providers.Web3Provider(

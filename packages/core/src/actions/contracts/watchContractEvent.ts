@@ -1,4 +1,4 @@
-import { Contract as EthersContract } from 'ethers/lib/ethers'
+import { Contract } from 'ethers/lib/ethers'
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
@@ -12,23 +12,21 @@ type Config = {
   once?: boolean
 }
 
-export function watchContractEvent<
-  Contract extends EthersContract = EthersContract,
->(
+export function watchContractEvent<TContract extends Contract = Contract>(
   /** Contract configuration */
   contractArgs: GetContractArgs,
   /** Event name to listen to */
-  eventName: Parameters<Contract['on']>[0],
-  callback: Parameters<Contract['on']>[1],
+  eventName: Parameters<TContract['on']>[0],
+  callback: Parameters<TContract['on']>[1],
   { chainId, once }: Config = {},
 ) {
-  let contract: Contract
+  let contract: TContract
   const watchEvent = async () => {
     if (contract) {
       contract?.off(eventName, callback)
     }
 
-    contract = getContract<Contract>({
+    contract = getContract<TContract>({
       signerOrProvider:
         getWebSocketProvider({ chainId }) || getProvider({ chainId }),
       ...contractArgs,

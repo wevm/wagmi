@@ -18,8 +18,9 @@ export const Account = () => {
   })
   const ensAvatar = useEnsAvatar({
     addressOrName: account?.address,
+    chainId: 1,
   })
-  const ensName = useEnsName({ address: account?.address })
+  const ensName = useEnsName({ address: account?.address, chainId: 1 })
   const disconnect = useDisconnect()
 
   return (
@@ -42,7 +43,7 @@ export const Account = () => {
         )}
       </div>
 
-      {false && (
+      {true && (
         <>
           {true && (
             <>
@@ -60,11 +61,11 @@ export const Account = () => {
           <h4>Read Contract</h4>
           <ReadContract />
 
-          {true && (
-            <>
-              <h4>Write Contract</h4>
-              <WriteContract />
+          <h4>Write Contract</h4>
+          <WriteContract />
 
+          {false && (
+            <>
               <h4>Sign Message</h4>
               <SignMessage />
 
