@@ -109,9 +109,12 @@ export {
 
 export {
   AddChainError,
+  ChainDoesNotSupportMulticallError,
+  ChainMismatchError,
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
+  ProviderChainsNotFound,
   ProviderRpcError,
   ResourceUnavailableError,
   RpcError,

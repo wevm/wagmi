@@ -1,4 +1,4 @@
-import { CallOverrides, Contract as EthersContract } from 'ethers/lib/ethers'
+import { CallOverrides, Contract } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
 import { getProvider } from '../providers'
@@ -19,7 +19,7 @@ export type ReadContractConfig = {
 export type ReadContractResult<Data = Result> = Data
 
 export async function readContract<
-  Contract extends EthersContract = EthersContract,
+  TContract extends Contract = Contract,
   Data = Result,
 >({
   addressOrName,
@@ -30,7 +30,7 @@ export async function readContract<
   overrides,
 }: ReadContractConfig): Promise<ReadContractResult<Data>> {
   const provider = getProvider({ chainId })
-  const contract = getContract<Contract>({
+  const contract = getContract<TContract>({
     addressOrName,
     contractInterface,
     signerOrProvider: provider,

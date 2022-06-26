@@ -1,6 +1,7 @@
+import { MockConnector } from '@wagmi/core/connectors/mock'
 import { parseEther } from 'ethers/lib/utils'
 
-import { act, actConnect, renderHook } from '../../../test'
+import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UseSendTransactionArgs,
@@ -9,9 +10,12 @@ import {
 } from './useSendTransaction'
 
 function useSendTransactionWithConnect(
-  config: UseSendTransactionArgs & UseSendTransactionConfig = {},
+  config?: UseSendTransactionArgs & UseSendTransactionConfig,
 ) {
-  return { connect: useConnect(), sendTransaction: useSendTransaction(config) }
+  return {
+    connect: useConnect(),
+    sendTransaction: useSendTransaction(config),
+  }
 }
 
 describe('useSendTransaction', () => {
@@ -32,6 +36,91 @@ describe('useSendTransaction', () => {
         "variables": undefined,
       }
     `)
+  })
+
+  describe('configuration', () => {
+    describe('chainId', () => {
+      it('switches before sending transaction,', async () => {
+        const utils = renderHook(() =>
+          useSendTransactionWithConnect({
+            chainId: 1,
+            request: {
+              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+              value: parseEther('1'),
+            },
+          }),
+        )
+        const { result, waitFor } = utils
+        await actConnect({ utils })
+
+        await act(async () => {
+          result.current.sendTransaction.sendTransaction()
+        })
+
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+        )
+
+        const { data, ...res } = result.current.sendTransaction
+        expect(data).toBeDefined()
+        expect(data?.hash).toBeDefined()
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "error": null,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": true,
+            "reset": [Function],
+            "sendTransaction": [Function],
+            "sendTransactionAsync": [Function],
+            "status": "success",
+            "variables": {
+              "chainId": 1,
+              "request": {
+                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+                "value": {
+                  "hex": "0x0de0b6b3a7640000",
+                  "type": "BigNumber",
+                },
+              },
+            },
+          }
+        `)
+      })
+
+      it('unable to switch', async () => {
+        const connector = new MockConnector({
+          options: {
+            flags: { noSwitchChain: true },
+            signer: getSigners()[0]!,
+          },
+        })
+        const utils = renderHook(() =>
+          useSendTransactionWithConnect({
+            chainId: 10,
+            request: {
+              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+              value: parseEther('1'),
+            },
+          }),
+        )
+        const { result, waitFor } = utils
+        await actConnect({ utils, connector })
+
+        await act(async () => {
+          result.current.sendTransaction.sendTransaction()
+        })
+
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isError).toBeTruthy(),
+        )
+
+        expect(result.current.sendTransaction.error).toMatchInlineSnapshot(
+          `[ChainMismatchError: Chain mismatch: Expected "Chain 10", received "Ethereum.]`,
+        )
+      })
+    })
   })
 
   describe('return value', () => {
@@ -71,6 +160,7 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "success",
             "variables": {
+              "chainId": undefined,
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": {
@@ -116,6 +206,7 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "success",
             "variables": {
+              "chainId": undefined,
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": {
@@ -166,6 +257,7 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "error",
             "variables": {
+              "chainId": undefined,
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": {
