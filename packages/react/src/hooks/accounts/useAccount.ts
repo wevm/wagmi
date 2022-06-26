@@ -1,45 +1,56 @@
 import * as React from 'react'
 import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
-import { useQueryClient } from 'react-query'
 
-import { QueryConfig } from '../../types'
-import { useQuery } from '../utils'
+import { useClient } from '../../context'
+import { useSyncExternalStoreWithTracked } from '../utils'
 
-export type UseAccountConfig = Pick<
-  QueryConfig<GetAccountResult, Error>,
-  'suspense' | 'onError' | 'onSettled' | 'onSuccess'
->
-
-export const queryKey = () => [{ entity: 'account' }] as const
-
-const queryFn = () => {
-  const result = getAccount()
-  if (result.address) return result
-  return null
+export type UseAccountConfig = {
+  /** Function to invoke when connected */
+  onConnect?({
+    address,
+    connector,
+    isReconnected,
+  }: {
+    address?: GetAccountResult['address']
+    connector?: GetAccountResult['connector']
+    isReconnected: boolean
+  }): void
+  /** Function to invoke when disconnected */
+  onDisconnect?(): void
 }
 
-export function useAccount({
-  suspense,
-  onError,
-  onSettled,
-  onSuccess,
-}: UseAccountConfig = {}) {
-  const queryClient = useQueryClient()
+export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
+  const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
 
-  const accountQuery = useQuery(queryKey(), queryFn, {
-    staleTime: 0,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  const { subscribe } = useClient()
 
   React.useEffect(() => {
-    const unwatch = watchAccount((data) => {
-      queryClient.setQueryData(queryKey(), data?.address ? data : null)
-    })
-    return unwatch
-  }, [queryClient])
+    // No need to subscribe if these callbacks aren't defined
+    if (!onConnect && !onDisconnect) return
 
-  return accountQuery
+    // Trigger update when status changes
+    const unsubscribe = subscribe(
+      (state) => state.status,
+      (status, prevStatus) => {
+        if (!!onConnect && status === 'connected') {
+          const { address, connector } = getAccount()
+          onConnect({
+            address,
+            connector,
+            isReconnected: prevStatus === 'reconnecting',
+          })
+        }
+
+        if (
+          !!onDisconnect &&
+          prevStatus !== 'connecting' &&
+          status === 'disconnected'
+        )
+          onDisconnect()
+      },
+    )
+    return unsubscribe
+  }, [onConnect, onDisconnect, subscribe])
+
+  return account
 }

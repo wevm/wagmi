@@ -19,6 +19,7 @@
   "useSigner": "useSigner",
   "useSignMessage": "useSignMessage",
   "useSignTypedData": "useSignTypedData",
+  "useSwitchNetwork": "useSwitchNetwork",
   "useToken": "useToken",
   "useWaitForTransaction": "useWaitForTransaction",
   "useWebSocketProvider": "useWebSocketProvider"

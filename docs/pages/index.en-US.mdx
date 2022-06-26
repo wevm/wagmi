@@ -4,7 +4,7 @@ title: 'wagmi: React Hooks for Ethereum'
 
 import { Header } from '../components/docs'
 
-<Header showGitcoinBanner={new Date() < new Date('2022-06-24')} />
+<Header />
 
 **wagmi** is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.
 
@@ -36,16 +36,16 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {
-  const { data } = useAccount()
+  const { address, isConnected } = useAccount()
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
   const { disconnect } = useDisconnect()
 
-  if (data)
+  if (isConnected)
     return (
       <div>
-        Connected to {data.address}
+        Connected to {address}
         <button onClick={() => disconnect()}>Disconnect</button>
       </div>
     )

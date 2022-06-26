@@ -1,6 +1,6 @@
 # useAccount
 
-Hook for accessing the connected account.
+Hook for accessing account data as well as connection status.
 
 ```ts
 import { useAccount } from 'wagmi'
@@ -12,11 +12,11 @@ import { useAccount } from 'wagmi'
 import { useAccount } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useAccount()
+  const { address, isConnecting, isDisconnected } = useAccount()
 
-  if (isLoading) return <div>Loading account…</div>
-  if (isError) return <div>Error loading account</div>
-  return <div>{data?.address}</div>
+  if (isConnecting) return <div>Connecting…</div>
+  if (isDisconnected) return <div>Disconnected</div>
+  return <div>{address}</div>
 }
 ```
 
@@ -24,88 +24,47 @@ function App() {
 
 ```ts
 {
-  data?: {
-    address: string
-    connector: Connector
-  }
-  error?: Error
-  isIdle: boolean
-  isLoading: boolean
-  isFetching: boolean
-  isSuccess: boolean
-  isError: boolean
-  isFetched: boolean
-  isRefetching: boolean
-  refetch: (options: {
-    throwOnError: boolean
-    cancelRefetch: boolean
-  }) => Promise<{
-    address: string
-    connector: Connector
-  }>
-  status: 'idle' | 'error' | 'loading' | 'success'
+  address?: string
+  connector?: Connector
+  isConnecting: boolean
+  isReconnecting: boolean
+  isConnected: boolean
+  isDisconnected: boolean
+  status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
 }
 ```
 
 ## Configuration
 
-### suspense (optional)
+### onConnect (optional)
 
-Set this to `true` to enable suspense mode.
+Function to invoke when account connects.
 
-```tsx {5}
-import { useAccount } from 'wagmi'
-
-function App() {
-  const account = useAccount({
-    suspense: true,
-  })
-}
-```
-
-### onError (optional)
-
-Function to invoke when an error is thrown while fetching new data.
+It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
 
 ```tsx {5-7}
 import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({
-    onError(error) {
-      console.log('Error', error)
+    onConnect({ address, connector, isReconnected }) {
+      console.log('Connected', { address, connector, isReconnected })
     },
   })
 }
 ```
 
-### onSettled (optional)
+### onDisconnect (optional)
 
-Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
-
-```tsx {5-7}
-import { useAccount } from 'wagmi'
-
-function App() {
-  const account = useAccount({
-    onSettled(data, error) {
-      console.log('Settled', { data, error })
-    },
-  })
-}
-```
-
-### onSuccess (optional)
-
-Function to invoke when fetching new data is successful.
+Function to invoke when account disconnects.
 
 ```tsx {5-7}
 import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({
-    onSuccess(data) {
-      console.log('Success', data)
+    onDisconnect() {
+      console.log('Disconnected')
     },
   })
 }

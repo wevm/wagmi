@@ -4,6 +4,556 @@ import Callout from 'nextra-theme-docs/callout'
 
 If you are coming from an earlier version of `wagmi`, in order to update to versions above `0.3.x`, you will need to make sure to update the following hooks & API's listed below.
 
+## 0.5.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.4.x` docs
+  [here](https://0.4.x.wagmi.sh).
+</Callout>
+
+### `WagmiConfig`
+
+The `client` prop is now required on `WagmiConfig`.
+
+````diff
+```tsx
+import {
+  createClient,
++ configureChains,
++ defaultChains
+} from 'wagmi'
++import { publicProvider } from 'wagmi/providers/public'
+
++const { provider, webSocketProvider } = configureChains(defaultChains, [
++ publicProvider(),
++])
+
++const client = createClient({
++ provider,
++ webSocketProvider,
++})
+
+function App() {
+  return (
+    <WagmiConfig
++     client={client}
+    >
+      <YourRoutes />
+    </WagmiConfig>
+  )
+}
+````
+
+### `createClient`
+
+#### `provider` is now required
+
+The `provider` config option is now required on `createClient`. It is recommended to pass the [`provider` given from `configureChains`](https://wagmi.sh/docs/providers/configuring-chains).
+
+```diff
+import {
+  createClient,
++ defaultChains,
++ configureChains
+} from 'wagmi'
++import { publicProvider } from 'wagmi/providers/publicProvider'
+
++const { provider } = configureChains(defaultChains, [
++ publicProvider
++])
+
+const client = createClient({
++ provider
+})
+```
+
+If you previously used an ethers.js Provider, you now need to provide your `chains` on the Provider instance:
+
+```diff
+import {
+  createClient,
++ defaultChains
+} from 'wagmi'
+import ethers from 'ethers'
+
+const client = createClient({
+- provider: getDefaultProvider()
++ provider: Object.assign(getDefaultProvider(), { chains: defaultChains })
+})
+```
+
+#### `chainId` removed from `connectors`
+
+Removed the `chainId` parameter from `connectors` function on `createClient`.
+
+```diff
+const client = createClient({
+- connectors({ chainId }) {
++ connectors() {
+    ...
+  }
+})
+```
+
+If you previously derived RPC URLs from the `chainId` on `connectors`, you can now remove that logic as `wagmi` now handles RPC URLs internally when used with `configureChains`.
+
+```diff
+import {
+  chain,
++  configureChains,
+  createClient
+} from 'wagmi';
+
++import { publicProvider } from 'wagmi/providers/public'
+
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
++const { chains } = configureChains(
++  [chain.mainnet],
++  [publicProvider()]
++);
+
+const client = createClient({
+-  connectors({ chainId }) {
+-    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+-    const rpcUrl = chain.rpcUrls.alchemy
+-      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+-      : chain.rpcUrls.default
+-    return [
++  connectors: [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: 'wagmi',
+-       chainId: chain.id,
+-       jsonRpcUrl: rpcUrl,
+      },
+    }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        qrcode: true,
+-       rpc: { [chain.id]: rpcUrl },
+      },
+    }),
+    new InjectedConnector({
+      chains,
+      options: { name: 'Injected' },
+    }),
+  ]
+-  },
+})
+```
+
+### `useAccount`
+
+#### Return value changes
+
+**The `data` value is now `address` & `connector`**
+
+```diff
+{
+- data?: {
+-   address: string
+-   connector: Connector
+- }
++ address?: string
++ connector?: Connector
+}
+```
+
+**Global connection status values have been added**
+
+The following global connection status values have been added:
+
+```diff
+{
++ isConnecting: boolean
++ isReconnecting: boolean
++ isConnected: boolean
++ isDisconnected: boolean
++ status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
+}
+```
+
+The `useAccount` hook is now aware of any connection event in your application, so now you can use these connection status values to determine if your user is connected, disconnected or connecting to a wallet on a global scope.
+
+**`error`, states & `refetch` values have been removed**
+
+Since the `useAccount` hook never dealt with asynchronous data, all of these values were
+redundant & unused.
+
+```diff
+{
+- error?: Error
+- isIdle: boolean
+- isLoading: boolean
+- isFetching: boolean
+- isSuccess: boolean
+- isError: boolean
+- isFetched: boolean
+- isRefetching: boolean
+- refetch: (options: {
+-   throwOnError: boolean
+-   cancelRefetch: boolean
+- }) => Promise<{
+-   address: string
+-   connector: Connector
+- }>
+- status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+**Summary of changes**
+
+Below is the whole diff of changes to the `useAccount` return value.
+
+```diff
+{
+- data?: {
+-   address: string
+-   connector: Connector
+- }
++ address?: string
++ connector?: Connector
+- error?: Error
+- isIdle: boolean
+- isLoading: boolean
+- isFetching: boolean
+- isSuccess: boolean
+- isError: boolean
+- isFetched: boolean
+- isRefetching: boolean
++ isConnecting: boolean
++ isReconnecting: boolean
++ isConnected: boolean
++ isDisconnected: boolean
+- refetch: (options: {
+-   throwOnError: boolean
+-   cancelRefetch: boolean
+- }) => Promise<{
+-   address: string
+-   connector: Connector
+- }>
+- status: 'idle' | 'error' | 'loading' | 'success'
++ status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
+}
+```
+
+#### Configuration changes
+
+**`onConnect` has been added**
+
+The `onConnect` callback is invoked when the account connects.
+
+It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
+
+```tsx
+const account = useAccount({
+  onConnect({ address, connector, isReconnected }) {
+    console.log('Connected')
+  },
+})
+```
+
+**`onDisconnect` has been added**
+
+The `onDisconnect` callback is invoked when the account disconnected.
+
+```tsx
+const account = useAccount({
+  onDisconnect() {
+    console.log('Disconnected')
+  },
+})
+```
+
+**`suspense` has been removed**
+
+The `useAccount` hook is a synchronous hook – so `suspense` never worked.
+
+```diff
+const account = useAccount({
+-  suspense: true,
+})
+```
+
+**`onError` has been removed**
+
+The `useAccount` hook never had any error definitions – so `onError` was never invoked.
+
+```diff
+const account = useAccount({
+- onError(error) {
+-   console.log('Error', error)
+- },
+})
+```
+
+**`onSettled` has been removed**
+
+The `useAccount` hook is a synchronous hook. `onSettled` was always invoked immediately.
+
+```diff
+const account = useAccount({
+- onSettled(data) {
+-   console.log('Settled', data)
+- },
+})
+```
+
+If you used `onSettled`, you can move the code beneath the `useAccount` hook:
+
+```diff
+const account = useAccount({
+- onSettled(data) {
+-   console.log('Address:', data.address)
+- },
+})
++ console.log('Address:', account.address)
+```
+
+**`onSuccess` has been removed**
+
+The `useAccount` hook is a synchronous hook. `onSuccess` was always invoked immediately.
+
+```diff
+const account = useAccount({
+- onSuccess(data) {
+-   console.log('Success', data)
+- },
+})
+```
+
+If you used `onSuccess`, you can move the code beneath the `useAccount` hook:
+
+```diff
+const account = useAccount({
+- onSuccess(data) {
+-   console.log('Address:', data.address)
+- },
+})
++ console.log('Address:', account.address)
+```
+
+### `useConnect`
+
+#### Return value changes
+
+**Connection status flags have been moved**
+
+The `isConnected`, `isConnecting`, `isReconnecting` & `isDisconnected` flags have been moved to the `useAccount` hook.
+
+```diff
+-import { useConnect } from 'wagmi'
++import { useAccount } from 'wagmi'
+
+function App() {
+  const {
+    isConnected,
+    isConnecting,
+    isConnecting,
+    isDisconnected
+- } = useConnect()
++ } = useAccount()
+}
+```
+
+**New `connect` mutation status flags have been added**
+
+The `isLoading`, `isSuccess` and `isError` flags have been added to `useConnect`.
+
+These flags represent the **local** async state of `useConnect`.
+
+**`activeConnector` has been removed**
+
+The `activeConnector` value has been removed. You can find the active connector on `useAccount`.
+
+```diff
+-import { useConnect } from 'wagmi'
++import { useAccount } from 'wagmi'
+
+function App() {
+- const { activeConnector } = useConnect()
++ const { connector } = useAccount()
+}
+```
+
+**`connector` parameter on `connect` & `connectAsync` has been removed**
+
+The `connector` parameter on `connect` & `connectAsync` now has to be in the config object parameter shape.
+
+```diff
+import { useConnect } from 'wagmi'
+
+function App() {
+  const { connect, connectors } = useConnect()
+
+  return (
+    <button
+-     onClick={() => connect(connectors[0])}
++     onClick={() => connect({ connector: connectors[0] })}
+    >
+      Connect
+    </button>
+  )
+}
+```
+
+#### Configuration changes
+
+**`onBeforeConnect` has been renamed**
+
+The `onBeforeConnect` callback has been renamed to `onMutate`
+
+**`onConnect` has been renamed**
+
+The `onConnect` callback has been renamed to `onSuccess`
+
+### `useContractRead`
+
+The `useContractRead` hook parameters have been consolidated into a singular config parameter.
+
+Before:
+
+```tsx
+useContractRead(
+  {
+    addressOrName: wagmigotchiContractAddress,
+    contractInterface: wagmigotchiABI,
+  },
+  'love',
+  { args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c' },
+)
+```
+
+After:
+
+```tsx
+useContractRead({
+  addressOrName: wagmigotchiContractAddress,
+  contractInterface: wagmigotchiABI,
+  functionName: 'love',
+  args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+})
+```
+
+### `useContractWrite`
+
+The `useContractWrite` hook parameters have been consolidated into a singular config parameter.
+
+Before:
+
+```tsx
+useContractWrite(
+  {
+    addressOrName: mlootContractAddress,
+    contractInterface: mlootABI,
+  },
+  'claim',
+)
+```
+
+After:
+
+```tsx
+useContractWrite({
+  addressOrName: mlootContractAddress,
+  contractInterface: mlootABI,
+  functionName: 'claim',
+})
+```
+
+### `useContractEvent`
+
+The `useContractEvent` hook parameters have been consolidated into a singular config parameter.
+
+Before:
+
+```tsx
+useContractEvent(
+  {
+    addressOrName: uniContractAddress,
+    contractInterface: erc20ABI,
+  },
+  'Transfer',
+  listener,
+),
+```
+
+After:
+
+```tsx
+useContractEvent({
+  addressOrName: uniContractAddress,
+  contractInterface: erc20ABI,
+  eventName: 'Transfer',
+  listener,
+})
+```
+
+### `useNetwork`
+
+The "switch network" functionality has been moved out of `useNetwork` into a new `useSwitchNetwork` hook.
+
+The `useNetwork` hook now accepts no configuration and only returns `chain` (renamed from `activeChain`) and `chains`.
+
+```diff
+import {
+  useNetwork
++ useSwitchNetwork
+} from 'wagmi'
+
+const {
+- activeChain
++ chain,
+  chains,
+- data,
+- error,
+- isError,
+- isIdle,
+- isLoading,
+- isSuccess,
+- pendingChainId,
+- switchNetwork,
+- switchNetworkAsync,
+- status,
+- reset,
+-} = useNetwork({
+- chainId: 69,
+- onError(error) {},
+- onMutate(args) {},
+- onSettled(data, error) {},
+- onSuccess(data) {}
+-})
++} = useNetwork()
+
++const {
++ chains,
++ data,
++ error,
++ isError,
++ isIdle,
++ isLoading,
++ isSuccess,
++ pendingChainId,
++ switchNetwork,
++ switchNetworkAsync,
++ status,
++ reset,
++} = useSwitchNetwork({
++ chainId: 69,
++ onError(error) {},
++ onMutate(args) {},
++ onSettled(data, error) {},
++ onSuccess(data) {}
++})
+```
+
 ## 0.4.x Breaking changes
 
 <Callout>
@@ -11,11 +561,13 @@ If you are coming from an earlier version of `wagmi`, in order to update to vers
   [here](https://0.3.x.wagmi.sh).
 </Callout>
 
-### Passing a function to `createClient` `connectors` has now been deprecated.
+### `createClient`
+
+Passing a function to `createClient` `connectors` has now been deprecated.
 
 If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](https://wagmi.sh/docs/providers/configuring-chains).
 
-#### Before
+Before:
 
 ```tsx {15-42}
 import { providers } from 'ethers'
@@ -66,7 +618,7 @@ const client = createClient({
 })
 ```
 
-#### After
+After:
 
 ```tsx {20-38}
 import { Provider, chain, createClient, defaultChains } from 'wagmi'
@@ -130,11 +682,11 @@ Duplicate exports with different names and the same functionality were removed t
   [here](https://0.2.x.wagmi.sh).
 </Callout>
 
-### `Provider` no longer supports configuration as props
+### `Provider`
 
 The `Provider` component no longer supports configuration directly as props. You will now need to create a wagmi [`Client`](/docs/client) via `createClient`, and then pass the client to `Provider`:
 
-#### Before
+Before:
 
 ```tsx
 import { Provider } from 'wagmi'
@@ -148,7 +700,7 @@ function App() {
 }
 ```
 
-#### After
+After:
 
 ```tsx
 import { Provider, createClient } from 'wagmi'
@@ -168,17 +720,17 @@ function App() {
 }
 ```
 
-### Hooks now return a singular object, instead of an array pair
+### Hooks now return a singular object
 
 All hooks in wagmi now return a single object instead of an array pair.
 
-##### Before
+Before:
 
 ```tsx
 const [{ data, loading, error }, disconnect] = useAccount()
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, isLoading, error } = useAccount()
@@ -188,7 +740,7 @@ const { data, isLoading, error } = useAccount()
 
 Getter functions such as `getBalance`, `getBlockNumber`, `read`, etc have been removed in favor of hook parameters / `refetch`. The `refetch` function does not accept arguments/config, so you will need to restructure your components more declaratively.
 
-#### Before
+Before:
 
 ```tsx
 import { useBalance } from 'wagmi'
@@ -212,7 +764,7 @@ function Example() {
 }
 ```
 
-#### After
+After:
 
 ```tsx
 import { useContractRead } from 'wagmi'
@@ -241,21 +793,19 @@ function Example() {
 }
 ```
 
-### Changes to hooks
-
-#### `useAccount`
+### `useAccount`
 
 - Now returns a singular object, instead of an array pair
 - `fetchEns` was removed in favor of keeping `useAccount` as lightweight as possible. Use [`useEnsName`](/docs/hooks/useEnsName) and [`useEnsAvatar`](/docs/hooks/useEnsAvatar) instead.
 - `disconnect` was removed. Use [`useDisconnect`](/docs/hooks/useDisconnect) instead.
 
-##### Before
+Before:
 
 ```tsx
 const [{ data, loading, error }, disconnect] = useAccount({ fetchEns: true })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, isLoading, error } = useAccount({ ens: true })
@@ -264,31 +814,29 @@ const { data: ensAvatar } = useEnsAvatar()
 const { disconnect } = useDisconnect()
 ```
 
-#### `useBalance`
+### `useBalance`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `getBalance` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, loading, error }, getBalance] = useBalance({ skip: true })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, isLoading, error, refetch } = useBalance({ enabled: false })
 ```
 
-#### `useBlockNumber`
+### `useBlockNumber`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `getBlockNumber` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, loading, error }, getBlockNumber] = useBlockNumber({
@@ -296,7 +844,7 @@ const [{ data, loading, error }, getBlockNumber] = useBlockNumber({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, isLoading, error, refetch } = useBlockNumber({
@@ -304,33 +852,31 @@ const { data, isLoading, error, refetch } = useBlockNumber({
 })
 ```
 
-#### `useConnect`
+### `useConnect`
 
 - Now returns a singular object, instead of an array pair
 - `connect` is no longer asynchronous. Use `connectAsync` instead.
 - `data.connected` no longer exists. Use `isConnected` instead.
 - `data.connectors` no longer exists. Use `connectors` instead.
 - Prefer `connector` over `data.connector`
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, loading, error }, connect] = useConnect()
 ```
 
-##### After
+After:
 
 ```tsx
 const { isConnected, connector, connectors, connectAsync } = useConnect()
 ```
 
-#### `useContractRead`
+### `useContractRead`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `read` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, read] = useContractRead(
@@ -343,7 +889,7 @@ const [{ data, error, loading }, read] = useContractRead(
 )
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useContractRead(
@@ -356,11 +902,10 @@ const { data, error, isLoading, refetch } = useContractRead(
 )
 ```
 
-#### `useContractWrite`
+### `useContractWrite`
 
 - Now returns a singular object, instead of an array pair
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, write] = useContractWrite(
@@ -372,7 +917,7 @@ const [{ data, error, loading }, write] = useContractWrite(
 )
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, write } = useContractWrite(
@@ -384,13 +929,12 @@ const { data, error, isLoading, write } = useContractWrite(
 )
 ```
 
-#### `useEnsAvatar`
+### `useEnsAvatar`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `getEnsAvatar` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, getEnsAvatar] = useEnsAvatar({
@@ -399,7 +943,7 @@ const [{ data, error, loading }, getEnsAvatar] = useEnsAvatar({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useEnsAvatar({
@@ -408,14 +952,13 @@ const { data, error, isLoading, refetch } = useEnsAvatar({
 })
 ```
 
-#### `useEnsLookup`
+### `useEnsLookup`
 
 - `useEnsLookup` was renamed to `useEnsName`
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `lookupAddress` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, lookupAddress] = useEnsLookup({
@@ -424,7 +967,7 @@ const [{ data, error, loading }, lookupAddress] = useEnsLookup({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useEnsName({
@@ -433,14 +976,13 @@ const { data, error, isLoading, refetch } = useEnsName({
 })
 ```
 
-#### `useEnsResolveName`
+### `useEnsResolveName`
 
 - `useEnsResolveName` was renamed to `useEnsAddress`
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `resolveName` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, resolveName] = useEnsResolveName({
@@ -449,7 +991,7 @@ const [{ data, error, loading }, resolveName] = useEnsResolveName({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, loading, refetch } = useEnsAddress({
@@ -458,13 +1000,12 @@ const { data, error, loading, refetch } = useEnsAddress({
 })
 ```
 
-#### `useEnsResolver`
+### `useEnsResolver`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `getEnsResolver` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, getEnsResolver] = useEnsResolver({
@@ -473,7 +1014,7 @@ const [{ data, error, loading }, getEnsResolver] = useEnsResolver({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useEnsResolver({
@@ -482,68 +1023,64 @@ const { data, error, isLoading, refetch } = useEnsResolver({
 })
 ```
 
-#### `useFeeData`
+### `useFeeData`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `getFeeData` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, getFeeData] = useFeeData({ skip: true })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useFeeData({ enabled: false })
 ```
 
-#### `useNetwork`
+### `useNetwork`
 
 - Now returns a singular object, instead of an array pair
 - `data.chain` is now `activeChain`
 - `data.chains` is now `chains`
 - `switchNetwork` now has sync (`switchNetwork`) and async (`switchNetworkAsync`) variants.
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, switchNetwork] = useNetwork()
 ```
 
-##### After
+After:
 
 ```tsx
 const { activeChain, chains, data, isLoading, switchNetworkAsync } =
   useNetwork()
 ```
 
-#### `useSigner`
+### `useSigner`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported.
 - `getSigner` was removed in favor of `refetch`
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, getSigner] = useSigner()
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useSigner()
 ```
 
-#### `useSignMessage`
+### `useSignMessage`
 
 - Now returns a singular object, instead of an array pair
 - `signMessage` now has sync (`signMessage`) and async (`signMessageAsync`) variants.
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, signMessage] = useSignMessage({
@@ -551,7 +1088,7 @@ const [{ data, error, loading }, signMessage] = useSignMessage({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, signMessageAsync } = useSignMessage({
@@ -559,12 +1096,11 @@ const { data, error, isLoading, signMessageAsync } = useSignMessage({
 })
 ```
 
-#### `useSignTypedData`
+### `useSignTypedData`
 
 - Now returns a singular object, instead of an array pair
 - `signTypedData` now has sync (`signTypedData`) and async (`signTypedDataAsync`) variants.
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, signTypedData] = useSignTypedData({
@@ -574,7 +1110,7 @@ const [{ data, error, loading }, signTypedData] = useSignTypedData({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, signTypedDataAsync } = useSignTypedData({
@@ -584,13 +1120,12 @@ const { data, error, isLoading, signTypedDataAsync } = useSignTypedData({
 })
 ```
 
-#### `useToken`
+### `useToken`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `getToken` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, getToken] = useToken({
@@ -599,7 +1134,7 @@ const [{ data, error, loading }, getToken] = useToken({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useToken({
@@ -608,13 +1143,12 @@ const { data, error, isLoading, refetch } = useToken({
 })
 ```
 
-#### `useTransaction`
+### `useTransaction`
 
 - `useTransaction` was renamed to `useSendTransaction`
 - Now returns a singular object, instead of an array pair
 - `sendTransaction` now has sync (`sendTransaction`) and async (`sendTransactionAsync`) variants.
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, sendTransaction] = useTransaction({
@@ -625,7 +1159,7 @@ const [{ data, error, loading }, sendTransaction] = useTransaction({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, sendTransactionAsync } = useSendTransaction({
@@ -636,13 +1170,12 @@ const { data, error, isLoading, sendTransactionAsync } = useSendTransaction({
 })
 ```
 
-#### `useWaitForTransaction`
+### `useWaitForTransaction`
 
 - Now returns a singular object, instead of an array pair
 - `skip` is no longer supported. It was repurposed to `enabled`.
 - `wait` was removed in favor of [hook parameters / `refetch`](#declarative-getters--imperative-getters).
-
-##### Before
+  Before:
 
 ```tsx
 const [{ data, error, loading }, wait] = useWaitForTransaction({
@@ -651,7 +1184,7 @@ const [{ data, error, loading }, wait] = useWaitForTransaction({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 const { data, error, isLoading, refetch } = useWaitForTransaction({
@@ -660,9 +1193,11 @@ const { data, error, isLoading, refetch } = useWaitForTransaction({
 })
 ```
 
-### `connector.getProvider` is now asynchronous
+### `connector.getProvider`
 
-#### Before
+`connector.getProvider` is now asynchronous
+
+Before:
 
 ```tsx
 const { connector } = useConnect()
@@ -670,7 +1205,7 @@ const { connector } = useConnect()
 const provider = connector.getProvider()
 ```
 
-#### After
+After:
 
 ```tsx
 const { connector } = useConnect()
@@ -678,11 +1213,11 @@ const { connector } = useConnect()
 const provider = await connector.getProvider()
 ```
 
-### `wagmi/connectors/walletLink` was renamed
+### `WalletLinkConnector`
 
 The WalletLink connector was replaced with the Coinbase Wallet SDK.
 
-##### Before
+Before:
 
 ```tsx
 import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
@@ -695,7 +1230,7 @@ const connector = new WalletLinkConnector({
 })
 ```
 
-##### After
+After:
 
 ```tsx
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'

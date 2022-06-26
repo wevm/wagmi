@@ -13,7 +13,12 @@ The example below uses [`useConnect`](/docs/hooks/useConnect), [`useAccount`](/d
 First, we create a new wagmi client set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors:
 
 ```tsx
-import { WagmiConfig, createClient, defaultChains, configureChains } from 'wagmi'
+import {
+  WagmiConfig,
+  createClient,
+  defaultChains,
+  configureChains,
+} from 'wagmi'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -79,7 +84,7 @@ Now that our connectors are set up, we want users to be able to choose a connect
 import { useConnect } from 'wagmi'
 
 export function Profile() {
-  const { connect, connectors, error, isConnecting, pendingConnector } =
+  const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
 
   return (
@@ -88,11 +93,11 @@ export function Profile() {
         <button
           disabled={!connector.ready}
           key={connector.id}
-          onClick={() => connect(connector)}
+          onClick={() => connect({ connector })}
         >
           {connector.name}
           {!connector.ready && ' (unsupported)'}
-          {isConnecting &&
+          {isLoading &&
             connector.id === pendingConnector?.id &&
             ' (connecting)'}
         </button>
@@ -118,21 +123,19 @@ import {
 } from 'wagmi'
 
 export function Profile() {
-  const { data: account } = useAccount()
-  const { data: ensAvatar } = useEnsAvatar({ addressOrName: account?.address })
-  const { data: ensName } = useEnsName({ address: account?.address })
-  const { connect, connectors, error, isConnecting, pendingConnector } =
+  const { address, connector, isConnected } = useAccount()
+  const { data: ensAvatar } = useEnsAvatar({ addressOrName: address })
+  const { data: ensName } = useEnsName({ address })
+  const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
   const { disconnect } = useDisconnect()
 
-  if (account) {
+  if (isConnected) {
     return (
       <div>
         <img src={ensAvatar} alt="ENS Avatar" />
-        <div>
-          {ensName ? `${ensName} (${account.address})` : account.address}
-        </div>
-        <div>Connected to {account.connector.name}</div>
+        <div>{ensName ? `${ensName} (${address})` : address}</div>
+        <div>Connected to {connector.name}</div>
         <button onClick={disconnect}>Disconnect</button>
       </div>
     )
@@ -144,11 +147,11 @@ export function Profile() {
         <button
           disabled={!connector.ready}
           key={connector.id}
-          onClick={() => connect(connector)}
+          onClick={() => connect({ connector })}
         >
           {connector.name}
           {!connector.ready && ' (unsupported)'}
-          {isConnecting &&
+          {isLoading &&
             connector.id === pendingConnector?.id &&
             ' (connecting)'}
         </button>

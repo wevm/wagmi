@@ -33,6 +33,7 @@ it('should expose correct exports', () => {
       "useSignMessage",
       "useSignTypedData",
       "useSigner",
+      "useSwitchNetwork",
       "useToken",
       "useWaitForTransaction",
       "useWebSocketProvider",

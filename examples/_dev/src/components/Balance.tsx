@@ -15,9 +15,9 @@ export const Balance = () => {
 }
 
 const AccountBalance = () => {
-  const { data: account } = useAccount()
+  const { address } = useAccount()
   const { data, refetch } = useBalance({
-    addressOrName: account?.address,
+    addressOrName: address,
     watch: true,
   })
 

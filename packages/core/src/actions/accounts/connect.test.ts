@@ -1,4 +1,5 @@
 import { getSigners, setupClient } from '../../../test'
+import { getClient } from '../../client'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 
@@ -46,6 +47,13 @@ describe('connect', () => {
       `)
     })
 
+    it('status changes on connection', async () => {
+      expect(getClient().status).toEqual('disconnected')
+      setTimeout(() => expect(getClient().status).toEqual('connecting'), 0)
+      await connect({ connector })
+      expect(getClient().status).toEqual('connected')
+    })
+
     it('is already connected', async () => {
       await connect({ connector })
       await expect(
@@ -55,7 +63,7 @@ describe('connect', () => {
       )
     })
 
-    it('user rejected request', async () => {
+    it('throws when user rejects request', async () => {
       await expect(
         connect({
           connector: new MockConnector({
@@ -66,6 +74,22 @@ describe('connect', () => {
           }),
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+      expect(getClient().status).toEqual('disconnected')
+    })
+
+    it('status changes on user rejection', async () => {
+      expect(getClient().status).toEqual('disconnected')
+      await expect(
+        connect({
+          connector: new MockConnector({
+            options: {
+              flags: { failConnect: true },
+              signer: getSigners()[0]!,
+            },
+          }),
+        }),
+      ).rejects.toThrowError()
+      expect(getClient().status).toEqual('disconnected')
     })
   })
 })

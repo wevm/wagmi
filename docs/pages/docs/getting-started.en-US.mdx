@@ -49,13 +49,13 @@ import { useAccount, useConnect, useEnsName } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {
-  const { data: account } = useAccount()
+  const { address, isConnected } = useAccount()
   const { data: ensName } = useEnsName({ address: account.address })
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
 
-  if (account) return <div>Connected to {ensName ?? account.address}</div>
+  if (isConnected) return <div>Connected to {ensName ?? address}</div>
   return <button onClick={() => connect()}>Connect Wallet</button>
 }
 ```

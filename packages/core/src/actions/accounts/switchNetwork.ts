@@ -12,8 +12,9 @@ export async function switchNetwork({
   chainId,
 }: SwitchNetworkArgs): Promise<SwitchNetworkResult> {
   const client = getClient()
-  if (!client.connector?.switchChain) throw new SwitchChainNotSupportedError()
+  const connector = client.connector
+  if (!connector?.switchChain)
+    throw new SwitchChainNotSupportedError({ connector })
 
-  const chain = await client.connector.switchChain(chainId)
-  return chain
+  return await connector.switchChain(chainId)
 }

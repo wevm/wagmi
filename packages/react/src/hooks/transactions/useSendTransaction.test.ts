@@ -217,7 +217,7 @@ describe('useSendTransaction', () => {
 
         await act(async () => {
           const mockConnector = result.current.connect.connectors[0]
-          result.current.connect.connect(mockConnector)
+          result.current.connect.connect({ connector: mockConnector })
         })
 
         await act(async () => {

@@ -71,12 +71,12 @@ import { useAccount, useConnect, useDisconnect } from 'wagmi'
 import { SignMessage } from './SignMessage'
 
 export function Profile() {
-  const { data: accountData } = useAccount()
-  const { connect, connectors, error, isConnecting, pendingConnector } =
+  const { isConnected } = useAccount()
+  const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
   const { disconnect } = useDisconnect()
 
-  if (accountData) {
+  if (isConnected) {
     return (
       <div>
         {/* Account content goes here */}
