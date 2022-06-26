@@ -105,6 +105,7 @@ declare global {
     isMetaMask?: true
     isOpera?: true
     isTally?: true
+    isTokenPocket?: true
     isTokenary?: true
     isTrust?: true
   }

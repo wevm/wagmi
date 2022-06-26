@@ -83,12 +83,12 @@ describe('switchNetwork', () => {
       await expect(
         switchNetwork({ chainId: 4 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"\\"Mock\\" does not support automatic chain switching."`,
+        `"\\"Mock\\" does not support programmatic chain switching."`,
       )
       await expect(
         switchNetwork({ chainId: 69 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"\\"Mock\\" does not support automatic chain switching."`,
+        `"\\"Mock\\" does not support programmatic chain switching."`,
       )
     })
   })

@@ -150,7 +150,7 @@ export class SwitchChainNotSupportedError extends Error {
   name = 'SwitchChainNotSupportedError'
 
   constructor({ connector }: { connector: Connector }) {
-    super(`"${connector.name}" does not support automatic chain switching.`)
+    super(`"${connector.name}" does not support programmatic chain switching.`)
   }
 }
 
