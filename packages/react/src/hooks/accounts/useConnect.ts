@@ -4,7 +4,6 @@ import { useMutation } from 'react-query'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
-import { useForceUpdate } from '../utils'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 
@@ -28,16 +27,6 @@ export function useConnect({
   onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
   const client = useClient()
-  const forceUpdate = useForceUpdate()
-
-  React.useEffect(() => {
-    // Trigger update when connectors change
-    const unsubscribe = client.subscribe(
-      (state) => state.connectors,
-      forceUpdate,
-    )
-    return unsubscribe
-  }, [client, forceUpdate])
 
   const {
     data,
