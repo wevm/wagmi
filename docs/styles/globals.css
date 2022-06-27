@@ -44,3 +44,7 @@ sup a {
 .footnotes {
   @apply text-sm;
 }
+
+.install [role="tablist"] {
+  justify-content: center;
+}

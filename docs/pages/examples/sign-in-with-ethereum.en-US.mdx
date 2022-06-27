@@ -40,7 +40,7 @@ npm install siwe iron-session
   <summary>`iron-session` TypeScript Set Up</summary>
 In order for TypeScript to work properly with `iron-session` and `siwe`, you need to add a couple properties to the `IronSessionData` interface. Add the following to `types/iron-session/index.d.ts`.
 
-```ts
+```ts filename="types/iron-session/index.d.ts"
 import 'iron-session'
 import { SiweMessage } from 'siwe'
 
@@ -54,7 +54,7 @@ declare module 'iron-session' {
 
 Then, update your `tsconfig.json` to include the custom types directory:
 
-```diff
+```diff filename="tsconfig.json"
 {
   "compilerOptions": {
     // ...
@@ -75,9 +75,7 @@ Follow the [Connect Wallet](/examples/connect-wallet#step-1-configuring-connecto
 
 First, create an API route for generating a random nonce. This is used to identify the session and prevent against [replay attacks](https://en.wikipedia.org/wiki/Replay_attack).
 
-`pages/api/nonce.ts`
-
-```ts {9-10}
+```ts filename="pages/api/nonce.ts" {9-10}
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { generateNonce } from 'siwe'
@@ -102,9 +100,7 @@ export default withIronSessionApiRoute(handler, ironOptions)
 
 Next, add an API route for verifying a SIWE message and creating the user session.
 
-`pages/api/verify.ts`
-
-```ts {11-12,14,17-18}
+```ts filename="pages/api/verify.ts" {11-12,14,17-18}
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { SiweMessage } from 'siwe'
@@ -151,9 +147,7 @@ export default withIronSessionApiRoute(handler, ironOptions)
 
 Finally, add two simple API routes for retrieving the signed-in user:
 
-`pages/api/me.ts`
-
-```ts
+```ts filename="pages/api/me.ts"
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -174,9 +168,7 @@ export default withIronSessionApiRoute(handler, ironOptions)
 
 And logging out:
 
-`pages/api/logout.ts`
-
-```ts
+```ts filename="pages/api/logout.ts"
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
 
