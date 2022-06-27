@@ -60,12 +60,12 @@ describe('useContractWrite', () => {
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             ...mlootContractConfig,
+            chainId: 1,
             functionName: 'claim',
-            chainId: 10,
           }),
         )
         const { result, waitFor } = utils
-        await actConnect({ utils, connector })
+        await actConnect({ chainId: 4, connector, utils })
 
         await act(async () => {
           result.current.contractWrite.write()
@@ -76,7 +76,7 @@ describe('useContractWrite', () => {
         )
 
         expect(result.current.contractWrite.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Chain 10", received "Ethereum.]`,
+          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby.]`,
         )
       })
     })

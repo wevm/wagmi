@@ -30,6 +30,7 @@ export function setupClient(config: Config = {}) {
 }
 
 export async function actConnect(config: {
+  chainId?: number
   connector?: Connector
   utils: ReturnType<typeof renderHook>
 }) {
@@ -41,6 +42,7 @@ export async function actConnect(config: {
   await act(async () => {
     const connect = getConnect(utils)
     await connect.connectAsync?.({
+      chainId: config.chainId,
       connector: connector ?? connect.connectors?.[0],
     })
   })

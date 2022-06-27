@@ -51,7 +51,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actConnect({ utils })
+        await actConnect({ chainId: 4, utils })
 
         await act(async () => {
           result.current.sendTransaction.sendTransaction()
@@ -98,7 +98,7 @@ describe('useSendTransaction', () => {
         })
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            chainId: 10,
+            chainId: 1,
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -106,7 +106,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actConnect({ utils, connector })
+        await actConnect({ chainId: 4, connector, utils })
 
         await act(async () => {
           result.current.sendTransaction.sendTransaction()
@@ -117,7 +117,7 @@ describe('useSendTransaction', () => {
         )
 
         expect(result.current.sendTransaction.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Chain 10", received "Ethereum.]`,
+          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby.]`,
         )
       })
     })
