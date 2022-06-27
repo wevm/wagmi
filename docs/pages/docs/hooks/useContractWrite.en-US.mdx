@@ -61,6 +61,25 @@ function App() {
 }
 ```
 
+### chainId (optional)
+
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+
+```tsx {6}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    chainId: 1,
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
 ### contractInterface
 
 Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.

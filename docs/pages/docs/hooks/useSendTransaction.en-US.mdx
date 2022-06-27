@@ -54,6 +54,24 @@ function App() {
 
 ## Configuration
 
+### chainId (optional)
+
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+
+```tsx {5}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const sendTransaction = useSendTransaction({
+    chainId: 1,
+    request: {
+      to: 'awkweb.eth',
+      value: BigNumber.from('1000000000000000000'), // 1 ETH
+    },
+  })
+}
+```
+
 ### request (optional)
 
 Object to use when creating transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.

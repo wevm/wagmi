@@ -28,7 +28,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 Note: In a production app, it is not recommended to only pass `publicProvider` to `configureChains` as you will probably face rate-limiting on the public provider endpoints. It is recommended to also pass an [`alchemyProvider`](/docs/providers/alchemy) or [`infuraProvider`](/docs/providers/infura) as well.
 
-[Read more on configuring chains](/docs/providers/configuring-chains)
+[Read more about configuring chains](/docs/providers/configuring-chains)
 
 ### 2. Create a wagmi client
 
@@ -55,7 +55,7 @@ const client = createClient({
 })
 ```
 
-[Read more on client configuration](/docs/client)
+[Read more about client configuration](/docs/client)
 
 ### 3. Wrap app with `WagmiConfig`
 
@@ -87,7 +87,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {
   const { address, isConnected } = useAccount()
-  const { data: ensName } = useEnsName({ address: account.address })
+  const { data: ensName } = useEnsName({ address })
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
