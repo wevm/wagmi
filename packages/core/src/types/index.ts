@@ -42,8 +42,8 @@ export type Chain = {
 }
 
 export type ChainProviderFn<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TProvider extends Provider = providers.BaseProvider,
+  TWebSocketProvider extends WebSocketProvider = providers.WebSocketProvider,
   TChain extends Chain = Chain,
 > = (chain: TChain) => {
   chain: TChain
