@@ -111,11 +111,12 @@ export function configureChains<
       const chainWebSocketProviders = webSocketProviders_[activeChainId]
 
       if (!chainWebSocketProviders) return undefined
-      if (chainWebSocketProviders.length === 1)
-        return Object.assign(chainWebSocketProviders[0]?.() || {}, { chains })
+
       // WebSockets do not work with `fallbackProvider`
       // Default to first available
-      return Object.assign(chainWebSocketProviders[0]?.() || {}, { chains })
+      return Object.assign(chainWebSocketProviders[0]?.() || {}, {
+        chains,
+      }) as TWebSocketProvider & { chains: TChain[] }
     },
   } as const
 }
