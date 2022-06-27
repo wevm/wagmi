@@ -65,6 +65,12 @@ describe('switchNetwork', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
     })
 
+    it('not connected', async () => {
+      await expect(
+        switchNetwork({ chainId: 69 }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
+    })
+
     it('not supported by connector', async () => {
       await connect({
         connector: new MockConnector({
@@ -75,9 +81,14 @@ describe('switchNetwork', () => {
         }),
       })
       await expect(
+        switchNetwork({ chainId: 4 }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"\\"Mock\\" does not support programmatic chain switching."`,
+      )
+      await expect(
         switchNetwork({ chainId: 69 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"Switch chain not supported by \\"Mock\\" connector."`,
+        `"\\"Mock\\" does not support programmatic chain switching."`,
       )
     })
   })

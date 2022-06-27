@@ -3,6 +3,7 @@ import { parseEther } from 'ethers/lib/utils'
 
 import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
+import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { sendTransaction } from './sendTransaction'
 
@@ -13,6 +14,56 @@ describe('sendTransaction', () => {
   })
 
   describe('args', () => {
+    describe('chainId', () => {
+      it('switches before sending transaction', async () => {
+        await connect({ connector: client.connectors[0]! })
+
+        const signers = getSigners()
+        const to = signers[1]
+        const toAddress = await to?.getAddress()
+        const fromAddress = client.data?.account
+
+        const result = await sendTransaction({
+          chainId: 1,
+          request: {
+            from: fromAddress,
+            to: toAddress,
+            value: parseEther('10'),
+          },
+        })
+        expect(result.hash).toBeDefined()
+      })
+
+      it('unable to switch', async () => {
+        await connect({
+          connector: new MockConnector({
+            options: {
+              flags: { noSwitchChain: true },
+              signer: getSigners()[0]!,
+            },
+          }),
+        })
+
+        const signers = getSigners()
+        const to = signers[1]
+        const toAddress = await to?.getAddress()
+        const fromAddress = client.data?.account
+
+        await expect(
+          sendTransaction({
+            chainId: 10,
+            request: {
+              from: fromAddress,
+              to: toAddress,
+              value: parseEther('10'),
+            },
+          }),
+        ).rejects.toThrowErrorMatchingInlineSnapshot(
+          `"Chain mismatch: Expected \\"Chain 10\\", received \\"Ethereum."`,
+        )
+      })
+    })
+
     it('request', async () => {
       await connect({ connector: client.connectors[0]! })
 

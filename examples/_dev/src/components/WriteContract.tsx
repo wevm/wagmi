@@ -5,13 +5,12 @@ import anvABI from './anv-abi.json'
 
 export const WriteContract = () => {
   const { write, data, error, isLoading, isError, isSuccess } =
-    useContractWrite(
-      {
-        addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-        contractInterface: anvABI,
-      },
-      'claim',
-    )
+    useContractWrite({
+      addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
+      contractInterface: anvABI,
+      functionName: 'claim',
+      chainId: 1,
+    })
 
   const [tokenId, setTokenId] = useState<string>('')
 

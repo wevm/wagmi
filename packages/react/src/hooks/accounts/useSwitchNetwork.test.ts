@@ -113,7 +113,7 @@ describe('useSwitchNetwork', () => {
       `)
     })
 
-    it('chainId', async () => {
+    it('throwForSwitchChainNotSupported', async () => {
       const connector = new MockConnector({
         options: {
           flags: { noSwitchChain: true },
@@ -137,7 +137,7 @@ describe('useSwitchNetwork', () => {
       await waitFor(() => expect(result.current.network.isError).toBeTruthy())
 
       expect(result.current.network.error).toMatchInlineSnapshot(
-        `[SwitchChainNotSupportedError: Switch chain not supported by "Mock" connector.]`,
+        `[SwitchChainNotSupportedError: "Mock" does not support programmatic chain switching.]`,
       )
     })
   })

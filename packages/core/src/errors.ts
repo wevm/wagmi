@@ -79,6 +79,22 @@ export class ChainDoesNotSupportMulticallError extends Error {
   }
 }
 
+export class ChainMismatchError extends Error {
+  name = 'ChainMismatchError'
+
+  constructor({
+    activeChain,
+    targetChain,
+  }: {
+    activeChain: string
+    targetChain: string
+  }) {
+    super(
+      `Chain mismatch: Expected "${targetChain}", received "${activeChain}.`,
+    )
+  }
+}
+
 export class ChainNotConfiguredError extends Error {
   name = 'ChainNotConfigured'
   message = 'Chain not configured'
@@ -114,6 +130,14 @@ export class ProviderChainsNotFound extends Error {
   ].join('\n')
 }
 
+export class ResourceUnavailableError extends RpcError {
+  name = 'ResourceUnavailable'
+
+  constructor(error: unknown) {
+    super(-32002, 'Resource unavailable', error)
+  }
+}
+
 export class SwitchChainError extends ProviderRpcError {
   name = 'SwitchChainError'
 
@@ -125,12 +149,8 @@ export class SwitchChainError extends ProviderRpcError {
 export class SwitchChainNotSupportedError extends Error {
   name = 'SwitchChainNotSupportedError'
 
-  constructor({ connector }: { connector?: Connector }) {
-    super(
-      `Switch chain not supported by ${
-        connector ? `"${connector.name}" ` : ''
-      }connector.`,
-    )
+  constructor({ connector }: { connector: Connector }) {
+    super(`"${connector.name}" does not support programmatic chain switching.`)
   }
 }
 
@@ -139,13 +159,5 @@ export class UserRejectedRequestError extends ProviderRpcError {
 
   constructor(error: unknown) {
     super(4001, 'User rejected request', error)
-  }
-}
-
-export class ResourceUnavailableError extends RpcError {
-  name = 'ResourceUnavailable'
-
-  constructor(error: unknown) {
-    super(-32002, 'Resource unavailable', error)
   }
 }

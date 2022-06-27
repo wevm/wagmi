@@ -20,13 +20,14 @@ export type UseContractWriteConfig = MutationConfig<
 >
 
 export const mutationKey = ([
-  { addressOrName, args, contractInterface, overrides },
+  { addressOrName, args, chainId, contractInterface, overrides },
 ]: [WriteContractConfig]) =>
   [
     {
       entity: 'writeContract',
       addressOrName,
       args,
+      chainId,
       contractInterface,
       overrides,
     },
@@ -35,6 +36,7 @@ export const mutationKey = ([
 export function useContractWrite({
   addressOrName,
   args,
+  chainId,
   contractInterface,
   functionName,
   overrides,
@@ -61,6 +63,7 @@ export function useContractWrite({
       {
         addressOrName,
         args,
+        chainId,
         contractInterface,
         functionName,
         overrides,
@@ -70,6 +73,7 @@ export function useContractWrite({
       writeContract({
         addressOrName,
         args,
+        chainId,
         contractInterface,
         functionName,
         overrides,
@@ -87,6 +91,7 @@ export function useContractWrite({
     (overrideConfig?: UseContractWriteMutationArgs) =>
       mutate({
         addressOrName,
+        chainId,
         contractInterface,
         functionName,
         signerOrProvider,
@@ -95,6 +100,7 @@ export function useContractWrite({
     [
       addressOrName,
       args,
+      chainId,
       contractInterface,
       functionName,
       mutate,
@@ -107,6 +113,7 @@ export function useContractWrite({
     (overrideConfig?: UseContractWriteMutationArgs) =>
       mutateAsync({
         addressOrName,
+        chainId,
         contractInterface,
         functionName,
         signerOrProvider,
@@ -115,6 +122,7 @@ export function useContractWrite({
     [
       addressOrName,
       args,
+      chainId,
       contractInterface,
       functionName,
       mutateAsync,

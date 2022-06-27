@@ -20,12 +20,13 @@ export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
 
 const mutationFn = (args: UseSendTransactionArgs) => {
-  const { request } = args
+  const { chainId, request } = args
   if (!request) throw new Error('request is required')
-  return sendTransaction({ request })
+  return sendTransaction({ chainId, request })
 }
 
 export function useSendTransaction({
+  chainId,
   request,
   onError,
   onMutate,
@@ -44,7 +45,7 @@ export function useSendTransaction({
     reset,
     status,
     variables,
-  } = useMutation(mutationKey({ request }), mutationFn, {
+  } = useMutation(mutationKey({ chainId, request }), mutationFn, {
     onError,
     onMutate,
     onSettled,
@@ -52,13 +53,15 @@ export function useSendTransaction({
   })
 
   const sendTransaction = React.useCallback(
-    (args?: SendTransactionArgs) => mutate(args || { request }),
-    [mutate, request],
+    (args?: SendTransactionArgs) =>
+      mutate({ chainId, request, ...(args ?? {}) }),
+    [chainId, mutate, request],
   )
 
   const sendTransactionAsync = React.useCallback(
-    (args?: SendTransactionArgs) => mutateAsync(args || { request }),
-    [mutateAsync, request],
+    (args?: SendTransactionArgs) =>
+      mutateAsync({ chainId, request, ...(args ?? {}) }),
+    [chainId, mutateAsync, request],
   )
 
   return {

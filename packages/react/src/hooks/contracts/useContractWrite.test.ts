@@ -1,3 +1,5 @@
+import { MockConnector } from '@wagmi/core/connectors/mock'
+
 import {
   act,
   actConnect,
@@ -44,6 +46,40 @@ describe('useContractWrite', () => {
         "writeAsync": [Function],
       }
     `)
+  })
+
+  describe('configuration', () => {
+    describe('chainId', () => {
+      it('unable to switch', async () => {
+        const connector = new MockConnector({
+          options: {
+            flags: { noSwitchChain: true },
+            signer: getSigners()[0]!,
+          },
+        })
+        const utils = renderHook(() =>
+          useContractWriteWithConnect({
+            ...mlootContractConfig,
+            functionName: 'claim',
+            chainId: 10,
+          }),
+        )
+        const { result, waitFor } = utils
+        await actConnect({ utils, connector })
+
+        await act(async () => {
+          result.current.contractWrite.write()
+        })
+
+        await waitFor(() =>
+          expect(result.current.contractWrite.isError).toBeTruthy(),
+        )
+
+        expect(result.current.contractWrite.error).toMatchInlineSnapshot(
+          `[ChainMismatchError: Chain mismatch: Expected "Chain 10", received "Ethereum.]`,
+        )
+      })
+    })
   })
 
   describe('return value', () => {
