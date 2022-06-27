@@ -6,6 +6,8 @@
   "useContract": "useContract",
   "useContractEvent": "useContractEvent",
   "useContractRead": "useContractRead",
+  "useContractReads": "useContractReads",
+  "useContractInfiniteReads": "useContractInfiniteReads",
   "useContractWrite": "useContractWrite",
   "useDisconnect": "useDisconnect",
   "useEnsAddress": "useEnsAddress",

@@ -14,13 +14,11 @@ The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb5
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading } = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-  )
+  const { data, isError, isLoading } = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+  })
 }
 ```
 
@@ -45,33 +43,57 @@ function App() {
 }
 ```
 
-## Arguments
+## Configuration
 
-### contractConfig
+### addressOrName
 
-See [useContract](/docs/hooks/useContract) for more info.
+Contract address or ENS name.
+
+```tsx {5}
+import { useContract } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
+}
+```
+
+### contractInterface
+
+Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+
+```tsx {6}
+import { useContract } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
+}
+```
 
 ### functionName
 
 Name of function to call.
 
-```tsx {9}
+```tsx {7}
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getSleep',
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
 }
 ```
 
-### Configuration
-
-#### args (optional)
+### args (optional)
 
 Arguments to pass to function call. Accepts `any | any[]`.
 
@@ -79,20 +101,16 @@ Arguments to pass to function call. Accepts `any | any[]`.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'love',
-    {
-      args: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'love',
+    args: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  })
 }
 ```
 
-#### chainId (optional)
+### chainId (optional)
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
 
@@ -100,20 +118,16 @@ Force a specific chain id for the request. The wagmi `Client`'s ethers `provider
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      chainId: 1,
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    chainId: 1,
+  })
 }
 ```
 
-#### overrides (optional)
+### overrides (optional)
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
@@ -121,20 +135,16 @@ function App() {
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  })
 }
 ```
 
-#### cacheOnBlock (optional)
+### cacheOnBlock (optional)
 
 Caches & persists the return data against the current block. Data will be considered stale when a new block arrives.
 
@@ -142,20 +152,16 @@ Caches & persists the return data against the current block. Data will be consid
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      cacheOnBlock: true,
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    cacheOnBlock: true,
+  })
 }
 ```
 
-#### watch (optional)
+### watch (optional)
 
 Watches and refreshes data for new blocks.
 
@@ -163,20 +169,16 @@ Watches and refreshes data for new blocks.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      watch: true,
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    watch: true,
+  })
 }
 ```
 
-#### cacheTime (optional)
+### cacheTime (optional)
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
@@ -184,20 +186,16 @@ Time (in ms) which the data should remain in the cache. Defaults to `0`.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      cacheTime: 2_000,
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    cacheTime: 2_000,
+  })
 }
 ```
 
-#### enabled (optional)
+### enabled (optional)
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
@@ -205,20 +203,16 @@ Set this to `false` to disable this query from automatically running. Defaults t
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      enabled: false,
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    enabled: false,
+  })
 }
 ```
 
-#### staleTime (optional)
+### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
@@ -226,20 +220,33 @@ Time (in ms) after data is considered stale. If set to `Infinity` the data will 
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      staleTime: 2_000,
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    staleTime: 2_000,
+  })
 }
 ```
 
-#### suspense (optional)
+### select (optional)
+
+Transform or select a part of the data returned by the contract.
+
+```tsx {11}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    select: (data) => transform(data),
+  })
+}
+```
+
+### suspense (optional)
 
 Set this to `true` to enable suspense mode.
 
@@ -247,20 +254,16 @@ Set this to `true` to enable suspense mode.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getHunger',
-    {
-      suspense: true,
-    },
-  )
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    suspense: true,
+  })
 }
 ```
 
-#### onSuccess (optional)
+### onSuccess (optional)
 
 Function to invoke when fetching new data is successful.
 
@@ -268,22 +271,18 @@ Function to invoke when fetching new data is successful.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    onSuccess(data) {
+      console.log('Success', data)
     },
-    'getHunger',
-    {
-      onSuccess(data) {
-        console.log('Success', data)
-      },
-    },
-  )
+  })
 }
 ```
 
-#### onError (optional)
+### onError (optional)
 
 Function to invoke when an error is thrown while fetching new data.
 
@@ -291,22 +290,18 @@ Function to invoke when an error is thrown while fetching new data.
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    onError(error) {
+      console.log('Error', error)
     },
-    'getHunger',
-    {
-      onError(error) {
-        console.log('Error', error)
-      },
-    },
-  )
+  })
 }
 ```
 
-#### onSettled (optional)
+### onSettled (optional)
 
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
@@ -314,17 +309,13 @@ Function to invoke when fetching is settled (either successfully fetched, or an 
 import { useContractRead } from 'wagmi'
 
 function App() {
-  const contractRead = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractRead = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
     },
-    'getHunger',
-    {
-      onSettled(data, error) {
-        console.log('Settled', { data, error })
-      },
-    },
-  )
+  })
 }
 ```

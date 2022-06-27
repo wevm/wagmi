@@ -12,26 +12,61 @@ npm install wagmi ethers
 
 ## Quick Start
 
-First, create a wagmi `Client` instance using [`createClient`](/docs/client).
+### 1. Configure chains
 
-```tsx {3}
-import { createClient } from 'wagmi'
+First, configure your desired chains to be used by wagmi, and the providers you want to use.
 
-const client = createClient()
+```tsx
+import { configureChains, chain } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [publicProvider()],
+)
 ```
 
-<Callout>
-  You can pass a configuration object to `createClient` to customize the
-  Client's properties. Properties, like auto-connect, wallet connectors, ethers
-  provider, and more, are [all configurable](/docs/client).
-</Callout>
+Note: In a production app, it is not recommended to only pass `publicProvider` to `configureChains` as you will probably face rate-limiting on the public provider endpoints. It is recommended to also pass an [`alchemyProvider`](/docs/providers/alchemy) or [`infuraProvider`](/docs/providers/infura) as well.
 
-Next, wrap your app with the [`WagmiConfig`](/docs/WagmiConfig) component, passing `client` to it.
+[Read more about configuring chains](/docs/providers/configuring-chains)
 
-```tsx {7-9}
-import { WagmiConfig, createClient } from 'wagmi'
+### 2. Create a wagmi client
 
-const client = createClient()
+Next, create a wagmi `Client` instance using [`createClient`](/docs/client), and pass the result from `configureChains` to it.
+
+```tsx {14-18}
+import {
+  WagmiConfig,
+  createClient,
+  configureChains,
+  defaultChains,
+} from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [publicProvider()],
+)
+
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+})
+```
+
+[Read more about client configuration](/docs/client)
+
+### 3. Wrap app with `WagmiConfig`
+
+Finally, wrap your app with the [`WagmiConfig`](/docs/WagmiConfig) component, passing `client` to it.
+
+```tsx {9-11}
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+})
 
 function App() {
   return (
@@ -42,7 +77,9 @@ function App() {
 }
 ```
 
-Finally, use hooks! Every component inside the `WagmiConfig` is now set up to use the wagmi hooks.
+### 4. You're good to go!
+
+Use hooks! Every component inside the `WagmiConfig` is now set up to use the wagmi hooks.
 
 ```tsx {5,6,7-9}
 import { useAccount, useConnect, useEnsName } from 'wagmi'
@@ -50,7 +87,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {
   const { address, isConnected } = useAccount()
-  const { data: ensName } = useEnsName({ address: account.address })
+  const { data: ensName } = useEnsName({ address })
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })

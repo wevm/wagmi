@@ -14,13 +14,11 @@ The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb5
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading, write } = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'feed',
-  )
+  const { data, isError, isLoading, write } = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
 
   return <button onClick={() => write()}>Feed</button>
 }
@@ -43,35 +41,82 @@ function App() {
 }
 ```
 
-## Arguments
+## Configuration
 
-### contractConfig
+### addressOrName
 
-See [useContract](/docs/hooks/useContract) for more info.
+Contract address or ENS name.
 
-### functionName
-
-Name of function to call.
-
-```tsx {9}
+```tsx {5}
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'feed',
-  )
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
 
   return <button onClick={() => write()}>Feed</button>
 }
 ```
 
-### Configuration
+### chainId (optional)
 
-#### args (optional)
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+
+```tsx {6}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    chainId: 1,
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### contractInterface
+
+Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+
+```tsx {6}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### functionName
+
+Name of function to call.
+
+```tsx {7}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### args (optional)
 
 Arguments to pass to function call. Accepts `any | any[]`.
 
@@ -79,44 +124,36 @@ Arguments to pass to function call. Accepts `any | any[]`.
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'feed',
-    {
-      args: [],
-    },
-  )
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+    args: [],
+  })
 }
 ```
 
-#### overrides (optional)
+### overrides (optional)
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
-```tsx {11-14}
+```tsx {8-11}
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+    overrides: {
+      from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      value: ethers.utils.parseEther('0.01'),
     },
-    'feed',
-    {
-      overrides: {
-        from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-        value: ethers.utils.parseEther('0.01'),
-      },
-    },
-  )
+  })
 }
 ```
 
-#### onError (optional)
+### onError (optional)
 
 Function to invoke when an error is thrown while attempting to write.
 
@@ -124,22 +161,18 @@ Function to invoke when an error is thrown while attempting to write.
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+    onError(error) {
+      console.log('Error', error)
     },
-    'feed',
-    {
-      onError(error) {
-        console.log('Error', error)
-      },
-    },
-  )
+  })
 }
 ```
 
-#### onMutate (optional)
+### onMutate (optional)
 
 Function fires before write function and is passed same variables write function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a write failure.
 
@@ -147,22 +180,18 @@ Function fires before write function and is passed same variables write function
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+    onMutate({ args, overrides }) {
+      console.log('Mutate', { args, overrides })
     },
-    'feed',
-    {
-      onMutate({ args, overrides }) {
-        console.log('Mutate', { args, overrides })
-      },
-    },
-  )
+  })
 }
 ```
 
-#### onSettled (optional)
+### onSettled (optional)
 
 Function to invoke when write is settled (either successfully written, or an error has thrown).
 
@@ -170,22 +199,18 @@ Function to invoke when write is settled (either successfully written, or an err
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
     },
-    'feed',
-    {
-      onSettled(data, error) {
-        console.log('Settled', { data, error })
-      },
-    },
-  )
+  })
 }
 ```
 
-#### onSuccess (optional)
+### onSuccess (optional)
 
 Function to invoke when write is successful
 
@@ -193,17 +218,13 @@ Function to invoke when write is successful
 import { useContractWrite } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+    onSuccess(data) {
+      console.log('Success', data)
     },
-    'feed',
-    {
-      onSuccess(data) {
-        console.log('Success', data)
-      },
-    },
-  )
+  })
 }
 ```

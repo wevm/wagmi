@@ -87,13 +87,11 @@ Transaction hash to monitor. Works well with [`useContractWrite`](/docs/hooks/us
 import { useContractWrite, useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'feed',
-  )
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
   const waitForTransaction = useWaitForTransaction({
     hash: contractWrite.data?.hash,
   })
@@ -123,13 +121,11 @@ Function that resolves to processed transaction receipt. Works well with [`useCo
 import { useContractWrite, useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'feed',
-  )
+  const contractWrite = useContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
   const waitForTransaction = useWaitForTransaction({
     wait: contractWrite.data?.wait,
   })

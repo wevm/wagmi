@@ -1,0 +1,605 @@
+import Callout from 'nextra-theme-docs/callout'
+
+# useContractInfiniteReads
+
+Hook for calling multiple ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) methods with "infinite scrolling" ("fetch more") support. Useful for rendering a dynamic list of contract data.
+
+```tsx
+import { useContractInfiniteReads } from 'wagmi'
+```
+
+## Usage
+
+The following example uses the [more loot](https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df) contract.
+
+The `useContractInfiniteReads` hook requires:
+
+- `cacheKey`: unique key to store the data in the cache
+- `contracts`: a function that provides a `param` (derived from `getNextPageParam` or `fetchNextPage`) as an argument and expects to return an array of contracts. In the example below, `param` is the token ID.
+
+```tsx
+import { useContractInfiniteReads } from 'wagmi'
+import mlootABI from './mlootABI.json'
+
+const contractConfig = {
+  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  contractInterface: mlootABI,
+}
+
+function App() {
+  const { data, fetchNextPage } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      { ...mlootContractConfig, functionName: 'getChest', args: [param] },
+      { ...mlootContractConfig, functionName: 'getFoot', args: [param] },
+      { ...mlootContractConfig, functionName: 'getHand', args: [param] },
+    ],
+  })
+}
+```
+
+You can also optionally provide `getNextPageParam` which will derive the `param` provided to `contracts`. In the example below, we want the `param` to increment by 1.
+
+```tsx {9}
+function App() {
+  const { data, fetchNextPage } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      { ...mlootContractConfig, functionName: 'getChest', args: [param] },
+      { ...mlootContractConfig, functionName: 'getFoot', args: [param] },
+      { ...mlootContractConfig, functionName: 'getHand', args: [param] },
+    ],
+    getNextPageParam: (_, pages) => pages.length + 1,
+  })
+}
+```
+
+### Paginated indexes
+
+Import the `paginatedIndexesConfig` helper to assist with paginated indexes. Useful for infinite pagination of token IDs.
+
+In the example below, we are fetching 10 `tokenURI`s at a time from the [more loot](https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df) contract.
+
+```tsx
+import { useContractInfiniteReads, paginatedIndexesConfig } from 'wagmi'
+import mlootABI from './mlootABI.json'
+
+const contractConfig = {
+  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  contractInterface: mlootABI,
+}
+
+function App() {
+  const { data, fetchNextPage } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    ...paginatedIndexesConfig(
+      (index) => ({
+        ...mlootContractConfig,
+        functionName: 'tokenURI',
+        args: [index],
+      }),
+      { start: 0, perPage: 10, direction: 'increment' },
+    ),
+  })
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data: {
+    pages: Result[][]
+    pageParam: PageParam
+  }
+  error?: Error
+  fetchNextPage: (options?: FetchNextPageOptions) => Promise<Result[]>
+  hasNextPage: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isFetchingNextPage: boolean;
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<Result>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### cacheKey
+
+Unique key used to store the data in the cache.
+
+```tsx {5}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, fetchNextPage } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      { ...mlootContractConfig, functionName: 'getChest', args: [param] },
+      { ...mlootContractConfig, functionName: 'getFoot', args: [param] },
+      { ...mlootContractConfig, functionName: 'getHand', args: [param] },
+    ],
+  })
+}
+```
+
+### contracts
+
+#### addressOrName
+
+Contract address or ENS name.
+
+```tsx {8,14}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+  })
+}
+```
+
+#### contractInterface
+
+Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+
+```tsx {9,15}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+  })
+}
+```
+
+#### functionName
+
+Name of function to call.
+
+```tsx {10,16}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+  })
+}
+```
+
+#### args
+
+Arguments to pass to function call. Accepts `any | any[]`.
+
+```tsx {11,17}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+  })
+}
+```
+
+#### chainId
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {12,19}
+import { useContractReads, chain } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+        chainId: chain.mainnet.id,
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+        chainId: chain.mainnet.id,
+      },
+    ],
+  })
+}
+```
+
+### getNextPageParam (optional)
+
+Derives the `param` provided to `contracts`. Provides the last page of the infinite list and an array of pages.
+
+If there is no next page available, return `undefined`.
+
+```tsx {21-22}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+  }),
+  getNextPageParam: (lastPage, allPages) =>
+    !lastPage ? allPages.length + 1 : undefined
+}
+```
+
+### allowFailure (optional)
+
+If a contract read fails while fetching, it will fail silently and not throw an error.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    allowFailure: false,
+  })
+}
+```
+
+### overrides (optional)
+
+[Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    enabled: false,
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    staleTime: 2_000,
+  })
+}
+```
+
+### select (optional)
+
+Transform or select a part of the data returned by the contract.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    select: (data) => transform(data),
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    suspense: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {20-22}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {20-22}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    onError(error) {
+      console.log('error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {20-22}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    onSettled(data) {
+      console.log('Settled', data)
+    },
+  })
+}
+```

@@ -14,39 +14,65 @@ The following examples use the [ENS Registry](https://etherscan.io/address/0x000
 import { useContractEvent } from 'wagmi'
 
 function App() {
-  useContractEvent(
-    {
-      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-      contractInterface: ensRegistryABI,
-    },
-    'NewOwner',
-    (event) => console.log(event),
-  )
+  useContractEvent({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    eventName: 'NewOwner',
+    listener: (event) => console.log(event),
+  })
 }
 ```
 
 ## Arguments
 
-### contractConfig
+### addressOrName
 
-See [useContract](/docs/hooks/useContract) for more info.
+Contract address or ENS name.
+
+```tsx {5}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    eventName: 'NewResolver',
+    listener: (event) => console.log(event),
+  })
+}
+```
+
+### contractInterface
+
+Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+
+```tsx {6}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  useContractEvent({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    eventName: 'NewResolver',
+    listener: (event) => console.log(event),
+  })
+}
+```
 
 ### eventName
 
 Name of the event to listen to.
 
-```tsx {9}
+```tsx {7}
 import { useContractEvent } from 'wagmi'
 
 function App() {
-  useContractEvent(
-    {
-      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-      contractInterface: ensRegistryABI,
-    },
-    'NewResolver',
-    (event) => console.log(event),
-  )
+  useContractEvent({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    eventName: 'NewResolver',
+    listener: (event) => console.log(event),
+  })
 }
 ```
 
@@ -54,24 +80,20 @@ function App() {
 
 Callback that receives event.
 
-```tsx {10}
+```tsx {8}
 import { useContractEvent } from 'wagmi'
 
 function App() {
-  useContractEvent(
-    {
-      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-      contractInterface: ensRegistryABI,
-    },
-    'NewOwner',
-    (event) => console.log(event),
-  )
+  useContractEvent({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    eventName: 'NewOwner',
+    listener: (event) => console.log(event),
+  })
 }
 ```
 
-### Configuration
-
-#### chainId (optional)
+### chainId (optional)
 
 Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/docs/client#websocketprovider-optional) for this to work correctly.
 
@@ -79,21 +101,17 @@ Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must 
 import { useContractEvent } from 'wagmi'
 
 function App() {
-  useContractEvent(
-    {
-      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-      contractInterface: ensRegistryABI,
-    },
-    'NewOwner',
-    (event) => console.log(event),
-    {
-      chainId: 1,
-    },
-  )
+  useContractEvent({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    eventName: 'NewOwner',
+    listener: (event) => console.log(event),
+    chainId: 1,
+  })
 }
 ```
 
-#### once (optional)
+### once (optional)
 
 Receive only a single event, then stop listener. Defaults to `false`.
 
@@ -101,16 +119,12 @@ Receive only a single event, then stop listener. Defaults to `false`.
 import { useContractEvent } from 'wagmi'
 
 function App() {
-  useContractEvent(
-    {
-      addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-      contractInterface: ensRegistryABI,
-    },
-    'NewOwner',
-    (event) => console.log(event),
-    {
-      once: true,
-    },
-  )
+  useContractEvent({
+    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    contractInterface: ensRegistryABI,
+    eventName: 'NewOwner',
+    listener: (event) => console.log(event),
+    once: true,
+  })
 }
 ```
