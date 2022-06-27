@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.4.2
+
+### Patch Changes
+
+- [#624](https://github.com/tmm/wagmi/pull/624) [`416fa7e`](https://github.com/tmm/wagmi/commit/416fa7ee1f8019ab86e33fb93783ffddecc02c49) Thanks [@jxom](https://github.com/jxom)! - Fix broken `WebSocketProvider` type defs
+
 ## 0.4.1
 
 ### Patch Changes

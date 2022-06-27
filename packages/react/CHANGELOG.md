@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.5.2
+
+### Patch Changes
+
+- [#624](https://github.com/tmm/wagmi/pull/624) [`416fa7e`](https://github.com/tmm/wagmi/commit/416fa7ee1f8019ab86e33fb93783ffddecc02c49) Thanks [@jxom](https://github.com/jxom)! - Fix broken `WebSocketProvider` type defs
+
+- Updated dependencies [[`416fa7e`](https://github.com/tmm/wagmi/commit/416fa7ee1f8019ab86e33fb93783ffddecc02c49)]:
+  - @wagmi/core@0.4.2
+
 ## 0.5.1
 
 ### Patch Changes
