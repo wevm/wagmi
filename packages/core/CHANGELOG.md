@@ -1,5 +1,204 @@
 # @wagmi/core
 
+## 0.4.0
+
+### Minor Changes
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `provider` config option is now required on `createClient`. It is recommended to pass the [`provider` given from `configureChains`](https://wagmi.sh/docs/providers/configuring-chains).
+
+  ```diff
+  import {
+    createClient,
+  + defaultChains,
+  + configureChains
+  } from 'wagmi'
+  +import { publicProvider } from 'wagmi/providers/publicProvider'
+
+  +const { provider } = configureChains(defaultChains, [
+  + publicProvider
+  +])
+
+  const client = createClient({
+  + provider
+  })
+  ```
+
+  If you previously used an ethers.js Provider, you now need to provide your `chains` on the Provider instance:
+
+  ```diff
+  import {
+    createClient,
+  + defaultChains
+  } from 'wagmi'
+  import ethers from 'ethers'
+
+  const client = createClient({
+  - provider: getDefaultProvider()
+  + provider: Object.assign(getDefaultProvider(), { chains: defaultChains })
+  })
+  ```
+
+* [`4f8f3c0`](https://github.com/tmm/wagmi/commit/4f8f3c0d65383bd8bbdfc3f1033adfdb11d80ebb) Thanks [@nachoiacovino](https://github.com/nachoiacovino)! - Use ethereum-lists chains symbols
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking:** Removed the `chainId` parameter from `connectors` function on `createClient`.
+
+  ```diff
+  const client = createClient({
+  - connectors({ chainId }) {
+  + connectors() {
+      ...
+    }
+  })
+  ```
+
+  If you previously derived RPC URLs from the `chainId` on `connectors`, you can now remove that logic as `wagmi` now handles RPC URLs internally when used with `configureChains`.
+
+  ```diff
+  import {
+    chain,
+  +  configureChains,
+    createClient
+  } from 'wagmi';
+
+  +import { publicProvider } from 'wagmi/providers/public'
+
+  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+  import { InjectedConnector } from 'wagmi/connectors/injected'
+  import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+  +const { chains } = configureChains(
+  +  [chain.mainnet],
+  +  [publicProvider()]
+  +);
+
+  const client = createClient({
+  -  connectors({ chainId }) {
+  -    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+  -    const rpcUrl = chain.rpcUrls.alchemy
+  -      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+  -      : chain.rpcUrls.default
+  -    return [
+  +  connectors: [
+      new MetaMaskConnector({ chains }),
+      new CoinbaseWalletConnector({
+        chains,
+        options: {
+          appName: 'wagmi',
+  -       chainId: chain.id,
+  -       jsonRpcUrl: rpcUrl,
+        },
+      }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          qrcode: true,
+  -       rpc: { [chain.id]: rpcUrl },
+        },
+      }),
+      new InjectedConnector({
+        chains,
+        options: { name: 'Injected' },
+      }),
+    ]
+  -  },
+  })
+  ```
+
+* [#611](https://github.com/tmm/wagmi/pull/611) [`3089c34`](https://github.com/tmm/wagmi/commit/3089c34196d4034acabac031e0a2f7ee63ae30cc) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `Connector`s `getProvider` method no longer supports the `create` config parameter. Use the `chainId` config option instead.
+
+- [#596](https://github.com/tmm/wagmi/pull/596) [`a770af7`](https://github.com/tmm/wagmi/commit/a770af7d2cb214b6620d5341115f1e938e1e77ff) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `TypedDataDomain` and `TypedDataField` types were removed and incorporated into `SignTypedDataArgs`.
+
+* [`4f8f3c0`](https://github.com/tmm/wagmi/commit/4f8f3c0d65383bd8bbdfc3f1033adfdb11d80ebb) Thanks [@nachoiacovino](https://github.com/nachoiacovino)! - Update symbols to match ethereum-lists/chains
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `writeContract` function parameters have been consolidated into a singular config parameter.
+
+  Before:
+
+  ```tsx
+  writeContract(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'feed',
+  )
+  ```
+
+  After:
+
+  ```tsx
+  readContract({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+  ```
+
+### Patch Changes
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `readContract` & `watchReadContract` function parameters have been consolidated into a singular config parameter.
+
+  Before:
+
+  ```tsx
+  readContract(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'getHunger',
+    { args: [0] },
+  )
+
+  watchReadContract(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+    },
+    'getHunger',
+    { args: [0] },
+    (result) => {},
+  )
+  ```
+
+  After:
+
+  ```tsx
+  readContract({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getHunger',
+    args: [0],
+  })
+
+  watchReadContract(
+    {
+      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      contractInterface: wagmigotchiABI,
+      functionName: 'getHunger',
+      args: [0],
+    },
+    (result) => {},
+  )
+  ```
+
+* [#598](https://github.com/tmm/wagmi/pull/598) [`fef26bf`](https://github.com/tmm/wagmi/commit/fef26bf8aef76fc9621e3cd54d4e0ca8f69abb38) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Update `@coinbase/wallet-sdk` peer dependency to `>=3.3.0` to fix errors when connecting with older versions of the Coinbase Wallet extension and mobile app.
+
+- [#611](https://github.com/tmm/wagmi/pull/611) [`3089c34`](https://github.com/tmm/wagmi/commit/3089c34196d4034acabac031e0a2f7ee63ae30cc) Thanks [@tmm](https://github.com/tmm)! - Added `chainId` config parameter for `writeContract` and `sendTransaction`.
+
+  If `chainId` is provided, the connector will validate that `chainId` is the active chain before sending a transaction (and switch to `chainId` if necessary).
+
+* [#582](https://github.com/tmm/wagmi/pull/582) [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where the wagmi client's `status` would not update from `"disconnected"` to `"connecting" -> "connected"` when the `connect` action is invoked.
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - Added a `multicall` & `watchMulticall` action that provides multicall support.
+
+  Internally uses the [`multicall3` contract](https://github.com/mds1/multicall).
+
+  [See example usage](https://github.com/tmm/wagmi/blob/194866032985fdd3f49bc46bf1b14181d7cb61d1/packages/core/src/actions/contracts/multicall.test.ts)
+
+* [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - Added a `readContracts` & `watchReadContracts` action that provides the ability to batch up multiple ethers Contract read-only methods.
+
 ## 0.3.8
 
 ### Patch Changes

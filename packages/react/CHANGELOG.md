@@ -1,5 +1,552 @@
 # wagmi
 
+## 0.5.0
+
+### Minor Changes
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `useContractWrite` hook parameters have been consolidated into a singular config parameter.
+
+  Before:
+
+  ```tsx
+  useContractWrite(
+    {
+      addressOrName: mlootContractAddress,
+      contractInterface: mlootABI,
+    },
+    'claim',
+  )
+  ```
+
+  After:
+
+  ```tsx
+  useContractWrite({
+    addressOrName: mlootContractAddress,
+    contractInterface: mlootABI,
+    functionName: 'claim',
+  })
+  ```
+
+* [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `useContractEvent` hook parameters have been consolidated into a singular config parameter.
+
+  Before:
+
+  ```tsx
+  useContractEvent(
+    {
+      addressOrName: uniContractAddress,
+      contractInterface: erc20ABI,
+    },
+    'Transfer',
+    listener,
+  ),
+  ```
+
+  After:
+
+  ```tsx
+  useContractEvent({
+    addressOrName: uniContractAddress,
+    contractInterface: erc20ABI,
+    eventName: 'Transfer',
+    listener,
+  })
+  ```
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `client` prop is now required on `WagmiConfig`.
+
+  ````diff
+  ```tsx
+  import {
+    createClient,
+  + configureChains,
+  + defaultChains
+  } from 'wagmi'
+  +import { publicProvider } from 'wagmi/providers/public'
+
+  +const { provider, webSocketProvider } = configureChains(defaultChains, [
+  + publicProvider(),
+  +])
+
+  +const client = createClient({
+  + provider,
+  + webSocketProvider,
+  +})
+
+  function App() {
+    return (
+      <WagmiConfig
+  +     client={client}
+      >
+        <YourRoutes />
+      </WagmiConfig>
+    )
+  }
+  ````
+
+* [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `provider` config option is now required on `createClient`. It is recommended to pass the [`provider` given from `configureChains`](https://wagmi.sh/docs/providers/configuring-chains).
+
+  ```diff
+  import {
+    createClient,
+  + defaultChains,
+  + configureChains
+  } from 'wagmi'
+  +import { publicProvider } from 'wagmi/providers/publicProvider'
+
+  +const { provider } = configureChains(defaultChains, [
+  + publicProvider
+  +])
+
+  const client = createClient({
+  + provider
+  })
+  ```
+
+  If you previously used an ethers.js Provider, you now need to provide your `chains` on the Provider instance:
+
+  ```diff
+  import {
+    createClient,
+  + defaultChains
+  } from 'wagmi'
+  import ethers from 'ethers'
+
+  const client = createClient({
+  - provider: getDefaultProvider()
+  + provider: Object.assign(getDefaultProvider(), { chains: defaultChains })
+  })
+  ```
+
+- [`4f8f3c0`](https://github.com/tmm/wagmi/commit/4f8f3c0d65383bd8bbdfc3f1033adfdb11d80ebb) Thanks [@nachoiacovino](https://github.com/nachoiacovino)! - Use ethereum-lists chains symbols
+
+* [#582](https://github.com/tmm/wagmi/pull/582) [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The following changes were made to the `useAccount` return value:
+
+  ### The `data` value is now `address` & `connector`
+
+  ```diff
+  {
+  - data?: {
+  -   address: string
+  -   connector: Connector
+  - }
+  + address?: string
+  + connector?: Connector
+  }
+  ```
+
+  ### Global connection status values have been added
+
+  The following global connection status values have been added:
+
+  ```diff
+  {
+  + isConnecting: boolean
+  + isReconnecting: boolean
+  + isConnected: boolean
+  + isDisconnected: boolean
+  + status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
+  }
+  ```
+
+  The `useAccount` hook is now aware of any connection event in your application, so now you can use these connection status values to determine if your user is connected, disconnected or connecting to a wallet on a global scope.
+
+  ### `error`, states & `refetch` values have been removed
+
+  Since the `useAccount` hook never dealt with asynchronous data, all of these values were
+  redundant & unused.
+
+  ```diff
+  {
+  - error?: Error
+  - isIdle: boolean
+  - isLoading: boolean
+  - isFetching: boolean
+  - isSuccess: boolean
+  - isError: boolean
+  - isFetched: boolean
+  - isRefetching: boolean
+  - refetch: (options: {
+  -   throwOnError: boolean
+  -   cancelRefetch: boolean
+  - }) => Promise<{
+  -   address: string
+  -   connector: Connector
+  - }>
+  - status: 'idle' | 'error' | 'loading' | 'success'
+  }
+  ```
+
+  ### Summary of changes
+
+  Below is the whole diff of changes to the `useAccount` return value.
+
+  ```diff
+  {
+  - data?: {
+  -   address: string
+  -   connector: Connector
+  - }
+  + address?: string
+  + connector?: Connector
+  - error?: Error
+  - isIdle: boolean
+  - isLoading: boolean
+  - isFetching: boolean
+  - isSuccess: boolean
+  - isError: boolean
+  - isFetched: boolean
+  - isRefetching: boolean
+  + isConnecting: boolean
+  + isReconnecting: boolean
+  + isConnected: boolean
+  + isDisconnected: boolean
+  - refetch: (options: {
+  -   throwOnError: boolean
+  -   cancelRefetch: boolean
+  - }) => Promise<{
+  -   address: string
+  -   connector: Connector
+  - }>
+  - status: 'idle' | 'error' | 'loading' | 'success'
+  + status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
+  }
+  ```
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking:** Removed the `chainId` parameter from `connectors` function on `createClient`.
+
+  ```diff
+  const client = createClient({
+  - connectors({ chainId }) {
+  + connectors() {
+      ...
+    }
+  })
+  ```
+
+  If you previously derived RPC URLs from the `chainId` on `connectors`, you can now remove that logic as `wagmi` now handles RPC URLs internally when used with `configureChains`.
+
+  ```diff
+  import {
+    chain,
+  +  configureChains,
+    createClient
+  } from 'wagmi';
+
+  +import { publicProvider } from 'wagmi/providers/public'
+
+  import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+  import { InjectedConnector } from 'wagmi/connectors/injected'
+  import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+  +const { chains } = configureChains(
+  +  [chain.mainnet],
+  +  [publicProvider()]
+  +);
+
+  const client = createClient({
+  -  connectors({ chainId }) {
+  -    const chain = chains.find((x) => x.id === chainId) ?? defaultChain
+  -    const rpcUrl = chain.rpcUrls.alchemy
+  -      ? `${chain.rpcUrls.alchemy}/${alchemyId}`
+  -      : chain.rpcUrls.default
+  -    return [
+  +  connectors: [
+      new MetaMaskConnector({ chains }),
+      new CoinbaseWalletConnector({
+        chains,
+        options: {
+          appName: 'wagmi',
+  -       chainId: chain.id,
+  -       jsonRpcUrl: rpcUrl,
+        },
+      }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          qrcode: true,
+  -       rpc: { [chain.id]: rpcUrl },
+        },
+      }),
+      new InjectedConnector({
+        chains,
+        options: { name: 'Injected' },
+      }),
+    ]
+  -  },
+  })
+  ```
+
+* [#596](https://github.com/tmm/wagmi/pull/596) [`a770af7`](https://github.com/tmm/wagmi/commit/a770af7d2cb214b6620d5341115f1e938e1e77ff) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `TypedDataDomain` and `TypedDataField` types were removed and incorporated into `SignTypedDataArgs`.
+
+- [#582](https://github.com/tmm/wagmi/pull/582) [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The following changes were made to the `useAccount` configuration:
+
+  ## `onConnect` has been added
+
+  The `onConnect` callback is invoked when the account connects.
+
+  It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
+
+  ```tsx
+  const account = useAccount({
+    onConnect({ address, connector, isReconnected }) {
+      console.log('Connected')
+    },
+  })
+  ```
+
+  ## `onDisconnect` has been added
+
+  The `onDisconnect` callback is invoked when the account disconnected.
+
+  ```tsx
+  const account = useAccount({
+    onDisconnect() {
+      console.log('Disconnected')
+    },
+  })
+  ```
+
+  ## `suspense` has been removed
+
+  The `useAccount` hook is a synchronous hook – so `suspense` never worked.
+
+  ```diff
+  const account = useAccount({
+  -  suspense: true,
+  })
+  ```
+
+  ## `onError` has been removed
+
+  The `useAccount` hook never had any error definitions – so `onError` was never invoked.
+
+  ```diff
+  const account = useAccount({
+  - onError(error) {
+  -   console.log('Error', error)
+  - },
+  })
+  ```
+
+  ## `onSettled` has been removed
+
+  The `useAccount` hook is a synchronous hook. `onSettled` was always invoked immediately.
+
+  ```diff
+  const account = useAccount({
+  - onSettled(data) {
+  -   console.log('Settled', data)
+  - },
+  })
+  ```
+
+  If you used `onSettled`, you can move the code beneath the `useAccount` hook:
+
+  ```diff
+  const account = useAccount({
+  - onSettled(data) {
+  -   console.log('Address:', data.address)
+  - },
+  })
+  + console.log('Address:', account.address)
+  ```
+
+  ## `onSuccess` has been removed
+
+  The `useAccount` hook is a synchronous hook. `onSuccess` was always invoked immediately.
+
+  ```diff
+  const account = useAccount({
+  - onSuccess(data) {
+  -   console.log('Success', data)
+  - },
+  })
+  ```
+
+  If you used `onSuccess`, you can move the code beneath the `useAccount` hook:
+
+  ```diff
+  const account = useAccount({
+  - onSuccess(data) {
+  -   console.log('Address:', data.address)
+  - },
+  })
+  + console.log('Address:', account.address)
+  ```
+
+* [#582](https://github.com/tmm/wagmi/pull/582) [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The following changes were made to the `useConnect` return value:
+
+  ### Connection status flags have been moved
+
+  The `isConnected`, `isConnecting`, `isReconnecting` & `isDisconnected` flags have been moved to the `useAccount` hook.
+
+  ```diff
+  -import { useConnect } from 'wagmi'
+  +import { useAccount } from 'wagmi'
+
+  function App() {
+    const {
+      isConnected,
+      isConnecting,
+      isConnecting,
+      isDisconnected
+  - } = useConnect()
+  + } = useAccount()
+  }
+  ```
+
+  ### New `connect` mutation status flags have been added
+
+  The `isLoading`, `isSuccess` and `isError` flags have been added to `useConnect`.
+
+  These flags represent the **local** async state of `useConnect`.
+
+  ### `activeConnector` has been removed
+
+  The `activeConnector` value has been removed. You can find the active connector on `useAccount`.
+
+  ```diff
+  -import { useConnect } from 'wagmi'
+  +import { useAccount } from 'wagmi'
+
+  function App() {
+  - const { activeConnector } = useConnect()
+  + const { connector } = useAccount()
+  }
+  ```
+
+- [#582](https://github.com/tmm/wagmi/pull/582) [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The following changes were made to the `useConnect` configuration:
+
+  ### `onBeforeConnect` has been renamed
+
+  The `onBeforeConnect` callback has been renamed to `onMutate`
+
+  ### `onConnect` has been renamed
+
+  The `onConnect` callback has been renamed to `onSuccess`
+
+* [#582](https://github.com/tmm/wagmi/pull/582) [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `connector` parameter to `connect` & `connectAsync` now has to be in the config object parameter shape.
+
+  ```diff
+  import { useConnect } from 'wagmi'
+
+  function App() {
+    const { connect, connectors } = useConnect()
+
+    return (
+      <button
+  -     onClick={() => connect(connectors[0])}
+  +     onClick={() => connect({ connector: connectors[0] })}
+      >
+        Connect
+      </button>
+    )
+  }
+  ```
+
+- [#582](https://github.com/tmm/wagmi/pull/582) [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The "switch network" functionality has been moved out of `useNetwork` into a new `useSwitchNetwork` hook.
+
+  The `useNetwork` hook now accepts no configuration and only returns `chain` (renamed from `activeChain`) and `chains`.
+
+  ```diff
+  import {
+    useNetwork
+  + useSwitchNetwork
+  } from 'wagmi'
+
+  const {
+  - activeChain
+  + chain,
+    chains,
+  - data,
+  - error,
+  - isError,
+  - isIdle,
+  - isLoading,
+  - isSuccess,
+  - pendingChainId,
+  - switchNetwork,
+  - switchNetworkAsync,
+  - status,
+  - reset,
+  -} = useNetwork({
+  - chainId: 69,
+  - onError(error) {},
+  - onMutate(args) {},
+  - onSettled(data, error) {},
+  - onSuccess(data) {}
+  -})
+  +} = useNetwork()
+
+  +const {
+  + data,
+  + error,
+  + isError,
+  + isIdle,
+  + isLoading,
+  + isSuccess,
+  + pendingChainId,
+  + switchNetwork,
+  + switchNetworkAsync,
+  + status,
+  + reset,
+  +} = useSwitchNetwork({
+  + chainId: 69,
+  + onError(error) {},
+  + onMutate(args) {},
+  + onSettled(data, error) {},
+  + onSuccess(data) {}
+  +})
+  ```
+
+* [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `useContractRead` hook parameters have been consolidated into a singular config parameter.
+
+  Before:
+
+  ```tsx
+  useContractRead(
+    {
+      addressOrName: wagmigotchiContractAddress,
+      contractInterface: wagmigotchiABI,
+    },
+    'love',
+    { args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c' },
+  )
+  ```
+
+  After:
+
+  ```tsx
+  useContractRead({
+    addressOrName: wagmigotchiContractAddress,
+    contractInterface: wagmigotchiABI,
+    functionName: 'love',
+    args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+  })
+  ```
+
+### Patch Changes
+
+- [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - Added a `useContractInfiniteReads` hook that provides the ability to call multiple ethers Contract read-only methods with "infinite scrolling" ("fetch more") support. Useful for rendering a dynamic list of contract data.
+
+  [Learn more](https://wagmi.sh/docs/hooks/useContractInfiniteReads)
+
+* [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4) Thanks [@jxom](https://github.com/jxom)! - Added a `useContractReads` hook that provides the ability to batch up multiple ethers Contract read-only methods.
+
+  [Learn more](https://wagmi.sh/docs/hooks/useContractReads)
+
+- [#598](https://github.com/tmm/wagmi/pull/598) [`fef26bf`](https://github.com/tmm/wagmi/commit/fef26bf8aef76fc9621e3cd54d4e0ca8f69abb38) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Update `@coinbase/wallet-sdk` to fix errors when connecting with older versions of the Coinbase Wallet extension and mobile app.
+
+* [#611](https://github.com/tmm/wagmi/pull/611) [`3089c34`](https://github.com/tmm/wagmi/commit/3089c34196d4034acabac031e0a2f7ee63ae30cc) Thanks [@tmm](https://github.com/tmm)! - Added `chainId` config parameter for `useContractWrite` and `useSendTransaction`.
+
+  If `chainId` is provided, the connector will validate that `chainId` is the active chain before sending a transaction (and switch to `chainId` if necessary).
+
+* Updated dependencies [[`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4), [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4), [`4f8f3c0`](https://github.com/tmm/wagmi/commit/4f8f3c0d65383bd8bbdfc3f1033adfdb11d80ebb), [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4), [`3089c34`](https://github.com/tmm/wagmi/commit/3089c34196d4034acabac031e0a2f7ee63ae30cc), [`a770af7`](https://github.com/tmm/wagmi/commit/a770af7d2cb214b6620d5341115f1e938e1e77ff), [`4f8f3c0`](https://github.com/tmm/wagmi/commit/4f8f3c0d65383bd8bbdfc3f1033adfdb11d80ebb), [`fef26bf`](https://github.com/tmm/wagmi/commit/fef26bf8aef76fc9621e3cd54d4e0ca8f69abb38), [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4), [`3089c34`](https://github.com/tmm/wagmi/commit/3089c34196d4034acabac031e0a2f7ee63ae30cc), [`b03830a`](https://github.com/tmm/wagmi/commit/b03830a54465215c2526f9509543fe2c978bfe70), [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4), [`fc94210`](https://github.com/tmm/wagmi/commit/fc94210b67daa91aa164625dfe189d5b6c2f92d4)]:
+  - @wagmi/core@0.4.0
+
 ## 0.4.12
 
 ### Patch Changes
