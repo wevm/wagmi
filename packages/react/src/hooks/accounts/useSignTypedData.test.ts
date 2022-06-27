@@ -1,6 +1,7 @@
+import { MockConnector } from '@wagmi/core/connectors/mock'
 import { verifyTypedData } from 'ethers/lib/utils'
 
-import { act, actConnect, renderHook } from '../../../test'
+import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 import {
   UseSignTypedDataArgs,
@@ -342,6 +343,60 @@ describe('useSignTypedData', () => {
           result.current.signTypedData.data as string,
         ),
       ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
+    })
+
+    describe('when chainId is provided in domain', () => {
+      it('switches before sending transaction', async () => {
+        const utils = renderHook(() =>
+          useSignTypedDataWithConnect({
+            domain,
+            types,
+            value,
+          }),
+        )
+        const { result, waitFor } = utils
+        await actConnect({ chainId: 4, utils })
+
+        await act(async () => result.current.signTypedData.signTypedData())
+        await waitFor(() =>
+          expect(result.current.signTypedData.isSuccess).toBeTruthy(),
+        )
+        expect(
+          verifyTypedData(
+            domain,
+            types,
+            value,
+            result.current.signTypedData.data as string,
+          ),
+        ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
+      })
+
+      it('unable to switch', async () => {
+        const connector = new MockConnector({
+          options: {
+            flags: { noSwitchChain: true },
+            signer: getSigners()[0]!,
+          },
+        })
+        const utils = renderHook(() =>
+          useSignTypedDataWithConnect({
+            domain,
+            types,
+            value,
+          }),
+        )
+        const { result, waitFor } = utils
+        await actConnect({ chainId: 4, connector, utils })
+
+        await act(async () => result.current.signTypedData.signTypedData())
+        await waitFor(() =>
+          expect(result.current.signTypedData.isError).toBeTruthy(),
+        )
+
+        expect(result.current.signTypedData.error).toMatchInlineSnapshot(
+          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby.]`,
+        )
+      })
     })
   })
 })
