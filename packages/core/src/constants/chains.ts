@@ -1,6 +1,6 @@
 import { Chain } from '../types'
 import { etherscanBlockExplorers } from './blockExplorers'
-import { alchemyRpcUrls, defaultAlchemyId, infuraRpcUrls } from './rpcs'
+import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from './rpcs'
 
 export const chainId = {
   mainnet: 1,
@@ -27,8 +27,9 @@ export const mainnet: Chain = {
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.mainnet,
+    default: publicRpcUrls.mainnet,
     infura: infuraRpcUrls.mainnet,
-    default: `${alchemyRpcUrls.mainnet}/${defaultAlchemyId}`,
+    public: publicRpcUrls.mainnet,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.mainnet,
@@ -50,8 +51,9 @@ export const ropsten: Chain = {
   nativeCurrency: { name: 'Ropsten Ether', symbol: 'ROP', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.ropsten,
+    default: publicRpcUrls.ropsten,
     infura: infuraRpcUrls.ropsten,
-    default: `${alchemyRpcUrls.ropsten}/${defaultAlchemyId}`,
+    public: publicRpcUrls.ropsten,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.ropsten,
@@ -74,8 +76,9 @@ export const rinkeby: Chain = {
   nativeCurrency: { name: 'Rinkeby Ether', symbol: 'RIN', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.rinkeby,
+    default: publicRpcUrls.rinkeby,
     infura: infuraRpcUrls.rinkeby,
-    default: `${alchemyRpcUrls.rinkeby}/${defaultAlchemyId}`,
+    public: publicRpcUrls.rinkeby,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.rinkeby,
@@ -98,8 +101,9 @@ export const goerli: Chain = {
   nativeCurrency: { name: 'Goerli Ether', symbol: 'GOR', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.goerli,
+    default: publicRpcUrls.goerli,
     infura: infuraRpcUrls.goerli,
-    default: `${alchemyRpcUrls.goerli}/${defaultAlchemyId}`,
+    public: publicRpcUrls.goerli,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.goerli,
@@ -122,8 +126,9 @@ export const kovan: Chain = {
   nativeCurrency: { name: 'Kovan Ether', symbol: 'KOV', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.kovan,
+    default: publicRpcUrls.kovan,
     infura: infuraRpcUrls.kovan,
-    default: `${alchemyRpcUrls.kovan}/${defaultAlchemyId}`,
+    public: publicRpcUrls.kovan,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.kovan,
@@ -143,8 +148,9 @@ export const optimism: Chain = {
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.optimism,
+    default: publicRpcUrls.optimism,
     infura: infuraRpcUrls.optimism,
-    default: 'https://mainnet.optimism.io',
+    public: publicRpcUrls.optimism,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.optimism,
@@ -167,8 +173,9 @@ export const optimismKovan: Chain = {
   },
   rpcUrls: {
     alchemy: alchemyRpcUrls.optimismKovan,
+    default: publicRpcUrls.optimismKovan,
     infura: infuraRpcUrls.optimismKovan,
-    default: 'https://kovan.optimism.io',
+    public: publicRpcUrls.optimismKovan,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.optimismKovan,
@@ -188,8 +195,9 @@ export const polygon: Chain = {
   nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.polygon,
+    default: publicRpcUrls.polygon,
     infura: infuraRpcUrls.polygon,
-    default: 'https://polygon-rpc.com',
+    public: publicRpcUrls.polygon,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.polygon,
@@ -212,8 +220,9 @@ export const polygonMumbai: Chain = {
   },
   rpcUrls: {
     alchemy: alchemyRpcUrls.polygonMumbai,
+    default: publicRpcUrls.polygonMumbai,
     infura: infuraRpcUrls.polygonMumbai,
-    default: 'https://matic-mumbai.chainstacklabs.com',
+    public: publicRpcUrls.polygonMumbai,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.polygonMumbai,
@@ -233,8 +242,9 @@ export const arbitrum: Chain = {
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.arbitrum,
+    default: publicRpcUrls.arbitrum,
     infura: infuraRpcUrls.arbitrum,
-    default: 'https://arb1.arbitrum.io/rpc',
+    public: publicRpcUrls.arbitrum,
   },
   blockExplorers: {
     arbitrum: {
@@ -261,8 +271,9 @@ export const arbitrumRinkeby: Chain = {
   },
   rpcUrls: {
     alchemy: alchemyRpcUrls.arbitrumRinkeby,
+    default: publicRpcUrls.arbitrumRinkeby,
     infura: infuraRpcUrls.arbitrumRinkeby,
-    default: 'https://rinkeby.arbitrum.io/rpc',
+    public: publicRpcUrls.arbitrumRinkeby,
   },
   blockExplorers: {
     arbitrum: {

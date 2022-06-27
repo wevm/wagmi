@@ -201,7 +201,13 @@ export class InjectedConnector extends Connector<
       if (!chain) throw new ChainNotConfiguredError()
 
       // Indicates chain is not added to provider
-      if ((<ProviderRpcError>error).code === 4902) {
+      if (
+        (<ProviderRpcError>error).code === 4902 ||
+        // Unwrapping for MetaMask Mobile
+        // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
+        (<RpcError<{ originalError?: { code: number } }>>error)?.data
+          ?.originalError?.code === 4902
+      ) {
         try {
           await provider.request({
             method: 'wallet_addEthereumChain',
@@ -210,7 +216,7 @@ export class InjectedConnector extends Connector<
                 chainId: id,
                 chainName: chain.name,
                 nativeCurrency: chain.nativeCurrency,
-                rpcUrls: [chain.rpcUrls.default],
+                rpcUrls: [chain.rpcUrls.public ?? chain.rpcUrls.default],
                 blockExplorerUrls: this.getBlockExplorerUrls(chain),
               },
             ],
