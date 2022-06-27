@@ -88,6 +88,26 @@ export class InjectedConnector extends Connector<
 
       this.emit('message', { type: 'connecting' })
 
+      // Attempt to show wallet select prompt with `wallet_requestPermissions` when
+      // `shimDisconnect` is active and account is in disconnected state (flag in storage)
+      if (
+        this.options?.shimDisconnect &&
+        !getClient().storage?.getItem(shimKey)
+      ) {
+        const accounts = await provider.request({
+          method: 'eth_accounts',
+        })
+        const isConnected = !!accounts[0]
+        if (isConnected)
+          try {
+            await provider.request({
+              method: 'wallet_requestPermissions',
+              params: [{ eth_accounts: {} }],
+            })
+            // eslint-disable-next-line no-empty
+          } catch (error) {}
+      }
+
       const account = await this.getAccount()
       // Switch to chain if provided
       let id = await this.getChainId()
