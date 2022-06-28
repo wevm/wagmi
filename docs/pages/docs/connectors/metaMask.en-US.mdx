@@ -3,6 +3,8 @@ title: 'MetaMask'
 description: 'Official wagmi Connector for MetaMask.'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+
 # MetaMask
 
 The `MetaMaskConnector` supports connecting with MetaMask.
@@ -77,6 +79,12 @@ const connector = new MetaMaskConnector({
 ```
 
 #### UNSTABLE_shimOnConnectSelectAccount
+
+<Callout emoji="🚧">
+  This is an experimental feature. It's stable enough to show up in the docs,
+  but should be used with care. If you have any feedback, [create a
+  discussion](https://github.com/tmm/wagmi/discussions).
+</Callout>
 
 While "disconnected" with `shimDisconnect`, allows user to select a different MetaMask account (than the currently connected account) when trying to connect. Defaults to `false`.
 
