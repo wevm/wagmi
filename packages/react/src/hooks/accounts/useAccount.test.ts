@@ -4,19 +4,15 @@ import {
   actDisconnect,
   renderHook,
   setupClient,
+  useAccount,
 } from '../../../test'
-import { UseAccountConfig, useAccount } from './useAccount'
+import { UseAccountConfig } from './useAccount'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
-function useTestAccount(config: UseAccountConfig = {}) {
-  const { ...values } = useAccount(config)
-  return values
-}
-
 function useAccountWithConnectAndDisconnect(config: UseAccountConfig = {}) {
   return {
-    account: useTestAccount(config),
+    account: useAccount(config),
     connect: useConnect(),
     disconnect: useDisconnect(),
   }

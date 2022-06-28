@@ -1,7 +1,6 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
-import { act, getSigners, renderHook } from '../../../test'
-import { useAccount } from './useAccount'
+import { act, getSigners, renderHook, useAccount } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 
 const connector = new MockConnector({
@@ -15,14 +14,9 @@ const connectorFail = new MockConnector({
   },
 })
 
-function useTestAccount() {
-  const { ...values } = useAccount()
-  return values
-}
-
 function useConnectWithAccount(config: UseConnectArgs & UseConnectConfig = {}) {
   return {
-    account: useTestAccount(),
+    account: useAccount(),
     connect: useConnect(config),
   }
 }

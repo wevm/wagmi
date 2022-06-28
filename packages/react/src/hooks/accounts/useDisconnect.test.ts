@@ -1,12 +1,6 @@
-import { act, actConnect, renderHook } from '../../../test'
-import { useAccount } from './useAccount'
+import { act, actConnect, renderHook, useAccount } from '../../../test'
 import { useConnect } from './useConnect'
 import { UseDisconnectConfig, useDisconnect } from './useDisconnect'
-
-function useTestAccount() {
-  const { ...values } = useAccount()
-  return values
-}
 
 function useDisconnectWithConnect(config: UseDisconnectConfig = {}) {
   return { connect: useConnect(), disconnect: useDisconnect(config) }
@@ -14,7 +8,7 @@ function useDisconnectWithConnect(config: UseDisconnectConfig = {}) {
 
 function useDisconnectWithAccountAndConnect() {
   return {
-    account: useTestAccount(),
+    account: useAccount(),
     connect: useConnect(),
     disconnect: useDisconnect(),
   }

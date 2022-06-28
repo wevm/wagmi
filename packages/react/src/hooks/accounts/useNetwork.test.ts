@@ -6,20 +6,15 @@ import {
   actSwitchNetwork,
   renderHook,
   setupClient,
+  useNetwork,
 } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
-import { useNetwork } from './useNetwork'
 import {
   UseSwitchNetworkArgs,
   UseSwitchNetworkConfig,
   useSwitchNetwork,
 } from './useSwitchNetwork'
-
-function useTestNetwork() {
-  const { ...values } = useNetwork()
-  return values
-}
 
 function useNetworkWithConnectAndDisconnect(
   config: {
@@ -30,7 +25,7 @@ function useNetworkWithConnectAndDisconnect(
   return {
     connect: useConnect(config.connect),
     disconnect: useDisconnect(),
-    network: useTestNetwork(),
+    network: useNetwork(),
     switchNetwork: useSwitchNetwork(config.switchNetwork),
   }
 }
@@ -41,7 +36,7 @@ describe('useNetwork', () => {
       const client = setupClient()
       await connect({ connector: client.connectors[0]! })
 
-      const { result } = renderHook(() => useTestNetwork(), {
+      const { result } = renderHook(() => useNetwork(), {
         initialProps: { client },
       })
 
