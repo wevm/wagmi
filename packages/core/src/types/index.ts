@@ -82,6 +82,19 @@ declare global {
     iconUrls?: string[]
   }
 
+  type WalletPermissionCaveat = {
+    type: string
+    value: any
+  }
+
+  type WalletPermission = {
+    caveats: WalletPermissionCaveat[]
+    date: number
+    id: string
+    invoker: `http://${string}` | `https://${string}`
+    parentCapability: 'eth_accounts' | string
+  }
+
   type WatchAssetParams = {
     /** In the future, other standards will be supported */
     type: 'ERC20'
@@ -155,6 +168,18 @@ declare global {
     request(args: { method: 'web3_clientVersion' }): Promise<string>
 
     /**
+     * EIP-2255: Wallet Permissions System
+     * https://eips.ethereum.org/EIPS/eip-2255
+     */
+    request(args: {
+      method: 'wallet_requestPermissions'
+      params: [{ eth_accounts: Record<string, any> }]
+    }): Promise<WalletPermission[]>
+    request(args: {
+      method: 'wallet_getPermissions'
+    }): Promise<WalletPermission[]>
+
+    /**
      * EIP-3085: Wallet Add Ethereum Chain RPC Method
      * https://eips.ethereum.org/EIPS/eip-3085
      */
@@ -162,6 +187,7 @@ declare global {
       method: 'wallet_addEthereumChain'
       params: AddEthereumChainParameter[]
     }): Promise<null>
+
     /**
      * EIP-3326: Wallet Switch Ethereum Chain RPC Method
      * https://eips.ethereum.org/EIPS/eip-3326
