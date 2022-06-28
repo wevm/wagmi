@@ -9,9 +9,14 @@ import { UseAccountConfig, useAccount } from './useAccount'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
+function useTestAccount(config: UseAccountConfig = {}) {
+  const { ...values } = useAccount(config)
+  return values
+}
+
 function useAccountWithConnectAndDisconnect(config: UseAccountConfig = {}) {
   return {
-    account: useAccount(config),
+    account: useTestAccount(config),
     connect: useConnect(),
     disconnect: useDisconnect(),
   }

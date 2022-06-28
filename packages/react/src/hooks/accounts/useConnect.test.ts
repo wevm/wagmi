@@ -15,9 +15,14 @@ const connectorFail = new MockConnector({
   },
 })
 
+function useTestAccount() {
+  const { ...values } = useAccount()
+  return values
+}
+
 function useConnectWithAccount(config: UseConnectArgs & UseConnectConfig = {}) {
   return {
-    account: useAccount(),
+    account: useTestAccount(),
     connect: useConnect(config),
   }
 }
