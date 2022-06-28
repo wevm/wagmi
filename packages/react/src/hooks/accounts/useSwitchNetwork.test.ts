@@ -342,6 +342,7 @@ describe('useSwitchNetwork', () => {
                 "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
                 "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
                 "infura": "https://rinkeby.infura.io/v3",
+                "public": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
               },
               "testnet": true,
             }

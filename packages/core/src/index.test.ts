@@ -50,6 +50,7 @@ it('should expose correct exports', () => {
       "erc721ABI",
       "etherscanBlockExplorers",
       "infuraRpcUrls",
+      "publicRpcUrls",
       "units",
       "AddChainError",
       "ChainDoesNotSupportMulticallError",

@@ -104,6 +104,7 @@ export {
   erc721ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
+  publicRpcUrls,
   units,
 } from './constants'
 

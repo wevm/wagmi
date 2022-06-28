@@ -27,11 +27,11 @@ export default {
     </div>
   ),
   github,
-  head: ({ title, meta }) => {
+  head: ({ meta, title }) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { systemTheme } = useTheme()
-    const description_ =
-      meta.description_ ||
+    const description =
+      meta.description ||
       'wagmi is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.'
     const title_ =
       title && !title.startsWith('wagmi')
@@ -45,8 +45,8 @@ export default {
         <title>{title_}</title>
 
         {/* SEO */}
-        <meta name="description" content={description_} />
-        <meta name="og:description" content={description_} />
+        <meta name="description" content={description} />
+        <meta name="og:description" content={description} />
         <meta name="og:title" content={title_} />
         <meta name="og:image" content="https://wagmi.sh/og.png" />
         <meta name="twitter:card" content="summary_large_image" />

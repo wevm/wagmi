@@ -187,7 +187,7 @@ export class CoinbaseWalletConnector extends Connector<
                 chainId: id,
                 chainName: chain.name,
                 nativeCurrency: chain.nativeCurrency,
-                rpcUrls: [chain.rpcUrls.default],
+                rpcUrls: [chain.rpcUrls.public ?? chain.rpcUrls.default],
                 blockExplorerUrls: this.getBlockExplorerUrls(chain),
               },
             ],

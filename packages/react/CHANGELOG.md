@@ -1,5 +1,40 @@
 # wagmi
 
+## 0.5.4
+
+### Patch Changes
+
+- [#631](https://github.com/tmm/wagmi/pull/631) [`a780e32`](https://github.com/tmm/wagmi/commit/a780e32e91a0072c795fa0b5a6111302768e2a01) Thanks [@tmm](https://github.com/tmm)! - Fix WalletConnect stale session
+
+- Updated dependencies [[`a780e32`](https://github.com/tmm/wagmi/commit/a780e32e91a0072c795fa0b5a6111302768e2a01)]:
+  - @wagmi/core@0.4.3
+
+## 0.5.3
+
+### Patch Changes
+
+- [#627](https://github.com/tmm/wagmi/pull/627) [`5985530`](https://github.com/tmm/wagmi/commit/59855301d138313e83a607b3f05053e9f46a78a8) Thanks [@jxom](https://github.com/jxom)! - equalityFn in `useSyncExternalStoreWithTracked` should return truthy when there are no tracked keys.
+
+## 0.5.2
+
+### Patch Changes
+
+- [#624](https://github.com/tmm/wagmi/pull/624) [`416fa7e`](https://github.com/tmm/wagmi/commit/416fa7ee1f8019ab86e33fb93783ffddecc02c49) Thanks [@jxom](https://github.com/jxom)! - Fix broken `WebSocketProvider` type defs
+
+- Updated dependencies [[`416fa7e`](https://github.com/tmm/wagmi/commit/416fa7ee1f8019ab86e33fb93783ffddecc02c49)]:
+  - @wagmi/core@0.4.2
+
+## 0.5.1
+
+### Patch Changes
+
+- [#622](https://github.com/tmm/wagmi/pull/622) [`d171581`](https://github.com/tmm/wagmi/commit/d171581464891dd870d97b6232205da0cb152d9b) Thanks [@tmm](https://github.com/tmm)! - Use `domain.chainId` to validate and switch chain before signing in `useSignTypedData`.
+
+* [#618](https://github.com/tmm/wagmi/pull/618) [`a5138e8`](https://github.com/tmm/wagmi/commit/a5138e82a00e4d9469ad78c97b2d34200d7f1fbe) Thanks [@tmm](https://github.com/tmm)! - Fix adding chains when using MetaMask mobile app, add `publicRpcUrls` constant, and default to public endpoint when adding chain.
+
+* Updated dependencies [[`d171581`](https://github.com/tmm/wagmi/commit/d171581464891dd870d97b6232205da0cb152d9b), [`a5138e8`](https://github.com/tmm/wagmi/commit/a5138e82a00e4d9469ad78c97b2d34200d7f1fbe)]:
+  - @wagmi/core@0.4.1
+
 ## 0.5.0
 
 ### Minor Changes

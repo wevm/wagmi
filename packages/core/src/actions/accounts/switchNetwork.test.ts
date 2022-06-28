@@ -43,6 +43,7 @@ describe('switchNetwork', () => {
             "alchemy": "https://opt-kovan.g.alchemy.com/v2",
             "default": "https://kovan.optimism.io",
             "infura": "https://optimism-kovan.infura.io/v3",
+            "public": "https://kovan.optimism.io",
           },
           "testnet": true,
         }

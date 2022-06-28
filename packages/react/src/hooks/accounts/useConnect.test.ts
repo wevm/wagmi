@@ -1,7 +1,6 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
 
-import { act, getSigners, renderHook } from '../../../test'
-import { useAccount } from './useAccount'
+import { act, getSigners, renderHook, useAccount } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 
 const connector = new MockConnector({

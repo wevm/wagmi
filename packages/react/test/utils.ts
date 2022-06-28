@@ -12,6 +12,11 @@ import {
 import { getProvider, getSigners } from '../../core/test/utils'
 import { renderHook } from '.'
 import { CreateClientConfig, createClient } from '../src'
+import {
+  UseAccountConfig,
+  useAccount as useAccount_,
+} from '../src/hooks/accounts/useAccount'
+import { useNetwork as useNetwork_ } from '../src/hooks/accounts/useNetwork'
 
 type Config = Partial<CreateClientConfig>
 
@@ -30,6 +35,7 @@ export function setupClient(config: Config = {}) {
 }
 
 export async function actConnect(config: {
+  chainId?: number
   connector?: Connector
   utils: ReturnType<typeof renderHook>
 }) {
@@ -41,6 +47,7 @@ export async function actConnect(config: {
   await act(async () => {
     const connect = getConnect(utils)
     await connect.connectAsync?.({
+      chainId: config.chainId,
       connector: connector ?? connect.connectors?.[0],
     })
   })
@@ -111,4 +118,19 @@ export async function getUnclaimedTokenId(
     attempts += 1
   }
   return false
+}
+
+/**
+ * `renderHook` in `@testing-library/react` doesn't play well
+ * with tracked values, so we need to use custom hooks.
+ */
+
+export function useAccount(config: UseAccountConfig = {}) {
+  const { ...values } = useAccount_(config)
+  return values
+}
+
+export function useNetwork() {
+  const { ...values } = useNetwork_()
+  return values
 }
