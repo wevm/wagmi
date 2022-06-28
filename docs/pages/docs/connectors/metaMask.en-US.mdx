@@ -75,3 +75,18 @@ const connector = new MetaMaskConnector({
   },
 })
 ```
+
+#### UNSTABLE_shimOnConnectSelectAccount
+
+While "disconnected" with `shimDisconnect`, allows user to select a different MetaMask account (than the currently connected account) when trying to connect. Defaults to `false`.
+
+```ts {6}
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+
+const connector = new MetaMaskConnector({
+  options: {
+    shimDisconnect: true,
+    UNSTABLE_shimOnConnectSelectAccount: true,
+  },
+})
+```
