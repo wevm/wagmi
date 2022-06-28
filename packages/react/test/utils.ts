@@ -118,6 +118,11 @@ export async function getUnclaimedTokenId(
   return false
 }
 
+/**
+ * `renderHook` in `@testing-library/react` doesn't play well
+ * with tracked values, so we need to use custom hooks.
+ */
+
 export function useAccount(config: UseAccountConfig = {}) {
   const { ...values } = useAccount_(config)
   return values
