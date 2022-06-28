@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.5.3
+
+### Patch Changes
+
+- [#627](https://github.com/tmm/wagmi/pull/627) [`5985530`](https://github.com/tmm/wagmi/commit/59855301d138313e83a607b3f05053e9f46a78a8) Thanks [@jxom](https://github.com/jxom)! - equalityFn in `useSyncExternalStoreWithTracked` should return truthy when there are no tracked keys.
+
 ## 0.5.2
 
 ### Patch Changes
