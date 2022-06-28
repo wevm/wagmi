@@ -1,5 +1,4 @@
-import { act, actConnect, renderHook } from '../../../test'
-import { useAccount } from './useAccount'
+import { act, actConnect, renderHook, useAccount } from '../../../test'
 import { useConnect } from './useConnect'
 import { UseDisconnectConfig, useDisconnect } from './useDisconnect'
 

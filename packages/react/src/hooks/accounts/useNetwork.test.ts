@@ -6,10 +6,10 @@ import {
   actSwitchNetwork,
   renderHook,
   setupClient,
+  useNetwork,
 } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
-import { useNetwork } from './useNetwork'
 import {
   UseSwitchNetworkArgs,
   UseSwitchNetworkConfig,

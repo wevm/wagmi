@@ -74,6 +74,8 @@ export {
   actDisconnect,
   actSwitchNetwork,
   getUnclaimedTokenId,
+  useAccount,
+  useNetwork,
 } from './utils'
 export {
   getProvider,

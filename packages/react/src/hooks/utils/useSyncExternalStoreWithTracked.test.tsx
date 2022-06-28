@@ -37,45 +37,7 @@ function useExternalStore(
 }
 
 describe('useSyncExternalStoreWithTracked', () => {
-  it('rerenders when any property changes', async () => {
-    const externalStore = createExternalStore({
-      foo: 'bar',
-      baz: 'wagmi',
-      isGonnaMakeIt: false,
-    })
-
-    const renders: any[] = []
-
-    function App() {
-      const state = useExternalStore(externalStore, (state) =>
-        renders.push(state),
-      )
-      return <div>{JSON.stringify(state)}</div>
-    }
-
-    render(wrapper({ children: <App /> }), document.createElement('div'))
-
-    act(() => {
-      externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
-    })
-
-    expect(renders).toMatchInlineSnapshot(`
-      [
-        {
-          "baz": "wagmi",
-          "foo": "bar",
-          "isGonnaMakeIt": false,
-        },
-        {
-          "baz": "wagmi",
-          "foo": "bar",
-          "isGonnaMakeIt": true,
-        },
-      ]
-    `)
-  })
-
-  it('rerenders only when `baz` changes', async () => {
+  it('rerenders only when the tracked value changes', async () => {
     const externalStore = createExternalStore({
       foo: 'bar',
       baz: 'wagmi',
@@ -122,6 +84,81 @@ describe('useSyncExternalStoreWithTracked', () => {
           "baz": "ngmi",
           "foo": "baz",
           "isGonnaMakeIt": true,
+        },
+      ]
+    `)
+  })
+
+  it('rerenders when all values are being tracked', async () => {
+    const externalStore = createExternalStore({
+      foo: 'bar',
+      baz: 'wagmi',
+      isGonnaMakeIt: false,
+    })
+
+    const renders: any[] = []
+
+    function App() {
+      const state = useExternalStore(externalStore, (state) =>
+        renders.push(state),
+      )
+      return (
+        <div>
+          {state.baz}
+          {state.foo}
+          {state.isGonnaMakeIt}
+        </div>
+      )
+    }
+
+    render(wrapper({ children: <App /> }), document.createElement('div'))
+
+    act(() => {
+      externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
+    })
+
+    expect(renders).toMatchInlineSnapshot(`
+      [
+        {
+          "baz": "wagmi",
+          "foo": "bar",
+          "isGonnaMakeIt": false,
+        },
+        {
+          "baz": "wagmi",
+          "foo": "bar",
+          "isGonnaMakeIt": true,
+        },
+      ]
+    `)
+  })
+
+  it('does not rerender when no values are being tracked', async () => {
+    const externalStore = createExternalStore({
+      foo: 'bar',
+      baz: 'wagmi',
+      isGonnaMakeIt: false,
+    })
+
+    const renders: any[] = []
+
+    function App() {
+      useExternalStore(externalStore, (state) => renders.push(state))
+      return <div>test</div>
+    }
+
+    render(wrapper({ children: <App /> }), document.createElement('div'))
+
+    act(() => {
+      externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
+    })
+
+    expect(renders).toMatchInlineSnapshot(`
+      [
+        {
+          "baz": "wagmi",
+          "foo": "bar",
+          "isGonnaMakeIt": false,
         },
       ]
     `)
