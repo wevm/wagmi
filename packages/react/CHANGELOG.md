@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.5.5
+
+### Patch Changes
+
+- [#629](https://github.com/tmm/wagmi/pull/629) [`199db71`](https://github.com/tmm/wagmi/commit/199db7165eed43d36cb882d373f95e7c49212f23) Thanks [@jxom](https://github.com/jxom)! - Add `wagmi/actions` entrypoint that exports imperative `@wagmi/core` actions
+
+* [#616](https://github.com/tmm/wagmi/pull/616) [`7a7a17a`](https://github.com/tmm/wagmi/commit/7a7a17a46d4c9e6465cc46a111b5fe8a56109f1b) Thanks [@tmm](https://github.com/tmm)! - Adds `UNSTABLE_shimOnConnectSelectAccount` flag. With this flag and "disconnected" with `shimDisconnect` enabled, the user is prompted to select a different MetaMask account (than the currently connected account) when trying to connect (e.g. `useConnect`/`connect` action).
+
+* Updated dependencies [[`7a7a17a`](https://github.com/tmm/wagmi/commit/7a7a17a46d4c9e6465cc46a111b5fe8a56109f1b)]:
+  - @wagmi/core@0.4.4
+
 ## 0.5.4
 
 ### Patch Changes
