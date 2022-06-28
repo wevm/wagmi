@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.4.3
+
+### Patch Changes
+
+- [#631](https://github.com/tmm/wagmi/pull/631) [`a780e32`](https://github.com/tmm/wagmi/commit/a780e32e91a0072c795fa0b5a6111302768e2a01) Thanks [@tmm](https://github.com/tmm)! - Fix WalletConnect stale session
+
 ## 0.4.2
 
 ### Patch Changes
