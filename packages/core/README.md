@@ -18,8 +18,8 @@ Check out the following places for more wagmi-related content:
 
 - Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
 - Follow [@awkweb](https://twitter.com/awkweb) and [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
-- Sign the [guestbook](https://github.com/tmm/wagmi/discussions/2)
 - Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) using wagmi
+- Browse the [awesome-wagmi](https://github.com/tmm/awesome-wagmi) list of awesome projects and resources
 
 ## Support
 

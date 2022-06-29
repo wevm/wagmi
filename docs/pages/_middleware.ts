@@ -6,6 +6,7 @@ const redirects: Record<string, string> = {
   '/docs/connectors/metamask': '/docs/connectors/metaMask',
   '/docs/connectors/walletconnect': '/docs/connectors/walletConnect',
   '/docs/migrating-to-030': '/docs/migrating-to-03', // Tweeted wrong link: https://twitter.com/awkweb/status/1518607780332122116
+  '/docs/migrating-to-03': '/docs/migration-guide',
   '/docs/provider': '/docs/WagmiConfig',
 }
 
@@ -14,7 +15,8 @@ export function middleware(request: NextRequest) {
   // https://github.com/shuding/nextra/issues/384
   if (request.nextUrl.pathname in redirects) {
     const url = request.nextUrl.clone()
-    url.pathname = redirects[request.nextUrl.pathname]
+    const pathname = redirects[request.nextUrl.pathname] ?? '/'
+    url.pathname = pathname
     return NextResponse.redirect(url)
   }
 
