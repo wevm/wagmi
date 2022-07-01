@@ -17,11 +17,11 @@ import { useNetwork } from 'wagmi'
 import { useNetwork } from 'wagmi'
 
 function App() {
-  const { chain, chains } = useNetwork()
+  const { activeChain, chains } = useNetwork()
 
   return (
     <>
-      {chain && <div>Connected to {chain.name}</div>}
+      {activeChain && <div>Connected to {activeChain.name}</div>}
       {chains && (
         <div>Available chains: {chains.map((chain) => chain.name)}</div>
       )}
@@ -36,7 +36,7 @@ function App() {
 
 ```tsx
 {
-  chain?: Chain & { unsupported?: boolean }
+  activeChain?: Chain & { unsupported?: boolean }
   chains: Chain[]
 }
 ```
