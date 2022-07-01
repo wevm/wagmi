@@ -309,7 +309,7 @@ export const hardhat: Chain = {
 }
 
 export const foundry: Chain = {
-  id: chainId.hardhat,
+  id: chainId.foundry,
   name: 'Foundry',
   network: 'foundry',
   rpcUrls: {
