@@ -97,10 +97,15 @@ export async function multicall<Data extends any[] = Result[]>({
       addressOrName,
       contractInterface,
     })
-    const result = contract.interface.decodeFunctionResult(
-      functionName,
-      returnData,
-    )
-    return Array.isArray(result) && result.length === 1 ? result[0] : result
+    try {
+      const result = contract.interface.decodeFunctionResult(
+        functionName,
+        returnData,
+      )
+      return Array.isArray(result) && result.length === 1 ? result[0] : result
+    } catch (error) {
+      // `decodeFunctionResult` throws if contract does not exist at address, etc.
+      return null
+    }
   }) as Data
 }

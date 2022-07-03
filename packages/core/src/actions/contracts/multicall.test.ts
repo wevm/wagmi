@@ -131,4 +131,46 @@ describe('readContracts', () => {
       )
     })
   })
+
+  describe('behavior', () => {
+    it('returns null value for contracts that do not exist', async () => {
+      expect(
+        await multicall({
+          contracts: [
+            {
+              ...wagmigotchiContractConfig,
+              addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+              functionName: 'love',
+              args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+            },
+
+            ...contracts,
+            {
+              ...wagmigotchiContractConfig,
+              addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+              functionName: 'getAlive',
+            },
+          ],
+        }),
+      ).toMatchInlineSnapshot(`
+        [
+          null,
+          {
+            "hex": "0x02",
+            "type": "BigNumber",
+          },
+          {
+            "hex": "0x01",
+            "type": "BigNumber",
+          },
+          false,
+          {
+            "hex": "0x05a6db",
+            "type": "BigNumber",
+          },
+          null,
+        ]
+      `)
+    })
+  })
 })
