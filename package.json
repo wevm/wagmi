@@ -56,6 +56,7 @@
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "bundlewatch": "^0.3.3",
+    "dotenv": "^11.0.0",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",

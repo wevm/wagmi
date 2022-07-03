@@ -17,13 +17,11 @@ export const ReadContract = () => {
 }
 
 const GetAlive = () => {
-  const { data, isRefetching, isSuccess, refetch } = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'getAlive',
-  )
+  const { data, isRefetching, isSuccess, refetch } = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'getAlive',
+  })
 
   return (
     <div>
@@ -41,14 +39,13 @@ const GetAlive = () => {
 
 const Love = () => {
   const [address, setAddress] = useState<string>('')
-  const { data, isFetching, isRefetching, isSuccess } = useContractRead(
-    {
-      addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-      contractInterface: wagmigotchiABI,
-    },
-    'love',
-    { args: [address], enabled: Boolean(address) },
-  )
+  const { data, isFetching, isRefetching, isSuccess } = useContractRead({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'love',
+    args: [address],
+    enabled: Boolean(address),
+  })
 
   const [value, setValue] = useState('')
 
