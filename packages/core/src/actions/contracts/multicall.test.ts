@@ -115,7 +115,31 @@ describe('multicall', () => {
         )
       })
 
-      it('should not throw if allowFailure=true & a contract has no response', async () => {
+      it('throws if allowFailure=false & a contract has no response', async () => {
+        await expect(
+          multicall({
+            allowFailure: false,
+            contracts: [
+              ...contracts,
+              {
+                ...wagmigotchiContractConfig,
+                functionName: 'love',
+                // address is not the wagmigotchi contract
+                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              },
+            ],
+          }),
+        ).rejects.toThrowErrorMatchingInlineSnapshot(`
+                "Function \\"love\\" on contract \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\" returned an empty response.
+
+                Are you sure the function \\"love\\" exists on this contract?
+
+                Etherscan: https://etherscan.io/address/0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC#readContract"
+              `)
+      })
+
+      it('does not throw if allowFailure=true & a contract has no response', async () => {
         expect(
           await multicall({
             allowFailure: true,
@@ -148,30 +172,6 @@ describe('multicall', () => {
             undefined,
           ]
         `)
-      })
-
-      it('should throw if allowFailure=false & a contract has no response', async () => {
-        await expect(
-          multicall({
-            allowFailure: false,
-            contracts: [
-              ...contracts,
-              {
-                ...wagmigotchiContractConfig,
-                functionName: 'love',
-                // address is not the wagmigotchi contract
-                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-                args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-              },
-            ],
-          }),
-        ).rejects.toThrowErrorMatchingInlineSnapshot(`
-                "Function \\"love\\" on contract \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\" returned an empty response.
-
-                Are you sure the function \\"love\\" exists on this contract?
-
-                Etherscan: https://etherscan.io/address/0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC#readContract"
-              `)
       })
     })
   })

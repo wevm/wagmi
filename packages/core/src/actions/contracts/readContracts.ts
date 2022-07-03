@@ -3,7 +3,7 @@ import { Result } from 'ethers/lib/utils'
 
 import {
   ChainDoesNotSupportMulticallError,
-  ContractMethodNoDataError,
+  ContractMethodNoResultError,
 } from '../../errors'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
@@ -65,7 +65,7 @@ export async function readContracts<Data extends any[] = Result[]>({
     }
     return (await Promise.all(promises)).flat() as Data
   } catch (err) {
-    if (err instanceof ContractMethodNoDataError) throw err
+    if (err instanceof ContractMethodNoResultError) throw err
 
     const promises = contracts.map((contract) =>
       readContract({ ...contract, overrides }),

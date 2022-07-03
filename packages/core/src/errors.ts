@@ -111,8 +111,8 @@ export class ConnectorNotFoundError extends Error {
   message = 'Connector not found'
 }
 
-export class ContractMethodNoDataError extends Error {
-  name = 'ContractMethodNoDataError'
+export class ContractMethodNoResultError extends Error {
+  name = 'ContractMethodNoResultError'
 
   constructor({
     addressOrName,
