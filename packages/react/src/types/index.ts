@@ -12,6 +12,7 @@ export type QueryConfig<Data, Error> = Pick<
   UseQueryOptions<Data, Error>,
   | 'cacheTime'
   | 'enabled'
+  | 'isDataEqual'
   | 'keepPreviousData'
   | 'staleTime'
   | 'select'
@@ -26,6 +27,7 @@ export type InfiniteQueryConfig<Data, Error> = Pick<
   | 'cacheTime'
   | 'enabled'
   | 'getNextPageParam'
+  | 'isDataEqual'
   | 'keepPreviousData'
   | 'select'
   | 'staleTime'

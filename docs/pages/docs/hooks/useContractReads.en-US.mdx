@@ -351,6 +351,30 @@ function App() {
 }
 ```
 
+### isDataEqual (optional)
+
+Determines if the data has changed or not. Defaults to `deepEqual`.
+
+```tsx {15}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    isDataEqual: (prev, next) => prev === next,
+  })
+}
+```
+
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.

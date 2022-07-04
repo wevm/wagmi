@@ -7,6 +7,7 @@ import {
 
 import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
 import { useInfiniteQuery } from '../utils'
+import { deepEqual } from '../../utils'
 
 export type UseContractInfiniteReadsConfig<TPageParam = any> =
   InfiniteQueryConfig<ReadContractResult, Error> &
@@ -77,6 +78,7 @@ export function useContractInfiniteReads<TPageParam = any>({
   contracts,
   enabled: enabled_ = true,
   getNextPageParam,
+  isDataEqual = deepEqual,
   keepPreviousData,
   onError,
   onSettled,
@@ -99,8 +101,9 @@ export function useContractInfiniteReads<TPageParam = any>({
   return useInfiniteQuery(queryKey_, queryFn({ contracts }), {
     cacheTime,
     enabled,
-    keepPreviousData,
     getNextPageParam,
+    isDataEqual,
+    keepPreviousData,
     select,
     staleTime,
     suspense,

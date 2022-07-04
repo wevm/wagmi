@@ -3,14 +3,13 @@ import {
   ReadContractConfig,
   ReadContractResult,
   readContract,
-  watchReadContract,
 } from '@wagmi/core'
-import { hashQueryKey, useQueryClient } from 'react-query'
+import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { parseContractResult } from '../../utils'
+import { deepEqual, parseContractResult } from '../../utils'
 import { useBlockNumber } from '../network-status'
-import { useChainId, useQuery } from '../utils'
+import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 type UseContractReadArgs = ReadContractConfig & {
   /** If set to `true`, the cache will depend on the block number */
@@ -76,6 +75,7 @@ export function useContractRead({
   cacheOnBlock = false,
   cacheTime,
   enabled: enabled_ = true,
+  isDataEqual = deepEqual,
   select,
   staleTime,
   suspense,
@@ -121,40 +121,12 @@ export function useContractRead({
     return enabled
   }, [addressOrName, blockNumber, cacheOnBlock, enabled_, functionName])
 
-  const client = useQueryClient()
-  React.useEffect(() => {
-    if (enabled) {
-      const unwatch = watchReadContract(
-        {
-          addressOrName,
-          args,
-          chainId,
-          contractInterface,
-          functionName,
-          overrides,
-          listenToBlock: watch && !cacheOnBlock,
-        },
-        (result) => client.setQueryData(queryKey_, result),
-      )
-      return unwatch
-    }
-  }, [
-    addressOrName,
-    args,
-    cacheOnBlock,
-    chainId,
-    client,
-    contractInterface,
-    enabled,
-    functionName,
-    overrides,
-    queryKey_,
-    watch,
-  ])
+  useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
 
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
+    isDataEqual,
     queryKeyHashFn,
     select: (data) => {
       const result = parseContractResult({

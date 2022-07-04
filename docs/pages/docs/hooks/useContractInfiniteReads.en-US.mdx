@@ -429,6 +429,35 @@ function App() {
 }
 ```
 
+### isDataEqual (optional)
+
+Determines if the data has changed or not. Defaults to `deepEqual`.
+
+```tsx {20}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts: (param = 0) => [
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getChest',
+        args: [param],
+      },
+      {
+        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        contractInterface: mlootABI,
+        functionName: 'getWaist',
+        args: [param],
+      },
+    ],
+    isDataEqual: (prev, next) => prev === next,
+  })
+}
+```
+
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
