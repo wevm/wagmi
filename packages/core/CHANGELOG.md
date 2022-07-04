@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.4.5
+
+### Patch Changes
+
+- [#654](https://github.com/tmm/wagmi/pull/654) [`e66530b`](https://github.com/tmm/wagmi/commit/e66530bf4881b3533c528f8c5a5f41be0eab0a64) Thanks [@jxom](https://github.com/jxom)! - fix `multicall` returning nullish data for all calls unexpectedly
+
 ## 0.4.4
 
 ### Patch Changes
