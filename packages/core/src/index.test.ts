@@ -58,6 +58,7 @@ it('should expose correct exports', () => {
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
+      "ContractMethodNoResultError",
       "ProviderChainsNotFound",
       "ProviderRpcError",
       "ResourceUnavailableError",

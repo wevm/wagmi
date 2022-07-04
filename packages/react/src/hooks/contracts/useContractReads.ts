@@ -1,15 +1,15 @@
 import * as React from 'react'
+import { hashQueryKey, useQueryClient } from 'react-query'
 import {
   ReadContractsConfig,
   ReadContractsResult,
   readContracts,
   watchReadContracts,
 } from '@wagmi/core'
-import { useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useQuery } from '../utils'
+import { useChainId, useQuery } from '../utils'
 import { parseContractResult } from '../../utils'
 
 export type UseContractReadsConfig = QueryConfig<ReadContractsResult, Error> &
@@ -20,29 +20,44 @@ export type UseContractReadsConfig = QueryConfig<ReadContractsResult, Error> &
     watch?: boolean
   }
 
-export const queryKey = ([{ contracts, overrides }, { blockNumber }]: [
-  ReadContractsConfig,
-  { blockNumber?: number },
-]) =>
+export const queryKey = ([
+  { allowFailure, contracts, overrides },
+  { blockNumber, chainId },
+]: [ReadContractsConfig, { blockNumber?: number; chainId?: number }]) =>
   [
     {
       entity: 'readContracts',
-      contracts,
+      allowFailure,
       blockNumber,
+      chainId,
+      contracts,
       overrides,
     },
   ] as const
 
+const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
+  const { contracts, ...rest } = queryKey_
+  const contracts_ = contracts?.map((contract) => {
+    // Exclude the contract interface from the serialized query key.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { contractInterface, ...rest } = contract
+    return rest
+  })
+  return hashQueryKey([{ contracts: contracts_, ...rest }])
+}
+
 const queryFn = ({
-  queryKey: [{ contracts, overrides }],
+  queryKey: [{ allowFailure, contracts, overrides }],
 }: QueryFunctionArgs<typeof queryKey>) => {
   return readContracts({
+    allowFailure,
     contracts,
     overrides,
   })
 }
 
 export function useContractReads({
+  allowFailure = true,
   cacheOnBlock = false,
   cacheTime,
   contracts,
@@ -61,10 +76,15 @@ export function useContractReads({
     enabled: watch || cacheOnBlock,
     watch,
   })
+  const chainId = useChainId()
 
   const queryKey_ = React.useMemo(
-    () => queryKey([{ contracts, overrides }, { blockNumber }]),
-    [blockNumber, contracts, overrides],
+    () =>
+      queryKey([
+        { allowFailure, contracts, overrides },
+        { blockNumber: cacheOnBlock ? blockNumber : undefined, chainId },
+      ]),
+    [allowFailure, blockNumber, cacheOnBlock, chainId, contracts, overrides],
   )
 
   const enabled = React.useMemo(() => {
@@ -92,6 +112,7 @@ export function useContractReads({
     cacheTime,
     enabled,
     keepPreviousData,
+    queryKeyHashFn,
     staleTime,
     select: (data) => {
       const result = data.map((data, i) =>

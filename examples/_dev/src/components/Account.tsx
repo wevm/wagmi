@@ -5,6 +5,7 @@ import { useIsMounted } from '../hooks'
 import { Balance } from './Balance'
 import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
+import { ReadContracts } from './ReadContracts'
 import { SendTransaction } from './SendTransaction'
 import { SignMessage } from './SignMessage'
 import { Token } from './Token'
@@ -60,6 +61,9 @@ export const Account = () => {
 
           <h4>Read Contract</h4>
           <ReadContract />
+
+          <h4>Read Contracts</h4>
+          <ReadContracts />
 
           <h4>Write Contract</h4>
           <WriteContract />

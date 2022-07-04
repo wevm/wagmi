@@ -7,6 +7,7 @@ import { multicallInterface } from '../../constants'
 import { ReadContractConfig } from './readContract'
 import {
   ChainDoesNotSupportMulticallError,
+  ContractMethodNoResultError,
   ProviderChainsNotFound,
 } from '../../errors'
 
@@ -79,7 +80,7 @@ export async function multicall<Data extends any[] = Result[]>({
         )
       return {
         target: addressOrName,
-        allowFailure: allowFailure,
+        allowFailure,
         callData,
       }
     },
@@ -93,14 +94,31 @@ export async function multicall<Data extends any[] = Result[]>({
     const { addressOrName, contractInterface, functionName } = <
       MulticallContract
     >contracts[i]
+
+    if (returnData === '0x') {
+      const err = new ContractMethodNoResultError({
+        addressOrName,
+        blockExplorer: chain.blockExplorers?.default,
+        functionName,
+      })
+      if (!allowFailure) throw err
+      console.warn(err.message)
+      return undefined
+    }
+
     const contract = getContract({
       addressOrName,
       contractInterface,
     })
-    const result = contract.interface.decodeFunctionResult(
-      functionName,
-      returnData,
-    )
-    return Array.isArray(result) && result.length === 1 ? result[0] : result
+    try {
+      const result = contract.interface.decodeFunctionResult(
+        functionName,
+        returnData,
+      )
+      return Array.isArray(result) && result.length === 1 ? result[0] : result
+    } catch (err) {
+      if (!allowFailure) throw err
+      return undefined
+    }
   }) as Data
 }

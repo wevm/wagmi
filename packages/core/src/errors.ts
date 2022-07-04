@@ -1,4 +1,5 @@
 import { Connector } from './connectors'
+import { BlockExplorer } from './constants'
 import { Chain } from './types'
 
 /**
@@ -108,6 +109,34 @@ export class ConnectorAlreadyConnectedError extends Error {
 export class ConnectorNotFoundError extends Error {
   name = 'ConnectorNotFoundError'
   message = 'Connector not found'
+}
+
+export class ContractMethodNoResultError extends Error {
+  name = 'ContractMethodNoResultError'
+
+  constructor({
+    addressOrName,
+    blockExplorer,
+    functionName,
+  }: {
+    addressOrName: string
+    blockExplorer?: BlockExplorer
+    functionName: string
+  }) {
+    super(
+      [
+        `Function "${functionName}" on contract "${addressOrName}" returned an empty response.`,
+        '',
+        `Are you sure the function "${functionName}" exists on this contract?`,
+        ...(blockExplorer
+          ? [
+              '',
+              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${addressOrName}#readContract`,
+            ]
+          : []),
+      ].join('\n'),
+    )
+  }
 }
 
 export class ProviderChainsNotFound extends Error {
