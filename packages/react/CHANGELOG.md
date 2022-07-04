@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.5.6
+
+### Patch Changes
+
+- [#654](https://github.com/tmm/wagmi/pull/654) [`e66530b`](https://github.com/tmm/wagmi/commit/e66530bf4881b3533c528f8c5a5f41be0eab0a64) Thanks [@jxom](https://github.com/jxom)! - omit `contractInterface` from `useContractRead` & `useContractReads` query key hash
+
+* [#654](https://github.com/tmm/wagmi/pull/654) [`e66530b`](https://github.com/tmm/wagmi/commit/e66530bf4881b3533c528f8c5a5f41be0eab0a64) Thanks [@jxom](https://github.com/jxom)! - fix `multicall` returning nullish data for all calls unexpectedly
+
+* Updated dependencies [[`e66530b`](https://github.com/tmm/wagmi/commit/e66530bf4881b3533c528f8c5a5f41be0eab0a64)]:
+  - @wagmi/core@0.4.5
+
 ## 0.5.5
 
 ### Patch Changes
