@@ -1,11 +1,11 @@
-import { Signer } from 'ethers/lib/ethers'
+import { providers } from 'ethers/lib/ethers'
 
 import { getSigners } from '../../../test'
 import { MockConnector } from './connector'
 
 describe('MockConnector', () => {
   let connector: MockConnector
-  let signer: Signer
+  let signer: providers.JsonRpcSigner
   beforeEach(() => {
     const signers = getSigners()
     signer = signers[0]!

@@ -3,6 +3,7 @@ import * as Exports from './'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
+      "buildTransactionRequest",
       "connect",
       "disconnect",
       "fetchBalance",
@@ -22,6 +23,7 @@ it('should expose correct exports', () => {
       "readContract",
       "readContracts",
       "sendTransaction",
+      "sendTransactionEager",
       "signMessage",
       "signTypedData",
       "switchNetwork",

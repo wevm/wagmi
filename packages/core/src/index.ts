@@ -1,4 +1,5 @@
 export {
+  buildTransactionRequest,
   connect,
   disconnect,
   fetchBalance,
@@ -18,6 +19,7 @@ export {
   readContract,
   readContracts,
   sendTransaction,
+  sendTransactionEager,
   signMessage,
   signTypedData,
   switchNetwork,
@@ -34,6 +36,8 @@ export {
   writeContract,
 } from './actions'
 export type {
+  BuildTransactionRequestArgs,
+  BuildTransactionRequestResult,
   ConnectArgs,
   ConnectResult,
   FetchBalanceArgs,
@@ -66,6 +70,8 @@ export type {
   ReadContractsResult,
   SendTransactionArgs,
   SendTransactionResult,
+  SendTransactionEagerArgs,
+  SendTransactionEagerResult,
   SignMessageArgs,
   SignMessageResult,
   SignTypedDataArgs,

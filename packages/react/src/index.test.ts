@@ -30,6 +30,7 @@ it('should expose correct exports', () => {
       "useProvider",
       "useQuery",
       "useSendTransaction",
+      "useSendTransactionEager",
       "useSignMessage",
       "useSignTypedData",
       "useSigner",

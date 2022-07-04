@@ -27,6 +27,10 @@ export { useBlockNumber, useFeeData } from './network-status'
 
 export { useProvider, useWebSocketProvider } from './providers'
 
-export { useSendTransaction, useWaitForTransaction } from './transactions'
+export {
+  useSendTransaction,
+  useSendTransactionEager,
+  useWaitForTransaction,
+} from './transactions'
 
 export { useChainId, useBaseQuery, useQuery, useInfiniteQuery } from './utils'

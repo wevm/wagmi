@@ -31,6 +31,7 @@ export {
   useProvider,
   useQuery,
   useSendTransaction,
+  useSendTransactionEager,
   useSignMessage,
   useSignTypedData,
   useSigner,

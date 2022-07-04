@@ -6,6 +6,7 @@ import { Balance } from './Balance'
 import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
 import { SendTransaction } from './SendTransaction'
+import { SendTransactionEager } from './SendTransactionEager'
 import { SignMessage } from './SignMessage'
 import { Token } from './Token'
 import { WriteContract } from './WriteContract'
@@ -52,6 +53,9 @@ export const Account = () => {
 
               <h4>Block Number</h4>
               <BlockNumber />
+
+              <h4>Send Transaction Eager</h4>
+              <SendTransactionEager />
 
               <h4>Send Transaction</h4>
               <SendTransaction />
