@@ -1,4 +1,5 @@
 export {
+  buildContractTransaction,
   buildTransactionRequest,
   connect,
   disconnect,
@@ -33,9 +34,12 @@ export {
   watchReadContracts,
   watchSigner,
   watchWebSocketProvider,
+  writeContractEager,
   writeContractLazy,
 } from './actions'
 export type {
+  BuildContractTransactionConfig,
+  BuildContractTransactionResult,
   BuildTransactionRequestArgs,
   BuildTransactionRequestResult,
   ConnectArgs,
@@ -89,6 +93,8 @@ export type {
   WatchProviderCallback,
   WatchSignerCallback,
   WatchWebSocketProviderCallback,
+  WriteContractEagerConfig,
+  WriteContractEagerResult,
   WriteContractLazyConfig,
   WriteContractLazyResult,
 } from './actions'

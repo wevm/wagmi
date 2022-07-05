@@ -17,6 +17,7 @@ export {
   useContractInfiniteReads,
   useContractRead,
   useContractReads,
+  useContractWriteEager,
   useContractWriteLazy,
   useToken,
 } from './contracts'

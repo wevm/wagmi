@@ -8,9 +8,9 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
 
-export type useBuildTransactionRequestArgs = BuildTransactionRequestArgs
+export type UseBuildTransactionRequestArgs = BuildTransactionRequestArgs
 
-export type useBuildTransactionRequestConfig = QueryConfig<
+export type UseBuildTransactionRequestConfig = QueryConfig<
   BuildTransactionRequestResult,
   Error
 >
@@ -18,7 +18,7 @@ export type useBuildTransactionRequestConfig = QueryConfig<
 export const queryKey = ({
   chainId,
   request,
-}: useBuildTransactionRequestArgs & {
+}: UseBuildTransactionRequestArgs & {
   chainId?: number
 }) => [{ entity: 'buildTransactionRequest', chainId, request }] as const
 
@@ -37,7 +37,7 @@ export function useBuildTransactionRequest({
   onError,
   onSettled,
   onSuccess,
-}: useBuildTransactionRequestArgs & useBuildTransactionRequestConfig) {
+}: UseBuildTransactionRequestArgs & UseBuildTransactionRequestConfig) {
   const chainId = useChainId()
   const provider = useProvider()
   return useQuery(queryKey({ request, chainId }), queryFn, {

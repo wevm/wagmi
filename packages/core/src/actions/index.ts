@@ -30,13 +30,17 @@ export {
 } from './accounts'
 
 export {
+  buildContractTransaction,
   getContract,
   readContract,
   readContracts,
   watchContractEvent,
   watchReadContract,
   watchReadContracts,
+  writeContractEager,
   writeContractLazy,
+  type BuildContractTransactionConfig,
+  type BuildContractTransactionResult,
   type GetContractArgs,
   type ReadContractConfig,
   type ReadContractResult,
@@ -46,6 +50,8 @@ export {
   type WatchReadContractResult,
   type WatchReadContractsConfig,
   type WatchReadContractsResult,
+  type WriteContractEagerConfig,
+  type WriteContractEagerResult,
   type WriteContractLazyConfig,
   type WriteContractLazyResult,
 } from './contracts'

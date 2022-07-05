@@ -10,6 +10,7 @@ import { SendTransactionEager } from './SendTransactionEager'
 import { SignMessage } from './SignMessage'
 import { Token } from './Token'
 import { WriteContract } from './WriteContract'
+import { WriteContractEager } from './WriteContractEager'
 
 export const Account = () => {
   const isMounted = useIsMounted()
@@ -43,6 +44,9 @@ export const Account = () => {
           <span>Connected to {account.connector.name}</span>
         )}
       </div>
+
+      <WriteContract />
+      <WriteContractEager />
 
       {false && (
         <>

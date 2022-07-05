@@ -1,3 +1,9 @@
+export {
+  buildContractTransaction,
+  type BuildContractTransactionConfig,
+  type BuildContractTransactionResult,
+} from './buildContractTransaction'
+
 export { getContract, type GetContractArgs } from './getContract'
 
 export {
@@ -25,6 +31,12 @@ export {
   type WatchReadContractsConfig,
   type WatchReadContractsResult,
 } from './watchReadContracts'
+
+export {
+  writeContractEager,
+  type WriteContractEagerConfig,
+  type WriteContractEagerResult,
+} from './writeContractEager'
 
 export {
   writeContractLazy,

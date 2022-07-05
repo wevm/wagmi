@@ -5,26 +5,25 @@ import { fetchEnsAddress } from '../ens'
 import { getProvider } from '../providers'
 
 export type BuildTransactionRequestArgs = {
-  request: Partial<providers.TransactionRequest> & {
-    to: NonNullable<providers.TransactionRequest['to']>
-    value: NonNullable<providers.TransactionRequest['value']>
-  }
+  request: Partial<providers.TransactionRequest>
+  signerOrProvider?: providers.JsonRpcSigner | providers.Provider
 }
 
 export type BuildTransactionRequestResult = providers.TransactionRequest
 
 export async function buildTransactionRequest({
   request,
+  signerOrProvider = getProvider(),
 }: BuildTransactionRequestArgs): Promise<BuildTransactionRequestResult> {
-  const provider = getProvider()
-
   const [toResult, gasLimitResult] = await Promise.allSettled([
-    isAddress(request.to)
-      ? Promise.resolve(request.to)
-      : fetchEnsAddress({ name: request.to }),
+    request.to
+      ? isAddress(request.to)
+        ? Promise.resolve(request.to)
+        : fetchEnsAddress({ name: request.to })
+      : undefined,
     request.gasLimit
       ? Promise.resolve(request.gasLimit)
-      : provider.estimateGas(request),
+      : signerOrProvider.estimateGas(request),
   ])
 
   const gasLimit =

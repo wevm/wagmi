@@ -47,14 +47,14 @@ export function createClient<
   ...config
 }: CreateClientConfig<TProvider, TWebSocketProvider>) {
   const client = createVanillaClient<TProvider, TWebSocketProvider>(config)
-  if (persister)
-    persistQueryClient({
-      queryClient,
-      persister,
-      dehydrateOptions: {
-        shouldDehydrateQuery: (query) => query.cacheTime !== 0,
-      },
-    })
+  // if (persister)
+  //   persistQueryClient({
+  //     queryClient,
+  //     persister,
+  //     dehydrateOptions: {
+  //       shouldDehydrateQuery: (query) => query.cacheTime !== 0,
+  //     },
+  //   })
   return Object.assign(client, { queryClient })
 }
 
