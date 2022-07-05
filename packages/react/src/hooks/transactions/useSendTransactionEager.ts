@@ -37,7 +37,7 @@ export function useSendTransactionEager({
   onSettled,
   onSuccess,
 }: UseSendTransactionEagerArgs & UseSendTransactionEagerConfig) {
-  // TODO: still works w/ no signer?
+  // TODO: does this work with no signer?
   const { data: eagerRequest } = useBuildTransactionRequest({ request })
 
   const {

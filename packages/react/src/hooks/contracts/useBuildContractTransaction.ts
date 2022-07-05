@@ -1,13 +1,13 @@
 import {
   BuildContractTransactionConfig,
   BuildContractTransactionResult,
+  FetchSignerResult,
   buildContractTransaction,
 } from '@wagmi/core'
-import { useEffect } from 'react'
+import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
-import { useProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
 
 export type UseBuildContractTransactionArgs = BuildContractTransactionConfig
@@ -23,9 +23,8 @@ export const queryKey = (
     contractInterface,
     functionName,
     overrides,
-    signer,
   }: UseBuildContractTransactionArgs,
-  { chainId }: { chainId?: number },
+  { chainId, signer }: { chainId?: number; signer?: FetchSignerResult },
 ) =>
   [
     {
@@ -40,9 +39,15 @@ export const queryKey = (
     },
   ] as const
 
+const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { contractInterface, signer, ...rest } = queryKey_
+  return hashQueryKey([rest, signer?._address])
+}
+
 const queryFn = ({
   queryKey: [
-    { args, addressOrName, contractInterface, functionName, overrides, signer },
+    { args, addressOrName, contractInterface, functionName, overrides },
   ],
 }: QueryFunctionArgs<typeof queryKey>) => {
   return buildContractTransaction({
@@ -51,7 +56,6 @@ const queryFn = ({
     contractInterface,
     functionName,
     overrides,
-    signer,
   })
 }
 
@@ -61,10 +65,9 @@ export function useBuildContractTransaction({
   functionName,
   args,
   overrides,
-  signer: signer_,
   cacheTime,
   enabled = true,
-  staleTime = 1_000 * 60 * 60 * 24, // 24 hours
+  staleTime,
   suspense,
   onError,
   onSettled,
@@ -81,14 +84,14 @@ export function useBuildContractTransaction({
         functionName,
         args,
         overrides,
-        signer: signer_ || signer,
       },
-      { chainId },
+      { chainId, signer },
     ),
     queryFn,
     {
       cacheTime,
-      enabled: Boolean(enabled && (signer_ || signer)),
+      enabled: Boolean(enabled && signer),
+      queryKeyHashFn,
       staleTime,
       suspense,
       onError,

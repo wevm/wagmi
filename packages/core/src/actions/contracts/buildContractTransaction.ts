@@ -1,13 +1,13 @@
-import { ConnectorNotFoundError } from '@wagmi/core'
 import {
   BigNumber,
   CallOverrides,
   Contract,
   PopulatedTransaction,
-  providers,
 } from 'ethers/lib/ethers'
-import { buildTransactionRequest } from '../transactions'
 
+import { ConnectorNotFoundError } from '../../errors'
+import { fetchSigner } from '../accounts'
+import { buildTransactionRequest } from '../transactions'
 import { GetContractArgs, getContract } from './getContract'
 
 export type BuildContractTransactionConfig = Omit<
@@ -18,7 +18,6 @@ export type BuildContractTransactionConfig = Omit<
   functionName: string
   /** Arguments to pass contract method */
   args?: any | any[]
-  signer: providers.JsonRpcSigner
   overrides?: CallOverrides
 }
 
@@ -31,9 +30,11 @@ export async function buildContractTransaction<
   args,
   contractInterface,
   functionName,
-  signer,
   overrides,
 }: BuildContractTransactionConfig): Promise<BuildContractTransactionResult> {
+  const signer = await fetchSigner()
+  if (!signer) throw new ConnectorNotFoundError()
+
   const contract = getContract<TContract>({
     addressOrName,
     contractInterface,
@@ -48,18 +49,13 @@ export async function buildContractTransaction<
     ...(overrides ? [overrides] : []),
   ]
   const unsignedTransaction = await populateTransactionFn(...params)
-  console.log('test222', unsignedTransaction)
-  // let gasLimit
-  // if (typeof window !== 'undefined') {
-  //   const res = await buildTransactionRequest({
-  //     request: unsignedTransaction,
-  //     signerOrProvider: signer,
-  //   })
-  //   console.log(res)
-  // }
-  // console.log('fk2', unsignedTransaction, gasLimit)
+  const { gasLimit } = await buildTransactionRequest({
+    request: unsignedTransaction,
+    signerOrProvider: signer,
+  })
+
   return {
     ...unsignedTransaction,
-    // gasLimit: gasLimit ? BigNumber.from(gasLimit) : undefined,
+    gasLimit: gasLimit ? BigNumber.from(gasLimit) : undefined,
   }
 }

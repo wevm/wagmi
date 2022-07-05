@@ -22,7 +22,7 @@ export type UseContractWriteEagerConfig = MutationConfig<
 >
 
 export const mutationKey = ([
-  { addressOrName, args, contractInterface, functionName, overrides, signer },
+  { addressOrName, args, contractInterface, functionName, overrides },
 ]: [Partial<BuildContractTransactionConfig>]) =>
   [
     {
@@ -32,7 +32,6 @@ export const mutationKey = ([
       contractInterface,
       functionName,
       overrides,
-      signer,
     },
   ] as const
 
@@ -42,7 +41,6 @@ const mutationFn = ({
   contractInterface,
   functionName,
   overrides,
-  signer,
   unsignedTransaction,
 }: UseContractWriteEagerVariables) => {
   return unsignedTransaction
@@ -53,7 +51,6 @@ const mutationFn = ({
         functionName,
         args,
         overrides,
-        signerOrProvider: signer,
       })
 }
 
@@ -63,7 +60,6 @@ export function useContractWriteEager({
   contractInterface,
   functionName,
   overrides,
-  signer,
   onError,
   onMutate,
   onSettled,
@@ -75,7 +71,6 @@ export function useContractWriteEager({
     contractInterface,
     functionName,
     overrides,
-    signer,
   })
 
   const {
@@ -98,7 +93,6 @@ export function useContractWriteEager({
         contractInterface,
         functionName,
         overrides,
-        signer,
       },
     ]),
     mutationFn,
@@ -118,7 +112,6 @@ export function useContractWriteEager({
         functionName,
         args,
         overrides,
-        signer,
         unsignedTransaction,
       }),
     [
@@ -128,7 +121,6 @@ export function useContractWriteEager({
       functionName,
       mutate,
       overrides,
-      signer,
       unsignedTransaction,
     ],
   )
@@ -141,7 +133,6 @@ export function useContractWriteEager({
         contractInterface,
         functionName,
         overrides,
-        signer,
         unsignedTransaction,
       }),
     [
@@ -151,7 +142,6 @@ export function useContractWriteEager({
       functionName,
       mutateAsync,
       overrides,
-      signer,
       unsignedTransaction,
     ],
   )

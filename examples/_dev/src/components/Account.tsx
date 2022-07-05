@@ -46,7 +46,7 @@ export const Account = () => {
         )}
       </div>
 
-      <WriteContract />
+      {/* <WriteContract /> */}
       <WriteContractEager />
 
       {false && (
