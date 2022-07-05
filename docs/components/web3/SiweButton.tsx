@@ -10,11 +10,13 @@ type Props = {
 }
 
 export function SiweButton({ address, chainId, onSuccess }: Props) {
+  const { signMessageAsync } = useSignMessage()
   const [state, setState] = React.useState<{
     error?: Error
     loading?: boolean
     nonce?: string
   }>({})
+
   React.useEffect(() => {
     async function fetchNonce() {
       try {
@@ -28,8 +30,6 @@ export function SiweButton({ address, chainId, onSuccess }: Props) {
 
     fetchNonce()
   }, [])
-
-  const { signMessageAsync } = useSignMessage()
 
   const handleSignIn = React.useCallback(async () => {
     try {
