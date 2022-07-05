@@ -2,12 +2,12 @@ import * as React from 'react'
 import {
   ReadContractResult,
   ReadContractsConfig,
+  deepEqual,
   readContracts,
 } from '@wagmi/core'
 
 import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
 import { useInfiniteQuery } from '../utils'
-import { deepEqual } from '../../utils'
 
 export type UseContractInfiniteReadsConfig<TPageParam = any> =
   InfiniteQueryConfig<ReadContractResult, Error> &

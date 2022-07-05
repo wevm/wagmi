@@ -132,6 +132,22 @@ function App() {
 }
 ```
 
+### onBlock (optional)
+
+Function to invoke when a new block is created.
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onBlock(blockNumber) {
+      console.log('New block: ', blockNumber)
+    },
+  })
+}
+```
+
 ### onSuccess (optional)
 
 Function to invoke when fetching new data is successful.
