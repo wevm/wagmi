@@ -65,6 +65,7 @@ export {
   chainId,
   configureChains,
   createStorage,
+  deepEqual,
   defaultChains,
   defaultL2Chains,
   erc20ABI,
