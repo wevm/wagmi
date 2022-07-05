@@ -1,5 +1,15 @@
 # wagmi
 
+## 0.5.7
+
+### Patch Changes
+
+- [#659](https://github.com/tmm/wagmi/pull/659) [`be76586`](https://github.com/tmm/wagmi/commit/be76586431238dc5a0970a6f10a3dff9faa8ca2d) Thanks [@jxom](https://github.com/jxom)! - Added an `isDataEqual` config option to `useContractRead`, `useContractReads` & `useContractInfiniteReads` to define whether or not that data has changed. Defaults to `deepEqual`.
+
+* [#659](https://github.com/tmm/wagmi/pull/659) [`be76586`](https://github.com/tmm/wagmi/commit/be76586431238dc5a0970a6f10a3dff9faa8ca2d) Thanks [@jxom](https://github.com/jxom)! - Added `onBlock` config to `useBlockNumber`
+
+- [#659](https://github.com/tmm/wagmi/pull/659) [`be76586`](https://github.com/tmm/wagmi/commit/be76586431238dc5a0970a6f10a3dff9faa8ca2d) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useContractRead` & `useContractReads` would return unstable data.
+
 ## 0.5.6
 
 ### Patch Changes
