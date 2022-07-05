@@ -2,7 +2,7 @@
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
   "license": "WAGMIT",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "repository": "tmm/wagmi",
   "author": "awkweb.eth",
   "homepage": "https://wagmi.sh",
