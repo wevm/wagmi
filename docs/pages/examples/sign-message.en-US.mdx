@@ -20,6 +20,7 @@ Follow the [Connect Wallet](/examples/connect-wallet#step-1-configuring-connecto
 Add the `useSignMessage` hook and set up a basic form:
 
 ```tsx
+import * as React from 'react';
 import { useSignMessage } from 'wagmi'
 import { verifyMessage } from 'ethers/lib/utils'
 
@@ -47,7 +48,6 @@ export function SignMessage() {
         id="message"
         name="message"
         placeholder="The quick brown fox…"
-        onChange={(event) => setMessage(event.target.value)}
       />
       <button disabled={isLoading}>
         {isLoading ? 'Check Wallet' : 'Sign Message'}
@@ -55,7 +55,7 @@ export function SignMessage() {
 
       {data && (
         <div>
-          <div>Recovered Address: {recoveredAddress}</div>
+          <div>Recovered Address: {recoveredAddress.current}</div>
           <div>Signature: {data}</div>
         </div>
       )}
