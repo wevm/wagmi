@@ -1,30 +1,30 @@
 import * as React from 'react'
 import {
-  WriteContractConfig,
-  WriteContractResult,
-  writeContract,
+  WriteContractLazyConfig,
+  WriteContractLazyResult,
+  writeContractLazy,
 } from '@wagmi/core'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
-export type UseContractWriteArgs = WriteContractConfig
-export type UseContractWriteMutationArgs = Pick<
-  WriteContractConfig,
+export type UseContractWriteLazyArgs = WriteContractLazyConfig
+export type UseContractWriteLazyMutationArgs = Pick<
+  WriteContractLazyConfig,
   'args' | 'overrides'
 >
-export type UseContractWriteConfig = MutationConfig<
-  WriteContractResult,
+export type UseContractWriteLazyConfig = MutationConfig<
+  WriteContractLazyResult,
   Error,
-  UseContractWriteArgs
+  UseContractWriteLazyArgs
 >
 
 export const mutationKey = ([
   { addressOrName, args, chainId, contractInterface, overrides },
-]: [WriteContractConfig]) =>
+]: [WriteContractLazyConfig]) =>
   [
     {
-      entity: 'writeContract',
+      entity: 'writeContractLazy',
       addressOrName,
       args,
       chainId,
@@ -33,7 +33,7 @@ export const mutationKey = ([
     },
   ] as const
 
-export function useContractWrite({
+export function useContractWriteLazy({
   addressOrName,
   args,
   chainId,
@@ -45,7 +45,7 @@ export function useContractWrite({
   onMutate,
   onSettled,
   onSuccess,
-}: UseContractWriteArgs & UseContractWriteConfig) {
+}: UseContractWriteLazyArgs & UseContractWriteLazyConfig) {
   const {
     data,
     error,
@@ -70,7 +70,7 @@ export function useContractWrite({
       },
     ]),
     ({ args, overrides }) =>
-      writeContract({
+      writeContractLazy({
         addressOrName,
         args,
         chainId,
@@ -88,7 +88,7 @@ export function useContractWrite({
   )
 
   const write = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) =>
+    (overrideConfig?: UseContractWriteLazyMutationArgs) =>
       mutate({
         addressOrName,
         chainId,
@@ -110,7 +110,7 @@ export function useContractWrite({
   )
 
   const writeAsync = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) =>
+    (overrideConfig?: UseContractWriteLazyMutationArgs) =>
       mutateAsync({
         addressOrName,
         chainId,

@@ -1,14 +1,18 @@
 ---
-title: 'useContractWrite'
+title: 'useContractWriteLazy'
 description: 'React Hook for calling a ethers Contract write method.'
 ---
 
-# useContractWrite
+import Callout from 'nextra-theme-docs/callout'
+
+# useContractWriteLazy
+
+<Callout>You may want to use `useContractWriteEager` instead. TODO.</Callout>
 
 Hook for calling a ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method.
 
 ```tsx
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 ```
 
 ## Usage
@@ -16,10 +20,10 @@ import { useContractWrite } from 'wagmi'
 The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
 
 ```tsx
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const { data, isError, isLoading, write } = useContractWrite({
+  const { data, isError, isLoading, write } = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -53,10 +57,10 @@ function App() {
 Contract address or ENS name.
 
 ```tsx {5}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -71,10 +75,10 @@ function App() {
 Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
 
 ```tsx {6}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     chainId: 1,
     contractInterface: wagmigotchiABI,
@@ -90,10 +94,10 @@ function App() {
 Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
 
 ```tsx {6}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -108,10 +112,10 @@ function App() {
 Name of function to call.
 
 ```tsx {7}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -126,10 +130,10 @@ function App() {
 Arguments to pass to function call. Accepts `any | any[]`.
 
 ```tsx {11}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -143,10 +147,10 @@ function App() {
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
 ```tsx {8-11}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -163,10 +167,10 @@ function App() {
 Function to invoke when an error is thrown while attempting to write.
 
 ```tsx {11-13}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -182,10 +186,10 @@ function App() {
 Function fires before write function and is passed same variables write function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a write failure.
 
 ```tsx {11-13}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -201,10 +205,10 @@ function App() {
 Function to invoke when write is settled (either successfully written, or an error has thrown).
 
 ```tsx {11-13}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -220,10 +224,10 @@ function App() {
 Function to invoke when write is successful
 
 ```tsx {11-13}
-import { useContractWrite } from 'wagmi'
+import { useContractWriteLazy } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWrite({
+  const contractWrite = useContractWriteLazy({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',

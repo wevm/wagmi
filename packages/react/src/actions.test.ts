@@ -35,7 +35,7 @@ it('should expose correct exports', () => {
       "watchReadContracts",
       "watchSigner",
       "watchWebSocketProvider",
-      "writeContract",
+      "writeContractLazy",
     ]
   `)
 })

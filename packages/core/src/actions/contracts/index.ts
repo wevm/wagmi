@@ -27,7 +27,7 @@ export {
 } from './watchReadContracts'
 
 export {
-  writeContract,
-  type WriteContractConfig,
-  type WriteContractResult,
-} from './writeContract'
+  writeContractLazy,
+  type WriteContractLazyConfig,
+  type WriteContractLazyResult,
+} from './writeContractLazy'

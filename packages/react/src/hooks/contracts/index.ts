@@ -6,5 +6,5 @@ export {
 } from './useContractInfiniteReads'
 export { useContractRead } from './useContractRead'
 export { useContractReads } from './useContractReads'
-export { useContractWrite } from './useContractWrite'
+export { useContractWriteLazy } from './useContractWriteLazy'
 export { useToken } from './useToken'

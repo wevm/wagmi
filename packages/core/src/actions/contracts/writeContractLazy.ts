@@ -10,7 +10,7 @@ import {
 import { Chain } from '../../types'
 import { GetContractArgs, getContract } from './getContract'
 
-export type WriteContractConfig = GetContractArgs & {
+export type WriteContractLazyConfig = GetContractArgs & {
   /**
    * Chain id to use for write
    * If signer is not active on this chain, it will attempt to programmatically switch
@@ -23,9 +23,9 @@ export type WriteContractConfig = GetContractArgs & {
   overrides?: CallOverrides
 }
 
-export type WriteContractResult = providers.TransactionResponse
+export type WriteContractLazyResult = providers.TransactionResponse
 
-export async function writeContract<TContract extends Contract = Contract>({
+export async function writeContractLazy<TContract extends Contract = Contract>({
   addressOrName,
   args,
   chainId,
@@ -33,7 +33,7 @@ export async function writeContract<TContract extends Contract = Contract>({
   functionName,
   overrides,
   signerOrProvider,
-}: WriteContractConfig): Promise<WriteContractResult> {
+}: WriteContractLazyConfig): Promise<WriteContractLazyResult> {
   const { connector } = getClient()
   if (!connector) throw new ConnectorNotFoundError()
 

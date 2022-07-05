@@ -31,7 +31,7 @@ export {
   watchReadContracts,
   watchSigner,
   watchWebSocketProvider,
-  writeContract,
+  writeContractLazy,
 } from '@wagmi/core'
 export type {
   ConnectArgs,
@@ -83,6 +83,6 @@ export type {
   WatchProviderCallback,
   WatchSignerCallback,
   WatchWebSocketProviderCallback,
-  WriteContractConfig,
-  WriteContractResult,
+  WriteContractLazyConfig,
+  WriteContractLazyResult,
 } from '@wagmi/core'

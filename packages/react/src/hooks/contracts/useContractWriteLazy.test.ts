@@ -10,26 +10,26 @@ import {
 } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UseContractWriteArgs,
-  UseContractWriteConfig,
-  useContractWrite,
-} from './useContractWrite'
+  UseContractWriteLazyArgs,
+  UseContractWriteLazyConfig,
+  useContractWriteLazy,
+} from './useContractWriteLazy'
 
-function useContractWriteWithConnect(
-  config: UseContractWriteArgs & UseContractWriteConfig,
+function useContractWriteLazyWithConnect(
+  config: UseContractWriteLazyArgs & UseContractWriteLazyConfig,
 ) {
   return {
     connect: useConnect(),
-    contractWrite: useContractWrite(config),
+    contractWrite: useContractWriteLazy(config),
   }
 }
 
 const timeout = 15_000
 
-describe('useContractWrite', () => {
+describe('useContractWriteLazy', () => {
   it('mounts', () => {
     const { result } = renderHook(() =>
-      useContractWrite({ ...mlootContractConfig, functionName: 'claim' }),
+      useContractWriteLazy({ ...mlootContractConfig, functionName: 'claim' }),
     )
     expect(result.current).toMatchInlineSnapshot(`
       {
@@ -58,7 +58,7 @@ describe('useContractWrite', () => {
           },
         })
         const utils = renderHook(() =>
-          useContractWriteWithConnect({
+          useContractWriteLazyWithConnect({
             ...mlootContractConfig,
             chainId: 1,
             functionName: 'claim',
@@ -91,7 +91,7 @@ describe('useContractWrite', () => {
         )
         if (!tokenId) return
         const utils = renderHook(() =>
-          useContractWriteWithConnect({
+          useContractWriteLazyWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
             args: tokenId,
@@ -115,7 +115,7 @@ describe('useContractWrite', () => {
         )
         if (!tokenId) return
         const utils = renderHook(() =>
-          useContractWriteWithConnect({
+          useContractWriteLazyWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
           }),
@@ -136,7 +136,7 @@ describe('useContractWrite', () => {
 
       it('fails', async () => {
         const utils = renderHook(() =>
-          useContractWriteWithConnect({
+          useContractWriteLazyWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
             args: 1,
@@ -164,7 +164,7 @@ describe('useContractWrite', () => {
         )
         if (!tokenId) return
         const utils = renderHook(() =>
-          useContractWriteWithConnect({
+          useContractWriteLazyWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
           }),
@@ -186,7 +186,7 @@ describe('useContractWrite', () => {
 
       it('throws error', async () => {
         const utils = renderHook(() =>
-          useContractWriteWithConnect({
+          useContractWriteLazyWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
           }),
@@ -221,7 +221,7 @@ describe('useContractWrite', () => {
       let functionName = 'claim'
       let args: any | any[] = tokenId
       const utils = renderHook(() =>
-        useContractWriteWithConnect({
+        useContractWriteLazyWithConnect({
           ...mlootContractConfig,
           functionName,
           args,

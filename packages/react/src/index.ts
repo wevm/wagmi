@@ -19,7 +19,7 @@ export {
   useContractInfiniteReads,
   useContractRead,
   useContractReads,
-  useContractWrite,
+  useContractWriteLazy,
   useDisconnect,
   useEnsAddress,
   useEnsAvatar,

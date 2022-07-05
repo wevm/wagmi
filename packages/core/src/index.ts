@@ -33,7 +33,7 @@ export {
   watchReadContracts,
   watchSigner,
   watchWebSocketProvider,
-  writeContract,
+  writeContractLazy,
 } from './actions'
 export type {
   BuildTransactionRequestArgs,
@@ -89,8 +89,8 @@ export type {
   WatchProviderCallback,
   WatchSignerCallback,
   WatchWebSocketProviderCallback,
-  WriteContractConfig,
-  WriteContractResult,
+  WriteContractLazyConfig,
+  WriteContractLazyResult,
 } from './actions'
 
 export { createClient, Client } from './client'

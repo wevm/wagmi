@@ -16,10 +16,10 @@ import {
 } from '../transactions/useWaitForTransaction'
 import { UseContractEventConfig, useContractEvent } from './useContractEvent'
 import {
-  UseContractWriteArgs,
-  UseContractWriteConfig,
-  useContractWrite,
-} from './useContractWrite'
+  UseContractWriteLazyArgs,
+  UseContractWriteLazyConfig,
+  useContractWriteLazy,
+} from './useContractWriteLazy'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
@@ -28,14 +28,14 @@ function useContractEventWithWrite(config: {
     config: UseContractEventConfig
   }
   contractWrite: {
-    config: UseContractWriteArgs & UseContractWriteConfig
+    config: UseContractWriteLazyArgs & UseContractWriteLazyConfig
   }
   waitForTransaction?: UseWaitForTransactionArgs & UseWaitForTransactionConfig
 }) {
   return {
     connect: useConnect(),
     contractEvent: useContractEvent(config.contractEvent.config),
-    contractWrite: useContractWrite(config.contractWrite.config),
+    contractWrite: useContractWriteLazy(config.contractWrite.config),
     waitForTransaction: useWaitForTransaction(config.waitForTransaction),
   }
 }

@@ -18,7 +18,7 @@ it('should expose correct exports', () => {
       "useContractInfiniteReads",
       "useContractRead",
       "useContractReads",
-      "useContractWrite",
+      "useContractWriteLazy",
       "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",
