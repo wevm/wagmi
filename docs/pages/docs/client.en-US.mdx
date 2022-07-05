@@ -37,12 +37,10 @@ Enables reconnecting to last used connector on mount. Defaults to `false`.
 import { createClient, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider } = configureChains(defaultChains, [
-  publicProvider(),
-])
+const { provider } = configureChains(defaultChains, [publicProvider()])
 
 const client = createClient({
-  autoConnect: true
+  autoConnect: true,
   provider,
 })
 ```

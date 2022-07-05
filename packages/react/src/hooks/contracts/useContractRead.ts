@@ -5,7 +5,7 @@ import {
   readContract,
   watchReadContract,
 } from '@wagmi/core'
-import { useQueryClient } from 'react-query'
+import { hashQueryKey, useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { parseContractResult } from '../../utils'
@@ -37,6 +37,12 @@ export const queryKey = ([
       overrides,
     },
   ] as const
+
+const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { contractInterface, ...rest } = queryKey_
+  return hashQueryKey([rest])
+}
 
 const queryFn = ({
   queryKey: [
@@ -149,6 +155,7 @@ export function useContractRead({
   return useQuery(queryKey_, queryFn, {
     cacheTime,
     enabled,
+    queryKeyHashFn,
     select: (data) => {
       const result = parseContractResult({
         contractInterface,

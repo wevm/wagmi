@@ -53,6 +53,7 @@ export {
   Connector,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
+  ContractMethodNoResultError,
   ProviderChainsNotFound,
   ProviderRpcError,
   ResourceUnavailableError,

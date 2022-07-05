@@ -26,12 +26,13 @@ const contracts: MulticallConfig['contracts'] = [
   },
 ]
 
-describe('readContracts', () => {
-  beforeEach(() =>
+describe('multicall', () => {
+  beforeEach(() => {
     setupClient({
       chains: [chain.mainnet, { ...chain.polygon, multicall: undefined }],
-    }),
-  )
+    })
+    console.warn = jest.fn()
+  })
 
   it('default', async () => {
     expect(await multicall({ contracts })).toMatchInlineSnapshot(`
@@ -95,22 +96,83 @@ describe('readContracts', () => {
       `)
     })
 
-    it('allowFailure', async () => {
-      await expect(
-        multicall({
-          allowFailure: false,
-          contracts: [
-            ...contracts,
+    describe('allowFailure', () => {
+      it('it should throw if a contract method fails', async () => {
+        await expect(
+          multicall({
+            allowFailure: false,
+            contracts: [
+              ...contracts,
+              {
+                ...mlootContractConfig,
+                functionName: 'tokenOfOwnerByIndex',
+                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+              },
+            ],
+          }),
+        ).rejects.toThrowErrorMatchingInlineSnapshot(
+          `"call revert exception; VM Exception while processing transaction: reverted with reason string \\"Multicall3: call failed\\" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"aggregate3((address,bool,bytes)[])\\", data=\\"0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000174d756c746963616c6c333a2063616c6c206661696c6564000000000000000000\\", errorArgs=[\\"Multicall3: call failed\\"], errorName=\\"Error\\", errorSignature=\\"Error(string)\\", reason=\\"Multicall3: call failed\\", code=CALL_EXCEPTION, version=abi/5.6.1)"`,
+        )
+      })
+
+      it('throws if allowFailure=false & a contract has no response', async () => {
+        await expect(
+          multicall({
+            allowFailure: false,
+            contracts: [
+              ...contracts,
+              {
+                ...wagmigotchiContractConfig,
+                functionName: 'love',
+                // address is not the wagmigotchi contract
+                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              },
+            ],
+          }),
+        ).rejects.toThrowErrorMatchingInlineSnapshot(`
+                "Function \\"love\\" on contract \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\" returned an empty response.
+
+                Are you sure the function \\"love\\" exists on this contract?
+
+                Etherscan: https://etherscan.io/address/0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC#readContract"
+              `)
+      })
+
+      it('does not throw if allowFailure=true & a contract has no response', async () => {
+        expect(
+          await multicall({
+            allowFailure: true,
+            contracts: [
+              ...contracts,
+              {
+                ...wagmigotchiContractConfig,
+                functionName: 'love',
+                // address is not the wagmigotchi contract
+                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              },
+            ],
+          }),
+        ).toMatchInlineSnapshot(`
+          [
             {
-              ...mlootContractConfig,
-              functionName: 'tokenOfOwnerByIndex',
-              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+              "hex": "0x02",
+              "type": "BigNumber",
             },
-          ],
-        }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"call revert exception; VM Exception while processing transaction: reverted with reason string \\"Multicall3: call failed\\" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"aggregate3((address,bool,bytes)[])\\", data=\\"0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000174d756c746963616c6c333a2063616c6c206661696c6564000000000000000000\\", errorArgs=[\\"Multicall3: call failed\\"], errorName=\\"Error\\", errorSignature=\\"Error(string)\\", reason=\\"Multicall3: call failed\\", code=CALL_EXCEPTION, version=abi/5.6.1)"`,
-      )
+            {
+              "hex": "0x01",
+              "type": "BigNumber",
+            },
+            false,
+            {
+              "hex": "0x05a6db",
+              "type": "BigNumber",
+            },
+            undefined,
+          ]
+        `)
+      })
     })
   })
 

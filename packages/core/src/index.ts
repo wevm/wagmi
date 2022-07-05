@@ -127,6 +127,7 @@ export {
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
+  ContractMethodNoResultError,
   ProviderChainsNotFound,
   ProviderRpcError,
   ResourceUnavailableError,
