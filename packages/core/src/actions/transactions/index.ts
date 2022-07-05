@@ -5,10 +5,10 @@ export {
 } from './buildTransactionRequest'
 
 export {
-  sendTransaction,
-  type SendTransactionArgs,
-  type SendTransactionResult,
-} from './sendTransaction'
+  sendTransactionLazy,
+  type SendTransactionLazyArgs,
+  type SendTransactionLazyResult,
+} from './sendTransactionLazy'
 
 export {
   sendTransactionEager,

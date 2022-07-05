@@ -5,9 +5,9 @@ import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
-import { sendTransaction } from './sendTransaction'
+import { sendTransactionLazy } from './sendTransactionLazy'
 
-describe('sendTransaction', () => {
+describe('sendTransactionLazy', () => {
   let client: Client
   beforeEach(() => {
     client = setupClient()
@@ -23,7 +23,7 @@ describe('sendTransaction', () => {
         const toAddress = await to?.getAddress()
         const fromAddress = client.data?.account
 
-        const result = await sendTransaction({
+        const result = await sendTransactionLazy({
           chainId: 1,
           request: {
             from: fromAddress,
@@ -50,7 +50,7 @@ describe('sendTransaction', () => {
         const fromAddress = client.data?.account
 
         await expect(
-          sendTransaction({
+          sendTransactionLazy({
             chainId: 10,
             request: {
               from: fromAddress,
@@ -72,7 +72,7 @@ describe('sendTransaction', () => {
       const toAddress = await to?.getAddress()
       const fromAddress = client.data?.account
 
-      const result = await sendTransaction({
+      const result = await sendTransactionLazy({
         request: {
           from: fromAddress,
           to: toAddress,
@@ -86,7 +86,7 @@ describe('sendTransaction', () => {
   describe('behavior', () => {
     it('throws', async () => {
       await expect(
-        sendTransaction({
+        sendTransactionLazy({
           request: {},
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
@@ -96,7 +96,7 @@ describe('sendTransaction', () => {
       await connect({ connector: client.connectors[0]! })
 
       try {
-        await sendTransaction({
+        await sendTransactionLazy({
           request: {
             to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
             value: BigNumber.from('10000000000000000000000'), // 100,000 ETH

@@ -9,7 +9,7 @@ import {
 } from './useSendTransactionEager'
 
 function useSendTransactionEagerWithConnect(
-  config?: UseSendTransactionEagerArgs & UseSendTransactionEagerConfig,
+  config: UseSendTransactionEagerArgs & UseSendTransactionEagerConfig,
 ) {
   return {
     connect: useConnect(),

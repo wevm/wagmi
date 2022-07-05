@@ -30,7 +30,7 @@ export {
   useNetwork,
   useProvider,
   useQuery,
-  useSendTransaction,
+  useSendTransactionLazy,
   useSendTransactionEager,
   useSignMessage,
   useSignTypedData,

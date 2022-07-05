@@ -28,7 +28,7 @@ export { useBlockNumber, useFeeData } from './network-status'
 export { useProvider, useWebSocketProvider } from './providers'
 
 export {
-  useSendTransaction,
+  useSendTransactionLazy,
   useSendTransactionEager,
   useWaitForTransaction,
 } from './transactions'

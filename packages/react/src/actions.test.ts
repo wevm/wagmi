@@ -21,7 +21,7 @@ it('should expose correct exports', () => {
       "getWebSocketProvider",
       "readContract",
       "readContracts",
-      "sendTransaction",
+      "sendTransactionLazy",
       "signMessage",
       "signTypedData",
       "switchNetwork",

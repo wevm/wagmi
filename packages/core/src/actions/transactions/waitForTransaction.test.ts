@@ -3,7 +3,7 @@ import { parseEther } from 'ethers/lib/utils'
 import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
 import { connect } from '../accounts'
-import { sendTransaction } from './sendTransaction'
+import { sendTransactionLazy } from './sendTransactionLazy'
 import { waitForTransaction } from './waitForTransaction'
 
 describe('waitForTransaction', () => {
@@ -21,7 +21,7 @@ describe('waitForTransaction', () => {
       const toAddress = await to?.getAddress()
       const fromAddress = client.data?.account
 
-      const result = await sendTransaction({
+      const result = await sendTransactionLazy({
         request: {
           from: fromAddress,
           to: toAddress,
@@ -44,7 +44,7 @@ describe('waitForTransaction', () => {
       const toAddress = await to?.getAddress()
       const fromAddress = client.data?.account
 
-      const result = await sendTransaction({
+      const result = await sendTransactionLazy({
         request: {
           from: fromAddress,
           to: toAddress,

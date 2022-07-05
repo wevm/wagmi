@@ -9,7 +9,7 @@ import {
 } from '../../errors'
 import { Chain } from '../../types'
 
-export type SendTransactionArgs = {
+export type SendTransactionLazyArgs = {
   /**
    * Chain id to use for write
    * If signer is not active on this chain, it will attempt to programmatically switch
@@ -19,12 +19,12 @@ export type SendTransactionArgs = {
   request: providers.TransactionRequest
 }
 
-export type SendTransactionResult = providers.TransactionResponse
+export type SendTransactionLazyResult = providers.TransactionResponse
 
-export async function sendTransaction({
+export async function sendTransactionLazy({
   chainId,
   request,
-}: SendTransactionArgs): Promise<SendTransactionResult> {
+}: SendTransactionLazyArgs): Promise<SendTransactionLazyResult> {
   const { connector } = getClient()
   if (!connector) throw new ConnectorNotFoundError()
 

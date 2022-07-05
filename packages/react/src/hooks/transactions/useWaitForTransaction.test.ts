@@ -2,7 +2,7 @@ import { parseEther } from 'ethers/lib/utils'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
-import { useSendTransaction } from './useSendTransaction'
+import { useSendTransactionLazy } from './useSendTransactionLazy'
 import {
   UseWaitForTransactionArgs,
   UseWaitForTransactionConfig,
@@ -14,7 +14,7 @@ function useWaitForTransactionWithSendTransactionAndConnect(
 ) {
   return {
     connect: useConnect(),
-    sendTransaction: useSendTransaction(),
+    sendTransaction: useSendTransactionLazy(),
     waitForTransaction: useWaitForTransaction(config),
   }
 }

@@ -1,38 +1,38 @@
 import * as React from 'react'
 import {
-  SendTransactionArgs,
-  SendTransactionResult,
-  sendTransaction,
+  SendTransactionLazyArgs,
+  SendTransactionLazyResult,
+  sendTransactionLazy,
 } from '@wagmi/core'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
-export type UseSendTransactionArgs = Partial<SendTransactionArgs>
+export type UseSendTransactionLazyArgs = Partial<SendTransactionLazyArgs>
 
-export type UseSendTransactionConfig = MutationConfig<
-  SendTransactionResult,
+export type UseSendTransactionLazyConfig = MutationConfig<
+  SendTransactionLazyResult,
   Error,
-  UseSendTransactionArgs
+  UseSendTransactionLazyArgs
 >
 
-export const mutationKey = (args: UseSendTransactionArgs) =>
+export const mutationKey = (args: UseSendTransactionLazyArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
 
-const mutationFn = (args: UseSendTransactionArgs) => {
+const mutationFn = (args: UseSendTransactionLazyArgs) => {
   const { chainId, request } = args
   if (!request) throw new Error('request is required')
-  return sendTransaction({ chainId, request })
+  return sendTransactionLazy({ chainId, request })
 }
 
-export function useSendTransaction({
+export function useSendTransactionLazy({
   chainId,
   request,
   onError,
   onMutate,
   onSettled,
   onSuccess,
-}: UseSendTransactionArgs & UseSendTransactionConfig = {}) {
+}: UseSendTransactionLazyArgs & UseSendTransactionLazyConfig = {}) {
   const {
     data,
     error,
@@ -53,13 +53,13 @@ export function useSendTransaction({
   })
 
   const sendTransaction = React.useCallback(
-    (args?: SendTransactionArgs) =>
+    (args?: SendTransactionLazyArgs) =>
       mutate({ chainId, request, ...(args ?? {}) }),
     [chainId, mutate, request],
   )
 
   const sendTransactionAsync = React.useCallback(
-    (args?: SendTransactionArgs) =>
+    (args?: SendTransactionLazyArgs) =>
       mutateAsync({ chainId, request, ...(args ?? {}) }),
     [chainId, mutateAsync, request],
   )

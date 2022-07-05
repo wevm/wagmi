@@ -29,7 +29,7 @@ it('should expose correct exports', () => {
       "useNetwork",
       "useProvider",
       "useQuery",
-      "useSendTransaction",
+      "useSendTransactionLazy",
       "useSendTransactionEager",
       "useSignMessage",
       "useSignTypedData",

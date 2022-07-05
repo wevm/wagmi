@@ -98,13 +98,13 @@ export {
 
 export {
   buildTransactionRequest,
-  sendTransaction,
+  sendTransactionLazy,
   sendTransactionEager,
   waitForTransaction,
   type BuildTransactionRequestArgs,
   type BuildTransactionRequestResult,
-  type SendTransactionArgs,
-  type SendTransactionResult,
+  type SendTransactionLazyArgs,
+  type SendTransactionLazyResult,
   type SendTransactionEagerArgs,
   type SendTransactionEagerResult,
   type WaitForTransactionArgs,

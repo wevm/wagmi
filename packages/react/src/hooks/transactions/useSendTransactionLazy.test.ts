@@ -4,23 +4,23 @@ import { parseEther } from 'ethers/lib/utils'
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UseSendTransactionArgs,
-  UseSendTransactionConfig,
-  useSendTransaction,
-} from './useSendTransaction'
+  UseSendTransactionLazyArgs,
+  UseSendTransactionLazyConfig,
+  useSendTransactionLazy,
+} from './useSendTransactionLazy'
 
-function useSendTransactionWithConnect(
-  config?: UseSendTransactionArgs & UseSendTransactionConfig,
+function useSendTransactionLazyWithConnect(
+  config?: UseSendTransactionLazyArgs & UseSendTransactionLazyConfig,
 ) {
   return {
     connect: useConnect(),
-    sendTransaction: useSendTransaction(config),
+    sendTransaction: useSendTransactionLazy(config),
   }
 }
 
-describe('useSendTransaction', () => {
+describe('useSendTransactionLazy', () => {
   it('mounts', () => {
-    const { result } = renderHook(() => useSendTransaction())
+    const { result } = renderHook(() => useSendTransactionLazy())
     expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -42,7 +42,7 @@ describe('useSendTransaction', () => {
     describe('chainId', () => {
       it('switches before sending transaction,', async () => {
         const utils = renderHook(() =>
-          useSendTransactionWithConnect({
+          useSendTransactionLazyWithConnect({
             chainId: 1,
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
@@ -97,7 +97,7 @@ describe('useSendTransaction', () => {
           },
         })
         const utils = renderHook(() =>
-          useSendTransactionWithConnect({
+          useSendTransactionLazyWithConnect({
             chainId: 1,
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
@@ -127,7 +127,7 @@ describe('useSendTransaction', () => {
     describe('sendTransaction', () => {
       it('uses configuration', async () => {
         const utils = renderHook(() =>
-          useSendTransactionWithConnect({
+          useSendTransactionLazyWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -174,7 +174,7 @@ describe('useSendTransaction', () => {
       })
 
       it('uses deferred args', async () => {
-        const utils = renderHook(() => useSendTransactionWithConnect())
+        const utils = renderHook(() => useSendTransactionLazyWithConnect())
         const { result, waitFor } = utils
         await actConnect({ utils })
 
@@ -221,7 +221,7 @@ describe('useSendTransaction', () => {
 
       it('fails on insufficient balance', async () => {
         const utils = renderHook(() =>
-          useSendTransactionWithConnect({
+          useSendTransactionLazyWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('100000'),
@@ -274,7 +274,7 @@ describe('useSendTransaction', () => {
     describe('sendTransactionAsync', () => {
       it('uses configuration', async () => {
         const utils = renderHook(() =>
-          useSendTransactionWithConnect({
+          useSendTransactionLazyWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -297,7 +297,7 @@ describe('useSendTransaction', () => {
 
       it('throws on error', async () => {
         const utils = renderHook(() =>
-          useSendTransactionWithConnect({
+          useSendTransactionLazyWithConnect({
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('100000'),
