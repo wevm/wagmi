@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
   ReadContractResult,
   ReadContractsConfig,
+  deepEqual,
   readContracts,
 } from '@wagmi/core'
 
@@ -77,6 +78,7 @@ export function useContractInfiniteReads<TPageParam = any>({
   contracts,
   enabled: enabled_ = true,
   getNextPageParam,
+  isDataEqual = deepEqual,
   keepPreviousData,
   onError,
   onSettled,
@@ -99,8 +101,9 @@ export function useContractInfiniteReads<TPageParam = any>({
   return useInfiniteQuery(queryKey_, queryFn({ contracts }), {
     cacheTime,
     enabled,
-    keepPreviousData,
     getNextPageParam,
+    isDataEqual,
+    keepPreviousData,
     select,
     staleTime,
     suspense,

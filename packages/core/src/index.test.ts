@@ -69,6 +69,7 @@ it('should expose correct exports', () => {
       "createStorage",
       "noopStorage",
       "configureChains",
+      "deepEqual",
       "normalizeChainId",
     ]
   `)

@@ -61,6 +61,7 @@ it('should expose correct exports', () => {
       "chainId",
       "configureChains",
       "createStorage",
+      "deepEqual",
       "defaultChains",
       "defaultL2Chains",
       "erc20ABI",

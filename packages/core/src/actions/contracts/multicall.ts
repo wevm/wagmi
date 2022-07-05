@@ -90,7 +90,7 @@ export async function multicall<Data extends any[] = Result[]>({
     ...params,
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
-    if (!success) return undefined
+    if (!success) return null
     const { addressOrName, contractInterface, functionName } = <
       MulticallContract
     >contracts[i]
@@ -103,7 +103,7 @@ export async function multicall<Data extends any[] = Result[]>({
       })
       if (!allowFailure) throw err
       console.warn(err.message)
-      return undefined
+      return null
     }
 
     const contract = getContract({
@@ -118,7 +118,7 @@ export async function multicall<Data extends any[] = Result[]>({
       return Array.isArray(result) && result.length === 1 ? result[0] : result
     } catch (err) {
       if (!allowFailure) throw err
-      return undefined
+      return null
     }
   }) as Data
 }
