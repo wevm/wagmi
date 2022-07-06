@@ -115,7 +115,7 @@ importers:
       siwe: ^1.1.6
       tailwindcss: ^3.0.24
       typescript: ^4.6.4
-      wagmi: ^0.5.7
+      wagmi: ^0.5.8
     dependencies:
       '@reach/skip-nav': 0.16.0_ef5jwxihqo6n7gxfmzogljlgcm
       degen: 0.0.49_ef5jwxihqo6n7gxfmzogljlgcm
@@ -156,7 +156,7 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.6.4
-      wagmi: ^0.5.7
+      wagmi: ^0.5.8
     dependencies:
       ethers: 5.6.5
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
@@ -186,7 +186,7 @@ importers:
       react-scripts: 5.0.1
       typescript: ^4.6.4
       util: ^0.12.4
-      wagmi: ^0.5.7
+      wagmi: ^0.5.8
       web-vitals: ^2.1.4
     dependencies:
       '@types/node': 16.11.33
@@ -216,7 +216,7 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.6.4
-      wagmi: ^0.5.7
+      wagmi: ^0.5.8
     dependencies:
       ethers: 5.6.5
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
@@ -248,7 +248,7 @@ importers:
       remix: ^1.6.3
       safe-event-emitter: ^1.0.1
       typescript: ^4.6.4
-      wagmi: ^0.5.7
+      wagmi: ^0.5.8
     dependencies:
       '@esbuild-plugins/node-globals-polyfill': 0.1.1
       '@esbuild-plugins/node-modules-polyfill': 0.1.4
@@ -282,7 +282,7 @@ importers:
       typescript: ^4.6.4
       util: ^0.12.4
       vite: ^2.9.8
-      wagmi: ^0.5.7
+      wagmi: ^0.5.8
     dependencies:
       buffer: 6.0.3
       ethers: 5.6.5
@@ -322,7 +322,7 @@ importers:
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
       '@types/use-sync-external-store': ^0.0.3
-      '@wagmi/core': ^0.4.5
+      '@wagmi/core': ^0.4.6
       '@walletconnect/ethereum-provider': ^1.7.8
       ethers: ^5.6.5
       react: ^18.1.0

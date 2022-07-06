@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.5.8
+
+### Patch Changes
+
+- [#670](https://github.com/tmm/wagmi/pull/670) [`29a0d21`](https://github.com/tmm/wagmi/commit/29a0d21ee83995559f63542778dfa805f15e7441) Thanks [@tmm](https://github.com/tmm)! - Fix broken release not containing `deepEqual` from `@wagmi/core`.
+
+- Updated dependencies [[`29a0d21`](https://github.com/tmm/wagmi/commit/29a0d21ee83995559f63542778dfa805f15e7441)]:
+  - @wagmi/core@0.4.6
+
 ## 0.5.7
 
 ### Patch Changes
