@@ -1,39 +1,23 @@
-export { connect, type ConnectArgs, type ConnectResult } from './connect'
+export * from './connect'
 
 export { disconnect } from './disconnect'
 
-export {
-  fetchBalance,
-  type FetchBalanceArgs,
-  type FetchBalanceResult,
-} from './fetchBalance'
+export * from './fetchBalance'
 
-export { fetchSigner, type FetchSignerResult } from './fetchSigner'
+export * from './fetchSigner'
 
-export { getAccount, type GetAccountResult } from './getAccount'
+export * from './getAccount'
 
-export { getNetwork, type GetNetworkResult } from './getNetwork'
+export * from './getNetwork'
 
-export {
-  signMessage,
-  type SignMessageArgs,
-  type SignMessageResult,
-} from './signMessage'
+export * from './signMessage'
 
-export {
-  signTypedData,
-  type SignTypedDataArgs,
-  type SignTypedDataResult,
-} from './signTypedData'
+export * from './signTypedData'
 
-export {
-  switchNetwork,
-  type SwitchNetworkArgs,
-  type SwitchNetworkResult,
-} from './switchNetwork'
+export * from './switchNetwork'
 
-export { watchAccount, type WatchAccountCallback } from './watchAccount'
+export * from './watchAccount'
 
-export { watchNetwork, type WatchNetworkCallback } from './watchNetwork'
+export * from './watchNetwork'
 
-export { watchSigner, type WatchSignerCallback } from './watchSigner'
+export * from './watchSigner'

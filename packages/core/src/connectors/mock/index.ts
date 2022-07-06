@@ -1,2 +1,2 @@
 export { MockConnector } from './connector'
-export { type MockProviderOptions, MockProvider } from './provider'
+export * from './provider'

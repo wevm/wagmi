@@ -1,18 +1,7 @@
-export {
-  getProvider,
-  type GetProviderArgs,
-  type GetProviderResult,
-} from './getProvider'
+export * from './getProvider'
 
-export {
-  getWebSocketProvider,
-  type GetWebSocketProviderArgs,
-  type GetWebSocketProviderResult,
-} from './getWebSocketProvider'
+export * from './getWebSocketProvider'
 
-export { watchProvider, type WatchProviderCallback } from './watchProvider'
+export * from './watchProvider'
 
-export {
-  watchWebSocketProvider,
-  type WatchWebSocketProviderCallback,
-} from './watchWebSocketProvider'
+export * from './watchWebSocketProvider'

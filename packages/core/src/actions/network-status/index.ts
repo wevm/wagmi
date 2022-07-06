@@ -1,17 +1,5 @@
-export {
-  fetchBlockNumber,
-  type FetchBlockNumberArgs,
-  type FetchBlockNumberResult,
-} from './fetchBlockNumber'
+export * from './fetchBlockNumber'
 
-export {
-  fetchFeeData,
-  type FetchFeeDataResult,
-  type FetchFeeDataArgs,
-} from './fetchFeeData'
+export * from './fetchFeeData'
 
-export {
-  watchBlockNumber,
-  type WatchBlockNumberArgs,
-  type WatchBlockNumberCallback,
-} from './watchBlockNumber'
+export * from './watchBlockNumber'

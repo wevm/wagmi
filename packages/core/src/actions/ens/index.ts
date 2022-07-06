@@ -1,23 +1,7 @@
-export {
-  fetchEnsAddress,
-  type FetchEnsAddressArgs,
-  type FetchEnsAddressResult,
-} from './fetchEnsAddress'
+export * from './fetchEnsAddress'
 
-export {
-  fetchEnsAvatar,
-  type FetchEnsAvatarArgs,
-  type FetchEnsAvatarResult,
-} from './fetchEnsAvatar'
+export * from './fetchEnsAvatar'
 
-export {
-  fetchEnsName,
-  type FetchEnsNameArgs,
-  type FetchEnsNameResult,
-} from './fetchEnsName'
+export * from './fetchEnsName'
 
-export {
-  fetchEnsResolver,
-  type FetchEnsResolverArgs,
-  type FetchEnsResolverResult,
-} from './fetchEnsResolver'
+export * from './fetchEnsResolver'

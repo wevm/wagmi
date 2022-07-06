@@ -1,11 +1,3 @@
-export {
-  sendTransaction,
-  type SendTransactionArgs,
-  type SendTransactionResult,
-} from './sendTransaction'
+export * from './sendTransaction'
 
-export {
-  waitForTransaction,
-  type WaitForTransactionArgs,
-  type WaitForTransactionResult,
-} from './waitForTransaction'
+export * from './waitForTransaction'
