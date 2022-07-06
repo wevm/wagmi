@@ -138,5 +138,10 @@ export type {
   WebSocketProvider,
 } from './types'
 
-export { configureChains, deepEqual, normalizeChainId } from './utils'
+export {
+  configureChains,
+  deepEqual,
+  normalizeChainId,
+  parseContractResult,
+} from './utils'
 export type { ConfigureChainsConfig } from './utils'
