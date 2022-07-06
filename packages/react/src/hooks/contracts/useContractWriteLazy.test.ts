@@ -1,6 +1,6 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { getUnclaimedTokenId } from '@wagmi/core/test'
 
+import { getUnclaimedTokenId } from '../../../../core/test'
 import {
   act,
   actConnect,

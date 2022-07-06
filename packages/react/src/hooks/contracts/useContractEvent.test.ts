@@ -1,6 +1,6 @@
 import { erc20ABI } from '@wagmi/core'
-import { getUnclaimedTokenId } from '@wagmi/core/test'
 
+import { getUnclaimedTokenId } from '../../../../core/test'
 import {
   act,
   actConnect,
