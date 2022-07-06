@@ -5,6 +5,7 @@ import {
 } from '../transactions'
 
 export type WriteContractPreparedConfig = {
+  /** The prepared request to use when sending the transaction */
   request: PrepareContractTransactionResult
 }
 export type WriteContractPreparedResult = SendTransactionPreparedResult

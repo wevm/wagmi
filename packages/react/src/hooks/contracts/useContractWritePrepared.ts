@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {
-  PrepareContractTransactionResult,
+  WriteContractPreparedConfig,
   WriteContractPreparedResult,
   writeContractPrepared,
 } from '@wagmi/core'
@@ -9,7 +9,8 @@ import { useMutation } from 'react-query'
 import { MutationConfig } from '../../types'
 
 export type UseContractWritePreparedArgs = {
-  request?: PrepareContractTransactionResult
+  /** The prepared request to use when sending the transaction */
+  request?: WriteContractPreparedConfig['request']
 }
 export type UseContractWritePreparedConfig = MutationConfig<
   WriteContractPreparedResult,

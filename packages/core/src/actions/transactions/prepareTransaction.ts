@@ -5,6 +5,7 @@ import { fetchEnsAddress } from '../ens'
 import { getProvider } from '../providers'
 
 export type PrepareTransactionArgs = {
+  /** Request data to prepare the transaction */
   request: providers.TransactionRequest & {
     to: NonNullable<providers.TransactionRequest['to']>
   }

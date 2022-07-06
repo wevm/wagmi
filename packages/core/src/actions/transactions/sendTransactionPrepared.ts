@@ -10,6 +10,7 @@ import { getProvider } from '../providers'
 import { PrepareTransactionResult } from './prepareTransaction'
 
 export type SendTransactionPreparedArgs = {
+  /** The prepared request to use when sending the transaction */
   request: PrepareTransactionResult
 }
 

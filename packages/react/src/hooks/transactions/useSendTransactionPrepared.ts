@@ -9,6 +9,7 @@ import { useMutation } from 'react-query'
 import { MutationConfig } from '../../types'
 
 export type UseSendTransactionPreparedArgs = {
+  /** The prepared request to use when sending the transaction */
   request?: SendTransactionPreparedArgs['request']
 }
 
