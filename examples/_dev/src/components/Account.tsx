@@ -46,11 +46,6 @@ export const Account = () => {
         )}
       </div>
 
-      <SendTransactionPrepared />
-
-      {/* <WriteContract /> */}
-      {/* <WriteContractPrepared /> */}
-
       {false && (
         <>
           {true && (
@@ -61,11 +56,11 @@ export const Account = () => {
               <h4>Block Number</h4>
               <BlockNumber />
 
-              <h4>Send Transaction Eager</h4>
-              <SendTransactionPrepared />
-
               <h4>Send Transaction</h4>
               <SendTransaction />
+
+              <h4>Send Transaction Prepared</h4>
+              <SendTransactionPrepared />
             </>
           )}
 
@@ -77,6 +72,9 @@ export const Account = () => {
 
           <h4>Write Contract</h4>
           <WriteContract />
+
+          <h4>Write Contract Prepared</h4>
+          <WriteContractPrepared />
 
           {false && (
             <>

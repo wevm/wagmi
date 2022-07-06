@@ -43,72 +43,17 @@ describe('useSendTransactionPrepared', () => {
         "isLoading": false,
         "isSuccess": false,
         "reset": [Function],
-        "sendTransaction": [Function],
-        "sendTransactionAsync": [Function],
+        "sendTransaction": undefined,
+        "sendTransactionAsync": undefined,
         "status": "idle",
         "variables": undefined,
       }
     `)
   })
 
-  it('populates eager request', async () => {
-    const { result, waitFor } = renderHook(() =>
-      useSendTransactionPreparedWithConnect({
-        request: {
-          to: 'moxey.eth',
-          value: parseEther('1'),
-        },
-      }),
-    )
-
-    await waitFor(() =>
-      expect(result.current.prepareTransaction.isSuccess).toBeTruthy(),
-    )
-
-    expect(result.current.prepareTransaction).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "gasLimit": {
-            "hex": "0x5209",
-            "type": "BigNumber",
-          },
-          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          "value": {
-            "hex": "0x0de0b6b3a7640000",
-            "type": "BigNumber",
-          },
-        },
-        "error": null,
-        "fetchStatus": "idle",
-        "internal": {
-          "dataUpdatedAt": 1643673600000,
-          "errorUpdatedAt": 0,
-          "failureCount": 0,
-          "isFetchedAfterMount": true,
-          "isLoadingError": false,
-          "isPaused": false,
-          "isPlaceholderData": false,
-          "isPreviousData": false,
-          "isRefetchError": false,
-          "isStale": true,
-          "remove": [Function],
-        },
-        "isError": false,
-        "isFetched": true,
-        "isFetching": false,
-        "isIdle": false,
-        "isLoading": false,
-        "isRefetching": false,
-        "isSuccess": true,
-        "refetch": [Function],
-        "status": "success",
-      }
-    `)
-  })
-
   describe('return value', () => {
     describe('sendTransactionPrepared', () => {
-      it('uses eager request when it has been populated', async () => {
+      it('sends transaction', async () => {
         const utils = renderHook(() =>
           useSendTransactionPreparedWithConnect({
             request: {
@@ -227,7 +172,7 @@ describe('useSendTransactionPrepared', () => {
     })
 
     describe('sendTransactionPreparedAsync', () => {
-      it('uses configuration', async () => {
+      it('sends transaction', async () => {
         const utils = renderHook(() =>
           useSendTransactionPreparedWithConnect({
             request: {
