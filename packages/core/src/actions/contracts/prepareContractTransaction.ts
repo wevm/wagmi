@@ -13,7 +13,7 @@ import { fetchSigner } from '../accounts'
 import { prepareTransaction } from '../transactions'
 import { GetContractArgs, getContract } from './getContract'
 
-export type BuildContractTransactionConfig = Omit<
+export type PrepareContractTransactionConfig = Omit<
   GetContractArgs,
   'signerOrProvider'
 > & {
@@ -24,12 +24,12 @@ export type BuildContractTransactionConfig = Omit<
   overrides?: CallOverrides
 }
 
-export type BuildContractTransactionResult = PopulatedTransaction & {
+export type PrepareContractTransactionResult = PopulatedTransaction & {
   to: NonNullable<PopulatedTransaction['to']>
   gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
 }
 
-export async function buildContractTransaction<
+export async function prepareContractTransaction<
   TContract extends Contract = Contract,
 >({
   addressOrName,
@@ -37,7 +37,7 @@ export async function buildContractTransaction<
   contractInterface,
   functionName,
   overrides,
-}: BuildContractTransactionConfig): Promise<BuildContractTransactionResult> {
+}: PrepareContractTransactionConfig): Promise<PrepareContractTransactionResult> {
   const signer = await fetchSigner()
   if (!signer) throw new ConnectorNotFoundError()
 
@@ -68,6 +68,8 @@ export async function buildContractTransaction<
     request: unsignedTransaction,
     signerOrProvider: signer,
   })
+
+  console.log('test', gasLimit)
 
   return {
     ...unsignedTransaction,

@@ -1,80 +1,42 @@
 import * as React from 'react'
 import {
-  BuildContractTransactionConfig,
-  WriteContractEagerConfig,
-  WriteContractEagerResult,
-  writeContractLazy,
+  PrepareContractTransactionResult,
+  WriteContractPreparedResult,
   writeContractPrepared,
 } from '@wagmi/core'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
-import { useBuildContractTransaction } from './useBuildContractTransaction'
 
-export type UseContractWritePreparedVariables =
-  BuildContractTransactionConfig & {
-    unsignedTransaction?: WriteContractEagerConfig['unsignedTransaction']
-  }
-export type UseContractWritePreparedArgs = BuildContractTransactionConfig
+export type UseContractWritePreparedArgs = {
+  request?: PrepareContractTransactionResult
+}
 export type UseContractWritePreparedConfig = MutationConfig<
-  WriteContractEagerResult,
+  WriteContractPreparedResult,
   Error,
-  UseContractWritePreparedVariables
+  UseContractWritePreparedArgs
 >
 
-export const mutationKey = ([
-  { addressOrName, args, contractInterface, functionName, overrides },
-]: [Partial<BuildContractTransactionConfig>]) =>
+export const mutationKey = ([{ request }]: [UseContractWritePreparedArgs]) =>
   [
     {
       entity: 'writeContractPrepared',
-      addressOrName,
-      args,
-      contractInterface,
-      functionName,
-      overrides,
+      request,
     },
   ] as const
 
-const mutationFn = ({
-  addressOrName,
-  args,
-  contractInterface,
-  functionName,
-  overrides,
-  unsignedTransaction,
-}: UseContractWritePreparedVariables) => {
-  return unsignedTransaction
-    ? writeContractPrepared({ unsignedTransaction })
-    : writeContractLazy({
-        addressOrName,
-        contractInterface,
-        functionName,
-        args,
-        overrides,
-      })
+const mutationFn = ({ request }: UseContractWritePreparedArgs) => {
+  if (!request) throw new Error('request is required')
+  return writeContractPrepared({ request })
 }
 
 export function useContractWritePrepared({
-  addressOrName,
-  args,
-  contractInterface,
-  functionName,
-  overrides,
+  request,
   onError,
   onMutate,
   onSettled,
   onSuccess,
 }: UseContractWritePreparedArgs & UseContractWritePreparedConfig) {
-  const buildContractTransactionQuery = useBuildContractTransaction({
-    addressOrName,
-    args,
-    contractInterface,
-    functionName,
-    overrides,
-  })
-  const { data: unsignedTransaction } = buildContractTransactionQuery
-
   const {
     data,
     error,
@@ -87,74 +49,23 @@ export function useContractWritePrepared({
     reset,
     status,
     variables,
-  } = useMutation(
-    mutationKey([
-      {
-        addressOrName,
-        args,
-        contractInterface,
-        functionName,
-        overrides,
-      },
-    ]),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
-    },
-  )
+  } = useMutation(mutationKey([{ request }]), mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
-  const write = React.useCallback(
-    () =>
-      mutate({
-        addressOrName,
-        contractInterface,
-        functionName,
-        args,
-        overrides,
-        unsignedTransaction,
-      }),
-    [
-      addressOrName,
-      args,
-      contractInterface,
-      functionName,
-      mutate,
-      overrides,
-      unsignedTransaction,
-    ],
-  )
+  const write = React.useCallback(() => mutate({ request }), [mutate, request])
 
   const writeAsync = React.useCallback(
-    () =>
-      mutateAsync({
-        addressOrName,
-        args,
-        contractInterface,
-        functionName,
-        overrides,
-        unsignedTransaction,
-      }),
-    [
-      addressOrName,
-      args,
-      contractInterface,
-      functionName,
-      mutateAsync,
-      overrides,
-      unsignedTransaction,
-    ],
+    () => mutateAsync({ request }),
+    [mutateAsync, request],
   )
 
   return {
     data,
     error,
-    internal: {
-      unsignedTransaction,
-      buildContractTransactionQuery,
-    },
     isError,
     isIdle,
     isLoading,
@@ -162,7 +73,7 @@ export function useContractWritePrepared({
     reset,
     status,
     variables,
-    write,
-    writeAsync,
+    write: request ? write : undefined,
+    writeAsync: request ? writeAsync : undefined,
   }
 }

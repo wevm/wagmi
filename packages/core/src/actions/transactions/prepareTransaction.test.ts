@@ -19,13 +19,13 @@ describe('prepareTransaction', () => {
       to: 'moxey.eth',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await prepareTransaction({
+    const preparedRequest = await prepareTransaction({
       request,
     })
 
     expect(fetchEnsAddressSpy).toBeCalledWith({ name: 'moxey.eth' })
     expect(estimateGasSpy).toBeCalledWith(request)
-    expect(eagerRequest).toMatchInlineSnapshot(`
+    expect(preparedRequest).toMatchInlineSnapshot(`
       {
         "gasLimit": {
           "hex": "0x5209",
@@ -49,13 +49,13 @@ describe('prepareTransaction', () => {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await prepareTransaction({
+    const preparedRequest = await prepareTransaction({
       request,
     })
 
     expect(fetchEnsAddressSpy).toBeCalledTimes(0)
     expect(estimateGasSpy).toBeCalledWith(request)
-    expect(eagerRequest).toMatchInlineSnapshot(`
+    expect(preparedRequest).toMatchInlineSnapshot(`
       {
         "gasLimit": {
           "hex": "0x5209",
@@ -80,13 +80,13 @@ describe('prepareTransaction', () => {
       to: 'moxey.eth',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await prepareTransaction({
+    const preparedRequest = await prepareTransaction({
       request,
     })
 
     expect(fetchEnsAddressSpy).toBeCalledWith({ name: 'moxey.eth' })
     expect(estimateGasSpy).toBeCalledTimes(0)
-    expect(eagerRequest).toMatchInlineSnapshot(`
+    expect(preparedRequest).toMatchInlineSnapshot(`
       {
         "gasLimit": {
           "hex": "0x0f4240",
@@ -111,13 +111,13 @@ describe('prepareTransaction', () => {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await prepareTransaction({
+    const preparedRequest = await prepareTransaction({
       request,
     })
 
     expect(fetchEnsAddressSpy).toBeCalledTimes(0)
     expect(estimateGasSpy).toBeCalledTimes(0)
-    expect(eagerRequest).toMatchInlineSnapshot(`
+    expect(preparedRequest).toMatchInlineSnapshot(`
       {
         "gasLimit": {
           "hex": "0x0f4240",

@@ -1,8 +1,8 @@
 import {
-  BuildContractTransactionConfig,
-  BuildContractTransactionResult,
   FetchSignerResult,
-  buildContractTransaction,
+  PrepareContractTransactionConfig,
+  PrepareContractTransactionResult,
+  prepareContractTransaction,
 } from '@wagmi/core'
 import { hashQueryKey } from 'react-query'
 
@@ -10,9 +10,9 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UseBuildContractTransactionArgs = BuildContractTransactionConfig
-export type UseBuildContractTransactionConfig = QueryConfig<
-  BuildContractTransactionResult,
+export type UseprepareContractTransactionArgs = PrepareContractTransactionConfig
+export type UsePrepareContractTransactionConfig = QueryConfig<
+  PrepareContractTransactionResult,
   Error
 >
 
@@ -23,12 +23,12 @@ export const queryKey = (
     contractInterface,
     functionName,
     overrides,
-  }: UseBuildContractTransactionArgs,
+  }: UseprepareContractTransactionArgs,
   { chainId, signer }: { chainId?: number; signer?: FetchSignerResult },
 ) =>
   [
     {
-      entity: 'prepareTransaction',
+      entity: 'prepareContractTransaction',
       addressOrName,
       args,
       chainId,
@@ -50,7 +50,7 @@ const queryFn = ({
     { args, addressOrName, contractInterface, functionName, overrides },
   ],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return buildContractTransaction({
+  return prepareContractTransaction({
     args,
     addressOrName,
     contractInterface,
@@ -59,7 +59,7 @@ const queryFn = ({
   })
 }
 
-export function useBuildContractTransaction({
+export function usePrepareContractTransaction({
   addressOrName,
   contractInterface,
   functionName,
@@ -72,7 +72,7 @@ export function useBuildContractTransaction({
   onError,
   onSettled,
   onSuccess,
-}: UseBuildContractTransactionArgs & UseBuildContractTransactionConfig) {
+}: UseprepareContractTransactionArgs & UsePrepareContractTransactionConfig) {
   const chainId = useChainId()
   const { data: signer } = useSigner()
 

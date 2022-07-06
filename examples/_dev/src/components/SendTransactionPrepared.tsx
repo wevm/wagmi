@@ -3,17 +3,11 @@ import { usePrepareTransaction, useSendTransactionPrepared } from 'wagmi'
 
 export const SendTransactionPrepared = () => {
   // TODO: test if this works w/o signer
-  const {
-    data: preparedRequest,
-    error: eagerError,
-    isError: isEagerError,
-  } = usePrepareTransaction({
+  const { data: preparedRequest } = usePrepareTransaction({
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =
     useSendTransactionPrepared({ request: preparedRequest })
-
-  console.log('test', isEagerError, eagerError)
 
   if (isLoading) return <div>Check Wallet</div>
 

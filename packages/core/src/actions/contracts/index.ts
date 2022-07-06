@@ -1,8 +1,8 @@
 export {
-  buildContractTransaction,
-  type BuildContractTransactionConfig,
-  type BuildContractTransactionResult,
-} from './buildContractTransaction'
+  prepareContractTransaction,
+  type PrepareContractTransactionConfig,
+  type PrepareContractTransactionResult,
+} from './prepareContractTransaction'
 
 export { getContract, type GetContractArgs } from './getContract'
 
@@ -34,8 +34,8 @@ export {
 
 export {
   writeContractPrepared,
-  type WriteContractEagerConfig,
-  type WriteContractEagerResult,
+  type WriteContractPreparedConfig,
+  type WriteContractPreparedResult,
 } from './writeContractPrepared'
 
 export {

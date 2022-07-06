@@ -19,6 +19,7 @@ export {
   useContractReads,
   useContractWritePrepared,
   useContractWriteLazy,
+  usePrepareContractTransaction,
   useToken,
 } from './contracts'
 

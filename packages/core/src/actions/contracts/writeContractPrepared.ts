@@ -1,16 +1,16 @@
-import { BuildContractTransactionResult } from './buildContractTransaction'
+import { PrepareContractTransactionResult } from './prepareContractTransaction'
 import {
   SendTransactionPreparedResult,
   sendTransactionPrepared,
 } from '../transactions'
 
-export type WriteContractEagerConfig = {
-  unsignedTransaction: BuildContractTransactionResult
+export type WriteContractPreparedConfig = {
+  request: PrepareContractTransactionResult
 }
-export type WriteContractEagerResult = SendTransactionPreparedResult
+export type WriteContractPreparedResult = SendTransactionPreparedResult
 
 export async function writeContractPrepared({
-  unsignedTransaction,
-}: WriteContractEagerConfig): Promise<WriteContractEagerResult> {
-  return await sendTransactionPrepared({ request: unsignedTransaction })
+  request,
+}: WriteContractPreparedConfig): Promise<WriteContractPreparedResult> {
+  return await sendTransactionPrepared({ request })
 }
