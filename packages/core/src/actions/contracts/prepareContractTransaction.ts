@@ -69,8 +69,6 @@ export async function prepareContractTransaction<
     signerOrProvider: signer,
   })
 
-  console.log('test', gasLimit)
-
   return {
     ...unsignedTransaction,
     gasLimit: BigNumber.from(gasLimit),

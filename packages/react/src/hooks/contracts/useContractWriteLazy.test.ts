@@ -1,10 +1,10 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
+import { getUnclaimedTokenId } from '@wagmi/core/test'
 
 import {
   act,
   actConnect,
   getSigners,
-  getUnclaimedTokenId,
   mlootContractConfig,
   renderHook,
 } from '../../../test'

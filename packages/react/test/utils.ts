@@ -1,5 +1,4 @@
 import { act } from '@testing-library/react'
-import { Contract } from 'ethers'
 
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import {
@@ -87,37 +86,6 @@ export async function actSwitchNetwork(config: {
 
   const { waitFor } = utils
   await waitFor(() => expect(getNetwork(utils).isSuccess).toBeTruthy())
-}
-
-export async function getUnclaimedTokenId(
-  addressOrName: string,
-  maxAttempts = 3,
-) {
-  function getRandomTokenId(from: number, to: number) {
-    return Math.floor(Math.random() * to) + from
-  }
-
-  let attempts = 0
-  const provider = getProvider()
-  const contract = new Contract(
-    addressOrName,
-    [
-      'function ownerOf(uint256 _tokenId) external view returns (address)',
-      'function totalSupply() view returns (uint256)',
-    ],
-    provider,
-  )
-  const totalSupply = await contract.totalSupply()
-  while (attempts < maxAttempts) {
-    const randomTokenId = getRandomTokenId(1, totalSupply)
-    try {
-      await contract.ownerOf(randomTokenId)
-    } catch (error) {
-      return randomTokenId
-    }
-    attempts += 1
-  }
-  return false
 }
 
 /**

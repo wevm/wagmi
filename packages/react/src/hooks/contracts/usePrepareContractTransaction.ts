@@ -10,7 +10,7 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UseprepareContractTransactionArgs = PrepareContractTransactionConfig
+export type UsePrepareContractTransactionArgs = PrepareContractTransactionConfig
 export type UsePrepareContractTransactionConfig = QueryConfig<
   PrepareContractTransactionResult,
   Error
@@ -23,7 +23,7 @@ export const queryKey = (
     contractInterface,
     functionName,
     overrides,
-  }: UseprepareContractTransactionArgs,
+  }: UsePrepareContractTransactionArgs,
   { chainId, signer }: { chainId?: number; signer?: FetchSignerResult },
 ) =>
   [
@@ -72,7 +72,7 @@ export function usePrepareContractTransaction({
   onError,
   onSettled,
   onSuccess,
-}: UseprepareContractTransactionArgs & UsePrepareContractTransactionConfig) {
+}: UsePrepareContractTransactionArgs & UsePrepareContractTransactionConfig) {
   const chainId = useChainId()
   const { data: signer } = useSigner()
 

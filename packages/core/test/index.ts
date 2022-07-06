@@ -19,4 +19,9 @@ export function setupClient(config: Config = {}) {
 }
 
 export { mlootContractConfig, wagmigotchiContractConfig } from './constants'
-export { getProvider, getWebSocketProvider, getSigners } from './utils'
+export {
+  getUnclaimedTokenId,
+  getProvider,
+  getWebSocketProvider,
+  getSigners,
+} from './utils'

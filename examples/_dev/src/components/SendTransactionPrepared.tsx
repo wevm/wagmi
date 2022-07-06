@@ -2,7 +2,6 @@ import { BigNumber } from 'ethers'
 import { usePrepareTransaction, useSendTransactionPrepared } from 'wagmi'
 
 export const SendTransactionPrepared = () => {
-  // TODO: test if this works w/o signer
   const { data: preparedRequest } = usePrepareTransaction({
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
