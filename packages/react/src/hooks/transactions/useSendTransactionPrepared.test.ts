@@ -1,26 +1,32 @@
+import { TransactionResponse } from '@ethersproject/providers'
 import { parseEther } from 'ethers/lib/utils'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UseSendTransactionEagerArgs,
-  UseSendTransactionEagerConfig,
-  useSendTransactionEager,
-} from './useSendTransactionEager'
+  UsePrepareTransactionArgs,
+  UsePrepareTransactionConfig,
+  usePrepareTransaction,
+} from './usePrepareTransaction'
+import { useSendTransactionPrepared } from './useSendTransactionPrepared'
 
-function useSendTransactionEagerWithConnect(
-  config: UseSendTransactionEagerArgs & UseSendTransactionEagerConfig,
+function useSendTransactionPreparedWithConnect(
+  config: UsePrepareTransactionArgs & UsePrepareTransactionConfig,
 ) {
+  const prepareTransaction = usePrepareTransaction(config)
   return {
+    prepareTransaction,
     connect: useConnect(),
-    sendTransactionEager: useSendTransactionEager(config),
+    sendTransactionPrepared: useSendTransactionPrepared({
+      request: prepareTransaction.data,
+    }),
   }
 }
 
-describe('useSendTransactionEager', () => {
+describe('useSendTransactionPrepared', () => {
   it('mounts', async () => {
     const { result } = renderHook(() =>
-      useSendTransactionEager({
+      useSendTransactionPrepared({
         request: {
           to: 'moxey.eth',
           value: parseEther('1'),
@@ -32,9 +38,6 @@ describe('useSendTransactionEager', () => {
       {
         "data": undefined,
         "error": null,
-        "internal": {
-          "eagerRequest": undefined,
-        },
         "isError": false,
         "isIdle": true,
         "isLoading": false,
@@ -50,7 +53,7 @@ describe('useSendTransactionEager', () => {
 
   it('populates eager request', async () => {
     const { result, waitFor } = renderHook(() =>
-      useSendTransactionEager({
+      useSendTransactionPreparedWithConnect({
         request: {
           to: 'moxey.eth',
           value: parseEther('1'),
@@ -59,44 +62,55 @@ describe('useSendTransactionEager', () => {
     )
 
     await waitFor(() =>
-      expect(result.current.internal.eagerRequest).toBeDefined(),
+      expect(result.current.prepareTransaction.isSuccess).toBeTruthy(),
     )
 
-    expect(result.current).toMatchInlineSnapshot(`
+    expect(result.current.prepareTransaction).toMatchInlineSnapshot(`
       {
-        "data": undefined,
-        "error": null,
-        "internal": {
-          "eagerRequest": {
-            "gasLimit": {
-              "hex": "0x5209",
-              "type": "BigNumber",
-            },
-            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-            "value": {
-              "hex": "0x0de0b6b3a7640000",
-              "type": "BigNumber",
-            },
+        "data": {
+          "gasLimit": {
+            "hex": "0x5209",
+            "type": "BigNumber",
+          },
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": {
+            "hex": "0x0de0b6b3a7640000",
+            "type": "BigNumber",
           },
         },
+        "error": null,
+        "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 1643673600000,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": true,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": true,
+          "remove": [Function],
+        },
         "isError": false,
-        "isIdle": true,
+        "isFetched": true,
+        "isFetching": false,
+        "isIdle": false,
         "isLoading": false,
-        "isSuccess": false,
-        "reset": [Function],
-        "sendTransaction": [Function],
-        "sendTransactionAsync": [Function],
-        "status": "idle",
-        "variables": undefined,
+        "isRefetching": false,
+        "isSuccess": true,
+        "refetch": [Function],
+        "status": "success",
       }
     `)
   })
 
   describe('return value', () => {
-    describe('sendTransactionEager', () => {
+    describe('sendTransactionPrepared', () => {
       it('uses eager request when it has been populated', async () => {
         const utils = renderHook(() =>
-          useSendTransactionEagerWithConnect({
+          useSendTransactionPreparedWithConnect({
             request: {
               to: 'moxey.eth',
               value: parseEther('1'),
@@ -108,37 +122,24 @@ describe('useSendTransactionEager', () => {
 
         await waitFor(() =>
           expect(
-            result.current.sendTransactionEager.internal.eagerRequest,
+            result.current.sendTransactionPrepared.sendTransaction,
           ).toBeDefined(),
         )
 
         await act(async () => {
-          result.current.sendTransactionEager.sendTransaction()
+          result.current.sendTransactionPrepared.sendTransaction?.()
         })
 
         await waitFor(() =>
-          expect(result.current.sendTransactionEager.isSuccess).toBeTruthy(),
+          expect(result.current.sendTransactionPrepared.isSuccess).toBeTruthy(),
         )
 
-        const { data, ...res } = result.current.sendTransactionEager
+        const { data, ...res } = result.current.sendTransactionPrepared
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
-            "internal": {
-              "eagerRequest": {
-                "gasLimit": {
-                  "hex": "0x5209",
-                  "type": "BigNumber",
-                },
-                "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
-              },
-            },
             "isError": false,
             "isIdle": false,
             "isLoading": false,
@@ -154,66 +155,6 @@ describe('useSendTransactionEager', () => {
                   "type": "BigNumber",
                 },
                 "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
-              },
-            },
-          }
-        `)
-      })
-
-      it('uses given request if eager request has not been populated', async () => {
-        const utils = renderHook(() =>
-          useSendTransactionEagerWithConnect({
-            request: {
-              to: 'moxey.eth',
-              value: parseEther('1'),
-            },
-          }),
-        )
-        const { result, waitFor } = utils
-        await actConnect({ utils })
-
-        await act(async () => {
-          result.current.sendTransactionEager.sendTransaction()
-        })
-
-        await waitFor(() =>
-          expect(result.current.sendTransactionEager.isSuccess).toBeTruthy(),
-        )
-
-        const { data, ...res } = result.current.sendTransactionEager
-        expect(data).toBeDefined()
-        expect(data?.hash).toBeDefined()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "error": null,
-            "internal": {
-              "eagerRequest": {
-                "gasLimit": {
-                  "hex": "0x5209",
-                  "type": "BigNumber",
-                },
-                "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
-              },
-            },
-            "isError": false,
-            "isIdle": false,
-            "isLoading": false,
-            "isSuccess": true,
-            "reset": [Function],
-            "sendTransaction": [Function],
-            "sendTransactionAsync": [Function],
-            "status": "success",
-            "variables": {
-              "request": {
-                "to": "moxey.eth",
                 "value": {
                   "hex": "0x0de0b6b3a7640000",
                   "type": "BigNumber",
@@ -226,7 +167,7 @@ describe('useSendTransactionEager', () => {
 
       it('fails on insufficient balance', async () => {
         const utils = renderHook(() =>
-          useSendTransactionEagerWithConnect({
+          useSendTransactionPreparedWithConnect({
             request: {
               to: 'moxey.eth',
               value: parseEther('100000'),
@@ -238,19 +179,19 @@ describe('useSendTransactionEager', () => {
 
         await waitFor(() =>
           expect(
-            result.current.sendTransactionEager.internal.eagerRequest,
+            result.current.sendTransactionPrepared.sendTransaction,
           ).toBeDefined(),
         )
 
         await act(async () => {
-          result.current.sendTransactionEager.sendTransaction()
+          result.current.sendTransactionPrepared.sendTransaction?.()
         })
 
         await waitFor(() =>
-          expect(result.current.sendTransactionEager.isError).toBeTruthy(),
+          expect(result.current.sendTransactionPrepared.isError).toBeTruthy(),
         )
 
-        const { error, ...res } = result.current.sendTransactionEager
+        const { error, ...res } = result.current.sendTransactionPrepared
         expect(
           error?.message?.includes(
             "sender doesn't have enough funds to send tx",
@@ -259,19 +200,6 @@ describe('useSendTransactionEager', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "internal": {
-              "eagerRequest": {
-                "gasLimit": {
-                  "hex": "0x5209",
-                  "type": "BigNumber",
-                },
-                "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-                "value": {
-                  "hex": "0x152d02c7e14af6800000",
-                  "type": "BigNumber",
-                },
-              },
-            },
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -298,10 +226,10 @@ describe('useSendTransactionEager', () => {
       })
     })
 
-    describe('sendTransactionEagerAsync', () => {
+    describe('sendTransactionPreparedAsync', () => {
       it('uses configuration', async () => {
         const utils = renderHook(() =>
-          useSendTransactionEagerWithConnect({
+          useSendTransactionPreparedWithConnect({
             request: {
               to: 'moxey.eth',
               value: parseEther('1'),
@@ -313,24 +241,24 @@ describe('useSendTransactionEager', () => {
 
         await waitFor(() =>
           expect(
-            result.current.sendTransactionEager.internal.eagerRequest,
+            result.current.sendTransactionPrepared.sendTransaction,
           ).toBeDefined(),
         )
 
         await act(async () => {
           const res =
-            await result.current.sendTransactionEager.sendTransactionAsync()
+            (await result.current.sendTransactionPrepared.sendTransactionAsync?.()) as TransactionResponse
           expect(res.hash).toBeDefined()
         })
 
         await waitFor(() =>
-          expect(result.current.sendTransactionEager.isSuccess).toBeTruthy(),
+          expect(result.current.sendTransactionPrepared.isSuccess).toBeTruthy(),
         )
       })
 
       it('throws on error', async () => {
         const utils = renderHook(() =>
-          useSendTransactionEagerWithConnect({
+          useSendTransactionPreparedWithConnect({
             request: {
               to: 'moxey.eth',
               value: parseEther('100000'),
@@ -342,7 +270,7 @@ describe('useSendTransactionEager', () => {
 
         await waitFor(() =>
           expect(
-            result.current.sendTransactionEager.internal.eagerRequest,
+            result.current.sendTransactionPrepared.sendTransactionAsync,
           ).toBeDefined(),
         )
 
@@ -353,7 +281,7 @@ describe('useSendTransactionEager', () => {
 
         await act(async () => {
           try {
-            await result.current.sendTransactionEager.sendTransactionAsync()
+            await result.current.sendTransactionPrepared.sendTransactionAsync?.()
           } catch (error) {
             expect(
               (error as Error)?.message?.includes(
@@ -364,7 +292,7 @@ describe('useSendTransactionEager', () => {
         })
 
         await waitFor(() =>
-          expect(result.current.sendTransactionEager.isError).toBeTruthy(),
+          expect(result.current.sendTransactionPrepared.isError).toBeTruthy(),
         )
       })
     })

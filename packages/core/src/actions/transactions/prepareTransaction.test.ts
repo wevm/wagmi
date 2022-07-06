@@ -3,9 +3,9 @@ import { BigNumber } from 'ethers'
 import { setupClient } from '../../../test'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'
 import { getProvider } from '../providers'
-import { buildTransactionRequest } from './buildTransactionRequest'
+import { prepareTransaction } from './prepareTransaction'
 
-describe('buildTransactionRequest', () => {
+describe('prepareTransaction', () => {
   beforeEach(() => setupClient())
 
   afterEach(() => jest.clearAllMocks())
@@ -19,7 +19,7 @@ describe('buildTransactionRequest', () => {
       to: 'moxey.eth',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await buildTransactionRequest({
+    const eagerRequest = await prepareTransaction({
       request,
     })
 
@@ -49,7 +49,7 @@ describe('buildTransactionRequest', () => {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await buildTransactionRequest({
+    const eagerRequest = await prepareTransaction({
       request,
     })
 
@@ -80,7 +80,7 @@ describe('buildTransactionRequest', () => {
       to: 'moxey.eth',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await buildTransactionRequest({
+    const eagerRequest = await prepareTransaction({
       request,
     })
 
@@ -111,7 +111,7 @@ describe('buildTransactionRequest', () => {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const eagerRequest = await buildTransactionRequest({
+    const eagerRequest = await prepareTransaction({
       request,
     })
 
@@ -133,54 +133,35 @@ describe('buildTransactionRequest', () => {
   })
 
   describe('errors', () => {
-    it('undefined `to` if fetchEnsAddress throws', async () => {
-      jest.spyOn(fetchEnsAddress, 'fetchEnsAddress').mockRejectedValue('error')
+    it('fetchEnsAddress throws', async () => {
+      jest
+        .spyOn(fetchEnsAddress, 'fetchEnsAddress')
+        .mockRejectedValue(new Error('error'))
 
       const request = {
         to: 'moxey.eth',
         value: BigNumber.from('10000000000000000'), // 0.01 ETH
       }
-      const eagerRequest = await buildTransactionRequest({
-        request,
-      })
-
-      expect(eagerRequest).toMatchInlineSnapshot(`
-        {
-          "gasLimit": {
-            "hex": "0x5209",
-            "type": "BigNumber",
-          },
-          "to": undefined,
-          "value": {
-            "hex": "0x2386f26fc10000",
-            "type": "BigNumber",
-          },
-        }
-      `)
+      expect(() =>
+        prepareTransaction({
+          request,
+        }),
+      ).rejects.toThrowError()
     })
 
     it('undefined `gasLimit` if estimateGas throws', async () => {
       const provider = getProvider()
-      jest.spyOn(provider, 'estimateGas').mockRejectedValue('error')
+      jest.spyOn(provider, 'estimateGas').mockRejectedValue(new Error('error'))
 
       const request = {
         to: 'moxey.eth',
         value: BigNumber.from('10000000000000000'), // 0.01 ETH
       }
-      const eagerRequest = await buildTransactionRequest({
-        request,
-      })
-
-      expect(eagerRequest).toMatchInlineSnapshot(`
-        {
-          "gasLimit": undefined,
-          "to": undefined,
-          "value": {
-            "hex": "0x2386f26fc10000",
-            "type": "BigNumber",
-          },
-        }
-      `)
+      expect(() =>
+        prepareTransaction({
+          request,
+        }),
+      ).rejects.toThrowError()
     })
   })
 })

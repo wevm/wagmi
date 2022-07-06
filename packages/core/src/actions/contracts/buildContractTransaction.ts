@@ -5,9 +5,12 @@ import {
   PopulatedTransaction,
 } from 'ethers/lib/ethers'
 
-import { ConnectorNotFoundError } from '../../errors'
+import {
+  ConnectorNotFoundError,
+  ContractMethodDoesNotExistError,
+} from '../../errors'
 import { fetchSigner } from '../accounts'
-import { buildTransactionRequest } from '../transactions'
+import { prepareTransaction } from '../transactions'
 import { GetContractArgs, getContract } from './getContract'
 
 export type BuildContractTransactionConfig = Omit<
@@ -42,14 +45,19 @@ export async function buildContractTransaction<
   })
 
   const populateTransactionFn = contract.populateTransaction[functionName]
-  if (!populateTransactionFn) throw new Error('TODO')
+  if (!populateTransactionFn) {
+    throw new ContractMethodDoesNotExistError({
+      addressOrName,
+      functionName,
+    })
+  }
 
   const params = [
     ...(Array.isArray(args) ? args : args ? [args] : []),
     ...(overrides ? [overrides] : []),
   ]
   const unsignedTransaction = await populateTransactionFn(...params)
-  const { gasLimit } = await buildTransactionRequest({
+  const { gasLimit } = await prepareTransaction({
     request: unsignedTransaction,
     signerOrProvider: signer,
   })

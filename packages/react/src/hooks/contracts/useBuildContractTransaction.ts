@@ -28,7 +28,7 @@ export const queryKey = (
 ) =>
   [
     {
-      entity: 'buildTransactionRequest',
+      entity: 'prepareTransaction',
       addressOrName,
       args,
       chainId,

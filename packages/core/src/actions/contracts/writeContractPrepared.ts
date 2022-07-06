@@ -1,17 +1,17 @@
 import { PopulatedTransaction } from 'ethers'
 
 import {
-  SendTransactionEagerResult,
-  sendTransactionEager,
+  SendTransactionPreparedResult,
+  sendTransactionPrepared,
 } from '../transactions'
 
 export type WriteContractEagerConfig = {
   unsignedTransaction: PopulatedTransaction
 }
-export type WriteContractEagerResult = SendTransactionEagerResult
+export type WriteContractEagerResult = SendTransactionPreparedResult
 
-export async function writeContractEager({
+export async function writeContractPrepared({
   unsignedTransaction,
 }: WriteContractEagerConfig): Promise<WriteContractEagerResult> {
-  return await sendTransactionEager({ request: unsignedTransaction })
+  return await sendTransactionPrepared({ request: unsignedTransaction })
 }

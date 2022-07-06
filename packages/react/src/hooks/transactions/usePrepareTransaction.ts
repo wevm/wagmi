@@ -1,48 +1,51 @@
 import {
-  BuildTransactionRequestArgs,
-  BuildTransactionRequestResult,
-  buildTransactionRequest,
+  PrepareTransactionArgs,
+  PrepareTransactionResult,
+  prepareTransaction,
 } from '@wagmi/core'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { deepEqual } from '../../utils'
 import { useProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
 
-export type UseBuildTransactionRequestArgs = BuildTransactionRequestArgs
+export type UsePrepareTransactionArgs = PrepareTransactionArgs
 
-export type UseBuildTransactionRequestConfig = QueryConfig<
-  BuildTransactionRequestResult,
+export type UsePrepareTransactionConfig = QueryConfig<
+  PrepareTransactionResult,
   Error
 >
 
 export const queryKey = ({
   chainId,
   request,
-}: UseBuildTransactionRequestArgs & {
+}: UsePrepareTransactionArgs & {
   chainId?: number
-}) => [{ entity: 'buildTransactionRequest', chainId, request }] as const
+}) => [{ entity: 'prepareTransaction', chainId, request }] as const
 
 const queryFn = ({
   queryKey: [{ request }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return buildTransactionRequest({ request })
+  return prepareTransaction({ request })
 }
 
-export function useBuildTransactionRequest({
+export function usePrepareTransaction({
   request,
   cacheTime,
   enabled = true,
-  staleTime = 1_000 * 60 * 60 * 24, // 24 hours
+  staleTime,
   suspense,
   onError,
   onSettled,
   onSuccess,
-}: UseBuildTransactionRequestArgs & UseBuildTransactionRequestConfig) {
+}: UsePrepareTransactionArgs & UsePrepareTransactionConfig) {
   const chainId = useChainId()
   const provider = useProvider()
+
   return useQuery(queryKey({ request, chainId }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && provider),
+    isDataEqual: deepEqual,
     staleTime,
     suspense,
     onError,

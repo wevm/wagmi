@@ -7,7 +7,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # useWaitForTransaction
 
-Hook for declaratively waiting until transaction is processed. Pairs well with [`useContractWriteLazy`](/docs/hooks/useContractWriteLazy)/[`useContractWriteEager`](/docs/hooks/useContractWriteEager) and [`useSendTransaction`](/docs/hooks/useSendTransaction).
+Hook for declaratively waiting until transaction is processed. Pairs well with [`useContractWriteLazy`](/docs/hooks/useContractWriteLazy)/[`useContractWritePrepared`](/docs/hooks/useContractWritePrepared) and [`useSendTransaction`](/docs/hooks/useSendTransaction).
 
 ```ts
 import { useWaitForTransaction } from 'wagmi'
@@ -86,13 +86,13 @@ function App() {
 
 ### hash (optional)
 
-Transaction hash to monitor. Works well with [`useContractWriteLazy`](/docs/hooks/useContractWriteLazy)/[`useContractWriteEager`](/docs/hooks/useContractWriteEager) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.hash`.
+Transaction hash to monitor. Works well with [`useContractWriteLazy`](/docs/hooks/useContractWriteLazy)/[`useContractWritePrepared`](/docs/hooks/useContractWritePrepared) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.hash`.
 
 ```tsx {5}
-import { useContractWriteEager, useWaitForTransaction } from 'wagmi'
+import { useContractWritePrepared, useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWriteEager({
+  const contractWrite = useContractWritePrepared({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -120,13 +120,13 @@ function App() {
 
 ### wait (optional)
 
-Function that resolves to processed transaction receipt. Works well with [`useContractWriteLazy`](/docs/hooks/useContractWriteLazy)/[`useContractWriteEager`](/docs/hooks/useContractWriteEager) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.wait`.
+Function that resolves to processed transaction receipt. Works well with [`useContractWriteLazy`](/docs/hooks/useContractWriteLazy)/[`useContractWritePrepared`](/docs/hooks/useContractWritePrepared) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.wait`.
 
 ```tsx {5}
-import { useContractWriteEager, useWaitForTransaction } from 'wagmi'
+import { useContractWritePrepared, useWaitForTransaction } from 'wagmi'
 
 function App() {
-  const contractWrite = useContractWriteEager({
+  const contractWrite = useContractWritePrepared({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',

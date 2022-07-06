@@ -7,17 +7,17 @@ import {
 } from '../../errors'
 import { fetchSigner } from '../accounts'
 import { getProvider } from '../providers'
+import { PrepareTransactionResult } from './prepareTransaction'
 
-export type SendTransactionEagerArgs = {
-  /** Object to use when creating transaction */
-  request: providers.TransactionRequest
+export type SendTransactionPreparedArgs = {
+  request: PrepareTransactionResult
 }
 
-export type SendTransactionEagerResult = providers.TransactionResponse
+export type SendTransactionPreparedResult = providers.TransactionResponse
 
-export async function sendTransactionEager({
+export async function sendTransactionPrepared({
   request,
-}: SendTransactionEagerArgs): Promise<SendTransactionEagerResult> {
+}: SendTransactionPreparedArgs): Promise<SendTransactionPreparedResult> {
   try {
     /*********************************************************/
     /** START: WalletConnect mobile deep link cautious code. */

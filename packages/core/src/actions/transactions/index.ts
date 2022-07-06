@@ -1,8 +1,8 @@
 export {
-  buildTransactionRequest,
-  type BuildTransactionRequestArgs,
-  type BuildTransactionRequestResult,
-} from './buildTransactionRequest'
+  prepareTransaction,
+  type PrepareTransactionArgs,
+  type PrepareTransactionResult,
+} from './prepareTransaction'
 
 export {
   sendTransactionLazy,
@@ -11,10 +11,10 @@ export {
 } from './sendTransactionLazy'
 
 export {
-  sendTransactionEager,
-  type SendTransactionEagerArgs,
-  type SendTransactionEagerResult,
-} from './sendTransactionEager'
+  sendTransactionPrepared,
+  type SendTransactionPreparedArgs,
+  type SendTransactionPreparedResult,
+} from './sendTransactionPrepared'
 
 export {
   waitForTransaction,

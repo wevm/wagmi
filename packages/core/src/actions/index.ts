@@ -37,7 +37,7 @@ export {
   watchContractEvent,
   watchReadContract,
   watchReadContracts,
-  writeContractEager,
+  writeContractPrepared,
   writeContractLazy,
   type BuildContractTransactionConfig,
   type BuildContractTransactionResult,
@@ -103,16 +103,16 @@ export {
 } from './tokens'
 
 export {
-  buildTransactionRequest,
+  prepareTransaction,
   sendTransactionLazy,
-  sendTransactionEager,
+  sendTransactionPrepared,
   waitForTransaction,
-  type BuildTransactionRequestArgs,
-  type BuildTransactionRequestResult,
+  type PrepareTransactionArgs,
+  type PrepareTransactionResult,
   type SendTransactionLazyArgs,
   type SendTransactionLazyResult,
-  type SendTransactionEagerArgs,
-  type SendTransactionEagerResult,
+  type SendTransactionPreparedArgs,
+  type SendTransactionPreparedResult,
   type WaitForTransactionArgs,
   type WaitForTransactionResult,
 } from './transactions'

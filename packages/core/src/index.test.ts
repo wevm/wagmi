@@ -3,7 +3,8 @@ import * as Exports from './'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "buildTransactionRequest",
+      "buildContractTransaction",
+      "prepareTransaction",
       "connect",
       "disconnect",
       "fetchBalance",
@@ -23,7 +24,7 @@ it('should expose correct exports', () => {
       "readContract",
       "readContracts",
       "sendTransactionLazy",
-      "sendTransactionEager",
+      "sendTransactionPrepared",
       "signMessage",
       "signTypedData",
       "switchNetwork",
@@ -37,6 +38,7 @@ it('should expose correct exports', () => {
       "watchReadContracts",
       "watchSigner",
       "watchWebSocketProvider",
+      "writeContractPrepared",
       "writeContractLazy",
       "createClient",
       "Client",
@@ -60,6 +62,7 @@ it('should expose correct exports', () => {
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
+      "ContractMethodDoesNotExistError",
       "ContractMethodNoResultError",
       "ProviderChainsNotFound",
       "ProviderRpcError",

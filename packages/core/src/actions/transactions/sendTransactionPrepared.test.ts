@@ -4,9 +4,10 @@ import { parseEther } from 'ethers/lib/utils'
 import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
 import { connect } from '../accounts'
-import { sendTransactionEager } from './sendTransactionEager'
+import { prepareTransaction } from './prepareTransaction'
+import { sendTransactionPrepared } from './sendTransactionPrepared'
 
-describe('sendTransactionEager', () => {
+describe('sendTransactionPrepared', () => {
   let client: Client
   beforeEach(() => {
     client = setupClient()
@@ -19,15 +20,16 @@ describe('sendTransactionEager', () => {
       const signers = getSigners()
       const to = signers[1]
       const toAddress = await to?.getAddress()
-      const fromAddress = client.data?.account
 
+      const request = await prepareTransaction({
+        request: {
+          to: toAddress as string,
+          value: parseEther('10'),
+        },
+      })
       const { blockNumber, hash, gasLimit, gasPrice } =
-        await sendTransactionEager({
-          request: {
-            from: fromAddress,
-            to: toAddress,
-            value: parseEther('10'),
-          },
+        await sendTransactionPrepared({
+          request,
         })
       expect(blockNumber).toBeDefined()
       expect(hash).toBeDefined()
@@ -42,23 +44,19 @@ describe('sendTransactionEager', () => {
   })
 
   describe('behavior', () => {
-    it('throws', async () => {
-      await expect(
-        sendTransactionEager({
-          request: {},
-        }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
-    })
-
     it('fails on insufficient balance', async () => {
       await connect({ connector: client.connectors[0]! })
 
+      const request = await prepareTransaction({
+        request: {
+          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+          value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
+        },
+      })
+
       try {
-        await sendTransactionEager({
-          request: {
-            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-            value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
-          },
+        await sendTransactionPrepared({
+          request,
         })
       } catch (error) {
         expect((<Error>error).message).toContain(

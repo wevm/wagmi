@@ -98,7 +98,7 @@ export async function multicall<Data extends any[] = Result[]>({
     if (returnData === '0x') {
       const err = new ContractMethodNoResultError({
         addressOrName,
-        blockExplorer: chain.blockExplorers?.default,
+        chainId: chain.id,
         functionName,
       })
       if (!allowFailure) throw err

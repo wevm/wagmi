@@ -7,11 +7,11 @@ import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
 import { ReadContracts } from './ReadContracts'
 import { SendTransaction } from './SendTransaction'
-import { SendTransactionEager } from './SendTransactionEager'
+import { SendTransactionPrepared } from './SendTransactionPrepared'
 import { SignMessage } from './SignMessage'
 import { Token } from './Token'
 import { WriteContract } from './WriteContract'
-import { WriteContractEager } from './WriteContractEager'
+import { WriteContractPrepared } from './WriteContractPrepared'
 
 export const Account = () => {
   const isMounted = useIsMounted()
@@ -46,8 +46,10 @@ export const Account = () => {
         )}
       </div>
 
+      <SendTransactionPrepared />
+
       {/* <WriteContract /> */}
-      <WriteContractEager />
+      {/* <WriteContractPrepared /> */}
 
       {false && (
         <>
@@ -60,7 +62,7 @@ export const Account = () => {
               <BlockNumber />
 
               <h4>Send Transaction Eager</h4>
-              <SendTransactionEager />
+              <SendTransactionPrepared />
 
               <h4>Send Transaction</h4>
               <SendTransaction />

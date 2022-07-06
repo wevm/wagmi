@@ -4,6 +4,7 @@ import { getClient } from '../../client'
 import {
   ChainMismatchError,
   ConnectorNotFoundError,
+  ContractMethodDoesNotExistError,
   ProviderRpcError,
   UserRejectedRequestError,
 } from '../../errors'
@@ -70,9 +71,10 @@ export async function writeContractLazy<TContract extends Contract = Contract>({
     const contractWithSigner = contract.connect(signer)
     const contractFunction = contractWithSigner[functionName]
     if (!contractFunction)
-      console.warn(
-        `"${functionName}" does not exist in interface for contract "${addressOrName}"`,
-      )
+      throw new ContractMethodDoesNotExistError({
+        addressOrName,
+        functionName,
+      })
     return (await contractFunction(...params)) as providers.TransactionResponse
   } catch (error) {
     if ((<ProviderRpcError>error).code === 4001)

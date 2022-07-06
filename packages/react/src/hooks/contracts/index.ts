@@ -6,6 +6,6 @@ export {
 } from './useContractInfiniteReads'
 export { useContractRead } from './useContractRead'
 export { useContractReads } from './useContractReads'
-export { useContractWriteEager } from './useContractWriteEager'
+export { useContractWritePrepared } from './useContractWritePrepared'
 export { useContractWriteLazy } from './useContractWriteLazy'
 export { useToken } from './useToken'

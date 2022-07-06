@@ -297,7 +297,7 @@ describe('readContracts', () => {
       `)
     })
 
-    it('should throw if allowFailure=false & a contract has no response', async () => {
+    it.only('should throw if allowFailure=false & a contract has no response', async () => {
       await expect(
         readContracts({
           allowFailure: false,

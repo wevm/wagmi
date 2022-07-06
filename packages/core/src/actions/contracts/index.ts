@@ -33,10 +33,10 @@ export {
 } from './watchReadContracts'
 
 export {
-  writeContractEager,
+  writeContractPrepared,
   type WriteContractEagerConfig,
   type WriteContractEagerResult,
-} from './writeContractEager'
+} from './writeContractPrepared'
 
 export {
   writeContractLazy,

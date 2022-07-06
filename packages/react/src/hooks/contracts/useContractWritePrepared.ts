@@ -3,22 +3,23 @@ import {
   BuildContractTransactionConfig,
   WriteContractEagerConfig,
   WriteContractEagerResult,
-  writeContractEager,
   writeContractLazy,
+  writeContractPrepared,
 } from '@wagmi/core'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 import { useBuildContractTransaction } from './useBuildContractTransaction'
 
-export type UseContractWriteEagerVariables = BuildContractTransactionConfig & {
-  unsignedTransaction?: WriteContractEagerConfig['unsignedTransaction']
-}
-export type UseContractWriteEagerArgs = BuildContractTransactionConfig
-export type UseContractWriteEagerConfig = MutationConfig<
+export type UseContractWritePreparedVariables =
+  BuildContractTransactionConfig & {
+    unsignedTransaction?: WriteContractEagerConfig['unsignedTransaction']
+  }
+export type UseContractWritePreparedArgs = BuildContractTransactionConfig
+export type UseContractWritePreparedConfig = MutationConfig<
   WriteContractEagerResult,
   Error,
-  UseContractWriteEagerVariables
+  UseContractWritePreparedVariables
 >
 
 export const mutationKey = ([
@@ -26,7 +27,7 @@ export const mutationKey = ([
 ]: [Partial<BuildContractTransactionConfig>]) =>
   [
     {
-      entity: 'writeContractEager',
+      entity: 'writeContractPrepared',
       addressOrName,
       args,
       contractInterface,
@@ -42,9 +43,9 @@ const mutationFn = ({
   functionName,
   overrides,
   unsignedTransaction,
-}: UseContractWriteEagerVariables) => {
+}: UseContractWritePreparedVariables) => {
   return unsignedTransaction
-    ? writeContractEager({ unsignedTransaction })
+    ? writeContractPrepared({ unsignedTransaction })
     : writeContractLazy({
         addressOrName,
         contractInterface,
@@ -54,7 +55,7 @@ const mutationFn = ({
       })
 }
 
-export function useContractWriteEager({
+export function useContractWritePrepared({
   addressOrName,
   args,
   contractInterface,
@@ -64,14 +65,15 @@ export function useContractWriteEager({
   onMutate,
   onSettled,
   onSuccess,
-}: UseContractWriteEagerArgs & UseContractWriteEagerConfig) {
-  const { data: unsignedTransaction } = useBuildContractTransaction({
+}: UseContractWritePreparedArgs & UseContractWritePreparedConfig) {
+  const buildContractTransactionQuery = useBuildContractTransaction({
     addressOrName,
     args,
     contractInterface,
     functionName,
     overrides,
   })
+  const { data: unsignedTransaction } = buildContractTransactionQuery
 
   const {
     data,
@@ -151,6 +153,7 @@ export function useContractWriteEager({
     error,
     internal: {
       unsignedTransaction,
+      buildContractTransactionQuery,
     },
     isError,
     isIdle,
