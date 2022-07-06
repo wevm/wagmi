@@ -81,6 +81,8 @@ describe('useBlockNumber', () => {
         }
       `)
     })
+
+    it.todo('onBlock')
   })
 
   describe('return value', () => {

@@ -10,16 +10,30 @@ type Props = {
 }
 
 export function SiweButton({ address, chainId, onSuccess }: Props) {
+  const { signMessageAsync } = useSignMessage()
   const [state, setState] = React.useState<{
     error?: Error
     loading?: boolean
+    nonce?: string
   }>({})
-  const { signMessageAsync } = useSignMessage()
+
+  React.useEffect(() => {
+    async function fetchNonce() {
+      try {
+        const nonceRes = await fetch('/api/nonce')
+        const nonce = await nonceRes.text()
+        setState((x) => ({ ...x, nonce }))
+      } catch (error) {
+        setState((x) => ({ ...x, error: error as Error }))
+      }
+    }
+
+    fetchNonce()
+  }, [])
 
   const handleSignIn = React.useCallback(async () => {
     try {
       setState((x) => ({ ...x, error: undefined, loading: true }))
-      const nonceRes = await fetch('/api/nonce')
       const message = new SiweMessage({
         domain: window.location.host,
         address,
@@ -27,7 +41,7 @@ export function SiweButton({ address, chainId, onSuccess }: Props) {
         uri: window.location.origin,
         version: '1',
         chainId,
-        nonce: await nonceRes.text(),
+        nonce: state.nonce,
       })
 
       const signature = await signMessageAsync({
@@ -47,14 +61,14 @@ export function SiweButton({ address, chainId, onSuccess }: Props) {
     } catch (error) {
       setState((x) => ({ ...x, error: error as Error, loading: false }))
     }
-  }, [address, chainId, signMessageAsync, onSuccess])
+  }, [address, chainId, state.nonce, signMessageAsync, onSuccess])
 
   return (
     <Stack space="4">
       <Button
         center
-        disabled={state.loading}
-        loading={state.loading}
+        disabled={!state.nonce || state.loading}
+        loading={!state.nonce || state.loading}
         prefix={!state.loading && <IconEth />}
         width="full"
         onClick={handleSignIn}

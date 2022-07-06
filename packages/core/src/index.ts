@@ -151,5 +151,5 @@ export type {
   WebSocketProvider,
 } from './types'
 
-export { configureChains, normalizeChainId } from './utils'
+export { configureChains, deepEqual, normalizeChainId } from './utils'
 export type { ConfigureChainsConfig } from './utils'

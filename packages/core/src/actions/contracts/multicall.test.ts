@@ -169,7 +169,7 @@ describe('multicall', () => {
               "hex": "0x05a6db",
               "type": "BigNumber",
             },
-            undefined,
+            null,
           ]
         `)
       })

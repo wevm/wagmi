@@ -1,7 +1,6 @@
 import * as React from 'react'
+import { deepEqual } from '@wagmi/core'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
-
-import { deepEqual } from '../../utils'
 
 const isPlainObject = (obj: unknown) =>
   typeof obj === 'object' && !Array.isArray(obj)
