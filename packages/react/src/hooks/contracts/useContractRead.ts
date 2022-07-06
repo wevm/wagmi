@@ -3,12 +3,12 @@ import {
   ReadContractConfig,
   ReadContractResult,
   deepEqual,
+  parseContractResult,
   readContract,
 } from '@wagmi/core'
 import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { parseContractResult } from '../../utils'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
