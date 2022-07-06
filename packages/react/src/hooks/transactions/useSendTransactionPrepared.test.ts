@@ -26,7 +26,7 @@ function useSendTransactionPreparedWithConnect(
 describe('useSendTransactionPrepared', () => {
   it('mounts', async () => {
     const { result } = renderHook(() =>
-      useSendTransactionPrepared({
+      useSendTransactionPreparedWithConnect({
         request: {
           to: 'moxey.eth',
           value: parseEther('1'),
@@ -34,7 +34,7 @@ describe('useSendTransactionPrepared', () => {
       }),
     )
 
-    expect(result.current).toMatchInlineSnapshot(`
+    expect(result.current.sendTransactionPrepared).toMatchInlineSnapshot(`
       {
         "data": undefined,
         "error": null,

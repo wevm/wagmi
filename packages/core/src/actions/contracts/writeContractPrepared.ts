@@ -1,12 +1,11 @@
-import { PopulatedTransaction } from 'ethers'
-
+import { BuildContractTransactionResult } from './buildContractTransaction'
 import {
   SendTransactionPreparedResult,
   sendTransactionPrepared,
 } from '../transactions'
 
 export type WriteContractEagerConfig = {
-  unsignedTransaction: PopulatedTransaction
+  unsignedTransaction: BuildContractTransactionResult
 }
 export type WriteContractEagerResult = SendTransactionPreparedResult
 

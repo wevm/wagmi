@@ -24,7 +24,10 @@ export type BuildContractTransactionConfig = Omit<
   overrides?: CallOverrides
 }
 
-export type BuildContractTransactionResult = PopulatedTransaction
+export type BuildContractTransactionResult = PopulatedTransaction & {
+  to: NonNullable<PopulatedTransaction['to']>
+  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+}
 
 export async function buildContractTransaction<
   TContract extends Contract = Contract,
@@ -56,7 +59,11 @@ export async function buildContractTransaction<
     ...(Array.isArray(args) ? args : args ? [args] : []),
     ...(overrides ? [overrides] : []),
   ]
-  const unsignedTransaction = await populateTransactionFn(...params)
+  const unsignedTransaction = (await populateTransactionFn(
+    ...params,
+  )) as PopulatedTransaction & {
+    to: string
+  }
   const { gasLimit } = await prepareTransaction({
     request: unsignedTransaction,
     signerOrProvider: signer,
@@ -64,6 +71,6 @@ export async function buildContractTransaction<
 
   return {
     ...unsignedTransaction,
-    gasLimit: gasLimit ? BigNumber.from(gasLimit) : undefined,
+    gasLimit: BigNumber.from(gasLimit),
   }
 }
