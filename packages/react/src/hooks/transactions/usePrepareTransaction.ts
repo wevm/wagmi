@@ -1,11 +1,11 @@
 import {
   PrepareTransactionArgs,
   PrepareTransactionResult,
+  deepEqual,
   prepareTransaction,
 } from '@wagmi/core'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { deepEqual } from '../../utils'
 import { useProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
 
