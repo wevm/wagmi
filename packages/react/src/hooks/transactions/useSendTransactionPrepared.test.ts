@@ -94,7 +94,7 @@ describe('useSendTransactionPrepared', () => {
             "sendTransactionAsync": [Function],
             "status": "success",
             "variables": {
-              "request": {
+              "preparedRequest": {
                 "gasLimit": {
                   "hex": "0x5209",
                   "type": "BigNumber",
@@ -154,7 +154,7 @@ describe('useSendTransactionPrepared', () => {
             "sendTransactionAsync": [Function],
             "status": "error",
             "variables": {
-              "request": {
+              "preparedRequest": {
                 "gasLimit": {
                   "hex": "0x5209",
                   "type": "BigNumber",
