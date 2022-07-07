@@ -10,7 +10,7 @@ import { MutationConfig } from '../../types'
 
 export type UseContractWritePreparedArgs = {
   /** The prepared request to use when sending the transaction */
-  request?: WriteContractPreparedConfig['request']
+  preparedRequest?: WriteContractPreparedConfig['preparedRequest']
 }
 export type UseContractWritePreparedConfig = MutationConfig<
   WriteContractPreparedResult,
@@ -18,21 +18,23 @@ export type UseContractWritePreparedConfig = MutationConfig<
   UseContractWritePreparedArgs
 >
 
-export const mutationKey = ([{ request }]: [UseContractWritePreparedArgs]) =>
+export const mutationKey = ([{ preparedRequest }]: [
+  UseContractWritePreparedArgs,
+]) =>
   [
     {
       entity: 'writeContractPrepared',
-      request,
+      preparedRequest,
     },
   ] as const
 
-const mutationFn = ({ request }: UseContractWritePreparedArgs) => {
-  if (!request) throw new Error('request is required')
-  return writeContractPrepared({ request })
+const mutationFn = ({ preparedRequest }: UseContractWritePreparedArgs) => {
+  if (!preparedRequest) throw new Error('preparedRequest is required')
+  return writeContractPrepared({ preparedRequest })
 }
 
 export function useContractWritePrepared({
-  request,
+  preparedRequest,
   onError,
   onMutate,
   onSettled,
@@ -50,18 +52,21 @@ export function useContractWritePrepared({
     reset,
     status,
     variables,
-  } = useMutation(mutationKey([{ request }]), mutationFn, {
+  } = useMutation(mutationKey([{ preparedRequest }]), mutationFn, {
     onError,
     onMutate,
     onSettled,
     onSuccess,
   })
 
-  const write = React.useCallback(() => mutate({ request }), [mutate, request])
+  const write = React.useCallback(
+    () => mutate({ preparedRequest }),
+    [mutate, preparedRequest],
+  )
 
   const writeAsync = React.useCallback(
-    () => mutateAsync({ request }),
-    [mutateAsync, request],
+    () => mutateAsync({ preparedRequest }),
+    [mutateAsync, preparedRequest],
   )
 
   return {
@@ -74,7 +79,7 @@ export function useContractWritePrepared({
     reset,
     status,
     variables,
-    write: request ? write : undefined,
-    writeAsync: request ? writeAsync : undefined,
+    write: preparedRequest ? write : undefined,
+    writeAsync: preparedRequest ? writeAsync : undefined,
   }
 }

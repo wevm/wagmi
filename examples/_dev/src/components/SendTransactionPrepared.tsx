@@ -6,7 +6,7 @@ export const SendTransactionPrepared = () => {
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =
-    useSendTransactionPrepared({ request: preparedRequest })
+    useSendTransactionPrepared({ preparedRequest })
 
   if (isLoading) return <div>Check Wallet</div>
 

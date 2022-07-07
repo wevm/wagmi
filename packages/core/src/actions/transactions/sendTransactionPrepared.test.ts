@@ -21,7 +21,7 @@ describe('sendTransactionPrepared', () => {
       const to = signers[1]
       const toAddress = await to?.getAddress()
 
-      const request = await prepareTransaction({
+      const preparedRequest = await prepareTransaction({
         request: {
           to: toAddress as string,
           value: parseEther('10'),
@@ -29,7 +29,7 @@ describe('sendTransactionPrepared', () => {
       })
       const { blockNumber, hash, gasLimit, gasPrice } =
         await sendTransactionPrepared({
-          request,
+          preparedRequest,
         })
       expect(blockNumber).toBeDefined()
       expect(hash).toBeDefined()
@@ -47,7 +47,7 @@ describe('sendTransactionPrepared', () => {
     it('fails on insufficient balance', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const request = await prepareTransaction({
+      const preparedRequest = await prepareTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
@@ -56,7 +56,7 @@ describe('sendTransactionPrepared', () => {
 
       try {
         await sendTransactionPrepared({
-          request,
+          preparedRequest,
         })
       } catch (error) {
         expect((<Error>error).message).toContain(

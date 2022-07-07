@@ -18,7 +18,7 @@ function useSendTransactionPreparedWithConnect(
     prepareTransaction,
     connect: useConnect(),
     sendTransactionPrepared: useSendTransactionPrepared({
-      request: prepareTransaction.data,
+      preparedRequest: prepareTransaction.data,
     }),
   }
 }

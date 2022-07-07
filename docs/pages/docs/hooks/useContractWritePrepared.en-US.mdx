@@ -3,6 +3,155 @@ title: 'useContractWritePrepared'
 description: 'React Hook for calling a ethers Contract write method.'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+
 # useContractWritePrepared
 
+Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method with a ["prepared request"](/TODO). Pairs with the [`usePrepareContractTransaction` hook](/TODO).
+
+```tsx
+import { useContractWritePrepared } from 'wagmi'
+```
+
+**Why should I use this over `useWriteContractLazy`?**
+
 TODO
+
+## Usage
+
+The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
+
+```tsx
+import { useContractWritePrepared, usePrepareContractTransaction } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareContractTransaction({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+  })
+  const { data, isLoading, isSuccess, write } = useContractWritePrepared({
+    preparedRequest,
+  })
+
+  return (
+    <div>
+      <button disabled={!write} onClick={() => write?.()}>
+        Feed
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: TransactionResponse
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  write: (() => void) | undefined
+  writeAsync: (() => Promise<TransactionResponse>) | undefined
+  reset: () => void
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+### Why can't I pass arguments to `write`?
+
+TODO
+
+## Configuration
+
+### preparedRequest (optional)
+
+The prepared request to use when sending the contract transaction. Derived from the [`usePrepareContractTransaction` hook](/TODO).
+
+```tsx {5-7}
+import { usePrepareContractTransaction, useContractWritePrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareContractTransaction({ ... })
+  const { write } = useContractWritePrepared({
+    preparedRequest,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to write.
+
+```tsx {7-9}
+import { usePrepareContractTransaction, useContractWritePrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareContractTransaction({ ... })
+  const { write } = useContractWritePrepared({
+    preparedRequest,
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before the contract write function and is passed same variables the contract write function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a failure.
+
+```tsx {7-9}
+import { usePrepareContractTransaction, useContractWritePrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareContractTransaction({ ... })
+  const { write } = useContractWritePrepared({
+    preparedRequest,
+    onMutate({ args, overrides }) {
+      console.log('Mutate', { args, overrides })
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when write is settled (either successfully sent, or an error has thrown).
+
+```tsx {7-9}
+import { usePrepareContractTransaction, useContractWritePrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareContractTransaction({ ... })
+  const { write } = useContractWritePrepared({
+    preparedRequest,
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when write is successful.
+
+```tsx {7-9}
+import { usePrepareContractTransaction, useContractWritePrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareContractTransaction({ ... })
+  const { write } = useContractWritePrepared({
+    preparedRequest,
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

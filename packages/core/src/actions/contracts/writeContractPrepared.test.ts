@@ -23,12 +23,12 @@ describe('writeContractPrepared', () => {
     if (!tokenId) return
 
     await connect({ connector })
-    const request = await prepareContractTransaction({
+    const preparedRequest = await prepareContractTransaction({
       ...mlootContractConfig,
       functionName: 'claim',
       args: [tokenId],
     })
-    const { hash } = await writeContractPrepared({ request })
+    const { hash } = await writeContractPrepared({ preparedRequest })
 
     expect(hash).toBeDefined()
   })

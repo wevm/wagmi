@@ -11,13 +11,13 @@ import { PrepareTransactionResult } from './prepareTransaction'
 
 export type SendTransactionPreparedArgs = {
   /** The prepared request to use when sending the transaction */
-  request: PrepareTransactionResult
+  preparedRequest: PrepareTransactionResult
 }
 
 export type SendTransactionPreparedResult = providers.TransactionResponse
 
 export async function sendTransactionPrepared({
-  request,
+  preparedRequest,
 }: SendTransactionPreparedArgs): Promise<SendTransactionPreparedResult> {
   try {
     /*********************************************************/
@@ -39,7 +39,7 @@ export async function sendTransactionPrepared({
     const uncheckedSigner = signer.connectUnchecked()
 
     // This is where the end-user will be prompted.
-    const { hash } = await uncheckedSigner.sendTransaction(request)
+    const { hash } = await uncheckedSigner.sendTransaction(preparedRequest)
 
     /********************************************************/
     /** END: WalletConnect mobile deep link cautious code.  */

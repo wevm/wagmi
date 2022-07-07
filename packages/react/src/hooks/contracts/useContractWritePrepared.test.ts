@@ -17,7 +17,7 @@ function useContractWritePreparedWithConnect(
     prepareContractTransaction,
     connect: useConnect(),
     contractWritePrepared: useContractWritePrepared({
-      request: prepareContractTransaction.data,
+      preparedRequest: prepareContractTransaction.data,
     }),
   }
 }

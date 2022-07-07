@@ -6,12 +6,12 @@ import {
 
 export type WriteContractPreparedConfig = {
   /** The prepared request to use when sending the transaction */
-  request: PrepareContractTransactionResult
+  preparedRequest: PrepareContractTransactionResult
 }
 export type WriteContractPreparedResult = SendTransactionPreparedResult
 
 export async function writeContractPrepared({
-  request,
+  preparedRequest,
 }: WriteContractPreparedConfig): Promise<WriteContractPreparedResult> {
-  return await sendTransactionPrepared({ request })
+  return await sendTransactionPrepared({ preparedRequest })
 }

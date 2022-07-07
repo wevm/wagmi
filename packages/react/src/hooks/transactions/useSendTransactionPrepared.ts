@@ -10,7 +10,7 @@ import { MutationConfig } from '../../types'
 
 export type UseSendTransactionPreparedArgs = {
   /** The prepared request to use when sending the transaction */
-  request?: SendTransactionPreparedArgs['request']
+  preparedRequest?: SendTransactionPreparedArgs['preparedRequest']
 }
 
 export type UseSendTransactionPreparedConfig = MutationConfig<
@@ -23,13 +23,13 @@ export const mutationKey = (args: UseSendTransactionPreparedArgs) =>
   [{ entity: 'sendTransactionPrepared', ...args }] as const
 
 const mutationFn = (args: UseSendTransactionPreparedArgs) => {
-  const { request } = args
-  if (!request) throw new Error('request not provided')
-  return sendTransactionPrepared({ request })
+  const { preparedRequest } = args
+  if (!preparedRequest) throw new Error('preparedRequest not provided')
+  return sendTransactionPrepared({ preparedRequest })
 }
 
 export function useSendTransactionPrepared({
-  request,
+  preparedRequest,
   onError,
   onMutate,
   onSettled,
@@ -47,7 +47,7 @@ export function useSendTransactionPrepared({
     reset,
     status,
     variables,
-  } = useMutation(mutationKey({ request }), mutationFn, {
+  } = useMutation(mutationKey({ preparedRequest }), mutationFn, {
     onError,
     onMutate,
     onSettled,
@@ -55,12 +55,12 @@ export function useSendTransactionPrepared({
   })
 
   const sendTransaction = React.useCallback(() => {
-    return mutate({ request })
-  }, [mutate, request])
+    return mutate({ preparedRequest })
+  }, [mutate, preparedRequest])
 
   const sendTransactionAsync = React.useCallback(async () => {
-    return await mutateAsync({ request })
-  }, [mutateAsync, request])
+    return await mutateAsync({ preparedRequest })
+  }, [mutateAsync, preparedRequest])
 
   return {
     data,
@@ -70,8 +70,8 @@ export function useSendTransactionPrepared({
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: request ? sendTransaction : undefined,
-    sendTransactionAsync: request ? sendTransactionAsync : undefined,
+    sendTransaction: preparedRequest ? sendTransaction : undefined,
+    sendTransactionAsync: preparedRequest ? sendTransactionAsync : undefined,
     status,
     variables,
   }

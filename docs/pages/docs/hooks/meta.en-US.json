@@ -17,6 +17,8 @@
   "useEnsResolver": "useEnsResolver",
   "useFeeData": "useFeeData",
   "useNetwork": "useNetwork",
+  "usePrepareContractTransaction": "usePrepareContractTransaction",
+  "usePrepareTransaction": "usePrepareTransaction",
   "useProvider": "useProvider",
   "useSendTransactionPrepared": "useSendTransactionPrepared",
   "useSendTransactionLazy": "useSendTransactionLazy",

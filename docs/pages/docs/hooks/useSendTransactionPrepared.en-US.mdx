@@ -3,6 +3,152 @@ title: 'useSendTransactionPrepared'
 description: 'React Hook for sending a transaction.'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+
 # useSendTransactionPrepared
 
+Hook for sending a transaction with a ["prepared request"](/TODO). Pairs with the [`usePrepareTransaction` hook](/TODO).
+
+```tsx
+import { useSendTransactionPrepared } from 'wagmi'
+```
+
+**Why should I use this over `useSendTransactionLazy`?**
+
 TODO
+
+## Usage
+
+```tsx
+import { useSendTransactionPrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareTransaction({
+    request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+  })
+  const { data, isLoading, isSuccess, sendTransaction } =
+    useSendTransactionPrepared({
+      preparedRequest,
+    })
+
+  return (
+    <div>
+      <button disabled={!sendTransaction} onClick={() => sendTransaction?.()}>
+        Send Transaction
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: TransactionResponse
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  sendTransaction: (() => void) | undefined
+  sendTransactionAsync: (() => Promise<TransactionResponse>) | undefined
+  reset: () => void
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+### Why can't I pass arguments to `sendTransaction`?
+
+TODO
+
+## Configuration
+
+### preparedRequest (optional)
+
+The prepared request to use when sending the transaction. Derived from the [`usePrepareTransaction` hook](/TODO).
+
+```tsx {5-7}
+import { usePrepareTransaction, useSendTransactionPrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareTransaction({ ... })
+  const { sendTransaction } = useSendTransactionPrepared({
+    preparedRequest,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to send.
+
+```tsx {7-9}
+import { usePrepareTransaction, useSendTransactionPrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareTransaction({ ... })
+  const { sendTransaction } = useSendTransactionPrepared({
+    preparedRequest,
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
+
+```tsx {7-9}
+import { usePrepareTransaction, useSendTransactionPrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareTransaction({ ... })
+  const { sendTransaction } = useSendTransactionPrepared({
+    preparedRequest,
+    onMutate({ args, overrides }) {
+      console.log('Mutate', { args, overrides })
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
+
+```tsx {7-9}
+import { usePrepareTransaction, useSendTransactionPrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareTransaction({ ... })
+  const { sendTransaction } = useSendTransactionPrepared({
+    preparedRequest,
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when send transaction is successful.
+
+```tsx {7-9}
+import { usePrepareTransaction, useSendTransactionPrepared } from 'wagmi'
+
+function App() {
+  const { data: preparedRequest } = usePrepareTransaction({ ... })
+  const { sendTransaction } = useSendTransactionPrepared({
+    preparedRequest,
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

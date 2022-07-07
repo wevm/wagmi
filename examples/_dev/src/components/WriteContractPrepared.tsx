@@ -10,7 +10,7 @@ export const WriteContractPrepared = () => {
     args: parseInt('56'),
   })
   const { write, data, error, isLoading, isError, isSuccess } =
-    useContractWritePrepared({ request: preparedRequest })
+    useContractWritePrepared({ preparedRequest })
 
   return (
     <div>
