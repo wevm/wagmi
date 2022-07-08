@@ -4,13 +4,13 @@ import {
   ReadContractsConfig,
   ReadContractsResult,
   deepEqual,
+  parseContractResult,
   readContracts,
 } from '@wagmi/core'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
-import { parseContractResult } from '../../utils'
 
 export type UseContractReadsConfig = QueryConfig<ReadContractsResult, Error> &
   ReadContractsConfig & {

@@ -532,4 +532,120 @@ describe('parseContractResult', () => {
       expect(result[1].gms[0].sender).toEqual(data[1].gms[0].sender)
     })
   })
+
+  describe('tuple of complex types', () => {
+    const contractInterface = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        name: 'gms',
+        outputs: [
+          {
+            components: [
+              {
+                internalType: 'uint256',
+                name: 'timestamp',
+                type: 'uint256',
+              },
+              {
+                internalType: 'address',
+                name: 'sender',
+                type: 'address',
+              },
+            ],
+            internalType: 'struct Gms[]',
+            name: 'gms',
+            type: 'tuple[]',
+          },
+          {
+            components: [
+              {
+                internalType: 'uint256',
+                name: 'count',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'firstGmTimstamp',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'lastGmTimestamp',
+                type: 'uint256',
+              },
+            ],
+            internalType: 'struct Sender',
+            name: 'sender',
+            type: 'tuple',
+          },
+          {
+            internalType: 'uint256[]',
+            name: 'timestamps',
+            type: 'uint256[]',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ]
+
+    it('should parse the data to an ethers Result if there are no named keys', () => {
+      const data: [[BigNumber, string][], BigNumber[], BigNumber[]] = [
+        [
+          [
+            BigNumber.from(1654322661),
+            '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+          ],
+          [
+            BigNumber.from(1654322662),
+            '0xa5Cc3C03994DB5B0d9a5EEdD10CaBab0813678ad',
+          ],
+        ],
+        [
+          BigNumber.from(69),
+          BigNumber.from(1654322661),
+          BigNumber.from(1654322661),
+        ],
+        [
+          BigNumber.from(1654322660),
+          BigNumber.from(1654322661),
+          BigNumber.from(1654322662),
+        ],
+      ]
+      const [gms, sender, timestamps] = data
+
+      const result = parseContractResult({
+        contractInterface,
+        data,
+        functionName: 'gms',
+      })
+      const [receivedGms, receivedSender, receivedTimestamps] = result
+
+      expect(Object.keys(result).length !== data.length).toBeTruthy()
+
+      expect(result.gms).toEqual(receivedGms)
+      expect(result.sender).toEqual(receivedSender)
+      expect(result.timestamps).toEqual(receivedTimestamps)
+
+      expect(JSON.stringify(receivedGms)).toEqual(JSON.stringify(gms))
+      expect(Object.keys(receivedGms[0]).length !== gms[0]?.length).toBeTruthy()
+      expect(receivedGms[0].timestamp).toEqual(gms[0]?.[0])
+      expect(receivedGms[0].sender).toEqual(gms[0]?.[1])
+
+      expect(JSON.stringify(receivedSender)).toEqual(JSON.stringify(sender))
+      expect(receivedSender.count).toEqual(sender[0])
+      expect(receivedSender.firstGmTimstamp).toEqual(sender[1])
+      expect(receivedSender.lastGmTimestamp).toEqual(sender[2])
+
+      expect(JSON.stringify(receivedTimestamps)).toEqual(
+        JSON.stringify(timestamps),
+      )
+    })
+  })
 })

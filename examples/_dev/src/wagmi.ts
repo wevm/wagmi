@@ -3,8 +3,10 @@ import {
   chain,
   configureChains,
   createClient,
+  createStorage,
   defaultChains,
 } from 'wagmi'
+import { destroyCookie, parseCookies, setCookie } from 'nookies'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -91,5 +93,18 @@ export const client = createClient({
   autoConnect: true,
   connectors,
   provider,
+  storage: createStorage({
+    storage: {
+      getItem(key) {
+        return parseCookies()?.[key]
+      },
+      setItem(key, value) {
+        setCookie(null, key, value)
+      },
+      removeItem(key) {
+        destroyCookie(null, key)
+      },
+    },
+  }),
   webSocketProvider,
 })

@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.4.7
+
+### Patch Changes
+
+- [#677](https://github.com/tmm/wagmi/pull/677) [`35e4219`](https://github.com/tmm/wagmi/commit/35e42199af9dd346549c1718e144728f55b8d7dd) Thanks [@jxom](https://github.com/jxom)! - Move `parseContractResult` to `@wagmi/core`
+
 ## 0.4.6
 
 ### Patch Changes
