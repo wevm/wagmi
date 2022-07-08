@@ -126,7 +126,8 @@ export class Client<
                     chain: state?.data?.chain,
                   },
                 }),
-                chains: state?.chains,
+                // TODO: Why is this here?
+                // chains: state?.chains,
               }
             },
             version: 1,

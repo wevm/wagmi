@@ -27,11 +27,7 @@ export function dehydrate<
   const queryState = dehydrateQueryClient(client.queryClient)
 
   return {
-    data: {
-      account: undefined,
-      chain: undefined,
-      ...client.data,
-    },
+    data: client.data ?? {},
     queryState,
   }
 }

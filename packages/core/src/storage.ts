@@ -2,10 +2,13 @@ type BaseStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 
 export type ClientStorage = {
   getItem: <T>(key: string, defaultState?: T | null) => T | null
+  getKey: (
+    key: string,
+    keyDeps?: (string | number | undefined)[],
+    { includePrefix }?: { includePrefix?: boolean },
+  ) => string
   removeItem: (key: string) => void
   setItem: <T>(key: string, value: T | null) => void
-  deserialize: (value: string) => any
-  serialize: (value: any) => string
 }
 
 type CreateStorageConfig = {
@@ -21,12 +24,13 @@ export function createStorage({
   storage,
   key: prefix = 'wagmi',
 }: CreateStorageConfig): ClientStorage {
+  const getKey = (key: string) => `${prefix}.${key}`
+
   return {
     ...storage,
-    deserialize,
-    serialize,
+    getKey,
     getItem(key, defaultState = null) {
-      const value = storage.getItem(`${prefix}.${key}`)
+      const value = storage.getItem(getKey(key))
       try {
         return value ? deserialize(value) : defaultState
       } catch (error) {
@@ -36,17 +40,17 @@ export function createStorage({
     },
     setItem(key, value) {
       if (value === null) {
-        storage.removeItem(`${prefix}.${key}`)
+        storage.removeItem(getKey(key))
       } else {
         try {
-          storage.setItem(`${prefix}.${key}`, serialize(value))
+          storage.setItem(getKey(key), serialize(value))
         } catch (err) {
           console.error(err)
         }
       }
     },
     removeItem(key) {
-      storage.removeItem(`${prefix}.${key}`)
+      storage.removeItem(getKey(key))
     },
   }
 }

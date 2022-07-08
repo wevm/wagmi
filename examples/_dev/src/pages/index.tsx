@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { dehydrate, prefetchEnsName } from 'wagmi'
+import { parseCookies } from 'nookies'
 
 import { Account, Connect, NetworkSwitcher } from '../components'
 import { client } from '../wagmi'
@@ -9,22 +10,28 @@ type ServerProps = {
   dehydratedState: unknown
 }
 
+function extractState(client: any, cookies: any) {
+  let store: {
+    state: {
+      data?: { account?: string; chain?: { id: number; unsupported: boolean } }
+    }
+  } = { state: {} }
+  try {
+    const key = client.storage.getKey('store')
+    store = JSON.parse(cookies[key] ?? '{}')
+    // eslint-disable-next-line no-empty
+  } catch (error) {}
+  client.setState((x: any) => ({ ...x, ...store.state }))
+  return store.state
+}
+
 export const getServerSideProps: GetServerSideProps<ServerProps> = async (
-  _context,
+  context,
 ) => {
-  client.setState((x) => ({
-    ...x,
-    data: {
-      account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-      chain: {
-        id: 1,
-        unsupported: false,
-      },
-    },
-  }))
-  const address = client.data?.account
-  const chainId = client.data?.chain?.id
-  if (address && chainId) await prefetchEnsName(client, { address, chainId })
+  const cookies = parseCookies(context)
+  const state = extractState(client, cookies)
+  const address = state.data?.account
+  if (address) await prefetchEnsName(client, { address, chainId: 1 })
 
   return {
     props: {
