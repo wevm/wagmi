@@ -31,7 +31,7 @@ export type ClientConfig<
 
 export type Data<TProvider extends Provider> = ConnectorData<TProvider>
 export type State<
-  TProvider extends Provider,
+  TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
   chains?: Connector['chains']
@@ -74,13 +74,15 @@ export class Client<
     webSocketProvider,
   }: ClientConfig<TProvider, TWebSocketProvider>) {
     // Check status for autoConnect flag
-    let status: State<TProvider, TWebSocketProvider>['status'] = 'disconnected'
+    let status: State['status'] = 'disconnected'
     let chainId: number | undefined
     if (autoConnect) {
       try {
-        const rawState = storage.getItem(storeKey, '')
-        const data: Data<TProvider> | undefined = JSON.parse(rawState || '{}')
-          ?.state?.data
+        const rawState = storage.getItem<{
+          state?: State<TProvider>
+          version?: number
+        }>(storeKey)
+        const data = rawState?.state?.data
         // If account exists in localStorage, set status to reconnecting
         status = data?.account ? 'reconnecting' : 'connecting'
         chainId = data?.chain?.id
@@ -109,15 +111,24 @@ export class Client<
           {
             name: storeKey,
             getStorage: () => storage,
-            partialize: (state) => ({
-              ...(autoConnect && {
-                data: {
-                  account: state?.data?.account,
-                  chain: state?.data?.chain,
-                },
-              }),
-              chains: state?.chains,
-            }),
+            // Skip serialization and deserialization since wagmi storage handles this
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            serialize: (state) => state as string,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            deserialize: (state) => state as any,
+            partialize(state) {
+              return {
+                ...(autoConnect && {
+                  data: {
+                    account: state?.data?.account,
+                    chain: state?.data?.chain,
+                  },
+                }),
+                chains: state?.chains,
+              }
+            },
             version: 1,
           },
         ),
@@ -134,6 +145,9 @@ export class Client<
     this.storage = storage
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
+
+    if (autoConnect && typeof window !== 'undefined')
+      setTimeout(async () => await this.autoConnect(), 0)
   }
 
   get chains() {

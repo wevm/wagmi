@@ -57,20 +57,21 @@ export class InjectedConnector extends Connector<
     super({ chains, options })
 
     let name = 'Injected'
-    if (typeof window !== 'undefined') {
-      const overrideName = options.name
-      const detectedName = getInjectedName(window.ethereum)
-      if (overrideName)
-        name =
-          typeof overrideName === 'function'
-            ? overrideName(detectedName)
-            : overrideName
-      else
-        name =
-          typeof detectedName === 'string'
-            ? detectedName
-            : <string>detectedName[0]
+    const overrideName = options.name
+    if (typeof overrideName === 'string') {
+      name = overrideName
+    } else {
+      if (typeof window !== 'undefined') {
+        const detectedName = getInjectedName(window.ethereum)
+        if (overrideName) name = overrideName(detectedName)
+        else
+          name =
+            typeof detectedName === 'string'
+              ? detectedName
+              : <string>detectedName[0]
+      }
     }
+
     this.id = 'injected'
     this.name = name
   }

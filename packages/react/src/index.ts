@@ -1,15 +1,9 @@
-export {
-  Context,
-  /** @deprecated use `WagmiConfig` instead */
-  WagmiConfig as WagmiProvider,
-  WagmiConfig,
-  createClient,
-  useClient,
-} from './context'
-export type { CreateClientConfig, WagmiConfigProps } from './context'
+export { Context, WagmiConfig, useClient } from './context'
+export type { WagmiConfigProps } from './context'
 
 export {
   paginatedIndexesConfig,
+  prefetchEnsName,
   useAccount,
   useBalance,
   useBlockNumber,
@@ -40,7 +34,20 @@ export {
   useWebSocketProvider,
 } from './hooks'
 
-export { deserialize, serialize } from './utils'
+export {
+  Hydrate,
+  dehydrate,
+  hydrate,
+  useHydrate,
+  type DehydratedState,
+} from './hydrate'
+
+export {
+  createClient,
+  deserialize,
+  serialize,
+  type CreateClientConfig,
+} from './utils'
 
 export {
   AddChainError,
