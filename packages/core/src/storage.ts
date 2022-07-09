@@ -1,6 +1,8 @@
 type BaseStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 
 export type ClientStorage = {
+  deserialize: (value: string) => any
+  serialize: (value: any) => string
   getItem: <T>(key: string, defaultState?: T | null) => T | null
   getKey: (
     key: string,
@@ -28,6 +30,8 @@ export function createStorage({
 
   return {
     ...storage,
+    deserialize,
+    serialize,
     getKey,
     getItem(key, defaultState = null) {
       const value = storage.getItem(getKey(key))

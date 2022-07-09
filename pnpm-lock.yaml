@@ -152,16 +152,16 @@ importers:
       eslint: ^8.15.0
       eslint-config-next: ^12.1.6
       ethers: ^5.6.5
+      js-cookie: ^3.0.1
       next: ^12.1.6
-      nookies: ^2.5.2
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.6.4
       wagmi: ^0.5.9
     dependencies:
       ethers: 5.6.5
+      js-cookie: 3.0.1
       next: 12.1.6_ef5jwxihqo6n7gxfmzogljlgcm
-      nookies: 2.5.2
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       wagmi: link:../../packages/react
@@ -15516,6 +15516,11 @@ packages:
       '@sideway/pinpoint': 2.0.0
     dev: true
 
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /js-levenshtein/1.1.6:
     resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
     engines: {node: '>=0.10.0'}
@@ -17403,13 +17408,6 @@ packages:
 
   /node-releases/2.0.4:
     resolution: {integrity: sha512-gbMzqQtTtDz/00jQzZ21PQzdI9PyLYqUSvD0p3naOhX4odFji0ZxYdnVwPTxmSwkmxhcFImpozceidSG+AgoPQ==}
-
-  /nookies/2.5.2:
-    resolution: {integrity: sha512-x0TRSaosAEonNKyCrShoUaJ5rrT5KHRNZ5DwPCuizjgrnkpE5DRf3VL7AyyQin4htict92X1EQ7ejDbaHDVdYA==}
-    dependencies:
-      cookie: 0.4.2
-      set-cookie-parser: 2.4.8
-    dev: false
 
   /normalize-package-data/2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}

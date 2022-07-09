@@ -6,7 +6,7 @@ import {
   createStorage,
   defaultChains,
 } from 'wagmi'
-import { destroyCookie, parseCookies, setCookie } from 'nookies'
+import cookie from 'js-cookie'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -95,15 +95,9 @@ export const client = createClient({
   provider,
   storage: createStorage({
     storage: {
-      getItem(key) {
-        return parseCookies()?.[key]
-      },
-      setItem(key, value) {
-        setCookie(null, key, value)
-      },
-      removeItem(key) {
-        destroyCookie(null, key)
-      },
+      getItem: cookie.get,
+      setItem: cookie.set,
+      removeItem: cookie.remove,
     },
   }),
   webSocketProvider,

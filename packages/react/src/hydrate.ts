@@ -9,25 +9,47 @@ import {
 import { Client } from './types'
 import { useClient } from './context'
 
-export type DehydratedState = {
-  data: {
-    account?: string
-    chain?: {
-      id: number
-      unsupported: boolean
+type SSRData = {
+  account: string | null
+  chain: { id: number; unsupported: boolean } | null
+}
+
+export function extractState<
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+>(
+  client: Client<TProvider, TWebSocketProvider>,
+  req: any | null | undefined,
+): SSRData {
+  try {
+    const cookies = req?.cookies
+    const store = client.storage.deserialize(
+      cookies[client.storage.getKey('store')],
+    )
+    return store.state.data
+  } catch (error) {
+    return {
+      account: null,
+      chain: null,
     }
   }
+}
+
+export type DehydratedState = {
+  data: SSRData | null
   queryState: DehydratedQueryState
 }
 
 export function dehydrate<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
->(client: Client<TProvider, TWebSocketProvider>): DehydratedState {
+>(
+  client: Client<TProvider, TWebSocketProvider>,
+  ssrData: SSRData | null = null,
+): DehydratedState {
   const queryState = dehydrateQueryClient(client.queryClient)
-
   return {
-    data: client.data ?? {},
+    data: ssrData,
     queryState,
   }
 }
@@ -37,13 +59,21 @@ export function hydrate<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 >(client: Client<TProvider, TWebSocketProvider>, dehydratedState: unknown) {
   const { data, queryState } = <DehydratedState>dehydratedState ?? {}
+  const account = data?.account ?? undefined
+  const chain = data?.chain ?? undefined
 
+  // Hydrate query client
   hydrateQueryClient(client.queryClient, queryState)
 
+  // Restore client state
   client.setState((x) => ({
     ...x,
-    data,
-    status: data?.account ? 'reconnecting' : x.status,
+    data: {
+      ...x.data,
+      account,
+      chain,
+    },
+    status: account ? 'reconnecting' : x.status,
   }))
 }
 

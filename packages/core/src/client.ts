@@ -34,7 +34,6 @@ export type State<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
-  chains?: Connector['chains']
   connector?: Connector
   connectors: Connector[]
   data?: Data<TProvider>
@@ -126,8 +125,6 @@ export class Client<
                     chain: state?.data?.chain,
                   },
                 }),
-                // TODO: Why is this here?
-                // chains: state?.chains,
               }
             },
             version: 1,
@@ -151,9 +148,6 @@ export class Client<
       setTimeout(async () => await this.autoConnect(), 0)
   }
 
-  get chains() {
-    return this.store.getState().chains
-  }
   get connectors() {
     return this.store.getState().connectors
   }
@@ -234,7 +228,6 @@ export class Client<
       this.setState((x) => ({
         ...x,
         connector,
-        chains: connector?.chains,
         data,
         status: 'connected',
       }))

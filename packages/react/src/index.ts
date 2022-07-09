@@ -37,6 +37,7 @@ export {
 export {
   Hydrate,
   dehydrate,
+  extractState,
   hydrate,
   useHydrate,
   type DehydratedState,
