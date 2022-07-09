@@ -1,20 +1,16 @@
 export {
-  prepareTransaction,
-  type PrepareTransactionArgs,
-  type PrepareTransactionResult,
-} from './prepareTransaction'
+  prepareSendTransaction,
+  type PrepareSendTransactionArgs,
+  type PrepareSendTransactionResult,
+} from './prepareSendTransaction'
 
 export {
-  sendTransactionLazy,
-  type SendTransactionLazyArgs,
-  type SendTransactionLazyResult,
-} from './sendTransactionLazy'
-
-export {
-  sendTransactionPrepared,
-  type SendTransactionPreparedArgs,
-  type SendTransactionPreparedResult,
-} from './sendTransactionPrepared'
+  sendTransaction,
+  type SendTransactionArgs,
+  type SendTransactionPreparedRequest,
+  type SendTransactionResult,
+  type SendTransactionUnpreparedRequest,
+} from './sendTransaction'
 
 export {
   waitForTransaction,

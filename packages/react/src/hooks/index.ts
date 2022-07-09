@@ -17,9 +17,8 @@ export {
   useContractInfiniteReads,
   useContractRead,
   useContractReads,
-  useContractWritePrepared,
-  useContractWriteLazy,
-  usePrepareContractTransaction,
+  useContractWrite,
+  useContractWritePrepare,
   useToken,
 } from './contracts'
 
@@ -30,9 +29,8 @@ export { useBlockNumber, useFeeData } from './network-status'
 export { useProvider, useWebSocketProvider } from './providers'
 
 export {
-  usePrepareTransaction,
-  useSendTransactionLazy,
-  useSendTransactionPrepared,
+  useSendTransaction,
+  useSendTransactionPrepare,
   useWaitForTransaction,
 } from './transactions'
 

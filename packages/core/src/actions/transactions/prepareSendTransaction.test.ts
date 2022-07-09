@@ -3,9 +3,9 @@ import { BigNumber } from 'ethers'
 import { setupClient } from '../../../test'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'
 import { getProvider } from '../providers'
-import { prepareTransaction } from './prepareTransaction'
+import { prepareSendTransaction } from './prepareSendTransaction'
 
-describe('prepareTransaction', () => {
+describe('prepareSendTransaction', () => {
   beforeEach(() => setupClient())
 
   afterEach(() => jest.clearAllMocks())
@@ -19,7 +19,7 @@ describe('prepareTransaction', () => {
       to: 'moxey.eth',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const preparedRequest = await prepareTransaction({
+    const preparedRequest = await prepareSendTransaction({
       request,
     })
 
@@ -49,7 +49,7 @@ describe('prepareTransaction', () => {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const preparedRequest = await prepareTransaction({
+    const preparedRequest = await prepareSendTransaction({
       request,
     })
 
@@ -80,7 +80,7 @@ describe('prepareTransaction', () => {
       to: 'moxey.eth',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const preparedRequest = await prepareTransaction({
+    const preparedRequest = await prepareSendTransaction({
       request,
     })
 
@@ -111,7 +111,7 @@ describe('prepareTransaction', () => {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       value: BigNumber.from('10000000000000000'), // 0.01 ETH
     }
-    const preparedRequest = await prepareTransaction({
+    const preparedRequest = await prepareSendTransaction({
       request,
     })
 
@@ -143,7 +143,7 @@ describe('prepareTransaction', () => {
         value: BigNumber.from('10000000000000000'), // 0.01 ETH
       }
       expect(() =>
-        prepareTransaction({
+        prepareSendTransaction({
           request,
         }),
       ).rejects.toThrowError()
@@ -158,7 +158,7 @@ describe('prepareTransaction', () => {
         value: BigNumber.from('10000000000000000'), // 0.01 ETH
       }
       expect(() =>
-        prepareTransaction({
+        prepareSendTransaction({
           request,
         }),
       ).rejects.toThrowError()

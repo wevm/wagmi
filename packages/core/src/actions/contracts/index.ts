@@ -1,8 +1,8 @@
 export {
-  prepareContractTransaction,
-  type PrepareContractTransactionConfig,
-  type PrepareContractTransactionResult,
-} from './prepareContractTransaction'
+  prepareWriteContract,
+  type PrepareWriteContractConfig,
+  type PrepareWriteContractResult,
+} from './prepareWriteContract'
 
 export { getContract, type GetContractArgs } from './getContract'
 
@@ -33,10 +33,12 @@ export {
 } from './watchReadContracts'
 
 export {
-  writeContractPrepared,
-  type WriteContractPreparedConfig,
-  type WriteContractPreparedResult,
-} from './writeContractPrepared'
+  writeContract,
+  type WriteContractArgs,
+  type WriteContractPreparedRequest,
+  type WriteContractResult,
+  type WriteContractUnpreparedRequest,
+} from './writeContract'
 
 export {
   writeContractLazy,

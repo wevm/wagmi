@@ -2,7 +2,7 @@ import { parseEther } from 'ethers/lib/utils'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
-import { useSendTransactionLazy } from './useSendTransactionLazy'
+import { useSendTransaction } from './useSendTransaction'
 import {
   UseWaitForTransactionArgs,
   UseWaitForTransactionConfig,
@@ -14,7 +14,7 @@ function useWaitForTransactionWithSendTransactionAndConnect(
 ) {
   return {
     connect: useConnect(),
-    sendTransaction: useSendTransactionLazy(),
+    sendTransaction: useSendTransaction(),
     waitForTransaction: useWaitForTransaction(config),
   }
 }
@@ -55,10 +55,13 @@ describe('useWaitForTransaction', () => {
       await actConnect({ utils })
 
       await act(async () => {
-        result.current.sendTransaction.sendTransaction({
+        result.current.sendTransaction.sendTransaction!({
           request: {
-            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-            value: parseEther('1'),
+            type: 'dangerouslyUnprepared',
+            payload: {
+              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+              value: parseEther('1'),
+            },
           },
         })
       })
@@ -103,10 +106,13 @@ describe('useWaitForTransaction', () => {
       await actConnect({ utils })
 
       await act(async () => {
-        result.current.sendTransaction.sendTransaction({
+        result.current.sendTransaction.sendTransaction!({
           request: {
-            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-            value: parseEther('1'),
+            type: 'dangerouslyUnprepared',
+            payload: {
+              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+              value: parseEther('1'),
+            },
           },
         })
       })

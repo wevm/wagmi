@@ -1,12 +1,12 @@
 import { BigNumber } from 'ethers'
 
 import { renderHook } from '../../../test'
-import { usePrepareTransaction } from './usePrepareTransaction'
+import { useSendTransactionPrepare } from './useSendTransactionPrepare'
 
-describe('usePrepareTransaction', () => {
+describe('useSendTransactionPrepare', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
-      usePrepareTransaction({
+      useSendTransactionPrepare({
         request: {
           to: 'moxey.eth',
           value: BigNumber.from('10000000000000000'),
@@ -21,15 +21,18 @@ describe('usePrepareTransaction', () => {
     expect(res).toMatchInlineSnapshot(`
       {
         "data": {
-          "gasLimit": {
-            "hex": "0x5209",
-            "type": "BigNumber",
+          "payload": {
+            "gasLimit": {
+              "hex": "0x5209",
+              "type": "BigNumber",
+            },
+            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            "value": {
+              "hex": "0x2386f26fc10000",
+              "type": "BigNumber",
+            },
           },
-          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          "value": {
-            "hex": "0x2386f26fc10000",
-            "type": "BigNumber",
-          },
+          "type": "prepared",
         },
         "error": null,
         "fetchStatus": "idle",

@@ -6,13 +6,13 @@ import {
 } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
-import { prepareContractTransaction } from './prepareContractTransaction'
+import { prepareWriteContract } from './prepareWriteContract'
 
 const connector = new MockConnector({
   options: { signer: getSigners()[0]! },
 })
 
-describe('prepareContractTransaction', () => {
+describe('prepareWriteContract', () => {
   beforeEach(() => setupClient())
 
   it('default', async () => {
@@ -22,13 +22,13 @@ describe('prepareContractTransaction', () => {
     if (!tokenId) return
 
     await connect({ connector })
-    const request = await prepareContractTransaction({
+    const request = await prepareWriteContract({
       ...mlootContractConfig,
       functionName: 'claim',
       args: [tokenId],
     })
 
-    const { data, gasLimit, ...rest } = request
+    const { data, gasLimit, ...rest } = request.payload
     expect(data).toBeDefined()
     expect(gasLimit).toBeDefined()
     expect(rest).toMatchInlineSnapshot(`
@@ -43,7 +43,7 @@ describe('prepareContractTransaction', () => {
     it('contract method error', async () => {
       await connect({ connector })
       await expect(() =>
-        prepareContractTransaction({
+        prepareWriteContract({
           ...mlootContractConfig,
           functionName: 'claim',
           args: 1,
@@ -53,7 +53,7 @@ describe('prepareContractTransaction', () => {
 
     it('connector not found', async () => {
       await expect(() =>
-        prepareContractTransaction({
+        prepareWriteContract({
           ...mlootContractConfig,
           functionName: 'claim',
         }),
@@ -63,7 +63,7 @@ describe('prepareContractTransaction', () => {
     it('contract function not found', async () => {
       await connect({ connector })
       await expect(() =>
-        prepareContractTransaction({
+        prepareWriteContract({
           ...mlootContractConfig,
           functionName: 'wagmi',
         }),

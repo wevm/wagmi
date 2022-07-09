@@ -1,5 +1,4 @@
 import {
-  BigNumber,
   CallOverrides,
   Contract,
   PopulatedTransaction,
@@ -10,10 +9,9 @@ import {
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { fetchSigner } from '../accounts'
-import { prepareTransaction } from '../transactions'
 import { GetContractArgs, getContract } from './getContract'
 
-export type PrepareContractTransactionConfig = Omit<
+export type PrepareWriteContractConfig = Omit<
   GetContractArgs,
   'signerOrProvider'
 > & {
@@ -24,12 +22,15 @@ export type PrepareContractTransactionConfig = Omit<
   overrides?: CallOverrides
 }
 
-export type PrepareContractTransactionResult = PopulatedTransaction & {
-  to: NonNullable<PopulatedTransaction['to']>
-  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+export type PrepareWriteContractResult = {
+  type: 'prepared'
+  payload: PopulatedTransaction & {
+    to: NonNullable<PopulatedTransaction['to']>
+    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+  }
 }
 
-export async function prepareContractTransaction<
+export async function prepareWriteContract<
   TContract extends Contract = Contract,
 >({
   addressOrName,
@@ -37,7 +38,7 @@ export async function prepareContractTransaction<
   contractInterface,
   functionName,
   overrides,
-}: PrepareContractTransactionConfig): Promise<PrepareContractTransactionResult> {
+}: PrepareWriteContractConfig): Promise<PrepareWriteContractResult> {
   const signer = await fetchSigner()
   if (!signer) throw new ConnectorNotFoundError()
 
@@ -64,13 +65,15 @@ export async function prepareContractTransaction<
   )) as PopulatedTransaction & {
     to: string
   }
-  const { gasLimit } = await prepareTransaction({
-    request: unsignedTransaction,
-    signerOrProvider: signer,
-  })
+  const gasLimit =
+    unsignedTransaction.gasLimit ||
+    (await signer.estimateGas(unsignedTransaction))
 
   return {
-    ...unsignedTransaction,
-    gasLimit: BigNumber.from(gasLimit),
+    type: 'prepared',
+    payload: {
+      ...unsignedTransaction,
+      gasLimit,
+    },
   }
 }

@@ -2,22 +2,21 @@ import { getUnclaimedTokenId } from '../../../../core/test'
 import { actConnect, mlootContractConfig, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UsePrepareContractTransactionArgs,
-  UsePrepareContractTransactionConfig,
-  usePrepareContractTransaction,
-} from './usePrepareContractTransaction'
+  UseContractWritePrepareArgs,
+  UseContractWritePrepareConfig,
+  useContractWritePrepare,
+} from './useContractWritePrepare'
 
-function usePrepareContractTransactionWithConnect(
-  config: UsePrepareContractTransactionArgs &
-    UsePrepareContractTransactionConfig,
+function useContractWritePrepareWithConnect(
+  config: UseContractWritePrepareArgs & UseContractWritePrepareConfig,
 ) {
   return {
     connect: useConnect(),
-    prepareContractTransaction: usePrepareContractTransaction(config),
+    prepareContractTransaction: useContractWritePrepare(config),
   }
 }
 
-describe('usePrepareContractTransaction', () => {
+describe('useContractWritePrepare', () => {
   it('mounts', async () => {
     const tokenId = await getUnclaimedTokenId(
       '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -25,7 +24,7 @@ describe('usePrepareContractTransaction', () => {
     if (!tokenId) return
 
     const { result } = renderHook(() =>
-      usePrepareContractTransactionWithConnect({
+      useContractWritePrepareWithConnect({
         ...mlootContractConfig,
         functionName: 'claim',
         args: [tokenId],
@@ -34,7 +33,10 @@ describe('usePrepareContractTransaction', () => {
 
     expect(result.current.prepareContractTransaction).toMatchInlineSnapshot(`
       {
-        "data": undefined,
+        "data": {
+          "payload": undefined,
+          "type": "prepared",
+        },
         "error": null,
         "fetchStatus": "idle",
         "internal": {
@@ -70,7 +72,7 @@ describe('usePrepareContractTransaction', () => {
     if (!tokenId) return
 
     const utils = renderHook(() =>
-      usePrepareContractTransactionWithConnect({
+      useContractWritePrepareWithConnect({
         ...mlootContractConfig,
         functionName: 'claim',
         args: [tokenId],
@@ -85,7 +87,7 @@ describe('usePrepareContractTransaction', () => {
     )
 
     const { data: request, ...rest } = result.current.prepareContractTransaction
-    const { data, gasLimit, ...restRequest } = request || {}
+    const { data, gasLimit, ...restRequest } = request?.payload || {}
     expect(data).toBeDefined()
     expect(gasLimit).toBeDefined()
     expect(restRequest).toMatchInlineSnapshot(`
@@ -127,7 +129,7 @@ describe('usePrepareContractTransaction', () => {
   describe('errors', () => {
     it('contract method error', async () => {
       const utils = renderHook(() =>
-        usePrepareContractTransactionWithConnect({
+        useContractWritePrepareWithConnect({
           ...mlootContractConfig,
           functionName: 'claim',
           args: 1,
@@ -143,7 +145,10 @@ describe('usePrepareContractTransaction', () => {
 
       expect(result.current.prepareContractTransaction).toMatchInlineSnapshot(`
         {
-          "data": undefined,
+          "data": {
+            "payload": undefined,
+            "type": "prepared",
+          },
           "error": [Error: processing response error (body="{\\"jsonrpc\\":\\"2.0\\",\\"id\\":42,\\"error\\":{\\"code\\":-32603,\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":{\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}}", error={"code":-32603,"data":{"message":"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'","data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000"}}, requestBody="{\\"method\\":\\"eth_estimateGas\\",\\"params\\":[{\\"from\\":\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\",\\"to\\":\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\"}],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}", requestMethod="POST", url="http://127.0.0.1:8545", code=SERVER_ERROR, version=web/5.6.0)],
           "fetchStatus": "idle",
           "internal": {
@@ -179,7 +184,7 @@ describe('usePrepareContractTransaction', () => {
       if (!tokenId) return
 
       const utils = renderHook(() =>
-        usePrepareContractTransactionWithConnect({
+        useContractWritePrepareWithConnect({
           ...mlootContractConfig,
           functionName: 'wagmi',
           args: [tokenId],
@@ -195,7 +200,10 @@ describe('usePrepareContractTransaction', () => {
 
       expect(result.current.prepareContractTransaction).toMatchInlineSnapshot(`
         {
-          "data": undefined,
+          "data": {
+            "payload": undefined,
+            "type": "prepared",
+          },
           "error": [ContractMethodDoesNotExistError: Function "wagmi" on contract "0x1dfe7ca09e99d10835bf73044a23b73fc20623df" does not exist.
 
         Etherscan: https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df#readContract],

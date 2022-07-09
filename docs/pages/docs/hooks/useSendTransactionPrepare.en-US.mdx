@@ -1,35 +1,33 @@
 ---
-title: 'usePrepareTransaction'
+title: 'useSendTransactionPrepare'
 description: 'Hook for preparing a transaction to be sent.'
 ---
 
-# usePrepareTransaction
+# useSendTransactionPrepare
 
-Hook for preparing a transaction to be sent via [`useSendTransactionPrepared`](/docs/hooks/useSendTransactionPrepared).
+Hook for preparing a transaction to be sent via [`useSendTransaction`](/docs/hooks/useSendTransaction).
 
 Eagerly fetches the parameters required for sending a transaction such as the gas limit and resolving an ENS address (if required).
 
 ```tsx
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 ```
 
 ## Usage
 
-`usePrepareTransaction` gives back a "prepared request" to be sent through to `useSendTransactionPrepared`.
+`useSendTransactionPrepare` gives back a "prepared request" to be sent through to `useSendTransaction`.
 
 ```tsx {4-9}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const { data: preparedRequest, error } = usePrepareTransaction({
+  const { request, error } = useSendTransactionPrepare({
     request: {
       to: 'moxey.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
     },
   })
-  const { sendTransaction } = useSendTransactionPrepared({
-    preparedRequest,
-  })
+  const { sendTransaction } = useSendTransaction({ request })
 
   return (
     <>
@@ -74,10 +72,10 @@ Note: The `sendTransaction` function will be undefined if the request has not be
 Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
 
 ```tsx {5-8}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -91,10 +89,10 @@ function App() {
 Time (in ms) which the data should remain in the cache.
 
 ```tsx {9}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -109,10 +107,10 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {9}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -127,10 +125,10 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale.
 
 ```tsx {9}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -145,10 +143,10 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {9}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -163,10 +161,10 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {9-11}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -183,10 +181,10 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {9-11}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH
@@ -203,10 +201,10 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {9-11}
-import { usePrepareTransaction } from 'wagmi'
+import { useSendTransactionPrepare } from 'wagmi'
 
 function App() {
-  const prepareTransaction = usePrepareTransaction({
+  const prepareTransaction = useSendTransactionPrepare({
     request: {
       to: 'awkweb.eth',
       value: BigNumber.from('1000000000000000000'), // 1 ETH

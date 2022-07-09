@@ -1,4 +1,3 @@
-export { usePrepareTransaction } from './usePrepareTransaction'
-export { useSendTransactionLazy } from './useSendTransactionLazy'
-export { useSendTransactionPrepared } from './useSendTransactionPrepared'
+export { useSendTransaction } from './useSendTransaction'
+export { useSendTransactionPrepare } from './useSendTransactionPrepare'
 export { useWaitForTransaction } from './useWaitForTransaction'

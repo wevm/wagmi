@@ -4,7 +4,7 @@ import { isAddress } from 'ethers/lib/utils'
 import { fetchEnsAddress } from '../ens'
 import { getProvider } from '../providers'
 
-export type PrepareTransactionArgs = {
+export type PrepareSendTransactionArgs = {
   /** Request data to prepare the transaction */
   request: providers.TransactionRequest & {
     to: NonNullable<providers.TransactionRequest['to']>
@@ -12,15 +12,18 @@ export type PrepareTransactionArgs = {
   signerOrProvider?: providers.JsonRpcSigner | providers.Provider
 }
 
-export type PrepareTransactionResult = providers.TransactionRequest & {
-  to: NonNullable<providers.TransactionRequest['to']>
-  gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
+export type PrepareSendTransactionResult = {
+  type: 'prepared'
+  payload: providers.TransactionRequest & {
+    to: NonNullable<providers.TransactionRequest['to']>
+    gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
+  }
 }
 
-export async function prepareTransaction({
+export async function prepareSendTransaction({
   request,
   signerOrProvider = getProvider(),
-}: PrepareTransactionArgs): Promise<PrepareTransactionResult> {
+}: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)
       ? Promise.resolve(request.to)
@@ -30,5 +33,8 @@ export async function prepareTransaction({
       : signerOrProvider.estimateGas(request),
   ])
 
-  return { ...request, gasLimit, to: to as string }
+  return {
+    type: 'prepared',
+    payload: { ...request, gasLimit, to: to as string },
+  }
 }

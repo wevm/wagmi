@@ -1,12 +1,15 @@
 import { BigNumber } from 'ethers'
-import { useSendTransactionLazy } from 'wagmi'
+import { useSendTransaction } from 'wagmi'
 
 export const SendTransaction = () => {
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =
-    useSendTransactionLazy({
+    useSendTransaction({
       request: {
-        to: '0xc961145a54C96E3aE9bAA048c4F4D6b04C13916b',
-        value: BigNumber.from('10000000000000000'), // 0.01 ETH
+        type: 'dangerouslyUnprepared',
+        payload: {
+          to: '0xc961145a54C96E3aE9bAA048c4F4D6b04C13916b',
+          value: BigNumber.from('10000000000000000'), // 0.01 ETH
+        },
       },
     })
 
@@ -14,7 +17,7 @@ export const SendTransaction = () => {
 
   if (isIdle)
     return (
-      <button disabled={isLoading} onClick={() => sendTransaction()}>
+      <button disabled={isLoading} onClick={() => sendTransaction?.()}>
         Send Transaction
       </button>
     )

@@ -1,8 +1,8 @@
 import {
   FetchSignerResult,
-  PrepareContractTransactionConfig,
-  PrepareContractTransactionResult,
-  prepareContractTransaction,
+  PrepareWriteContractConfig,
+  PrepareWriteContractResult,
+  prepareWriteContract,
 } from '@wagmi/core'
 import { hashQueryKey } from 'react-query'
 
@@ -10,9 +10,9 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UsePrepareContractTransactionArgs = PrepareContractTransactionConfig
-export type UsePrepareContractTransactionConfig = QueryConfig<
-  PrepareContractTransactionResult,
+export type UseContractWritePrepareArgs = PrepareWriteContractConfig
+export type UseContractWritePrepareConfig = QueryConfig<
+  PrepareWriteContractResult,
   Error
 >
 
@@ -23,7 +23,7 @@ export const queryKey = (
     contractInterface,
     functionName,
     overrides,
-  }: UsePrepareContractTransactionArgs,
+  }: UseContractWritePrepareArgs,
   { chainId, signer }: { chainId?: number; signer?: FetchSignerResult },
 ) =>
   [
@@ -50,7 +50,7 @@ const queryFn = ({
     { args, addressOrName, contractInterface, functionName, overrides },
   ],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return prepareContractTransaction({
+  return prepareWriteContract({
     args,
     addressOrName,
     contractInterface,
@@ -59,7 +59,7 @@ const queryFn = ({
   })
 }
 
-export function usePrepareContractTransaction({
+export function useContractWritePrepare({
   addressOrName,
   contractInterface,
   functionName,
@@ -72,11 +72,11 @@ export function usePrepareContractTransaction({
   onError,
   onSettled,
   onSuccess,
-}: UsePrepareContractTransactionArgs & UsePrepareContractTransactionConfig) {
+}: UseContractWritePrepareArgs & UseContractWritePrepareConfig) {
   const chainId = useChainId()
   const { data: signer } = useSigner()
 
-  return useQuery(
+  const writeContractQuery = useQuery(
     queryKey(
       {
         addressOrName,
@@ -99,4 +99,12 @@ export function usePrepareContractTransaction({
       onSuccess,
     },
   )
+
+  return {
+    ...writeContractQuery,
+    data: writeContractQuery.data || {
+      payload: undefined,
+      type: 'prepared',
+    },
+  }
 }

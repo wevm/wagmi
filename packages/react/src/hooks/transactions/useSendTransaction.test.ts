@@ -1,26 +1,47 @@
+import { TransactionResponse } from '@ethersproject/providers'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { parseEther } from 'ethers/lib/utils'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UseSendTransactionLazyArgs,
-  UseSendTransactionLazyConfig,
-  useSendTransactionLazy,
-} from './useSendTransactionLazy'
+  UseSendTransactionArgs,
+  UseSendTransactionConfig,
+  useSendTransaction,
+} from './useSendTransaction'
+import {
+  UseSendTransactionPrepareArgs,
+  UseSendTransactionPrepareConfig,
+  useSendTransactionPrepare,
+} from './useSendTransactionPrepare'
 
-function useSendTransactionLazyWithConnect(
-  config?: UseSendTransactionLazyArgs & UseSendTransactionLazyConfig,
+function useSendTransactionWithConnect(
+  config?: UseSendTransactionArgs & UseSendTransactionConfig,
 ) {
   return {
     connect: useConnect(),
-    sendTransaction: useSendTransactionLazy(config),
+    sendTransaction: useSendTransaction(config),
   }
 }
 
-describe('useSendTransactionLazy', () => {
+function useSendTransactionPreparedWithConnect(
+  config: UseSendTransactionPrepareArgs &
+    UseSendTransactionPrepareConfig & { chainId?: number },
+) {
+  const sendTransactionPrepare = useSendTransactionPrepare(config)
+  return {
+    connect: useConnect(),
+    sendTransactionPrepare,
+    sendTransaction: useSendTransaction({
+      chainId: config?.chainId,
+      request: sendTransactionPrepare.data,
+    }),
+  }
+}
+
+describe('useSendTransaction', () => {
   it('mounts', () => {
-    const { result } = renderHook(() => useSendTransactionLazy())
+    const { result } = renderHook(() => useSendTransaction())
     expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -40,55 +61,6 @@ describe('useSendTransactionLazy', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('switches before sending transaction,', async () => {
-        const utils = renderHook(() =>
-          useSendTransactionLazyWithConnect({
-            chainId: 1,
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
-          }),
-        )
-        const { result, waitFor } = utils
-        await actConnect({ chainId: 4, utils })
-
-        await act(async () => {
-          result.current.sendTransaction.sendTransaction()
-        })
-
-        await waitFor(() =>
-          expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
-        )
-
-        const { data, ...res } = result.current.sendTransaction
-        expect(data).toBeDefined()
-        expect(data?.hash).toBeDefined()
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "error": null,
-            "isError": false,
-            "isIdle": false,
-            "isLoading": false,
-            "isSuccess": true,
-            "reset": [Function],
-            "sendTransaction": [Function],
-            "sendTransactionAsync": [Function],
-            "status": "success",
-            "variables": {
-              "chainId": 1,
-              "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
-              },
-            },
-          }
-        `)
-      })
-
       it('unable to switch', async () => {
         const connector = new MockConnector({
           options: {
@@ -97,7 +69,7 @@ describe('useSendTransactionLazy', () => {
           },
         })
         const utils = renderHook(() =>
-          useSendTransactionLazyWithConnect({
+          useSendTransactionPreparedWithConnect({
             chainId: 1,
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
@@ -108,8 +80,12 @@ describe('useSendTransactionLazy', () => {
         const { result, waitFor } = utils
         await actConnect({ chainId: 4, connector, utils })
 
+        await waitFor(() =>
+          expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
+        )
+
         await act(async () => {
-          result.current.sendTransaction.sendTransaction()
+          result.current.sendTransaction.sendTransaction?.()
         })
 
         await waitFor(() =>
@@ -125,11 +101,11 @@ describe('useSendTransactionLazy', () => {
 
   describe('return value', () => {
     describe('sendTransaction', () => {
-      it('uses configuration', async () => {
+      it('prepared', async () => {
         const utils = renderHook(() =>
-          useSendTransactionLazyWithConnect({
+          useSendTransactionPreparedWithConnect({
             request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+              to: 'moxey.eth',
               value: parseEther('1'),
             },
           }),
@@ -137,8 +113,12 @@ describe('useSendTransactionLazy', () => {
         const { result, waitFor } = utils
         await actConnect({ utils })
 
+        await waitFor(() =>
+          expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
+        )
+
         await act(async () => {
-          result.current.sendTransaction.sendTransaction()
+          result.current.sendTransaction.sendTransaction?.()
         })
 
         await waitFor(() =>
@@ -162,11 +142,72 @@ describe('useSendTransactionLazy', () => {
             "variables": {
               "chainId": undefined,
               "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
+                "payload": {
+                  "gasLimit": {
+                    "hex": "0x5209",
+                    "type": "BigNumber",
+                  },
+                  "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+                  "value": {
+                    "hex": "0x0de0b6b3a7640000",
+                    "type": "BigNumber",
+                  },
                 },
+                "type": "prepared",
+              },
+            },
+          }
+        `)
+      })
+
+      it('dangerouslyUnprepared', async () => {
+        const utils = renderHook(() =>
+          useSendTransactionWithConnect({
+            request: {
+              type: 'dangerouslyUnprepared',
+              payload: {
+                to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+                value: parseEther('1'),
+              },
+            },
+          }),
+        )
+        const { result, waitFor } = utils
+        await actConnect({ utils })
+
+        await act(async () => {
+          result.current.sendTransaction.sendTransaction?.()
+        })
+
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+        )
+
+        const { data, ...res } = result.current.sendTransaction
+        expect(data).toBeDefined()
+        expect(data?.hash).toBeDefined()
+        expect(res).toMatchInlineSnapshot(`
+          {
+            "error": null,
+            "isError": false,
+            "isIdle": false,
+            "isLoading": false,
+            "isSuccess": true,
+            "reset": [Function],
+            "sendTransaction": [Function],
+            "sendTransactionAsync": [Function],
+            "status": "success",
+            "variables": {
+              "chainId": undefined,
+              "request": {
+                "payload": {
+                  "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+                  "value": {
+                    "hex": "0x0de0b6b3a7640000",
+                    "type": "BigNumber",
+                  },
+                },
+                "type": "dangerouslyUnprepared",
               },
             },
           }
@@ -174,15 +215,18 @@ describe('useSendTransactionLazy', () => {
       })
 
       it('uses deferred args', async () => {
-        const utils = renderHook(() => useSendTransactionLazyWithConnect())
+        const utils = renderHook(() => useSendTransactionWithConnect())
         const { result, waitFor } = utils
         await actConnect({ utils })
 
         await act(async () => {
-          result.current.sendTransaction.sendTransaction({
+          result.current.sendTransaction.sendTransaction?.({
             request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
+              type: 'dangerouslyUnprepared',
+              payload: {
+                to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+                value: parseEther('1'),
+              },
             },
           })
         })
@@ -208,11 +252,14 @@ describe('useSendTransactionLazy', () => {
             "variables": {
               "chainId": undefined,
               "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
+                "payload": {
+                  "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+                  "value": {
+                    "hex": "0x0de0b6b3a7640000",
+                    "type": "BigNumber",
+                  },
                 },
+                "type": "dangerouslyUnprepared",
               },
             },
           }
@@ -221,10 +268,13 @@ describe('useSendTransactionLazy', () => {
 
       it('fails on insufficient balance', async () => {
         const utils = renderHook(() =>
-          useSendTransactionLazyWithConnect({
+          useSendTransactionWithConnect({
             request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('100000'),
+              type: 'dangerouslyUnprepared',
+              payload: {
+                to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+                value: parseEther('100000'),
+              },
             },
           }),
         )
@@ -232,7 +282,7 @@ describe('useSendTransactionLazy', () => {
         await actConnect({ utils })
 
         await act(async () => {
-          result.current.sendTransaction.sendTransaction()
+          result.current.sendTransaction.sendTransaction?.()
         })
 
         await waitFor(() =>
@@ -259,11 +309,14 @@ describe('useSendTransactionLazy', () => {
             "variables": {
               "chainId": undefined,
               "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x152d02c7e14af6800000",
-                  "type": "BigNumber",
+                "payload": {
+                  "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+                  "value": {
+                    "hex": "0x152d02c7e14af6800000",
+                    "type": "BigNumber",
+                  },
                 },
+                "type": "dangerouslyUnprepared",
               },
             },
           }
@@ -272,11 +325,11 @@ describe('useSendTransactionLazy', () => {
     })
 
     describe('sendTransactionAsync', () => {
-      it('uses configuration', async () => {
+      it('prepared', async () => {
         const utils = renderHook(() =>
-          useSendTransactionLazyWithConnect({
+          useSendTransactionPreparedWithConnect({
             request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+              to: 'moxey.eth',
               value: parseEther('1'),
             },
           }),
@@ -284,9 +337,39 @@ describe('useSendTransactionLazy', () => {
         const { result, waitFor } = utils
         await actConnect({ utils })
 
+        await waitFor(() =>
+          expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
+        )
+
         await act(async () => {
           const res =
-            await result.current.sendTransaction.sendTransactionAsync()
+            (await result.current.sendTransaction.sendTransactionAsync?.()) as TransactionResponse
+          expect(res.hash).toBeDefined()
+        })
+
+        await waitFor(() =>
+          expect(result.current.sendTransaction.isSuccess).toBeTruthy(),
+        )
+      })
+
+      it('dangerouslyUnprepared', async () => {
+        const utils = renderHook(() =>
+          useSendTransactionWithConnect({
+            request: {
+              type: 'dangerouslyUnprepared',
+              payload: {
+                to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+                value: parseEther('1'),
+              },
+            },
+          }),
+        )
+        const { result, waitFor } = utils
+        await actConnect({ utils })
+
+        await act(async () => {
+          const res = await result.current.sendTransaction
+            .sendTransactionAsync!()
           expect(res.hash).toBeDefined()
         })
 
@@ -297,10 +380,13 @@ describe('useSendTransactionLazy', () => {
 
       it('throws on error', async () => {
         const utils = renderHook(() =>
-          useSendTransactionLazyWithConnect({
+          useSendTransactionWithConnect({
             request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('100000'),
+              type: 'dangerouslyUnprepared',
+              payload: {
+                to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+                value: parseEther('100000'),
+              },
             },
           }),
         )
@@ -314,7 +400,7 @@ describe('useSendTransactionLazy', () => {
 
         await act(async () => {
           try {
-            await result.current.sendTransaction.sendTransactionAsync()
+            await result.current.sendTransaction.sendTransactionAsync?.()
           } catch (error) {
             expect(
               (error as Error)?.message?.includes(

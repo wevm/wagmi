@@ -23,13 +23,12 @@ TODO
 import { useSendTransactionPrepared } from 'wagmi'
 
 function App() {
-  const { data: preparedRequest } = usePrepareTransaction({
+  const { request } = useSendTransactionPrepare({
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
-  const { data, isLoading, isSuccess, sendTransaction } =
-    useSendTransactionPrepared({
-      preparedRequest,
-    })
+  const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+    request,
+  })
 
   return (
     <div>

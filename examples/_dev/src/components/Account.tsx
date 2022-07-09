@@ -46,6 +46,8 @@ export const Account = () => {
         )}
       </div>
 
+      <SendTransactionPrepared />
+
       {false && (
         <>
           {true && (
