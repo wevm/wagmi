@@ -160,7 +160,7 @@ describe('useSendTransaction', () => {
         `)
       })
 
-      it('dangerouslyUnprepared', async () => {
+      it('dangerouslyPrepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
             dangerouslyPrepared: true,

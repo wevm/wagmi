@@ -9,7 +9,10 @@ import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
-export type UseContractWriteArgs = Omit<WriteContractArgs, 'request'> &
+export type UseContractWriteArgs = Omit<
+  WriteContractArgs,
+  'request' | 'dangerouslyPrepared'
+> &
   (
     | {
         dangerouslyPrepared?: false | undefined
@@ -28,6 +31,16 @@ export type UseContractWriteConfig = MutationConfig<
   Error,
   UseContractWriteArgs
 >
+
+type ContractWriteFn = (overrideConfig?: UseContractWriteMutationArgs) => void
+type ContractWriteAsyncFn = (
+  overrideConfig?: UseContractWriteMutationArgs,
+) => Promise<WriteContractResult>
+type MutateFnReturnValue<Args, Fn> = Args extends {
+  dangerouslyPrepared: true
+}
+  ? Fn
+  : Fn | undefined
 
 export const mutationKey = ([
   {
@@ -75,7 +88,9 @@ const mutationFn = ({
   } as WriteContractArgs)
 }
 
-export function useContractWrite({
+export function useContractWrite<
+  Args extends UseContractWriteArgs = UseContractWriteArgs,
+>({
   addressOrName,
   args,
   chainId,
@@ -88,7 +103,7 @@ export function useContractWrite({
   onMutate,
   onSettled,
   onSuccess,
-}: UseContractWriteArgs & UseContractWriteConfig) {
+}: Args & UseContractWriteConfig) {
   const {
     data,
     error,
@@ -165,7 +180,11 @@ export function useContractWrite({
     reset,
     status,
     variables,
-    write: !dangerouslyPrepared && !request ? undefined : write,
-    writeAsync: !dangerouslyPrepared && !request ? undefined : writeAsync,
+    write: (!dangerouslyPrepared && !request
+      ? undefined
+      : write) as MutateFnReturnValue<Args, ContractWriteFn>,
+    writeAsync: (!dangerouslyPrepared && !request
+      ? undefined
+      : writeAsync) as MutateFnReturnValue<Args, ContractWriteAsyncFn>,
   }
 }

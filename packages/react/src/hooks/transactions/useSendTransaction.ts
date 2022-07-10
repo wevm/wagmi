@@ -17,24 +17,35 @@ export type UseSendTransactionArgs = Omit<
   (
     | {
         dangerouslyPrepared?: false
-        request?: SendTransactionPreparedRequest
+        request: SendTransactionPreparedRequest | undefined
       }
     | {
         dangerouslyPrepared: true
         request?: SendTransactionUnpreparedRequest
       }
   )
+export type UseSendTransactionMutationArgs = {
+  dangerouslySet: {
+    request: SendTransactionUnpreparedRequest
+  }
+}
 export type UseSendTransactionConfig = MutationConfig<
   SendTransactionResult,
   Error,
   SendTransactionArgs
 >
 
-type UseSendTransactionMutationArgs = {
-  dangerouslySet: {
-    request: SendTransactionUnpreparedRequest
-  }
+type SendTransactionFn = (
+  overrideConfig?: UseSendTransactionMutationArgs,
+) => void
+type SendTransactionAsyncFn = (
+  overrideConfig?: UseSendTransactionMutationArgs,
+) => Promise<SendTransactionResult>
+type MutateFnReturnValue<Args, Fn> = Args extends {
+  dangerouslyPrepared: true
 }
+  ? Fn
+  : Fn | undefined
 
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
@@ -51,7 +62,9 @@ const mutationFn = ({
   } as SendTransactionArgs)
 }
 
-export function useSendTransaction({
+export function useSendTransaction<
+  Args extends UseSendTransactionArgs = UseSendTransactionArgs,
+>({
   chainId,
   dangerouslyPrepared,
   request,
@@ -59,7 +72,7 @@ export function useSendTransaction({
   onMutate,
   onSettled,
   onSuccess,
-}: UseSendTransactionArgs & UseSendTransactionConfig) {
+}: Args & UseSendTransactionConfig) {
   const {
     data,
     error,
@@ -117,10 +130,15 @@ export function useSendTransaction({
     isLoading,
     isSuccess,
     reset,
-    sendTransaction:
-      !dangerouslyPrepared && !request ? undefined : sendTransaction,
-    sendTransactionAsync:
-      !dangerouslyPrepared && !request ? undefined : sendTransactionAsync,
+    sendTransaction: (!dangerouslyPrepared && !request
+      ? undefined
+      : sendTransaction) as MutateFnReturnValue<Args, SendTransactionFn>,
+    sendTransactionAsync: (!dangerouslyPrepared && !request
+      ? undefined
+      : sendTransactionAsync) as MutateFnReturnValue<
+      Args,
+      SendTransactionAsyncFn
+    >,
     status,
     variables,
   }
