@@ -35,13 +35,7 @@ export {
 export {
   writeContract,
   type WriteContractArgs,
-  type WriteContractPreparedRequest,
+  type WriteContractPreparedArgs,
   type WriteContractResult,
-  type WriteContractUnpreparedRequest,
+  type WriteContractUnpreparedArgs,
 } from './writeContract'
-
-export {
-  writeContractLazy,
-  type WriteContractLazyConfig,
-  type WriteContractLazyResult,
-} from './writeContractLazy'

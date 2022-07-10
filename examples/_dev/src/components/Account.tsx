@@ -46,7 +46,7 @@ export const Account = () => {
         )}
       </div>
 
-      <SendTransactionPrepared />
+      <WriteContractPrepared />
 
       {false && (
         <>

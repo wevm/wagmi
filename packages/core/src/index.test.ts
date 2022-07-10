@@ -3,8 +3,6 @@ import * as Exports from './'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "prepareContractTransaction",
-      "prepareTransaction",
       "connect",
       "disconnect",
       "fetchBalance",
@@ -21,10 +19,11 @@ it('should expose correct exports', () => {
       "getNetwork",
       "getProvider",
       "getWebSocketProvider",
+      "prepareWriteContract",
+      "prepareSendTransaction",
       "readContract",
       "readContracts",
-      "sendTransactionLazy",
-      "sendTransactionPrepared",
+      "sendTransaction",
       "signMessage",
       "signTypedData",
       "switchNetwork",
@@ -38,8 +37,7 @@ it('should expose correct exports', () => {
       "watchReadContracts",
       "watchSigner",
       "watchWebSocketProvider",
-      "writeContractPrepared",
-      "writeContractLazy",
+      "writeContract",
       "createClient",
       "Client",
       "Connector",

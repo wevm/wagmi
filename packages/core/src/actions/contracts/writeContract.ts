@@ -1,27 +1,25 @@
-import { CallOverrides } from 'ethers'
+import { CallOverrides, PopulatedTransaction } from 'ethers'
 
 import { ChainMismatchError } from '../../errors'
 import { getNetwork } from '../accounts'
-import { SendTransactionResult, sendTransaction } from '../transactions'
-import { GetContractArgs } from './getContract'
 import {
-  PrepareWriteContractConfig,
-  PrepareWriteContractResult,
-  prepareWriteContract,
-} from './prepareWriteContract'
+  SendTransactionPreparedRequest,
+  SendTransactionResult,
+  sendTransaction,
+} from '../transactions'
+import { GetContractArgs } from './getContract'
+import { prepareWriteContract } from './prepareWriteContract'
 
-export type WriteContractPreparedRequest = {
-  type: 'prepared'
-  /** The prepared request to use when sending the transaction */
-  payload: PrepareWriteContractResult['payload']
+export type WriteContractPreparedArgs = {
+  dangerouslyPrepared?: false
+  request: PopulatedTransaction & {
+    to: NonNullable<PopulatedTransaction['to']>
+    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+  }
 }
-export type WriteContractUnpreparedRequest = {
-  type: 'dangerouslyUnprepared'
-  /** A request that has not been "prepared" via `prepareWriteContract`.
-   * Providing this may cause UX issues (iOS deep linking issues, delay to
-   * open wallet, etc).
-   */
-  payload: PrepareWriteContractConfig
+export type WriteContractUnpreparedArgs = {
+  dangerouslyPrepared: true
+  request?: undefined
 }
 
 export type WriteContractArgs = Omit<GetContractArgs, 'signerOrProvider'> & {
@@ -32,11 +30,17 @@ export type WriteContractArgs = Omit<GetContractArgs, 'signerOrProvider'> & {
   /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
-}
+} & (WriteContractUnpreparedArgs | WriteContractPreparedArgs)
 export type WriteContractResult = SendTransactionResult
 
 export async function writeContract({
+  addressOrName,
+  args,
   chainId,
+  contractInterface,
+  dangerouslyPrepared,
+  functionName,
+  overrides,
   request: request_,
 }: WriteContractArgs): Promise<WriteContractResult> {
   const { chain: activeChain, chains } = getNetwork()
@@ -51,9 +55,23 @@ export async function writeContract({
     })
   }
 
-  let request = request_
-  if (request.type === 'dangerouslyUnprepared') {
-    request = await prepareWriteContract(request.payload)
+  if (!dangerouslyPrepared) {
+    if (!request_) throw new Error('`request` is required')
   }
-  return await sendTransaction({ request })
+
+  const request = dangerouslyPrepared
+    ? (
+        await prepareWriteContract({
+          addressOrName,
+          args,
+          contractInterface,
+          functionName,
+          overrides,
+        })
+      ).request
+    : request_
+
+  return sendTransaction({
+    request: request as SendTransactionPreparedRequest,
+  })
 }

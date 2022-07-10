@@ -22,9 +22,8 @@ export type PrepareWriteContractConfig = Omit<
   overrides?: CallOverrides
 }
 
-export type PrepareWriteContractResult = {
-  type: 'prepared'
-  payload: PopulatedTransaction & {
+export type PrepareWriteContractResult = PrepareWriteContractConfig & {
+  request: PopulatedTransaction & {
     to: NonNullable<PopulatedTransaction['to']>
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
@@ -70,8 +69,12 @@ export async function prepareWriteContract<
     (await signer.estimateGas(unsignedTransaction))
 
   return {
-    type: 'prepared',
-    payload: {
+    addressOrName,
+    args,
+    contractInterface,
+    functionName,
+    overrides,
+    request: {
       ...unsignedTransaction,
       gasLimit,
     },

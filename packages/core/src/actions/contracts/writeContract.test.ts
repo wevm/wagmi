@@ -23,12 +23,12 @@ describe('writeContract', () => {
     if (!tokenId) return
 
     await connect({ connector })
-    const request = await prepareWriteContract({
+    const config = await prepareWriteContract({
       ...mlootContractConfig,
       functionName: 'claim',
       args: [tokenId],
     })
-    const { hash } = await writeContract({ request })
+    const { hash } = await writeContract({ ...config })
 
     expect(hash).toBeDefined()
   })
@@ -41,14 +41,10 @@ describe('writeContract', () => {
 
     await connect({ connector })
     const { hash } = await writeContract({
-      request: {
-        type: 'dangerouslyUnprepared',
-        payload: {
-          ...mlootContractConfig,
-          functionName: 'claim',
-          args: [tokenId],
-        },
-      },
+      ...mlootContractConfig,
+      dangerouslyPrepared: true,
+      functionName: 'claim',
+      args: [tokenId],
     })
 
     expect(hash).toBeDefined()
@@ -62,7 +58,7 @@ describe('writeContract', () => {
       if (!tokenId) return
 
       await connect({ connector })
-      const request = await prepareWriteContract({
+      const config = await prepareWriteContract({
         ...mlootContractConfig,
         functionName: 'claim',
         args: [tokenId],
@@ -71,7 +67,7 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           chainId: 69,
-          request,
+          ...config,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum."`,
@@ -82,10 +78,10 @@ describe('writeContract', () => {
       await connect({ connector })
       await expect(() =>
         writeContract({
-          request: {
-            type: 'dangerouslyUnprepared',
-            payload: { ...mlootContractConfig, functionName: 'claim', args: 1 },
-          },
+          ...mlootContractConfig,
+          dangerouslyPrepared: true,
+          functionName: 'claim',
+          args: 1,
         }),
       ).rejects.toThrowError()
     })
@@ -93,10 +89,9 @@ describe('writeContract', () => {
     it('connector not found', async () => {
       await expect(() =>
         writeContract({
-          request: {
-            type: 'dangerouslyUnprepared',
-            payload: { ...mlootContractConfig, functionName: 'claim' },
-          },
+          ...mlootContractConfig,
+          dangerouslyPrepared: true,
+          functionName: 'claim',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
@@ -105,10 +100,9 @@ describe('writeContract', () => {
       await connect({ connector })
       await expect(() =>
         writeContract({
-          request: {
-            type: 'dangerouslyUnprepared',
-            payload: { ...mlootContractConfig, functionName: 'wagmi' },
-          },
+          ...mlootContractConfig,
+          dangerouslyPrepared: true,
+          functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
               "Function \\"wagmi\\" on contract \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\" does not exist.

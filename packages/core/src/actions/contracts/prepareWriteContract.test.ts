@@ -22,13 +22,13 @@ describe('prepareWriteContract', () => {
     if (!tokenId) return
 
     await connect({ connector })
-    const request = await prepareWriteContract({
+    const { request } = await prepareWriteContract({
       ...mlootContractConfig,
       functionName: 'claim',
       args: [tokenId],
     })
 
-    const { data, gasLimit, ...rest } = request.payload
+    const { data, gasLimit, ...rest } = request || {}
     expect(data).toBeDefined()
     expect(gasLimit).toBeDefined()
     expect(rest).toMatchInlineSnapshot(`

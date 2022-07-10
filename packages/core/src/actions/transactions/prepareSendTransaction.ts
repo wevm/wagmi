@@ -12,12 +12,9 @@ export type PrepareSendTransactionArgs = {
   signerOrProvider?: providers.JsonRpcSigner | providers.Provider
 }
 
-export type PrepareSendTransactionResult = {
-  type: 'prepared'
-  payload: providers.TransactionRequest & {
-    to: NonNullable<providers.TransactionRequest['to']>
-    gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
-  }
+export type PrepareSendTransactionResult = providers.TransactionRequest & {
+  to: NonNullable<providers.TransactionRequest['to']>
+  gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
 }
 
 export async function prepareSendTransaction({
@@ -33,8 +30,5 @@ export async function prepareSendTransaction({
       : signerOrProvider.estimateGas(request),
   ])
 
-  return {
-    type: 'prepared',
-    payload: { ...request, gasLimit, to: to as string },
-  }
+  return { ...request, gasLimit, to: to as string }
 }

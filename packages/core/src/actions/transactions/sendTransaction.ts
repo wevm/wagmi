@@ -1,5 +1,4 @@
 import { providers } from 'ethers'
-import { isAddress } from 'ethers/lib/utils'
 
 import {
   ChainMismatchError,
@@ -9,39 +8,37 @@ import {
 } from '../../errors'
 import { fetchSigner, getNetwork } from '../accounts'
 import { getProvider } from '../providers'
-import { PrepareSendTransactionResult } from './prepareSendTransaction'
 
-export type SendTransactionPreparedRequest = {
-  type: 'prepared'
-  /** A prepared request. */
-  payload: PrepareSendTransactionResult['payload']
+export type SendTransactionPreparedRequest = providers.TransactionRequest & {
+  to: NonNullable<providers.TransactionRequest['to']>
+  gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
 }
-export type SendTransactionUnpreparedRequest = {
-  type: 'dangerouslyUnprepared'
-  /** A request that has not been "prepared" via `prepareSendTransaction`.
-   * Providing this may cause UX issues (iOS deep linking issues, delay to
-   * open wallet, etc).
-   */
-  payload: providers.TransactionRequest
-}
+export type SendTransactionUnpreparedRequest = providers.TransactionRequest
 
 export type SendTransactionArgs = {
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
-  request: SendTransactionPreparedRequest | SendTransactionUnpreparedRequest
-}
+} & (
+  | {
+      dangerouslyPrepared?: false
+      request: SendTransactionPreparedRequest
+    }
+  | {
+      dangerouslyPrepared: true
+      request: SendTransactionUnpreparedRequest
+    }
+)
 
 export type SendTransactionResult = providers.TransactionResponse
 
 export async function sendTransaction({
   chainId,
+  dangerouslyPrepared = false,
   request,
 }: SendTransactionArgs): Promise<SendTransactionResult> {
-  if (request.type === 'prepared') {
-    if (!request.payload.gasLimit) throw new Error('`gasLimit` is required')
-    if (!request.payload.to) throw new Error('`to` is required')
-    if (!isAddress(request.payload.to))
-      throw new Error('`to` must be an address')
+  if (!dangerouslyPrepared) {
+    if (!request.gasLimit) throw new Error('`gasLimit` is required')
+    if (!request.to) throw new Error('`to` is required')
   }
 
   const { chain: activeChain, chains } = getNetwork()
@@ -79,7 +76,7 @@ export async function sendTransaction({
     // delay to open wallet, etc).
 
     const uncheckedSigner = signer.connectUnchecked()
-    const { hash } = await uncheckedSigner.sendTransaction(request.payload)
+    const { hash } = await uncheckedSigner.sendTransaction(request)
 
     /********************************************************/
     /** END: WalletConnect mobile deep link cautious code.  */

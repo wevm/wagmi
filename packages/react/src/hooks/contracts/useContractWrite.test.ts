@@ -31,7 +31,7 @@ function useContractWritePreparedWithConnect(
     contractWritePrepare,
     contractWrite: useContractWrite({
       chainId: config?.chainId,
-      request: contractWritePrepare.data,
+      ...contractWritePrepare.data,
     }),
   }
 }
@@ -160,6 +160,8 @@ describe('useContractWrite', () => {
         `)
       })
 
+      it.todo('prepared with dangerously set args')
+
       it('unprepared', async () => {
         const tokenId = await getUnclaimedTokenId(
           '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -168,14 +170,10 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            request: {
-              type: 'dangerouslyUnprepared',
-              payload: {
-                ...mlootContractConfig,
-                functionName: 'claim',
-                args: [tokenId],
-              },
-            },
+            dangerouslyPrepared: true,
+            ...mlootContractConfig,
+            functionName: 'claim',
+            args: [tokenId],
           }),
         )
 
@@ -218,13 +216,9 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            request: {
-              type: 'dangerouslyUnprepared',
-              payload: {
-                ...mlootContractConfig,
-                functionName: 'claim',
-              },
-            },
+            dangerouslyPrepared: true,
+            ...mlootContractConfig,
+            functionName: 'claim',
           }),
         )
         const { result, waitFor } = utils
@@ -232,7 +226,9 @@ describe('useContractWrite', () => {
 
         await act(async () =>
           result.current.contractWrite.write?.({
-            args: tokenId,
+            dangerouslySet: {
+              args: tokenId,
+            },
           }),
         )
         await waitFor(
@@ -296,6 +292,8 @@ describe('useContractWrite', () => {
           `)
       })
 
+      it.todo('prepared with dangerously set args')
+
       it('unprepared', async () => {
         const tokenId = await getUnclaimedTokenId(
           '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -304,14 +302,10 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            request: {
-              type: 'dangerouslyUnprepared',
-              payload: {
-                ...mlootContractConfig,
-                functionName: 'claim',
-                args: [tokenId],
-              },
-            },
+            dangerouslyPrepared: true,
+            ...mlootContractConfig,
+            functionName: 'claim',
+            args: [tokenId],
           }),
         )
 
@@ -355,13 +349,9 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            request: {
-              type: 'dangerouslyUnprepared',
-              payload: {
-                ...mlootContractConfig,
-                functionName: 'claim',
-              },
-            },
+            dangerouslyPrepared: true,
+            ...mlootContractConfig,
+            functionName: 'claim',
           }),
         )
         const { result, waitFor } = utils
@@ -369,7 +359,9 @@ describe('useContractWrite', () => {
 
         await act(async () => {
           const res = await result.current.contractWrite.writeAsync?.({
-            args: tokenId,
+            dangerouslySet: {
+              args: tokenId,
+            },
           })
           expect(res?.hash).toBeDefined()
         })

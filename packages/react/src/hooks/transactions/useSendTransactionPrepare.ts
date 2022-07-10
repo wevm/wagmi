@@ -42,25 +42,14 @@ export function useSendTransactionPrepare({
   const chainId = useChainId()
   const provider = useProvider()
 
-  const sendTransactionQuery = useQuery(
-    queryKey({ request, chainId }),
-    queryFn,
-    {
-      cacheTime,
-      enabled: Boolean(enabled && provider),
-      isDataEqual: deepEqual,
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    },
-  )
-  return {
-    ...sendTransactionQuery,
-    data: sendTransactionQuery.data || {
-      payload: undefined,
-      type: 'prepared',
-    },
-  }
+  return useQuery(queryKey({ request, chainId }), queryFn, {
+    cacheTime,
+    enabled: Boolean(enabled && provider),
+    isDataEqual: deepEqual,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 }

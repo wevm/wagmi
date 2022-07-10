@@ -34,7 +34,6 @@ export {
   watchSigner,
   watchWebSocketProvider,
   writeContract,
-  writeContractLazy,
 } from './actions'
 export type {
   ConnectArgs,
@@ -93,11 +92,9 @@ export type {
   WatchSignerCallback,
   WatchWebSocketProviderCallback,
   WriteContractArgs,
-  WriteContractPreparedRequest,
+  WriteContractPreparedArgs,
   WriteContractResult,
-  WriteContractUnpreparedRequest,
-  WriteContractLazyConfig,
-  WriteContractLazyResult,
+  WriteContractUnpreparedArgs,
 } from './actions'
 
 export { createClient, Client } from './client'

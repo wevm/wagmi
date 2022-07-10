@@ -76,7 +76,7 @@ export function useContractWritePrepare({
   const chainId = useChainId()
   const { data: signer } = useSigner()
 
-  const writeContractQuery = useQuery(
+  const query = useQuery(
     queryKey(
       {
         addressOrName,
@@ -99,12 +99,16 @@ export function useContractWritePrepare({
       onSuccess,
     },
   )
-
   return {
-    ...writeContractQuery,
-    data: writeContractQuery.data || {
-      payload: undefined,
-      type: 'prepared',
+    ...query,
+    data: {
+      addressOrName,
+      args,
+      contractInterface,
+      overrides,
+      functionName,
+      request: undefined,
+      ...query.data,
     },
   }
 }

@@ -16,10 +16,10 @@ import {
 } from '../transactions/useWaitForTransaction'
 import { UseContractEventConfig, useContractEvent } from './useContractEvent'
 import {
-  UseContractWriteLazyArgs,
-  UseContractWriteLazyConfig,
-  useContractWriteLazy,
-} from './useContractWriteLazy'
+  UseContractWriteArgs,
+  UseContractWriteConfig,
+  useContractWrite,
+} from './useContractWrite'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
@@ -28,14 +28,14 @@ function useContractEventWithWrite(config: {
     config: UseContractEventConfig
   }
   contractWrite: {
-    config: UseContractWriteLazyArgs & UseContractWriteLazyConfig
+    config: UseContractWriteArgs & UseContractWriteConfig
   }
   waitForTransaction?: UseWaitForTransactionArgs & UseWaitForTransactionConfig
 }) {
   return {
     connect: useConnect(),
     contractEvent: useContractEvent(config.contractEvent.config),
-    contractWrite: useContractWriteLazy(config.contractWrite.config),
+    contractWrite: useContractWrite(config.contractWrite.config),
     waitForTransaction: useWaitForTransaction(config.waitForTransaction),
   }
 }
@@ -80,7 +80,12 @@ describe('useContractEvent', () => {
               },
             },
             contractWrite: {
-              config: { ...mlootContractConfig, functionName, args },
+              config: {
+                dangerouslyPrepared: true,
+                ...mlootContractConfig,
+                functionName,
+                args,
+              },
             },
             waitForTransaction: { hash },
           }),
@@ -88,7 +93,7 @@ describe('useContractEvent', () => {
         const { result, rerender, waitFor } = utils
         await actConnect({ utils })
 
-        await act(async () => result.current.contractWrite.write())
+        await act(async () => result.current.contractWrite.write?.())
         await waitFor(
           () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
           { timeout },
@@ -105,7 +110,7 @@ describe('useContractEvent', () => {
         rerender()
 
         await actConnect({ utils })
-        await act(async () => result.current.contractWrite.write())
+        await act(async () => result.current.contractWrite.write?.())
         await waitFor(
           () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
           { timeout },

@@ -21,18 +21,15 @@ describe('useSendTransactionPrepare', () => {
     expect(res).toMatchInlineSnapshot(`
       {
         "data": {
-          "payload": {
-            "gasLimit": {
-              "hex": "0x5209",
-              "type": "BigNumber",
-            },
-            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-            "value": {
-              "hex": "0x2386f26fc10000",
-              "type": "BigNumber",
-            },
+          "gasLimit": {
+            "hex": "0x5209",
+            "type": "BigNumber",
           },
-          "type": "prepared",
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": {
+            "hex": "0x2386f26fc10000",
+            "type": "BigNumber",
+          },
         },
         "error": null,
         "fetchStatus": "idle",

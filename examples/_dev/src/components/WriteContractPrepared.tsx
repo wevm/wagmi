@@ -1,16 +1,16 @@
-import { useContractWritePrepared, usePrepareContractTransaction } from 'wagmi'
+import { useContractWrite, useContractWritePrepare } from 'wagmi'
 
 import anvABI from './anv-abi.json'
 
 export const WriteContractPrepared = () => {
-  const { data: preparedRequest } = usePrepareContractTransaction({
+  const { data: config } = useContractWritePrepare({
     addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
     contractInterface: anvABI,
     functionName: 'claim',
     args: parseInt('56'),
   })
   const { write, data, error, isLoading, isError, isSuccess } =
-    useContractWritePrepared({ preparedRequest })
+    useContractWrite({ ...config })
 
   return (
     <div>

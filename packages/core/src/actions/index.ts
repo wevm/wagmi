@@ -38,7 +38,6 @@ export {
   watchReadContract,
   watchReadContracts,
   writeContract,
-  writeContractLazy,
   type GetContractArgs,
   type PrepareWriteContractConfig,
   type PrepareWriteContractResult,
@@ -51,11 +50,9 @@ export {
   type WatchReadContractsConfig,
   type WatchReadContractsResult,
   type WriteContractArgs,
-  type WriteContractPreparedRequest,
+  type WriteContractPreparedArgs,
   type WriteContractResult,
-  type WriteContractUnpreparedRequest,
-  type WriteContractLazyConfig,
-  type WriteContractLazyResult,
+  type WriteContractUnpreparedArgs,
 } from './contracts'
 
 export {

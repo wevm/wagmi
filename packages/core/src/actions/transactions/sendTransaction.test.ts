@@ -41,7 +41,7 @@ describe('sendTransaction', () => {
       `)
     })
 
-    it('"dangerously unprepared" request', async () => {
+    it('"dangerously prepared" request', async () => {
       await connect({ connector: client.connectors[0]! })
 
       const signers = getSigners()
@@ -49,12 +49,10 @@ describe('sendTransaction', () => {
       const toAddress = await to?.getAddress()
 
       const { blockNumber, hash, gasLimit, gasPrice } = await sendTransaction({
+        dangerouslyPrepared: true,
         request: {
-          type: 'dangerouslyUnprepared',
-          payload: {
-            to: toAddress as string,
-            value: parseEther('10'),
-          },
+          to: toAddress as string,
+          value: parseEther('10'),
         },
       })
       expect(blockNumber).toBeDefined()
@@ -126,42 +124,14 @@ describe('sendTransaction', () => {
       })
 
       expect(() =>
+        // @ts-expect-error - testing for JS consumers
         sendTransaction({
-          // @ts-expect-error - testing for JS consumers
           request: {
             ...request,
-            payload: {
-              ...request.payload,
-              to: undefined,
-            },
+            to: undefined,
           },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"\`to\` is required"`)
-    })
-
-    it('`to` not a valid address', async () => {
-      await connect({ connector: client.connectors[0]! })
-
-      const request = await prepareSendTransaction({
-        request: {
-          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-          value: parseEther('10'),
-        },
-      })
-
-      expect(() =>
-        sendTransaction({
-          request: {
-            ...request,
-            payload: {
-              ...request.payload,
-              to: 'moxey.eth',
-            },
-          },
-        }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"\`to\` must be an address"`,
-      )
     })
 
     it('`gasLimit` undefined', async () => {
@@ -175,14 +145,11 @@ describe('sendTransaction', () => {
       })
 
       expect(() =>
+        // @ts-expect-error - testing for JS consumers
         sendTransaction({
-          // @ts-expect-error - testing for JS consumers
           request: {
             ...request,
-            payload: {
-              ...request.payload,
-              gasLimit: undefined,
-            },
+            gasLimit: undefined,
           },
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"\`gasLimit\` is required"`)

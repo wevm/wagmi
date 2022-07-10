@@ -19,9 +19,11 @@ it('should expose correct exports', () => {
       "getNetwork",
       "getProvider",
       "getWebSocketProvider",
+      "prepareSendTransaction",
+      "prepareWriteContract",
       "readContract",
       "readContracts",
-      "sendTransactionLazy",
+      "sendTransaction",
       "signMessage",
       "signTypedData",
       "switchNetwork",
@@ -35,7 +37,7 @@ it('should expose correct exports', () => {
       "watchReadContracts",
       "watchSigner",
       "watchWebSocketProvider",
-      "writeContractLazy",
+      "writeContract",
     ]
   `)
 })

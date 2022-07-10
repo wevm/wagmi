@@ -1,20 +1,27 @@
 import * as React from 'react'
 import {
   WriteContractArgs,
+  WriteContractPreparedArgs,
   WriteContractResult,
-  WriteContractUnpreparedRequest,
   writeContract,
 } from '@wagmi/core'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
-export type UseContractWriteArgs<
-  Request =
-    | WriteContractArgs['request']
-    | { type: 'prepared'; payload: undefined },
-> = Omit<WriteContractArgs, 'request'> & {
-  request: Request
+export type UseContractWriteArgs = Omit<WriteContractArgs, 'request'> &
+  (
+    | {
+        dangerouslyPrepared?: false | undefined
+        request: WriteContractPreparedArgs['request'] | undefined
+      }
+    | {
+        dangerouslyPrepared: true
+        request?: undefined
+      }
+  )
+export type UseContractWriteMutationArgs = {
+  dangerouslySet: Pick<WriteContractArgs, 'args' | 'overrides'>
 }
 export type UseContractWriteConfig = MutationConfig<
   WriteContractResult,
@@ -22,34 +29,66 @@ export type UseContractWriteConfig = MutationConfig<
   UseContractWriteArgs
 >
 
-type UseContractWriteMutationArgs = Partial<
-  WriteContractUnpreparedRequest['payload']
->
-
-export const mutationKey = ([{ request }]: [UseContractWriteArgs]) =>
+export const mutationKey = ([
+  {
+    addressOrName,
+    args,
+    chainId,
+    contractInterface,
+    functionName,
+    overrides,
+    request,
+  },
+]: [UseContractWriteArgs]) =>
   [
     {
       entity: 'writeContract',
+      addressOrName,
+      args,
+      chainId,
+      contractInterface,
+      functionName,
+      overrides,
       request,
     },
   ] as const
 
-const mutationFn = ({ chainId, request }: WriteContractArgs) => {
-  return writeContract({ chainId, request })
+const mutationFn = ({
+  addressOrName,
+  args,
+  chainId,
+  contractInterface,
+  dangerouslyPrepared,
+  functionName,
+  overrides,
+  request,
+}: WriteContractArgs) => {
+  return writeContract({
+    addressOrName,
+    args,
+    chainId,
+    contractInterface,
+    functionName,
+    dangerouslyPrepared,
+    overrides,
+    request,
+  } as WriteContractArgs)
 }
 
-export function useContractWrite<
-  Request extends
-    | WriteContractArgs['request']
-    | { type: 'prepared'; payload: undefined },
->({
+export function useContractWrite({
+  addressOrName,
+  args,
   chainId,
+  contractInterface,
+  dangerouslyPrepared,
+  functionName,
+  overrides,
   request,
   onError,
   onMutate,
   onSettled,
   onSuccess,
-}: UseContractWriteArgs<Request> & UseContractWriteConfig) {
+}: UseContractWriteArgs & UseContractWriteConfig) {
   const {
     data,
     error,
@@ -62,57 +101,56 @@ export function useContractWrite<
     reset,
     status,
     variables,
-  } = useMutation(mutationKey([{ request }]), mutationFn, {
-    onError,
-    onMutate,
-    onSettled,
-    onSuccess,
-  })
+  } = useMutation(
+    mutationKey([
+      {
+        addressOrName,
+        contractInterface,
+        functionName,
+        args,
+        chainId,
+        dangerouslyPrepared,
+        overrides,
+        request,
+      } as WriteContractArgs,
+    ]),
+    mutationFn,
+    {
+      onError,
+      onMutate,
+      onSettled,
+      onSuccess,
+    },
+  )
 
   const write = React.useCallback(
-    (
-      args?: Request extends { type: 'dangerouslyUnprepared'; payload: any }
-        ? UseContractWriteMutationArgs
-        : never,
-    ) => {
-      let request_ = request
-      if (args && request.type === 'dangerouslyUnprepared') {
-        request_ = {
-          ...request,
-          payload: {
-            ...request.payload,
-            ...args,
-          },
-        }
-      }
+    (overrideConfig?: UseContractWriteMutationArgs) => {
       return mutate({
+        addressOrName,
         chainId,
-        request: request_ as WriteContractArgs['request'],
-      })
+        contractInterface,
+        dangerouslyPrepared:
+          dangerouslyPrepared || overrideConfig?.dangerouslySet,
+        functionName,
+        request,
+        ...(overrideConfig?.dangerouslySet || { args, overrides }),
+      } as WriteContractArgs)
     },
     [chainId, mutate, request],
   )
 
   const writeAsync = React.useCallback(
-    (
-      args?: Request extends { type: 'dangerouslyUnprepared'; payload: any }
-        ? UseContractWriteMutationArgs
-        : never,
-    ) => {
-      let request_ = request
-      if (args && request.type === 'dangerouslyUnprepared') {
-        request_ = {
-          ...request,
-          payload: {
-            ...request.payload,
-            ...args,
-          },
-        }
-      }
+    (overrideConfig?: UseContractWriteMutationArgs) => {
       return mutateAsync({
+        addressOrName,
         chainId,
-        request: request_ as WriteContractArgs['request'],
-      })
+        contractInterface,
+        dangerouslyPrepared:
+          dangerouslyPrepared || overrideConfig?.dangerouslySet,
+        functionName,
+        request,
+        ...(overrideConfig?.dangerouslySet || { args, overrides }),
+      } as WriteContractArgs)
     },
     [chainId, mutateAsync, request],
   )
@@ -127,8 +165,7 @@ export function useContractWrite<
     reset,
     status,
     variables,
-    write: request.type === 'prepared' && !request.payload ? undefined : write,
-    writeAsync:
-      request.type === 'prepared' && !request.payload ? undefined : writeAsync,
+    write: !dangerouslyPrepared && !request ? undefined : write,
+    writeAsync: !dangerouslyPrepared && !request ? undefined : writeAsync,
   }
 }

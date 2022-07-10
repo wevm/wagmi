@@ -15,6 +15,8 @@ export {
   getNetwork,
   getProvider,
   getWebSocketProvider,
+  prepareSendTransaction,
+  prepareWriteContract,
   readContract,
   readContracts,
   sendTransaction,
@@ -31,7 +33,7 @@ export {
   watchReadContracts,
   watchSigner,
   watchWebSocketProvider,
-  writeContractLazy,
+  writeContract,
 } from '@wagmi/core'
 export type {
   ConnectArgs,
@@ -65,7 +67,9 @@ export type {
   ReadContractsConfig,
   ReadContractsResult,
   SendTransactionArgs,
+  SendTransactionPreparedRequest,
   SendTransactionResult,
+  SendTransactionUnpreparedRequest,
   SignMessageArgs,
   SignMessageResult,
   SignTypedDataArgs,
@@ -83,6 +87,8 @@ export type {
   WatchProviderCallback,
   WatchSignerCallback,
   WatchWebSocketProviderCallback,
-  WriteContractLazyConfig,
-  WriteContractLazyResult,
+  WriteContractArgs,
+  WriteContractPreparedArgs,
+  WriteContractResult,
+  WriteContractUnpreparedArgs,
 } from '@wagmi/core'

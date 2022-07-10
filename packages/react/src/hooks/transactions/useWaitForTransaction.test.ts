@@ -14,7 +14,7 @@ function useWaitForTransactionWithSendTransactionAndConnect(
 ) {
   return {
     connect: useConnect(),
-    sendTransaction: useSendTransaction(),
+    sendTransaction: useSendTransaction({ dangerouslyPrepared: true }),
     waitForTransaction: useWaitForTransaction(config),
   }
 }
@@ -56,9 +56,8 @@ describe('useWaitForTransaction', () => {
 
       await act(async () => {
         result.current.sendTransaction.sendTransaction!({
-          request: {
-            type: 'dangerouslyUnprepared',
-            payload: {
+          dangerouslySet: {
+            request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
             },
@@ -107,9 +106,8 @@ describe('useWaitForTransaction', () => {
 
       await act(async () => {
         result.current.sendTransaction.sendTransaction!({
-          request: {
-            type: 'dangerouslyUnprepared',
-            payload: {
+          dangerouslySet: {
+            request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
             },
