@@ -2,23 +2,28 @@ import { CallOverrides, PopulatedTransaction } from 'ethers'
 
 import { ChainMismatchError } from '../../errors'
 import { getNetwork } from '../accounts'
-import {
-  SendTransactionPreparedRequest,
-  SendTransactionResult,
-  sendTransaction,
-} from '../transactions'
+import { SendTransactionResult, sendTransaction } from '../transactions'
 import { GetContractArgs } from './getContract'
 import { prepareWriteContract } from './prepareWriteContract'
 
 export type WriteContractPreparedArgs = {
-  type: 'prepared'
+  /**
+   * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
+   * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
+   * using the `prepareWriteContract` function.
+   *
+   * `prepared`: The request has been prepared with parameters required for sending a transaction
+   * via the `prepareWriteContract` function
+   * */
+  mode: 'prepared'
+  /** The prepared request. */
   request: PopulatedTransaction & {
     to: NonNullable<PopulatedTransaction['to']>
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
 }
 export type WriteContractUnpreparedArgs = {
-  type: 'dangerouslyUnprepared'
+  mode: 'dangerouslyUnprepared'
   request?: undefined
 }
 
@@ -39,13 +44,13 @@ export async function writeContract({
   chainId,
   contractInterface,
   functionName,
+  mode,
   overrides,
   request: request_,
-  type,
 }: WriteContractArgs): Promise<WriteContractResult> {
   const { chain: activeChain, chains } = getNetwork()
   const activeChainId = activeChain?.id
-  if (chainId && chainId !== activeChain?.id) {
+  if (chainId && chainId !== activeChainId) {
     throw new ChainMismatchError({
       activeChain:
         chains.find((x) => x.id === activeChainId)?.name ??
@@ -55,12 +60,12 @@ export async function writeContract({
     })
   }
 
-  if (type === 'prepared') {
+  if (mode === 'prepared') {
     if (!request_) throw new Error('`request` is required')
   }
 
   const request =
-    type === 'dangerouslyUnprepared'
+    mode === 'dangerouslyUnprepared'
       ? (
           await prepareWriteContract({
             addressOrName,
@@ -73,7 +78,7 @@ export async function writeContract({
       : request_
 
   return sendTransaction({
-    request: request as SendTransactionPreparedRequest,
-    type: 'prepared',
+    request,
+    mode: 'prepared',
   })
 }

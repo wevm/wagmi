@@ -15,7 +15,12 @@ export const WriteContractPrepared = () => {
   return (
     <div>
       <div>Mint an Adjective Noun Verb:</div>
-      <button disabled={isLoading || !write} onClick={() => write?.()}>
+      <button
+        disabled={isLoading || !write}
+        onClick={() =>
+          write?.({ dangerouslySetArgs: [], dangerouslySetOverrides: {} })
+        }
+      >
         Mint
       </button>
       {isError && <div>{error?.message}</div>}

@@ -12,16 +12,32 @@ import { MutationConfig } from '../../types'
 export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
   (
     | {
-        type: 'prepared'
+        /**
+         * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
+         * UX side-effects, it is highly recommended to not use this and instead prepare the config upfront
+         * using the `useContractWritePrepare` hook. [Read more](/TODO)
+         *
+         * `prepared`: The config has been prepared with parameters required for performing a contract write
+         * via the [`useContractWritePrepare` hook](/TODO)
+         * */
+        mode: 'prepared'
+        /** The prepared request to perform a contract write. */
         request: WriteContractPreparedArgs['request'] | undefined
       }
     | {
-        type: 'dangerouslyUnprepared'
+        mode: 'dangerouslyUnprepared'
         request?: undefined
       }
   )
 export type UseContractWriteMutationArgs = {
-  dangerouslySet: Pick<WriteContractArgs, 'args' | 'overrides'>
+  /**
+   * Dangerously pass through unprepared config. Note: This has harmful
+   * UX side-effects, it is highly recommended to not use this and instead
+   * prepare the config upfront using the `useContractWritePrepare` function.
+   * [Read more](/TODO)
+   */
+  dangerouslySetArgs?: WriteContractArgs['args']
+  dangerouslySetOverrides?: WriteContractArgs['overrides']
 }
 export type UseContractWriteConfig = MutationConfig<
   WriteContractResult,
@@ -34,7 +50,7 @@ type ContractWriteAsyncFn = (
   overrideConfig?: UseContractWriteMutationArgs,
 ) => Promise<WriteContractResult>
 type MutateFnReturnValue<Args, Fn> = Args extends {
-  type: 'dangerouslyUnprepared'
+  mode: 'dangerouslyUnprepared'
 }
   ? Fn
   : Fn | undefined
@@ -69,9 +85,9 @@ const mutationFn = ({
   chainId,
   contractInterface,
   functionName,
+  mode,
   overrides,
   request,
-  type,
 }: WriteContractArgs) => {
   return writeContract({
     addressOrName,
@@ -79,12 +95,19 @@ const mutationFn = ({
     chainId,
     contractInterface,
     functionName,
+    mode,
     overrides,
     request,
-    type,
   } as WriteContractArgs)
 }
 
+/**
+ * @description Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write)
+ * method.
+ *
+ * It is highly recommended to pair this with the [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare)
+ * to [avoid UX issues](/TODO).
+ */
 export function useContractWrite<
   Args extends UseContractWriteArgs = UseContractWriteArgs,
 >({
@@ -93,9 +116,9 @@ export function useContractWrite<
   chainId,
   contractInterface,
   functionName,
+  mode,
   overrides,
   request,
-  type,
   onError,
   onMutate,
   onSettled,
@@ -121,9 +144,9 @@ export function useContractWrite<
         functionName,
         args,
         chainId,
+        mode,
         overrides,
         request,
-        type,
       } as WriteContractArgs,
     ]),
     mutationFn,
@@ -139,12 +162,13 @@ export function useContractWrite<
     (overrideConfig?: UseContractWriteMutationArgs) => {
       return mutate({
         addressOrName,
+        args: overrideConfig?.dangerouslySetArgs ?? args,
         chainId,
         contractInterface,
         functionName,
+        mode: overrideConfig ? 'dangerouslyUnprepared' : mode,
+        overrides: overrideConfig?.dangerouslySetOverrides ?? overrides,
         request,
-        type: overrideConfig?.dangerouslySet ? 'dangerouslyUnprepared' : type,
-        ...(overrideConfig?.dangerouslySet || { args, overrides }),
       } as WriteContractArgs)
     },
     [
@@ -153,10 +177,10 @@ export function useContractWrite<
       chainId,
       contractInterface,
       functionName,
+      mode,
       mutate,
       overrides,
       request,
-      type,
     ],
   )
 
@@ -164,12 +188,13 @@ export function useContractWrite<
     (overrideConfig?: UseContractWriteMutationArgs) => {
       return mutateAsync({
         addressOrName,
+        args: overrideConfig?.dangerouslySetArgs ?? args,
         chainId,
         contractInterface,
         functionName,
+        mode: overrideConfig ? 'dangerouslyUnprepared' : mode,
+        overrides: overrideConfig?.dangerouslySetOverrides ?? overrides,
         request,
-        type: overrideConfig?.dangerouslySet ? 'dangerouslyUnprepared' : type,
-        ...(overrideConfig?.dangerouslySet || { args, overrides }),
       } as WriteContractArgs)
     },
     [
@@ -178,10 +203,10 @@ export function useContractWrite<
       chainId,
       contractInterface,
       functionName,
+      mode,
       mutateAsync,
       overrides,
       request,
-      type,
     ],
   )
 
@@ -195,10 +220,10 @@ export function useContractWrite<
     reset,
     status,
     variables,
-    write: (type === 'prepared' && !request
+    write: (mode === 'prepared' && !request
       ? undefined
       : write) as MutateFnReturnValue<Args, ContractWriteFn>,
-    writeAsync: (type === 'prepared' && !request
+    writeAsync: (mode === 'prepared' && !request
       ? undefined
       : writeAsync) as MutateFnReturnValue<Args, ContractWriteAsyncFn>,
   }

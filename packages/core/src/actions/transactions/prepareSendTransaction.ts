@@ -20,7 +20,7 @@ export type PrepareSendTransactionResult = {
     to: NonNullable<providers.TransactionRequest['to']>
     gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
   }
-  type: 'prepared'
+  mode: 'prepared'
 }
 
 export async function prepareSendTransaction({
@@ -38,8 +38,8 @@ export async function prepareSendTransaction({
   ])
 
   return {
-    chainId,
+    ...(chainId ? { chainId } : {}),
     request: { ...request, gasLimit, to: to as string },
-    type: 'prepared',
+    mode: 'prepared',
   }
 }

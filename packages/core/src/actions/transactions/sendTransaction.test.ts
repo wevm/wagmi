@@ -49,7 +49,7 @@ describe('sendTransaction', () => {
       const toAddress = await to?.getAddress()
 
       const { blockNumber, hash, gasLimit, gasPrice } = await sendTransaction({
-        type: 'dangerouslyUnprepared',
+        mode: 'dangerouslyUnprepared',
         request: {
           to: toAddress as string,
           value: parseEther('10'),

@@ -16,18 +16,32 @@ export type UseSendTransactionArgs = Omit<
 > &
   (
     | {
-        type: 'prepared'
-        request: SendTransactionPreparedRequest | undefined
+        /**
+         * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has harmful
+         * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
+         * using the `useSendTransactionPrepare` hook. [Read more](/TODO)
+         *
+         * `prepared`: The request has been prepared with parameters required for sending a transaction
+         * via the [`useSendTransactionPrepare` hook](/TODO)
+         * */
+        mode: 'prepared'
+        /** The prepared request to send the transaction. */
+        request: SendTransactionPreparedRequest['request'] | undefined
       }
     | {
-        type: 'dangerouslyUnprepared'
-        request?: SendTransactionUnpreparedRequest
+        mode: 'dangerouslyUnprepared'
+        /** The unprepared request to send the transaction. */
+        request?: SendTransactionUnpreparedRequest['request']
       }
   )
 export type UseSendTransactionMutationArgs = {
-  dangerouslySet: {
-    request: SendTransactionUnpreparedRequest
-  }
+  /**
+   * Dangerously pass through an unprepared `request`. Note: This has harmful
+   * UX side-effects, it is highly recommended to not use this and instead
+   * prepare the request upfront using the `useSendTransactionPrepare` hook.
+   * [Read more](/TODO)
+   */
+  dangerouslySetRequest: SendTransactionUnpreparedRequest['request']
 }
 export type UseSendTransactionConfig = MutationConfig<
   SendTransactionResult,
@@ -42,7 +56,7 @@ type SendTransactionAsyncFn = (
   overrideConfig?: UseSendTransactionMutationArgs,
 ) => Promise<SendTransactionResult>
 type MutateFnReturnValue<Args, Fn> = Args extends {
-  type: 'dangerouslyUnprepared'
+  mode: 'dangerouslyUnprepared'
 }
   ? Fn
   : Fn | undefined
@@ -50,20 +64,26 @@ type MutateFnReturnValue<Args, Fn> = Args extends {
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
 
-const mutationFn = ({ chainId, request, type }: SendTransactionArgs) => {
+const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
   return sendTransaction({
     chainId,
+    mode,
     request,
-    type,
   } as SendTransactionArgs)
 }
 
+/**
+ * @description Hook for sending a transaction.
+ *
+ * It is recommended to pair this with the [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare)
+ * to [avoid UX issues](/TODO).
+ */
 export function useSendTransaction<
   Args extends UseSendTransactionArgs = UseSendTransactionArgs,
 >({
   chainId,
+  mode,
   request,
-  type,
   onError,
   onMutate,
   onSettled,
@@ -84,8 +104,8 @@ export function useSendTransaction<
   } = useMutation(
     mutationKey({
       chainId,
+      mode,
       request,
-      type,
     } as SendTransactionArgs),
     mutationFn,
     {
@@ -100,22 +120,20 @@ export function useSendTransaction<
     (args?: UseSendTransactionMutationArgs) =>
       mutate({
         chainId,
-        request,
-        type,
-        ...args?.dangerouslySet,
+        mode,
+        request: args?.dangerouslySetRequest ?? request,
       } as SendTransactionArgs),
-    [chainId, mutate, request, type],
+    [chainId, mode, mutate, request],
   )
 
   const sendTransactionAsync = React.useCallback(
     (args?: UseSendTransactionMutationArgs) =>
       mutateAsync({
         chainId,
-        request,
-        type,
-        ...args?.dangerouslySet,
+        mode,
+        request: args?.dangerouslySetRequest ?? request,
       } as SendTransactionArgs),
-    [chainId, mutateAsync, request, type],
+    [chainId, mode, mutateAsync, request],
   )
 
   return {
@@ -126,10 +144,10 @@ export function useSendTransaction<
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: (type === 'prepared' && !request
+    sendTransaction: (mode === 'prepared' && !request
       ? undefined
       : sendTransaction) as MutateFnReturnValue<Args, SendTransactionFn>,
-    sendTransactionAsync: (type === 'prepared' && !request
+    sendTransactionAsync: (mode === 'prepared' && !request
       ? undefined
       : sendTransactionAsync) as MutateFnReturnValue<
       Args,

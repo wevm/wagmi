@@ -9,34 +9,41 @@ import {
 import { fetchSigner, getNetwork } from '../accounts'
 import { getProvider } from '../providers'
 
-export type SendTransactionPreparedRequest = providers.TransactionRequest & {
-  to: NonNullable<providers.TransactionRequest['to']>
-  gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
+export type SendTransactionPreparedRequest = {
+  /**
+   * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has harmful
+   * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
+   * using the `prepareSendTransaction` function.
+   *
+   * `prepared`: The request has been prepared with parameters required for sending a transaction
+   * via the `prepareSendTransaction` function
+   * */
+  mode: 'prepared'
+  /** The prepared request for sending a transaction. */
+  request: providers.TransactionRequest & {
+    to: NonNullable<providers.TransactionRequest['to']>
+    gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
+  }
 }
-export type SendTransactionUnpreparedRequest = providers.TransactionRequest
+export type SendTransactionUnpreparedRequest = {
+  mode: 'dangerouslyUnprepared'
+  /** The unprepared request for sending a transaction. */
+  request: providers.TransactionRequest
+}
 
 export type SendTransactionArgs = {
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
-} & (
-  | {
-      request: SendTransactionPreparedRequest
-      type: 'prepared'
-    }
-  | {
-      request: SendTransactionUnpreparedRequest
-      type: 'dangerouslyUnprepared'
-    }
-)
+} & (SendTransactionPreparedRequest | SendTransactionUnpreparedRequest)
 
 export type SendTransactionResult = providers.TransactionResponse
 
 export async function sendTransaction({
   chainId,
+  mode,
   request,
-  type,
 }: SendTransactionArgs): Promise<SendTransactionResult> {
-  if (type === 'prepared') {
+  if (mode === 'prepared') {
     if (!request.gasLimit) throw new Error('`gasLimit` is required')
     if (!request.to) throw new Error('`to` is required')
   }

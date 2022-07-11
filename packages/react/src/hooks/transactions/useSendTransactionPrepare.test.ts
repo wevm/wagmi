@@ -21,7 +21,7 @@ describe('useSendTransactionPrepare', () => {
     expect(res).toMatchInlineSnapshot(`
       {
         "config": {
-          "chainId": undefined,
+          "mode": "prepared",
           "request": {
             "gasLimit": {
               "hex": "0x5209",
@@ -33,10 +33,9 @@ describe('useSendTransactionPrepare', () => {
               "type": "BigNumber",
             },
           },
-          "type": "prepared",
         },
         "data": {
-          "chainId": undefined,
+          "mode": "prepared",
           "request": {
             "gasLimit": {
               "hex": "0x5209",
@@ -48,7 +47,6 @@ describe('useSendTransactionPrepare', () => {
               "type": "BigNumber",
             },
           },
-          "type": "prepared",
         },
         "error": null,
         "fetchStatus": "idle",

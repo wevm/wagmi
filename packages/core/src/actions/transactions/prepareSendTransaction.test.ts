@@ -27,7 +27,7 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledWith(request)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "chainId": undefined,
+        "mode": "prepared",
         "request": {
           "gasLimit": {
             "hex": "0x5209",
@@ -39,7 +39,6 @@ describe('prepareSendTransaction', () => {
             "type": "BigNumber",
           },
         },
-        "type": "prepared",
       }
     `)
   })
@@ -61,7 +60,7 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledWith(request)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "chainId": undefined,
+        "mode": "prepared",
         "request": {
           "gasLimit": {
             "hex": "0x5209",
@@ -73,7 +72,6 @@ describe('prepareSendTransaction', () => {
             "type": "BigNumber",
           },
         },
-        "type": "prepared",
       }
     `)
   })
@@ -96,7 +94,7 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledTimes(0)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "chainId": undefined,
+        "mode": "prepared",
         "request": {
           "gasLimit": {
             "hex": "0x0f4240",
@@ -108,7 +106,6 @@ describe('prepareSendTransaction', () => {
             "type": "BigNumber",
           },
         },
-        "type": "prepared",
       }
     `)
   })
@@ -131,7 +128,7 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledTimes(0)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "chainId": undefined,
+        "mode": "prepared",
         "request": {
           "gasLimit": {
             "hex": "0x0f4240",
@@ -143,7 +140,6 @@ describe('prepareSendTransaction', () => {
             "type": "BigNumber",
           },
         },
-        "type": "prepared",
       }
     `)
   })

@@ -30,7 +30,7 @@ export type PrepareWriteContractResult = PrepareWriteContractConfig & {
     to: NonNullable<PopulatedTransaction['to']>
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
-  type: 'prepared'
+  mode: 'prepared'
 }
 
 export async function prepareWriteContract<
@@ -76,7 +76,7 @@ export async function prepareWriteContract<
   return {
     addressOrName,
     args,
-    chainId,
+    ...(chainId ? { chainId } : {}),
     contractInterface,
     functionName,
     overrides,
@@ -84,6 +84,6 @@ export async function prepareWriteContract<
       ...unsignedTransaction,
       gasLimit,
     },
-    type: 'prepared',
+    mode: 'prepared',
   }
 }

@@ -42,7 +42,7 @@ describe('writeContract', () => {
     await connect({ connector })
     const { hash } = await writeContract({
       ...mlootContractConfig,
-      type: 'dangerouslyUnprepared',
+      mode: 'dangerouslyUnprepared',
       functionName: 'claim',
       args: [tokenId],
     })
@@ -79,7 +79,7 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...mlootContractConfig,
-          type: 'dangerouslyUnprepared',
+          mode: 'dangerouslyUnprepared',
           functionName: 'claim',
           args: 1,
         }),
@@ -90,7 +90,7 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...mlootContractConfig,
-          type: 'dangerouslyUnprepared',
+          mode: 'dangerouslyUnprepared',
           functionName: 'claim',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
@@ -101,7 +101,7 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...mlootContractConfig,
-          type: 'dangerouslyUnprepared',
+          mode: 'dangerouslyUnprepared',
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`

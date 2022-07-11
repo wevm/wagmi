@@ -182,11 +182,9 @@ describe('useContractWrite', () => {
 
         await act(async () =>
           result.current.contractWrite.write?.({
-            dangerouslySet: {
-              args: await getUnclaimedTokenId(
-                '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-              ),
-            },
+            dangerouslySetArgs: await getUnclaimedTokenId(
+              '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+            ),
           }),
         )
         await waitFor(
@@ -205,7 +203,7 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
             args: [tokenId],
@@ -251,7 +249,7 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
           }),
@@ -261,9 +259,7 @@ describe('useContractWrite', () => {
 
         await act(async () =>
           result.current.contractWrite.write?.({
-            dangerouslySet: {
-              args: tokenId,
-            },
+            dangerouslySetArgs: tokenId,
           }),
         )
         await waitFor(
@@ -277,7 +273,7 @@ describe('useContractWrite', () => {
       it('throws error', async () => {
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
             args: [1],
@@ -386,11 +382,9 @@ describe('useContractWrite', () => {
 
         await act(async () => {
           const res = await result.current.contractWrite.writeAsync?.({
-            dangerouslySet: {
-              args: await getUnclaimedTokenId(
-                '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-              ),
-            },
+            dangerouslySetArgs: await getUnclaimedTokenId(
+              '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+            ),
           })
           expect(res?.hash).toBeDefined()
         })
@@ -410,7 +404,7 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
             args: [tokenId],
@@ -457,7 +451,7 @@ describe('useContractWrite', () => {
 
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
           }),
@@ -467,9 +461,7 @@ describe('useContractWrite', () => {
 
         await act(async () => {
           const res = await result.current.contractWrite.writeAsync?.({
-            dangerouslySet: {
-              args: tokenId,
-            },
+            dangerouslySetArgs: tokenId,
           })
           expect(res?.hash).toBeDefined()
         })
@@ -484,7 +476,7 @@ describe('useContractWrite', () => {
       it('throws error', async () => {
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
             args: [1],
@@ -497,9 +489,7 @@ describe('useContractWrite', () => {
         await act(async () => {
           await expect(
             result.current.contractWrite.writeAsync?.({
-              dangerouslySet: {
-                args: 1,
-              },
+              dangerouslySetArgs: 1,
             }),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
             `"processing response error (body=\\"{\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\",\\\\\\"id\\\\\\":42,\\\\\\"error\\\\\\":{\\\\\\"code\\\\\\":-32603,\\\\\\"message\\\\\\":\\\\\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\\\\\",\\\\\\"data\\\\\\":{\\\\\\"message\\\\\\":\\\\\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\\\\\"}}}\\", error={\\"code\\":-32603,\\"data\\":{\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}, requestBody=\\"{\\\\\\"method\\\\\\":\\\\\\"eth_estimateGas\\\\\\",\\\\\\"params\\\\\\":[{\\\\\\"from\\\\\\":\\\\\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\\\\\",\\\\\\"to\\\\\\":\\\\\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\\\\\"}],\\\\\\"id\\\\\\":42,\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\"}\\", requestMethod=\\"POST\\", url=\\"http://127.0.0.1:8545\\", code=SERVER_ERROR, version=web/5.6.0)"`,
@@ -516,7 +506,7 @@ describe('useContractWrite', () => {
   describe('behavior', () => {
     jest.setTimeout(timeout)
 
-    it.only('multiple writes', async () => {
+    it('multiple writes', async () => {
       const tokenId = await getUnclaimedTokenId(
         '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
       )

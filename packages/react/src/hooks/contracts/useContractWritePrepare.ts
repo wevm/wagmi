@@ -59,6 +59,11 @@ const queryFn = ({
   })
 }
 
+/**
+ * @description Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
+ *
+ * Eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+ */
 export function useContractWritePrepare({
   addressOrName,
   contractInterface,
@@ -107,7 +112,7 @@ export function useContractWritePrepare({
       overrides,
       functionName,
       request: undefined,
-      type: 'prepared',
+      mode: 'prepared',
       ...contractWritePrepareQuery.data,
     } as PrepareWriteContractResult,
   })

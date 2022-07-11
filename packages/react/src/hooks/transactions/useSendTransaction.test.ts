@@ -42,7 +42,7 @@ function useSendTransactionPreparedWithConnect(
 describe('useSendTransaction', () => {
   it('mounts', () => {
     const { result } = renderHook(() =>
-      useSendTransaction({ type: 'dangerouslyUnprepared' }),
+      useSendTransaction({ mode: 'dangerouslyUnprepared' }),
     )
     expect(result.current).toMatchInlineSnapshot(`
       {
@@ -143,6 +143,7 @@ describe('useSendTransaction', () => {
             "status": "success",
             "variables": {
               "chainId": undefined,
+              "mode": "prepared",
               "request": {
                 "gasLimit": {
                   "hex": "0x5209",
@@ -154,7 +155,6 @@ describe('useSendTransaction', () => {
                   "type": "BigNumber",
                 },
               },
-              "type": "prepared",
             },
           }
         `)
@@ -163,7 +163,7 @@ describe('useSendTransaction', () => {
       it('dangerouslyUnprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -197,6 +197,7 @@ describe('useSendTransaction', () => {
             "status": "success",
             "variables": {
               "chainId": undefined,
+              "mode": "dangerouslyUnprepared",
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": {
@@ -204,7 +205,6 @@ describe('useSendTransaction', () => {
                   "type": "BigNumber",
                 },
               },
-              "type": "dangerouslyUnprepared",
             },
           }
         `)
@@ -212,18 +212,16 @@ describe('useSendTransaction', () => {
 
       it('uses deferred args', async () => {
         const utils = renderHook(() =>
-          useSendTransactionWithConnect({ type: 'dangerouslyUnprepared' }),
+          useSendTransactionWithConnect({ mode: 'dangerouslyUnprepared' }),
         )
         const { result, waitFor } = utils
         await actConnect({ utils })
 
         await act(async () => {
           result.current.sendTransaction.sendTransaction?.({
-            dangerouslySet: {
-              request: {
-                to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-                value: parseEther('1'),
-              },
+            dangerouslySetRequest: {
+              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+              value: parseEther('1'),
             },
           })
         })
@@ -248,6 +246,7 @@ describe('useSendTransaction', () => {
             "status": "success",
             "variables": {
               "chainId": undefined,
+              "mode": "dangerouslyUnprepared",
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": {
@@ -255,7 +254,6 @@ describe('useSendTransaction', () => {
                   "type": "BigNumber",
                 },
               },
-              "type": "dangerouslyUnprepared",
             },
           }
         `)
@@ -264,7 +262,7 @@ describe('useSendTransaction', () => {
       it('fails on insufficient balance', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('100000'),
@@ -301,6 +299,7 @@ describe('useSendTransaction', () => {
             "status": "error",
             "variables": {
               "chainId": undefined,
+              "mode": "dangerouslyUnprepared",
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": {
@@ -308,7 +307,6 @@ describe('useSendTransaction', () => {
                   "type": "BigNumber",
                 },
               },
-              "type": "dangerouslyUnprepared",
             },
           }
         `)
@@ -346,7 +344,7 @@ describe('useSendTransaction', () => {
       it('dangerouslyUnprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -370,7 +368,7 @@ describe('useSendTransaction', () => {
       it('throws on error', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            type: 'dangerouslyUnprepared',
+            mode: 'dangerouslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('100000'),

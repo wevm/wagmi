@@ -29,6 +29,11 @@ const queryFn = ({
   return prepareSendTransaction({ request })
 }
 
+/**
+ * @description Hook for preparing a transaction to be sent via [`useSendTransaction`](/docs/hooks/useSendTransaction).
+ *
+ * Eagerly fetches the parameters required for sending a transaction such as the gas estimate and resolving an ENS address (if required).
+ */
 export function useSendTransactionPrepare({
   request,
   cacheTime,
@@ -59,7 +64,7 @@ export function useSendTransactionPrepare({
   return Object.assign(sendTransactionPrepareQuery, {
     config: {
       request: undefined,
-      type: 'prepared',
+      mode: 'prepared',
       ...sendTransactionPrepareQuery.data,
     } as PrepareSendTransactionResult,
   })
