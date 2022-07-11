@@ -126,7 +126,11 @@ export class CoinbaseWalletConnector extends Connector<
       let CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
       // Workaround for Vite dev import errors
       // https://github.com/vitejs/vite/issues/7112
-      if (!CoinbaseWalletSDK.constructor)
+      if (
+        typeof CoinbaseWalletSDK !== 'function' &&
+        // @ts-expect-error This import error is not visible to TypeScript
+        typeof CoinbaseWalletSDK.default === 'function'
+      )
         CoinbaseWalletSDK = (<{ default: typeof CoinbaseWalletSDK }>(
           (<unknown>CoinbaseWalletSDK)
         )).default
