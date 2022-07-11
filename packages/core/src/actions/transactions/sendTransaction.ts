@@ -20,12 +20,12 @@ export type SendTransactionArgs = {
   chainId?: number
 } & (
   | {
-      dangerouslyPrepared?: false
       request: SendTransactionPreparedRequest
+      type: 'prepared'
     }
   | {
-      dangerouslyPrepared: true
       request: SendTransactionUnpreparedRequest
+      type: 'dangerouslyUnprepared'
     }
 )
 
@@ -33,10 +33,10 @@ export type SendTransactionResult = providers.TransactionResponse
 
 export async function sendTransaction({
   chainId,
-  dangerouslyPrepared = false,
   request,
+  type,
 }: SendTransactionArgs): Promise<SendTransactionResult> {
-  if (!dangerouslyPrepared) {
+  if (type === 'prepared') {
     if (!request.gasLimit) throw new Error('`gasLimit` is required')
     if (!request.to) throw new Error('`to` is required')
   }

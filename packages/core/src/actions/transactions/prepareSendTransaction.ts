@@ -5,6 +5,8 @@ import { fetchEnsAddress } from '../ens'
 import { getProvider } from '../providers'
 
 export type PrepareSendTransactionArgs = {
+  /** Chain ID used to validate if the signer is connected to the target chain */
+  chainId?: number
   /** Request data to prepare the transaction */
   request: providers.TransactionRequest & {
     to: NonNullable<providers.TransactionRequest['to']>
@@ -12,12 +14,17 @@ export type PrepareSendTransactionArgs = {
   signerOrProvider?: providers.JsonRpcSigner | providers.Provider
 }
 
-export type PrepareSendTransactionResult = providers.TransactionRequest & {
-  to: NonNullable<providers.TransactionRequest['to']>
-  gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
+export type PrepareSendTransactionResult = {
+  chainId?: number
+  request: providers.TransactionRequest & {
+    to: NonNullable<providers.TransactionRequest['to']>
+    gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
+  }
+  type: 'prepared'
 }
 
 export async function prepareSendTransaction({
+  chainId,
   request,
   signerOrProvider = getProvider(),
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
@@ -30,5 +37,9 @@ export async function prepareSendTransaction({
       : signerOrProvider.estimateGas(request),
   ])
 
-  return { ...request, gasLimit, to: to as string }
+  return {
+    chainId,
+    request: { ...request, gasLimit, to: to as string },
+    type: 'prepared',
+  }
 }

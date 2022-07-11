@@ -21,14 +21,14 @@ describe('sendTransaction', () => {
       const to = signers[1]
       const toAddress = await to?.getAddress()
 
-      const request = await prepareSendTransaction({
+      const config = await prepareSendTransaction({
         request: {
           to: toAddress as string,
           value: parseEther('10'),
         },
       })
       const { blockNumber, hash, gasLimit, gasPrice } = await sendTransaction({
-        request,
+        ...config,
       })
       expect(blockNumber).toBeDefined()
       expect(hash).toBeDefined()
@@ -49,7 +49,7 @@ describe('sendTransaction', () => {
       const toAddress = await to?.getAddress()
 
       const { blockNumber, hash, gasLimit, gasPrice } = await sendTransaction({
-        dangerouslyPrepared: true,
+        type: 'dangerouslyUnprepared',
         request: {
           to: toAddress as string,
           value: parseEther('10'),
@@ -75,7 +75,7 @@ describe('sendTransaction', () => {
       const to = signers[1]
       const toAddress = (await to?.getAddress()) || ''
 
-      const request = await prepareSendTransaction({
+      const config = await prepareSendTransaction({
         request: {
           to: toAddress,
           value: parseEther('10'),
@@ -85,7 +85,7 @@ describe('sendTransaction', () => {
       expect(() =>
         sendTransaction({
           chainId: 420,
-          request,
+          ...config,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 420\\", received \\"Ethereum."`,
@@ -95,7 +95,7 @@ describe('sendTransaction', () => {
     it('insufficient balance', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const request = await prepareSendTransaction({
+      const config = await prepareSendTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
@@ -104,7 +104,7 @@ describe('sendTransaction', () => {
 
       try {
         await sendTransaction({
-          request,
+          ...config,
         })
       } catch (error) {
         expect((<Error>error).message).toContain(
@@ -116,7 +116,7 @@ describe('sendTransaction', () => {
     it('`to` undefined', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const request = await prepareSendTransaction({
+      const config = await prepareSendTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: parseEther('10'),
@@ -124,10 +124,11 @@ describe('sendTransaction', () => {
       })
 
       expect(() =>
-        // @ts-expect-error - testing for JS consumers
+        // @ts-expect-error – testing for JS consumers
         sendTransaction({
+          ...config,
           request: {
-            ...request,
+            ...config.request,
             to: undefined,
           },
         }),
@@ -137,7 +138,7 @@ describe('sendTransaction', () => {
     it('`gasLimit` undefined', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const request = await prepareSendTransaction({
+      const config = await prepareSendTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: parseEther('10'),
@@ -147,8 +148,9 @@ describe('sendTransaction', () => {
       expect(() =>
         // @ts-expect-error - testing for JS consumers
         sendTransaction({
+          ...config,
           request: {
-            ...request,
+            ...config.request,
             gasLimit: undefined,
           },
         }),

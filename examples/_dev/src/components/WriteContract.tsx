@@ -6,8 +6,8 @@ import anvABI from './anv-abi.json'
 export const WriteContract = () => {
   const { write, data, error, isLoading, isError, isSuccess } =
     useContractWrite({
+      type: 'dangerouslyUnprepared',
       addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-      dangerouslyPrepared: true,
       contractInterface: anvABI,
       functionName: 'claim',
       chainId: 1,

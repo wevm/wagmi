@@ -81,7 +81,7 @@ describe('useContractEvent', () => {
             },
             contractWrite: {
               config: {
-                dangerouslyPrepared: true,
+                type: 'dangerouslyUnprepared',
                 ...mlootContractConfig,
                 functionName,
                 args,

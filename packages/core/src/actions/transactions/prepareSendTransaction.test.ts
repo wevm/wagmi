@@ -27,15 +27,19 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledWith(request)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "gasLimit": {
-          "hex": "0x5209",
-          "type": "BigNumber",
+        "chainId": undefined,
+        "request": {
+          "gasLimit": {
+            "hex": "0x5209",
+            "type": "BigNumber",
+          },
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": {
+            "hex": "0x2386f26fc10000",
+            "type": "BigNumber",
+          },
         },
-        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-        "value": {
-          "hex": "0x2386f26fc10000",
-          "type": "BigNumber",
-        },
+        "type": "prepared",
       }
     `)
   })
@@ -57,15 +61,19 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledWith(request)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "gasLimit": {
-          "hex": "0x5209",
-          "type": "BigNumber",
+        "chainId": undefined,
+        "request": {
+          "gasLimit": {
+            "hex": "0x5209",
+            "type": "BigNumber",
+          },
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": {
+            "hex": "0x2386f26fc10000",
+            "type": "BigNumber",
+          },
         },
-        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-        "value": {
-          "hex": "0x2386f26fc10000",
-          "type": "BigNumber",
-        },
+        "type": "prepared",
       }
     `)
   })
@@ -88,15 +96,19 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledTimes(0)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "gasLimit": {
-          "hex": "0x0f4240",
-          "type": "BigNumber",
+        "chainId": undefined,
+        "request": {
+          "gasLimit": {
+            "hex": "0x0f4240",
+            "type": "BigNumber",
+          },
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": {
+            "hex": "0x2386f26fc10000",
+            "type": "BigNumber",
+          },
         },
-        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-        "value": {
-          "hex": "0x2386f26fc10000",
-          "type": "BigNumber",
-        },
+        "type": "prepared",
       }
     `)
   })
@@ -119,15 +131,19 @@ describe('prepareSendTransaction', () => {
     expect(estimateGasSpy).toBeCalledTimes(0)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
-        "gasLimit": {
-          "hex": "0x0f4240",
-          "type": "BigNumber",
+        "chainId": undefined,
+        "request": {
+          "gasLimit": {
+            "hex": "0x0f4240",
+            "type": "BigNumber",
+          },
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": {
+            "hex": "0x2386f26fc10000",
+            "type": "BigNumber",
+          },
         },
-        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-        "value": {
-          "hex": "0x2386f26fc10000",
-          "type": "BigNumber",
-        },
+        "type": "prepared",
       }
     `)
   })

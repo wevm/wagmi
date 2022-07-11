@@ -2,11 +2,11 @@ import { BigNumber } from 'ethers'
 import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
 
 export const SendTransactionPrepared = () => {
-  const { data: request } = useSendTransactionPrepare({
+  const { config } = useSendTransactionPrepare({
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =
-    useSendTransaction({ request })
+    useSendTransaction(config)
 
   if (isLoading) return <div>Check Wallet</div>
 

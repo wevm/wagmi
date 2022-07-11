@@ -20,16 +20,35 @@ describe('useSendTransactionPrepare', () => {
     const { internal, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
+        "config": {
+          "chainId": undefined,
+          "request": {
+            "gasLimit": {
+              "hex": "0x5209",
+              "type": "BigNumber",
+            },
+            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            "value": {
+              "hex": "0x2386f26fc10000",
+              "type": "BigNumber",
+            },
+          },
+          "type": "prepared",
+        },
         "data": {
-          "gasLimit": {
-            "hex": "0x5209",
-            "type": "BigNumber",
+          "chainId": undefined,
+          "request": {
+            "gasLimit": {
+              "hex": "0x5209",
+              "type": "BigNumber",
+            },
+            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            "value": {
+              "hex": "0x2386f26fc10000",
+              "type": "BigNumber",
+            },
           },
-          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          "value": {
-            "hex": "0x2386f26fc10000",
-            "type": "BigNumber",
-          },
+          "type": "prepared",
         },
         "error": null,
         "fetchStatus": "idle",

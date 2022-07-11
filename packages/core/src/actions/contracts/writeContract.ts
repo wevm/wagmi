@@ -11,14 +11,14 @@ import { GetContractArgs } from './getContract'
 import { prepareWriteContract } from './prepareWriteContract'
 
 export type WriteContractPreparedArgs = {
-  dangerouslyPrepared?: false
+  type: 'prepared'
   request: PopulatedTransaction & {
     to: NonNullable<PopulatedTransaction['to']>
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
 }
 export type WriteContractUnpreparedArgs = {
-  dangerouslyPrepared: true
+  type: 'dangerouslyUnprepared'
   request?: undefined
 }
 
@@ -38,10 +38,10 @@ export async function writeContract({
   args,
   chainId,
   contractInterface,
-  dangerouslyPrepared,
   functionName,
   overrides,
   request: request_,
+  type,
 }: WriteContractArgs): Promise<WriteContractResult> {
   const { chain: activeChain, chains } = getNetwork()
   const activeChainId = activeChain?.id
@@ -55,23 +55,25 @@ export async function writeContract({
     })
   }
 
-  if (!dangerouslyPrepared) {
+  if (type === 'prepared') {
     if (!request_) throw new Error('`request` is required')
   }
 
-  const request = dangerouslyPrepared
-    ? (
-        await prepareWriteContract({
-          addressOrName,
-          args,
-          contractInterface,
-          functionName,
-          overrides,
-        })
-      ).request
-    : request_
+  const request =
+    type === 'dangerouslyUnprepared'
+      ? (
+          await prepareWriteContract({
+            addressOrName,
+            args,
+            contractInterface,
+            functionName,
+            overrides,
+          })
+        ).request
+      : request_
 
   return sendTransaction({
     request: request as SendTransactionPreparedRequest,
+    type: 'prepared',
   })
 }

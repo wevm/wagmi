@@ -15,6 +15,8 @@ export type PrepareWriteContractConfig = Omit<
   GetContractArgs,
   'signerOrProvider'
 > & {
+  /** Chain ID used to validate if the signer is connected to the target chain */
+  chainId?: number
   /** Method to call on contract */
   functionName: string
   /** Arguments to pass contract method */
@@ -23,10 +25,12 @@ export type PrepareWriteContractConfig = Omit<
 }
 
 export type PrepareWriteContractResult = PrepareWriteContractConfig & {
+  chainId?: number
   request: PopulatedTransaction & {
     to: NonNullable<PopulatedTransaction['to']>
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
+  type: 'prepared'
 }
 
 export async function prepareWriteContract<
@@ -34,6 +38,7 @@ export async function prepareWriteContract<
 >({
   addressOrName,
   args,
+  chainId,
   contractInterface,
   functionName,
   overrides,
@@ -71,6 +76,7 @@ export async function prepareWriteContract<
   return {
     addressOrName,
     args,
+    chainId,
     contractInterface,
     functionName,
     overrides,
@@ -78,5 +84,6 @@ export async function prepareWriteContract<
       ...unsignedTransaction,
       gasLimit,
     },
+    type: 'prepared',
   }
 }

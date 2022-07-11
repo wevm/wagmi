@@ -14,7 +14,7 @@ function useWaitForTransactionWithSendTransactionAndConnect(
 ) {
   return {
     connect: useConnect(),
-    sendTransaction: useSendTransaction({ dangerouslyPrepared: true }),
+    sendTransaction: useSendTransaction({ type: 'dangerouslyUnprepared' }),
     waitForTransaction: useWaitForTransaction(config),
   }
 }

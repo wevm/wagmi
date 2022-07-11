@@ -9,17 +9,14 @@ import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
-export type UseContractWriteArgs = Omit<
-  WriteContractArgs,
-  'request' | 'dangerouslyPrepared'
-> &
+export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
   (
     | {
-        dangerouslyPrepared?: false | undefined
+        type: 'prepared'
         request: WriteContractPreparedArgs['request'] | undefined
       }
     | {
-        dangerouslyPrepared: true
+        type: 'dangerouslyUnprepared'
         request?: undefined
       }
   )
@@ -37,7 +34,7 @@ type ContractWriteAsyncFn = (
   overrideConfig?: UseContractWriteMutationArgs,
 ) => Promise<WriteContractResult>
 type MutateFnReturnValue<Args, Fn> = Args extends {
-  dangerouslyPrepared: true
+  type: 'dangerouslyUnprepared'
 }
   ? Fn
   : Fn | undefined
@@ -71,10 +68,10 @@ const mutationFn = ({
   args,
   chainId,
   contractInterface,
-  dangerouslyPrepared,
   functionName,
   overrides,
   request,
+  type,
 }: WriteContractArgs) => {
   return writeContract({
     addressOrName,
@@ -82,9 +79,9 @@ const mutationFn = ({
     chainId,
     contractInterface,
     functionName,
-    dangerouslyPrepared,
     overrides,
     request,
+    type,
   } as WriteContractArgs)
 }
 
@@ -95,10 +92,10 @@ export function useContractWrite<
   args,
   chainId,
   contractInterface,
-  dangerouslyPrepared,
   functionName,
   overrides,
   request,
+  type,
   onError,
   onMutate,
   onSettled,
@@ -124,9 +121,9 @@ export function useContractWrite<
         functionName,
         args,
         chainId,
-        dangerouslyPrepared,
         overrides,
         request,
+        type,
       } as WriteContractArgs,
     ]),
     mutationFn,
@@ -144,14 +141,23 @@ export function useContractWrite<
         addressOrName,
         chainId,
         contractInterface,
-        dangerouslyPrepared:
-          dangerouslyPrepared || overrideConfig?.dangerouslySet,
         functionName,
         request,
+        type: overrideConfig?.dangerouslySet ? 'dangerouslyUnprepared' : type,
         ...(overrideConfig?.dangerouslySet || { args, overrides }),
       } as WriteContractArgs)
     },
-    [chainId, mutate, request],
+    [
+      addressOrName,
+      args,
+      chainId,
+      contractInterface,
+      functionName,
+      mutate,
+      overrides,
+      request,
+      type,
+    ],
   )
 
   const writeAsync = React.useCallback(
@@ -160,14 +166,23 @@ export function useContractWrite<
         addressOrName,
         chainId,
         contractInterface,
-        dangerouslyPrepared:
-          dangerouslyPrepared || overrideConfig?.dangerouslySet,
         functionName,
         request,
+        type: overrideConfig?.dangerouslySet ? 'dangerouslyUnprepared' : type,
         ...(overrideConfig?.dangerouslySet || { args, overrides }),
       } as WriteContractArgs)
     },
-    [chainId, mutateAsync, request],
+    [
+      addressOrName,
+      args,
+      chainId,
+      contractInterface,
+      functionName,
+      mutateAsync,
+      overrides,
+      request,
+      type,
+    ],
   )
 
   return {
@@ -180,10 +195,10 @@ export function useContractWrite<
     reset,
     status,
     variables,
-    write: (!dangerouslyPrepared && !request
+    write: (type === 'prepared' && !request
       ? undefined
       : write) as MutateFnReturnValue<Args, ContractWriteFn>,
-    writeAsync: (!dangerouslyPrepared && !request
+    writeAsync: (type === 'prepared' && !request
       ? undefined
       : writeAsync) as MutateFnReturnValue<Args, ContractWriteAsyncFn>,
   }

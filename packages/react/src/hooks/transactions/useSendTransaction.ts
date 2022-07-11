@@ -12,15 +12,15 @@ import { MutationConfig } from '../../types'
 
 export type UseSendTransactionArgs = Omit<
   SendTransactionArgs,
-  'request' | 'dangerouslyPrepared'
+  'request' | 'type'
 > &
   (
     | {
-        dangerouslyPrepared?: false
+        type: 'prepared'
         request: SendTransactionPreparedRequest | undefined
       }
     | {
-        dangerouslyPrepared: true
+        type: 'dangerouslyUnprepared'
         request?: SendTransactionUnpreparedRequest
       }
   )
@@ -42,7 +42,7 @@ type SendTransactionAsyncFn = (
   overrideConfig?: UseSendTransactionMutationArgs,
 ) => Promise<SendTransactionResult>
 type MutateFnReturnValue<Args, Fn> = Args extends {
-  dangerouslyPrepared: true
+  type: 'dangerouslyUnprepared'
 }
   ? Fn
   : Fn | undefined
@@ -50,15 +50,11 @@ type MutateFnReturnValue<Args, Fn> = Args extends {
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
 
-const mutationFn = ({
-  chainId,
-  dangerouslyPrepared,
-  request,
-}: SendTransactionArgs) => {
+const mutationFn = ({ chainId, request, type }: SendTransactionArgs) => {
   return sendTransaction({
     chainId,
-    dangerouslyPrepared,
     request,
+    type,
   } as SendTransactionArgs)
 }
 
@@ -66,8 +62,8 @@ export function useSendTransaction<
   Args extends UseSendTransactionArgs = UseSendTransactionArgs,
 >({
   chainId,
-  dangerouslyPrepared,
   request,
+  type,
   onError,
   onMutate,
   onSettled,
@@ -88,8 +84,8 @@ export function useSendTransaction<
   } = useMutation(
     mutationKey({
       chainId,
-      dangerouslyPrepared,
       request,
+      type,
     } as SendTransactionArgs),
     mutationFn,
     {
@@ -104,22 +100,22 @@ export function useSendTransaction<
     (args?: UseSendTransactionMutationArgs) =>
       mutate({
         chainId,
-        dangerouslyPrepared,
         request,
+        type,
         ...args?.dangerouslySet,
       } as SendTransactionArgs),
-    [chainId, mutate, request],
+    [chainId, mutate, request, type],
   )
 
   const sendTransactionAsync = React.useCallback(
     (args?: UseSendTransactionMutationArgs) =>
       mutateAsync({
         chainId,
-        dangerouslyPrepared,
         request,
+        type,
         ...args?.dangerouslySet,
       } as SendTransactionArgs),
-    [chainId, mutateAsync, request],
+    [chainId, mutateAsync, request, type],
   )
 
   return {
@@ -130,10 +126,10 @@ export function useSendTransaction<
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: (!dangerouslyPrepared && !request
+    sendTransaction: (type === 'prepared' && !request
       ? undefined
       : sendTransaction) as MutateFnReturnValue<Args, SendTransactionFn>,
-    sendTransactionAsync: (!dangerouslyPrepared && !request
+    sendTransactionAsync: (type === 'prepared' && !request
       ? undefined
       : sendTransactionAsync) as MutateFnReturnValue<
       Args,
