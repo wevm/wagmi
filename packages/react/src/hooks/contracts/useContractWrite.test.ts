@@ -506,7 +506,7 @@ describe('useContractWrite', () => {
   describe('behavior', () => {
     jest.setTimeout(timeout)
 
-    it('multiple writes', async () => {
+    it.skip('multiple writes', async () => {
       const tokenId = await getUnclaimedTokenId(
         '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
       )
