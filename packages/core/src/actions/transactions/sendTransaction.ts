@@ -38,6 +38,20 @@ export type SendTransactionArgs = {
 
 export type SendTransactionResult = providers.TransactionResponse
 
+/**
+ * @description Function to send a transaction.
+ *
+ * It is recommended to pair this with the {@link prepareSendTransaction} function to avoid harmful UX side-effects.
+ *
+ * @example
+ * import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
+ *
+ * const config = await prepareSendTransaction({
+ *  to: 'moxey.eth',
+ *  value: parseEther('1'),
+ * })
+ * const result = await sendTransaction(config)
+ */
 export async function sendTransaction({
   chainId,
   mode,

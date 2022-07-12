@@ -33,6 +33,21 @@ export type PrepareWriteContractResult = PrepareWriteContractConfig & {
   mode: 'prepared'
 }
 
+/**
+ * @description Prepares the parameters required for a contract write transaction.
+ *
+ * Returns config to be passed through to {@link writeContract}.
+ *
+ * @example
+ * import { prepareWriteContract, writeContract } from '@wagmi/core'
+ *
+ * const config = await prepareWriteContract({
+ *  addressOrName: '0x...',
+ *  contractInterface: wagmiAbi,
+ *  functionName: 'mint',
+ * })
+ * const result = await writeContract(config)
+ */
 export async function prepareWriteContract<
   TContract extends Contract = Contract,
 >({

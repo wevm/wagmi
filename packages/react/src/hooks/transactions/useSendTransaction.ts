@@ -77,6 +77,15 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  *
  * It is recommended to pair this with the [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare)
  * to [avoid UX issues](/TODO).
+ *
+ * @example
+ * import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
+ *
+ * const config = await useSendTransactionPrepare({
+ *   to: 'moxey.eth',
+ *   value: parseEther('1'),
+ * })
+ * const result = await useSendTransaction(config)
  */
 export function useSendTransaction<
   Args extends UseSendTransactionArgs = UseSendTransactionArgs,

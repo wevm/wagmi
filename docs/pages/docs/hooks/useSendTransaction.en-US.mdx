@@ -7,11 +7,6 @@ import Callout from 'nextra-theme-docs/callout'
 
 # useSendTransaction
 
-<Callout emoji="⚠️">
-  It is recommended to pair this with the [`useSendTransactionPrepare`
-  hook](/docs/hooks/useSendTransactionPrepare) to [avoid a harmful UX](/TODO).
-</Callout>
-
 Hook for sending a transaction.
 
 ```tsx
@@ -21,7 +16,7 @@ import { useSendTransaction } from 'wagmi'
 ## Usage
 
 ```tsx
-import { useSendTransaction } from 'wagmi'
+import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
 
 function App() {
   const { config } = useSendTransactionPrepare({
@@ -42,6 +37,12 @@ function App() {
 }
 ```
 
+<Callout>
+  It is highly recommended to pair `useSendTransaction` with the
+  [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare) to
+  [avoid a harmful UX](/TODO).
+</Callout>
+
 ## Return Value
 
 ```tsx
@@ -61,12 +62,12 @@ function App() {
 
 ## Configuration
 
-### type
+### mode
 
 - `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has harmful UX side-effects, it is highly recommended to not use this and instead prepare the request upfront using the `useSendTransactionPrepare` hook.
 - `prepared`: The request has been prepared with parameters required for sending a transaction via the `useSendTransactionPrepare` hook
 
-This is automatically populated when using [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare).
+> This is automatically populated when using [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare).
 
 ```tsx {5}
 import { useSendTransaction } from 'wagmi'
@@ -86,7 +87,7 @@ function App() {
 
 The request to use when sending the transaction.
 
-This is automatically populated when using [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare).
+> This is automatically populated when using [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare).
 
 ```tsx {7}
 import { useSendTransactionPrepare, useSendTransaction } from 'wagmi'
@@ -169,5 +170,72 @@ function App() {
       console.log('Success', data)
     },
   })
+}
+```
+
+## Override Config
+
+It is possible to pass through override config. Any override config prefixed with `dangerouslySet` means that it will break the previously prepared request. It will need to prepare the request again at the time of invoking `sendTransaction`/`sendTransactionAsync`.
+
+<Callout>
+  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
+  Only use it as a last resort.
+</Callout>
+
+```tsx {15-18}
+import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
+
+function App() {
+  const { config } = useSendTransactionPrepare({
+    request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+  })
+  const { data, isLoading, isSuccess, sendTransaction } =
+    useSendTransaction(config)
+
+  return (
+    <div>
+      <button
+        disabled={!sendTransaction}
+        onClick={() => sendTransaction({
+          dangerouslySetRequest: {
+            to: 'awkweb.eth',
+            value: BigNumber.from('10000000000000000'),
+          }}
+        })}>
+        Send Transaction
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+## Dangerous Usage
+
+It is possible to use `useSendTransaction` without pairing it with `useSendTransactionPrepare` by using "dangerously unprepared" mode.
+
+<Callout>
+  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
+  Only use it as a last resort.
+</Callout>
+
+```tsx {5-7}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+    mode: 'dangerouslyUnprepared',
+    to: 'moxey.eth',
+    value: BigNumber.from('10000000000000000'),
+  })
+
+  return (
+    <div>
+      <button onClick={() => sendTransaction()}>Send Transaction</button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
 }
 ```

@@ -10,10 +10,10 @@ export type WriteContractPreparedArgs = {
   /**
    * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
    * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
-   * using the `prepareWriteContract` function.
+   * using the {@link prepareWriteContract} function.
    *
    * `prepared`: The request has been prepared with parameters required for sending a transaction
-   * via the `prepareWriteContract` function
+   * via the {@link prepareWriteContract} function
    * */
   mode: 'prepared'
   /** The prepared request. */
@@ -38,6 +38,21 @@ export type WriteContractArgs = Omit<GetContractArgs, 'signerOrProvider'> & {
 } & (WriteContractUnpreparedArgs | WriteContractPreparedArgs)
 export type WriteContractResult = SendTransactionResult
 
+/**
+ * @description Function to call a contract write method.
+ *
+ * It is recommended to pair this with the {@link prepareWriteContract} function to avoid harmful UX side-effects.
+ *
+ * @example
+ * import { prepareWriteContract, writeContract } from '@wagmi/core'
+ *
+ * const config = await prepareWriteContract({
+ *   addressOrName: '0x...',
+ *   contractInterface: wagmiAbi,
+ *   functionName: 'mint',
+ * })
+ * const result = await writeContract(config)
+ */
 export async function writeContract({
   addressOrName,
   args,

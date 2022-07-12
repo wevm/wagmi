@@ -107,6 +107,17 @@ const mutationFn = ({
  *
  * It is highly recommended to pair this with the [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare)
  * to [avoid UX issues](/TODO).
+ *
+ * @example
+ * import { useContractWrite, useContractWritePrepare } from 'wagmi'
+ *
+ * const { config } = useContractWritePrepare({
+ *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+ *  contractInterface: wagmigotchiABI,
+ *  functionName: 'feed',
+ * })
+ * const { data, isLoading, isSuccess, write } = useContractWrite(config)
+ *
  */
 export function useContractWrite<
   Args extends UseContractWriteArgs = UseContractWriteArgs,

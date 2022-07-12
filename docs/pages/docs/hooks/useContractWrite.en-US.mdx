@@ -7,12 +7,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # useContractWrite
 
-<Callout emoji="⚠️">
-  It is recommended to pair this with the [`useContractWritePrepare`
-  hook](/docs/hooks/useContractWritePrepare) to [avoid a harmful UX](/TODO).
-</Callout>
-
-Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method with a ["prepared request"](/TODO). Pairs with the [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx
 import { useContractWrite } from 'wagmi'
@@ -45,6 +40,12 @@ function App() {
 }
 ```
 
+<Callout>
+  It is highly recommended to pair `useContractWrite` with the
+  [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare) to
+  [avoid a harmful UX](/TODO).
+</Callout>
+
 ## Return Value
 
 ```tsx
@@ -64,12 +65,12 @@ function App() {
 
 ## Configuration
 
-### type
+### mode
 
 - `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has harmful UX side-effects, it is highly recommended to not use this and instead prepare the config upfront using the `useContractWritePrepare` hook.
 - `prepared`: The config has been prepared with parameters required for performing a contract write via the [`useContractWritePrepare` hook](/TODO)
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {5}
 import { useContractWrite } from 'wagmi'
@@ -88,7 +89,7 @@ function App() {
 
 Contract address or ENS name.
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {6}
 import { useContractWrite } from 'wagmi'
@@ -109,7 +110,7 @@ function App() {
 
 Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {7}
 import { useContractWrite } from 'wagmi'
@@ -131,7 +132,7 @@ function App() {
 
 Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {7}
 import { useContractWrite } from 'wagmi'
@@ -152,7 +153,7 @@ function App() {
 
 Name of function to call.
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {8}
 import { useContractWrite } from 'wagmi'
@@ -173,7 +174,7 @@ function App() {
 
 Arguments to pass to function call. Accepts `any | any[]`.
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {9}
 import { useContractWrite } from 'wagmi'
@@ -195,7 +196,7 @@ function App() {
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {9-12}
 import { useContractWrite } from 'wagmi'
@@ -220,7 +221,7 @@ function App() {
 
 The request to use when sending the contract transaction.
 
-This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
+> This is automatically populated when using [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare).
 
 ```tsx {7}
 import { useContractWritePrepare, useContractWrite } from 'wagmi'
@@ -303,5 +304,79 @@ function App() {
       console.log('Success', data)
     },
   })
+}
+```
+
+## Override Config
+
+It is possible to pass through override config. Any override config prefixed with `dangerouslySet` means that it will break the previously prepared request. It will need to prepare the request again at the time of invoking `write`/`writeAsync`.
+
+<Callout>
+  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
+  Only use it as a last resort.
+</Callout>
+
+```tsx {17-21}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = useContractWritePrepare({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'claim',
+  })
+  const { data, isLoading, isSuccess, write } = useContractWrite(config)
+
+  return (
+    <div>
+      <button
+        disabled={!write}
+        onClick={() =>
+          write({
+            dangerouslySetArgs: 69,
+            dangerouslySetOverrides: {
+              from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+              value: ethers.utils.parseEther('0.01'),
+            },
+          })
+        }
+      >
+        Claim
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+## Dangerous Usage
+
+It is possible to use `useContractWrite` without pairing it with `useContractWritePrepare` by using "dangerously unprepared" mode.
+
+<Callout>
+  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
+  Only use it as a last resort.
+</Callout>
+
+```tsx {5-9}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    mode: 'dangerouslyUnprepared',
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'claim',
+    tokenId: 69,
+  })
+
+  return (
+    <div>
+      <button onClick={() => write()}>Claim</button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
 }
 ```

@@ -63,6 +63,17 @@ const queryFn = ({
  * @description Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
  *
  * Eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+ *
+ * @example
+ * import { useContractWrite, useContractWritePrepare } from 'wagmi'
+ *
+ * const { config } = useContractWritePrepare({
+ *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+ *  contractInterface: wagmigotchiABI,
+ *  functionName: 'feed',
+ * })
+ * const { data, isLoading, isSuccess, write } = useContractWrite(config)
+ *
  */
 export function useContractWritePrepare({
   addressOrName,

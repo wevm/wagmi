@@ -1163,7 +1163,7 @@ const { data, error, isLoading, refetch } = useToken({
 const [{ data, error, loading }, sendTransaction] = useTransaction({
   request: {
     to: 'awkweb.eth',
-    value: BigNumber.from('1000000000000000000'), // 1 ETH
+    value: parseEther('1'), // 1 ETH
   },
 })
 ```
@@ -1174,7 +1174,7 @@ After:
 const { data, error, isLoading, sendTransactionAsync } = useSendTransaction({
   request: {
     to: 'awkweb.eth',
-    value: BigNumber.from('1000000000000000000'), // 1 ETH
+    value: parseEther('1'), // 1 ETH
   },
 })
 ```

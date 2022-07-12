@@ -23,6 +23,20 @@ export type PrepareSendTransactionResult = {
   mode: 'prepared'
 }
 
+/**
+ * @description Prepares the parameters required for sending a transaction.
+ *
+ * Returns config to be passed through to {@link sendTransaction}.
+ *
+ * @example
+ * import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
+ *
+ * const config = await prepareSendTransaction({
+ *  to: 'moxey.eth',
+ *  value: parseEther('1'),
+ * })
+ * const result = await sendTransaction(config)
+ */
 export async function prepareSendTransaction({
   chainId,
   request,

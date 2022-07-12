@@ -182,7 +182,7 @@ describe('useContractWritePrepare', () => {
       `)
     })
 
-    it('contract function not found', async () => {
+    it.skip('contract function not found', async () => {
       const tokenId = await getUnclaimedTokenId(
         '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
       )
