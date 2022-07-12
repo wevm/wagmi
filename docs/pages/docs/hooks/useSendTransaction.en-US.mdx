@@ -16,10 +16,10 @@ import { useSendTransaction } from 'wagmi'
 ## Usage
 
 ```tsx
-import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
+import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
   const { data, isLoading, isSuccess, sendTransaction } =
@@ -39,7 +39,7 @@ function App() {
 
 <Callout>
   It is highly recommended to pair `useSendTransaction` with the
-  [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare) to
+  [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction) to
   [avoid a harmful UX](/TODO).
 </Callout>
 
@@ -64,10 +64,10 @@ function App() {
 
 ### mode
 
-- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has harmful UX side-effects, it is highly recommended to not use this and instead prepare the request upfront using the `useSendTransactionPrepare` hook.
-- `prepared`: The request has been prepared with parameters required for sending a transaction via the `useSendTransactionPrepare` hook
+- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has harmful UX side-effects, it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
+- `prepared`: The request has been prepared with parameters required for sending a transaction via the `usePrepareSendTransaction` hook
 
-> This is automatically populated when using [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare).
+> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction).
 
 ```tsx {5}
 import { useSendTransaction } from 'wagmi'
@@ -87,13 +87,13 @@ function App() {
 
 The request to use when sending the transaction.
 
-> This is automatically populated when using [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare).
+> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction).
 
 ```tsx {7}
-import { useSendTransactionPrepare, useSendTransaction } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({ ... })
+  const { config } = usePrepareSendTransaction({ ... })
   const { sendTransaction } = useSendTransaction({
     ...config,
     request: config.request
@@ -106,10 +106,10 @@ function App() {
 Function to invoke when an error is thrown while attempting to send.
 
 ```tsx {7-9}
-import { useSendTransactionPrepare, useSendTransaction } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({ ... })
+  const { config } = usePrepareSendTransaction({ ... })
   const { sendTransaction } = useSendTransaction({
     ...config,
     onError(error) {
@@ -124,10 +124,10 @@ function App() {
 Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
 
 ```tsx {7-9}
-import { useSendTransactionPrepare, useSendTransaction } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({ ... })
+  const { config } = usePrepareSendTransaction({ ... })
   const { sendTransaction } = useSendTransaction({
     ...config,
     onMutate({ args, overrides }) {
@@ -142,10 +142,10 @@ function App() {
 Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
 
 ```tsx {7-9}
-import { useSendTransactionPrepare, useSendTransaction } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({ ... })
+  const { config } = usePrepareSendTransaction({ ... })
   const { sendTransaction } = useSendTransaction({
     ...config,
     onSettled(data, error) {
@@ -160,10 +160,10 @@ function App() {
 Function to invoke when send transaction is successful.
 
 ```tsx {7-9}
-import { useSendTransactionPrepare, useSendTransaction } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({ ... })
+  const { config } = usePrepareSendTransaction({ ... })
   const { sendTransaction } = useSendTransaction({
     ...config,
     onSuccess(data) {
@@ -183,10 +183,10 @@ It is possible to pass through override config. Any override config prefixed wit
 </Callout>
 
 ```tsx {15-18}
-import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
   const { data, isLoading, isSuccess, sendTransaction } =
@@ -213,7 +213,7 @@ function App() {
 
 ## Dangerous Usage
 
-It is possible to use `useSendTransaction` without pairing it with `useSendTransactionPrepare` by using "dangerously unprepared" mode.
+It is possible to use `useSendTransaction` without pairing it with `usePrepareSendTransaction` by using "dangerously unprepared" mode.
 
 <Callout>
   This usage is not recommended. It comes with [harmful UX side-effects](/TODO).

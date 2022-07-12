@@ -18,7 +18,7 @@ export {
   useContractRead,
   useContractReads,
   useContractWrite,
-  useContractWritePrepare,
+  usePrepareContractWrite,
   useToken,
 } from './contracts'
 
@@ -30,7 +30,7 @@ export { useProvider, useWebSocketProvider } from './providers'
 
 export {
   useSendTransaction,
-  useSendTransactionPrepare,
+  usePrepareSendTransaction,
   useWaitForTransaction,
 } from './transactions'
 

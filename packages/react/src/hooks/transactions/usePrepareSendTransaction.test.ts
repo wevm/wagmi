@@ -1,12 +1,12 @@
 import { BigNumber } from 'ethers'
 
 import { renderHook } from '../../../test'
-import { useSendTransactionPrepare } from './useSendTransactionPrepare'
+import { usePrepareSendTransaction } from './usePrepareSendTransaction'
 
-describe('useSendTransactionPrepare', () => {
+describe('usePrepareSendTransaction', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
-      useSendTransactionPrepare({
+      usePrepareSendTransaction({
         request: {
           to: 'moxey.eth',
           value: BigNumber.from('10000000000000000'),

@@ -19,10 +19,10 @@ export type UseSendTransactionArgs = Omit<
         /**
          * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has harmful
          * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
-         * using the `useSendTransactionPrepare` hook. [Read more](/TODO)
+         * using the `usePrepareSendTransaction` hook. [Read more](/TODO)
          *
          * `prepared`: The request has been prepared with parameters required for sending a transaction
-         * via the [`useSendTransactionPrepare` hook](/TODO)
+         * via the [`usePrepareSendTransaction` hook](/TODO)
          * */
         mode: 'prepared'
         /** The prepared request to send the transaction. */
@@ -38,7 +38,7 @@ export type UseSendTransactionMutationArgs = {
   /**
    * Dangerously pass through an unprepared `request`. Note: This has harmful
    * UX side-effects, it is highly recommended to not use this and instead
-   * prepare the request upfront using the `useSendTransactionPrepare` hook.
+   * prepare the request upfront using the `usePrepareSendTransaction` hook.
    * [Read more](/TODO)
    */
   dangerouslySetRequest: SendTransactionUnpreparedRequest['request']
@@ -75,13 +75,13 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
 /**
  * @description Hook for sending a transaction.
  *
- * It is recommended to pair this with the [`useSendTransactionPrepare` hook](/docs/hooks/useSendTransactionPrepare)
+ * It is recommended to pair this with the [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction)
  * to [avoid UX issues](/TODO).
  *
  * @example
- * import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
+ * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
  *
- * const config = await useSendTransactionPrepare({
+ * const config = await usePrepareSendTransaction({
  *   to: 'moxey.eth',
  *   value: parseEther('1'),
  * })

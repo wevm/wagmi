@@ -1,27 +1,27 @@
 ---
-title: 'useContractWritePrepare'
+title: 'usePrepareContractWrite'
 description: 'Hook for preparing a contract write.'
 ---
 
-# useContractWritePrepare
+# usePrepareContractWrite
 
 Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
 
 Eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
 
 ```tsx
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 ```
 
 ## Usage
 
-`useContractWritePrepare` gives back a "prepared config" to be sent through to `useContractWrite`.
+`usePrepareContractWrite` gives back a "prepared config" to be sent through to `useContractWrite`.
 
 ```tsx {4-8}
-import { useContractWritePrepare, useContractWrite } from 'wagmi'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
-  const { config, error } = useContractWritePrepare({
+  const { config, error } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -71,10 +71,10 @@ Note: The `write` function will be undefined if the config has not been prepared
 Contract address or ENS name.
 
 ```tsx {5}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -87,10 +87,10 @@ function App() {
 Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
 
 ```tsx {6}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -103,10 +103,10 @@ function App() {
 Name of function to call.
 
 ```tsx {7}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -119,10 +119,10 @@ function App() {
 Arguments to pass to function call. Accepts `any | any[]`.
 
 ```tsx {8}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -136,10 +136,10 @@ function App() {
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
 ```tsx {8-11}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -156,10 +156,10 @@ function App() {
 Time (in ms) which the prepared request should remain in the cache.
 
 ```tsx {8}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -173,10 +173,10 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {8}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -190,10 +190,10 @@ function App() {
 Time (in ms) after prepared request is considered stale. If set to `Infinity` the data will never be considered stale.
 
 ```tsx {8}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -207,10 +207,10 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {8}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -224,10 +224,10 @@ function App() {
 Function to invoke when fetching is successful.
 
 ```tsx {8-10}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -243,10 +243,10 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {8-10}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -262,10 +262,10 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {8-10}
-import { useContractWritePrepare } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = useContractWritePrepare({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',

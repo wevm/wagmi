@@ -7,5 +7,5 @@ export {
 export { useContractRead } from './useContractRead'
 export { useContractReads } from './useContractReads'
 export { useContractWrite } from './useContractWrite'
-export { useContractWritePrepare } from './useContractWritePrepare'
+export { usePrepareContractWrite } from './usePrepareContractWrite'
 export { useToken } from './useToken'

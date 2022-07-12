@@ -2,10 +2,10 @@ import { getSigners, getUnclaimedTokenId } from '../../../../core/test'
 import { act, actConnect, mlootContractConfig, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UseContractWritePrepareArgs,
-  UseContractWritePrepareConfig,
-  useContractWritePrepare,
-} from './useContractWritePrepare'
+  UsePrepareContractWriteArgs,
+  UsePrepareContractWriteConfig,
+  usePrepareContractWrite,
+} from './usePrepareContractWrite'
 import {
   UseContractWriteArgs,
   UseContractWriteConfig,
@@ -21,17 +21,17 @@ function useContractWriteWithConnect(
   }
 }
 
-function useContractWritePreparedWithConnect(
-  config: UseContractWritePrepareArgs &
-    UseContractWritePrepareConfig & { chainId?: number },
+function usePrepareContractWritedWithConnect(
+  config: UsePrepareContractWriteArgs &
+    UsePrepareContractWriteConfig & { chainId?: number },
 ) {
-  const contractWritePrepare = useContractWritePrepare(config)
+  const prepareContractWrite = usePrepareContractWrite(config)
   return {
     connect: useConnect(),
-    contractWritePrepare,
+    prepareContractWrite,
     contractWrite: useContractWrite({
       chainId: config?.chainId,
-      ...contractWritePrepare.config,
+      ...prepareContractWrite.config,
     }),
   }
 }
@@ -47,7 +47,7 @@ describe('useContractWrite', () => {
     if (!tokenId) return
 
     const { result } = renderHook(() =>
-      useContractWritePreparedWithConnect({
+      usePrepareContractWritedWithConnect({
         ...mlootContractConfig,
         functionName: 'claim',
         args: [tokenId],
@@ -80,7 +80,7 @@ describe('useContractWrite', () => {
         if (!tokenId) return
 
         const utils = renderHook(() =>
-          useContractWritePreparedWithConnect({
+          usePrepareContractWritedWithConnect({
             ...mlootContractConfig,
             chainId: 69,
             functionName: 'claim',
@@ -119,7 +119,7 @@ describe('useContractWrite', () => {
         if (!tokenId) return
 
         const utils = renderHook(() =>
-          useContractWritePreparedWithConnect({
+          usePrepareContractWritedWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
             args: [tokenId],
@@ -167,7 +167,7 @@ describe('useContractWrite', () => {
         if (!tokenId) return
 
         const utils = renderHook(() =>
-          useContractWritePreparedWithConnect({
+          usePrepareContractWritedWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
             args: [tokenId],
@@ -318,7 +318,7 @@ describe('useContractWrite', () => {
         if (!tokenId) return
 
         const utils = renderHook(() =>
-          useContractWritePreparedWithConnect({
+          usePrepareContractWritedWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
             args: [tokenId],
@@ -367,7 +367,7 @@ describe('useContractWrite', () => {
         if (!tokenId) return
 
         const utils = renderHook(() =>
-          useContractWritePreparedWithConnect({
+          usePrepareContractWritedWithConnect({
             ...mlootContractConfig,
             functionName: 'claim',
             args: [tokenId],
@@ -514,7 +514,7 @@ describe('useContractWrite', () => {
       let functionName = 'claim'
       let args: any | any[] = tokenId
       const utils = renderHook(() =>
-        useContractWritePreparedWithConnect({
+        usePrepareContractWritedWithConnect({
           ...mlootContractConfig,
           functionName,
           args,

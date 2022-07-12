@@ -10,8 +10,8 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UseContractWritePrepareArgs = PrepareWriteContractConfig
-export type UseContractWritePrepareConfig = QueryConfig<
+export type UsePrepareContractWriteArgs = PrepareWriteContractConfig
+export type UsePrepareContractWriteConfig = QueryConfig<
   PrepareWriteContractResult,
   Error
 >
@@ -23,7 +23,7 @@ export const queryKey = (
     contractInterface,
     functionName,
     overrides,
-  }: UseContractWritePrepareArgs,
+  }: UsePrepareContractWriteArgs,
   { chainId, signer }: { chainId?: number; signer?: FetchSignerResult },
 ) =>
   [
@@ -65,9 +65,9 @@ const queryFn = ({
  * Eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
  *
  * @example
- * import { useContractWrite, useContractWritePrepare } from 'wagmi'
+ * import { useContractWrite, usePrepareContractWrite } from 'wagmi'
  *
- * const { config } = useContractWritePrepare({
+ * const { config } = usePrepareContractWrite({
  *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
  *  contractInterface: wagmigotchiABI,
  *  functionName: 'feed',
@@ -75,7 +75,7 @@ const queryFn = ({
  * const { data, isLoading, isSuccess, write } = useContractWrite(config)
  *
  */
-export function useContractWritePrepare({
+export function usePrepareContractWrite({
   addressOrName,
   contractInterface,
   functionName,
@@ -88,11 +88,11 @@ export function useContractWritePrepare({
   onError,
   onSettled,
   onSuccess,
-}: UseContractWritePrepareArgs & UseContractWritePrepareConfig) {
+}: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig) {
   const chainId = useChainId()
   const { data: signer } = useSigner()
 
-  const contractWritePrepareQuery = useQuery(
+  const prepareContractWriteQuery = useQuery(
     queryKey(
       {
         addressOrName,
@@ -115,7 +115,7 @@ export function useContractWritePrepare({
       onSuccess,
     },
   )
-  return Object.assign(contractWritePrepareQuery, {
+  return Object.assign(prepareContractWriteQuery, {
     config: {
       addressOrName,
       args,
@@ -124,7 +124,7 @@ export function useContractWritePrepare({
       functionName,
       request: undefined,
       mode: 'prepared',
-      ...contractWritePrepareQuery.data,
+      ...prepareContractWriteQuery.data,
     } as PrepareWriteContractResult,
   })
 }

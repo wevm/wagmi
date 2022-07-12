@@ -3,8 +3,8 @@ import { parseEther } from 'ethers/lib/utils'
 import * as React from 'react'
 import {
   useAccount,
+  usePrepareSendTransaction,
   useSendTransaction,
-  useSendTransactionPrepare,
 } from 'wagmi'
 
 import { PreviewWrapper } from '../core'
@@ -38,7 +38,7 @@ export function SendTransaction() {
     error: prepareError,
     isError: isPrepareError,
     isLoading: isPreparing,
-  } = useSendTransactionPrepare({
+  } = usePrepareSendTransaction({
     request: {
       to: debouncedTo,
       value: debouncedValue ? parseEther(debouncedValue) : undefined,

@@ -10,10 +10,10 @@ import {
   useSendTransaction,
 } from './useSendTransaction'
 import {
-  UseSendTransactionPrepareArgs,
-  UseSendTransactionPrepareConfig,
-  useSendTransactionPrepare,
-} from './useSendTransactionPrepare'
+  UsePrepareSendTransactionArgs,
+  UsePrepareSendTransactionConfig,
+  usePrepareSendTransaction,
+} from './usePrepareSendTransaction'
 
 function useSendTransactionWithConnect(
   config: UseSendTransactionArgs & UseSendTransactionConfig,
@@ -25,16 +25,16 @@ function useSendTransactionWithConnect(
 }
 
 function useSendTransactionPreparedWithConnect(
-  config: UseSendTransactionPrepareArgs &
-    UseSendTransactionPrepareConfig & { chainId?: number },
+  config: UsePrepareSendTransactionArgs &
+    UsePrepareSendTransactionConfig & { chainId?: number },
 ) {
-  const sendTransactionPrepare = useSendTransactionPrepare(config)
+  const prepareSendTransaction = usePrepareSendTransaction(config)
   return {
     connect: useConnect(),
-    sendTransactionPrepare,
+    prepareSendTransaction,
     sendTransaction: useSendTransaction({
       chainId: config?.chainId,
-      ...sendTransactionPrepare.config,
+      ...prepareSendTransaction.config,
     }),
   }
 }

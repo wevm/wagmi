@@ -1,33 +1,33 @@
 ---
-title: 'useSendTransactionPrepare'
+title: 'usePrepareSendTransaction'
 description: 'Hook for preparing a transaction to be sent.'
 ---
 
-# useSendTransactionPrepare
+# usePrepareSendTransaction
 
 Hook for preparing a transaction to be sent via [`useSendTransaction`](/docs/hooks/useSendTransaction).
 
 Eagerly fetches the parameters required for sending a transaction such as the gas estimate and resolving an ENS address (if required).
 
 ```tsx
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 ```
 
 ## Usage
 
-`useSendTransactionPrepare` gives back a "prepared request" to be sent through to `useSendTransactionPrepared`.
+`usePrepareSendTransaction` gives back a "prepared request" to be sent through to `useSendTransaction`.
 
 ```tsx {4-9}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const { config, error } = useSendTransactionPrepare({
+  const { config, error } = usePrepareSendTransaction({
     request: {
       to: 'moxey.eth',
       value: parseEther('1'),
     },
   })
-  const { sendTransaction } = useSendTransactionPrepared(config)
+  const { sendTransaction } = useSendTransaction(config)
 
   return (
     <>
@@ -72,10 +72,10 @@ Note: The `sendTransaction` function will be undefined if the request has not be
 Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
 
 ```tsx {5-8}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
@@ -89,10 +89,10 @@ function App() {
 Time (in ms) which the data should remain in the cache.
 
 ```tsx {9}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
@@ -107,10 +107,10 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {9}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
@@ -125,10 +125,10 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale.
 
 ```tsx {9}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
@@ -143,10 +143,10 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {9}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
@@ -161,10 +161,10 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {9-11}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
@@ -181,10 +181,10 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {9-11}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
@@ -201,10 +201,10 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {9-11}
-import { useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH

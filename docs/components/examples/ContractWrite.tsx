@@ -3,7 +3,7 @@ import { Button, Stack, Text } from 'degen'
 import {
   useAccount,
   useContractWrite,
-  useContractWritePrepare,
+  usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi'
 
@@ -19,7 +19,7 @@ export function ContractWrite() {
     error: prepareError,
     isError: isPrepareError,
     isLoading: isPreparing,
-  } = useContractWritePrepare({
+  } = usePrepareContractWrite({
     addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
     contractInterface: wagmiAbi,
     functionName: 'mint',

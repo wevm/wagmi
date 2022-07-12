@@ -15,10 +15,10 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
         /**
          * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
          * UX side-effects, it is highly recommended to not use this and instead prepare the config upfront
-         * using the `useContractWritePrepare` hook. [Read more](/TODO)
+         * using the `usePrepareContractWrite` hook. [Read more](/TODO)
          *
          * `prepared`: The config has been prepared with parameters required for performing a contract write
-         * via the [`useContractWritePrepare` hook](/TODO)
+         * via the [`usePrepareContractWrite` hook](/TODO)
          * */
         mode: 'prepared'
         /** The prepared request to perform a contract write. */
@@ -33,7 +33,7 @@ export type UseContractWriteMutationArgs = {
   /**
    * Dangerously pass through unprepared config. Note: This has harmful
    * UX side-effects, it is highly recommended to not use this and instead
-   * prepare the config upfront using the `useContractWritePrepare` function.
+   * prepare the config upfront using the `usePrepareContractWrite` function.
    * [Read more](/TODO)
    */
   dangerouslySetArgs?: WriteContractArgs['args']
@@ -105,13 +105,13 @@ const mutationFn = ({
  * @description Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write)
  * method.
  *
- * It is highly recommended to pair this with the [`useContractWritePrepare` hook](/docs/hooks/useContractWritePrepare)
+ * It is highly recommended to pair this with the [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite)
  * to [avoid UX issues](/TODO).
  *
  * @example
- * import { useContractWrite, useContractWritePrepare } from 'wagmi'
+ * import { useContractWrite, usePrepareContractWrite } from 'wagmi'
  *
- * const { config } = useContractWritePrepare({
+ * const { config } = usePrepareContractWrite({
  *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
  *  contractInterface: wagmigotchiABI,
  *  functionName: 'feed',

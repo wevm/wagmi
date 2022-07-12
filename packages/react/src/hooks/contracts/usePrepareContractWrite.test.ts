@@ -2,21 +2,21 @@ import { getUnclaimedTokenId } from '../../../../core/test'
 import { actConnect, mlootContractConfig, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UseContractWritePrepareArgs,
-  UseContractWritePrepareConfig,
-  useContractWritePrepare,
-} from './useContractWritePrepare'
+  UsePrepareContractWriteArgs,
+  UsePrepareContractWriteConfig,
+  usePrepareContractWrite,
+} from './usePrepareContractWrite'
 
-function useContractWritePrepareWithConnect(
-  config: UseContractWritePrepareArgs & UseContractWritePrepareConfig,
+function usePrepareContractWriteWithConnect(
+  config: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig,
 ) {
   return {
     connect: useConnect(),
-    prepareContractTransaction: useContractWritePrepare(config),
+    prepareContractTransaction: usePrepareContractWrite(config),
   }
 }
 
-describe('useContractWritePrepare', () => {
+describe('usePrepareContractWrite', () => {
   it('mounts', async () => {
     const tokenId = await getUnclaimedTokenId(
       '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -24,7 +24,7 @@ describe('useContractWritePrepare', () => {
     if (!tokenId) return
 
     const { result } = renderHook(() =>
-      useContractWritePrepareWithConnect({
+      usePrepareContractWriteWithConnect({
         ...mlootContractConfig,
         functionName: 'claim',
         args: [tokenId],
@@ -71,7 +71,7 @@ describe('useContractWritePrepare', () => {
     if (!tokenId) return
 
     const utils = renderHook(() =>
-      useContractWritePrepareWithConnect({
+      usePrepareContractWriteWithConnect({
         ...mlootContractConfig,
         functionName: 'claim',
         args: [tokenId],
@@ -134,7 +134,7 @@ describe('useContractWritePrepare', () => {
   describe('errors', () => {
     it('contract method error', async () => {
       const utils = renderHook(() =>
-        useContractWritePrepareWithConnect({
+        usePrepareContractWriteWithConnect({
           ...mlootContractConfig,
           functionName: 'claim',
           args: 1,
@@ -189,7 +189,7 @@ describe('useContractWritePrepare', () => {
       if (!tokenId) return
 
       const utils = renderHook(() =>
-        useContractWritePrepareWithConnect({
+        usePrepareContractWriteWithConnect({
           ...mlootContractConfig,
           functionName: 'wagmi',
           args: [tokenId],

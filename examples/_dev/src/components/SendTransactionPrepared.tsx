@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers'
-import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 export const SendTransactionPrepared = () => {
-  const { config } = useSendTransactionPrepare({
+  const { config } = usePrepareSendTransaction({
     request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
   })
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =

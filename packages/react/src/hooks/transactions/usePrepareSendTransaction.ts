@@ -9,14 +9,14 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
 
-export type UseSendTransactionPrepareArgs = Omit<
+export type UsePrepareSendTransactionArgs = Omit<
   PrepareSendTransactionArgs,
   'request'
 > & {
   request: Partial<PrepareSendTransactionArgs['request']>
 }
 
-export type UseSendTransactionPrepareConfig = QueryConfig<
+export type UsePrepareSendTransactionConfig = QueryConfig<
   PrepareSendTransactionResult,
   Error
 >
@@ -24,7 +24,7 @@ export type UseSendTransactionPrepareConfig = QueryConfig<
 export const queryKey = ({
   chainId,
   request,
-}: UseSendTransactionPrepareArgs & {
+}: UsePrepareSendTransactionArgs & {
   chainId?: number
 }) => [{ entity: 'prepareSendTransaction', chainId, request }] as const
 
@@ -41,15 +41,15 @@ const queryFn = ({
  * Eagerly fetches the parameters required for sending a transaction such as the gas estimate and resolving an ENS address (if required).
  *
  * @example
- * import { useSendTransaction, useSendTransactionPrepare } from 'wagmi'
+ * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
  *
- * const config = await useSendTransactionPrepare({
+ * const config = await usePrepareSendTransaction({
  *   to: 'moxey.eth',
  *   value: parseEther('1'),
  * })
  * const result = await useSendTransaction(config)
  */
-export function useSendTransactionPrepare({
+export function usePrepareSendTransaction({
   request,
   cacheTime,
   enabled = true,
@@ -58,11 +58,11 @@ export function useSendTransactionPrepare({
   onError,
   onSettled,
   onSuccess,
-}: UseSendTransactionPrepareArgs & UseSendTransactionPrepareConfig) {
+}: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig) {
   const chainId = useChainId()
   const provider = useProvider()
 
-  const sendTransactionPrepareQuery = useQuery(
+  const prepareSendTransactionQuery = useQuery(
     queryKey({ request, chainId }),
     queryFn,
     {
@@ -76,11 +76,11 @@ export function useSendTransactionPrepare({
       onSuccess,
     },
   )
-  return Object.assign(sendTransactionPrepareQuery, {
+  return Object.assign(prepareSendTransactionQuery, {
     config: {
       request: undefined,
       mode: 'prepared',
-      ...sendTransactionPrepareQuery.data,
+      ...prepareSendTransactionQuery.data,
     } as PrepareSendTransactionResult,
   })
 }
