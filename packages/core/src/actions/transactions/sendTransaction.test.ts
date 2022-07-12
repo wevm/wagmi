@@ -27,18 +27,11 @@ describe('sendTransaction', () => {
           value: parseEther('10'),
         },
       })
-      const { blockNumber, hash, gasLimit, gasPrice } = await sendTransaction({
+      const { hash, wait } = await sendTransaction({
         ...config,
       })
-      expect(blockNumber).toBeDefined()
       expect(hash).toBeDefined()
-      expect(gasPrice).toBeDefined()
-      expect(gasLimit).toMatchInlineSnapshot(`
-        {
-          "hex": "0x5209",
-          "type": "BigNumber",
-        }
-      `)
+      expect(await wait()).toBeDefined()
     })
 
     it('"dangerously prepared" request', async () => {
@@ -48,22 +41,15 @@ describe('sendTransaction', () => {
       const to = signers[1]
       const toAddress = await to?.getAddress()
 
-      const { blockNumber, hash, gasLimit, gasPrice } = await sendTransaction({
+      const { hash, wait } = await sendTransaction({
         mode: 'dangerouslyUnprepared',
         request: {
           to: toAddress as string,
           value: parseEther('10'),
         },
       })
-      expect(blockNumber).toBeDefined()
       expect(hash).toBeDefined()
-      expect(gasPrice).toBeDefined()
-      expect(gasLimit).toMatchInlineSnapshot(`
-        {
-          "hex": "0x5209",
-          "type": "BigNumber",
-        }
-      `)
+      expect(await wait()).toBeDefined()
     })
   })
 

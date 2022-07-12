@@ -130,6 +130,7 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
+        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -184,6 +185,7 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
+        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -233,6 +235,7 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
+        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,

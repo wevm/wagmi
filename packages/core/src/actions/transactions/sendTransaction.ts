@@ -1,5 +1,4 @@
 import { providers } from 'ethers'
-import { poll } from 'ethers/lib/utils'
 
 import {
   ChainMismatchError,
@@ -8,7 +7,6 @@ import {
   UserRejectedRequestError,
 } from '../../errors'
 import { fetchSigner, getNetwork } from '../accounts'
-import { getProvider } from '../providers'
 
 export type SendTransactionPreparedRequest = {
   /**
@@ -37,12 +35,15 @@ export type SendTransactionArgs = {
   chainId?: number
 } & (SendTransactionPreparedRequest | SendTransactionUnpreparedRequest)
 
-export type SendTransactionResult = providers.TransactionResponse
+export type SendTransactionResult = {
+  hash: providers.TransactionResponse['hash']
+  wait: providers.TransactionResponse['wait']
+}
 
 /**
  * @description Function to send a transaction.
  *
- * It is recommended to pair this with the {@link prepareSendTransaction} function to avoid harmful UX side-effects.
+ * It is recommended to pair this with the `prepareSendTransaction` function to avoid harmful UX side-effects.
  *
  * @example
  * import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
@@ -81,8 +82,6 @@ export async function sendTransaction({
     /** Do not perform any async operations in this block.   */
     /*********************************************************/
 
-    const provider = getProvider()
-
     // `fetchSigner` isn't really "asynchronous" as we have already
     // initialized the provider upon user connection, so it will return
     // immediately.
@@ -98,25 +97,14 @@ export async function sendTransaction({
     // delay to open wallet, etc).
 
     const uncheckedSigner = signer.connectUnchecked()
-    const { hash } = await uncheckedSigner.sendTransaction(request)
+    const { hash, wait } = await uncheckedSigner.sendTransaction(request)
 
     /********************************************************/
     /** END: WalletConnect mobile deep link cautious code.  */
     /** Go nuts!                                            */
     /********************************************************/
 
-    // The unchecked `sendTransaction` only returns a hash, so we want to use
-    // it to retrieve the full transaction once it has been mined.
-    return (await poll(
-      async () => {
-        const tx = await provider.getTransaction(hash)
-        if (tx === null) {
-          return undefined
-        }
-        return provider._wrapTransaction(tx, hash)
-      },
-      { oncePoll: provider },
-    )) as providers.TransactionResponse
+    return { hash, wait }
   } catch (error) {
     if ((<ProviderRpcError>error).code === 4001)
       throw new UserRejectedRequestError(error)
