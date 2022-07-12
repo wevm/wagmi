@@ -8,6 +8,7 @@ import {
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
+import { useAccount } from '../accounts'
 
 export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
   (
@@ -220,6 +221,8 @@ export function useContractWrite<
       request,
     ],
   )
+
+  useAccount({ onDisconnect: () => reset() })
 
   return {
     data,
