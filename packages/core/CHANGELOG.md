@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.4.8
+
+### Patch Changes
+
+- [#693](https://github.com/tmm/wagmi/pull/693) [`56e468c`](https://github.com/tmm/wagmi/commit/56e468c3617ec222527bb3c02eadec3ebeff923a) Thanks [@markdalgleish](https://github.com/markdalgleish)! - Fix import errors with Coinbase Wallet SDK in Vite
+
 ## 0.4.7
 
 ### Patch Changes
