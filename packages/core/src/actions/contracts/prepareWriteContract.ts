@@ -36,7 +36,7 @@ export type PrepareWriteContractResult = PrepareWriteContractConfig & {
 /**
  * @description Prepares the parameters required for a contract write transaction.
  *
- * Returns config to be passed through to {@link writeContract}.
+ * Returns config to be passed through to `writeContract`.
  *
  * @example
  * import { prepareWriteContract, writeContract } from '@wagmi/core'

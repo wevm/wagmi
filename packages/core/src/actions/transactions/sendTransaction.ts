@@ -1,4 +1,5 @@
 import { providers } from 'ethers'
+import { poll } from 'ethers/lib/utils'
 
 import {
   ChainMismatchError,
@@ -106,8 +107,16 @@ export async function sendTransaction({
 
     // The unchecked `sendTransaction` only returns a hash, so we want to use
     // it to retrieve the full transaction once it has been mined.
-    const transaction = await provider.getTransaction(hash)
-    return transaction
+    return (await poll(
+      async () => {
+        const tx = await provider.getTransaction(hash)
+        if (tx === null) {
+          return undefined
+        }
+        return provider._wrapTransaction(tx, hash)
+      },
+      { oncePoll: provider },
+    )) as providers.TransactionResponse
   } catch (error) {
     if ((<ProviderRpcError>error).code === 4001)
       throw new UserRejectedRequestError(error)

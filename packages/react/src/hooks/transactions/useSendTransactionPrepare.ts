@@ -9,7 +9,12 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
 
-export type UseSendTransactionPrepareArgs = PrepareSendTransactionArgs
+export type UseSendTransactionPrepareArgs = Omit<
+  PrepareSendTransactionArgs,
+  'request'
+> & {
+  request: Partial<PrepareSendTransactionArgs['request']>
+}
 
 export type UseSendTransactionPrepareConfig = QueryConfig<
   PrepareSendTransactionResult,
@@ -26,7 +31,8 @@ export const queryKey = ({
 const queryFn = ({
   queryKey: [{ request }],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return prepareSendTransaction({ request })
+  if (!request.to) throw new Error('request.to is required')
+  return prepareSendTransaction({ request: { ...request, to: request.to } })
 }
 
 /**
@@ -47,7 +53,7 @@ export function useSendTransactionPrepare({
   request,
   cacheTime,
   enabled = true,
-  staleTime,
+  staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,
@@ -61,7 +67,7 @@ export function useSendTransactionPrepare({
     queryFn,
     {
       cacheTime,
-      enabled: Boolean(enabled && provider),
+      enabled: Boolean(enabled && provider && request.to),
       isDataEqual: deepEqual,
       staleTime,
       suspense,

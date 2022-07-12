@@ -26,7 +26,7 @@ export type PrepareSendTransactionResult = {
 /**
  * @description Prepares the parameters required for sending a transaction.
  *
- * Returns config to be passed through to {@link sendTransaction}.
+ * Returns config to be passed through to `sendTransaction`.
  *
  * @example
  * import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
