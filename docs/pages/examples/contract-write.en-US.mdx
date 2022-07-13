@@ -3,6 +3,7 @@ title: 'Contract Write'
 description: 'Learn how to perform a contract write with wagmi.'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
 import { ContractWrite } from '../../components/examples'
 
 # Contract Write
@@ -17,7 +18,7 @@ Follow the [Connect Wallet](/examples/connect-wallet#step-1-configuring-connecto
 
 ## Step 2: Create a new component
 
-Create a new component that will contain the contract write logic.
+Create a new component that will contain the NFT mint logic.
 
 ```tsx
 import * as React from 'react'
@@ -33,7 +34,7 @@ export function MintNFT() {
 
 ## Step 3: Add the `usePrepareContractWrite` hook
 
-Create a new component and add the [`usePrepareContractWrite` hook](/docs/hooks/useContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+Add the [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
 
 You will need to:
 
@@ -95,6 +96,10 @@ export function MintNFT() {
 Clicking the "Mint" button will invoke the `mint` function on the contract and mint the NFT for the user.
 
 However, there is currently no feedback to show when the `mint` transaction is successful. We will add some feedback in the next step.
+
+<Callout emoji="🤔" type="info">
+  [Why do I need a `usePrepareContractWrite` & `useContractWrite` hook?](/TODO)
+</Callout>
 
 ## Step 5: Add the `useWaitForTransaction` hook
 
