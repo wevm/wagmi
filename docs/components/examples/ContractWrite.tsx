@@ -9,7 +9,6 @@ import {
 
 import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'
-import wagmiAbi from './wagmi-abi.json'
 
 export function ContractWrite() {
   const { isConnected } = useAccount()
@@ -21,7 +20,7 @@ export function ContractWrite() {
     isLoading: isPreparing,
   } = usePrepareContractWrite({
     addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-    contractInterface: wagmiAbi,
+    contractInterface: ['function mint()'],
     functionName: 'mint',
   })
   const {

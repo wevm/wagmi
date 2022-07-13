@@ -48,20 +48,22 @@ const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
   return hashQueryKey([rest, signer?._address])
 }
 
-const queryFn = ({
-  queryKey: [
-    { args, addressOrName, contractInterface, functionName, overrides, signer },
-  ],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  return prepareWriteContract({
-    args,
-    addressOrName,
-    contractInterface,
-    functionName,
-    overrides,
-    signer,
-  })
-}
+const queryFn =
+  ({ signer }: { signer?: FetchSignerResult }) =>
+  ({
+    queryKey: [
+      { args, addressOrName, contractInterface, functionName, overrides },
+    ],
+  }: QueryFunctionArgs<typeof queryKey>) => {
+    return prepareWriteContract({
+      args,
+      addressOrName,
+      contractInterface,
+      functionName,
+      overrides,
+      signer,
+    })
+  }
 
 /**
  * @description Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
@@ -107,7 +109,7 @@ export function usePrepareContractWrite({
       },
       { chainId, signer },
     ),
-    queryFn,
+    queryFn({ signer }),
     {
       cacheTime,
       enabled: Boolean(enabled && signer),
