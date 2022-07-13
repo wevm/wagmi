@@ -1,4 +1,9 @@
-import { getSigners, getUnclaimedTokenId } from '../../../../core/test'
+import {
+  getSigners,
+  getTotalSupply,
+  getUnclaimedTokenId,
+  wagmiContractConfig,
+} from '../../../../core/test'
 import { act, actConnect, mlootContractConfig, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
@@ -506,16 +511,12 @@ describe('useContractWrite', () => {
   describe('behavior', () => {
     jest.setTimeout(timeout)
 
-    it.skip('multiple writes', async () => {
-      const tokenId = await getUnclaimedTokenId(
-        '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-      )
-      if (!tokenId) return
-      let functionName = 'claim'
-      let args: any | any[] = tokenId
+    it('multiple writes', async () => {
+      let args: any[] | any = []
+      let functionName = 'mint'
       const utils = renderHook(() =>
         usePrepareContractWritedWithConnect({
-          ...mlootContractConfig,
+          ...wagmiContractConfig,
           functionName,
           args,
         }),
@@ -523,8 +524,9 @@ describe('useContractWrite', () => {
       const { result, rerender, waitFor } = utils
       await actConnect({ utils })
 
-      await waitFor(() =>
-        expect(result.current.contractWrite.write).toBeDefined(),
+      await waitFor(
+        () => expect(result.current.contractWrite.write).toBeDefined(),
+        { timeout },
       )
       await act(async () => result.current.contractWrite.write?.())
       await waitFor(
@@ -536,6 +538,7 @@ describe('useContractWrite', () => {
 
       const from = await getSigners()[0]?.getAddress()
       const to = await getSigners()[1]?.getAddress()
+      const tokenId = await getTotalSupply(wagmiContractConfig.addressOrName)
       functionName = 'transferFrom'
       args = [from, to, tokenId]
       rerender()

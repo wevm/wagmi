@@ -17,11 +17,11 @@ describe('useBalance', () => {
       {
         "data": {
           "decimals": 18,
-          "formatted": "1.622080339908136684",
+          "formatted": "1.889009973656812885",
           "symbol": "ETH",
           "unit": "ether",
           "value": {
-            "hex": "0x1682c979995e8eec",
+            "hex": "0x1a371c9008fbfd55",
             "type": "BigNumber",
           },
         },
@@ -57,11 +57,11 @@ describe('useBalance', () => {
           {
             "data": {
               "decimals": 18,
-              "formatted": "1.622080339908136684",
+              "formatted": "1.889009973656812885",
               "symbol": "ETH",
               "unit": "ether",
               "value": {
-                "hex": "0x1682c979995e8eec",
+                "hex": "0x1a371c9008fbfd55",
                 "type": "BigNumber",
               },
             },
@@ -95,11 +95,11 @@ describe('useBalance', () => {
           {
             "data": {
               "decimals": 18,
-              "formatted": "0.063903008095677776",
+              "formatted": "0.244974809851885503",
               "symbol": "ETH",
               "unit": "ether",
               "value": {
-                "hex": "0xe30772819f2d50",
+                "hex": "0x0366534aa823f7bf",
                 "type": "BigNumber",
               },
             },
@@ -132,11 +132,11 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "1.622080339908136684",
+            "formatted": "1.889009973656812885",
             "symbol": "ETH",
             "unit": "ether",
             "value": {
-              "hex": "0x1682c979995e8eec",
+              "hex": "0x1a371c9008fbfd55",
               "type": "BigNumber",
             },
           },
@@ -198,11 +198,11 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "1622080339.908136684",
+            "formatted": "1889009973.656812885",
             "symbol": "ETH",
             "unit": "gwei",
             "value": {
-              "hex": "0x1682c979995e8eec",
+              "hex": "0x1a371c9008fbfd55",
               "type": "BigNumber",
             },
           },
@@ -270,11 +270,11 @@ describe('useBalance', () => {
         expect(data).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "2.540437289581808169",
+            "formatted": "0.415160768386201476",
             "symbol": "ETH",
             "unit": "ether",
             "value": {
-              "hex": "0x234172414bae0a29",
+              "hex": "0x05c2f284ec567784",
               "type": "BigNumber",
             },
           }

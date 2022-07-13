@@ -18,8 +18,13 @@ export function setupClient(config: Config = {}) {
   })
 }
 
-export { mlootContractConfig, wagmigotchiContractConfig } from './constants'
 export {
+  mlootContractConfig,
+  wagmigotchiContractConfig,
+  wagmiContractConfig,
+} from './constants'
+export {
+  getTotalSupply,
   getUnclaimedTokenId,
   getProvider,
   getWebSocketProvider,

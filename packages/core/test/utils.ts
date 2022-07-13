@@ -195,3 +195,21 @@ export async function getUnclaimedTokenId(
   }
   return false
 }
+
+export async function getTotalSupply(addressOrName: string) {
+  const provider = getProvider()
+  const contract = new Contract(
+    addressOrName,
+    [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+    provider,
+  )
+  return await contract.totalSupply()
+}

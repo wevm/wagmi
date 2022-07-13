@@ -10,7 +10,10 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UsePrepareContractWriteArgs = PrepareWriteContractConfig
+export type UsePrepareContractWriteArgs = Omit<
+  PrepareWriteContractConfig,
+  'signerOrProvider'
+>
 export type UsePrepareContractWriteConfig = QueryConfig<
   PrepareWriteContractResult,
   Error
@@ -47,7 +50,7 @@ const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
 
 const queryFn = ({
   queryKey: [
-    { args, addressOrName, contractInterface, functionName, overrides },
+    { args, addressOrName, contractInterface, functionName, overrides, signer },
   ],
 }: QueryFunctionArgs<typeof queryKey>) => {
   return prepareWriteContract({
@@ -56,6 +59,7 @@ const queryFn = ({
     contractInterface,
     functionName,
     overrides,
+    signer,
   })
 }
 

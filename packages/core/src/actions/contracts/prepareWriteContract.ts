@@ -2,6 +2,7 @@ import {
   CallOverrides,
   Contract,
   PopulatedTransaction,
+  providers,
 } from 'ethers/lib/ethers'
 
 import {
@@ -22,6 +23,7 @@ export type PrepareWriteContractConfig = Omit<
   /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
+  signer?: providers.JsonRpcSigner | null
 }
 
 export type PrepareWriteContractResult = PrepareWriteContractConfig & {
@@ -57,8 +59,9 @@ export async function prepareWriteContract<
   contractInterface,
   functionName,
   overrides,
+  signer: signer_,
 }: PrepareWriteContractConfig): Promise<PrepareWriteContractResult> {
-  const signer = await fetchSigner()
+  const signer = signer_ ?? (await fetchSigner())
   if (!signer) throw new ConnectorNotFoundError()
 
   const contract = getContract<TContract>({
