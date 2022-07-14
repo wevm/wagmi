@@ -1,56 +1,41 @@
 ---
 title: 'Prepare Hooks'
-description: 'What are prepare hooks?'
+description: 'What are Prepare Hooks?'
 ---
+
+import { ValidationComparisonTable } from '../../../components/docs/ValidationComparisonTable'
 
 # Prepare Hooks
 
 In previous versions of wagmi, "transactional" hooks such as `useSendTransaction` and `useContractWrite` performed potentially long-running asynchronous work. These hooks internally invoke the [ethers `signer.sendTransaction` function](https://docs.ethers.io/v5/api/signer/#Signer-sendTransaction) that fetches the gas estimate & block number, and resolves an ENS name (if needed) before the transaction gets sent. On a slow network, these asynchronous tasks can take a while.
 
-Performing asynchronous tasks in an event handler (like a button click) or in a non-initiated user event (like a page load) is not ideal as it can lead to a variety of connected UX pitfalls.
+Performing asynchronous tasks in an event handler (like a button) or in a non-initiated user event (like a page load) is not ideal as it can lead to a variety of connected user-experience (UX) related pitfalls ([listed below](#ux-pitfalls-without-prepare-hooks)).
 
-Prepare hooks solve these pitfalls as they allow you to eagerly perform this asynchronous work beforehand & generate the parameters required for their paired hook (e.g. `usePrepareSendTransaction` prepares a request for `useSendTransaction`).
+Prepare Hooks allow you to eagerly perform this asynchronous work beforehand & generate the parameters required for their paired hook (e.g. `usePrepareSendTransaction` prepares a request for `useSendTransaction`).
 
-wagmi currently has the following prepare hooks:
+wagmi currently has the following Prepare Hooks:
 
 - [`usePrepareContractWrite`](/docs/prepare-hooks/usePrepareContractWrite)
 - [`usePrepareSendTransaction`](/docs/prepare-hooks/usePrepareSendTransaction)
 
-These hooks avoid you from falling into some UX pitfalls which are listed below.
-
 ## UX Pitfalls without Prepare Hooks
 
-You may have noticed one of the following UX pitfalls when using "transactional" hooks without performing the asynchronous work beforehand.
+You may have noticed one of the following pitfalls when using "transactional" hooks without performing the asynchronous work beforehand.
 
 ### Slow TTOW (Time To Open Wallet)
 
-Performing long-running async work in between a user interaction (i.e. a button) and opening the wallet can lead to a slow TTOW (Time To Open Wallet).
+Performing long-running async work in between a user interaction (i.e. click handler) and opening the wallet can lead to a slow TTOW (Time To Open Wallet).
 
 Under slow network conditions, it may confuse the end-user as to why the wallet is taking a while to open.
 
 The video below shows the difference between a slow TTOW and a fast TTOW.
 
-<div
-  style={{
-    position: 'relative',
-    paddingBottom: '56.25%',
-    marginTop: 20,
-    height: 0,
-  }}
->
-  <iframe
-    src="https://www.loom.com/embed/623e6e3e2f5e4514a7705206279daf2b"
-    frameBorder="0"
-    allowFullScreen
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-    }}
-  />
-</div>
+<video
+  controls
+  src="/docs/ttow-comparison.mp4"
+  width="100%"
+  style={{ marginTop: 16 }}
+/>
 
 ### iOS App Link Constraints
 
@@ -63,17 +48,15 @@ This issue occurs because app links on iOS will only open the native app when th
 
 ### No upfront validation
 
-When using "transactional" hooks such as `useContractWrite` & `useSendTransaction`, it is not until that the user interacts with the button they will get feedback on if the transaction errored for some reason.
+When using "transactional" hooks such as `useContractWrite` & `useSendTransaction`, the user will only get feedback on the status of the transaction once they have invoked the click handler.
 
-There are some cases where we can perform upfront validation on a contract or transaction request before the user interacts with the button (such as checking if we can still mint on a contract).
+There are some cases where we can perform upfront validation on a contract or transaction request before the user interacts with the click handler (such as checking if we can still mint on a contract).
 
 See the comparison below for when a user tries to mint a sold out NFT.
 
-| Validating _after_ interaction                | Validating _before_ interaction                |
-| --------------------------------------------- | ---------------------------------------------- |
-| <img src="/docs/lazy-mint.gif" width="300" /> | <img src="/docs/eager-mint.png" width="300" /> |
+<ValidationComparisonTable />
 
-By using prepare hooks, we can perform this eager validation before the button is pressed.
+By using a Prepare Hook, we can perform this eager validation before the click handler is invoked.
 
 ```tsx {5,17}
 import * as React from 'react'
