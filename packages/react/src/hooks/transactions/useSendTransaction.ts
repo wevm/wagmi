@@ -24,7 +24,7 @@ export type UseSendTransactionArgs = Omit<
          * using the `usePrepareSendTransaction` hook.
          *
          * `prepared`: The request has been prepared with parameters required for sending a transaction
-         * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/docs/hooks/usePrepareSendTransaction)
+         * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/docs/prepare-hooks/usePrepareSendTransaction)
          * */
         mode: 'prepared'
         /** The prepared request to send the transaction. */
@@ -77,7 +77,7 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
 /**
  * @description Hook for sending a transaction.
  *
- * It is recommended to pair this with the [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction)
+ * It is recommended to pair this with the [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction)
  * to [avoid UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
  *
  * @example

@@ -17,8 +17,6 @@
   "useFeeData": "useFeeData",
   "useNetwork": "useNetwork",
   "useProvider": "useProvider",
-  "usePrepareContractWrite": "usePrepareContractWrite",
-  "usePrepareSendTransaction": "usePrepareSendTransaction",
   "useSendTransaction": "useSendTransaction",
   "useSigner": "useSigner",
   "useSignMessage": "useSignMessage",

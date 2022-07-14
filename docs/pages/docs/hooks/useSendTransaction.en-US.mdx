@@ -39,8 +39,8 @@ function App() {
 
 <Callout>
   It is highly recommended to pair `useSendTransaction` with the
-  [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction) to
-  [avoid UX
+  [`usePrepareSendTransaction`
+  hook](/docs/prepare-hooks/usePrepareSendTransaction) to [avoid UX
   pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
@@ -68,7 +68,7 @@ function App() {
 - `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
 - `prepared`: The request has been prepared with parameters required for sending a transaction via the `usePrepareSendTransaction` hook
 
-> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction).
+> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction).
 
 ```tsx {5}
 import { useSendTransaction } from 'wagmi'
@@ -88,7 +88,7 @@ function App() {
 
 The request to use when sending the transaction.
 
-> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction).
+> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction).
 
 ```tsx {7}
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'

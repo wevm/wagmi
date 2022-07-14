@@ -8,7 +8,7 @@ import { SendTransaction } from '../../components/examples'
 
 # Send Transaction
 
-The following example teaches you how to send transactions in wagmi. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`usePrepareSendTransaction`](/docs/hooks/usePrepareSendTransaction) & [`useSendTransaction`](/docs/hooks/useSendTransaction) hooks. Try it out before moving on.
+The following example teaches you how to send transactions in wagmi. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`usePrepareSendTransaction`](/docs/prepare-hooks/usePrepareSendTransaction) & [`useSendTransaction`](/docs/hooks/useSendTransaction) hooks. Try it out before moving on.
 
 <SendTransaction />
 
@@ -68,7 +68,7 @@ export function SendTransaction() {
 
 ## Step 4: Add the `usePrepareSendTransaction` hook
 
-Create a new component and add the [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction). This hook eagerly fetches the parameters required for sending a transaction such as the gas estimate.
+Create a new component and add the [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction). This hook eagerly fetches the parameters required for sending a transaction such as the gas estimate.
 
 You will need to:
 
