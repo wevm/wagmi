@@ -10,9 +10,9 @@ import { fetchSigner, getNetwork } from '../accounts'
 
 export type SendTransactionPreparedRequest = {
   /**
-   * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has harmful
-   * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
-   * using the `prepareSendTransaction` function.
+   * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
+   * [UX pitfalls]((/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks)), it is highly recommended
+   * to not use this and instead prepare the request upfront using the `prepareSendTransaction` function.
    *
    * `prepared`: The request has been prepared with parameters required for sending a transaction
    * via the `prepareSendTransaction` function
@@ -43,7 +43,8 @@ export type SendTransactionResult = {
 /**
  * @description Function to send a transaction.
  *
- * It is recommended to pair this with the `prepareSendTransaction` function to avoid harmful UX side-effects.
+ * It is recommended to pair this with the `prepareSendTransaction` function to avoid
+ * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { prepareSendTransaction, sendTransaction } from '@wagmi/core'

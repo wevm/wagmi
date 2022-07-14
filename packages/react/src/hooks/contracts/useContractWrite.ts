@@ -15,11 +15,11 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
     | {
         /**
          * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
-         * UX side-effects, it is highly recommended to not use this and instead prepare the config upfront
-         * using the `usePrepareContractWrite` hook. [Read more](/TODO)
+         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended
+         * to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
          *
          * `prepared`: The config has been prepared with parameters required for performing a contract write
-         * via the [`usePrepareContractWrite` hook](/TODO)
+         * via the [`usePrepareContractWrite` hook](https://wagmi.sh/docs/hooks/usePrepareContractWrite)
          * */
         mode: 'prepared'
         /** The prepared request to perform a contract write. */
@@ -32,10 +32,10 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
   )
 export type UseContractWriteMutationArgs = {
   /**
-   * Dangerously pass through unprepared config. Note: This has harmful
-   * UX side-effects, it is highly recommended to not use this and instead
-   * prepare the config upfront using the `usePrepareContractWrite` function.
-   * [Read more](/TODO)
+   * Dangerously pass through unprepared config. Note: This has
+   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks),
+   * it is highly recommended to not use this and instead prepare the config upfront
+   * using the `usePrepareContractWrite` function.
    */
   dangerouslySetArgs?: WriteContractArgs['args']
   dangerouslySetOverrides?: WriteContractArgs['overrides']
@@ -107,7 +107,7 @@ const mutationFn = ({
  * method.
  *
  * It is highly recommended to pair this with the [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite)
- * to [avoid UX issues](/TODO).
+ * to [avoid UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { useContractWrite, usePrepareContractWrite } from 'wagmi'

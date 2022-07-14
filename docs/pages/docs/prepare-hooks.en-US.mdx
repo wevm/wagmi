@@ -1,0 +1,99 @@
+---
+title: 'Prepare Hooks'
+description: 'What are prepare hooks?'
+---
+
+# Prepare Hooks
+
+In previous versions of wagmi, "transactional" hooks such as `useSendTransaction` and `useContractWrite` performed potentially long-running asynchronous work.
+
+Performing asynchronous work in an event handler (like a button click) or in a non-initiated user event (like a page load) is not ideal as it can lead to a variety of connected UX pitfalls.
+
+Prepare hooks solve these pitfalls as they allow you to eagerly perform this asynchronous work beforehand & generate the parameters required for their paired hook (e.g. `usePrepareSendTransaction` is used with `useSendTransaction`).
+
+wagmi currently has the following prepare hooks:
+
+- [`usePrepareContractWrite`](/docs/hooks/usePrepareContractWrite)
+- [`usePrepareSendTransaction`](/docs/hooks/usePrepareSendTransaction)
+
+These hooks avoid you from falling into some UX pitfalls which are listed below.
+
+## UX Pitfalls without Prepare Hooks
+
+You may have noticed one of the following UX pitfalls when using "transactional" hooks without performing the asynchronous work beforehand.
+
+### Slow TTOW (Time To Open Wallet)
+
+Performing long-running async work in between a user interaction (i.e. a button) and opening the wallet can lead to a slow TTOW (Time To Open Wallet).
+
+Under slow network conditions, it may confuse the end-user as to why the wallet is taking a while to open.
+
+The video below shows the difference between a slow TTOW and a fast TTOW.
+
+<div
+  style={{
+    position: 'relative',
+    paddingBottom: '56.25%',
+    marginTop: 20,
+    height: 0,
+  }}
+>
+  <iframe
+    src="https://www.loom.com/embed/623e6e3e2f5e4514a7705206279daf2b"
+    frameBorder="0"
+    allowFullScreen
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+    }}
+  />
+</div>
+
+### iOS App Link Constraints
+
+When using WalletConnect on iOS and triggering a wallet interaction (e.g. when sending a transaction or signing a message), you may experience issues where the native app is not opened as expected and a browser navigation occurs instead (as seen in the above video). For some wallets (e.g. [Rainbow](https://rainbow.me/)) this will present a fallback website, while other wallets (e.g. [MetaMask](https://metamask.io/)) will redirect to the App Store.
+
+This issue occurs because app links on iOS will only open the native app when the following rules are followed:
+
+- **The wallet interaction must be triggered by a user-initiated event**, e.g. in a click handler rather than on page load or in an asynchronous callback.
+- **The wallet interaction must be triggered as soon as possible within the event handler.** Any preceding asynchronous work (e.g. estimating gas, resolving an ENS name, fetching a nonce) should have already completed before the event handler fires.
+
+### No upfront validation
+
+When using "transactional" hooks such as `useContractWrite` & `useSendTransaction`, it is not until that the user interacts with the button they will get feedback on if the transaction errored for some reason.
+
+There are some cases where we can perform upfront validation on a contract or transaction request before the user interacts with the button (such as checking if we can still mint on a contract).
+
+See the comparison below for when a user tries to mint a sold out NFT.
+
+| Validating _after_ interaction                | Validating _before_ interaction                |
+| --------------------------------------------- | ---------------------------------------------- |
+| <img src="/docs/lazy-mint.gif" width="300" /> | <img src="/docs/eager-mint.png" width="300" /> |
+
+By using prepare hooks, we can perform this eager validation before the button is pressed.
+
+```tsx {5,17}
+import * as React from 'react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+export function MintNFT() {
+  const { config, error, isError } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+  const { data, write } = useContractWrite(config)
+
+  return (
+    <div>
+      <button disabled={!write} onClick={() => write()}>
+        Mint
+      </button>
+      {isError && <div>Error: {error.message}</div>}
+    </div>
+  )
+}
+```

@@ -40,7 +40,7 @@ function App() {
 <Callout>
   It is highly recommended to pair `useSendTransaction` with the
   [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction) to
-  [avoid a harmful UX](/TODO).
+  [avoid UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
 ## Return Value
@@ -64,7 +64,7 @@ function App() {
 
 ### mode
 
-- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has harmful UX side-effects, it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
+- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
 - `prepared`: The request has been prepared with parameters required for sending a transaction via the `usePrepareSendTransaction` hook
 
 > This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction).
@@ -178,8 +178,9 @@ function App() {
 It is possible to pass through override config. Any override config prefixed with `dangerouslySet` means that it will break the previously prepared request. It will need to prepare the request again at the time of invoking `sendTransaction`/`sendTransactionAsync`.
 
 <Callout>
-  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
-  Only use it as a last resort.
+  This usage is not recommended. It comes with [UX
+  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
+  as a last resort.
 </Callout>
 
 ```tsx {15-18}
@@ -216,8 +217,9 @@ function App() {
 It is possible to use `useSendTransaction` without pairing it with `usePrepareSendTransaction` by using "dangerously unprepared" mode.
 
 <Callout>
-  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
-  Only use it as a last resort.
+  This usage is not recommended. It comes with [UX
+  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
+  as a last resort.
 </Callout>
 
 ```tsx {5-7}

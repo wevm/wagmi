@@ -8,8 +8,9 @@ import { prepareWriteContract } from './prepareWriteContract'
 
 export type WriteContractPreparedArgs = {
   /**
-   * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
-   * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
+   * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has
+   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks),
+   * it is highly recommended to not use this and instead prepare the request upfront
    * using the {@link prepareWriteContract} function.
    *
    * `prepared`: The request has been prepared with parameters required for sending a transaction
@@ -41,7 +42,8 @@ export type WriteContractResult = SendTransactionResult
 /**
  * @description Function to call a contract write method.
  *
- * It is recommended to pair this with the {@link prepareWriteContract} function to avoid harmful UX side-effects.
+ * It is recommended to pair this with the {@link prepareWriteContract} function
+ * to avoid [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { prepareWriteContract, writeContract } from '@wagmi/core'

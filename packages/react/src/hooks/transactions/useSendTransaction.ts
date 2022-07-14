@@ -18,12 +18,13 @@ export type UseSendTransactionArgs = Omit<
   (
     | {
         /**
-         * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has harmful
-         * UX side-effects, it is highly recommended to not use this and instead prepare the request upfront
-         * using the `usePrepareSendTransaction` hook. [Read more](/TODO)
+         * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
+         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it
+         * is highly recommended to not use this and instead prepare the request upfront
+         * using the `usePrepareSendTransaction` hook.
          *
          * `prepared`: The request has been prepared with parameters required for sending a transaction
-         * via the [`usePrepareSendTransaction` hook](/TODO)
+         * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/docs/hooks/usePrepareSendTransaction)
          * */
         mode: 'prepared'
         /** The prepared request to send the transaction. */
@@ -37,10 +38,10 @@ export type UseSendTransactionArgs = Omit<
   )
 export type UseSendTransactionMutationArgs = {
   /**
-   * Dangerously pass through an unprepared `request`. Note: This has harmful
-   * UX side-effects, it is highly recommended to not use this and instead
-   * prepare the request upfront using the `usePrepareSendTransaction` hook.
-   * [Read more](/TODO)
+   * Dangerously pass through an unprepared `request`. Note: This has
+   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is
+   * highly recommended to not use this and instead prepare the request upfront
+   * using the `usePrepareSendTransaction` hook.
    */
   dangerouslySetRequest: SendTransactionUnpreparedRequest['request']
 }
@@ -77,7 +78,7 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  * @description Hook for sending a transaction.
  *
  * It is recommended to pair this with the [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction)
- * to [avoid UX issues](/TODO).
+ * to [avoid UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'

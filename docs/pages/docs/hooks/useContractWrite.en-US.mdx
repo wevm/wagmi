@@ -43,7 +43,7 @@ function App() {
 <Callout>
   It is highly recommended to pair `useContractWrite` with the
   [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite) to
-  [avoid a harmful UX](/TODO).
+  [avoid UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
 ## Return Value
@@ -67,8 +67,8 @@ function App() {
 
 ### mode
 
-- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has harmful UX side-effects, it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
-- `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/TODO)
+- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
+- `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite)
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
 
@@ -312,8 +312,9 @@ function App() {
 It is possible to pass through override config. Any override config prefixed with `dangerouslySet` means that it will break the previously prepared request. It will need to prepare the request again at the time of invoking `write`/`writeAsync`.
 
 <Callout>
-  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
-  Only use it as a last resort.
+  This usage is not recommended. It comes with [UX
+  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
+  as a last resort.
 </Callout>
 
 ```tsx {17-21}
@@ -355,8 +356,9 @@ function App() {
 It is possible to use `useContractWrite` without pairing it with `usePrepareContractWrite` by using "dangerously unprepared" mode.
 
 <Callout>
-  This usage is not recommended. It comes with [harmful UX side-effects](/TODO).
-  Only use it as a last resort.
+  This usage is not recommended. It comes with [UX
+  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
+  as a last resort.
 </Callout>
 
 ```tsx {5-9}

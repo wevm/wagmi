@@ -98,7 +98,8 @@ Clicking the "Mint" button will invoke the `mint` function on the contract and m
 However, there is currently no feedback to show when the `mint` transaction is successful. We will add some feedback in the next step.
 
 <Callout emoji="🤔" type="info">
-  [Why do I need a `usePrepareContractWrite` & `useContractWrite` hook?](/TODO)
+  [Why do I need a `usePrepareContractWrite` & `useContractWrite`
+  hook?](/docs/prepare-hooks)
 </Callout>
 
 ## Step 5: Add the `useWaitForTransaction` hook
@@ -171,6 +172,55 @@ export function App() {
   }
 
   return <div>{/* Connect wallet content goes here */}</div>
+}
+```
+
+## Bonus Point: Add some error handling
+
+Now let's provide some feedback to the user if the prepare hook fails, or if the write hook fails.
+
+```tsx {11-12,18,37-39}
+import * as React from 'react'
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
+
+export function MintNFT() {
+  const {
+    config,
+    error: prepareError,
+    isError: isPrepareError,
+  } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+  const { data, error, isError, write } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  })
+
+  return (
+    <div>
+      <button disabled={!write || isLoading} onClick={() => write()}>
+        {isLoading ? 'Minting...' : 'Mint'}
+      </button>
+      {isSuccess && (
+        <div>
+          Successfully minted your NFT!
+          <div>
+            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+          </div>
+        </div>
+      )}
+      {(isPrepareError || isError) && (
+        <div>Error: {(prepareError || error)?.message}</div>
+      )}
+    </div>
+  )
 }
 ```
 
