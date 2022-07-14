@@ -15,11 +15,11 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
     | {
         /**
          * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
-         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended
+         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended
          * to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
          *
          * `prepared`: The config has been prepared with parameters required for performing a contract write
-         * via the [`usePrepareContractWrite` hook](https://wagmi.sh/docs/hooks/usePrepareContractWrite)
+         * via the [`usePrepareContractWrite` hook](https://wagmi.sh/docs/prepare-hooks/usePrepareContractWrite)
          * */
         mode: 'prepared'
         /** The prepared request to perform a contract write. */
@@ -33,7 +33,7 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
 export type UseContractWriteMutationArgs = {
   /**
    * Dangerously pass through unprepared config. Note: This has
-   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks),
+   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
    * it is highly recommended to not use this and instead prepare the config upfront
    * using the `usePrepareContractWrite` function.
    */
@@ -106,8 +106,8 @@ const mutationFn = ({
  * @description Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write)
  * method.
  *
- * It is highly recommended to pair this with the [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite)
- * to [avoid UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
+ * It is highly recommended to pair this with the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite)
+ * to [avoid UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { useContractWrite, usePrepareContractWrite } from 'wagmi'

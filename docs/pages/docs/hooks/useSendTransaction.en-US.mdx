@@ -40,7 +40,8 @@ function App() {
 <Callout>
   It is highly recommended to pair `useSendTransaction` with the
   [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction) to
-  [avoid UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
+  [avoid UX
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
 ## Return Value
@@ -64,7 +65,7 @@ function App() {
 
 ### mode
 
-- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
+- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
 - `prepared`: The request has been prepared with parameters required for sending a transaction via the `usePrepareSendTransaction` hook
 
 > This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/hooks/usePrepareSendTransaction).
@@ -179,8 +180,8 @@ It is possible to pass through override config. Any override config prefixed wit
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
 </Callout>
 
 ```tsx {15-18}
@@ -218,8 +219,8 @@ It is possible to use `useSendTransaction` without pairing it with `usePrepareSe
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
 </Callout>
 
 ```tsx {5-7}

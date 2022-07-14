@@ -7,7 +7,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # useContractWrite
 
-Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx
 import { useContractWrite } from 'wagmi'
@@ -42,8 +42,9 @@ function App() {
 
 <Callout>
   It is highly recommended to pair `useContractWrite` with the
-  [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite) to
-  [avoid UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
+  [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite)
+  to [avoid UX
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
 ## Return Value
@@ -67,10 +68,10 @@ function App() {
 
 ### mode
 
-- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
-- `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite)
+- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
+- `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite)
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {5}
 import { useContractWrite } from 'wagmi'
@@ -89,7 +90,7 @@ function App() {
 
 Contract address or ENS name.
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {6}
 import { useContractWrite } from 'wagmi'
@@ -110,7 +111,7 @@ function App() {
 
 Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {7}
 import { useContractWrite } from 'wagmi'
@@ -132,7 +133,7 @@ function App() {
 
 Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {7}
 import { useContractWrite } from 'wagmi'
@@ -153,7 +154,7 @@ function App() {
 
 Name of function to call.
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {8}
 import { useContractWrite } from 'wagmi'
@@ -174,7 +175,7 @@ function App() {
 
 Arguments to pass to function call. Accepts `any | any[]`.
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {9}
 import { useContractWrite } from 'wagmi'
@@ -196,7 +197,7 @@ function App() {
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {9-12}
 import { useContractWrite } from 'wagmi'
@@ -221,7 +222,7 @@ function App() {
 
 The request to use when sending the contract transaction.
 
-> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/hooks/usePrepareContractWrite).
+> This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
 ```tsx {7}
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
@@ -313,8 +314,8 @@ It is possible to pass through override config. Any override config prefixed wit
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
 </Callout>
 
 ```tsx {17-21}
@@ -357,8 +358,8 @@ It is possible to use `useContractWrite` without pairing it with `usePrepareCont
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
 </Callout>
 
 ```tsx {5-9}
