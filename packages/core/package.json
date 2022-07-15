@@ -38,6 +38,10 @@
       "module": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.esm.js",
       "default": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.cjs.js"
     },
+    "./connectors/bitKeep": {
+      "module": "./connectors/bitKeep/dist/wagmi-core-connectors-bitKeep.esm.js",
+      "default": "./connectors/bitKeep/dist/wagmi-core-connectors-bitKeep.cjs.js"
+    },
     "./connectors/mock": {
       "module": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
       "default": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js"
@@ -75,6 +79,7 @@
       "chains.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/metaMask.ts",
+      "connectors/bitKeep.ts",
       "connectors/walletConnect.ts",
       "connectors/mock/index.ts",
       "providers/alchemy.ts",

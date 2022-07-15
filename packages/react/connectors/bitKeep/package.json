@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-connectors-bitKeep.cjs.js",
+  "module": "dist/wagmi-connectors-bitKeep.esm.js"
+}
