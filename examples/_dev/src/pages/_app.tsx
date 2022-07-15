@@ -11,6 +11,7 @@ import {
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
+import { LedgerConnector } from 'wagmi/connectors/ledger'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
@@ -79,6 +80,9 @@ const client = createClient({
       options: {
         qrcode: true,
       },
+    }),
+    new LedgerConnector({
+      chains,
     }),
     new InjectedConnector({
       chains,

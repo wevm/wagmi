@@ -40,6 +40,10 @@
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
     },
+    "./connectors/ledger": {
+      "types": "./dist/connectors/ledger.d.ts",
+      "default": "./dist/connectors/ledger.js"
+    },
     "./connectors/metaMask": {
       "types": "./dist/connectors/metaMask.d.ts",
       "default": "./dist/connectors/metaMask.js"
@@ -80,11 +84,15 @@
   ],
   "peerDependencies": {
     "@coinbase/wallet-sdk": ">=3.3.0",
+    "@ledgerhq/connect-kit-loader": ">=1.0.0",
     "@walletconnect/ethereum-provider": ">=1.7.5",
     "ethers": ">=5.5.1"
   },
   "peerDependenciesMeta": {
     "@coinbase/wallet-sdk": {
+      "optional": true
+    },
+    "@ledgerhq/connect-kit-loader": {
       "optional": true
     },
     "@walletconnect/ethereum-provider": {
@@ -98,6 +106,7 @@
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
+    "@ledgerhq/connect-kit-loader": "^1.0.0",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "typescript": "^4.7.4"
   },
