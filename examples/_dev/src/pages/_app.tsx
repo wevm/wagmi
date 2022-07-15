@@ -14,6 +14,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { BitKeepConnector } from 'wagmi/connectors/bitKeep'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
@@ -67,6 +68,12 @@ const client = createClient({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
+      chains,
+      options: {
+        UNSTABLE_shimConnectSelectWallet: true,
+      },
+    }),
+    new BitKeepConnector({
       chains,
       options: {
         UNSTABLE_shimConnectSelectWallet: true,

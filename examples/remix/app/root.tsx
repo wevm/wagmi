@@ -21,6 +21,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { BitKeepConnector } from 'wagmi/connectors/bitKeep'
 
 export function loader() {
   require('dotenv').config()
@@ -46,6 +47,7 @@ export default function App() {
       autoConnect: true,
       connectors: [
         new MetaMaskConnector({ chains }),
+        new BitKeepConnector({ chains }),
         new CoinbaseWalletConnector({
           chains,
           options: {

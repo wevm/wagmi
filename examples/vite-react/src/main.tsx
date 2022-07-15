@@ -12,6 +12,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { BitKeepConnector } from 'wagmi/connectors/bitKeep'
 
 import { App } from './App'
 
@@ -25,6 +26,7 @@ const client = createClient({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({ chains }),
+    new BitKeepConnector({ chains }),
     new CoinbaseWalletConnector({
       chains,
       options: {
