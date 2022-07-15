@@ -32,8 +32,10 @@ export type PrepareSendTransactionResult = {
  * import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
  *
  * const config = await prepareSendTransaction({
- *  to: 'moxey.eth',
- *  value: parseEther('1'),
+ *  request: {
+ *    to: 'moxey.eth',
+ *    value: parseEther('1'),
+ *  }
  * })
  * const result = await sendTransaction(config)
  */

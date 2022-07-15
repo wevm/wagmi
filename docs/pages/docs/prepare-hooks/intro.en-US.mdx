@@ -9,7 +9,7 @@ import { ValidationComparisonTable } from '../../../components/docs/ValidationCo
 
 In previous versions of wagmi, "transactional" hooks such as `useSendTransaction` and `useContractWrite` performed potentially long-running asynchronous work. These hooks internally invoke the [ethers `signer.sendTransaction` function](https://docs.ethers.io/v5/api/signer/#Signer-sendTransaction) that fetches the gas estimate & block number, and resolves an ENS name (if needed) before the transaction gets sent. On a slow network, these asynchronous tasks can take a while.
 
-Performing asynchronous tasks in an event handler (like a button) or in a non-initiated user event (like a page load) is not ideal as it can lead to a variety of connected user-experience (UX) related pitfalls ([listed below](#ux-pitfalls-without-prepare-hooks)).
+Performing asynchronous tasks in an event handler (like a button) or in an event that wasn't initiated by the user (like a page load) is not ideal as it can lead to a variety of connected user-experience (UX) related pitfalls ([listed below](#ux-pitfalls-without-prepare-hooks)).
 
 Prepare Hooks allow you to eagerly perform this asynchronous work beforehand & generate the parameters required for their paired hook (e.g. `usePrepareSendTransaction` prepares a request for `useSendTransaction`).
 

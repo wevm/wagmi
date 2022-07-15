@@ -83,11 +83,13 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  * @example
  * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
  *
- * const config = await usePrepareSendTransaction({
- *   to: 'moxey.eth',
- *   value: parseEther('1'),
+ * const config = usePrepareSendTransaction({
+ *   request: {
+ *     to: 'moxey.eth',
+ *     value: parseEther('1'),
+ *   }
  * })
- * const result = await useSendTransaction(config)
+ * const result = useSendTransaction(config)
  */
 export function useSendTransaction<
   Args extends UseSendTransactionArgs = UseSendTransactionArgs,

@@ -16,7 +16,7 @@ const connector = new MockConnector({
 describe('writeContract', () => {
   beforeEach(() => setupClient())
 
-  it('prepared request', async () => {
+  it('prepared config', async () => {
     const tokenId = await getUnclaimedTokenId(
       '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
     )
@@ -33,7 +33,7 @@ describe('writeContract', () => {
     expect(hash).toBeDefined()
   })
 
-  it('unprepared request', async () => {
+  it('unprepared config', async () => {
     const tokenId = await getUnclaimedTokenId(
       '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
     )
