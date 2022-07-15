@@ -199,7 +199,12 @@ declare global {
     }): Promise<null>
   }
 
+  interface BitKeep extends InjectedProviders {
+    ethereum: Ethereum
+  }
+
   interface Window {
     ethereum?: Ethereum
+    bitkeep?: BitKeep
   }
 }

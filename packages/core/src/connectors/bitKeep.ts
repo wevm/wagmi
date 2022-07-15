@@ -25,7 +25,7 @@ export type BitKeepConnectorOptions = Pick<
 export class BitKeepConnector extends InjectedConnector {
   readonly id = 'bitKeep'
   readonly ready =
-    typeof window != 'undefined' && !!this.#findProvider(window.ethereum)
+    typeof window != 'undefined' && !!this.#findProvider(window.bitkeep?.ethereum)
 
   #provider?: Window['ethereum']
   #UNSTABLE_shimOnConnectSelectAccount: BitKeepConnectorOptions['UNSTABLE_shimOnConnectSelectAccount']
@@ -112,14 +112,14 @@ export class BitKeepConnector extends InjectedConnector {
     if (typeof window !== 'undefined') {
       // TODO: Fallback to `ethereum#initialized` event for async injection
       // https://github.com/BitKeep/detect-provider#synchronous-and-asynchronous-injection=
-      this.#provider = this.#findProvider(window.ethereum)
+      this.#provider = this.#findProvider(window.bitkeep?.ethereum)
     }
     return this.#provider
   }
 
   #getReady(ethereum?: Ethereum) {
-    const isBitKeep = !!ethereum?.isBitKeep
-    if (!isBitKeep) return
+    const isBitKeep = !!window?.bitkeep?.ethereum
+    if (!isBitKeep || !ethereum) return
     // Brave tries to make itself look like BitKeep
     // Could also try RPC `web3_clientVersion` if following is unreliable
     if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return
