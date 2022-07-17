@@ -24,7 +24,7 @@ All the breaking changes in this release are related to the introduction of [Pre
 
 If a `chainId` is passed to `useContractWrite`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -33,7 +33,7 @@ The configuration passed to the `useContractWrite` hook now needs to be either:
 - prepared with the [`usePrepareContractWrite` Prepare Hook](/docs/prepare-hooks/usePrepareContractWrite) **(new)**, or
 - dangerously prepared **(previous functionality)**
 
-> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](https://wagmi.sh/docs/prepare-hooks/intro).
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/docs/prepare-hooks/intro).
 
 **Prepared usage**
 
@@ -86,11 +86,11 @@ const {
 +const { data: transaction } = useWaitForTransaction({ confirmations: 0, hash })
 ```
 
-> Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+> Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 **`sendTransaction`/`sendTransactionAsync` arguments**
 
-The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
 
 ```diff
 <button
@@ -110,7 +110,7 @@ The `sendTransaction`/`sendTransactionAsync` configuration object has now been a
 
 **`write`/`writeAsync` arguments**
 
-The `write`/`writeAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+The `write`/`writeAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
 
 ```diff
 <button
@@ -149,7 +149,7 @@ const { write } = useContractWrite(config)
 
 If a `chainId` is passed to `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -158,7 +158,7 @@ The configuration passed to the `useSendTransaction` hook now needs to be either
 - prepared with the [`usePrepareSendTransaction` Prepare Hook](/docs/prepare-hooks/usePrepareSendTransaction) **(new)**, or
 - dangerously prepared **(previous functionality)**
 
-> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](https://wagmi.sh/docs/prepare-hooks/intro).
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/docs/prepare-hooks/intro).
 
 **Prepared usage**
 
@@ -215,11 +215,11 @@ const {
 +const { data: transaction } = useWaitForTransaction({ confirmations: 0, hash })
 ```
 
-> Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+> Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 **`sendTransaction`/`sendTransactionAsync` arguments**
 
-The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
 
 ```diff
 <button
@@ -297,7 +297,7 @@ function App() {
 
 #### `provider` is now required
 
-The `provider` config option is now required on `createClient`. It is recommended to pass the [`provider` given from `configureChains`](https://wagmi.sh/docs/providers/configuring-chains).
+The `provider` config option is now required on `createClient`. It is recommended to pass the [`provider` given from `configureChains`](/docs/providers/configuring-chains).
 
 ```diff
 import {
@@ -818,7 +818,7 @@ const {
 
 Passing a function to `createClient` `connectors` has now been deprecated.
 
-If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](https://wagmi.sh/docs/providers/configuring-chains).
+If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](/docs/providers/configuring-chains).
 
 Before:
 
