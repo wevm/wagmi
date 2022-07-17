@@ -1,5 +1,4 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { providers } from 'ethers/lib/ethers'
 
 import { defaultChains } from '../constants'
 import { Chain } from '../types'
@@ -21,6 +20,7 @@ export interface ConnectorEvents<Provider = any> {
 export abstract class Connector<
   Provider = any,
   Options = any,
+  Signer = any,
 > extends EventEmitter<ConnectorEvents<Provider>> {
   /** Unique connector id */
   abstract readonly id: string
@@ -52,9 +52,7 @@ export abstract class Connector<
   abstract getAccount(): Promise<string>
   abstract getChainId(): Promise<number>
   abstract getProvider(config?: { chainId?: number }): Promise<Provider>
-  abstract getSigner(config?: {
-    chainId?: number
-  }): Promise<providers.JsonRpcSigner>
+  abstract getSigner(config?: { chainId?: number }): Promise<Signer>
   abstract isAuthorized(): Promise<boolean>
   switchChain?(chainId: number): Promise<Chain>
   watchAsset?(asset: {

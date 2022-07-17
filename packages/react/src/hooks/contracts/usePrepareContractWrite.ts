@@ -4,6 +4,7 @@ import {
   PrepareWriteContractResult,
   prepareWriteContract,
 } from '@wagmi/core'
+import { providers } from 'ethers'
 import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -27,7 +28,10 @@ export const queryKey = (
     functionName,
     overrides,
   }: UsePrepareContractWriteArgs,
-  { chainId, signer }: { chainId?: number; signer?: FetchSignerResult },
+  {
+    chainId,
+    signer,
+  }: { chainId?: number; signer?: FetchSignerResult<providers.JsonRpcSigner> },
 ) =>
   [
     {
@@ -96,7 +100,7 @@ export function usePrepareContractWrite({
   onSuccess,
 }: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig) {
   const chainId = useChainId()
-  const { data: signer } = useSigner()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>()
 
   const prepareContractWriteQuery = useQuery(
     queryKey(

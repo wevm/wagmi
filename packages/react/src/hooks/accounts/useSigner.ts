@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { FetchSignerResult, fetchSigner, watchSigner } from '@wagmi/core'
+import {
+  FetchSignerResult,
+  Signer,
+  fetchSigner,
+  watchSigner,
+} from '@wagmi/core'
 import { useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'
@@ -12,15 +17,19 @@ export type UseSignerConfig = Omit<
 
 export const queryKey = () => [{ entity: 'signer' }] as const
 
-const queryFn = () => fetchSigner()
+const queryFn = <TSigner extends Signer>() => fetchSigner<TSigner>()
 
-export function useSigner({
+export function useSigner<TSigner extends Signer>({
   suspense,
   onError,
   onSettled,
   onSuccess,
 }: UseSignerConfig = {}) {
-  const signerQuery = useQuery(queryKey(), queryFn, {
+  const signerQuery = useQuery<
+    FetchSignerResult<TSigner>,
+    Error,
+    FetchSignerResult<TSigner>
+  >(queryKey(), queryFn, {
     cacheTime: 0,
     staleTime: 0,
     suspense,

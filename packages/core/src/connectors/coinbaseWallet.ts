@@ -32,7 +32,8 @@ type Options = CoinbaseWalletSDKOptions & {
 
 export class CoinbaseWalletConnector extends Connector<
   CoinbaseWalletProvider,
-  Options
+  Options,
+  providers.JsonRpcSigner
 > {
   readonly id = 'coinbaseWallet'
   readonly name = 'Coinbase Wallet'

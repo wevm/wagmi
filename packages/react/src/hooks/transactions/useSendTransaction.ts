@@ -9,7 +9,6 @@ import {
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
-import { useAccount } from '../accounts'
 
 export type UseSendTransactionArgs = Omit<
   SendTransactionArgs,
@@ -148,8 +147,6 @@ export function useSendTransaction<
       } as SendTransactionArgs),
     [chainId, mode, mutateAsync, request],
   )
-
-  useAccount({ onDisconnect: () => reset() })
 
   return {
     data,

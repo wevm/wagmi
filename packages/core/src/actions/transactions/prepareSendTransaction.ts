@@ -1,6 +1,7 @@
 import { providers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 
+import { Address } from '../../types'
 import { fetchEnsAddress } from '../ens'
 import { getProvider } from '../providers'
 
@@ -17,7 +18,7 @@ export type PrepareSendTransactionArgs = {
 export type PrepareSendTransactionResult = {
   chainId?: number
   request: providers.TransactionRequest & {
-    to: NonNullable<providers.TransactionRequest['to']>
+    to: Address
     gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
   }
   mode: 'prepared'
@@ -46,16 +47,18 @@ export async function prepareSendTransaction({
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)
-      ? Promise.resolve(request.to)
+      ? Promise.resolve(<Address>request.to)
       : fetchEnsAddress({ name: request.to }),
     request.gasLimit
       ? Promise.resolve(request.gasLimit)
       : signerOrProvider.estimateGas(request),
   ])
 
+  if (!to) throw new Error('Could not resolve ENS name')
+
   return {
     ...(chainId ? { chainId } : {}),
-    request: { ...request, gasLimit, to: to as string },
+    request: { ...request, gasLimit, to },
     mode: 'prepared',
   }
 }

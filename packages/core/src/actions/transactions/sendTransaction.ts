@@ -6,6 +6,7 @@ import {
   ProviderRpcError,
   UserRejectedRequestError,
 } from '../../errors'
+import { Address } from '../../types'
 import { fetchSigner, getNetwork } from '../accounts'
 
 export type SendTransactionPreparedRequest = {
@@ -20,7 +21,7 @@ export type SendTransactionPreparedRequest = {
   mode: 'prepared'
   /** The prepared request for sending a transaction. */
   request: providers.TransactionRequest & {
-    to: NonNullable<providers.TransactionRequest['to']>
+    to: Address
     gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
   }
 }
@@ -86,7 +87,7 @@ export async function sendTransaction({
     // `fetchSigner` isn't really "asynchronous" as we have already
     // initialized the provider upon user connection, so it will return
     // immediately.
-    const signer = await fetchSigner()
+    const signer = await fetchSigner<providers.JsonRpcSigner>()
     if (!signer) throw new ConnectorNotFoundError()
 
     // Why don't we just use `signer.sendTransaction`?

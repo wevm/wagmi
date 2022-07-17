@@ -145,6 +145,7 @@ export type {
   FallbackProviderConfig,
   ProviderWithFallbackConfig,
   Provider,
+  Signer,
   Unit,
   WebSocketProvider,
 } from './types'

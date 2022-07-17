@@ -2,17 +2,17 @@ import {
   CallOverrides,
   Contract,
   PopulatedTransaction,
-  providers,
 } from 'ethers/lib/ethers'
 
 import {
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
 } from '../../errors'
+import { Address, Signer } from '../../types'
 import { fetchSigner } from '../accounts'
 import { GetContractArgs, getContract } from './getContract'
 
-export type PrepareWriteContractConfig = Omit<
+export type PrepareWriteContractConfig<TSigner extends Signer = Signer> = Omit<
   GetContractArgs,
   'signerOrProvider'
 > & {
@@ -23,17 +23,18 @@ export type PrepareWriteContractConfig = Omit<
   /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
-  signer?: providers.JsonRpcSigner | null
+  signer?: TSigner | null
 }
 
-export type PrepareWriteContractResult = PrepareWriteContractConfig & {
-  chainId?: number
-  request: PopulatedTransaction & {
-    to: NonNullable<PopulatedTransaction['to']>
-    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+export type PrepareWriteContractResult<TSigner extends Signer = Signer> =
+  PrepareWriteContractConfig<TSigner> & {
+    chainId?: number
+    request: PopulatedTransaction & {
+      to: Address
+      gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+    }
+    mode: 'prepared'
   }
-  mode: 'prepared'
-}
 
 /**
  * @description Prepares the parameters required for a contract write transaction.
@@ -52,6 +53,7 @@ export type PrepareWriteContractResult = PrepareWriteContractConfig & {
  */
 export async function prepareWriteContract<
   TContract extends Contract = Contract,
+  TSigner extends Signer = Signer,
 >({
   addressOrName,
   args,
@@ -60,7 +62,7 @@ export async function prepareWriteContract<
   functionName,
   overrides,
   signer: signer_,
-}: PrepareWriteContractConfig): Promise<PrepareWriteContractResult> {
+}: PrepareWriteContractConfig): Promise<PrepareWriteContractResult<TSigner>> {
   const signer = signer_ ?? (await fetchSigner())
   if (!signer) throw new ConnectorNotFoundError()
 
@@ -85,7 +87,7 @@ export async function prepareWriteContract<
   const unsignedTransaction = (await populateTransactionFn(
     ...params,
   )) as PopulatedTransaction & {
-    to: string
+    to: Address
   }
   const gasLimit =
     unsignedTransaction.gasLimit ||

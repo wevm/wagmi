@@ -1,6 +1,7 @@
 import { CallOverrides, PopulatedTransaction } from 'ethers'
 
 import { ChainMismatchError } from '../../errors'
+import { Address } from '../../types'
 import { getNetwork } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
 import { GetContractArgs } from './getContract'
@@ -19,7 +20,7 @@ export type WriteContractPreparedArgs = {
   mode: 'prepared'
   /** The prepared request. */
   request: PopulatedTransaction & {
-    to: NonNullable<PopulatedTransaction['to']>
+    to: Address
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
 }
