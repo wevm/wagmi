@@ -31,7 +31,7 @@ export type ClientConfig<
 
 export type Data<TProvider extends Provider> = ConnectorData<TProvider>
 export type State<
-  TProvider extends Provider,
+  TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = {
   chains?: Connector['chains']
@@ -74,7 +74,7 @@ export class Client<
     webSocketProvider,
   }: ClientConfig<TProvider, TWebSocketProvider>) {
     // Check status for autoConnect flag
-    let status: State<TProvider, TWebSocketProvider>['status'] = 'disconnected'
+    let status: State['status'] = 'disconnected'
     let chainId: number | undefined
     if (autoConnect) {
       try {
@@ -200,7 +200,10 @@ export class Client<
     if (this.#isAutoConnecting) return
     this.#isAutoConnecting = true
 
-    if (!this.connectors.length) return
+    this.setState((x) => ({
+      ...x,
+      status: x.data?.account ? 'reconnecting' : 'connecting',
+    }))
 
     // Try last used connector first
     const sorted = this.#lastUsedConnector
