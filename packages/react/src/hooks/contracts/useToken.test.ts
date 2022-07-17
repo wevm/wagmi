@@ -21,6 +21,7 @@ describe('useToken', () => {
         "data": {
           "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
           "decimals": 18,
+          "name": "Ethereum Name Service",
           "symbol": "ENS",
           "totalSupply": {
             "formatted": "100000000.0",
@@ -63,6 +64,7 @@ describe('useToken', () => {
             "data": {
               "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
               "decimals": 18,
+              "name": "Uniswap",
               "symbol": "UNI",
               "totalSupply": {
                 "formatted": "1000000000.0",
@@ -101,7 +103,11 @@ describe('useToken', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method="symbol()", data="0x", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.1)],
+            "error": [ContractMethodNoResultError: Function "decimals" on contract "0xa0cf798816d4b9b9866b5330eea46a18382f251e" returned an empty response.
+
+          Are you sure the function "decimals" exists on this contract?
+
+          Etherscan: https://etherscan.io/address/0xa0cf798816d4b9b9866b5330eea46a18382f251e#readContract],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
@@ -131,6 +137,7 @@ describe('useToken', () => {
           "data": {
             "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
             "decimals": 18,
+            "name": "Ethereum Name Service",
             "symbol": "ENS",
             "totalSupply": {
               "formatted": "100000000.0",
@@ -194,6 +201,7 @@ describe('useToken', () => {
           "data": {
             "address": "0xc18360217d8f7ab5e7c516566761ea12ce7f9d72",
             "decimals": 18,
+            "name": "Ethereum Name Service",
             "symbol": "ENS",
             "totalSupply": {
               "formatted": "100000000000000000000000000",
@@ -231,6 +239,7 @@ describe('useToken', () => {
           {
             "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
             "decimals": 18,
+            "name": "Uniswap",
             "symbol": "UNI",
             "totalSupply": {
               "formatted": "1000000000.0",

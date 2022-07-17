@@ -34,8 +34,6 @@ export type InjectedConnectorOptions = {
   shimDisconnect?: boolean
 }
 
-export const shimDisconnectKey = 'injected.shimDisconnect'
-
 export class InjectedConnector extends Connector<
   Window['ethereum'],
   InjectedConnectorOptions | undefined
@@ -47,6 +45,8 @@ export class InjectedConnector extends Connector<
   #provider?: Window['ethereum']
   #switchingChains?: boolean
 
+  protected shimDisconnectKey = 'injected.shimDisconnect'
+
   constructor({
     chains,
     options = { shimDisconnect: true },
@@ -57,20 +57,18 @@ export class InjectedConnector extends Connector<
     super({ chains, options })
 
     let name = 'Injected'
-    if (typeof window !== 'undefined') {
-      const overrideName = options.name
+    const overrideName = options.name
+    if (typeof overrideName === 'string') name = overrideName
+    else if (typeof window !== 'undefined') {
       const detectedName = getInjectedName(window.ethereum)
-      if (overrideName)
-        name =
-          typeof overrideName === 'function'
-            ? overrideName(detectedName)
-            : overrideName
+      if (overrideName) name = overrideName(detectedName)
       else
         name =
           typeof detectedName === 'string'
             ? detectedName
             : <string>detectedName[0]
     }
+
     this.id = 'injected'
     this.name = name
   }
@@ -100,7 +98,7 @@ export class InjectedConnector extends Connector<
 
       // Add shim to storage signalling wallet is connected
       if (this.options?.shimDisconnect)
-        getClient().storage?.setItem(shimDisconnectKey, true)
+        getClient().storage?.setItem(this.shimDisconnectKey, true)
 
       return { account, chain: { id, unsupported }, provider }
     } catch (error) {
@@ -122,7 +120,7 @@ export class InjectedConnector extends Connector<
 
     // Remove shim signalling wallet is disconnected
     if (this.options?.shimDisconnect)
-      getClient().storage?.removeItem(shimDisconnectKey)
+      getClient().storage?.removeItem(this.shimDisconnectKey)
   }
 
   async getAccount() {
@@ -164,7 +162,7 @@ export class InjectedConnector extends Connector<
       if (
         this.options?.shimDisconnect &&
         // If shim does not exist in storage, wallet is disconnected
-        !getClient().storage?.getItem(shimDisconnectKey)
+        !getClient().storage?.getItem(this.shimDisconnectKey)
       )
         return false
 
@@ -289,7 +287,7 @@ export class InjectedConnector extends Connector<
     this.emit('disconnect')
     // Remove shim signalling wallet is disconnected
     if (this.options?.shimDisconnect)
-      getClient().storage?.removeItem(shimDisconnectKey)
+      getClient().storage?.removeItem(this.shimDisconnectKey)
   }
 
   protected isUserRejectedRequestError(error: unknown) {

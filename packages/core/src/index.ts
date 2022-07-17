@@ -91,7 +91,11 @@ export { createClient, Client } from './client'
 export type { ClientConfig } from './client'
 
 export { Connector, InjectedConnector } from './connectors'
-export type { ConnectorData, ConnectorEvents } from './connectors'
+export type {
+  ConnectorData,
+  ConnectorEvents,
+  InjectedConnectorOptions,
+} from './connectors'
 
 export {
   alchemyRpcUrls,
@@ -131,6 +135,7 @@ export type { ClientStorage as Storage } from './storage'
 export type {
   Chain,
   ChainProviderFn,
+  Ethereum,
   FallbackProviderConfig,
   ProviderWithFallbackConfig,
   Provider,
