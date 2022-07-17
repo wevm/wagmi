@@ -131,6 +131,7 @@ export type { ClientStorage as Storage } from './storage'
 export type {
   Chain,
   ChainProviderFn,
+  Ethereum,
   FallbackProviderConfig,
   ProviderWithFallbackConfig,
   Provider,

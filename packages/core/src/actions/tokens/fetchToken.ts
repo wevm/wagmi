@@ -1,9 +1,9 @@
-import { BigNumber, Contract } from 'ethers/lib/ethers'
+import { BigNumber } from 'ethers/lib/ethers'
 import { formatUnits } from 'ethers/lib/utils'
 
 import { erc20ABI } from '../../constants'
-import { getProvider } from '../providers'
 import { Unit } from '../../types'
+import { readContracts } from '../contracts'
 
 export type FetchTokenArgs = {
   /** Address of ERC-20 token */
@@ -28,14 +28,26 @@ export async function fetchToken({
   chainId,
   formatUnits: units = 'ether',
 }: FetchTokenArgs): Promise<FetchTokenResult> {
-  const provider = getProvider({ chainId })
-  const contract = new Contract(address, erc20ABI, provider)
-  const [symbol, decimals, totalSupply] = await Promise.all([
-    contract.symbol(),
-    contract.decimals(),
-    contract.totalSupply(),
-  ])
-  const token = {
+  const erc20Config = {
+    addressOrName: address,
+    contractInterface: erc20ABI,
+    chainId,
+  }
+  const [totalSupply, decimals, symbol] = await readContracts<
+    [BigNumber, number, string]
+  >({
+    allowFailure: false,
+    contracts: [
+      { ...erc20Config, functionName: 'totalSupply' },
+      { ...erc20Config, functionName: 'decimals' },
+      {
+        ...erc20Config,
+        functionName: 'symbol',
+      },
+    ],
+  })
+
+  return {
     address,
     decimals,
     symbol,
@@ -44,5 +56,4 @@ export async function fetchToken({
       value: totalSupply,
     },
   }
-  return token
 }
