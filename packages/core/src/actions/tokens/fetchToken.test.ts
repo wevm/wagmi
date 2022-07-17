@@ -15,6 +15,7 @@ describe('fetchToken', () => {
           {
             "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
             "decimals": 18,
+            "name": "Uniswap",
             "symbol": "UNI",
             "totalSupply": {
               "formatted": "1000000000.0",
@@ -33,7 +34,7 @@ describe('fetchToken', () => {
             address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
           }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"symbol()\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.1)"`,
+          `"call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"decimals()\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.1)"`,
         )
       })
     })
@@ -48,6 +49,7 @@ describe('fetchToken', () => {
         {
           "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
           "decimals": 18,
+          "name": "Uniswap",
           "symbol": "UNI",
           "totalSupply": {
             "formatted": "1000000000.0",
@@ -70,6 +72,7 @@ describe('fetchToken', () => {
         {
           "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
           "decimals": 18,
+          "name": "Uniswap",
           "symbol": "UNI",
           "totalSupply": {
             "formatted": "1000000000000000000.0",

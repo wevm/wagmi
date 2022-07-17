@@ -16,6 +16,7 @@ export type FetchTokenArgs = {
 export type FetchTokenResult = {
   address: string
   decimals: number
+  name: string
   symbol: string
   totalSupply: {
     formatted: string
@@ -33,23 +34,22 @@ export async function fetchToken({
     contractInterface: erc20ABI,
     chainId,
   }
-  const [totalSupply, decimals, symbol] = await readContracts<
-    [BigNumber, number, string]
+  const [decimals, name, symbol, totalSupply] = await readContracts<
+    [number, string, string, BigNumber]
   >({
     allowFailure: false,
     contracts: [
-      { ...erc20Config, functionName: 'totalSupply' },
       { ...erc20Config, functionName: 'decimals' },
-      {
-        ...erc20Config,
-        functionName: 'symbol',
-      },
+      { ...erc20Config, functionName: 'name' },
+      { ...erc20Config, functionName: 'symbol' },
+      { ...erc20Config, functionName: 'totalSupply' },
     ],
   })
 
   return {
     address,
     decimals,
+    name,
     symbol,
     totalSupply: {
       formatted: formatUnits(totalSupply, units),
