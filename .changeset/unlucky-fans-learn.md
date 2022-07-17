@@ -7,7 +7,7 @@
 If you require the full `TransactionResponse`, you can use `waitForTransaction` with `confirmations: 0`:
 
 ```diff
-import { sendTransaction, waitForTransaction } from 'wagmi'
+import { sendTransaction, waitForTransaction } from '@wagmi/core'
 
 const {
   hash,

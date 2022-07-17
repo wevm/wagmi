@@ -12,7 +12,7 @@
 ### Prepared usage
 
 ```diff
-import { usePrepareContractWrite, useContractWrite } from '@wagmi/core'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 +const { config } = usePrepareContractWrite({
 + addressOrName: '0x...',
@@ -35,7 +35,7 @@ const { data } = useContractWrite({
 If you are not ready to upgrade to `usePrepareContractWrite`, it is possible to use `useContractWrite` without preparing the configuration first by passing `mode: 'dangerouslyUnprepared'`.
 
 ```diff
-import { useContractWrite } from '@wagmi/core'
+import { useContractWrite } from 'wagmi'
 
 const { data } = useContractWrite({
 + mode: 'dangerouslyUnprepared',

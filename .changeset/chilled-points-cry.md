@@ -2,7 +2,7 @@
 'wagmi': minor
 ---
 
-**Breaking**: The request passed to the `useSendTransaction` hook now needs to be either:
+**Breaking**: The configuration passed to the `useSendTransaction` hook now needs to be either:
 
 - prepared with the `usePrepareSendTransaction` hook **(new)**, or
 - dangerously prepared **(previous functionality)**
@@ -12,7 +12,7 @@
 ### Prepared usage
 
 ```diff
-import { usePrepareSendTransaction, useSendTransaction } from '@wagmi/core'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 +const { config } = usePrepareSendTransaction({
 +  request: {
@@ -35,7 +35,7 @@ const { data } = useSendTransaction({
 If you are not ready to upgrade to `usePrepareSendTransaction`, it is possible to use `useSendTransaction` without preparing the configuration first by passing `mode: 'dangerouslyUnprepared'`.
 
 ```diff
-import { useSendTransaction } from '@wagmi/core'
+import { useSendTransaction } from 'wagmi'
 
 const { data } = useSendTransaction({
 + mode: 'dangerouslyUnprepared',
