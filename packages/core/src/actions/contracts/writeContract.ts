@@ -1,8 +1,8 @@
-import { CallOverrides, PopulatedTransaction } from 'ethers'
+import { CallOverrides, PopulatedTransaction, providers } from 'ethers'
 
-import { ChainMismatchError } from '../../errors'
+import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
 import { Address } from '../../types'
-import { getNetwork } from '../accounts'
+import { fetchSigner, getNetwork } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
 import { GetContractArgs } from './getContract'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -66,6 +66,15 @@ export async function writeContract({
   overrides,
   request: request_,
 }: WriteContractArgs): Promise<WriteContractResult> {
+  /********************************************************************/
+  /** START: iOS App Link cautious code.                              */
+  /** Do not perform any async operations in this block.              */
+  /** Ref: wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
+  /********************************************************************/
+
+  const signer = await fetchSigner<providers.JsonRpcSigner>()
+  if (!signer) throw new ConnectorNotFoundError()
+
   const { chain: activeChain, chains } = getNetwork()
   const activeChainId = activeChain?.id
   if (chainId && chainId !== activeChainId) {
@@ -95,8 +104,15 @@ export async function writeContract({
         ).request
       : request_
 
-  return sendTransaction({
+  const transaction = await sendTransaction({
     request,
     mode: 'prepared',
   })
+
+  /********************************************************************/
+  /** END: iOS App Link cautious code.                                */
+  /** Go nuts!                                                        */
+  /********************************************************************/
+
+  return transaction
 }

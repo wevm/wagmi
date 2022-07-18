@@ -61,6 +61,18 @@ export async function sendTransaction({
   mode,
   request,
 }: SendTransactionArgs): Promise<SendTransactionResult> {
+  /********************************************************************/
+  /** START: iOS App Link cautious code.                              */
+  /** Do not perform any async operations in this block.              */
+  /** Ref: wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
+  /********************************************************************/
+
+  // `fetchSigner` isn't really "asynchronous" as we have already
+  // initialized the provider upon user connection, so it will return
+  // immediately.
+  const signer = await fetchSigner<providers.JsonRpcSigner>()
+  if (!signer) throw new ConnectorNotFoundError()
+
   if (mode === 'prepared') {
     if (!request.gasLimit) throw new Error('`gasLimit` is required')
     if (!request.to) throw new Error('`to` is required')
@@ -79,17 +91,6 @@ export async function sendTransaction({
   }
 
   try {
-    /*********************************************************/
-    /** START: WalletConnect mobile deep link cautious code. */
-    /** Do not perform any async operations in this block.   */
-    /*********************************************************/
-
-    // `fetchSigner` isn't really "asynchronous" as we have already
-    // initialized the provider upon user connection, so it will return
-    // immediately.
-    const signer = await fetchSigner<providers.JsonRpcSigner>()
-    if (!signer) throw new ConnectorNotFoundError()
-
     // Why don't we just use `signer.sendTransaction`?
     // The `signer.sendTransaction` method performs async
     // heavy operations (such as fetching block number)
@@ -101,10 +102,10 @@ export async function sendTransaction({
     const uncheckedSigner = signer.connectUnchecked()
     const { hash, wait } = await uncheckedSigner.sendTransaction(request)
 
-    /********************************************************/
-    /** END: WalletConnect mobile deep link cautious code.  */
-    /** Go nuts!                                            */
-    /********************************************************/
+    /********************************************************************/
+    /** END: iOS App Link cautious code.                                */
+    /** Go nuts!                                                        */
+    /********************************************************************/
 
     return { hash, wait }
   } catch (error) {

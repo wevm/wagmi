@@ -31,6 +31,9 @@ export async function signTypedData({
   types,
   value,
 }: SignTypedDataArgs): Promise<SignTypedDataResult> {
+  const signer = await fetchSigner<providers.JsonRpcSigner>()
+  if (!signer) throw new ConnectorNotFoundError()
+
   const { chain: activeChain, chains } = getNetwork()
   const { chainId: chainId_ } = domain
   if (chainId_) {
@@ -48,8 +51,6 @@ export async function signTypedData({
     }
   }
 
-  const signer = await fetchSigner<providers.JsonRpcSigner>()
-  if (!signer) throw new ConnectorNotFoundError()
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
   return await signer._signTypedData(domain, types, value)
 }
