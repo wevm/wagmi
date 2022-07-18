@@ -77,6 +77,8 @@ function App() {
 
 An ethers [Provider](https://docs.ethers.io/v5/api/providers/provider/#Provider) or [Signer](https://docs.ethers.io/v5/api/signer/#Signer).
 
+If you are using `contract.queryFilter(someFilterHere)` , you need to set a provider.
+
 ```tsx {8}
 import { useContract, useProvider } from 'wagmi'
 
