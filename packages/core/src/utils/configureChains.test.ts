@@ -582,14 +582,18 @@ describe('configureChains', () => {
         { stallTimeout: 5000 },
       )
 
+      const fallbackProvider = provider({
+        chainId: chain.mainnet.id,
+      }) as providers.FallbackProvider
+
       expect(
-        (
-          provider({ chainId: chain.mainnet.id }) as providers.FallbackProvider
-        ).providerConfigs.map(({ priority, stallTimeout, weight }) => ({
-          priority,
-          stallTimeout,
-          weight,
-        })),
+        fallbackProvider.providerConfigs.map(
+          ({ priority, stallTimeout, weight }) => ({
+            priority,
+            stallTimeout,
+            weight,
+          }),
+        ),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -635,14 +639,18 @@ describe('configureChains', () => {
         }),
       ])
 
+      const fallbackProvider = provider({
+        chainId: chain.mainnet.id,
+      }) as providers.FallbackProvider
+
       expect(
-        (
-          provider({ chainId: chain.mainnet.id }) as providers.FallbackProvider
-        ).providerConfigs.map(({ priority, stallTimeout, weight }) => ({
-          priority,
-          stallTimeout,
-          weight,
-        })),
+        fallbackProvider.providerConfigs.map(
+          ({ priority, stallTimeout, weight }) => ({
+            priority,
+            stallTimeout,
+            weight,
+          }),
+        ),
       ).toMatchInlineSnapshot(`
         [
           {
