@@ -31,7 +31,7 @@ export function configureChains<
   providers: ChainProviderFn<TProvider, TWebSocketProvider, TChain>[],
   {
     minQuorum = 1,
-    pollingInterval = 4000,
+    pollingInterval = 4_000,
     targetQuorum = 1,
     stallTimeout,
   }: ConfigureChainsConfig = {},
