@@ -3,11 +3,13 @@ import { providers } from 'ethers'
 import { Chain, ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type JsonRpcProviderConfig = FallbackProviderConfig & {
+  pollingInterval?: number
   rpc: (chain: Chain) => { http: string; webSocket?: string } | null
   static?: boolean
 }
 
 export function jsonRpcProvider({
+  pollingInterval,
   priority,
   rpc,
   stallTimeout,
@@ -37,6 +39,7 @@ export function jsonRpcProvider({
           chainId: chain.id,
           name: chain.network,
         })
+        if (pollingInterval) provider.pollingInterval = pollingInterval
         return Object.assign(provider, { priority, stallTimeout, weight })
       },
       ...(rpcConfig.webSocket && {

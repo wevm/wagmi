@@ -44,6 +44,20 @@ const { chains, provider } = configureChains(
 
 ## Configuration
 
+### pollingInterval (optional)
+
+The frequency in milliseconds at which the provider polls.
+
+```ts {6}
+import { chain, configureChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [publicProvider({ pollingInterval: 5000 })],
+)
+```
+
 ### priority (optional)
 
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
