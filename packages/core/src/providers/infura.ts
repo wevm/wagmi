@@ -5,10 +5,12 @@ import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type InfuraProviderConfig = FallbackProviderConfig & {
   infuraId?: string
+  pollingInterval?: number
 }
 
 export function infuraProvider({
   infuraId = defaultInfuraId,
+  pollingInterval,
   priority,
   stallTimeout,
   weight,
@@ -28,6 +30,7 @@ export function infuraProvider({
       },
       provider: () => {
         const provider = new providers.InfuraProvider(chain.id, infuraId)
+        if (pollingInterval) provider.pollingInterval = pollingInterval
         return Object.assign(provider, { priority, stallTimeout, weight })
       },
       webSocketProvider: () =>

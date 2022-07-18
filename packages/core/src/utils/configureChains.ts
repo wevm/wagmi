@@ -8,10 +8,7 @@ import {
   WebSocketProvider,
 } from '../types'
 
-export type ConfigureChainsConfig = {
-  pollingInterval?: number
-  stallTimeout?: number
-} & (
+export type ConfigureChainsConfig = { stallTimeout?: number } & (
   | {
       targetQuorum?: number
       minQuorum?: never
@@ -29,12 +26,7 @@ export function configureChains<
 >(
   defaultChains: TChain[],
   providers: ChainProviderFn<TProvider, TWebSocketProvider, TChain>[],
-  {
-    minQuorum = 1,
-    pollingInterval = 4_000,
-    targetQuorum = 1,
-    stallTimeout,
-  }: ConfigureChainsConfig = {},
+  { minQuorum = 1, targetQuorum = 1, stallTimeout }: ConfigureChainsConfig = {},
 ) {
   if (!defaultChains.length) throw new Error('must have at least one chain')
   if (targetQuorum < minQuorum)
@@ -96,25 +88,19 @@ export function configureChains<
           : <number>defaultChains[0]?.id
       const chainProviders = providers_[activeChainId]
 
-      if (!chainProviders || !chainProviders[0])
+      if (!chainProviders)
         throw new Error(`No providers configured for chain "${activeChainId}"`)
-
-      if (chainProviders.length === 1) {
-        return Object.assign(chainProviders[0](), {
+      if (chainProviders.length === 1)
+        return Object.assign(chainProviders[0]?.() || {}, {
           chains,
-          pollingInterval,
         }) as TProvider & {
           chains: TChain[]
         }
-      }
       return Object.assign(
         fallbackProvider(targetQuorum, minQuorum, chainProviders, {
           stallTimeout,
         }),
-        {
-          chains,
-          pollingInterval,
-        },
+        { chains },
       )
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {

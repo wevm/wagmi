@@ -64,6 +64,28 @@ const { chains, provider } = configureChains(
 )
 ```
 
+### pollingInterval (optional)
+
+The frequency in milliseconds at which the provider polls.
+
+```tsx {8}
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    jsonRpcProvider({
+      pollingInterval: 5000,
+      rpc: (chain) => ({
+        http: `https://${chain.id}.example.com`,
+        webSocket: `wss://${chain.id}.example.com`,
+      }),
+    }),
+  ],
+)
+```
+
 ### priority (optional)
 
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
