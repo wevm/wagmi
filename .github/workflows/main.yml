@@ -31,7 +31,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
-          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}-lol
           restore-keys: pnpm-
       - name: Cache node_modules
         uses: actions/cache@v3
@@ -43,7 +43,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-lol
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: pnpm i
@@ -78,7 +78,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-lol
       - name: Lint code
         run: pnpm lint
       - name: Check types
@@ -111,7 +111,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-lol
       - name: Build
         run: pnpm build
       - name: Check size
@@ -148,7 +148,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-lol
       - name: Test
         run: pnpm test:ci
         env:
