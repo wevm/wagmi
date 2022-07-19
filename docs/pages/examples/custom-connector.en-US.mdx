@@ -11,7 +11,7 @@ wagmi has a number of [built-in](/docs/connectors/injected) [Connectors](/docs/c
 
 You can ask yourself the following questions to decide what type of connector to create:
 
-- **Do you want to create a connector for an [injected](/docs/connectors/injected) wallet (e.g. browser wallet or extension)?** You can likely extend the `InjectedConnector` class. The `MetaMaskConnector` is a good example of this (check out the [source code](https://github.com/tmm/wagmi/blob/main/packages/core/src/connectors/metaMask.ts) for more info).
+- **Do you want to create a connector for an [injected](/docs/connectors/injected) wallet (e.g. browser wallet or extension)?** You can likely extend the `InjectedConnector` class. The `MetaMaskConnector` is a good example of this (check out the [source code](https://github.com/wagmi-dev/wagmi/blob/main/packages/core/src/connectors/metaMask.ts) for more info).
 - **Do you want to create a non-injected connector (e.g. wrap an existing SDK)?** Both `WalletConnectConnector` and `CoinbaseWalletConnector` wrap underlying SDKs and are good examples of this. Continue reading to learn more!
 
 ## Step 1: Extend Connector
@@ -71,6 +71,6 @@ const client = createClient({
 
 ## Step 3: Share With Others
 
-Congrats! You created a custom wagmi Connector! Others might benefit from this work and knowledge. You are welcome to publish your custom Connector as a standalone package or tell folks about it by [creating a new GitHub Discussion](https://github.com/tmm/wagmi/discussions/new?category=show-and-tell).
+Congrats! You created a custom wagmi Connector! Others might benefit from this work and knowledge. You are welcome to publish your custom Connector as a standalone package or tell folks about it by [creating a new GitHub Discussion](https://github.com/wagmi-dev/wagmi/discussions/new?category=show-and-tell).
 
-If the Connector covers a unique/useful use-case and enough folks are interested, it might make sense for your custom Connector to be built into wagmi. You can [start a new discussion](https://github.com/tmm/wagmi/discussions/new?category=ideas) to tell us more about the use-case, and why it should be included. It's not always possible to add new built-in connectors to wagmi as they increase the surface area for the core team, but it could make sense!
+If the Connector covers a unique/useful use-case and enough folks are interested, it might make sense for your custom Connector to be built into wagmi. You can [start a new discussion](https://github.com/wagmi-dev/wagmi/discussions/new?category=ideas) to tell us more about the use-case, and why it should be included. It's not always possible to add new built-in connectors to wagmi as they increase the surface area for the core team, but it could make sense!

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
 
-const github = 'https://github.com/tmm/wagmi'
+const github = 'https://github.com/wagmi-dev/wagmi'
 
 const TITLE_WITH_TRANSLATIONS = {
   'en-US': 'React Hooks for Ethereum',

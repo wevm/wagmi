@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.6.3/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "tmm/wagmi" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "wagmi-dev/wagmi" }],
   "commit": false,
   "access": "public",
   "baseBranch": "main",
