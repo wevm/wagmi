@@ -2,4 +2,4 @@
 'wagmi': patch
 ---
 
-Fix issue where `useProvider` would not update when `chainId` config changes
+Fix issue where `useProvider` & `useWebSocketProvider` would not update when `chainId` config changes
