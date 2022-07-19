@@ -165,6 +165,29 @@ const { chains } = configureChains(
 
 ### Configuration
 
+### pollingInterval (optional)
+
+The frequency in milliseconds at which the provider polls. Defaults to `4000`.
+
+```ts {15}
+import { chain, configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+const alchemyId = process.env.ALCHEMY_ID
+const infuraId = process.env.INFURA_ID
+
+const { chains } = configureChains(
+  [chain.mainnet, chain.optimism],
+  [
+    alchemyProvider({ alchemyId }),
+    infuraProvider({ infuraId }),
+    publicProvider(),
+  ],
+  { pollingInterval: 10_000, targetQuorum: 3 },
+)
+```
+
 #### targetQuorum (optional)
 
 Sets the target quorum. Defaults to `1`.

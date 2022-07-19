@@ -2,12 +2,9 @@ import { providers } from 'ethers'
 
 import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
-export type PublicProviderConfig = FallbackProviderConfig & {
-  pollingInterval?: number
-}
+export type PublicProviderConfig = FallbackProviderConfig
 
 export function publicProvider({
-  pollingInterval,
   priority,
   stallTimeout,
   weight,
@@ -24,7 +21,6 @@ export function publicProvider({
             name: chain.network,
           },
         )
-        if (pollingInterval) provider.pollingInterval = pollingInterval
         return Object.assign(provider, { priority, stallTimeout, weight })
       },
     }
