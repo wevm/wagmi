@@ -2,13 +2,13 @@ gm.
 
 Thanks for your interest in contributing! Please take a moment to review this document **before submitting a pull request.**
 
-If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/tmm/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).
+If you want to contribute, but aren't sure where to start, you can create a [new discussion](https://github.com/wagmi-dev/wagmi/discussions) or reach out [on Twitter](https://twitter.com/awkweb).
 
 ## Pull requests
 
 **Please ask first before starting work on any significant new features.**
 
-It's never a fun experience to have your pull request declined after investing a lot of time and effort into a new feature. To avoid this from happening, we request that contributors create [a feature request](https://github.com/tmm/wagmi/discussions/new?category=ideas) to first discuss any significant new ideas. This includes things like adding new hooks, connectors, chains, etc.
+It's never a fun experience to have your pull request declined after investing a lot of time and effort into a new feature. To avoid this from happening, we request that contributors create [a feature request](https://github.com/wagmi-dev/wagmi/discussions/new?category=ideas) to first discuss any significant new ideas. This includes things like adding new hooks, connectors, chains, etc.
 
 ## Prerequisites
 
