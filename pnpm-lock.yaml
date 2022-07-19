@@ -330,13 +330,13 @@ importers:
       react-dom: ^18.1.0
       react-dom-17: npm:react-dom@^17.0.2
       react-query: 4.0.0-beta.23
-      use-sync-external-store: ^1.1.0
+      use-sync-external-store: ^1.2.0
     dependencies:
       '@coinbase/wallet-sdk': 3.3.0
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.8
       react-query: 4.0.0-beta.23_ef5jwxihqo6n7gxfmzogljlgcm
-      use-sync-external-store: 1.1.0_react@18.1.0
+      use-sync-external-store: 1.2.0_react@18.1.0
     devDependencies:
       '@testing-library/react': 13.2.0_ef5jwxihqo6n7gxfmzogljlgcm
       '@testing-library/react-hooks': 7.0.2_ef5jwxihqo6n7gxfmzogljlgcm
@@ -8784,7 +8784,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.14.9_debug@4.3.2
+      follow-redirects: 1.14.9
     transitivePeerDependencies:
       - debug
 
@@ -12997,6 +12997,15 @@ packages:
   /focus-visible/5.2.0:
     resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
     dev: false
+
+  /follow-redirects/1.14.9:
+    resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
 
   /follow-redirects/1.14.9_debug@4.3.2:
     resolution: {integrity: sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==}
@@ -19159,7 +19168,7 @@ packages:
       match-sorter: 6.3.1
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      use-sync-external-store: 1.1.0_react@18.1.0
+      use-sync-external-store: 1.2.0_react@18.1.0
     dev: false
 
   /react-refresh/0.11.0:
@@ -21595,8 +21604,8 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dev: false
 
-  /use-sync-external-store/1.1.0_react@18.1.0:
-    resolution: {integrity: sha512-SEnieB2FPKEVne66NpXPd1Np4R1lTNKfjuy3XdIoPQKYBAFdzbzSZlSn1KJZUiihQLQC5Znot4SBz1EOTBwQAQ==}
+  /use-sync-external-store/1.2.0_react@18.1.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
