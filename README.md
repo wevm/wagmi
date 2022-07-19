@@ -1,7 +1,7 @@
 <p>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tmm/wagmi/main/.github/logo-dark.svg">
-    <img alt="wagmi logo" src="https://raw.githubusercontent.com/tmm/wagmi/main/.github/logo-light.svg" width="auto" height="60">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/wagmi/main/.github/logo-dark.svg">
+    <img alt="wagmi logo" src="https://raw.githubusercontent.com/wagmi-dev/wagmi/main/.github/logo-light.svg" width="auto" height="60">
   </picture>
 </p>
 
@@ -18,7 +18,7 @@ React Hooks for Ethereum
     <img src="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=161b22&style=flat" alt="Downloads per month">
   </a>
   <a href="https://bestofjs.org/projects/wagmi">
-    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily" alt="Best of JS">
+    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily" alt="Best of JS">
   </a>
   <a href="https://github.com/sponsors/tmm?metadata_campaign=gh_readme_badge">
     <img src="https://img.shields.io/github/sponsors/tmm?colorA=21262d&colorB=161b22&style=flat" alt="Sponsors">
@@ -102,10 +102,10 @@ We've only scratched the surface for what you can do with wagmi!
 
 Check out the following places for more wagmi-related content:
 
-- Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
+- Join the [discussions on GitHub](https://github.com/wagmi-dev/wagmi/discussions)
 - Follow [@awkweb](https://twitter.com/awkweb) and [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
-- Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) using wagmi
-- Browse the [awesome-wagmi](https://github.com/tmm/awesome-wagmi) list of awesome projects and resources
+- Share [your project/organization](https://github.com/wagmi-dev/wagmi/discussions/201) using wagmi
+- Browse the [awesome-wagmi](https://github.com/wagmi-dev/awesome-wagmi) list of awesome projects and resources
 
 ## Support
 
