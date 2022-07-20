@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.5.11
+
+### Patch Changes
+
+- [`4c7d123`](https://github.com/wagmi-dev/wagmi/commit/4c7d123c8e74f93e770096857eb8c40ce0a47681) Thanks [@jxom](https://github.com/jxom)! - Fix issue where `useProvider` & `useWebSocketProvider` would not update when `chainId` config changes
+
 ## 0.5.10
 
 ### Patch Changes
