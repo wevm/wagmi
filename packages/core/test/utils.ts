@@ -42,9 +42,16 @@ export function getWebSocketProvider({
   const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
   const network = getNetwork(chain)
   const url = chain_.hardhat.rpcUrls.default.toString().replace('http', 'ws')
-  return Object.assign(new EthersWebSocketProviderWrapper(url, network), {
-    chains,
+  const webSocketProvider = Object.assign(
+    new EthersWebSocketProviderWrapper(url, network),
+    { chains },
+  )
+  // Clean up WebSocketProvider immediately
+  // so handle doesn't stay open in test environment
+  webSocketProvider?.destroy().catch(() => {
+    return
   })
+  return webSocketProvider
 }
 
 // TODO: Figure out why this is flaky
