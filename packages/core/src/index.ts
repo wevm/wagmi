@@ -101,7 +101,11 @@ export { createClient, Client } from './client'
 export type { ClientConfig } from './client'
 
 export { Connector, InjectedConnector } from './connectors'
-export type { ConnectorData, ConnectorEvents } from './connectors'
+export type {
+  ConnectorData,
+  ConnectorEvents,
+  InjectedConnectorOptions,
+} from './connectors'
 
 export {
   alchemyRpcUrls,
@@ -142,6 +146,7 @@ export type { ClientStorage as Storage } from './storage'
 export type {
   Chain,
   ChainProviderFn,
+  Ethereum,
   FallbackProviderConfig,
   ProviderWithFallbackConfig,
   Provider,
@@ -150,5 +155,10 @@ export type {
   WebSocketProvider,
 } from './types'
 
-export { configureChains, deepEqual, normalizeChainId } from './utils'
+export {
+  configureChains,
+  deepEqual,
+  normalizeChainId,
+  parseContractResult,
+} from './utils'
 export type { ConfigureChainsConfig } from './utils'

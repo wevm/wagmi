@@ -1,5 +1,29 @@
 # wagmi
 
+## 0.5.10
+
+### Patch Changes
+
+- [#713](https://github.com/tmm/wagmi/pull/713) [`08b0113`](https://github.com/tmm/wagmi/commit/08b0113bef9f32dceab2ecd823b1ee00f9bdc45d) Thanks [@jxom](https://github.com/jxom)! - Fix an issue where the `useContractRead` query function could return `undefined` instead of a serializable `null`.
+
+* [#725](https://github.com/tmm/wagmi/pull/725) [`b976920`](https://github.com/tmm/wagmi/commit/b97692051d778d7e112872663832c97963a8029a) Thanks [@tmm](https://github.com/tmm)! - Lock `react-query` version
+
+- [#721](https://github.com/tmm/wagmi/pull/721) [`abea25f`](https://github.com/tmm/wagmi/commit/abea25fd15d81d1ecaec9d3fbd687042ab29b1e6) Thanks [@tmm](https://github.com/tmm)! - Add `name` to `useToken` `data` value.
+
+- Updated dependencies [[`abea25f`](https://github.com/tmm/wagmi/commit/abea25fd15d81d1ecaec9d3fbd687042ab29b1e6), [`abea25f`](https://github.com/tmm/wagmi/commit/abea25fd15d81d1ecaec9d3fbd687042ab29b1e6)]:
+  - @wagmi/core@0.4.9
+
+## 0.5.9
+
+### Patch Changes
+
+- [#677](https://github.com/tmm/wagmi/pull/677) [`35e4219`](https://github.com/tmm/wagmi/commit/35e42199af9dd346549c1718e144728f55b8d7dd) Thanks [@jxom](https://github.com/jxom)! - Move `parseContractResult` to `@wagmi/core`
+
+* [#677](https://github.com/tmm/wagmi/pull/677) [`35e4219`](https://github.com/tmm/wagmi/commit/35e42199af9dd346549c1718e144728f55b8d7dd) Thanks [@jxom](https://github.com/jxom)! - Parse tuples correctly in `parseContractResult`
+
+* Updated dependencies [[`35e4219`](https://github.com/tmm/wagmi/commit/35e42199af9dd346549c1718e144728f55b8d7dd)]:
+  - @wagmi/core@0.4.7
+
 ## 0.5.8
 
 ### Patch Changes

@@ -57,22 +57,6 @@ const { chains, provider } = configureChains(
 )
 ```
 
-### pollingInterval (optional)
-
-The frequency in milliseconds at which the provider polls.
-
-```ts {8}
-import { chain, configureChains } from 'wagmi'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-
-const alchemyId = process.env.ALCHEMY_ID
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [alchemyProvider({ alchemyId, pollingInterval: 5000 })],
-)
-```
-
 ### priority (optional)
 
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.

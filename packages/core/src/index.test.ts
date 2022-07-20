@@ -74,6 +74,7 @@ it('should expose correct exports', () => {
       "configureChains",
       "deepEqual",
       "normalizeChainId",
+      "parseContractResult",
     ]
   `)
 })

@@ -18,17 +18,15 @@ export function parseContractResult({
     const iface = Contract.getInterface(contractInterface)
     const fragment = iface.getFunction(functionName)
 
-    const isArray =
-      fragment?.outputs?.[0]?.baseType === 'array' ||
-      fragment?.outputs?.[0]?.baseType === 'tuple'
+    const isTuple = (fragment.outputs?.length || 0) > 1
 
-    const data_ = isArray ? [data] : data
+    const data_ = isTuple ? data : [data]
     const encodedResult = iface.encodeFunctionResult(functionName, data_)
     const decodedResult = iface.decodeFunctionResult(
       functionName,
       encodedResult,
     )
-    return isArray ? decodedResult[0] : decodedResult
+    return isTuple ? decodedResult : decodedResult[0]
   }
   return data
 }

@@ -5,12 +5,8 @@ import {
   RpcError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
-import {
-  InjectedConnector,
-  InjectedConnectorOptions,
-  shimDisconnectKey,
-} from './injected'
+import { Chain, Ethereum } from '../types'
+import { InjectedConnector, InjectedConnectorOptions } from './injected'
 
 export type MetaMaskConnectorOptions = Pick<
   InjectedConnectorOptions,
@@ -70,7 +66,7 @@ export class MetaMaskConnector extends InjectedConnector {
       if (
         this.#UNSTABLE_shimOnConnectSelectAccount &&
         this.options?.shimDisconnect &&
-        !getClient().storage?.getItem(shimDisconnectKey)
+        !getClient().storage?.getItem(this.shimDisconnectKey)
       ) {
         const accounts = await provider
           .request({
@@ -96,7 +92,7 @@ export class MetaMaskConnector extends InjectedConnector {
       }
 
       if (this.options?.shimDisconnect)
-        getClient().storage?.setItem(shimDisconnectKey, true)
+        getClient().storage?.setItem(this.shimDisconnectKey, true)
 
       return { account, chain: { id, unsupported }, provider }
     } catch (error) {

@@ -337,19 +337,29 @@ export const chain = {
   hardhat,
   foundry,
 } as const
-export const allChains = Object.values(chain)
 
-export const defaultChains: Chain[] = [
-  chain.mainnet,
-  chain.ropsten,
-  chain.rinkeby,
-  chain.goerli,
-  chain.kovan,
+export const allChains = [
+  mainnet,
+  ropsten,
+  rinkeby,
+  goerli,
+  kovan,
+  optimism,
+  optimismKovan,
+  polygon,
+  polygonMumbai,
+  arbitrum,
+  arbitrumRinkeby,
+  localhost,
+  hardhat,
+  foundry,
 ]
 
+export const defaultChains: Chain[] = [mainnet, ropsten, rinkeby, goerli, kovan]
+
 export const defaultL2Chains: Chain[] = [
-  chain.arbitrum,
-  chain.arbitrumRinkeby,
-  chain.optimism,
-  chain.optimismKovan,
+  arbitrum,
+  arbitrumRinkeby,
+  optimism,
+  optimismKovan,
 ]

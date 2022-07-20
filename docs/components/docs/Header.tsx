@@ -82,12 +82,12 @@ export function Header({ showGitcoinBanner }: Props) {
 
         <a
           aria-label="Stars"
-          href="https://github.com/tmm/wagmi"
+          href="https://github.com/wagmi-dev/wagmi"
           className="h-5"
         >
           <img
             alt=""
-            src="https://img.shields.io/github/stars/tmm/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Stars"
+            src="https://img.shields.io/github/stars/wagmi-dev/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=Stars"
           />
         </a>
 

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 import {
   GetProviderArgs,
   Provider,
@@ -6,25 +6,16 @@ import {
   watchProvider,
 } from '@wagmi/core'
 
-import { useClient } from '../../context'
-import { useForceUpdate } from '../utils'
-
 export type UseProviderArgs = Partial<GetProviderArgs>
 
 export function useProvider<TProvider extends Provider>({
   chainId,
 }: UseProviderArgs = {}) {
-  const forceUpdate = useForceUpdate()
-  const client = useClient<TProvider>()
-  const provider = React.useRef(getProvider<TProvider>({ chainId }))
-
-  React.useEffect(() => {
-    const unwatch = watchProvider<TProvider>({ chainId }, (provider_) => {
-      provider.current = provider_
-      forceUpdate()
-    })
-    return unwatch
-  }, [chainId, client, forceUpdate])
-
-  return provider.current
+  return useSyncExternalStoreWithSelector(
+    (cb) => watchProvider<TProvider>({ chainId }, cb),
+    () => getProvider<TProvider>({ chainId }),
+    () => getProvider<TProvider>({ chainId }),
+    (x) => x,
+    (a, b) => a.network.chainId === b.network.chainId,
+  )
 }
