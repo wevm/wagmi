@@ -22,14 +22,13 @@ export type FetchBalanceResult = {
   decimals: number
   formatted: string
   symbol: string
-  unit: Unit | number
   value: BigNumber
 }
 
 export async function fetchBalance({
   addressOrName,
   chainId,
-  formatUnits: unit = 'ether',
+  formatUnits: unit,
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
   const client = getClient()
@@ -74,9 +73,8 @@ export async function fetchBalance({
     })
     return {
       decimals,
-      formatted: formatUnits(value ?? '0', unit),
+      formatted: formatUnits(value ?? '0', unit ?? decimals),
       symbol,
-      unit,
       value,
     }
   }
@@ -86,9 +84,8 @@ export async function fetchBalance({
   const chain = chains.find((x) => x.id === provider.network.chainId)
   return {
     decimals: chain?.nativeCurrency?.decimals ?? 18,
-    formatted: formatUnits(value ?? '0', unit),
+    formatted: formatUnits(value ?? '0', unit ?? 'ether'),
     symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
-    unit,
     value,
   }
 }
