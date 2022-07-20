@@ -98,7 +98,7 @@ export function Header({ showGitcoinBanner }: Props) {
         >
           <img
             alt=""
-            src="https://img.shields.io/endpoint?colorA=2B323B&colorB=1e2329&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily"
+            src="https://img.shields.io/endpoint?colorA=2B323B&colorB=1e2329&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily"
           />
         </a>
 
