@@ -18,7 +18,7 @@ React Hooks for Ethereum
     <img src="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=161b22&style=flat" alt="Downloads per month">
   </a>
   <a href="https://bestofjs.org/projects/wagmi">
-    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily" alt="Best of JS">
+    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily" alt="Best of JS">
   </a>
   <a href="https://github.com/sponsors/tmm?metadata_campaign=gh_readme_badge">
     <img src="https://img.shields.io/github/sponsors/tmm?colorA=21262d&colorB=161b22&style=flat" alt="Sponsors">
@@ -113,7 +113,7 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 - [GitHub Sponsors](https://github.com/sponsors/tmm?metadata_campaign=gh_readme_support)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
-- [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
+- [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
 
 ## Contributing
 
@@ -129,3 +129,9 @@ Thanks to julianhutton.eth ([@julianjhutton](https://twitter.com/julianjhutton))
 ## License
 
 [WAGMIT](/LICENSE) License
+
+<br />
+
+<a href="https://vercel.com/?utm_source=wagmi-dev&utm_campaign=oss">
+  <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel">
+</a>
