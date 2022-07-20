@@ -34,7 +34,7 @@ export function useBalance({
   cacheTime,
   chainId: chainId_,
   enabled = true,
-  formatUnits = 'ether',
+  formatUnits,
   staleTime,
   suspense,
   token,
