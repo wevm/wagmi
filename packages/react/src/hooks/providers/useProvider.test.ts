@@ -23,6 +23,15 @@ describe('useProvider', () => {
       const { result } = renderHook(() => useProvider({ chainId: 1 }))
       expect(result.current).toMatchInlineSnapshot(`"<Provider network={1} />"`)
     })
+
+    it('switches chainId', () => {
+      let chainId = 1
+      const { result, rerender } = renderHook(() => useProvider({ chainId }))
+      expect(result.current).toMatchInlineSnapshot(`"<Provider network={1} />"`)
+      chainId = 4
+      rerender()
+      expect(result.current).toMatchInlineSnapshot(`"<Provider network={4} />"`)
+    })
   })
 
   describe('behavior', () => {
