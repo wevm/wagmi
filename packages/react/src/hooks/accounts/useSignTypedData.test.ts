@@ -346,32 +346,7 @@ describe('useSignTypedData', () => {
     })
 
     describe('when chainId is provided in domain', () => {
-      it('switches before sending transaction', async () => {
-        const utils = renderHook(() =>
-          useSignTypedDataWithConnect({
-            domain,
-            types,
-            value,
-          }),
-        )
-        const { result, waitFor } = utils
-        await actConnect({ chainId: 4, utils })
-
-        await act(async () => result.current.signTypedData.signTypedData())
-        await waitFor(() =>
-          expect(result.current.signTypedData.isSuccess).toBeTruthy(),
-        )
-        expect(
-          verifyTypedData(
-            domain,
-            types,
-            value,
-            result.current.signTypedData.data as string,
-          ),
-        ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
-      })
-
-      it('unable to switch', async () => {
+      it("throws mismatch if chainId doesn't match signer", async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },

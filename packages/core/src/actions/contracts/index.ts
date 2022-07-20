@@ -1,3 +1,9 @@
+export {
+  prepareWriteContract,
+  type PrepareWriteContractConfig,
+  type PrepareWriteContractResult,
+} from './prepareWriteContract'
+
 export { getContract, type GetContractArgs } from './getContract'
 
 export {
@@ -28,6 +34,8 @@ export {
 
 export {
   writeContract,
-  type WriteContractConfig,
+  type WriteContractArgs,
+  type WriteContractPreparedArgs,
   type WriteContractResult,
+  type WriteContractUnpreparedArgs,
 } from './writeContract'

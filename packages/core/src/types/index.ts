@@ -1,4 +1,4 @@
-import { providers } from 'ethers'
+import { Signer as BaseSigner, providers } from 'ethers'
 
 import {
   BlockExplorer,
@@ -6,6 +6,8 @@ import {
   RpcProviderName,
   units,
 } from '../constants'
+
+export type Address = `0x${string}`
 
 export type Chain = {
   /** ID in number form */
@@ -62,6 +64,8 @@ export type Provider = providers.BaseProvider & { chains?: Chain[] }
 export type WebSocketProvider = providers.WebSocketProvider & {
   chains?: Chain[]
 }
+
+export type Signer = BaseSigner
 
 export type Unit = typeof units[number]
 

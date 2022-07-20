@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
-  WriteContractConfig,
+  WriteContractArgs,
+  WriteContractPreparedArgs,
   WriteContractResult,
   writeContract,
 } from '@wagmi/core'
@@ -8,20 +9,63 @@ import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
-export type UseContractWriteArgs = WriteContractConfig
-export type UseContractWriteMutationArgs = Pick<
-  WriteContractConfig,
-  'args' | 'overrides'
->
+export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
+  (
+    | {
+        /**
+         * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
+         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended
+         * to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
+         *
+         * `prepared`: The config has been prepared with parameters required for performing a contract write
+         * via the [`usePrepareContractWrite` hook](https://wagmi.sh/docs/prepare-hooks/usePrepareContractWrite)
+         * */
+        mode: 'prepared'
+        /** The prepared request to perform a contract write. */
+        request: WriteContractPreparedArgs['request'] | undefined
+      }
+    | {
+        mode: 'dangerouslyUnprepared'
+        request?: undefined
+      }
+  )
+export type UseContractWriteMutationArgs = {
+  /**
+   * Dangerously pass through unprepared config. Note: This has
+   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
+   * it is highly recommended to not use this and instead prepare the config upfront
+   * using the `usePrepareContractWrite` function.
+   */
+  dangerouslySetArgs?: WriteContractArgs['args']
+  dangerouslySetOverrides?: WriteContractArgs['overrides']
+}
 export type UseContractWriteConfig = MutationConfig<
   WriteContractResult,
   Error,
   UseContractWriteArgs
 >
 
+type ContractWriteFn = (overrideConfig?: UseContractWriteMutationArgs) => void
+type ContractWriteAsyncFn = (
+  overrideConfig?: UseContractWriteMutationArgs,
+) => Promise<WriteContractResult>
+type MutateFnReturnValue<Args, Fn> = Args extends {
+  mode: 'dangerouslyUnprepared'
+}
+  ? Fn
+  : Fn | undefined
+
 export const mutationKey = ([
-  { addressOrName, args, chainId, contractInterface, overrides },
-]: [WriteContractConfig]) =>
+  {
+    addressOrName,
+    args,
+    chainId,
+    contractInterface,
+    functionName,
+    overrides,
+    request,
+  },
+]: [UseContractWriteArgs]) =>
   [
     {
       entity: 'writeContract',
@@ -29,23 +73,68 @@ export const mutationKey = ([
       args,
       chainId,
       contractInterface,
+      functionName,
       overrides,
+      request,
     },
   ] as const
 
-export function useContractWrite({
+const mutationFn = ({
   addressOrName,
   args,
   chainId,
   contractInterface,
   functionName,
+  mode,
   overrides,
-  signerOrProvider,
+  request,
+}: WriteContractArgs) => {
+  return writeContract({
+    addressOrName,
+    args,
+    chainId,
+    contractInterface,
+    functionName,
+    mode,
+    overrides,
+    request,
+  } as WriteContractArgs)
+}
+
+/**
+ * @description Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write)
+ * method.
+ *
+ * It is highly recommended to pair this with the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite)
+ * to [avoid UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+ *
+ * @example
+ * import { useContractWrite, usePrepareContractWrite } from 'wagmi'
+ *
+ * const { config } = usePrepareContractWrite({
+ *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+ *  contractInterface: wagmigotchiABI,
+ *  functionName: 'feed',
+ * })
+ * const { data, isLoading, isSuccess, write } = useContractWrite(config)
+ *
+ */
+export function useContractWrite<
+  Args extends UseContractWriteArgs = UseContractWriteArgs,
+>({
+  addressOrName,
+  args,
+  chainId,
+  contractInterface,
+  functionName,
+  mode,
+  overrides,
+  request,
   onError,
   onMutate,
   onSettled,
   onSuccess,
-}: UseContractWriteArgs & UseContractWriteConfig) {
+}: Args & UseContractWriteConfig) {
   const {
     data,
     error,
@@ -62,23 +151,16 @@ export function useContractWrite({
     mutationKey([
       {
         addressOrName,
-        args,
-        chainId,
         contractInterface,
         functionName,
+        args,
+        chainId,
+        mode,
         overrides,
-      },
+        request,
+      } as WriteContractArgs,
     ]),
-    ({ args, overrides }) =>
-      writeContract({
-        addressOrName,
-        args,
-        chainId,
-        contractInterface,
-        functionName,
-        overrides,
-        signerOrProvider,
-      }),
+    mutationFn,
     {
       onError,
       onMutate,
@@ -88,46 +170,54 @@ export function useContractWrite({
   )
 
   const write = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) =>
-      mutate({
+    (overrideConfig?: UseContractWriteMutationArgs) => {
+      return mutate({
         addressOrName,
+        args: overrideConfig?.dangerouslySetArgs ?? args,
         chainId,
         contractInterface,
         functionName,
-        signerOrProvider,
-        ...(overrideConfig || { args, overrides }),
-      }),
+        mode: overrideConfig ? 'dangerouslyUnprepared' : mode,
+        overrides: overrideConfig?.dangerouslySetOverrides ?? overrides,
+        request,
+      } as WriteContractArgs)
+    },
     [
       addressOrName,
       args,
       chainId,
       contractInterface,
       functionName,
+      mode,
       mutate,
       overrides,
-      signerOrProvider,
+      request,
     ],
   )
 
   const writeAsync = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) =>
-      mutateAsync({
+    (overrideConfig?: UseContractWriteMutationArgs) => {
+      return mutateAsync({
         addressOrName,
+        args: overrideConfig?.dangerouslySetArgs ?? args,
         chainId,
         contractInterface,
         functionName,
-        signerOrProvider,
-        ...(overrideConfig || { args, overrides }),
-      }),
+        mode: overrideConfig ? 'dangerouslyUnprepared' : mode,
+        overrides: overrideConfig?.dangerouslySetOverrides ?? overrides,
+        request,
+      } as WriteContractArgs)
+    },
     [
       addressOrName,
       args,
       chainId,
       contractInterface,
       functionName,
+      mode,
       mutateAsync,
       overrides,
-      signerOrProvider,
+      request,
     ],
   )
 
@@ -141,7 +231,11 @@ export function useContractWrite({
     reset,
     status,
     variables,
-    write,
-    writeAsync,
+    write: (mode === 'prepared' && !request
+      ? undefined
+      : write) as MutateFnReturnValue<Args, ContractWriteFn>,
+    writeAsync: (mode === 'prepared' && !request
+      ? undefined
+      : writeAsync) as MutateFnReturnValue<Args, ContractWriteAsyncFn>,
   }
 }

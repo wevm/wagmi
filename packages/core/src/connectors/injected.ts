@@ -36,7 +36,8 @@ export type InjectedConnectorOptions = {
 
 export class InjectedConnector extends Connector<
   Window['ethereum'],
-  InjectedConnectorOptions | undefined
+  InjectedConnectorOptions | undefined,
+  providers.JsonRpcSigner
 > {
   readonly id: string
   readonly name: string

@@ -18,7 +18,7 @@ React Hooks for Ethereum
     <img src="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=161b22&style=flat" alt="Downloads per month">
   </a>
   <a href="https://bestofjs.org/projects/wagmi">
-    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=tmm%2Fwagmi%26since=daily" alt="Best of JS">
+    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily" alt="Best of JS">
   </a>
   <a href="https://github.com/sponsors/tmm?metadata_campaign=gh_readme_badge">
     <img src="https://img.shields.io/github/sponsors/tmm?colorA=21262d&colorB=161b22&style=flat" alt="Sponsors">

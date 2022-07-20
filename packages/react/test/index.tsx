@@ -73,7 +73,6 @@ export {
   actConnect,
   actDisconnect,
   actSwitchNetwork,
-  getUnclaimedTokenId,
   useAccount,
   useNetwork,
 } from './utils'

@@ -1,5 +1,5 @@
+import { getProvider } from './actions'
 import { Connector } from './connectors'
-import { BlockExplorer } from './constants'
 import { Chain } from './types'
 
 /**
@@ -111,18 +111,50 @@ export class ConnectorNotFoundError extends Error {
   message = 'Connector not found'
 }
 
+export class ContractMethodDoesNotExistError extends Error {
+  name = 'ContractMethodDoesNotExistError'
+
+  constructor({
+    addressOrName,
+    chainId,
+    functionName,
+  }: {
+    addressOrName: string
+    chainId?: number
+    functionName: string
+  }) {
+    const { chains, network } = getProvider()
+    const chain = chains?.find(({ id }) => id === (chainId || network.chainId))
+    const blockExplorer = chain?.blockExplorers?.default
+    super(
+      [
+        `Function "${functionName}" on contract "${addressOrName}" does not exist.`,
+        ...(blockExplorer
+          ? [
+              '',
+              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${addressOrName}#readContract`,
+            ]
+          : []),
+      ].join('\n'),
+    )
+  }
+}
+
 export class ContractMethodNoResultError extends Error {
   name = 'ContractMethodNoResultError'
 
   constructor({
     addressOrName,
-    blockExplorer,
+    chainId,
     functionName,
   }: {
     addressOrName: string
-    blockExplorer?: BlockExplorer
+    chainId?: number
     functionName: string
   }) {
+    const { chains, network } = getProvider()
+    const chain = chains?.find(({ id }) => id === (chainId || network.chainId))
+    const blockExplorer = chain?.blockExplorers?.default
     super(
       [
         `Function "${functionName}" on contract "${addressOrName}" returned an empty response.`,

@@ -31,6 +31,7 @@ export {
 
 export {
   getContract,
+  prepareWriteContract,
   readContract,
   readContracts,
   watchContractEvent,
@@ -38,6 +39,8 @@ export {
   watchReadContracts,
   writeContract,
   type GetContractArgs,
+  type PrepareWriteContractConfig,
+  type PrepareWriteContractResult,
   type ReadContractConfig,
   type ReadContractResult,
   type ReadContractsConfig,
@@ -46,8 +49,10 @@ export {
   type WatchReadContractResult,
   type WatchReadContractsConfig,
   type WatchReadContractsResult,
-  type WriteContractConfig,
+  type WriteContractArgs,
+  type WriteContractPreparedArgs,
   type WriteContractResult,
+  type WriteContractUnpreparedArgs,
 } from './contracts'
 
 export {
@@ -97,10 +102,15 @@ export {
 } from './tokens'
 
 export {
+  prepareSendTransaction,
   sendTransaction,
   waitForTransaction,
+  type PrepareSendTransactionArgs,
+  type PrepareSendTransactionResult,
   type SendTransactionArgs,
+  type SendTransactionPreparedRequest,
   type SendTransactionResult,
+  type SendTransactionUnpreparedRequest,
   type WaitForTransactionArgs,
   type WaitForTransactionResult,
 } from './transactions'

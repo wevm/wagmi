@@ -19,6 +19,8 @@ it('should expose correct exports', () => {
       "getNetwork",
       "getProvider",
       "getWebSocketProvider",
+      "prepareSendTransaction",
+      "prepareWriteContract",
       "readContract",
       "readContracts",
       "sendTransaction",

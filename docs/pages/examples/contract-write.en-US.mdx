@@ -1,0 +1,229 @@
+---
+title: 'Contract Write'
+description: 'Learn how to perform a contract write with wagmi.'
+---
+
+import Callout from 'nextra-theme-docs/callout'
+import { ContractWrite } from '../../components/examples'
+
+# Contract Write
+
+The following example teaches you how to implement a simple "Mint NFT" component using wagmi. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`usePrepareContractWrite`](/docs/prepare-hooks/usePrepareContractWrite), [`useContractWrite`](/docs/hooks/useContractWrite) & [`useWaitForTransaction`](/docs/hooks/useWaitForTransaction) hooks. Try it out before moving on.
+
+<ContractWrite />
+
+## Step 1: Connect Wallet
+
+Follow the [Connect Wallet](/examples/connect-wallet#step-1-configuring-connectors) guide to get this set up.
+
+## Step 2: Create a new component
+
+Create a new component that will contain the NFT mint logic.
+
+```tsx
+import * as React from 'react'
+
+export function MintNFT() {
+  return (
+    <div>
+      <button>Mint</button>
+    </div>
+  )
+}
+```
+
+## Step 3: Add the `usePrepareContractWrite` hook
+
+Add the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+
+You will need to:
+
+1. Add the hook
+2. Pass in your contract configuration (address, contract interface, and function name)
+
+```tsx {2,5-9}
+import * as React from 'react'
+import { usePrepareContractWrite } from 'wagmi'
+
+export function MintNFT() {
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+
+  return (
+    <div>
+      <button>Mint</button>
+    </div>
+  )
+}
+```
+
+## Step 4: Add the `useContractWrite` hook
+
+Now add the [`useContractWrite` hook](/docs/hooks/useContractWrite). This hook performs the actual contract write transaction.
+
+We will need to:
+
+1. Add the hook.
+2. Pass in the configuration (`config`) that we created in the previous step.
+3. Hook it up to our button element via an `onClick` prop.
+4. Disable the button when the `write` function is not ready (still preparing).
+
+```tsx {2,10,14-16}
+import * as React from 'react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+export function MintNFT() {
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+  const { write } = useContractWrite(config)
+
+  return (
+    <div>
+      <button disabled={!write} onClick={() => write?.()}>
+        Mint
+      </button>
+    </div>
+  )
+}
+```
+
+Clicking the "Mint" button will invoke the `mint` function on the contract and mint the NFT for the user.
+
+However, there is currently no feedback to show when the `mint` transaction is successful. We will add some feedback in the next step.
+
+<Callout emoji="🤔" type="info">
+  [Why do I need a `usePrepareContractWrite` & `useContractWrite`
+  hook?](/docs/prepare-hooks/intro)
+</Callout>
+
+## Step 5: Add the `useWaitForTransaction` hook
+
+Using the [`useWaitForTransaction` hook](/docs/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
+
+We will need to:
+
+1. Add the hook
+2. Add loading state to the button when the transaction is pending.
+3. Add a success state for when the transaction is successful.
+
+```tsx {5,16-18,22-32}
+import * as React from 'react'
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
+
+export function MintNFT() {
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+  const { data, write } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  })
+
+  return (
+    <div>
+      <button disabled={!write || isLoading} onClick={() => write()}>
+        {isLoading ? 'Minting...' : 'Mint'}
+      </button>
+      {isSuccess && (
+        <div>
+          Successfully minted your NFT!
+          <div>
+            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+```
+
+## Step 6: Add To App
+
+Import the `MintNFT` component and display it when the account is connected.
+
+```tsx {3,12}
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+
+import { MintNFT } from './MintNFT'
+
+export function App() {
+  const { isConnected } = useAccount()
+
+  if (isConnected) {
+    return (
+      <div>
+        {/* Account content goes here */}
+        <MintNFT />
+      </div>
+    )
+  }
+
+  return <div>{/* Connect wallet content goes here */}</div>
+}
+```
+
+## Bonus Point: Add some error handling
+
+Now let's provide some feedback to the user if the prepare hook fails, or if the write hook fails.
+
+```tsx {11-12,18,37-39}
+import * as React from 'react'
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
+
+export function MintNFT() {
+  const {
+    config,
+    error: prepareError,
+    isError: isPrepareError,
+  } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+  const { data, error, isError, write } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  })
+
+  return (
+    <div>
+      <button disabled={!write || isLoading} onClick={() => write()}>
+        {isLoading ? 'Minting...' : 'Mint'}
+      </button>
+      {isSuccess && (
+        <div>
+          Successfully minted your NFT!
+          <div>
+            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+          </div>
+        </div>
+      )}
+      {(isPrepareError || isError) && (
+        <div>Error: {(prepareError || error)?.message}</div>
+      )}
+    </div>
+  )
+}
+```
+
+## Wrap Up
+
+That's it! You have now added a basic "Mint NFT" component to your app.

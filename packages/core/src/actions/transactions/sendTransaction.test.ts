@@ -3,8 +3,8 @@ import { parseEther } from 'ethers/lib/utils'
 
 import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
-import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
+import { prepareSendTransaction } from './prepareSendTransaction'
 import { sendTransaction } from './sendTransaction'
 
 describe('sendTransaction', () => {
@@ -14,99 +14,133 @@ describe('sendTransaction', () => {
   })
 
   describe('args', () => {
-    describe('chainId', () => {
-      it('switches before sending transaction', async () => {
-        await connect({ connector: client.connectors[0]! })
-
-        const signers = getSigners()
-        const to = signers[1]
-        const toAddress = await to?.getAddress()
-        const fromAddress = client.data?.account
-
-        const result = await sendTransaction({
-          chainId: 1,
-          request: {
-            from: fromAddress,
-            to: toAddress,
-            value: parseEther('10'),
-          },
-        })
-        expect(result.hash).toBeDefined()
-      })
-
-      it('unable to switch', async () => {
-        await connect({
-          connector: new MockConnector({
-            options: {
-              flags: { noSwitchChain: true },
-              signer: getSigners()[0]!,
-            },
-          }),
-        })
-
-        const signers = getSigners()
-        const to = signers[1]
-        const toAddress = await to?.getAddress()
-        const fromAddress = client.data?.account
-
-        await expect(
-          sendTransaction({
-            chainId: 10,
-            request: {
-              from: fromAddress,
-              to: toAddress,
-              value: parseEther('10'),
-            },
-          }),
-        ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"Chain mismatch: Expected \\"Chain 10\\", received \\"Ethereum."`,
-        )
-      })
-    })
-
-    it('request', async () => {
+    it('"prepared" request', async () => {
       await connect({ connector: client.connectors[0]! })
 
       const signers = getSigners()
       const to = signers[1]
       const toAddress = await to?.getAddress()
-      const fromAddress = client.data?.account
 
-      const result = await sendTransaction({
+      const config = await prepareSendTransaction({
         request: {
-          from: fromAddress,
+          to: toAddress as string,
+          value: parseEther('10'),
+        },
+      })
+      const { hash, wait } = await sendTransaction({
+        ...config,
+      })
+      expect(hash).toBeDefined()
+      expect(await wait()).toBeDefined()
+    })
+
+    it('"dangerously prepared" request', async () => {
+      await connect({ connector: client.connectors[0]! })
+
+      const signers = getSigners()
+      const to = signers[1]
+      const toAddress = await to?.getAddress()
+
+      const { hash, wait } = await sendTransaction({
+        mode: 'dangerouslyUnprepared',
+        request: {
+          to: toAddress as string,
+          value: parseEther('10'),
+        },
+      })
+      expect(hash).toBeDefined()
+      expect(await wait()).toBeDefined()
+    })
+  })
+
+  describe('errors', () => {
+    it('signer is on different chain', async () => {
+      await connect({ connector: client.connectors[0]! })
+
+      const signers = getSigners()
+      const to = signers[1]
+      const toAddress = (await to?.getAddress()) || ''
+
+      const config = await prepareSendTransaction({
+        request: {
           to: toAddress,
           value: parseEther('10'),
         },
       })
-      expect(result.hash).toBeDefined()
-    })
-  })
 
-  describe('behavior', () => {
-    it('throws', async () => {
-      await expect(
+      expect(() =>
         sendTransaction({
-          request: {},
+          chainId: 420,
+          ...config,
         }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Chain mismatch: Expected \\"Chain 420\\", received \\"Ethereum."`,
+      )
     })
 
-    it('fails on insufficient balance', async () => {
+    it('insufficient balance', async () => {
       await connect({ connector: client.connectors[0]! })
+
+      const config = await prepareSendTransaction({
+        request: {
+          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+          value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
+        },
+      })
 
       try {
         await sendTransaction({
-          request: {
-            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-            value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
-          },
+          ...config,
         })
       } catch (error) {
         expect((<Error>error).message).toContain(
           "sender doesn't have enough funds to send tx",
         )
       }
+    })
+
+    it('`to` undefined', async () => {
+      await connect({ connector: client.connectors[0]! })
+
+      const config = await prepareSendTransaction({
+        request: {
+          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+          value: parseEther('10'),
+        },
+      })
+
+      expect(() =>
+        // @ts-expect-error – testing for JS consumers
+        sendTransaction({
+          ...config,
+          request: {
+            ...config.request,
+            to: undefined,
+          },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"\`to\` is required"`)
+    })
+
+    it('`gasLimit` undefined', async () => {
+      await connect({ connector: client.connectors[0]! })
+
+      const config = await prepareSendTransaction({
+        request: {
+          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+          value: parseEther('10'),
+        },
+      })
+
+      expect(() =>
+        // @ts-expect-error - testing for JS consumers
+        sendTransaction({
+          ...config,
+          request: {
+            ...config.request,
+            gasLimit: undefined,
+          },
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`"\`gasLimit\` is required"`)
     })
   })
 })

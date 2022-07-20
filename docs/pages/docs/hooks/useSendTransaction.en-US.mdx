@@ -3,6 +3,8 @@ title: 'useSendTransaction'
 description: 'React Hook for sending a transaction.'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+
 # useSendTransaction
 
 Hook for sending a transaction.
@@ -14,31 +16,33 @@ import { useSendTransaction } from 'wagmi'
 ## Usage
 
 ```tsx
-import { useSendTransaction } from 'wagmi'
+import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
 
 function App() {
-  const { data, isIdle, isError, isLoading, isSuccess, sendTransaction } =
-    useSendTransaction({
-      request: {
-        to: 'awkweb.eth',
-        value: BigNumber.from('1000000000000000000'), // 1 ETH
-      },
-    })
+  const { config } = usePrepareSendTransaction({
+    request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+  })
+  const { data, isLoading, isSuccess, sendTransaction } =
+    useSendTransaction(config)
 
   return (
     <div>
-      {isIdle && (
-        <button disabled={loading} onClick={() => sendTransaction()}>
-          Send Transaction
-        </button>
-      )}
+      <button disabled={!sendTransaction} onClick={() => sendTransaction?.()}>
+        Send Transaction
+      </button>
       {isLoading && <div>Check Wallet</div>}
       {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
-      {isError && <div>Error sending transaction</div>}
     </div>
   )
 }
 ```
+
+<Callout>
+  It is highly recommended to pair `useSendTransaction` with the
+  [`usePrepareSendTransaction`
+  hook](/docs/prepare-hooks/usePrepareSendTransaction) to [avoid UX
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+</Callout>
 
 ## Return Value
 
@@ -50,8 +54,8 @@ function App() {
   isIdle: boolean
   isLoading: boolean
   isSuccess: boolean
-  sendTransaction: (args? SendTransactionArgs) => void
-  sendTransactionAsync: (args? SendTransactionArgs) => Promise<TransactionResponse>
+  sendTransaction: ((args?: SendTransactionArgs) => void) | undefined
+  sendTransactionAsync: ((args?: SendTransactionArgs) => Promise<TransactionResponse>) | undefined
   reset: () => void
   status: 'idle' | 'error' | 'loading' | 'success'
 }
@@ -59,19 +63,22 @@ function App() {
 
 ## Configuration
 
-### chainId (optional)
+### mode
 
-Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction).
+
+- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
+- `prepared`: The request has been prepared with parameters required for sending a transaction via the `usePrepareSendTransaction` hook
 
 ```tsx {5}
 import { useSendTransaction } from 'wagmi'
 
 function App() {
-  const sendTransaction = useSendTransaction({
-    chainId: 1,
+  const { sendTransaction } = useSendTransaction({
+    mode: 'dangerouslyUnprepared',
     request: {
-      to: 'awkweb.eth',
-      value: BigNumber.from('1000000000000000000'), // 1 ETH
+      to: 'moxey.eth',
+      value: BigNumber.from('10000000000000000'),
     },
   })
 }
@@ -79,17 +86,18 @@ function App() {
 
 ### request (optional)
 
-Object to use when creating transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
+> This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction).
 
-```tsx {5-8}
-import { useSendTransaction } from 'wagmi'
+The request to use when sending the transaction.
+
+```tsx {7}
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const sendTransaction = useSendTransaction({
-    request: {
-      to: 'awkweb.eth',
-      value: BigNumber.from('1000000000000000000'), // 1 ETH
-    },
+  const { config } = usePrepareSendTransaction({ ... })
+  const { sendTransaction } = useSendTransaction({
+    ...config,
+    request: config.request
   })
 }
 ```
@@ -98,15 +106,13 @@ function App() {
 
 Function to invoke when an error is thrown while attempting to send.
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
+```tsx {7-9}
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const sendTransaction = useSendTransaction({
-    request: {
-      to: 'awkweb.eth',
-      value: BigNumber.from('1000000000000000000'), // 1 ETH
-    },
+  const { config } = usePrepareSendTransaction({ ... })
+  const { sendTransaction } = useSendTransaction({
+    ...config,
     onError(error) {
       console.log('Error', error)
     },
@@ -118,15 +124,13 @@ function App() {
 
 Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
+```tsx {7-9}
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const sendTransaction = useSendTransaction({
-    request: {
-      to: 'awkweb.eth',
-      value: BigNumber.from('1000000000000000000'), // 1 ETH
-    },
+  const { config } = usePrepareSendTransaction({ ... })
+  const { sendTransaction } = useSendTransaction({
+    ...config,
     onMutate({ args, overrides }) {
       console.log('Mutate', { args, overrides })
     },
@@ -138,15 +142,13 @@ function App() {
 
 Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
+```tsx {7-9}
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const sendTransaction = useSendTransaction({
-    request: {
-      to: 'awkweb.eth',
-      value: BigNumber.from('1000000000000000000'), // 1 ETH
-    },
+  const { config } = usePrepareSendTransaction({ ... })
+  const { sendTransaction } = useSendTransaction({
+    ...config,
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },
@@ -158,18 +160,85 @@ function App() {
 
 Function to invoke when send transaction is successful.
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
+```tsx {7-9}
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
-  const sendTransaction = useSendTransaction({
-    request: {
-      to: 'awkweb.eth',
-      value: BigNumber.from('1000000000000000000'), // 1 ETH
-    },
+  const { config } = usePrepareSendTransaction({ ... })
+  const { sendTransaction } = useSendTransaction({
+    ...config,
     onSuccess(data) {
       console.log('Success', data)
     },
   })
+}
+```
+
+## Override Config
+
+It is possible to pass through override config. Any override config prefixed with `dangerouslySet` means that it will break the previously prepared config. It will need to prepare the request again at the time of invoking `sendTransaction`/`sendTransactionAsync`.
+
+<Callout>
+  This usage is not recommended. It comes with [UX
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
+</Callout>
+
+```tsx {15-18}
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+  })
+  const { data, isLoading, isSuccess, sendTransaction } =
+    useSendTransaction(config)
+
+  return (
+    <div>
+      <button
+        disabled={!sendTransaction}
+        onClick={() => sendTransaction({
+          dangerouslySetRequest: {
+            to: 'awkweb.eth',
+            value: BigNumber.from('10000000000000000'),
+          }}
+        })}>
+        Send Transaction
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+## Dangerous Usage
+
+It is possible to use `useSendTransaction` without pairing it with `usePrepareSendTransaction` by using "dangerously unprepared" mode.
+
+<Callout>
+  This usage is not recommended. It comes with [UX
+  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
+</Callout>
+
+```tsx {5-7}
+import { useSendTransaction } from 'wagmi'
+
+function App() {
+  const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+    mode: 'dangerouslyUnprepared',
+    to: 'moxey.eth',
+    value: BigNumber.from('10000000000000000'),
+  })
+
+  return (
+    <div>
+      <button onClick={() => sendTransaction()}>Send Transaction</button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
 }
 ```

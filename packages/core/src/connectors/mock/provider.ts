@@ -1,5 +1,5 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { Signer, providers } from 'ethers'
+import { providers } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
 
 import { UserRejectedRequestError } from '../../errors'
@@ -12,7 +12,7 @@ export type MockProviderOptions = {
     failSwitchChain?: boolean
     noSwitchChain?: boolean
   }
-  signer: Signer
+  signer: providers.JsonRpcSigner
 }
 
 type Events = {
@@ -26,7 +26,7 @@ export class MockProvider extends providers.BaseProvider {
   events = new EventEmitter<Events>()
 
   #options: MockProviderOptions
-  #signer?: Signer
+  #signer?: providers.JsonRpcSigner
 
   constructor(options: MockProviderOptions) {
     super({ name: 'Network', chainId: options.chainId ?? 1 })

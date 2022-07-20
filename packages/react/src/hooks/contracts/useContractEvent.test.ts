@@ -1,10 +1,10 @@
 import { erc20ABI } from '@wagmi/core'
 
+import { getUnclaimedTokenId } from '../../../../core/test'
 import {
   act,
   actConnect,
   getSigners,
-  getUnclaimedTokenId,
   mlootContractConfig,
   renderHook,
 } from '../../../test'
@@ -80,7 +80,12 @@ describe('useContractEvent', () => {
               },
             },
             contractWrite: {
-              config: { ...mlootContractConfig, functionName, args },
+              config: {
+                mode: 'dangerouslyUnprepared',
+                ...mlootContractConfig,
+                functionName,
+                args,
+              },
             },
             waitForTransaction: { hash },
           }),
@@ -88,7 +93,7 @@ describe('useContractEvent', () => {
         const { result, rerender, waitFor } = utils
         await actConnect({ utils })
 
-        await act(async () => result.current.contractWrite.write())
+        await act(async () => result.current.contractWrite.write?.())
         await waitFor(
           () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
           { timeout },
@@ -105,7 +110,7 @@ describe('useContractEvent', () => {
         rerender()
 
         await actConnect({ utils })
-        await act(async () => result.current.contractWrite.write())
+        await act(async () => result.current.contractWrite.write?.())
         await waitFor(
           () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
           { timeout },

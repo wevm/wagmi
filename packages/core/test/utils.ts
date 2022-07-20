@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { Wallet } from 'ethers/lib/ethers'
+import { Contract, Wallet } from 'ethers/lib/ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
 
@@ -170,4 +170,53 @@ export function getSigners() {
     return provider.getSigner(wallet.address)
   })
   return signers
+}
+
+export async function getUnclaimedTokenId(
+  addressOrName: string,
+  maxAttempts = 3,
+) {
+  function getRandomTokenId(from: number, to: number) {
+    return Math.floor(Math.random() * to) + from
+  }
+
+  let attempts = 0
+  const provider = getProvider()
+  const contract = new Contract(
+    addressOrName,
+    [
+      'function ownerOf(uint256 _tokenId) external view returns (address)',
+      'function totalSupply() view returns (uint256)',
+    ],
+    provider,
+  )
+  const totalSupply = await contract.totalSupply()
+  while (attempts < maxAttempts) {
+    const randomTokenId = getRandomTokenId(1, totalSupply)
+    try {
+      await contract.ownerOf(randomTokenId)
+    } catch (error) {
+      return randomTokenId
+    }
+    attempts += 1
+  }
+  return false
+}
+
+export async function getTotalSupply(addressOrName: string) {
+  const provider = getProvider()
+  const contract = new Contract(
+    addressOrName,
+    [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+    provider,
+  )
+  return await contract.totalSupply()
 }
