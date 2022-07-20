@@ -73,7 +73,7 @@ describe('signTypedData', () => {
     })
 
     describe('when chainId is provided in domain', () => {
-      it('unable to switch', async () => {
+      it("throws mismatch if chainId doesn't match signer", async () => {
         await connect({
           chainId: 4,
           connector: new MockConnector({

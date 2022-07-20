@@ -346,7 +346,7 @@ describe('useSignTypedData', () => {
     })
 
     describe('when chainId is provided in domain', () => {
-      it('unable to switch', async () => {
+      it("throws mismatch if chainId doesn't match signer", async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
