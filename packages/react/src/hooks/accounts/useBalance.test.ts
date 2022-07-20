@@ -19,7 +19,6 @@ describe('useBalance', () => {
           "decimals": 18,
           "formatted": "1.889009973656812885",
           "symbol": "ETH",
-          "unit": "ether",
           "value": {
             "hex": "0x1a371c9008fbfd55",
             "type": "BigNumber",
@@ -59,7 +58,6 @@ describe('useBalance', () => {
               "decimals": 18,
               "formatted": "1.889009973656812885",
               "symbol": "ETH",
-              "unit": "ether",
               "value": {
                 "hex": "0x1a371c9008fbfd55",
                 "type": "BigNumber",
@@ -97,7 +95,6 @@ describe('useBalance', () => {
               "decimals": 18,
               "formatted": "0.244974809851885503",
               "symbol": "ETH",
-              "unit": "ether",
               "value": {
                 "hex": "0x0366534aa823f7bf",
                 "type": "BigNumber",
@@ -134,7 +131,6 @@ describe('useBalance', () => {
             "decimals": 18,
             "formatted": "1.889009973656812885",
             "symbol": "ETH",
-            "unit": "ether",
             "value": {
               "hex": "0x1a371c9008fbfd55",
               "type": "BigNumber",
@@ -200,7 +196,6 @@ describe('useBalance', () => {
             "decimals": 18,
             "formatted": "1889009973.656812885",
             "symbol": "ETH",
-            "unit": "gwei",
             "value": {
               "hex": "0x1a371c9008fbfd55",
               "type": "BigNumber",
@@ -237,7 +232,6 @@ describe('useBalance', () => {
             "decimals": 18,
             "formatted": "445.85124391824564224",
             "symbol": "ENS",
-            "unit": "ether",
             "value": {
               "hex": "0x182b6dd01f5d124000",
               "type": "BigNumber",
@@ -272,7 +266,6 @@ describe('useBalance', () => {
             "decimals": 18,
             "formatted": "0.415160768386201476",
             "symbol": "ETH",
-            "unit": "ether",
             "value": {
               "hex": "0x05c2f284ec567784",
               "type": "BigNumber",
@@ -305,6 +298,44 @@ describe('useBalance', () => {
           "isSuccess": false,
           "refetch": [Function],
           "status": "idle",
+        }
+      `)
+    })
+
+    it('token', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useBalance({
+          addressOrName: 'awkweb.eth',
+          token: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "decimals": 6,
+            "formatted": "1735.381",
+            "symbol": "USDC",
+            "value": {
+              "hex": "0x676fd008",
+              "type": "BigNumber",
+            },
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
         }
       `)
     })
