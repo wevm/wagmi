@@ -12,6 +12,7 @@ type EtherscanChains = Extract<
   | 'kovan'
   | 'optimism'
   | 'optimismKovan'
+  | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
   | 'arbitrum'
@@ -45,6 +46,10 @@ export const etherscanBlockExplorers: Record<EtherscanChains, BlockExplorer> = {
   optimismKovan: {
     name: 'Etherscan',
     url: 'https://kovan-optimistic.etherscan.io',
+  },
+  optimismGoerli: {
+    name: 'Etherscan',
+    url: 'https://l2-explorer.surge.sh/',
   },
   polygon: {
     name: 'PolygonScan',
