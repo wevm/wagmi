@@ -1,14 +1,6 @@
 import { erc20ABI } from '@wagmi/core'
 
-import {
-  act,
-  actConnect,
-  getSigners,
-  getTotalSupply,
-  mlootContractConfig,
-  renderHook,
-  wagmiContractConfig,
-} from '../../../test'
+import { act, actConnect, renderHook, wagmiContractConfig } from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UseWaitForTransactionArgs,
@@ -41,8 +33,6 @@ function useContractEventWithWrite(config: {
   }
 }
 
-const timeout = 15_000
-
 describe('useContractEvent', () => {
   it('mounts', () => {
     const listener = jest.fn()
@@ -59,18 +49,16 @@ describe('useContractEvent', () => {
 
   describe('configuration', () => {
     describe('once', () => {
-      jest.setTimeout(timeout)
       it('listens', async () => {
         let hash: string | undefined = undefined
-        let functionName = 'mint'
 
         const listener = jest.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({
             contractEvent: {
               config: {
-                ...mlootContractConfig,
-                eventName: 'Approval',
+                ...wagmiContractConfig,
+                eventName: 'Transfer',
                 listener,
               },
             },
@@ -78,7 +66,7 @@ describe('useContractEvent', () => {
               config: {
                 mode: 'dangerouslyUnprepared',
                 ...wagmiContractConfig,
-                functionName,
+                functionName: 'mint',
               },
             },
             waitForTransaction: { hash },
@@ -88,28 +76,8 @@ describe('useContractEvent', () => {
         await actConnect({ utils })
 
         await act(async () => result.current.contractWrite.write?.())
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
-        )
-        hash = result.current.contractWrite.data?.hash
-        rerender()
         await waitFor(() =>
-          expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
-        )
-
-        const from = await getSigners()[0]?.getAddress()
-        const to = await getSigners()[1]?.getAddress()
-        const tokenId = await getTotalSupply(wagmiContractConfig.addressOrName)
-        functionName = 'approve'
-        args = [from, to, tokenId]
-        rerender()
-
-        await actConnect({ utils })
-        await act(async () => result.current.contractWrite.write?.())
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
         hash = result.current.contractWrite.data?.hash
         rerender()

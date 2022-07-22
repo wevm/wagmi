@@ -46,29 +46,59 @@ function usePrepareContractWritedWithConnect(
 }
 
 describe('useContractWrite', () => {
-  it('mounts', async () => {
-    const { result } = renderHook(() =>
-      usePrepareContractWritedWithConnect({
-        ...wagmiContractConfig,
-        functionName: 'mint',
-      }),
-    )
+  describe('mounts', () => {
+    it('prepared', async () => {
+      const { result } = renderHook(() =>
+        useContractWrite({
+          mode: 'prepared',
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          request: undefined,
+        }),
+      )
 
-    expect(result.current.contractWrite).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": null,
-        "isError": false,
-        "isIdle": true,
-        "isLoading": false,
-        "isSuccess": false,
-        "reset": [Function],
-        "status": "idle",
-        "variables": undefined,
-        "write": undefined,
-        "writeAsync": undefined,
-      }
-    `)
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isSuccess": false,
+          "reset": [Function],
+          "status": "idle",
+          "variables": undefined,
+          "write": undefined,
+          "writeAsync": undefined,
+        }
+      `)
+    })
+
+    it('dangerouslyUnprepared', async () => {
+      const { result } = renderHook(() =>
+        useContractWrite({
+          mode: 'dangerouslyUnprepared',
+          ...wagmiContractConfig,
+          functionName: 'mint',
+        }),
+      )
+
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isSuccess": false,
+          "reset": [Function],
+          "status": "idle",
+          "variables": undefined,
+          "write": [Function],
+          "writeAsync": [Function],
+        }
+      `)
+    })
   })
 
   describe('configuration', () => {
