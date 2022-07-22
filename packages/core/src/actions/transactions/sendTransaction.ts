@@ -6,7 +6,7 @@ import {
   ProviderRpcError,
   UserRejectedRequestError,
 } from '../../errors'
-import { Address } from '../../types'
+import { Address, Signer } from '../../types'
 import { fetchSigner, getNetwork } from '../accounts'
 
 export type SendTransactionPreparedRequest = {
@@ -70,7 +70,7 @@ export async function sendTransaction({
   // `fetchSigner` isn't really "asynchronous" as we have already
   // initialized the provider upon user connection, so it will return
   // immediately.
-  const signer = await fetchSigner<providers.JsonRpcSigner>()
+  const signer = await fetchSigner<Signer>()
   if (!signer) throw new ConnectorNotFoundError()
 
   if (mode === 'prepared') {
@@ -99,8 +99,12 @@ export async function sendTransaction({
     // when using it in a click handler (iOS deep linking issues,
     // delay to open wallet, etc).
 
-    const uncheckedSigner = signer.connectUnchecked()
-    const { hash, wait } = await uncheckedSigner.sendTransaction(request)
+    const uncheckedSigner = (<providers.JsonRpcSigner>(
+      signer
+    )).connectUnchecked?.()
+    const { hash, wait } = await (uncheckedSigner ?? signer).sendTransaction(
+      request,
+    )
 
     /********************************************************************/
     /** END: iOS App Link cautious code.                                */

@@ -43,7 +43,7 @@ export type PrepareSendTransactionResult = {
 export async function prepareSendTransaction({
   chainId,
   request,
-  signerOrProvider = getProvider(),
+  signerOrProvider = getProvider({ chainId }),
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)

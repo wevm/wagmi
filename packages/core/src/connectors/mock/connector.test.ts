@@ -88,10 +88,11 @@ describe('MockConnector', () => {
   it('getSigner', async () => {
     await connector.connect()
     expect(await connector.getSigner()).toMatchInlineSnapshot(`
-      JsonRpcSigner {
-        "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "_index": null,
+      WalletSigner {
         "_isSigner": true,
+        "_mnemonic": [Function],
+        "_signingKey": [Function],
+        "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "provider": "<Provider network={31337} />",
       }
     `)

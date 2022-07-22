@@ -1,9 +1,4 @@
-import {
-  getSigners,
-  getUnclaimedTokenId,
-  mlootContractConfig,
-  setupClient,
-} from '../../../test'
+import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -16,16 +11,10 @@ describe('prepareWriteContract', () => {
   beforeEach(() => setupClient())
 
   it('default', async () => {
-    const tokenId = await getUnclaimedTokenId(
-      '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-    )
-    if (!tokenId) return
-
     await connect({ connector })
     const { request } = await prepareWriteContract({
-      ...mlootContractConfig,
-      functionName: 'claim',
-      args: [tokenId],
+      ...wagmiContractConfig,
+      functionName: 'mint',
     })
 
     const { data, gasLimit, ...rest } = request || {}
@@ -34,7 +23,7 @@ describe('prepareWriteContract', () => {
     expect(rest).toMatchInlineSnapshot(`
       {
         "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "to": "0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF",
+        "to": "0xaf0326d92b97dF1221759476B072abfd8084f9bE",
       }
     `)
   })
@@ -44,9 +33,8 @@ describe('prepareWriteContract', () => {
       await connect({ connector })
       await expect(() =>
         prepareWriteContract({
-          ...mlootContractConfig,
+          ...wagmiContractConfig,
           functionName: 'claim',
-          args: 1,
         }),
       ).rejects.toThrowError()
     })
@@ -54,8 +42,8 @@ describe('prepareWriteContract', () => {
     it('connector not found', async () => {
       await expect(() =>
         prepareWriteContract({
-          ...mlootContractConfig,
-          functionName: 'claim',
+          ...wagmiContractConfig,
+          functionName: 'mint',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
@@ -64,13 +52,13 @@ describe('prepareWriteContract', () => {
       await connect({ connector })
       await expect(() =>
         prepareWriteContract({
-          ...mlootContractConfig,
+          ...wagmiContractConfig,
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-              "Function \\"wagmi\\" on contract \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\" does not exist.
+              "Function \\"wagmi\\" on contract \\"0xaf0326d92b97df1221759476b072abfd8084f9be\\" does not exist.
 
-              Etherscan: https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df#readContract"
+              Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract"
             `)
     })
   })

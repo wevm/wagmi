@@ -94,7 +94,7 @@ describe('sendTransaction', () => {
         })
       } catch (error) {
         expect((<Error>error).message).toContain(
-          "sender doesn't have enough funds to send tx",
+          'insufficient funds for intrinsic transaction cost',
         )
       }
     })

@@ -1,12 +1,13 @@
 import { erc20ABI } from '@wagmi/core'
 
-import { getUnclaimedTokenId } from '../../../../core/test'
 import {
   act,
   actConnect,
   getSigners,
+  getTotalSupply,
   mlootContractConfig,
   renderHook,
+  wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
 import {
@@ -60,14 +61,8 @@ describe('useContractEvent', () => {
     describe('once', () => {
       jest.setTimeout(timeout)
       it('listens', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         let hash: string | undefined = undefined
-        let functionName = 'claim'
-        let args: any | any[] = tokenId
+        let functionName = 'mint'
 
         const listener = jest.fn()
         const utils = renderHook(() =>
@@ -82,9 +77,8 @@ describe('useContractEvent', () => {
             contractWrite: {
               config: {
                 mode: 'dangerouslyUnprepared',
-                ...mlootContractConfig,
+                ...wagmiContractConfig,
                 functionName,
-                args,
               },
             },
             waitForTransaction: { hash },
@@ -104,9 +98,11 @@ describe('useContractEvent', () => {
           expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
         )
 
+        const from = await getSigners()[0]?.getAddress()
         const to = await getSigners()[1]?.getAddress()
+        const tokenId = await getTotalSupply(wagmiContractConfig.addressOrName)
         functionName = 'approve'
-        args = [to, tokenId]
+        args = [from, to, tokenId]
         rerender()
 
         await actConnect({ utils })

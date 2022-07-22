@@ -46,7 +46,7 @@ describe('fetchEnsAvatar', () => {
   beforeAll(() =>
     server.listen({
       onUnhandledRequest(req) {
-        if (req.url.origin !== chain.hardhat.rpcUrls.default.toString())
+        if (req.url.origin !== chain.foundry.rpcUrls.default)
           console.warn(
             `Found an unhandled ${req.method} request to ${req.url.href}`,
           )

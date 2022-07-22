@@ -77,9 +77,13 @@ export {
   useNetwork,
 } from './utils'
 export {
+  getCrowdfundArgs,
   getProvider,
-  getWebSocketProvider,
   getSigners,
-  wagmigotchiContractConfig,
+  getTotalSupply,
+  getWebSocketProvider,
+  mirrorCrowdfundContractConfig,
   mlootContractConfig,
+  wagmiContractConfig,
+  wagmigotchiContractConfig,
 } from '../../core/test'

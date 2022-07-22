@@ -7,7 +7,7 @@ describe('CoinbaseWalletConnector', () => {
       chains: defaultChains,
       options: {
         appName: 'wagmi',
-        jsonRpcUrl: chain.hardhat.rpcUrls.default.toString(),
+        jsonRpcUrl: chain.foundry.rpcUrls.default,
       },
     })
     expect(connector.name).toEqual('Coinbase Wallet')
