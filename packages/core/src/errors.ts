@@ -91,7 +91,7 @@ export class ChainMismatchError extends Error {
     targetChain: string
   }) {
     super(
-      `Chain mismatch: Expected "${targetChain}", received "${activeChain}.`,
+      `Chain mismatch: Expected "${targetChain}", received "${activeChain}".`,
     )
   }
 }
