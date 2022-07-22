@@ -24,7 +24,7 @@ describe('usePrepareSendTransaction', () => {
           "mode": "prepared",
           "request": {
             "gasLimit": {
-              "hex": "0x5209",
+              "hex": "0x5208",
               "type": "BigNumber",
             },
             "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
@@ -38,7 +38,7 @@ describe('usePrepareSendTransaction', () => {
           "mode": "prepared",
           "request": {
             "gasLimit": {
-              "hex": "0x5209",
+              "hex": "0x5208",
               "type": "BigNumber",
             },
             "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",

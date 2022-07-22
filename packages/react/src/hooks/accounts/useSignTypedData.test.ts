@@ -369,7 +369,7 @@ describe('useSignTypedData', () => {
         )
 
         expect(result.current.signTypedData.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby.]`,
+          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
         )
       })
     })

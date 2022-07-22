@@ -19,13 +19,14 @@ export function setupClient(config: Config = {}) {
 }
 
 export {
+  mirrorCrowdfundContractConfig,
   mlootContractConfig,
-  wagmigotchiContractConfig,
   wagmiContractConfig,
+  wagmigotchiContractConfig,
 } from './constants'
 export {
+  getCrowdfundArgs,
   getTotalSupply,
-  getUnclaimedTokenId,
   getProvider,
   getWebSocketProvider,
   getSigners,

@@ -1,9 +1,4 @@
-import {
-  getSigners,
-  getUnclaimedTokenId,
-  mlootContractConfig,
-  setupClient,
-} from '../../../test'
+import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -14,19 +9,15 @@ const connector = new MockConnector({
 })
 
 describe('writeContract', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   it('prepared config', async () => {
-    const tokenId = await getUnclaimedTokenId(
-      '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-    )
-    if (!tokenId) return
-
     await connect({ connector })
     const config = await prepareWriteContract({
-      ...mlootContractConfig,
-      functionName: 'claim',
-      args: [tokenId],
+      ...wagmiContractConfig,
+      functionName: 'mint',
     })
     const { hash } = await writeContract({ ...config })
 
@@ -34,17 +25,11 @@ describe('writeContract', () => {
   })
 
   it('unprepared config', async () => {
-    const tokenId = await getUnclaimedTokenId(
-      '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-    )
-    if (!tokenId) return
-
     await connect({ connector })
     const { hash } = await writeContract({
-      ...mlootContractConfig,
+      ...wagmiContractConfig,
       mode: 'dangerouslyUnprepared',
-      functionName: 'claim',
-      args: [tokenId],
+      functionName: 'mint',
     })
 
     expect(hash).toBeDefined()
@@ -52,16 +37,10 @@ describe('writeContract', () => {
 
   describe('errors', () => {
     it('signer is on different chain', async () => {
-      const tokenId = await getUnclaimedTokenId(
-        '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-      )
-      if (!tokenId) return
-
       await connect({ connector })
       const config = await prepareWriteContract({
-        ...mlootContractConfig,
-        functionName: 'claim',
-        args: [tokenId],
+        ...wagmiContractConfig,
+        functionName: 'mint',
       })
 
       await expect(() =>
@@ -70,7 +49,7 @@ describe('writeContract', () => {
           ...config,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum."`,
+        `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
       )
     })
 
@@ -78,10 +57,9 @@ describe('writeContract', () => {
       await connect({ connector })
       await expect(() =>
         writeContract({
-          ...mlootContractConfig,
+          ...wagmiContractConfig,
           mode: 'dangerouslyUnprepared',
           functionName: 'claim',
-          args: 1,
         }),
       ).rejects.toThrowError()
     })
@@ -89,7 +67,7 @@ describe('writeContract', () => {
     it('connector not found', async () => {
       await expect(() =>
         writeContract({
-          ...mlootContractConfig,
+          ...wagmiContractConfig,
           mode: 'dangerouslyUnprepared',
           functionName: 'claim',
         }),
@@ -100,14 +78,14 @@ describe('writeContract', () => {
       await connect({ connector })
       await expect(() =>
         writeContract({
-          ...mlootContractConfig,
+          ...wagmiContractConfig,
           mode: 'dangerouslyUnprepared',
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-              "Function \\"wagmi\\" on contract \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\" does not exist.
+              "Function \\"wagmi\\" on contract \\"0xaf0326d92b97df1221759476b072abfd8084f9be\\" does not exist.
 
-              Etherscan: https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df#readContract"
+              Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract"
             `)
     })
   })

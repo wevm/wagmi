@@ -1,5 +1,9 @@
-import { getUnclaimedTokenId } from '../../../../core/test'
-import { actConnect, mlootContractConfig, renderHook } from '../../../test'
+import {
+  actConnect,
+  mlootContractConfig,
+  renderHook,
+  wagmiContractConfig,
+} from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UsePrepareContractWriteArgs,
@@ -19,16 +23,10 @@ function usePrepareContractWriteWithConnect(
 
 describe('usePrepareContractWrite', () => {
   it('mounts', async () => {
-    const tokenId = await getUnclaimedTokenId(
-      '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-    )
-    if (!tokenId) return
-
     const { result } = renderHook(() =>
       usePrepareContractWriteWithConnect({
-        ...mlootContractConfig,
-        functionName: 'claim',
-        args: [tokenId],
+        ...wagmiContractConfig,
+        functionName: 'mint',
       }),
     )
 
@@ -66,16 +64,10 @@ describe('usePrepareContractWrite', () => {
   })
 
   it('connect', async () => {
-    const tokenId = await getUnclaimedTokenId(
-      '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-    )
-    if (!tokenId) return
-
     const utils = renderHook(() =>
       usePrepareContractWriteWithConnect({
-        ...mlootContractConfig,
-        functionName: 'claim',
-        args: [tokenId],
+        ...wagmiContractConfig,
+        functionName: 'mint',
       }),
     )
     const { result, waitFor } = utils
@@ -99,7 +91,7 @@ describe('usePrepareContractWrite', () => {
     expect(restRequest).toMatchInlineSnapshot(`
       {
         "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "to": "0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF",
+        "to": "0xaf0326d92b97dF1221759476B072abfd8084f9bE",
       }
     `)
     expect(rest).toMatchInlineSnapshot(`
@@ -155,7 +147,7 @@ describe('usePrepareContractWrite', () => {
       expect(data).toBeUndefined()
       expect(rest).toMatchInlineSnapshot(`
         {
-          "error": [Error: processing response error (body="{\\"jsonrpc\\":\\"2.0\\",\\"id\\":42,\\"error\\":{\\"code\\":-32603,\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":{\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}}", error={"code":-32603,"data":{"message":"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'","data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000"}}, requestBody="{\\"method\\":\\"eth_estimateGas\\",\\"params\\":[{\\"from\\":\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\",\\"to\\":\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\"}],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}", requestMethod="POST", url="http://127.0.0.1:8545", code=SERVER_ERROR, version=web/5.6.0)],
+          "error": [Error: cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (error={"reason":"processing response error","code":"SERVER_ERROR","body":"{\\"jsonrpc\\":\\"2.0\\",\\"id\\":42,\\"error\\":{\\"code\\":3,\\"message\\":\\"execution reverted: Token ID invalid\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}","error":{"code":3,"data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000"},"requestBody":"{\\"method\\":\\"eth_estimateGas\\",\\"params\\":[{\\"from\\":\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\",\\"to\\":\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\"}],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}","requestMethod":"POST","url":"http://127.0.0.1:8545"}, method="estimateGas", transaction={"from":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","to":"0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF","data":"0x379607f50000000000000000000000000000000000000000000000000000000000000001","accessList":null}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.6.5)],
           "fetchStatus": "idle",
           "internal": {
             "dataUpdatedAt": 0,
@@ -184,16 +176,10 @@ describe('usePrepareContractWrite', () => {
     })
 
     it('contract function not found', async () => {
-      const tokenId = await getUnclaimedTokenId(
-        '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-      )
-      if (!tokenId) return
-
       const utils = renderHook(() =>
         usePrepareContractWriteWithConnect({
-          ...mlootContractConfig,
+          ...wagmiContractConfig,
           functionName: 'wagmi',
-          args: [tokenId],
         }),
       )
       const { result, waitFor } = utils
@@ -210,9 +196,9 @@ describe('usePrepareContractWrite', () => {
       expect(data).toBeUndefined()
       expect(rest).toMatchInlineSnapshot(`
         {
-          "error": [ContractMethodDoesNotExistError: Function "wagmi" on contract "0x1dfe7ca09e99d10835bf73044a23b73fc20623df" does not exist.
+          "error": [ContractMethodDoesNotExistError: Function "wagmi" on contract "0xaf0326d92b97df1221759476b072abfd8084f9be" does not exist.
 
-        Etherscan: https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df#readContract],
+        Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract],
           "fetchStatus": "idle",
           "internal": {
             "dataUpdatedAt": 0,

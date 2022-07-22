@@ -7,7 +7,7 @@ describe('WalletConnectConnector', () => {
       chains: defaultChains,
       options: {
         rpc: {
-          [chain.hardhat.id]: chain.hardhat.rpcUrls.default.toString(),
+          [chain.foundry.id]: chain.foundry.rpcUrls.default,
         },
       },
     })

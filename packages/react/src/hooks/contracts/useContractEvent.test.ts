@@ -1,13 +1,6 @@
 import { erc20ABI } from '@wagmi/core'
 
-import { getUnclaimedTokenId } from '../../../../core/test'
-import {
-  act,
-  actConnect,
-  getSigners,
-  mlootContractConfig,
-  renderHook,
-} from '../../../test'
+import { act, actConnect, renderHook, wagmiContractConfig } from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UseWaitForTransactionArgs,
@@ -40,8 +33,6 @@ function useContractEventWithWrite(config: {
   }
 }
 
-const timeout = 15_000
-
 describe('useContractEvent', () => {
   it('mounts', () => {
     const listener = jest.fn()
@@ -58,33 +49,24 @@ describe('useContractEvent', () => {
 
   describe('configuration', () => {
     describe('once', () => {
-      jest.setTimeout(timeout)
       it('listens', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         let hash: string | undefined = undefined
-        let functionName = 'claim'
-        let args: any | any[] = tokenId
 
         const listener = jest.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({
             contractEvent: {
               config: {
-                ...mlootContractConfig,
-                eventName: 'Approval',
+                ...wagmiContractConfig,
+                eventName: 'Transfer',
                 listener,
               },
             },
             contractWrite: {
               config: {
                 mode: 'dangerouslyUnprepared',
-                ...mlootContractConfig,
-                functionName,
-                args,
+                ...wagmiContractConfig,
+                functionName: 'mint',
               },
             },
             waitForTransaction: { hash },
@@ -94,26 +76,8 @@ describe('useContractEvent', () => {
         await actConnect({ utils })
 
         await act(async () => result.current.contractWrite.write?.())
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
-        )
-        hash = result.current.contractWrite.data?.hash
-        rerender()
         await waitFor(() =>
-          expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
-        )
-
-        const to = await getSigners()[1]?.getAddress()
-        functionName = 'approve'
-        args = [to, tokenId]
-        rerender()
-
-        await actConnect({ utils })
-        await act(async () => result.current.contractWrite.write?.())
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
         hash = result.current.contractWrite.data?.hash
         rerender()

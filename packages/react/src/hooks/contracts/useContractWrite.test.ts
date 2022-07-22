@@ -1,10 +1,14 @@
 import {
+  act,
+  actConnect,
+  getCrowdfundArgs,
   getSigners,
   getTotalSupply,
-  getUnclaimedTokenId,
+  mirrorCrowdfundContractConfig,
+  mlootContractConfig,
+  renderHook,
   wagmiContractConfig,
-} from '../../../../core/test'
-import { act, actConnect, mlootContractConfig, renderHook } from '../../../test'
+} from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UsePrepareContractWriteArgs,
@@ -41,55 +45,70 @@ function usePrepareContractWritedWithConnect(
   }
 }
 
-const timeout = 15_000
-
 describe('useContractWrite', () => {
-  jest.setTimeout(timeout)
-  it('mounts', async () => {
-    const tokenId = await getUnclaimedTokenId(
-      '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-    )
-    if (!tokenId) return
+  describe('mounts', () => {
+    it('prepared', async () => {
+      const { result } = renderHook(() =>
+        useContractWrite({
+          mode: 'prepared',
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          request: undefined,
+        }),
+      )
 
-    const { result } = renderHook(() =>
-      usePrepareContractWritedWithConnect({
-        ...mlootContractConfig,
-        functionName: 'claim',
-        args: [tokenId],
-      }),
-    )
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isSuccess": false,
+          "reset": [Function],
+          "status": "idle",
+          "variables": undefined,
+          "write": undefined,
+          "writeAsync": undefined,
+        }
+      `)
+    })
 
-    expect(result.current.contractWrite).toMatchInlineSnapshot(`
-      {
-        "data": undefined,
-        "error": null,
-        "isError": false,
-        "isIdle": true,
-        "isLoading": false,
-        "isSuccess": false,
-        "reset": [Function],
-        "status": "idle",
-        "variables": undefined,
-        "write": undefined,
-        "writeAsync": undefined,
-      }
-    `)
+    it('dangerouslyUnprepared', async () => {
+      const { result } = renderHook(() =>
+        useContractWrite({
+          mode: 'dangerouslyUnprepared',
+          ...wagmiContractConfig,
+          functionName: 'mint',
+        }),
+      )
+
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": undefined,
+          "error": null,
+          "isError": false,
+          "isIdle": true,
+          "isLoading": false,
+          "isSuccess": false,
+          "reset": [Function],
+          "status": "idle",
+          "variables": undefined,
+          "write": [Function],
+          "writeAsync": [Function],
+        }
+      `)
+    })
   })
 
   describe('configuration', () => {
     describe('chainId', () => {
       it('unable to switch', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
-            ...mlootContractConfig,
+            ...wagmiContractConfig,
             chainId: 69,
-            functionName: 'claim',
-            args: [tokenId],
+            functionName: 'mint',
           }),
         )
 
@@ -109,7 +128,7 @@ describe('useContractWrite', () => {
         )
 
         expect(result.current.contractWrite.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Chain 69", received "Ethereum.]`,
+          `[ChainMismatchError: Chain mismatch: Expected "Chain 69", received "Ethereum".]`,
         )
       })
     })
@@ -118,16 +137,10 @@ describe('useContractWrite', () => {
   describe('return value', () => {
     describe('write', () => {
       it('prepared', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
-            ...mlootContractConfig,
-            functionName: 'claim',
-            args: [tokenId],
+            ...wagmiContractConfig,
+            functionName: 'mint',
           }),
         )
 
@@ -166,16 +179,12 @@ describe('useContractWrite', () => {
       })
 
       it('prepared with deferred args', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
+        const data = getCrowdfundArgs()
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
-            ...mlootContractConfig,
-            functionName: 'claim',
-            args: [tokenId],
+            ...mirrorCrowdfundContractConfig,
+            functionName: 'createCrowdfund',
+            args: data,
           }),
         )
         const { result, waitFor } = utils
@@ -185,33 +194,24 @@ describe('useContractWrite', () => {
           expect(result.current.contractWrite.write).toBeDefined(),
         )
 
-        await act(async () =>
+        await act(async () => {
           result.current.contractWrite.write?.({
-            dangerouslySetArgs: await getUnclaimedTokenId(
-              '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-            ),
-          }),
-        )
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+            dangerouslySetArgs: getCrowdfundArgs(),
+          })
+        })
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
 
       it('dangerouslyUnprepared', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'dangerouslyUnprepared',
-            ...mlootContractConfig,
-            functionName: 'claim',
-            args: [tokenId],
+            ...wagmiContractConfig,
+            functionName: 'mint',
           }),
         )
 
@@ -222,9 +222,8 @@ describe('useContractWrite', () => {
           result.current.contractWrite.write?.()
         })
 
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
 
         const { data, variables, ...res } = result.current.contractWrite
@@ -247,16 +246,11 @@ describe('useContractWrite', () => {
       })
 
       it('dangerouslyUnprepared with deferred args', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'dangerouslyUnprepared',
-            ...mlootContractConfig,
-            functionName: 'claim',
+            ...mirrorCrowdfundContractConfig,
+            functionName: 'createCrowdfund',
           }),
         )
         const { result, waitFor } = utils
@@ -264,12 +258,11 @@ describe('useContractWrite', () => {
 
         await act(async () =>
           result.current.contractWrite.write?.({
-            dangerouslySetArgs: tokenId,
+            dangerouslySetArgs: getCrowdfundArgs(),
           }),
         )
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
@@ -281,7 +274,7 @@ describe('useContractWrite', () => {
             mode: 'dangerouslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
-            args: [1],
+            args: 1,
           }),
         )
 
@@ -301,7 +294,7 @@ describe('useContractWrite', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: processing response error (body="{\\"jsonrpc\\":\\"2.0\\",\\"id\\":42,\\"error\\":{\\"code\\":-32603,\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":{\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}}", error={"code":-32603,"data":{"message":"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'","data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000"}}, requestBody="{\\"method\\":\\"eth_estimateGas\\",\\"params\\":[{\\"from\\":\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\",\\"to\\":\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\"}],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}", requestMethod="POST", url="http://127.0.0.1:8545", code=SERVER_ERROR, version=web/5.6.0)],
+            "error": [Error: cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (error={"reason":"processing response error","code":"SERVER_ERROR","body":"{\\"jsonrpc\\":\\"2.0\\",\\"id\\":42,\\"error\\":{\\"code\\":3,\\"message\\":\\"execution reverted: Token ID invalid\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}","error":{"code":3,"data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000"},"requestBody":"{\\"method\\":\\"eth_estimateGas\\",\\"params\\":[{\\"from\\":\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\",\\"to\\":\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\"}],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}","requestMethod":"POST","url":"http://127.0.0.1:8545"}, method="estimateGas", transaction={"from":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","to":"0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF","data":"0x379607f50000000000000000000000000000000000000000000000000000000000000001","accessList":null}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.6.5)],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -317,16 +310,10 @@ describe('useContractWrite', () => {
 
     describe('writeAsync', () => {
       it('prepared', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
-            ...mlootContractConfig,
-            functionName: 'claim',
-            args: [tokenId],
+            ...wagmiContractConfig,
+            functionName: 'mint',
           }),
         )
 
@@ -366,16 +353,12 @@ describe('useContractWrite', () => {
       })
 
       it('prepared with deferred args', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
+        const data = getCrowdfundArgs()
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
-            ...mlootContractConfig,
-            functionName: 'claim',
-            args: [tokenId],
+            ...mirrorCrowdfundContractConfig,
+            functionName: 'createCrowdfund',
+            args: data,
           }),
         )
         const { result, waitFor } = utils
@@ -387,32 +370,23 @@ describe('useContractWrite', () => {
 
         await act(async () => {
           const res = await result.current.contractWrite.writeAsync?.({
-            dangerouslySetArgs: await getUnclaimedTokenId(
-              '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-            ),
+            dangerouslySetArgs: getCrowdfundArgs(),
           })
           expect(res?.hash).toBeDefined()
         })
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
 
       it('dangerouslyUnprepared', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'dangerouslyUnprepared',
-            ...mlootContractConfig,
-            functionName: 'claim',
-            args: [tokenId],
+            ...wagmiContractConfig,
+            functionName: 'mint',
           }),
         )
 
@@ -424,9 +398,8 @@ describe('useContractWrite', () => {
           expect(res?.hash).toBeDefined()
         })
 
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
 
         const { data, variables, ...res } = result.current.contractWrite
@@ -449,16 +422,11 @@ describe('useContractWrite', () => {
       })
 
       it('dangerouslyUnprepared with deferred args', async () => {
-        const tokenId = await getUnclaimedTokenId(
-          '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        )
-        if (!tokenId) return
-
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'dangerouslyUnprepared',
-            ...mlootContractConfig,
-            functionName: 'claim',
+            ...mirrorCrowdfundContractConfig,
+            functionName: 'createCrowdfund',
           }),
         )
         const { result, waitFor } = utils
@@ -466,13 +434,12 @@ describe('useContractWrite', () => {
 
         await act(async () => {
           const res = await result.current.contractWrite.writeAsync?.({
-            dangerouslySetArgs: tokenId,
+            dangerouslySetArgs: getCrowdfundArgs(),
           })
           expect(res?.hash).toBeDefined()
         })
-        await waitFor(
-          () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-          { timeout },
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
         )
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
@@ -497,20 +464,17 @@ describe('useContractWrite', () => {
               dangerouslySetArgs: 1,
             }),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
-            `"processing response error (body=\\"{\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\",\\\\\\"id\\\\\\":42,\\\\\\"error\\\\\\":{\\\\\\"code\\\\\\":-32603,\\\\\\"message\\\\\\":\\\\\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\\\\\",\\\\\\"data\\\\\\":{\\\\\\"message\\\\\\":\\\\\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\\\\\"}}}\\", error={\\"code\\":-32603,\\"data\\":{\\"message\\":\\"Error: VM Exception while processing transaction: reverted with reason string 'Token ID invalid'\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}, requestBody=\\"{\\\\\\"method\\\\\\":\\\\\\"eth_estimateGas\\\\\\",\\\\\\"params\\\\\\":[{\\\\\\"from\\\\\\":\\\\\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\\\\\",\\\\\\"to\\\\\\":\\\\\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\\\\\"}],\\\\\\"id\\\\\\":42,\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\"}\\", requestMethod=\\"POST\\", url=\\"http://127.0.0.1:8545\\", code=SERVER_ERROR, version=web/5.6.0)"`,
+            `"cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (error={\\"reason\\":\\"processing response error\\",\\"code\\":\\"SERVER_ERROR\\",\\"body\\":\\"{\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\",\\\\\\"id\\\\\\":42,\\\\\\"error\\\\\\":{\\\\\\"code\\\\\\":3,\\\\\\"message\\\\\\":\\\\\\"execution reverted: Token ID invalid\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\\\\\"}}\\",\\"error\\":{\\"code\\":3,\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"},\\"requestBody\\":\\"{\\\\\\"method\\\\\\":\\\\\\"eth_estimateGas\\\\\\",\\\\\\"params\\\\\\":[{\\\\\\"from\\\\\\":\\\\\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\\\\\",\\\\\\"to\\\\\\":\\\\\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\\\\\"}],\\\\\\"id\\\\\\":42,\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\"}\\",\\"requestMethod\\":\\"POST\\",\\"url\\":\\"http://127.0.0.1:8545\\"}, method=\\"estimateGas\\", transaction={\\"from\\":\\"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266\\",\\"to\\":\\"0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\",\\"accessList\\":null}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.6.5)"`,
           )
         })
-        await waitFor(
-          () => expect(result.current.contractWrite.isError).toBeTruthy(),
-          { timeout },
+        await waitFor(() =>
+          expect(result.current.contractWrite.isError).toBeTruthy(),
         )
       })
     })
   })
 
   describe('behavior', () => {
-    jest.setTimeout(timeout)
-
     it('multiple writes', async () => {
       let args: any[] | any = []
       let functionName = 'mint'
@@ -524,14 +488,12 @@ describe('useContractWrite', () => {
       const { result, rerender, waitFor } = utils
       await actConnect({ utils })
 
-      await waitFor(
-        () => expect(result.current.contractWrite.write).toBeDefined(),
-        { timeout },
+      await waitFor(() =>
+        expect(result.current.contractWrite.write).toBeDefined(),
       )
       await act(async () => result.current.contractWrite.write?.())
-      await waitFor(
-        () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-        { timeout },
+      await waitFor(() =>
+        expect(result.current.contractWrite.isSuccess).toBeTruthy(),
       )
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
@@ -549,9 +511,8 @@ describe('useContractWrite', () => {
         expect(result.current.contractWrite.write).toBeDefined(),
       )
       await act(async () => result.current.contractWrite.write?.())
-      await waitFor(
-        () => expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-        { timeout },
+      await waitFor(() =>
+        expect(result.current.contractWrite.isSuccess).toBeTruthy(),
       )
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()

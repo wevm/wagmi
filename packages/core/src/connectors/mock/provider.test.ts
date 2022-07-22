@@ -1,11 +1,10 @@
-import { providers } from 'ethers/lib/ethers'
-
 import { getSigners } from '../../../test'
+import { Signer } from '../../types'
 import { MockProvider } from './provider'
 
 describe('MockProvider', () => {
   let provider: MockProvider
-  let signer: providers.JsonRpcSigner
+  let signer: Signer
   beforeEach(() => {
     const signers = getSigners()
     signer = signers[0]!
@@ -69,10 +68,11 @@ describe('MockProvider', () => {
     it('connected', async () => {
       await provider.enable()
       expect(provider.getSigner()).toMatchInlineSnapshot(`
-        JsonRpcSigner {
-          "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "_index": null,
+        WalletSigner {
           "_isSigner": true,
+          "_mnemonic": [Function],
+          "_signingKey": [Function],
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "provider": "<Provider network={31337} />",
         }
       `)

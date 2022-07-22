@@ -3,6 +3,7 @@ import { providers } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
 
 import { UserRejectedRequestError } from '../../errors'
+import { Signer } from '../../types'
 
 export type MockProviderOptions = {
   chainId?: number
@@ -12,7 +13,7 @@ export type MockProviderOptions = {
     failSwitchChain?: boolean
     noSwitchChain?: boolean
   }
-  signer: providers.JsonRpcSigner
+  signer: Signer
 }
 
 type Events = {
@@ -26,7 +27,7 @@ export class MockProvider extends providers.BaseProvider {
   events = new EventEmitter<Events>()
 
   #options: MockProviderOptions
-  #signer?: providers.JsonRpcSigner
+  #signer?: Signer
 
   constructor(options: MockProviderOptions) {
     super({ name: 'Network', chainId: options.chainId ?? 1 })

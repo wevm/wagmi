@@ -95,7 +95,7 @@ describe('useSendTransaction', () => {
         )
 
         expect(result.current.sendTransaction.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby.]`,
+          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
         )
       })
     })
@@ -147,7 +147,7 @@ describe('useSendTransaction', () => {
               "mode": "prepared",
               "request": {
                 "gasLimit": {
-                  "hex": "0x5209",
+                  "hex": "0x5208",
                   "type": "BigNumber",
                 },
                 "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
@@ -286,7 +286,7 @@ describe('useSendTransaction', () => {
         const { error, ...res } = result.current.sendTransaction
         expect(
           error?.message?.includes(
-            "sender doesn't have enough funds to send tx",
+            'insufficient funds for intrinsic transaction cost',
           ),
         ).toEqual(true)
         expect(res).toMatchInlineSnapshot(`
@@ -392,7 +392,7 @@ describe('useSendTransaction', () => {
           } catch (error) {
             expect(
               (error as Error)?.message?.includes(
-                "sender doesn't have enough funds to send tx",
+                'insufficient funds for intrinsic transaction cost',
               ),
             ).toEqual(true)
           }

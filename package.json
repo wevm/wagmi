@@ -1,36 +1,28 @@
 {
   "name": "root",
   "scripts": {
+    "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER",
     "build": "preconstruct build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "preconstruct dev",
-    "dev:docs": "pnpm dev && pnpm --filter docs dev",
-    "dev:playground": "pnpm dev && pnpm --filter example-dev dev",
-    "dev:example:cra": "pnpm build && pnpm --filter example-cra start",
-    "dev:example:next": "pnpm build && pnpm --filter example-next dev",
-    "dev:example:remix": "pnpm build && pnpm --filter example-remix dev",
-    "dev:example:vite-react": "pnpm build && pnpm --filter example-vite-react dev",
-    "hardhat:dev": "pnpm hardhat node --config .config/hardhat.config.ts",
+    "docs:build": "pnpm dev && pnpm --filter docs build",
+    "docs:dev": "pnpm dev && pnpm --filter docs dev",
+    "example:cra": "pnpm build && pnpm --filter example-cra start",
+    "example:next": "pnpm build && pnpm --filter example-next dev",
+    "example:remix": "pnpm build && pnpm --filter example-remix dev",
+    "example:vite-react": "pnpm build && pnpm --filter example-vite-react dev",
     "lint": "eslint . --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
     "lint:types": "tsc --noEmit",
-    "postinstall": "husky install .config/husky && preconstruct dev",
+    "playground": "pnpm dev && pnpm --filter example-dev dev",
+    "postinstall": "preconstruct dev",
     "preinstall": "npx only-allow pnpm",
-    "size": "bundlewatch --config .config/bundlewatch.config.js",
-    "test": "jest --coverage",
-    "test:ci": "start-server-and-test hardhat:dev http://127.0.0.1:8545 test",
-    "test:size": "pnpm build && pnpm size",
+    "prepare": "npx simple-git-hooks",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch"
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "pnpm lint:fix"
-    ],
-    "*.{json,md,mdx,yml}": [
-      "pnpm lint:format"
-    ]
   },
   "preconstruct": {
     "packages": [
@@ -45,7 +37,6 @@
     "@changesets/changelog-github": "^0.4.4",
     "@changesets/cli": "^2.22.0",
     "@ethersproject/providers": "^5.6.5",
-    "@nomiclabs/hardhat-ethers": "^2.0.6",
     "@preconstruct/cli": "^2.1.5",
     "@swc-node/jest": "^1.5.2",
     "@testing-library/jest-dom": "^5.16.4",
@@ -55,7 +46,6 @@
     "@types/prettier": "^2.6.0",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
-    "bundlewatch": "^0.3.3",
     "dotenv": "^11.0.0",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.5.0",
@@ -69,16 +59,25 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-testing-library": "^5.5.1",
     "ethers": "^5.6.5",
-    "hardhat": "^2.9.6",
-    "husky": "^7.0.4",
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "jest-watch-typeahead": "^1.1.0",
     "lint-staged": "^12.4.1",
     "msw": "^0.39.2",
     "prettier": "^2.6.2",
-    "start-server-and-test": "^1.14.0",
+    "simple-git-hooks": "^2.8.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "pnpm lint:fix"
+    ],
+    "*.{json,md,mdx,yml}": [
+      "pnpm lint:format"
+    ]
   }
 }

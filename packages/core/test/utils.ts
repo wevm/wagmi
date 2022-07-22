@@ -21,10 +21,9 @@ export function getProvider({
   chains = allChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
-  const network = getNetwork(chain)
-  const url = chain_.hardhat.rpcUrls.default.toString()
-  const provider = new EthersProviderWrapper(url, network)
+  const chain = allChains.find((x) => x.id === chainId) ?? chain_.foundry
+  const url = chain_.foundry.rpcUrls.default
+  const provider = new EthersProviderWrapper(url, getNetwork(chain))
   provider.pollingInterval = 1_000
   return Object.assign(provider, { chains })
 }
@@ -39,11 +38,10 @@ export function getWebSocketProvider({
   chains = allChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
-  const network = getNetwork(chain)
-  const url = chain_.hardhat.rpcUrls.default.toString().replace('http', 'ws')
+  const chain = allChains.find((x) => x.id === chainId) ?? chain_.foundry
+  const url = chain_.foundry.rpcUrls.default.replace('http', 'ws')
   const webSocketProvider = Object.assign(
-    new EthersWebSocketProviderWrapper(url, network),
+    new EthersWebSocketProviderWrapper(url, getNetwork(chain)),
     { chains },
   )
   // Clean up WebSocketProvider immediately
@@ -54,12 +52,7 @@ export function getWebSocketProvider({
   return webSocketProvider
 }
 
-// TODO: Figure out why this is flaky
-// Throws "Expected private key to be an Uint8Array"
-// from "packages/hardhat-core/src/internal/util/keys-derivation.ts"
-// const accounts = normalizeHardhatNetworkAccountsConfig(
-//   defaultHardhatNetworkParams.accounts,
-// )
+// Default accounts from Anvil
 export const accounts = [
   {
     privateKey:
@@ -163,44 +156,18 @@ export const accounts = [
   },
 ]
 
-export function getSigners() {
-  const provider = getProvider()
-  const signers = accounts.map((x) => {
-    const wallet = new Wallet(x.privateKey)
-    return provider.getSigner(wallet.address)
-  })
-  return signers
+export class WalletSigner extends Wallet {
+  connectUnchecked(): providers.JsonRpcSigner {
+    const uncheckedSigner = (<EthersProviderWrapper>(
+      this.provider
+    )).getUncheckedSigner(this.address)
+    return uncheckedSigner
+  }
 }
 
-export async function getUnclaimedTokenId(
-  addressOrName: string,
-  maxAttempts = 3,
-) {
-  function getRandomTokenId(from: number, to: number) {
-    return Math.floor(Math.random() * to) + from
-  }
-
-  let attempts = 0
+export function getSigners() {
   const provider = getProvider()
-  const contract = new Contract(
-    addressOrName,
-    [
-      'function ownerOf(uint256 _tokenId) external view returns (address)',
-      'function totalSupply() view returns (uint256)',
-    ],
-    provider,
-  )
-  const totalSupply = await contract.totalSupply()
-  while (attempts < maxAttempts) {
-    const randomTokenId = getRandomTokenId(1, totalSupply)
-    try {
-      await contract.ownerOf(randomTokenId)
-    } catch (error) {
-      return randomTokenId
-    }
-    attempts += 1
-  }
-  return false
+  return accounts.map((x) => new WalletSigner(x.privateKey, provider))
 }
 
 export async function getTotalSupply(addressOrName: string) {
@@ -219,4 +186,43 @@ export async function getTotalSupply(addressOrName: string) {
     provider,
   )
   return await contract.totalSupply()
+}
+
+let crowdfundId = 0
+function getRandomNumber(from = 1, to = 100) {
+  return Math.floor(Math.random() * to) + from
+}
+
+export function getCrowdfundArgs({
+  tributaryConfig = {
+    tributary: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    feePercentage: 250,
+  },
+  name = `Crowdfund ${crowdfundId}`,
+  symbol = `$Crowdfund${crowdfundId}-${getRandomNumber()}`,
+  operatorAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  fundingRecipientAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  fundingGoal = '100000000000000000000',
+  operatorPercent = '100',
+}: {
+  tributaryConfig?: { tributary: string; feePercentage: number }
+  name?: string
+  symbol?: string
+  operatorAddress?: string
+  fundingRecipientAddress?: string
+  fundingGoal?: string
+  operatorPercent?: string
+} = {}) {
+  crowdfundId += 1
+  // do not change order of keys below
+  const data = {
+    tributaryConfig,
+    name,
+    symbol,
+    operatorAddress,
+    fundingRecipientAddress,
+    fundingGoal,
+    operatorPercent,
+  }
+  return Object.values(data)
 }
