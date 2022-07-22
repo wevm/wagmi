@@ -197,7 +197,7 @@ export default withIronSessionApiRoute(handler, ironOptions)
 
 Now that the connect wallet logic and API routes are set up, we can sign in the user! We'll create a new `SiweMessage` and sign it using the [`useSignMessage`](/docs/hooks/useSignMessage) hook. We can also add a log out button and a side effect for fetching the logged in user when the page loads or window gains focus.
 
-```tsx {19,43-53,57-64,96,119}
+```tsx {19,43-53,58-65,97,120}
 import * as React from 'react'
 import { useAccount, useNetwork, useSignMessage } from 'wagmi'
 import { SiweMessage } from 'siwe'
@@ -234,7 +234,8 @@ function SignInButton({
   const { address } = useAccount()
   const { chain: activeChain } = useNetwork()
   const { signMessageAsync } = useSignMessage()
-  const signIn = React.useCallback(async () => {
+
+  const signIn = async () => {
     try {
       const chainId = activeChain?.id
       if (!address || !chainId) return
@@ -271,7 +272,7 @@ function SignInButton({
       onError({ error: error as Error })
       fetchNonce()
     }
-  }, [])
+  }
 
   return (
     <button disabled={!state.nonce || state.loading} onClick={signIn}>
