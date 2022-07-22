@@ -49,7 +49,7 @@ describe('writeContract', () => {
           ...config,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum."`,
+        `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
       )
     })
 

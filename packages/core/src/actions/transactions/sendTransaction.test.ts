@@ -74,7 +74,7 @@ describe('sendTransaction', () => {
           ...config,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        `"Chain mismatch: Expected \\"Chain 420\\", received \\"Ethereum."`,
+        `"Chain mismatch: Expected \\"Chain 420\\", received \\"Ethereum\\"."`,
       )
     })
 

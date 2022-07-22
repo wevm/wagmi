@@ -128,7 +128,7 @@ describe('useContractWrite', () => {
         )
 
         expect(result.current.contractWrite.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Chain 69", received "Ethereum.]`,
+          `[ChainMismatchError: Chain mismatch: Expected "Chain 69", received "Ethereum".]`,
         )
       })
     })

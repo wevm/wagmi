@@ -86,7 +86,7 @@ describe('signTypedData', () => {
         await expect(
           signTypedData({ domain, types, value }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby."`,
+          `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby\\"."`,
         )
       })
     })
