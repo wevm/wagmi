@@ -1,13 +1,13 @@
-import { providers } from 'ethers'
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
+import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
+import { getClient } from '../client'
 import {
   ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { getClient } from '../client'
 import { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'

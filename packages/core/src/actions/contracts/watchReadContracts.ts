@@ -1,10 +1,10 @@
 import { getClient } from '../../client'
+import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import {
   ReadContractsConfig,
   ReadContractsResult,
   readContracts,
 } from './readContracts'
-import { watchBlockNumber } from '../network-status/watchBlockNumber'
 
 export type WatchReadContractsConfig = ReadContractsConfig & {
   listenToBlock?: boolean

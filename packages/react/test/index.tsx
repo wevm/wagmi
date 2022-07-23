@@ -1,9 +1,9 @@
-import * as React from 'react'
 import {
   RenderHookOptions,
   renderHook as defaultRenderHook,
   waitFor,
 } from '@testing-library/react'
+import * as React from 'react'
 import { QueryClient } from 'react-query'
 
 import { WagmiConfig } from '../src'

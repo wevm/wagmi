@@ -1,5 +1,5 @@
-import { Mutate, StoreApi, default as create } from 'zustand/vanilla'
 import { persist, subscribeWithSelector } from 'zustand/middleware'
+import { Mutate, StoreApi, default as create } from 'zustand/vanilla'
 
 import { Connector, ConnectorData, InjectedConnector } from './connectors'
 import { ClientStorage, createStorage, noopStorage } from './storage'

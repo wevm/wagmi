@@ -1,9 +1,9 @@
-import * as React from 'react'
 import {
   SignTypedDataArgs,
   SignTypedDataResult,
   signTypedData,
 } from '@wagmi/core'
+import * as React from 'react'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'

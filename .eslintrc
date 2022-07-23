@@ -41,7 +41,10 @@
       "error",
       {
         "groups": ["external", "internal"],
-        "newlines-between": "always-and-inside-groups"
+        "newlines-between": "always-and-inside-groups",
+        "alphabetize": {
+          "order": "asc"
+        }
       }
     ],
     "sort-imports": [
@@ -69,9 +72,9 @@
     }
   ],
   "ignorePatterns": [
-    "**/dist/**",
     "CHANGELOG.md",
     "build",
+    "dist",
     "node_modules"
   ],
   "settings": {

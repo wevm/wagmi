@@ -1,6 +1,6 @@
 import { getClient } from '../../client'
-import { MulticallConfig, MulticallResult, multicall } from './multicall'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
+import { MulticallConfig, MulticallResult, multicall } from './multicall'
 
 export type WatchMulticallConfig = MulticallConfig & {
   listenToBlock?: boolean

@@ -1,8 +1,7 @@
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
-import { Chain } from '../types'
-import { getInjectedName, normalizeChainId } from '../utils'
+import { getClient } from '../client'
 import {
   AddChainError,
   ChainNotConfiguredError,
@@ -13,8 +12,9 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
+import { Chain } from '../types'
+import { getInjectedName, normalizeChainId } from '../utils'
 import { Connector } from './base'
-import { getClient } from '../client'
 
 export type InjectedConnectorOptions = {
   /** Name of connector */

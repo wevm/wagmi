@@ -1,10 +1,10 @@
-import * as React from 'react'
 import {
   WriteContractArgs,
   WriteContractPreparedArgs,
   WriteContractResult,
   writeContract,
 } from '@wagmi/core'
+import * as React from 'react'
 import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'

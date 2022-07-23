@@ -1,10 +1,10 @@
-import * as React from 'react'
 import {
   FetchSignerResult,
   Signer,
   fetchSigner,
   watchSigner,
 } from '@wagmi/core'
+import * as React from 'react'
 import { useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'

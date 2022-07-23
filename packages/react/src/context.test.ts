@@ -1,6 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
-
 import * as React from 'react'
+import { describe, expect, it, vi } from 'vitest'
 
 import { renderHook } from '../test'
 import { useClient } from './context'

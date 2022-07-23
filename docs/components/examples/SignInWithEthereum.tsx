@@ -1,10 +1,10 @@
-import * as React from 'react'
 import { Box, Button, Skeleton, Stack } from 'degen'
+import * as React from 'react'
 import { chain, useAccount, useNetwork } from 'wagmi'
 
+import { formatAddress } from '../../lib/address'
 import { PreviewWrapper } from '../core'
 import { Account, SiweButton, WalletSelector } from '../web3'
-import { formatAddress } from '../../lib/address'
 
 export function SignInWithEthereum() {
   const [address, setAddress] = React.useState<string>()

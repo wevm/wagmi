@@ -1,6 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
-
 import { erc20ABI } from '@wagmi/core'
+import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, renderHook, wagmiContractConfig } from '../../../test'
 import { useConnect } from '../accounts'

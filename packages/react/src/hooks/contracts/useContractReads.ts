@@ -1,5 +1,3 @@
-import * as React from 'react'
-import { hashQueryKey } from 'react-query'
 import {
   ReadContractsConfig,
   ReadContractsResult,
@@ -7,6 +5,8 @@ import {
   parseContractResult,
   readContracts,
 } from '@wagmi/core'
+import * as React from 'react'
+import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'

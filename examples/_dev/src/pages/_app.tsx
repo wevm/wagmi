@@ -1,6 +1,6 @@
-import * as React from 'react'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
+import * as React from 'react'
 import {
   Chain,
   WagmiConfig,
@@ -11,8 +11,8 @@ import {
 } from 'wagmi'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'

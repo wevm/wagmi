@@ -1,15 +1,15 @@
 import { CallOverrides } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
-import { getProvider } from '../providers'
-import { getContract } from './getContract'
 import { multicallInterface } from '../../constants'
-import { ReadContractConfig } from './readContract'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
   ProviderChainsNotFound,
 } from '../../errors'
+import { getProvider } from '../providers'
+import { getContract } from './getContract'
+import { ReadContractConfig } from './readContract'
 
 type MulticallContract = {
   addressOrName: ReadContractConfig['addressOrName']

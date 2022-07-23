@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
+import * as React from 'react'
 import { useMutation } from 'react-query'
 
 import { useClient } from '../../context'

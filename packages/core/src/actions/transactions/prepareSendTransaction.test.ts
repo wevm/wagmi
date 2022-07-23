@@ -1,6 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-
 import { BigNumber } from 'ethers'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { setupClient } from '../../../test'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'

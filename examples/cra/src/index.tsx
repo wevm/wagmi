@@ -7,16 +7,15 @@ import {
   createClient,
   defaultChains,
 } from 'wagmi'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
-
-import { Buffer } from 'buffer'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 import { App } from './App'
 import reportWebVitals from './reportWebVitals'
+import { Buffer } from 'buffer'
 
 // polyfill Buffer for client
 if (!window.Buffer) {

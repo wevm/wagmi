@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
+import { useRouter } from 'next/router'
 
 const github = 'https://github.com/wagmi-dev/wagmi'
 

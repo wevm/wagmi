@@ -1,9 +1,9 @@
-import * as React from 'react'
 import {
   SwitchNetworkArgs,
   SwitchNetworkResult,
   switchNetwork,
 } from '@wagmi/core'
+import * as React from 'react'
 import { useMutation } from 'react-query'
 
 import { useClient } from '../../context'

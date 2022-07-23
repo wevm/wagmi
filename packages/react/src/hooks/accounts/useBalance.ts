@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
+import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'

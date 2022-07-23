@@ -1,6 +1,6 @@
-import * as React from 'react'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
+import * as React from 'react'
 
 import {
   WagmiConfig,
@@ -8,11 +8,11 @@ import {
   createClient,
   defaultChains,
 } from 'wagmi'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
 
