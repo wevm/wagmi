@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { Provider, WebSocketProvider } from '@wagmi/core'
+import * as React from 'react'
 import { QueryClientProvider } from 'react-query'
 
 import { Client } from './client'

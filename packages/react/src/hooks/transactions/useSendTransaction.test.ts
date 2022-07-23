@@ -6,15 +6,15 @@ import { describe, expect, it } from 'vitest'
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UseSendTransactionArgs,
-  UseSendTransactionConfig,
-  useSendTransaction,
-} from './useSendTransaction'
-import {
   UsePrepareSendTransactionArgs,
   UsePrepareSendTransactionConfig,
   usePrepareSendTransaction,
 } from './usePrepareSendTransaction'
+import {
+  UseSendTransactionArgs,
+  UseSendTransactionConfig,
+  useSendTransaction,
+} from './useSendTransaction'
 
 function useSendTransactionWithConnect(
   config: UseSendTransactionArgs & UseSendTransactionConfig,

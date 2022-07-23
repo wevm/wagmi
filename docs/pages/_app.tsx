@@ -1,7 +1,7 @@
-import * as React from 'react'
 import { ThemeProvider } from 'degen'
-import NextScript from 'next/script'
 import type { AppProps } from 'next/app'
+import NextScript from 'next/script'
+import * as React from 'react'
 
 import '../styles/globals.css'
 import 'nextra-theme-docs/style.css'
@@ -9,8 +9,8 @@ import 'nextra-theme-docs/style.css'
 // https://github.com/import-js/eslint-plugin-import/issues/1868
 // eslint-disable-next-line import/no-unresolved
 import 'degen/styles'
-import { useFathom } from '../hooks'
 import { Providers } from '../components/core'
+import { useFathom } from '../hooks'
 import { encodeBase64 } from '../lib/encode'
 
 const themeKey = 'theme'

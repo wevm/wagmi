@@ -1,7 +1,7 @@
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { chain } from '@wagmi/core'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { chain } from '@wagmi/core'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 import { act, renderHook } from '../../../test'
 import { useEnsAvatar } from './useEnsAvatar'

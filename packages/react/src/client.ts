@@ -6,8 +6,8 @@ import {
   createClient as createCoreClient,
 } from '@wagmi/core'
 import { QueryClient } from 'react-query'
-import { Persister, persistQueryClient } from 'react-query/persistQueryClient'
 import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
+import { Persister, persistQueryClient } from 'react-query/persistQueryClient'
 
 import { deserialize, serialize } from './utils'
 

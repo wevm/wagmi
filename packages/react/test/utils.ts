@@ -1,16 +1,16 @@
-import { expect } from 'vitest'
 import { act } from '@testing-library/react'
 
-import { MockConnector } from '@wagmi/core/connectors/mock'
 import {
   Connector,
   Provider,
   WebSocketProvider,
   defaultChains,
 } from '@wagmi/core'
+import { MockConnector } from '@wagmi/core/connectors/mock'
+import { expect } from 'vitest'
 
-import { getProvider, getSigners } from '../../core/test/utils'
 import { renderHook } from '.'
+import { getProvider, getSigners } from '../../core/test/utils'
 import { CreateClientConfig, createClient } from '../src'
 import {
   UseAccountConfig,

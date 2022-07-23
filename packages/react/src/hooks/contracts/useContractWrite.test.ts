@@ -13,15 +13,15 @@ import {
 } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UsePrepareContractWriteArgs,
-  UsePrepareContractWriteConfig,
-  usePrepareContractWrite,
-} from './usePrepareContractWrite'
-import {
   UseContractWriteArgs,
   UseContractWriteConfig,
   useContractWrite,
 } from './useContractWrite'
+import {
+  UsePrepareContractWriteArgs,
+  UsePrepareContractWriteConfig,
+  usePrepareContractWrite,
+} from './usePrepareContractWrite'
 
 function useContractWriteWithConnect(
   config: UseContractWriteArgs & UseContractWriteConfig,

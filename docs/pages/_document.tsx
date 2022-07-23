@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { SkipNavLink } from '@reach/skip-nav'
 import {
   Head,
   Html,
@@ -6,7 +6,7 @@ import {
   default as NextDocument,
   NextScript,
 } from 'next/document'
-import { SkipNavLink } from '@reach/skip-nav'
+import * as React from 'react'
 
 class Document extends NextDocument {
   render() {

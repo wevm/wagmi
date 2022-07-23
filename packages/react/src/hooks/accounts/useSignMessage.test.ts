@@ -1,6 +1,5 @@
-import { describe, expect, it, vi } from 'vitest'
-
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
+import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from './useConnect'

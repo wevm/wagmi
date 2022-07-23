@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from 'vitest'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { verifyTypedData } from 'ethers/lib/utils'
+import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from './useConnect'

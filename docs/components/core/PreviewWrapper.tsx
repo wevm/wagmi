@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { useTheme as useNextThemes } from 'next-themes'
 import { Box, useTheme } from 'degen'
+import { useTheme as useNextThemes } from 'next-themes'
+import * as React from 'react'
 
 type Props = {
   children: React.ReactNode

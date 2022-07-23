@@ -5,11 +5,10 @@ import {
   setupClient,
   wagmigotchiContractConfig,
 } from '../../../test'
-import { ReadContractsConfig, readContracts } from './readContracts'
-
-import * as readContract from './readContract'
-import * as multicall from './multicall'
 import { chain } from '../../constants'
+import * as multicall from './multicall'
+import * as readContract from './readContract'
+import { ReadContractsConfig, readContracts } from './readContracts'
 
 const contracts: ReadContractsConfig['contracts'] = [
   {

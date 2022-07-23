@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { deepEqual } from '@wagmi/core'
+import * as React from 'react'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
 const isPlainObject = (obj: unknown) =>

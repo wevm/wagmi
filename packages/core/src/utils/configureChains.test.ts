@@ -1,3 +1,6 @@
+import { providers } from 'ethers'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
 import {
   Mock,
   afterAll,
@@ -8,16 +11,13 @@ import {
   it,
   vi,
 } from 'vitest'
-import { providers } from 'ethers'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
 
+import { chain, defaultAlchemyId, defaultInfuraId } from '../constants'
 import { alchemyProvider } from '../providers/alchemy'
-import { publicProvider } from '../providers/public'
 import { infuraProvider } from '../providers/infura'
 import { jsonRpcProvider } from '../providers/jsonRpc'
 
-import { chain, defaultAlchemyId, defaultInfuraId } from '../constants'
+import { publicProvider } from '../providers/public'
 import { Chain } from '../types'
 import { configureChains } from './configureChains'
 

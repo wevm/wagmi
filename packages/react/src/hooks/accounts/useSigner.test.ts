@@ -10,8 +10,8 @@ import {
 } from '../../../test'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
-import { useSwitchNetwork } from './useSwitchNetwork'
 import { useSigner } from './useSigner'
+import { useSwitchNetwork } from './useSwitchNetwork'
 
 function useSignerWithAccount() {
   return {

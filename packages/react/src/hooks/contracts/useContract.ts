@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { GetContractArgs, getContract } from '@wagmi/core'
+import * as React from 'react'
 
 export type UseContractConfig = GetContractArgs
 

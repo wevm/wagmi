@@ -74,5 +74,9 @@
     "*.{json,md,mdx,yml}": [
       "pnpm lint:format"
     ]
+  },
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=7"
   }
 }

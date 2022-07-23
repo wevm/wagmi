@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   ReadContractConfig,
   ReadContractResult,
@@ -6,6 +5,7 @@ import {
   parseContractResult,
   readContract,
 } from '@wagmi/core'
+import * as React from 'react'
 import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
