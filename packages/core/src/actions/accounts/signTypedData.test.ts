@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest'
 import { verifyTypedData } from 'ethers/lib/utils'
 
 import { getSigners, setupClient } from '../../../test'
@@ -44,7 +45,9 @@ const value = {
 }
 
 describe('signTypedData', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   describe('args', () => {
     it('domain, types, and value', async () => {

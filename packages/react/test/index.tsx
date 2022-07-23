@@ -4,13 +4,11 @@ import {
   renderHook as defaultRenderHook,
   waitFor,
 } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
 import { QueryClient } from 'react-query'
 
 import { WagmiConfig } from '../src'
+import { Client } from '../src/client'
 import { setupClient } from './utils'
-import { reactVersion } from './setup'
-import { Client } from '../src/context'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,9 +32,11 @@ type Props = { client?: Client } & {
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
-export function wrapper(props: Props) {
-  const client = props.client ?? setupClient({ queryClient })
-  return <WagmiConfig client={client} {...props} />
+export function wrapper({
+  client = setupClient({ queryClient }),
+  ...rest
+}: Props = {}) {
+  return <WagmiConfig client={client} {...rest} />
 }
 
 export function renderHook<TResult, TProps>(
@@ -46,28 +46,25 @@ export function renderHook<TResult, TProps>(
     ...options_
   }: RenderHookOptions<TProps & { client?: Client }> | undefined = {},
 ) {
-  let options: RenderHookOptions<TProps & { client?: Client }>
-  if (reactVersion === '18')
-    options = {
-      wrapper: (props) => wrapper({ ...props, ...options_?.initialProps }),
-      ...options_,
-    }
-  else
-    options = {
-      wrapper: wrapper_ ?? wrapper,
-      ...options_,
-    }
+  const options: RenderHookOptions<TProps & { client?: Client }> = {
+    ...(wrapper_
+      ? { wrapper: wrapper_ }
+      : {
+          wrapper: (props) => wrapper({ ...props, ...options_?.initialProps }),
+        }),
+    ...options_,
+  }
 
   queryClient.clear()
 
   const utils = defaultRenderHook<TResult, TProps>(hook, options)
   return {
     ...utils,
-    waitFor: (utils as { waitFor?: typeof waitFor }).waitFor ?? waitFor,
+    waitFor: (utils as { waitFor?: typeof waitFor })?.waitFor ?? waitFor,
   }
 }
 
-export { act } from '@testing-library/react'
+export { act, cleanup } from '@testing-library/react'
 export {
   setupClient,
   actConnect,

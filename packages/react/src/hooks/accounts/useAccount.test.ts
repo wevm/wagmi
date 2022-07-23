@@ -1,3 +1,5 @@
+import { describe, expect, it, vi } from 'vitest'
+
 import {
   act,
   actConnect,
@@ -106,8 +108,8 @@ describe('useAccount', () => {
     })
 
     it('invokes callbacks on connect and disconnect', async () => {
-      const connectListener = jest.fn()
-      const disconnectListener = jest.fn()
+      const connectListener = vi.fn()
+      const disconnectListener = vi.fn()
       const utils = renderHook(() =>
         useAccountWithConnectAndDisconnect({
           onConnect: connectListener,

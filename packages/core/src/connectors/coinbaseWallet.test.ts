@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { chain, defaultChains } from '../constants'
 import { CoinbaseWalletConnector } from './coinbaseWallet'
 

@@ -1,4 +1,10 @@
 export {
+  fetchToken,
+  type FetchTokenArgs,
+  type FetchTokenResult,
+} from './fetchToken'
+
+export {
   prepareWriteContract,
   type PrepareWriteContractConfig,
   type PrepareWriteContractResult,

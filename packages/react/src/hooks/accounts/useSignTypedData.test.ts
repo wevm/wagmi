@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from 'vitest'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { verifyTypedData } from 'ethers/lib/utils'
 
@@ -71,7 +72,7 @@ describe('useSignTypedData', () => {
 
   describe('configuration', () => {
     it('onSuccess', async () => {
-      const onSuccess = jest.fn()
+      const onSuccess = vi.fn()
       const utils = renderHook(() =>
         useSignTypedDataWithConnect({
           domain,

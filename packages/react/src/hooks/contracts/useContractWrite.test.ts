@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import {
   act,
   actConnect,
@@ -190,8 +192,9 @@ describe('useContractWrite', () => {
         const { result, waitFor } = utils
         await actConnect({ utils })
 
-        await waitFor(() =>
-          expect(result.current.contractWrite.write).toBeDefined(),
+        await waitFor(
+          () => expect(result.current.contractWrite.write).toBeDefined(),
+          { timeout: 10_000 },
         )
 
         await act(async () => {
@@ -204,7 +207,7 @@ describe('useContractWrite', () => {
         )
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
-      })
+      }, 10_000)
 
       it('dangerouslyUnprepared', async () => {
         const utils = renderHook(() =>

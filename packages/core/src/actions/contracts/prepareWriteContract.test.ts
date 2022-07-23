@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
@@ -8,7 +10,9 @@ const connector = new MockConnector({
 })
 
 describe('prepareWriteContract', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   it('default', async () => {
     await connect({ connector })

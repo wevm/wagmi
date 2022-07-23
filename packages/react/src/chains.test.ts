@@ -1,3 +1,5 @@
+import { expect, it } from 'vitest'
+
 import * as Exports from './chains'
 
 it('should expose correct exports', () => {

@@ -1,5 +1,14 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+} from 'vitest'
 
 import { setupClient } from '../../../test'
 import { chain } from '../../constants'
@@ -54,7 +63,9 @@ describe('fetchEnsAvatar', () => {
     }),
   )
 
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   afterEach(() => server.resetHandlers())
 

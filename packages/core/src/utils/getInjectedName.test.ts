@@ -1,24 +1,46 @@
+import { describe, expect, it } from 'vitest'
+
 import { getInjectedName } from './getInjectedName'
 
-describe.each`
-  ethereum                                                                                                     | expected
-  ${undefined}                                                                                                 | ${'Injected'}
-  ${{ isBraveWallet: true }}                                                                                   | ${'Brave Wallet'}
-  ${{ isBraveWallet: true, isMetaMask: true }}                                                                 | ${'Brave Wallet'}
-  ${{ isCoinbaseWallet: true }}                                                                                | ${'Coinbase Wallet'}
-  ${{ isExodus: true }}                                                                                        | ${'Exodus'}
-  ${{ isFrame: true }}                                                                                         | ${'Frame'}
-  ${{ isTally: true }}                                                                                         | ${'Tally'}
-  ${{ isTokenPocket: true, isMetaMask: true }}                                                                 | ${'TokenPocket'}
-  ${{ isTokenary: true, isMetaMask: true }}                                                                    | ${'Tokenary'}
-  ${{ isTrust: true }}                                                                                         | ${'Trust Wallet'}
-  ${{ isMetaMask: true }}                                                                                      | ${'MetaMask'}
-  ${{ providers: [{ isMetaMask: true }, { isCoinbaseWallet: true }] }}                                         | ${['MetaMask', 'Coinbase Wallet']}
-  ${{ providers: [{ isMetaMask: true }, { isMetaMask: true, isTokenary: true }, { isCoinbaseWallet: true }] }} | ${['MetaMask', 'Tokenary', 'Coinbase Wallet']}
-  ${{ providers: [{ isMetaMask: true }, { isFooWallet: true }, {}] }}                                          | ${['MetaMask', 'Unknown Wallet #1', 'Unknown Wallet #2']}
-  ${{}}                                                                                                        | ${'Injected'}
-`('getInjectedName($ethereum)', ({ ethereum, expected }) => {
+describe.each([
+  { ethereum: undefined, expected: 'Injected' },
+  { ethereum: { isBraveWallet: true }, expected: 'Brave Wallet' },
+  {
+    ethereum: { isBraveWallet: true, isMetaMask: true },
+    expected: 'Brave Wallet',
+  },
+  { ethereum: { isCoinbaseWallet: true }, expected: 'Coinbase Wallet' },
+  { ethereum: { isExodus: true }, expected: 'Exodus' },
+  { ethereum: { isFrame: true }, expected: 'Frame' },
+  { ethereum: { isTally: true }, expected: 'Tally' },
+  {
+    ethereum: { isTokenPocket: true, isMetaMask: true },
+    expected: 'TokenPocket',
+  },
+  { ethereum: { isTokenary: true, isMetaMask: true }, expected: 'Tokenary' },
+  { ethereum: { isTrust: true }, expected: 'Trust Wallet' },
+  { ethereum: { isMetaMask: true }, expected: 'MetaMask' },
+  {
+    ethereum: { providers: [{ isMetaMask: true }, { isCoinbaseWallet: true }] },
+    expected: ['MetaMask', 'Coinbase Wallet'],
+  },
+  {
+    ethereum: {
+      providers: [
+        { isMetaMask: true },
+        { isMetaMask: true, isTokenary: true },
+        { isCoinbaseWallet: true },
+      ],
+    },
+    expected: ['MetaMask', 'Tokenary', 'Coinbase Wallet'],
+  },
+  {
+    ethereum: { providers: [{ isMetaMask: true }, { isFooWallet: true }, {}] },
+    expected: ['MetaMask', 'Unknown Wallet #1', 'Unknown Wallet #2'],
+  },
+  { ethereum: {}, expected: 'Injected' },
+])('getInjectedName($ethereum)', ({ ethereum, expected }) => {
   it(`returns ${expected}`, () => {
-    expect(getInjectedName(ethereum)).toEqual(expected)
+    expect(getInjectedName(<any>ethereum)).toEqual(expected)
   })
 })

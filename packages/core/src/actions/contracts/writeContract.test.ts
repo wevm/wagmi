@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'

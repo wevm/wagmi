@@ -1,3 +1,5 @@
+import { describe, expect, it, vi } from 'vitest'
+
 import { erc20ABI } from '@wagmi/core'
 
 import { act, actConnect, renderHook, wagmiContractConfig } from '../../../test'
@@ -35,7 +37,7 @@ function useContractEventWithWrite(config: {
 
 describe('useContractEvent', () => {
   it('mounts', () => {
-    const listener = jest.fn()
+    const listener = vi.fn()
     renderHook(() =>
       useContractEvent({
         addressOrName: uniContractAddress,
@@ -52,7 +54,7 @@ describe('useContractEvent', () => {
       it('listens', async () => {
         let hash: string | undefined = undefined
 
-        const listener = jest.fn()
+        const listener = vi.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({
             contractEvent: {

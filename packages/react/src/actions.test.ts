@@ -1,3 +1,5 @@
+import { expect, it } from 'vitest'
+
 import * as Exports from './actions'
 
 it('should expose correct exports', () => {

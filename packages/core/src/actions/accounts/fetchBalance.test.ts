@@ -1,10 +1,12 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { fetchBalance } from './fetchBalance'
 
 describe('fetchBalance', () => {
   describe('args', () => {
     beforeEach(() => {
-      console.warn = jest.fn()
+      console.warn = vi.fn()
       setupClient()
     })
 

@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import {
   mlootContractConfig,
   setupClient,
@@ -31,7 +33,7 @@ describe('multicall', () => {
     setupClient({
       chains: [chain.mainnet, { ...chain.polygon, multicall: undefined }],
     })
-    console.warn = jest.fn()
+    console.warn = vi.fn()
   })
 
   it('default', async () => {

@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import {
   mlootContractConfig,
   setupClient,
@@ -7,7 +9,9 @@ import { readContract } from './readContract'
 
 describe('readContract', () => {
   describe('args', () => {
-    beforeEach(() => setupClient())
+    beforeEach(() => {
+      setupClient()
+    })
 
     it('chainId', async () => {
       expect(

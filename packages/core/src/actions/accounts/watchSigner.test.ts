@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { connect } from './connect'
 import { disconnect } from './disconnect'
@@ -5,7 +7,9 @@ import { switchNetwork } from './switchNetwork'
 import { watchSigner } from './watchSigner'
 
 describe('watchSigner', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   it('listens to account changes', async () => {
     const client = setupClient()

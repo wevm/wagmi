@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { erc20ABI } from '../../constants'
 import { getContract } from './getContract'
 

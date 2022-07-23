@@ -1,4 +1,5 @@
 import { parseEther } from 'ethers/lib/utils'
+import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'

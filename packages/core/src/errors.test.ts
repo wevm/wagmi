@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { ProviderRpcError, RpcError } from './errors'
 
 describe('RpcError', () => {

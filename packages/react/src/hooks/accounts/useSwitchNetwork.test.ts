@@ -1,5 +1,6 @@
 import { connect } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
+import { describe, expect, it } from 'vitest'
 
 import {
   act,
@@ -65,7 +66,7 @@ describe('useSwitchNetwork', () => {
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { chains, ...res } = result.current
-      expect(chains.length).toMatchInlineSnapshot(`5`)
+      expect(chains.length).toMatchInlineSnapshot(`0`)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -94,7 +95,7 @@ describe('useSwitchNetwork', () => {
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { chains, ...res } = result.current
-      expect(chains.length).toMatchInlineSnapshot(`5`)
+      expect(chains.length).toMatchInlineSnapshot(`0`)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
