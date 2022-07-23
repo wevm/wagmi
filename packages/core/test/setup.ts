@@ -1,10 +1,10 @@
-import '@testing-library/jest-dom'
+import { vi } from 'vitest'
 
 Object.defineProperty(window, 'localStorage', {
   value: {
-    getItem: jest.fn(() => null),
-    removeItem: jest.fn(() => null),
-    setItem: jest.fn(() => null),
+    getItem: vi.fn(() => null),
+    removeItem: vi.fn(() => null),
+    setItem: vi.fn(() => null),
   },
   writable: true,
 })

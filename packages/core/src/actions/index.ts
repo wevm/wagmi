@@ -30,6 +30,7 @@ export {
 } from './accounts'
 
 export {
+  fetchToken,
   getContract,
   prepareWriteContract,
   readContract,
@@ -38,6 +39,8 @@ export {
   watchReadContract,
   watchReadContracts,
   writeContract,
+  type FetchTokenArgs,
+  type FetchTokenResult,
   type GetContractArgs,
   type PrepareWriteContractConfig,
   type PrepareWriteContractResult,
@@ -94,12 +97,6 @@ export {
   type WatchProviderCallback,
   type WatchWebSocketProviderCallback,
 } from './providers'
-
-export {
-  fetchToken,
-  type FetchTokenArgs,
-  type FetchTokenResult,
-} from './tokens'
 
 export {
   prepareSendTransaction,

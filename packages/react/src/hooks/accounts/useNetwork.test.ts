@@ -1,4 +1,5 @@
 import { connect } from '@wagmi/core'
+import { describe, expect, it } from 'vitest'
 
 import {
   actConnect,
@@ -49,7 +50,7 @@ describe('useNetwork', () => {
       const { result } = renderHook(() => useNetwork())
 
       const { chain, chains } = result.current
-      expect(chains.length).toBe(5)
+      expect(chains.length).toBe(0)
       expect(chain).toBeUndefined()
     })
   })

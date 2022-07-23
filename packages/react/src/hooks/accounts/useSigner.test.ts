@@ -1,4 +1,5 @@
 import { connect } from '@wagmi/core'
+import { describe, expect, it } from 'vitest'
 
 import {
   actConnect,

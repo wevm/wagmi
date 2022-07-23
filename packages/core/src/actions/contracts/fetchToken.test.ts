@@ -1,9 +1,13 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { fetchToken } from './fetchToken'
 
 describe('fetchToken', () => {
   describe('args', () => {
-    beforeEach(() => setupClient())
+    beforeEach(() => {
+      setupClient()
+    })
 
     describe('address', () => {
       it('has token', async () => {

@@ -107,16 +107,16 @@
     "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^13.2.0",
-    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "@types/use-sync-external-store": "^0.0.3",
     "ethers": "^5.6.5",
     "react": "^18.1.0",
-    "react-17": "npm:react@^17.0.2",
+    "react-17": "npm:react@17.0.2",
     "react-dom": "^18.1.0",
-    "react-dom-17": "npm:react-dom@^17.0.2"
+    "react-dom-17": "npm:react-dom@17.0.2"
   },
   "keywords": [
     "react",

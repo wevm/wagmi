@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { actConnect, actSwitchNetwork, renderHook } from '../../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
 import { UseProviderArgs, useProvider } from './useProvider'

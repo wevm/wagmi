@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { connect } from './connect'
 import { disconnect } from './disconnect'

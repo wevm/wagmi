@@ -1,5 +1,6 @@
 import { BigNumber } from 'ethers'
 import { Result } from 'ethers/lib/utils'
+import { describe, expect, it } from 'vitest'
 
 import { parseContractResult } from './parseContractResult'
 

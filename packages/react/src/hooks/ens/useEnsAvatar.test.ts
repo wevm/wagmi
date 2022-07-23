@@ -1,3 +1,4 @@
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { chain } from '@wagmi/core'
@@ -60,7 +61,6 @@ describe('useEnsAvatar', () => {
 
   afterAll(() => server.close())
 
-  jest.setTimeout(timeout)
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useEnsAvatar({ addressOrName: 'nick.eth' }),

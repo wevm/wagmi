@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { describe, expect, it } from 'vitest'
 
 import { serialize } from './serialize'
 

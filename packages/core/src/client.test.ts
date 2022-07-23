@@ -1,4 +1,5 @@
 import { getDefaultProvider } from 'ethers'
+import { describe, expect, it } from 'vitest'
 
 import { getProvider, getSigners, getWebSocketProvider } from '../test'
 import { Client, createClient, getClient } from './client'

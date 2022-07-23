@@ -1,8 +1,12 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { fetchFeeData } from './fetchFeeData'
 
 describe('fetchFeeData', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   it('default', async () => {
     const result = await fetchFeeData()

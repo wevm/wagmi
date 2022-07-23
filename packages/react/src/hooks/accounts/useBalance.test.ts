@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { act, renderHook } from '../../../test'
 import { useBalance } from './useBalance'
 
@@ -338,6 +340,6 @@ describe('useBalance', () => {
           "status": "success",
         }
       `)
-    })
+    }, 10_000)
   })
 })

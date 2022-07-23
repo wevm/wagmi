@@ -1,3 +1,13 @@
+import {
+  Mock,
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest'
 import { providers } from 'ethers'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
@@ -52,7 +62,7 @@ function getHandlers({
   rpcUrl,
 }: {
   chains: Chain[]
-  listener: jest.Mock
+  listener: Mock
   rpcUrl: (chain: Chain) => string
 }) {
   const handlers = chains.map((chain) => {
@@ -68,28 +78,28 @@ function getHandlers({
   return handlers
 }
 
-const alchemyListener = jest.fn()
+const alchemyListener = vi.fn()
 const alchemyHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: alchemyListener,
   rpcUrl: (chain) => `${chain.rpcUrls.alchemy}/${alchemyId}`,
 })
 
-const infuraListener = jest.fn()
+const infuraListener = vi.fn()
 const infuraHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: infuraListener,
   rpcUrl: (chain) => `${chain.rpcUrls.infura}/${infuraId}`,
 })
 
-const publicListener = jest.fn()
+const publicListener = vi.fn()
 const publicHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: publicListener,
   rpcUrl: (chain) => chain.rpcUrls.default,
 })
 
-const jsonRpcListener = jest.fn()
+const jsonRpcListener = vi.fn()
 const jsonRpcHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: jsonRpcListener,

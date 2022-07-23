@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { act, mlootContractConfig, renderHook } from '../../../test'
 import {
   paginatedIndexesConfig,
@@ -5,8 +7,6 @@ import {
 } from './useContractInfiniteReads'
 
 describe('useContractInfiniteReads', () => {
-  jest.setTimeout(15_000)
-
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useContractInfiniteReads({
@@ -56,7 +56,7 @@ describe('useContractInfiniteReads', () => {
         "status": "success",
       }
     `)
-  })
+  }, 15_000)
 
   describe('configuration', () => {
     it('chainId', async () => {
@@ -550,7 +550,7 @@ describe('useContractInfiniteReads', () => {
           ],
         }
       `)
-    })
+    }, 15_000)
 
     it('decrements from `start = 100` with `perPage = 10`', async () => {
       const { result, waitFor } = renderHook(() =>

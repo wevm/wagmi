@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from 'vitest'
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
 
 import { getSigners, setupClient } from '../../../test'
@@ -15,7 +16,9 @@ const messages = {
 }
 
 describe('signMessage', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   describe('args', () => {
     describe('message', () => {

@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { getSigners } from '../../../test'
 import { Signer } from '../../types'
 import { MockConnector } from './connector'
@@ -20,7 +22,7 @@ describe('MockConnector', () => {
 
   describe('connect', () => {
     it('succeeds', async () => {
-      const onChange = jest.fn()
+      const onChange = vi.fn()
       connector.on('change', onChange)
 
       expect(await connector.connect()).toMatchInlineSnapshot(`
@@ -51,7 +53,7 @@ describe('MockConnector', () => {
   })
 
   it('disconnect', async () => {
-    const onDisconnect = jest.fn()
+    const onDisconnect = vi.fn()
     connector.on('disconnect', onDisconnect)
 
     await connector.connect()
@@ -110,7 +112,7 @@ describe('MockConnector', () => {
 
   describe('switchChain', () => {
     it('succeeds', async () => {
-      const onChange = jest.fn()
+      const onChange = vi.fn()
       connector.on('change', onChange)
 
       expect(await connector.getChainId()).toEqual(1)

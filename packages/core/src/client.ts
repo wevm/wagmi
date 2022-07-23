@@ -134,6 +134,9 @@ export class Client<
     this.storage = storage
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
+
+    if (autoConnect && typeof window !== 'undefined')
+      setTimeout(async () => await this.autoConnect(), 0)
   }
 
   get chains() {

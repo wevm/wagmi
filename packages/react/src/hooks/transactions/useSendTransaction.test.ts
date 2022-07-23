@@ -1,6 +1,7 @@
 import { TransactionResponse } from '@ethersproject/providers'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { parseEther } from 'ethers/lib/utils'
+import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'

@@ -1,3 +1,4 @@
+import { expect } from 'vitest'
 import { act } from '@testing-library/react'
 
 import { MockConnector } from '@wagmi/core/connectors/mock'

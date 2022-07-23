@@ -1,8 +1,12 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { fetchBlockNumber } from './fetchBlockNumber'
 
 describe('fetchBlockNumber', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   it('default', async () => {
     expect(await fetchBlockNumber()).toBeDefined()
