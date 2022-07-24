@@ -7,6 +7,7 @@ export async function fetchSigner<TSigner extends Signer = Signer>(): Promise<
   FetchSignerResult<TSigner>
 > {
   const client = getClient()
-  const signer = (await client.connector?.getSigner?.()) || null
+  const account = client.data?.account
+  const signer = (await client.connector?.getSigner?.({ account })) || null
   return signer
 }

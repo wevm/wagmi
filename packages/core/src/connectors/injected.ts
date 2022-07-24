@@ -148,14 +148,14 @@ export class InjectedConnector extends Connector<
     return this.#provider
   }
 
-  async getSigner() {
-    const [provider, account] = await Promise.all([
+  async getSigner({ account }: { account?: string } = {}) {
+    const [provider, account_] = await Promise.all([
       this.getProvider(),
-      this.getAccount(),
+      account || this.getAccount(),
     ])
     return new providers.Web3Provider(
       <providers.ExternalProvider>provider,
-    ).getSigner(account)
+    ).getSigner(account_)
   }
 
   async isAuthorized() {
