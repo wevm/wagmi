@@ -17,7 +17,7 @@ npm install @wagmi/core ethers
 Check out the following places for more wagmi-related content:
 
 - Join the [discussions on GitHub](https://github.com/wagmi-dev/wagmi/discussions)
-- Follow [@awkweb](https://twitter.com/awkweb), [@jakemoxey](https://twitter.com/jakemoxey) and [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
+- Follow [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
 - Share [your project/organization](https://github.com/wagmi-dev/wagmi/discussions/201) using wagmi
 - Browse the [awesome-wagmi](https://github.com/wagmi-dev/awesome-wagmi) list of awesome projects and resources
 

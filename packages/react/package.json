@@ -3,10 +3,14 @@
   "description": "React Hooks for Ethereum",
   "license": "WAGMIT",
   "version": "0.5.11",
-  "repository": "wagmi-dev/wagmi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "directory": "packages/react"
+  },
   "author": "awkweb.eth",
   "homepage": "https://wagmi.sh",
-  "ethereum": "awkweb.eth",
+  "ethereum": "wagmi-dev.eth",
   "funding": [
     {
       "type": "gitcoin",
@@ -17,7 +21,6 @@
       "url": "https://github.com/sponsors/tmm"
     }
   ],
-  "sideEffects": false,
   "main": "dist/wagmi.cjs.js",
   "module": "dist/wagmi.esm.js",
   "types": "dist/wagmi.cjs.d.ts",
@@ -72,6 +75,7 @@
       "default": "./providers/public/dist/wagmi-providers-public.cjs.js"
     }
   },
+  "sideEffects": false,
   "files": [
     "/actions",
     "/chains",

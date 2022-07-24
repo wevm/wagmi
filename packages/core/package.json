@@ -3,9 +3,13 @@
   "description": "Vanilla JS library for Ethereum",
   "license": "WAGMIT",
   "version": "0.4.9",
-  "repository": "wagmi-dev/wagmi",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "directory": "packages/core"
+  },
   "author": "awkweb.eth",
-  "ethereum": "awkweb.eth",
+  "ethereum": "wagmi-dev.eth",
   "funding": [
     {
       "type": "gitcoin",
@@ -16,7 +20,6 @@
       "url": "https://github.com/sponsors/tmm"
     }
   ],
-  "sideEffects": false,
   "main": "dist/wagmi-core.cjs.js",
   "module": "dist/wagmi-core.esm.js",
   "types": "dist/wagmi-core.cjs.d.ts",
@@ -63,6 +66,7 @@
       "default": "./providers/public/dist/wagmi-core-providers-public.cjs.js"
     }
   },
+  "sideEffects": false,
   "files": [
     "/chains",
     "/connectors",
