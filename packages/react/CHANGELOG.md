@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.5.12
+
+### Patch Changes
+
+- [`a34fb00`](https://github.com/wagmi-dev/wagmi/commit/a34fb00103df4c63635d15e60dcfc1659b33fde1) Thanks [@jxom](https://github.com/jxom)! - Fix `useContractRead` return value unexpectedly returning null for falsy values
+
 ## 0.5.11
 
 ### Patch Changes
