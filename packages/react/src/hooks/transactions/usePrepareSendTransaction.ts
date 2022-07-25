@@ -43,11 +43,11 @@ const queryFn = ({
  * @example
  * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
  *
- * const config = await usePrepareSendTransaction({
+ * const config = usePrepareSendTransaction({
  *   to: 'moxey.eth',
  *   value: parseEther('1'),
  * })
- * const result = await useSendTransaction(config)
+ * const result = useSendTransaction(config)
  */
 export function usePrepareSendTransaction({
   request,
