@@ -1,9 +1,13 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { fetchEnsResolver } from './fetchEnsResolver'
 
 describe('fetchEnsResolver', () => {
   describe('args', () => {
-    beforeEach(() => setupClient())
+    beforeEach(() => {
+      setupClient()
+    })
 
     it('chainId', async () => {
       expect(await fetchEnsResolver({ name: 'awkweb.eth', chainId: 1 }))

@@ -1,3 +1,5 @@
+import { describe, expect, it, vi } from 'vitest'
+
 import { act, actConnect, renderHook, useAccount } from '../../../test'
 import { useConnect } from './useConnect'
 import { UseDisconnectConfig, useDisconnect } from './useDisconnect'
@@ -34,7 +36,7 @@ describe('useDisconnect', () => {
 
   describe('configuration', () => {
     it('onSuccess', async () => {
-      const onSuccess = jest.fn()
+      const onSuccess = vi.fn()
       const utils = renderHook(() => useDisconnectWithConnect({ onSuccess }))
       const { result, waitFor } = utils
 

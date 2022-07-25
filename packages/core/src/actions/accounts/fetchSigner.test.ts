@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
@@ -8,7 +10,9 @@ const connector = new MockConnector({
 })
 
 describe('fetchSigner', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   describe('behavior', () => {
     it('not connected', async () => {
@@ -18,10 +22,11 @@ describe('fetchSigner', () => {
     it('connected', async () => {
       await connect({ connector })
       expect(await fetchSigner()).toMatchInlineSnapshot(`
-        JsonRpcSigner {
-          "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "_index": null,
+        WalletSigner {
           "_isSigner": true,
+          "_mnemonic": [Function],
+          "_signingKey": [Function],
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "provider": "<Provider network={31337} />",
         }
       `)

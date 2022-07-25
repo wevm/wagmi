@@ -1,4 +1,6 @@
-export function getInjectedName(ethereum?: Window['ethereum']) {
+import { Ethereum } from '../types'
+
+export function getInjectedName(ethereum?: Ethereum) {
   if (!ethereum) return 'Injected'
 
   const getName = (provider: Ethereum) => {

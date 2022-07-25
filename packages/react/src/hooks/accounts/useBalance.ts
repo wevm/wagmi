@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
+import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
@@ -34,7 +34,7 @@ export function useBalance({
   cacheTime,
   chainId: chainId_,
   enabled = true,
-  formatUnits = 'ether',
+  formatUnits,
   staleTime,
   suspense,
   token,

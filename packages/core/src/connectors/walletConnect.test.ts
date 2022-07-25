@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { chain, defaultChains } from '../constants'
 import { WalletConnectConnector } from './walletConnect'
 
@@ -7,7 +9,7 @@ describe('WalletConnectConnector', () => {
       chains: defaultChains,
       options: {
         rpc: {
-          [chain.hardhat.id]: chain.hardhat.rpcUrls.default.toString(),
+          [chain.foundry.id]: chain.foundry.rpcUrls.default,
         },
       },
     })

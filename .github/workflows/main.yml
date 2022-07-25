@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16]
+        node-version: [18]
         pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16]
+        node-version: [18]
         pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16]
+        node-version: [18]
         pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
@@ -114,11 +114,6 @@ jobs:
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build
         run: pnpm build
-      - name: Check size
-        run: pnpm size
-        env:
-          BUNDLEWATCH_GITHUB_TOKEN: ${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}
-          CI_BRANCH_BASE: main
 
   test:
     name: Test
@@ -126,7 +121,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16]
+        # TODO: Switch back to Node 16 once Vitest is patched
+        # https://github.com/vitest-dev/vitest/issues/1191
+        node-version: [18]
         pnpm-version: [7]
         react-version: [17, 18]
     steps:
@@ -149,8 +146,34 @@ jobs:
             packages/*/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
-      - name: Test
-        run: pnpm test:ci
+      - name: Install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          profile: minimal
+          override: true
+      - name: Install Anvil
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+      # TODO: Cache Anvil RPC calls between runs to speed up tests
+      - name: Launch Anvil
+        run: anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER &
         env:
-          ALCHEMY_ID: ${{ secrets.ALCHEMY_ID }}
-          REACT_VERSION: ${{ matrix.react }}
+          ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
+          ANVIL_BLOCK_NUMBER: 15132000
+      - name: Test
+        if: matrix.react-version == 18
+        run: pnpm test:coverage
+        env:
+          REACT_VERSION: ${{ matrix.react-version }}
+      - name: Test
+        if: matrix.react-version == 17
+        run: |
+          cd packages/react
+          pnpm add -D react@17.0.2 react-dom@17.0.2
+          cd ../..
+          pnpm test:run react
+        env:
+          REACT_VERSION: ${{ matrix.react-version }}

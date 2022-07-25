@@ -1,15 +1,15 @@
 import { CallOverrides } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
-import { getProvider } from '../providers'
-import { getContract } from './getContract'
 import { multicallInterface } from '../../constants'
-import { ReadContractConfig } from './readContract'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
   ProviderChainsNotFound,
 } from '../../errors'
+import { getProvider } from '../providers'
+import { getContract } from './getContract'
+import { ReadContractConfig } from './readContract'
 
 type MulticallContract = {
   addressOrName: ReadContractConfig['addressOrName']
@@ -98,7 +98,7 @@ export async function multicall<Data extends any[] = Result[]>({
     if (returnData === '0x') {
       const err = new ContractMethodNoResultError({
         addressOrName,
-        blockExplorer: chain.blockExplorers?.default,
+        chainId: chain.id,
         functionName,
       })
       if (!allowFailure) throw err

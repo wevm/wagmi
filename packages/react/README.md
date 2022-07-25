@@ -16,10 +16,10 @@ npm install wagmi ethers
 
 Check out the following places for more wagmi-related content:
 
-- Join the [discussions on GitHub](https://github.com/tmm/wagmi/discussions)
-- Follow [@awkweb](https://twitter.com/awkweb) and [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
-- Share [your project/organization](https://github.com/tmm/wagmi/discussions/201) using wagmi
-- Browse the [awesome-wagmi](https://github.com/tmm/awesome-wagmi) list of awesome projects and resources
+- Join the [discussions on GitHub](https://github.com/wagmi-dev/wagmi/discussions)
+- Follow [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
+- Share [your project/organization](https://github.com/wagmi-dev/wagmi/discussions/201) using wagmi
+- Browse the [awesome-wagmi](https://github.com/wagmi-dev/awesome-wagmi) list of awesome projects and resources
 
 ## Support
 
@@ -27,4 +27,4 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 - [GitHub Sponsors](https://github.com/sponsors/tmm?metadata_campaign=readme_wagmi)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
-- [awkweb.eth](https://etherscan.io/enslookup-search?search=awkweb.eth)
+- [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)

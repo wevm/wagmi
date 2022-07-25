@@ -1,10 +1,12 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { fetchBalance } from './fetchBalance'
 
 describe('fetchBalance', () => {
   describe('args', () => {
     beforeEach(() => {
-      console.warn = jest.fn()
+      console.warn = vi.fn()
       setupClient()
     })
 
@@ -17,11 +19,10 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "1.622080339908136684",
+            "formatted": "1.889009973656812885",
             "symbol": "ETH",
-            "unit": "ether",
             "value": {
-              "hex": "0x1682c979995e8eec",
+              "hex": "0x1a371c9008fbfd55",
               "type": "BigNumber",
             },
           }
@@ -36,11 +37,10 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "1.622080339908136684",
+            "formatted": "1.889009973656812885",
             "symbol": "ETH",
-            "unit": "ether",
             "value": {
-              "hex": "0x1682c979995e8eec",
+              "hex": "0x1a371c9008fbfd55",
               "type": "BigNumber",
             },
           }
@@ -57,11 +57,10 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "1.622080339908136684",
+          "formatted": "1.889009973656812885",
           "symbol": "ETH",
-          "unit": "ether",
           "value": {
-            "hex": "0x1682c979995e8eec",
+            "hex": "0x1a371c9008fbfd55",
             "type": "BigNumber",
           },
         }
@@ -77,11 +76,10 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "1622080339.908136684",
+          "formatted": "1889009973.656812885",
           "symbol": "ETH",
-          "unit": "gwei",
           "value": {
-            "hex": "0x1682c979995e8eec",
+            "hex": "0x1a371c9008fbfd55",
             "type": "BigNumber",
           },
         }
@@ -100,7 +98,6 @@ describe('fetchBalance', () => {
             "decimals": 18,
             "formatted": "18.0553",
             "symbol": "UNI",
-            "unit": "ether",
             "value": {
               "hex": "0xfa914fb05d1c4000",
               "type": "BigNumber",
@@ -121,7 +118,6 @@ describe('fetchBalance', () => {
               "decimals": 18,
               "formatted": "18.0553",
               "symbol": "UNI",
-              "unit": "ether",
               "value": {
                 "hex": "0xfa914fb05d1c4000",
                 "type": "BigNumber",
@@ -141,6 +137,27 @@ describe('fetchBalance', () => {
           )
         })
       })
+    })
+  })
+
+  describe('behavior', () => {
+    it('token with less than 18 decimals formats units correctly', async () => {
+      expect(
+        await fetchBalance({
+          addressOrName: 'awkweb.eth',
+          token: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+        }),
+      ).toMatchInlineSnapshot(`
+          {
+            "decimals": 6,
+            "formatted": "1735.381",
+            "symbol": "USDC",
+            "value": {
+              "hex": "0x676fd008",
+              "type": "BigNumber",
+            },
+          }
+        `)
     })
   })
 })

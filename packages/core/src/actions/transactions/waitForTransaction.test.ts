@@ -1,4 +1,5 @@
 import { parseEther } from 'ethers/lib/utils'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
 import { Client } from '../../client'
@@ -22,6 +23,7 @@ describe('waitForTransaction', () => {
       const fromAddress = client.data?.account
 
       const result = await sendTransaction({
+        mode: 'dangerouslyUnprepared',
         request: {
           from: fromAddress,
           to: toAddress,
@@ -45,6 +47,7 @@ describe('waitForTransaction', () => {
       const fromAddress = client.data?.account
 
       const result = await sendTransaction({
+        mode: 'dangerouslyUnprepared',
         request: {
           from: fromAddress,
           to: toAddress,

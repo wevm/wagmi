@@ -1,5 +1,7 @@
 {
   "connect-wallet": "Connect Wallet",
+  "send-transaction": "Send Transaction",
+  "contract-write": "Contract Write",
   "sign-message": "Sign Message",
   "sign-in-with-ethereum": "Sign-In with Ethereum",
   "custom-connector": "Create Custom Connector"

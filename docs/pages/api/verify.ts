@@ -1,5 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import { withIronSessionApiRoute } from 'iron-session/next'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { SiweMessage } from 'siwe'
 
 import { ironOptions } from '../../lib/iron'

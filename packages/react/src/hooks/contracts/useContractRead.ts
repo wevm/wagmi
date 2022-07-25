@@ -1,4 +1,3 @@
-import * as React from 'react'
 import {
   ReadContractConfig,
   ReadContractResult,
@@ -6,6 +5,7 @@ import {
   parseContractResult,
   readContract,
 } from '@wagmi/core'
+import * as React from 'react'
 import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -44,7 +44,7 @@ const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
   return hashQueryKey([rest])
 }
 
-const queryFn = ({
+const queryFn = async ({
   queryKey: [
     {
       addressOrName,
@@ -56,14 +56,16 @@ const queryFn = ({
     },
   ],
 }: QueryFunctionArgs<typeof queryKey>) => {
-  return readContract({
-    addressOrName,
-    args,
-    chainId,
-    contractInterface,
-    functionName,
-    overrides,
-  })
+  return (
+    (await readContract({
+      addressOrName,
+      args,
+      chainId,
+      contractInterface,
+      functionName,
+      overrides,
+    })) || null
+  )
 }
 
 export function useContractRead({

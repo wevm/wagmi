@@ -1,9 +1,9 @@
-import { providers } from 'ethers'
 import type {
   CoinbaseWalletProvider,
   CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
+import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
 import {
@@ -32,7 +32,8 @@ type Options = CoinbaseWalletSDKOptions & {
 
 export class CoinbaseWalletConnector extends Connector<
   CoinbaseWalletProvider,
-  Options
+  Options,
+  providers.JsonRpcSigner
 > {
   readonly id = 'coinbaseWallet'
   readonly name = 'Coinbase Wallet'

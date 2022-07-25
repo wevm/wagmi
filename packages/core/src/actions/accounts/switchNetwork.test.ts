@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { allChains } from '../../constants'
@@ -10,7 +12,9 @@ const connector = new MockConnector({
 })
 
 describe('switchNetwork', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   describe('args', () => {
     it('chainId', async () => {

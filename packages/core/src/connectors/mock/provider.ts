@@ -1,8 +1,9 @@
-import { default as EventEmitter } from 'eventemitter3'
-import { Signer, providers } from 'ethers'
+import { providers } from 'ethers'
 import { getAddress } from 'ethers/lib/utils'
+import { default as EventEmitter } from 'eventemitter3'
 
 import { UserRejectedRequestError } from '../../errors'
+import { Signer } from '../../types'
 
 export type MockProviderOptions = {
   chainId?: number

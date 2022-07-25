@@ -1,10 +1,10 @@
-import * as React from 'react'
 import {
   ReadContractResult,
   ReadContractsConfig,
   deepEqual,
   readContracts,
 } from '@wagmi/core'
+import * as React from 'react'
 
 import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
 import { useInfiniteQuery } from '../utils'

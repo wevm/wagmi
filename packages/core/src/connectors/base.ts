@@ -1,5 +1,4 @@
 import { default as EventEmitter } from 'eventemitter3'
-import { Signer } from 'ethers/lib/ethers'
 
 import { defaultChains } from '../constants'
 import { Chain } from '../types'
@@ -21,6 +20,7 @@ export interface ConnectorEvents<Provider = any> {
 export abstract class Connector<
   Provider = any,
   Options = any,
+  Signer = any,
 > extends EventEmitter<ConnectorEvents<Provider>> {
   /** Unique connector id */
   abstract readonly id: string

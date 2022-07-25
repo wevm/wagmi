@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { ethers } from 'ethers'
+import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
 import { UseContractConfig, useContract } from './useContract'

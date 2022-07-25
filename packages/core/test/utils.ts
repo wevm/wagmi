@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { Wallet } from 'ethers/lib/ethers'
+import { Contract, Wallet } from 'ethers/lib/ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
 
@@ -21,10 +21,9 @@ export function getProvider({
   chains = allChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
-  const network = getNetwork(chain)
-  const url = chain_.hardhat.rpcUrls.default.toString()
-  const provider = new EthersProviderWrapper(url, network)
+  const chain = allChains.find((x) => x.id === chainId) ?? chain_.foundry
+  const url = chain_.foundry.rpcUrls.default
+  const provider = new EthersProviderWrapper(url, getNetwork(chain))
   provider.pollingInterval = 1_000
   return Object.assign(provider, { chains })
 }
@@ -39,20 +38,21 @@ export function getWebSocketProvider({
   chains = allChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = allChains.find((x) => x.id === chainId) ?? chain_.hardhat
-  const network = getNetwork(chain)
-  const url = chain_.hardhat.rpcUrls.default.toString().replace('http', 'ws')
-  return Object.assign(new EthersWebSocketProviderWrapper(url, network), {
-    chains,
+  const chain = allChains.find((x) => x.id === chainId) ?? chain_.foundry
+  const url = chain_.foundry.rpcUrls.default.replace('http', 'ws')
+  const webSocketProvider = Object.assign(
+    new EthersWebSocketProviderWrapper(url, getNetwork(chain)),
+    { chains },
+  )
+  // Clean up WebSocketProvider immediately
+  // so handle doesn't stay open in test environment
+  webSocketProvider?.destroy().catch(() => {
+    return
   })
+  return webSocketProvider
 }
 
-// TODO: Figure out why this is flaky
-// Throws "Expected private key to be an Uint8Array"
-// from "packages/hardhat-core/src/internal/util/keys-derivation.ts"
-// const accounts = normalizeHardhatNetworkAccountsConfig(
-//   defaultHardhatNetworkParams.accounts,
-// )
+// Default accounts from Anvil
 export const accounts = [
   {
     privateKey:
@@ -156,11 +156,73 @@ export const accounts = [
   },
 ]
 
+export class WalletSigner extends Wallet {
+  connectUnchecked(): providers.JsonRpcSigner {
+    const uncheckedSigner = (<EthersProviderWrapper>(
+      this.provider
+    )).getUncheckedSigner(this.address)
+    return uncheckedSigner
+  }
+}
+
 export function getSigners() {
   const provider = getProvider()
-  const signers = accounts.map((x) => {
-    const wallet = new Wallet(x.privateKey)
-    return provider.getSigner(wallet.address)
-  })
-  return signers
+  return accounts.map((x) => new WalletSigner(x.privateKey, provider))
+}
+
+export async function getTotalSupply(addressOrName: string) {
+  const provider = getProvider()
+  const contract = new Contract(
+    addressOrName,
+    [
+      {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    ],
+    provider,
+  )
+  return await contract.totalSupply()
+}
+
+let crowdfundId = 0
+function getRandomNumber(from = 1, to = 100) {
+  return Math.floor(Math.random() * to) + from
+}
+
+export function getCrowdfundArgs({
+  tributaryConfig = {
+    tributary: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    feePercentage: 250,
+  },
+  name = `Crowdfund ${crowdfundId}`,
+  symbol = `$Crowdfund${crowdfundId}-${getRandomNumber()}`,
+  operatorAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  fundingRecipientAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  fundingGoal = '100000000000000000000',
+  operatorPercent = '100',
+}: {
+  tributaryConfig?: { tributary: string; feePercentage: number }
+  name?: string
+  symbol?: string
+  operatorAddress?: string
+  fundingRecipientAddress?: string
+  fundingGoal?: string
+  operatorPercent?: string
+} = {}) {
+  crowdfundId += 1
+  // do not change order of keys below
+  const data = {
+    tributaryConfig,
+    name,
+    symbol,
+    operatorAddress,
+    fundingRecipientAddress,
+    fundingGoal,
+    operatorPercent,
+  }
+  return Object.values(data)
 }

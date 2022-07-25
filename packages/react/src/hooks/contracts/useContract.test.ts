@@ -1,4 +1,5 @@
 import { erc20ABI } from '@wagmi/core'
+import { describe, expect, it } from 'vitest'
 
 import { getProvider, renderHook } from '../../../test'
 import { UseContractConfig, useContract } from './useContract'

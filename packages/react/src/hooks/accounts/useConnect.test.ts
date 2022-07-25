@@ -1,4 +1,5 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
+import { describe, expect, it, vi } from 'vitest'
 
 import { act, getSigners, renderHook, useAccount } from '../../../test'
 import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
@@ -134,7 +135,7 @@ describe('useConnect', () => {
     })
 
     it('onSuccess', async () => {
-      const onSuccess = jest.fn()
+      const onSuccess = vi.fn()
       const { result, waitFor } = renderHook(() =>
         useConnect({ connector, onSuccess }),
       )
@@ -276,10 +277,11 @@ describe('useConnect', () => {
           result.current.connect.connect({ chainId: 69 })
         })
 
-        await waitFor(
-          () =>
+        await waitFor(() =>
+          expect(
             result.current.connect.isSuccess &&
-            result.current.account.isConnected,
+              result.current.account.isConnected,
+          ).toBeTruthy(),
         )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
@@ -334,10 +336,11 @@ describe('useConnect', () => {
           result.current.connect.connect({ chainId: 3 })
         })
 
-        await waitFor(
-          () =>
+        await waitFor(() =>
+          expect(
             result.current.connect.isSuccess &&
-            result.current.account.isConnected,
+              result.current.account.isConnected,
+          ).toBeTruthy(),
         )
 
         expect(result.current.connect).toMatchInlineSnapshot(`
@@ -455,10 +458,11 @@ describe('useConnect', () => {
           `)
         })
 
-        await waitFor(
-          () =>
+        await waitFor(() =>
+          expect(
             result.current.connect.isSuccess &&
-            result.current.account.isConnected,
+              result.current.account.isConnected,
+          ).toBeTruthy(),
         )
       })
 
@@ -502,7 +506,7 @@ describe('useConnect', () => {
           `)
         })
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
       })
 
       it('connects to supported chain', async () => {
@@ -523,7 +527,7 @@ describe('useConnect', () => {
           `)
         })
 
-        await waitFor(() => result.current.isSuccess)
+        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
       })
 
       it('throws error', async () => {
@@ -558,7 +562,7 @@ describe('useConnect', () => {
       )
 
       await act(async () => result.current.connect())
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
       expect(result.current.data?.chain).toMatchInlineSnapshot(`
         {
           "id": 69,
@@ -580,7 +584,7 @@ describe('useConnect', () => {
       )
 
       await act(async () => result.current.connect())
-      await waitFor(() => result.current.isSuccess)
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
       expect(result.current.data?.chain).toMatchInlineSnapshot(`
         {
           "id": 3,

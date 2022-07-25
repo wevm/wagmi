@@ -1,3 +1,5 @@
+import { expect, it } from 'vitest'
+
 import * as Exports from './'
 
 it('should expose correct exports', () => {
@@ -19,6 +21,8 @@ it('should expose correct exports', () => {
       "getNetwork",
       "getProvider",
       "getWebSocketProvider",
+      "prepareWriteContract",
+      "prepareSendTransaction",
       "readContract",
       "readContracts",
       "sendTransaction",
@@ -58,6 +62,7 @@ it('should expose correct exports', () => {
       "ChainNotConfiguredError",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
+      "ContractMethodDoesNotExistError",
       "ContractMethodNoResultError",
       "ProviderChainsNotFound",
       "ProviderRpcError",

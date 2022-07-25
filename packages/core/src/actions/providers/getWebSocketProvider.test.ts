@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import {
   getWebSocketProvider as getWebSocketProvider_,
   setupClient,
@@ -6,13 +8,12 @@ import { getWebSocketProvider } from './getWebSocketProvider'
 
 describe('getWebSocketProvider', () => {
   it('default', async () => {
-    const client = setupClient({
+    setupClient({
       webSocketProvider: getWebSocketProvider_,
     })
     expect(getWebSocketProvider()).toMatchInlineSnapshot(
       `"<WebSocketProvider network={31337} />"`,
     )
-    await client.webSocketProvider?.destroy()
   })
 
   describe('args', () => {
@@ -21,7 +22,6 @@ describe('getWebSocketProvider', () => {
       expect(webSocketProvider).toMatchInlineSnapshot(
         `"<WebSocketProvider network={1} />"`,
       )
-      await webSocketProvider?.destroy()
     })
   })
 })

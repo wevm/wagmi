@@ -1,6 +1,7 @@
-import { Signer } from 'ethers/lib/ethers'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { getSigners } from '../../../test'
+import { Signer } from '../../types'
 import { MockConnector } from './connector'
 
 describe('MockConnector', () => {
@@ -21,7 +22,7 @@ describe('MockConnector', () => {
 
   describe('connect', () => {
     it('succeeds', async () => {
-      const onChange = jest.fn()
+      const onChange = vi.fn()
       connector.on('change', onChange)
 
       expect(await connector.connect()).toMatchInlineSnapshot(`
@@ -52,7 +53,7 @@ describe('MockConnector', () => {
   })
 
   it('disconnect', async () => {
-    const onDisconnect = jest.fn()
+    const onDisconnect = vi.fn()
     connector.on('disconnect', onDisconnect)
 
     await connector.connect()
@@ -88,10 +89,11 @@ describe('MockConnector', () => {
   it('getSigner', async () => {
     await connector.connect()
     expect(await connector.getSigner()).toMatchInlineSnapshot(`
-      JsonRpcSigner {
-        "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "_index": null,
+      WalletSigner {
         "_isSigner": true,
+        "_mnemonic": [Function],
+        "_signingKey": [Function],
+        "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "provider": "<Provider network={31337} />",
       }
     `)
@@ -110,7 +112,7 @@ describe('MockConnector', () => {
 
   describe('switchChain', () => {
     it('succeeds', async () => {
-      const onChange = jest.fn()
+      const onChange = vi.fn()
       connector.on('change', onChange)
 
       expect(await connector.getChainId()).toEqual(1)

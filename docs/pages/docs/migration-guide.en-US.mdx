@@ -9,6 +9,230 @@ import Callout from 'nextra-theme-docs/callout'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following hooks & API's listed below.
 
+## 0.6.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.5.x` docs
+  [here](https://0.5.x.wagmi.sh).
+</Callout>
+
+All the breaking changes in this release are related to the introduction of [Prepare Hooks](/docs/prepare-hooks/intro). It is recommended to read the [Prepare Hooks](/docs/prepare-hooks/intro) section before migrating to 0.6.x.
+
+### `useContractWrite`
+
+#### Behavioral changes
+
+If a `chainId` is passed to `useContractWrite`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
+
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+
+#### Configuration changes
+
+The configuration passed to the `useContractWrite` hook now needs to be either:
+
+- prepared with the [`usePrepareContractWrite` Prepare Hook](/docs/prepare-hooks/usePrepareContractWrite) **(new)**, or
+- dangerously prepared **(previous functionality)**
+
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/docs/prepare-hooks/intro).
+
+**Prepared usage**
+
+```diff
++const { config } = usePrepareContractWrite({
++ addressOrName: '0x...',
++ contractInterface: wagmiAbi,
++ functionName: 'mint',
++ args: [tokenId]
++})
+const { data } = useContractWrite({
+- addressOrName: '0x...',
+- contractInterface: wagmiAbi,
+- functionName: 'mint',
+- args: [tokenId],
++ ...config
+})
+```
+
+**Dangerously unprepared usage**
+
+If you are not ready to upgrade to `usePrepareContractWrite`, it is possible to use `useContractWrite` without preparing the configuration first by passing `mode: 'dangerouslyUnprepared'`.
+
+```diff
+const { data } = useContractWrite({
++ mode: 'dangerouslyUnprepared',
+  addressOrName: '0x...',
+  contractInterface: wagmiAbi,
+  functionName: 'mint',
+  args: [tokenId],
+})
+```
+
+#### Return value changes
+
+**`data` now only returns `hash` & `wait`**
+
+`data` now returns an object only consisting of `hash` & `wait`, and not the full [`TransactionResponse`](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionResponse).
+
+If you require the full `TransactionResponse`, you can use `useWaitForTransaction` with `confirmations: 0`:
+
+```diff
+const {
+  data: {
+    hash,
+    wait,
+-   ...transaction
+  }
+} = useContractWrite(...)
++const { data: transaction } = useWaitForTransaction({ confirmations: 0, hash })
+```
+
+> Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+
+**`write`/`writeAsync` arguments**
+
+The `write`/`writeAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+
+```diff
+<button
+  onClick={() => {
+    write({
+-     args: [1],
+-     overrides: { from: '0x...' }
++     dangerouslySetArgs: [1],
++     dangerouslySetOverrides: '0x...'
+    })
+  }}
+>
+  Send
+</button>
+```
+
+**`write`/`writeAsync` can be `undefined`**
+
+When `useContractWrite` is in "prepare mode" (used with `usePrepareContractWrite`), `write`/`writeAsync` will be `undefined` until the configuration has been prepared. Ensure that your usage reflects this.
+
+```tsx
+const { config } = usePrepareContractWrite({ ... })
+const { write } = useContractWrite(config)
+
+<button
+  disabled={!write}
+  onClick={() => write?.()}
+>
+  Send
+</button>
+```
+
+### `useSendTransaction`
+
+#### Behavioral changes
+
+If a `chainId` is passed to `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
+
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+
+#### Configuration changes
+
+The configuration passed to the `useSendTransaction` hook now needs to be either:
+
+- prepared with the [`usePrepareSendTransaction` Prepare Hook](/docs/prepare-hooks/usePrepareSendTransaction) **(new)**, or
+- dangerously prepared **(previous functionality)**
+
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/docs/prepare-hooks/intro).
+
+**Prepared usage**
+
+```diff
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
+
++const { config } = usePrepareSendTransaction({
++  request: {
++    to: 'moxey.eth',
++    value: parseEther('1'),
++  }
++})
+const { data } = useSendTransaction({
+- request: {
+-   to: 'moxey.eth',
+-   value: parseEther('1')
+- }
++ ...config
+})
+```
+
+**Dangerously unprepared usage**
+
+If you are not ready to upgrade to `usePrepareSendTransaction`, it is possible to use `useSendTransaction` without preparing the configuration first by passing `mode: 'dangerouslyUnprepared'`.
+
+```diff
+import { useSendTransaction } from 'wagmi'
+
+const { data } = useSendTransaction({
++ mode: 'dangerouslyUnprepared',
+  request: {
+    to: 'moxey.eth',
+    value: parseEther('1'),
+  }
+})
+```
+
+#### Return value changes
+
+**`data` now only returns `hash` & `wait`**
+
+`data` now returns an object only consisting of `hash` & `wait`, and not the full [`TransactionResponse`](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionResponse).
+
+If you require the full `TransactionResponse`, you can use `useWaitForTransaction` with `confirmations: 0`:
+
+```diff
+const {
+  data: {
+    hash,
+    wait,
+-   ...transaction
+  }
+} = useSendTransaction(...)
++const { data: transaction } = useWaitForTransaction({ confirmations: 0, hash })
+```
+
+> Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+
+**`sendTransaction`/`sendTransactionAsync` arguments**
+
+The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "dangerous" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+
+```diff
+<button
+  onClick={() => {
+    sendTransaction({
+-     request: {
++     dangerouslySetRequest:
+        to: 'moxey.eth',
+        value: parseEther('1')
+      }
+    })
+  }}
+>
+  Send
+</button>
+```
+
+**`sendTransaction`/`sendTransactionAsync` can be `undefined`**
+
+When `useSendTransaction` is in "prepare mode" (used with `usePrepareSendTransaction`), `sendTransaction`/`sendTransactionAsync` will be `undefined` until the configuration has been prepared. Ensure that your usage reflects this.
+
+```tsx
+const { config } = usePrepareSendTransaction({ ... })
+const { sendTransaction } = useSendTransaction(config)
+
+<button
+  disabled={!sendTransaction}
+  onClick={() => sendTransaction?.()}
+>
+  Send
+</button>
+```
+
 ## 0.5.x Breaking changes
 
 <Callout>
@@ -53,7 +277,7 @@ function App() {
 
 #### `provider` is now required
 
-The `provider` config option is now required on `createClient`. It is recommended to pass the [`provider` given from `configureChains`](https://wagmi.sh/docs/providers/configuring-chains).
+The `provider` config option is now required on `createClient`. It is recommended to pass the [`provider` given from `configureChains`](/docs/providers/configuring-chains).
 
 ```diff
 import {
@@ -574,7 +798,7 @@ const {
 
 Passing a function to `createClient` `connectors` has now been deprecated.
 
-If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](https://wagmi.sh/docs/providers/configuring-chains).
+If you previously derived an RPC URL from the `chainId` in `connectors`, you will need to migrate to use the [`configureChains` API](/docs/providers/configuring-chains).
 
 Before:
 
@@ -1163,7 +1387,7 @@ const { data, error, isLoading, refetch } = useToken({
 const [{ data, error, loading }, sendTransaction] = useTransaction({
   request: {
     to: 'awkweb.eth',
-    value: BigNumber.from('1000000000000000000'), // 1 ETH
+    value: parseEther('1'), // 1 ETH
   },
 })
 ```
@@ -1174,7 +1398,7 @@ After:
 const { data, error, isLoading, sendTransactionAsync } = useSendTransaction({
   request: {
     to: 'awkweb.eth',
-    value: BigNumber.from('1000000000000000000'), // 1 ETH
+    value: parseEther('1'), // 1 ETH
   },
 })
 ```

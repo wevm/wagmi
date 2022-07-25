@@ -1,5 +1,14 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+} from 'vitest'
 
 import { setupClient } from '../../../test'
 import { chain } from '../../constants'
@@ -46,7 +55,7 @@ describe('fetchEnsAvatar', () => {
   beforeAll(() =>
     server.listen({
       onUnhandledRequest(req) {
-        if (req.url.origin !== chain.hardhat.rpcUrls.default.toString())
+        if (req.url.origin !== chain.foundry.rpcUrls.default)
           console.warn(
             `Found an unhandled ${req.method} request to ${req.url.href}`,
           )
@@ -54,7 +63,9 @@ describe('fetchEnsAvatar', () => {
     }),
   )
 
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   afterEach(() => server.resetHandlers())
 

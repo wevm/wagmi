@@ -1,6 +1,7 @@
-import { render, unstable_batchedUpdates } from 'react-dom'
+import * as ReactDOM from 'react-dom'
+import { afterEach, describe, expect, it } from 'vitest'
 
-import { act, wrapper } from '../../../test'
+import { act, cleanup, renderHook } from '../../../test'
 import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked'
 
 function createExternalStore<State>(initialState: State) {
@@ -9,7 +10,7 @@ function createExternalStore<State>(initialState: State) {
   return {
     set(updater: (state: State) => State) {
       currentState = updater(currentState)
-      unstable_batchedUpdates(() => {
+      ReactDOM.unstable_batchedUpdates(() => {
         listeners.forEach((listener) => listener())
       })
     },
@@ -37,23 +38,26 @@ function useExternalStore(
 }
 
 describe('useSyncExternalStoreWithTracked', () => {
+  afterEach(() => {
+    cleanup()
+  })
+
   it('rerenders only when the tracked value changes', async () => {
     const externalStore = createExternalStore({
       foo: 'bar',
-      baz: 'wagmi',
+      gm: 'wagmi',
       isGonnaMakeIt: false,
     })
 
     const renders: any[] = []
 
-    function App() {
-      const { baz } = useExternalStore(externalStore, (state) =>
-        renders.push(state),
-      )
-      return <div>{baz}</div>
-    }
+    renderHook(() => {
+      const { gm } = useExternalStore(externalStore, (state) => {
+        renders.push(state)
+      })
 
-    render(wrapper({ children: <App /> }), document.createElement('div'))
+      return gm
+    })
 
     act(() => {
       externalStore.set((x) => ({ ...x, foo: 'baz', isGonnaMakeIt: true }))
@@ -62,27 +66,27 @@ describe('useSyncExternalStoreWithTracked', () => {
     expect(renders).toMatchInlineSnapshot(`
       [
         {
-          "baz": "wagmi",
           "foo": "bar",
+          "gm": "wagmi",
           "isGonnaMakeIt": false,
         },
       ]
     `)
 
     act(() => {
-      externalStore.set((x) => ({ ...x, baz: 'ngmi' }))
+      externalStore.set((x) => ({ ...x, gm: 'ngmi' }))
     })
 
     expect(renders).toMatchInlineSnapshot(`
       [
         {
-          "baz": "wagmi",
           "foo": "bar",
+          "gm": "wagmi",
           "isGonnaMakeIt": false,
         },
         {
-          "baz": "ngmi",
           "foo": "baz",
+          "gm": "ngmi",
           "isGonnaMakeIt": true,
         },
       ]
@@ -92,26 +96,23 @@ describe('useSyncExternalStoreWithTracked', () => {
   it('rerenders when all values are being tracked', async () => {
     const externalStore = createExternalStore({
       foo: 'bar',
-      baz: 'wagmi',
+      gm: 'wagmi',
       isGonnaMakeIt: false,
     })
 
     const renders: any[] = []
 
-    function App() {
-      const state = useExternalStore(externalStore, (state) =>
-        renders.push(state),
-      )
-      return (
-        <div>
-          {state.baz}
-          {state.foo}
-          {state.isGonnaMakeIt}
-        </div>
-      )
-    }
+    renderHook(() => {
+      const state = useExternalStore(externalStore, (state) => {
+        renders.push(state)
+      })
 
-    render(wrapper({ children: <App /> }), document.createElement('div'))
+      return {
+        foo: state.foo,
+        gm: state.gm,
+        isGonnaMakeIt: state.isGonnaMakeIt,
+      }
+    })
 
     act(() => {
       externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
@@ -120,13 +121,13 @@ describe('useSyncExternalStoreWithTracked', () => {
     expect(renders).toMatchInlineSnapshot(`
       [
         {
-          "baz": "wagmi",
           "foo": "bar",
+          "gm": "wagmi",
           "isGonnaMakeIt": false,
         },
         {
-          "baz": "wagmi",
           "foo": "bar",
+          "gm": "wagmi",
           "isGonnaMakeIt": true,
         },
       ]
@@ -136,18 +137,19 @@ describe('useSyncExternalStoreWithTracked', () => {
   it('does not rerender when no values are being tracked', async () => {
     const externalStore = createExternalStore({
       foo: 'bar',
-      baz: 'wagmi',
+      gm: 'wagmi',
       isGonnaMakeIt: false,
     })
 
     const renders: any[] = []
 
-    function App() {
-      useExternalStore(externalStore, (state) => renders.push(state))
-      return <div>test</div>
-    }
+    renderHook(() => {
+      useExternalStore(externalStore, (state) => {
+        renders.push(state)
+      })
 
-    render(wrapper({ children: <App /> }), document.createElement('div'))
+      return 'test'
+    })
 
     act(() => {
       externalStore.set((x) => ({ ...x, isGonnaMakeIt: true }))
@@ -156,8 +158,8 @@ describe('useSyncExternalStoreWithTracked', () => {
     expect(renders).toMatchInlineSnapshot(`
       [
         {
-          "baz": "wagmi",
           "foo": "bar",
+          "gm": "wagmi",
           "isGonnaMakeIt": false,
         },
       ]

@@ -1,4 +1,5 @@
 import { verifyTypedData } from 'ethers/lib/utils'
+import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
@@ -44,7 +45,9 @@ const value = {
 }
 
 describe('signTypedData', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   describe('args', () => {
     it('domain, types, and value', async () => {
@@ -73,16 +76,7 @@ describe('signTypedData', () => {
     })
 
     describe('when chainId is provided in domain', () => {
-      it('switches before sending transaction', async () => {
-        await connect({ chainId: 4, connector })
-        expect(
-          await signTypedData({ domain, types, value }),
-        ).toMatchInlineSnapshot(
-          `"0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b"`,
-        )
-      })
-
-      it('unable to switch', async () => {
+      it("throws mismatch if chainId doesn't match signer", async () => {
         await connect({
           chainId: 4,
           connector: new MockConnector({
@@ -95,7 +89,7 @@ describe('signTypedData', () => {
         await expect(
           signTypedData({ domain, types, value }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby."`,
+          `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby\\"."`,
         )
       })
     })

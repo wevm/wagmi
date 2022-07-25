@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+import { describe, expect, it } from 'vitest'
 
 import { deserialize } from './deserialize'
 

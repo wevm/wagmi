@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.4.9
+
+### Patch Changes
+
+- [#721](https://github.com/tmm/wagmi/pull/721) [`abea25f`](https://github.com/tmm/wagmi/commit/abea25fd15d81d1ecaec9d3fbd687042ab29b1e6) Thanks [@tmm](https://github.com/tmm)! - Stay connected to existing `client.connector` when `connect` action fails to connect to new connector.
+
+* [#721](https://github.com/tmm/wagmi/pull/721) [`abea25f`](https://github.com/tmm/wagmi/commit/abea25fd15d81d1ecaec9d3fbd687042ab29b1e6) Thanks [@tmm](https://github.com/tmm)! - Switch `fetchToken` action to multicall and add `name` output property.
+
 ## 0.4.8
 
 ### Patch Changes

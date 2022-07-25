@@ -1,6 +1,7 @@
+import { chain } from '@wagmi/core'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { chain } from '@wagmi/core'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 import { act, renderHook } from '../../../test'
 import { useEnsAvatar } from './useEnsAvatar'
@@ -48,7 +49,7 @@ describe('useEnsAvatar', () => {
   beforeAll(() =>
     server.listen({
       onUnhandledRequest(req) {
-        if (req.url.origin !== chain.hardhat.rpcUrls.default.toString())
+        if (req.url.origin !== chain.foundry.rpcUrls.default)
           console.warn(
             `Found an unhandled ${req.method} request to ${req.url.href}`,
           )
@@ -60,7 +61,6 @@ describe('useEnsAvatar', () => {
 
   afterAll(() => server.close())
 
-  jest.setTimeout(timeout)
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useEnsAvatar({ addressOrName: 'nick.eth' }),

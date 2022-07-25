@@ -1,9 +1,9 @@
-import * as React from 'react'
 import { Avatar, Box, Button, Skeleton, Stack } from 'degen'
+import * as React from 'react'
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
-import { formatAddress } from '../../lib/address'
 import { useIsMounted } from '../../hooks'
+import { formatAddress } from '../../lib/address'
 
 export function Account() {
   const isMounted = useIsMounted()

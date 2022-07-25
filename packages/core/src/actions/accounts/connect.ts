@@ -47,7 +47,13 @@ export async function connect<TProvider extends Provider = Provider>({
 
     return { ...data, connector } as const
   } catch (err) {
-    client.setState((x) => ({ ...x, status: 'disconnected' }))
+    client.setState((x) => {
+      return {
+        ...x,
+        // Keep existing connector connected in case of error
+        status: x.connector ? 'connected' : 'disconnected',
+      }
+    })
     throw err
   }
 }

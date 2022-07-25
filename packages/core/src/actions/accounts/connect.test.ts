@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { getSigners, setupClient } from '../../../test'
 import { getClient } from '../../client'
 import { MockConnector } from '../../connectors/mock'
@@ -8,7 +10,9 @@ const connector = new MockConnector({
 })
 
 describe('connect', () => {
-  beforeEach(() => setupClient())
+  beforeEach(() => {
+    setupClient()
+  })
 
   describe('args', () => {
     it('connector', async () => {

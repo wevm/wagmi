@@ -19,12 +19,13 @@
     "strict": true,
     "strictNullChecks": true,
     "target": "es2021",
-    "types": ["@ethersproject/providers", "jest", "node"]
+    "types": [
+      "node",
+      // TODO: Remove once issue is fixed
+      // https://github.com/microsoft/TypeScript/issues/42873
+      "@ethersproject/providers"
+    ]
   },
   "exclude": ["node_modules", "**/dist/**"],
-  "include": ["packages/**/*"],
-  "ts-node": {
-    "transpileOnly": true,
-    "transpiler": "ts-node/transpilers/swc-experimental"
-  }
+  "include": ["packages/**/*"]
 }

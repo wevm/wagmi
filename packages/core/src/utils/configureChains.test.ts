@@ -1,13 +1,23 @@
 import { providers } from 'ethers'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import {
+  Mock,
+  afterAll,
+  afterEach,
+  beforeAll,
+  describe,
+  expect,
+  it,
+  vi,
+} from 'vitest'
 
+import { chain, defaultAlchemyId, defaultInfuraId } from '../constants'
 import { alchemyProvider } from '../providers/alchemy'
-import { publicProvider } from '../providers/public'
 import { infuraProvider } from '../providers/infura'
 import { jsonRpcProvider } from '../providers/jsonRpc'
 
-import { chain, defaultAlchemyId, defaultInfuraId } from '../constants'
+import { publicProvider } from '../providers/public'
 import { Chain } from '../types'
 import { configureChains } from './configureChains'
 
@@ -52,7 +62,7 @@ function getHandlers({
   rpcUrl,
 }: {
   chains: Chain[]
-  listener: jest.Mock
+  listener: Mock
   rpcUrl: (chain: Chain) => string
 }) {
   const handlers = chains.map((chain) => {
@@ -68,28 +78,28 @@ function getHandlers({
   return handlers
 }
 
-const alchemyListener = jest.fn()
+const alchemyListener = vi.fn()
 const alchemyHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: alchemyListener,
   rpcUrl: (chain) => `${chain.rpcUrls.alchemy}/${alchemyId}`,
 })
 
-const infuraListener = jest.fn()
+const infuraListener = vi.fn()
 const infuraHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: infuraListener,
   rpcUrl: (chain) => `${chain.rpcUrls.infura}/${infuraId}`,
 })
 
-const publicListener = jest.fn()
+const publicListener = vi.fn()
 const publicHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: publicListener,
   rpcUrl: (chain) => chain.rpcUrls.default,
 })
 
-const jsonRpcListener = jest.fn()
+const jsonRpcListener = vi.fn()
 const jsonRpcHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: jsonRpcListener,
@@ -582,14 +592,18 @@ describe('configureChains', () => {
         { stallTimeout: 5000 },
       )
 
+      const fallbackProvider = provider({
+        chainId: chain.mainnet.id,
+      }) as providers.FallbackProvider
+
       expect(
-        (
-          provider({ chainId: chain.mainnet.id }) as providers.FallbackProvider
-        ).providerConfigs.map(({ priority, stallTimeout, weight }) => ({
-          priority,
-          stallTimeout,
-          weight,
-        })),
+        fallbackProvider.providerConfigs.map(
+          ({ priority, stallTimeout, weight }) => ({
+            priority,
+            stallTimeout,
+            weight,
+          }),
+        ),
       ).toMatchInlineSnapshot(`
         [
           {
@@ -635,14 +649,18 @@ describe('configureChains', () => {
         }),
       ])
 
+      const fallbackProvider = provider({
+        chainId: chain.mainnet.id,
+      }) as providers.FallbackProvider
+
       expect(
-        (
-          provider({ chainId: chain.mainnet.id }) as providers.FallbackProvider
-        ).providerConfigs.map(({ priority, stallTimeout, weight }) => ({
-          priority,
-          stallTimeout,
-          weight,
-        })),
+        fallbackProvider.providerConfigs.map(
+          ({ priority, stallTimeout, weight }) => ({
+            priority,
+            stallTimeout,
+            weight,
+          }),
+        ),
       ).toMatchInlineSnapshot(`
         [
           {

@@ -4,32 +4,18 @@ import {
   getWebSocketProvider,
   watchWebSocketProvider,
 } from '@wagmi/core'
-import * as React from 'react'
-
-import { useClient } from '../../context'
-import { useForceUpdate } from '../utils'
+import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
 export type UseWebSocketProviderArgs = Partial<GetWebSocketProviderArgs>
 
 export function useWebSocketProvider<
   TWebSocketProvider extends WebSocketProvider,
 >({ chainId }: UseWebSocketProviderArgs = {}) {
-  const forceUpdate = useForceUpdate()
-  const client = useClient()
-  const webSocketProvider = React.useRef(
-    getWebSocketProvider<TWebSocketProvider>({ chainId }),
+  return useSyncExternalStoreWithSelector(
+    (cb) => watchWebSocketProvider<TWebSocketProvider>({ chainId }, cb),
+    () => getWebSocketProvider<TWebSocketProvider>({ chainId }),
+    () => getWebSocketProvider<TWebSocketProvider>({ chainId }),
+    (x) => x,
+    (a, b) => a?.network.chainId === b?.network.chainId,
   )
-
-  React.useEffect(() => {
-    const unwatch = watchWebSocketProvider<TWebSocketProvider>(
-      { chainId },
-      (webSocketProvider_) => {
-        webSocketProvider.current = webSocketProvider_
-        forceUpdate()
-      },
-    )
-    return unwatch
-  }, [chainId, client, forceUpdate])
-
-  return webSocketProvider.current
 }

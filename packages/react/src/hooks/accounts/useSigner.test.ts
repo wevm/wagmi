@@ -1,4 +1,5 @@
 import { connect } from '@wagmi/core'
+import { describe, expect, it } from 'vitest'
 
 import {
   actConnect,
@@ -9,8 +10,8 @@ import {
 } from '../../../test'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
-import { useSwitchNetwork } from './useSwitchNetwork'
 import { useSigner } from './useSigner'
+import { useSwitchNetwork } from './useSwitchNetwork'
 
 function useSignerWithAccount() {
   return {
@@ -37,10 +38,11 @@ describe('useSigner', () => {
       const { internal, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": JsonRpcSigner {
-            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "_index": null,
+          "data": WalletSigner {
             "_isSigner": true,
+            "_mnemonic": [Function],
+            "_signingKey": [Function],
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "provider": "<Provider network={31337} />",
           },
           "error": null,
@@ -97,10 +99,11 @@ describe('useSigner', () => {
       const { internal, ...res } = result.current.signer
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": JsonRpcSigner {
-            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "_index": null,
+          "data": WalletSigner {
             "_isSigner": true,
+            "_mnemonic": [Function],
+            "_signingKey": [Function],
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "provider": "<Provider network={31337} />",
           },
           "error": null,
@@ -153,10 +156,11 @@ describe('useSigner', () => {
       const { internal, ...res } = result.current.signer
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": JsonRpcSigner {
-            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "_index": null,
+          "data": WalletSigner {
             "_isSigner": true,
+            "_mnemonic": [Function],
+            "_signingKey": [Function],
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "provider": "<Provider network={31337} />",
           },
           "error": null,
@@ -181,10 +185,11 @@ describe('useSigner', () => {
       const { internal: _, ...res2 } = result.current.signer
       expect(res2).toMatchInlineSnapshot(`
         {
-          "data": JsonRpcSigner {
-            "_address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "_index": null,
+          "data": WalletSigner {
             "_isSigner": true,
+            "_mnemonic": [Function],
+            "_signingKey": [Function],
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "provider": "<Provider network={31337} />",
           },
           "error": null,

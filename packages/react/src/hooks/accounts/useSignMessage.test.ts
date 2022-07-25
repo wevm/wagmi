@@ -1,4 +1,5 @@
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
+import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
@@ -44,7 +45,7 @@ describe('useSignMessage', () => {
 
   describe('configuration', () => {
     it('onSuccess', async () => {
-      const onSuccess = jest.fn()
+      const onSuccess = vi.fn()
       const utils = renderHook(() =>
         useSignMessageWithConnect({
           message: messages.string,

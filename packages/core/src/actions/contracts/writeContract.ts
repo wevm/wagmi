@@ -1,82 +1,118 @@
-import { CallOverrides, Contract, providers } from 'ethers'
+import { CallOverrides, PopulatedTransaction, providers } from 'ethers'
 
-import { getClient } from '../../client'
-import {
-  ChainMismatchError,
-  ConnectorNotFoundError,
-  ProviderRpcError,
-  UserRejectedRequestError,
-} from '../../errors'
-import { Chain } from '../../types'
-import { GetContractArgs, getContract } from './getContract'
+import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
+import { Address } from '../../types'
+import { fetchSigner, getNetwork } from '../accounts'
+import { SendTransactionResult, sendTransaction } from '../transactions'
+import { GetContractArgs } from './getContract'
+import { prepareWriteContract } from './prepareWriteContract'
 
-export type WriteContractConfig = GetContractArgs & {
+export type WriteContractPreparedArgs = {
   /**
-   * Chain id to use for write
-   * If signer is not active on this chain, it will attempt to programmatically switch
-   */
+   * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has
+   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
+   * it is highly recommended to not use this and instead prepare the request upfront
+   * using the {@link prepareWriteContract} function.
+   *
+   * `prepared`: The request has been prepared with parameters required for sending a transaction
+   * via the {@link prepareWriteContract} function
+   * */
+  mode: 'prepared'
+  /** The prepared request. */
+  request: PopulatedTransaction & {
+    to: Address
+    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+  }
+}
+export type WriteContractUnpreparedArgs = {
+  mode: 'dangerouslyUnprepared'
+  request?: undefined
+}
+
+export type WriteContractArgs = Omit<GetContractArgs, 'signerOrProvider'> & {
+  /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
   /** Method to call on contract */
   functionName: string
   /** Arguments to pass contract method */
   args?: any | any[]
   overrides?: CallOverrides
-}
+} & (WriteContractUnpreparedArgs | WriteContractPreparedArgs)
+export type WriteContractResult = SendTransactionResult
 
-export type WriteContractResult = providers.TransactionResponse
-
-export async function writeContract<TContract extends Contract = Contract>({
+/**
+ * @description Function to call a contract write method.
+ *
+ * It is recommended to pair this with the {@link prepareWriteContract} function
+ * to avoid [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+ *
+ * @example
+ * import { prepareWriteContract, writeContract } from '@wagmi/core'
+ *
+ * const config = await prepareWriteContract({
+ *   addressOrName: '0x...',
+ *   contractInterface: wagmiAbi,
+ *   functionName: 'mint',
+ * })
+ * const result = await writeContract(config)
+ */
+export async function writeContract({
   addressOrName,
   args,
   chainId,
   contractInterface,
   functionName,
+  mode,
   overrides,
-  signerOrProvider,
-}: WriteContractConfig): Promise<WriteContractResult> {
-  const { connector } = getClient()
-  if (!connector) throw new ConnectorNotFoundError()
+  request: request_,
+}: WriteContractArgs): Promise<WriteContractResult> {
+  /********************************************************************/
+  /** START: iOS App Link cautious code.                              */
+  /** Do not perform any async operations in this block.              */
+  /** Ref: wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
+  /********************************************************************/
 
-  const params = [
-    ...(Array.isArray(args) ? args : args ? [args] : []),
-    ...(overrides ? [overrides] : []),
-  ]
+  const signer = await fetchSigner<providers.JsonRpcSigner>()
+  if (!signer) throw new ConnectorNotFoundError()
 
-  try {
-    let chain: Chain | undefined
-    if (chainId) {
-      const activeChainId = await connector.getChainId()
-      // Try to switch chain to provided `chainId`
-      if (chainId !== activeChainId) {
-        if (connector.switchChain) chain = await connector.switchChain(chainId)
-        else
-          throw new ChainMismatchError({
-            activeChain:
-              connector.chains.find((x) => x.id === activeChainId)?.name ??
-              `Chain ${activeChainId}`,
-            targetChain:
-              connector.chains.find((x) => x.id === chainId)?.name ??
-              `Chain ${chainId}`,
-          })
-      }
-    }
-
-    const signer = await connector.getSigner({ chainId: chain?.id })
-    const contract = getContract<TContract>({
-      addressOrName,
-      contractInterface,
-      signerOrProvider,
+  const { chain: activeChain, chains } = getNetwork()
+  const activeChainId = activeChain?.id
+  if (chainId && chainId !== activeChainId) {
+    throw new ChainMismatchError({
+      activeChain:
+        chains.find((x) => x.id === activeChainId)?.name ??
+        `Chain ${activeChainId}`,
+      targetChain:
+        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
     })
-    const contractWithSigner = contract.connect(signer)
-    const contractFunction = contractWithSigner[functionName]
-    if (!contractFunction)
-      console.warn(
-        `"${functionName}" does not exist in interface for contract "${addressOrName}"`,
-      )
-    return (await contractFunction(...params)) as providers.TransactionResponse
-  } catch (error) {
-    if ((<ProviderRpcError>error).code === 4001)
-      throw new UserRejectedRequestError(error)
-    throw error
   }
+
+  if (mode === 'prepared') {
+    if (!request_) throw new Error('`request` is required')
+  }
+
+  const request =
+    mode === 'dangerouslyUnprepared'
+      ? (
+          await prepareWriteContract({
+            addressOrName,
+            args,
+            contractInterface,
+            functionName,
+            overrides,
+          })
+        ).request
+      : request_
+
+  const transaction = await sendTransaction({
+    request,
+    mode: 'prepared',
+  })
+
+  /********************************************************************/
+  /** END: iOS App Link cautious code.                                */
+  /** Go nuts!                                                        */
+  /********************************************************************/
+
+  return transaction
 }

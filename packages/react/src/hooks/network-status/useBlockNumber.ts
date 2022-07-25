@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { useQueryClient } from 'react-query'
 import {
   FetchBlockNumberArgs,
   FetchBlockNumberResult,
   fetchBlockNumber,
 } from '@wagmi/core'
+import * as React from 'react'
+import { useQueryClient } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'

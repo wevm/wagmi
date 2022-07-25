@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { chain, defaultChains } from '../constants'
 import { CoinbaseWalletConnector } from './coinbaseWallet'
 
@@ -7,7 +9,7 @@ describe('CoinbaseWalletConnector', () => {
       chains: defaultChains,
       options: {
         appName: 'wagmi',
-        jsonRpcUrl: chain.hardhat.rpcUrls.default.toString(),
+        jsonRpcUrl: chain.foundry.rpcUrls.default,
       },
     })
     expect(connector.name).toEqual('Coinbase Wallet')

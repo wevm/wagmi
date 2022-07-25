@@ -1,13 +1,14 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import {
   mlootContractConfig,
   setupClient,
   wagmigotchiContractConfig,
 } from '../../../test'
-import { ReadContractsConfig, readContracts } from './readContracts'
-
-import * as readContract from './readContract'
-import * as multicall from './multicall'
 import { chain } from '../../constants'
+import * as multicall from './multicall'
+import * as readContract from './readContract'
+import { ReadContractsConfig, readContracts } from './readContracts'
 
 const contracts: ReadContractsConfig['contracts'] = [
   {
@@ -33,11 +34,11 @@ describe('readContracts', () => {
     setupClient({
       chains: [chain.mainnet, { ...chain.polygon, multicall: undefined }],
     })
-    console.warn = jest.fn()
+    console.warn = vi.fn()
   })
 
   it('default', async () => {
-    const spy = jest.spyOn(multicall, 'multicall')
+    const spy = vi.spyOn(multicall, 'multicall')
     const results = await readContracts({ contracts })
 
     expect(spy).toHaveBeenCalledWith({
@@ -66,7 +67,7 @@ describe('readContracts', () => {
   })
 
   it('falls back to readContract if multicall is not available', async () => {
-    const spy = jest.spyOn(readContract, 'readContract')
+    const spy = vi.spyOn(readContract, 'readContract')
     const chainId = chain.polygon.id
     const contracts: ReadContractsConfig['contracts'] = [
       {
@@ -121,7 +122,7 @@ describe('readContracts', () => {
 
   describe('multi-chain', () => {
     it('default', async () => {
-      const spy = jest.spyOn(multicall, 'multicall')
+      const spy = vi.spyOn(multicall, 'multicall')
       const ethContracts: ReadContractsConfig['contracts'] = [
         {
           ...wagmigotchiContractConfig,
@@ -185,7 +186,7 @@ describe('readContracts', () => {
     })
 
     it('falls back to readContract if multicall is not available', async () => {
-      const spy = jest.spyOn(readContract, 'readContract')
+      const spy = vi.spyOn(readContract, 'readContract')
       const ethContracts: ReadContractsConfig['contracts'] = [
         {
           ...wagmigotchiContractConfig,

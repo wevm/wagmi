@@ -1,12 +1,13 @@
+import { expect, it } from 'vitest'
+
 import * as Exports from './'
 
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "Context",
-      "WagmiProvider",
-      "WagmiConfig",
       "createClient",
+      "Context",
+      "WagmiConfig",
       "useClient",
       "paginatedIndexesConfig",
       "useAccount",
@@ -19,6 +20,7 @@ it('should expose correct exports', () => {
       "useContractRead",
       "useContractReads",
       "useContractWrite",
+      "usePrepareContractWrite",
       "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",
@@ -30,6 +32,7 @@ it('should expose correct exports', () => {
       "useProvider",
       "useQuery",
       "useSendTransaction",
+      "usePrepareSendTransaction",
       "useSignMessage",
       "useSignTypedData",
       "useSigner",
@@ -72,8 +75,4 @@ it('should expose correct exports', () => {
       "readContracts",
     ]
   `)
-})
-
-it('should alias "WagmiConfig" as "WagmiProvider"', () => {
-  expect(Exports.WagmiConfig).toBe(Exports.WagmiProvider)
 })

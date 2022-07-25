@@ -1,9 +1,13 @@
+import { beforeEach, describe, expect, it } from 'vitest'
+
 import { setupClient } from '../../../test'
 import { fetchToken } from './fetchToken'
 
 describe('fetchToken', () => {
   describe('args', () => {
-    beforeEach(() => setupClient())
+    beforeEach(() => {
+      setupClient()
+    })
 
     describe('address', () => {
       it('has token', async () => {
@@ -15,6 +19,7 @@ describe('fetchToken', () => {
           {
             "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
             "decimals": 18,
+            "name": "Uniswap",
             "symbol": "UNI",
             "totalSupply": {
               "formatted": "1000000000.0",
@@ -28,13 +33,13 @@ describe('fetchToken', () => {
       })
 
       it('bogus token', async () => {
-        await expect(
-          fetchToken({
+        try {
+          await fetchToken({
             address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
-          }),
-        ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"symbol()\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.6.1)"`,
-        )
+          })
+        } catch (error) {
+          expect((<Error>error).message).toContain('call revert exception')
+        }
       })
     })
 
@@ -48,6 +53,7 @@ describe('fetchToken', () => {
         {
           "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
           "decimals": 18,
+          "name": "Uniswap",
           "symbol": "UNI",
           "totalSupply": {
             "formatted": "1000000000.0",
@@ -70,6 +76,7 @@ describe('fetchToken', () => {
         {
           "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
           "decimals": 18,
+          "name": "Uniswap",
           "symbol": "UNI",
           "totalSupply": {
             "formatted": "1000000000000000000.0",

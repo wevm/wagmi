@@ -7,5 +7,6 @@
   "providers": "Providers",
   "connectors": "Connectors",
   "hooks": "Hooks",
+  "prepare-hooks": "Prepare Hooks",
   "constants": "Constants"
 }
