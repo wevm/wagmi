@@ -64,7 +64,7 @@ const queryFn = async ({
       contractInterface,
       functionName,
       overrides,
-    })) || null
+    })) ?? null
   )
 }
 
