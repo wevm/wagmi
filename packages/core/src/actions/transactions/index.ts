@@ -1,4 +1,10 @@
 export {
+  deprecatedSendTransaction,
+  type DeprecatedSendTransactionArgs,
+  type DeprecatedSendTransactionResult,
+} from './deprecatedSendTransaction'
+
+export {
   prepareSendTransaction,
   type PrepareSendTransactionArgs,
   type PrepareSendTransactionResult,

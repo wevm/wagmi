@@ -1,5 +1,7 @@
 export {
   connect,
+  deprecatedSendTransaction,
+  deprecatedWriteContract,
   disconnect,
   fetchBalance,
   fetchBlockNumber,
@@ -38,6 +40,10 @@ export {
 export type {
   ConnectArgs,
   ConnectResult,
+  DeprecatedSendTransactionArgs,
+  DeprecatedSendTransactionResult,
+  DeprecatedWriteContractConfig,
+  DeprecatedWriteContractResult,
   FetchBalanceArgs,
   FetchBalanceResult,
   FetchBlockNumberArgs,
