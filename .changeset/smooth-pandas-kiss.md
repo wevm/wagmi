@@ -9,9 +9,9 @@
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
--   alchemyProvider({ alchemyId, pollingInterval: 5000 }),
+-   alchemyProvider({ apiKey, pollingInterval: 5000 }),
 -   publicProvider({ pollingInterval: 5000 })
-+   alchemyProvider({ alchemyId }),
++   alchemyProvider({ apiKey }),
 +   publicProvider()
   ],
 + { pollingInterval: 5000 }

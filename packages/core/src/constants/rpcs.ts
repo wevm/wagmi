@@ -1,7 +1,7 @@
 import { ChainName } from './chains'
 
-export const defaultAlchemyId = '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC'
-export const defaultInfuraId = '84842078b09946638c03157f83405213'
+export const defaultAlchemyApiKey = '_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC'
+export const defaultInfuraApiKey = '84842078b09946638c03157f83405213'
 
 export type RpcProviderName = 'alchemy' | 'infura' | 'public'
 
@@ -76,11 +76,11 @@ type PublicChains = Extract<
   | 'arbitrumRinkeby'
 >
 export const publicRpcUrls: Record<PublicChains, string> = {
-  mainnet: `${alchemyRpcUrls.mainnet}/${defaultAlchemyId}`,
-  ropsten: `${alchemyRpcUrls.ropsten}/${defaultAlchemyId}`,
-  rinkeby: `${alchemyRpcUrls.rinkeby}/${defaultAlchemyId}`,
-  goerli: `${alchemyRpcUrls.goerli}/${defaultAlchemyId}`,
-  kovan: `${alchemyRpcUrls.kovan}/${defaultAlchemyId}`,
+  mainnet: `${alchemyRpcUrls.mainnet}/${defaultAlchemyApiKey}`,
+  ropsten: `${alchemyRpcUrls.ropsten}/${defaultAlchemyApiKey}`,
+  rinkeby: `${alchemyRpcUrls.rinkeby}/${defaultAlchemyApiKey}`,
+  goerli: `${alchemyRpcUrls.goerli}/${defaultAlchemyApiKey}`,
+  kovan: `${alchemyRpcUrls.kovan}/${defaultAlchemyApiKey}`,
   optimism: 'https://mainnet.optimism.io',
   optimismKovan: 'https://kovan.optimism.io',
   polygon: 'https://polygon-rpc.com',
