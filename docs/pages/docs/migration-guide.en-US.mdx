@@ -20,6 +20,12 @@ All the breaking changes in this release are related to the introduction of [Pre
 
 ### `useContractWrite`
 
+<Callout>
+  Not ready to migrate to the new `useContractWrite` yet? You can use the
+  [`useDeprecatedContractWrite`
+  hook](/docs/deprecated-hooks/useDeprecatedContractWrite).
+</Callout>
+
 #### Behavioral changes
 
 If a `chainId` is passed to `useContractWrite`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
@@ -124,6 +130,12 @@ const { write } = useContractWrite(config)
 ```
 
 ### `useSendTransaction`
+
+<Callout>
+  Not ready to migrate to the new `useSendTransaction` yet? You can use the
+  [`useDeprecatedSendTransaction`
+  hook](/docs/deprecated-hooks/useDeprecatedSendTransaction).
+</Callout>
 
 #### Behavioral changes
 

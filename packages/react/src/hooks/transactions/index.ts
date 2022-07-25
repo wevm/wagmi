@@ -1,4 +1,5 @@
-export { useSendTransaction } from './useSendTransaction'
+export { useDeprecatedSendTransaction } from './useDeprecatedSendTransaction'
 export { usePrepareSendTransaction } from './usePrepareSendTransaction'
+export { useSendTransaction } from './useSendTransaction'
 export { useTransaction } from './useTransaction'
 export { useWaitForTransaction } from './useWaitForTransaction'

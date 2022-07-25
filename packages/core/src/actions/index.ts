@@ -30,6 +30,7 @@ export {
 } from './accounts'
 
 export {
+  deprecatedWriteContract,
   fetchToken,
   getContract,
   prepareWriteContract,
@@ -39,6 +40,8 @@ export {
   watchReadContract,
   watchReadContracts,
   writeContract,
+  type DeprecatedWriteContractConfig,
+  type DeprecatedWriteContractResult,
   type FetchTokenArgs,
   type FetchTokenResult,
   type GetContractArgs,
@@ -99,10 +102,13 @@ export {
 } from './providers'
 
 export {
+  deprecatedSendTransaction,
   fetchTransaction,
   prepareSendTransaction,
   sendTransaction,
   waitForTransaction,
+  type DeprecatedSendTransactionArgs,
+  type DeprecatedSendTransactionResult,
   type FetchTransactionArgs,
   type FetchTransactionResult,
   type PrepareSendTransactionArgs,

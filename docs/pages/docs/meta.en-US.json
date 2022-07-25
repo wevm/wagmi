@@ -8,5 +8,6 @@
   "connectors": "Connectors",
   "hooks": "Hooks",
   "prepare-hooks": "Prepare Hooks",
-  "constants": "Constants"
+  "constants": "Constants",
+  "deprecated-hooks": "Deprecated Hooks"
 }
