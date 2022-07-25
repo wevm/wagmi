@@ -33,6 +33,7 @@ export const mutationKey = ([
     },
   ] as const
 
+/** @deprecated */
 export function useDeprecatedContractWrite({
   addressOrName,
   args,

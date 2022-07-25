@@ -26,6 +26,7 @@ const mutationFn = (args: UseDeprecatedSendTransactionArgs) => {
   return deprecatedSendTransaction({ chainId, request })
 }
 
+/** @deprecated */
 export function useDeprecatedSendTransaction({
   chainId,
   request,
