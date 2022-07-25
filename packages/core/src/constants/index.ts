@@ -15,8 +15,8 @@ export { multicallInterface } from './multicall'
 
 export {
   alchemyRpcUrls,
-  defaultAlchemyId,
-  defaultInfuraId,
+  defaultAlchemyApiKey,
+  defaultInfuraApiKey,
   infuraRpcUrls,
   publicRpcUrls,
 } from './rpcs'

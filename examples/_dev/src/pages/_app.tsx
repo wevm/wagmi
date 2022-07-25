@@ -20,9 +20,6 @@ import { infuraProvider } from 'wagmi/providers/infura'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
 
-const alchemyId = process.env.NEXT_PUBLIC_ALCHEMY_ID
-const infuraId = process.env.NEXT_PUBLIC_INFURA_ID
-
 const avalanche: Chain = {
   id: 43_114,
   name: 'Avalanche',
@@ -48,8 +45,8 @@ const avalanche: Chain = {
 const { chains, provider, webSocketProvider } = configureChains(
   [...defaultChains, chain.optimism, avalanche],
   [
-    alchemyProvider({ alchemyId }),
-    infuraProvider({ infuraId }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
+    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY }),
     jsonRpcProvider({
       rpc: (chain) => {
         if (chain.id !== avalanche.id) return null

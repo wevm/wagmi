@@ -233,6 +233,25 @@ const { sendTransaction } = useSendTransaction(config)
 </button>
 ```
 
+### `alchemyProvider` and `infuraProvider`
+
+`alchemyProvider` and `infuraProvider` now use a generic `apiKey` configuration option instead of `alchemyId` and `infuraId`.
+
+```diff
+import { alchemyProvider } from '@wagmi/core/providers/alchemy'
+import { infuraProvider } from '@wagmi/core/providers/infura'
+
+alchemyProvider({
+-  alchemyId: 'yourAlchemyApiKey',
++  apiKey: 'yourAlchemyApiKey',
+})
+
+infuraProvider({
+-  infuraId: 'yourInfuraApiKey',
++  apiKey: 'yourInfuraApiKey',
+})
+```
+
 ## 0.5.x Breaking changes
 
 <Callout>

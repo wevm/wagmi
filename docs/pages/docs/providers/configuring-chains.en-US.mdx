@@ -27,10 +27,8 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
-const alchemyId = process.env.ALCHEMY_ID
-
 const { chains, provider } = configureChains(defaultChains, [
-  alchemyProvider({ alchemyId }),
+  alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
   publicProvider(),
 ])
 
@@ -63,10 +61,8 @@ The `configureChains` function accepts multiple providers. This is useful if not
 ```ts
 import { Chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { infuraProvider } from 'wagmi/providers/infura'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-
-const alchemyId = process.env.ALCHEMY_ID
-const infuraId = process.env.INFURA_ID
 
 const avalancheChain: Chain = {
   id: 43_114,
@@ -89,8 +85,8 @@ const avalancheChain: Chain = {
 const { provider } = configureChains(
   [chain.mainnet, avalancheChain],
   [
-    alchemyProvider({ alchemyId }),
-    infuraProvider({ infuraId }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     jsonRpcProvider({
       rpc: (chain) => {
         if (chain.id !== avalancheChain.id) return null
@@ -109,8 +105,8 @@ If the `targetQuorum` option is set to a value greater than `1`, it will dispatc
 const { provider } = configureChains(
   [chain.mainnet, avalancheChain],
   [
-    alchemyProvider({ alchemyId }),
-    infuraProvider({ infuraId }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     jsonRpcProvider({
       rpc: (chain) => {
         if (chain.id !== avalancheChain.id) return null
@@ -150,16 +146,14 @@ The providers the app supports.
 
 If a provider does not support a chain, it will fall back onto the next one in the array. If no RPC URLs are found, `configureChains` will throw an error.
 
-```ts {9}
+```ts {7}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const alchemyId = process.env.ALCHEMY_ID
-
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
-  [alchemyProvider({ alchemyId }), publicProvider()],
+  [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 ```
 
@@ -169,19 +163,16 @@ const { chains } = configureChains(
 
 The frequency in milliseconds at which the provider polls. Defaults to `4000`.
 
-```ts {15}
+```ts {12}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const alchemyId = process.env.ALCHEMY_ID
-const infuraId = process.env.INFURA_ID
-
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
   [
-    alchemyProvider({ alchemyId }),
-    infuraProvider({ infuraId }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
   { pollingInterval: 10_000, targetQuorum: 3 },
@@ -192,19 +183,16 @@ const { chains } = configureChains(
 
 Sets the target quorum. Defaults to `1`.
 
-```ts {15}
+```ts {12}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const alchemyId = process.env.ALCHEMY_ID
-const infuraId = process.env.INFURA_ID
-
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
   [
-    alchemyProvider({ alchemyId }),
-    infuraProvider({ infuraId }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
   { targetQuorum: 3 },
@@ -215,19 +203,16 @@ const { chains } = configureChains(
 
 Sets the minimum quorum that must be accepted by the providers. Defaults to `1`.
 
-```ts {15}
+```ts {12}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const alchemyId = process.env.ALCHEMY_ID
-const infuraId = process.env.INFURA_ID
-
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
   [
-    alchemyProvider({ alchemyId }),
-    infuraProvider({ infuraId }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
   { targetQuorum: 3, minQuorum: 2 },
@@ -238,19 +223,16 @@ const { chains } = configureChains(
 
 The timeout in milliseconds after which another provider will be attempted.
 
-```ts {15}
+```ts {12}
 import { chain, configureChains } from 'wagmi'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
-const alchemyId = process.env.ALCHEMY_ID
-const infuraId = process.env.INFURA_ID
-
 const { chains } = configureChains(
   [chain.mainnet, chain.optimism],
   [
-    alchemyProvider({ alchemyId }),
-    infuraProvider({ infuraId }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
   { stallTimeout: 5000 },

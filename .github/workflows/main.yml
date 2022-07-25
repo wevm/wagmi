@@ -163,12 +163,12 @@ jobs:
         env:
           ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
           ANVIL_BLOCK_NUMBER: 15132000
-      - name: Test
+      - name: Test React 18
         if: matrix.react-version == 18
         run: pnpm test:coverage
         env:
           REACT_VERSION: ${{ matrix.react-version }}
-      - name: Test
+      - name: Test React 17
         if: matrix.react-version == 17
         run: |
           cd packages/react

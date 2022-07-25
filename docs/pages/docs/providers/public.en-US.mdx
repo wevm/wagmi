@@ -48,16 +48,14 @@ const { chains, provider } = configureChains(
 
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
-```ts {9-10}
+```ts {7-8}
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-
-const alchemyId = process.env.ALCHEMY_ID
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
-    alchemyProvider({ alchemyId, priority: 0 }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey', priority: 0 }),
     publicProvider({ priority: 1 }),
   ],
 )
@@ -67,17 +65,15 @@ const { chains, provider } = configureChains(
 
 The timeout in milliseconds after which another provider will be attempted.
 
-```ts {9-10}
+```ts {8}
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
-
-const alchemyId = process.env.ALCHEMY_ID
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
   [
-    alchemyProvider({ alchemyId, stallTimeout: 1000 }),
-    publicProvider({ stallTimeout: 1000 }),
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    publicProvider({ stallTimeout: 1_000 }),
   ],
 )
 ```
@@ -86,14 +82,15 @@ const { chains, provider } = configureChains(
 
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
-```ts {8}
+```ts {7-8}
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const alchemyId = process.env.ALCHEMY_ID
-
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
-  [alchemyProvider({ alchemyId, weight: 1 }), publicProvider({ weight: 2 })],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey', weight: 1 }),
+    publicProvider({ weight: 2 }),
+  ],
 )
 ```

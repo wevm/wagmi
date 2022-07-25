@@ -15,10 +15,8 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 import { App } from './App'
 
-const alchemyId = import.meta.env.VITE_ALCHEMY_ID as string
-
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ alchemyId }),
+  alchemyProvider({ apiKey: import.meta.env.VITE_ALCHEMY_API_KEY as string }),
 ])
 
 const client = createClient({
