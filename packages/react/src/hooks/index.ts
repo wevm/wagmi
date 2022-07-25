@@ -31,6 +31,7 @@ export { useProvider, useWebSocketProvider } from './providers'
 export {
   useSendTransaction,
   usePrepareSendTransaction,
+  useTransaction,
   useWaitForTransaction,
 } from './transactions'
 

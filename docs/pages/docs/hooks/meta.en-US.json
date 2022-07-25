@@ -23,6 +23,7 @@
   "useSignTypedData": "useSignTypedData",
   "useSwitchNetwork": "useSwitchNetwork",
   "useToken": "useToken",
+  "useTransaction": "useTransaction",
   "useWaitForTransaction": "useWaitForTransaction",
   "useWebSocketProvider": "useWebSocketProvider"
 }

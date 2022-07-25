@@ -99,9 +99,12 @@ export {
 } from './providers'
 
 export {
+  fetchTransaction,
   prepareSendTransaction,
   sendTransaction,
   waitForTransaction,
+  type FetchTransactionArgs,
+  type FetchTransactionResult,
   type PrepareSendTransactionArgs,
   type PrepareSendTransactionResult,
   type SendTransactionArgs,
