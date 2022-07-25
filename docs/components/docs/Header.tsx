@@ -65,7 +65,7 @@ export function Header({ showGitcoinBanner }: Props) {
         >
           <img
             alt=""
-            src="https://img.shields.io/npm/l/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=License"
+            src="https://img.shields.io/github/license/wagmi-dev/wagmi?colorA=2B323B&colorB=1e2329&style=flat&label=License"
           />
         </a>
 

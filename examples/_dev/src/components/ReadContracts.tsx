@@ -62,7 +62,10 @@ export function ReadContracts() {
     <div>
       <div>Data:</div>
       {isLoading && <div>loading...</div>}
-      {isSuccess && data?.map((data) => <div>{JSON.stringify(data)}</div>)}
+      {isSuccess &&
+        data?.map((data) => (
+          <div key={JSON.stringify(data)}>{JSON.stringify(data)}</div>
+        ))}
     </div>
   )
 }
