@@ -16,7 +16,7 @@ export type CreateClientConfig<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = ClientConfig<TProvider, TWebSocketProvider> & {
   queryClient?: QueryClient
-  persister?: Persister
+  persister?: Persister | null
 }
 export function createClient<
   TProvider extends Provider,
