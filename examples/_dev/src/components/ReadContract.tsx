@@ -4,7 +4,7 @@ import { useContractRead } from 'wagmi'
 import wagmigotchiAbi from './wagmigotchi-abi.json'
 
 const wagmigotchiContractConfig = {
-  addressOrName: '0xff9c1b15b16263c61d017ee9f65c50e4ae0113d7',
+  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   contractInterface: wagmigotchiAbi,
 }
 
@@ -14,9 +14,11 @@ export const ReadContract = () => {
       <div>
         <GetAlive />
       </div>
-      <div>
-        <Love />
-      </div>
+      {false && (
+        <div>
+          <Love />
+        </div>
+      )}
     </div>
   )
 }

@@ -48,9 +48,9 @@ export const Account = () => {
 
       <WriteContractPrepared />
 
-      {false && (
+      {true && (
         <>
-          {true && (
+          {false && (
             <>
               <h4>Balance</h4>
               <Balance />
