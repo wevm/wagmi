@@ -1,14 +1,14 @@
 import { providers } from 'ethers'
 
-import { defaultInfuraId } from '../constants/rpcs'
+import { defaultInfuraApiKey } from '../constants/rpcs'
 import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type InfuraProviderConfig = FallbackProviderConfig & {
-  infuraId?: string
+  apiKey?: string
 }
 
 export function infuraProvider({
-  infuraId = defaultInfuraId,
+  apiKey = defaultInfuraApiKey,
   priority,
   stallTimeout,
   weight,
@@ -23,15 +23,15 @@ export function infuraProvider({
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: `${chain.rpcUrls.infura}/${infuraId}`,
+          default: `${chain.rpcUrls.infura}/${apiKey}`,
         },
       },
       provider: () => {
-        const provider = new providers.InfuraProvider(chain.id, infuraId)
+        const provider = new providers.InfuraProvider(chain.id, apiKey)
         return Object.assign(provider, { priority, stallTimeout, weight })
       },
       webSocketProvider: () =>
-        new providers.InfuraWebSocketProvider(chain.id, infuraId),
+        new providers.InfuraWebSocketProvider(chain.id, apiKey),
     }
   }
 }

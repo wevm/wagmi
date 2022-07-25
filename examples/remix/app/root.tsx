@@ -25,7 +25,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 export function loader() {
   require('dotenv').config()
   return {
-    alchemyId: process.env.REMIX_ALCHEMY_ID as string,
+    alchemyApiKey: process.env.REMIX_ALCHEMY_API_KEY as string,
   }
 }
 
@@ -34,12 +34,12 @@ export const meta: MetaFunction = () => {
 }
 
 export default function App() {
-  const { alchemyId } = useLoaderData()
+  const { alchemyApiKey } = useLoaderData()
 
   const client = useMemo(() => {
     const { chains, provider, webSocketProvider } = configureChains(
       defaultChains,
-      [alchemyProvider({ alchemyId })],
+      [alchemyProvider({ apiKey: alchemyApiKey })],
     )
 
     return createClient({
@@ -69,7 +69,7 @@ export default function App() {
       provider,
       webSocketProvider,
     })
-  }, [alchemyId])
+  }, [alchemyApiKey])
 
   return (
     <html lang="en">

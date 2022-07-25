@@ -5,6 +5,12 @@ export {
 } from './deprecatedSendTransaction'
 
 export {
+  fetchTransaction,
+  type FetchTransactionArgs,
+  type FetchTransactionResult,
+} from './fetchTransaction'
+
+export {
   prepareSendTransaction,
   type PrepareSendTransactionArgs,
   type PrepareSendTransactionResult,

@@ -36,6 +36,7 @@ export {
   useSigner,
   useSwitchNetwork,
   useToken,
+  useTransaction,
   useWaitForTransaction,
   useWebSocketProvider,
 } from './hooks'

@@ -79,7 +79,7 @@ const { data } = useContractWrite({
 
 `data` now returns an object only consisting of `hash` & `wait`, and not the full [`TransactionResponse`](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionResponse).
 
-If you require the full `TransactionResponse`, you can use `useWaitForTransaction` with `confirmations: 0`:
+If you require the full `TransactionResponse`, you can use `useTransaction`:
 
 ```diff
 const {
@@ -89,7 +89,7 @@ const {
 -   ...transaction
   }
 } = useContractWrite(...)
-+const { data: transaction } = useWaitForTransaction({ confirmations: 0, hash })
++const { data: transaction } = useTransaction({ hash })
 ```
 
 > Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
@@ -194,7 +194,7 @@ const { data } = useSendTransaction({
 
 `data` now returns an object only consisting of `hash` & `wait`, and not the full [`TransactionResponse`](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionResponse).
 
-If you require the full `TransactionResponse`, you can use `useWaitForTransaction` with `confirmations: 0`:
+If you require the full `TransactionResponse`, you can use `useTransaction`:
 
 ```diff
 const {
@@ -204,7 +204,7 @@ const {
 -   ...transaction
   }
 } = useSendTransaction(...)
-+const { data: transaction } = useWaitForTransaction({ confirmations: 0, hash })
++const { data: transaction } = useTransaction({ hash })
 ```
 
 > Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
@@ -243,6 +243,25 @@ const { sendTransaction } = useSendTransaction(config)
 >
   Send
 </button>
+```
+
+### `alchemyProvider` and `infuraProvider`
+
+`alchemyProvider` and `infuraProvider` now use a generic `apiKey` configuration option instead of `alchemyId` and `infuraId`.
+
+```diff
+import { alchemyProvider } from '@wagmi/core/providers/alchemy'
+import { infuraProvider } from '@wagmi/core/providers/infura'
+
+alchemyProvider({
+-  alchemyId: 'yourAlchemyApiKey',
++  apiKey: 'yourAlchemyApiKey',
+})
+
+infuraProvider({
+-  infuraId: 'yourInfuraApiKey',
++  apiKey: 'yourInfuraApiKey',
+})
 ```
 
 ## 0.5.x Breaking changes

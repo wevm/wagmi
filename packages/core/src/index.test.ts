@@ -18,6 +18,7 @@ it('should expose correct exports', () => {
       "fetchFeeData",
       "fetchSigner",
       "fetchToken",
+      "fetchTransaction",
       "getAccount",
       "getContract",
       "getNetwork",

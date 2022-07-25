@@ -40,6 +40,7 @@ it('should expose correct exports', () => {
       "useSigner",
       "useSwitchNetwork",
       "useToken",
+      "useTransaction",
       "useWaitForTransaction",
       "useWebSocketProvider",
       "deserialize",

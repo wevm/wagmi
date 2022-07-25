@@ -33,6 +33,7 @@ export {
   useDeprecatedSendTransaction,
   useSendTransaction,
   usePrepareSendTransaction,
+  useTransaction,
   useWaitForTransaction,
 } from './transactions'
 

@@ -103,11 +103,14 @@ export {
 
 export {
   deprecatedSendTransaction,
+  fetchTransaction,
   prepareSendTransaction,
   sendTransaction,
   waitForTransaction,
   type DeprecatedSendTransactionArgs,
   type DeprecatedSendTransactionResult,
+  type FetchTransactionArgs,
+  type FetchTransactionResult,
   type PrepareSendTransactionArgs,
   type PrepareSendTransactionResult,
   type SendTransactionArgs,
