@@ -69,7 +69,7 @@ const client = createClient({
     new MetaMaskConnector({
       chains,
       options: {
-        UNSTABLE_shimConnectSelectWallet: true,
+        UNSTABLE_shimOnConnectSelectAccount: true,
       },
     }),
     new CoinbaseWalletConnector({
@@ -97,6 +97,7 @@ const client = createClient({
       },
     }),
   ],
+  persister: null,
   provider,
   webSocketProvider,
 })
