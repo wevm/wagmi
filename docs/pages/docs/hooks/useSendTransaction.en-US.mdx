@@ -67,7 +67,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction).
 
-- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
+- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
 - `prepared`: The request has been prepared with parameters required for sending a transaction via the `usePrepareSendTransaction` hook
 
 ```tsx {5}
@@ -75,7 +75,7 @@ import { useSendTransaction } from 'wagmi'
 
 function App() {
   const { sendTransaction } = useSendTransaction({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     request: {
       to: 'moxey.eth',
       value: BigNumber.from('10000000000000000'),
@@ -176,7 +176,7 @@ function App() {
 
 ## Override Config
 
-It is possible to pass through override config. Any override config prefixed with `dangerouslySet` means that it will break the previously prepared config. It will need to prepare the request again at the time of invoking `sendTransaction`/`sendTransactionAsync`.
+It is possible to pass through override config. Any override config prefixed with `recklesslySetUnprepared` means that it will break the previously prepared config. It will need to prepare the request again at the time of invoking `sendTransaction`/`sendTransactionAsync`.
 
 <Callout>
   This usage is not recommended. It comes with [UX
@@ -199,7 +199,7 @@ function App() {
       <button
         disabled={!sendTransaction}
         onClick={() => sendTransaction({
-          dangerouslySetRequest: {
+          recklesslySetUnpreparedRequest: {
             to: 'awkweb.eth',
             value: BigNumber.from('10000000000000000'),
           }}
@@ -213,9 +213,9 @@ function App() {
 }
 ```
 
-## Dangerous Usage
+## Reckless Usage
 
-It is possible to use `useSendTransaction` without pairing it with `usePrepareSendTransaction` by using "dangerously unprepared" mode.
+It is possible to use `useSendTransaction` without pairing it with `usePrepareSendTransaction` by using "recklessly unprepared" mode.
 
 <Callout>
   This usage is not recommended. It comes with [UX
@@ -228,7 +228,7 @@ import { useSendTransaction } from 'wagmi'
 
 function App() {
   const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     to: 'moxey.eth',
     value: BigNumber.from('10000000000000000'),
   })

@@ -17,7 +17,7 @@ export type UseSendTransactionArgs = Omit<
   (
     | {
         /**
-         * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
+         * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
          * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it
          * is highly recommended to not use this and instead prepare the request upfront
          * using the `usePrepareSendTransaction` hook.
@@ -30,19 +30,19 @@ export type UseSendTransactionArgs = Omit<
         request: SendTransactionPreparedRequest['request'] | undefined
       }
     | {
-        mode: 'dangerouslyUnprepared'
+        mode: 'recklesslyUnprepared'
         /** The unprepared request to send the transaction. */
         request?: SendTransactionUnpreparedRequest['request']
       }
   )
 export type UseSendTransactionMutationArgs = {
   /**
-   * Dangerously pass through an unprepared `request`. Note: This has
+   * Recklessly pass through an unprepared `request`. Note: This has
    * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is
    * highly recommended to not use this and instead prepare the request upfront
    * using the `usePrepareSendTransaction` hook.
    */
-  dangerouslySetRequest: SendTransactionUnpreparedRequest['request']
+  recklesslySetUnpreparedRequest: SendTransactionUnpreparedRequest['request']
 }
 export type UseSendTransactionConfig = MutationConfig<
   SendTransactionResult,
@@ -57,7 +57,7 @@ type SendTransactionAsyncFn = (
   overrideConfig?: UseSendTransactionMutationArgs,
 ) => Promise<SendTransactionResult>
 type MutateFnReturnValue<Args, Fn> = Args extends {
-  mode: 'dangerouslyUnprepared'
+  mode: 'recklesslyUnprepared'
 }
   ? Fn
   : Fn | undefined
@@ -133,7 +133,7 @@ export function useSendTransaction<
       mutate({
         chainId,
         mode,
-        request: args?.dangerouslySetRequest ?? request,
+        request: args?.recklesslySetUnpreparedRequest ?? request,
       } as SendTransactionArgs),
     [chainId, mode, mutate, request],
   )
@@ -143,7 +143,7 @@ export function useSendTransaction<
       mutateAsync({
         chainId,
         mode,
-        request: args?.dangerouslySetRequest ?? request,
+        request: args?.recklesslySetUnpreparedRequest ?? request,
       } as SendTransactionArgs),
     [chainId, mode, mutateAsync, request],
   )

@@ -65,7 +65,7 @@ describe('useContractEvent', () => {
             },
             contractWrite: {
               config: {
-                mode: 'dangerouslyUnprepared',
+                mode: 'recklesslyUnprepared',
                 ...wagmiContractConfig,
                 functionName: 'mint',
               },

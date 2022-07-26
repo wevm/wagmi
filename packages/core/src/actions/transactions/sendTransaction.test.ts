@@ -35,7 +35,7 @@ describe('sendTransaction', () => {
       expect(await wait()).toBeDefined()
     })
 
-    it('"dangerously prepared" request', async () => {
+    it('"recklessly unprepared" request', async () => {
       await connect({ connector: client.connectors[0]! })
 
       const signers = getSigners()
@@ -43,7 +43,7 @@ describe('sendTransaction', () => {
       const toAddress = await to?.getAddress()
 
       const { hash, wait } = await sendTransaction({
-        mode: 'dangerouslyUnprepared',
+        mode: 'recklesslyUnprepared',
         request: {
           to: toAddress as string,
           value: parseEther('10'),

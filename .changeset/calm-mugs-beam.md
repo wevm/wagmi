@@ -5,7 +5,7 @@
 **Breaking**: The configuration passed to the `sendTransaction` action now needs to be:
 
 - prepared with the `prepareSendTransaction` action **(new functionality)**, or
-- dangerously unprepared **(previous functionality)**
+- recklessly unprepared **(previous functionality)**
 
 > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
 
@@ -30,15 +30,15 @@ const result = await sendTransaction({
 })
 ```
 
-### Dangerously unprepared usage
+### Recklessly unprepared usage
 
-It is possible to use `sendTransaction` without preparing the configuration first by passing `mode: 'dangerouslyUnprepared'`.
+It is possible to use `sendTransaction` without preparing the configuration first by passing `mode: 'recklesslyUnprepared'`.
 
 ```diff
 import { sendTransaction } from '@wagmi/core'
 
 const result = await sendTransaction({
-+ mode: 'dangerouslyUnprepared',
++ mode: 'recklesslyUnprepared',
   request: {
     to: 'moxey.eth',
     value: parseEther('1'),
