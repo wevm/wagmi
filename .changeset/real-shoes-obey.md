@@ -9,7 +9,7 @@
   onClick={() => {
     sendTransaction({
 -     request: {
-+     recklesslySetUnpreparedUnpreparedRequest:
++     recklesslySetUnpreparedRequest:
         to: 'moxey.eth',
         value: parseEther('1')
       }
