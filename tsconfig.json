@@ -3,7 +3,6 @@
     "allowJs": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
-    "incremental": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["es2019", "es2017", "dom"],

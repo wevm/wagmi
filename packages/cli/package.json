@@ -1,0 +1,44 @@
+{
+  "name": "@wagmi/cli",
+  "license": "WAGMIT",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "directory": "packages/cli"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "/dist"
+  ],
+  "bin": {
+    "wagmi": "./dist/bin.js"
+  },
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "cac": "^6.7.12",
+    "find-up": "^6.3.0",
+    "fs-extra": "^10.1.0",
+    "pathe": "^0.3.2",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "tsup": "^6.2.0"
+  }
+}
