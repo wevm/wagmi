@@ -13,7 +13,7 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
   (
     | {
         /**
-         * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
+         * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
          * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended
          * to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
          *
@@ -25,19 +25,19 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
         request: WriteContractPreparedArgs['request'] | undefined
       }
     | {
-        mode: 'dangerouslyUnprepared'
+        mode: 'recklesslyUnprepared'
         request?: undefined
       }
   )
 export type UseContractWriteMutationArgs = {
   /**
-   * Dangerously pass through unprepared config. Note: This has
+   * Recklessly pass through unprepared config. Note: This has
    * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
    * it is highly recommended to not use this and instead prepare the config upfront
    * using the `usePrepareContractWrite` function.
    */
-  dangerouslySetArgs?: WriteContractArgs['args']
-  dangerouslySetOverrides?: WriteContractArgs['overrides']
+  recklesslySetUnpreparedArgs?: WriteContractArgs['args']
+  recklesslySetUnpreparedOverrides?: WriteContractArgs['overrides']
 }
 export type UseContractWriteConfig = MutationConfig<
   WriteContractResult,
@@ -50,7 +50,7 @@ type ContractWriteAsyncFn = (
   overrideConfig?: UseContractWriteMutationArgs,
 ) => Promise<WriteContractResult>
 type MutateFnReturnValue<Args, Fn> = Args extends {
-  mode: 'dangerouslyUnprepared'
+  mode: 'recklesslyUnprepared'
 }
   ? Fn
   : Fn | undefined
@@ -173,12 +173,13 @@ export function useContractWrite<
     (overrideConfig?: UseContractWriteMutationArgs) => {
       return mutate({
         addressOrName,
-        args: overrideConfig?.dangerouslySetArgs ?? args,
+        args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
         chainId,
         contractInterface,
         functionName,
-        mode: overrideConfig ? 'dangerouslyUnprepared' : mode,
-        overrides: overrideConfig?.dangerouslySetOverrides ?? overrides,
+        mode: overrideConfig ? 'recklesslyUnprepared' : mode,
+        overrides:
+          overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
         request,
       } as WriteContractArgs)
     },
@@ -199,12 +200,13 @@ export function useContractWrite<
     (overrideConfig?: UseContractWriteMutationArgs) => {
       return mutateAsync({
         addressOrName,
-        args: overrideConfig?.dangerouslySetArgs ?? args,
+        args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
         chainId,
         contractInterface,
         functionName,
-        mode: overrideConfig ? 'dangerouslyUnprepared' : mode,
-        overrides: overrideConfig?.dangerouslySetOverrides ?? overrides,
+        mode: overrideConfig ? 'recklesslyUnprepared' : mode,
+        overrides:
+          overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
         request,
       } as WriteContractArgs)
     },

@@ -5,7 +5,7 @@
 **Breaking**: The configuration passed to the `writeContract` action now needs to be:
 
 - prepared with the `prepareWriteContract` action **(new functionality)**, or
-- dangerously unprepared **(previous functionality)**
+- recklessly unprepared **(previous functionality)**
 
 > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
 
@@ -32,9 +32,9 @@ const result = await writeContract({
 })
 ```
 
-### Dangerously unprepared usage
+### Recklessly unprepared usage
 
-It is possible to use `writeContract` without preparing the configuration first by passing `mode: 'dangerouslyUnprepared'`.
+It is possible to use `writeContract` without preparing the configuration first by passing `mode: 'recklesslyUnprepared'`.
 
 ```diff
 import { writeContract } from '@wagmi/core'
@@ -42,7 +42,7 @@ import { writeContract } from '@wagmi/core'
 const tokenId = 69
 
 const result = await writeContract({
-+ mode: 'dangerouslyUnprepared',
++ mode: 'recklesslyUnprepared',
   addressOrName: '0x...',
   contractInterface: wagmiAbi,
   functionName: 'mint',

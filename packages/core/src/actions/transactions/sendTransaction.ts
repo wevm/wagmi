@@ -11,7 +11,7 @@ import { fetchSigner, getNetwork } from '../accounts'
 
 export type SendTransactionPreparedRequest = {
   /**
-   * `dangerouslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
+   * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
    * [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended
    * to not use this and instead prepare the request upfront using the `prepareSendTransaction` function.
    *
@@ -26,7 +26,7 @@ export type SendTransactionPreparedRequest = {
   }
 }
 export type SendTransactionUnpreparedRequest = {
-  mode: 'dangerouslyUnprepared'
+  mode: 'recklesslyUnprepared'
   /** The unprepared request for sending a transaction. */
   request: providers.TransactionRequest
 }

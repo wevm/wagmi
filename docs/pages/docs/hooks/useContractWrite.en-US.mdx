@@ -70,7 +70,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-- `dangerouslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
+- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
 - `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite)
 
 ```tsx {5}
@@ -78,7 +78,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const { sendTransaction } = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -97,7 +97,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -118,7 +118,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     chainId: 1,
     contractInterface: wagmigotchiABI,
@@ -140,7 +140,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -161,7 +161,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -182,7 +182,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -204,7 +204,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
@@ -310,7 +310,7 @@ function App() {
 
 ## Override Config
 
-It is possible to pass through override config. Any override config prefixed with `dangerouslySet` means that it will break the previously prepared config. It will need to prepare the request again at the time of invoking `write`/`writeAsync`.
+It is possible to pass through override config. Any override config prefixed with `recklesslySetUnprepared` means that it will break the previously prepared config. It will need to prepare the request again at the time of invoking `write`/`writeAsync`.
 
 <Callout>
   This usage is not recommended. It comes with [UX
@@ -335,8 +335,8 @@ function App() {
         disabled={!write}
         onClick={() =>
           write({
-            dangerouslySetArgs: 69,
-            dangerouslySetOverrides: {
+            recklesslySetUnpreparedArgs: 69,
+            recklesslySetUnpreparedOverrides: {
               from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
               value: ethers.utils.parseEther('0.01'),
             },
@@ -352,9 +352,9 @@ function App() {
 }
 ```
 
-## Dangerous Usage
+## Reckless Usage
 
-It is possible to use `useContractWrite` without pairing it with `usePrepareContractWrite` by using "dangerously unprepared" mode.
+It is possible to use `useContractWrite` without pairing it with `usePrepareContractWrite` by using "recklessly unprepared" mode.
 
 <Callout>
   This usage is not recommended. It comes with [UX
@@ -367,7 +367,7 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const { data, isLoading, isSuccess, write } = useContractWrite({
-    mode: 'dangerouslyUnprepared',
+    mode: 'recklesslyUnprepared',
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'claim',

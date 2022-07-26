@@ -23,7 +23,7 @@ describe('waitForTransaction', () => {
       const fromAddress = client.data?.account
 
       const result = await sendTransaction({
-        mode: 'dangerouslyUnprepared',
+        mode: 'recklesslyUnprepared',
         request: {
           from: fromAddress,
           to: toAddress,
@@ -47,7 +47,7 @@ describe('waitForTransaction', () => {
       const fromAddress = client.data?.account
 
       const result = await sendTransaction({
-        mode: 'dangerouslyUnprepared',
+        mode: 'recklesslyUnprepared',
         request: {
           from: fromAddress,
           to: toAddress,

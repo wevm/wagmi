@@ -9,7 +9,7 @@ import { prepareWriteContract } from './prepareWriteContract'
 
 export type WriteContractPreparedArgs = {
   /**
-   * `dangerouslyUnprepared`: Allow to pass through unprepared config. Note: This has
+   * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
    * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
    * it is highly recommended to not use this and instead prepare the request upfront
    * using the {@link prepareWriteContract} function.
@@ -25,7 +25,7 @@ export type WriteContractPreparedArgs = {
   }
 }
 export type WriteContractUnpreparedArgs = {
-  mode: 'dangerouslyUnprepared'
+  mode: 'recklesslyUnprepared'
   request?: undefined
 }
 
@@ -92,7 +92,7 @@ export async function writeContract({
   }
 
   const request =
-    mode === 'dangerouslyUnprepared'
+    mode === 'recklesslyUnprepared'
       ? (
           await prepareWriteContract({
             addressOrName,

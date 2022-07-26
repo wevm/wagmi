@@ -5,7 +5,7 @@
 **Breaking**: The configuration passed to the `useContractWrite` hook now needs to be either:
 
 - prepared with the `usePrepareContractWrite` hook **(new)**, or
-- dangerously prepared **(previous functionality)**
+- recklessly unprepared **(previous functionality)**
 
 > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
 
@@ -30,15 +30,15 @@ const { data } = useContractWrite({
 })
 ```
 
-### Dangerously unprepared usage
+### Recklessly unprepared usage
 
-If you are not ready to upgrade to `usePrepareContractWrite`, it is possible to use `useContractWrite` without preparing the configuration first by passing `mode: 'dangerouslyUnprepared'`.
+If you are not ready to upgrade to `usePrepareContractWrite`, it is possible to use `useContractWrite` without preparing the configuration first by passing `mode: 'recklesslyUnprepared'`.
 
 ```diff
 import { useContractWrite } from 'wagmi'
 
 const { data } = useContractWrite({
-+ mode: 'dangerouslyUnprepared',
++ mode: 'recklesslyUnprepared',
   addressOrName: '0x...',
   contractInterface: wagmiAbi,
   functionName: 'mint',

@@ -30,7 +30,7 @@ describe('writeContract', () => {
     await connect({ connector })
     const { hash } = await writeContract({
       ...wagmiContractConfig,
-      mode: 'dangerouslyUnprepared',
+      mode: 'recklesslyUnprepared',
       functionName: 'mint',
     })
 
@@ -60,7 +60,7 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...wagmiContractConfig,
-          mode: 'dangerouslyUnprepared',
+          mode: 'recklesslyUnprepared',
           functionName: 'claim',
         }),
       ).rejects.toThrowError()
@@ -70,7 +70,7 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...wagmiContractConfig,
-          mode: 'dangerouslyUnprepared',
+          mode: 'recklesslyUnprepared',
           functionName: 'claim',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
@@ -81,7 +81,7 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...wagmiContractConfig,
-          mode: 'dangerouslyUnprepared',
+          mode: 'recklesslyUnprepared',
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`

@@ -18,7 +18,10 @@ export const WriteContractPrepared = () => {
       <button
         disabled={isLoading || !write}
         onClick={() =>
-          write?.({ dangerouslySetArgs: [], dangerouslySetOverrides: {} })
+          write?.({
+            recklesslySetUnpreparedArgs: [],
+            recklesslySetUnpreparedOverrides: {},
+          })
         }
       >
         Mint
