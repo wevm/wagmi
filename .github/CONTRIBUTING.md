@@ -179,7 +179,13 @@ Even though you can technically use any markdown formatting you like, headings s
 
 If your PR is making changes to an area that already has a changeset (e.g. there’s an existing changeset covering theme API changes but you’re making further changes to the same API), you should update the existing changeset in your PR rather than creating a new one.
 
-The first time a PR with a changeset is merged after a release, a new PR will automatically be created called `Version Packages`. Any subsequent PRs with changesets will automatically update this existing version packages PR. Merging this PR is the first step of the release process.
+### Releasing
+
+The first time a PR with a changeset is merged after a release, a new PR will automatically be created called `Version Packages`. Any subsequent PRs with changesets will automatically update this existing version packages PR. Merging this PR triggers the release process by publishing to npm and cleaning up the changeset files.
+
+### Creating a snapshot release
+
+If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wagmi-dev/wagmi/actions/workflows/snapshot.yml) the Snapshot workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
 
 <div align="right">
   <a href="#advanced-guide">&uarr; back to top</a></b>
