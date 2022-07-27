@@ -88,15 +88,20 @@ function App() {
 
 Transaction hash to monitor. Works well with [`useContractWrite`](/docs/hooks/useContractWrite) and [`useSendTransaction`](/docs/hooks/useSendTransaction).
 
-```tsx {5}
-import { usePrepareContractWrited, useWaitForTransaction } from 'wagmi'
+```tsx {15}
+import {
+  useContractWrite,
+  usePrepareContractWrited,
+  useWaitForTransaction,
+} from 'wagmi'
 
 function App() {
-  const contractWrite = usePrepareContractWrited({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
   })
+  const contractWrite = useContractWrite(config)
   const waitForTransaction = useWaitForTransaction({
     hash: contractWrite.data?.hash,
   })
@@ -122,15 +127,20 @@ function App() {
 
 Function that resolves to processed transaction receipt. Works well with [`useContractWrite`](/docs/hooks/useContractWrite)/[`usePrepareContractWrited`](/docs/prepare-hooks/usePrepareContractWrited) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.wait`.
 
-```tsx {5}
-import { usePrepareContractWrited, useWaitForTransaction } from 'wagmi'
+```tsx {15}
+import {
+  useContractWrite,
+  usePrepareContractWrited,
+  useWaitForTransaction,
+} from 'wagmi'
 
 function App() {
-  const contractWrite = usePrepareContractWrited({
+  const { config } = usePrepareContractWrite({
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
   })
+  const contractWrite = useContractWrite(config)
   const waitForTransaction = useWaitForTransaction({
     wait: contractWrite.data?.wait,
   })
