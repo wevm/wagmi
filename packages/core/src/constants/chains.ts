@@ -271,9 +271,7 @@ export const arbitrumGoerli: Chain = {
     decimals: 18,
   },
   rpcUrls: {
-    alchemy: alchemyRpcUrls.arbitrumGoerli,
     default: publicRpcUrls.arbitrumGoerli,
-    infura: infuraRpcUrls.arbitrumGoerli,
     public: publicRpcUrls.arbitrumGoerli,
   },
   blockExplorers: {
