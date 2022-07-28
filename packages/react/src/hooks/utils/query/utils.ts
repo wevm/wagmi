@@ -3,7 +3,7 @@ import {
   QueryKey,
   QueryObserver,
   QueryOptions,
-} from 'react-query'
+} from '@tanstack/react-query'
 
 function isQueryKey(value: unknown): value is QueryKey {
   return Array.isArray(value)

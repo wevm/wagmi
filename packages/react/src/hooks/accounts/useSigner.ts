@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query'
 import {
   FetchSignerResult,
   Signer,
@@ -5,7 +6,6 @@ import {
   watchSigner,
 } from '@wagmi/core'
 import * as React from 'react'
-import { useQueryClient } from 'react-query'
 
 import { QueryConfig } from '../../types'
 import { useQuery } from '../utils'

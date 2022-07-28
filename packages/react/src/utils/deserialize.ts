@@ -1,5 +1,5 @@
+import { PersistedClient } from '@tanstack/react-query-persist-client'
 import { BigNumber } from 'ethers/lib/ethers'
-import { PersistedClient } from 'react-query/persistQueryClient'
 
 const findAndReplace = (
   cacheRef: any,
