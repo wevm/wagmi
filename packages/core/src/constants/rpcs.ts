@@ -74,6 +74,7 @@ type PublicChains = Extract<
   | 'polygonMumbai'
   | 'arbitrum'
   | 'arbitrumRinkeby'
+  | 'arbitrumGoerli'
 >
 export const publicRpcUrls: Record<PublicChains, string> = {
   mainnet: `${alchemyRpcUrls.mainnet}/${defaultAlchemyApiKey}`,
@@ -87,4 +88,5 @@ export const publicRpcUrls: Record<PublicChains, string> = {
   polygonMumbai: 'https://matic-mumbai.chainstacklabs.com',
   arbitrum: 'https://arb1.arbitrum.io/rpc',
   arbitrumRinkeby: 'https://rinkeby.arbitrum.io/rpc',
+  arbitrumGoerli: 'https://goerli-rollup.arbitrum.io/rpc',
 } as const
