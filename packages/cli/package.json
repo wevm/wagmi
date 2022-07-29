@@ -30,15 +30,25 @@
   "scripts": {
     "build": "tsup"
   },
+  "peerDependencies": {
+    "ethers": ">=5.5.1"
+  },
   "dependencies": {
+    "@wagmi/core": "^0.5.0",
     "cac": "^6.7.12",
+    "dedent": "^0.7.0",
     "find-up": "^6.3.0",
     "fs-extra": "^10.1.0",
+    "log-update": "^5.0.1",
+    "node-fetch": "^3.2.9",
     "pathe": "^0.3.2",
     "picocolors": "^1.0.0"
   },
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
     "@types/fs-extra": "^9.0.13",
+    "ethers": "^5.6.5",
+    "fixturez": "^1.1.0",
     "tsup": "^6.2.0"
   }
 }

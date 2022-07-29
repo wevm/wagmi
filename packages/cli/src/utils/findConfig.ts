@@ -1,19 +1,15 @@
 import { findUp } from 'find-up'
 import { resolve } from 'pathe'
 
-import { CliOptions } from '../cli'
 import { configFiles } from '../constants'
 
-export async function findConfig(
-  options: {
-    config?: CliOptions['config']
-    root?: CliOptions['root']
-  } = {},
-) {
-  const root = resolve(options.root || process.cwd())
-  const configPath = options.config
-    ? resolve(root, options.config)
-    : await findUp(configFiles, { cwd: root } as any)
+type FindConfig = {
+  config?: string
+  root?: string
+}
 
-  return configPath
+export async function findConfig({ config, root }: FindConfig = {}) {
+  const rootDir = resolve(root || process.cwd())
+  if (config) return resolve(rootDir, config)
+  return await findUp(configFiles, { cwd: rootDir })
 }

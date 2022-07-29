@@ -1,1 +1,2 @@
-export { init } from './commands'
+export { defineConfig } from './config'
+export { etherscan } from './sources'

@@ -1,11 +1,21 @@
+import { ContractInterface } from 'ethers'
+
+import { SourceFn } from './sources'
+
 type Contract = {
   /** Name used for naming contract objects */
   name: string
-  /** Address or ENS name of contract */
-  addressOrName: string
+  /** Address of contract */
+  address: `0x${string}`
+  /** Chain id of contract */
+  chainId: number
+  /**
+   * Contract interface source
+   */
+  source: ContractInterface | SourceFn
 }
 
-type Config = {
+export type Config = {
   contracts: Contract[]
 }
 
