@@ -10,6 +10,7 @@ export const chainId = {
   kovan: 42,
   optimism: 10,
   optimismKovan: 69,
+  optimismGoerli: 420,
   polygon: 137,
   polygonMumbai: 80_001,
   arbitrum: 42_161,
@@ -188,6 +189,34 @@ export const optimismKovan: Chain = {
   testnet: true,
 }
 
+export const optimismGoerli: Chain = {
+  id: chainId.optimismGoerli,
+  name: 'Optimism Goerli',
+  network: 'optimism-goerli',
+  nativeCurrency: {
+    name: 'Goerli Ether',
+    symbol: 'GOR',
+    decimals: 18,
+  },
+  rpcUrls: {
+    alchemy: alchemyRpcUrls.optimismGoerli,
+    default: publicRpcUrls.optimismGoerli,
+    infura: infuraRpcUrls.optimismGoerli,
+    public: publicRpcUrls.optimismGoerli,
+  },
+  blockExplorers: {
+    default: {
+      name: 'Blockscout',
+      url: 'https://blockscout.com/optimism/goerli',
+    },
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 49461,
+  },
+  testnet: true,
+}
+
 export const polygon: Chain = {
   id: chainId.polygon,
   name: 'Polygon',
@@ -346,6 +375,7 @@ export const allChains = [
   kovan,
   optimism,
   optimismKovan,
+  optimismGoerli,
   polygon,
   polygonMumbai,
   arbitrum,
@@ -362,4 +392,5 @@ export const defaultL2Chains: Chain[] = [
   arbitrumRinkeby,
   optimism,
   optimismKovan,
+  optimismGoerli,
 ]

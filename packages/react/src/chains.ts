@@ -9,6 +9,7 @@ export {
   mainnet,
   optimism,
   optimismKovan,
+  optimismGoerli,
   polygon,
   polygonMumbai,
   rinkeby,
