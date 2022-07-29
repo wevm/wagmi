@@ -261,29 +261,6 @@ export const arbitrum: Chain = {
   },
 }
 
-export const arbitrumGoerli: Chain = {
-  id: chainId.arbitrumGoerli,
-  name: 'Arbitrum Goerli',
-  network: 'arbitrum-goerli',
-  nativeCurrency: {
-    name: 'Arbitrum Goerli Ether',
-    symbol: 'AGETH',
-    decimals: 18,
-  },
-  rpcUrls: {
-    default: publicRpcUrls.arbitrumGoerli,
-    public: publicRpcUrls.arbitrumGoerli,
-  },
-  blockExplorers: {
-    default: {
-      name: 'Arbitrum Explorer',
-      url: 'https://goerli-rollup-explorer.arbitrum.io',
-    },
-  },
-  multicall: undefined,
-  testnet: true,
-}
-
 export const arbitrumRinkeby: Chain = {
   id: chainId.arbitrumRinkeby,
   name: 'Arbitrum Rinkeby',
@@ -311,6 +288,29 @@ export const arbitrumRinkeby: Chain = {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
     blockCreated: 10228837,
   },
+  testnet: true,
+}
+
+export const arbitrumGoerli: Chain = {
+  id: chainId.arbitrumGoerli,
+  name: 'Arbitrum Goerli',
+  network: 'arbitrum-goerli',
+  nativeCurrency: {
+    name: 'Arbitrum Goerli Ether',
+    symbol: 'AGETH',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: publicRpcUrls.arbitrumGoerli,
+    public: publicRpcUrls.arbitrumGoerli,
+  },
+  blockExplorers: {
+    default: {
+      name: 'Arbitrum Explorer',
+      url: 'https://goerli-rollup-explorer.arbitrum.io',
+    },
+  },
+  multicall: undefined,
   testnet: true,
 }
 
