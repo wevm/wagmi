@@ -14,7 +14,7 @@ type AlchemyChains = Extract<
   | 'kovan'
   | 'optimism'
   | 'optimismKovan'
-  | 'optimismGoerli',
+  | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
   | 'arbitrum'
@@ -44,7 +44,7 @@ type InfuraChains = Extract<
   | 'kovan'
   | 'optimism'
   | 'optimismKovan'
-  | 'optimismGoerli',
+  | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
   | 'arbitrum'
