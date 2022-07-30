@@ -1,0 +1,6 @@
+services:
+  anvil:
+    build: .
+    env_file: ./.env
+    ports:
+      - '8545:8545'

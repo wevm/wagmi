@@ -105,13 +105,21 @@ Once the Next.js dev server is running, you can make changes to any of the packa
 
 ## Running the test suite
 
-wagmi uses [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) to execute tests against a local Ethereum node. First, install Anvil via [Foundry](https://book.getfoundry.sh/getting-started/installation). Next, add the following to your environment (recommended to use [`direnv`](https://github.com/direnv/direnv)):
+wagmi uses [Docker](https://www.docker.com/) to easily get up and running with an [Anvil](https://github.com/foundry-rs/foundry/tree/master/anvil) environment to execute tests against a local Ethereum node.
 
-```bash
+
+First, if you don't already have Docker installed, you can [download it here](https://docs.docker.com/get-docker/).
+
+Once installed, create a `.env` file and add the following:
+
+```
 ANVIL_FORK_URL=https://eth-mainnet.alchemyapi.io/v2/<apiKey>
+ANVIL_BLOCK_NUMBER=15132000
 ```
 
-`ANVIL_FORK_URL` can be for any RPC service provider (e.g. Alchemy or Infura). Now you are ready to run the tests! In one terminal session, spin up Anvil using `pnpm anvil`. Next, in a different terminal session, you have the following options for running tests:
+`ANVIL_FORK_URL` can be for any RPC service provider (e.g. Alchemy or Infura). Make sure to replace `<apiKey>` with your own. After that, you are ready to run the tests! 
+
+In one terminal session, spin up Anvil using `pnpm anvil`. Next, in a different terminal session, you have the following options for running tests:
 
 - `pnpm test` — runs tests in watch mode
 - `pnpm test:run` — performs single run without watch mode
