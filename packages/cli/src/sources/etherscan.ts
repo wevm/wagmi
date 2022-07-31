@@ -1,15 +1,14 @@
 import { chainId } from '@wagmi/core'
-import { ContractInterface } from 'ethers'
 import fetch from 'node-fetch'
 
-export type SourceFn<TChainId extends number = number> = (config: {
-  address: string
-  chainId: TChainId
-}) => Promise<ContractInterface>
+import { SourceFn } from '../config'
+import { ContractInterface } from '../types'
 
-type EtherscanApiNetworks = 'mainnet' | 'optimism' | 'arbitrum' | 'polygon'
+type EtherscanNetworks = 'mainnet' | 'optimism' | 'arbitrum' | 'polygon'
 type EtherscanConfig = {
-  apiKey: string | { [K in EtherscanApiNetworks]?: string }
+  apiKey: string | { [K in EtherscanNetworks]?: string }
+  // TODO: Follow proxy to implementation address
+  // followProxy?: boolean
 }
 
 export function etherscan({ apiKey }: EtherscanConfig): SourceFn {
@@ -30,6 +29,7 @@ export function etherscan({ apiKey }: EtherscanConfig): SourceFn {
 
   const getApiKey = (id: ChainId) => {
     if (typeof apiKey === 'string') return apiKey
+
     switch (id) {
       case chainId.mainnet:
       case chainId.ropsten:
@@ -46,24 +46,27 @@ export function etherscan({ apiKey }: EtherscanConfig): SourceFn {
       case chainId.arbitrum:
       case chainId.arbitrumRinkeby:
         return apiKey.arbitrum
+      default:
+        throw new Error(`Chain id "${chainId}" not found.`)
     }
   }
 
   const cache: Record<string, ContractInterface> = {}
-  return async ({ address, chainId }) => {
-    const apiUrl = `${
-      apiUrls[<ChainId>chainId]
-    }?module=contract&action=getabi&address=${address}&apikey=${getApiKey(
+  return async ({ address, chainId = 1 }) => {
+    const baseUrl = apiUrls[<ChainId>chainId]
+    if (!baseUrl) throw new Error(`No API url found for chain id "${chainId}"`)
+    const apiUrl = `${baseUrl}?module=contract&action=getabi&address=${address}&apikey=${getApiKey(
       <ChainId>chainId,
     )}`
     if (cache[apiUrl]) return cache[apiUrl] as ContractInterface
 
+    type EtherscanResponse =
+      | { status: '1'; message: 'OK'; result: ContractInterface }
+      | { status: '0'; message: 'NOTOK'; result: string }
     const response = await fetch(apiUrl)
-    const data = (await response.json()) as {
-      status: 1 | number
-      message: 'OK' | string
-      result: ContractInterface
-    }
+    const data = (await response.json()) as EtherscanResponse
+    if (data.status === '0') throw new Error(data.result)
+
     cache[apiUrl] = data.result
     return data.result
   }

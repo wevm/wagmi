@@ -1,17 +1,18 @@
-import { ContractInterface } from 'ethers'
+import { ContractInterface } from './types'
 
-import { SourceFn } from './sources'
+export type SourceFn = (config: {
+  address: string
+  chainId?: number
+}) => Promise<ContractInterface>
 
-type Contract = {
-  /** Name used for naming contract objects */
+export type Contract = {
+  /** Name used for contract objects */
   name: string
   /** Address of contract */
   address: `0x${string}`
   /** Chain id of contract */
-  chainId: number
-  /**
-   * Contract interface source
-   */
+  chainId?: number
+  /** Contract interface source */
   source: ContractInterface | SourceFn
 }
 

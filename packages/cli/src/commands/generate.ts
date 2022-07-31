@@ -1,3 +1,7 @@
+import { getAddress, isAddress } from 'ethers/lib/utils'
+
+import * as logger from '../logger'
+import { Contract } from '../types'
 import { findConfig, resolveConfig } from '../utils'
 
 export type Generate = {
@@ -12,30 +16,34 @@ export async function generate({ config: config_, root }: Generate) {
   const config = await resolveConfig({ configPath })
   if (!config.contracts?.length) throw new Error('No contracts provided')
 
+  const contractNames = new Set<string>()
+  const contracts: Contract[] = []
   for (const contract of config.contracts) {
-    console.log(`Fetching contract interface for ${contract.name}`)
-    try {
-      // const contractInterface =
+    logger.log(`Fetching contract interface for ${contract.name}`)
+    if (!isAddress(contract.address)) throw new Error('Invalid address')
+    if (contractNames.has(contract.name))
+      throw new Error('Contract name must be unique')
+
+    const address = getAddress(contract.address)
+    const contractInterface =
       typeof contract.source === 'function'
-        ? await contract.source({
-            address: contract.address,
-            chainId: contract.chainId,
-          })
+        ? await contract.source({ address, chainId: contract.chainId })
         : contract.source
-    } catch (error) {
-      console.error(error)
-    }
+
+    contracts.push({
+      addressOrName: address,
+      name: contract.name,
+      chainId: contract.chainId,
+      contractInterface,
+    })
+    contractNames.add(contract.name)
   }
 
-  // 1. Fetch interfaces
-  // - Store in object
-  // - Handle rate limiting
-  // - Error handing (e.g. contract not found, verified, etc.)
   // 2. Generate types
+  // - ethereum-abi-types-generator
   // - NatSpec comments https://docs.soliditylang.org/en/latest/natspec-format.html
-  // 2a. Generate hooks
-  // - React plugin
+  // 2a. Plugins system
+  // - React plugin to generate hooks
   // 4. Write contract objects to entrypoint
   // - detect package to use (e.g. `wagmi/generated` or `@wagmi/core/generated`)
-  // - use prettier?
 }

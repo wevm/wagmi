@@ -1,22 +1,19 @@
-import { defineConfig, etherscan } from '@wagmi/cli'
+import { defineConfig, etherscan, fs } from '@wagmi/cli'
 
-const source = etherscan({
-  apiKey: 'MK9NWF5JSK6JPWDMVTIJF4RZ466VD2XEPZ',
-})
+const apiKey = 'MK9NWF5JSK6JPWDMVTIJF4RZ466VD2XEPZ'
 
 export default defineConfig({
   contracts: [
     {
       address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-      name: 'WagmiMintExample',
+      name: 'WagmiMintEtherscan',
       chainId: 1,
-      source,
+      source: etherscan({ apiKey }),
     },
     {
       address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-      name: 'WagmiMintExample',
-      chainId: 1,
-      source,
+      name: 'WagmiMintFs',
+      source: fs({ path: './src/contracts/wagmi.js' }),
     },
   ],
 })

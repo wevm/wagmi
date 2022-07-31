@@ -1,7 +1,12 @@
 import { findUp } from 'find-up'
 import { resolve } from 'pathe'
 
-import { configFiles } from '../constants'
+const configFiles = [
+  'wagmi.config.js',
+  'wagmi.config.mjs',
+  'wagmi.config.mts',
+  'wagmi.config.ts',
+]
 
 type FindConfig = {
   config?: string

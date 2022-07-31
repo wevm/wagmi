@@ -2,15 +2,11 @@ import pico from 'picocolors'
 
 import util from 'util'
 
-function format(args: any[], customPrefix?: string) {
-  const fullPrefix = customPrefix === undefined ? '' : ' ' + customPrefix
-  return (
-    fullPrefix +
-    util
-      .format('', ...args)
-      .split('\n')
-      .join('\n' + fullPrefix + ' ')
-  )
+function format(args: any[]) {
+  return util
+    .format(...args)
+    .split('\n')
+    .join('\n')
 }
 
 export function success(...args: Array<any>) {

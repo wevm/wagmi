@@ -1,2 +1,2 @@
 export { defineConfig } from './config'
-export { etherscan } from './sources'
+export { etherscan, fs } from './sources'
