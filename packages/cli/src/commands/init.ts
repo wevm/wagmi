@@ -20,10 +20,27 @@ export async function init() {
   const extension = tsconfig ? 'ts' : 'js'
   const configName = `${cwd}/wagmi.config.${extension}`
 
-  const content = dedent(`
-    import { defineConfig } from '@wagmi/cli/config'
+  let content: string
+  if (tsconfig)
+    content = dedent(`
+    import { defineConfig } from '@wagmi/cli'
     
-    export default defineConfig({})
+    export default defineConfig({
+      contracts: [],
+      plugins: [],
+    })
+  `)
+  else
+    content = dedent(`
+    // @ts-check
+
+    /**
+     * @type {import('@wagmi/cli').Config}
+     **/
+    export default {
+      contracts: [],
+      plugins: [],
+    }
   `)
   await fse.writeFile(configName, content, {})
   logger.success(`Config created at "${configName}"`)

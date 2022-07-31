@@ -1,8 +1,12 @@
-import { defineConfig, etherscan, fs } from '@wagmi/cli'
+// @ts-check
+import { etherscan, fs } from '@wagmi/cli'
 
 const apiKey = 'MK9NWF5JSK6JPWDMVTIJF4RZ466VD2XEPZ'
 
-export default defineConfig({
+/**
+ * @type {import('@wagmi/cli').Config}
+ **/
+export default {
   contracts: [
     {
       address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
@@ -17,4 +21,4 @@ export default defineConfig({
       source: fs({ path: './src/contracts/wagmi.js' }),
     },
   ],
-})
+}

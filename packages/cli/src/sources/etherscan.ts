@@ -52,7 +52,7 @@ export function etherscan({ apiKey }: EtherscanConfig): SourceFn {
   }
 
   const cache: Record<string, ContractInterface> = {}
-  return async ({ address, chainId = 1 }) => {
+  return async ({ address, chainId }) => {
     const baseUrl = apiUrls[<ChainId>chainId]
     if (!baseUrl) throw new Error(`No API url found for chain id "${chainId}"`)
     const apiUrl = `${baseUrl}?module=contract&action=getabi&address=${address}&apikey=${getApiKey(

@@ -38,12 +38,4 @@ export async function generate({ config: config_, root }: Generate) {
     })
     contractNames.add(contract.name)
   }
-
-  // 2. Generate types
-  // - ethereum-abi-types-generator
-  // - NatSpec comments https://docs.soliditylang.org/en/latest/natspec-format.html
-  // 2a. Plugins system
-  // - React plugin to generate hooks
-  // 4. Write contract objects to entrypoint
-  // - detect package to use (e.g. `wagmi/generated` or `@wagmi/core/generated`)
 }

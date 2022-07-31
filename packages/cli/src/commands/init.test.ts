@@ -35,6 +35,17 @@ describe('init', () => {
       `Config created at "${configFile}"`,
     )
     expect(fse.existsSync(configFile)).toBeTruthy()
+    expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+      "// @ts-check
+
+      /**
+       * @type {import('@wagmi/cli').Config}
+       **/
+      export default {
+        contracts: [],
+        plugins: [],
+      }"
+    `)
   })
 
   it('creates config file in TypeScript format', async () => {
@@ -52,6 +63,14 @@ describe('init', () => {
       `Config created at "${configFile}"`,
     )
     expect(fse.existsSync(configFile)).toBeTruthy()
+    expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+      "import { defineConfig } from '@wagmi/cli'
+
+      export default defineConfig({
+        contracts: [],
+        plugins: [],
+      })"
+    `)
   })
 
   it('displays config file location when config exists', async () => {

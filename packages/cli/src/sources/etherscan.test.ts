@@ -75,11 +75,6 @@ describe('etherscan', () => {
     afterAll(() => server.close())
 
     it('fetches contract interface', async () => {
-      const contractInterface = await source({ address })
-      expect(contractInterface).toMatchSnapshot()
-    })
-
-    it('fetches contract interface for chainId', async () => {
       const contractInterface = await source({ address, chainId: 1 })
       expect(contractInterface).toMatchSnapshot()
     })
@@ -94,7 +89,7 @@ describe('etherscan', () => {
 
     it('fails to fetch for unverified contract', async () => {
       await expect(
-        source({ address: unverifiedContractAddress }),
+        source({ address: unverifiedContractAddress, chainId: 1 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Contract source code not verified"',
       )
