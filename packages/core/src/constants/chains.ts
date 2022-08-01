@@ -301,6 +301,7 @@ export const arbitrumGoerli: Chain = {
     decimals: 18,
   },
   rpcUrls: {
+    alchemy: alchemyRpcUrls.arbitrumRinkeby,
     default: publicRpcUrls.arbitrumGoerli,
     public: publicRpcUrls.arbitrumGoerli,
   },

@@ -18,6 +18,7 @@ type AlchemyChains = Extract<
   | 'polygonMumbai'
   | 'arbitrum'
   | 'arbitrumRinkeby'
+  | 'arbitrumGoerli'
 >
 export const alchemyRpcUrls: Record<AlchemyChains, string> = {
   mainnet: 'https://eth-mainnet.alchemyapi.io/v2',
@@ -31,6 +32,7 @@ export const alchemyRpcUrls: Record<AlchemyChains, string> = {
   polygonMumbai: 'https://polygon-mumbai.g.alchemy.com/v2',
   arbitrum: 'https://arb-mainnet.g.alchemy.com/v2',
   arbitrumRinkeby: 'https://arb-rinkeby.g.alchemy.com/v2',
+  arbitrumGoerli: 'https://arb-goerli.g.alchemy.com/v2',
 } as const
 
 type InfuraChains = Extract<
