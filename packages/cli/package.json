@@ -8,7 +8,8 @@
     "directory": "packages/cli"
   },
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -34,16 +35,14 @@
     "ethers": ">=5.5.1"
   },
   "dependencies": {
-    "@wagmi/core": "^0.5.0",
     "cac": "^6.7.12",
     "dedent": "^0.7.0",
-    "ethereum-abi-types-generator": "^1.3.2",
     "find-up": "^6.3.0",
     "fs-extra": "^10.1.0",
-    "log-update": "^5.0.1",
     "node-fetch": "^3.2.9",
     "pathe": "^0.3.2",
-    "picocolors": "^1.0.0"
+    "picocolors": "^1.0.0",
+    "typechain": "^8.1.0"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",

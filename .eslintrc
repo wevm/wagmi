@@ -31,7 +31,8 @@
     "@typescript-eslint/no-unused-vars": [
       2,
       {
-        "argsIgnorePattern": "^_"
+        "argsIgnorePattern": "^_",
+         "destructuredArrayIgnorePattern": "^_"
       }
     ],
     "@typescript-eslint/no-var-requires": "off",

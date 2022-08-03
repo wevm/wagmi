@@ -7,6 +7,9 @@ import { ContractInterface } from '../types'
 import { pathToFileURL } from 'node:url'
 
 type FsConfig = {
+  /**
+   * Source file containing contract interface
+   */
   path: string
 }
 
@@ -28,6 +31,7 @@ export function fs({ path }: FsConfig): SourceFn {
       try {
         const fileUrl = `${pathToFileURL(fileBase)}.mjs`
         contractInterface = (await import(fileUrl)).default
+        if (!contractInterface) throw new Error('Missing default export')
       } finally {
         fse.unlinkSync(fileNameTemp)
       }

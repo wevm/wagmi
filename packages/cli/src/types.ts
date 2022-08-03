@@ -1,43 +1,52 @@
-type Variable = {
+export type Item = {
   name: string
   // TODO: Add more granular typing
   type: string
   internalType: string
-  components?: Variable[]
+  components?: Item[]
 }
 
-type StateMutability = 'pure' | 'view' | 'nonpayable' | 'payable'
+export type StateMutability = 'pure' | 'view' | 'nonpayable' | 'payable'
 
-// TODO: Add constant, payable, gas properties
-type ContractFunction =
+export type ContractFunction<TItem = Item> = {
+  stateMutability: StateMutability
+  /**
+   * @deprecated use `pure` or `view` from {@link StateMutability} instead
+   * https://github.com/ethereum/solidity/issues/992
+   */
+  constant?: boolean
+  /**
+   * @deprecated use `payable` or `nonpayable` from {@link StateMutability} instead
+   * https://github.com/ethereum/solidity/issues/992
+   */
+  payable?: boolean
+} & (
   | {
       type: 'function' | 'receive'
-      inputs: Variable[]
+      inputs: TItem[]
       name: string
-      outputs: Variable[]
-      stateMutability: StateMutability
+      outputs: TItem[]
     }
   | {
       type: 'constructor'
-      inputs: Variable[]
-      stateMutability: StateMutability
+      inputs: TItem[]
     }
   | {
       type: 'fallback'
-      stateMutability: StateMutability
     }
+)
 
-type ContractEvent = {
+export type ContractEvent<TItem = Item> = {
   type: 'event'
   name: string
-  inputs: (Variable & { indexed: boolean })[]
+  inputs: (TItem & { indexed?: boolean })[]
   anonymous?: true
 }
 
-type ContractError = {
+export type ContractError<TItem = Item> = {
   type: 'error'
   name: string
-  inputs: Variable[]
+  inputs: TItem[]
 }
 
 export type ContractInterface = (

@@ -2,7 +2,6 @@ import { ContractInterface } from './types'
 
 export type SourceFn = (config: {
   address: string
-  chainId: number
 }) => Promise<ContractInterface>
 
 type Contract = {
@@ -10,8 +9,6 @@ type Contract = {
   name: string
   /** Address of contract */
   address: `0x${string}`
-  /** Chain id of contract */
-  chainId: number
   /** Contract interface source */
   source: ContractInterface | SourceFn
 }

@@ -11,7 +11,6 @@ import {
 } from 'vitest'
 
 import { SourceFn } from '../config'
-
 import { etherscan } from './etherscan'
 
 const apiKey = 'abc'
@@ -48,24 +47,13 @@ const server = setupServer(...handlers)
 
 describe('etherscan', () => {
   it('creates etherscan source', () => {
-    expect(etherscan({ apiKey })).toBeDefined()
-  })
-
-  it('creates etherscan source with multiple api keys', () => {
-    expect(
-      etherscan({
-        apiKey: {
-          mainnet: apiKey,
-          optimism: 'xyz',
-        },
-      }),
-    ).toBeDefined()
+    expect(etherscan({ apiKey, chainId: 1 })).toBeDefined()
   })
 
   describe('calls', () => {
     let source: SourceFn
     beforeEach(() => {
-      source = etherscan({ apiKey })
+      source = etherscan({ apiKey, chainId: 1 })
     })
 
     beforeAll(() => server.listen())
@@ -75,21 +63,13 @@ describe('etherscan', () => {
     afterAll(() => server.close())
 
     it('fetches contract interface', async () => {
-      const contractInterface = await source({ address, chainId: 1 })
+      const contractInterface = await source({ address })
       expect(contractInterface).toMatchSnapshot()
-    })
-
-    it('fails to fetch for unknown chainId', async () => {
-      await expect(
-        source({ address, chainId: 2 }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"No API url found for chain id \\"2\\""',
-      )
     })
 
     it('fails to fetch for unverified contract', async () => {
       await expect(
-        source({ address: unverifiedContractAddress, chainId: 1 }),
+        source({ address: unverifiedContractAddress }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Contract source code not verified"',
       )

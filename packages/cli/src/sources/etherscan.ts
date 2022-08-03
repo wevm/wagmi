@@ -1,73 +1,80 @@
-import { chainId } from '@wagmi/core'
 import fetch from 'node-fetch'
 
 import { SourceFn } from '../config'
 import { ContractInterface } from '../types'
 
-type EtherscanNetworks = 'mainnet' | 'optimism' | 'arbitrum' | 'polygon'
+const apiUrls = {
+  // Mainnet
+  [1]: 'https://api.etherscan.io/api',
+  [3]: 'https://api-ropsten.etherscan.io/api',
+  [4]: 'https://api-rinkeby.etherscan.io/api',
+  [5]: 'https://api-goerli.etherscan.io/api',
+  [42]: 'https://api-kovan.etherscan.io/api',
+  // Optimism
+  [10]: 'https://api-optimistic.etherscan.io/api',
+  [69]: 'https://api-kovan-optimistic.etherscan.io/api',
+  // Polygon
+  [137]: 'https://api.polygonscan.com/api',
+  [80_001]: 'https://api-testnet.polygonscan.com/api',
+  // Arbitrum
+  [42_161]: 'https://api.arbiscan.io/api',
+  [421_611]: 'https://api-testnet.arbiscan.io/api',
+  // BNB Smart Chain
+  [56]: 'https://api.bscscan.com/api',
+  [97]: 'https://api-testnet.bscscan.com/api',
+  // Heco Chain
+  [128]: 'https://api.hecoinfo.com/api',
+  [256]: 'https://api-testnet.hecoinfo.com/api',
+  // Fantom
+  [250]: 'https://api.ftmscan.com/api',
+  [4002]: 'https://api-testnet.ftmscan.com/api',
+  // Avalanche
+  [43114]: 'https://api.snowtrace.io/api',
+  [43113]: 'https://api-testnet.snowtrace.io/api',
+}
+type ChainId = keyof typeof apiUrls
+
 type EtherscanConfig = {
-  apiKey: string | { [K in EtherscanNetworks]?: string }
-  // TODO: Follow proxy to implementation address
-  // followProxy?: boolean
+  /**
+   * Etherscan API key
+   *
+   * API keys are specific per network (e.g. Mainnet) and include testnets (e.g. Goerli). Create or manage keys:
+   * - [Mainnet](https://etherscan.io/myapikey)
+   * - [Arbitrum](https://arbiscan.io/myapikey)
+   * - [Avalanche](https://snowtrace.io/myapikey)
+   * - [BNB Smart Chain](https://bscscan.com/myapikey)
+   * - [Fantom](https://ftmscan.com/myapikey)
+   * - [Heco Chain](https://hecoinfo.com/myapikey)
+   * - [Optimism](https://optimistic.etherscan.io/myapikey)
+   * - [Polygon](https://polygonscan.com/myapikey)
+   */
+  apiKey?: string
+  /**
+   * Chain id to use for fetching contract interface
+   */
+  chainId: ChainId
 }
 
-export function etherscan({ apiKey }: EtherscanConfig): SourceFn {
-  const apiUrls = {
-    [chainId.mainnet]: 'https://api.etherscan.io/api',
-    [chainId.ropsten]: 'https://api-ropsten.etherscan.io/api',
-    [chainId.rinkeby]: 'https://api-rinkeby.etherscan.io/api',
-    [chainId.goerli]: 'https://api-goerli.etherscan.io/api',
-    [chainId.kovan]: 'https://api-kovan.etherscan.io/api',
-    [chainId.optimism]: 'https://api-optimistic.etherscan.io/api',
-    [chainId.optimismKovan]: 'https://api-kovan-optimistic.etherscan.io/api',
-    [chainId.polygon]: 'https://api.polygonscan.com/api',
-    [chainId.polygonMumbai]: 'https://api-testnet.polygonscan.com/api',
-    [chainId.arbitrum]: 'https://api.arbiscan.io/api',
-    [chainId.arbitrumRinkeby]: 'https://api-testnet.arbiscan.io/api',
-  }
-  type ChainId = keyof typeof apiUrls
-
-  const getApiKey = (id: ChainId) => {
-    if (typeof apiKey === 'string') return apiKey
-
-    switch (id) {
-      case chainId.mainnet:
-      case chainId.ropsten:
-      case chainId.rinkeby:
-      case chainId.goerli:
-      case chainId.kovan:
-        return apiKey.mainnet
-      case chainId.optimism:
-      case chainId.optimismKovan:
-        return apiKey.optimism
-      case chainId.polygon:
-      case chainId.polygonMumbai:
-        return apiKey.polygon
-      case chainId.arbitrum:
-      case chainId.arbitrumRinkeby:
-        return apiKey.arbitrum
-      default:
-        throw new Error(`Chain id "${chainId}" not found.`)
-    }
-  }
-
+export function etherscan({ apiKey, chainId }: EtherscanConfig): SourceFn {
   const cache: Record<string, ContractInterface> = {}
-  return async ({ address, chainId }) => {
-    const baseUrl = apiUrls[<ChainId>chainId]
+  return async ({ address }) => {
+    const baseUrl = apiUrls[chainId]
     if (!baseUrl) throw new Error(`No API url found for chain id "${chainId}"`)
-    const apiUrl = `${baseUrl}?module=contract&action=getabi&address=${address}&apikey=${getApiKey(
-      <ChainId>chainId,
-    )}`
+
+    const apiUrl = `${baseUrl}?module=contract&action=getabi&address=${address}${
+      apiKey ? `&apikey=${apiKey}` : ''
+    }`
     if (cache[apiUrl]) return cache[apiUrl] as ContractInterface
 
     type EtherscanResponse =
-      | { status: '1'; message: 'OK'; result: ContractInterface }
+      | { status: '1'; message: 'OK'; result: string }
       | { status: '0'; message: 'NOTOK'; result: string }
     const response = await fetch(apiUrl)
     const data = (await response.json()) as EtherscanResponse
     if (data.status === '0') throw new Error(data.result)
 
-    cache[apiUrl] = data.result
-    return data.result
+    const contractInterface = JSON.parse(data.result) as ContractInterface
+    cache[apiUrl] = contractInterface
+    return contractInterface
   }
 }
