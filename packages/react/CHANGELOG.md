@@ -1,5 +1,20 @@
 # wagmi
 
+## 0.6.1
+
+### Patch Changes
+
+- [#767](https://github.com/wagmi-dev/wagmi/pull/767) [`e9392f3`](https://github.com/wagmi-dev/wagmi/commit/e9392f396e48e928bd9d2522e3ad671c589f08cb) Thanks [@klyap](https://github.com/klyap)! - Add Optimism Goerli chain ahead of [Kovan deprecation](https://dev.optimism.io/kovan-to-goerli).
+
+* [#817](https://github.com/wagmi-dev/wagmi/pull/817) [`7e5cac7`](https://github.com/wagmi-dev/wagmi/commit/7e5cac75815dcd8aa563462342a4853fc5207735) Thanks [@alecananian](https://github.com/alecananian)! - Added custom name mapping for 1inch Wallet injected provider
+
+- [#806](https://github.com/wagmi-dev/wagmi/pull/806) [`0b34e56`](https://github.com/wagmi-dev/wagmi/commit/0b34e56db97e6dcdb71088e0149b2d55ebc604a5) Thanks [@vmichalik](https://github.com/vmichalik)! - Fix canonical testnet native asset symbols by changing them to ETH
+
+* [#778](https://github.com/wagmi-dev/wagmi/pull/778) [`0892908`](https://github.com/wagmi-dev/wagmi/commit/08929084eeeba1a3a55aa098fa9d92a243685ad5) Thanks [@0xcadams](https://github.com/0xcadams)! - Add Arbitrum Goerli chain.
+
+* Updated dependencies [[`e9392f3`](https://github.com/wagmi-dev/wagmi/commit/e9392f396e48e928bd9d2522e3ad671c589f08cb), [`7e5cac7`](https://github.com/wagmi-dev/wagmi/commit/7e5cac75815dcd8aa563462342a4853fc5207735), [`0b34e56`](https://github.com/wagmi-dev/wagmi/commit/0b34e56db97e6dcdb71088e0149b2d55ebc604a5), [`0892908`](https://github.com/wagmi-dev/wagmi/commit/08929084eeeba1a3a55aa098fa9d92a243685ad5)]:
+  - @wagmi/core@0.5.1
+
 ## 0.6.0
 
 ### Minor Changes
