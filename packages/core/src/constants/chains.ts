@@ -15,6 +15,7 @@ export const chainId = {
   polygonMumbai: 80_001,
   arbitrum: 42_161,
   arbitrumRinkeby: 421_611,
+  arbitrumGoerli: 421_613,
   localhost: 1_337,
   hardhat: 31_337,
   foundry: 31_337,
@@ -319,6 +320,34 @@ export const arbitrumRinkeby: Chain = {
   testnet: true,
 }
 
+export const arbitrumGoerli: Chain = {
+  id: chainId.arbitrumGoerli,
+  name: 'Arbitrum Goerli',
+  network: 'arbitrum-goerli',
+  nativeCurrency: {
+    name: 'Arbitrum Goerli Ether',
+    symbol: 'ETH',
+    decimals: 18,
+  },
+  rpcUrls: {
+    alchemy: alchemyRpcUrls.arbitrumGoerli,
+    default: publicRpcUrls.arbitrumGoerli,
+    infura: infuraRpcUrls.arbitrumGoerli,
+    public: publicRpcUrls.arbitrumGoerli,
+  },
+  blockExplorers: {
+    default: {
+      name: 'Arbitrum Explorer',
+      url: 'https://goerli-rollup-explorer.arbitrum.io',
+    },
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 88114,
+  },
+  testnet: true,
+}
+
 export const localhost: Chain = {
   id: chainId.localhost,
   name: 'Localhost',
@@ -361,6 +390,7 @@ export const chain = {
   polygon,
   polygonMumbai,
   arbitrum,
+  arbitrumGoerli,
   arbitrumRinkeby,
   localhost,
   hardhat,
@@ -379,6 +409,7 @@ export const allChains = [
   polygon,
   polygonMumbai,
   arbitrum,
+  arbitrumGoerli,
   arbitrumRinkeby,
   localhost,
   hardhat,
@@ -390,6 +421,7 @@ export const defaultChains: Chain[] = [mainnet, ropsten, rinkeby, goerli, kovan]
 export const defaultL2Chains: Chain[] = [
   arbitrum,
   arbitrumRinkeby,
+  arbitrumGoerli,
   optimism,
   optimismKovan,
   optimismGoerli,

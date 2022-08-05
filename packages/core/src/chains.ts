@@ -1,5 +1,6 @@
 export {
   arbitrum,
+  arbitrumGoerli,
   arbitrumRinkeby,
   foundry,
   goerli,

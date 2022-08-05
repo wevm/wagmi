@@ -19,6 +19,7 @@ type AlchemyChains = Extract<
   | 'polygonMumbai'
   | 'arbitrum'
   | 'arbitrumRinkeby'
+  | 'arbitrumGoerli'
 >
 export const alchemyRpcUrls: Record<AlchemyChains, string> = {
   mainnet: 'https://eth-mainnet.alchemyapi.io/v2',
@@ -33,6 +34,7 @@ export const alchemyRpcUrls: Record<AlchemyChains, string> = {
   polygonMumbai: 'https://polygon-mumbai.g.alchemy.com/v2',
   arbitrum: 'https://arb-mainnet.g.alchemy.com/v2',
   arbitrumRinkeby: 'https://arb-rinkeby.g.alchemy.com/v2',
+  arbitrumGoerli: 'https://arb-goerli.g.alchemy.com/v2',
 } as const
 
 type InfuraChains = Extract<
@@ -49,6 +51,7 @@ type InfuraChains = Extract<
   | 'polygonMumbai'
   | 'arbitrum'
   | 'arbitrumRinkeby'
+  | 'arbitrumGoerli'
 >
 export const infuraRpcUrls: Record<InfuraChains, string> = {
   mainnet: 'https://mainnet.infura.io/v3',
@@ -63,6 +66,7 @@ export const infuraRpcUrls: Record<InfuraChains, string> = {
   polygonMumbai: 'https://polygon-mumbai.infura.io/v3',
   arbitrum: 'https://arbitrum-mainnet.infura.io/v3',
   arbitrumRinkeby: 'https://arbitrum-rinkeby.infura.io/v3',
+  arbitrumGoerli: 'https://arbitrum-goerli.infura.io/v3',
 } as const
 
 type PublicChains = Extract<
@@ -79,6 +83,7 @@ type PublicChains = Extract<
   | 'polygonMumbai'
   | 'arbitrum'
   | 'arbitrumRinkeby'
+  | 'arbitrumGoerli'
 >
 export const publicRpcUrls: Record<PublicChains, string> = {
   mainnet: `${alchemyRpcUrls.mainnet}/${defaultAlchemyApiKey}`,
@@ -93,4 +98,5 @@ export const publicRpcUrls: Record<PublicChains, string> = {
   polygonMumbai: 'https://matic-mumbai.chainstacklabs.com',
   arbitrum: 'https://arb1.arbitrum.io/rpc',
   arbitrumRinkeby: 'https://rinkeby.arbitrum.io/rpc',
+  arbitrumGoerli: 'https://goerli-rollup.arbitrum.io/rpc',
 } as const

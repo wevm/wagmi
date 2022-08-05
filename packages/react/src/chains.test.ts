@@ -7,6 +7,7 @@ it('should expose correct exports', () => {
     [
       "arbitrum",
       "arbitrumRinkeby",
+      "arbitrumGoerli",
       "foundry",
       "goerli",
       "hardhat",
