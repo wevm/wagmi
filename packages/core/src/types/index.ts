@@ -120,13 +120,13 @@ type InjectedProviderFlags = {
   isExodus?: true
   isFrame?: true
   isMetaMask?: true
+  isOneInchAndroidWallet?: true
+  isOneInchIOSWallet?: true
   isOpera?: true
   isTally?: true
   isTokenPocket?: true
   isTokenary?: true
   isTrust?: true
-  isOneInchIOSWallet?: true
-  isOneInchAndroidWallet?: true
 }
 
 type InjectedProviders = InjectedProviderFlags & {
