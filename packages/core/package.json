@@ -17,7 +17,7 @@
     },
     {
       "type": "github",
-      "url": "https://github.com/sponsors/tmm"
+      "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
   "main": "dist/wagmi-core.cjs.js",

@@ -1,11 +1,12 @@
 name: Bug Report
 description: File a bug/issue
-title: '[bug] <title>'
+title: 'bug: <title>'
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! The more info you provide, the more we can help you. If you are a [Sponsor](https://github.com/sponsors/tmm?metadata_campaign=gh_issue), your issues are prioritized.
+        Thanks for taking the time to fill out this bug report! The more info you provide, the more we can help you. If you are a [Sponsor](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_issue), your issues are prioritized.
+
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?

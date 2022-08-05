@@ -16,6 +16,7 @@ it('should expose correct exports', () => {
       "mainnet",
       "optimism",
       "optimismKovan",
+      "optimismGoerli",
       "polygon",
       "polygonMumbai",
       "rinkeby",
