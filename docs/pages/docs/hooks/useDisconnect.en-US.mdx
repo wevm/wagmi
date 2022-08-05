@@ -49,7 +49,7 @@ Function to invoke when an error is thrown while disconnecting.
 import { useDisconnect } from 'wagmi'
 
 function App() {
-  const disconnect = useDisconnect({
+  const { disconnect } = useDisconnect({
     onError(error) {
       console.log('Error', error)
     },
@@ -65,7 +65,7 @@ Function fires before disconnect function. Value returned from this function wil
 import { useDisconnect } from 'wagmi'
 
 function App() {
-  const disconnect = useDisconnect({
+  const { disconnect } = useDisconnect({
     onMutate(args) {
       console.log('Mutate', args)
     },
@@ -81,7 +81,7 @@ Function to invoke when disconnect is settled (either successfully disconnected,
 import { useDisconnect } from 'wagmi'
 
 function App() {
-  const disconnect = useDisconnect({
+  const { disconnect } = useDisconnect({
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },
@@ -97,7 +97,7 @@ Function to invoke when disconnect is successful.
 import { useDisconnect } from 'wagmi'
 
 function App() {
-  const disconnect = useDisconnect({
+  const { disconnect } = useDisconnect({
     onSuccess(data) {
       console.log('Success', data)
     },
