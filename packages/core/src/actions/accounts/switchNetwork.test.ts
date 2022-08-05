@@ -40,7 +40,7 @@ describe('switchNetwork', () => {
           "nativeCurrency": {
             "decimals": 18,
             "name": "Kovan Ether",
-            "symbol": "KOR",
+            "symbol": "ETH",
           },
           "network": "optimism-kovan",
           "rpcUrls": {

@@ -336,7 +336,7 @@ describe('useSwitchNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Rinkeby Ether",
-                "symbol": "RIN",
+                "symbol": "ETH",
               },
               "network": "rinkeby",
               "rpcUrls": {
