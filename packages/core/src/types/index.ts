@@ -125,6 +125,8 @@ type InjectedProviderFlags = {
   isTokenPocket?: true
   isTokenary?: true
   isTrust?: true
+  isOneInchIOSWallet?: true
+  isOneInchAndroidWallet?: true
 }
 
 type InjectedProviders = InjectedProviderFlags & {
