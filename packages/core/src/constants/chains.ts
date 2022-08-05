@@ -326,7 +326,7 @@ export const arbitrumGoerli: Chain = {
   network: 'arbitrum-goerli',
   nativeCurrency: {
     name: 'Arbitrum Goerli Ether',
-    symbol: 'AGETH',
+    symbol: 'ETH',
     decimals: 18,
   },
   rpcUrls: {
@@ -420,6 +420,7 @@ export const defaultChains: Chain[] = [mainnet, ropsten, rinkeby, goerli, kovan]
 
 export const defaultL2Chains: Chain[] = [
   arbitrum,
+  arbitrumRinkeby,
   arbitrumGoerli,
   optimism,
   optimismKovan,
