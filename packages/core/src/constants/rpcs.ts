@@ -48,6 +48,7 @@ type InfuraChains = Extract<
   | 'polygonMumbai'
   | 'arbitrum'
   | 'arbitrumRinkeby'
+  | 'arbitrumGoerli'
 >
 export const infuraRpcUrls: Record<InfuraChains, string> = {
   mainnet: 'https://mainnet.infura.io/v3',
@@ -61,6 +62,7 @@ export const infuraRpcUrls: Record<InfuraChains, string> = {
   polygonMumbai: 'https://polygon-mumbai.infura.io/v3',
   arbitrum: 'https://arbitrum-mainnet.infura.io/v3',
   arbitrumRinkeby: 'https://arbitrum-rinkeby.infura.io/v3',
+  arbitrumGoerli: 'https://arbitrum-goerli.infura.io/v3',
 } as const
 
 type PublicChains = Extract<

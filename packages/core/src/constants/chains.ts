@@ -303,6 +303,7 @@ export const arbitrumGoerli: Chain = {
   rpcUrls: {
     alchemy: alchemyRpcUrls.arbitrumGoerli,
     default: publicRpcUrls.arbitrumGoerli,
+    infura: infuraRpcUrls.arbitrumGoerli,
     public: publicRpcUrls.arbitrumGoerli,
   },
   blockExplorers: {
@@ -311,7 +312,10 @@ export const arbitrumGoerli: Chain = {
       url: 'https://goerli-rollup-explorer.arbitrum.io',
     },
   },
-  multicall: undefined,
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 88114,
+  },
   testnet: true,
 }
 
