@@ -49,7 +49,7 @@ export const ropsten: Chain = {
   id: chainId.ropsten,
   name: 'Ropsten',
   network: 'ropsten',
-  nativeCurrency: { name: 'Ropsten Ether', symbol: 'ROP', decimals: 18 },
+  nativeCurrency: { name: 'Ropsten Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.ropsten,
     default: publicRpcUrls.ropsten,
@@ -74,7 +74,7 @@ export const rinkeby: Chain = {
   id: chainId.rinkeby,
   name: 'Rinkeby',
   network: 'rinkeby',
-  nativeCurrency: { name: 'Rinkeby Ether', symbol: 'RIN', decimals: 18 },
+  nativeCurrency: { name: 'Rinkeby Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.rinkeby,
     default: publicRpcUrls.rinkeby,
@@ -99,7 +99,7 @@ export const goerli: Chain = {
   id: chainId.goerli,
   name: 'Goerli',
   network: 'goerli',
-  nativeCurrency: { name: 'Goerli Ether', symbol: 'GOR', decimals: 18 },
+  nativeCurrency: { name: 'Goerli Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.goerli,
     default: publicRpcUrls.goerli,
@@ -124,7 +124,7 @@ export const kovan: Chain = {
   id: chainId.kovan,
   name: 'Kovan',
   network: 'kovan',
-  nativeCurrency: { name: 'Kovan Ether', symbol: 'KOV', decimals: 18 },
+  nativeCurrency: { name: 'Kovan Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.kovan,
     default: publicRpcUrls.kovan,
@@ -169,7 +169,7 @@ export const optimismKovan: Chain = {
   network: 'optimism-kovan',
   nativeCurrency: {
     name: 'Kovan Ether',
-    symbol: 'KOR',
+    symbol: 'ETH',
     decimals: 18,
   },
   rpcUrls: {
@@ -195,7 +195,7 @@ export const optimismGoerli: Chain = {
   network: 'optimism-goerli',
   nativeCurrency: {
     name: 'Goerli Ether',
-    symbol: 'GOR',
+    symbol: 'ETH',
     decimals: 18,
   },
   rpcUrls: {
@@ -295,7 +295,7 @@ export const arbitrumRinkeby: Chain = {
   network: 'arbitrum-rinkeby',
   nativeCurrency: {
     name: 'Arbitrum Rinkeby Ether',
-    symbol: 'ARETH',
+    symbol: 'ETH',
     decimals: 18,
   },
   rpcUrls: {
