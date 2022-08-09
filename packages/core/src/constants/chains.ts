@@ -386,6 +386,7 @@ export const chain = {
   goerli,
   kovan,
   optimism,
+  optimismGoerli,
   optimismKovan,
   polygon,
   polygonMumbai,
