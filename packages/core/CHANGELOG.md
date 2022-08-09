@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.5.2
+
+### Patch Changes
+
+- [#823](https://github.com/wagmi-dev/wagmi/pull/823) [`10b8b78`](https://github.com/wagmi-dev/wagmi/commit/10b8b78605b7246b2c55b8d69f96663906e5cd20) Thanks [@tmm](https://github.com/tmm)! - Add Optimism Goerli to `chain` lookup.
+
 ## 0.5.1
 
 ### Patch Changes
