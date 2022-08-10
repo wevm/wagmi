@@ -96,6 +96,10 @@ Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask)
 
 We've only scratched the surface for what you can do with wagmi!
 
+—
+
+Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) to get started with pre-built interface on top of wagmi for managing wallet connections.
+
 ## Community
 
 Check out the following places for more wagmi-related content:
@@ -112,6 +116,15 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
 - [GitHub Sponsors](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
 - [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
+
+## Sponsors
+
+<a href="https://twitter.com/family">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-dark.svg">
+    <img alt="wagmi logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-light.svg" width="auto" height="35">
+  </picture>
+</a>
 
 ## Contributing
 
@@ -131,5 +144,6 @@ Thanks to julianhutton.eth ([@julianjhutton](https://twitter.com/julianjhutton))
 <br />
 
 <a href="https://vercel.com/?utm_source=wagmi-dev&utm_campaign=oss">
-  <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel">
+  <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
 </a>
+
