@@ -1,11 +1,11 @@
 import { Client, getClient } from '../../client'
 import { Connector, ConnectorData } from '../../connectors'
 import { ConnectorAlreadyConnectedError } from '../../errors'
-import { Provider } from '../../types'
+import { InitialChainId, Provider } from '../../types'
 
 export type ConnectArgs = {
   /** Chain ID to connect to */
-  chainId?: number
+  chainId?: InitialChainId
   /** Connector to connect */
   connector: Connector
 }

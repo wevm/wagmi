@@ -12,7 +12,7 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
+import { Chain, InitialChainId } from '../types'
 import { getInjectedName, normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -74,7 +74,11 @@ export class InjectedConnector extends Connector<
     this.name = name
   }
 
-  async connect({ chainId }: { chainId?: number } = {}) {
+  async connect({
+    chainId,
+  }: {
+    chainId?: InitialChainId
+  } = {}) {
     try {
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
@@ -92,9 +96,15 @@ export class InjectedConnector extends Connector<
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
       if (chainId && id !== chainId) {
-        const chain = await this.switchChain(chainId)
-        id = chain.id
-        unsupported = this.isChainUnsupported(id)
+        const resolvedChainId =
+          typeof chainId === 'function'
+            ? chainId({ walletChainId: id, chains: this.chains })
+            : chainId
+        if (resolvedChainId !== undefined) {
+          const chain = await this.switchChain(resolvedChainId)
+          id = chain.id
+          unsupported = this.isChainUnsupported(id)
+        }
       }
 
       // Add shim to storage signalling wallet is connected

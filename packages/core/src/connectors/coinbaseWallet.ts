@@ -13,7 +13,7 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
+import { Chain, InitialChainId } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -52,7 +52,11 @@ export class CoinbaseWalletConnector extends Connector<
     })
   }
 
-  async connect({ chainId }: { chainId?: number } = {}) {
+  async connect({
+    chainId,
+  }: {
+    chainId?: InitialChainId
+  } = {}) {
     try {
       const provider = await this.getProvider()
       provider.on('accountsChanged', this.onAccountsChanged)
@@ -67,9 +71,15 @@ export class CoinbaseWalletConnector extends Connector<
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
       if (chainId && id !== chainId) {
-        const chain = await this.switchChain(chainId)
-        id = chain.id
-        unsupported = this.isChainUnsupported(id)
+        const resolvedChainId =
+          typeof chainId === 'function'
+            ? chainId({ walletChainId: id, chains: this.chains })
+            : chainId
+        if (resolvedChainId !== undefined) {
+          const chain = await this.switchChain(resolvedChainId)
+          id = chain.id
+          unsupported = this.isChainUnsupported(id)
+        }
       }
 
       return {

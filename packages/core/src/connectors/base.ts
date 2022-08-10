@@ -1,7 +1,7 @@
 import { default as EventEmitter } from 'eventemitter3'
 
 import { defaultChains } from '../constants'
-import { Chain } from '../types'
+import { Chain, InitialChainId } from '../types'
 
 export type ConnectorData<Provider = any> = {
   account?: string
@@ -46,7 +46,7 @@ export abstract class Connector<
   }
 
   abstract connect(config?: {
-    chainId?: number
+    chainId?: InitialChainId
   }): Promise<Required<ConnectorData>>
   abstract disconnect(): Promise<void>
   abstract getAccount(): Promise<string>

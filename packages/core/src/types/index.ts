@@ -44,6 +44,13 @@ export type Chain = {
   testnet?: boolean
 }
 
+type InitialChainIdResolver = (context: {
+  walletChainId?: number
+  chains: Array<Chain>
+}) => number | undefined
+
+export type InitialChainId = number | InitialChainIdResolver
+
 export type ChainProviderFn<
   TProvider extends Provider = providers.BaseProvider,
   TWebSocketProvider extends WebSocketProvider = providers.WebSocketProvider,

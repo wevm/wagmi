@@ -1,8 +1,9 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
 import { getClient } from '../../client'
 import { MockConnector } from '../../connectors/mock'
+import { chain } from './../../constants/chains'
 import { connect } from './connect'
 
 const connector = new MockConnector({
@@ -49,6 +50,24 @@ describe('connect', () => {
           "unsupported": false,
         }
       `)
+    })
+
+    it('accepts a dynamically resolved chain ID', async () => {
+      const chainId = vi.fn().mockImplementation(() => 123)
+
+      const result = await connect({
+        connector: new MockConnector({
+          chains: [chain.mainnet],
+          options: {
+            flags: { walletChainId: 1 },
+            signer: getSigners()[0]!,
+          },
+        }),
+        chainId,
+      })
+      expect(result.chain.id).toBe(123)
+      expect(chainId.mock.lastCall?.[0]?.walletChainId).toEqual(1)
+      expect(chainId.mock.lastCall?.[0]?.chains).toEqual([chain.mainnet])
     })
 
     it('status changes on connection', async () => {

@@ -12,6 +12,7 @@ export type MockProviderOptions = {
     failConnect?: boolean
     failSwitchChain?: boolean
     noSwitchChain?: boolean
+    walletChainId?: number
   }
   signer: Signer
 }

@@ -5,7 +5,7 @@ import {
   RpcError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain, Ethereum } from '../types'
+import { Chain, Ethereum, InitialChainId } from '../types'
 import { InjectedConnector, InjectedConnectorOptions } from './injected'
 
 export type MetaMaskConnectorOptions = Pick<
@@ -48,7 +48,11 @@ export class MetaMaskConnector extends InjectedConnector {
       options.UNSTABLE_shimOnConnectSelectAccount
   }
 
-  async connect({ chainId }: { chainId?: number } = {}) {
+  async connect({
+    chainId,
+  }: {
+    chainId?: InitialChainId
+  } = {}) {
     try {
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
@@ -86,9 +90,15 @@ export class MetaMaskConnector extends InjectedConnector {
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
       if (chainId && id !== chainId) {
-        const chain = await this.switchChain(chainId)
-        id = chain.id
-        unsupported = this.isChainUnsupported(id)
+        const resolvedChainId =
+          typeof chainId === 'function'
+            ? chainId({ walletChainId: id, chains: this.chains })
+            : chainId
+        if (resolvedChainId !== undefined) {
+          const chain = await this.switchChain(resolvedChainId)
+          id = chain.id
+          unsupported = this.isChainUnsupported(id)
+        }
       }
 
       if (this.options?.shimDisconnect)

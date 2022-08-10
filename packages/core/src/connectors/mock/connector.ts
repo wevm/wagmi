@@ -1,6 +1,6 @@
 import { getAddress } from 'ethers/lib/utils'
 
-import { Chain } from '../../types'
+import { Chain, InitialChainId } from '../../types'
 import { normalizeChainId } from '../../utils'
 import { Connector, ConnectorData } from '../base'
 import { MockProvider, MockProviderOptions } from './provider'
@@ -19,8 +19,19 @@ export class MockConnector extends Connector<
     super(config)
   }
 
-  async connect({ chainId }: { chainId?: number } = {}) {
-    const provider = await this.getProvider({ chainId })
+  async connect({
+    chainId,
+  }: {
+    chainId?: InitialChainId
+  } = {}) {
+    const resolvedChainId =
+      typeof chainId === 'function'
+        ? chainId({
+            walletChainId: this.options.flags?.walletChainId,
+            chains: this.chains,
+          })
+        : chainId
+    const provider = await this.getProvider({ chainId: resolvedChainId })
     provider.on('accountsChanged', this.onAccountsChanged)
     provider.on('chainChanged', this.onChainChanged)
     provider.on('disconnect', this.onDisconnect)
