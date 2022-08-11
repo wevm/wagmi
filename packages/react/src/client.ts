@@ -1,3 +1,9 @@
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { QueryClient } from '@tanstack/react-query'
+import {
+  Persister,
+  persistQueryClient,
+} from '@tanstack/react-query-persist-client'
 import {
   ClientConfig,
   Client as CoreClient,
@@ -5,9 +11,6 @@ import {
   WebSocketProvider,
   createClient as createCoreClient,
 } from '@wagmi/core'
-import { QueryClient } from 'react-query'
-import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
-import { Persister, persistQueryClient } from 'react-query/persistQueryClient'
 
 import { deserialize, serialize } from './utils'
 
@@ -36,7 +39,7 @@ export function createClient<
     },
   }),
   persister = typeof window !== 'undefined'
-    ? createWebStoragePersister({
+    ? createSyncStoragePersister({
         key: 'wagmi.cache',
         storage: window.localStorage,
         serialize,

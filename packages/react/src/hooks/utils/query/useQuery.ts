@@ -4,7 +4,7 @@ import {
   QueryObserver,
   QueryObserverResult,
   UseQueryOptions,
-} from 'react-query'
+} from '@tanstack/react-query'
 
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs, trackResult } from './utils'
@@ -39,15 +39,13 @@ type UseQueryResult<TData, TError> = Pick<
     | 'remove'
   >
 }
+type DefinedUseQueryResult<TData = unknown, TError = unknown> = Omit<
+  UseQueryResult<TData, TError>,
+  'data'
+> & {
+  data: TData
+}
 
-export function useQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-): UseQueryResult<TData, TError>
 export function useQuery<
   TQueryFnData = unknown,
   TError = unknown,
@@ -57,9 +55,23 @@ export function useQuery<
   queryKey: TQueryKey,
   options?: Omit<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'queryKey'
-  >,
+    'queryKey' | 'initialData'
+  > & { initialData?: () => undefined },
 ): UseQueryResult<TData, TError>
+
+export function useQuery<
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+>(
+  queryKey: TQueryKey,
+  options?: Omit<
+    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+    'queryKey' | 'initialData'
+  > & { initialData: TQueryFnData | (() => TQueryFnData) },
+): DefinedUseQueryResult<TData, TError>
+
 export function useQuery<
   TQueryFnData = unknown,
   TError = unknown,
@@ -70,9 +82,24 @@ export function useQuery<
   queryFn: QueryFunction<TQueryFnData, TQueryKey>,
   options?: Omit<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'queryKey' | 'queryFn'
-  >,
+    'queryKey' | 'queryFn' | 'initialData'
+  > & { initialData?: () => undefined },
 ): UseQueryResult<TData, TError>
+
+export function useQuery<
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+>(
+  queryKey: TQueryKey,
+  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
+  options?: Omit<
+    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+    'queryKey' | 'queryFn' | 'initialData'
+  > & { initialData: TQueryFnData | (() => TQueryFnData) },
+): DefinedUseQueryResult<TData, TError>
+
 export function useQuery<
   TQueryFnData,
   TError,

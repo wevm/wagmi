@@ -299,6 +299,9 @@ importers:
   packages/react:
     specifiers:
       '@coinbase/wallet-sdk': ^3.3.0
+      '@tanstack/query-sync-storage-persister': ^4.0.10
+      '@tanstack/react-query': ^4.0.10
+      '@tanstack/react-query-persist-client': ^4.0.10
       '@testing-library/react': ^13.3.0
       '@testing-library/react-hooks': ^8.0.1
       '@types/react': ^18.0.9
@@ -311,13 +314,14 @@ importers:
       react-17: npm:react@17.0.2
       react-dom: ^18.1.0
       react-dom-17: npm:react-dom@17.0.2
-      react-query: 4.0.0-beta.23
       use-sync-external-store: ^1.2.0
     dependencies:
       '@coinbase/wallet-sdk': 3.3.0
+      '@tanstack/query-sync-storage-persister': 4.0.10
+      '@tanstack/react-query': 4.0.10_ef5jwxihqo6n7gxfmzogljlgcm
+      '@tanstack/react-query-persist-client': 4.0.10
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.8
-      react-query: 4.0.0-beta.23_ef5jwxihqo6n7gxfmzogljlgcm
       use-sync-external-store: 1.2.0_react@18.1.0
     devDependencies:
       '@testing-library/react': 13.3.0_ef5jwxihqo6n7gxfmzogljlgcm
@@ -6246,6 +6250,37 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
+  /@tanstack/query-core/4.0.10:
+    resolution: {integrity: sha512-9LsABpZXkWZHi4P1ozRETEDXQocLAxVzQaIhganxbNuz/uA3PsCAJxJTiQrknG5htLMzOF5MqM9G10e6DCxV1A==}
+    dev: false
+
+  /@tanstack/query-sync-storage-persister/4.0.10:
+    resolution: {integrity: sha512-A8Lf8w8H2/FWTPGzNi5kb6KPI/OBFPs9+fzGZ6gvetSyl6U7aCq4qztn/PIqlp48xew/JFZjN2CtO8RivTwBnA==}
+    dev: false
+
+  /@tanstack/react-query-persist-client/4.0.10:
+    resolution: {integrity: sha512-R2xftsji8VteC28LWitQYhuXvUDPoFAOuDl8wP1ngg4aLIYtKCQ78MS/9jRJSuykok+TpNUCvthBb37ShNVLKQ==}
+    dev: false
+
+  /@tanstack/react-query/4.0.10_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-Wn5QhZUE5wvr6rGClV7KeQIUsdTmYR9mgmMZen7DSRWauHW2UTynFg3Kkf6pw+XlxxOLsyLWwz/Q6q1lSpM3TQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.0.10
+      '@types/use-sync-external-store': 0.0.3
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+      use-sync-external-store: 1.2.0_react@18.1.0
+    dev: false
+
   /@testing-library/dom/8.11.3:
     resolution: {integrity: sha512-9LId28I+lx70wUiZjLvi1DB/WT2zGOxUh46glrSNMaWVx849kKAluezVzZrXJfTKKoQTmEOutLes/bHg4Bj3aA==}
     engines: {node: '>=12'}
@@ -8289,11 +8324,6 @@ packages:
       tryer: 1.0.1
     dev: false
 
-  /big-integer/1.6.51:
-    resolution: {integrity: sha512-GPEid2Y9QU1Exl1rpO9B2IPJGHPSupF5GnVIP0blYvNOMer2bTvSWs1jGOUg04hTmu67nmLsQ9TBo1puaotBHg==}
-    engines: {node: '>=0.6'}
-    dev: false
-
   /big.js/5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
 
@@ -8406,19 +8436,6 @@ packages:
     dependencies:
       wcwidth: 1.0.1
     dev: true
-
-  /broadcast-channel/3.7.0:
-    resolution: {integrity: sha512-cIAKJXAxGJceNZGTZSBzMxzyOn72cVgPnKx4dc6LRjQgbaJUQqhy5rzL3zbMxkMWsGKkv2hSFkPRMEXfoMZ2Mg==}
-    dependencies:
-      '@babel/runtime': 7.17.9
-      detect-node: 2.1.0
-      js-sha3: 0.8.0
-      microseconds: 0.2.0
-      nano-time: 1.0.0
-      oblivious-set: 1.0.0
-      rimraf: 3.0.2
-      unload: 2.2.0
-    dev: false
 
   /brorand/1.1.0:
     resolution: {integrity: sha512-cKV8tMCEpQs4hK/ik71d6LrPOnpkpGBR0wzxqr68g2m/LB2GxVYQroAjMJZRVM1Y4BCjCKc3vAamxSzOY2RP+w==}
@@ -14470,13 +14487,6 @@ packages:
       remove-accents: 0.4.2
     dev: false
 
-  /match-sorter/6.3.1:
-    resolution: {integrity: sha512-mxybbo3pPNuA+ZuCUhm5bwNkXrJTbsk5VWbR5wiwz/GC6LIiegBGn2w3O08UG/jdbYLinw51fSQ5xNU1U3MgBw==}
-    dependencies:
-      '@babel/runtime': 7.17.9
-      remove-accents: 0.4.2
-    dev: false
-
   /md5.js/1.3.5:
     resolution: {integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==}
     dependencies:
@@ -15137,10 +15147,6 @@ packages:
       braces: 3.0.2
       picomatch: 2.3.1
 
-  /microseconds/0.2.0:
-    resolution: {integrity: sha512-n7DHHMjR1avBbSpsTBj6fmMGh2AGrifVV4e+WYc3Q9lO+xnSZ3NyhcBND3vzzatt05LFhoKFRxrIyklmLlUtyA==}
-    dev: false
-
   /mime-db/1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
@@ -15360,12 +15366,6 @@ packages:
   /mute-stream/0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
     dev: true
-
-  /nano-time/1.0.0:
-    resolution: {integrity: sha1-sFVPaa2J4i0JB/ehKwmTpdlhN+8=}
-    dependencies:
-      big-integer: 1.6.51
-    dev: false
 
   /nanoid/3.3.1:
     resolution: {integrity: sha512-n6Vs/3KGyxPQd6uO0eH4Bv0ojGSUvuLlIHtC3Y0kEO23YRge8H9x1GCzLn28YX0H66pMkxuaeESFq4tKISKwdw==}
@@ -15733,10 +15733,6 @@ packages:
       call-bind: 1.0.2
       define-properties: 1.1.4
       es-abstract: 1.20.0
-
-  /oblivious-set/1.0.0:
-    resolution: {integrity: sha512-z+pI07qxo4c2CulUHCDf9lcqDlMSo72N/4rLUpRXf6fu+q8vjt8y0xS+Tlf8NTJDdTXHbdeO1n3MlbctwEoXZw==}
-    dev: false
 
   /obuf/1.1.2:
     resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
@@ -17288,27 +17284,6 @@ packages:
 
   /react-is/18.1.0:
     resolution: {integrity: sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==}
-    dev: false
-
-  /react-query/4.0.0-beta.23_ef5jwxihqo6n7gxfmzogljlgcm:
-    resolution: {integrity: sha512-e6mNBVAYGy0M1OwX0mhRB/lCkOedKeqTUrbPjNCqvm8hQGUsJJobqfHVvTv8o6JJaOO2MFcxKF4vZM+PEKbHZA==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: '*'
-      react-native: '*'
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.17.9
-      '@types/use-sync-external-store': 0.0.3
-      broadcast-channel: 3.7.0
-      match-sorter: 6.3.1
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      use-sync-external-store: 1.2.0_react@18.1.0
     dev: false
 
   /react-refresh/0.11.0:
@@ -19625,13 +19600,6 @@ packages:
   /universalify/2.0.0:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
-
-  /unload/2.2.0:
-    resolution: {integrity: sha512-B60uB5TNBLtN6/LsgAf3udH9saB5p7gqJwcFfbOEZ8BcBHnGwCf6G/TGiEqkRAxX7zAFIUtzdrXQSdL3Q/wqNA==}
-    dependencies:
-      '@babel/runtime': 7.17.9
-      detect-node: 2.1.0
-    dev: false
 
   /unpipe/1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}

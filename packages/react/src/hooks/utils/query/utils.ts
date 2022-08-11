@@ -3,7 +3,7 @@ import {
   QueryKey,
   QueryObserver,
   QueryOptions,
-} from 'react-query'
+} from '@tanstack/react-query'
 
 function isQueryKey(value: unknown): value is QueryKey {
   return Array.isArray(value)
@@ -41,7 +41,7 @@ export function shouldThrowError<T extends (...args: any[]) => boolean>(
 }
 
 export function trackResult<
-  TQueryResult = unknown,
+  TQueryResult extends Record<string, unknown> = Record<string, unknown>,
   TQueryFnData = unknown,
   TError = unknown,
   TData = TQueryFnData,
