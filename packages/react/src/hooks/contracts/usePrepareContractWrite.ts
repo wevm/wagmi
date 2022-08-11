@@ -1,3 +1,4 @@
+import { hashQueryKey } from '@tanstack/react-query'
 import {
   FetchSignerResult,
   PrepareWriteContractConfig,
@@ -5,7 +6,6 @@ import {
   prepareWriteContract,
 } from '@wagmi/core'
 import { providers } from 'ethers'
-import { hashQueryKey } from 'react-query'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'

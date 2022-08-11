@@ -1,10 +1,10 @@
+import { QueryClient } from '@tanstack/react-query'
 import {
   RenderHookOptions,
   renderHook as defaultRenderHook,
   waitFor,
 } from '@testing-library/react'
 import * as React from 'react'
-import { QueryClient } from 'react-query'
 
 import { WagmiConfig } from '../src'
 import { Client } from '../src/client'

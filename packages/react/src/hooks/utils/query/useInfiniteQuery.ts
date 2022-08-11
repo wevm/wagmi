@@ -5,7 +5,7 @@ import {
   QueryKey,
   QueryObserver,
   UseInfiniteQueryOptions,
-} from 'react-query'
+} from '@tanstack/react-query'
 
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs, trackResult } from './utils'

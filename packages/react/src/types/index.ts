@@ -3,7 +3,7 @@ import {
   UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
-} from 'react-query'
+} from '@tanstack/react-query'
 
 export type QueryFunctionArgs<T extends (...args: any) => any> =
   QueryFunctionContext<ReturnType<T>>

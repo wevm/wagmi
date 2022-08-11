@@ -1,3 +1,4 @@
+import { useMutation } from '@tanstack/react-query'
 import {
   WriteContractArgs,
   WriteContractPreparedArgs,
@@ -5,7 +6,6 @@ import {
   writeContract,
 } from '@wagmi/core'
 import * as React from 'react'
-import { useMutation } from 'react-query'
 
 import { MutationConfig } from '../../types'
 
