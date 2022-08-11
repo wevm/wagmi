@@ -64,6 +64,7 @@ describe('useClient', () => {
             "getState": [Function],
             "persist": {
               "clearStorage": [Function],
+              "getOptions": [Function],
               "hasHydrated": [Function],
               "onFinishHydration": [Function],
               "onHydrate": [Function],

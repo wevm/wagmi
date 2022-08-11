@@ -89,23 +89,29 @@ export class Client<
     }
 
     // Create store
-    this.store = create(
+    this.store = create<
+      State<TProvider, TWebSocketProvider>,
+      [
+        ['zustand/subscribeWithSelector', never],
+        ['zustand/persist', Partial<State<TProvider, TWebSocketProvider>>],
+      ]
+    >(
       subscribeWithSelector(
-        persist<
-          State<TProvider, TWebSocketProvider>,
-          [['zustand/subscribeWithSelector', never]]
-        >(
-          () => ({
-            connectors:
-              typeof connectors === 'function' ? connectors() : connectors,
-            provider:
-              typeof provider === 'function' ? provider({ chainId }) : provider,
-            status,
-            webSocketProvider:
-              typeof webSocketProvider === 'function'
-                ? webSocketProvider({ chainId })
-                : webSocketProvider,
-          }),
+        persist(
+          () =>
+            <State<TProvider, TWebSocketProvider>>{
+              connectors:
+                typeof connectors === 'function' ? connectors() : connectors,
+              provider:
+                typeof provider === 'function'
+                  ? provider({ chainId })
+                  : provider,
+              status,
+              webSocketProvider:
+                typeof webSocketProvider === 'function'
+                  ? webSocketProvider({ chainId })
+                  : webSocketProvider,
+            },
           {
             name: storeKey,
             getStorage: () => storage,
