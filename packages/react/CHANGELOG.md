@@ -1,5 +1,20 @@
 # wagmi
 
+## 0.6.3
+
+### Patch Changes
+
+- [#835](https://github.com/wagmi-dev/wagmi/pull/835) [`1b85e54`](https://github.com/wagmi-dev/wagmi/commit/1b85e54ae654e2564cf5bc2dae6411fe0a25875c) Thanks [@jxom](https://github.com/jxom)! - Update `@coinbase/wallet-sdk` to `3.4.1`
+
+* [#843](https://github.com/wagmi-dev/wagmi/pull/843) [`e77dee6`](https://github.com/wagmi-dev/wagmi/commit/e77dee6a606b8aac4279569c54cec8902476fee9) Thanks [@tmm](https://github.com/tmm)! - Fix `MockConnector` entrypoint path
+
+- [#834](https://github.com/wagmi-dev/wagmi/pull/834) [`9655879`](https://github.com/wagmi-dev/wagmi/commit/96558793b0319df47aefafa6b7b9c959068d491b) Thanks [@jxom](https://github.com/jxom)! - Update zustand to `4.0.0`
+
+* [#833](https://github.com/wagmi-dev/wagmi/pull/833) [`3ae6d0f`](https://github.com/wagmi-dev/wagmi/commit/3ae6d0f5e2d65432024272b43afe68a8f63bb7ea) Thanks [@jxom](https://github.com/jxom)! - Updated `react-query@4.0.0-beta.23` to `@tanstack/react-query@^4.0.10`
+
+* Updated dependencies [[`1b85e54`](https://github.com/wagmi-dev/wagmi/commit/1b85e54ae654e2564cf5bc2dae6411fe0a25875c), [`9655879`](https://github.com/wagmi-dev/wagmi/commit/96558793b0319df47aefafa6b7b9c959068d491b)]:
+  - @wagmi/core@0.5.3
+
 ## 0.6.2
 
 ### Patch Changes
