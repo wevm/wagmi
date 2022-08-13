@@ -51,8 +51,8 @@
       "default": "./connectors/metaMask/dist/wagmi-connectors-metaMask.cjs.js"
     },
     "./connectors/mock": {
-      "module": "./connectors/metaMask/dist/wagmi-connectors-mock.esm.js",
-      "default": "./connectors/metaMask/dist/wagmi-connectors-mock.cjs.js"
+      "module": "./connectors/mock/dist/wagmi-connectors-mock.esm.js",
+      "default": "./connectors/mock/dist/wagmi-connectors-mock.cjs.js"
     },
     "./connectors/walletConnect": {
       "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js",
