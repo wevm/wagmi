@@ -91,7 +91,7 @@ export function SendTransaction() {
   const { config } = usePrepareSendTransaction({
     request: {
       to: debouncedTo,
-      value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
+      value: debouncedValue ? parseEther(debouncedValue) : undefined,
     },
   })
 
