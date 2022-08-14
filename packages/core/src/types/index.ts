@@ -126,6 +126,7 @@ type InjectedProviderFlags = {
   isTally?: true
   isTokenPocket?: true
   isTokenary?: true
+  isEnkrypt?: true
   isTrust?: true
 }
 
