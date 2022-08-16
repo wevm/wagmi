@@ -6,6 +6,7 @@ export {
   goerli,
   hardhat,
   kovan,
+  sepolia,
   localhost,
   mainnet,
   optimism,
