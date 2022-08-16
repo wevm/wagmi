@@ -8,6 +8,7 @@ export const chainId = {
   rinkeby: 4,
   goerli: 5,
   kovan: 42,
+  sepolia: 11_155_111,
   optimism: 10,
   optimismKovan: 69,
   optimismGoerli: 420,
@@ -139,6 +140,26 @@ export const kovan: Chain = {
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
     blockCreated: 30285908,
+  },
+  testnet: true,
+}
+
+export const sepolia: Chain = {
+  id: chainId.sepolia,
+  name: 'Sepolia',
+  network: 'sepolia',
+  nativeCurrency: { name: 'Sepolia Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: publicRpcUrls.sepolia,
+    public: publicRpcUrls.sepolia,
+  },
+  blockExplorers: {
+    etherscan: etherscanBlockExplorers.sepolia,
+    default: etherscanBlockExplorers.sepolia,
+  },
+  multicall: {
+    address: '0xca11bde05977b3631167028862be2a173976ca11',
+    blockCreated: 751532,
   },
   testnet: true,
 }
@@ -385,6 +406,7 @@ export const chain = {
   rinkeby,
   goerli,
   kovan,
+  sepolia,
   optimism,
   optimismGoerli,
   optimismKovan,
@@ -404,6 +426,7 @@ export const allChains = [
   rinkeby,
   goerli,
   kovan,
+  sepolia,
   optimism,
   optimismKovan,
   optimismGoerli,
@@ -417,7 +440,14 @@ export const allChains = [
   foundry,
 ]
 
-export const defaultChains: Chain[] = [mainnet, ropsten, rinkeby, goerli, kovan]
+export const defaultChains: Chain[] = [
+  mainnet,
+  ropsten,
+  rinkeby,
+  goerli,
+  kovan,
+  sepolia,
+]
 
 export const defaultL2Chains: Chain[] = [
   arbitrum,
