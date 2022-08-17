@@ -76,6 +76,7 @@ type PublicChains = Extract<
   | 'rinkeby'
   | 'goerli'
   | 'kovan'
+  | 'sepolia'
   | 'optimism'
   | 'optimismKovan'
   | 'optimismGoerli'
@@ -91,6 +92,7 @@ export const publicRpcUrls: Record<PublicChains, string> = {
   rinkeby: `${alchemyRpcUrls.rinkeby}/${defaultAlchemyApiKey}`,
   goerli: `${alchemyRpcUrls.goerli}/${defaultAlchemyApiKey}`,
   kovan: `${alchemyRpcUrls.kovan}/${defaultAlchemyApiKey}`,
+  sepolia: `https://rpc.sepolia.dev`,
   optimism: 'https://mainnet.optimism.io',
   optimismKovan: 'https://kovan.optimism.io',
   optimismGoerli: 'https://goerli.optimism.io',

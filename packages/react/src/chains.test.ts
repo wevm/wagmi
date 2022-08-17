@@ -12,6 +12,7 @@ it('should expose correct exports', () => {
       "goerli",
       "hardhat",
       "kovan",
+      "sepolia",
       "localhost",
       "mainnet",
       "optimism",
