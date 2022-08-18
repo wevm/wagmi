@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.6.4
+
+### Patch Changes
+
+- [#852](https://github.com/wagmi-dev/wagmi/pull/852) [`c3192d0`](https://github.com/wagmi-dev/wagmi/commit/c3192d0663aa332ae9edfd9dd49b333454013ab7) Thanks [@skeithc](https://github.com/skeithc)! - Added support for the Sepolia testnet
+
+- Updated dependencies [[`c3192d0`](https://github.com/wagmi-dev/wagmi/commit/c3192d0663aa332ae9edfd9dd49b333454013ab7)]:
+  - @wagmi/core@0.5.4
+
 ## 0.6.3
 
 ### Patch Changes
