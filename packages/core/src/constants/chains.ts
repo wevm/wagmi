@@ -440,14 +440,7 @@ export const allChains = [
   foundry,
 ]
 
-export const defaultChains: Chain[] = [
-  mainnet,
-  ropsten,
-  rinkeby,
-  goerli,
-  kovan,
-  sepolia,
-]
+export const defaultChains: Chain[] = [mainnet, ropsten, rinkeby, goerli, kovan]
 
 export const defaultL2Chains: Chain[] = [
   arbitrum,
