@@ -74,7 +74,7 @@ describe('useEnsName', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: invalid address (argument="address", value="3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj", code=INVALID_ARGUMENT, version=address/5.6.0)],
+            "error": [Error: invalid address (argument="address", value="3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj", code=INVALID_ARGUMENT, version=address/5.7.0)],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,

@@ -12,6 +12,7 @@ describe('fetchFeeData', () => {
     const result = await fetchFeeData()
     expect(Object.keys(result)).toMatchInlineSnapshot(`
       [
+        "lastBaseFeePerGas",
         "maxFeePerGas",
         "maxPriorityFeePerGas",
         "gasPrice",
@@ -25,6 +26,7 @@ describe('fetchFeeData', () => {
       const result = await fetchFeeData({ chainId: 1 })
       expect(Object.keys(result)).toMatchInlineSnapshot(`
         [
+          "lastBaseFeePerGas",
           "maxFeePerGas",
           "maxPriorityFeePerGas",
           "gasPrice",
@@ -37,6 +39,7 @@ describe('fetchFeeData', () => {
       const result = await fetchFeeData({ formatUnits: 'ether' })
       expect(Object.keys(result)).toMatchInlineSnapshot(`
         [
+          "lastBaseFeePerGas",
           "maxFeePerGas",
           "maxPriorityFeePerGas",
           "gasPrice",
