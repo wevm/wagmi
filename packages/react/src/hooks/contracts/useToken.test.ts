@@ -105,11 +105,18 @@ describe('useToken', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [ContractMethodNoResultError: Function "decimals" on contract "0xa0cf798816d4b9b9866b5330eea46a18382f251e" returned an empty response.
+            "error": [ContractMethodNoResultError: Contract read returned an empty response. This could be due to any of the following:
+          - The contract does not have the function "decimals",
+          - The parameters passed to the contract function may be invalid, or
+          - The address is not a contract.
 
-          Are you sure the function "decimals" exists on this contract?
-
-          Etherscan: https://etherscan.io/address/0xa0cf798816d4b9b9866b5330eea46a18382f251e#readContract],
+          Config:
+          {
+            "addressOrName": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
+            "contractInterface": "...",
+            "functionName": "decimals",
+            "chainId": 1
+          }],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,

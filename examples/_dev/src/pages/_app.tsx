@@ -94,7 +94,6 @@ const client = createClient({
       },
     }),
   ],
-  persister: null,
   provider,
   webSocketProvider,
 })

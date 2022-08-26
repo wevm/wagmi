@@ -111,7 +111,7 @@ importers:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       siwe: 1.1.6_ethers@5.7.0
-      wagmi: 0.6.4_wh5fe4zts7a6lu4f7oeon3yvh4
+      wagmi: link:../packages/react
     devDependencies:
       '@next/bundle-analyzer': 12.1.6
       '@preconstruct/next': 4.0.0
@@ -122,7 +122,7 @@ importers:
       eslint: 8.15.0
       eslint-config-next: 12.1.6_yxaxxfdnjkfnhfnfccigqzpoue
       postcss: 8.4.13
-      tailwindcss: 3.0.24_postcss@8.4.13
+      tailwindcss: 3.0.24
       typescript: 4.6.4
 
   examples/_dev:
@@ -138,13 +138,13 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.6.4
-      wagmi: ^0.6.4
+      wagmi: workspace:*
     dependencies:
       ethers: 5.7.0
       next: 12.2.0_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      wagmi: 0.6.4_wh5fe4zts7a6lu4f7oeon3yvh4
+      wagmi: link:../../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
       '@types/node': 17.0.31
@@ -183,7 +183,7 @@ importers:
       react-scripts: 5.0.1_oxzyc36t6ywqirvp35nas5bcte
       typescript: 4.6.4
       util: 0.12.4
-      wagmi: 0.6.4_wh5fe4zts7a6lu4f7oeon3yvh4
+      wagmi: link:../../packages/react
       web-vitals: 2.1.4
 
   examples/next:
@@ -204,7 +204,7 @@ importers:
       next: 12.2.0_ef5jwxihqo6n7gxfmzogljlgcm
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
-      wagmi: 0.6.4_wh5fe4zts7a6lu4f7oeon3yvh4
+      wagmi: link:../../packages/react
     devDependencies:
       '@types/node': 17.0.31
       '@types/react': 18.0.9
@@ -243,7 +243,7 @@ importers:
       react-dom: 18.1.0_react@18.1.0
       remix: 1.6.3
       safe-event-emitter: 1.0.1
-      wagmi: 0.6.4_wh5fe4zts7a6lu4f7oeon3yvh4
+      wagmi: link:../../packages/react
     devDependencies:
       '@remix-run/dev': 1.6.3_qjnn6vzvj4tebce62z3xdnrjfq
       '@types/react': 18.0.9
@@ -273,7 +273,7 @@ importers:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       util: 0.12.4
-      wagmi: 0.6.4_wh5fe4zts7a6lu4f7oeon3yvh4
+      wagmi: link:../../packages/react
     devDependencies:
       '@types/react': 18.0.9
       '@types/react-dom': 18.0.3
@@ -320,7 +320,7 @@ importers:
       '@tanstack/query-sync-storage-persister': 4.0.10
       '@tanstack/react-query': 4.0.10_ef5jwxihqo6n7gxfmzogljlgcm
       '@tanstack/react-query-persist-client': 4.0.10
-      '@wagmi/core': 0.5.4_ijp5ivuv2hbgmzo67gbr32bvuq
+      '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.7.8
       use-sync-external-store: 1.2.0_react@18.1.0
     devDependencies:
@@ -4429,6 +4429,7 @@ packages:
       - '@babel/core'
       - encoding
       - supports-color
+    dev: true
 
   /@csstools/normalize.css/12.0.0:
     resolution: {integrity: sha512-M0qqxAcwCsIVfpFQSlGN5XjXWu8l5JDZN+fPt1LeW5SZexQTgnaEvgXAY+CeygRw0EeppWHi12JxESWiWrB0Sg==}
@@ -7220,50 +7221,6 @@ packages:
     dependencies:
       sirv: 2.0.2
     dev: true
-
-  /@wagmi/core/0.5.4_ijp5ivuv2hbgmzo67gbr32bvuq:
-    resolution: {integrity: sha512-EisAQTXyglnfzALHRnI8rSXlt95O3KNgBN4fHOQvYj6sBOsp/t9ooaqMIbqn4v5xMJSjmYgnQH1J5InQOcTCNg==}
-    peerDependencies:
-      '@coinbase/wallet-sdk': '>=3.3.0'
-      '@walletconnect/ethereum-provider': '>=1.7.5'
-      ethers: '>=5.5.1'
-    peerDependenciesMeta:
-      '@coinbase/wallet-sdk':
-        optional: true
-      '@walletconnect/ethereum-provider':
-        optional: true
-    dependencies:
-      '@coinbase/wallet-sdk': 3.3.0
-      '@walletconnect/ethereum-provider': 1.7.8
-      ethers: 5.7.0
-      eventemitter3: 4.0.7
-      zustand: 4.0.0_react@18.1.0
-    transitivePeerDependencies:
-      - immer
-      - react
-    dev: false
-
-  /@wagmi/core/0.5.4_imz3rrcsuzfoak6ggzmkgqaypm:
-    resolution: {integrity: sha512-EisAQTXyglnfzALHRnI8rSXlt95O3KNgBN4fHOQvYj6sBOsp/t9ooaqMIbqn4v5xMJSjmYgnQH1J5InQOcTCNg==}
-    peerDependencies:
-      '@coinbase/wallet-sdk': '>=3.3.0'
-      '@walletconnect/ethereum-provider': '>=1.7.5'
-      ethers: '>=5.5.1'
-    peerDependenciesMeta:
-      '@coinbase/wallet-sdk':
-        optional: true
-      '@walletconnect/ethereum-provider':
-        optional: true
-    dependencies:
-      '@coinbase/wallet-sdk': 3.4.1
-      '@walletconnect/ethereum-provider': 1.7.8
-      ethers: 5.7.0
-      eventemitter3: 4.0.7
-      zustand: 4.0.0_react@18.1.0
-    transitivePeerDependencies:
-      - immer
-      - react
-    dev: false
 
   /@walletconnect/browser-utils/1.7.8:
     resolution: {integrity: sha512-iCL0XCWOZaABIc0lqA79Vyaybr3z26nt8mxiwvfrG8oaKUf5Y21Of4dj+wIXQ4Hhblre6SgDlU0Ffb39+1THOw==}
@@ -15415,12 +15372,12 @@ packages:
     resolution: {integrity: sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+    dev: true
 
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-    dev: true
 
   /nanomatch/1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
@@ -16477,25 +16434,14 @@ packages:
       postcss: 8.4.12
     dev: false
 
-  /postcss-js/4.0.0_postcss@8.4.12:
+  /postcss-js/4.0.0_postcss@8.4.14:
     resolution: {integrity: sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==}
     engines: {node: ^12 || ^14 || >= 16}
     peerDependencies:
       postcss: ^8.3.3
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.12
-    dev: false
-
-  /postcss-js/4.0.0_postcss@8.4.13:
-    resolution: {integrity: sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==}
-    engines: {node: ^12 || ^14 || >= 16}
-    peerDependencies:
-      postcss: ^8.3.3
-    dependencies:
-      camelcase-css: 2.0.1
-      postcss: 8.4.13
-    dev: true
+      postcss: 8.4.14
 
   /postcss-lab-function/4.2.0_postcss@8.4.12:
     resolution: {integrity: sha512-Zb1EO9DGYfa3CP8LhINHCcTTCTLI+R3t7AX2mKsDzdgVQ/GkCpHOTgOr6HBHslP7XDdVbqgHW5vvRPMdVANQ8w==}
@@ -16508,7 +16454,7 @@ packages:
       postcss-value-parser: 4.2.0
     dev: false
 
-  /postcss-load-config/3.1.4_postcss@8.4.12:
+  /postcss-load-config/3.1.4_postcss@8.4.14:
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
     engines: {node: '>= 10'}
     peerDependencies:
@@ -16521,26 +16467,8 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.0.5
-      postcss: 8.4.12
+      postcss: 8.4.14
       yaml: 1.10.2
-    dev: false
-
-  /postcss-load-config/3.1.4_postcss@8.4.13:
-    resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
-    engines: {node: '>= 10'}
-    peerDependencies:
-      postcss: '>=8.0.9'
-      ts-node: '>=9.0.0'
-    peerDependenciesMeta:
-      postcss:
-        optional: true
-      ts-node:
-        optional: true
-    dependencies:
-      lilconfig: 2.0.5
-      postcss: 8.4.13
-      yaml: 1.10.2
-    dev: true
 
   /postcss-loader/6.2.1_ophkbroklgd6jdvupnp5h6xq4i:
     resolution: {integrity: sha512-WbbYpmAaKcux/P66bZ40bpWsBucjx/TTgVVzRZ9yUO8yQfVBlameJ0ZGVaPfH64hNSBh63a+ICP5nqOpBA0w+Q==}
@@ -16683,25 +16611,14 @@ packages:
       postcss: 8.4.12
     dev: false
 
-  /postcss-nested/5.0.6_postcss@8.4.12:
+  /postcss-nested/5.0.6_postcss@8.4.14:
     resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.12
+      postcss: 8.4.14
       postcss-selector-parser: 6.0.10
-    dev: false
-
-  /postcss-nested/5.0.6_postcss@8.4.13:
-    resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
-    engines: {node: '>=12.0'}
-    peerDependencies:
-      postcss: ^8.2.14
-    dependencies:
-      postcss: 8.4.13
-      postcss-selector-parser: 6.0.10
-    dev: true
 
   /postcss-nesting/10.1.4_postcss@8.4.12:
     resolution: {integrity: sha512-2ixdQ59ik/Gt1+oPHiI1kHdwEI8lLKEmui9B1nl6163ANLC+GewQn7fXMxJF2JSb4i2MKL96GU8fIiQztK4TTA==}
@@ -17025,13 +16942,12 @@ packages:
       nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
-    dev: true
 
   /postcss/8.4.5:
     resolution: {integrity: sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==}
     engines: {node: ^10 || ^12 || >=14}
     dependencies:
-      nanoid: 3.3.3
+      nanoid: 3.3.4
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
@@ -17288,12 +17204,6 @@ packages:
   /react-dev-utils/12.0.1_a3uklltdpldphvn3k4mxkgnmza:
     resolution: {integrity: sha512-84Ivxmr17KjUupyqzFode6xKhjwuEJDROWKJy/BthkL7Wn6NJ8h4WE6k/exAv6ImS+0oZLRRW5j/aINMHyeGeQ==}
     engines: {node: '>=14'}
-    peerDependencies:
-      typescript: '>=2.7'
-      webpack: '>=4'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
     dependencies:
       '@babel/code-frame': 7.16.7
       address: 1.2.0
@@ -17324,7 +17234,9 @@ packages:
     transitivePeerDependencies:
       - eslint
       - supports-color
+      - typescript
       - vue-template-compiler
+      - webpack
     dev: false
 
   /react-dom/17.0.2_react@18.1.0:
@@ -17453,7 +17365,7 @@ packages:
       semver: 7.3.7
       source-map-loader: 3.0.1_webpack@5.72.0
       style-loader: 3.3.1_webpack@5.72.0
-      tailwindcss: 3.0.24_postcss@8.4.12
+      tailwindcss: 3.0.24
       terser-webpack-plugin: 5.3.1_webpack@5.72.0
       typescript: 4.6.4
       webpack: 5.72.0
@@ -19052,12 +18964,10 @@ packages:
       uuid: 8.3.2
     dev: true
 
-  /tailwindcss/3.0.24_postcss@8.4.12:
+  /tailwindcss/3.0.24:
     resolution: {integrity: sha512-H3uMmZNWzG6aqmg9q07ZIRNIawoiEcNFKDfL+YzOPuPsXuDXxJxB9icqzLgdzKNwjG3SAro2h9SYav8ewXNgig==}
     engines: {node: '>=12.13.0'}
     hasBin: true
-    peerDependencies:
-      postcss: ^8.0.9
     dependencies:
       arg: 5.0.1
       chokidar: 3.5.3
@@ -19072,49 +18982,16 @@ packages:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
-      postcss: 8.4.12
-      postcss-js: 4.0.0_postcss@8.4.12
-      postcss-load-config: 3.1.4_postcss@8.4.12
-      postcss-nested: 5.0.6_postcss@8.4.12
+      postcss: 8.4.14
+      postcss-js: 4.0.0_postcss@8.4.14
+      postcss-load-config: 3.1.4_postcss@8.4.14
+      postcss-nested: 5.0.6_postcss@8.4.14
       postcss-selector-parser: 6.0.10
       postcss-value-parser: 4.2.0
       quick-lru: 5.1.1
       resolve: 1.22.0
     transitivePeerDependencies:
       - ts-node
-    dev: false
-
-  /tailwindcss/3.0.24_postcss@8.4.13:
-    resolution: {integrity: sha512-H3uMmZNWzG6aqmg9q07ZIRNIawoiEcNFKDfL+YzOPuPsXuDXxJxB9icqzLgdzKNwjG3SAro2h9SYav8ewXNgig==}
-    engines: {node: '>=12.13.0'}
-    hasBin: true
-    peerDependencies:
-      postcss: ^8.0.9
-    dependencies:
-      arg: 5.0.1
-      chokidar: 3.5.3
-      color-name: 1.1.4
-      detective: 5.2.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.2.11
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      lilconfig: 2.0.5
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.0.0
-      postcss: 8.4.13
-      postcss-js: 4.0.0_postcss@8.4.13
-      postcss-load-config: 3.1.4_postcss@8.4.13
-      postcss-nested: 5.0.6_postcss@8.4.13
-      postcss-selector-parser: 6.0.10
-      postcss-value-parser: 4.2.0
-      quick-lru: 5.1.1
-      resolve: 1.22.0
-    transitivePeerDependencies:
-      - ts-node
-    dev: true
 
   /tapable/1.1.3:
     resolution: {integrity: sha512-4WK/bYZmj8xLr+HUCODHGF1ZFzsYffasLUgEiMBY4fgtltdO6B4WJtlSbPaDTLpYTcGVwM2qLnFTICEcNxs3kA==}
@@ -20010,33 +19887,6 @@ packages:
       xml-name-validator: 4.0.0
     dev: true
 
-  /wagmi/0.6.4_wh5fe4zts7a6lu4f7oeon3yvh4:
-    resolution: {integrity: sha512-obP1t+nfdfB0Y7eIVPrpWw8tVftF5HHdtwi214En7yubuU5cbV+AMkI8z8Mj0NteHo805frShnss9L1jzMqNuQ==}
-    peerDependencies:
-      ethers: '>=5.5.1'
-      react: '>=17.0.0'
-    dependencies:
-      '@coinbase/wallet-sdk': 3.4.1
-      '@tanstack/query-sync-storage-persister': 4.0.10
-      '@tanstack/react-query': 4.0.10_ef5jwxihqo6n7gxfmzogljlgcm
-      '@tanstack/react-query-persist-client': 4.0.10
-      '@wagmi/core': 0.5.4_imz3rrcsuzfoak6ggzmkgqaypm
-      '@walletconnect/ethereum-provider': 1.7.8
-      ethers: 5.7.0
-      react: 18.1.0
-      use-sync-external-store: 1.2.0_react@18.1.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - bufferutil
-      - debug
-      - encoding
-      - immer
-      - react-dom
-      - react-native
-      - supports-color
-      - utf-8-validate
-    dev: false
-
   /walker/1.0.8:
     resolution: {integrity: sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==}
     dependencies:
@@ -20805,22 +20655,6 @@ packages:
         optional: true
     dependencies:
       use-sync-external-store: 1.2.0
-    dev: false
-
-  /zustand/4.0.0_react@18.1.0:
-    resolution: {integrity: sha512-OrsfQTnRXF1LZ9/vR/IqN9ws5EXUhb149xmPjErZnUrkgxS/gAHGy2dPNIVkVvoxrVe1sIydn4JjF0dYHmGeeQ==}
-    engines: {node: '>=12.7.0'}
-    peerDependencies:
-      immer: '>=9.0'
-      react: '>=16.8'
-    peerDependenciesMeta:
-      immer:
-        optional: true
-      react:
-        optional: true
-    dependencies:
-      react: 18.1.0
-      use-sync-external-store: 1.2.0_react@18.1.0
     dev: false
 
   /zwitch/2.0.2:
