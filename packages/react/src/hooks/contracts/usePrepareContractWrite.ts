@@ -1,8 +1,8 @@
-import { hashQueryKey } from '@tanstack/react-query'
 import {
   FetchSignerResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
+  minimizeContractInterface,
   prepareWriteContract,
 } from '@wagmi/core'
 import { providers } from 'ethers'
@@ -28,10 +28,7 @@ export const queryKey = (
     functionName,
     overrides,
   }: UsePrepareContractWriteArgs,
-  {
-    chainId,
-    signer,
-  }: { chainId?: number; signer?: FetchSignerResult<providers.JsonRpcSigner> },
+  { chainId, signerAddress }: { chainId?: number; signerAddress?: string },
 ) =>
   [
     {
@@ -39,18 +36,15 @@ export const queryKey = (
       addressOrName,
       args,
       chainId,
-      contractInterface,
+      contractInterface: minimizeContractInterface({
+        contractInterface,
+        functionName,
+      }),
       functionName,
       overrides,
-      signer,
+      signerAddress,
     },
   ] as const
-
-const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { contractInterface, signer, ...rest } = queryKey_
-  return hashQueryKey([rest, signer?._address])
-}
 
 const queryFn =
   ({ signer }: { signer?: FetchSignerResult }) =>
@@ -111,13 +105,12 @@ export function usePrepareContractWrite({
         args,
         overrides,
       },
-      { chainId, signer },
+      { chainId, signerAddress: signer?._address },
     ),
     queryFn({ signer }),
     {
       cacheTime,
       enabled: Boolean(enabled && signer),
-      queryKeyHashFn,
       staleTime,
       suspense,
       onError,

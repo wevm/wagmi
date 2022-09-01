@@ -1,8 +1,8 @@
-import { hashQueryKey } from '@tanstack/react-query'
 import {
   ReadContractsConfig,
   ReadContractsResult,
   deepEqual,
+  minimizeContractInterface,
   parseContractResult,
   readContracts,
 } from '@wagmi/core'
@@ -30,21 +30,16 @@ export const queryKey = ([
       allowFailure,
       blockNumber,
       chainId,
-      contracts,
+      contracts: contracts.map((contract) => ({
+        ...contract,
+        contractInterface: minimizeContractInterface({
+          contractInterface: contract.contractInterface,
+          functionName: contract.functionName,
+        }),
+      })),
       overrides,
     },
   ] as const
-
-const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
-  const { contracts, ...rest } = queryKey_
-  const contracts_ = contracts?.map((contract) => {
-    // Exclude the contract interface from the serialized query key.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { contractInterface, ...rest } = contract
-    return rest
-  })
-  return hashQueryKey([{ contracts: contracts_, ...rest }])
-}
 
 const queryFn = ({
   queryKey: [{ allowFailure, contracts, overrides }],
@@ -101,7 +96,6 @@ export function useContractReads({
     enabled,
     isDataEqual,
     keepPreviousData,
-    queryKeyHashFn,
     staleTime,
     select: (data) => {
       const result = data.map((data, i) =>
