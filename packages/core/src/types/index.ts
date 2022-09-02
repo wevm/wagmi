@@ -119,6 +119,7 @@ type InjectedProviderFlags = {
   isCoinbaseWallet?: true
   isExodus?: true
   isFrame?: true
+  isMathWallet?: true
   isMetaMask?: true
   isOneInchAndroidWallet?: true
   isOneInchIOSWallet?: true
