@@ -12,7 +12,7 @@ describe('getWebSocketProvider', () => {
       webSocketProvider: getWebSocketProvider_,
     })
     expect(getWebSocketProvider()).toMatchInlineSnapshot(
-      `"<WebSocketProvider network={31337} />"`,
+      '"<WebSocketProvider network={1} />"',
     )
   })
 

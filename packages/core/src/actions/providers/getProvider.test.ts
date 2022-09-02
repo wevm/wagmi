@@ -6,9 +6,7 @@ import { getProvider } from './getProvider'
 describe('getProvider', () => {
   it('default', async () => {
     setupClient()
-    expect(getProvider()).toMatchInlineSnapshot(
-      `"<Provider network={31337} />"`,
-    )
+    expect(getProvider()).toMatchInlineSnapshot('"<Provider network={1} />"')
   })
 
   describe('args', () => {
