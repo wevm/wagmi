@@ -6,15 +6,15 @@ import { useChainId } from './useChainId'
 describe('useChainId', () => {
   it('mounts', async () => {
     const { result } = renderHook(() => useChainId())
-    expect(result.current).toMatchInlineSnapshot(`31337`)
+    expect(result.current).toMatchInlineSnapshot('1')
   })
 
   describe('args', () => {
     describe.each([
-      { chainId: undefined, expected: 31337 },
+      { chainId: undefined, expected: 1 },
       { chainId: 1, expected: 1 },
       { chainId: 4, expected: 4 },
-      { chainId: 12345, expected: 31337 },
+      { chainId: 12345, expected: 1 },
     ])('useChainId({ chainId: $chainId })', ({ chainId, expected }) => {
       it(`returns ${expected}`, () => {
         const { result } = renderHook(() => useChainId({ chainId }))

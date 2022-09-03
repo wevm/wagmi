@@ -44,7 +44,7 @@ describe('readContracts', () => {
     expect(spy).toHaveBeenCalledWith({
       allowFailure: true,
       contracts,
-      chainId: 31337,
+      chainId: 1,
       overrides: undefined,
     })
     expect(results).toMatchInlineSnapshot(`

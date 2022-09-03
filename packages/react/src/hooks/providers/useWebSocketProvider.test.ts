@@ -17,7 +17,7 @@ describe('useWebSocketProvider', () => {
       initialProps: { client },
     })
     expect(result.current).toMatchInlineSnapshot(
-      `"<WebSocketProvider network={31337} />"`,
+      '"<WebSocketProvider network={1} />"',
     )
   })
 

@@ -38,7 +38,7 @@ describe('fetchToken', () => {
             address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
           })
         } catch (error) {
-          expect((<Error>error).message).toContain('call revert exception')
+          expect((<Error>error).message).toContain('returned an empty response')
         }
       })
     })
