@@ -22,7 +22,7 @@ export function Header({ showGitcoinBanner }: Props) {
       {showGitcoinBanner && (
         <div className="mb-4">
           <Callout emoji="🚀">
-            wagmi is participating in Gitcoin Grant Round 14 until June 23.
+            wagmi is participating in Gitcoin Grant Round 15 until September 22.
             Please consider supporting development. Funds will be matched with
             Quadratic Funding. Go{' '}
             <a

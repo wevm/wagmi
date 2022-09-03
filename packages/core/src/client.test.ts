@@ -138,7 +138,7 @@ describe('createClient', () => {
           provider: getProvider(),
         })
         expect(client.provider).toMatchInlineSnapshot(
-          `"<Provider network={31337} />"`,
+          '"<Provider network={1} />"',
         )
       })
     })
@@ -189,7 +189,7 @@ describe('createClient', () => {
         })
         await client.webSocketProvider?.destroy()
         expect(client.webSocketProvider).toMatchInlineSnapshot(
-          `"<WebSocketProvider network={31337} />"`,
+          '"<WebSocketProvider network={1} />"',
         )
       })
     })

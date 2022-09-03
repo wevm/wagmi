@@ -21,7 +21,7 @@ describe('watchProvider', () => {
     expect(providers).toMatchInlineSnapshot(`
       [
         "<Provider network={1} />",
-        "<Provider network={31337} />",
+        "<Provider network={1} />",
         "<Provider network={1} />",
       ]
     `)

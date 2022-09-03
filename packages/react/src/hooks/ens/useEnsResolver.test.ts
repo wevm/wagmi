@@ -19,7 +19,7 @@ describe('useEnsResolver', () => {
           "_resolvedAddress": undefined,
           "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
           "name": "imhiring.eth",
-          "provider": "<Provider network={31337} />",
+          "provider": "<Provider network={1} />",
         },
         "error": null,
         "fetchStatus": "idle",
@@ -115,7 +115,7 @@ describe('useEnsResolver', () => {
               "_resolvedAddress": undefined,
               "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
               "name": "awkweb.eth",
-              "provider": "<Provider network={31337} />",
+              "provider": "<Provider network={1} />",
             },
             "error": null,
             "fetchStatus": "idle",
@@ -174,7 +174,7 @@ describe('useEnsResolver', () => {
             "_resolvedAddress": undefined,
             "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
             "name": "worm.eth",
-            "provider": "<Provider network={31337} />",
+            "provider": "<Provider network={1} />",
           }
         `)
       })
