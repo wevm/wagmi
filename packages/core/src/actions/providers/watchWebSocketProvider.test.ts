@@ -27,7 +27,7 @@ describe('watchWebSocketProvider', () => {
     expect(providers).toMatchInlineSnapshot(`
       [
         "<WebSocketProvider network={1} />",
-        "<WebSocketProvider network={31337} />",
+        "<WebSocketProvider network={1} />",
         "<WebSocketProvider network={1} />",
       ]
     `)

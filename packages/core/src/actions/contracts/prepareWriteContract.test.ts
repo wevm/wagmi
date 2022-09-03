@@ -60,10 +60,10 @@ describe('prepareWriteContract', () => {
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-              "Function \\"wagmi\\" on contract \\"0xaf0326d92b97df1221759476b072abfd8084f9be\\" does not exist.
+        "Function \\"wagmi\\" on contract \\"0xaf0326d92b97df1221759476b072abfd8084f9be\\" does not exist.
 
-              Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract"
-            `)
+        Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract"
+      `)
     })
   })
 })

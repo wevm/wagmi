@@ -55,10 +55,7 @@ describe('getNetwork', () => {
             },
             "network": "homestead",
             "rpcUrls": {
-              "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-              "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              "infura": "https://mainnet.infura.io/v3",
-              "public": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+              "default": "http://127.0.0.1:8545",
             },
             "unsupported": false,
           },

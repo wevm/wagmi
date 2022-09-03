@@ -15,9 +15,7 @@ function useProviderWithConnectAndNetwork(config: UseProviderArgs = {}) {
 describe('useProvider', () => {
   it('mounts', () => {
     const { result } = renderHook(() => useProvider())
-    expect(result.current).toMatchInlineSnapshot(
-      `"<Provider network={31337} />"`,
-    )
+    expect(result.current).toMatchInlineSnapshot('"<Provider network={1} />"')
   })
 
   describe('configuration', () => {
@@ -41,7 +39,7 @@ describe('useProvider', () => {
       const utils = renderHook(() => useProviderWithConnectAndNetwork())
       const { result } = utils
       expect(result.current.provider).toMatchInlineSnapshot(
-        `"<Provider network={31337} />"`,
+        '"<Provider network={1} />"',
       )
 
       await actConnect({ utils })

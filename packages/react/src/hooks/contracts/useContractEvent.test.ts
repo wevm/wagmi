@@ -85,8 +85,7 @@ describe('useContractEvent', () => {
         await waitFor(() =>
           expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
         )
-
-        expect(listener).toHaveBeenCalled()
+        await waitFor(() => expect(listener).toHaveBeenCalled())
       })
     })
   })
