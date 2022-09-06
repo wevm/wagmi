@@ -115,6 +115,7 @@ type WatchAssetParams = {
 }
 
 type InjectedProviderFlags = {
+  isBitKeep?: true
   isBraveWallet?: true
   isCoinbaseWallet?: true
   isExodus?: true
