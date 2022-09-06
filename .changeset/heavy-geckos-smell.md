@@ -2,4 +2,4 @@
 '@wagmi/core': patch
 ---
 
-- Added support for `BitKeep`
+Added BitKeep and Math Wallet to injected flags
