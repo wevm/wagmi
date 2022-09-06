@@ -6,6 +6,11 @@ const sponsors = {
     light:
       'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-light.svg',
   },
+  context: {
+    dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/context-dark.svg',
+    light:
+      'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/context-light.svg',
+  },
 } as const
 
 export function Sponsors() {
@@ -18,6 +23,16 @@ export function Sponsors() {
           <img
             alt="family logo"
             src={sponsors.family[mode]}
+            width="auto"
+            height="35"
+          />
+        </picture>
+      </a>
+      <a href="https://twitter.com/context">
+        <picture>
+          <img
+            alt="context logo"
+            src={sponsors.context[mode]}
             width="auto"
             height="35"
           />
