@@ -2,7 +2,6 @@ import {
   ReadContractConfig,
   ReadContractResult,
   deepEqual,
-  minimizeContractInterface,
   parseContractResult,
   readContract,
 } from '@wagmi/core'
@@ -22,9 +21,9 @@ type UseContractReadArgs = ReadContractConfig & {
 export type UseContractReadConfig = QueryConfig<ReadContractResult, Error>
 
 export const queryKey = ([
-  { addressOrName, args, chainId, contractInterface, functionName, overrides },
+  { addressOrName, args, chainId, functionName, overrides },
   { blockNumber },
-]: [ReadContractConfig, { blockNumber?: number }]) =>
+]: [Omit<ReadContractConfig, 'contractInterface'>, { blockNumber?: number }]) =>
   [
     {
       entity: 'readContract',
@@ -32,38 +31,27 @@ export const queryKey = ([
       args,
       blockNumber,
       chainId,
-      contractInterface: minimizeContractInterface({
-        contractInterface,
-        functionName,
-      }),
       functionName,
       overrides,
     },
   ] as const
 
-const queryFn = async ({
-  queryKey: [
-    {
-      addressOrName,
-      args,
-      chainId,
-      contractInterface,
-      functionName,
-      overrides,
-    },
-  ],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  return (
-    (await readContract({
-      addressOrName,
-      args,
-      chainId,
-      contractInterface,
-      functionName,
-      overrides,
-    })) ?? null
-  )
-}
+const queryFn =
+  ({ contractInterface }: Pick<ReadContractConfig, 'contractInterface'>) =>
+  async ({
+    queryKey: [{ addressOrName, args, chainId, functionName, overrides }],
+  }: QueryFunctionArgs<typeof queryKey>) => {
+    return (
+      (await readContract({
+        addressOrName,
+        args,
+        chainId,
+        contractInterface,
+        functionName,
+        overrides,
+      })) ?? null
+    )
+  }
 
 export function useContractRead({
   addressOrName,
@@ -97,7 +85,6 @@ export function useContractRead({
           addressOrName,
           args,
           chainId,
-          contractInterface,
           functionName,
           overrides,
         },
@@ -109,7 +96,6 @@ export function useContractRead({
       blockNumber,
       cacheOnBlock,
       chainId,
-      contractInterface,
       functionName,
       overrides,
     ],
@@ -123,7 +109,7 @@ export function useContractRead({
 
   useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
 
-  return useQuery(queryKey_, queryFn, {
+  return useQuery(queryKey_, queryFn({ contractInterface }), {
     cacheTime,
     enabled,
     isDataEqual,

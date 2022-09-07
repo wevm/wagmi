@@ -2,7 +2,6 @@ import {
   FetchSignerResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
-  minimizeContractInterface,
   prepareWriteContract,
 } from '@wagmi/core'
 import { providers } from 'ethers'
@@ -24,10 +23,9 @@ export const queryKey = (
   {
     args,
     addressOrName,
-    contractInterface,
     functionName,
     overrides,
-  }: UsePrepareContractWriteArgs,
+  }: Omit<UsePrepareContractWriteArgs, 'contractInterface'>,
   { chainId, signerAddress }: { chainId?: number; signerAddress?: string },
 ) =>
   [
@@ -36,10 +34,6 @@ export const queryKey = (
       addressOrName,
       args,
       chainId,
-      contractInterface: minimizeContractInterface({
-        contractInterface,
-        functionName,
-      }),
       functionName,
       overrides,
       signerAddress,
@@ -47,11 +41,15 @@ export const queryKey = (
   ] as const
 
 const queryFn =
-  ({ signer }: { signer?: FetchSignerResult }) =>
   ({
-    queryKey: [
-      { args, addressOrName, contractInterface, functionName, overrides },
-    ],
+    contractInterface,
+    signer,
+  }: {
+    contractInterface: UsePrepareContractWriteArgs['contractInterface']
+    signer?: FetchSignerResult
+  }) =>
+  ({
+    queryKey: [{ args, addressOrName, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     return prepareWriteContract({
       args,
@@ -100,14 +98,13 @@ export function usePrepareContractWrite({
     queryKey(
       {
         addressOrName,
-        contractInterface,
         functionName,
         args,
         overrides,
       },
       { chainId, signerAddress: signer?._address },
     ),
-    queryFn({ signer }),
+    queryFn({ contractInterface, signer }),
     {
       cacheTime,
       enabled: Boolean(enabled && signer),
