@@ -4,7 +4,11 @@
 
 ### Patch Changes
 
-- [#904](https://github.com/wagmi-dev/wagmi/pull/904) [`c231058`](https://github.com/wagmi-dev/wagmi/commit/c23105850f335f8798031e14c7098b7dee8c2975) Thanks [@jxom](https://github.com/jxom)! - Minimized `contractInterface` in query keys
+- [#912](https://github.com/wagmi-dev/wagmi/pull/912) [`e529e12`](https://github.com/wagmi-dev/wagmi/commit/e529e125c713ed3ef24a59c6bf226fe4deee7ac9) Thanks [@zouhangwithsweet](https://github.com/zouhangwithsweet)! - Added BitKeep to injected flags
+
+- [#912](https://github.com/wagmi-dev/wagmi/pull/910) Thanks [@mytangying](https://github.com/zouhangwithsweet)! - Added MathWallet to injected flags
+
+- [#904](https://github.com/wagmi-dev/wagmi/pull/904) [`c231058`](https://github.com/wagmi-dev/wagmi/commit/c23105850f335f8798031e14c7098b7dee8c2975) Thanks [@jxom](https://github.com/jxom)! - Removed `contractInterface` & `signer` from persisted query keys.
 
 - Updated dependencies [[`e529e12`](https://github.com/wagmi-dev/wagmi/commit/e529e125c713ed3ef24a59c6bf226fe4deee7ac9), [`c231058`](https://github.com/wagmi-dev/wagmi/commit/c23105850f335f8798031e14c7098b7dee8c2975)]:
   - @wagmi/core@0.5.5
