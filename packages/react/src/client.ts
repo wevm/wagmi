@@ -12,6 +12,7 @@ import {
   createClient as createCoreClient,
 } from '@wagmi/core'
 
+import { queryKey as signerQueryKey } from './hooks/accounts/useSigner'
 import { deserialize, serialize } from './utils'
 
 export type CreateClientConfig<
@@ -54,7 +55,9 @@ export function createClient<
       queryClient,
       persister,
       dehydrateOptions: {
-        shouldDehydrateQuery: (query) => query.cacheTime !== 0,
+        shouldDehydrateQuery: (query) =>
+          query.cacheTime !== 0 &&
+          query.queryHash !== JSON.stringify(signerQueryKey()),
       },
     })
   return Object.assign(client, { queryClient })

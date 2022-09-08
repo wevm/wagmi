@@ -167,6 +167,7 @@ export type {
 export {
   configureChains,
   deepEqual,
+  minimizeContractInterface,
   normalizeChainId,
   parseContractResult,
 } from './utils'
