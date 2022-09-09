@@ -1,4 +1,4 @@
-import { BigNumber, logger } from 'ethers/lib/ethers'
+import { BigNumber, logger } from 'ethers'
 import { Logger, formatUnits, isAddress } from 'ethers/lib/utils'
 
 import { getClient } from '../../client'

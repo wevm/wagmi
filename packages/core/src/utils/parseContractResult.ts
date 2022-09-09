@@ -1,4 +1,4 @@
-import { Contract, ContractInterface } from 'ethers/lib/ethers'
+import { Contract, ContractInterface } from 'ethers'
 import { Result } from 'ethers/lib/utils'
 
 function isPlainArray(value: unknown) {
