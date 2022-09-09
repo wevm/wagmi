@@ -1,5 +1,5 @@
 import { BigNumberish, providers } from 'ethers'
-import { formatUnits } from 'ethers/lib/utils'
+import { formatUnits } from 'ethers/lib/utils.js'
 
 import { Unit } from '../../types'
 import { getProvider } from '../providers'

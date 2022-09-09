@@ -1,4 +1,4 @@
-import { Contract } from 'ethers/lib/ethers'
+import { Contract } from 'ethers'
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'

@@ -1,5 +1,5 @@
-import { CallOverrides, Contract } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
+import { CallOverrides, Contract } from 'ethers'
+import { Result } from 'ethers/lib/utils.js'
 
 import { getProvider } from '../providers'
 import { GetContractArgs, getContract } from './getContract'

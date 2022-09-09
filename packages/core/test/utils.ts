@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { Contract, Wallet } from 'ethers/lib/ethers'
+import { Contract, Wallet } from 'ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
 

@@ -1,5 +1,5 @@
-import { CallOverrides } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
+import { CallOverrides } from 'ethers'
+import { Result } from 'ethers/lib/utils.js'
 
 import { multicallInterface } from '../../constants'
 import {

@@ -1,5 +1,5 @@
 import { Box, Button, Input, Stack, Text } from 'degen'
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from 'ethers/lib/utils.js'
 import * as React from 'react'
 import {
   useAccount,
@@ -85,8 +85,8 @@ export function SendTransaction() {
               {isLoading
                 ? 'Check wallet...'
                 : isConfirming
-                ? 'Sending...'
-                : 'Send'}
+                  ? 'Sending...'
+                  : 'Send'}
             </Button>
             {isSuccess && (
               <Text>
