@@ -145,27 +145,112 @@ export class ContractMethodNoResultError extends Error {
 
   constructor({
     addressOrName,
+    args,
     chainId,
     functionName,
   }: {
     addressOrName: string
-    chainId?: number
+    args: any
+    chainId: number
     functionName: string
   }) {
-    const { chains, network } = getProvider()
-    const chain = chains?.find(({ id }) => id === (chainId || network.chainId))
-    const blockExplorer = chain?.blockExplorers?.default
     super(
       [
-        `Function "${functionName}" on contract "${addressOrName}" returned an empty response.`,
+        'Contract read returned an empty response. This could be due to any of the following:',
+        `- The contract does not have the function "${functionName}",`,
+        '- The parameters passed to the contract function may be invalid, or',
+        '- The address is not a contract.',
         '',
-        `Are you sure the function "${functionName}" exists on this contract?`,
-        ...(blockExplorer
-          ? [
-              '',
-              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${addressOrName}#readContract`,
-            ]
-          : []),
+        `Config:`,
+        JSON.stringify(
+          {
+            addressOrName,
+            contractInterface: '...',
+            functionName,
+            chainId,
+            args,
+          },
+          null,
+          2,
+        ),
+      ].join('\n'),
+    )
+  }
+}
+
+export class ContractMethodRevertedError extends Error {
+  name = 'ContractMethodRevertedError'
+
+  constructor({
+    addressOrName,
+    args,
+    chainId,
+    functionName,
+    errorMessage,
+  }: {
+    addressOrName: string
+    args: any
+    chainId: number
+    functionName: string
+    errorMessage: string
+  }) {
+    super(
+      [
+        'Contract method reverted with an error.',
+        '',
+        `Config:`,
+        JSON.stringify(
+          {
+            addressOrName,
+            contractInterface: '...',
+            functionName,
+            chainId,
+            args,
+          },
+          null,
+          2,
+        ),
+        '',
+        `Details: ${errorMessage}`,
+      ].join('\n'),
+    )
+  }
+}
+
+export class ContractResultDecodeError extends Error {
+  name = 'ContractResultDecodeError'
+
+  constructor({
+    addressOrName,
+    args,
+    chainId,
+    functionName,
+    errorMessage,
+  }: {
+    addressOrName: string
+    args: any
+    chainId: number
+    functionName: string
+    errorMessage: string
+  }) {
+    super(
+      [
+        'Failed to decode contract function result.',
+        '',
+        `Config:`,
+        JSON.stringify(
+          {
+            addressOrName,
+            contractInterface: '...',
+            functionName,
+            chainId,
+            args,
+          },
+          null,
+          2,
+        ),
+        '',
+        `Details: ${errorMessage}`,
       ].join('\n'),
     )
   }

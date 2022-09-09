@@ -140,6 +140,8 @@ export {
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
   ContractMethodNoResultError,
+  ContractMethodRevertedError,
+  ContractResultDecodeError,
   ProviderChainsNotFound,
   ProviderRpcError,
   ResourceUnavailableError,

@@ -6,6 +6,7 @@ import { Balance } from './Balance'
 import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
 import { ReadContracts } from './ReadContracts'
+import { ReadContractsInfinite } from './ReadContractsInfinite'
 import { SendTransaction } from './SendTransaction'
 import { SendTransactionPrepared } from './SendTransactionPrepared'
 import { SignMessage } from './SignMessage'
@@ -46,8 +47,6 @@ export const Account = () => {
         )}
       </div>
 
-      <WriteContractPrepared />
-
       {true && (
         <>
           {false && (
@@ -71,6 +70,9 @@ export const Account = () => {
 
           <h4>Read Contracts</h4>
           <ReadContracts />
+
+          <h4>Read Contracts Infinite</h4>
+          <ReadContractsInfinite />
 
           <h4>Write Contract</h4>
           <WriteContract />

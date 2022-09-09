@@ -5,6 +5,8 @@ import { multicallInterface } from '../../constants'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
+  ContractMethodRevertedError,
+  ContractResultDecodeError,
   ProviderChainsNotFound,
 } from '../../errors'
 import { getProvider } from '../providers'
@@ -70,18 +72,27 @@ export async function multicall<Data extends any[] = Result[]>({
         contractInterface,
       })
       const params = Array.isArray(args) ? args : args ? [args] : []
-      const callData = contract.interface.encodeFunctionData(
-        functionName,
-        params,
-      )
-      if (!contract[functionName])
-        console.warn(
-          `"${functionName}" is not in the interface for contract "${addressOrName}"`,
+      try {
+        const callData = contract.interface.encodeFunctionData(
+          functionName,
+          params,
         )
-      return {
-        target: addressOrName,
-        allowFailure,
-        callData,
+        if (!contract[functionName])
+          console.warn(
+            `"${functionName}" is not in the interface for contract "${addressOrName}"`,
+          )
+        return {
+          target: addressOrName,
+          allowFailure,
+          callData,
+        }
+      } catch (err) {
+        if (!allowFailure) throw err
+        return {
+          target: addressOrName,
+          allowFailure,
+          callData: '0x',
+        }
       }
     },
   )
@@ -90,26 +101,45 @@ export async function multicall<Data extends any[] = Result[]>({
     ...params,
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
-    if (!success) return null
-    const { addressOrName, contractInterface, functionName } = <
-      MulticallContract
-    >contracts[i]
-
-    if (returnData === '0x') {
-      const err = new ContractMethodNoResultError({
-        addressOrName,
-        chainId: chain.id,
-        functionName,
-      })
-      if (!allowFailure) throw err
-      console.warn(err.message)
-      return null
-    }
+    const { addressOrName, contractInterface, functionName, args } = contracts[
+      i
+    ] as MulticallContract
 
     const contract = getContract({
       addressOrName,
       contractInterface,
     })
+
+    if (!success) {
+      let error
+      try {
+        contract.interface.decodeFunctionResult(functionName, returnData)
+      } catch (err) {
+        error = new ContractMethodRevertedError({
+          addressOrName,
+          args,
+          chainId: chain.id,
+          functionName,
+          errorMessage: (<Error>err).message,
+        })
+        if (!allowFailure) throw error
+        console.warn(error.message)
+      }
+      return null
+    }
+
+    if (returnData === '0x') {
+      const error = new ContractMethodNoResultError({
+        addressOrName,
+        args,
+        chainId: chain.id,
+        functionName,
+      })
+      if (!allowFailure) throw error
+      console.warn(error.message)
+      return null
+    }
+
     try {
       const result = contract.interface.decodeFunctionResult(
         functionName,
@@ -117,7 +147,15 @@ export async function multicall<Data extends any[] = Result[]>({
       )
       return Array.isArray(result) && result.length === 1 ? result[0] : result
     } catch (err) {
-      if (!allowFailure) throw err
+      const error = new ContractResultDecodeError({
+        addressOrName,
+        args,
+        chainId: chain.id,
+        functionName,
+        errorMessage: (<Error>err).message,
+      })
+      if (!allowFailure) throw error
+      console.warn(error.message)
       return null
     }
   }) as Data

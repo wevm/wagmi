@@ -67,6 +67,8 @@ it('should expose correct exports', () => {
       "ConnectorNotFoundError",
       "ContractMethodDoesNotExistError",
       "ContractMethodNoResultError",
+      "ContractMethodRevertedError",
+      "ContractResultDecodeError",
       "ProviderChainsNotFound",
       "ProviderRpcError",
       "ResourceUnavailableError",

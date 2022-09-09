@@ -1,9 +1,12 @@
 import { CallOverrides } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
+import { mainnet } from '../../chains'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
+  ContractMethodRevertedError,
+  ContractResultDecodeError,
 } from '../../errors'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
@@ -42,17 +45,17 @@ export async function readContracts<Data extends any[] = Result[]>({
         [chainId]: [...(contracts[chainId] || []), contract],
       }
     }, {})
-    const promises = Object.entries(contractsByChainId).map(
-      ([chainId, contracts]) =>
+    const promises = () =>
+      Object.entries(contractsByChainId).map(([chainId, contracts]) =>
         multicall<Data>({
           allowFailure,
           chainId: parseInt(chainId),
           contracts,
           overrides,
         }),
-    )
+      )
     if (allowFailure) {
-      return (await Promise.allSettled(promises))
+      return (await Promise.allSettled(promises()))
         .map((result) => {
           if (result.status === 'fulfilled') return result.value
           if (result.reason instanceof ChainDoesNotSupportMulticallError) {
@@ -63,18 +66,31 @@ export async function readContracts<Data extends any[] = Result[]>({
         })
         .flat() as Data
     }
-    return (await Promise.all(promises)).flat() as Data
+    return (await Promise.all(promises())).flat() as Data
   } catch (err) {
+    if (err instanceof ContractResultDecodeError) throw err
     if (err instanceof ContractMethodNoResultError) throw err
+    if (err instanceof ContractMethodRevertedError) throw err
 
-    const promises = contracts.map((contract) =>
-      readContract({ ...contract, overrides }),
-    )
+    const promises = () =>
+      contracts.map((contract) => readContract({ ...contract, overrides }))
     if (allowFailure) {
-      return (await Promise.allSettled(promises)).map((result) =>
-        result.status === 'fulfilled' ? result.value : null,
-      ) as Data
+      return (await Promise.allSettled(promises())).map((result, i) => {
+        if (result.status === 'fulfilled') return result.value
+        const { addressOrName, functionName, chainId, args } = contracts[
+          i
+        ] as ReadContractsContract
+        const error = new ContractMethodRevertedError({
+          addressOrName,
+          functionName,
+          chainId: chainId ?? mainnet.id,
+          args,
+          errorMessage: result.reason,
+        })
+        console.warn(error.message)
+        return null
+      }) as Data
     }
-    return (await Promise.all(promises)) as Data
+    return (await Promise.all(promises())) as Data
   }
 }
