@@ -166,7 +166,7 @@ describe('multicall', () => {
         expect(warn).toBeCalled()
         expect(warnMessages).toMatchInlineSnapshot(`
           [
-            "Contract read threw an error.
+            "Contract method reverted with an error.
 
           Config:
           {
@@ -181,7 +181,7 @@ describe('multicall', () => {
           }
 
           Details: call revert exception; VM Exception while processing transaction: reverted with reason string \\"ERC721Enumerable: owner index out of bounds\\" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"tokenOfOwnerByIndex(address,uint256)\\", data=\\"0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002b455243373231456e756d657261626c653a206f776e657220696e646578206f7574206f6620626f756e6473000000000000000000000000000000000000000000\\", errorArgs=[\\"ERC721Enumerable: owner index out of bounds\\"], errorName=\\"Error\\", errorSignature=\\"Error(string)\\", reason=\\"ERC721Enumerable: owner index out of bounds\\", code=CALL_EXCEPTION, version=abi/5.7.0)",
-            "Contract read threw an error.
+            "Contract method reverted with an error.
 
           Config:
           {

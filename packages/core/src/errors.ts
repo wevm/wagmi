@@ -178,8 +178,8 @@ export class ContractMethodNoResultError extends Error {
   }
 }
 
-export class ContractResultDecodeError extends Error {
-  name = 'ContractResultDecodeError'
+export class ContractMethodRevertedError extends Error {
+  name = 'ContractMethodRevertedError'
 
   constructor({
     addressOrName,
@@ -196,7 +196,7 @@ export class ContractResultDecodeError extends Error {
   }) {
     super(
       [
-        'Failed to decode contract function result.',
+        'Contract method reverted with an error.',
         '',
         `Config:`,
         JSON.stringify(
@@ -217,8 +217,8 @@ export class ContractResultDecodeError extends Error {
   }
 }
 
-export class ContractRevertedError extends Error {
-  name = 'ContractRevertedError'
+export class ContractResultDecodeError extends Error {
+  name = 'ContractResultDecodeError'
 
   constructor({
     addressOrName,
@@ -235,7 +235,7 @@ export class ContractRevertedError extends Error {
   }) {
     super(
       [
-        'Contract read threw an error.',
+        'Failed to decode contract function result.',
         '',
         `Config:`,
         JSON.stringify(

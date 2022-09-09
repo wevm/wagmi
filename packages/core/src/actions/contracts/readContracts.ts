@@ -1,13 +1,12 @@
 import { CallOverrides } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
-import { chain } from '../../constants'
-
+import { mainnet } from '../../chains'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
+  ContractMethodRevertedError,
   ContractResultDecodeError,
-  ContractRevertedError,
 } from '../../errors'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
@@ -71,7 +70,7 @@ export async function readContracts<Data extends any[] = Result[]>({
   } catch (err) {
     if (err instanceof ContractResultDecodeError) throw err
     if (err instanceof ContractMethodNoResultError) throw err
-    if (err instanceof ContractRevertedError) throw err
+    if (err instanceof ContractMethodRevertedError) throw err
 
     const promises = () =>
       contracts.map((contract) => readContract({ ...contract, overrides }))
@@ -81,10 +80,10 @@ export async function readContracts<Data extends any[] = Result[]>({
         const { addressOrName, functionName, chainId, args } = contracts[
           i
         ] as ReadContractsContract
-        const error = new ContractRevertedError({
+        const error = new ContractMethodRevertedError({
           addressOrName,
           functionName,
-          chainId: chainId ?? chain.mainnet.id,
+          chainId: chainId ?? mainnet.id,
           args,
           errorMessage: result.reason,
         })

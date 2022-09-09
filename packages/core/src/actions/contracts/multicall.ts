@@ -5,8 +5,8 @@ import { multicallInterface } from '../../constants'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
+  ContractMethodRevertedError,
   ContractResultDecodeError,
-  ContractRevertedError,
   ProviderChainsNotFound,
 } from '../../errors'
 import { getProvider } from '../providers'
@@ -115,7 +115,7 @@ export async function multicall<Data extends any[] = Result[]>({
       try {
         contract.interface.decodeFunctionResult(functionName, returnData)
       } catch (err) {
-        error = new ContractRevertedError({
+        error = new ContractMethodRevertedError({
           addressOrName,
           args,
           chainId: chain.id,
