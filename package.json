@@ -81,5 +81,10 @@
   "engines": {
     "node": ">=16",
     "pnpm": ">=7"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@preconstruct/cli@2.2.1": "patches/@preconstruct__cli@2.2.1.patch"
+    }
   }
 }

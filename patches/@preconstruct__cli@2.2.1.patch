@@ -1,0 +1,835 @@
+diff --git a/cli/dist/cli.cjs.dev.js b/cli/dist/cli.cjs.dev.js
+index 61844e9707af70e4e49858a4beba5531069b1209..ac0322956f61c631dd615f25c09321c1c4e2acfc 100644
+--- a/cli/dist/cli.cjs.dev.js
++++ b/cli/dist/cli.cjs.dev.js
+@@ -234,6 +234,10 @@ class Entrypoint extends Item {
+     this.source = source;
+   }
+ 
++  get hasModuleField() {
++    return this.json.module !== undefined;
++  }
++
+   get name() {
+     return normalizePath(path__default.join(this.package.name, path__default.relative(this.package.directory, this.directory)));
+   }
+@@ -253,7 +257,8 @@ let errors = {
+   fieldMustExistInAllEntrypointsIfExistsDeclinedFixDuringInit: field => `all entrypoints in a package must have the same fields and one entrypoint in this package has a ${field} field but you've declined the fix`,
+   missingBrowserConditionWithFieldPresent: `the exports field is configured and the browser field exists in this package but it is not specified in the preconstruct.exports.envConditions field`,
+   missingBrowserFieldWithConditionPresent: `the exports field is configured and the browser condition is set in preconstruct.exports.envConditions but the field is not present at the top-level`,
+-  noModuleFieldWithExportsField: `when using the exports field, the module field must also be specified`
++  noModuleFieldWithExportsField: `when using the exports field, the module field or type must also be specified`,
++  moduleFieldWithModuleType: `when \`"type": "module"\`, the module field should be redundant, and thus it is not allowed`
+ };
+ let confirms = {
+   writeMainField: createPromptConfirmLoader("preconstruct is going to change the main field in your package.json, are you okay with that?"),
+@@ -315,9 +320,6 @@ function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if
+ function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { _defineProperty$3(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+ 
+ function _defineProperty$3(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+-function getNameForDistForEntrypoint(entrypoint) {
+-  return getDistName(entrypoint.package, entrypoint.name);
+-}
+ let fields = ["version", "description", "main", "module", "umd:main", "browser", "exports"];
+ function setFieldInOrder(obj, field, value) {
+   if (field in obj) {
+@@ -353,61 +355,15 @@ function setFieldInOrder(obj, field, value) {
+ function getEntrypointName(pkg, entrypointDir) {
+   return normalizePath(path.join(pkg.name, path.relative(pkg.directory, path.resolve(pkg.directory, entrypointDir))));
+ }
++function getBaseDistName(entrypoint) {
++  const strategy = entrypoint.package.distFilenameStrategy;
+ 
+-function getDistNameWithStrategy(pkg, entrypointName, strategy) {
+   if (strategy === "full") {
+-    return entrypointName.replace("@", "").replace(/\//g, "-");
+-  }
+-
+-  return pkg.name.replace(/.*\//, "");
+-}
+-
+-function getDistName(pkg, entrypointName) {
+-  if ("distFilenameStrategy" in pkg.project.json.preconstruct) {
+-    if (pkg.project.json.preconstruct.distFilenameStrategy !== "full" && pkg.project.json.preconstruct.distFilenameStrategy !== "unscoped-package-name") {
+-      throw new FatalError(`distFilenameStrategy is defined in your Preconstruct config as ${JSON.stringify(pkg.project.json.preconstruct.distFilenameStrategy)} but the only accepted values are "full" and "unscoped-package-name"`, pkg.project.name);
+-    }
+-
+-    if (pkg.project.json.preconstruct.distFilenameStrategy === "unscoped-package-name") {
+-      return getDistNameWithStrategy(pkg, entrypointName, "unscoped-package-name");
+-    }
++    return entrypoint.name.replace("@", "").replace(/\//g, "-");
+   }
+ 
+-  return getDistNameWithStrategy(pkg, entrypointName, "full");
++  return entrypoint.package.name.replace(/.*\//, "");
+ }
+-
+-const validFieldsFromPkg = {
+-  main(pkg, entrypointName) {
+-    let safeName = getDistName(pkg, entrypointName);
+-    return `dist/${safeName}.cjs.js`;
+-  },
+-
+-  module(pkg, entrypointName) {
+-    let safeName = getDistName(pkg, entrypointName);
+-    return `dist/${safeName}.esm.js`;
+-  },
+-
+-  "umd:main"(pkg, entrypointName) {
+-    let safeName = getDistName(pkg, entrypointName);
+-    return `dist/${safeName}.umd.min.js`;
+-  },
+-
+-  browser(pkg, hasModuleBuild, entrypointName) {
+-    let safeName = getDistName(pkg, entrypointName);
+-    const moduleBuild = {
+-      [`./dist/${safeName}.esm.js`]: `./dist/${safeName}.browser.esm.js`
+-    };
+-
+-    if (pkg.exportsFieldConfig()) {
+-      return moduleBuild;
+-    }
+-
+-    return _objectSpread$1({
+-      [`./dist/${safeName}.cjs.js`]: `./dist/${safeName}.browser.cjs.js`
+-    }, hasModuleBuild && moduleBuild);
+-  }
+-
+-};
+ function exportsField(pkg) {
+   const exportsFieldConfig = pkg.exportsFieldConfig();
+ 
+@@ -415,47 +371,77 @@ function exportsField(pkg) {
+     return;
+   }
+ 
++  const hasModuleType = pkg.type === "module";
+   let output = {};
+   pkg.entrypoints.forEach(entrypoint => {
+     const esmBuild = getExportsFieldOutputPath(entrypoint, "esm");
+-    const exportConditions = {
+-      module: exportsFieldConfig.envConditions.size ? _objectSpread$1({}, exportsFieldConfig.envConditions.has("worker") && {
+-        worker: getExportsFieldOutputPath(entrypoint, "worker")
+-      }, {}, exportsFieldConfig.envConditions.has("browser") && {
+-        browser: getExportsFieldOutputPath(entrypoint, "browser")
+-      }, {
+-        default: esmBuild
+-      }) : esmBuild,
+-      default: getExportsFieldOutputPath(entrypoint, "cjs")
+-    };
++    let module;
++    if (exportsFieldConfig.envConditions.size) module = _objectSpread$1({}, exportsFieldConfig.envConditions.has("worker") && {
++      worker: getExportsFieldOutputPath(entrypoint, "worker")
++    }, {}, exportsFieldConfig.envConditions.has("browser") && {
++      browser: getExportsFieldOutputPath(entrypoint, "browser-esm")
++    }, {
++      default: esmBuild
++    });else if (!hasModuleType) module = esmBuild;
++
++    const exportConditions = _objectSpread$1({}, module ? {
++      module
++    } : {}, {
++      default: hasModuleType ? esmBuild : getExportsFieldOutputPath(entrypoint, "cjs")
++    });
++
+     output["." + entrypoint.name.replace(entrypoint.package.name, "")] = exportConditions;
+   });
+   return _objectSpread$1({}, output, {
+     "./package.json": "./package.json"
+   }, exportsFieldConfig.extra);
+ }
+-function getExportsFieldOutputPath(entrypoint, type) {
+-  const safeName = getDistName(entrypoint.package, entrypoint.name);
+-  const format = type === "cjs" ? "cjs" : "esm";
+-  const env = type === "worker" || type === "browser" ? type : undefined;
++const buildTargetToExtensionPrefix = {
++  cjs: "cjs",
++  esm: "esm",
++  "browser-cjs": "browser.cjs",
++  "browser-esm": "browser.esm",
++  worker: "worker.esm",
++  umd: "umd.min"
++};
++function getDistExtension(target) {
++  return `${buildTargetToExtensionPrefix[target]}.js`;
++}
++
++function getDistFilename(entrypoint, target) {
++  return `dist/${getBaseDistName(entrypoint)}.${getDistExtension(target)}`;
++}
++
++function getExportsFieldOutputPath(entrypoint, target) {
+   const prefix = entrypoint.name.replace(entrypoint.package.name, "");
+-  return `.${prefix}/dist/${safeName}.${env ? `${env}.` : ""}${format}.js`;
++  return `.${prefix}/${getDistFilename(entrypoint, target)}`;
+ }
+ const validFieldsForEntrypoint = {
+   main(entrypoint) {
+-    return validFieldsFromPkg.main(entrypoint.package, entrypoint.name);
++    if (entrypoint.package.type === "module") return getDistFilename(entrypoint, "esm");
++    return getDistFilename(entrypoint, "cjs");
+   },
+ 
+   module(entrypoint) {
+-    return validFieldsFromPkg.module(entrypoint.package, entrypoint.name);
++    return getDistFilename(entrypoint, "esm");
+   },
+ 
+   "umd:main"(entrypoint) {
+-    return validFieldsFromPkg["umd:main"](entrypoint.package, entrypoint.name);
++    return getDistFilename(entrypoint, "umd");
+   },
+ 
+   browser(entrypoint) {
+-    return validFieldsFromPkg.browser(entrypoint.package, entrypoint.json.module !== undefined, entrypoint.name);
++    const moduleBuild = {
++      [`./${getDistFilename(entrypoint, "esm")}`]: `./${getDistFilename(entrypoint, "browser-esm")}`
++    };
++
++    if (entrypoint.package.exportsFieldConfig() || entrypoint.package.type === "module") {
++      return moduleBuild;
++    }
++
++    return _objectSpread$1({
++      [`./${getDistFilename(entrypoint, "cjs")}`]: `./${getDistFilename(entrypoint, "browser-cjs")}`
++    }, entrypoint.hasModuleField && moduleBuild);
+   }
+ 
+ };
+@@ -493,13 +479,14 @@ function getFieldsUsedInEntrypoints(descriptors) {
+ 
+ function getPlainEntrypointContent(pkg, fields, entrypointDir, indent) {
+   const obj = {};
++  const minimalEntrypoint = {
++    hasModuleField: fields.has("module"),
++    name: getEntrypointName(pkg, entrypointDir),
++    package: pkg
++  };
+ 
+   for (const field of fields) {
+-    if (field === "browser") {
+-      obj[field] = validFieldsFromPkg[field](pkg, fields.has("module"), getEntrypointName(pkg, entrypointDir));
+-    } else {
+-      obj[field] = validFieldsFromPkg[field](pkg, getEntrypointName(pkg, entrypointDir));
+-    }
++    obj[field] = validFieldsForEntrypoint[field](minimalEntrypoint);
+   }
+ 
+   return JSON.stringify(obj, null, indent) + "\n";
+@@ -663,6 +650,12 @@ class Package extends Item {
+     });
+   }
+ 
++  removeFieldOnEntrypoints(field) {
++    this.entrypoints.forEach(entrypoint => {
++      entrypoint.json = setFieldInOrder(entrypoint.json, field, undefined);
++    });
++  }
++
+   get name() {
+     if (typeof this.json.name !== "string") {
+       throw new FatalError("The name field on this package is not a string", this.directory);
+@@ -671,6 +664,24 @@ class Package extends Item {
+     return this.json.name;
+   }
+ 
++  get type() {
++    return this.json.type;
++  }
++
++  get distFilenameStrategy() {
++    if ("distFilenameStrategy" in this.project.json.preconstruct) {
++      const written = this.project.json.preconstruct.distFilenameStrategy;
++
++      if (written !== "full" && written !== "unscoped-package-name") {
++        throw new FatalError(`distFilenameStrategy is defined in your Preconstruct config as ${JSON.stringify(written)} but the only accepted values are "full" and "unscoped-package-name"`, this.project.name);
++      }
++
++      return written;
++    }
++
++    return "full";
++  }
++
+   exportsFieldConfig() {
+     if (!this.project.experimentalFlags.exports) {
+       return;
+@@ -927,7 +938,12 @@ async function fixPackage(pkg) {
+   keys(fields).filter(x => fields[x]).forEach(field => {
+     pkg.setFieldOnEntrypoints(field);
+   });
+-  pkg.json = setFieldInOrder(pkg.json, "exports", exportsField(pkg));
++  pkg.json = setFieldInOrder(pkg.json, "exports", exportsField(pkg)); // Remove any `module` fields if package `type` is `"module"`
++
++  if (pkg.type === "module" && fields.module) {
++    pkg.json = setFieldInOrder(pkg.json, "module", undefined);
++  }
++
+   await pkg.save();
+   return (await Promise.all(pkg.entrypoints.map(x => x.save()))).some(x => x);
+ }
+@@ -949,7 +965,7 @@ function validatePackage(pkg) {
+   const exportsFieldConfig = pkg.exportsFieldConfig();
+ 
+   if (exportsFieldConfig) {
+-    if (!fields.module) {
++    if (!fields.module && pkg.type !== "module") {
+       throw new FixableError(errors.noModuleFieldWithExportsField, pkg.name);
+     }
+ 
+@@ -1065,6 +1081,11 @@ function validateEntrypoint(entrypoint, log) {
+       continue;
+     }
+ 
++    if (entrypoint.json.type === "module" && field === "module") {
++      fatalErrors.push(new FixableError(errors.moduleFieldWithModuleType, entrypoint.name));
++      continue;
++    }
++
+     if (!isFieldValid[field](entrypoint)) {
+       let isUsingOldDistFilenames;
+       let prevDistFilenameStrategy = entrypoint.package.project.json.preconstruct.distFilenameStrategy;
+@@ -1177,10 +1198,13 @@ async function doInit(pkg) {
+ 
+   let allEntrypointsAreMissingAModuleField = pkg.entrypoints.every(entrypoint => entrypoint.json.module === undefined);
+   let someEntrypointsAreNotValid = pkg.entrypoints.some(entrypoint => !isFieldValid.module(entrypoint));
++  let canWriteModuleField = await confirms.writeModuleField(pkg); // Remove any `module` fields if package `type` is `"module"`
+ 
+-  if (allEntrypointsAreMissingAModuleField || someEntrypointsAreNotValid) {
+-    let canWriteModuleField = await confirms.writeModuleField(pkg);
++  if (pkg.type === "module" && !allEntrypointsAreMissingAModuleField) {
++    if (canWriteModuleField) pkg.removeFieldOnEntrypoints("module");else new FixableError(errors.moduleFieldWithModuleType, pkg.name);
++  }
+ 
++  if (pkg.type !== "module" && (allEntrypointsAreMissingAModuleField || someEntrypointsAreNotValid)) {
+     if (canWriteModuleField) {
+       pkg.setFieldOnEntrypoints("module");
+     } else if (!allEntrypointsAreMissingAModuleField) {
+@@ -1678,25 +1702,29 @@ async function dev(projectDir) {
+         }
+ 
+         return Promise.all(promises);
+-      }), fs.writeFile(path__default.join(entrypoint.directory, validFieldsForEntrypoint.main(entrypoint)), `"use strict";
+-// this file might look strange and you might be wondering what it's for
+-// it's lets you import your source files by importing this entrypoint
+-// as you would import it if it was built with preconstruct build
+-// this file is slightly different to some others though
+-// it has a require hook which compiles your code with Babel
+-// this means that you don't have to set up @babel/register or anything like that
+-// but you can still require this module and it'll be compiled
+-
+-// this bit of code imports the require hook and registers it
+-let unregister = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, path__default.dirname(require.resolve("@preconstruct/hook")))))}).___internalHook(typeof __dirname === 'undefined' ? undefined : __dirname, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, project.directory)))}, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, pkg.directory)))});
+-
+-// this re-exports the source file
+-module.exports = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, entrypoint.source)))});
+-
+-unregister();
+-`)];
+-
+-      if (entrypoint.json.module) {
++      })];
++
++      if (entrypoint.json.type !== "module") {
++        promises.push(fs.writeFile(path__default.join(entrypoint.directory, validFieldsForEntrypoint.main(entrypoint)), `"use strict";
++  // this file might look strange and you might be wondering what it's for
++  // it's lets you import your source files by importing this entrypoint
++  // as you would import it if it was built with preconstruct build
++  // this file is slightly different to some others though
++  // it has a require hook which compiles your code with Babel
++  // this means that you don't have to set up @babel/register or anything like that
++  // but you can still require this module and it'll be compiled
++  
++  // this bit of code imports the require hook and registers it
++  let unregister = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, path__default.dirname(require.resolve("@preconstruct/hook")))))}).___internalHook(typeof __dirname === 'undefined' ? undefined : __dirname, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, project.directory)))}, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, pkg.directory)))});
++  
++  // this re-exports the source file
++  module.exports = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, entrypoint.source)))});
++  
++  unregister();
++  `));
++      }
++
++      if (entrypoint.json.module || entrypoint.json.type === "module") {
+         promises.push(fs.symlink(entrypoint.source, path__default.join(entrypoint.directory, validFieldsForEntrypoint.module(entrypoint))));
+       }
+ 
+@@ -1739,11 +1767,8 @@ async function cleanProjectBeforeBuild(project) {
+   }));
+ }
+ 
++const allowedExtensionRegex = /\.([tj]sx?|json)$/;
+ function flowAndNodeDevProdEntry(pkg, warnings) {
+-  // let directorySourceFilesMustBeIn = pkg.project.experimentalFlags
+-  //   .newEntrypoints
+-  //   ? path.resolve(pkg.directory, "src")
+-  //   : pkg.directory;
+   return {
+     name: "flow-and-prod-dev-entry",
+ 
+@@ -1769,7 +1794,16 @@ function flowAndNodeDevProdEntry(pkg, warnings) {
+         throw new FatalError(`Could not resolve ${source} ` + (importer ? `from ${path__default.relative(pkg.directory, importer)}` : ""), pkg.name);
+       }
+ 
+-      if (source.startsWith("\0") || resolved.id.startsWith("\0") || resolved.id.startsWith(pkg.directory)) {
++      if (source.startsWith("\0") || resolved.id.startsWith("\0")) {
++        return resolved;
++      }
++
++      if (resolved.id.startsWith(pkg.directory)) {
++        if (!resolved.external && !allowedExtensionRegex.test(resolved.id)) {
++          warnings.push(new FatalError(`only .ts, .tsx, .js, .jsx, and .json files can be imported but "${source}" is imported in ${importer ? `"${normalizePath(path__default.relative(pkg.directory, importer))}"` : "a module"}`, pkg.name));
++          return "could-not-resolve";
++        }
++
+         return resolved;
+       }
+ 
+@@ -2128,7 +2162,7 @@ let getRollupConfig = (pkg, entrypoints, aliases, type, reportTransformedFile) =
+ 
+   let input = {};
+   entrypoints.forEach(entrypoint => {
+-    input[path__default.relative(pkg.directory, path__default.join(entrypoint.directory, "dist", getNameForDistForEntrypoint(entrypoint)))] = entrypoint.source;
++    input[path__default.relative(pkg.directory, path__default.join(entrypoint.directory, "dist", getBaseDistName(entrypoint)))] = entrypoint.source;
+   });
+   let warnings = [];
+   const config = {
+@@ -2286,12 +2320,13 @@ function getRollupConfigs(pkg, aliases) {
+ 
+   }] : [];
+   let configs = [];
++  const hasModuleType = pkg.type === "module";
+   let hasModuleField = pkg.entrypoints[0].json.module !== undefined;
+   configs.push({
+     config: getRollupConfig(pkg, pkg.entrypoints, aliases, "node-dev", pkg.project.experimentalFlags.logCompiledFiles ? filename => {
+       info("compiled " + filename.replace(pkg.project.directory + path__default.sep, ""));
+     } : () => {}),
+-    outputs: [{
++    outputs: [...(!hasModuleType ? [{
+       format: "cjs",
+       entryFileNames: "[name].cjs.dev.js",
+       chunkFileNames: "dist/[name]-[hash].cjs.dev.js",
+@@ -2299,14 +2334,14 @@ function getRollupConfigs(pkg, aliases) {
+       exports: "named",
+       interop,
+       plugins: cjsPlugins
+-    }, ...(hasModuleField ? [{
++    }] : []), ...(hasModuleField || hasModuleType ? [{
+       format: "es",
+-      entryFileNames: "[name].esm.js",
+-      chunkFileNames: "dist/[name]-[hash].esm.js",
++      entryFileNames: `[name].${getDistExtension("esm")}`,
++      chunkFileNames: `dist/[name]-[hash].${getDistExtension("esm")}`,
+       dir: pkg.directory
+     }] : [])]
+   });
+-  configs.push({
++  if (!hasModuleType) configs.push({
+     config: getRollupConfig(pkg, pkg.entrypoints, aliases, "node-prod", () => {}),
+     outputs: [{
+       format: "cjs",
+@@ -2327,7 +2362,7 @@ function getRollupConfigs(pkg, aliases) {
+       outputs: [{
+         format: "umd",
+         sourcemap: true,
+-        entryFileNames: "[name].umd.min.js",
++        entryFileNames: `[name].${getDistExtension("umd")}`,
+         name: entrypoint.json.preconstruct.umdName,
+         dir: pkg.directory,
+         interop,
+@@ -2347,18 +2382,18 @@ function getRollupConfigs(pkg, aliases) {
+   if (hasBrowserField) {
+     configs.push({
+       config: getRollupConfig(pkg, pkg.entrypoints, aliases, "browser", () => {}),
+-      outputs: [!exportsFieldConfig && {
++      outputs: [!exportsFieldConfig && !hasModuleType && {
+         format: "cjs",
+-        entryFileNames: "[name].browser.cjs.js",
+-        chunkFileNames: "dist/[name]-[hash].browser.cjs.js",
++        entryFileNames: `[name].${getDistExtension("browser-cjs")}`,
++        chunkFileNames: `dist/[name]-[hash].${getDistExtension("browser-cjs")}`,
+         dir: pkg.directory,
+         exports: "named",
+         interop,
+         plugins: cjsPlugins
+-      }, hasModuleField && {
++      }, (hasModuleField || hasModuleType) && {
+         format: "es",
+-        entryFileNames: "[name].browser.esm.js",
+-        chunkFileNames: "dist/[name]-[hash].browser.esm.js",
++        entryFileNames: `[name].${getDistExtension("browser-esm")}`,
++        chunkFileNames: `dist/[name]-[hash].${getDistExtension("browser-esm")}`,
+         dir: pkg.directory
+       }].filter(value => value !== false)
+     });
+@@ -2370,8 +2405,8 @@ function getRollupConfigs(pkg, aliases) {
+       config: getRollupConfig(pkg, pkg.entrypoints, aliases, "worker", () => {}),
+       outputs: [{
+         format: "es",
+-        entryFileNames: "[name].worker.esm.js",
+-        chunkFileNames: "dist/[name]-[hash].worker.esm.js",
++        entryFileNames: `[name].${getDistExtension("worker")}`,
++        chunkFileNames: `dist/[name]-[hash].${getDistExtension("worker")}`,
+         dir: pkg.directory
+       }]
+     });
+diff --git a/cli/dist/cli.cjs.prod.js b/cli/dist/cli.cjs.prod.js
+index 9371dded723dd1c1c73cabb52b682914d07badfa..546c349a7d149faff3faf4726085698b13168a68 100644
+--- a/cli/dist/cli.cjs.prod.js
++++ b/cli/dist/cli.cjs.prod.js
+@@ -180,6 +180,9 @@ class Entrypoint extends Item {
+     super(filePath, contents, pkg._jsonDataByPath), _defineProperty$2(this, "package", void 0), 
+     _defineProperty$2(this, "source", void 0), this.package = pkg, this.source = source;
+   }
++  get hasModuleField() {
++    return void 0 !== this.json.module;
++  }
+   get name() {
+     return normalizePath(path__default.join(this.package.name, path__default.relative(this.package.directory, this.directory)));
+   }
+@@ -197,7 +200,8 @@ let errors = {
+   fieldMustExistInAllEntrypointsIfExistsDeclinedFixDuringInit: field => `all entrypoints in a package must have the same fields and one entrypoint in this package has a ${field} field but you've declined the fix`,
+   missingBrowserConditionWithFieldPresent: "the exports field is configured and the browser field exists in this package but it is not specified in the preconstruct.exports.envConditions field",
+   missingBrowserFieldWithConditionPresent: "the exports field is configured and the browser condition is set in preconstruct.exports.envConditions but the field is not present at the top-level",
+-  noModuleFieldWithExportsField: "when using the exports field, the module field must also be specified"
++  noModuleFieldWithExportsField: "when using the exports field, the module field or type must also be specified",
++  moduleFieldWithModuleType: 'when `"type": "module"`, the module field should be redundant, and thus it is not allowed'
+ }, confirms = {
+   writeMainField: createPromptConfirmLoader("preconstruct is going to change the main field in your package.json, are you okay with that?"),
+   writeModuleField: createPromptConfirmLoader("would you like to generate module builds? this will write to the module field in your package.json"),
+@@ -275,10 +279,6 @@ function _defineProperty$3(obj, key, value) {
+   }) : obj[key] = value, obj;
+ }
+ 
+-function getNameForDistForEntrypoint(entrypoint) {
+-  return getDistName(entrypoint.package, entrypoint.name);
+-}
+-
+ let fields = [ "version", "description", "main", "module", "umd:main", "browser", "exports" ];
+ 
+ function setFieldInOrder(obj, field, value) {
+@@ -299,64 +299,69 @@ function getEntrypointName(pkg, entrypointDir) {
+   return normalizePath(path.join(pkg.name, path.relative(pkg.directory, path.resolve(pkg.directory, entrypointDir))));
+ }
+ 
+-function getDistNameWithStrategy(pkg, entrypointName, strategy) {
+-  return "full" === strategy ? entrypointName.replace("@", "").replace(/\//g, "-") : pkg.name.replace(/.*\//, "");
+-}
+-
+-function getDistName(pkg, entrypointName) {
+-  if ("distFilenameStrategy" in pkg.project.json.preconstruct) {
+-    if ("full" !== pkg.project.json.preconstruct.distFilenameStrategy && "unscoped-package-name" !== pkg.project.json.preconstruct.distFilenameStrategy) throw new FatalError(`distFilenameStrategy is defined in your Preconstruct config as ${JSON.stringify(pkg.project.json.preconstruct.distFilenameStrategy)} but the only accepted values are "full" and "unscoped-package-name"`, pkg.project.name);
+-    if ("unscoped-package-name" === pkg.project.json.preconstruct.distFilenameStrategy) return getDistNameWithStrategy(pkg, entrypointName, "unscoped-package-name");
+-  }
+-  return getDistNameWithStrategy(pkg, entrypointName, "full");
++function getBaseDistName(entrypoint) {
++  return "full" === entrypoint.package.distFilenameStrategy ? entrypoint.name.replace("@", "").replace(/\//g, "-") : entrypoint.package.name.replace(/.*\//, "");
+ }
+ 
+-const validFieldsFromPkg = {
+-  main: (pkg, entrypointName) => `dist/${getDistName(pkg, entrypointName)}.cjs.js`,
+-  module: (pkg, entrypointName) => `dist/${getDistName(pkg, entrypointName)}.esm.js`,
+-  "umd:main": (pkg, entrypointName) => `dist/${getDistName(pkg, entrypointName)}.umd.min.js`,
+-  browser(pkg, hasModuleBuild, entrypointName) {
+-    let safeName = getDistName(pkg, entrypointName);
+-    const moduleBuild = {
+-      [`./dist/${safeName}.esm.js`]: `./dist/${safeName}.browser.esm.js`
+-    };
+-    return pkg.exportsFieldConfig() ? moduleBuild : _objectSpread$1({
+-      [`./dist/${safeName}.cjs.js`]: `./dist/${safeName}.browser.cjs.js`
+-    }, hasModuleBuild && moduleBuild);
+-  }
+-};
+-
+ function exportsField(pkg) {
+   const exportsFieldConfig = pkg.exportsFieldConfig();
+   if (!exportsFieldConfig) return;
++  const hasModuleType = "module" === pkg.type;
+   let output = {};
+   return pkg.entrypoints.forEach(entrypoint => {
+-    const esmBuild = getExportsFieldOutputPath(entrypoint, "esm"), exportConditions = {
+-      module: exportsFieldConfig.envConditions.size ? _objectSpread$1({}, exportsFieldConfig.envConditions.has("worker") && {
+-        worker: getExportsFieldOutputPath(entrypoint, "worker")
+-      }, {}, exportsFieldConfig.envConditions.has("browser") && {
+-        browser: getExportsFieldOutputPath(entrypoint, "browser")
+-      }, {
+-        default: esmBuild
+-      }) : esmBuild,
+-      default: getExportsFieldOutputPath(entrypoint, "cjs")
+-    };
++    const esmBuild = getExportsFieldOutputPath(entrypoint, "esm");
++    let module;
++    exportsFieldConfig.envConditions.size ? module = _objectSpread$1({}, exportsFieldConfig.envConditions.has("worker") && {
++      worker: getExportsFieldOutputPath(entrypoint, "worker")
++    }, {}, exportsFieldConfig.envConditions.has("browser") && {
++      browser: getExportsFieldOutputPath(entrypoint, "browser-esm")
++    }, {
++      default: esmBuild
++    }) : hasModuleType || (module = esmBuild);
++    const exportConditions = _objectSpread$1({}, module ? {
++      module: module
++    } : {}, {
++      default: hasModuleType ? esmBuild : getExportsFieldOutputPath(entrypoint, "cjs")
++    });
+     output["." + entrypoint.name.replace(entrypoint.package.name, "")] = exportConditions;
+   }), _objectSpread$1({}, output, {
+     "./package.json": "./package.json"
+   }, exportsFieldConfig.extra);
+ }
+ 
+-function getExportsFieldOutputPath(entrypoint, type) {
+-  const safeName = getDistName(entrypoint.package, entrypoint.name), format = "cjs" === type ? "cjs" : "esm", env = "worker" === type || "browser" === type ? type : void 0;
+-  return `.${entrypoint.name.replace(entrypoint.package.name, "")}/dist/${safeName}.${env ? `${env}.` : ""}${format}.js`;
++const buildTargetToExtensionPrefix = {
++  cjs: "cjs",
++  esm: "esm",
++  "browser-cjs": "browser.cjs",
++  "browser-esm": "browser.esm",
++  worker: "worker.esm",
++  umd: "umd.min"
++};
++
++function getDistExtension(target) {
++  return `${buildTargetToExtensionPrefix[target]}.js`;
++}
++
++function getDistFilename(entrypoint, target) {
++  return `dist/${getBaseDistName(entrypoint)}.${getDistExtension(target)}`;
++}
++
++function getExportsFieldOutputPath(entrypoint, target) {
++  return `.${entrypoint.name.replace(entrypoint.package.name, "")}/${getDistFilename(entrypoint, target)}`;
+ }
+ 
+ const validFieldsForEntrypoint = {
+-  main: entrypoint => validFieldsFromPkg.main(entrypoint.package, entrypoint.name),
+-  module: entrypoint => validFieldsFromPkg.module(entrypoint.package, entrypoint.name),
+-  "umd:main": entrypoint => validFieldsFromPkg["umd:main"](entrypoint.package, entrypoint.name),
+-  browser: entrypoint => validFieldsFromPkg.browser(entrypoint.package, void 0 !== entrypoint.json.module, entrypoint.name)
++  main: entrypoint => "module" === entrypoint.package.type ? getDistFilename(entrypoint, "esm") : getDistFilename(entrypoint, "cjs"),
++  module: entrypoint => getDistFilename(entrypoint, "esm"),
++  "umd:main": entrypoint => getDistFilename(entrypoint, "umd"),
++  browser(entrypoint) {
++    const moduleBuild = {
++      [`./${getDistFilename(entrypoint, "esm")}`]: `./${getDistFilename(entrypoint, "browser-esm")}`
++    };
++    return entrypoint.package.exportsFieldConfig() || "module" === entrypoint.package.type ? moduleBuild : _objectSpread$1({
++      [`./${getDistFilename(entrypoint, "cjs")}`]: `./${getDistFilename(entrypoint, "browser-cjs")}`
++    }, entrypoint.hasModuleField && moduleBuild);
++  }
+ };
+ 
+ function flowTemplate(hasDefaultExport, relativePath) {
+@@ -390,8 +395,12 @@ function getFieldsUsedInEntrypoints(descriptors) {
+ }
+ 
+ function getPlainEntrypointContent(pkg, fields, entrypointDir, indent) {
+-  const obj = {};
+-  for (const field of fields) obj[field] = "browser" === field ? validFieldsFromPkg[field](pkg, fields.has("module"), getEntrypointName(pkg, entrypointDir)) : validFieldsFromPkg[field](pkg, getEntrypointName(pkg, entrypointDir));
++  const obj = {}, minimalEntrypoint = {
++    hasModuleField: fields.has("module"),
++    name: getEntrypointName(pkg, entrypointDir),
++    package: pkg
++  };
++  for (const field of fields) obj[field] = validFieldsForEntrypoint[field](minimalEntrypoint);
+   return JSON.stringify(obj, null, indent) + "\n";
+ }
+ 
+@@ -477,10 +486,26 @@ class Package extends Item {
+       entrypoint.json = setFieldInOrder(entrypoint.json, field, validFieldsForEntrypoint[field](entrypoint));
+     });
+   }
++  removeFieldOnEntrypoints(field) {
++    this.entrypoints.forEach(entrypoint => {
++      entrypoint.json = setFieldInOrder(entrypoint.json, field, void 0);
++    });
++  }
+   get name() {
+     if ("string" != typeof this.json.name) throw new FatalError("The name field on this package is not a string", this.directory);
+     return this.json.name;
+   }
++  get type() {
++    return this.json.type;
++  }
++  get distFilenameStrategy() {
++    if ("distFilenameStrategy" in this.project.json.preconstruct) {
++      const written = this.project.json.preconstruct.distFilenameStrategy;
++      if ("full" !== written && "unscoped-package-name" !== written) throw new FatalError(`distFilenameStrategy is defined in your Preconstruct config as ${JSON.stringify(written)} but the only accepted values are "full" and "unscoped-package-name"`, this.project.name);
++      return written;
++    }
++    return "full";
++  }
+   exportsFieldConfig() {
+     if (!this.project.experimentalFlags.exports) return;
+     let defaultExportsFieldEnabled = !1;
+@@ -621,8 +646,8 @@ async function fixPackage(pkg) {
+   pkg.json.preconstruct.exports.envConditions.includes("browser") || pkg.json.preconstruct.exports.envConditions.push("browser"), 
+   fields.browser = !0), keys(fields).filter(x => fields[x]).forEach(field => {
+     pkg.setFieldOnEntrypoints(field);
+-  }), pkg.json = setFieldInOrder(pkg.json, "exports", exportsField(pkg)), await pkg.save(), 
+-  (await Promise.all(pkg.entrypoints.map(x => x.save()))).some(x => x);
++  }), pkg.json = setFieldInOrder(pkg.json, "exports", exportsField(pkg)), "module" === pkg.type && fields.module && (pkg.json = setFieldInOrder(pkg.json, "module", void 0)), 
++  await pkg.save(), (await Promise.all(pkg.entrypoints.map(x => x.save()))).some(x => x);
+ }
+ 
+ let unsafeRequire = require;
+@@ -636,7 +661,7 @@ function validatePackage(pkg) {
+   };
+   const exportsFieldConfig = pkg.exportsFieldConfig();
+   if (exportsFieldConfig) {
+-    if (!fields.module) throw new FixableError(errors.noModuleFieldWithExportsField, pkg.name);
++    if (!fields.module && "module" !== pkg.type) throw new FixableError(errors.noModuleFieldWithExportsField, pkg.name);
+     const hasField = fields.browser, hasCondition = exportsFieldConfig.envConditions.has("browser");
+     if (hasField && !hasCondition) throw new FixableError(errors.missingBrowserConditionWithFieldPresent, pkg.name);
+     if (!hasField && hasCondition) throw new FixableError(errors.missingBrowserFieldWithConditionPresent, pkg.name);
+@@ -682,7 +707,7 @@ let projectsShownOldDistNamesInfo = new WeakSet;
+ function validateEntrypoint(entrypoint, log) {
+   log && info(infos.validEntrypoint, entrypoint.name);
+   const fatalErrors = [];
+-  for (const field of [ "main", "module", "umd:main", "browser" ]) if ("main" === field || void 0 !== entrypoint.json[field]) {
++  for (const field of [ "main", "module", "umd:main", "browser" ]) if ("main" === field || void 0 !== entrypoint.json[field]) if ("module" !== entrypoint.json.type || "module" !== field) {
+     if (!isFieldValid[field](entrypoint)) {
+       let isUsingOldDistFilenames, prevDistFilenameStrategy = entrypoint.package.project.json.preconstruct.distFilenameStrategy;
+       try {
+@@ -699,7 +724,7 @@ function validateEntrypoint(entrypoint, log) {
+     }
+     "umd:main" !== field || isUmdNameSpecified(entrypoint) || fatalErrors.push(new FixableError(errors.umdNameNotSpecified, entrypoint.name)), 
+     log && !fatalErrors.length && info(infos.validField(field), entrypoint.name);
+-  }
++  } else fatalErrors.push(new FixableError(errors.moduleFieldWithModuleType, entrypoint.name));
+   if (fatalErrors.length) throw new BatchError(fatalErrors);
+ }
+ 
+@@ -743,9 +768,10 @@ async function doInit(pkg) {
+     if (!await confirms.writeMainField(pkg)) throw new FatalError(errors.deniedWriteMainField, pkg.name);
+     pkg.setFieldOnEntrypoints("main");
+   }
+-  let allEntrypointsAreMissingAModuleField = pkg.entrypoints.every(entrypoint => void 0 === entrypoint.json.module), someEntrypointsAreNotValid = pkg.entrypoints.some(entrypoint => !isFieldValid.module(entrypoint));
+-  if (allEntrypointsAreMissingAModuleField || someEntrypointsAreNotValid) {
+-    if (await confirms.writeModuleField(pkg)) pkg.setFieldOnEntrypoints("module"); else if (!allEntrypointsAreMissingAModuleField) throw new FixableError(errors.fieldMustExistInAllEntrypointsIfExistsDeclinedFixDuringInit("module"), pkg.name);
++  let allEntrypointsAreMissingAModuleField = pkg.entrypoints.every(entrypoint => void 0 === entrypoint.json.module), someEntrypointsAreNotValid = pkg.entrypoints.some(entrypoint => !isFieldValid.module(entrypoint)), canWriteModuleField = await confirms.writeModuleField(pkg);
++  if ("module" !== pkg.type || allEntrypointsAreMissingAModuleField || (canWriteModuleField ? pkg.removeFieldOnEntrypoints("module") : new FixableError(errors.moduleFieldWithModuleType, pkg.name)), 
++  "module" !== pkg.type && (allEntrypointsAreMissingAModuleField || someEntrypointsAreNotValid)) {
++    if (canWriteModuleField) pkg.setFieldOnEntrypoints("module"); else if (!allEntrypointsAreMissingAModuleField) throw new FixableError(errors.fieldMustExistInAllEntrypointsIfExistsDeclinedFixDuringInit("module"), pkg.name);
+   } else info(infos.validField("module"), pkg.name);
+   let someEntrypointsHaveAMaybeInvalidUmdBuild = pkg.entrypoints.some(entrypoint => void 0 !== entrypoint.json["umd:main"]), someUmdMainFieldsAreInvalid = pkg.entrypoints.some(entrypoint => !isFieldValid["umd:main"](entrypoint)), someUmdNamesAreNotSpecified = pkg.entrypoints.some(entrypoint => !isUmdNameSpecified(entrypoint));
+   if (someEntrypointsHaveAMaybeInvalidUmdBuild && (someUmdMainFieldsAreInvalid || someUmdNamesAreNotSpecified)) {
+@@ -1009,8 +1035,9 @@ async function dev(projectDir) {
+       let promises = [];
+       return typeSystemInfo.flow && promises.push(writeDevFlowFile(entrypoint)), !1 !== typeSystemInfo.typescript && promises.push(writeDevTSFile(entrypoint, typeSystemInfo.typescript)), 
+       Promise.all(promises);
+-    }), fs.writeFile(path__default.join(entrypoint.directory, validFieldsForEntrypoint.main(entrypoint)), `"use strict";\n// this file might look strange and you might be wondering what it's for\n// it's lets you import your source files by importing this entrypoint\n// as you would import it if it was built with preconstruct build\n// this file is slightly different to some others though\n// it has a require hook which compiles your code with Babel\n// this means that you don't have to set up @babel/register or anything like that\n// but you can still require this module and it'll be compiled\n\n// this bit of code imports the require hook and registers it\nlet unregister = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, path__default.dirname(require.resolve("@preconstruct/hook")))))}).___internalHook(typeof __dirname === 'undefined' ? undefined : __dirname, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, project.directory)))}, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, pkg.directory)))});\n\n// this re-exports the source file\nmodule.exports = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, entrypoint.source)))});\n\nunregister();\n`) ];
+-    if (entrypoint.json.module && promises.push(fs.symlink(entrypoint.source, path__default.join(entrypoint.directory, validFieldsForEntrypoint.module(entrypoint)))), 
++    }) ];
++    if ("module" !== entrypoint.json.type && promises.push(fs.writeFile(path__default.join(entrypoint.directory, validFieldsForEntrypoint.main(entrypoint)), `"use strict";\n  // this file might look strange and you might be wondering what it's for\n  // it's lets you import your source files by importing this entrypoint\n  // as you would import it if it was built with preconstruct build\n  // this file is slightly different to some others though\n  // it has a require hook which compiles your code with Babel\n  // this means that you don't have to set up @babel/register or anything like that\n  // but you can still require this module and it'll be compiled\n  \n  // this bit of code imports the require hook and registers it\n  let unregister = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, path__default.dirname(require.resolve("@preconstruct/hook")))))}).___internalHook(typeof __dirname === 'undefined' ? undefined : __dirname, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, project.directory)))}, ${JSON.stringify(normalizePath(path__default.relative(distDirectory, pkg.directory)))});\n  \n  // this re-exports the source file\n  module.exports = require(${JSON.stringify(normalizePath(path__default.relative(distDirectory, entrypoint.source)))});\n  \n  unregister();\n  `)), 
++    (entrypoint.json.module || "module" === entrypoint.json.type) && promises.push(fs.symlink(entrypoint.source, path__default.join(entrypoint.directory, validFieldsForEntrypoint.module(entrypoint)))), 
+     (null === (_pkg$exportsFieldConf = pkg.exportsFieldConfig()) || void 0 === _pkg$exportsFieldConf ? void 0 : null === (_pkg$exportsFieldConf2 = _pkg$exportsFieldConf.envConditions) || void 0 === _pkg$exportsFieldConf2 ? void 0 : _pkg$exportsFieldConf2.has("worker")) && promises.push(fs.symlink(entrypoint.source, path__default.join(pkg.directory, getExportsFieldOutputPath(entrypoint, "worker")))), 
+     entrypoint.json.browser) {
+       let browserField = validFieldsForEntrypoint.browser(entrypoint);
+@@ -1038,6 +1065,8 @@ async function cleanProjectBeforeBuild(project) {
+   }));
+ }
+ 
++const allowedExtensionRegex = /\.([tj]sx?|json)$/;
++
+ function flowAndNodeDevProdEntry(pkg, warnings) {
+   return {
+     name: "flow-and-prod-dev-entry",
+@@ -1051,7 +1080,8 @@ function flowAndNodeDevProdEntry(pkg, warnings) {
+         "could-not-resolve";
+         throw new FatalError(`Could not resolve ${source} ` + (importer ? `from ${path__default.relative(pkg.directory, importer)}` : ""), pkg.name);
+       }
+-      return source.startsWith("\0") || resolved.id.startsWith("\0") || resolved.id.startsWith(pkg.directory) ? resolved : (warnings.push(new FatalError(`all relative imports in a package should only import modules inside of their package directory but ${importer ? `"${normalizePath(path__default.relative(pkg.directory, importer))}"` : "a module"} is importing "${source}"`, pkg.name)), 
++      return source.startsWith("\0") || resolved.id.startsWith("\0") ? resolved : resolved.id.startsWith(pkg.directory) ? resolved.external || allowedExtensionRegex.test(resolved.id) ? resolved : (warnings.push(new FatalError(`only .ts, .tsx, .js, .jsx, and .json files can be imported but "${source}" is imported in ${importer ? `"${normalizePath(path__default.relative(pkg.directory, importer))}"` : "a module"}`, pkg.name)), 
++      "could-not-resolve") : (warnings.push(new FatalError(`all relative imports in a package should only import modules inside of their package directory but ${importer ? `"${normalizePath(path__default.relative(pkg.directory, importer))}"` : "a module"} is importing "${source}"`, pkg.name)), 
+       "could-not-resolve");
+     },
+     async generateBundle(opts, bundle) {
+@@ -1281,7 +1311,7 @@ let getRollupConfig = (pkg, entrypoints, aliases, type, reportTransformedFile) =
+   wrapExternalPredicate = inner => source => source.startsWith("node:") || inner(source));
+   let input = {};
+   entrypoints.forEach(entrypoint => {
+-    input[path__default.relative(pkg.directory, path__default.join(entrypoint.directory, "dist", getNameForDistForEntrypoint(entrypoint)))] = entrypoint.source;
++    input[path__default.relative(pkg.directory, path__default.join(entrypoint.directory, "dist", getBaseDistName(entrypoint)))] = entrypoint.source;
+   });
+   let warnings = [];
+   return {
+@@ -1383,12 +1413,14 @@ function getRollupConfigs(pkg, aliases) {
+       right: ")"
+     })
+   } ] : [];
+-  let configs = [], hasModuleField = void 0 !== pkg.entrypoints[0].json.module;
++  let configs = [];
++  const hasModuleType = "module" === pkg.type;
++  let hasModuleField = void 0 !== pkg.entrypoints[0].json.module;
+   configs.push({
+     config: getRollupConfig(pkg, pkg.entrypoints, aliases, "node-dev", pkg.project.experimentalFlags.logCompiledFiles ? filename => {
+       info("compiled " + filename.replace(pkg.project.directory + path__default.sep, ""));
+     } : () => {}),
+-    outputs: [ {
++    outputs: [ ...hasModuleType ? [] : [ {
+       format: "cjs",
+       entryFileNames: "[name].cjs.dev.js",
+       chunkFileNames: "dist/[name]-[hash].cjs.dev.js",
+@@ -1396,13 +1428,13 @@ function getRollupConfigs(pkg, aliases) {
+       exports: "named",
+       interop: interop,
+       plugins: cjsPlugins
+-    }, ...hasModuleField ? [ {
++    } ], ...hasModuleField || hasModuleType ? [ {
+       format: "es",
+-      entryFileNames: "[name].esm.js",
+-      chunkFileNames: "dist/[name]-[hash].esm.js",
++      entryFileNames: `[name].${getDistExtension("esm")}`,
++      chunkFileNames: `dist/[name]-[hash].${getDistExtension("esm")}`,
+       dir: pkg.directory
+     } ] : [] ]
+-  }), configs.push({
++  }), hasModuleType || configs.push({
+     config: getRollupConfig(pkg, pkg.entrypoints, aliases, "node-prod", () => {}),
+     outputs: [ {
+       format: "cjs",
+@@ -1419,7 +1451,7 @@ function getRollupConfigs(pkg, aliases) {
+       outputs: [ {
+         format: "umd",
+         sourcemap: !0,
+-        entryFileNames: "[name].umd.min.js",
++        entryFileNames: `[name].${getDistExtension("umd")}`,
+         name: entrypoint.json.preconstruct.umdName,
+         dir: pkg.directory,
+         interop: interop,
+@@ -1430,26 +1462,26 @@ function getRollupConfigs(pkg, aliases) {
+   const exportsFieldConfig = pkg.exportsFieldConfig();
+   return void 0 !== pkg.entrypoints[0].json.browser && configs.push({
+     config: getRollupConfig(pkg, pkg.entrypoints, aliases, "browser", () => {}),
+-    outputs: [ !exportsFieldConfig && {
++    outputs: [ !exportsFieldConfig && !hasModuleType && {
+       format: "cjs",
+-      entryFileNames: "[name].browser.cjs.js",
+-      chunkFileNames: "dist/[name]-[hash].browser.cjs.js",
++      entryFileNames: `[name].${getDistExtension("browser-cjs")}`,
++      chunkFileNames: `dist/[name]-[hash].${getDistExtension("browser-cjs")}`,
+       dir: pkg.directory,
+       exports: "named",
+       interop: interop,
+       plugins: cjsPlugins
+-    }, hasModuleField && {
++    }, (hasModuleField || hasModuleType) && {
+       format: "es",
+-      entryFileNames: "[name].browser.esm.js",
+-      chunkFileNames: "dist/[name]-[hash].browser.esm.js",
++      entryFileNames: `[name].${getDistExtension("browser-esm")}`,
++      chunkFileNames: `dist/[name]-[hash].${getDistExtension("browser-esm")}`,
+       dir: pkg.directory
+     } ].filter(value => !1 !== value)
+   }), (null == exportsFieldConfig ? void 0 : exportsFieldConfig.envConditions.has("worker")) && configs.push({
+     config: getRollupConfig(pkg, pkg.entrypoints, aliases, "worker", () => {}),
+     outputs: [ {
+       format: "es",
+-      entryFileNames: "[name].worker.esm.js",
+-      chunkFileNames: "dist/[name]-[hash].worker.esm.js",
++      entryFileNames: `[name].${getDistExtension("worker")}`,
++      chunkFileNames: `dist/[name]-[hash].${getDistExtension("worker")}`,
+       dir: pkg.directory
+     } ]
+   }), configs;

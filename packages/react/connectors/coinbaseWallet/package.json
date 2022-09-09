@@ -1,4 +1,3 @@
 {
-  "main": "dist/wagmi-connectors-coinbaseWallet.cjs.js",
-  "module": "dist/wagmi-connectors-coinbaseWallet.esm.js"
+  "main": "dist/wagmi-connectors-coinbaseWallet.esm.js"
 }

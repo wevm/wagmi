@@ -1,4 +1,3 @@
 {
-  "main": "dist/wagmi-core-providers-public.cjs.js",
-  "module": "dist/wagmi-core-providers-public.esm.js"
+  "main": "dist/wagmi-core-providers-public.esm.js"
 }
