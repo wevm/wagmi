@@ -1,3 +1,4 @@
 {
+  "type": "module",
   "main": "dist/wagmi-core-providers-infura.esm.js"
 }

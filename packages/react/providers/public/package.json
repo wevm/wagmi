@@ -1,3 +1,4 @@
 {
+  "type": "module",
   "main": "dist/wagmi-providers-public.esm.js"
 }
