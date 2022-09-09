@@ -1,4 +1,3 @@
-import { hashQueryKey } from '@tanstack/react-query'
 import {
   ReadContractsConfig,
   ReadContractsResult,
@@ -6,6 +5,7 @@ import {
   parseContractResult,
   readContracts,
 } from '@wagmi/core'
+import { ContractInterface } from 'ethers'
 import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -30,31 +30,33 @@ export const queryKey = ([
       allowFailure,
       blockNumber,
       chainId,
-      contracts,
+      contracts: contracts.map(
+        ({ addressOrName, args, chainId, functionName }) => ({
+          addressOrName,
+          args,
+          chainId,
+          functionName,
+        }),
+      ),
       overrides,
     },
   ] as const
 
-const queryKeyHashFn = ([queryKey_]: ReturnType<typeof queryKey>) => {
-  const { contracts, ...rest } = queryKey_
-  const contracts_ = contracts?.map((contract) => {
-    // Exclude the contract interface from the serialized query key.
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { contractInterface, ...rest } = contract
-    return rest
-  })
-  return hashQueryKey([{ contracts: contracts_, ...rest }])
-}
-
-const queryFn = ({
-  queryKey: [{ allowFailure, contracts, overrides }],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  return readContracts({
-    allowFailure,
-    contracts,
-    overrides,
-  })
-}
+const queryFn =
+  ({ contractInterfaces }: { contractInterfaces: ContractInterface[] }) =>
+  ({
+    queryKey: [{ allowFailure, contracts: contracts_, overrides }],
+  }: QueryFunctionArgs<typeof queryKey>) => {
+    const contracts = contracts_.map((contract, i) => ({
+      ...contract,
+      contractInterface: <ContractInterface>contractInterfaces[i],
+    }))
+    return readContracts({
+      allowFailure,
+      contracts,
+      overrides,
+    })
+  }
 
 export function useContractReads({
   allowFailure = true,
@@ -88,6 +90,10 @@ export function useContractReads({
     [allowFailure, blockNumber, cacheOnBlock, chainId, contracts, overrides],
   )
 
+  const contractInterfaces = contracts.map(
+    ({ contractInterface }) => contractInterface,
+  )
+
   const enabled = React.useMemo(() => {
     let enabled = Boolean(enabled_ && contracts.length > 0)
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
@@ -96,12 +102,11 @@ export function useContractReads({
 
   useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
 
-  return useQuery(queryKey_, queryFn, {
+  return useQuery(queryKey_, queryFn({ contractInterfaces }), {
     cacheTime,
     enabled,
     isDataEqual,
     keepPreviousData,
-    queryKeyHashFn,
     staleTime,
     select: (data) => {
       const result = data.map((data, i) =>

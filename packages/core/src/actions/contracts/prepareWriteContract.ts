@@ -9,6 +9,7 @@ import {
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Address, Signer } from '../../types'
+import { minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { GetContractArgs, getContract } from './getContract'
 
@@ -58,7 +59,7 @@ export async function prepareWriteContract<
   addressOrName,
   args,
   chainId,
-  contractInterface,
+  contractInterface: contractInterface_,
   functionName,
   overrides,
   signer: signer_,
@@ -68,7 +69,7 @@ export async function prepareWriteContract<
 
   const contract = getContract<TContract>({
     addressOrName,
-    contractInterface,
+    contractInterface: contractInterface_,
     signerOrProvider: signer,
   })
 
@@ -79,6 +80,11 @@ export async function prepareWriteContract<
       functionName,
     })
   }
+
+  const contractInterface = minimizeContractInterface({
+    contractInterface: contract.interface,
+    functionName,
+  })
 
   const params = [
     ...(Array.isArray(args) ? args : args ? [args] : []),
