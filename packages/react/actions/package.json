@@ -1,4 +1,6 @@
 {
   "main": "dist/wagmi-actions.cjs.js",
-  "module": "dist/wagmi-actions.esm.js"
+  "module": "dist/wagmi-actions.esm.js",
+  "exports": "./dist/wagmi-actions.esm.js",
+  "types": "dist/wagmi-actions.cjs.d.js"
 }

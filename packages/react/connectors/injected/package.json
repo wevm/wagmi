@@ -1,4 +1,6 @@
 {
   "main": "dist/wagmi-connectors-injected.cjs.js",
-  "module": "dist/wagmi-connectors-injected.esm.js"
+  "module": "dist/wagmi-connectors-injected.esm.js",
+  "exports": "./dist/wagmi-connectors-injected.esm.js",
+  "types": "dist/wagmi-connectors-injected.cjs.d.js"
 }

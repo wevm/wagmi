@@ -1,4 +1,6 @@
 {
   "main": "dist/wagmi-connectors-mock.cjs.js",
-  "module": "dist/wagmi-connectors-mock.esm.js"
+  "module": "dist/wagmi-connectors-mock.esm.js",
+  "exports": "./dist/wagmi-connectors-mock.esm.js",
+  "types": "dist/wagmi-connectors-mock.cjs.d.js"
 }

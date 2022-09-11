@@ -1,4 +1,6 @@
 {
   "main": "dist/wagmi-core-providers-alchemy.cjs.js",
-  "module": "dist/wagmi-core-providers-alchemy.esm.js"
+  "module": "dist/wagmi-core-providers-alchemy.esm.js",
+  "exports": "./dist/wagmi-core-providers-alchemy.esm.js",
+  "types": "dist/wagmi-core-providers-alchemy.cjs.d.js"
 }

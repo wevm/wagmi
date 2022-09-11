@@ -1,4 +1,6 @@
 {
   "main": "dist/wagmi-connectors-walletConnect.cjs.js",
-  "module": "dist/wagmi-connectors-walletConnect.esm.js"
+  "module": "dist/wagmi-connectors-walletConnect.esm.js",
+  "exports": "./dist/wagmi-connectors-walletConnect.esm.js",
+  "types": "dist/wagmi-connectors-walletConnect.cjs.d.js"
 }

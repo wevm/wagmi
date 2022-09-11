@@ -1,4 +1,6 @@
 {
   "main": "dist/wagmi-core-chains.cjs.js",
-  "module": "dist/wagmi-core-chains.esm.js"
+  "module": "dist/wagmi-core-chains.esm.js",
+  "exports": "./dist/wagmi-core-chains.esm.js",
+  "types": "dist/wagmi-core-chains.cjs.d.js"
 }

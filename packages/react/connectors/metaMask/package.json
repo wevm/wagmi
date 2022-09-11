@@ -1,4 +1,6 @@
 {
   "main": "dist/wagmi-connectors-metaMask.cjs.js",
-  "module": "dist/wagmi-connectors-metaMask.esm.js"
+  "module": "dist/wagmi-connectors-metaMask.esm.js",
+  "exports": "./dist/wagmi-connectors-metaMask.esm.js",
+  "types": "dist/wagmi-connectors-metaMask.cjs.d.js"
 }
