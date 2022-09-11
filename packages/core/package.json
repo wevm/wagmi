@@ -26,43 +26,53 @@
   "exports": {
     "./package.json": "./package.json",
     ".": {
-      "module": "./dist/wagmi-core.esm.js",
+      "import": "./dist/wagmi-core.esm.js",
+      "require": "./dist/wagmi-core.cjs.js",
       "default": "./dist/wagmi-core.cjs.js"
     },
     "./chains": {
-      "module": "./chains/dist/wagmi-core-chains.esm.js",
+      "import": "./chains/dist/wagmi-core-chains.esm.js",
+      "require": "./chains/dist/wagmi-core-chains.cjs.js",
       "default": "./chains/dist/wagmi-core-chains.cjs.js"
     },
     "./connectors/coinbaseWallet": {
-      "module": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
+      "import": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
+      "require": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js",
       "default": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js"
     },
     "./connectors/metaMask": {
-      "module": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.esm.js",
+      "import": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.esm.js",
+      "require": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.cjs.js",
       "default": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.cjs.js"
     },
     "./connectors/mock": {
-      "module": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
+      "import": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
+      "require": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js",
       "default": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js"
     },
     "./connectors/walletConnect": {
-      "module": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
+      "import": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
+      "require": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js",
       "default": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js"
     },
     "./providers/alchemy": {
-      "module": "./providers/alchemy/dist/wagmi-core-providers-alchemy.esm.js",
+      "import": "./providers/alchemy/dist/wagmi-core-providers-alchemy.esm.js",
+      "require": "./providers/alchemy/dist/wagmi-core-providers-alchemy.cjs.js",
       "default": "./providers/alchemy/dist/wagmi-core-providers-alchemy.cjs.js"
     },
     "./providers/infura": {
-      "module": "./providers/infura/dist/wagmi-core-providers-infura.esm.js",
+      "import": "./providers/infura/dist/wagmi-core-providers-infura.esm.js",
+      "require": "./providers/infura/dist/wagmi-core-providers-infura.cjs.js",
       "default": "./providers/infura/dist/wagmi-core-providers-infura.cjs.js"
     },
     "./providers/jsonRpc": {
-      "module": "./providers/jsonRpc/dist/wagmi-core-providers-jsonRpc.esm.js",
+      "import": "./providers/jsonRpc/dist/wagmi-core-providers-jsonRpc.esm.js",
+      "require": "./providers/jsonRpc/dist/wagmi-core-providers-jsonRpc.cjs.js",
       "default": "./providers/jsonRpc/dist/wagmi-core-providers-jsonRpc.cjs.js"
     },
     "./providers/public": {
-      "module": "./providers/public/dist/wagmi-core-providers-public.esm.js",
+      "import": "./providers/public/dist/wagmi-core-providers-public.esm.js",
+      "require": "./providers/public/dist/wagmi-core-providers-public.cjs.js",
       "default": "./providers/public/dist/wagmi-core-providers-public.cjs.js"
     }
   },
