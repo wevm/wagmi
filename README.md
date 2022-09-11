@@ -23,6 +23,10 @@
 
 <br>
 
+> **Note**
+>
+> wagmi is participating in [Gitcoin Grant Round 15](https://wagmi.sh/gitcoin) until September 22. Contributions are matched with [Quadratic Funding](https://finematics.com/quadratic-funding-explained/) (e.g. $1 turns into $27). If you find wagmi useful, please consider supporting development [here](https://wagmi.sh/gitcoin). Thank you 🙏
+
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
@@ -122,14 +126,13 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
 <a href="https://twitter.com/family">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-dark.svg">
-    <img alt="family logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-light.svg" width="auto" height="35">
+    <img alt="family logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-light.svg" width="auto" height="50">
   </picture>
 </a>
-&nbsp;&nbsp;
 <a href="https://twitter.com/context">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/context-dark.svg">
-    <img alt="context logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/context-light.svg" width="auto" height="35">
+    <img alt="context logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/context-light.svg" width="auto" height="50">
   </picture>
 </a>
 
@@ -153,4 +156,3 @@ Thanks to julianhutton.eth ([@julianjhutton](https://twitter.com/julianjhutton))
 <a href="https://vercel.com/?utm_source=wagmi-dev&utm_campaign=oss">
   <img src="https://www.datocms-assets.com/31049/1618983297-powered-by-vercel.svg" alt="Powered by Vercel" height="35">
 </a>
-
