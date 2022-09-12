@@ -40,5 +40,19 @@ describe('logger', () => {
       expect(consoleWarnMessages).toEqual([])
       expect(consoleWarn).toBeCalledTimes(0)
     })
+
+    it('custom logger - nullish warn', () => {
+      createClient({
+        provider: () => null as any,
+        logger: {
+          warn: null,
+        },
+      })
+      logWarning('foo')
+      logWarning('bar')
+      logWarning('baz')
+      expect(consoleWarnMessages).toEqual([])
+      expect(consoleWarn).toBeCalledTimes(0)
+    })
   })
 })
