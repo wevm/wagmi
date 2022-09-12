@@ -16,6 +16,10 @@ export type ClientConfig<
    * @default [new InjectedConnector()]
    */
   connectors?: (() => Connector[]) | Connector[]
+  /** Custom logger */
+  logger?: {
+    warn: typeof console.warn | null
+  }
   /** Interface for connecting to network */
   provider: ((config: { chainId?: number }) => TProvider) | TProvider
   /**
@@ -71,6 +75,9 @@ export class Client<
       storage:
         typeof window !== 'undefined' ? window.localStorage : noopStorage,
     }),
+    logger = {
+      warn: console.warn,
+    },
     webSocketProvider,
   }: ClientConfig<TProvider, TWebSocketProvider>) {
     // Check status for autoConnect flag
@@ -133,6 +140,7 @@ export class Client<
     this.config = {
       autoConnect,
       connectors,
+      logger,
       provider,
       storage,
       webSocketProvider,
