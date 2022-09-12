@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 patchedDependencies:
   '@preconstruct/cli@2.2.1':
-    hash: c3odjac6qelbsijqfcrelhextm
+    hash: hvvu2fqyu75cpdcx4cvdcys7iu
     path: patches/@preconstruct__cli@2.2.1.patch
 
 importers:
@@ -50,7 +50,7 @@ importers:
       '@changesets/changelog-github': 0.4.4
       '@changesets/cli': 2.24.4
       '@ethersproject/providers': 5.7.0
-      '@preconstruct/cli': 2.2.1_c3odjac6qelbsijqfcrelhextm
+      '@preconstruct/cli': 2.2.1_hvvu2fqyu75cpdcx4cvdcys7iu
       '@types/eslint': 8.4.3
       '@types/node': 17.0.21
       '@types/prettier': 2.6.0
@@ -5689,7 +5689,7 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
-  /@preconstruct/cli/2.2.1_c3odjac6qelbsijqfcrelhextm:
+  /@preconstruct/cli/2.2.1_hvvu2fqyu75cpdcx4cvdcys7iu:
     resolution: {integrity: sha512-G+sUV9o8l6Ds/82qJZYTXkCsVqPXLuD+bv+nVQeo3OL+eqzO/uAiBBFVp0DMcBJiyQYeU9nb+V8q22/PPaepDw==}
     hasBin: true
     dependencies:
