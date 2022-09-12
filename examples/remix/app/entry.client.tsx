@@ -7,5 +7,6 @@ import { Buffer } from 'buffer'
 if (!window.Buffer) {
   window.Buffer = Buffer
 }
+window.process = { env: {} } as NodeJS.Process
 
 hydrate(<RemixBrowser />, document)
