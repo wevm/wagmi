@@ -1,5 +1,5 @@
 import { Box, Button, Text, Textarea } from 'degen'
-import { verifyMessage } from 'ethers/lib/utils'
+import { verifyMessage } from 'ethers/lib/utils.js'
 import * as React from 'react'
 import { useAccount, useSignMessage } from 'wagmi'
 

@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
 import { getClient } from '../client'
 import {

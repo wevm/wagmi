@@ -1,4 +1,4 @@
-import { Bytes } from 'ethers/lib/utils'
+import { Bytes } from 'ethers/lib/utils.js'
 
 import {
   ConnectorNotFoundError,

@@ -1,4 +1,4 @@
-import { getAddress } from 'ethers/lib/utils'
+import { getAddress } from 'ethers/lib/utils.js'
 
 import { Address } from '../../types'
 import { getProvider } from '../providers'

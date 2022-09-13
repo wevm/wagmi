@@ -1,5 +1,5 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { verifyTypedData } from 'ethers/lib/utils'
+import { verifyTypedData } from 'ethers/lib/utils.js'
 import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
