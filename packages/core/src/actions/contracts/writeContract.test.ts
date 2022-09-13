@@ -61,6 +61,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowError()
@@ -71,6 +72,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
@@ -82,6 +84,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`

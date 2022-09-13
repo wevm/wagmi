@@ -1,7 +1,7 @@
+import { Address } from 'abitype'
 import { providers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 
-import { Address } from '../../types'
 import { fetchEnsAddress } from '../ens'
 import { getProvider } from '../providers'
 

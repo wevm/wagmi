@@ -38,7 +38,7 @@ describe('prepareWriteContract', () => {
       await expect(() =>
         prepareWriteContract({
           ...wagmiContractConfig,
-          functionName: 'claim',
+          functionName: 'claim' as any,
         }),
       ).rejects.toThrowError()
     })
@@ -57,7 +57,7 @@ describe('prepareWriteContract', () => {
       await expect(() =>
         prepareWriteContract({
           ...wagmiContractConfig,
-          functionName: 'wagmi',
+          functionName: 'wagmi' as any,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
         "Function \\"wagmi\\" on contract \\"0xaf0326d92b97df1221759476b072abfd8084f9be\\" does not exist.

@@ -1,39 +1,73 @@
-import { Contract } from 'ethers/lib/ethers'
+import {
+  Abi,
+  AbiEvent,
+  AbiParametersToPrimitiveTypes,
+  Address,
+  ExtractAbiEvent,
+  ExtractAbiEventNames,
+} from 'abitype'
+import { Contract } from 'ethers'
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
+import { IsNever, NotEqual, Or } from '../../types/utils'
 import { getProvider, getWebSocketProvider } from '../providers'
-import { GetContractArgs, getContract } from './getContract'
+import { getContract } from './getContract'
 
-type Config = {
+export type WatchContractEventConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TEventName extends string = string,
+  TEvent extends AbiEvent = TAbi extends Abi
+    ? ExtractAbiEvent<TAbi, TEventName>
+    : never,
+  TArgs = AbiParametersToPrimitiveTypes<TEvent['inputs']>,
+> = {
+  /** Contract address */
+  addressOrName: Address
+  /** Contract ABI */
+  contractInterface: TAbi
   /** Chain id to use for provider */
   chainId?: number
+  /** Event to listen for */
+  eventName: TEventName
+  /** Callback when event is emitted */
+  callback: TArgs extends readonly any[]
+    ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
+      ? (...args: any) => void
+      : (...args: TArgs) => void
+    : never
   /** Receive only a single event */
   once?: boolean
 }
 
-export function watchContractEvent<TContract extends Contract = Contract>(
-  /** Contract configuration */
-  contractArgs: GetContractArgs,
-  /** Event name to listen to */
-  eventName: Parameters<TContract['on']>[0],
-  callback: Parameters<TContract['on']>[1],
-  { chainId, once }: Config = {},
-) {
-  let contract: TContract
+export function watchContractEvent<
+  TAbi extends Abi | readonly unknown[],
+  TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
+>({
+  addressOrName,
+  contractInterface,
+  chainId,
+  eventName,
+  callback,
+  once,
+}: WatchContractEventConfig<TAbi, TEventName>) {
+  type Callback = Parameters<Contract['on']>[1]
+
+  let contract: Contract
   const watchEvent = async () => {
     if (contract) {
-      contract?.off(eventName, callback)
+      contract?.off(eventName, <Callback>callback)
     }
 
-    contract = getContract<TContract>({
+    contract = getContract({
+      addressOrName,
+      contractInterface,
       signerOrProvider:
         getWebSocketProvider({ chainId }) || getProvider({ chainId }),
-      ...contractArgs,
     })
 
-    if (once) contract.once(eventName, callback)
-    else contract.on(eventName, callback)
+    if (once) contract.once(eventName, <Callback>callback)
+    else contract.on(eventName, <Callback>callback)
   }
 
   watchEvent()
@@ -50,7 +84,7 @@ export function watchContractEvent<TContract extends Contract = Contract>(
   )
 
   return () => {
-    contract?.off(eventName, callback)
+    contract?.off(eventName, <Callback>callback)
     unsubscribe()
   }
 }

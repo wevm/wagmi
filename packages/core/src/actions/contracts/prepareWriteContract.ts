@@ -1,41 +1,73 @@
 import {
-  CallOverrides,
-  Contract,
-  PopulatedTransaction,
-} from 'ethers/lib/ethers'
+  Abi,
+  AbiFunction,
+  AbiParametersToPrimitiveTypes,
+  Address,
+  ExtractAbiFunction,
+  ExtractAbiFunctionNames,
+} from 'abitype'
+import { CallOverrides, PopulatedTransaction } from 'ethers/lib/ethers'
 
 import {
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
 } from '../../errors'
-import { Address, Signer } from '../../types'
+import { Signer } from '../../types'
+import { IsNever, NotEqual, Or } from '../../types/utils'
 import { minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
-import { GetContractArgs, getContract } from './getContract'
+import { getContract } from './getContract'
 
-export type PrepareWriteContractConfig<TSigner extends Signer = Signer> = Omit<
-  GetContractArgs,
-  'signerOrProvider'
-> & {
+export type PrepareWriteContractConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+  TSigner extends Signer = Signer,
+  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
+    ? ExtractAbiFunction<TAbi, TFunctionName>
+    : never,
+  TArgs = AbiParametersToPrimitiveTypes<TFunction['inputs']>,
+> = {
+  /** Contract address */
+  addressOrName: Address
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
+  /** Contract ABI */
+  contractInterface: TAbi
   /** Method to call on contract */
-  functionName: string
-  /** Arguments to pass contract method */
-  args?: any | any[]
+  functionName: [TFunctionName] extends [never] ? string : TFunctionName
+  /** Call overrides */
   overrides?: CallOverrides
   signer?: TSigner | null
-}
+} & (TArgs extends readonly any[]
+  ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
+    ? {
+        /**
+         * Arguments to pass contract method
+         *
+         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
+         */
+        args?: any[]
+      }
+    : TArgs['length'] extends 0
+    ? { args?: never }
+    : {
+        /** Arguments to pass contract method */
+        args: TArgs
+      }
+  : never)
 
-export type PrepareWriteContractResult<TSigner extends Signer = Signer> =
-  PrepareWriteContractConfig<TSigner> & {
-    chainId?: number
-    request: PopulatedTransaction & {
-      to: Address
-      gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-    }
-    mode: 'prepared'
+export type PrepareWriteContractResult = {
+  contractInterface: Abi | readonly unknown[]
+  addressOrName: Address
+  chainId?: number
+  functionName: string
+  mode: 'prepared'
+  overrides?: CallOverrides
+  request: PopulatedTransaction & {
+    to: Address
+    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
+}
 
 /**
  * @description Prepares the parameters required for a contract write transaction.
@@ -53,38 +85,40 @@ export type PrepareWriteContractResult<TSigner extends Signer = Signer> =
  * const result = await writeContract(config)
  */
 export async function prepareWriteContract<
-  TContract extends Contract = Contract,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
+    : string,
   TSigner extends Signer = Signer,
 >({
   addressOrName,
   args,
   chainId,
-  contractInterface: contractInterface_,
+  contractInterface,
   functionName,
   overrides,
   signer: signer_,
-}: PrepareWriteContractConfig): Promise<PrepareWriteContractResult<TSigner>> {
+}: PrepareWriteContractConfig<
+  TAbi,
+  TFunctionName,
+  TSigner
+>): Promise<PrepareWriteContractResult> {
   const signer = signer_ ?? (await fetchSigner())
   if (!signer) throw new ConnectorNotFoundError()
 
-  const contract = getContract<TContract>({
+  const contract = getContract({
     addressOrName,
-    contractInterface: contractInterface_,
+    contractInterface,
     signerOrProvider: signer,
   })
 
   const populateTransactionFn = contract.populateTransaction[functionName]
   if (!populateTransactionFn) {
     throw new ContractMethodDoesNotExistError({
-      addressOrName,
+      addressOrName: addressOrName,
       functionName,
     })
   }
-
-  const contractInterface = minimizeContractInterface({
-    contractInterface: contract.interface,
-    functionName,
-  })
 
   const params = [
     ...(Array.isArray(args) ? args : args ? [args] : []),
@@ -99,17 +133,21 @@ export async function prepareWriteContract<
     unsignedTransaction.gasLimit ||
     (await signer.estimateGas(unsignedTransaction))
 
-  return {
-    addressOrName,
-    args,
-    ...(chainId ? { chainId } : {}),
+  const minimizedAbi = minimizeContractInterface({
     contractInterface,
     functionName,
+  })
+
+  return {
+    contractInterface: minimizedAbi,
+    addressOrName,
+    chainId,
+    functionName,
+    mode: 'prepared',
     overrides,
     request: {
       ...unsignedTransaction,
       gasLimit,
     },
-    mode: 'prepared',
   }
 }

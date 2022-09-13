@@ -15,7 +15,6 @@ const domain = {
   name: 'Ether Mail',
   version: '1',
   chainId: 1,
-  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
 }
 
 // Named list of all type definitions
@@ -92,6 +91,41 @@ describe('signTypedData', () => {
           `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby\\"."`,
         )
       })
+    })
+  })
+
+  describe('types', () => {
+    const types = {
+      Contributor: [
+        { name: 'name', type: 'string' },
+        { name: 'username', type: 'string' },
+        { name: 'address', type: 'address' },
+      ],
+      Project: [
+        { name: 'name', type: 'string' },
+        { name: 'contributors', type: 'Contributor[]' },
+      ],
+    } as const
+
+    signTypedData({
+      domain,
+      types,
+      value: {
+        name: 'Alice',
+        username: 'alice',
+        address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      },
+    })
+
+    signTypedData({
+      domain,
+      types,
+      value: {
+        name: 'Alice',
+        username: 'alice',
+        // @ts-expect-error invalid address
+        address: 'test',
+      },
     })
   })
 })

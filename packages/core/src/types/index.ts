@@ -1,3 +1,4 @@
+import { Address } from 'abitype'
 import { Signer as BaseSigner, providers } from 'ethers'
 
 import {
@@ -7,7 +8,6 @@ import {
   units,
 } from '../constants'
 
-export type Address = `0x${string}`
 export type Hash = `0x${string}`
 
 export type Chain = {
@@ -33,11 +33,13 @@ export type Chain = {
   }
   /** ENS registry */
   ens?: {
-    address: string
+    address: Address
   }
-  /** Chain multicall contract */
+  /**
+   * Chain [multicall3 contract](https://github.com/mds1/multicall)
+   */
   multicall?: {
-    address: string
+    address: Address
     blockCreated: number
   }
   /** Flag for test networks */
@@ -104,7 +106,7 @@ type WatchAssetParams = {
   type: 'ERC20'
   options: {
     /** Address of token contract */
-    address: string
+    address: Address
     /** Number of token decimals */
     decimals: number
     /** String url of token logo */

@@ -1,3 +1,4 @@
+import { Address } from 'abitype'
 import { providers } from 'ethers'
 
 import {
@@ -6,7 +7,7 @@ import {
   ProviderRpcError,
   UserRejectedRequestError,
 } from '../../errors'
-import { Address, Signer } from '../../types'
+import { Signer } from '../../types'
 import { fetchSigner, getNetwork } from '../accounts'
 
 export type SendTransactionPreparedRequest = {

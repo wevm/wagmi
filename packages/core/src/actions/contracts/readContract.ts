@@ -1,26 +1,69 @@
-import { CallOverrides, Contract } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
+import {
+  Abi,
+  AbiFunction,
+  AbiParametersToPrimitiveTypes,
+  Address,
+  ExtractAbiFunction,
+  ExtractAbiFunctionNames,
+} from 'abitype'
+import { CallOverrides } from 'ethers/lib/ethers'
 
+import { IsNever, NotEqual, Or, UnwrapArray } from '../../types/utils'
 import { getProvider } from '../providers'
-import { GetContractArgs, getContract } from './getContract'
+import { getContract } from './getContract'
 
-export type ReadContractConfig = {
-  addressOrName: GetContractArgs['addressOrName']
-  /** Arguments to pass contract method */
-  args?: any | any[]
+export type ReadContractConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
+    ? ExtractAbiFunction<TAbi, TFunctionName>
+    : never,
+  TArgs = AbiParametersToPrimitiveTypes<TFunction['inputs']>,
+> = {
+  /** Contract address */
+  addressOrName: Address
   /** Chain id to use for provider */
   chainId?: number
-  contractInterface: GetContractArgs['contractInterface']
+  /** Contract ABI */
+  contractInterface: TAbi
   /** Function to invoke on the contract */
-  functionName: string
+  functionName: [TFunctionName] extends [never] ? string : TFunctionName
   /** Call overrides */
   overrides?: CallOverrides
-}
-export type ReadContractResult<Data = Result> = Data
+} & (TArgs extends readonly any[]
+  ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
+    ? {
+        /**
+         * Arguments to pass contract method
+         *
+         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
+         */
+        args?: any[]
+      }
+    : TArgs['length'] extends 0
+    ? { args?: never }
+    : {
+        /** Arguments to pass contract method */
+        args: TArgs
+      }
+  : never)
+
+export type ReadContractResult<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+> = TAbi extends Abi
+  ? UnwrapArray<
+      AbiParametersToPrimitiveTypes<
+        ExtractAbiFunction<TAbi, TFunctionName>['outputs']
+      >
+    >
+  : any
 
 export async function readContract<
-  TContract extends Contract = Contract,
-  Data = Result,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'view' | 'pure'>
+    : string,
 >({
   addressOrName,
   args,
@@ -28,24 +71,25 @@ export async function readContract<
   contractInterface,
   functionName,
   overrides,
-}: ReadContractConfig): Promise<ReadContractResult<Data>> {
+}: ReadContractConfig<TAbi, TFunctionName>): Promise<
+  ReadContractResult<TAbi, TFunctionName>
+> {
   const provider = getProvider({ chainId })
-  const contract = getContract<TContract>({
+  const contract = getContract({
     addressOrName,
     contractInterface,
     signerOrProvider: provider,
   })
 
-  const params = [
-    ...(Array.isArray(args) ? args : args ? [args] : []),
-    ...(overrides ? [overrides] : []),
-  ]
-
-  const contractFunction = contract[functionName]
+  const contractFunction = contract[<string>functionName]
   if (!contractFunction)
     console.warn(
       `"${functionName}" is not in the interface for contract "${addressOrName}"`,
     )
-  const response = (await contractFunction?.(...params)) as Data
-  return response
+
+  const params = [
+    ...(Array.isArray(args) ? args : args ? [args] : []),
+    ...(overrides ? [overrides] : []),
+  ]
+  return await contractFunction?.(...params)
 }

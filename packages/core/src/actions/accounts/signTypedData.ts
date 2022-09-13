@@ -1,11 +1,15 @@
-import { BytesLike, providers } from 'ethers'
+import { Address, TypedData, TypedDataToPrimitiveTypes } from 'abitype'
+import { BytesLike, TypedDataField, providers } from 'ethers'
 
 import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
 import { normalizeChainId } from '../../utils'
 import { fetchSigner } from './fetchSigner'
 import { getNetwork } from './getNetwork'
 
-export type SignTypedDataArgs = {
+export type SignTypedDataArgs<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+> = {
   /** Domain or domain signature for origin or contract */
   domain: {
     name?: string
@@ -15,22 +19,25 @@ export type SignTypedDataArgs = {
      * If signer is not active on this chain, it will attempt to programmatically switch
      */
     chainId?: string | number | bigint
-    verifyingContract?: string
+    verifyingContract?: Address
     salt?: BytesLike
   }
   /** Named list of all type definitions */
-  types: Record<string, Array<{ name: string; type: string }>>
+  types: TTypedData
   /** Data to sign */
-  value: Record<string, any>
+  value: TSchema[keyof TSchema]
 }
 
 export type SignTypedDataResult = string
 
-export async function signTypedData({
+export async function signTypedData<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+>({
   domain,
   types,
   value,
-}: SignTypedDataArgs): Promise<SignTypedDataResult> {
+}: SignTypedDataArgs<TTypedData, TSchema>): Promise<SignTypedDataResult> {
   const signer = await fetchSigner<providers.JsonRpcSigner>()
   if (!signer) throw new ConnectorNotFoundError()
 
@@ -52,5 +59,9 @@ export async function signTypedData({
   }
 
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-  return await signer._signTypedData(domain, types, value)
+  return await signer._signTypedData(
+    domain,
+    <Record<string, Array<TypedDataField>>>(<unknown>types),
+    value,
+  )
 }

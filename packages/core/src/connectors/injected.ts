@@ -1,3 +1,4 @@
+import { Address } from 'abitype'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
@@ -244,7 +245,7 @@ export class InjectedConnector extends Connector<
     image,
     symbol,
   }: {
-    address: string
+    address: Address
     decimals?: number
     image?: string
     symbol: string

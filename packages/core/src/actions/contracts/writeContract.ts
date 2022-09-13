@@ -1,11 +1,22 @@
-import { CallOverrides, PopulatedTransaction, providers } from 'ethers'
+import {
+  Abi,
+  AbiFunction,
+  AbiParametersToPrimitiveTypes,
+  Address,
+  ExtractAbiFunction,
+  ExtractAbiFunctionNames,
+} from 'abitype'
+import { CallOverrides, PopulatedTransaction } from 'ethers'
 
 import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
-import { Address } from '../../types'
+import { Signer } from '../../types'
+import { IsNever, NotEqual, Or } from '../../types/utils'
 import { fetchSigner, getNetwork } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
-import { GetContractArgs } from './getContract'
-import { prepareWriteContract } from './prepareWriteContract'
+import {
+  PrepareWriteContractConfig,
+  prepareWriteContract,
+} from './prepareWriteContract'
 
 export type WriteContractPreparedArgs = {
   /**
@@ -23,21 +34,54 @@ export type WriteContractPreparedArgs = {
     to: Address
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
-}
-export type WriteContractUnpreparedArgs = {
-  mode: 'recklesslyUnprepared'
-  request?: undefined
+  args?: never
 }
 
-export type WriteContractArgs = Omit<GetContractArgs, 'signerOrProvider'> & {
+export type WriteContractUnpreparedArgs<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
+    ? ExtractAbiFunction<TAbi, TFunctionName>
+    : never,
+  TArgs = AbiParametersToPrimitiveTypes<TFunction['inputs']>,
+> = {
+  mode: 'recklesslyUnprepared'
+  request?: undefined
+} & (TArgs extends readonly any[]
+  ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
+    ? {
+        /**
+         * Arguments to pass contract method
+         *
+         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
+         */
+        args?: any[]
+      }
+    : TArgs['length'] extends 0
+    ? { args?: never }
+    : {
+        /** Arguments to pass contract method */
+        args: TArgs
+      }
+  : never)
+
+export type WriteContractArgs<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = {
+  /** Contract address */
+  addressOrName: Address
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
+  /** Contract ABI */
+  contractInterface: TAbi
   /** Method to call on contract */
-  functionName: string
-  /** Arguments to pass contract method */
-  args?: any | any[]
+  functionName: [TFunctionName] extends [never] ? string : TFunctionName
   overrides?: CallOverrides
-} & (WriteContractUnpreparedArgs | WriteContractPreparedArgs)
+} & (
+  | WriteContractUnpreparedArgs<TAbi, TFunctionName>
+  | WriteContractPreparedArgs
+)
 export type WriteContractResult = SendTransactionResult
 
 /**
@@ -56,7 +100,13 @@ export type WriteContractResult = SendTransactionResult
  * })
  * const result = await writeContract(config)
  */
-export async function writeContract({
+export async function writeContract<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
+    : string,
+  TSigner extends Signer = Signer,
+>({
   addressOrName,
   args,
   chainId,
@@ -65,14 +115,14 @@ export async function writeContract({
   mode,
   overrides,
   request: request_,
-}: WriteContractArgs): Promise<WriteContractResult> {
+}: WriteContractArgs<TAbi, TFunctionName>): Promise<WriteContractResult> {
   /********************************************************************/
   /** START: iOS App Link cautious code.                              */
   /** Do not perform any async operations in this block.              */
   /** Ref: wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
   /********************************************************************/
 
-  const signer = await fetchSigner<providers.JsonRpcSigner>()
+  const signer = await fetchSigner<TSigner>()
   if (!signer) throw new ConnectorNotFoundError()
 
   const { chain: activeChain, chains } = getNetwork()
@@ -94,13 +144,15 @@ export async function writeContract({
   const request =
     mode === 'recklesslyUnprepared'
       ? (
-          await prepareWriteContract({
+          await prepareWriteContract(<
+            PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>
+          >(<unknown>{
             addressOrName,
             args,
             contractInterface,
             functionName,
             overrides,
-          })
+          }))
         ).request
       : request_
 

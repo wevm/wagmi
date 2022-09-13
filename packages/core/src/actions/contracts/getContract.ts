@@ -1,10 +1,11 @@
+import { Abi, Address } from 'abitype'
 import { Contract, ContractInterface, Signer, providers } from 'ethers'
 
 export type GetContractArgs = {
   /** Contract address or ENS name */
-  addressOrName: string
+  addressOrName: Address
   /** Contract interface or ABI */
-  contractInterface: ContractInterface
+  contractInterface: ContractInterface | Abi | readonly unknown[]
   /** Signer or provider to attach to contract */
   signerOrProvider?: Signer | providers.Provider | null
 }
@@ -18,7 +19,7 @@ export function getContract<T = Contract>({
     (<unknown>(
       new Contract(
         addressOrName,
-        contractInterface,
+        <ContractInterface>(<unknown>contractInterface),
         <Signer | providers.Provider | undefined>signerOrProvider,
       )
     ))
