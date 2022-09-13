@@ -1,4 +1,4 @@
-import { Interface } from 'ethers/lib/utils'
+import { Interface } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { mlootContractConfig } from '../../test'

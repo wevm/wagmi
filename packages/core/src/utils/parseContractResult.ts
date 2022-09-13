@@ -1,5 +1,5 @@
-import { Contract, ContractInterface } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
+import { Contract, ContractInterface } from 'ethers'
+import { Result } from 'ethers/lib/utils.js'
 
 function isPlainArray(value: unknown) {
   return Array.isArray(value) && Object.keys(value).length === value.length

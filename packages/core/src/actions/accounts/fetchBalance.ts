@@ -1,5 +1,5 @@
-import { BigNumber, logger } from 'ethers/lib/ethers'
-import { Logger, formatUnits, isAddress } from 'ethers/lib/utils'
+import { BigNumber, logger } from 'ethers'
+import { Logger, formatUnits, isAddress } from 'ethers/lib/utils.js'
 
 import { getClient } from '../../client'
 import { erc20ABI } from '../../constants'

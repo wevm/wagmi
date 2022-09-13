@@ -1,5 +1,5 @@
-import { BigNumber } from 'ethers/lib/ethers'
-import { formatUnits } from 'ethers/lib/utils'
+import { BigNumber } from 'ethers'
+import { formatUnits } from 'ethers/lib/utils.js'
 
 import { erc20ABI } from '../../constants'
 import { Unit } from '../../types'

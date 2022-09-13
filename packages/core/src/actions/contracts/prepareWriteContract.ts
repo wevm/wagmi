@@ -2,7 +2,7 @@ import {
   CallOverrides,
   Contract,
   PopulatedTransaction,
-} from 'ethers/lib/ethers'
+} from 'ethers'
 
 import {
   ConnectorNotFoundError,

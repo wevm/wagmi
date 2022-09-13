@@ -1,4 +1,4 @@
-import { verifyMessage } from 'ethers/lib/utils'
+import { verifyMessage } from 'ethers/lib/utils.js'
 import * as React from 'react'
 import { useSignMessage } from 'wagmi'
 

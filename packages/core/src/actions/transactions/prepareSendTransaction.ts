@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { isAddress } from 'ethers/lib/utils'
+import { isAddress } from 'ethers/lib/utils.js'
 
 import { Address } from '../../types'
 import { fetchEnsAddress } from '../ens'

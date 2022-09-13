@@ -4,7 +4,7 @@ import type {
 } from '@coinbase/wallet-sdk'
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
 import {
   AddChainError,
