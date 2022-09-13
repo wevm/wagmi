@@ -8,7 +8,7 @@ import {
   ContractMethodRevertedError,
   ContractResultDecodeError,
 } from '../../errors'
-import { logWarning } from '../../utils'
+import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { ReadContractConfig, readContract } from './readContract'
@@ -60,7 +60,7 @@ export async function readContracts<Data extends any[] = Result[]>({
         .map((result) => {
           if (result.status === 'fulfilled') return result.value
           if (result.reason instanceof ChainDoesNotSupportMulticallError) {
-            logWarning(result.reason.message)
+            logWarn(result.reason.message)
             throw result.reason
           }
           return null
@@ -88,7 +88,7 @@ export async function readContracts<Data extends any[] = Result[]>({
           args,
           errorMessage: result.reason,
         })
-        logWarning(error.message)
+        logWarn(error.message)
         return null
       }) as Data
     }

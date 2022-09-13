@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { createClient } from '../client'
 
-import { logWarning } from './logger'
+import { logWarn } from './logger'
 
 let consoleWarnMessages: string[] = []
 const consoleWarn = vi
@@ -15,12 +15,12 @@ describe('logger', () => {
     consoleWarn.mockClear()
   })
 
-  describe('logWarning', () => {
+  describe('logWarn', () => {
     it('logs warnings', () => {
       createClient({ provider: () => null as any })
-      logWarning('foo')
-      logWarning('bar')
-      logWarning('baz')
+      logWarn('foo')
+      logWarn('bar')
+      logWarn('baz')
       expect(consoleWarnMessages).toEqual(['foo', 'bar', 'baz'])
       expect(consoleWarn).toBeCalledTimes(3)
     })
@@ -33,9 +33,9 @@ describe('logger', () => {
           warn: (message) => warnMessages.push(message),
         },
       })
-      logWarning('foo')
-      logWarning('bar')
-      logWarning('baz')
+      logWarn('foo')
+      logWarn('bar')
+      logWarn('baz')
       expect(warnMessages).toEqual(['foo', 'bar', 'baz'])
       expect(consoleWarnMessages).toEqual([])
       expect(consoleWarn).toBeCalledTimes(0)
@@ -48,9 +48,9 @@ describe('logger', () => {
           warn: null,
         },
       })
-      logWarning('foo')
-      logWarning('bar')
-      logWarning('baz')
+      logWarn('foo')
+      logWarn('bar')
+      logWarn('baz')
       expect(consoleWarnMessages).toEqual([])
       expect(consoleWarn).toBeCalledTimes(0)
     })

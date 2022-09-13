@@ -22,12 +22,12 @@ logger?: {
 You can pass in a function to define your own custom logger.
 
 ```diff
-+ import { logWarning } from './logger';
++ import { logWarn } from './logger';
 
 const client = createClient({
   ...
 + logger: {
-+   warn: message => logWarning(message)
++   warn: message => logWarn(message)
 + }
   ...
 })

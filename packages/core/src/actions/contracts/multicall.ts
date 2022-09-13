@@ -9,7 +9,7 @@ import {
   ContractResultDecodeError,
   ProviderChainsNotFound,
 } from '../../errors'
-import { logWarning } from '../../utils'
+import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 import { ReadContractConfig } from './readContract'
@@ -79,7 +79,7 @@ export async function multicall<Data extends any[] = Result[]>({
           params,
         )
         if (!contract[functionName])
-          logWarning(
+          logWarn(
             `"${functionName}" is not in the interface for contract "${addressOrName}"`,
           )
         return {
@@ -124,7 +124,7 @@ export async function multicall<Data extends any[] = Result[]>({
           errorMessage: (<Error>err).message,
         })
         if (!allowFailure) throw error
-        logWarning(error.message)
+        logWarn(error.message)
       }
       return null
     }
@@ -137,7 +137,7 @@ export async function multicall<Data extends any[] = Result[]>({
         functionName,
       })
       if (!allowFailure) throw error
-      logWarning(error.message)
+      logWarn(error.message)
       return null
     }
 
@@ -156,7 +156,7 @@ export async function multicall<Data extends any[] = Result[]>({
         errorMessage: (<Error>err).message,
       })
       if (!allowFailure) throw error
-      logWarning(error.message)
+      logWarn(error.message)
       return null
     }
   }) as Data

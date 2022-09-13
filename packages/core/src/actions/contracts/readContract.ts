@@ -1,7 +1,7 @@
 import { CallOverrides, Contract } from 'ethers/lib/ethers'
 import { Result } from 'ethers/lib/utils'
 
-import { logWarning } from '../../utils'
+import { logWarn } from '../../utils'
 
 import { getProvider } from '../providers'
 import { GetContractArgs, getContract } from './getContract'
@@ -45,7 +45,7 @@ export async function readContract<
 
   const contractFunction = contract[functionName]
   if (!contractFunction)
-    logWarning(
+    logWarn(
       `"${functionName}" is not in the interface for contract "${addressOrName}"`,
     )
   const response = (await contractFunction?.(...params)) as Data
