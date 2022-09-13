@@ -71,6 +71,39 @@ const client = createClient({
 })
 ```
 
+### logger (optional)
+
+Adds the ability to provide a custom logger to override how logs are broadcasted in wagmi. Defaults to `console` logging.
+
+```ts {4,9-11}
+import { createClient, configureChains, defaultChains } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+import { logWarn } from './logger'
+
+const { provider } = configureChains(defaultChains, [publicProvider()])
+
+const client = createClient({
+  logger: {
+    warn: (message) => logWarn(message),
+  },
+  provider,
+})
+```
+
+You can also disable a logger by passing `null` as the value.
+
+```ts {5}
+// ...
+
+const client = createClient({
+  logger: {
+    warn: null,
+  },
+  provider,
+})
+```
+
 ### provider
 
 ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.

@@ -8,6 +8,7 @@ import {
   UserRejectedRequestError,
 } from '../../errors'
 import { Chain } from '../../types'
+import { logWarn } from '../../utils'
 import { GetContractArgs, getContract } from './getContract'
 
 export type DeprecatedWriteContractConfig = GetContractArgs & {
@@ -72,7 +73,7 @@ export async function deprecatedWriteContract<
     const contractWithSigner = contract.connect(signer)
     const contractFunction = contractWithSigner[functionName]
     if (!contractFunction)
-      console.warn(
+      logWarn(
         `"${functionName}" does not exist in interface for contract "${addressOrName}"`,
       )
     return (await contractFunction(...params)) as providers.TransactionResponse

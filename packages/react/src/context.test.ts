@@ -15,6 +15,9 @@ describe('useClient', () => {
             "connectors": [
               "<MockConnector>",
             ],
+            "logger": {
+              "warn": [Function],
+            },
             "provider": [Function],
             "storage": {
               "getItem": [Function],
