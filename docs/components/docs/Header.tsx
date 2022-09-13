@@ -22,17 +22,32 @@ export function Header({ showGitcoinBanner }: Props) {
       {showGitcoinBanner && (
         <div className="mb-4">
           <Callout emoji="🚀">
-            wagmi is participating in Gitcoin Grant Round 15 until September 22.
-            Please consider supporting development. Funds will be matched with
-            Quadratic Funding. Go{' '}
+            wagmi is participating in{' '}
+            <a
+              target="_blank"
+              href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+              rel="noopener noreferrer"
+            >
+              Gitcoin Grant Round 15
+            </a>{' '}
+            until September 22. Contributions are matched with{' '}
+            <a
+              href="https://finematics.com/quadratic-funding-explained"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Quadratic Funding
+            </a>{' '}
+            (e.g. $1 turns into $27). If you find wagmi useful, please consider
+            supporting development{' '}
             <a
               target="_blank"
               href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
               rel="noopener noreferrer"
             >
               here
-            </a>{' '}
-            to contribute :)
+            </a>
+            . Thank you 🙏
           </Callout>
         </div>
       )}
@@ -104,12 +119,12 @@ export function Header({ showGitcoinBanner }: Props) {
 
         <a
           aria-label="Sponsors"
-          href="https://github.com/sponsors/tmm?metadata_campaign=docs_header"
+          href="https://github.com/sponsors/wagmi-dev?metadata_campaign=docs_header"
           className="h-5"
         >
           <img
             alt=""
-            src="https://img.shields.io/github/sponsors/tmm?colorA=2B323B&colorB=1e2329&style=flat&label=Sponsors"
+            src="https://img.shields.io/github/sponsors/wagmi-dev?colorA=2B323B&colorB=1e2329&style=flat&label=Sponsors"
           />
         </a>
       </div>

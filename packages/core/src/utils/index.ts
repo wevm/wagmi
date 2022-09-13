@@ -3,7 +3,7 @@ export type { ConfigureChainsConfig } from './configureChains'
 
 export { deepEqual } from './deepEqual'
 export { getInjectedName } from './getInjectedName'
+export { logWarn } from './logger'
 export { minimizeContractInterface } from './minimizeContractInterface'
 export { normalizeChainId } from './normalizeChainId'
 export { parseContractResult } from './parseContractResult'
-export { warn } from './warn'

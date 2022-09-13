@@ -17,14 +17,14 @@ export function Sponsors() {
   const { resolvedTheme } = useTheme()
   const mode = (resolvedTheme ?? 'dark') as 'dark' | 'light'
   return (
-    <div className="flex my-6 gap-6">
+    <div className="flex my-5 gap-2">
       <a href="https://twitter.com/family">
         <picture>
           <img
             alt="family logo"
             src={sponsors.family[mode]}
             width="auto"
-            height="35"
+            className="h-12"
           />
         </picture>
       </a>
@@ -34,7 +34,7 @@ export function Sponsors() {
             alt="context logo"
             src={sponsors.context[mode]}
             width="auto"
-            height="35"
+            className="h-12"
           />
         </picture>
       </a>

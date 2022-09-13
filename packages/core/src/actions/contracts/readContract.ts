@@ -9,6 +9,7 @@ import {
 import { CallOverrides } from 'ethers/lib/ethers'
 
 import { IsNever, NotEqual, Or, UnwrapArray } from '../../types/utils'
+import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 
@@ -83,7 +84,7 @@ export async function readContract<
 
   const contractFunction = contract[<string>functionName]
   if (!contractFunction)
-    console.warn(
+    logWarn(
       `"${functionName}" is not in the interface for contract "${addressOrName}"`,
     )
 
