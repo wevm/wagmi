@@ -1,3 +1,4 @@
+import { Address } from 'abitype'
 import { BigNumber, logger } from 'ethers/lib/ethers'
 import { Logger, formatUnits, isAddress } from 'ethers/lib/utils'
 
@@ -15,11 +16,11 @@ export type FetchBalanceArgs = {
   /** Units for formatting output */
   formatUnits?: Unit | number
   /** ERC-20 address */
-  token?: string
+  token?: Address
 }
 
 export type FetchBalanceResult = {
-  decimals: number
+  decimals: number | BigNumber
   formatted: string
   symbol: string
   value: BigNumber
@@ -35,15 +36,9 @@ export async function fetchBalance({
   const provider = getProvider({ chainId })
 
   if (token) {
-    const erc20Config = {
-      addressOrName: token,
-      contractInterface: erc20ABI,
-      chainId,
-    }
-
     // Convert ENS name to address if required
-    let resolvedAddress: string
-    if (isAddress(addressOrName)) resolvedAddress = addressOrName
+    let resolvedAddress: Address
+    if (isAddress(addressOrName)) resolvedAddress = <Address>addressOrName
     else {
       const address = await provider.resolveName(addressOrName)
       // Same error `provider.getBalance` throws for invalid ENS name
@@ -55,19 +50,30 @@ export async function fetchBalance({
             operation: `resolveName(${JSON.stringify(addressOrName)})`,
           },
         )
-      resolvedAddress = address
+      resolvedAddress = <Address>address
     }
 
-    const [value, decimals, symbol] = await readContracts<
-      [BigNumber, number, string]
-    >({
+    const [value, decimals, symbol] = await readContracts({
       allowFailure: false,
       contracts: [
-        { ...erc20Config, functionName: 'balanceOf', args: resolvedAddress },
-        { ...erc20Config, functionName: 'decimals' },
         {
-          ...erc20Config,
-          functionName: 'symbol',
+          addressOrName: token,
+          chainId,
+          contractInterface: erc20ABI,
+          functionName: 'balanceOf' as const,
+          args: [resolvedAddress],
+        },
+        {
+          addressOrName: token,
+          chainId,
+          contractInterface: erc20ABI,
+          functionName: 'decimals' as const,
+        },
+        {
+          addressOrName: token,
+          chainId,
+          contractInterface: erc20ABI,
+          functionName: 'symbol' as const,
         },
       ],
     })

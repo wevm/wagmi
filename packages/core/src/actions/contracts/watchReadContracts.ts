@@ -6,14 +6,17 @@ import {
   readContracts,
 } from './readContracts'
 
-export type WatchReadContractsConfig = ReadContractsConfig & {
-  listenToBlock?: boolean
-}
-export type WatchReadContractsResult = (result: ReadContractsResult) => void
+export type WatchReadContractsConfig<T extends unknown[]> =
+  ReadContractsConfig<T> & {
+    listenToBlock?: boolean
+  }
+export type WatchReadContractsResult<T extends unknown[]> = (
+  result: ReadContractsResult<T>,
+) => void
 
-export function watchReadContracts(
-  config: WatchReadContractsConfig,
-  callback: WatchReadContractsResult,
+export function watchReadContracts<T extends unknown[]>(
+  config: WatchReadContractsConfig<T>,
+  callback: WatchReadContractsResult<T>,
 ) {
   const client = getClient()
 
