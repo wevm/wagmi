@@ -19,7 +19,6 @@ export type ReadContractConfig<
   TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
     ? ExtractAbiFunction<TAbi, TFunctionName>
     : never,
-  TArgs = AbiParametersToPrimitiveTypes<TFunction['inputs']>,
 > = {
   /** Contract address */
   addressOrName: Address
@@ -31,7 +30,9 @@ export type ReadContractConfig<
   functionName: [TFunctionName] extends [never] ? string : TFunctionName
   /** Call overrides */
   overrides?: CallOverrides
-} & (TArgs extends readonly any[]
+} & (AbiParametersToPrimitiveTypes<
+  TFunction['inputs']
+> extends infer TArgs extends readonly any[]
   ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
     ? {
         /**

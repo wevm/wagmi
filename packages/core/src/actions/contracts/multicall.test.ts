@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
@@ -7,24 +8,28 @@ import {
 } from '../../../test'
 
 import { chain } from '../../constants'
-import { MulticallConfig, multicall } from './multicall'
+import { multicall } from './multicall'
 
-const contracts: MulticallConfig['contracts'] = [
+const contracts = [
   {
     ...wagmigotchiContractConfig,
     functionName: 'love',
-    args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+    args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
   },
   {
     ...wagmigotchiContractConfig,
     functionName: 'love',
-    args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+    args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
   },
-  { ...wagmigotchiContractConfig, functionName: 'getAlive' },
+  {
+    ...wagmigotchiContractConfig,
+    functionName: 'getAlive',
+    args: [],
+  },
   {
     ...mlootContractConfig,
     functionName: 'tokenOfOwnerByIndex',
-    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
   },
 ]
 
@@ -116,8 +121,11 @@ describe('multicall', () => {
               ...contracts,
               {
                 ...mlootContractConfig,
-                functionName: 'tokenOfOwnerByIndex',
-                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+                functionName: 'tokenOfOwnerByIndex' as const,
+                args: [
+                  '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                  BigNumber.from('69420'),
+                ],
               },
             ],
           }),
@@ -134,13 +142,19 @@ describe('multicall', () => {
               ...contracts,
               {
                 ...mlootContractConfig,
-                functionName: 'tokenOfOwnerByIndex',
-                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+                functionName: 'tokenOfOwnerByIndex' as const,
+                args: [
+                  '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                  BigNumber.from(69420),
+                ],
               },
               {
                 ...mlootContractConfig,
-                functionName: 'tokenOfOwnerByIndex',
-                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69421],
+                functionName: 'tokenOfOwnerByIndex' as const,
+                args: [
+                  '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                  BigNumber.from(69421),
+                ],
               },
             ],
           }),
@@ -310,7 +324,7 @@ describe('multicall', () => {
                 functionName: 'love',
                 // address is not the wagmigotchi contract
                 addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-                args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
               },
             ],
           }),
@@ -342,14 +356,14 @@ describe('multicall', () => {
                 functionName: 'love',
                 // address is not the wagmigotchi contract
                 addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-                args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
               },
               {
                 ...wagmigotchiContractConfig,
                 functionName: 'love',
                 // address is not the wagmigotchi contract
                 addressOrName: '0x01D13b073CE170e94f6d530B0Cd54498A87A537F',
-                args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
               },
             ],
           }),
