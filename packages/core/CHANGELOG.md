@@ -1,5 +1,55 @@
 # @wagmi/core
 
+## 0.5.6
+
+### Patch Changes
+
+- [#936](https://github.com/wagmi-dev/wagmi/pull/936) [`3329d1f`](https://github.com/wagmi-dev/wagmi/commit/3329d1f5880431566e14ac1640f48d0975aec4c2) Thanks [@jxom](https://github.com/jxom)! - Added the ability to provide a custom logger to override how logs are broadcasted to the consumer in wagmi.
+
+  A custom logger can be provided to the wagmi client via `logger`.
+
+  ### API
+
+  ```tsx
+  logger?: {
+    warn: typeof console.warn | null
+  }
+  ```
+
+  ### Examples
+
+  **Passing in a custom logger**
+
+  You can pass in a function to define your own custom logger.
+
+  ```diff
+  + import { logWarn } from './logger';
+
+  const client = createClient({
+    ...
+  + logger: {
+  +   warn: message => logWarn(message)
+  + }
+    ...
+  })
+  ```
+
+  **Disabling a logger**
+
+  You can disable a logger by passing `null` as the value.
+
+  ```diff
+  const client = createClient({
+    ...
+  + logger: {
+  +   warn: null
+  + }
+    ...
+  })
+  ```
+
+* [#889](https://github.com/wagmi-dev/wagmi/pull/889) [`27788ed`](https://github.com/wagmi-dev/wagmi/commit/27788ed989b5dc26849c7945fb91a92e56766018) Thanks [@jxom](https://github.com/jxom)! - Make multicall & readContracts more error robust
+
 ## 0.5.5
 
 ### Patch Changes
