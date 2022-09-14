@@ -4,31 +4,30 @@ import {
   PrepareWriteContractResult,
   prepareWriteContract,
 } from '@wagmi/core'
-import { providers } from 'ethers'
+import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import { Signer, providers } from 'ethers'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UsePrepareContractWriteArgs = Omit<
-  PrepareWriteContractConfig,
-  'signerOrProvider'
->
-export type UsePrepareContractWriteConfig = QueryConfig<
-  PrepareWriteContractResult,
-  Error
->
+export type UsePrepareContractWriteConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+  TSigner extends Signer = Signer,
+> = PrepareWriteContractConfig<TAbi, TFunctionName, TSigner> &
+  QueryConfig<PrepareWriteContractResult, Error>
 
-export const queryKey = (
+function queryKey(
   {
     args,
     addressOrName,
     functionName,
     overrides,
-  }: Omit<UsePrepareContractWriteArgs, 'contractInterface'>,
+  }: Omit<PrepareWriteContractConfig, 'contractInterface'>,
   { chainId, signerAddress }: { chainId?: number; signerAddress?: string },
-) =>
-  [
+) {
+  return [
     {
       entity: 'prepareContractTransaction',
       addressOrName,
@@ -39,16 +38,16 @@ export const queryKey = (
       signerAddress,
     },
   ] as const
+}
 
-const queryFn =
-  ({
-    contractInterface,
-    signer,
-  }: {
-    contractInterface: UsePrepareContractWriteArgs['contractInterface']
-    signer?: FetchSignerResult
-  }) =>
-  ({
+function queryFn({
+  contractInterface,
+  signer,
+}: {
+  contractInterface: Abi | readonly unknown[]
+  signer?: FetchSignerResult
+}) {
+  return ({
     queryKey: [{ args, addressOrName, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     return prepareWriteContract({
@@ -60,6 +59,7 @@ const queryFn =
       signer,
     })
   }
+}
 
 /**
  * @description Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
@@ -77,7 +77,12 @@ const queryFn =
  * const { data, isLoading, isSuccess, write } = useContractWrite(config)
  *
  */
-export function usePrepareContractWrite({
+export function usePrepareContractWrite<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
+    : string,
+>({
   addressOrName,
   contractInterface,
   functionName,
@@ -90,7 +95,7 @@ export function usePrepareContractWrite({
   onError,
   onSettled,
   onSuccess,
-}: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig) {
+}: UsePrepareContractWriteConfig<TAbi, TFunctionName>) {
   const chainId = useChainId()
   const { data: signer } = useSigner<providers.JsonRpcSigner>()
 
@@ -101,7 +106,7 @@ export function usePrepareContractWrite({
         functionName,
         args,
         overrides,
-      },
+      } as Omit<PrepareWriteContractConfig, 'contractInterface'>,
       { chainId, signerAddress: signer?._address },
     ),
     queryFn({ contractInterface, signer }),

@@ -1,4 +1,5 @@
 import { erc20ABI } from '@wagmi/core'
+import { Abi, ExtractAbiEventNames, ExtractAbiFunctionNames } from 'abitype'
 import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, renderHook, wagmiContractConfig } from '../../../test'
@@ -9,20 +10,22 @@ import {
   useWaitForTransaction,
 } from '../transactions/useWaitForTransaction'
 import { UseContractEventConfig, useContractEvent } from './useContractEvent'
-import {
-  UseContractWriteArgs,
-  UseContractWriteConfig,
-  useContractWrite,
-} from './useContractWrite'
+import { UseContractWriteConfig, useContractWrite } from './useContractWrite'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
-function useContractEventWithWrite(config: {
+function useContractEventWithWrite<
+  TAbi extends Abi | readonly unknown[],
+  TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
+    : string,
+>(config: {
   contractEvent: {
-    config: UseContractEventConfig
+    config: UseContractEventConfig<TAbi, TEventName>
   }
   contractWrite: {
-    config: UseContractWriteArgs & UseContractWriteConfig
+    config: UseContractWriteConfig<TAbi, TFunctionName>
   }
   waitForTransaction?: UseWaitForTransactionArgs & UseWaitForTransactionConfig
 }) {
@@ -36,16 +39,16 @@ function useContractEventWithWrite(config: {
 
 describe('useContractEvent', () => {
   it('mounts', () => {
-    const listener = vi.fn()
+    const callback = vi.fn()
     renderHook(() =>
       useContractEvent({
         addressOrName: uniContractAddress,
         contractInterface: erc20ABI,
         eventName: 'Transfer',
-        listener,
+        callback,
       }),
     )
-    expect(listener).toHaveBeenCalledTimes(0)
+    expect(callback).toHaveBeenCalledTimes(0)
   })
 
   describe('configuration', () => {
@@ -53,14 +56,14 @@ describe('useContractEvent', () => {
       it('listens', async () => {
         let hash: string | undefined = undefined
 
-        const listener = vi.fn()
+        const callback = vi.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({
             contractEvent: {
               config: {
                 ...wagmiContractConfig,
                 eventName: 'Transfer',
-                listener,
+                callback,
               },
             },
             contractWrite: {
@@ -85,7 +88,7 @@ describe('useContractEvent', () => {
         await waitFor(() =>
           expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
         )
-        await waitFor(() => expect(listener).toHaveBeenCalled())
+        await waitFor(() => expect(callback).toHaveBeenCalled())
       })
     })
   })

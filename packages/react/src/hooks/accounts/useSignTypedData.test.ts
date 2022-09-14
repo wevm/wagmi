@@ -1,21 +1,18 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
+import { TypedData, TypedDataToPrimitiveTypes } from 'abitype'
 import { verifyTypedData } from 'ethers/lib/utils'
 import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
-import {
-  UseSignTypedDataArgs,
-  UseSignTypedDataConfig,
-  useSignTypedData,
-} from './useSignTypedData'
+import { UseSignTypedDataConfig, useSignTypedData } from './useSignTypedData'
 
 // All properties on a domain are optional
 const domain = {
   name: 'Ether Mail',
   version: '1',
   chainId: 1,
-  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC' as const,
 }
 
 // Named list of all type definitions
@@ -44,9 +41,10 @@ const value = {
   contents: 'Hello, Bob!',
 }
 
-function useSignTypedDataWithConnect(
-  config: UseSignTypedDataArgs & UseSignTypedDataConfig = {},
-) {
+function useSignTypedDataWithConnect<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+>(config: UseSignTypedDataConfig<TTypedData, TSchema> = {}) {
   return { connect: useConnect(), signTypedData: useSignTypedData(config) }
 }
 

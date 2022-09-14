@@ -5,11 +5,15 @@ import {
   WriteContractResult,
   writeContract,
 } from '@wagmi/core'
+import { Abi, ExtractAbiFunctionNames } from 'abitype'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
 
-export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
+export type UseContractWriteArgs<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = Omit<WriteContractArgs<TAbi, TFunctionName>, 'mode' | 'request'> &
   (
     | {
         /**
@@ -26,47 +30,46 @@ export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
       }
     | {
         mode: 'recklesslyUnprepared'
-        request?: undefined
+        request?: never
       }
   )
-export type UseContractWriteMutationArgs = {
-  /**
-   * Recklessly pass through unprepared config. Note: This has
-   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
-   * it is highly recommended to not use this and instead prepare the config upfront
-   * using the `usePrepareContractWrite` function.
-   */
-  recklesslySetUnpreparedArgs?: WriteContractArgs['args']
-  recklesslySetUnpreparedOverrides?: WriteContractArgs['overrides']
-}
-export type UseContractWriteConfig = MutationConfig<
-  WriteContractResult,
-  Error,
-  UseContractWriteArgs
->
 
-type ContractWriteFn = (overrideConfig?: UseContractWriteMutationArgs) => void
-type ContractWriteAsyncFn = (
-  overrideConfig?: UseContractWriteMutationArgs,
-) => Promise<WriteContractResult>
-type MutateFnReturnValue<Args, Fn> = Args extends {
-  mode: 'recklesslyUnprepared'
-}
-  ? Fn
-  : Fn | undefined
+export type UseContractWriteConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = MutationConfig<WriteContractResult, Error, UseContractWriteArgs> &
+  UseContractWriteArgs<TAbi, TFunctionName>
 
-export const mutationKey = ([
-  {
-    addressOrName,
-    args,
-    chainId,
-    contractInterface,
-    functionName,
-    overrides,
-    request,
-  },
-]: [UseContractWriteArgs]) =>
-  [
+type UseContractWriteMutationArgs<
+  Mode extends 'prepared' | 'recklesslyUnprepared',
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = Mode extends 'recklesslyUnprepared'
+  ? {
+      /**
+       * Recklessly pass through unprepared config. Note: This has
+       * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
+       * it is highly recommended to not use this and instead prepare the config upfront
+       * using the `usePrepareContractWrite` function.
+       */
+      recklesslySetUnpreparedArgs?: WriteContractArgs<
+        TAbi,
+        TFunctionName
+      >['args']
+      recklesslySetUnpreparedOverrides?: WriteContractArgs['overrides']
+    }
+  : undefined
+
+function mutationKey({
+  addressOrName,
+  args,
+  chainId,
+  contractInterface,
+  functionName,
+  overrides,
+  request,
+}: UseContractWriteArgs) {
+  return [
     {
       entity: 'writeContract',
       addressOrName,
@@ -78,8 +81,9 @@ export const mutationKey = ([
       request,
     },
   ] as const
+}
 
-const mutationFn = ({
+function mutationFn({
   addressOrName,
   args,
   chainId,
@@ -88,17 +92,18 @@ const mutationFn = ({
   mode,
   overrides,
   request,
-}: WriteContractArgs) => {
+}: WriteContractArgs) {
   return writeContract({
     addressOrName,
-    args,
-    chainId,
     contractInterface,
     functionName,
-    mode,
+    args: args as any,
+    chainId,
+    // TODO: Fix narrowing for `mode`
+    mode: mode as any,
     overrides,
-    request,
-  } as WriteContractArgs)
+    request: request as any,
+  })
 }
 
 /**
@@ -120,7 +125,10 @@ const mutationFn = ({
  *
  */
 export function useContractWrite<
-  Args extends UseContractWriteArgs = UseContractWriteArgs,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
+    : string,
 >({
   addressOrName,
   args,
@@ -134,7 +142,7 @@ export function useContractWrite<
   onMutate,
   onSettled,
   onSuccess,
-}: Args & UseContractWriteConfig) {
+}: UseContractWriteConfig<TAbi, TFunctionName>) {
   const {
     data,
     error,
@@ -148,18 +156,16 @@ export function useContractWrite<
     status,
     variables,
   } = useMutation(
-    mutationKey([
-      {
-        addressOrName,
-        contractInterface,
-        functionName,
-        args,
-        chainId,
-        mode,
-        overrides,
-        request,
-      } as WriteContractArgs,
-    ]),
+    mutationKey({
+      addressOrName,
+      contractInterface,
+      functionName,
+      args,
+      chainId,
+      mode,
+      overrides,
+      request,
+    } as WriteContractArgs),
     mutationFn,
     {
       onError,
@@ -170,7 +176,13 @@ export function useContractWrite<
   )
 
   const write = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) => {
+    (
+      overrideConfig?: UseContractWriteMutationArgs<
+        typeof mode,
+        TAbi,
+        TFunctionName
+      >,
+    ) => {
       return mutate({
         addressOrName,
         args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
@@ -197,7 +209,13 @@ export function useContractWrite<
   )
 
   const writeAsync = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) => {
+    (
+      overrideConfig?: UseContractWriteMutationArgs<
+        typeof mode,
+        TAbi,
+        TFunctionName
+      >,
+    ) => {
       return mutateAsync({
         addressOrName,
         args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
@@ -233,11 +251,7 @@ export function useContractWrite<
     reset,
     status,
     variables,
-    write: (mode === 'prepared' && !request
-      ? undefined
-      : write) as MutateFnReturnValue<Args, ContractWriteFn>,
-    writeAsync: (mode === 'prepared' && !request
-      ? undefined
-      : writeAsync) as MutateFnReturnValue<Args, ContractWriteAsyncFn>,
+    write: mode === 'prepared' && !request ? undefined : write,
+    writeAsync: mode === 'prepared' && !request ? undefined : writeAsync,
   }
 }

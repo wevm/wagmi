@@ -46,7 +46,7 @@ export type WriteContractUnpreparedArgs<
   TArgs = AbiParametersToPrimitiveTypes<TFunction['inputs']>,
 > = {
   mode: 'recklesslyUnprepared'
-  request?: undefined
+  request?: never
 } & (TArgs extends readonly any[]
   ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
     ? {

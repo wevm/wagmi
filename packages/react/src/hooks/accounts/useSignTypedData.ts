@@ -4,29 +4,47 @@ import {
   SignTypedDataResult,
   signTypedData,
 } from '@wagmi/core'
+import { TypedData, TypedDataToPrimitiveTypes } from 'abitype'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
 
-export type UseSignTypedDataArgs = Partial<SignTypedDataArgs>
+export type UseSignTypedDataArgs<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+> = Partial<SignTypedDataArgs<TTypedData, TSchema>>
 
-export type UseSignTypedDataConfig = MutationConfig<
+export type UseSignTypedDataConfig<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+> = MutationConfig<
   SignTypedDataResult,
   Error,
-  SignTypedDataArgs
->
+  SignTypedDataArgs<TTypedData, TSchema>
+> &
+  UseSignTypedDataArgs<TTypedData, TSchema>
 
-export const mutationKey = (args: UseSignTypedDataArgs) =>
-  [{ entity: 'signTypedData', ...args }] as const
+function mutationKey<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+>({ domain, types, value }: UseSignTypedDataArgs<TTypedData, TSchema>) {
+  return [{ entity: 'signTypedData', domain, types, value }] as const
+}
 
-const mutationFn = (args: UseSignTypedDataArgs) => {
+function mutationFn<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+>(args: UseSignTypedDataArgs<TTypedData, TSchema>) {
   const { domain, types, value } = args
   if (!domain || !types || !value)
     throw new Error('domain, types, and value are all required')
   return signTypedData({ domain, types, value })
 }
 
-export function useSignTypedData({
+export function useSignTypedData<
+  TTypedData extends TypedData,
+  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+>({
   domain,
   types,
   value,
@@ -34,7 +52,7 @@ export function useSignTypedData({
   onMutate,
   onSettled,
   onSuccess,
-}: UseSignTypedDataArgs & UseSignTypedDataConfig = {}) {
+}: UseSignTypedDataConfig<TTypedData, TSchema> = {}) {
   const {
     data,
     error,
@@ -55,14 +73,22 @@ export function useSignTypedData({
   })
 
   const signTypedData = React.useCallback(
-    (args?: SignTypedDataArgs) =>
-      mutate(args || <SignTypedDataArgs>{ domain, types, value }),
+    (args?: Partial<SignTypedDataArgs<TTypedData, TSchema>>) =>
+      mutate(<SignTypedDataArgs<TTypedData, TSchema>>{
+        domain: args?.domain ?? domain,
+        types: args?.types ?? types,
+        value: args?.value ?? value,
+      }),
     [domain, types, value, mutate],
   )
 
   const signTypedDataAsync = React.useCallback(
-    (args?: SignTypedDataArgs) =>
-      mutateAsync(args || <SignTypedDataArgs>{ domain, types, value }),
+    (args?: Partial<SignTypedDataArgs<TTypedData, TSchema>>) =>
+      mutateAsync(<SignTypedDataArgs<TTypedData, TSchema>>{
+        domain: args?.domain ?? domain,
+        types: args?.types ?? types,
+        value: args?.value ?? value,
+      }),
     [domain, types, value, mutateAsync],
   )
 

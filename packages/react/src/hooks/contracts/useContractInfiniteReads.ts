@@ -1,6 +1,6 @@
 import {
-  ReadContractResult,
   ReadContractsConfig,
+  ReadContractsResult,
   deepEqual,
   readContracts,
 } from '@wagmi/core'
@@ -9,24 +9,29 @@ import * as React from 'react'
 import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
 import { useInfiniteQuery } from '../utils'
 
-export type UseContractInfiniteReadsConfig<TPageParam = any> =
-  InfiniteQueryConfig<ReadContractResult, Error> &
-    Omit<ReadContractsConfig, 'contracts'> & {
-      cacheKey: string
-      contracts: (pageParam: TPageParam) => ReadContractsConfig['contracts']
-    }
+export type UseContractInfiniteReadsConfig<
+  TContracts extends unknown[],
+  TPageParam = any,
+> = InfiniteQueryConfig<ReadContractsResult<TContracts>, Error> &
+  Omit<ReadContractsConfig<TContracts>, 'contracts'> & {
+    cacheKey: string
+    contracts(pageParam: TPageParam):
+      | ReadContractsConfig<TContracts>['contracts']
+      // TODO: Remove fallback for better type inference of `args`
+      | ReadContractsConfig<unknown[]>['contracts']
+  }
 
-export const paginatedIndexesConfig = (
-  fn: (index: number) => ReadContractsConfig['contracts'][0],
+export function paginatedIndexesConfig<TContracts extends unknown[]>(
+  fn: (index: number) => ReadContractsConfig<TContracts>['contracts'][0],
   {
     perPage,
     start,
     direction,
   }: { perPage: number; start: number; direction: 'increment' | 'decrement' },
 ): Pick<
-  UseContractInfiniteReadsConfig<number>,
+  UseContractInfiniteReadsConfig<TContracts, number>,
   'contracts' | 'getNextPageParam'
-> => {
+> {
   return {
     getNextPageParam: (lastPage, pages) =>
       lastPage?.length === perPage ? pages.length : undefined,
@@ -42,37 +47,44 @@ export const paginatedIndexesConfig = (
   }
 }
 
-export const queryKey = ([{ cacheKey, overrides }]: [
-  {
-    cacheKey: UseContractInfiniteReadsConfig['cacheKey']
-    overrides: UseContractInfiniteReadsConfig['overrides']
-  },
-]) =>
-  [
+function queryKey<TContracts extends unknown[]>({
+  cacheKey,
+  overrides,
+}: {
+  cacheKey: UseContractInfiniteReadsConfig<TContracts>['cacheKey']
+  overrides: UseContractInfiniteReadsConfig<TContracts>['overrides']
+}) {
+  return [
     {
       entity: 'readContractsInfinite',
       cacheKey,
       overrides,
     },
   ] as const
+}
 
-const queryFn =
-  <TPageParam>({
-    contracts,
-  }: {
-    contracts: UseContractInfiniteReadsConfig<TPageParam>['contracts']
-  }) =>
-  ({
+function queryFn<TContracts extends unknown[], TPageParam>({
+  contracts,
+}: {
+  contracts: UseContractInfiniteReadsConfig<TContracts, TPageParam>['contracts']
+}) {
+  return ({
     queryKey: [{ overrides }],
     pageParam,
-  }: QueryFunctionArgs<typeof queryKey>) => {
+  }: QueryFunctionArgs<typeof queryKey<TContracts>>) => {
     return readContracts({
-      contracts: contracts(pageParam || undefined),
+      contracts: contracts(
+        pageParam || undefined,
+      ) as unknown as ReadContractsConfig<TContracts>['contracts'],
       overrides,
     })
   }
+}
 
-export function useContractInfiniteReads<TPageParam = any>({
+export function useContractInfiniteReads<
+  TContracts extends unknown[],
+  TPageParam = any,
+>({
   cacheKey,
   cacheTime,
   contracts,
@@ -87,9 +99,9 @@ export function useContractInfiniteReads<TPageParam = any>({
   select,
   staleTime,
   suspense,
-}: UseContractInfiniteReadsConfig<TPageParam>) {
+}: UseContractInfiniteReadsConfig<TContracts, TPageParam>) {
   const queryKey_ = React.useMemo(
-    () => queryKey([{ cacheKey, overrides }]),
+    () => queryKey<TContracts>({ cacheKey, overrides }),
     [cacheKey, overrides],
   )
 
@@ -98,17 +110,21 @@ export function useContractInfiniteReads<TPageParam = any>({
     return enabled
   }, [contracts, enabled_])
 
-  return useInfiniteQuery(queryKey_, queryFn({ contracts }), {
-    cacheTime,
-    enabled,
-    getNextPageParam,
-    isDataEqual,
-    keepPreviousData,
-    select,
-    staleTime,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  return useInfiniteQuery(
+    queryKey_,
+    queryFn<TContracts, TPageParam>({ contracts }),
+    {
+      cacheTime,
+      enabled,
+      getNextPageParam,
+      isDataEqual,
+      keepPreviousData,
+      select,
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
 }

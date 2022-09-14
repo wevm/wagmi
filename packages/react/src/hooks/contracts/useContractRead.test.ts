@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -14,7 +15,7 @@ describe('useContractRead', () => {
       useContractRead({
         ...wagmigotchiContractConfig,
         functionName: 'love',
-        args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+        args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
       }),
     )
 
@@ -49,7 +50,7 @@ describe('useContractRead', () => {
         useContractRead({
           ...wagmigotchiContractConfig,
           functionName: 'love',
-          args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
           chainId: 1,
         }),
       )
@@ -85,6 +86,7 @@ describe('useContractRead', () => {
           ...wagmigotchiContractConfig,
           functionName: 'love',
           enabled: false,
+          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
         }),
       )
 
@@ -117,7 +119,7 @@ describe('useContractRead', () => {
         useContractRead({
           ...wagmigotchiContractConfig,
           functionName: 'love',
-          args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
           enabled: false,
         }),
       )
@@ -140,7 +142,10 @@ describe('useContractRead', () => {
         useContractRead({
           ...mlootContractConfig,
           functionName: 'tokenOfOwnerByIndex',
-          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+          args: [
+            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            BigNumber.from('0'),
+          ],
         }),
       )
 

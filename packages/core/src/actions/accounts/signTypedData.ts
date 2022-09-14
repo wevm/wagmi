@@ -25,7 +25,11 @@ export type SignTypedDataArgs<
   /** Named list of all type definitions */
   types: TTypedData
   /** Data to sign */
-  value: TSchema[keyof TSchema]
+  value: TSchema[keyof TSchema] extends infer TValue
+    ? { [x: string]: any } extends TValue
+      ? Record<string, any>
+      : TValue
+    : never
 }
 
 export type SignTypedDataResult = string

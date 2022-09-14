@@ -12,9 +12,21 @@ describe('useContractInfiniteReads', () => {
       useContractInfiniteReads({
         cacheKey: 'contracts',
         contracts: (index = 0) => [
-          { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-          { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-          { ...mlootContractConfig, functionName: 'getHand', args: [index] },
+          {
+            ...mlootContractConfig,
+            functionName: 'getChest',
+            args: [index],
+          },
+          {
+            ...mlootContractConfig,
+            functionName: 'getFoot',
+            args: [index],
+          },
+          {
+            ...mlootContractConfig,
+            functionName: 'getHand',
+            args: [index],
+          },
         ],
         getNextPageParam: (_, pages) => pages.length + 1,
       }),

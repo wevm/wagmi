@@ -47,7 +47,7 @@ export type PrepareWriteContractConfig<
          *
          * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
          */
-        args?: any[]
+        args?: readonly any[]
       }
     : TArgs['length'] extends 0
     ? { args?: never }

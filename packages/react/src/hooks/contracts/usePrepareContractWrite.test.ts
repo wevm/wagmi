@@ -1,3 +1,5 @@
+import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -8,14 +10,16 @@ import {
 } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UsePrepareContractWriteArgs,
   UsePrepareContractWriteConfig,
   usePrepareContractWrite,
 } from './usePrepareContractWrite'
 
-function usePrepareContractWriteWithConnect(
-  config: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig,
-) {
+function usePrepareContractWriteWithConnect<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
+    : string,
+>(config: UsePrepareContractWriteConfig<TAbi, TFunctionName>) {
   const { ...prepareContractTransaction } = usePrepareContractWrite(config)
   return {
     connect: useConnect(),
@@ -132,7 +136,7 @@ describe('usePrepareContractWrite', () => {
         usePrepareContractWriteWithConnect({
           ...mlootContractConfig,
           functionName: 'claim',
-          args: 1,
+          args: [BigNumber.from(1)],
         }),
       )
       const { result, waitFor } = utils
@@ -181,6 +185,7 @@ describe('usePrepareContractWrite', () => {
       const utils = renderHook(() =>
         usePrepareContractWriteWithConnect({
           ...wagmiContractConfig,
+          // @ts-expect-error function does not exist
           functionName: 'wagmi',
         }),
       )

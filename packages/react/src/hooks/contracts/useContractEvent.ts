@@ -1,44 +1,67 @@
+import { IsNever, NotEqual, Or } from '@wagmi/core/src/types/utils'
+import {
+  Abi,
+  AbiEvent,
+  AbiParametersToPrimitiveTypes,
+  Address,
+  ExtractAbiEvent,
+  ExtractAbiEventNames,
+} from 'abitype'
 import { ethers } from 'ethers'
 import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
-import { UseContractConfig, useContract } from './useContract'
+import { useContract } from './useContract'
 
 export type UseContractEventConfig<
-  Contract extends ethers.Contract = ethers.Contract,
-> = UseContractConfig & {
-  /** Event name to listen to */
-  eventName: Parameters<Contract['on']>[0]
-  /** Callback function when event is called */
-  listener: Parameters<Contract['on']>[1]
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TEventName extends string = string,
+  TEvent extends AbiEvent = TAbi extends Abi
+    ? ExtractAbiEvent<TAbi, TEventName>
+    : never,
+  TArgs = AbiParametersToPrimitiveTypes<TEvent['inputs']>,
+> = {
+  /** Contract address */
+  addressOrName: Address
+  /** Contract ABI */
+  contractInterface: TAbi
   /** Chain id to use for provider */
   chainId?: number
+  /** Event to listen for */
+  eventName: TEventName
+  /** Callback when event is emitted */
+  callback: TArgs extends readonly any[]
+    ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
+      ? (...args: any) => void
+      : (...args: TArgs) => void
+    : never
   /** Receive only a single event */
   once?: boolean
 }
 
-export const useContractEvent = <Contract extends ethers.Contract>({
+export function useContractEvent<
+  TAbi extends Abi | readonly unknown[],
+  TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
+>({
   addressOrName,
   chainId,
   contractInterface,
-  listener,
+  callback,
   eventName,
-  signerOrProvider,
   once,
-}: UseContractEventConfig<Contract>) => {
+}: UseContractEventConfig<TAbi, TEventName>) {
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
-  const contract = useContract<Contract>({
+  const contract = useContract({
     addressOrName,
     contractInterface,
-    signerOrProvider: webSocketProvider ?? provider ?? signerOrProvider,
+    signerOrProvider: webSocketProvider ?? provider,
   })
-  const listenerRef = React.useRef(listener)
-  listenerRef.current = listener
+  const callbackRef = React.useRef(callback)
+  callbackRef.current = callback
 
   React.useEffect(() => {
-    const handler = (...event: Array<Parameters<Contract['on']>[1]>) =>
-      listenerRef.current(event)
+    const handler = (...event: any[]) => callbackRef.current(event)
 
     const contract_ = <ethers.Contract>(<unknown>contract)
     if (once) contract_.once(eventName, handler)

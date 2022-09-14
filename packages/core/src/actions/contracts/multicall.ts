@@ -84,55 +84,61 @@ type GetResult<T> = T extends {
 
 type MAXIMUM_DEPTH = 20
 type ContractsConfig<
-  T extends unknown[],
+  TContracts extends unknown[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? MulticallContractConfig[]
-  : T extends []
+  : TContracts extends []
   ? []
-  : T extends [infer Head]
+  : TContracts extends [infer Head]
   ? [...Result, GetConfig<Head>]
-  : T extends [infer Head, ...infer Tail]
+  : TContracts extends [infer Head, ...infer Tail]
   ? ContractsConfig<[...Tail], [...Result, GetConfig<Head>], [...Depth, 1]>
-  : unknown[] extends T
-  ? T
-  : T extends MulticallContractConfig<infer TAbi, infer TFunctionName>[]
+  : unknown[] extends TContracts
+  ? TContracts
+  : TContracts extends MulticallContractConfig<
+      infer TAbi,
+      infer TFunctionName
+    >[]
   ? MulticallContractConfig<TAbi, TFunctionName>[]
   : MulticallContractConfig[]
 
-export type MulticallConfig<T extends unknown[]> = {
+export type MulticallConfig<TContracts extends unknown[]> = {
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Chain id to use for provider */
   chainId?: number
-  contracts: readonly [...ContractsConfig<T>]
+  contracts: readonly [...ContractsConfig<TContracts>]
   /** Call overrides */
   overrides?: CallOverrides
 }
 
 export type MulticallResult<
-  T extends unknown[],
+  TContracts extends unknown[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? any[]
-  : T extends []
+  : TContracts extends []
   ? []
-  : T extends [infer Head]
+  : TContracts extends [infer Head]
   ? [...Result, GetResult<Head>]
-  : T extends [infer Head, ...infer Tail]
+  : TContracts extends [infer Head, ...infer Tail]
   ? MulticallResult<[...Tail], [...Result, GetResult<Head>], [...Depth, 1]>
-  : T extends MulticallContractConfig<infer TAbi, infer TFunctionName>[]
+  : TContracts extends MulticallContractConfig<
+      infer TAbi,
+      infer TFunctionName
+    >[]
   ? GetResult<{ contractInterface: TAbi; functionName: TFunctionName }>[]
   : any[]
 
-export async function multicall<T extends unknown[]>({
+export async function multicall<TContracts extends unknown[]>({
   allowFailure = true,
   chainId,
   contracts,
   overrides,
-}: MulticallConfig<T>): Promise<MulticallResult<T>> {
+}: MulticallConfig<TContracts>): Promise<MulticallResult<TContracts>> {
   const provider = getProvider({ chainId })
   if (!provider.chains) throw new ProviderChainsNotFound()
 
@@ -254,5 +260,5 @@ export async function multicall<T extends unknown[]>({
       logWarn(error.message)
       return null
     }
-  }) as MulticallResult<T>
+  }) as MulticallResult<TContracts>
 }

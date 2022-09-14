@@ -45,7 +45,7 @@ type ReadContractsContractConfig<
          *
          * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
          */
-        args?: any[]
+        args?: readonly any[]
       }
     : TArgs['length'] extends 0
     ? { args?: never }
@@ -86,20 +86,23 @@ type GetResult<T> = T extends {
 
 type MAXIMUM_DEPTH = 20
 type ContractsConfig<
-  T extends unknown[],
+  TContracts extends unknown[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? ReadContractsContractConfig[]
-  : T extends []
+  : TContracts extends []
   ? []
-  : T extends [infer Head]
+  : TContracts extends [infer Head]
   ? [...Result, GetConfig<Head>]
-  : T extends [infer Head, ...infer Tail]
+  : TContracts extends [infer Head, ...infer Tail]
   ? ContractsConfig<[...Tail], [...Result, GetConfig<Head>], [...Depth, 1]>
-  : unknown[] extends T
-  ? T
-  : T extends ReadContractsContractConfig<infer TAbi, infer TFunctionName>[]
+  : unknown[] extends TContracts
+  ? TContracts
+  : TContracts extends ReadContractsContractConfig<
+      infer TAbi,
+      infer TFunctionName
+    >[]
   ? ReadContractsContractConfig<TAbi, TFunctionName>[]
   : ReadContractsContractConfig[]
 
@@ -112,26 +115,29 @@ export type ReadContractsConfig<T extends unknown[]> = {
 }
 
 export type ReadContractsResult<
-  T extends unknown[],
+  TContracts extends unknown[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? any[]
-  : T extends []
+  : TContracts extends []
   ? []
-  : T extends [infer Head]
+  : TContracts extends [infer Head]
   ? [...Result, GetResult<Head>]
-  : T extends [infer Head, ...infer Tail]
+  : TContracts extends [infer Head, ...infer Tail]
   ? ReadContractsResult<[...Tail], [...Result, GetResult<Head>], [...Depth, 1]>
-  : T extends ReadContractsContractConfig<infer TAbi, infer TFunctionName>[]
+  : TContracts extends ReadContractsContractConfig<
+      infer TAbi,
+      infer TFunctionName
+    >[]
   ? GetResult<{ contractInterface: TAbi; functionName: TFunctionName }>[]
   : any[]
 
-export async function readContracts<T extends unknown[]>({
+export async function readContracts<TContracts extends unknown[]>({
   allowFailure = true,
   contracts,
   overrides,
-}: ReadContractsConfig<T>): Promise<ReadContractsResult<T>> {
+}: ReadContractsConfig<TContracts>): Promise<ReadContractsResult<TContracts>> {
   type ContractConfig = {
     addressOrName: Address
     chainId?: number
@@ -170,9 +176,11 @@ export async function readContracts<T extends unknown[]>({
           }
           return null
         })
-        .flat() as ReadContractsResult<T>
+        .flat() as ReadContractsResult<TContracts>
 
-    return (await Promise.all(promises())).flat() as ReadContractsResult<T>
+    return (
+      await Promise.all(promises())
+    ).flat() as ReadContractsResult<TContracts>
   } catch (err) {
     if (err instanceof ContractResultDecodeError) throw err
     if (err instanceof ContractMethodNoResultError) throw err
@@ -197,8 +205,8 @@ export async function readContracts<T extends unknown[]>({
         })
         logWarn(error.message)
         return null
-      }) as ReadContractsResult<T>
+      }) as ReadContractsResult<TContracts>
 
-    return (await Promise.all(promises())) as ReadContractsResult<T>
+    return (await Promise.all(promises())) as ReadContractsResult<TContracts>
   }
 }
