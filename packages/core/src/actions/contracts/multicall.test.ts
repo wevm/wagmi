@@ -143,18 +143,12 @@ describe('multicall', () => {
               {
                 ...mlootContractConfig,
                 functionName: 'tokenOfOwnerByIndex' as const,
-                args: [
-                  '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-                  BigNumber.from(69420),
-                ],
+                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
               },
               {
                 ...mlootContractConfig,
                 functionName: 'tokenOfOwnerByIndex' as const,
-                args: [
-                  '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-                  BigNumber.from(69421),
-                ],
+                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69421],
               },
             ],
           }),
@@ -340,7 +334,9 @@ describe('multicall', () => {
             \\"contractInterface\\": \\"...\\",
             \\"functionName\\": \\"love\\",
             \\"chainId\\": 1,
-            \\"args\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+            \\"args\\": [
+              \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+            ]
           }"
         `)
       })
@@ -400,7 +396,9 @@ describe('multicall', () => {
             \\"contractInterface\\": \\"...\\",
             \\"functionName\\": \\"love\\",
             \\"chainId\\": 1,
-            \\"args\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+            \\"args\\": [
+              \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+            ]
           }",
             "Contract read returned an empty response. This could be due to any of the following:
           - The contract does not have the function \\"love\\",
@@ -413,7 +411,9 @@ describe('multicall', () => {
             \\"contractInterface\\": \\"...\\",
             \\"functionName\\": \\"love\\",
             \\"chainId\\": 1,
-            \\"args\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+            \\"args\\": [
+              \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+            ]
           }",
           ]
         `)

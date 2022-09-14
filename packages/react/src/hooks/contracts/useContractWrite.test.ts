@@ -47,8 +47,8 @@ function usePrepareContractWritedWithConnect<
     connect: useConnect(),
     prepareContractWrite,
     contractWrite: useContractWrite({
-      chainId: config?.chainId,
       ...prepareContractWrite.config,
+      chainId: config?.chainId,
     }),
   }
 }
@@ -111,7 +111,7 @@ describe('useContractWrite', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it.skip('unable to switch', async () => {
+      it('unable to switch', async () => {
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
             ...wagmiContractConfig,

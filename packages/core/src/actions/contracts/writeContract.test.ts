@@ -47,8 +47,8 @@ describe('writeContract', () => {
 
       await expect(() =>
         writeContract({
-          chainId: 69,
           ...config,
+          chainId: 69,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,

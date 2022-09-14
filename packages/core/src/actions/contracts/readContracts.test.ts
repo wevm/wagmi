@@ -517,7 +517,9 @@ describe('readContracts', () => {
           \\"contractInterface\\": \\"...\\",
           \\"functionName\\": \\"love\\",
           \\"chainId\\": 137,
-          \\"args\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+          \\"args\\": [
+            \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+          ]
         }
 
         Details: Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"love(address)\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.7.0)",
