@@ -57,7 +57,7 @@ export function createClient<
       dehydrateOptions: {
         shouldDehydrateQuery: (query) =>
           query.cacheTime !== 0 &&
-          query.queryHash !== JSON.stringify(signerQueryKey()),
+          query.queryHash !== JSON.stringify(signerQueryKey({ chainId: 1 })),
       },
     })
   return Object.assign(client, { queryClient })

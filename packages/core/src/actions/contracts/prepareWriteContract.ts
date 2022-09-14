@@ -5,12 +5,13 @@ import {
 } from 'ethers/lib/ethers'
 
 import {
+  ChainMismatchError,
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Address, Signer } from '../../types'
 import { minimizeContractInterface } from '../../utils'
-import { fetchSigner } from '../accounts'
+import { fetchSigner, getNetwork } from '../accounts'
 import { GetContractArgs, getContract } from './getContract'
 
 export type PrepareWriteContractConfig<TSigner extends Signer = Signer> = Omit<
@@ -66,6 +67,18 @@ export async function prepareWriteContract<
 }: PrepareWriteContractConfig): Promise<PrepareWriteContractResult<TSigner>> {
   const signer = signer_ ?? (await fetchSigner())
   if (!signer) throw new ConnectorNotFoundError()
+
+  const { chain: activeChain, chains } = getNetwork()
+  const activeChainId = activeChain?.id
+  if (chainId && chainId !== activeChainId) {
+    throw new ChainMismatchError({
+      activeChain:
+        chains.find((x) => x.id === activeChainId)?.name ??
+        `Chain ${activeChainId}`,
+      targetChain:
+        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
+    })
+  }
 
   const contract = getContract<TContract>({
     addressOrName,

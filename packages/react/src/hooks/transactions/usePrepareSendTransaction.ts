@@ -1,12 +1,15 @@
 import {
+  ConnectorNotFoundError,
+  FetchSignerResult,
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
   deepEqual,
   prepareSendTransaction,
 } from '@wagmi/core'
+import { providers } from 'ethers'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useProvider } from '../providers'
+import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
 export type UsePrepareSendTransactionArgs = Omit<
@@ -21,19 +24,36 @@ export type UsePrepareSendTransactionConfig = QueryConfig<
   Error
 >
 
-export const queryKey = ({
-  chainId,
-  request,
-}: UsePrepareSendTransactionArgs & {
-  chainId?: number
-}) => [{ entity: 'prepareSendTransaction', chainId, request }] as const
+export const queryKey = (
+  { chainId, request }: UsePrepareSendTransactionArgs,
+  {
+    activeChainId,
+    signerAddress,
+  }: { activeChainId: number; signerAddress?: string },
+) =>
+  [
+    {
+      entity: 'prepareSendTransaction',
+      activeChainId,
+      chainId,
+      request,
+      signerAddress,
+    },
+  ] as const
 
-const queryFn = ({
-  queryKey: [{ request }],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  if (!request.to) throw new Error('request.to is required')
-  return prepareSendTransaction({ request: { ...request, to: request.to } })
-}
+const queryFn =
+  ({ signer }: { signer?: FetchSignerResult }) =>
+  ({
+    queryKey: [{ chainId, request }],
+  }: QueryFunctionArgs<typeof queryKey>) => {
+    if (!request.to) throw new Error('request.to is required')
+    if (!signer) throw new ConnectorNotFoundError()
+    return prepareSendTransaction({
+      chainId,
+      request: { ...request, to: request.to },
+      signerOrProvider: signer,
+    })
+  }
 
 /**
  * @description Hook for preparing a transaction to be sent via [`useSendTransaction`](/docs/hooks/useSendTransaction).
@@ -50,6 +70,7 @@ const queryFn = ({
  * const result = useSendTransaction(config)
  */
 export function usePrepareSendTransaction({
+  chainId,
   request,
   cacheTime,
   enabled = true,
@@ -59,15 +80,18 @@ export function usePrepareSendTransaction({
   onSettled,
   onSuccess,
 }: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig) {
-  const chainId = useChainId()
-  const provider = useProvider()
+  const activeChainId = useChainId()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
 
   const prepareSendTransactionQuery = useQuery(
-    queryKey({ request, chainId }),
-    queryFn,
+    queryKey(
+      { request, chainId },
+      { activeChainId, signerAddress: signer?._address },
+    ),
+    queryFn({ signer }),
     {
       cacheTime,
-      enabled: Boolean(enabled && provider && request.to),
+      enabled: Boolean(enabled && signer && request.to),
       isDataEqual: deepEqual,
       staleTime,
       suspense,

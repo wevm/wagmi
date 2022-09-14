@@ -1,18 +1,23 @@
 import { providers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 
-import { Address } from '../../types'
+import { ChainMismatchError } from '../../errors'
+import { Address, Provider, Signer } from '../../types'
+import { getNetwork } from '../accounts'
 import { fetchEnsAddress } from '../ens'
 import { getProvider } from '../providers'
 
-export type PrepareSendTransactionArgs = {
+export type PrepareSendTransactionArgs<
+  TProvider extends Provider = Provider,
+  TSigner extends Signer = Signer,
+> = {
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
   /** Request data to prepare the transaction */
   request: providers.TransactionRequest & {
     to: NonNullable<providers.TransactionRequest['to']>
   }
-  signerOrProvider?: providers.JsonRpcSigner | providers.Provider
+  signerOrProvider?: TSigner | TProvider
 }
 
 export type PrepareSendTransactionResult = {
@@ -45,6 +50,18 @@ export async function prepareSendTransaction({
   request,
   signerOrProvider = getProvider({ chainId }),
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
+  const { chain: activeChain, chains } = getNetwork()
+  const activeChainId = activeChain?.id
+  if (chainId && chainId !== activeChainId) {
+    throw new ChainMismatchError({
+      activeChain:
+        chains.find((x) => x.id === activeChainId)?.name ??
+        `Chain ${activeChainId}`,
+      targetChain:
+        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
+    })
+  }
+
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)
       ? Promise.resolve(<Address>request.to)

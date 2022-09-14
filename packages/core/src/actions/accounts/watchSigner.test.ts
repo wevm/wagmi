@@ -15,7 +15,7 @@ describe('watchSigner', () => {
     const client = setupClient()
 
     let counter = 0
-    const unsubscribe = watchSigner((data) => {
+    const unsubscribe = watchSigner({}, (data) => {
       if (counter === 0)
         expect(data).toMatchInlineSnapshot(`
           WalletSigner {
@@ -39,7 +39,7 @@ describe('watchSigner', () => {
     const client = setupClient()
 
     let counter = 0
-    const unwatch = watchSigner((data) => {
+    const unwatch = watchSigner({}, (data) => {
       if (counter === 0)
         expect(data).toMatchInlineSnapshot(`
           WalletSigner {
