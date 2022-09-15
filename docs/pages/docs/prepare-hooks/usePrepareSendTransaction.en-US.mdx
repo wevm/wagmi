@@ -3,6 +3,8 @@ title: 'usePrepareSendTransaction'
 description: 'Hook for preparing a transaction to be sent.'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+
 # usePrepareSendTransaction
 
 Hook for preparing a transaction to be sent via [`useSendTransaction`](/docs/hooks/useSendTransaction).
@@ -42,7 +44,7 @@ function App() {
 }
 ```
 
-Note: The `sendTransaction` function will be undefined if the request has not been prepared (still in-flight or errored).
+<Callout>Note: The `sendTransaction` function will be undefined if the request has not been prepared (still in-flight or errored), or the end-user is not connected to a wallet.</Callout>
 
 ## Return value
 
@@ -80,6 +82,25 @@ function App() {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
     },
+  })
+}
+```
+
+### chainId (optional)
+
+Chain ID used to validate if the user is connected to the target chain.
+
+```tsx {10}
+import { usePrepareSendTransaction } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    chainId: optimism.id
   })
 }
 ```

@@ -3,6 +3,8 @@ title: 'usePrepareContractWrite'
 description: 'Hook for preparing a contract write.'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+
 # usePrepareContractWrite
 
 Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
@@ -41,7 +43,7 @@ function App() {
 }
 ```
 
-Note: The `write` function will be undefined if the config has not been prepared (still in-flight or errored).
+<Callout>Note: The `write` function will be undefined if the config has not been prepared (still in-flight or errored), or the end-user is not connected to a wallet.</Callout>
 
 ## Return value
 
@@ -127,6 +129,24 @@ function App() {
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
     args: [],
+  })
+}
+```
+
+### chainId (optional)
+
+Chain ID used to validate if the user is connected to the target chain.
+
+```tsx {9}
+import { usePrepareContractWrite } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    contractInterface: wagmigotchiABI,
+    functionName: 'feed',
+    chainId: optimism.id
   })
 }
 ```

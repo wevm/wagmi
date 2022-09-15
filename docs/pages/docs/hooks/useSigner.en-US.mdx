@@ -48,6 +48,21 @@ function App() {
 
 ## Configuration
 
+### chainId (optional)
+
+Chain ID to use for signer.
+
+```tsx {5-7}
+import { useContract, useSigner } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { data: signer } = useSigner({
+    chainId: optimism.id
+  })
+}
+```
+
 ### onError (optional)
 
 Function to invoke when an error is thrown while fetching new data.
