@@ -65,7 +65,7 @@ export async function prepareWriteContract<
   overrides,
   signer: signer_,
 }: PrepareWriteContractConfig): Promise<PrepareWriteContractResult<TSigner>> {
-  const signer = signer_ ?? (await fetchSigner())
+  const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
 
   const { chain: activeChain, chains } = getNetwork()

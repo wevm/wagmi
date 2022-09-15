@@ -1,23 +1,19 @@
 import { providers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 
-import { ChainMismatchError } from '../../errors'
-import { Address, Provider, Signer } from '../../types'
-import { getNetwork } from '../accounts'
+import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
+import { Address, Signer } from '../../types'
+import { fetchSigner, getNetwork } from '../accounts'
 import { fetchEnsAddress } from '../ens'
-import { getProvider } from '../providers'
 
-export type PrepareSendTransactionArgs<
-  TProvider extends Provider = Provider,
-  TSigner extends Signer = Signer,
-> = {
+export type PrepareSendTransactionArgs<TSigner extends Signer = Signer> = {
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
   /** Request data to prepare the transaction */
   request: providers.TransactionRequest & {
     to: NonNullable<providers.TransactionRequest['to']>
   }
-  signerOrProvider?: TSigner | TProvider
+  signer?: TSigner | null
 }
 
 export type PrepareSendTransactionResult = {
@@ -48,8 +44,11 @@ export type PrepareSendTransactionResult = {
 export async function prepareSendTransaction({
   chainId,
   request,
-  signerOrProvider = getProvider({ chainId }),
+  signer: signer_,
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
+  const signer = signer_ ?? (await fetchSigner({ chainId }))
+  if (!signer) throw new ConnectorNotFoundError()
+
   const { chain: activeChain, chains } = getNetwork()
   const activeChainId = activeChain?.id
   if (chainId && chainId !== activeChainId) {
@@ -68,7 +67,7 @@ export async function prepareSendTransaction({
       : fetchEnsAddress({ name: request.to }),
     request.gasLimit
       ? Promise.resolve(request.gasLimit)
-      : signerOrProvider.estimateGas(request),
+      : signer.estimateGas(request),
   ])
 
   if (!to) throw new Error('Could not resolve ENS name')

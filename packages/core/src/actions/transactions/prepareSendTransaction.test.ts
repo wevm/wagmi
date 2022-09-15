@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
-import { connect } from '../accounts'
+import { connect, fetchSigner } from '../accounts'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'
 import { getProvider } from '../providers'
 import { prepareSendTransaction } from './prepareSendTransaction'
@@ -22,9 +22,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('derives the gas limit & ens address', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       to: 'moxey.eth',
@@ -55,9 +59,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('derives the gas limit only if address is passed', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
@@ -88,9 +96,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('derives the address only if gas limit is passed', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       gasLimit: BigNumber.from('1000000'),
@@ -122,9 +134,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('returns the request if both gas limit & address is passed', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       gasLimit: BigNumber.from('1000000'),

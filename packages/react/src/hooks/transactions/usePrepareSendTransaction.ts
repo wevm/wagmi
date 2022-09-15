@@ -1,5 +1,4 @@
 import {
-  ConnectorNotFoundError,
   FetchSignerResult,
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
@@ -47,11 +46,10 @@ const queryFn =
     queryKey: [{ chainId, request }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!request.to) throw new Error('request.to is required')
-    if (!signer) throw new ConnectorNotFoundError()
     return prepareSendTransaction({
       chainId,
       request: { ...request, to: request.to },
-      signerOrProvider: signer,
+      signer,
     })
   }
 
