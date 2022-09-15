@@ -99,7 +99,9 @@ export function usePrepareContractWrite({
   onSuccess,
 }: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig) {
   const activeChainId = useChainId()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({
+    chainId: chainId ?? activeChainId,
+  })
 
   const prepareContractWriteQuery = useQuery(
     queryKey(

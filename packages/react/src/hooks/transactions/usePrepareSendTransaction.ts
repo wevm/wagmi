@@ -79,7 +79,9 @@ export function usePrepareSendTransaction({
   onSuccess,
 }: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig) {
   const activeChainId = useChainId()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({
+    chainId: chainId ?? activeChainId,
+  })
 
   const prepareSendTransactionQuery = useQuery(
     queryKey(
