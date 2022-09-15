@@ -64,7 +64,7 @@ describe('useSendTransaction', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('unable to switch', async () => {
+      it('recklesslyUnprepared - unable to switch', async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
@@ -72,8 +72,9 @@ describe('useSendTransaction', () => {
           },
         })
         const utils = renderHook(() =>
-          useSendTransactionPreparedWithConnect({
+          useSendTransactionWithConnect({
             chainId: 1,
+            mode: 'recklesslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),

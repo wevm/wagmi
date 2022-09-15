@@ -32,7 +32,7 @@ function useContractWriteWithConnect(
   }
 }
 
-function usePrepareContractWritedWithConnect(
+function usePrepareContractWriteWithConnect(
   config: UsePrepareContractWriteArgs &
     UsePrepareContractWriteConfig & { chainId?: number },
 ) {
@@ -105,10 +105,11 @@ describe('useContractWrite', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('unable to switch', async () => {
+      it('recklesslyUnprepared - unable to switch', async () => {
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          useContractWriteWithConnect({
             ...wagmiContractConfig,
+            mode: 'recklesslyUnprepared',
             chainId: 69,
             functionName: 'mint',
           }),
@@ -140,7 +141,7 @@ describe('useContractWrite', () => {
     describe('write', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
           }),
@@ -183,7 +184,7 @@ describe('useContractWrite', () => {
       it('prepared with deferred args', async () => {
         const data = getCrowdfundArgs()
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...mirrorCrowdfundContractConfig,
             functionName: 'createCrowdfund',
             args: data,
@@ -314,7 +315,7 @@ describe('useContractWrite', () => {
     describe('writeAsync', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
           }),
@@ -358,7 +359,7 @@ describe('useContractWrite', () => {
       it('prepared with deferred args', async () => {
         const data = getCrowdfundArgs()
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...mirrorCrowdfundContractConfig,
             functionName: 'createCrowdfund',
             args: data,
@@ -482,7 +483,7 @@ describe('useContractWrite', () => {
       let args: any[] | any = []
       let functionName = 'mint'
       const utils = renderHook(() =>
-        usePrepareContractWritedWithConnect({
+        usePrepareContractWriteWithConnect({
           ...wagmiContractConfig,
           functionName,
           args,
