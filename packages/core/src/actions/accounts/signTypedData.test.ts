@@ -15,6 +15,7 @@ const domain = {
   name: 'Ether Mail',
   version: '1',
   chainId: 1,
+  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC' as const,
 }
 
 // Named list of all type definitions
@@ -54,7 +55,7 @@ describe('signTypedData', () => {
       expect(
         await signTypedData({ domain, types, value }),
       ).toMatchInlineSnapshot(
-        '"0x638234ed750f57f80c0526707a590fe65749aba4e5fa0cd16ace23e90a88e82f74ee81000af0e16fc25cf82a0a7b33e4264e2f8ecb7598e9938130a9fd9807991c"',
+        `"0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b"`,
       )
     })
   })

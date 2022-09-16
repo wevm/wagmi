@@ -1,5 +1,5 @@
-import { Address } from 'abitype'
-import { Signer as BaseSigner, providers } from 'ethers'
+import { Address, ResolvedConfig } from 'abitype'
+import { Signer as BaseSigner, BigNumber, providers } from 'ethers'
 
 import {
   BlockExplorer,
@@ -7,6 +7,19 @@ import {
   RpcProviderName,
   units,
 } from '../constants'
+
+declare module 'abitype' {
+  export interface Config {
+    // TODO: Drop `BigNumber` once ethers supports `bigint` natively
+    BigIntType: BigNumber
+    BytesType: `0x${string}` | ArrayLike<number>
+    IntType: number
+  }
+}
+
+declare module 'ethers/lib/utils' {
+  export function getAddress(address: string): Address
+}
 
 export type Hash = `0x${string}`
 
@@ -108,7 +121,7 @@ type WatchAssetParams = {
     /** Address of token contract */
     address: Address
     /** Number of token decimals */
-    decimals: number
+    decimals: ResolvedConfig['IntType']
     /** String url of token logo */
     image?: string
     /** A ticker symbol or shorthand, up to 5 characters */
@@ -167,9 +180,9 @@ export interface Ethereum extends InjectedProviders {
    * EIP-1193: Ethereum Provider JavaScript API
    * https://eips.ethereum.org/EIPS/eip-1193
    */
-  request(args: { method: 'eth_accounts' }): Promise<string[]>
+  request(args: { method: 'eth_accounts' }): Promise<Address[]>
   request(args: { method: 'eth_chainId' }): Promise<string>
-  request(args: { method: 'eth_requestAccounts' }): Promise<string[]>
+  request(args: { method: 'eth_requestAccounts' }): Promise<Address[]>
 
   /**
    * EIP-1474: Remote procedure call specification

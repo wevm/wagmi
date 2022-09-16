@@ -1,5 +1,10 @@
-import { Address, TypedData, TypedDataToPrimitiveTypes } from 'abitype'
-import { BytesLike, TypedDataField, providers } from 'ethers'
+import {
+  Address,
+  ResolvedConfig,
+  TypedData,
+  TypedDataToPrimitiveTypes,
+} from 'abitype'
+import { TypedDataField, providers } from 'ethers'
 
 import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
 import { normalizeChainId } from '../../utils'
@@ -20,7 +25,7 @@ export type SignTypedDataArgs<
      */
     chainId?: string | number | bigint
     verifyingContract?: Address
-    salt?: BytesLike
+    salt?: ResolvedConfig['BytesType']
   }
   /** Named list of all type definitions */
   types: TTypedData

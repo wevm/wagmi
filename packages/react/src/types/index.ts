@@ -4,6 +4,16 @@ import {
   UseMutationOptions,
   UseQueryOptions,
 } from '@tanstack/react-query'
+import { BigNumber } from 'ethers'
+
+declare module 'abitype' {
+  export interface Config {
+    // TODO: Drop `BigNumber` once ethers supports `bigint` natively
+    BigIntType: BigNumber
+    BytesType: `0x${string}` | ArrayLike<number>
+    IntType: number
+  }
+}
 
 export type QueryFunctionArgs<T extends (...args: any) => any> =
   QueryFunctionContext<ReturnType<T>>

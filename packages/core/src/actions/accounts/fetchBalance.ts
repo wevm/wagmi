@@ -1,5 +1,5 @@
-import { Address } from 'abitype'
-import { BigNumber, logger } from 'ethers/lib/ethers'
+import { Address, ResolvedConfig } from 'abitype'
+import { logger } from 'ethers/lib/ethers'
 import { Logger, formatUnits, isAddress } from 'ethers/lib/utils'
 
 import { getClient } from '../../client'
@@ -20,10 +20,10 @@ export type FetchBalanceArgs = {
 }
 
 export type FetchBalanceResult = {
-  decimals: number | BigNumber
+  decimals: ResolvedConfig['IntType']
   formatted: string
   symbol: string
-  value: BigNumber
+  value: ResolvedConfig['BigIntType']
 }
 
 export async function fetchBalance({
@@ -53,26 +53,26 @@ export async function fetchBalance({
       resolvedAddress = <Address>address
     }
 
+    const erc20Config = {
+      addressOrName: token,
+      contractInterface: erc20ABI,
+      chainId,
+    } as const
+
     const [value, decimals, symbol] = await readContracts({
       allowFailure: false,
       contracts: [
         {
-          addressOrName: token,
-          chainId,
-          contractInterface: erc20ABI,
+          ...erc20Config,
           functionName: 'balanceOf' as const,
           args: [resolvedAddress],
         },
         {
-          addressOrName: token,
-          chainId,
-          contractInterface: erc20ABI,
+          ...erc20Config,
           functionName: 'decimals' as const,
         },
         {
-          addressOrName: token,
-          chainId,
-          contractInterface: erc20ABI,
+          ...erc20Config,
           functionName: 'symbol' as const,
         },
       ],

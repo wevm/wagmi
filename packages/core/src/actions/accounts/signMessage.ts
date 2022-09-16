@@ -1,4 +1,4 @@
-import { Bytes } from 'ethers/lib/utils'
+import { ResolvedConfig } from 'abitype'
 
 import {
   ConnectorNotFoundError,
@@ -9,7 +9,7 @@ import { fetchSigner } from './fetchSigner'
 
 export type SignMessageArgs = {
   /** Message to sign with wallet */
-  message: Bytes | string
+  message: string | ResolvedConfig['BytesType']
 }
 
 type Signature = string

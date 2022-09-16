@@ -1,7 +1,6 @@
 import {
   Abi,
   AbiFunction,
-  AbiParametersToPrimitiveTypes,
   Address,
   ExtractAbiFunction,
   ExtractAbiFunctionNames,
@@ -15,7 +14,10 @@ import {
   ContractMethodRevertedError,
   ContractResultDecodeError,
 } from '../../errors'
-import { IsNever, NotEqual, Or, UnwrapArray } from '../../types/utils'
+import {
+  GetArgs,
+  GetResult as ReadContractsContractResult,
+} from '../../types/utils'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
@@ -27,7 +29,6 @@ type ReadContractsContractConfig<
   TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
     ? ExtractAbiFunction<TAbi, TFunctionName>
     : never,
-  TArgs = AbiParametersToPrimitiveTypes<TFunction['inputs']>,
 > = {
   /** Contract address */
   addressOrName: Address
@@ -37,34 +38,7 @@ type ReadContractsContractConfig<
   contractInterface: TAbi
   /** Function to invoke on the contract */
   functionName: [TFunctionName] extends [never] ? string : TFunctionName
-} & (TArgs extends readonly any[]
-  ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-    ? {
-        /**
-         * Arguments to pass contract method
-         *
-         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
-         */
-        args?: readonly any[]
-      }
-    : TArgs['length'] extends 0
-    ? { args?: never }
-    : {
-        /** Arguments to pass contract method */
-        args: TArgs
-      }
-  : never)
-
-type ReadContractsContractResult<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
-> = TAbi extends Abi
-  ? UnwrapArray<
-      AbiParametersToPrimitiveTypes<
-        ExtractAbiFunction<TAbi, TFunctionName>['outputs']
-      >
-    >
-  : any
+} & GetArgs<TAbi, TFunction>
 
 type GetConfig<T> = T extends {
   contractInterface: infer TAbi extends Abi

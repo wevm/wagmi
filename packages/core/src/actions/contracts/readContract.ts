@@ -1,14 +1,13 @@
 import {
   Abi,
   AbiFunction,
-  AbiParametersToPrimitiveTypes,
   Address,
   ExtractAbiFunction,
   ExtractAbiFunctionNames,
 } from 'abitype'
 import { CallOverrides } from 'ethers/lib/ethers'
 
-import { IsNever, NotEqual, Or, UnwrapArray } from '../../types/utils'
+import { GetArgs, GetResult } from '../../types/utils'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
@@ -30,36 +29,12 @@ export type ReadContractConfig<
   functionName: [TFunctionName] extends [never] ? string : TFunctionName
   /** Call overrides */
   overrides?: CallOverrides
-} & (AbiParametersToPrimitiveTypes<
-  TFunction['inputs']
-> extends infer TArgs extends readonly any[]
-  ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-    ? {
-        /**
-         * Arguments to pass contract method
-         *
-         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
-         */
-        args?: readonly any[]
-      }
-    : TArgs['length'] extends 0
-    ? { args?: never }
-    : {
-        /** Arguments to pass contract method */
-        args: TArgs
-      }
-  : never)
+} & GetArgs<TAbi, TFunction>
 
 export type ReadContractResult<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-> = TAbi extends Abi
-  ? UnwrapArray<
-      AbiParametersToPrimitiveTypes<
-        ExtractAbiFunction<TAbi, TFunctionName>['outputs']
-      >
-    >
-  : any
+> = GetResult<TAbi, TFunctionName>
 
 export async function readContract<
   TAbi extends Abi | readonly unknown[],

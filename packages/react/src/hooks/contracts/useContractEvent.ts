@@ -1,4 +1,3 @@
-import { IsNever, NotEqual, Or } from '@wagmi/core/src/types/utils'
 import {
   Abi,
   AbiEvent,
@@ -10,6 +9,7 @@ import {
 import { ethers } from 'ethers'
 import * as React from 'react'
 
+import { IsNever, NotEqual, Or } from '../../types/utils'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useContract } from './useContract'
 
@@ -61,7 +61,7 @@ export function useContractEvent<
   callbackRef.current = callback
 
   React.useEffect(() => {
-    const handler = (...event: any[]) => callbackRef.current(event)
+    const handler = (...event: any[]) => callbackRef.current(...event)
 
     const contract_ = <ethers.Contract>(<unknown>contract)
     if (once) contract_.once(eventName, handler)

@@ -1,5 +1,4 @@
-import { Address } from 'abitype'
-import { BigNumber } from 'ethers/lib/ethers'
+import { Address, ResolvedConfig } from 'abitype'
 import { formatUnits } from 'ethers/lib/utils'
 
 import { erc20ABI } from '../../constants'
@@ -15,13 +14,13 @@ export type FetchTokenArgs = {
   formatUnits?: Unit | number
 }
 export type FetchTokenResult = {
-  address: string
-  decimals: number | BigNumber
+  address: Address
+  decimals: ResolvedConfig['IntType']
   name: string
   symbol: string
   totalSupply: {
     formatted: string
-    value: BigNumber
+    value: ResolvedConfig['BigIntType']
   }
 }
 
@@ -30,31 +29,28 @@ export async function fetchToken({
   chainId,
   formatUnits: units = 'ether',
 }: FetchTokenArgs): Promise<FetchTokenResult> {
+  const erc20Config = {
+    addressOrName: address,
+    contractInterface: erc20ABI,
+    chainId,
+  } as const
   const [decimals, name, symbol, totalSupply] = await readContracts({
     allowFailure: false,
     contracts: [
       {
-        addressOrName: address,
-        contractInterface: erc20ABI,
-        chainId,
+        ...erc20Config,
         functionName: 'decimals' as const,
       },
       {
-        addressOrName: address,
-        contractInterface: erc20ABI,
-        chainId,
+        ...erc20Config,
         functionName: 'name' as const,
       },
       {
-        addressOrName: address,
-        contractInterface: erc20ABI,
-        chainId,
+        ...erc20Config,
         functionName: 'symbol' as const,
       },
       {
-        addressOrName: address,
-        contractInterface: erc20ABI,
-        chainId,
+        ...erc20Config,
         functionName: 'totalSupply' as const,
       },
     ],

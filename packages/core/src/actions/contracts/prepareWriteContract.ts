@@ -1,7 +1,6 @@
 import {
   Abi,
   AbiFunction,
-  AbiParametersToPrimitiveTypes,
   Address,
   ExtractAbiFunction,
   ExtractAbiFunctionNames,
@@ -13,7 +12,7 @@ import {
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Signer } from '../../types'
-import { IsNever, NotEqual, Or } from '../../types/utils'
+import { GetArgs } from '../../types/utils'
 import { minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { getContract } from './getContract'
@@ -37,25 +36,7 @@ export type PrepareWriteContractConfig<
   /** Call overrides */
   overrides?: CallOverrides
   signer?: TSigner | null
-} & (AbiParametersToPrimitiveTypes<
-  TFunction['inputs']
-> extends infer TArgs extends readonly any[]
-  ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-    ? {
-        /**
-         * Arguments to pass contract method
-         *
-         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for better type inference.
-         */
-        args?: readonly any[]
-      }
-    : TArgs['length'] extends 0
-    ? { args?: never }
-    : {
-        /** Arguments to pass contract method */
-        args: TArgs
-      }
-  : never)
+} & GetArgs<TAbi, TFunction>
 
 export type PrepareWriteContractResult = {
   contractInterface: Abi | readonly unknown[]
