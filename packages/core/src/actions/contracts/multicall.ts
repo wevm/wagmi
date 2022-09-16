@@ -7,7 +7,7 @@ import {
 } from 'abitype'
 import { CallOverrides } from 'ethers/lib/ethers'
 
-import { multicallInterface } from '../../constants'
+import { multicallABI } from '../../constants'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
@@ -132,7 +132,7 @@ export async function multicall<TContracts extends unknown[]>({
 
   const multicallContract = getContract({
     addressOrName: chain.multicall.address,
-    contractInterface: multicallInterface,
+    contractInterface: multicallABI,
     signerOrProvider: provider,
   })
   const calls = (<MulticallContractConfig[]>(<unknown>contracts)).map(

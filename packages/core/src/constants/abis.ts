@@ -1,6 +1,5 @@
 /**
- * ERC-20 Token Standard
- * https://ethereum.org/en/developers/docs/standards/tokens/erc-20
+ * [ERC-20 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20)
  */
 export const erc20ABI = [
   {
@@ -201,8 +200,7 @@ export const erc20ABI = [
 ] as const
 
 /**
- * ERC-721 Non-Fungible Token Standard
- * https://ethereum.org/en/developers/docs/standards/tokens/erc-721
+ * [ERC-721 Non-Fungible Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-721)
  */
 export const erc721ABI = [
   {
@@ -526,5 +524,59 @@ export const erc721ABI = [
       },
     ],
     outputs: [],
+  },
+] as const
+
+/**
+ * [Multicall3](https://github.com/mds1/multicall)
+ */
+export const multicallABI = [
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'address',
+            name: 'target',
+            type: 'address',
+          },
+          {
+            internalType: 'bool',
+            name: 'allowFailure',
+            type: 'bool',
+          },
+          {
+            internalType: 'bytes',
+            name: 'callData',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct Multicall3.Call3[]',
+        name: 'calls',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'aggregate3',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'bool',
+            name: 'success',
+            type: 'bool',
+          },
+          {
+            internalType: 'bytes',
+            name: 'returnData',
+            type: 'bytes',
+          },
+        ],
+        internalType: 'struct Multicall3.Result[]',
+        name: 'returnData',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
 ] as const

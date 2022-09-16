@@ -44,8 +44,9 @@ type UseContractWriteMutationArgs<
   Mode extends 'prepared' | 'recklesslyUnprepared',
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = Mode extends 'recklesslyUnprepared'
-  ? {
+> = Mode extends 'prepared'
+  ? undefined
+  : {
       /**
        * Recklessly pass through unprepared config. Note: This has
        * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
@@ -58,7 +59,6 @@ type UseContractWriteMutationArgs<
       >['args']
       recklesslySetUnpreparedOverrides?: WriteContractArgs['overrides']
     }
-  : undefined
 
 function mutationKey({
   addressOrName,

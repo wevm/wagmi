@@ -15,7 +15,7 @@ export function minimizeContractInterface<
     const minimizedAbi = (<Abi>config.contractInterface).filter(
       (x) => x.type === 'function' && x.name === config.functionName,
     )
-    if (minimizedAbi.length === 0) throw new Error('Not valid ABI')
+    if (minimizedAbi.length === 0) throw new Error('Invalid ABI')
     return minimizedAbi
   } catch (error) {
     const abi = Contract.getInterface(

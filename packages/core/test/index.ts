@@ -18,15 +18,6 @@ export function setupClient(config: Config = {}) {
   })
 }
 
-/**
- * Assert parameter is of a specific type.
- *
- * @param _value - Value that should be identical to type `T`.
- */
-export function expectType<T>(_value: T): void {
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-}
-
 export {
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
