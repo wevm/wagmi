@@ -44,6 +44,7 @@ type InfuraChains = Extract<
   | 'rinkeby'
   | 'goerli'
   | 'kovan'
+  | 'sepolia'
   | 'optimism'
   | 'optimismKovan'
   | 'optimismGoerli'
@@ -59,6 +60,7 @@ export const infuraRpcUrls: Record<InfuraChains, string> = {
   rinkeby: 'https://rinkeby.infura.io/v3',
   goerli: 'https://goerli.infura.io/v3',
   kovan: 'https://kovan.infura.io/v3',
+  sepolia: 'https://sepolia.infura.io/v3',
   optimism: 'https://optimism-mainnet.infura.io/v3',
   optimismKovan: 'https://optimism-kovan.infura.io/v3',
   optimismGoerli: 'https://optimism-goerli.infura.io/v3',

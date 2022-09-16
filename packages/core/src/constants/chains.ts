@@ -152,6 +152,7 @@ export const sepolia: Chain = {
   rpcUrls: {
     default: publicRpcUrls.sepolia,
     public: publicRpcUrls.sepolia,
+    infura: infuraRpcUrls.sepolia,
   },
   blockExplorers: {
     etherscan: etherscanBlockExplorers.sepolia,
