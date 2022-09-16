@@ -151,6 +151,7 @@ export const sepolia: Chain = {
   nativeCurrency: { name: 'Sepolia Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     default: publicRpcUrls.sepolia,
+    infura: infuraRpcUrls.sepolia,
     public: publicRpcUrls.sepolia,
   },
   blockExplorers: {
