@@ -91,7 +91,7 @@ Transaction hash to monitor. Works well with [`useContractWrite`](/docs/hooks/us
 ```tsx {15}
 import {
   useContractWrite,
-  usePrepareContractWrited,
+  usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi'
 
@@ -125,12 +125,12 @@ function App() {
 
 ### wait (optional)
 
-Function that resolves to processed transaction receipt. Works well with [`useContractWrite`](/docs/hooks/useContractWrite)/[`usePrepareContractWrited`](/docs/prepare-hooks/usePrepareContractWrited) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.wait`.
+Function that resolves to processed transaction receipt. Works well with [`useContractWrite`](/docs/hooks/useContractWrite)/[`usePrepareContractWrite`](/docs/prepare-hooks/usePrepareContractWrite) and [`useSendTransaction`](/docs/hooks/useSendTransaction) `data.wait`.
 
 ```tsx {15}
 import {
   useContractWrite,
-  usePrepareContractWrited,
+  usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi'
 
