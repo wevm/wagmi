@@ -18,7 +18,7 @@ export type UseSignerConfig = Omit<
 }
 
 export const queryKey = ({ chainId }: Partial<UseSignerConfig>) =>
-  [{ entity: 'signer', chainId }] as const
+  [{ entity: 'signer', chainId, persist: false }] as const
 
 const queryFn = <TSigner extends Signer>({
   queryKey: [{ chainId }],
