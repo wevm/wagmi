@@ -2,4 +2,4 @@
 '@wagmi/core': patch
 ---
 
-Added Infura as a provider for sepolia
+Added Infura RPC URL for Sepolia
