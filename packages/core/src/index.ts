@@ -168,7 +168,6 @@ export type {
 } from './types'
 
 export {
-  assertActiveChain,
   configureChains,
   deepEqual,
   minimizeContractInterface,

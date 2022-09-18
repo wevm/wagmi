@@ -78,7 +78,6 @@ it('should expose correct exports', () => {
       "UserRejectedRequestError",
       "createStorage",
       "noopStorage",
-      "assertActiveChain",
       "configureChains",
       "deepEqual",
       "minimizeContractInterface",
