@@ -2,10 +2,6 @@
 'wagmi': minor
 ---
 
----
-'wagmi': minor
----
-
 **Breaking**: `usePrepareSendTransaction` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
 
 If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead:
