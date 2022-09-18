@@ -9,7 +9,7 @@ import {
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Address, Signer } from '../../types'
-import { minimizeContractInterface } from '../../utils'
+import { assertActiveChain, minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { GetContractArgs, getContract } from './getContract'
 
@@ -64,8 +64,10 @@ export async function prepareWriteContract<
   overrides,
   signer: signer_,
 }: PrepareWriteContractConfig): Promise<PrepareWriteContractResult<TSigner>> {
-  const signer = signer_ ?? (await fetchSigner())
+  const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
+
+  if (chainId) assertActiveChain({ chainId })
 
   const contract = getContract<TContract>({
     addressOrName,

@@ -59,6 +59,7 @@ export type {
   FetchEnsResolverResult,
   FetchFeeDataArgs,
   FetchFeeDataResult,
+  FetchSignerArgs,
   FetchSignerResult,
   FetchTokenArgs,
   FetchTokenResult,

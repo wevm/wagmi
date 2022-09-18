@@ -1,6 +1,7 @@
 export { configureChains } from './configureChains'
 export type { ConfigureChainsConfig } from './configureChains'
 
+export { assertActiveChain } from './assertActiveChain'
 export { deepEqual } from './deepEqual'
 export { getInjectedName } from './getInjectedName'
 export { logWarn } from './logger'

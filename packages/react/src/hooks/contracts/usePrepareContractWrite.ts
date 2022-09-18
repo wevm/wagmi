@@ -23,14 +23,19 @@ export const queryKey = (
   {
     args,
     addressOrName,
+    chainId,
     functionName,
     overrides,
   }: Omit<UsePrepareContractWriteArgs, 'contractInterface'>,
-  { chainId, signerAddress }: { chainId?: number; signerAddress?: string },
+  {
+    activeChainId,
+    signerAddress,
+  }: { activeChainId?: number; signerAddress?: string },
 ) =>
   [
     {
       entity: 'prepareContractTransaction',
+      activeChainId,
       addressOrName,
       args,
       chainId,
@@ -49,11 +54,12 @@ const queryFn =
     signer?: FetchSignerResult
   }) =>
   ({
-    queryKey: [{ args, addressOrName, functionName, overrides }],
+    queryKey: [{ args, addressOrName, chainId, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     return prepareWriteContract({
       args,
       addressOrName,
+      chainId,
       contractInterface,
       functionName,
       overrides,
@@ -81,6 +87,7 @@ export function usePrepareContractWrite({
   addressOrName,
   contractInterface,
   functionName,
+  chainId,
   args,
   overrides,
   cacheTime,
@@ -91,18 +98,21 @@ export function usePrepareContractWrite({
   onSettled,
   onSuccess,
 }: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig) {
-  const chainId = useChainId()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>()
+  const activeChainId = useChainId()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({
+    chainId: chainId ?? activeChainId,
+  })
 
   const prepareContractWriteQuery = useQuery(
     queryKey(
       {
         addressOrName,
         functionName,
+        chainId,
         args,
         overrides,
       },
-      { chainId, signerAddress: signer?._address },
+      { activeChainId, signerAddress: signer?._address },
     ),
     queryFn({ contractInterface, signer }),
     {

@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import {
+  FetchSignerArgs,
   FetchSignerResult,
   Signer,
   fetchSigner,
@@ -7,29 +8,36 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig } from '../../types'
-import { useQuery } from '../utils'
+import { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId, useQuery } from '../utils'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,
   'cacheTime' | 'staleTime' | 'enabled'
->
+> &
+  FetchSignerArgs
 
-export const queryKey = () => [{ entity: 'signer' }] as const
+export const queryKey = ({ chainId }: FetchSignerArgs) =>
+  [{ entity: 'signer', chainId, persist: false }] as const
 
-const queryFn = <TSigner extends Signer>() => fetchSigner<TSigner>()
+const queryFn = <TSigner extends Signer>({
+  queryKey: [{ chainId }],
+}: QueryFunctionArgs<typeof queryKey>) => fetchSigner<TSigner>({ chainId })
 
 export function useSigner<TSigner extends Signer>({
+  chainId: chainId_,
   suspense,
   onError,
   onSettled,
   onSuccess,
 }: UseSignerConfig = {}) {
+  const chainId = useChainId({ chainId: chainId_ })
   const signerQuery = useQuery<
     FetchSignerResult<TSigner>,
     Error,
-    FetchSignerResult<TSigner>
-  >(queryKey(), queryFn, {
+    FetchSignerResult<TSigner>,
+    ReturnType<typeof queryKey>
+  >(queryKey({ chainId }), queryFn, {
     cacheTime: 0,
     staleTime: 0,
     suspense,
@@ -40,11 +48,11 @@ export function useSigner<TSigner extends Signer>({
 
   const queryClient = useQueryClient()
   React.useEffect(() => {
-    const unwatch = watchSigner((signer) =>
-      queryClient.setQueryData(queryKey(), signer),
+    const unwatch = watchSigner({ chainId }, (signer) =>
+      queryClient.setQueryData(queryKey({ chainId }), signer),
     )
     return unwatch
-  }, [queryClient])
+  }, [queryClient, chainId])
 
   return signerQuery
 }

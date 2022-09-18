@@ -1,13 +1,29 @@
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
-import { renderHook } from '../../../test'
-import { usePrepareSendTransaction } from './usePrepareSendTransaction'
+import { act, actConnect, renderHook } from '../../../test'
+import { useConnect, useSwitchNetwork } from '../accounts'
+import {
+  UsePrepareSendTransactionArgs,
+  UsePrepareSendTransactionConfig,
+  usePrepareSendTransaction,
+} from './usePrepareSendTransaction'
+
+function usePrepareSendTransactionWithConnect(
+  config: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig,
+) {
+  const { ...prepareSendTransaction } = usePrepareSendTransaction(config)
+  return {
+    connect: useConnect(),
+    network: useSwitchNetwork(),
+    prepareSendTransaction,
+  }
+}
 
 describe('usePrepareSendTransaction', () => {
   it('mounts', async () => {
-    const { result, waitFor } = renderHook(() =>
-      usePrepareSendTransaction({
+    const { result } = renderHook(() =>
+      usePrepareSendTransactionWithConnect({
         request: {
           to: 'moxey.eth',
           value: BigNumber.from('10000000000000000'),
@@ -15,42 +31,88 @@ describe('usePrepareSendTransaction', () => {
       }),
     )
 
-    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = result.current
-    expect(res).toMatchInlineSnapshot(`
+    const { config, ...rest } = result.current.prepareSendTransaction
+    expect(config).toBeDefined()
+    expect(rest).toMatchInlineSnapshot(`
       {
-        "config": {
-          "mode": "prepared",
-          "request": {
-            "gasLimit": {
-              "hex": "0x5208",
-              "type": "BigNumber",
-            },
-            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-            "value": {
-              "hex": "0x2386f26fc10000",
-              "type": "BigNumber",
-            },
-          },
-        },
-        "data": {
-          "mode": "prepared",
-          "request": {
-            "gasLimit": {
-              "hex": "0x5208",
-              "type": "BigNumber",
-            },
-            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-            "value": {
-              "hex": "0x2386f26fc10000",
-              "type": "BigNumber",
-            },
-          },
-        },
+        "data": undefined,
         "error": null,
         "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": true,
+          "remove": [Function],
+        },
+        "isError": false,
+        "isFetched": false,
+        "isFetching": false,
+        "isIdle": true,
+        "isLoading": false,
+        "isRefetching": false,
+        "isSuccess": false,
+        "refetch": [Function],
+        "status": "idle",
+      }
+    `)
+  })
+
+  it('connect', async () => {
+    const utils = renderHook(() =>
+      usePrepareSendTransactionWithConnect({
+        request: {
+          to: 'moxey.eth',
+          value: BigNumber.from('10000000000000000'),
+        },
+      }),
+    )
+    const { result, waitFor } = utils
+
+    await actConnect({ utils })
+
+    await waitFor(() =>
+      expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
+    )
+
+    const { config, data: res, ...rest } = result.current.prepareSendTransaction
+    const { gasLimit, ...restRequest } = config?.request || {}
+    expect(res).toBeDefined()
+    expect(config).toBeDefined()
+    expect(gasLimit).toBeDefined()
+    expect(restRequest).toMatchInlineSnapshot(`
+      {
+        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+        "value": {
+          "hex": "0x2386f26fc10000",
+          "type": "BigNumber",
+        },
+      }
+    `)
+    expect(rest).toMatchInlineSnapshot(`
+      {
+        "error": null,
+        "fetchStatus": "idle",
+        "internal": {
+          "dataUpdatedAt": 1643673600000,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "isFetchedAfterMount": true,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isStale": false,
+          "remove": [Function],
+        },
         "isError": false,
         "isFetched": true,
         "isFetching": false,
@@ -62,5 +124,36 @@ describe('usePrepareSendTransaction', () => {
         "status": "success",
       }
     `)
+  })
+
+  describe('errors', () => {
+    it('should throw an error on the wrong chain', async () => {
+      const utils = renderHook(() =>
+        usePrepareSendTransactionWithConnect({
+          request: {
+            to: 'moxey.eth',
+            value: BigNumber.from('10000000000000000'),
+          },
+          chainId: 1,
+        }),
+      )
+
+      const { result, waitFor } = utils
+      await actConnect({ chainId: 4, utils })
+
+      await waitFor(() =>
+        expect(result.current.prepareSendTransaction.isError).toBeTruthy(),
+      )
+      expect(result.current.prepareSendTransaction.error).toMatchInlineSnapshot(
+        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]',
+      )
+
+      await act(async () => result.current.network.switchNetwork?.(1))
+      await waitFor(() => expect(result.current.network.isSuccess).toBeTruthy())
+
+      await waitFor(() =>
+        expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
+      )
+    })
   })
 })

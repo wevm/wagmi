@@ -33,6 +33,20 @@ describe('prepareWriteContract', () => {
   })
 
   describe('errors', () => {
+    it('signer is on different chain', async () => {
+      await connect({ connector })
+
+      await expect(() =>
+        prepareWriteContract({
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          chainId: 69,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
+      )
+    })
+
     it('contract method error', async () => {
       await connect({ connector })
       await expect(() =>
