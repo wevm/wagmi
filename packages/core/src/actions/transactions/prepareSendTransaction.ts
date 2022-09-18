@@ -1,9 +1,10 @@
 import { providers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 
-import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
+import { ConnectorNotFoundError } from '../../errors'
 import { Address, Signer } from '../../types'
-import { fetchSigner, getNetwork } from '../accounts'
+import { assertActiveChain } from '../../utils'
+import { fetchSigner } from '../accounts'
 import { fetchEnsAddress } from '../ens'
 
 export type PrepareSendTransactionArgs<TSigner extends Signer = Signer> = {
@@ -49,17 +50,7 @@ export async function prepareSendTransaction({
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
 
-  const { chain: activeChain, chains } = getNetwork()
-  const activeChainId = activeChain?.id
-  if (chainId && chainId !== activeChainId) {
-    throw new ChainMismatchError({
-      activeChain:
-        chains.find((x) => x.id === activeChainId)?.name ??
-        `Chain ${activeChainId}`,
-      targetChain:
-        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
-    })
-  }
+  if (chainId) assertActiveChain({ chainId })
 
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)

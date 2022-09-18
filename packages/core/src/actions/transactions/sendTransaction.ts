@@ -1,13 +1,13 @@
 import { providers } from 'ethers'
 
 import {
-  ChainMismatchError,
   ConnectorNotFoundError,
   ProviderRpcError,
   UserRejectedRequestError,
 } from '../../errors'
 import { Address, Signer } from '../../types'
-import { fetchSigner, getNetwork } from '../accounts'
+import { assertActiveChain } from '../../utils'
+import { fetchSigner } from '../accounts'
 
 export type SendTransactionPreparedRequest = {
   /**
@@ -78,17 +78,7 @@ export async function sendTransaction({
     if (!request.to) throw new Error('`to` is required')
   }
 
-  const { chain: activeChain, chains } = getNetwork()
-  const activeChainId = activeChain?.id
-  if (chainId && chainId !== activeChain?.id) {
-    throw new ChainMismatchError({
-      activeChain:
-        chains.find((x) => x.id === activeChainId)?.name ??
-        `Chain ${activeChainId}`,
-      targetChain:
-        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
-    })
-  }
+  if (chainId) assertActiveChain({ chainId })
 
   try {
     // Why don't we just use `signer.sendTransaction`?

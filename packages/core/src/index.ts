@@ -59,6 +59,7 @@ export type {
   FetchEnsResolverResult,
   FetchFeeDataArgs,
   FetchFeeDataResult,
+  FetchSignerArgs,
   FetchSignerResult,
   FetchTokenArgs,
   FetchTokenResult,
@@ -167,6 +168,7 @@ export type {
 } from './types'
 
 export {
+  assertActiveChain,
   configureChains,
   deepEqual,
   minimizeContractInterface,

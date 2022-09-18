@@ -1,5 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
 import {
+  FetchSignerArgs,
   FetchSignerResult,
   Signer,
   fetchSigner,
@@ -8,16 +9,15 @@ import {
 import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useQuery } from '../utils'
+import { useChainId, useQuery } from '../utils'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,
   'cacheTime' | 'staleTime' | 'enabled'
-> & {
-  chainId?: number
-}
+> &
+  FetchSignerArgs
 
-export const queryKey = ({ chainId }: Partial<UseSignerConfig>) =>
+export const queryKey = ({ chainId }: FetchSignerArgs) =>
   [{ entity: 'signer', chainId, persist: false }] as const
 
 const queryFn = <TSigner extends Signer>({
@@ -25,12 +25,13 @@ const queryFn = <TSigner extends Signer>({
 }: QueryFunctionArgs<typeof queryKey>) => fetchSigner<TSigner>({ chainId })
 
 export function useSigner<TSigner extends Signer>({
-  chainId,
+  chainId: chainId_,
   suspense,
   onError,
   onSettled,
   onSuccess,
 }: UseSignerConfig = {}) {
+  const chainId = useChainId({ chainId: chainId_ })
   const signerQuery = useQuery<
     FetchSignerResult<TSigner>,
     Error,

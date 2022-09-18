@@ -56,6 +56,8 @@ export function createClient<
       dehydrateOptions: {
         shouldDehydrateQuery: (query) =>
           query.cacheTime !== 0 &&
+          // Note: adding a `persist` flag to a query key will instruct the
+          // persister whether or not to persist the response of the query.
           (query.queryKey[0] as { persist?: boolean }).persist !== false,
       },
     })

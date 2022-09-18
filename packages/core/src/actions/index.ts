@@ -15,6 +15,7 @@ export {
   type ConnectResult,
   type FetchBalanceArgs,
   type FetchBalanceResult,
+  type FetchSignerArgs,
   type FetchSignerResult,
   type GetAccountResult,
   type GetNetworkResult,
