@@ -7,6 +7,8 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
+import { queryClientContext } from '../../context'
+
 import { MutationConfig } from '../../types'
 
 export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
@@ -166,6 +168,7 @@ export function useContractWrite<
       onMutate,
       onSettled,
       onSuccess,
+      context: queryClientContext,
     },
   )
 

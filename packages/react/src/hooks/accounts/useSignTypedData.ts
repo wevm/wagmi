@@ -6,6 +6,8 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
+import { queryClientContext } from '../../context'
+
 import { MutationConfig } from '../../types'
 
 export type UseSignTypedDataArgs = Partial<SignTypedDataArgs>
@@ -52,6 +54,7 @@ export function useSignTypedData({
     onMutate,
     onSettled,
     onSuccess,
+    context: queryClientContext,
   })
 
   const signTypedData = React.useCallback(

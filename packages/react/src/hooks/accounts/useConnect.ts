@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
 import * as React from 'react'
 
-import { useClient } from '../../context'
+import { queryClientContext, useClient } from '../../context'
 import { MutationConfig } from '../../types'
 
 export type UseConnectArgs = Partial<ConnectArgs>
@@ -45,6 +45,7 @@ export function useConnect({
     onMutate,
     onSettled,
     onSuccess,
+    context: queryClientContext,
   })
 
   const connect = React.useCallback(

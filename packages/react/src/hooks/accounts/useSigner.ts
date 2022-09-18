@@ -10,6 +10,7 @@ import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
+import { queryClientContext } from '../../context'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,
@@ -46,7 +47,7 @@ export function useSigner<TSigner extends Signer>({
     onSuccess,
   })
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient({ context: queryClientContext })
   React.useEffect(() => {
     const unwatch = watchSigner({ chainId }, (signer) =>
       queryClient.setQueryData(queryKey({ chainId }), signer),

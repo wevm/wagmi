@@ -6,7 +6,7 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { useClient } from '../../context'
+import { queryClientContext, useClient } from '../../context'
 import { MutationConfig } from '../../types'
 import { useForceUpdate } from '../utils'
 
@@ -57,6 +57,7 @@ export function useSwitchNetwork({
     onMutate,
     onSettled,
     onSuccess,
+    context: queryClientContext,
   })
 
   const switchNetwork_ = React.useCallback(

@@ -2,6 +2,8 @@ import { useMutation } from '@tanstack/react-query'
 import { SignMessageArgs, SignMessageResult, signMessage } from '@wagmi/core'
 import * as React from 'react'
 
+import { queryClientContext } from '../../context'
+
 import { MutationConfig } from '../../types'
 
 export type UseSignMessageArgs = Partial<SignMessageArgs>
@@ -45,6 +47,7 @@ export function useSignMessage({
     onMutate,
     onSettled,
     onSuccess,
+    context: queryClientContext,
   })
 
   const signMessage = React.useCallback(

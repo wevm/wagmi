@@ -9,6 +9,8 @@ import {
 } from '@tanstack/react-query'
 import * as React from 'react'
 
+import { queryClientContext } from '../../../context'
+
 import { useSyncExternalStore } from '../useSyncExternalStore'
 import { shouldThrowError } from './utils'
 
@@ -28,7 +30,7 @@ export function useBaseQuery<
   >,
   Observer: typeof QueryObserver,
 ) {
-  const queryClient = useQueryClient({ context: options.context })
+  const queryClient = useQueryClient({ context: queryClientContext })
   const isRestoring = useIsRestoring()
   const errorResetBoundary = useQueryErrorResetBoundary()
   const defaultedOptions = queryClient.defaultQueryOptions(options)

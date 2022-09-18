@@ -7,6 +7,8 @@ import {
 import { debounce } from '@wagmi/core/internal'
 import * as React from 'react'
 
+import { queryClientContext } from '../../context'
+
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
@@ -44,7 +46,7 @@ export function useBlockNumber({
   const chainId = useChainId({ chainId: chainId_ })
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient({ context: queryClientContext })
 
   React.useEffect(() => {
     if (!watch && !onBlock) return

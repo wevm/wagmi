@@ -8,6 +8,8 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
+import { queryClientContext } from '../../context'
+
 import { MutationConfig } from '../../types'
 
 export type UseSendTransactionArgs = Omit<
@@ -125,6 +127,7 @@ export function useSendTransaction<
       onMutate,
       onSettled,
       onSuccess,
+      context: queryClientContext,
     },
   )
 
