@@ -80,18 +80,20 @@ You will need to:
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
 import { usePrepareSendTransaction } from 'wagmi'
+import { utils } from 'ethers';
+
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
   const [debouncedTo] = useDebounce(to, 500)
 
   const [amount, setAmount] = React.useState('')
-  const [debouncedValue] = useDebounce(value, 500)
+  const [debouncedValue] = useDebounce(amount, 500)
 
   const { config } = usePrepareSendTransaction({
     request: {
       to: debouncedTo,
-      value: debouncedValue ? parseEther(debouncedValue) : undefined,
+      value: debouncedValue ? utils.parseEther(debouncedValue) : undefined,
     },
   })
 
