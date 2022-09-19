@@ -2,7 +2,7 @@
 '@wagmi/core': minor
 ---
 
-**Breaking**: `args` config option must now be an array for the following actions: `readContract`, `writeContract`, `prepareWriteContract`, `multicall`, `readContracts`, `watchMulticall`, `watchReadContracts`.
+**Breaking**: `args` config option must now be an array for the following actions: `readContract`, `writeContract`, `prepareWriteContract`, `multicall`, `readContracts`, `watchMulticall`, and `watchReadContracts`.
 
 ```diff
 import { readContract } from '@wagmi/core'
