@@ -58,7 +58,7 @@ export function useBalance({
     },
   )
 
-  const { data: blockNumber } = useBlockNumber({ watch })
+  const { data: blockNumber } = useBlockNumber({ chainId, watch })
   React.useEffect(() => {
     if (!enabled) return
     if (!watch) return
