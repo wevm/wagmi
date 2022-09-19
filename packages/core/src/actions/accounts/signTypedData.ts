@@ -1,9 +1,4 @@
-import {
-  Address,
-  ResolvedConfig,
-  TypedData,
-  TypedDataToPrimitiveTypes,
-} from 'abitype'
+import { TypedData, TypedDataDomain, TypedDataToPrimitiveTypes } from 'abitype'
 import { TypedDataField, providers } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
@@ -15,17 +10,7 @@ export type SignTypedDataArgs<
   TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
 > = {
   /** Domain or domain signature for origin or contract */
-  domain: {
-    name?: string
-    version?: string
-    /**
-     * Chain permitted for signing
-     * If signer is not active on this chain, it will attempt to programmatically switch
-     */
-    chainId?: string | number | bigint
-    verifyingContract?: Address
-    salt?: ResolvedConfig['BytesType']
-  }
+  domain: TypedDataDomain
   /** Named list of all type definitions */
   types: TTypedData
   /** Data to sign */
@@ -36,7 +21,7 @@ export type SignTypedDataArgs<
     : never
 }
 
-export type SignTypedDataResult = string
+export type SignTypedDataResult = `0x${string}`
 
 export async function signTypedData<
   TTypedData extends TypedData,
@@ -54,9 +39,9 @@ export async function signTypedData<
   if (chainId) assertActiveChain({ chainId })
 
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-  return await signer._signTypedData(
+  return (await signer._signTypedData(
     domain,
     <Record<string, Array<TypedDataField>>>(<unknown>types),
     value,
-  )
+  )) as SignTypedDataResult
 }

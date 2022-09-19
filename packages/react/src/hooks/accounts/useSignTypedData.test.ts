@@ -26,7 +26,7 @@ const types = {
     { name: 'to', type: 'Person' },
     { name: 'contents', type: 'string' },
   ],
-}
+} as const
 
 // Data to sign
 const value = {
@@ -39,7 +39,7 @@ const value = {
     wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
   },
   contents: 'Hello, Bob!',
-}
+} as const
 
 function useSignTypedDataWithConnect<
   TTypedData extends TypedData,
@@ -334,14 +334,16 @@ describe('useSignTypedData', () => {
       await waitFor(() =>
         expect(result.current.signTypedData.isSuccess).toBeTruthy(),
       )
-      expect(
-        verifyTypedData(
-          domain,
-          types,
-          value,
-          result.current.signTypedData.data as string,
-        ),
-      ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
+
+      if (result.current.signTypedData.data)
+        expect(
+          verifyTypedData(
+            domain,
+            types,
+            value,
+            result.current.signTypedData.data,
+          ),
+        ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
     })
 
     describe('when chainId is provided in domain', () => {

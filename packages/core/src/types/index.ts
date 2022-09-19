@@ -1,4 +1,10 @@
-import { Address, ResolvedConfig } from 'abitype'
+import {
+  Address,
+  ResolvedConfig,
+  TypedData,
+  TypedDataDomain,
+  TypedDataToPrimitiveTypes,
+} from 'abitype'
 import { Signer as BaseSigner, BigNumber, providers } from 'ethers'
 
 import {
@@ -19,6 +25,27 @@ declare module 'abitype' {
 
 declare module 'ethers/lib/utils' {
   export function getAddress(address: string): Address
+  export function verifyTypedData<
+    TTypedData extends TypedData,
+    TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+  >(
+    domain: TypedDataDomain,
+    types: TTypedData,
+    value: TSchema[keyof TSchema] extends infer TValue
+      ? { [x: string]: any } extends TValue
+        ? Record<string, any>
+        : TValue
+      : never,
+    signature:
+      | {
+          r: string
+          s?: string
+          _vs?: string
+          recoveryParam?: number
+          v?: number
+        }
+      | ResolvedConfig['BytesType'],
+  ): string
 }
 
 export type Hash = `0x${string}`
