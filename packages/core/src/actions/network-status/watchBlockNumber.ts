@@ -19,7 +19,7 @@ export function watchBlockNumber(
     // We need to debounce the listener as we want to opt-out
     // of the behavior where ethers emits a "block" event for
     // every block that was missed in between the `pollingInterval`.
-    const debouncedCallback = debounce(callback, 50)
+    const debouncedCallback = debounce(callback, 1)
     if (previousProvider) {
       previousProvider?.off('block', debouncedCallback)
     }

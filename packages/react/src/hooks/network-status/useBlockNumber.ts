@@ -57,7 +57,7 @@ export function useBlockNumber({
       // calls the event callback after .off() has been called
       if (watch) queryClient.setQueryData(queryKey({ chainId }), blockNumber)
       if (onBlock) onBlock(blockNumber)
-    }, 50)
+    }, 1)
 
     const provider_ = webSocketProvider ?? provider
     provider_.on('block', listener)
