@@ -13,7 +13,7 @@ import {
 } from '../../errors'
 import { Signer } from '../../types'
 import { GetArgs } from '../../types/utils'
-import { minimizeContractInterface } from '../../utils'
+import { assertActiveChain, minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { getContract } from './getContract'
 
@@ -85,8 +85,10 @@ export async function prepareWriteContract<
   TFunctionName,
   TSigner
 >): Promise<PrepareWriteContractResult> {
-  const signer = signer_ ?? (await fetchSigner())
+  const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
+
+  if (chainId) assertActiveChain({ chainId })
 
   const contract = getContract({
     addressOrName,

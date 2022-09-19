@@ -8,7 +8,11 @@ export {
   type FetchBalanceResult,
 } from './fetchBalance'
 
-export { fetchSigner, type FetchSignerResult } from './fetchSigner'
+export {
+  fetchSigner,
+  type FetchSignerArgs,
+  type FetchSignerResult,
+} from './fetchSigner'
 
 export { getAccount, type GetAccountResult } from './getAccount'
 

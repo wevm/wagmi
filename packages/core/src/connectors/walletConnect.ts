@@ -144,6 +144,7 @@ export class WalletConnectConnector extends Connector<
     ])
     return new providers.Web3Provider(
       <providers.ExternalProvider>provider,
+      chainId,
     ).getSigner(account)
   }
 

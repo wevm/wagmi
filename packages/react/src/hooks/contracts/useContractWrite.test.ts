@@ -32,7 +32,7 @@ function useContractWriteWithConnect<
   }
 }
 
-function usePrepareContractWritedWithConnect<
+function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends TAbi extends Abi
     ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
@@ -111,10 +111,11 @@ describe('useContractWrite', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('unable to switch', async () => {
+      it('recklesslyUnprepared - unable to switch', async () => {
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          useContractWriteWithConnect({
             ...wagmiContractConfig,
+            mode: 'recklesslyUnprepared',
             chainId: 69,
             functionName: 'mint',
           }),
@@ -146,7 +147,7 @@ describe('useContractWrite', () => {
     describe('write', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
           }),
@@ -189,7 +190,7 @@ describe('useContractWrite', () => {
       it('prepared with deferred args', async () => {
         const args = getCrowdfundArgs()
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...mirrorCrowdfundContractConfig,
             functionName: 'createCrowdfund',
             args,
@@ -318,7 +319,7 @@ describe('useContractWrite', () => {
     describe('writeAsync', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
           }),
@@ -362,7 +363,7 @@ describe('useContractWrite', () => {
       it('prepared with deferred args', async () => {
         const args = getCrowdfundArgs()
         const utils = renderHook(() =>
-          usePrepareContractWritedWithConnect({
+          usePrepareContractWriteWithConnect({
             ...mirrorCrowdfundContractConfig,
             functionName: 'createCrowdfund',
             args,
@@ -487,7 +488,7 @@ describe('useContractWrite', () => {
         'payable' | 'nonpayable'
       >
       const utils = renderHook(() =>
-        usePrepareContractWritedWithConnect({
+        usePrepareContractWriteWithConnect({
           ...wagmiContractConfig,
           functionName,
           args,

@@ -1,13 +1,22 @@
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import { FetchSignerResult, fetchSigner } from './fetchSigner'
+import { Signer } from '../../types'
+import { FetchSignerArgs, FetchSignerResult, fetchSigner } from './fetchSigner'
 
-export type WatchSignerCallback = (data: FetchSignerResult) => void
+export type WatchSignerArgs = FetchSignerArgs
 
-export function watchSigner(callback: WatchSignerCallback) {
+export type WatchSignerCallback<TSigner extends Signer = Signer> = (
+  data: FetchSignerResult<TSigner>,
+) => void
+
+export function watchSigner<TSigner extends Signer = Signer>(
+  { chainId }: WatchSignerArgs,
+  callback: WatchSignerCallback<TSigner>,
+) {
   const client = getClient()
-  const handleChange = async () => callback(await fetchSigner())
+  const handleChange = async () =>
+    callback(await fetchSigner<TSigner>({ chainId }))
   const unsubscribe = client.subscribe(
     ({ data, connector }) => ({
       account: data?.account,

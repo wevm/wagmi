@@ -9,6 +9,37 @@ import Callout from 'nextra-theme-docs/callout'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following hooks & API's listed below.
 
+## 0.7.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.6.x` docs
+  [here](https://0.6.x.wagmi.sh).
+</Callout>
+
+### `usePrepareContractWrite`
+
+#### chainId behavior
+
+`usePrepareContractWrite` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+If you wish to defer this check until the click handler is pressed, you can place the `chainId` in `useContractWrite` instead.
+
+### `usePrepareSendTransaction`
+
+#### enabled behavior
+
+The `usePrepareSendTransaction` hook will now only run when the end-user is connected to their wallet.
+
+This is to reach parity with `usePrepareContractWrite`.
+
+If the end-user is not connected, then the `usePrepareSendTransaction` hook will remain idle.
+
+#### chainId behavior
+
+`usePrepareSendTransaction` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead.
+
 ## 0.6.x Breaking changes
 
 <Callout>

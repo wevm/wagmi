@@ -3,12 +3,14 @@ import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import {
+  act,
   actConnect,
   mlootContractConfig,
   renderHook,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
+import { useSwitchNetwork } from '../accounts/useSwitchNetwork'
 import {
   UsePrepareContractWriteConfig,
   usePrepareContractWrite,
@@ -23,6 +25,7 @@ function usePrepareContractWriteWithConnect<
   const { ...prepareContractTransaction } = usePrepareContractWrite(config)
   return {
     connect: useConnect(),
+    network: useSwitchNetwork(),
     prepareContractTransaction,
   }
 }
@@ -131,6 +134,37 @@ describe('usePrepareContractWrite', () => {
   })
 
   describe('errors', () => {
+    it('should throw an error on the wrong chain', async () => {
+      const utils = renderHook(() =>
+        usePrepareContractWriteWithConnect({
+          ...wagmiContractConfig,
+          chainId: 1,
+          functionName: 'mint',
+        }),
+      )
+
+      const { result, waitFor } = utils
+      await actConnect({ chainId: 4, utils })
+
+      await waitFor(() =>
+        expect(result.current.prepareContractTransaction.isError).toBeTruthy(),
+      )
+      expect(
+        result.current.prepareContractTransaction.error,
+      ).toMatchInlineSnapshot(
+        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]',
+      )
+
+      await act(async () => result.current.network.switchNetwork?.(1))
+      await waitFor(() => expect(result.current.network.isSuccess).toBeTruthy())
+
+      await waitFor(() =>
+        expect(
+          result.current.prepareContractTransaction.isSuccess,
+        ).toBeTruthy(),
+      )
+    })
+
     it('contract method error', async () => {
       const utils = renderHook(() =>
         usePrepareContractWriteWithConnect({

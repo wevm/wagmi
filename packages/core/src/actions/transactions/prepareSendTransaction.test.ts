@@ -1,10 +1,16 @@
 import { BigNumber } from 'ethers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { getSigners, setupClient } from '../../../test'
+import { MockConnector } from '../../connectors/mock'
+import { connect, fetchSigner } from '../accounts'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'
 import { getProvider } from '../providers'
 import { prepareSendTransaction } from './prepareSendTransaction'
+
+const connector = new MockConnector({
+  options: { signer: getSigners()[0]! },
+})
 
 describe('prepareSendTransaction', () => {
   beforeEach(() => {
@@ -16,9 +22,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('derives the gas limit & ens address', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       to: 'moxey.eth',
@@ -49,9 +59,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('derives the gas limit only if address is passed', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
@@ -82,9 +96,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('derives the address only if gas limit is passed', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       gasLimit: BigNumber.from('1000000'),
@@ -116,9 +134,13 @@ describe('prepareSendTransaction', () => {
   })
 
   it('returns the request if both gas limit & address is passed', async () => {
-    const provider = getProvider()
+    await connect({ connector })
+
+    const signer = await fetchSigner()
+    if (!signer) throw new Error('signer is required')
+
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
-    const estimateGasSpy = vi.spyOn(provider, 'estimateGas')
+    const estimateGasSpy = vi.spyOn(signer, 'estimateGas')
 
     const request = {
       gasLimit: BigNumber.from('1000000'),
@@ -150,6 +172,24 @@ describe('prepareSendTransaction', () => {
   })
 
   describe('errors', () => {
+    it('signer is on different chain', async () => {
+      await connect({ connector })
+
+      const request = {
+        gasLimit: BigNumber.from('1000000'),
+        to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+        value: BigNumber.from('10000000000000000'), // 0.01 ETH
+      }
+      await expect(() =>
+        prepareSendTransaction({
+          request,
+          chainId: 69,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
+      )
+    })
+
     it('fetchEnsAddress throws', async () => {
       vi.spyOn(fetchEnsAddress, 'fetchEnsAddress').mockRejectedValue(
         new Error('error'),

@@ -6,10 +6,9 @@ import {
 } from 'abitype'
 import { TypedDataField, providers } from 'ethers'
 
-import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
-import { normalizeChainId } from '../../utils'
+import { ConnectorNotFoundError } from '../../errors'
+import { assertActiveChain, normalizeChainId } from '../../utils'
 import { fetchSigner } from './fetchSigner'
-import { getNetwork } from './getNetwork'
 
 export type SignTypedDataArgs<
   TTypedData extends TypedData,
@@ -50,22 +49,9 @@ export async function signTypedData<
   const signer = await fetchSigner<providers.JsonRpcSigner>()
   if (!signer) throw new ConnectorNotFoundError()
 
-  const { chain: activeChain, chains } = getNetwork()
   const { chainId: chainId_ } = domain
-  if (chainId_) {
-    const chainId = normalizeChainId(chainId_)
-    const activeChainId = activeChain?.id
-
-    if (chainId !== activeChain?.id) {
-      throw new ChainMismatchError({
-        activeChain:
-          chains.find((x) => x.id === activeChainId)?.name ??
-          `Chain ${activeChainId}`,
-        targetChain:
-          chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
-      })
-    }
-  }
+  const chainId = chainId_ ? normalizeChainId(chainId_) : undefined
+  if (chainId) assertActiveChain({ chainId })
 
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
   return await signer._signTypedData(

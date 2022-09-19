@@ -7,10 +7,11 @@ import {
 } from 'abitype'
 import { CallOverrides, PopulatedTransaction } from 'ethers'
 
-import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
+import { ConnectorNotFoundError } from '../../errors'
 import { Signer } from '../../types'
 import { GetArgs } from '../../types/utils'
-import { fetchSigner, getNetwork } from '../accounts'
+import { assertActiveChain } from '../../utils'
+import { fetchSigner } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
 import {
   PrepareWriteContractConfig,
@@ -107,17 +108,7 @@ export async function writeContract<
   const signer = await fetchSigner<TSigner>()
   if (!signer) throw new ConnectorNotFoundError()
 
-  const { chain: activeChain, chains } = getNetwork()
-  const activeChainId = activeChain?.id
-  if (chainId && chainId !== activeChainId) {
-    throw new ChainMismatchError({
-      activeChain:
-        chains.find((x) => x.id === activeChainId)?.name ??
-        `Chain ${activeChainId}`,
-      targetChain:
-        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
-    })
-  }
+  if (chainId) assertActiveChain({ chainId })
 
   if (mode === 'prepared') {
     if (!request_) throw new Error('`request` is required')
