@@ -31,7 +31,7 @@ export type WatchContractEventConfig<
   /** Event to listen for */
   eventName: TEventName
   /** Callback when event is emitted */
-  callback: TArgs extends readonly any[]
+  listener: TArgs extends readonly any[]
     ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
       ? (...args: any) => void
       : (...args: TArgs) => void
@@ -48,7 +48,7 @@ export function watchContractEvent<
   contractInterface,
   chainId,
   eventName,
-  callback,
+  listener,
   once,
 }: WatchContractEventConfig<TAbi, TEventName>) {
   type Callback = Parameters<Contract['on']>[1]
@@ -56,7 +56,7 @@ export function watchContractEvent<
   let contract: Contract
   const watchEvent = async () => {
     if (contract) {
-      contract?.off(eventName, <Callback>callback)
+      contract?.off(eventName, <Callback>listener)
     }
 
     contract = getContract({
@@ -66,8 +66,8 @@ export function watchContractEvent<
         getWebSocketProvider({ chainId }) || getProvider({ chainId }),
     })
 
-    if (once) contract.once(eventName, <Callback>callback)
-    else contract.on(eventName, <Callback>callback)
+    if (once) contract.once(eventName, <Callback>listener)
+    else contract.on(eventName, <Callback>listener)
   }
 
   watchEvent()
@@ -84,7 +84,7 @@ export function watchContractEvent<
   )
 
   return () => {
-    contract?.off(eventName, <Callback>callback)
+    contract?.off(eventName, <Callback>listener)
     unsubscribe()
   }
 }

@@ -39,16 +39,16 @@ function useContractEventWithWrite<
 
 describe('useContractEvent', () => {
   it('mounts', () => {
-    const callback = vi.fn()
+    const listener = vi.fn()
     renderHook(() =>
       useContractEvent({
         addressOrName: uniContractAddress,
         contractInterface: erc20ABI,
         eventName: 'Transfer',
-        callback,
+        listener,
       }),
     )
-    expect(callback).toHaveBeenCalledTimes(0)
+    expect(listener).toHaveBeenCalledTimes(0)
   })
 
   describe('configuration', () => {
@@ -56,14 +56,14 @@ describe('useContractEvent', () => {
       it('listens', async () => {
         let hash: string | undefined = undefined
 
-        const callback = vi.fn()
+        const listener = vi.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({
             contractEvent: {
               config: {
                 ...wagmiContractConfig,
                 eventName: 'Transfer',
-                callback,
+                listener,
               },
             },
             contractWrite: {
@@ -88,7 +88,7 @@ describe('useContractEvent', () => {
         await waitFor(() =>
           expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
         )
-        await waitFor(() => expect(callback).toHaveBeenCalled())
+        await waitFor(() => expect(listener).toHaveBeenCalled())
       })
     })
   })

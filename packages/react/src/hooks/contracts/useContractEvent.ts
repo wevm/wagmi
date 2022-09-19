@@ -30,7 +30,7 @@ export type UseContractEventConfig<
   /** Event to listen for */
   eventName: TEventName
   /** Callback when event is emitted */
-  callback: TArgs extends readonly any[]
+  listener: TArgs extends readonly any[]
     ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
       ? (...args: any) => void
       : (...args: TArgs) => void
@@ -46,7 +46,7 @@ export function useContractEvent<
   addressOrName,
   chainId,
   contractInterface,
-  callback,
+  listener,
   eventName,
   once,
 }: UseContractEventConfig<TAbi, TEventName>) {
@@ -57,8 +57,8 @@ export function useContractEvent<
     contractInterface,
     signerOrProvider: webSocketProvider ?? provider,
   })
-  const callbackRef = React.useRef(callback)
-  callbackRef.current = callback
+  const callbackRef = React.useRef(listener)
+  callbackRef.current = listener
 
   React.useEffect(() => {
     const handler = (...event: any[]) => callbackRef.current(...event)
