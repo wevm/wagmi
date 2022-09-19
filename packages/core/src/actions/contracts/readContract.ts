@@ -64,9 +64,6 @@ export async function readContract<
       `"${functionName}" is not in the interface for contract "${addressOrName}"`,
     )
 
-  const params = [
-    ...(args ?? []),
-    ...(overrides ? [overrides] : []),
-  ]
+  const params = [...(args ?? []), ...(overrides ? [overrides] : [])]
   return await contractFunction?.(...params)
 }

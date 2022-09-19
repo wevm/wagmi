@@ -104,10 +104,7 @@ export async function prepareWriteContract<
     })
   }
 
-  const params = [
-    ...(args ?? []),
-    ...(overrides ? [overrides] : []),
-  ]
+  const params = [...(args ?? []), ...(overrides ? [overrides] : [])]
   const unsignedTransaction = (await populateTransactionFn(
     ...params,
   )) as PopulatedTransaction & {
