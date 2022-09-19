@@ -419,7 +419,7 @@ export const mlootContractConfig = {
 } as const
 
 export const wagmiContractConfig = {
-  addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+  addressOrName: '0xfba3912ca04dd458c843e2ee08967fc04f3579c2',
   contractInterface: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {
@@ -528,6 +528,13 @@ export const wagmiContractConfig = {
     },
     {
       inputs: [],
+      name: 'mint',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+    {
+      inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
       name: 'mint',
       outputs: [],
       stateMutability: 'nonpayable',

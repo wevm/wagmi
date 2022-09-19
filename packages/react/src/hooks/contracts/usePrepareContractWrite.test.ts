@@ -232,9 +232,9 @@ describe('usePrepareContractWrite', () => {
       expect(data).toBeUndefined()
       expect(rest).toMatchInlineSnapshot(`
         {
-          "error": [ContractMethodDoesNotExistError: Function "wagmi" on contract "0xaf0326d92b97df1221759476b072abfd8084f9be" does not exist.
+          "error": [ContractMethodDoesNotExistError: Function "wagmi" on contract "0xfba3912ca04dd458c843e2ee08967fc04f3579c2" does not exist.
 
-        Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract],
+        Etherscan: https://etherscan.io/address/0xfba3912ca04dd458c843e2ee08967fc04f3579c2#readContract],
           "fetchStatus": "idle",
           "internal": {
             "dataUpdatedAt": 0,
