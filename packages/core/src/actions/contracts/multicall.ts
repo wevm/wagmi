@@ -142,7 +142,7 @@ export async function multicall<TContracts extends unknown[]>({
         addressOrName,
         contractInterface,
       })
-      const params = Array.isArray(args) ? args : args ? [args] : []
+      const params = args ?? []
       try {
         const callData = contract.interface.encodeFunctionData(
           functionName,

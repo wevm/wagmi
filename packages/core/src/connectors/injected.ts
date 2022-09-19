@@ -22,14 +22,12 @@ export type InjectedConnectorOptions = {
   name?: string | ((detectedName: string | string[]) => string)
   /**
    * MetaMask 10.9.3 emits disconnect event when chain is changed.
-   * This flag prevents the `"disconnect"` event from being emitted upon switching chains.
-   * @see https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334
+   * This flag prevents the `"disconnect"` event from being emitted upon switching chains. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334) for more info.
    */
   shimChainChangedDisconnect?: boolean
   /**
    * MetaMask and other injected providers do not support programmatic disconnect.
-   * This flag simulates the disconnect behavior by keeping track of connection status in storage.
-   * @see https://github.com/MetaMask/metamask-extension/issues/10353
+   * This flag simulates the disconnect behavior by keeping track of connection status in storage. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/10353) for more info.
    * @default true
    */
   shimDisconnect?: boolean
@@ -51,11 +49,16 @@ export class InjectedConnector extends Connector<
 
   constructor({
     chains,
-    options = { shimDisconnect: true },
+    options: options_,
   }: {
     chains?: Chain[]
     options?: InjectedConnectorOptions
   } = {}) {
+    const options = {
+      shimDisconnect: true,
+      shimChainChangedDisconnect: true,
+      ...options_,
+    }
     super({ chains, options })
 
     let name = 'Injected'
