@@ -118,12 +118,6 @@ export class CoinbaseWalletConnector extends Connector<
 
   async getProvider() {
     if (!this.#provider) {
-      const chain =
-        this.chains.find((chain) => chain.id === this.options.chainId) ||
-        this.chains[0]
-      const chainId = this.options.chainId || chain?.id
-      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
-
       let CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
       // Workaround for Vite dev import errors
       // https://github.com/vitejs/vite/issues/7112
@@ -135,8 +129,20 @@ export class CoinbaseWalletConnector extends Connector<
         CoinbaseWalletSDK = (<{ default: typeof CoinbaseWalletSDK }>(
           (<unknown>CoinbaseWalletSDK)
         )).default
-
       this.#client = new CoinbaseWalletSDK(this.options)
+
+      // @ts-expect-error – accessing `private` method
+      const walletExtensionChainId = this.#client.walletExtension?.getChainId()
+
+      const chain =
+        this.chains.find((chain) =>
+          this.options.chainId
+            ? chain.id === this.options.chainId
+            : chain.id === walletExtensionChainId,
+        ) || this.chains[0]
+      const chainId = this.options.chainId || chain?.id
+      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
+
       this.#provider = this.#client.makeWeb3Provider(jsonRpcUrl, chainId)
     }
     return this.#provider
