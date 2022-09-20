@@ -169,7 +169,6 @@ export type {
 
 export {
   configureChains,
-  debounce,
   deepEqual,
   minimizeContractInterface,
   normalizeChainId,

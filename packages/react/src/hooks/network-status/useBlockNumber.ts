@@ -2,9 +2,9 @@ import { useQueryClient } from '@tanstack/react-query'
 import {
   FetchBlockNumberArgs,
   FetchBlockNumberResult,
-  debounce,
   fetchBlockNumber,
 } from '@wagmi/core'
+import { debounce } from '@wagmi/core/internal'
 import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
