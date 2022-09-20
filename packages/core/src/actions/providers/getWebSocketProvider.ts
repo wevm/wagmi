@@ -16,5 +16,7 @@ export function getWebSocketProvider<
   chainId,
 }: GetWebSocketProviderArgs = {}): GetWebSocketProviderResult<TWebSocketProvider> {
   const client = getClient<any, TWebSocketProvider>()
-  return client.getWebSocketProvider({ chainId }) || client.webSocketProvider
+  if (chainId)
+    return client.getWebSocketProvider({ chainId }) || client.webSocketProvider
+  return client.webSocketProvider
 }

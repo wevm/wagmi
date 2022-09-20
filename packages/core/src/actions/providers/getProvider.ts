@@ -12,5 +12,6 @@ export function getProvider<TProvider extends Provider = Provider>({
   chainId,
 }: GetProviderArgs = {}): GetProviderResult<TProvider> {
   const client = getClient<TProvider>()
-  return client.getProvider({ chainId }) || client.provider
+  if (chainId) return client.getProvider({ chainId }) || client.provider
+  return client.provider
 }
