@@ -118,12 +118,6 @@ export class CoinbaseWalletConnector extends Connector<
 
   async getProvider() {
     if (!this.#provider) {
-      const chain =
-        this.chains.find((chain) => chain.id === this.options.chainId) ||
-        this.chains[0]
-      const chainId = this.options.chainId || chain?.id
-      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
-
       let CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
       // Workaround for Vite dev import errors
       // https://github.com/vitejs/vite/issues/7112
@@ -135,8 +129,33 @@ export class CoinbaseWalletConnector extends Connector<
         CoinbaseWalletSDK = (<{ default: typeof CoinbaseWalletSDK }>(
           (<unknown>CoinbaseWalletSDK)
         )).default
-
       this.#client = new CoinbaseWalletSDK(this.options)
+
+      /**
+       * Mock implementations to retrieve private `walletExtension` method
+       * from the Coinbase Wallet SDK.
+       */
+      abstract class WalletProvider {
+        // https://github.com/coinbase/coinbase-wallet-sdk/blob/b4cca90022ffeb46b7bbaaab9389a33133fe0844/packages/wallet-sdk/src/provider/CoinbaseWalletProvider.ts#L927-L936
+        abstract getChainId(): number
+      }
+      abstract class Client {
+        // https://github.com/coinbase/coinbase-wallet-sdk/blob/b4cca90022ffeb46b7bbaaab9389a33133fe0844/packages/wallet-sdk/src/CoinbaseWalletSDK.ts#L233-L235
+        abstract get walletExtension(): WalletProvider | undefined
+      }
+      const walletExtensionChainId = (
+        this.#client as unknown as Client
+      ).walletExtension?.getChainId()
+
+      const chain =
+        this.chains.find((chain) =>
+          this.options.chainId
+            ? chain.id === this.options.chainId
+            : chain.id === walletExtensionChainId,
+        ) || this.chains[0]
+      const chainId = this.options.chainId || chain?.id
+      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
+
       this.#provider = this.#client.makeWeb3Provider(jsonRpcUrl, chainId)
     }
     return this.#provider
