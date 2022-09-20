@@ -1,6 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
+import {
+  getSigners,
+  setupClient,
+  tokenId,
+  wagmiContractConfig,
+} from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -20,6 +25,7 @@ describe('writeContract', () => {
     const config = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
+      args: [tokenId],
     })
     const { hash } = await writeContract({ ...config })
 
@@ -32,6 +38,7 @@ describe('writeContract', () => {
       ...wagmiContractConfig,
       mode: 'recklesslyUnprepared',
       functionName: 'mint',
+      args: [tokenId],
     })
 
     expect(hash).toBeDefined()
@@ -43,6 +50,7 @@ describe('writeContract', () => {
       const config = await prepareWriteContract({
         ...wagmiContractConfig,
         functionName: 'mint',
+        args: [tokenId],
       })
 
       await expect(() =>

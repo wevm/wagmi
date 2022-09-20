@@ -5,10 +5,10 @@ import {
   actConnect,
   getCrowdfundArgs,
   getSigners,
-  getTotalSupply,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
   renderHook,
+  tokenId,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
@@ -82,6 +82,7 @@ describe('useContractWrite', () => {
           mode: 'recklesslyUnprepared',
           ...wagmiContractConfig,
           functionName: 'mint',
+          args: [tokenId],
         }),
       )
 
@@ -112,6 +113,7 @@ describe('useContractWrite', () => {
             mode: 'recklesslyUnprepared',
             chainId: 69,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -144,6 +146,7 @@ describe('useContractWrite', () => {
           usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -216,6 +219,7 @@ describe('useContractWrite', () => {
             mode: 'recklesslyUnprepared',
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -318,6 +322,7 @@ describe('useContractWrite', () => {
           usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -391,6 +396,7 @@ describe('useContractWrite', () => {
             mode: 'recklesslyUnprepared',
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -480,7 +486,8 @@ describe('useContractWrite', () => {
 
   describe('behavior', () => {
     it('multiple writes', async () => {
-      let args: any[] | any = []
+      const tokenId = 69420
+      let args: any[] | any = [tokenId]
       let functionName = 'mint'
       const utils = renderHook(() =>
         usePrepareContractWriteWithConnect({
@@ -504,7 +511,6 @@ describe('useContractWrite', () => {
 
       const from = await getSigners()[0]?.getAddress()
       const to = await getSigners()[1]?.getAddress()
-      const tokenId = await getTotalSupply(wagmiContractConfig.addressOrName)
       functionName = 'transferFrom'
       args = [from, to, tokenId]
       rerender()

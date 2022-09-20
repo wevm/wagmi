@@ -1,6 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
+import {
+  getSigners,
+  setupClient,
+  tokenId,
+  wagmiContractConfig,
+} from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -19,6 +24,7 @@ describe('prepareWriteContract', () => {
     const { request } = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
+      args: [tokenId],
     })
 
     const { data, gasLimit, ...rest } = request || {}
@@ -27,7 +33,7 @@ describe('prepareWriteContract', () => {
     expect(rest).toMatchInlineSnapshot(`
       {
         "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "to": "0xaf0326d92b97dF1221759476B072abfd8084f9bE",
+        "to": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
       }
     `)
   })
@@ -41,6 +47,7 @@ describe('prepareWriteContract', () => {
           ...wagmiContractConfig,
           functionName: 'mint',
           chainId: 69,
+          args: [tokenId],
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
@@ -62,6 +69,7 @@ describe('prepareWriteContract', () => {
         prepareWriteContract({
           ...wagmiContractConfig,
           functionName: 'mint',
+          args: [tokenId],
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
