@@ -19,10 +19,10 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "1.889009973656812885",
+            "formatted": "0.40742480512617271",
             "symbol": "ETH",
             "value": {
-              "hex": "0x1a371c9008fbfd55",
+              "hex": "0x05a776b39e3a7026",
               "type": "BigNumber",
             },
           }
@@ -37,10 +37,10 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "1.889009973656812885",
+            "formatted": "0.40742480512617271",
             "symbol": "ETH",
             "value": {
-              "hex": "0x1a371c9008fbfd55",
+              "hex": "0x05a776b39e3a7026",
               "type": "BigNumber",
             },
           }
@@ -57,10 +57,10 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "1.889009973656812885",
+          "formatted": "0.40742480512617271",
           "symbol": "ETH",
           "value": {
-            "hex": "0x1a371c9008fbfd55",
+            "hex": "0x05a776b39e3a7026",
             "type": "BigNumber",
           },
         }
@@ -76,10 +76,10 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "1889009973.656812885",
+          "formatted": "407424805.12617271",
           "symbol": "ETH",
           "value": {
-            "hex": "0x1a371c9008fbfd55",
+            "hex": "0x05a776b39e3a7026",
             "type": "BigNumber",
           },
         }
@@ -148,16 +148,16 @@ describe('fetchBalance', () => {
           token: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
         }),
       ).toMatchInlineSnapshot(`
-          {
-            "decimals": 6,
-            "formatted": "1735.381",
-            "symbol": "USDC",
-            "value": {
-              "hex": "0x676fd008",
-              "type": "BigNumber",
-            },
-          }
-        `)
+        {
+          "decimals": 6,
+          "formatted": "500.001",
+          "symbol": "USDC",
+          "value": {
+            "hex": "0x1dcd68e8",
+            "type": "BigNumber",
+          },
+        }
+      `)
     })
   })
 })
