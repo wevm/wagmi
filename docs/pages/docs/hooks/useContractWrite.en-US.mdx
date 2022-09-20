@@ -133,7 +133,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+Contract ABI in JSON or JS object format. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName` and `args`.
 
 ```tsx {7}
 import { useContractWrite } from 'wagmi'
@@ -175,7 +175,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-Arguments to pass to function call. Accepts `any | any[]`.
+Arguments to pass to function call.
 
 ```tsx {9}
 import { useContractWrite } from 'wagmi'

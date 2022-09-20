@@ -166,6 +166,7 @@ export type {
   Unit,
   WebSocketProvider,
 } from './types'
+export type { Address } from 'abitype'
 
 export {
   configureChains,

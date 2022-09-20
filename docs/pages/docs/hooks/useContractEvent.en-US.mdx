@@ -23,7 +23,9 @@ function App() {
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
     eventName: 'NewOwner',
-    listener: (event) => console.log(event),
+    listener(node, label, owner) {
+      console.log(node, label, owner)
+    },
   })
 }
 ```
@@ -41,15 +43,17 @@ function App() {
   useContractEvent({
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
-    eventName: 'NewResolver',
-    listener: (event) => console.log(event),
+    eventName: 'NewOwner',
+    listener(node, label, owner) {
+      console.log(node, label, owner)
+    },
   })
 }
 ```
 
 ### contractInterface
 
-Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+Contract ABI in JSON or JS object format. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `eventName` and `listener`.
 
 ```tsx {6}
 import { useContractEvent } from 'wagmi'
@@ -58,8 +62,10 @@ function App() {
   useContractEvent({
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
-    eventName: 'NewResolver',
-    listener: (event) => console.log(event),
+    eventName: 'NewOwner',
+    listener(node, label, owner) {
+      console.log(node, label, owner)
+    },
   })
 }
 ```
@@ -76,7 +82,9 @@ function App() {
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
     eventName: 'NewResolver',
-    listener: (event) => console.log(event),
+    listener(node, resolver) {
+      console.log(node, resolver)
+    },
   })
 }
 ```
@@ -85,7 +93,7 @@ function App() {
 
 Callback that receives event.
 
-```tsx {8}
+```tsx {8-10}
 import { useContractEvent } from 'wagmi'
 
 function App() {
@@ -93,7 +101,9 @@ function App() {
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
     eventName: 'NewOwner',
-    listener: (event) => console.log(event),
+    listener(node, label, owner) {
+      console.log(node, label, owner)
+    },
   })
 }
 ```
@@ -102,7 +112,7 @@ function App() {
 
 Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/docs/client#websocketprovider-optional) for this to work correctly.
 
-```tsx {12}
+```tsx {11}
 import { useContractEvent } from 'wagmi'
 
 function App() {
@@ -110,7 +120,9 @@ function App() {
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
     eventName: 'NewOwner',
-    listener: (event) => console.log(event),
+    listener(node, label, owner) {
+      console.log(node, label, owner)
+    },
     chainId: 1,
   })
 }
@@ -120,7 +132,7 @@ function App() {
 
 Receive only a single event, then stop listener. Defaults to `false`.
 
-```tsx {12}
+```tsx {11}
 import { useContractEvent } from 'wagmi'
 
 function App() {
@@ -128,7 +140,9 @@ function App() {
     addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     contractInterface: ensRegistryABI,
     eventName: 'NewOwner',
-    listener: (event) => console.log(event),
+    listener(node, label, owner) {
+      console.log(node, label, owner)
+    },
     once: true,
   })
 }

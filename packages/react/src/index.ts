@@ -87,3 +87,5 @@ export type {
   Storage,
   Unit,
 } from '@wagmi/core'
+
+export type { Address } from 'abitype'

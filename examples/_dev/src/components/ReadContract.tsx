@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useContractRead } from 'wagmi'
+import { Address, useContractRead } from 'wagmi'
 
-import wagmigotchiAbi from './wagmigotchi-abi.json'
+import { wagmigotchiAbi } from './wagmigotchi-abi'
 
 const wagmigotchiContractConfig = {
-  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1' as const,
   contractInterface: wagmigotchiAbi,
 }
 
@@ -44,7 +44,9 @@ const GetAlive = () => {
 }
 
 const Love = () => {
-  const [address, setAddress] = useState<string>('')
+  const [address, setAddress] = useState<Address>(
+    '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  )
   const { data, isFetching, isRefetching, isSuccess } = useContractRead({
     ...wagmigotchiContractConfig,
     functionName: 'love',
@@ -63,7 +65,7 @@ const Love = () => {
         style={{ marginLeft: 4 }}
         value={value}
       />
-      <button onClick={() => setAddress(value)}>
+      <button onClick={() => setAddress(value as Address)}>
         {isFetching
           ? isRefetching
             ? 'refetching...'

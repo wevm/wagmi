@@ -43,7 +43,11 @@ function App() {
 }
 ```
 
-<Callout>Note: The `write` function will be undefined if the config has not been prepared (still in-flight or errored), or the end-user is not connected to a wallet.</Callout>
+<Callout>
+  Note: The `write` function will be undefined if the config has not been
+  prepared (still in-flight or errored), or the end-user is not connected to a
+  wallet.
+</Callout>
 
 ## Return value
 
@@ -86,7 +90,7 @@ function App() {
 
 ### contractInterface
 
-Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+Contract ABI in JSON or JS object format. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName` and `args`.
 
 ```tsx {6}
 import { usePrepareContractWrite } from 'wagmi'
@@ -118,7 +122,7 @@ function App() {
 
 ### args (optional)
 
-Arguments to pass to function call. Accepts `any | any[]`.
+Arguments to pass to function call.
 
 ```tsx {8}
 import { usePrepareContractWrite } from 'wagmi'
@@ -146,7 +150,7 @@ function App() {
     addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     contractInterface: wagmigotchiABI,
     functionName: 'feed',
-    chainId: optimism.id
+    chainId: optimism.id,
   })
 }
 ```
