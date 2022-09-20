@@ -5,8 +5,8 @@ import {
   act,
   actConnect,
   getSigners,
-  getTotalSupply,
   renderHook,
+  tokenId,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
@@ -33,6 +33,7 @@ describe('useDeprecatedContractWrite', () => {
       useDeprecatedContractWrite({
         ...wagmiContractConfig,
         functionName: 'mint',
+        args: [tokenId],
       }),
     )
     expect(result.current).toMatchInlineSnapshot(`
@@ -66,6 +67,7 @@ describe('useDeprecatedContractWrite', () => {
             ...wagmiContractConfig,
             chainId: 1,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
         const { result, waitFor } = utils
@@ -93,6 +95,7 @@ describe('useDeprecatedContractWrite', () => {
           useDeprecatedContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
         const { result, waitFor } = utils
@@ -111,7 +114,7 @@ describe('useDeprecatedContractWrite', () => {
 
   describe('behavior', () => {
     it('can call multiple writes', async () => {
-      let args: any[] | any = []
+      let args: any[] | any = [tokenId]
       let functionName = 'mint'
       const utils = renderHook(() =>
         useDeprecatedContractWriteWithConnect({
@@ -133,7 +136,6 @@ describe('useDeprecatedContractWrite', () => {
 
       const from = await getSigners()[0]?.getAddress()
       const to = await getSigners()[1]?.getAddress()
-      const tokenId = await getTotalSupply(wagmiContractConfig.addressOrName)
       functionName = 'transferFrom'
       args = [from, to, tokenId]
       rerender()

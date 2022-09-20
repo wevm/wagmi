@@ -77,10 +77,10 @@ export {
   getCrowdfundArgs,
   getProvider,
   getSigners,
-  getTotalSupply,
   getWebSocketProvider,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
+  tokenId,
   wagmiContractConfig,
   wagmigotchiContractConfig,
 } from '../../core/test'

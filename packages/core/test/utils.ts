@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { Contract, Wallet } from 'ethers/lib/ethers'
+import { Wallet } from 'ethers/lib/ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
 
@@ -175,24 +175,6 @@ export class WalletSigner extends Wallet {
 export function getSigners() {
   const provider = getProvider()
   return accounts.map((x) => new WalletSigner(x.privateKey, provider))
-}
-
-export async function getTotalSupply(addressOrName: string) {
-  const provider = getProvider()
-  const contract = new Contract(
-    addressOrName,
-    [
-      {
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
-    provider,
-  )
-  return await contract.totalSupply()
 }
 
 let crowdfundId = 0

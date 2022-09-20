@@ -1,3 +1,7 @@
+import { BigNumber } from 'ethers'
+
+export const tokenId = BigNumber.from(69420)
+
 export const wagmigotchiContractConfig = {
   addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   contractInterface: [
@@ -419,7 +423,7 @@ export const mlootContractConfig = {
 } as const
 
 export const wagmiContractConfig = {
-  addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+  addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
   contractInterface: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {
@@ -527,7 +531,7 @@ export const wagmiContractConfig = {
       type: 'function',
     },
     {
-      inputs: [],
+      inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
       name: 'mint',
       outputs: [],
       stateMutability: 'nonpayable',

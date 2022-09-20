@@ -21,12 +21,12 @@ export function setupClient(config: Config = {}) {
 export {
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
+  tokenId,
   wagmiContractConfig,
   wagmigotchiContractConfig,
 } from './constants'
 export {
   getCrowdfundArgs,
-  getTotalSupply,
   getProvider,
   getWebSocketProvider,
   getSigners,
