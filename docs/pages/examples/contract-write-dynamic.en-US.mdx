@@ -1,0 +1,398 @@
+---
+title: 'Contract Write'
+description: 'Learn how to perform a contract write with wagmi.'
+---
+
+import Callout from 'nextra-theme-docs/callout'
+import { ContractWriteDynamic } from '../../components/examples'
+
+# Contract Write (Dynamic Args)
+
+The following example teaches you how to implement a "Mint NFT" form that takes in a dynamic argument (token ID) using wagmi. The example below builds on the [Contract Write Example](/examples/contract-write) and uses the [`usePrepareContractWrite`](/docs/prepare-hooks/usePrepareContractWrite), [`useContractWrite`](/docs/hooks/useContractWrite) & [`useWaitForTransaction`](/docs/hooks/useWaitForTransaction) hooks. Try it out before moving on.
+
+<ContractWriteDynamic />
+
+## Step 1: Connect Wallet
+
+Follow the [Connect Wallet](/examples/connect-wallet#step-1-configuring-connectors) guide to get this set up.
+
+## Step 2: Create a new component
+
+Create a new component that will contain the NFT mint form.
+
+```tsx
+import * as React from 'react'
+
+export function MintNFTForm() {
+  return (
+    <form>
+      <label for="tokenId">Token ID</label>
+      <input id="tokenId" placeholder="420" />
+      <button>Mint</button>
+    </form>
+  )
+}
+```
+
+## Step 3: Add some state to the form
+
+Next, let's add some state to the input field.
+
+```tsx {4,11,13}
+import * as React from 'react'
+
+export function MintNFTForm() {
+  const [tokenId, setTokenId] = React.useState('')
+
+  return (
+    <form>
+      <label for="tokenId">Token ID</label>
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="420"
+        value={tokenId}
+      />
+      <button>Mint</button>
+    </form>
+  )
+}
+```
+
+## Step 4: Add the `usePrepareContractWrite` hook
+
+Add the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+
+You will need to:
+
+1. Add the hook
+2. Pass in your contract configuration (address, contract interface, function name and arguments)
+
+```tsx {2,7-21}
+import * as React from 'react'
+import { usePrepareContractWrite } from 'wagmi'
+
+export function MintNFTForm() {
+  const [tokenId, setTokenId] = React.useState('')
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+    args: [parseInt(tokenId)],
+    enabled: Boolean(tokenId),
+  })
+
+  return (
+    <form>
+      <label for="tokenId">Token ID</label>
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="420"
+        value={tokenId}
+      />
+      <button>Mint</button>
+    </form>
+  )
+}
+```
+
+## Step 5: Add a debounce to the input value
+
+As the `usePrepareContractWrite` hook performs an RPC request to obtain the gas estimate **on mount** and **on every change to `args`**, we don't want to spam the RPC and become rate-limited.
+
+To mitigate this, we can add a [`useDebounce` hook](https://usehooks-ts.com/react-hook/use-debounce) to our component. Let's set it so that it updates the token ID if no change has been made for 500 milliseconds.
+
+```tsx {3,7,21-22}
+import * as React from 'react'
+import { usePrepareContractWrite } from 'wagmi'
+import { useDebounce } from './useDebounce'
+
+export function MintNFTForm() {
+  const [tokenId, setTokenId] = React.useState('')
+  const debouncedTokenId = useDebounce(tokenId, 500)
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+    args: [parseInt(debouncedTokenId)],
+    enabled: Boolean(debouncedTokenId),
+  })
+
+  return (
+    <form>
+      <label for="tokenId">Token ID</label>
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="420"
+        value={tokenId}
+      />
+      <button>Mint</button>
+    </form>
+  )
+}
+```
+
+## Step 6: Add the `useContractWrite` hook
+
+Now add the [`useContractWrite` hook](/docs/hooks/useContractWrite). This hook performs the actual contract write transaction.
+
+We will need to:
+
+1. Add the hook.
+2. Pass in the configuration (`config`) that we created in the previous step.
+3. Hook it up to our form via an `onChange` prop.
+4. Disable the button when the `write` function is not ready (still preparing).
+
+```tsx {2,24,28-31,40}
+import * as React from 'react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+import { useDebounce } from './useDebounce'
+
+export function MintNFTForm() {
+  const [tokenId, setTokenId] = React.useState('')
+  const debouncedTokenId = useDebounce(tokenId)
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+    args: [parseInt(debouncedTokenId)],
+    enabled: Boolean(debouncedTokenId),
+  })
+  const { write } = useContractWrite(config)
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        write?.()
+      }}
+    >
+      <label for="tokenId">Token ID</label>
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="420"
+        value={tokenId}
+      />
+      <button disabled={!write}>Mint</button>
+    </form>
+  )
+}
+```
+
+Clicking the "Mint" button will invoke the `mint` function on the contract and mint the NFT for the user.
+
+However, there is currently no feedback to show when the `mint` transaction is successful. We will add some feedback in the next step.
+
+<Callout emoji="🤔" type="info">
+  [Why do I need a `usePrepareContractWrite` & `useContractWrite`
+  hook?](/docs/prepare-hooks/intro)
+</Callout>
+
+## Step 7: Add the `useWaitForTransaction` hook
+
+Using the [`useWaitForTransaction` hook](/docs/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
+
+We will need to:
+
+1. Add the hook
+2. Pass in the transaction hash (`data.hash`) as a parameter to the hook
+3. Add loading state to the button when the transaction is pending.
+4. Add a success state for when the transaction is successful.
+
+```tsx {5,28,30-32,48-58}
+import * as React from 'react'
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
+import { useDebounce } from './useDebounce'
+
+export function MintNFTForm() {
+  const [tokenId, setTokenId] = React.useState('')
+  const debouncedTokenId = useDebounce(tokenId)
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+    args: [parseInt(debouncedTokenId)],
+    enabled: Boolean(debouncedTokenId),
+  })
+  const { data, write } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  })
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        write?.()
+      }}
+    >
+      <label for="tokenId">Token ID</label>
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="420"
+        value={tokenId}
+      />
+      <button disabled={!write || isLoading}>
+        {isLoading ? 'Minting...' : 'Mint'}
+      </button>
+      {isSuccess && (
+        <div>
+          Successfully minted your NFT!
+          <div>
+            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+          </div>
+        </div>
+      )}
+    </form>
+  )
+}
+```
+
+## Step 8: Add To App
+
+Import the `MintNFTForm` component and display it when the account is connected.
+
+```tsx {3,12}
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+
+import { MintNFTForm } from './MintNFTForm'
+
+export function App() {
+  const { isConnected } = useAccount()
+
+  if (isConnected) {
+    return (
+      <div>
+        {/* Account content goes here */}
+        <MintNFTForm />
+      </div>
+    )
+  }
+
+  return <div>{/* Connect wallet content goes here */}</div>
+}
+```
+
+## Bonus Point: Add some error handling
+
+Now let's provide some feedback to the user if the prepare hook fails, or if the write hook fails.
+
+```tsx {15-16,32,63-65}
+import * as React from 'react'
+import {
+  usePrepareContractWrite,
+  useContractWrite,
+  useWaitForTransaction,
+} from 'wagmi'
+import { useDebounce } from './useDebounce'
+
+export function MintNFTForm() {
+  const [tokenId, setTokenId] = React.useState('')
+  const debouncedTokenId = useDebounce(tokenId)
+
+  const {
+    config,
+    error: prepareError,
+    isError: isPrepareError,
+  } = usePrepareContractWrite({
+    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+    args: [parseInt(debouncedTokenId)],
+    enabled: Boolean(debouncedTokenId),
+  })
+  const { data, error, isError, write } = useContractWrite(config)
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  })
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        write?.()
+      }}
+    >
+      <label for="tokenId">Token ID</label>
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
+        placeholder="420"
+        value={tokenId}
+      />
+      <button disabled={!write || isLoading}>
+        {isLoading ? 'Minting...' : 'Mint'}
+      </button>
+      {isSuccess && (
+        <div>
+          Successfully minted your NFT!
+          <div>
+            <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+          </div>
+        </div>
+      )}
+      {(isPrepareError || isError) && (
+        <div>Error: {(prepareError || error)?.message}</div>
+      )}
+    </form>
+  )
+}
+```
+
+## Wrap Up
+
+That's it! You have now added a basic "Mint NFT" form with dynamic arguments to your app.
