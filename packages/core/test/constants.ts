@@ -1,7 +1,3 @@
-import { BigNumber } from 'ethers'
-
-export const tokenId = BigNumber.from(69420)
-
 export const wagmigotchiContractConfig = {
   addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   contractInterface: [

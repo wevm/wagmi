@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { Wallet } from 'ethers/lib/ethers'
+import { BigNumber, Wallet } from 'ethers/lib/ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
 
@@ -214,4 +214,8 @@ export function getCrowdfundArgs({
     operatorPercent,
   }
   return Object.values(data)
+}
+
+export function getRandomTokenId() {
+  return BigNumber.from(Math.floor(Math.random() * 1000) + 69420)
 }

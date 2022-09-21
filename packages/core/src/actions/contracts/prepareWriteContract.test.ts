@@ -2,8 +2,8 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
   getSigners,
+  getRandomTokenId,
   setupClient,
-  tokenId,
   wagmiContractConfig,
 } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
@@ -24,7 +24,7 @@ describe('prepareWriteContract', () => {
     const { request } = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
-      args: [tokenId],
+      args: [getRandomTokenId()],
     })
 
     const { data, gasLimit, ...rest } = request || {}
@@ -47,7 +47,7 @@ describe('prepareWriteContract', () => {
           ...wagmiContractConfig,
           functionName: 'mint',
           chainId: 69,
-          args: [tokenId],
+          args: [getRandomTokenId()],
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
@@ -69,7 +69,7 @@ describe('prepareWriteContract', () => {
         prepareWriteContract({
           ...wagmiContractConfig,
           functionName: 'mint',
-          args: [tokenId],
+          args: [getRandomTokenId()],
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
