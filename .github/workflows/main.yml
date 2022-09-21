@@ -43,7 +43,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-1
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: pnpm i
@@ -78,7 +78,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-1
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Lint code
         run: pnpm lint
       - name: Check types
@@ -111,7 +111,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-1
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build
         run: pnpm build
 
@@ -145,7 +145,7 @@ jobs:
             examples/*/node_modules
             packages/*/node_modules
             packages/**/dist
-          key: modules-${{ hashFiles('pnpm-lock.yaml') }}-1
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install rust
         uses: actions-rs/toolchain@v1
         with:
