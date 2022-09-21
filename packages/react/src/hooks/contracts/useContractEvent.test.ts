@@ -1,4 +1,4 @@
-import { erc20ABI } from '@wagmi/core'
+import { Hash, erc20ABI } from '@wagmi/core'
 import { Abi, ExtractAbiEventNames, ExtractAbiFunctionNames } from 'abitype'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -60,7 +60,7 @@ describe('useContractEvent', () => {
   describe('configuration', () => {
     describe('once', () => {
       it('listens', async () => {
-        let hash: string | undefined = undefined
+        let hash: Hash | undefined = undefined
 
         const tokenId = getRandomTokenId()
         const listener = vi.fn()

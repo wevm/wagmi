@@ -1,28 +1,26 @@
+import { IsNever, NotEqual, Or } from '@wagmi/core/internal'
 import {
   Abi,
   AbiEvent,
   AbiParametersToPrimitiveTypes,
-  Address,
   ExtractAbiEvent,
   ExtractAbiEventNames,
 } from 'abitype'
 import { ethers } from 'ethers'
 import * as React from 'react'
 
-import { IsNever, NotEqual, Or } from '../../types/utils'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useContract } from './useContract'
 
-export type UseContractEventConfig<
+type ContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
   TEvent extends AbiEvent = TAbi extends Abi
     ? ExtractAbiEvent<TAbi, TEventName>
     : never,
-  TArgs = AbiParametersToPrimitiveTypes<TEvent['inputs']>,
 > = {
   /** Contract address */
-  addressOrName: Address
+  addressOrName: string
   /** Contract ABI */
   contractInterface: TAbi
   /** Chain id to use for provider */
@@ -30,7 +28,9 @@ export type UseContractEventConfig<
   /** Event to listen for */
   eventName: TEventName
   /** Callback when event is emitted */
-  listener: TArgs extends readonly any[]
+  listener: AbiParametersToPrimitiveTypes<
+    TEvent['inputs']
+  > extends infer TArgs extends readonly unknown[]
     ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
       ? (...args: any) => void
       : (...args: TArgs) => void
@@ -39,9 +39,30 @@ export type UseContractEventConfig<
   once?: boolean
 }
 
+type GetConfig<T> = T extends {
+  abi: infer TAbi extends Abi
+  eventName: infer TEventName extends string
+}
+  ? ContractEventConfig<
+      TAbi,
+      ExtractAbiEventNames<TAbi>,
+      ExtractAbiEvent<TAbi, TEventName>
+    >
+  : T extends {
+      abi: infer TAbi extends readonly unknown[]
+      eventName: infer TEventName extends string
+    }
+  ? ContractEventConfig<TAbi, TEventName>
+  : ContractEventConfig
+
+export type UseContractEventConfig<
+  TAbi = Abi,
+  TEventName = string,
+> = GetConfig<{ abi: TAbi; eventName: TEventName }>
+
 export function useContractEvent<
   TAbi extends Abi | readonly unknown[],
-  TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
+  TEventName extends string,
 >({
   addressOrName,
   chainId,

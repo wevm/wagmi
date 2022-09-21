@@ -51,8 +51,9 @@ export type WatchContractEventCallback<
   TEvent extends AbiEvent = TAbi extends Abi
     ? ExtractAbiEvent<TAbi, TEventName>
     : never,
-  TArgs = AbiParametersToPrimitiveTypes<TEvent['inputs']>,
-> = TArgs extends readonly any[]
+> = AbiParametersToPrimitiveTypes<
+  TEvent['inputs']
+> extends infer TArgs extends readonly unknown[]
   ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
     ? (...args: any) => void
     : (...args: TArgs) => void

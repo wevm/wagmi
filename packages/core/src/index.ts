@@ -160,6 +160,7 @@ export type {
   ChainProviderFn,
   Ethereum,
   FallbackProviderConfig,
+  Hash,
   ProviderWithFallbackConfig,
   Provider,
   Signer,
