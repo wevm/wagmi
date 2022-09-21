@@ -77,7 +77,7 @@ export {
   getCrowdfundArgs,
   getProvider,
   getSigners,
-  getTotalSupply,
+  getRandomTokenId,
   getWebSocketProvider,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,

@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest'
 import {
   act,
   actConnect,
+  getRandomTokenId,
   getSigners,
-  getTotalSupply,
   renderHook,
   wagmiContractConfig,
 } from '../../../test'
@@ -29,10 +29,12 @@ const timeout = 15_000
 
 describe('useDeprecatedContractWrite', () => {
   it('mounts', () => {
+    const tokenId = getRandomTokenId()
     const { result } = renderHook(() =>
       useDeprecatedContractWrite({
         ...wagmiContractConfig,
         functionName: 'mint',
+        args: [tokenId],
       }),
     )
     expect(result.current).toMatchInlineSnapshot(`
@@ -61,11 +63,13 @@ describe('useDeprecatedContractWrite', () => {
             signer: getSigners()[0]!,
           },
         })
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useDeprecatedContractWriteWithConnect({
             ...wagmiContractConfig,
             chainId: 1,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
         const { result, waitFor } = utils
@@ -89,10 +93,12 @@ describe('useDeprecatedContractWrite', () => {
   describe('return value', () => {
     describe('write', () => {
       it('uses configuration', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useDeprecatedContractWriteWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
         const { result, waitFor } = utils
@@ -111,7 +117,8 @@ describe('useDeprecatedContractWrite', () => {
 
   describe('behavior', () => {
     it('can call multiple writes', async () => {
-      let args: any[] | any = []
+      const tokenId = getRandomTokenId()
+      let args: any[] | any = [tokenId]
       let functionName = 'mint'
       const utils = renderHook(() =>
         useDeprecatedContractWriteWithConnect({
@@ -133,7 +140,6 @@ describe('useDeprecatedContractWrite', () => {
 
       const from = await getSigners()[0]?.getAddress()
       const to = await getSigners()[1]?.getAddress()
-      const tokenId = await getTotalSupply(wagmiContractConfig.addressOrName)
       functionName = 'transferFrom'
       args = [from, to, tokenId]
       rerender()

@@ -1,6 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
+import {
+  getRandomTokenId,
+  getSigners,
+  setupClient,
+  wagmiContractConfig,
+} from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -20,6 +25,7 @@ describe('writeContract', () => {
     const config = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
+      args: [getRandomTokenId()],
     })
     const { hash } = await writeContract({ ...config })
 
@@ -32,6 +38,7 @@ describe('writeContract', () => {
       ...wagmiContractConfig,
       mode: 'recklesslyUnprepared',
       functionName: 'mint',
+      args: [getRandomTokenId()],
     })
 
     expect(hash).toBeDefined()
@@ -43,6 +50,7 @@ describe('writeContract', () => {
       const config = await prepareWriteContract({
         ...wagmiContractConfig,
         functionName: 'mint',
+        args: [getRandomTokenId()],
       })
 
       await expect(() =>
@@ -85,9 +93,9 @@ describe('writeContract', () => {
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-        "Function \\"wagmi\\" on contract \\"0xaf0326d92b97df1221759476b072abfd8084f9be\\" does not exist.
+        "Function \\"wagmi\\" on contract \\"0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2\\" does not exist.
 
-        Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract"
+        Etherscan: https://etherscan.io/address/0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2#readContract"
       `)
     })
   })

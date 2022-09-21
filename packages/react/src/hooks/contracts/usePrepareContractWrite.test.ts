@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import {
   actConnect,
+  getRandomTokenId,
   mlootContractConfig,
   renderHook,
   wagmiContractConfig,
@@ -25,10 +26,12 @@ function usePrepareContractWriteWithConnect(
 
 describe('usePrepareContractWrite', () => {
   it('mounts', async () => {
+    const tokenId = getRandomTokenId()
     const { result } = renderHook(() =>
       usePrepareContractWriteWithConnect({
         ...wagmiContractConfig,
         functionName: 'mint',
+        args: [tokenId],
       }),
     )
 
@@ -66,10 +69,12 @@ describe('usePrepareContractWrite', () => {
   })
 
   it('connect', async () => {
+    const tokenId = getRandomTokenId()
     const utils = renderHook(() =>
       usePrepareContractWriteWithConnect({
         ...wagmiContractConfig,
         functionName: 'mint',
+        args: [tokenId],
       }),
     )
     const { result, waitFor } = utils
@@ -93,7 +98,7 @@ describe('usePrepareContractWrite', () => {
     expect(restRequest).toMatchInlineSnapshot(`
       {
         "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "to": "0xaf0326d92b97dF1221759476B072abfd8084f9bE",
+        "to": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
       }
     `)
     expect(rest).toMatchInlineSnapshot(`
@@ -198,9 +203,9 @@ describe('usePrepareContractWrite', () => {
       expect(data).toBeUndefined()
       expect(rest).toMatchInlineSnapshot(`
         {
-          "error": [ContractMethodDoesNotExistError: Function "wagmi" on contract "0xaf0326d92b97df1221759476b072abfd8084f9be" does not exist.
+          "error": [ContractMethodDoesNotExistError: Function "wagmi" on contract "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2" does not exist.
 
-        Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract],
+        Etherscan: https://etherscan.io/address/0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2#readContract],
           "fetchStatus": "idle",
           "internal": {
             "dataUpdatedAt": 0,

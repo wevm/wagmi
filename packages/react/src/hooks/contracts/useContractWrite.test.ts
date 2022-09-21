@@ -4,8 +4,8 @@ import {
   act,
   actConnect,
   getCrowdfundArgs,
+  getRandomTokenId,
   getSigners,
-  getTotalSupply,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
   renderHook,
@@ -77,11 +77,13 @@ describe('useContractWrite', () => {
     })
 
     it('recklesslyUnprepared', async () => {
+      const tokenId = getRandomTokenId()
       const { result } = renderHook(() =>
         useContractWrite({
           mode: 'recklesslyUnprepared',
           ...wagmiContractConfig,
           functionName: 'mint',
+          args: [tokenId],
         }),
       )
 
@@ -111,6 +113,7 @@ describe('useContractWrite', () => {
             ...wagmiContractConfig,
             chainId: 69,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -139,10 +142,12 @@ describe('useContractWrite', () => {
   describe('return value', () => {
     describe('write', () => {
       it('prepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -210,11 +215,13 @@ describe('useContractWrite', () => {
       }, 10_000)
 
       it('recklesslyUnprepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'recklesslyUnprepared',
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -313,10 +320,12 @@ describe('useContractWrite', () => {
 
     describe('writeAsync', () => {
       it('prepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -385,11 +394,13 @@ describe('useContractWrite', () => {
       })
 
       it('recklesslyUnprepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'recklesslyUnprepared',
             ...wagmiContractConfig,
             functionName: 'mint',
+            args: [tokenId],
           }),
         )
 
@@ -479,7 +490,8 @@ describe('useContractWrite', () => {
 
   describe('behavior', () => {
     it('multiple writes', async () => {
-      let args: any[] | any = []
+      const tokenId = getRandomTokenId()
+      let args: any[] | any = [tokenId]
       let functionName = 'mint'
       const utils = renderHook(() =>
         usePrepareContractWritedWithConnect({
@@ -503,7 +515,6 @@ describe('useContractWrite', () => {
 
       const from = await getSigners()[0]?.getAddress()
       const to = await getSigners()[1]?.getAddress()
-      const tokenId = await getTotalSupply(wagmiContractConfig.addressOrName)
       functionName = 'transferFrom'
       args = [from, to, tokenId]
       rerender()

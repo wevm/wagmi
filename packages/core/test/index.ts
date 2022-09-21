@@ -26,8 +26,8 @@ export {
 } from './constants'
 export {
   getCrowdfundArgs,
-  getTotalSupply,
   getProvider,
+  getRandomTokenId,
   getWebSocketProvider,
   getSigners,
 } from './utils'
