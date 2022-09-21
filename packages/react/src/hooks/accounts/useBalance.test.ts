@@ -19,10 +19,10 @@ describe('useBalance', () => {
       {
         "data": {
           "decimals": 18,
-          "formatted": "1.889009973656812885",
+          "formatted": "0.40742480512617271",
           "symbol": "ETH",
           "value": {
-            "hex": "0x1a371c9008fbfd55",
+            "hex": "0x05a776b39e3a7026",
             "type": "BigNumber",
           },
         },
@@ -58,10 +58,10 @@ describe('useBalance', () => {
           {
             "data": {
               "decimals": 18,
-              "formatted": "1.889009973656812885",
+              "formatted": "0.40742480512617271",
               "symbol": "ETH",
               "value": {
-                "hex": "0x1a371c9008fbfd55",
+                "hex": "0x05a776b39e3a7026",
                 "type": "BigNumber",
               },
             },
@@ -95,10 +95,10 @@ describe('useBalance', () => {
           {
             "data": {
               "decimals": 18,
-              "formatted": "0.244974809851885503",
+              "formatted": "0.048320181048190068",
               "symbol": "ETH",
               "value": {
-                "hex": "0x0366534aa823f7bf",
+                "hex": "0xabaaf2dadc2474",
                 "type": "BigNumber",
               },
             },
@@ -131,10 +131,10 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "1.889009973656812885",
+            "formatted": "0.40742480512617271",
             "symbol": "ETH",
             "value": {
-              "hex": "0x1a371c9008fbfd55",
+              "hex": "0x05a776b39e3a7026",
               "type": "BigNumber",
             },
           },
@@ -196,10 +196,10 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "1889009973.656812885",
+            "formatted": "407424805.12617271",
             "symbol": "ETH",
             "value": {
-              "hex": "0x1a371c9008fbfd55",
+              "hex": "0x05a776b39e3a7026",
               "type": "BigNumber",
             },
           },
@@ -266,10 +266,10 @@ describe('useBalance', () => {
         expect(data).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "0.415160768386201476",
+            "formatted": "0.024495190284783363",
             "symbol": "ETH",
             "value": {
-              "hex": "0x05c2f284ec567784",
+              "hex": "0x57063eeba14f03",
               "type": "BigNumber",
             },
           }
@@ -320,10 +320,10 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 6,
-            "formatted": "1735.381",
+            "formatted": "500.001",
             "symbol": "USDC",
             "value": {
-              "hex": "0x676fd008",
+              "hex": "0x1dcd68e8",
               "type": "BigNumber",
             },
           },

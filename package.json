@@ -1,7 +1,7 @@
 {
   "name": "root",
   "scripts": {
-    "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 15132000",
+    "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 15578840",
     "build": "preconstruct build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",

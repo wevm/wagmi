@@ -1,5 +1,5 @@
 import { providers } from 'ethers'
-import { Contract, Wallet } from 'ethers/lib/ethers'
+import { BigNumber, Wallet } from 'ethers/lib/ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
 
@@ -177,24 +177,6 @@ export function getSigners() {
   return accounts.map((x) => new WalletSigner(x.privateKey, provider))
 }
 
-export async function getTotalSupply(addressOrName: string) {
-  const provider = getProvider()
-  const contract = new Contract(
-    addressOrName,
-    [
-      {
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ],
-    provider,
-  )
-  return await contract.totalSupply()
-}
-
 let crowdfundId = 0
 function getRandomNumber(from = 1, to = 100) {
   return Math.floor(Math.random() * to) + from
@@ -232,4 +214,8 @@ export function getCrowdfundArgs({
     operatorPercent,
   }
   return Object.values(data)
+}
+
+export function getRandomTokenId() {
+  return BigNumber.from(Math.floor(Math.random() * 1000) + 69420)
 }
