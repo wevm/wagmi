@@ -486,7 +486,6 @@ describe('useContractWrite', () => {
 
   describe('behavior', () => {
     it('multiple writes', async () => {
-      const tokenId = 69420
       let args: any[] | any = [tokenId]
       let functionName = 'mint'
       const utils = renderHook(() =>
