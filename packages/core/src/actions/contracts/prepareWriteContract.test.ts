@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
-  getSigners,
   getRandomTokenId,
+  getSigners,
   setupClient,
   wagmiContractConfig,
 } from '../../../test'
