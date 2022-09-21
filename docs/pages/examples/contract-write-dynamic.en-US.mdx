@@ -47,9 +47,9 @@ export function MintNFTForm() {
   return (
     <form>
       <label for="tokenId">Token ID</label>
-      <input 
-        id="tokenId" 
-        onChange={e => setTokenId(e.target.value)}
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
         placeholder="420"
         value={tokenId}
       />
@@ -68,7 +68,7 @@ You will need to:
 1. Add the hook
 2. Pass in your contract configuration (address, contract interface, function name and arguments)
 
-```tsx {2,7-13}
+```tsx {2,7-21}
 import * as React from 'react'
 import { usePrepareContractWrite } from 'wagmi'
 
@@ -77,18 +77,26 @@ export function MintNFTForm() {
 
   const { config } = usePrepareContractWrite({
     addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint(uint32 tokenId)'],
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
     args: [parseInt(tokenId)],
-    enabled: Boolean(tokenId)
+    enabled: Boolean(tokenId),
   })
 
   return (
     <form>
       <label for="tokenId">Token ID</label>
-      <input 
-        id="tokenId" 
-        onChange={e => setTokenId(e.target.value)}
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
         placeholder="420"
         value={tokenId}
       />
@@ -104,7 +112,7 @@ As the `usePrepareContractWrite` hook performs an RPC request to obtain the gas 
 
 To mitigate this, we can add a [`useDebounce` hook](https://usehooks-ts.com/react-hook/use-debounce) to our component. Let's set it so that it updates the token ID if no change has been made for 500 milliseconds.
 
-```tsx {3,7,13-14}
+```tsx {3,7,21-22}
 import * as React from 'react'
 import { usePrepareContractWrite } from 'wagmi'
 import { useDebounce } from './useDebounce'
@@ -115,18 +123,26 @@ export function MintNFTForm() {
 
   const { config } = usePrepareContractWrite({
     addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint(uint32 tokenId)'],
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
-    enabled: Boolean(debouncedTokenId)
+    enabled: Boolean(debouncedTokenId),
   })
 
   return (
     <form>
       <label for="tokenId">Token ID</label>
-      <input 
-        id="tokenId" 
-        onChange={e => setTokenId(e.target.value)}
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
         placeholder="420"
         value={tokenId}
       />
@@ -147,12 +163,9 @@ We will need to:
 3. Hook it up to our form via an `onChange` prop.
 4. Disable the button when the `write` function is not ready (still preparing).
 
-```tsx {4,19,22-25,33-35}
+```tsx {2,24,28-31,40}
 import * as React from 'react'
-import { 
-  usePrepareContractWrite, 
-  useContractWrite 
-} from 'wagmi'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { useDebounce } from './useDebounce'
 
 export function MintNFTForm() {
@@ -161,28 +174,36 @@ export function MintNFTForm() {
 
   const { config } = usePrepareContractWrite({
     addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint(uint32 tokenId)'],
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
-    enabled: Boolean(debouncedTokenId)
+    enabled: Boolean(debouncedTokenId),
   })
   const { write } = useContractWrite(config)
 
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault()
-      write?.()
-    }}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        write?.()
+      }}
+    >
       <label for="tokenId">Token ID</label>
-      <input 
-        id="tokenId" 
-        onChange={e => setTokenId(e.target.value)}
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
         placeholder="420"
         value={tokenId}
       />
-      <button disabled={!write}>
-        Mint
-      </button>
+      <button disabled={!write}>Mint</button>
     </form>
   )
 }
@@ -205,15 +226,15 @@ We will need to:
 
 1. Add the hook
 2. Pass in the transaction hash (`data.hash`) as a parameter to the hook
-2. Add loading state to the button when the transaction is pending.
-3. Add a success state for when the transaction is successful.
+3. Add loading state to the button when the transaction is pending.
+4. Add a success state for when the transaction is successful.
 
-```tsx {5,20,22-24,38-48}
+```tsx {5,28,30-32,48-58}
 import * as React from 'react'
-import { 
-  usePrepareContractWrite, 
+import {
+  usePrepareContractWrite,
   useContractWrite,
-  useWaitForTransaction
+  useWaitForTransaction,
 } from 'wagmi'
 import { useDebounce } from './useDebounce'
 
@@ -223,10 +244,18 @@ export function MintNFTForm() {
 
   const { config } = usePrepareContractWrite({
     addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint(uint32 tokenId)'],
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
-    enabled: Boolean(debouncedTokenId)
+    enabled: Boolean(debouncedTokenId),
   })
   const { data, write } = useContractWrite(config)
 
@@ -235,14 +264,16 @@ export function MintNFTForm() {
   })
 
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault()
-      write?.()
-    }}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        write?.()
+      }}
+    >
       <label for="tokenId">Token ID</label>
-      <input 
-        id="tokenId" 
-        onChange={e => setTokenId(e.target.value)}
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
         placeholder="420"
         value={tokenId}
       />
@@ -291,12 +322,12 @@ export function App() {
 
 Now let's provide some feedback to the user if the prepare hook fails, or if the write hook fails.
 
-```tsx {15-16,24,53-55}
+```tsx {15-16,32,63-65}
 import * as React from 'react'
-import { 
-  usePrepareContractWrite, 
+import {
+  usePrepareContractWrite,
   useContractWrite,
-  useWaitForTransaction
+  useWaitForTransaction,
 } from 'wagmi'
 import { useDebounce } from './useDebounce'
 
@@ -304,16 +335,24 @@ export function MintNFTForm() {
   const [tokenId, setTokenId] = React.useState('')
   const debouncedTokenId = useDebounce(tokenId)
 
-  const { 
+  const {
     config,
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
     addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint(uint32 tokenId)'],
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
-    enabled: Boolean(debouncedTokenId)
+    enabled: Boolean(debouncedTokenId),
   })
   const { data, error, isError, write } = useContractWrite(config)
 
@@ -322,14 +361,16 @@ export function MintNFTForm() {
   })
 
   return (
-    <form onSubmit={(e) => {
-      e.preventDefault()
-      write?.()
-    }}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        write?.()
+      }}
+    >
       <label for="tokenId">Token ID</label>
-      <input 
-        id="tokenId" 
-        onChange={e => setTokenId(e.target.value)}
+      <input
+        id="tokenId"
+        onChange={(e) => setTokenId(e.target.value)}
         placeholder="420"
         value={tokenId}
       />
