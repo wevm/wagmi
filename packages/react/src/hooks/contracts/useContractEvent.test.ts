@@ -4,8 +4,8 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   act,
   actConnect,
+  getRandomTokenId,
   renderHook,
-  tokenId,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
@@ -59,6 +59,7 @@ describe('useContractEvent', () => {
       it('listens', async () => {
         let hash: string | undefined = undefined
 
+        const tokenId = getRandomTokenId()
         const listener = vi.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({

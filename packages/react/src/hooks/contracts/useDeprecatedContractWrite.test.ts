@@ -4,9 +4,9 @@ import { describe, expect, it } from 'vitest'
 import {
   act,
   actConnect,
+  getRandomTokenId,
   getSigners,
   renderHook,
-  tokenId,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
@@ -29,6 +29,7 @@ const timeout = 15_000
 
 describe('useDeprecatedContractWrite', () => {
   it('mounts', () => {
+    const tokenId = getRandomTokenId()
     const { result } = renderHook(() =>
       useDeprecatedContractWrite({
         ...wagmiContractConfig,
@@ -62,6 +63,7 @@ describe('useDeprecatedContractWrite', () => {
             signer: getSigners()[0]!,
           },
         })
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useDeprecatedContractWriteWithConnect({
             ...wagmiContractConfig,
@@ -91,6 +93,7 @@ describe('useDeprecatedContractWrite', () => {
   describe('return value', () => {
     describe('write', () => {
       it('uses configuration', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useDeprecatedContractWriteWithConnect({
             ...wagmiContractConfig,
@@ -114,6 +117,7 @@ describe('useDeprecatedContractWrite', () => {
 
   describe('behavior', () => {
     it('can call multiple writes', async () => {
+      const tokenId = getRandomTokenId()
       let args: any[] | any = [tokenId]
       let functionName = 'mint'
       const utils = renderHook(() =>

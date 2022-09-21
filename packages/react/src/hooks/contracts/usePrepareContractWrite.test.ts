@@ -3,9 +3,9 @@ import { describe, expect, it } from 'vitest'
 import {
   act,
   actConnect,
+  getRandomTokenId,
   mlootContractConfig,
   renderHook,
-  tokenId,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
@@ -29,6 +29,7 @@ function usePrepareContractWriteWithConnect(
 
 describe('usePrepareContractWrite', () => {
   it('mounts', async () => {
+    const tokenId = getRandomTokenId()
     const { result } = renderHook(() =>
       usePrepareContractWriteWithConnect({
         ...wagmiContractConfig,
@@ -71,6 +72,7 @@ describe('usePrepareContractWrite', () => {
   })
 
   it('connect', async () => {
+    const tokenId = getRandomTokenId()
     const utils = renderHook(() =>
       usePrepareContractWriteWithConnect({
         ...wagmiContractConfig,
@@ -134,6 +136,7 @@ describe('usePrepareContractWrite', () => {
 
   describe('errors', () => {
     it('should throw an error on the wrong chain', async () => {
+      const tokenId = getRandomTokenId()
       const utils = renderHook(() =>
         usePrepareContractWriteWithConnect({
           ...wagmiContractConfig,

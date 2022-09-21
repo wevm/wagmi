@@ -4,11 +4,11 @@ import {
   act,
   actConnect,
   getCrowdfundArgs,
+  getRandomTokenId,
   getSigners,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
   renderHook,
-  tokenId,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
@@ -77,6 +77,7 @@ describe('useContractWrite', () => {
     })
 
     it('recklesslyUnprepared', async () => {
+      const tokenId = getRandomTokenId()
       const { result } = renderHook(() =>
         useContractWrite({
           mode: 'recklesslyUnprepared',
@@ -107,6 +108,7 @@ describe('useContractWrite', () => {
   describe('configuration', () => {
     describe('chainId', () => {
       it('recklesslyUnprepared - unable to switch', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             ...wagmiContractConfig,
@@ -142,6 +144,7 @@ describe('useContractWrite', () => {
   describe('return value', () => {
     describe('write', () => {
       it('prepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
@@ -214,6 +217,7 @@ describe('useContractWrite', () => {
       }, 10_000)
 
       it('recklesslyUnprepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'recklesslyUnprepared',
@@ -318,6 +322,7 @@ describe('useContractWrite', () => {
 
     describe('writeAsync', () => {
       it('prepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           usePrepareContractWriteWithConnect({
             ...wagmiContractConfig,
@@ -391,6 +396,7 @@ describe('useContractWrite', () => {
       })
 
       it('recklesslyUnprepared', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             mode: 'recklesslyUnprepared',
@@ -486,6 +492,7 @@ describe('useContractWrite', () => {
 
   describe('behavior', () => {
     it('multiple writes', async () => {
+      const tokenId = getRandomTokenId()
       let args: any[] | any = [tokenId]
       let functionName = 'mint'
       const utils = renderHook(() =>

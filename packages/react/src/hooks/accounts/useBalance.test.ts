@@ -266,10 +266,10 @@ describe('useBalance', () => {
         expect(data).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "0.307244515192761736",
+            "formatted": "0.024495190284783363",
             "symbol": "ETH",
             "value": {
-              "hex": "0x04438d423b406d88",
+              "hex": "0x57063eeba14f03",
               "type": "BigNumber",
             },
           }
