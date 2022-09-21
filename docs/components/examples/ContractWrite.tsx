@@ -8,7 +8,7 @@ import {
 } from 'wagmi'
 
 import { PreviewWrapper } from '../core'
-import { Account, WalletSelector } from '../web3'
+import { Account, SwitchNetwork, WalletSelector } from '../web3'
 
 export function ContractWrite() {
   const { isConnected } = useAccount()
@@ -19,7 +19,7 @@ export function ContractWrite() {
     isError: isPrepareError,
     isLoading: isPreparing,
   } = usePrepareContractWrite({
-    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
     contractInterface: ['function mint()'],
     functionName: 'mint',
   })
@@ -57,6 +57,7 @@ export function ContractWrite() {
               <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
             </Text>
           )}
+          <SwitchNetwork />
         </Stack>
       </PreviewWrapper>
     )
