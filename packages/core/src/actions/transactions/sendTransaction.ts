@@ -6,7 +6,7 @@ import {
   ProviderRpcError,
   UserRejectedRequestError,
 } from '../../errors'
-import { Signer } from '../../types'
+import { Hash, Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 
@@ -38,7 +38,7 @@ export type SendTransactionArgs = {
 } & (SendTransactionPreparedRequest | SendTransactionUnpreparedRequest)
 
 export type SendTransactionResult = {
-  hash: providers.TransactionResponse['hash']
+  hash: Hash
   wait: providers.TransactionResponse['wait']
 }
 
@@ -102,7 +102,7 @@ export async function sendTransaction({
     /** Go nuts!                                                        */
     /********************************************************************/
 
-    return { hash, wait }
+    return { hash: <Hash>hash, wait }
   } catch (error) {
     if ((<ProviderRpcError>error).code === 4001)
       throw new UserRejectedRequestError(error)

@@ -64,16 +64,16 @@ export async function fetchBalance({
       contracts: [
         {
           ...erc20Config,
-          functionName: 'balanceOf' as const,
+          functionName: 'balanceOf',
           args: [resolvedAddress],
         },
         {
           ...erc20Config,
-          functionName: 'decimals' as const,
+          functionName: 'decimals',
         },
         {
           ...erc20Config,
-          functionName: 'symbol' as const,
+          functionName: 'symbol',
         },
       ],
     })

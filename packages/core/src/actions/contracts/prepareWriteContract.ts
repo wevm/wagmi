@@ -1,10 +1,4 @@
-import {
-  Abi,
-  AbiFunction,
-  Address,
-  ExtractAbiFunction,
-  ExtractAbiFunctionNames,
-} from 'abitype'
+import { Abi, Address } from 'abitype'
 import { CallOverrides, PopulatedTransaction } from 'ethers/lib/ethers'
 
 import {
@@ -12,35 +6,35 @@ import {
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Signer } from '../../types'
-import { GetArgs } from '../../types/utils'
+import { GetWriteParameters } from '../../types/contracts'
 import { assertActiveChain, minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { getContract } from './getContract'
 
+declare module '../../types/contracts' {
+  export interface ContractConfigExtended {
+    /** Chain ID used to validate if the signer is connected to the target chain */
+    chainId?: number
+    /** Call overrides */
+    overrides?: CallOverrides
+  }
+}
+
 export type PrepareWriteContractConfig<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
+  TAbi = Abi,
+  TFunctionName = string,
   TSigner extends Signer = Signer,
-  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
-    ? ExtractAbiFunction<TAbi, TFunctionName>
-    : never,
-> = {
-  /** Contract address */
-  addressOrName: Address
-  /** Chain ID used to validate if the signer is connected to the target chain */
-  chainId?: number
-  /** Contract ABI */
+> = GetWriteParameters<{
   contractInterface: TAbi
-  /** Method to call on contract */
-  functionName: [TFunctionName] extends [never] ? string : TFunctionName
-  /** Call overrides */
-  overrides?: CallOverrides
+  functionName: TFunctionName
+}> & {
+  /** Custom signer */
   signer?: TSigner | null
-} & GetArgs<TAbi, TFunction>
+}
 
 export type PrepareWriteContractResult = {
   contractInterface: Abi | readonly unknown[]
-  addressOrName: Address
+  addressOrName: string
   chainId?: number
   functionName: string
   mode: 'prepared'
@@ -68,9 +62,7 @@ export type PrepareWriteContractResult = {
  */
 export async function prepareWriteContract<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
-    : string,
+  TFunctionName extends string,
   TSigner extends Signer = Signer,
 >({
   addressOrName,
@@ -87,7 +79,6 @@ export async function prepareWriteContract<
 >): Promise<PrepareWriteContractResult> {
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
-
   if (chainId) assertActiveChain({ chainId })
 
   const contract = getContract({

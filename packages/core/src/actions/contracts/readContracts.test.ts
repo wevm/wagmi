@@ -22,7 +22,7 @@ const contracts = [
     functionName: 'love',
     args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
   },
-  { ...wagmigotchiContractConfig, functionName: 'getAlive', args: [] },
+  { ...wagmigotchiContractConfig, functionName: 'getAlive' },
   {
     ...mlootContractConfig,
     functionName: 'tokenOfOwnerByIndex',
@@ -92,7 +92,6 @@ describe('readContracts', () => {
         ...wagmigotchiContractConfig,
         chainId: chain.polygon.id,
         functionName: 'getAlive',
-        args: [],
       },
       {
         ...mlootContractConfig,
@@ -264,7 +263,10 @@ describe('readContracts', () => {
               ...mlootContractConfig,
               chainId: chain.polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+              args: [
+                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                BigNumber.from(69420),
+              ],
             },
           ],
         }),
@@ -283,13 +285,19 @@ describe('readContracts', () => {
               ...mlootContractConfig,
               chainId: chain.polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+              args: [
+                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                BigNumber.from(69420),
+              ],
             },
             {
               ...mlootContractConfig,
               chainId: chain.polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69421],
+              args: [
+                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                BigNumber.from(69421),
+              ],
             },
           ],
         }),
@@ -362,7 +370,7 @@ describe('readContracts', () => {
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
               addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-              args: [10e30],
+              args: [BigNumber.from(10e30)],
             },
           ],
         }),
@@ -383,7 +391,7 @@ describe('readContracts', () => {
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
               addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-              args: [10e30],
+              args: [BigNumber.from(10e30)],
             },
             {
               ...mlootContractConfig,
@@ -391,7 +399,7 @@ describe('readContracts', () => {
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
               addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-              args: [10e30],
+              args: [BigNumber.from(10e30)],
             },
           ],
         }),

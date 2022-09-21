@@ -39,19 +39,19 @@ export async function fetchToken({
     contracts: [
       {
         ...erc20Config,
-        functionName: 'decimals' as const,
+        functionName: 'decimals',
       },
       {
         ...erc20Config,
-        functionName: 'name' as const,
+        functionName: 'name',
       },
       {
         ...erc20Config,
-        functionName: 'symbol' as const,
+        functionName: 'symbol',
       },
       {
         ...erc20Config,
-        functionName: 'totalSupply' as const,
+        functionName: 'totalSupply',
       },
     ],
   })

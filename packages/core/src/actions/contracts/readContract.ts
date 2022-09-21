@@ -1,46 +1,36 @@
-import {
-  Abi,
-  AbiFunction,
-  Address,
-  ExtractAbiFunction,
-  ExtractAbiFunctionNames,
-} from 'abitype'
+import { Abi } from 'abitype'
 import { CallOverrides } from 'ethers/lib/ethers'
 
-import { GetArgs, GetResult } from '../../types/utils'
+import { GetReadParameters, GetReturnType } from '../../types/contracts'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 
+declare module '../../types/contracts' {
+  export interface ContractConfigExtended {
+    /** Chain id to use for provider */
+    chainId?: number
+    /** Call overrides */
+    overrides?: CallOverrides
+  }
+}
+
 export type ReadContractConfig<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
-  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
-    ? ExtractAbiFunction<TAbi, TFunctionName>
-    : never,
-> = {
-  /** Contract address */
-  addressOrName: Address
-  /** Chain id to use for provider */
-  chainId?: number
-  /** Contract ABI */
+  TAbi = Abi,
+  TFunctionName = string,
+> = GetReadParameters<{
   contractInterface: TAbi
-  /** Function to invoke on the contract */
-  functionName: [TFunctionName] extends [never] ? string : TFunctionName
-  /** Call overrides */
-  overrides?: CallOverrides
-} & GetArgs<TAbi, TFunction>
+  functionName: TFunctionName
+}>
 
 export type ReadContractResult<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-> = GetResult<TAbi, TFunctionName>
+  TAbi = Abi,
+  TFunctionName = string,
+> = GetReturnType<{ contractInterface: TAbi; functionName: TFunctionName }>
 
 export async function readContract<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'view' | 'pure'>
-    : string,
+  TFunctionName extends string,
 >({
   addressOrName,
   args,

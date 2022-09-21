@@ -41,7 +41,7 @@ export {
 export {
   watchReadContracts,
   type WatchReadContractsConfig,
-  type WatchReadContractsResult,
+  type WatchReadContractsCallback as WatchReadContractsResult,
 } from './watchReadContracts'
 
 export {

@@ -4,12 +4,9 @@ import { FormatTypes } from 'ethers/lib/utils'
 
 export function minimizeContractInterface<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'view' | 'pure'>
-    : string,
 >(config: {
   contractInterface: TAbi
-  functionName: [TFunctionName] extends [never] ? string : TFunctionName
+  functionName: TAbi extends Abi ? ExtractAbiFunctionNames<TAbi> : string
 }) {
   try {
     const minimizedAbi = (<Abi>config.contractInterface).filter(

@@ -1,15 +1,9 @@
-import {
-  Abi,
-  AbiFunction,
-  Address,
-  ExtractAbiFunction,
-  ExtractAbiFunctionNames,
-} from 'abitype'
+import { Abi, Address } from 'abitype'
 import { CallOverrides, PopulatedTransaction } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { Signer } from '../../types'
-import { GetArgs } from '../../types/utils'
+import { GetWriteParameters } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
@@ -37,34 +31,28 @@ export type WriteContractPreparedArgs = {
   args?: never
 }
 
-export type WriteContractUnpreparedArgs<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
-  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
-    ? ExtractAbiFunction<TAbi, TFunctionName>
-    : never,
-> = {
+export type WriteContractUnpreparedArgs<TAbi = Abi, TFunctionName = string> = {
   mode: 'recklesslyUnprepared'
   request?: never
-} & GetArgs<TAbi, TFunction>
+} & GetWriteParameters<{
+  contractInterface: TAbi
+  functionName: TFunctionName
+}>
 
-export type WriteContractArgs<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
-> = {
-  /** Contract address */
-  addressOrName: Address
+export type WriteContractArgs<TAbi = Abi, TFunctionName = string> = Omit<
+  GetWriteParameters<{
+    contractInterface: TAbi
+    functionName: TFunctionName
+  }>,
+  'args'
+> & {
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
-  /** Contract ABI */
-  contractInterface: TAbi
-  /** Method to call on contract */
-  functionName: [TFunctionName] extends [never] ? string : TFunctionName
   overrides?: CallOverrides
 } & (
-  | WriteContractUnpreparedArgs<TAbi, TFunctionName>
-  | WriteContractPreparedArgs
-)
+    | WriteContractUnpreparedArgs<TAbi, TFunctionName>
+    | WriteContractPreparedArgs
+  )
 export type WriteContractResult = SendTransactionResult
 
 /**
@@ -85,9 +73,7 @@ export type WriteContractResult = SendTransactionResult
  */
 export async function writeContract<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
-    : string,
+  TFunctionName extends string,
   TSigner extends Signer = Signer,
 >({
   addressOrName,

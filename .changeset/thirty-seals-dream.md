@@ -2,7 +2,7 @@
 '@wagmi/core': minor
 ---
 
-**Breaking**: `watchContractEvent` now accepts a single configuration object instead of position arguments.
+**Breaking**: `watchContractEvent` now accepts a configuration object and callback instead of positional arguments.
 
 ```diff
 import { watchContractEvent } from '@wagmi/core'
@@ -18,13 +18,15 @@ import { watchContractEvent } from '@wagmi/core'
 -   },
 -   { once: true },
 - )
-+ const unsubscribe = watchContractEvent({
-+   addressOrName: '0x…',
-+   contractInterface: […],
-+   eventName: 'Transfer',
-+   listener(from, to, tokenId) {
++ const unsubscribe = watchContractEvent(
++   {
++     addressOrName: '0x…',
++     contractInterface: […],
++     eventName: 'Transfer',
++     once: true,
++   },
++   (from, to, tokenId) => {
 +     // ...
 +   },
-+   once: true,
-+ })
++ )
 ```
