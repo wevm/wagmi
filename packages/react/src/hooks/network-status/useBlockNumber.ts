@@ -52,6 +52,8 @@ export function useBlockNumber({
     // We need to debounce the listener as we want to opt-out
     // of the behavior where ethers emits a "block" event for
     // every block that was missed in between the `pollingInterval`.
+    // We are setting a wait time of 1 as emitting an event in
+    // ethers takes ~0.1ms.
     const listener = debounce((blockNumber: number) => {
       // Just to be safe in case the provider implementation
       // calls the event callback after .off() has been called

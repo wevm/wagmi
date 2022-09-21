@@ -54,7 +54,7 @@ export class Client<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > {
-  config: Partial<ClientConfig<TProvider, TWebSocketProvider>>
+  config: ClientConfig<TProvider, TWebSocketProvider>
   providers = new Map<number, TProvider | undefined>()
   storage: ClientStorage
   store: Mutate<
@@ -329,10 +329,11 @@ export class Client<
         (chainId) => {
           this.setState((x) => ({
             ...x,
-            provider: this.getProvider({ bust: true, chainId }) || x.provider,
-            webSocketProvider:
-              this.getWebSocketProvider({ bust: true, chainId }) ||
-              x.webSocketProvider,
+            provider: this.getProvider({ bust: true, chainId }),
+            webSocketProvider: this.getWebSocketProvider({
+              bust: true,
+              chainId,
+            }),
           }))
         },
       )
