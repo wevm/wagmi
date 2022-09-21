@@ -55,7 +55,7 @@ export function Account() {
         </Stack>
       </Stack>
 
-      <Button variant="secondary" onClick={() => disconnect()}>
+      <Button variant="secondary" onClick={() => disconnect()} type="button">
         Disconnect
       </Button>
     </Stack>
