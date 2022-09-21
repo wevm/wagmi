@@ -49,6 +49,10 @@
       "module": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.esm.js",
       "default": "./connectors/walletConnect/dist/wagmi-core-connectors-walletConnect.cjs.js"
     },
+    "./internal": {
+      "module": "./internal/dist/wagmi-core-internal.esm.js",
+      "default": "./internal/dist/wagmi-core-internal.cjs.js"
+    },
     "./providers/alchemy": {
       "module": "./providers/alchemy/dist/wagmi-core-providers-alchemy.esm.js",
       "default": "./providers/alchemy/dist/wagmi-core-providers-alchemy.cjs.js"
@@ -70,6 +74,7 @@
   "files": [
     "/chains",
     "/connectors",
+    "/internal",
     "/providers",
     "/dist"
   ],
@@ -81,6 +86,7 @@
       "connectors/metaMask.ts",
       "connectors/walletConnect.ts",
       "connectors/mock/index.ts",
+      "internal.ts",
       "providers/alchemy.ts",
       "providers/public.ts",
       "providers/infura.ts",

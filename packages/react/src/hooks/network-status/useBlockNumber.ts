@@ -4,6 +4,7 @@ import {
   FetchBlockNumberResult,
   fetchBlockNumber,
 } from '@wagmi/core'
+import { debounce } from '@wagmi/core/internal'
 import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -41,19 +42,24 @@ export function useBlockNumber({
   onSuccess,
 }: UseBlockNumberArgs & UseBlockNumberConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
-  const provider = useProvider()
-  const webSocketProvider = useWebSocketProvider()
+  const provider = useProvider({ chainId })
+  const webSocketProvider = useWebSocketProvider({ chainId })
   const queryClient = useQueryClient()
 
   React.useEffect(() => {
     if (!watch && !onBlock) return
 
-    const listener = (blockNumber: number) => {
+    // We need to debounce the listener as we want to opt-out
+    // of the behavior where ethers emits a "block" event for
+    // every block that was missed in between the `pollingInterval`.
+    // We are setting a wait time of 1 as emitting an event in
+    // ethers takes ~0.1ms.
+    const listener = debounce((blockNumber: number) => {
       // Just to be safe in case the provider implementation
       // calls the event callback after .off() has been called
       if (watch) queryClient.setQueryData(queryKey({ chainId }), blockNumber)
       if (onBlock) onBlock(blockNumber)
-    }
+    }, 1)
 
     const provider_ = webSocketProvider ?? provider
     provider_.on('block', listener)

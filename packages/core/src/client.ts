@@ -54,7 +54,8 @@ export class Client<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > {
-  config: Partial<ClientConfig<TProvider, TWebSocketProvider>>
+  config: ClientConfig<TProvider, TWebSocketProvider>
+  providers = new Map<number, TProvider | undefined>()
   storage: ClientStorage
   store: Mutate<
     StoreApi<State<TProvider, TWebSocketProvider>>,
@@ -63,6 +64,7 @@ export class Client<
       ['zustand/persist', Partial<State<TProvider, TWebSocketProvider>>],
     ]
   >
+  webSocketProviders = new Map<number, TWebSocketProvider | undefined>()
 
   #isAutoConnecting?: boolean
   #lastUsedConnector?: string | null
@@ -80,6 +82,15 @@ export class Client<
     },
     webSocketProvider,
   }: ClientConfig<TProvider, TWebSocketProvider>) {
+    this.config = {
+      autoConnect,
+      connectors,
+      logger,
+      provider,
+      storage,
+      webSocketProvider,
+    }
+
     // Check status for autoConnect flag
     let status: State['status'] = 'disconnected'
     let chainId: number | undefined
@@ -109,15 +120,9 @@ export class Client<
             <State<TProvider, TWebSocketProvider>>{
               connectors:
                 typeof connectors === 'function' ? connectors() : connectors,
-              provider:
-                typeof provider === 'function'
-                  ? provider({ chainId })
-                  : provider,
+              provider: this.getProvider({ chainId }),
               status,
-              webSocketProvider:
-                typeof webSocketProvider === 'function'
-                  ? webSocketProvider({ chainId })
-                  : webSocketProvider,
+              webSocketProvider: this.getWebSocketProvider({ chainId }),
             },
           {
             name: storeKey,
@@ -137,14 +142,6 @@ export class Client<
       ),
     )
 
-    this.config = {
-      autoConnect,
-      connectors,
-      logger,
-      provider,
-      storage,
-      webSocketProvider,
-    }
     this.storage = storage
     this.#lastUsedConnector = storage?.getItem('wallet')
     this.#addEffects()
@@ -260,6 +257,36 @@ export class Client<
     return this.data
   }
 
+  getProvider({ bust, chainId }: { bust?: boolean; chainId?: number } = {}) {
+    let provider_ = this.providers.get(chainId ?? -1)
+    if (provider_ && !bust) return provider_
+
+    const { provider } = this.config
+    provider_ =
+      typeof provider === 'function' ? provider({ chainId }) : provider
+    this.providers.set(chainId ?? -1, provider_)
+
+    return provider_
+  }
+
+  getWebSocketProvider({
+    bust,
+    chainId,
+  }: { bust?: boolean; chainId?: number } = {}) {
+    let webSocketProvider_ = this.webSocketProviders.get(chainId ?? -1)
+    if (webSocketProvider_ && !bust) return webSocketProvider_
+
+    const { webSocketProvider } = this.config
+    webSocketProvider_ =
+      typeof webSocketProvider === 'function'
+        ? webSocketProvider({ chainId })
+        : webSocketProvider
+    if (webSocketProvider_)
+      this.webSocketProviders.set(chainId ?? -1, webSocketProvider_)
+
+    return webSocketProvider_
+  }
+
   setLastUsedConnector(lastUsedConnector: string | null = null) {
     this.storage?.setItem('wallet', lastUsedConnector)
   }
@@ -302,10 +329,11 @@ export class Client<
         (chainId) => {
           this.setState((x) => ({
             ...x,
-            provider: subscribeProvider ? provider({ chainId }) : x.provider,
-            webSocketProvider: subscribeWebSocketProvider
-              ? webSocketProvider({ chainId })
-              : x.webSocketProvider,
+            provider: this.getProvider({ bust: true, chainId }),
+            webSocketProvider: this.getWebSocketProvider({
+              bust: true,
+              chainId,
+            }),
           }))
         },
       )
