@@ -24,4 +24,14 @@ describe('getWebSocketProvider', () => {
       )
     })
   })
+
+  describe('behavior', () => {
+    it('referentially equal', async () => {
+      setupClient()
+      expect(
+        getWebSocketProvider({ chainId: 1 }) ===
+          getWebSocketProvider({ chainId: 1 }),
+      ).toBeTruthy()
+    })
+  })
 })

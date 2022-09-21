@@ -162,7 +162,7 @@ jobs:
         run: anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER &
         env:
           ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
-          ANVIL_BLOCK_NUMBER: 15132000
+          ANVIL_BLOCK_NUMBER: 15578840
       - name: Test React 18
         if: matrix.react-version == 18
         run: pnpm test:coverage

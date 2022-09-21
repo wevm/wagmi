@@ -1,0 +1,29 @@
+name: Bust actions cache
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  bust-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bust actions cache
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log("Clearing cache...")
+            const caches = await github.rest.actions.getActionsCacheList({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            for (const cache of caches.data.actions_caches) {
+              github.rest.actions.deleteActionsCacheById({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                cache_id: cache.id,
+              })
+            }
+            console.log("Cache cleared.")

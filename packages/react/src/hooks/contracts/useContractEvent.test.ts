@@ -2,7 +2,13 @@ import { erc20ABI } from '@wagmi/core'
 import { Abi, ExtractAbiEventNames, ExtractAbiFunctionNames } from 'abitype'
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, actConnect, renderHook, wagmiContractConfig } from '../../../test'
+import {
+  act,
+  actConnect,
+  getRandomTokenId,
+  renderHook,
+  wagmiContractConfig,
+} from '../../../test'
 import { useConnect } from '../accounts'
 import {
   UseWaitForTransactionArgs,
@@ -56,6 +62,7 @@ describe('useContractEvent', () => {
       it('listens', async () => {
         let hash: string | undefined = undefined
 
+        const tokenId = getRandomTokenId()
         const listener = vi.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({
@@ -71,6 +78,7 @@ describe('useContractEvent', () => {
                 mode: 'recklesslyUnprepared',
                 ...wagmiContractConfig,
                 functionName: 'mint',
+                args: [tokenId],
               },
             },
             waitForTransaction: { hash },

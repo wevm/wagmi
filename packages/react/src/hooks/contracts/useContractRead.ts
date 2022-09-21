@@ -93,6 +93,7 @@ export function useContractRead<
 }: UseContractReadConfig<TAbi, TFunctionName>) {
   const chainId = useChainId({ chainId: chainId_ })
   const { data: blockNumber } = useBlockNumber({
+    chainId,
     enabled: watch || cacheOnBlock,
     watch,
   })
@@ -126,7 +127,11 @@ export function useContractRead<
     return enabled
   }, [addressOrName, blockNumber, cacheOnBlock, enabled_, functionName])
 
-  useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
+  useInvalidateOnBlock({
+    chainId,
+    enabled: watch && !cacheOnBlock,
+    queryKey: queryKey_,
+  })
 
   return useQuery(queryKey_, queryFn({ contractInterface }), {
     cacheTime,
