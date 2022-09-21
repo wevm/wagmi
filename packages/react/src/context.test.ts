@@ -26,6 +26,9 @@ describe('useClient', () => {
             },
             "webSocketProvider": undefined,
           },
+          "providers": Map {
+            -1 => "<Provider network={1} />",
+          },
           "queryClient": QueryClient {
             "defaultOptions": {
               "queries": {
@@ -77,6 +80,7 @@ describe('useClient', () => {
             "setState": [Function],
             "subscribe": [Function],
           },
+          "webSocketProviders": Map {},
         }
       `)
     })

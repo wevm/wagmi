@@ -17,4 +17,13 @@ describe('getProvider', () => {
       )
     })
   })
+
+  describe('behavior', () => {
+    it('referentially equal', async () => {
+      setupClient()
+      expect(
+        getProvider({ chainId: 1 }) === getProvider({ chainId: 1 }),
+      ).toBeTruthy()
+    })
+  })
 })
