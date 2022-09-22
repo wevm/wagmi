@@ -88,6 +88,7 @@ describe('getNetwork', () => {
               "network": "homestead",
               "rpcUrls": {
                 "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
+                "coinbaseNode": "https://mainnet.ethereum.coinbasecloud.net",
                 "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
                 "infura": "https://mainnet.infura.io/v3",
                 "public": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
@@ -303,6 +304,7 @@ describe('getNetwork', () => {
               "network": "homestead",
               "rpcUrls": {
                 "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
+                "coinbaseNode": "https://mainnet.ethereum.coinbasecloud.net",
                 "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
                 "infura": "https://mainnet.infura.io/v3",
                 "public": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
