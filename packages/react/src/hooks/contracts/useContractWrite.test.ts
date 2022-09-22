@@ -108,6 +108,7 @@ describe('useContractWrite', () => {
   describe('configuration', () => {
     describe('chainId', () => {
       it('unable to switch', async () => {
+        const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           usePrepareContractWritedWithConnect({
             ...wagmiContractConfig,
