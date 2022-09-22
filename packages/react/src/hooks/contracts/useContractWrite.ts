@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   WriteContractArgs,
   WriteContractPreparedArgs,
@@ -7,9 +6,8 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { queryClientContext } from '../../context'
-
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils/query'
 
 export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
   (
@@ -168,7 +166,6 @@ export function useContractWrite<
       onMutate,
       onSettled,
       onSuccess,
-      context: queryClientContext,
     },
   )
 

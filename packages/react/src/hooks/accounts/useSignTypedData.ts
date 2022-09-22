@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   SignTypedDataArgs,
   SignTypedDataResult,
@@ -6,9 +5,8 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { queryClientContext } from '../../context'
-
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils/query'
 
 export type UseSignTypedDataArgs = Partial<SignTypedDataArgs>
 
@@ -54,7 +52,6 @@ export function useSignTypedData({
     onMutate,
     onSettled,
     onSuccess,
-    context: queryClientContext,
   })
 
   const signTypedData = React.useCallback(

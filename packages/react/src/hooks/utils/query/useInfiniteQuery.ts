@@ -7,6 +7,7 @@ import {
   UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
 
+import { queryClientContext as context } from '../../../context'
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs, trackResult } from './utils'
 
@@ -129,7 +130,7 @@ export function useInfiniteQuery<
 ): UseInfiniteQueryResult<TData, TError> {
   const parsedOptions = parseQueryArgs(arg1, arg2, arg3)
   const baseQuery = useBaseQuery(
-    parsedOptions,
+    { context, ...parsedOptions },
     InfiniteQueryObserver as typeof QueryObserver,
   )
 

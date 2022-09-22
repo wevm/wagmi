@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   DeprecatedWriteContractConfig,
   DeprecatedWriteContractResult,
@@ -6,9 +5,8 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { queryClientContext } from '../../context'
-
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils/query'
 
 export type UseDeprecatedContractWriteArgs = DeprecatedWriteContractConfig
 export type UseDeprecatedContractWriteMutationArgs = Pick<
@@ -87,7 +85,6 @@ export function useDeprecatedContractWrite({
       onMutate,
       onSettled,
       onSuccess,
-      context: queryClientContext,
     },
   )
 

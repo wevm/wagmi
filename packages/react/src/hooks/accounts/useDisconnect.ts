@@ -1,7 +1,6 @@
-import { useMutation } from '@tanstack/react-query'
 import { disconnect } from '@wagmi/core'
 
-import { queryClientContext } from '../../context'
+import { useMutation } from '../utils/query'
 
 export type UseDisconnectConfig = {
   /** Function to invoke when an error is thrown while connecting. */
@@ -60,7 +59,6 @@ export function useDisconnect({
           },
         }
       : {}),
-    context: queryClientContext,
   })
 
   return {

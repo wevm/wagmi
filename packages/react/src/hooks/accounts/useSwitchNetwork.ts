@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   SwitchNetworkArgs,
   SwitchNetworkResult,
@@ -6,9 +5,10 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { queryClientContext, useClient } from '../../context'
+import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
 import { useForceUpdate } from '../utils'
+import { useMutation } from '../utils/query'
 
 export type UseSwitchNetworkArgs = Partial<SwitchNetworkArgs>
 
@@ -57,7 +57,6 @@ export function useSwitchNetwork({
     onMutate,
     onSettled,
     onSuccess,
-    context: queryClientContext,
   })
 
   const switchNetwork_ = React.useCallback(

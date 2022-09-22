@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
 import {
   FetchSignerArgs,
   FetchSignerResult,
@@ -10,7 +9,7 @@ import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
-import { queryClientContext } from '../../context'
+import { useQueryClient } from '../utils/query'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,
@@ -47,7 +46,7 @@ export function useSigner<TSigner extends Signer>({
     onSuccess,
   })
 
-  const queryClient = useQueryClient({ context: queryClientContext })
+  const queryClient = useQueryClient()
   React.useEffect(() => {
     const unwatch = watchSigner({ chainId }, (signer) =>
       queryClient.setQueryData(queryKey({ chainId }), signer),

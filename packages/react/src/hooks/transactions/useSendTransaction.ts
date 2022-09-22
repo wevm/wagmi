@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   SendTransactionArgs,
   SendTransactionPreparedRequest,
@@ -8,9 +7,8 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { queryClientContext } from '../../context'
-
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils/query'
 
 export type UseSendTransactionArgs = Omit<
   SendTransactionArgs,
@@ -127,7 +125,6 @@ export function useSendTransaction<
       onMutate,
       onSettled,
       onSuccess,
-      context: queryClientContext,
     },
   )
 

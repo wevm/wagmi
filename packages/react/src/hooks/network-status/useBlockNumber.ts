@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
 import {
   FetchBlockNumberArgs,
   FetchBlockNumberResult,
@@ -7,11 +6,10 @@ import {
 import { debounce } from '@wagmi/core/internal'
 import * as React from 'react'
 
-import { queryClientContext } from '../../context'
-
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId, useQuery } from '../utils'
+import { useQueryClient } from '../utils/query'
 
 type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
   /** Function fires when a new block is created */
@@ -46,7 +44,7 @@ export function useBlockNumber({
   const chainId = useChainId({ chainId: chainId_ })
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
-  const queryClient = useQueryClient({ context: queryClientContext })
+  const queryClient = useQueryClient()
 
   React.useEffect(() => {
     if (!watch && !onBlock) return
