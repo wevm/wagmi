@@ -16,6 +16,7 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { coinbaseNodeProvider } from 'wagmi/providers/coinbaseNode'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { publicProvider } from 'wagmi/providers/public'
@@ -45,6 +46,10 @@ const avalanche: Chain = {
 const { chains, provider, webSocketProvider } = configureChains(
   [...defaultChains, chain.optimism, avalanche],
   [
+    coinbaseNodeProvider({
+      username: process.env.NEXT_PUBLIC_COINBASE_NODE_USERNAME!,
+      password: process.env.NEXT_PUBLIC_COINBASE_NODE_PASSWORD!,
+    }),
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
     infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY }),
     jsonRpcProvider({
@@ -85,10 +90,9 @@ const client = createClient({
       chains,
       options: {
         name: (detectedName) =>
-          `Injected (${
-            typeof detectedName === 'string'
-              ? detectedName
-              : detectedName.join(', ')
+          `Injected (${typeof detectedName === 'string'
+            ? detectedName
+            : detectedName.join(', ')
           })`,
         shimDisconnect: true,
       },

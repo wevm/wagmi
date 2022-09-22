@@ -47,7 +47,7 @@ const { chains, provider, webSocketProvider } = configureChains(
 )
 ```
 
-Note: In a production app, it is not recommended to only pass `publicProvider` to `configureChains` as you will probably face rate-limiting on the public provider endpoints. It is recommended to also pass an [`alchemyProvider`](/docs/providers/alchemy) or [`infuraProvider`](/docs/providers/infura) as well.
+Note: In a production app, it is not recommended to only pass `publicProvider` to `configureChains` as you will probably face rate-limiting on the public provider endpoints. It is recommended to also pass an [`alchemyProvider`](/docs/providers/alchemy), [`coinbaseNodeProvider`](/docs/providers/coinbaseNode) or [`infuraProvider`](/docs/providers/infura) as well.
 
 [Read more about configuring chains](/docs/providers/configuring-chains)
 

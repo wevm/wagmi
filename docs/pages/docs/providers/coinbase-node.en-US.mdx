@@ -1,0 +1,155 @@
+---
+title: 'Alchemy'
+description: 'Official wagmi Provider for Alchemy.'
+---
+
+import Callout from 'nextra-theme-docs/callout'
+
+# Coinbase Node
+
+The `coinbaseNodeProvider` configures the chains with [Coinbase Node](https://www.coinbase.com/cloud/products/node) RPC URLs and also provides a Coinbase Node configured [ethers.js `StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider).
+
+```ts
+import { coinbaseNodeProvider } from 'wagmi/providers/coinbaseNode'
+```
+
+## Usage
+
+Before you get started, make sure you have set up a [Coinbase Node project](https://docs.cloud.coinbase.com/node/reference/ethereum-api-quickstart#create-a-project-and-get-api-keys) and [API keys](https://docs.cloud.coinbase.com/node/reference/ethereum-api-quickstart#get-api-keys).
+
+```ts
+import { chain, configureChains } from 'wagmi'
+import { coinbaseNodeProvider } from 'wagmi/providers/coinbaseNode'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet],
+  [
+    coinbaseNodeProvider({
+      username: 'yourCoinbaseNodeUsername',
+      password: 'yourCoinbaseNodePassword',
+    }),
+  ],
+)
+```
+
+<Callout>
+  Note: The Coinbase Node provider only supports the **mainnet** chain right
+  now. If you have more chains, ensure that you include another provider
+  compatible with that chain [as a
+  fallback](/docs/providers/configuring-chains#providers).
+</Callout>
+
+## Return Value
+
+```ts
+{
+  chains: Chain[],
+  provider: BaseProvider,
+}
+```
+
+## Configuration
+
+### username
+
+Your Coinbase Node username from the [Coinbase Node Dashboard](https://console.cloud.coinbase.com/node).
+
+```ts {8}
+import { chain, configureChains } from 'wagmi'
+import { coinbaseNodeProvider } from 'wagmi/providers/coinbaseNode'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet],
+  [
+    coinbaseNodeProvider({
+      username: 'yourCoinbaseNodeUsername',
+      password: 'yourCoinbaseNodePassword',
+    }),
+  ],
+)
+```
+
+### password
+
+Your Coinbase Node password from the [Coinbase Node Dashboard](https://console.cloud.coinbase.com/node).
+
+```ts {9}
+import { chain, configureChains } from 'wagmi'
+import { coinbaseNodeProvider } from 'wagmi/providers/coinbaseNode'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet],
+  [
+    coinbaseNodeProvider({
+      username: 'yourCoinbaseNodeUsername',
+      password: 'yourCoinbaseNodePassword',
+    }),
+  ],
+)
+```
+
+### priority (optional)
+
+The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
+
+```ts {11,13}
+import { chain, configureChains } from 'wagmi'
+import { coinbaseNodeProvider } from 'wagmi/providers/coinbaseNode'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    coinbaseNodeProvider({
+      username: 'yourCoinbaseNodeUsername',
+      password: 'yourCoinbaseNodePassword',
+      priority: 0,
+    }),
+    publicProvider({ priority: 1 }),
+  ],
+)
+```
+
+### stallTimeout (optional)
+
+The timeout in milliseconds after which another provider will be attempted.
+
+```ts {11}
+import { chain, configureChains } from 'wagmi'
+import { coinbaseNode } from 'wagmi/providers/coinbaseNode'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    coinbaseNodeProvider({
+      username: 'yourCoinbaseNodeUsername',
+      password: 'yourCoinbaseNodePassword',
+      stallTimeout: 1_000,
+    }),
+    publicProvider(),
+  ],
+)
+```
+
+### weight (optional)
+
+The weight a response from this provider provides. This can be used if a given provider is more trusted.
+
+```ts {11,13}
+import { chain, configureChains } from 'wagmi'
+import { coinbaseNodeProvider } from 'wagmi/providers/coinbaseNode'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon],
+  [
+    coinbaseNodeProvider({
+      username: 'yourCoinbaseNodeUsername',
+      password: 'yourCoinbaseNodePassword',
+      weight: 1,
+    }),
+    publicProvider({ weight: 2 }),
+  ],
+)
+```

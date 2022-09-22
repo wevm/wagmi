@@ -62,6 +62,10 @@
       "module": "./providers/alchemy/dist/wagmi-providers-alchemy.esm.js",
       "default": "./providers/alchemy/dist/wagmi-providers-alchemy.cjs.js"
     },
+    "./providers/coinbaseNode": {
+      "module": "./providers/coinbaseNode/dist/wagmi-providers-coinbaseNode.esm.js",
+      "default": "./providers/coinbaseNode/dist/wagmi-providers-coinbaseNode.cjs.js"
+    },
     "./providers/infura": {
       "module": "./providers/infura/dist/wagmi-providers-infura.esm.js",
       "default": "./providers/infura/dist/wagmi-providers-infura.cjs.js"
@@ -94,6 +98,7 @@
       "connectors/mock.ts",
       "connectors/walletConnect.ts",
       "providers/alchemy.ts",
+      "providers/coinbaseNode.ts",
       "providers/public.ts",
       "providers/infura.ts",
       "providers/jsonRpc.ts"

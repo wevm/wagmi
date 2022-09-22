@@ -1,6 +1,7 @@
 {
   "configuring-chains": "Configuring Chains",
   "alchemy": "Alchemy",
+  "coinbase-node": "Coinbase Node",
   "infura": "Infura",
   "public": "Public",
   "jsonRpc": "JSON RPC"

@@ -1,6 +1,11 @@
 import { Chain } from '../types'
 import { etherscanBlockExplorers } from './blockExplorers'
-import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from './rpcs'
+import {
+  alchemyRpcUrls,
+  coinbaseNodeRpcUrls,
+  infuraRpcUrls,
+  publicRpcUrls,
+} from './rpcs'
 
 export const chainId = {
   mainnet: 1,
@@ -30,6 +35,7 @@ export const mainnet: Chain = {
   nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   rpcUrls: {
     alchemy: alchemyRpcUrls.mainnet,
+    coinbaseNode: coinbaseNodeRpcUrls.mainnet,
     default: publicRpcUrls.mainnet,
     infura: infuraRpcUrls.mainnet,
     public: publicRpcUrls.mainnet,

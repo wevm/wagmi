@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-core-providers-coinbaseNode.cjs.js",
+  "module": "dist/wagmi-core-providers-coinbaseNode.esm.js"
+}

@@ -37,6 +37,11 @@ export const alchemyRpcUrls: Record<AlchemyChains, string> = {
   arbitrumGoerli: 'https://arb-goerli.g.alchemy.com/v2',
 } as const
 
+type CoinbaseNodeChains = Extract<ChainName, 'mainnet'>
+export const coinbaseNodeRpcUrls: Record<CoinbaseNodeChains, string> = {
+  mainnet: 'https://mainnet.ethereum.coinbasecloud.net',
+} as const
+
 type InfuraChains = Extract<
   ChainName,
   | 'mainnet'
