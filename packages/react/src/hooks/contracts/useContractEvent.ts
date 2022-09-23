@@ -6,11 +6,33 @@ import {
   ExtractAbiEvent,
   ExtractAbiEventNames,
 } from 'abitype'
-import { ethers } from 'ethers'
 import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useContract } from './useContract'
+
+type GetListener<
+  TEvent extends AbiEvent,
+  TAbi = unknown,
+> = AbiParametersToPrimitiveTypes<
+  TEvent['inputs']
+> extends infer TArgs extends readonly unknown[]
+  ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
+    Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
+    ? {
+        /**
+         * Callback when event is emitted
+         *
+         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for type inference.
+         */
+        listener: (...args: any) => void
+      }
+    : // We are able to infer args, spread the types.
+      {
+        /** Callback when event is emitted */
+        listener: (...args: TArgs) => void
+      }
+  : never
 
 type ContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
@@ -20,24 +42,16 @@ type ContractEventConfig<
     : never,
 > = {
   /** Contract address */
-  addressOrName: string
+  addressOrName?: string
   /** Contract ABI */
   contractInterface: TAbi
   /** Chain id to use for provider */
   chainId?: number
   /** Event to listen for */
   eventName: TEventName
-  /** Callback when event is emitted */
-  listener: AbiParametersToPrimitiveTypes<
-    TEvent['inputs']
-  > extends infer TArgs extends readonly unknown[]
-    ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-      ? (...args: any) => void
-      : (...args: TArgs) => void
-    : never
   /** Receive only a single event */
   once?: boolean
-}
+} & GetListener<TEvent, TAbi>
 
 type GetConfig<T> = T extends {
   abi: infer TAbi extends Abi
@@ -82,14 +96,15 @@ export function useContractEvent<
   callbackRef.current = listener
 
   React.useEffect(() => {
+    if (!contract) return
+
     const handler = (...event: any[]) => callbackRef.current(...event)
 
-    const contract_ = <ethers.Contract>(<unknown>contract)
-    if (once) contract_.once(eventName, handler)
-    else contract_.on(eventName, handler)
+    if (once) contract.once(eventName, handler)
+    else contract.on(eventName, handler)
 
     return () => {
-      contract_.off(eventName, handler)
+      contract.off(eventName, handler)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract, eventName])

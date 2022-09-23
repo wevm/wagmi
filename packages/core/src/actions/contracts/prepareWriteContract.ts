@@ -6,31 +6,28 @@ import {
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Signer } from '../../types'
-import { GetWriteParameters } from '../../types/contracts'
+import { GetConfig } from '../../types/contracts'
 import { assertActiveChain, minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { getContract } from './getContract'
-
-declare module '../../types/contracts' {
-  export interface ContractConfigExtended {
-    /** Chain ID used to validate if the signer is connected to the target chain */
-    chainId?: number
-    /** Call overrides */
-    overrides?: CallOverrides
-  }
-}
 
 export type PrepareWriteContractConfig<
   TAbi = Abi,
   TFunctionName = string,
   TSigner extends Signer = Signer,
-> = GetWriteParameters<{
-  contractInterface: TAbi
-  functionName: TFunctionName
-}> & {
-  /** Custom signer */
-  signer?: TSigner | null
-}
+> = GetConfig<
+  {
+    contractInterface: TAbi
+    functionName: TFunctionName
+    /** Chain id to use for provider */
+    chainId?: number
+    /** Call overrides */
+    overrides?: CallOverrides
+    /** Custom signer */
+    signer?: TSigner | null
+  },
+  'nonpayable' | 'payable'
+>
 
 export type PrepareWriteContractResult = {
   contractInterface: Abi | readonly unknown[]
@@ -38,7 +35,6 @@ export type PrepareWriteContractResult = {
   chainId?: number
   functionName: string
   mode: 'prepared'
-  overrides?: CallOverrides
   request: PopulatedTransaction & {
     to: Address
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
@@ -116,7 +112,6 @@ export async function prepareWriteContract<
     chainId,
     functionName,
     mode: 'prepared',
-    overrides,
     request: {
       ...unsignedTransaction,
       gasLimit,

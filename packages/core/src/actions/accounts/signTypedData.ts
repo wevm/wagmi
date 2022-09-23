@@ -5,6 +5,23 @@ import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain, normalizeChainId } from '../../utils'
 import { fetchSigner } from './fetchSigner'
 
+type GetValue<TSchema = unknown> = TSchema[keyof TSchema] extends infer TValue
+  ? // Check if we were able to infer the shape of typed data
+    { [key: string]: any } extends TValue
+    ? {
+        /**
+         * Data to sign
+         *
+         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link types} for type inference.
+         */
+        value: Record<string, any>
+      }
+    : {
+        /** Data to sign */
+        value: TValue
+      }
+  : never
+
 export type SignTypedDataArgs<
   TTypedData extends TypedData,
   TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
@@ -13,15 +30,9 @@ export type SignTypedDataArgs<
   domain: TypedDataDomain
   /** Named list of all type definitions */
   types: TTypedData
-  /** Data to sign */
-  value: TSchema[keyof TSchema] extends infer TValue
-    ? { [x: string]: any } extends TValue
-      ? Record<string, any>
-      : TValue
-    : never
-}
+} & GetValue<TSchema>
 
-export type SignTypedDataResult = `0x${string}`
+export type SignTypedDataResult = string
 
 export async function signTypedData<
   TTypedData extends TypedData,
@@ -39,9 +50,9 @@ export async function signTypedData<
   if (chainId) assertActiveChain({ chainId })
 
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-  return (await signer._signTypedData(
+  return await signer._signTypedData(
     domain,
     <Record<string, Array<TypedDataField>>>(<unknown>types),
     value,
-  )) as SignTypedDataResult
+  )
 }

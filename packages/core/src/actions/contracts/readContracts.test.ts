@@ -2,6 +2,7 @@ import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
+  expectType,
   mlootContractConfig,
   setupClient,
   wagmigotchiContractConfig,
@@ -97,12 +98,14 @@ describe('readContracts', () => {
         ...mlootContractConfig,
         chainId: chain.polygon.id,
         functionName: 'tokenOfOwnerByIndex',
-        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
       },
-    ]
+    ] as const
     const results = await readContracts({
+      //  ^?
       contracts,
     })
+    expectType<[BigNumber, BigNumber, boolean, BigNumber]>(results)
 
     for (const contract of contracts) {
       expect(spy).toBeCalledWith({ ...contract, chainId })
@@ -142,24 +145,28 @@ describe('readContracts', () => {
           functionName: 'love',
           args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
         },
-      ]
+      ] as const
       const polygonContracts = [
         {
           ...wagmigotchiContractConfig,
           chainId: chain.polygon.id,
           functionName: 'getAlive',
-          args: [],
         },
         {
           ...mlootContractConfig,
           chainId: chain.polygon.id,
           functionName: 'tokenOfOwnerByIndex',
-          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+          args: [
+            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            BigNumber.from(0),
+          ],
         },
-      ]
+      ] as const
       const results = await readContracts({
+        //  ^?
         contracts: [...ethContracts, ...polygonContracts],
       })
+      expectType<[BigNumber, BigNumber, boolean, BigNumber]>(results)
 
       expect(spy).toHaveBeenCalledWith({
         allowFailure: true,
@@ -207,24 +214,28 @@ describe('readContracts', () => {
           functionName: 'love',
           args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
         },
-      ]
+      ] as const
       const polygonContracts = [
         {
           ...wagmigotchiContractConfig,
           chainId: chain.polygon.id,
           functionName: 'getAlive',
-          args: [],
         },
         {
           ...mlootContractConfig,
           chainId: chain.polygon.id,
           functionName: 'tokenOfOwnerByIndex',
-          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+          args: [
+            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            BigNumber.from(0),
+          ],
         },
-      ]
+      ] as const
       const results = await readContracts({
+        //  ^?
         contracts: [...ethContracts, ...polygonContracts],
       })
+      expectType<[BigNumber, BigNumber, boolean, BigNumber]>(results)
 
       for (const contract of ethContracts) {
         expect(spy).toBeCalledWith({ ...contract, chainId: chain.mainnet.id })

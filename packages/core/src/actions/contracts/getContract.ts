@@ -7,20 +7,20 @@ export type GetContractArgs = {
   /** Contract interface or ABI */
   contractInterface: ContractInterface | Abi | readonly unknown[]
   /** Signer or provider to attach to contract */
-  signerOrProvider?: Signer | providers.Provider | null
+  signerOrProvider?: Signer | providers.Provider
 }
 
-export function getContract<T = Contract>({
+export function getContract<TContract = Contract>({
   addressOrName,
   contractInterface,
   signerOrProvider,
 }: GetContractArgs) {
-  return <T>(
+  return <TContract>(
     (<unknown>(
       new Contract(
         addressOrName,
         <ContractInterface>(<unknown>contractInterface),
-        <Signer | providers.Provider | undefined>signerOrProvider,
+        signerOrProvider,
       )
     ))
   )

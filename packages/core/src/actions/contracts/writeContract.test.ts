@@ -66,10 +66,10 @@ describe('writeContract', () => {
     it('contract method error', async () => {
       await connect({ connector })
       await expect(() =>
-        // @ts-expect-error function does not exist
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowError()
@@ -77,10 +77,10 @@ describe('writeContract', () => {
 
     it('connector not found', async () => {
       await expect(() =>
-        // @ts-expect-error function does not exist
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
@@ -89,10 +89,10 @@ describe('writeContract', () => {
     it('contract function not found', async () => {
       await connect({ connector })
       await expect(() =>
-        // @ts-expect-error function does not exist
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`

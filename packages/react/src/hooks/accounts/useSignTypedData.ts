@@ -34,11 +34,15 @@ function mutationKey<
 function mutationFn<
   TTypedData extends TypedData,
   TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
->(args: UseSignTypedDataArgs<TTypedData, TSchema>) {
+>(args: SignTypedDataArgs<TTypedData, TSchema>) {
   const { domain, types, value } = args
   if (!domain || !types || !value)
     throw new Error('domain, types, and value are all required')
-  return signTypedData({ domain, types, value })
+  return signTypedData(<SignTypedDataArgs<TTypedData, TSchema>>{
+    domain,
+    types,
+    value,
+  })
 }
 
 export function useSignTypedData<
@@ -73,22 +77,22 @@ export function useSignTypedData<
   })
 
   const signTypedData = React.useCallback(
-    (args?: Partial<SignTypedDataArgs<TTypedData, TSchema>>) =>
-      mutate(<SignTypedDataArgs<TTypedData, TSchema>>{
+    (args?: UseSignTypedDataArgs<TTypedData, TSchema>) =>
+      mutate(<SignTypedDataArgs<TTypedData, TSchema>>(<unknown>{
         domain: args?.domain ?? domain,
         types: args?.types ?? types,
         value: args?.value ?? value,
-      }),
+      })),
     [domain, types, value, mutate],
   )
 
   const signTypedDataAsync = React.useCallback(
-    (args?: Partial<SignTypedDataArgs<TTypedData, TSchema>>) =>
-      mutateAsync(<SignTypedDataArgs<TTypedData, TSchema>>{
+    (args?: UseSignTypedDataArgs<TTypedData, TSchema>) =>
+      mutateAsync(<SignTypedDataArgs<TTypedData, TSchema>>(<unknown>{
         domain: args?.domain ?? domain,
         types: args?.types ?? types,
         value: args?.value ?? value,
-      }),
+      })),
     [domain, types, value, mutateAsync],
   )
 

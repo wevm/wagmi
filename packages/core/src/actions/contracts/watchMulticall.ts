@@ -9,7 +9,7 @@ export type WatchMulticallConfig<TContracts extends unknown[]> =
     listenToBlock?: boolean
   }
 export type WatchMulticallCallback<TContracts extends unknown[]> = (
-  result: MulticallResult<TContracts>,
+  results: MulticallResult<TContracts>,
 ) => void
 
 export function watchMulticall<

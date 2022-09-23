@@ -2,6 +2,7 @@ import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
+  expectType,
   mlootContractConfig,
   setupClient,
   wagmigotchiContractConfig,
@@ -16,6 +17,7 @@ describe('readContract', () => {
 
     it('chainId', async () => {
       const result = await readContract({
+        //  ^?
         ...wagmigotchiContractConfig,
         functionName: 'love',
         args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
@@ -27,57 +29,61 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
+      expectType<BigNumber>(result)
     })
 
     it('contract args', async () => {
-      expect(
-        await readContract({
-          ...wagmigotchiContractConfig,
-          functionName: 'love',
-          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
-        }),
-      ).toMatchInlineSnapshot(`
+      const result = await readContract({
+        //  ^?
+        ...wagmigotchiContractConfig,
+        functionName: 'love',
+        args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+      })
+      expect(result).toMatchInlineSnapshot(`
         {
           "hex": "0x02",
           "type": "BigNumber",
         }
       `)
+      expectType<BigNumber>(result)
     })
 
     it('overrides', async () => {
-      expect(
-        await readContract({
-          ...wagmigotchiContractConfig,
-          functionName: 'love',
-          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
-          overrides: {},
-        }),
-      ).toMatchInlineSnapshot(`
+      const result = await readContract({
+        //  ^?
+        ...wagmigotchiContractConfig,
+        functionName: 'love',
+        args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+        overrides: {},
+      })
+      expect(result).toMatchInlineSnapshot(`
         {
           "hex": "0x02",
           "type": "BigNumber",
         }
       `)
+      expectType<BigNumber>(result)
     })
   })
 
   describe('behavior', () => {
     it('can use multiple args', async () => {
-      expect(
-        await readContract({
-          ...mlootContractConfig,
-          functionName: 'tokenOfOwnerByIndex',
-          args: [
-            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            BigNumber.from('0'),
-          ],
-        }),
-      ).toMatchInlineSnapshot(`
+      const result = await readContract({
+        //  ^?
+        ...mlootContractConfig,
+        functionName: 'tokenOfOwnerByIndex',
+        args: [
+          '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          BigNumber.from('0'),
+        ],
+      })
+      expect(result).toMatchInlineSnapshot(`
         {
           "hex": "0x05a6db",
           "type": "BigNumber",
         }
       `)
+      expectType<BigNumber>(result)
     })
   })
 })

@@ -58,6 +58,18 @@ describe('useContractEvent', () => {
   })
 
   describe('configuration', () => {
+    it('addressOrName', () => {
+      const listener = vi.fn()
+      renderHook(() =>
+        useContractEvent({
+          contractInterface: erc20ABI,
+          eventName: 'Transfer',
+          listener,
+        }),
+      )
+      expect(listener).toHaveBeenCalledTimes(0)
+    })
+
     describe('once', () => {
       it('listens', async () => {
         let hash: Hash | undefined = undefined

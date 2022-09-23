@@ -1,27 +1,32 @@
 import { Abi } from 'abitype'
 import { CallOverrides } from 'ethers/lib/ethers'
 
-import { GetReadParameters, GetReturnType } from '../../types/contracts'
+import {
+  DefaultOptions,
+  GetConfig,
+  GetReturnType,
+  Options,
+} from '../../types/contracts'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 
-declare module '../../types/contracts' {
-  export interface ContractConfigExtended {
+export type ReadContractConfig<
+  TAbi = Abi,
+  TFunctionName = string,
+  TOptions extends Options = DefaultOptions,
+> = GetConfig<
+  {
+    contractInterface: TAbi
+    functionName: TFunctionName
     /** Chain id to use for provider */
     chainId?: number
     /** Call overrides */
     overrides?: CallOverrides
-  }
-}
-
-export type ReadContractConfig<
-  TAbi = Abi,
-  TFunctionName = string,
-> = GetReadParameters<{
-  contractInterface: TAbi
-  functionName: TFunctionName
-}>
+  },
+  'pure' | 'view',
+  TOptions
+>
 
 export type ReadContractResult<
   TAbi = Abi,

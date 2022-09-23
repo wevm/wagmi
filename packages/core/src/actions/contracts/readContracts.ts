@@ -14,18 +14,19 @@ import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { readContract } from './readContract'
 
-declare module '../../types/contracts' {
-  export interface ContractConfigExtended {
-    /** Chain id to use for provider */
-    chainId?: number
-  }
-}
-
 export type ReadContractsConfig<TContracts extends unknown[]> = {
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Contracts to query */
-  contracts: readonly [...ContractsConfig<TContracts>]
+  contracts: readonly [
+    ...ContractsConfig<
+      TContracts,
+      {
+        /** Chain id to use for provider */
+        chainId?: number
+      }
+    >,
+  ]
   /** Call overrides */
   overrides?: CallOverrides
 }
@@ -36,7 +37,10 @@ export type ReadContractsResult<TContracts extends unknown[]> =
 export async function readContracts<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-  TContracts extends { contractInterface: TAbi; functionName: TFunctionName }[],
+  TContracts extends {
+    contractInterface: TAbi
+    functionName: TFunctionName
+  }[],
 >({
   allowFailure = true,
   contracts,

@@ -51,13 +51,17 @@ export type WatchContractEventCallback<
   TEvent extends AbiEvent = TAbi extends Abi
     ? ExtractAbiEvent<TAbi, TEventName>
     : never,
-> = AbiParametersToPrimitiveTypes<
-  TEvent['inputs']
-> extends infer TArgs extends readonly unknown[]
-  ? Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-    ? (...args: any) => void
-    : (...args: TArgs) => void
-  : never
+> =
+  // Create local variable `TArgs` based on event input parameters
+  AbiParametersToPrimitiveTypes<
+    TEvent['inputs']
+  > extends infer TArgs extends readonly unknown[]
+    ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
+      Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
+      ? (...args: any) => void
+      : // We are able to infer args, spread the types.
+        (...args: TArgs) => void
+    : never
 
 export function watchContractEvent<
   TAbi extends Abi | readonly unknown[],

@@ -3,7 +3,7 @@ import { CallOverrides, PopulatedTransaction } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { Signer } from '../../types'
-import { GetWriteParameters } from '../../types/contracts'
+import { GetConfig } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
@@ -29,30 +29,35 @@ export type WriteContractPreparedArgs = {
     gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
   args?: never
+  overrides?: never
 }
 
 export type WriteContractUnpreparedArgs<TAbi = Abi, TFunctionName = string> = {
   mode: 'recklesslyUnprepared'
   request?: never
-} & GetWriteParameters<{
-  contractInterface: TAbi
-  functionName: TFunctionName
-}>
-
-export type WriteContractArgs<TAbi = Abi, TFunctionName = string> = Omit<
-  GetWriteParameters<{
+} & GetConfig<
+  {
     contractInterface: TAbi
     functionName: TFunctionName
-  }>,
+    /** Call overrides */
+    overrides?: CallOverrides
+  },
+  'nonpayable' | 'payable'
+>
+
+export type WriteContractArgs<TAbi = Abi, TFunctionName = string> = Omit<
+  GetConfig<
+    {
+      contractInterface: TAbi
+      functionName: TFunctionName
+      /** Chain id to use for provider */
+      chainId?: number
+    },
+    'nonpayable' | 'payable'
+  >,
   'args'
-> & {
-  /** Chain ID used to validate if the signer is connected to the target chain */
-  chainId?: number
-  overrides?: CallOverrides
-} & (
-    | WriteContractUnpreparedArgs<TAbi, TFunctionName>
-    | WriteContractPreparedArgs
-  )
+> &
+  (WriteContractUnpreparedArgs<TAbi, TFunctionName> | WriteContractPreparedArgs)
 export type WriteContractResult = SendTransactionResult
 
 /**
@@ -85,20 +90,17 @@ export async function writeContract<
   overrides,
   request: request_,
 }: WriteContractArgs<TAbi, TFunctionName>): Promise<WriteContractResult> {
-  /********************************************************************/
-  /** START: iOS App Link cautious code.                              */
-  /** Do not perform any async operations in this block.              */
-  /** Ref: wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
-  /********************************************************************/
+  /****************************************************************************/
+  /** START: iOS App Link cautious code.                                      */
+  /** Do not perform any async operations in this block.                      */
+  /** Ref: https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
+  /****************************************************************************/
 
   const signer = await fetchSigner<TSigner>()
   if (!signer) throw new ConnectorNotFoundError()
-
   if (chainId) assertActiveChain({ chainId })
-
-  if (mode === 'prepared') {
+  if (mode === 'prepared')
     if (!request_) throw new Error('`request` is required')
-  }
 
   const request =
     mode === 'recklesslyUnprepared'

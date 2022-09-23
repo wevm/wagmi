@@ -13,7 +13,7 @@ export type WatchReadContractsConfig<TContracts extends unknown[]> =
     listenToBlock?: boolean
   }
 export type WatchReadContractsCallback<TContracts extends unknown[]> = (
-  result: ReadContractsResult<TContracts>,
+  results: ReadContractsResult<TContracts>,
 ) => void
 
 export function watchReadContracts<

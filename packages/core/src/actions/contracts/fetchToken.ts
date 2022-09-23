@@ -37,22 +37,10 @@ export async function fetchToken({
   const [decimals, name, symbol, totalSupply] = await readContracts({
     allowFailure: false,
     contracts: [
-      {
-        ...erc20Config,
-        functionName: 'decimals',
-      },
-      {
-        ...erc20Config,
-        functionName: 'name',
-      },
-      {
-        ...erc20Config,
-        functionName: 'symbol',
-      },
-      {
-        ...erc20Config,
-        functionName: 'totalSupply',
-      },
+      { ...erc20Config, functionName: 'decimals' },
+      { ...erc20Config, functionName: 'name' },
+      { ...erc20Config, functionName: 'symbol' },
+      { ...erc20Config, functionName: 'totalSupply' },
     ],
   })
 

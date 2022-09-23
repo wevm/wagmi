@@ -15,7 +15,7 @@ describe('useContract', () => {
       }),
     )
     expect(result.current).toBeDefined()
-    expect(result.current.balanceOf).toBeDefined()
+    expect(result.current?.balanceOf).toBeDefined()
   })
 
   describe('behavior', () => {
@@ -28,11 +28,20 @@ describe('useContract', () => {
           signerOrProvider,
         }),
       )
-      expect(result.current.provider).toBeNull()
+      expect(result.current?.provider).toBeNull()
 
       signerOrProvider = getProvider()
       rerender()
-      expect(result.current.provider).not.toBeNull()
+      expect(result.current?.provider).not.toBeNull()
+    })
+
+    it('no adressOrName', async () => {
+      const { result } = renderHook(() =>
+        useContract({
+          contractInterface: erc20ABI,
+        }),
+      )
+      expect(result.current).toBeNull()
     })
   })
 })

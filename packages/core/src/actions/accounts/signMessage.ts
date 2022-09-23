@@ -12,8 +12,7 @@ export type SignMessageArgs = {
   message: string | ResolvedConfig['BytesType']
 }
 
-type Signature = string
-export type SignMessageResult = Signature
+export type SignMessageResult = string
 
 export async function signMessage(
   args: SignMessageArgs,
