@@ -8,8 +8,7 @@ import {
 import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useChainId, useQuery } from '../utils'
-import { useQueryClient } from '../utils/query'
+import { useChainId, useQuery, useQueryClient } from '../utils'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,

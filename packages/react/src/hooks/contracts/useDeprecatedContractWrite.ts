@@ -6,7 +6,7 @@ import {
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
-import { useMutation } from '../utils/query'
+import { useMutation } from '../utils'
 
 export type UseDeprecatedContractWriteArgs = DeprecatedWriteContractConfig
 export type UseDeprecatedContractWriteMutationArgs = Pick<

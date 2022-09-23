@@ -7,8 +7,7 @@ import * as React from 'react'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
-import { useForceUpdate } from '../utils'
-import { useMutation } from '../utils/query'
+import { useForceUpdate, useMutation } from '../utils'
 
 export type UseSwitchNetworkArgs = Partial<SwitchNetworkArgs>
 

@@ -1,6 +1,6 @@
 import { disconnect } from '@wagmi/core'
 
-import { useMutation } from '../utils/query'
+import { useMutation } from '../utils'
 
 export type UseDisconnectConfig = {
   /** Function to invoke when an error is thrown while connecting. */

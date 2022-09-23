@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
-import { useMutation } from '../utils/query'
+import { useMutation } from '../utils'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 
