@@ -14,7 +14,7 @@ export type WatchReadContractConfig<
 > = ReadContractConfig<TAbi, TFunctionName> & {
   listenToBlock?: boolean
 }
-export type WatchReadContractResult<
+export type WatchReadContractCallback<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 > = (result: ReadContractResult<TAbi, TFunctionName>) => void
@@ -26,7 +26,7 @@ export function watchReadContract<
     : string,
 >(
   config: WatchReadContractConfig<TAbi, TFunctionName>,
-  callback: WatchReadContractResult<TAbi, TFunctionName>,
+  callback: WatchReadContractCallback<TAbi, TFunctionName>,
 ) {
   const client = getClient()
 

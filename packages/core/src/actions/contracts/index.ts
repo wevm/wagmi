@@ -19,6 +19,12 @@ export {
 export { getContract, type GetContractArgs } from './getContract'
 
 export {
+  multicall,
+  type MulticallConfig,
+  type MulticallResult,
+} from './multicall'
+
+export {
   readContract,
   type ReadContractConfig,
   type ReadContractResult,
@@ -33,15 +39,21 @@ export {
 export { watchContractEvent } from './watchContractEvent'
 
 export {
+  watchMulticall,
+  type WatchMulticallConfig,
+  type WatchMulticallCallback,
+} from './watchMulticall'
+
+export {
   watchReadContract,
   type WatchReadContractConfig,
-  type WatchReadContractResult,
+  type WatchReadContractCallback,
 } from './watchReadContract'
 
 export {
   watchReadContracts,
   type WatchReadContractsConfig,
-  type WatchReadContractsCallback as WatchReadContractsResult,
+  type WatchReadContractsCallback,
 } from './watchReadContracts'
 
 export {

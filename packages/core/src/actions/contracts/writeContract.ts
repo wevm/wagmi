@@ -7,10 +7,7 @@ import { GetConfig } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
-import {
-  PrepareWriteContractConfig,
-  prepareWriteContract,
-} from './prepareWriteContract'
+import { prepareWriteContract } from './prepareWriteContract'
 
 export type WriteContractPreparedArgs = {
   /**
@@ -105,15 +102,14 @@ export async function writeContract<
   const request =
     mode === 'recklesslyUnprepared'
       ? (
-          await prepareWriteContract(<
-            PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>
-          >(<unknown>{
+          await prepareWriteContract<Abi | readonly unknown[], string>({
             addressOrName,
             args,
+            chainId,
             contractInterface,
             functionName,
             overrides,
-          }))
+          })
         ).request
       : request_
 
