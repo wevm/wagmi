@@ -1,5 +1,19 @@
 # @wagmi/core
 
+## 0.5.7
+
+### Patch Changes
+
+- [`aa51bc4d`](https://github.com/wagmi-dev/wagmi/commit/aa51bc4dc5683bf0178597d2fdb8f2e9d82e7970) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue in `CoinbaseWalletConnector` where the browser extension would unintendedly reset the network when the browser is refreshed.
+
+* [#955](https://github.com/wagmi-dev/wagmi/pull/955) [`e326cd80`](https://github.com/wagmi-dev/wagmi/commit/e326cd80fe65267db623eb6c80ccdd75572914cf) Thanks [@0xFlicker](https://github.com/0xFlicker)! - Added Infura RPC URL for Sepolia
+
+- [`cec14089`](https://github.com/wagmi-dev/wagmi/commit/cec14089500c86687226ab272b4c3fcb85ae3d69) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useProvider` & `getProvider` were not returning referentially equal providers.
+
+* [`cec14089`](https://github.com/wagmi-dev/wagmi/commit/cec14089500c86687226ab272b4c3fcb85ae3d69) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where the `watch` option was not respecting the neighboring `chainId` option in `useBlockNumber`.
+
+- [`cec14089`](https://github.com/wagmi-dev/wagmi/commit/cec14089500c86687226ab272b4c3fcb85ae3d69) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where block listeners (via `watch`) were firing excessively on L2 chains.
+
 ## 0.5.6
 
 ### Patch Changes

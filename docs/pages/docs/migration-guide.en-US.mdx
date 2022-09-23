@@ -61,7 +61,7 @@ All the breaking changes in this release are related to the introduction of [Pre
 
 If a `chainId` is passed to `useContractWrite`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -172,7 +172,7 @@ const { write } = useContractWrite(config)
 
 If a `chainId` is passed to `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
