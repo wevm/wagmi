@@ -57,6 +57,7 @@ export abstract class Connector<
   switchChain?(chainId: number): Promise<Chain>
   watchAsset?(asset: {
     address: string
+    decimals?: number
     image?: string
     symbol: string
   }): Promise<boolean>
