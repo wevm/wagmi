@@ -101,6 +101,9 @@ export async function fetchBalance({
     try {
       return await fetchContractBalance({ contractInterface: erc20ABI })
     } catch (err) {
+      // In the chance that there is an error upon decoding the contract result,
+      // it could be likely that the contract data is represented as bytes32 instead
+      // of a string.
       if (err instanceof ContractResultDecodeError) {
         const { symbol, ...rest } = await fetchContractBalance({
           contractInterface: erc20ABI_bytes32,
