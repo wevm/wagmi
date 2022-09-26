@@ -1,10 +1,17 @@
 import { BigNumber, logger } from 'ethers/lib/ethers'
-import { Logger, formatUnits, isAddress } from 'ethers/lib/utils'
+import {
+  Logger,
+  formatUnits,
+  isAddress,
+  parseBytes32String,
+} from 'ethers/lib/utils'
 
 import { getClient } from '../../client'
 import { erc20ABI } from '../../constants'
+import { erc20ABI_bytes32 } from '../../constants/abis'
+import { ContractResultDecodeError } from '../../errors'
 import { Unit } from '../../types'
-import { readContracts } from '../contracts'
+import { GetContractArgs, readContracts } from '../contracts'
 import { getProvider } from '../providers'
 
 export type FetchBalanceArgs = {
@@ -35,12 +42,6 @@ export async function fetchBalance({
   const provider = getProvider({ chainId })
 
   if (token) {
-    const erc20Config = {
-      addressOrName: token,
-      contractInterface: erc20ABI,
-      chainId,
-    }
-
     // Convert ENS name to address if required
     let resolvedAddress: string
     if (isAddress(addressOrName)) resolvedAddress = addressOrName
@@ -58,24 +59,58 @@ export async function fetchBalance({
       resolvedAddress = address
     }
 
-    const [value, decimals, symbol] = await readContracts<
-      [BigNumber, number, string]
-    >({
-      allowFailure: false,
-      contracts: [
-        { ...erc20Config, functionName: 'balanceOf', args: resolvedAddress },
-        { ...erc20Config, functionName: 'decimals' },
-        {
-          ...erc20Config,
-          functionName: 'symbol',
-        },
-      ],
-    })
-    return {
-      decimals,
-      formatted: formatUnits(value ?? '0', unit ?? decimals),
-      symbol,
-      value,
+    const fetchContractBalance = async ({
+      contractInterface,
+    }: {
+      contractInterface: GetContractArgs['contractInterface']
+    }) => {
+      const erc20Config = {
+        addressOrName: token,
+        contractInterface,
+        chainId,
+      }
+
+      const [value, decimals, symbol] = await readContracts<
+        [BigNumber, number, string]
+      >({
+        allowFailure: false,
+        contracts: [
+          {
+            ...erc20Config,
+            functionName: 'balanceOf',
+            args: resolvedAddress,
+          },
+          {
+            ...erc20Config,
+            functionName: 'decimals',
+          },
+          {
+            ...erc20Config,
+            functionName: 'symbol',
+          },
+        ],
+      })
+      return {
+        decimals,
+        formatted: formatUnits(value ?? '0', unit ?? decimals),
+        symbol,
+        value,
+      }
+    }
+
+    try {
+      return await fetchContractBalance({ contractInterface: erc20ABI })
+    } catch (err) {
+      if (err instanceof ContractResultDecodeError) {
+        const { symbol, ...rest } = await fetchContractBalance({
+          contractInterface: erc20ABI_bytes32,
+        })
+        return {
+          symbol: parseBytes32String(symbol),
+          ...rest,
+        }
+      }
+      throw err
     }
   }
 
