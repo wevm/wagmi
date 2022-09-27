@@ -1,8 +1,10 @@
+import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   mlootContractConfig,
   setupClient,
+  wagmiContractConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
 import { chain } from '../../constants'
@@ -127,6 +129,10 @@ describe('readContracts', () => {
 
   describe('multi-chain', () => {
     it('default', async () => {
+      setupClient({
+        chains: [chain.mainnet, chain.polygon, chain.goerli],
+      })
+
       const spy = vi.spyOn(multicall, 'multicall')
       const ethContracts: ReadContractsConfig['contracts'] = [
         {
@@ -140,6 +146,12 @@ describe('readContracts', () => {
           chainId: chain.mainnet.id,
           functionName: 'love',
           args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+        },
+        {
+          ...wagmigotchiContractConfig,
+          chainId: chain.mainnet.id,
+          functionName: 'love',
+          args: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
         },
       ]
       const polygonContracts: ReadContractsConfig['contracts'] = [
@@ -155,8 +167,30 @@ describe('readContracts', () => {
           args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
         },
       ]
+      const goerliContracts: ReadContractsConfig['contracts'] = [
+        {
+          ...wagmiContractConfig,
+          chainId: chain.goerli.id,
+          functionName: 'ownerOf',
+          args: [BigNumber.from(69)],
+        },
+        {
+          ...wagmiContractConfig,
+          chainId: chain.goerli.id,
+          functionName: 'balanceOf',
+          args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
+        },
+      ]
       const results = await readContracts({
-        contracts: [...ethContracts, ...polygonContracts],
+        contracts: [
+          ethContracts[0]!,
+          goerliContracts[0]!,
+          ethContracts[1]!,
+          polygonContracts[0]!,
+          goerliContracts[1]!,
+          polygonContracts[1]!,
+          ethContracts[2]!,
+        ],
       })
 
       expect(spy).toHaveBeenCalledWith({
@@ -177,13 +211,22 @@ describe('readContracts', () => {
             "hex": "0x02",
             "type": "BigNumber",
           },
+          "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
           {
             "hex": "0x01",
             "type": "BigNumber",
           },
           false,
           {
+            "hex": "0x02",
+            "type": "BigNumber",
+          },
+          {
             "hex": "0x05a6db",
+            "type": "BigNumber",
+          },
+          {
+            "hex": "0x00",
             "type": "BigNumber",
           },
         ]
