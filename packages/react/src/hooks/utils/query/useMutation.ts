@@ -4,7 +4,7 @@ import {
   UseMutationOptions,
   UseMutationResult,
   parseMutationArgs,
-  useMutation as rqUseMutation,
+  useMutation as useMutation_,
 } from '@tanstack/react-query'
 
 import { queryClientContext as context } from '../../../context'
@@ -74,5 +74,5 @@ export function useMutation<
   arg3?: UseMutationOptions<TData, TError, TVariables, TContext>,
 ): UseMutationResult<TData, TError, TVariables, TContext> {
   const options = parseMutationArgs(arg1, arg2, arg3)
-  return rqUseMutation({ context, ...options })
+  return useMutation_({ context, ...options })
 }
