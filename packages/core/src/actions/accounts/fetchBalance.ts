@@ -7,8 +7,7 @@ import {
 } from 'ethers/lib/utils'
 
 import { getClient } from '../../client'
-import { erc20ABI } from '../../constants'
-import { erc20ABI_bytes32 } from '../../constants/abis'
+import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import { ContractResultDecodeError } from '../../errors'
 import { Unit } from '../../types'
 import { GetContractArgs, readContracts } from '../contracts'
