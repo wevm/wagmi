@@ -23,10 +23,6 @@
 
 <br>
 
-> **Note**
->
-> wagmi is participating in [Gitcoin Grant Round 15](https://wagmi.sh/gitcoin) until September 22. Contributions are matched with [Quadratic Funding](https://finematics.com/quadratic-funding-explained/) (e.g. $1 turns into $27). If you find wagmi useful, please consider supporting development [here](https://wagmi.sh/gitcoin). Thank you 🙏
-
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
@@ -133,6 +129,12 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/context-dark.svg">
     <img alt="context logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/context-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://walletconnect.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/walletconnect-dark.svg">
+    <img alt="WalletConnect logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/walletconnect-light.svg" width="auto" height="50">
   </picture>
 </a>
 
