@@ -1,8 +1,8 @@
-import { useMutation } from '@tanstack/react-query'
 import { SignMessageArgs, SignMessageResult, signMessage } from '@wagmi/core'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseSignMessageArgs = Partial<SignMessageArgs>
 

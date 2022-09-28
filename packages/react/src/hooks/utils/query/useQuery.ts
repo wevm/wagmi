@@ -6,6 +6,8 @@ import {
   UseQueryOptions,
 } from '@tanstack/react-query'
 
+import { queryClientContext as context } from '../../../context'
+
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs, trackResult } from './utils'
 
@@ -113,7 +115,7 @@ export function useQuery<
   arg3?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): UseQueryResult<TData, TError> {
   const parsedOptions = parseQueryArgs(arg1, arg2, arg3)
-  const baseQuery = useBaseQuery(parsedOptions, QueryObserver)
+  const baseQuery = useBaseQuery({ context, ...parsedOptions }, QueryObserver)
 
   const result = {
     data: baseQuery.data,

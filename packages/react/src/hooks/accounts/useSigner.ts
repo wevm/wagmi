@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
 import {
   FetchSignerResult,
   Signer,
@@ -8,7 +7,7 @@ import {
 import * as React from 'react'
 
 import { QueryConfig } from '../../types'
-import { useQuery } from '../utils'
+import { useQuery, useQueryClient } from '../utils'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,

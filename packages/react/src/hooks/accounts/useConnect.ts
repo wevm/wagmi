@@ -1,9 +1,9 @@
-import { useMutation } from '@tanstack/react-query'
 import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
 import * as React from 'react'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 
