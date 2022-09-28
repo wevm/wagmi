@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   SwitchNetworkArgs,
   SwitchNetworkResult,
@@ -8,7 +7,7 @@ import * as React from 'react'
 
 import { useClient } from '../../context'
 import { MutationConfig } from '../../types'
-import { useForceUpdate } from '../utils'
+import { useForceUpdate, useMutation } from '../utils'
 
 export type UseSwitchNetworkArgs = Partial<SwitchNetworkArgs>
 

@@ -106,6 +106,25 @@ describe('fetchBalance', () => {
         `)
       })
 
+      it('bytes32 contract', async () => {
+        expect(
+          await fetchBalance({
+            addressOrName: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
+            token: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
+          }),
+        ).toMatchInlineSnapshot(`
+          {
+            "decimals": 18,
+            "formatted": "793.706155474190508252",
+            "symbol": "MKR",
+            "value": {
+              "hex": "0x2b06e2b72b1816a0dc",
+              "type": "BigNumber",
+            },
+          }
+        `)
+      })
+
       describe('name', () => {
         it('valid', async () => {
           expect(

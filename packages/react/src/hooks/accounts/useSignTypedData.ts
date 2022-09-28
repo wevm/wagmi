@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   SignTypedDataArgs,
   SignTypedDataResult,
@@ -8,6 +7,7 @@ import { TypedData, TypedDataToPrimitiveTypes } from 'abitype'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseSignTypedDataArgs<
   TTypedData extends TypedData,

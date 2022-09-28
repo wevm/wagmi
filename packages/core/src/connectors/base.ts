@@ -57,7 +57,8 @@ export abstract class Connector<
   abstract isAuthorized(): Promise<boolean>
   switchChain?(chainId: number): Promise<Chain>
   watchAsset?(asset: {
-    address: Address
+    address: string
+    decimals?: number
     image?: string
     symbol: string
   }): Promise<boolean>

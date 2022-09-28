@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   WriteContractArgs,
   WriteContractPreparedArgs,
@@ -9,6 +8,7 @@ import { Abi, ExtractAbiFunctionNames } from 'abitype'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseContractWriteArgs<
   TAbi extends Abi | readonly unknown[] = Abi,

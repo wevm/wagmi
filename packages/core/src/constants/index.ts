@@ -1,4 +1,4 @@
-export { erc20ABI, erc721ABI, multicallABI } from './abis'
+export { erc20ABI, erc20ABI_bytes32, erc721ABI, multicallABI } from './abis'
 
 export { etherscanBlockExplorers } from './blockExplorers'
 export type { BlockExplorer, BlockExplorerName } from './blockExplorers'

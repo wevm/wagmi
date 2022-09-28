@@ -1,6 +1,7 @@
-import { QueryKey, useQueryClient } from '@tanstack/react-query'
+import { QueryKey } from '@tanstack/react-query'
 
 import { useBlockNumber } from '../network-status'
+import { useQueryClient } from './query'
 
 export function useInvalidateOnBlock({
   chainId,
