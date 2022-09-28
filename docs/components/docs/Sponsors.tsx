@@ -31,6 +31,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/walletconnect-light.svg',
     },
   },
+  {
+    id: 'looksrare',
+    name: 'LooksRare',
+    href: 'https://looksrare.org',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/looksrare-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/looksrare-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
