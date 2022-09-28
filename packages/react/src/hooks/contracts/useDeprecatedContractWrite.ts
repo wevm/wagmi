@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query'
 import {
   DeprecatedWriteContractConfig,
   DeprecatedWriteContractResult,
@@ -7,6 +6,7 @@ import {
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseDeprecatedContractWriteArgs = DeprecatedWriteContractConfig
 export type UseDeprecatedContractWriteMutationArgs = Pick<

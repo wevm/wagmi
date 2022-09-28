@@ -37,4 +37,11 @@ export {
   useWaitForTransaction,
 } from './transactions'
 
-export { useChainId, useBaseQuery, useQuery, useInfiniteQuery } from './utils'
+export {
+  useChainId,
+  useBaseQuery,
+  useQuery,
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from './utils'
