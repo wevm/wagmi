@@ -22,10 +22,7 @@ type GetValue<TSchema = unknown> = TSchema[keyof TSchema] extends infer TValue
       }
   : never
 
-export type SignTypedDataArgs<
-  TTypedData extends TypedData,
-  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
-> = {
+export type SignTypedDataArgs<TTypedData = TypedData, TSchema = unknown> = {
   /** Domain or domain signature for origin or contract */
   domain: TypedDataDomain
   /** Named list of all type definitions */

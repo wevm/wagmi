@@ -18,7 +18,6 @@ declare module 'abitype' {
   export interface Config {
     // TODO: Drop `BigNumber` once ethers supports `bigint` natively
     BigIntType: BigNumber
-    BytesType: `0x${string}` | ArrayLike<number>
     IntType: number
   }
 }
@@ -44,7 +43,8 @@ declare module 'ethers/lib/utils' {
           recoveryParam?: number
           v?: number
         }
-      | ResolvedConfig['BytesType'],
+      | ResolvedConfig['BytesType']
+      | string,
   ): string
 }
 

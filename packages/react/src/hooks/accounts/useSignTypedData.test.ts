@@ -44,7 +44,7 @@ const value = {
 function useSignTypedDataWithConnect<
   TTypedData extends TypedData,
   TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
->(config: UseSignTypedDataConfig<TTypedData, TSchema> = {}) {
+>(config: UseSignTypedDataConfig<TTypedData, TSchema> = {} as any) {
   return { connect: useConnect(), signTypedData: useSignTypedData(config) }
 }
 

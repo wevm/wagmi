@@ -33,6 +33,22 @@ export type IsUnknown<T> = unknown extends T ? true : false
 export type NotEqual<T, U> = [T] extends [U] ? false : true
 
 /**
+ * Convert {@link TKeys} of {@link TObject} to optional properties
+ *
+ * @param TObject
+ * @param TKeys
+ * @returns {@link TObject} with {@link TKeys} converted to optional properties
+ *
+ * @example
+ * type Result = Optional<{ foo: string; bar: number }, 'foo'>
+ */
+export type Optional<TObject, TKeys extends keyof TObject> = {
+  [K in keyof TObject as K extends TKeys ? never : K]: TObject[K]
+} & {
+  [K in keyof TObject as K extends TKeys ? K : never]?: TObject[K]
+}
+
+/**
  * Boolean "or" operator
  *
  * @param T
