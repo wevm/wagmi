@@ -25,6 +25,12 @@ export {
 } from './multicall'
 
 export {
+  queryFilter,
+  type QueryFilterConfig,
+  type QueryFilterResult,
+} from './queryFilter'
+
+export {
   readContract,
   type ReadContractConfig,
   type ReadContractResult,

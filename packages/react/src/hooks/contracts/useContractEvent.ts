@@ -1,84 +1,37 @@
-import { IsNever, NotEqual, Or } from '@wagmi/core/internal'
-import {
-  Abi,
-  AbiEvent,
-  AbiParametersToPrimitiveTypes,
-  ExtractAbiEvent,
-  ExtractAbiEventNames,
-} from 'abitype'
+import { GetEventConfig } from '@wagmi/core/internal'
+import { Abi } from 'abitype'
 import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useContract } from './useContract'
 
-type GetListener<
-  TEvent extends AbiEvent,
-  TAbi = unknown,
-> = AbiParametersToPrimitiveTypes<
-  TEvent['inputs']
-> extends infer TArgs extends readonly unknown[]
-  ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
-    Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-    ? {
-        /**
-         * Callback when event is emitted
-         *
-         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for type inference.
-         */
-        listener: (...args: any) => void
-      }
-    : // We are able to infer args, spread the types.
-      {
-        /** Callback when event is emitted */
-        listener: (...args: TArgs) => void
-      }
-  : never
-
-type ContractEventConfig<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TEventName extends string = string,
-  TEvent extends AbiEvent = TAbi extends Abi
-    ? ExtractAbiEvent<TAbi, TEventName>
-    : never,
-> = {
-  /** Contract address */
-  addressOrName?: string
-  /** Contract ABI */
-  contractInterface: TAbi
-  /** Chain id to use for provider */
-  chainId?: number
-  /** Event to listen for */
-  eventName: TEventName
-  /** Receive only a single event */
-  once?: boolean
-} & GetListener<TEvent, TAbi>
-
-type GetConfig<T> = T extends {
-  abi: infer TAbi extends Abi
-  eventName: infer TEventName extends string
-}
-  ? ContractEventConfig<
-      TAbi,
-      ExtractAbiEventNames<TAbi>,
-      ExtractAbiEvent<TAbi, TEventName>
-    >
-  : T extends {
-      abi: infer TAbi extends readonly unknown[]
-      eventName: infer TEventName extends string
-    }
-  ? ContractEventConfig<TAbi, TEventName>
-  : ContractEventConfig
-
 export type UseContractEventConfig<
   TAbi = Abi,
   TEventName = string,
-> = GetConfig<{ abi: TAbi; eventName: TEventName }>
+> = GetEventConfig<
+  {
+    /** Contract ABI */
+    contractInterface: TAbi
+    /** Event to listen for */
+    eventName: TEventName
+    /** Chain id to use for provider */
+    chainId?: number
+    /** Receive only a single event */
+    once?: boolean
+  },
+  {
+    isAddressOptional: true
+    isArgsOptional: true
+    withListener: true
+  }
+>
 
 export function useContractEvent<
   TAbi extends Abi | readonly unknown[],
   TEventName extends string,
 >({
   addressOrName,
+  args,
   chainId,
   contractInterface,
   listener,
@@ -100,12 +53,15 @@ export function useContractEvent<
 
     const handler = (...event: any[]) => callbackRef.current(...event)
 
-    if (once) contract.once(eventName, handler)
-    else contract.on(eventName, handler)
+    const eventFilterFn = contract.filters[eventName]
+    const eventFilter = eventFilterFn?.(...(args ?? [])) ?? eventName
+
+    if (once) contract.once(eventFilter, handler)
+    else contract.on(eventFilter, handler)
 
     return () => {
-      contract.off(eventName, handler)
+      contract.off(eventFilter, handler)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contract, eventName])
+  }, [contract, eventName, args])
 }

@@ -1,3 +1,5 @@
+import { Abi } from 'abitype'
+
 /**
  * Check if {@link T} is `never`
  *
@@ -43,3 +45,22 @@ export type NotEqual<T, U> = [T] extends [U] ? false : true
  * type Result = Or<true, false>
  */
 export type Or<T, U> = T extends true ? true : U extends true ? true : false
+
+/**
+ * ABI can't be inferred if {@link TEntity} is `never` or {@link TAbi} does not have the same shape as `Abi`
+ *
+ * @param TEntity
+ * @param TAbi
+ *
+ * @example
+ * TArgs extends readonly unknown[]
+ * ?
+ *   AbiEntityNotInferred<TArgs, TAbi> extends true
+ *   ? (...args: any) => void
+ *   : (...args: TArgs) => void
+ * : never
+ */
+export type AbiEntityNotInferred<TEntity, TAbi = unknown> = Or<
+  IsNever<TEntity>,
+  NotEqual<TAbi, Abi>
+>
