@@ -16,7 +16,10 @@ export type UseContractReadsConfig<TContracts extends unknown[]> = QueryConfig<
   ReadContractsResult<TContracts>,
   Error
 > &
-  ReadContractsConfig<TContracts> & {
+  ReadContractsConfig<
+    TContracts,
+    { isAddressOptional: true; isArgsOptional: true }
+  > & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
     /** Subscribe to changes */

@@ -9,10 +9,10 @@ import { fetchSigner } from './fetchSigner'
 
 export type SignMessageArgs = {
   /** Message to sign with wallet */
-  message: string | ResolvedConfig['BytesType']
+  message: string | Uint8Array
 }
 
-export type SignMessageResult = string
+export type SignMessageResult = ResolvedConfig['BytesType']
 
 export async function signMessage(
   args: SignMessageArgs,
@@ -20,7 +20,9 @@ export async function signMessage(
   try {
     const signer = await fetchSigner()
     if (!signer) throw new ConnectorNotFoundError()
-    return await signer.signMessage(args.message)
+    return (await signer.signMessage(
+      args.message,
+    )) as ResolvedConfig['BytesType']
   } catch (error) {
     if ((<ProviderRpcError>error).code === 4001)
       throw new UserRejectedRequestError(error)

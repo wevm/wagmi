@@ -188,19 +188,27 @@ export type ContractsConfig<
   TContractProperties extends { [key: string]: unknown } = {
     [key: string]: unknown
   },
+  TOptions extends Options = DefaultOptions,
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
-  ? GetConfig<TContractProperties>[]
+  ? GetConfig<TContractProperties, 'pure' | 'view', TOptions>[]
   : TContracts extends []
   ? []
   : TContracts extends [infer Head]
-  ? [...Result, GetConfig<Head & TContractProperties, 'pure' | 'view'>]
+  ? [
+      ...Result,
+      GetConfig<Head & TContractProperties, 'pure' | 'view', TOptions>,
+    ]
   : TContracts extends [infer Head, ...infer Tail]
   ? ContractsConfig<
       [...Tail],
       TContractProperties,
-      [...Result, GetConfig<Head & TContractProperties, 'pure' | 'view'>],
+      TOptions,
+      [
+        ...Result,
+        GetConfig<Head & TContractProperties, 'pure' | 'view', TOptions>,
+      ],
       [...Depth, 1]
     >
   : unknown[] extends TContracts
@@ -210,10 +218,17 @@ export type ContractsConfig<
   TContracts extends ContractConfig<
       infer TContract,
       infer TAbi,
-      infer TFunctionName
+      infer TFunctionName,
+      infer TFunction
     >[]
-  ? ContractConfig<TContract, TAbi, TFunctionName>[]
-  : GetConfig<TContractProperties>[]
+  ? ContractConfig<
+      Omit<TContract & TContractProperties, OmitConfigProperties>,
+      TAbi,
+      TFunctionName,
+      TFunction,
+      TOptions
+    >[]
+  : GetConfig<TContractProperties, 'pure' | 'view', TOptions>[]
 
 /**
  * ContractsResult reducer recursively maps type param to results

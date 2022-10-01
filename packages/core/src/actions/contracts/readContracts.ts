@@ -8,13 +8,21 @@ import {
   ContractMethodRevertedError,
   ContractResultDecodeError,
 } from '../../errors'
-import { ContractsConfig, ContractsResult } from '../../types/contracts'
+import {
+  ContractsConfig,
+  ContractsResult,
+  DefaultOptions,
+  Options,
+} from '../../types/contracts'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { readContract } from './readContract'
 
-export type ReadContractsConfig<TContracts extends unknown[]> = {
+export type ReadContractsConfig<
+  TContracts extends unknown[],
+  TOptions extends Options = DefaultOptions,
+> = {
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Contracts to query */
@@ -24,7 +32,8 @@ export type ReadContractsConfig<TContracts extends unknown[]> = {
       {
         /** Chain id to use for provider */
         chainId?: number
-      }
+      },
+      TOptions
     >,
   ]
   /** Call overrides */
