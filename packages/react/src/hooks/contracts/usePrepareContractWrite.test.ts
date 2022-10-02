@@ -1,4 +1,4 @@
-import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import { Abi } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
@@ -19,9 +19,7 @@ import {
 
 function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
-    : string,
+  TFunctionName extends string,
 >(config: UsePrepareContractWriteConfig<TAbi, TFunctionName>) {
   const { ...prepareContractTransaction } = usePrepareContractWrite(config)
   return {

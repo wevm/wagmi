@@ -22,9 +22,7 @@ import {
 
 function useContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
-    : string,
+  TFunctionName extends string,
 >(config: UseContractWriteConfig<TAbi, TFunctionName>) {
   return {
     connect: useConnect(),
@@ -34,9 +32,7 @@ function useContractWriteWithConnect<
 
 function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
-    : string,
+  TFunctionName extends string,
 >(
   config: UsePrepareContractWriteConfig<TAbi, TFunctionName> & {
     chainId?: number
@@ -496,7 +492,10 @@ describe('useContractWrite', () => {
     it('multiple writes', async () => {
       const tokenId = getRandomTokenId()
       let args: any[] | any = [tokenId]
-      let functionName = 'mint'
+      let functionName: ExtractAbiFunctionNames<
+        typeof wagmiContractConfig['contractInterface'],
+        'nonpayable' | 'payable'
+      > = 'mint'
       const utils = renderHook(() =>
         usePrepareContractWriteWithConnect({
           ...wagmiContractConfig,

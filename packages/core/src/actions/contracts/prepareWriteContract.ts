@@ -6,7 +6,7 @@ import {
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Signer } from '../../types'
-import { GetConfig } from '../../types/contracts'
+import { DefaultOptions, GetConfig, Options } from '../../types/contracts'
 import { assertActiveChain, minimizeContractInterface } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { getContract } from './getContract'
@@ -15,6 +15,7 @@ export type PrepareWriteContractConfig<
   TAbi = Abi,
   TFunctionName = string,
   TSigner extends Signer = Signer,
+  TOptions extends Options = DefaultOptions,
 > = GetConfig<
   {
     contractInterface: TAbi
@@ -26,7 +27,8 @@ export type PrepareWriteContractConfig<
     /** Custom signer */
     signer?: TSigner | null
   },
-  'nonpayable' | 'payable'
+  'nonpayable' | 'payable',
+  TOptions
 >
 
 export type PrepareWriteContractResult = {
@@ -82,6 +84,7 @@ export async function prepareWriteContract<
     contractInterface,
     signerOrProvider: signer,
   })
+  console.log(contract)
 
   const populateTransactionFn = contract.populateTransaction[functionName]
   if (!populateTransactionFn) {

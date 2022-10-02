@@ -1,10 +1,9 @@
 import {
   WriteContractArgs,
-  WriteContractPreparedArgs,
   WriteContractResult,
   writeContract,
 } from '@wagmi/core'
-import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import { Abi } from 'abitype'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
@@ -13,26 +12,11 @@ import { useMutation } from '../utils'
 export type UseContractWriteArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = Omit<WriteContractArgs<TAbi, TFunctionName>, 'mode' | 'request'> &
-  (
-    | {
-        /**
-         * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
-         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended
-         * to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
-         *
-         * `prepared`: The config has been prepared with parameters required for performing a contract write
-         * via the [`usePrepareContractWrite` hook](https://wagmi.sh/docs/prepare-hooks/usePrepareContractWrite)
-         * */
-        mode: 'prepared'
-        /** The prepared request to perform a contract write. */
-        request: WriteContractPreparedArgs['request'] | undefined
-      }
-    | {
-        mode: 'recklesslyUnprepared'
-        request?: never
-      }
-  )
+> = WriteContractArgs<
+  TAbi,
+  TFunctionName,
+  { isAddressOptional: true; isArgsOptional: true; isRequestOptional: true }
+>
 
 export type UseContractWriteConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
@@ -92,18 +76,35 @@ function mutationFn({
   mode,
   overrides,
   request,
-}: WriteContractArgs) {
-  return writeContract({
-    addressOrName,
-    contractInterface,
-    functionName,
-    args: args as any,
-    chainId,
-    // TODO: Fix narrowing for `mode`
-    mode: mode as any,
-    overrides,
-    request: request as any,
-  })
+}: WriteContractArgs<
+  Abi | readonly unknown[],
+  string,
+  { isAddressOptional: true; isRequestOptional: true }
+>) {
+  if (!addressOrName) throw new Error('addressOrName is required')
+  switch (mode) {
+    case 'prepared': {
+      if (!request) throw new Error('request is required')
+      return writeContract({
+        mode: 'prepared',
+        addressOrName,
+        chainId,
+        contractInterface,
+        functionName,
+        request,
+      })
+    }
+    case 'recklesslyUnprepared':
+      return writeContract({
+        addressOrName,
+        contractInterface,
+        functionName,
+        args,
+        chainId,
+        mode: 'recklesslyUnprepared',
+        overrides,
+      })
+  }
 }
 
 /**
@@ -126,9 +127,7 @@ function mutationFn({
  */
 export function useContractWrite<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
-    : string,
+  TFunctionName extends string,
 >({
   addressOrName,
   args,

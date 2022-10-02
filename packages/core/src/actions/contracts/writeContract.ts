@@ -3,13 +3,25 @@ import { CallOverrides, PopulatedTransaction } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { Signer } from '../../types'
-import { GetConfig } from '../../types/contracts'
+import {
+  DefaultOptions,
+  GetConfig,
+  Options as Options_,
+} from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { SendTransactionResult, sendTransaction } from '../transactions'
 import { prepareWriteContract } from './prepareWriteContract'
 
-export type WriteContractPreparedArgs = {
+type Options = Options_ & { isRequestOptional?: boolean }
+type Request = PopulatedTransaction & {
+  to: Address
+  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+}
+
+export type WriteContractPreparedArgs<
+  TOptions extends Options = DefaultOptions,
+> = {
   /**
    * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
    * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
@@ -20,16 +32,23 @@ export type WriteContractPreparedArgs = {
    * via the {@link prepareWriteContract} function
    * */
   mode: 'prepared'
-  /** The prepared request. */
-  request: PopulatedTransaction & {
-    to: Address
-    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-  }
   args?: never
   overrides?: never
-}
+} & (TOptions['isRequestOptional'] extends true
+  ? {
+      /** The prepared request. */
+      request?: Request
+    }
+  : {
+      /** The prepared request. */
+      request: Request
+    })
 
-export type WriteContractUnpreparedArgs<TAbi = Abi, TFunctionName = string> = {
+export type WriteContractUnpreparedArgs<
+  TAbi = Abi,
+  TFunctionName = string,
+  TOptions extends Options = DefaultOptions,
+> = {
   mode: 'recklesslyUnprepared'
   request?: never
 } & GetConfig<
@@ -39,10 +58,15 @@ export type WriteContractUnpreparedArgs<TAbi = Abi, TFunctionName = string> = {
     /** Call overrides */
     overrides?: CallOverrides
   },
-  'nonpayable' | 'payable'
+  'nonpayable' | 'payable',
+  TOptions
 >
 
-export type WriteContractArgs<TAbi = Abi, TFunctionName = string> = Omit<
+export type WriteContractArgs<
+  TAbi = Abi,
+  TFunctionName = string,
+  TOptions extends Options = DefaultOptions,
+> = Omit<
   GetConfig<
     {
       contractInterface: TAbi
@@ -50,11 +74,15 @@ export type WriteContractArgs<TAbi = Abi, TFunctionName = string> = Omit<
       /** Chain id to use for provider */
       chainId?: number
     },
-    'nonpayable' | 'payable'
+    'nonpayable' | 'payable',
+    TOptions
   >,
   'args'
 > &
-  (WriteContractUnpreparedArgs<TAbi, TFunctionName> | WriteContractPreparedArgs)
+  (
+    | WriteContractUnpreparedArgs<TAbi, TFunctionName, TOptions>
+    | WriteContractPreparedArgs<TOptions>
+  )
 export type WriteContractResult = SendTransactionResult
 
 /**

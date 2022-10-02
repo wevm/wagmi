@@ -27,21 +27,14 @@ export type UseContractReadConfig<
     watch?: boolean
   }
 
-function queryKey<TAbi = Abi, TFunctionName = string>(
+function queryKey(
   {
     addressOrName,
     args,
     chainId,
     functionName,
     overrides,
-  }: Omit<
-    ReadContractConfig<
-      TAbi,
-      TFunctionName,
-      { isAddressOptional: true; isArgsOptional: true }
-    >,
-    'contractInterface'
-  >,
+  }: Omit<ReadContractConfig, 'contractInterface'>,
   { blockNumber }: { blockNumber?: number },
 ) {
   return [
@@ -117,7 +110,7 @@ export function useContractRead<
           chainId,
           functionName,
           overrides,
-        },
+        } as Omit<ReadContractConfig, 'contractInterface'>,
         { blockNumber: cacheOnBlock ? blockNumber : undefined },
       ),
     [

@@ -4,7 +4,7 @@ import {
   PrepareWriteContractResult,
   prepareWriteContract,
 } from '@wagmi/core'
-import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import { Abi } from 'abitype'
 import { Signer, providers } from 'ethers'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -15,7 +15,12 @@ export type UsePrepareContractWriteConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TSigner extends Signer = Signer,
-> = PrepareWriteContractConfig<TAbi, TFunctionName, TSigner> &
+> = PrepareWriteContractConfig<
+  TAbi,
+  TFunctionName,
+  TSigner,
+  { isAddressOptional: true; isArgsOptional: true }
+> &
   QueryConfig<PrepareWriteContractResult, Error>
 
 function queryKey(
@@ -85,9 +90,7 @@ function queryFn({
  */
 export function usePrepareContractWrite<
   TAbi extends Abi | readonly unknown[],
-  TFunctionName extends TAbi extends Abi
-    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
-    : string,
+  TFunctionName extends string,
 >({
   addressOrName,
   contractInterface,
@@ -122,7 +125,7 @@ export function usePrepareContractWrite<
     queryFn({ contractInterface, signer }),
     {
       cacheTime,
-      enabled: Boolean(enabled && signer),
+      enabled: Boolean(enabled && addressOrName && signer),
       staleTime,
       suspense,
       onError,
