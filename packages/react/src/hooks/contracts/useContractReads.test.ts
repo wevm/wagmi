@@ -20,13 +20,13 @@ const contracts = [
     functionName: 'love',
     args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
   },
-  { ...wagmigotchiContractConfig, functionName: 'getAlive', args: [] },
+  { ...wagmigotchiContractConfig, functionName: 'getAlive' },
   {
     ...mlootContractConfig,
     functionName: 'tokenOfOwnerByIndex',
     args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
   },
-]
+] as const
 
 describe('useContractRead', () => {
   it('mounts', async () => {

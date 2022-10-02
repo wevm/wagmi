@@ -1,6 +1,5 @@
 import { Abi } from 'abitype'
 import { Contract, ContractInterface } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
 
 function isPlainArray(value: unknown) {
   return Array.isArray(value) && Object.keys(value).length === value.length
@@ -12,7 +11,7 @@ export function parseContractResult({
   functionName,
 }: {
   contractInterface: ContractInterface | Abi | readonly unknown[]
-  data: Result
+  data: any
   functionName: string
 }) {
   if (data && isPlainArray(data)) {

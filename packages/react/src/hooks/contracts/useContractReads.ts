@@ -12,22 +12,34 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
-export type UseContractReadsConfig<TContracts extends unknown[]> = QueryConfig<
-  ReadContractsResult<TContracts>,
-  Error
-> &
+export type UseContractReadsConfig<TContracts extends unknown[]> =
   ReadContractsConfig<
     TContracts,
     { isAddressOptional: true; isArgsOptional: true }
-  > & {
-    /** If set to `true`, the cache will depend on the block number */
-    cacheOnBlock?: boolean
-    /** Subscribe to changes */
-    watch?: boolean
-  }
+  > &
+    QueryConfig<ReadContractsResult<TContracts>, Error> & {
+      /** If set to `true`, the cache will depend on the block number */
+      cacheOnBlock?: boolean
+      /** Subscribe to changes */
+      watch?: boolean
+    }
 
-function queryKey<TContracts extends unknown[]>(
-  { allowFailure, contracts, overrides }: ReadContractsConfig<TContracts>,
+function queryKey<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends {
+    contractInterface: TAbi
+    functionName: TFunctionName
+  }[],
+>(
+  {
+    allowFailure,
+    contracts,
+    overrides,
+  }: ReadContractsConfig<
+    TContracts,
+    { isAddressOptional: true; isArgsOptional: true }
+  >,
   { blockNumber, chainId }: { blockNumber?: number; chainId?: number },
 ) {
   return [
@@ -36,50 +48,64 @@ function queryKey<TContracts extends unknown[]>(
       allowFailure,
       blockNumber,
       chainId,
-      contracts: (<ContractConfig[]>(<unknown>contracts)).map(
+      contracts: (contracts as unknown as ContractConfig[]).map(
         ({ addressOrName, args, chainId, functionName }) => ({
           addressOrName,
           args,
           chainId,
           functionName,
         }),
-      ) as unknown as ReadContractsConfig<TContracts>['contracts'],
+      ),
       overrides,
     },
   ] as const
 }
 
-function queryFn<TContracts extends unknown[]>({
+function queryFn<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends {
+    contractInterface: TAbi
+    functionName: TFunctionName
+  }[],
+>({
   contractInterfaces,
 }: {
   contractInterfaces: (Abi | readonly unknown[])[]
 }) {
   return ({
     queryKey: [{ allowFailure, contracts: contracts_, overrides }],
-  }: QueryFunctionArgs<typeof queryKey<TContracts>>) => {
-    const contracts = (<ContractConfig[]>(<unknown>contracts_)).map(
+  }: QueryFunctionArgs<typeof queryKey<TAbi, TFunctionName, TContracts>>) => {
+    const contracts = (contracts_ as unknown as ContractConfig[]).map(
       (contract, i) => ({
         ...contract,
-        contractInterface: <Abi | readonly unknown[]>contractInterfaces[i],
+        contractInterface: contractInterfaces[i] as Abi | readonly unknown[],
       }),
-    ) as unknown as ReadContractsConfig<TContracts>['contracts']
+    )
     return readContracts({
       allowFailure,
       contracts,
       overrides,
-    })
+    }) as Promise<ReadContractsResult<TContracts>>
   }
 }
 
 type ContractConfig = {
   addressOrName: Address
   chainId?: number
-  contractInterface: Abi
+  contractInterface: Abi | readonly unknown[]
   functionName: string
   args: any[]
 }
 
-export function useContractReads<TContracts extends unknown[]>({
+export function useContractReads<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends {
+    contractInterface: TAbi
+    functionName: TFunctionName
+  }[],
+>({
   allowFailure = true,
   cacheOnBlock = false,
   cacheTime,
@@ -111,9 +137,9 @@ export function useContractReads<TContracts extends unknown[]>({
     [allowFailure, blockNumber, cacheOnBlock, chainId, contracts, overrides],
   )
 
-  const contractInterfaces: (Abi | readonly unknown[])[] = (<ContractConfig[]>(
-    (<unknown>contracts)
-  )).map(({ contractInterface }) => contractInterface)
+  const contractInterfaces = (contracts as unknown as ContractConfig[]).map(
+    ({ contractInterface }) => contractInterface,
+  )
 
   const enabled = React.useMemo(() => {
     let enabled = Boolean(enabled_ && contracts.length > 0)
@@ -123,7 +149,7 @@ export function useContractReads<TContracts extends unknown[]>({
 
   useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
 
-  return useQuery(queryKey_, queryFn<TContracts>({ contractInterfaces }), {
+  return useQuery(queryKey_, queryFn({ contractInterfaces }), {
     cacheTime,
     enabled,
     isDataEqual,
@@ -131,11 +157,10 @@ export function useContractReads<TContracts extends unknown[]>({
     staleTime,
     select(data) {
       const result = data.map((data, i) =>
-        contracts[i]
+        (contracts[i] as ContractConfig)
           ? parseContractResult({
-              contractInterface: (<ContractConfig>contracts[i])
-                ?.contractInterface,
-              functionName: (<ContractConfig>contracts[i])?.functionName,
+              contractInterface: contracts[i].contractInterface,
+              functionName: contracts[i].functionName,
               data,
             })
           : data,

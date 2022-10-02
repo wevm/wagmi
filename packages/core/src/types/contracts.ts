@@ -29,7 +29,7 @@ type GetArgs<
   TFunction extends AbiFunction & { type: 'function' },
   TOptions extends Options = DefaultOptions,
 > = TFunction['inputs'] extends infer TInputs extends readonly AbiParameter[]
-  ? // Check if valid ABI. If `TInputs` is `never` or `TAbi` does not have the same shape as `Abi`, then return optional `readonly any[]` args.
+  ? // Check if valid ABI. If `TInputs` is `never` or `TAbi` does not have the same shape as `Abi`, then return optional `readonly unknown[]` args.
     Or<IsNever<TInputs>, NotEqual<TAbi, Abi>> extends true
     ? {
         /**
@@ -37,18 +37,13 @@ type GetArgs<
          *
          * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link contractInterface} for type inference.
          */
-        args?: readonly any[]
+        args?: readonly unknown[]
       }
     : // If there are no inputs, do not include `args` in the return type.
     TInputs['length'] extends 0
     ? { args?: never }
     : AbiParametersToPrimitiveTypes<TInputs> extends infer TArgs
-    ? readonly unknown[] extends TArgs
-      ? {
-          /** Arguments to pass contract method */
-          args?: readonly any[]
-        }
-      : TOptions['isArgsOptional'] extends true
+    ? TOptions['isArgsOptional'] extends true
       ? {
           /** Arguments to pass contract method */
           args?: TArgs
@@ -124,7 +119,7 @@ export type GetConfig<
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contract Result Types
 
-type GetResult<
+export type GetResult<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
@@ -133,9 +128,9 @@ type GetResult<
 > =
   // Save `TOutputs` to local variable
   TFunction['outputs'] extends infer TOutputs extends readonly AbiParameter[]
-    ? // Check if valid ABI. If `TOutputs` is `never` or `TAbi` does not have the same shape as `Abi`, then return `any` as result.
+    ? // Check if valid ABI. If `TOutputs` is `never` or `TAbi` does not have the same shape as `Abi`, then return `unknown` as result.
       Or<IsNever<TOutputs>, NotEqual<TAbi, Abi>> extends true
-      ? any
+      ? unknown
       : // Save `TLength` to local variable for comparisons
       TOutputs['length'] extends infer TLength
       ? TLength extends 0
@@ -158,7 +153,7 @@ type GetResult<
               ? never
               : Output['name']]: AbiParameterToPrimitiveType<Output>
           } & AbiParametersToPrimitiveTypes<TOutputs>
-        : any
+        : unknown
       : never
     : never
 

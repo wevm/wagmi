@@ -50,25 +50,22 @@ function queryKey(
   ] as const
 }
 
-function queryFn({
-  contractInterface,
-}: {
-  contractInterface: Abi | readonly unknown[]
-}) {
+function queryFn<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+>({ contractInterface }: { contractInterface: Abi | readonly unknown[] }) {
   return async ({
     queryKey: [{ addressOrName, args, chainId, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!addressOrName) throw new Error('addressOrName is required')
-    return (
-      (await readContract({
-        addressOrName,
-        args,
-        chainId,
-        contractInterface,
-        functionName,
-        overrides,
-      })) ?? null
-    )
+    return ((await readContract({
+      addressOrName,
+      args,
+      chainId,
+      contractInterface,
+      functionName,
+      overrides,
+    })) ?? null) as ReadContractResult<TAbi, TFunctionName>
   }
 }
 

@@ -1,3 +1,4 @@
+import { Hash } from '@wagmi/core'
 import { parseEther } from 'ethers/lib/utils'
 import { describe, expect, it } from 'vitest'
 
@@ -45,7 +46,7 @@ describe('useWaitForTransaction', () => {
 
   describe('configuration', () => {
     it('chainId,', async () => {
-      let hash: string | undefined = undefined
+      let hash: Hash | undefined = undefined
       const utils = renderHook(() =>
         useWaitForTransactionWithSendTransactionAndConnect({
           chainId: 1,
@@ -96,7 +97,7 @@ describe('useWaitForTransaction', () => {
     })
 
     it('hash', async () => {
-      let hash: string | undefined = undefined
+      let hash: Hash | undefined = undefined
       const utils = renderHook(() =>
         useWaitForTransactionWithSendTransactionAndConnect({ hash }),
       )
