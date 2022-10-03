@@ -1,7 +1,10 @@
 import { BigNumber } from 'ethers'
+import { test } from 'vitest'
 
 import { expectType, mlootContractConfig } from '../../../test'
 import { watchReadContract } from './watchReadContract'
+
+test.todo('watchReadContract')
 
 // Test types
 ;() => {

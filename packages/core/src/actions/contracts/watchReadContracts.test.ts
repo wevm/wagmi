@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+import { test } from 'vitest'
 
 import {
   expectType,
@@ -6,6 +7,8 @@ import {
   wagmigotchiContractConfig,
 } from '../../../test'
 import { watchReadContracts } from './watchReadContracts'
+
+test.todo('watchReadContracts')
 
 // Test types
 ;() => {

@@ -53,7 +53,7 @@ export async function readContract<
     signerOrProvider: provider,
   })
 
-  const contractFunction = contract[<string>functionName]
+  const contractFunction = contract[functionName]
   if (!contractFunction)
     logWarn(
       `"${functionName}" is not in the interface for contract "${addressOrName}"`,
