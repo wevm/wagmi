@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import { act, mlootContractConfig, renderHook } from '../../../test'
@@ -11,23 +12,14 @@ describe('useContractInfiniteReads', () => {
     const { result, waitFor } = renderHook(() =>
       useContractInfiniteReads({
         cacheKey: 'contracts',
-        contracts: (index = 0) => [
-          {
-            ...mlootContractConfig,
-            functionName: 'getChest',
-            args: [index],
-          },
-          {
-            ...mlootContractConfig,
-            functionName: 'getFoot',
-            args: [index],
-          },
-          {
-            ...mlootContractConfig,
-            functionName: 'getHand',
-            args: [index],
-          },
-        ],
+        contracts(index = 0) {
+          const args = [BigNumber.from(index)] as const
+          return [
+            { ...mlootContractConfig, functionName: 'getChest', args },
+            { ...mlootContractConfig, functionName: 'getFoot', args },
+            { ...mlootContractConfig, functionName: 'getHand', args },
+          ]
+        },
         getNextPageParam: (_, pages) => pages.length + 1,
       }),
     )
@@ -75,26 +67,29 @@ describe('useContractInfiniteReads', () => {
       const { result, waitFor } = renderHook(() =>
         useContractInfiniteReads({
           cacheKey: 'contracts',
-          contracts: (index = 0) => [
-            {
-              ...mlootContractConfig,
-              chainId: 1,
-              functionName: 'getChest',
-              args: [index],
-            },
-            {
-              ...mlootContractConfig,
-              chainId: 1,
-              functionName: 'getFoot',
-              args: [index],
-            },
-            {
-              ...mlootContractConfig,
-              chainId: 1,
-              functionName: 'getHand',
-              args: [index],
-            },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              {
+                ...mlootContractConfig,
+                chainId: 1,
+                functionName: 'getChest',
+                args,
+              },
+              {
+                ...mlootContractConfig,
+                chainId: 1,
+                functionName: 'getFoot',
+                args,
+              },
+              {
+                ...mlootContractConfig,
+                chainId: 1,
+                functionName: 'getHand',
+                args,
+              },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
@@ -142,11 +137,14 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           enabled: false,
           cacheKey: 'contracts-enabled',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
@@ -180,11 +178,14 @@ describe('useContractInfiniteReads', () => {
       const { result, waitFor } = renderHook(() =>
         useContractInfiniteReads({
           cacheKey: 'contracts-getNextPageParam',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
@@ -300,11 +301,14 @@ describe('useContractInfiniteReads', () => {
       const { result, waitFor } = renderHook(() =>
         useContractInfiniteReads({
           cacheKey: 'contracts-fetchNextPage',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
@@ -419,11 +423,14 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           enabled: false,
           cacheKey: 'contracts',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
@@ -454,11 +461,13 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           cacheKey: 'contracts-increment',
           ...paginatedIndexesConfig(
-            (index) => ({
-              ...mlootContractConfig,
-              functionName: 'tokenURI',
-              args: [index],
-            }),
+            (index) => [
+              {
+                ...mlootContractConfig,
+                functionName: 'tokenURI',
+                args: [BigNumber.from(index)] as const,
+              },
+            ],
             { start: 0, perPage: 10, direction: 'increment' },
           ),
         }),
@@ -569,11 +578,13 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           cacheKey: 'contracts-decrement',
           ...paginatedIndexesConfig(
-            (index) => ({
-              ...mlootContractConfig,
-              functionName: 'tokenURI',
-              args: [index],
-            }),
+            (index) => [
+              {
+                ...mlootContractConfig,
+                functionName: 'tokenURI',
+                args: [BigNumber.from(index)] as const,
+              },
+            ],
             { start: 100, perPage: 10, direction: 'decrement' },
           ),
         }),
