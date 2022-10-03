@@ -7,7 +7,11 @@ import {
 } from '../../errors'
 import { Signer } from '../../types'
 import { DefaultOptions, GetConfig, Options } from '../../types/contracts'
-import { assertActiveChain, minimizeContractInterface } from '../../utils'
+import {
+  assertActiveChain,
+  minimizeContractInterface,
+  normalizeFunctionName,
+} from '../../utils'
 import { fetchSigner } from '../accounts'
 import { getContract } from './getContract'
 
@@ -84,15 +88,19 @@ export async function prepareWriteContract<
     contractInterface,
     signerOrProvider: signer,
   })
-  console.log(contract)
 
-  const populateTransactionFn = contract.populateTransaction[functionName]
-  if (!populateTransactionFn) {
+  const normalizedFunctionName = normalizeFunctionName({
+    contract,
+    functionName,
+    args,
+  })
+  const populateTransactionFn =
+    contract.populateTransaction[normalizedFunctionName]
+  if (!populateTransactionFn)
     throw new ContractMethodDoesNotExistError({
-      addressOrName: addressOrName,
-      functionName,
+      addressOrName,
+      functionName: normalizedFunctionName,
     })
-  }
 
   const params = [...(args ?? []), ...(overrides ? [overrides] : [])]
   const unsignedTransaction = (await populateTransactionFn(

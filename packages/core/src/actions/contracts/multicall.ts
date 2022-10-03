@@ -14,7 +14,7 @@ import {
   ContractsConfig,
   ContractsResult,
 } from '../../types/contracts'
-import { logWarn } from '../../utils'
+import { logWarn, normalizeFunctionName } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 
@@ -72,15 +72,21 @@ export async function multicall<
         contractInterface,
       })
       const params = args ?? []
+      const normalizedFunctionName = normalizeFunctionName({
+        contract,
+        functionName,
+        args,
+      })
       try {
+        const contractFunction = contract[normalizedFunctionName]
+        if (!contractFunction)
+          logWarn(
+            `"${normalizedFunctionName}" is not in the interface for contract "${addressOrName}"`,
+          )
         const callData = contract.interface.encodeFunctionData(
-          functionName,
+          normalizedFunctionName,
           params,
         )
-        if (!contract[functionName])
-          logWarn(
-            `"${functionName}" is not in the interface for contract "${addressOrName}"`,
-          )
         return {
           target: addressOrName,
           allowFailure,
@@ -114,17 +120,25 @@ export async function multicall<
       addressOrName,
       contractInterface,
     })
+    const normalizedFunctionName = normalizeFunctionName({
+      contract,
+      functionName,
+      args,
+    })
 
     if (!success) {
       let error
       try {
-        contract.interface.decodeFunctionResult(functionName, returnData)
+        contract.interface.decodeFunctionResult(
+          normalizedFunctionName,
+          returnData,
+        )
       } catch (err) {
         error = new ContractMethodRevertedError({
           addressOrName,
           args,
           chainId: chain.id,
-          functionName,
+          functionName: normalizedFunctionName,
           errorMessage: (<Error>err).message,
         })
         if (!allowFailure) throw error
@@ -138,7 +152,7 @@ export async function multicall<
         addressOrName,
         args,
         chainId: chain.id,
-        functionName,
+        functionName: normalizedFunctionName,
       })
       if (!allowFailure) throw error
       logWarn(error.message)
@@ -147,7 +161,7 @@ export async function multicall<
 
     try {
       const result = contract.interface.decodeFunctionResult(
-        functionName,
+        normalizedFunctionName,
         returnData,
       )
       return Array.isArray(result) && result.length === 1 ? result[0] : result
@@ -156,7 +170,7 @@ export async function multicall<
         addressOrName,
         args,
         chainId: chain.id,
-        functionName,
+        functionName: normalizedFunctionName,
         errorMessage: (<Error>err).message,
       })
       if (!allowFailure) throw error

@@ -1,13 +1,15 @@
 import { Abi } from 'abitype'
 import { CallOverrides } from 'ethers/lib/ethers'
 
+import { ContractMethodDoesNotExistError } from '../../errors'
+
 import {
   DefaultOptions,
   GetConfig,
   GetReturnType,
   Options,
 } from '../../types/contracts'
-import { logWarn } from '../../utils'
+import { normalizeFunctionName } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 
@@ -53,11 +55,17 @@ export async function readContract<
     signerOrProvider: provider,
   })
 
-  const contractFunction = contract[functionName]
+  const normalizedFunctionName = normalizeFunctionName({
+    contract,
+    functionName,
+    args,
+  })
+  const contractFunction = contract[normalizedFunctionName]
   if (!contractFunction)
-    logWarn(
-      `"${functionName}" is not in the interface for contract "${addressOrName}"`,
-    )
+    throw new ContractMethodDoesNotExistError({
+      addressOrName,
+      functionName: normalizedFunctionName,
+    })
 
   const params = [...(args ?? []), ...(overrides ? [overrides] : [])]
   return await contractFunction?.(...params)
