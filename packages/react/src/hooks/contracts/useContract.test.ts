@@ -43,5 +43,14 @@ describe('useContract', () => {
       )
       expect(result.current).toBeNull()
     })
+
+    it('no contractInterface', async () => {
+      const { result } = renderHook(() =>
+        useContract({
+          addressOrName: uniContractAddress,
+        }),
+      )
+      expect(result.current).toBeNull()
+    })
   })
 })

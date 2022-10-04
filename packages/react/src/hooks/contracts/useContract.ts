@@ -3,11 +3,9 @@ import { Contract } from 'ethers'
 
 import * as React from 'react'
 
-export type UseContractConfig = Omit<
-  GetContractArgs,
-  'addressOrName' | 'signerOrProvider'
-> & {
+export type UseContractConfig = {
   addressOrName?: GetContractArgs['addressOrName']
+  contractInterface?: GetContractArgs['contractInterface']
   signerOrProvider?: GetContractArgs['signerOrProvider'] | null
 }
 
@@ -17,7 +15,7 @@ export function useContract<TContract = Contract>({
   signerOrProvider,
 }: UseContractConfig) {
   return React.useMemo<TContract | null>(() => {
-    if (!addressOrName) return null
+    if (!addressOrName || !contractInterface) return null
     return getContract<TContract>({
       addressOrName,
       contractInterface,

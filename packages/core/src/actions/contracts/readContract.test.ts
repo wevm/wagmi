@@ -1,3 +1,4 @@
+import { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -29,7 +30,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<BigNumber>(result)
+      expectType<ResolvedConfig['BigIntType']>(result)
     })
 
     it('contract args', async () => {
@@ -45,7 +46,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<BigNumber>(result)
+      expectType<ResolvedConfig['BigIntType']>(result)
     })
 
     it('overrides', async () => {
@@ -62,7 +63,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<BigNumber>(result)
+      expectType<ResolvedConfig['BigIntType']>(result)
     })
   })
 
@@ -83,7 +84,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<BigNumber>(result)
+      expectType<ResolvedConfig['BigIntType']>(result)
     })
   })
 })

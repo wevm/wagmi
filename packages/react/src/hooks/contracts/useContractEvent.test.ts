@@ -1,10 +1,16 @@
 import { Hash, erc20ABI } from '@wagmi/core'
-import { Abi, ExtractAbiEventNames, ExtractAbiFunctionNames } from 'abitype'
+import {
+  Abi,
+  ExtractAbiEventNames,
+  ExtractAbiFunctionNames,
+  ResolvedConfig,
+} from 'abitype'
 import { describe, expect, it, vi } from 'vitest'
 
 import {
   act,
   actConnect,
+  expectType,
   getRandomTokenId,
   renderHook,
   wagmiContractConfig,
@@ -51,7 +57,12 @@ describe('useContractEvent', () => {
         addressOrName: uniContractAddress,
         contractInterface: erc20ABI,
         eventName: 'Transfer',
-        listener,
+        listener(from, to, value) {
+          expectType<ResolvedConfig['AddressType']>(from)
+          expectType<ResolvedConfig['AddressType']>(to)
+          expectType<ResolvedConfig['BigIntType']>(value)
+          listener(from, to, value)
+        },
       }),
     )
     expect(listener).toHaveBeenCalledTimes(0)
@@ -64,7 +75,12 @@ describe('useContractEvent', () => {
         useContractEvent({
           contractInterface: erc20ABI,
           eventName: 'Transfer',
-          listener,
+          listener(from, to, value) {
+            expectType<ResolvedConfig['AddressType']>(from)
+            expectType<ResolvedConfig['AddressType']>(to)
+            expectType<ResolvedConfig['BigIntType']>(value)
+            listener(from, to, value)
+          },
         }),
       )
       expect(listener).toHaveBeenCalledTimes(0)
@@ -82,7 +98,12 @@ describe('useContractEvent', () => {
               config: {
                 ...wagmiContractConfig,
                 eventName: 'Transfer',
-                listener,
+                listener(from, to, value) {
+                  expectType<ResolvedConfig['AddressType']>(from)
+                  expectType<ResolvedConfig['AddressType']>(to)
+                  expectType<ResolvedConfig['BigIntType']>(value)
+                  listener(from, to, value)
+                },
               },
             },
             contractWrite: {

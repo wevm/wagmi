@@ -1,3 +1,4 @@
+import { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { test } from 'vitest'
 
@@ -38,7 +39,14 @@ test.todo('watchReadContracts')
     },
     (results) => {
       // ^?
-      expectType<[BigNumber, BigNumber, boolean, BigNumber]>(results)
+      expectType<
+        [
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+          boolean,
+          ResolvedConfig['BigIntType'],
+        ]
+      >(results)
     },
   )
 }
@@ -70,7 +78,14 @@ test.todo('watchReadContracts')
     },
     (results) => {
       // ^?
-      expectType<[BigNumber, BigNumber, boolean, any]>(results)
+      expectType<
+        [
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+          boolean,
+          unknown,
+        ]
+      >(results)
     },
   )
 }

@@ -1,8 +1,10 @@
+import { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import {
   act,
+  expectType,
   mlootContractConfig,
   renderHook,
   wagmigotchiContractConfig,
@@ -38,6 +40,15 @@ describe('useContractRead', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
+    expectType<
+      | [
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+          boolean,
+          ResolvedConfig['BigIntType'],
+        ]
+      | undefined
+    >(res.data)
     expect(res).toMatchInlineSnapshot(`
       {
         "data": [
@@ -123,6 +134,15 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
+      expectType<
+        | [
+            ResolvedConfig['BigIntType'],
+            ResolvedConfig['BigIntType'],
+            boolean,
+            ResolvedConfig['BigIntType'],
+          ]
+        | undefined
+      >(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -150,6 +170,15 @@ describe('useContractRead', () => {
 
       await act(async () => {
         const { data } = await result.current.refetch()
+        expectType<
+          | [
+              ResolvedConfig['BigIntType'],
+              ResolvedConfig['BigIntType'],
+              boolean,
+              ResolvedConfig['BigIntType'],
+            ]
+          | undefined
+        >(data)
         expect(data).toMatchInlineSnapshot(`
           [
             {

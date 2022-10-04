@@ -1,3 +1,4 @@
+import { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -105,7 +106,14 @@ describe('readContracts', () => {
       //  ^?
       contracts,
     })
-    expectType<[BigNumber, BigNumber, boolean, BigNumber]>(results)
+    expectType<
+      [
+        ResolvedConfig['BigIntType'],
+        ResolvedConfig['BigIntType'],
+        boolean,
+        ResolvedConfig['BigIntType'],
+      ]
+    >(results)
 
     for (const contract of contracts) {
       expect(spy).toBeCalledWith({ ...contract, chainId })
@@ -166,7 +174,14 @@ describe('readContracts', () => {
         //  ^?
         contracts: [...ethContracts, ...polygonContracts],
       })
-      expectType<[BigNumber, BigNumber, boolean, BigNumber]>(results)
+      expectType<
+        [
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+          boolean,
+          ResolvedConfig['BigIntType'],
+        ]
+      >(results)
 
       expect(spy).toHaveBeenCalledWith({
         allowFailure: true,
@@ -235,7 +250,14 @@ describe('readContracts', () => {
         //  ^?
         contracts: [...ethContracts, ...polygonContracts],
       })
-      expectType<[BigNumber, BigNumber, boolean, BigNumber]>(results)
+      expectType<
+        [
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+          boolean,
+          ResolvedConfig['BigIntType'],
+        ]
+      >(results)
 
       for (const contract of ethContracts) {
         expect(spy).toBeCalledWith({ ...contract, chainId: chain.mainnet.id })

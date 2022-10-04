@@ -116,6 +116,7 @@ export function useContractInfiniteReads<
   })
 }
 
+// TODO: Fix return type inference for `useContractInfiniteReads` when using `paginatedIndexesConfig`
 export function paginatedIndexesConfig<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
