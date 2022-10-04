@@ -78,20 +78,14 @@ export async function fetchBalance({
             functionName: 'balanceOf',
             args: [resolvedAddress],
           },
-          {
-            ...erc20Config,
-            functionName: 'decimals',
-          },
-          {
-            ...erc20Config,
-            functionName: 'symbol',
-          },
+          { ...erc20Config, functionName: 'decimals' },
+          { ...erc20Config, functionName: 'symbol' },
         ],
       })
       return {
         decimals,
         formatted: formatUnits(value ?? '0', unit ?? decimals),
-        symbol: symbol as string,
+        symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
         value,
       }
     }

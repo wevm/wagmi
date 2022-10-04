@@ -15,7 +15,9 @@ import { IsNever, NotEqual, Or } from './utils'
 // Contract Configuration Types
 
 export type Options = {
+  /** Flag for making `addressOrName` optional */
   isAddressOptional?: boolean
+  /** Flag for making `args` optional */
   isArgsOptional?: boolean
 }
 export type DefaultOptions = {

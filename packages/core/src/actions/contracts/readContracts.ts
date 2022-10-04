@@ -65,7 +65,9 @@ export async function readContracts<
 
   try {
     const provider = getProvider()
-    const contractsByChainId = (<ContractConfig[]>(<unknown>contracts)).reduce<{
+    const contractsByChainId = (
+      contracts as unknown as ContractConfig[]
+    ).reduce<{
       [chainId: number]: ContractConfig[]
     }>((contracts, contract) => {
       const chainId = contract.chainId ?? provider.network.chainId
@@ -104,15 +106,13 @@ export async function readContracts<
     if (err instanceof ContractMethodRevertedError) throw err
 
     const promises = () =>
-      (<ContractConfig[]>(<unknown>contracts)).map((contract) =>
+      (contracts as unknown as ContractConfig[]).map((contract) =>
         readContract({ ...contract, overrides }),
       )
     if (allowFailure)
       return (await Promise.allSettled(promises())).map((result, i) => {
         if (result.status === 'fulfilled') return result.value
-        const { addressOrName, functionName, chainId, args } = <ContractConfig>(
-          (<ContractConfig[]>(<unknown>contracts))[i]
-        )
+        const { addressOrName, functionName, chainId, args } = contracts[i]
         const error = new ContractMethodRevertedError({
           addressOrName,
           functionName,

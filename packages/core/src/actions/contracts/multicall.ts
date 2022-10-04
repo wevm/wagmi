@@ -64,7 +64,7 @@ export async function multicall<
     contractInterface: multicallABI,
     signerOrProvider: provider,
   })
-  const calls = (<ContractConfig[]>(<unknown>contracts)).map(
+  const calls = (contracts as unknown as ContractConfig[]).map(
     ({ addressOrName, contractInterface, functionName, ...config }) => {
       const { args } = config || {}
       const contract = getContract({
@@ -112,9 +112,8 @@ export async function multicall<
     ...params,
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
-    const { addressOrName, contractInterface, functionName, args } = contracts[
-      i
-    ] as ContractConfig
+    const { addressOrName, contractInterface, functionName, args } =
+      contracts[i]
 
     const contract = getContract({
       addressOrName,
@@ -139,7 +138,7 @@ export async function multicall<
           args,
           chainId: chain.id,
           functionName: normalizedFunctionName,
-          errorMessage: (<Error>err).message,
+          errorMessage: (err as Error).message,
         })
         if (!allowFailure) throw error
         logWarn(error.message)
@@ -171,7 +170,7 @@ export async function multicall<
         args,
         chainId: chain.id,
         functionName: normalizedFunctionName,
-        errorMessage: (<Error>err).message,
+        errorMessage: (err as Error).message,
       })
       if (!allowFailure) throw error
       logWarn(error.message)

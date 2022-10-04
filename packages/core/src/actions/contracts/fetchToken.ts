@@ -53,8 +53,8 @@ export async function fetchToken({
     return {
       address,
       decimals,
-      name: name as string,
-      symbol: symbol as string,
+      name: name as string, // protect against `ResolvedConfig['BytesType']`
+      symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
       totalSupply: {
         formatted: formatUnits(totalSupply, units),
         value: totalSupply,
