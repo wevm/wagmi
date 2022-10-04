@@ -20,7 +20,15 @@ export function ContractWrite() {
     isLoading: isPreparing,
   } = usePrepareContractWrite({
     addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint()'],
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ] as const,
     functionName: 'mint',
   })
   const {

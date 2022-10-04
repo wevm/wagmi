@@ -14,7 +14,7 @@ import { useInfiniteQuery } from '../utils'
 export type UseContractInfiniteReadsConfig<
   TContracts extends unknown[] = unknown[],
   TPageParam = unknown,
-> = Pick<ReadContractsConfig<TContracts>, 'overrides'> & {
+> = Pick<ReadContractsConfig<TContracts>, 'allowFailure' | 'overrides'> & {
   cacheKey: string
   contracts(pageParam: TPageParam): readonly [
     ...ContractsConfig<
@@ -28,15 +28,18 @@ export type UseContractInfiniteReadsConfig<
 } & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error>
 
 function queryKey({
+  allowFailure,
   cacheKey,
   overrides,
 }: {
+  allowFailure: UseContractInfiniteReadsConfig['allowFailure']
   cacheKey: UseContractInfiniteReadsConfig['cacheKey']
   overrides: UseContractInfiniteReadsConfig['overrides']
 }) {
   return [
     {
       entity: 'readContractsInfinite',
+      allowFailure,
       cacheKey,
       overrides,
     },
@@ -57,10 +60,11 @@ function queryFn<
   contracts: UseContractInfiniteReadsConfig<TContracts, TPageParam>['contracts']
 }) {
   return ({
-    queryKey: [{ overrides }],
+    queryKey: [{ allowFailure, overrides }],
     pageParam,
   }: QueryFunctionArgs<typeof queryKey>) => {
     return readContracts({
+      allowFailure,
       contracts: contracts(pageParam || undefined),
       overrides,
     })
@@ -76,6 +80,7 @@ export function useContractInfiniteReads<
   }[],
   TPageParam = any,
 >({
+  allowFailure,
   cacheKey,
   cacheTime,
   contracts,
@@ -92,8 +97,8 @@ export function useContractInfiniteReads<
   suspense,
 }: UseContractInfiniteReadsConfig<TContracts, TPageParam>) {
   const queryKey_ = React.useMemo(
-    () => queryKey({ cacheKey, overrides }),
-    [cacheKey, overrides],
+    () => queryKey({ allowFailure, cacheKey, overrides }),
+    [allowFailure, cacheKey, overrides],
   )
 
   const enabled = React.useMemo(() => {

@@ -85,7 +85,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ],
+    ] as const,
     functionName: 'mint',
     args: [parseInt(tokenId)],
     enabled: Boolean(tokenId),
@@ -105,6 +105,13 @@ export function MintNFTForm() {
   )
 }
 ```
+
+<Callout emoji="🤔" type="info">
+  By adding a [const
+  assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
+  to `contractInterface`, TypeScript will infer the correct types for
+  `functionName` and `args`.
+</Callout>
 
 ## Step 5: Add a debounce to the input value
 
@@ -131,7 +138,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ],
+    ] as const,
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),
@@ -182,7 +189,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ],
+    ] as const,
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),
@@ -252,7 +259,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ],
+    ] as const,
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),
@@ -322,7 +329,7 @@ export function App() {
 
 Now let's provide some feedback to the user if the prepare hook fails, or if the write hook fails.
 
-```tsx {15-16,32,63-65}
+```tsx {16-17,33,64-66}
 import * as React from 'react'
 import {
   usePrepareContractWrite,
@@ -349,7 +356,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ],
+    ] as const,
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),

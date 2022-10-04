@@ -23,6 +23,7 @@ function Vercel({ height = 20 }) {
 }
 
 export default {
+  defaultMenuCollapsed: true,
   docsRepositoryBase: `${github}/tree/main/docs/pages`,
   feedbackLabels: 'feedback',
   feedbackLink() {

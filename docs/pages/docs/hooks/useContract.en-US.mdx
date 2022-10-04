@@ -43,9 +43,9 @@ ethers.Contract
 
 ## Configuration
 
-### addressOrName
+### addressOrName (optional)
 
-Contract address or ENS name.
+Contract address or ENS name. If `addressOrName` is not defined, response is `null`.
 
 ```tsx {5}
 import { useContract } from 'wagmi'
@@ -58,9 +58,9 @@ function App() {
 }
 ```
 
-### contractInterface
+### contractInterface (optional)
 
-Contract ABI in JSON or JS object format.
+Contract ABI. If `contractInterface` is not defined, response is `null`.
 
 ```tsx {6}
 import { useContract } from 'wagmi'

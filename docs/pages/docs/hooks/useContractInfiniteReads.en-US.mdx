@@ -23,6 +23,7 @@ The `useContractInfiniteReads` hook requires:
 - `contracts`: a function that provides a `param` (derived from `getNextPageParam` or `fetchNextPage`) as an argument and expects to return an array of contracts. In the example below, `param` is the token ID.
 
 ```tsx
+import { BigNumber } from 'ethers'
 import { useContractInfiniteReads } from 'wagmi'
 import mlootABI from './mlootABI.json'
 
@@ -34,26 +35,32 @@ const contractConfig = {
 function App() {
   const { data, fetchNextPage } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      { ...mlootContractConfig, functionName: 'getChest', args: [param] },
-      { ...mlootContractConfig, functionName: 'getFoot', args: [param] },
-      { ...mlootContractConfig, functionName: 'getHand', args: [param] },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        { ...mlootContractConfig, functionName: 'getChest', args },
+        { ...mlootContractConfig, functionName: 'getFoot', args },
+        { ...mlootContractConfig, functionName: 'getHand', args },
+      ],
+    },
   })
 }
 ```
 
 You can also optionally provide `getNextPageParam` which will derive the `param` provided to `contracts`. In the example below, we want the `param` to increment by 1.
 
-```tsx {9}
+```tsx {12}
 function App() {
   const { data, fetchNextPage } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      { ...mlootContractConfig, functionName: 'getChest', args: [param] },
-      { ...mlootContractConfig, functionName: 'getFoot', args: [param] },
-      { ...mlootContractConfig, functionName: 'getHand', args: [param] },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        { ...mlootContractConfig, functionName: 'getChest', args },
+        { ...mlootContractConfig, functionName: 'getFoot', args },
+        { ...mlootContractConfig, functionName: 'getHand', args },
+      ],
+    },
     getNextPageParam: (_, pages) => pages.length + 1,
   })
 }
@@ -66,6 +73,7 @@ Import the `paginatedIndexesConfig` helper to assist with paginated indexes. Use
 In the example below, we are fetching 10 `tokenURI`s at a time from the [more loot](https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df) contract.
 
 ```tsx
+import { BigNumber } from 'ethers'
 import { useContractInfiniteReads, paginatedIndexesConfig } from 'wagmi'
 import mlootABI from './mlootABI.json'
 
@@ -78,11 +86,15 @@ function App() {
   const { data, fetchNextPage } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
     ...paginatedIndexesConfig(
-      (index) => ({
-        ...mlootContractConfig,
-        functionName: 'tokenURI',
-        args: [index],
-      }),
+      (index) => {
+        return [
+          {
+            ...mlootContractConfig,
+            functionName: 'tokenURI',
+            args: [BigNumber.from(index)] as const,
+          },
+        ]
+      },
       { start: 0, perPage: 10, direction: 'increment' },
     ),
   })
@@ -128,11 +140,14 @@ import { useContractInfiniteReads } from 'wagmi'
 function App() {
   const { data, fetchNextPage } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      { ...mlootContractConfig, functionName: 'getChest', args: [param] },
-      { ...mlootContractConfig, functionName: 'getFoot', args: [param] },
-      { ...mlootContractConfig, functionName: 'getHand', args: [param] },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        { ...mlootContractConfig, functionName: 'getChest', args },
+        { ...mlootContractConfig, functionName: 'getFoot', args },
+        { ...mlootContractConfig, functionName: 'getHand', args },
+      ],
+    },
   })
 }
 ```
@@ -143,54 +158,62 @@ function App() {
 
 Contract address or ENS name.
 
-```tsx {8,14}
+```tsx {11,17}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
   })
 }
 ```
 
 #### contractInterface
 
-Contract ABI in JSON or JS object format.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName`, `args`, and hook result.
 
-```tsx {9,15}
+```tsx {12,18}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
   })
 }
 ```
@@ -199,26 +222,30 @@ function App() {
 
 Name of function to call.
 
-```tsx {10,16}
+```tsx {13,19}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
   })
 }
 ```
@@ -227,26 +254,30 @@ function App() {
 
 Arguments to pass to function call.
 
-```tsx {11,17}
+```tsx {14,20}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
   })
 }
 ```
@@ -255,28 +286,32 @@ function App() {
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
 
-```tsx {12,19}
+```tsx {15,22}
 import { useContractReads, chain } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-        chainId: chain.mainnet.id,
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-        chainId: chain.mainnet.id,
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+          chainId: chain.mainnet.id,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+          chainId: chain.mainnet.id,
+        },
+      ]
+    },
   })
 }
 ```
@@ -287,29 +322,33 @@ Derives the `param` provided to `contracts`. Provides the last page of the infin
 
 If there is no next page available, return `undefined`.
 
-```tsx {21-22}
+```tsx {24-25}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
-  }),
-  getNextPageParam: (lastPage, allPages) =>
-    !lastPage ? allPages.length + 1 : undefined
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
+    getNextPageParam: (lastPage, allPages) =>
+      !lastPage ? allPages.length + 1 : undefined,
+  })
 }
 ```
 
@@ -317,26 +356,30 @@ function App() {
 
 If a contract read fails while fetching, it will fail silently and not throw an error.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     allowFailure: false,
   })
 }
@@ -346,26 +389,30 @@ function App() {
 
 [Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
   })
 }
@@ -375,26 +422,30 @@ function App() {
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     cacheTime: 2_000,
   })
 }
@@ -404,26 +455,30 @@ function App() {
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     enabled: false,
   })
 }
@@ -433,26 +488,30 @@ function App() {
 
 Determines if the data has changed or not. Defaults to `deepEqual`.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     isDataEqual: (prev, next) => prev === next,
   })
 }
@@ -462,26 +521,30 @@ function App() {
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     staleTime: 2_000,
   })
 }
@@ -491,26 +554,30 @@ function App() {
 
 Transform or select a part of the data returned by the contract.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     select: (data) => transform(data),
   })
 }
@@ -520,26 +587,30 @@ function App() {
 
 Set this to `true` to enable suspense mode.
 
-```tsx {20}
+```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     suspense: true,
   })
 }
@@ -549,26 +620,30 @@ function App() {
 
 Function to invoke when fetching new data is successful.
 
-```tsx {20-22}
+```tsx {24-26}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     onSuccess(data) {
       console.log('Success', data)
     },
@@ -580,26 +655,30 @@ function App() {
 
 Function to invoke when an error is thrown while fetching new data.
 
-```tsx {20-22}
+```tsx {24-26}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     onError(error) {
       console.log('error', error)
     },
@@ -611,26 +690,30 @@ function App() {
 
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
-```tsx {20-22}
+```tsx {24-26}
 import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
 
 function App() {
   const { data, isError, isLoading } = useContractInfiniteReads({
     cacheKey: 'mlootAttributes',
-    contracts: (param = 0) => [
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getChest',
-        args: [param],
-      },
-      {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
-        functionName: 'getWaist',
-        args: [param],
-      },
-    ],
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          contractInterface: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
     onSettled(data) {
       console.log('Settled', data)
     },

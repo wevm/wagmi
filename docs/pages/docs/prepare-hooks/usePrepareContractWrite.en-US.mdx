@@ -72,9 +72,9 @@ function App() {
 
 ## Configuration
 
-### addressOrName
+### addressOrName (optional)
 
-Contract address or ENS name.
+Contract address or ENS name. If `addressOrName` is not defined, hook will not run.
 
 ```tsx {5}
 import { usePrepareContractWrite } from 'wagmi'
@@ -90,7 +90,7 @@ function App() {
 
 ### contractInterface
 
-Contract ABI in JSON or JS object format. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName` and `args`.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName` and `args`.
 
 ```tsx {6}
 import { usePrepareContractWrite } from 'wagmi'
@@ -124,15 +124,23 @@ function App() {
 
 Arguments to pass to function call.
 
-```tsx {8}
+```tsx {16}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'feed',
-    args: [],
+    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    contractInterface: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ] as const,
+    functionName: 'mint',
+    args: [69],
   })
 }
 ```

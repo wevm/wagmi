@@ -1,6 +1,6 @@
 import { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
-import { describe, it, test } from 'vitest'
+import { describe, it } from 'vitest'
 
 import {
   expectType,

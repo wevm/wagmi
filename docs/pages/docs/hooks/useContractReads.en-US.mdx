@@ -107,7 +107,7 @@ function App() {
 
 #### contractInterface
 
-Contract ABI in JSON or JS object format.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName`, `args`, and hook result.
 
 ```tsx {8,13}
 import { useContractReads } from 'wagmi'
