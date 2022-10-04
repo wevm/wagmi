@@ -35,7 +35,7 @@ describe('useContract', () => {
       expect(result.current?.provider).not.toBeNull()
     })
 
-    it('no adressOrName', async () => {
+    it('no addressOrName', async () => {
       const { result } = renderHook(() =>
         useContract({
           contractInterface: erc20ABI,
