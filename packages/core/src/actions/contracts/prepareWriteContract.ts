@@ -22,7 +22,7 @@ export type PrepareWriteContractConfig<
   TOptions extends Options = DefaultOptions,
 > = GetConfig<
   {
-    contractInterface: TAbi
+    abi: TAbi
     functionName: TFunctionName
     /** Chain id to use for provider */
     chainId?: number
@@ -36,8 +36,8 @@ export type PrepareWriteContractConfig<
 >
 
 export type PrepareWriteContractResult = {
-  contractInterface: Abi | readonly unknown[]
-  addressOrName: string
+  abi: Abi | readonly unknown[]
+  address: string
   chainId?: number
   functionName: string
   mode: 'prepared'
@@ -56,8 +56,8 @@ export type PrepareWriteContractResult = {
  * import { prepareWriteContract, writeContract } from '@wagmi/core'
  *
  * const config = await prepareWriteContract({
- *  addressOrName: '0x...',
- *  contractInterface: wagmiAbi,
+ *  address: '0x...',
+ *  abi: wagmiAbi,
  *  functionName: 'mint',
  * })
  * const result = await writeContract(config)
@@ -67,10 +67,10 @@ export async function prepareWriteContract<
   TFunctionName extends string,
   TSigner extends Signer = Signer,
 >({
-  addressOrName,
+  abi,
+  address,
   args,
   chainId,
-  contractInterface,
   functionName,
   overrides,
   signer: signer_,
@@ -83,12 +83,7 @@ export async function prepareWriteContract<
   if (!signer) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId })
 
-  const contract = getContract({
-    addressOrName,
-    contractInterface,
-    signerOrProvider: signer,
-  })
-
+  const contract = getContract({ address, abi, signerOrProvider: signer })
   const normalizedFunctionName = normalizeFunctionName({
     contract,
     functionName,
@@ -98,7 +93,7 @@ export async function prepareWriteContract<
     contract.populateTransaction[normalizedFunctionName]
   if (!populateTransactionFn)
     throw new ContractMethodDoesNotExistError({
-      addressOrName,
+      address,
       functionName: normalizedFunctionName,
     })
 
@@ -113,13 +108,13 @@ export async function prepareWriteContract<
     (await signer.estimateGas(unsignedTransaction))
 
   const minimizedAbi = minimizeContractInterface({
-    contractInterface,
+    abi,
     functionName,
   })
 
   return {
-    contractInterface: minimizedAbi,
-    addressOrName,
+    abi: minimizedAbi,
+    address,
     chainId,
     functionName,
     mode: 'prepared',

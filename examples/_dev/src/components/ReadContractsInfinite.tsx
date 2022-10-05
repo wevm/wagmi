@@ -1,8 +1,9 @@
+import { BigNumber } from 'ethers'
 import { paginatedIndexesConfig, useContractInfiniteReads } from 'wagmi'
 
 export const mlootContractConfig = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: [
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: [
     {
       inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
       name: 'tokenURI',
@@ -18,11 +19,13 @@ export function ReadContractsInfinite() {
     useContractInfiniteReads({
       cacheKey: 'lootTokenURIs',
       ...paginatedIndexesConfig(
-        (index) => ({
-          ...mlootContractConfig,
-          functionName: 'tokenURI',
-          args: [index],
-        }),
+        (index) => [
+          {
+            ...mlootContractConfig,
+            functionName: 'tokenURI',
+            args: [BigNumber.from(index)] as const,
+          },
+        ],
         { start: 0, perPage: 10, direction: 'increment' },
       ),
     })

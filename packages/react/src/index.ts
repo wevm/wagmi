@@ -16,8 +16,6 @@ export {
   useContractRead,
   useContractReads,
   useContractWrite,
-  useDeprecatedContractWrite,
-  useDeprecatedSendTransaction,
   useDisconnect,
   useEnsAddress,
   useEnsAvatar,

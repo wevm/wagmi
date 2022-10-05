@@ -361,8 +361,8 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"tokenOfOwnerByIndex\\",
           \\"chainId\\": 137,
           \\"args\\": [
@@ -379,8 +379,8 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"tokenOfOwnerByIndex\\",
           \\"chainId\\": 137,
           \\"args\\": [
@@ -408,7 +408,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: [10e30],
             },
           ],
@@ -429,7 +429,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: [10e30],
             },
             {
@@ -437,7 +437,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: [10e30],
             },
           ],
@@ -469,8 +469,8 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"ownerOf\\",
           \\"chainId\\": 137,
           \\"args\\": [
@@ -483,8 +483,8 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"ownerOf\\",
           \\"chainId\\": 137,
           \\"args\\": [
@@ -508,7 +508,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'love',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
             },
           ],
@@ -529,7 +529,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'love',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
             },
           ],
@@ -560,8 +560,8 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"love\\",
           \\"chainId\\": 137,
           \\"args\\": [

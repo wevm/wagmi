@@ -1,6 +1,6 @@
 export const wagmigotchiContractConfig = {
-  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  contractInterface: [
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {
       anonymous: false,
@@ -100,8 +100,8 @@ export const wagmigotchiContractConfig = {
 } as const
 
 export const mlootContractConfig = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: [
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {
       anonymous: false,
@@ -413,8 +413,8 @@ export const mlootContractConfig = {
 } as const
 
 export const wagmiContractConfig = {
-  addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-  contractInterface: [
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  abi: [
     { inputs: [], stateMutability: 'nonpayable', type: 'constructor' },
     {
       anonymous: false,
@@ -616,8 +616,8 @@ export const wagmiContractConfig = {
 } as const
 
 export const mirrorCrowdfundContractConfig = {
-  addressOrName: '0xcA69d7aE5F6a5A3FdBB66b2C6cAA1a2928c7CD2f',
-  contractInterface: [
+  address: '0xcA69d7aE5F6a5A3FdBB66b2C6cAA1a2928c7CD2f',
+  abi: [
     {
       inputs: [
         { name: 'owner_', type: 'address' },

@@ -6,16 +6,16 @@ function isPlainArray(value: unknown) {
 }
 
 export function parseContractResult({
-  contractInterface,
+  abi,
   data,
   functionName,
 }: {
-  contractInterface: ContractInterface | Abi | readonly unknown[]
+  abi: ContractInterface | Abi | readonly unknown[]
   data: any
   functionName: string
 }) {
   if (data && isPlainArray(data)) {
-    const iface = Contract.getInterface(<ContractInterface>contractInterface)
+    const iface = Contract.getInterface(<ContractInterface>abi)
     const fragment = iface.getFunction(functionName)
 
     const isTuple = (fragment.outputs?.length || 0) > 1

@@ -6,7 +6,7 @@ import { parseContractResult } from './parseContractResult'
 
 describe('parseContractResult', () => {
   describe('struct', () => {
-    const contractInterface = [
+    const abi = [
       {
         inputs: [
           {
@@ -39,7 +39,7 @@ describe('parseContractResult', () => {
         '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       ]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'gms',
       })
@@ -61,7 +61,7 @@ describe('parseContractResult', () => {
         },
       )
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'gms',
       })
@@ -73,7 +73,7 @@ describe('parseContractResult', () => {
   })
 
   describe('struct with no named attributes', () => {
-    const contractInterface = [
+    const abi = [
       {
         inputs: [
           {
@@ -106,7 +106,7 @@ describe('parseContractResult', () => {
         '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       ]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'withoutNames',
       })
@@ -116,7 +116,7 @@ describe('parseContractResult', () => {
   })
 
   describe('array', () => {
-    const contractInterface = [
+    const abi = [
       {
         inputs: [
           {
@@ -144,7 +144,7 @@ describe('parseContractResult', () => {
         '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
       ]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'addresses',
       })
@@ -153,7 +153,7 @@ describe('parseContractResult', () => {
   })
 
   describe('array with no named attributes', () => {
-    const contractInterface = [
+    const abi = [
       {
         inputs: [
           {
@@ -178,7 +178,7 @@ describe('parseContractResult', () => {
     it('should parse the data to an ethers Result', () => {
       const data = [BigNumber.from(1), BigNumber.from(2), BigNumber.from(3)]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'indexes',
       })
@@ -188,7 +188,7 @@ describe('parseContractResult', () => {
   })
 
   describe('array of simple tuples', () => {
-    const contractInterface = [
+    const abi = [
       {
         inputs: [
           {
@@ -234,7 +234,7 @@ describe('parseContractResult', () => {
         ],
       ]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'simpleTuples',
       })
@@ -274,7 +274,7 @@ describe('parseContractResult', () => {
         ),
       ]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'simpleTuples',
       })
@@ -292,7 +292,7 @@ describe('parseContractResult', () => {
   })
 
   describe('array of complex tuples', () => {
-    const contractInterface = [
+    const abi = [
       {
         inputs: [
           {
@@ -381,7 +381,7 @@ describe('parseContractResult', () => {
         ],
       ]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'complexTuples',
       })
@@ -513,7 +513,7 @@ describe('parseContractResult', () => {
         ),
       ]
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'complexTuples',
       })
@@ -535,7 +535,7 @@ describe('parseContractResult', () => {
   })
 
   describe('tuple of complex types', () => {
-    const contractInterface = [
+    const abi = [
       {
         inputs: [
           {
@@ -622,7 +622,7 @@ describe('parseContractResult', () => {
       const [gms, sender, timestamps] = data
 
       const result = parseContractResult({
-        contractInterface,
+        abi,
         data,
         functionName: 'gms',
       })

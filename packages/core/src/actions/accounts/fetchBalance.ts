@@ -59,17 +59,11 @@ export async function fetchBalance({
       resolvedAddress = <Address>address
     }
 
-    const fetchContractBalance = async ({
-      contractInterface,
-    }: {
-      contractInterface: typeof erc20ABI | typeof erc20ABI_bytes32
-    }) => {
-      const erc20Config = {
-        addressOrName: token,
-        contractInterface,
-        chainId,
-      } as const
-
+    type FetchContractBalance = {
+      abi: typeof erc20ABI | typeof erc20ABI_bytes32
+    }
+    const fetchContractBalance = async ({ abi }: FetchContractBalance) => {
+      const erc20Config = { abi, address: token, chainId } as const
       const [value, decimals, symbol] = await readContracts({
         allowFailure: false,
         contracts: [
@@ -91,14 +85,14 @@ export async function fetchBalance({
     }
 
     try {
-      return await fetchContractBalance({ contractInterface: erc20ABI })
+      return await fetchContractBalance({ abi: erc20ABI })
     } catch (err) {
       // In the chance that there is an error upon decoding the contract result,
       // it could be likely that the contract data is represented as bytes32 instead
       // of a string.
       if (err instanceof ContractResultDecodeError) {
         const { symbol, ...rest } = await fetchContractBalance({
-          contractInterface: erc20ABI_bytes32,
+          abi: erc20ABI_bytes32,
         })
         return {
           symbol: parseBytes32String(symbol),

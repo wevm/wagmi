@@ -54,8 +54,8 @@ describe('useContractEvent', () => {
     const listener = vi.fn()
     renderHook(() =>
       useContractEvent({
-        addressOrName: uniContractAddress,
-        contractInterface: erc20ABI,
+        address: uniContractAddress,
+        abi: erc20ABI,
         eventName: 'Transfer',
         listener(from, to, value) {
           expectType<ResolvedConfig['AddressType']>(from)
@@ -69,11 +69,11 @@ describe('useContractEvent', () => {
   })
 
   describe('configuration', () => {
-    it('addressOrName', () => {
+    it('address', () => {
       const listener = vi.fn()
       renderHook(() =>
         useContractEvent({
-          contractInterface: erc20ABI,
+          abi: erc20ABI,
           eventName: 'Transfer',
           listener(from, to, value) {
             expectType<ResolvedConfig['AddressType']>(from)

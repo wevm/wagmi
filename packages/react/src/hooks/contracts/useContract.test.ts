@@ -10,8 +10,8 @@ describe('useContract', () => {
   it('mounts', async () => {
     const { result } = renderHook(() =>
       useContract({
-        addressOrName: uniContractAddress,
-        contractInterface: erc20ABI,
+        address: uniContractAddress,
+        abi: erc20ABI,
       }),
     )
     expect(result.current).toBeDefined()
@@ -23,8 +23,8 @@ describe('useContract', () => {
       let signerOrProvider: UseContractConfig['signerOrProvider'] = undefined
       const { result, rerender } = renderHook(() =>
         useContract({
-          addressOrName: uniContractAddress,
-          contractInterface: erc20ABI,
+          address: uniContractAddress,
+          abi: erc20ABI,
           signerOrProvider,
         }),
       )
@@ -35,19 +35,19 @@ describe('useContract', () => {
       expect(result.current?.provider).not.toBeNull()
     })
 
-    it('no adressOrName', async () => {
+    it('no address', async () => {
       const { result } = renderHook(() =>
         useContract({
-          contractInterface: erc20ABI,
+          abi: erc20ABI,
         }),
       )
       expect(result.current).toBeNull()
     })
 
-    it('no contractInterface', async () => {
+    it('no abi', async () => {
       const { result } = renderHook(() =>
         useContract({
-          addressOrName: uniContractAddress,
+          address: uniContractAddress,
         }),
       )
       expect(result.current).toBeNull()

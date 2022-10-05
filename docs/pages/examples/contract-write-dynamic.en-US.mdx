@@ -76,8 +76,8 @@ export function MintNFTForm() {
   const [tokenId, setTokenId] = React.useState('')
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -109,8 +109,8 @@ export function MintNFTForm() {
 <Callout emoji="🤔" type="info">
   By adding a [const
   assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
-  to `contractInterface`, TypeScript will infer the correct types for
-  `functionName` and `args`.
+  to `abi`, TypeScript will infer the correct types for `functionName` and
+  `args`.
 </Callout>
 
 ## Step 5: Add a debounce to the input value
@@ -129,8 +129,8 @@ export function MintNFTForm() {
   const debouncedTokenId = useDebounce(tokenId, 500)
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -180,8 +180,8 @@ export function MintNFTForm() {
   const debouncedTokenId = useDebounce(tokenId)
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -250,8 +250,8 @@ export function MintNFTForm() {
   const debouncedTokenId = useDebounce(tokenId)
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -347,8 +347,8 @@ export function MintNFTForm() {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',

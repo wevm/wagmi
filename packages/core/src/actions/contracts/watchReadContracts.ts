@@ -19,7 +19,7 @@ export type WatchReadContractsCallback<TContracts extends unknown[]> = (
 export function watchReadContracts<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-  TContracts extends { contractInterface: TAbi; functionName: TFunctionName }[],
+  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
 >(
   config: WatchReadContractsConfig<TContracts>,
   callback: WatchReadContractsCallback<TContracts>,

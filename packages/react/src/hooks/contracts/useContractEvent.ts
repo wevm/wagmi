@@ -42,13 +42,13 @@ type ContractEventConfig<
     : never,
 > = {
   /** Contract address */
-  addressOrName?: string
+  address?: string
   /** Contract ABI */
-  contractInterface: TAbi
+  abi?: TAbi
   /** Chain id to use for provider */
   chainId?: number
   /** Event to listen for */
-  eventName: TEventName
+  eventName?: IsNever<TEventName> extends true ? string : TEventName
   /** Receive only a single event */
   once?: boolean
 } & GetListener<TEvent, TAbi>
@@ -78,9 +78,9 @@ export function useContractEvent<
   TAbi extends Abi | readonly unknown[],
   TEventName extends string,
 >({
-  addressOrName,
+  address,
   chainId,
-  contractInterface,
+  abi,
   listener,
   eventName,
   once,
@@ -88,15 +88,15 @@ export function useContractEvent<
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
   const contract = useContract({
-    addressOrName,
-    contractInterface,
+    address,
+    abi,
     signerOrProvider: webSocketProvider ?? provider,
   })
   const callbackRef = React.useRef(listener)
   callbackRef.current = listener
 
   React.useEffect(() => {
-    if (!contract) return
+    if (!contract || !eventName) return
 
     const handler = (...event: any[]) => callbackRef.current(...event)
 

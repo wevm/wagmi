@@ -7,7 +7,7 @@ describe('minimizeContractInterface', () => {
   it('minimizes contract interface', () => {
     expect(
       minimizeContractInterface({
-        contractInterface: mlootContractConfig.contractInterface,
+        abi: mlootContractConfig.abi,
         functionName: 'getRing',
       }),
     ).toMatchInlineSnapshot(`
@@ -36,7 +36,7 @@ describe('minimizeContractInterface', () => {
   it('minimizes overloaded contract interface', () => {
     expect(
       minimizeContractInterface({
-        contractInterface: [
+        abi: [
           {
             inputs: [
               { internalType: 'uint256', name: 'tokenId', type: 'uint256' },
@@ -111,7 +111,7 @@ describe('minimizeContractInterface', () => {
   it('minmizes contract in human-readable form', () => {
     expect(
       minimizeContractInterface({
-        contractInterface: [
+        abi: [
           'function getChest(uint256 tokenId) view returns (string)',
           'function getRing(uint256 tokenId) view returns (string)',
           'function getChest(uint256 tokenId, uint256 wagmiId) view returns (string)',

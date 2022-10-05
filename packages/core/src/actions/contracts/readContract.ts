@@ -19,7 +19,7 @@ export type ReadContractConfig<
   TOptions extends Options = DefaultOptions,
 > = GetConfig<
   {
-    contractInterface: TAbi
+    abi: TAbi
     functionName: TFunctionName
     /** Chain id to use for provider */
     chainId?: number
@@ -33,16 +33,16 @@ export type ReadContractConfig<
 export type ReadContractResult<
   TAbi = Abi,
   TFunctionName = string,
-> = GetReturnType<{ contractInterface: TAbi; functionName: TFunctionName }>
+> = GetReturnType<{ abi: TAbi; functionName: TFunctionName }>
 
 export async function readContract<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >({
-  addressOrName,
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   overrides,
 }: ReadContractConfig<TAbi, TFunctionName>): Promise<
@@ -50,8 +50,8 @@ export async function readContract<
 > {
   const provider = getProvider({ chainId })
   const contract = getContract({
-    addressOrName,
-    contractInterface,
+    address,
+    abi,
     signerOrProvider: provider,
   })
 
@@ -63,7 +63,7 @@ export async function readContract<
   const contractFunction = contract[normalizedFunctionName]
   if (!contractFunction)
     throw new ContractMethodDoesNotExistError({
-      addressOrName,
+      address,
       functionName: normalizedFunctionName,
     })
 

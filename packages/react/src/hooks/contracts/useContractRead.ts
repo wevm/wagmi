@@ -18,7 +18,12 @@ export type UseContractReadConfig<
 > = ReadContractConfig<
   TAbi,
   TFunctionName,
-  { isAddressOptional: true; isArgsOptional: true }
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isFunctionNameOptional: true
+  }
 > &
   QueryConfig<ReadContractResult<TAbi, TFunctionName>, Error> & {
     /** If set to `true`, the cache will depend on the block number */
@@ -29,18 +34,18 @@ export type UseContractReadConfig<
 
 function queryKey(
   {
-    addressOrName,
+    address,
     args,
     chainId,
     functionName,
     overrides,
-  }: Omit<ReadContractConfig, 'contractInterface'>,
+  }: Omit<ReadContractConfig, 'abi'>,
   { blockNumber }: { blockNumber?: number },
 ) {
   return [
     {
       entity: 'readContract',
-      addressOrName,
+      address,
       args,
       blockNumber,
       chainId,
@@ -53,16 +58,17 @@ function queryKey(
 function queryFn<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->({ contractInterface }: { contractInterface: Abi | readonly unknown[] }) {
+>({ abi }: { abi?: Abi | readonly unknown[] }) {
+  if (!abi) throw new Error('abi is required')
   return async ({
-    queryKey: [{ addressOrName, args, chainId, functionName, overrides }],
+    queryKey: [{ address, args, chainId, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
-    if (!addressOrName) throw new Error('addressOrName is required')
+    if (!address) throw new Error('address is required')
     return ((await readContract({
-      addressOrName,
+      address,
       args,
       chainId,
-      contractInterface,
+      abi,
       functionName,
       overrides,
     })) ?? null) as ReadContractResult<TAbi, TFunctionName>
@@ -73,8 +79,8 @@ export function useContractRead<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >({
-  addressOrName,
-  contractInterface,
+  abi,
+  address,
   functionName,
   args,
   chainId: chainId_,
@@ -102,16 +108,16 @@ export function useContractRead<
     () =>
       queryKey(
         {
-          addressOrName,
+          address,
           args,
           chainId,
           functionName,
           overrides,
-        } as Omit<ReadContractConfig, 'contractInterface'>,
+        } as Omit<ReadContractConfig, 'abi'>,
         { blockNumber: cacheOnBlock ? blockNumber : undefined },
       ),
     [
-      addressOrName,
+      address,
       args,
       blockNumber,
       cacheOnBlock,
@@ -122,10 +128,10 @@ export function useContractRead<
   )
 
   const enabled = React.useMemo(() => {
-    let enabled = Boolean(enabled_ && addressOrName)
+    let enabled = Boolean(enabled_ && abi && address && functionName)
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled
-  }, [addressOrName, blockNumber, cacheOnBlock, enabled_])
+  }, [abi, address, blockNumber, cacheOnBlock, enabled_, functionName])
 
   useInvalidateOnBlock({
     chainId,
@@ -133,16 +139,19 @@ export function useContractRead<
     queryKey: queryKey_,
   })
 
-  return useQuery(queryKey_, queryFn({ contractInterface }), {
+  return useQuery(queryKey_, queryFn({ abi }), {
     cacheTime,
     enabled,
     isDataEqual,
     select(data) {
-      const result = parseContractResult({
-        contractInterface,
-        data,
-        functionName,
-      })
+      const result =
+        abi && functionName
+          ? parseContractResult({
+              abi,
+              data,
+              functionName,
+            })
+          : data
       return select ? select(result) : result
     },
     staleTime,

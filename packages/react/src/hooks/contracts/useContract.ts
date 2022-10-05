@@ -3,24 +3,25 @@ import { Contract } from 'ethers'
 
 import * as React from 'react'
 
-export type UseContractConfig = {
-  addressOrName?: GetContractArgs['addressOrName']
-  contractInterface?: GetContractArgs['contractInterface']
+export type UseContractConfig = Partial<
+  Pick<GetContractArgs, 'abi' | 'address'>
+> & {
+  /** Signer or provider to attach to contract */
   signerOrProvider?: GetContractArgs['signerOrProvider'] | null
 }
 
 export function useContract<TContract = Contract>({
-  addressOrName,
-  contractInterface,
+  address,
+  abi,
   signerOrProvider,
 }: UseContractConfig) {
   return React.useMemo<TContract | null>(() => {
-    if (!addressOrName || !contractInterface) return null
+    if (!address || !abi) return null
     return getContract<TContract>({
-      addressOrName,
-      contractInterface,
+      address,
+      abi,
       signerOrProvider:
         signerOrProvider === null ? undefined : signerOrProvider,
     })
-  }, [addressOrName, contractInterface, signerOrProvider])
+  }, [address, abi, signerOrProvider])
 }

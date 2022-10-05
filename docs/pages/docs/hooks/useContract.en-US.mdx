@@ -29,8 +29,8 @@ import { useContract } from 'wagmi'
 
 function App() {
   const contract = useContract({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
   })
 }
 ```
@@ -38,37 +38,37 @@ function App() {
 ## Return Value
 
 ```tsx
-ethers.Contract
+ethers.Contract | null
 ```
 
 ## Configuration
 
-### addressOrName (optional)
+### address (optional)
 
-Contract address or ENS name. If `addressOrName` is not defined, response is `null`.
+Contract address or ENS name. If `address` is not defined, response is `null`.
 
 ```tsx {5}
 import { useContract } from 'wagmi'
 
 function App() {
   const contract = useContract({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
   })
 }
 ```
 
-### contractInterface (optional)
+### abi (optional)
 
-Contract ABI. If `contractInterface` is not defined, response is `null`.
+Contract ABI. If `abi` is not defined, response is `null`.
 
 ```tsx {6}
 import { useContract } from 'wagmi'
 
 function App() {
   const contract = useContract({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
   })
 }
 ```
@@ -83,8 +83,8 @@ import { useContract, useProvider } from 'wagmi'
 function App() {
   const provider = useProvider()
   const contract = useContract({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     signerOrProvider: provider,
   })
 }

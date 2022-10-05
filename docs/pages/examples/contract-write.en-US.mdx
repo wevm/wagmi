@@ -47,8 +47,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 export function MintNFT() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -85,8 +85,8 @@ import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 export function MintNFT() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -138,8 +138,8 @@ import {
 
 export function MintNFT() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -217,8 +217,8 @@ export function MintNFT() {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',

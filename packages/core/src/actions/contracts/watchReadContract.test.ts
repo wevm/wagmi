@@ -21,8 +21,8 @@ describe('watchReadContract', () => {
 
     watchReadContract(
       {
-        addressOrName: '0x123',
-        contractInterface: [],
+        address: '0x123',
+        abi: [],
         functionName: 'tokenOfOwnerByIndex',
         args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
       },

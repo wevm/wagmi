@@ -53,7 +53,7 @@ export type WriteContractUnpreparedArgs<
   request?: never
 } & GetConfig<
   {
-    contractInterface: TAbi
+    abi: TAbi
     functionName: TFunctionName
     /** Call overrides */
     overrides?: CallOverrides
@@ -69,7 +69,7 @@ export type WriteContractArgs<
 > = Omit<
   GetConfig<
     {
-      contractInterface: TAbi
+      abi: TAbi
       functionName: TFunctionName
       /** Chain id to use for provider */
       chainId?: number
@@ -95,8 +95,8 @@ export type WriteContractResult = SendTransactionResult
  * import { prepareWriteContract, writeContract } from '@wagmi/core'
  *
  * const config = await prepareWriteContract({
- *   addressOrName: '0x...',
- *   contractInterface: wagmiAbi,
+ *   address: '0x...',
+ *   abi: wagmiAbi,
  *   functionName: 'mint',
  * })
  * const result = await writeContract(config)
@@ -106,10 +106,10 @@ export async function writeContract<
   TFunctionName extends string,
   TSigner extends Signer = Signer,
 >({
-  addressOrName,
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   mode,
   overrides,
@@ -131,10 +131,10 @@ export async function writeContract<
     mode === 'recklesslyUnprepared'
       ? (
           await prepareWriteContract<Abi | readonly unknown[], string>({
-            addressOrName,
+            address,
             args,
             chainId,
-            contractInterface,
+            abi,
             functionName,
             overrides,
           })

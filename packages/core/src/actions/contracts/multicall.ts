@@ -35,7 +35,7 @@ export type MulticallResult<TContracts extends unknown[]> =
 export async function multicall<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-  TContracts extends { contractInterface: TAbi; functionName: TFunctionName }[],
+  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
 >({
   allowFailure = true,
   chainId,
@@ -60,17 +60,14 @@ export async function multicall<
     })
 
   const multicallContract = getContract({
-    addressOrName: chain.multicall.address,
-    contractInterface: multicallABI,
+    address: chain.multicall.address,
+    abi: multicallABI,
     signerOrProvider: provider,
   })
   const calls = (contracts as unknown as ContractConfig[]).map(
-    ({ addressOrName, contractInterface, functionName, ...config }) => {
+    ({ address, abi, functionName, ...config }) => {
       const { args } = config || {}
-      const contract = getContract({
-        addressOrName,
-        contractInterface,
-      })
+      const contract = getContract({ address, abi })
       const params = args ?? []
       const normalizedFunctionName = normalizeFunctionName({
         contract,
@@ -81,21 +78,21 @@ export async function multicall<
         const contractFunction = contract[normalizedFunctionName]
         if (!contractFunction)
           logWarn(
-            `"${normalizedFunctionName}" is not in the interface for contract "${addressOrName}"`,
+            `"${normalizedFunctionName}" is not in the interface for contract "${address}"`,
           )
         const callData = contract.interface.encodeFunctionData(
           normalizedFunctionName,
           params,
         )
         return {
-          target: addressOrName,
+          target: address,
           allowFailure,
           callData,
         }
       } catch (err) {
         if (!allowFailure) throw err
         return {
-          target: addressOrName,
+          target: address,
           allowFailure,
           callData: '0x',
         }
@@ -112,13 +109,9 @@ export async function multicall<
     ...params,
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
-    const { addressOrName, contractInterface, functionName, args } =
-      contracts[i]
+    const { address, abi, args, functionName } = contracts[i]
 
-    const contract = getContract({
-      addressOrName,
-      contractInterface,
-    })
+    const contract = getContract({ address, abi })
     const normalizedFunctionName = normalizeFunctionName({
       contract,
       functionName,
@@ -134,7 +127,7 @@ export async function multicall<
         )
       } catch (err) {
         error = new ContractMethodRevertedError({
-          addressOrName,
+          address,
           args,
           chainId: chain.id,
           functionName: normalizedFunctionName,
@@ -148,7 +141,7 @@ export async function multicall<
 
     if (returnData === '0x') {
       const error = new ContractMethodNoResultError({
-        addressOrName,
+        address,
         args,
         chainId: chain.id,
         functionName: normalizedFunctionName,
@@ -166,7 +159,7 @@ export async function multicall<
       return Array.isArray(result) && result.length === 1 ? result[0] : result
     } catch (err) {
       const error = new ContractResultDecodeError({
-        addressOrName,
+        address,
         args,
         chainId: chain.id,
         functionName: normalizedFunctionName,

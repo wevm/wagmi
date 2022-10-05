@@ -2,26 +2,22 @@ import { Abi } from 'abitype'
 import { Contract, ContractInterface, Signer, providers } from 'ethers'
 
 export type GetContractArgs = {
-  /** Contract address or ENS name */
-  addressOrName: string
+  /** Contract address */
+  address: string
   /** Contract interface or ABI */
-  contractInterface: ContractInterface | Abi | readonly unknown[]
+  abi: ContractInterface | Abi | readonly unknown[]
   /** Signer or provider to attach to contract */
   signerOrProvider?: Signer | providers.Provider
 }
 
 export function getContract<TContract = Contract>({
-  addressOrName,
-  contractInterface,
+  address,
+  abi,
   signerOrProvider,
 }: GetContractArgs) {
   return <TContract>(
     (<unknown>(
-      new Contract(
-        addressOrName,
-        <ContractInterface>(<unknown>contractInterface),
-        signerOrProvider,
-      )
+      new Contract(address, <ContractInterface>(<unknown>abi), signerOrProvider)
     ))
   )
 }

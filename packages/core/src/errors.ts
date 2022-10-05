@@ -115,11 +115,11 @@ export class ContractMethodDoesNotExistError extends Error {
   name = 'ContractMethodDoesNotExistError'
 
   constructor({
-    addressOrName,
+    address,
     chainId,
     functionName,
   }: {
-    addressOrName: string
+    address: string
     chainId?: number
     functionName: string
   }) {
@@ -128,11 +128,11 @@ export class ContractMethodDoesNotExistError extends Error {
     const blockExplorer = chain?.blockExplorers?.default
     super(
       [
-        `Function "${functionName}" on contract "${addressOrName}" does not exist.`,
+        `Function "${functionName}" on contract "${address}" does not exist.`,
         ...(blockExplorer
           ? [
               '',
-              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${addressOrName}#readContract`,
+              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${address}#readContract`,
             ]
           : []),
       ].join('\n'),
@@ -144,12 +144,12 @@ export class ContractMethodNoResultError extends Error {
   name = 'ContractMethodNoResultError'
 
   constructor({
-    addressOrName,
+    address,
     args,
     chainId,
     functionName,
   }: {
-    addressOrName: string
+    address: string
     args: any
     chainId: number
     functionName: string
@@ -164,8 +164,8 @@ export class ContractMethodNoResultError extends Error {
         `Config:`,
         JSON.stringify(
           {
-            addressOrName,
-            contractInterface: '...',
+            address,
+            abi: '...',
             functionName,
             chainId,
             args,
@@ -182,13 +182,13 @@ export class ContractMethodRevertedError extends Error {
   name = 'ContractMethodRevertedError'
 
   constructor({
-    addressOrName,
+    address,
     args,
     chainId,
     functionName,
     errorMessage,
   }: {
-    addressOrName: string
+    address: string
     args: any
     chainId: number
     functionName: string
@@ -201,8 +201,8 @@ export class ContractMethodRevertedError extends Error {
         `Config:`,
         JSON.stringify(
           {
-            addressOrName,
-            contractInterface: '...',
+            address,
+            abi: '...',
             functionName,
             chainId,
             args,
@@ -221,13 +221,13 @@ export class ContractResultDecodeError extends Error {
   name = 'ContractResultDecodeError'
 
   constructor({
-    addressOrName,
+    address,
     args,
     chainId,
     functionName,
     errorMessage,
   }: {
-    addressOrName: string
+    address: string
     args: any
     chainId: number
     functionName: string
@@ -240,8 +240,8 @@ export class ContractResultDecodeError extends Error {
         `Config:`,
         JSON.stringify(
           {
-            addressOrName,
-            contractInterface: '...',
+            address,
+            abi: '...',
             functionName,
             chainId,
             args,

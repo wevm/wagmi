@@ -1,10 +1,4 @@
 export {
-  deprecatedWriteContract,
-  type DeprecatedWriteContractConfig,
-  type DeprecatedWriteContractResult,
-} from './deprecatedWriteContract'
-
-export {
   fetchToken,
   type FetchTokenArgs,
   type FetchTokenResult,

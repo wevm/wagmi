@@ -28,8 +28,8 @@ import { useContractInfiniteReads } from 'wagmi'
 import mlootABI from './mlootABI.json'
 
 const contractConfig = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: mlootABI,
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: mlootABI,
 }
 
 function App() {
@@ -78,8 +78,8 @@ import { useContractInfiniteReads, paginatedIndexesConfig } from 'wagmi'
 import mlootABI from './mlootABI.json'
 
 const contractConfig = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: mlootABI,
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: mlootABI,
 }
 
 function App() {
@@ -154,7 +154,7 @@ function App() {
 
 ### contracts
 
-#### addressOrName
+#### address
 
 Contract address or ENS name.
 
@@ -169,14 +169,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -186,9 +186,9 @@ function App() {
 }
 ```
 
-#### contractInterface
+#### abi
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName`, `args`, and hook result.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result.
 
 ```tsx {12,18}
 import { useContractInfiniteReads } from 'wagmi'
@@ -201,14 +201,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -233,14 +233,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -265,14 +265,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -297,15 +297,15 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
           chainId: chain.mainnet.id,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
           chainId: chain.mainnet.id,
@@ -333,14 +333,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -367,14 +367,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -400,14 +400,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -433,14 +433,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -466,14 +466,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -499,14 +499,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -532,14 +532,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -565,14 +565,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -598,14 +598,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -631,14 +631,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -666,14 +666,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },
@@ -701,14 +701,14 @@ function App() {
       const args = [BigNumber.from(param)] as const
       return [
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getChest',
           args,
         },
         {
-          addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-          contractInterface: mlootABI,
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
           functionName: 'getWaist',
           args,
         },

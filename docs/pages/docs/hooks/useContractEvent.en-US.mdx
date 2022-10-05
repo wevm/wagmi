@@ -20,8 +20,8 @@ import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     eventName: 'NewOwner',
     listener(node, label, owner) {
       console.log(node, label, owner)
@@ -32,17 +32,17 @@ function App() {
 
 ## Arguments
 
-### addressOrName (optional)
+### address (optional)
 
-Contract address or ENS name. If `addressOrName` is not defined, hook will not run.
+Contract address or ENS name. If `address` is not defined, hook will not run.
 
 ```tsx {5}
 import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     eventName: 'NewOwner',
     listener(node, label, owner) {
       console.log(node, label, owner)
@@ -51,17 +51,17 @@ function App() {
 }
 ```
 
-### contractInterface
+### abi
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `eventName` and `listener`.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`.
 
 ```tsx {6}
 import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     eventName: 'NewOwner',
     listener(node, label, owner) {
       console.log(node, label, owner)
@@ -79,8 +79,8 @@ import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     eventName: 'NewResolver',
     listener(node, resolver) {
       console.log(node, resolver)
@@ -98,8 +98,8 @@ import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     eventName: 'NewOwner',
     listener(node, label, owner) {
       console.log(node, label, owner)
@@ -117,8 +117,8 @@ import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     eventName: 'NewOwner',
     listener(node, label, owner) {
       console.log(node, label, owner)
@@ -137,8 +137,8 @@ import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
-    addressOrName: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    contractInterface: ensRegistryABI,
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
     eventName: 'NewOwner',
     listener(node, label, owner) {
       console.log(node, label, owner)

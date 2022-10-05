@@ -2,8 +2,8 @@ import { BigNumber } from 'ethers'
 import { useContractReads } from 'wagmi'
 
 export const wagmigotchiContractConfig = {
-  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  contractInterface: [
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: [
     {
       inputs: [],
       name: 'getAlive',
@@ -22,8 +22,8 @@ export const wagmigotchiContractConfig = {
 } as const
 
 export const mlootContractConfig = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: [
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: [
     {
       inputs: [
         { internalType: 'address', name: 'owner', type: 'address' },

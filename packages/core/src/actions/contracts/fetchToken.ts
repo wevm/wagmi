@@ -30,16 +30,11 @@ export async function fetchToken({
   chainId,
   formatUnits: units = 'ether',
 }: FetchTokenArgs): Promise<FetchTokenResult> {
-  async function fetchToken_({
-    contractInterface,
-  }: {
-    contractInterface: typeof erc20ABI | typeof erc20ABI_bytes32
-  }) {
-    const erc20Config = {
-      addressOrName: address,
-      contractInterface,
-      chainId,
-    }
+  type FetchToken_ = {
+    abi: typeof erc20ABI | typeof erc20ABI_bytes32
+  }
+  async function fetchToken_({ abi }: FetchToken_) {
+    const erc20Config = { address, abi, chainId } as const
     const [decimals, name, symbol, totalSupply] = await readContracts({
       allowFailure: false,
       contracts: [
@@ -63,14 +58,14 @@ export async function fetchToken({
   }
 
   try {
-    return await fetchToken_({ contractInterface: erc20ABI })
+    return await fetchToken_({ abi: erc20ABI })
   } catch (err) {
     // In the chance that there is an error upon decoding the contract result,
     // it could be likely that the contract data is represented as bytes32 instead
     // of a string.
     if (err instanceof ContractResultDecodeError) {
       const { name, symbol, ...rest } = await fetchToken_({
-        contractInterface: erc20ABI_bytes32,
+        abi: erc20ABI_bytes32,
       })
       return {
         name: parseBytes32String(name),

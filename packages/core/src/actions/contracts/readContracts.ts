@@ -46,21 +46,18 @@ export type ReadContractsResult<TContracts extends unknown[]> =
 export async function readContracts<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-  TContracts extends {
-    contractInterface: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
 >({
   allowFailure = true,
   contracts,
   overrides,
 }: ReadContractsConfig<TContracts>): Promise<ReadContractsResult<TContracts>> {
   type ContractConfig = {
-    addressOrName: string
+    abi: Abi
+    address: string
+    args: unknown[]
     chainId?: number
-    contractInterface: Abi
     functionName: string
-    args: any[]
   }
 
   try {
@@ -112,9 +109,9 @@ export async function readContracts<
     if (allowFailure)
       return (await Promise.allSettled(promises())).map((result, i) => {
         if (result.status === 'fulfilled') return result.value
-        const { addressOrName, functionName, chainId, args } = contracts[i]
+        const { address, args, chainId, functionName } = contracts[i]
         const error = new ContractMethodRevertedError({
-          addressOrName,
+          address,
           functionName,
           chainId: chainId ?? mainnet.id,
           args,

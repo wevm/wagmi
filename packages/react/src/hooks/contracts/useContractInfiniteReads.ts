@@ -50,7 +50,7 @@ function queryFn<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TContracts extends {
-    contractInterface: TAbi
+    abi: TAbi
     functionName: TFunctionName
   }[],
   TPageParam = unknown,
@@ -75,7 +75,7 @@ export function useContractInfiniteReads<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TContracts extends {
-    contractInterface: TAbi
+    abi: TAbi
     functionName: TFunctionName
   }[],
   TPageParam = any,
@@ -126,7 +126,7 @@ export function paginatedIndexesConfig<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TContracts extends {
-    contractInterface: TAbi
+    abi: TAbi
     functionName: TFunctionName
   }[],
 >(

@@ -18,13 +18,13 @@ type ContractEventConfig<
   TEventName extends string = string,
 > = {
   /** Contract address */
-  addressOrName: string
+  address: string
   /** Contract ABI */
-  contractInterface: TAbi
+  abi: TAbi
   /** Chain id to use for provider */
   chainId?: number
   /** Event to listen for */
-  eventName: TEventName
+  eventName: IsNever<TEventName> extends true ? string : TEventName
   /** Receive only a single event */
   once?: boolean
 }
@@ -68,8 +68,8 @@ export function watchContractEvent<
   TEventName extends string,
 >(
   {
-    addressOrName,
-    contractInterface,
+    address,
+    abi,
     chainId,
     eventName,
     once,
@@ -82,12 +82,9 @@ export function watchContractEvent<
   const watchEvent = async () => {
     if (contract) contract?.off(eventName, handler)
 
-    contract = getContract({
-      addressOrName,
-      contractInterface,
-      signerOrProvider:
-        getWebSocketProvider({ chainId }) || getProvider({ chainId }),
-    })
+    const signerOrProvider =
+      getWebSocketProvider({ chainId }) || getProvider({ chainId })
+    contract = getContract({ address, abi, signerOrProvider })
 
     if (once) contract.once(eventName, handler)
     else contract.on(eventName, handler)

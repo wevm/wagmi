@@ -6,8 +6,6 @@ it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
       "connect",
-      "deprecatedSendTransaction",
-      "deprecatedWriteContract",
       "disconnect",
       "fetchBalance",
       "fetchBlockNumber",

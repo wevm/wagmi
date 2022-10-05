@@ -9,8 +9,8 @@ import { isArgOfType, normalizeFunctionName } from './normalizeFunctionName'
 describe('normalizeFunctionName', () => {
   it('returns basic function', async () => {
     const contract = new Contract(
-      wagmiContractConfig.addressOrName,
-      wagmiContractConfig.contractInterface,
+      wagmiContractConfig.address,
+      wagmiContractConfig.abi,
     )
     const functionName = 'balanceOf'
     expect(
@@ -23,8 +23,8 @@ describe('normalizeFunctionName', () => {
 
   it('returns overloaded function with different argument lengths', async () => {
     const contract = new Contract(
-      wagmiContractConfig.addressOrName,
-      wagmiContractConfig.contractInterface,
+      wagmiContractConfig.address,
+      wagmiContractConfig.abi,
     )
     const functionName = 'safeTransferFrom'
     expect(

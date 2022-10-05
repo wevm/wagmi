@@ -24,8 +24,8 @@ import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config, error } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
   const { write } = useContractWrite(config)
@@ -72,33 +72,33 @@ function App() {
 
 ## Configuration
 
-### addressOrName (optional)
+### adddress (optional)
 
-Contract address or ENS name. If `addressOrName` is not defined, hook will not run.
+Contract address or ENS name. If `adddress` is not defined, hook will not run.
 
 ```tsx {5}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 }
 ```
 
-### contractInterface
+### abi
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface`, TypeScript will infer the correct types for `functionName` and `args`.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`.
 
 ```tsx {6}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 }
@@ -113,8 +113,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 }
@@ -129,8 +129,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    adddress: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -155,8 +155,8 @@ import { optimism } from 'wagmi/chains'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     chainId: optimism.id,
   })
@@ -172,8 +172,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     overrides: {
       from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
@@ -192,8 +192,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     cacheTime: 2_000,
   })
@@ -209,8 +209,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     enabled: false,
   })
@@ -226,8 +226,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     staleTime: 2_000,
   })
@@ -243,8 +243,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     suspense: true,
   })
@@ -260,8 +260,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     onSuccess(data) {
       console.log('Success', data)
@@ -279,8 +279,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     onError(error) {
       console.log('Error', error)
@@ -298,8 +298,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     onSettled(data, error) {
       console.log('Settled', { data, error })

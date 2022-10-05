@@ -15,7 +15,13 @@ export type UseContractWriteArgs<
 > = WriteContractArgs<
   TAbi,
   TFunctionName,
-  { isAddressOptional: true; isArgsOptional: true; isRequestOptional: true }
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isFunctionNameOptional: true
+    isRequestOptional: true
+  }
 >
 
 export type UseContractWriteConfig<
@@ -45,10 +51,10 @@ type UseContractWriteMutationArgs<
     }
 
 function mutationKey({
-  addressOrName,
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   overrides,
   request,
@@ -56,10 +62,10 @@ function mutationKey({
   return [
     {
       entity: 'writeContract',
-      addressOrName,
+      address,
       args,
       chainId,
-      contractInterface,
+      abi,
       functionName,
       overrides,
       request,
@@ -68,10 +74,10 @@ function mutationKey({
 }
 
 function mutationFn({
-  addressOrName,
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   mode,
   overrides,
@@ -79,25 +85,34 @@ function mutationFn({
 }: WriteContractArgs<
   Abi | readonly unknown[],
   string,
-  { isAddressOptional: true; isRequestOptional: true }
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isFunctionNameOptional: true
+    isRequestOptional: true
+  }
 >) {
-  if (!addressOrName) throw new Error('addressOrName is required')
+  if (!address) throw new Error('address is required')
+  if (!abi) throw new Error('abi is required')
+  if (!functionName) throw new Error('functionName is required')
+
   switch (mode) {
     case 'prepared': {
       if (!request) throw new Error('request is required')
       return writeContract({
         mode: 'prepared',
-        addressOrName,
+        address,
         chainId,
-        contractInterface,
+        abi,
         functionName,
         request,
       })
     }
     case 'recklesslyUnprepared':
       return writeContract({
-        addressOrName,
-        contractInterface,
+        address,
+        abi,
         functionName,
         args,
         chainId,
@@ -118,8 +133,8 @@ function mutationFn({
  * import { useContractWrite, usePrepareContractWrite } from 'wagmi'
  *
  * const { config } = usePrepareContractWrite({
- *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
- *  contractInterface: wagmigotchiABI,
+ *  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+ *  abi: wagmigotchiABI,
  *  functionName: 'feed',
  * })
  * const { data, isLoading, isSuccess, write } = useContractWrite(config)
@@ -129,10 +144,10 @@ export function useContractWrite<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >({
-  addressOrName,
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   mode,
   overrides,
@@ -156,8 +171,8 @@ export function useContractWrite<
     variables,
   } = useMutation(
     mutationKey({
-      addressOrName,
-      contractInterface,
+      address,
+      abi,
       functionName,
       args,
       chainId,
@@ -183,10 +198,10 @@ export function useContractWrite<
       >,
     ) => {
       return mutate({
-        addressOrName,
+        address,
         args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
         chainId,
-        contractInterface,
+        abi,
         functionName,
         mode: overrideConfig ? 'recklesslyUnprepared' : mode,
         overrides:
@@ -195,10 +210,10 @@ export function useContractWrite<
       } as WriteContractArgs)
     },
     [
-      addressOrName,
+      address,
       args,
       chainId,
-      contractInterface,
+      abi,
       functionName,
       mode,
       mutate,
@@ -216,10 +231,10 @@ export function useContractWrite<
       >,
     ) => {
       return mutateAsync({
-        addressOrName,
+        address,
         args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
         chainId,
-        contractInterface,
+        abi,
         functionName,
         mode: overrideConfig ? 'recklesslyUnprepared' : mode,
         overrides:
@@ -228,10 +243,10 @@ export function useContractWrite<
       } as WriteContractArgs)
     },
     [
-      addressOrName,
+      address,
       args,
       chainId,
-      contractInterface,
+      abi,
       functionName,
       mode,
       mutateAsync,

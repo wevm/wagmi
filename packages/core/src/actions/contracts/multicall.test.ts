@@ -183,8 +183,8 @@ describe('multicall', () => {
 
           Config:
           {
-            \\"addressOrName\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-            \\"contractInterface\\": \\"...\\",
+            \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
+            \\"abi\\": \\"...\\",
             \\"functionName\\": \\"tokenOfOwnerByIndex\\",
             \\"chainId\\": 1,
             \\"args\\": [
@@ -201,8 +201,8 @@ describe('multicall', () => {
 
           Config:
           {
-            \\"addressOrName\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-            \\"contractInterface\\": \\"...\\",
+            \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
+            \\"abi\\": \\"...\\",
             \\"functionName\\": \\"tokenOfOwnerByIndex\\",
             \\"chainId\\": 1,
             \\"args\\": [
@@ -229,7 +229,7 @@ describe('multicall', () => {
                 ...mlootContractConfig,
                 functionName: 'ownerOf',
                 // address is not the wagmigotchi contract
-                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
                 args: [10e30],
               },
             ],
@@ -250,14 +250,14 @@ describe('multicall', () => {
                 ...mlootContractConfig,
                 functionName: 'ownerOf',
                 // address is not the wagmigotchi contract
-                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
                 args: [10e30],
               },
               {
                 ...mlootContractConfig,
                 functionName: 'ownerOf',
                 // address is not the wagmigotchi contract
-                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
                 args: [10e30],
               },
             ],
@@ -291,8 +291,8 @@ describe('multicall', () => {
 
           Config:
           {
-            \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-            \\"contractInterface\\": \\"...\\",
+            \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+            \\"abi\\": \\"...\\",
             \\"functionName\\": \\"ownerOf\\",
             \\"chainId\\": 1,
             \\"args\\": [
@@ -306,8 +306,8 @@ describe('multicall', () => {
 
           Config:
           {
-            \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-            \\"contractInterface\\": \\"...\\",
+            \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+            \\"abi\\": \\"...\\",
             \\"functionName\\": \\"ownerOf\\",
             \\"chainId\\": 1,
             \\"args\\": [
@@ -328,7 +328,7 @@ describe('multicall', () => {
                 ...wagmigotchiContractConfig,
                 functionName: 'love',
                 // address is not the wagmigotchi contract
-                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
                 args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
               },
             ],
@@ -341,8 +341,8 @@ describe('multicall', () => {
 
           Config:
           {
-            \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-            \\"contractInterface\\": \\"...\\",
+            \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+            \\"abi\\": \\"...\\",
             \\"functionName\\": \\"love\\",
             \\"chainId\\": 1,
             \\"args\\": [
@@ -362,14 +362,14 @@ describe('multicall', () => {
                 ...wagmigotchiContractConfig,
                 functionName: 'love',
                 // address is not the wagmigotchi contract
-                addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+                address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
                 args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
               },
               {
                 ...wagmigotchiContractConfig,
                 functionName: 'love',
                 // address is not the wagmigotchi contract
-                addressOrName: '0x01D13b073CE170e94f6d530B0Cd54498A87A537F',
+                address: '0x01D13b073CE170e94f6d530B0Cd54498A87A537F',
                 args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
               },
             ],
@@ -403,8 +403,8 @@ describe('multicall', () => {
 
           Config:
           {
-            \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-            \\"contractInterface\\": \\"...\\",
+            \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+            \\"abi\\": \\"...\\",
             \\"functionName\\": \\"love\\",
             \\"chainId\\": 1,
             \\"args\\": [
@@ -418,8 +418,8 @@ describe('multicall', () => {
 
           Config:
           {
-            \\"addressOrName\\": \\"0x01D13b073CE170e94f6d530B0Cd54498A87A537F\\",
-            \\"contractInterface\\": \\"...\\",
+            \\"address\\": \\"0x01D13b073CE170e94f6d530B0Cd54498A87A537F\\",
+            \\"abi\\": \\"...\\",
             \\"functionName\\": \\"love\\",
             \\"chainId\\": 1,
             \\"args\\": [

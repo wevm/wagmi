@@ -19,8 +19,8 @@ export function ContractWrite() {
     isError: isPrepareError,
     isLoading: isPreparing,
   } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',

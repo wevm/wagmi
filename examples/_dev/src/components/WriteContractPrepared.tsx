@@ -5,8 +5,8 @@ import { anvAbi } from './anv-abi'
 
 export const WriteContractPrepared = () => {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-    contractInterface: anvAbi,
+    address: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
+    abi: anvAbi,
     functionName: 'claim',
     args: [BigNumber.from('56')],
   })

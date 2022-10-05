@@ -14,15 +14,15 @@ wagmi is written in TypeScript so the library and your projects are type-safe! T
 
 ## Type Inference
 
-Types in wagmi generally don't require providing type annotations for yourself. For contract interaction hooks and signing typed data, you must add [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface` and `types` respectively to get the best type inference. For example, `useContractRead`:
+Types in wagmi generally don't require providing type annotations for yourself. For contract interaction hooks and signing typed data, you must add [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi` and `types` respectively to get the best type inference. For example, `useContractRead`:
 
 ```ts
 import { useContractRead } from 'wagmi'
 
 const { data } = useContractRead({
   //    ^? (property) data: BigNumber | undefined
-  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  contractInterface: [
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: [
     {
       name: 'getUncleanliness',
       inputs: [],
