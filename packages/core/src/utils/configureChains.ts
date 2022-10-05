@@ -1,3 +1,4 @@
+import { Formatter } from '@ethersproject/providers'
 import { providers } from 'ethers'
 
 import {
@@ -90,32 +91,36 @@ export function configureChains<
   return {
     chains,
     provider: ({ chainId }: { chainId?: number }) => {
-      const activeChainId =
-        chainId && chains.some((x) => x.id === chainId)
-          ? chainId
-          : <number>defaultChains[0]?.id
-      const chainProviders = providers_[activeChainId]
+      const activeChain = <TChain>(
+        (chains.find((x) => x.id === chainId) ?? defaultChains[0])
+      )
+      const chainProviders = providers_[activeChain.id]
 
       if (!chainProviders || !chainProviders[0])
-        throw new Error(`No providers configured for chain "${activeChainId}"`)
+        throw new Error(`No providers configured for chain "${activeChain.id}"`)
 
+      let provider
       if (chainProviders.length === 1) {
-        return Object.assign(chainProviders[0](), {
-          chains,
-          pollingInterval,
-        }) as TProvider & {
-          chains: TChain[]
+        provider = chainProviders[0]()
+      } else {
+        provider = fallbackProvider(targetQuorum, minQuorum, chainProviders, {
+          stallTimeout,
+        })
+      }
+
+      // Formatter workaround as Celo does not provide `gasLimit` or `difficulty` on eth_getBlockByNumber.
+      if (activeChain.id === 42220) {
+        provider.formatter.formats.block = {
+          ...provider.formatter.formats.block,
+          difficulty: Formatter.allowNull(provider.formatter.bigNumber),
+          gasLimit: Formatter.allowNull(provider.formatter.bigNumber),
         }
       }
-      return Object.assign(
-        fallbackProvider(targetQuorum, minQuorum, chainProviders, {
-          stallTimeout,
-        }),
-        {
-          chains,
-          pollingInterval,
-        },
-      )
+
+      return Object.assign(provider, {
+        chains,
+        pollingInterval,
+      })
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
       const activeChainId =
