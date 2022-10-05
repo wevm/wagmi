@@ -1,4 +1,3 @@
-import { Formatter } from '@ethersproject/providers'
 import { providers } from 'ethers'
 
 import {
@@ -112,8 +111,8 @@ export function configureChains<
       if (activeChain.id === 42220) {
         provider.formatter.formats.block = {
           ...provider.formatter.formats.block,
-          difficulty: Formatter.allowNull(provider.formatter.bigNumber),
-          gasLimit: Formatter.allowNull(provider.formatter.bigNumber),
+          difficulty: () => 0,
+          gasLimit: () => 0,
         }
       }
 
