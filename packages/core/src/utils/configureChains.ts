@@ -122,17 +122,27 @@ export function configureChains<
       })
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
-      const activeChainId =
-        chainId && chains.some((x) => x.id === chainId)
-          ? chainId
-          : <number>defaultChains[0]?.id
-      const chainWebSocketProviders = webSocketProviders_[activeChainId]
+      const activeChain = <TChain>(
+        (chains.find((x) => x.id === chainId) ?? defaultChains[0])
+      )
+      const chainWebSocketProviders = webSocketProviders_[activeChain.id]
 
       if (!chainWebSocketProviders) return undefined
 
+      const provider = chainWebSocketProviders[0]?.()
+
+      // Formatter workaround as Celo does not provide `gasLimit` or `difficulty` on eth_getBlockByNumber.
+      if (provider && activeChain.id === 42220) {
+        provider.formatter.formats.block = {
+          ...provider.formatter.formats.block,
+          difficulty: () => 0,
+          gasLimit: () => 0,
+        }
+      }
+
       // WebSockets do not work with `fallbackProvider`
       // Default to first available
-      return Object.assign(chainWebSocketProviders[0]?.() || {}, {
+      return Object.assign(provider || {}, {
         chains,
       }) as TWebSocketProvider & { chains: TChain[] }
     },
