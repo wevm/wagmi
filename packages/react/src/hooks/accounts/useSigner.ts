@@ -30,7 +30,7 @@ export function useSigner<TSigner extends Signer>({
     FetchSignerResult<TSigner>
   >(queryKey(), queryFn, {
     cacheTime: 0,
-    staleTime: 0,
+    staleTime: Infinity,
     suspense,
     onError,
     onSettled,
