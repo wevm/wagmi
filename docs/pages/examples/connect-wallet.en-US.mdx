@@ -15,7 +15,9 @@ The example below uses [`useConnect`](/docs/hooks/useConnect), [`useAccount`](/d
 <ConnectWallet />
 
 <Callout emoji="🚀">
-  Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) to get started with pre-built interface on top of wagmi for managing wallet connections.
+  Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev)
+  to get started with pre-built interface on top of wagmi for managing wallet
+  connections.
 </Callout>
 
 ## Step 1: Configuring Connectors
@@ -36,6 +38,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { TallyHoConnector } from 'wagmi/connectors/tallyHo'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 // Configure chains & providers with the Alchemy provider.
@@ -50,6 +53,7 @@ const client = createClient({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({ chains }),
+    new TallyHoConnector({ chains }),
     new CoinbaseWalletConnector({
       chains,
       options: {

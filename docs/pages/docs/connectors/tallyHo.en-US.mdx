@@ -1,0 +1,72 @@
+---
+title: 'TallyHo'
+description: 'Official wagmi Connector for Tally Ho.'
+---
+
+import Callout from 'nextra-theme-docs/callout'
+
+# TallyHo
+
+The `TallyHoConnector` supports connecting with TallyHo.
+
+```ts
+import { TallyHoConnector } from 'wagmi/connectors/tallyHo'
+```
+
+## Usage
+
+```ts
+import { TallyHoConnector } from 'wagmi/connectors/tallyHo'
+
+const connector = new TallyHoConnector()
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { chain } from 'wagmi'
+import { TallyHoConnector } from 'wagmi/connectors/tallyHo'
+
+const connector = new TallyHoConnector({
+  chains: [chain.mainnet, chain.optimism],
+})
+```
+
+### options (optional)
+
+Options for configuring the connector.
+
+```ts {4-6}
+import { TallyHoConnector } from 'wagmi/connectors/tallyHo'
+
+const connector = new TallyHoConnector({
+  options: {
+    shimDisconnect: true,
+  },
+})
+```
+
+#### UNSTABLE_shimOnConnectSelectAccount
+
+<Callout emoji="🚧">
+  This is an experimental feature. It's stable enough to show up in the docs,
+  but should be used with care. If you have any feedback, [create a
+  discussion](https://github.com/wagmi-dev/wagmi/discussions).
+</Callout>
+
+While "disconnected" with `shimDisconnect`, allows user to select a different Tally Ho account (than the currently connected account) when trying to connect. Defaults to `false`.
+
+```ts {6}
+import { TallyHoConnector } from 'wagmi/connectors/tallyHo'
+
+const connector = new TallyHoConnector({
+  options: {
+    shimDisconnect: true,
+    UNSTABLE_shimOnConnectSelectAccount: true,
+  },
+})
+```

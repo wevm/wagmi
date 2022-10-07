@@ -26,7 +26,7 @@
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
-- 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and Injected
+- 💼 Built-in wallet connectors for MetaMask, TallyHo, WalletConnect, Coinbase Wallet, and Injected
 - 👟 Caching, request deduplication, multicall, batching, and persistence
 - 🌀 Auto-refresh data on wallet, block, and network changes
 - 🦄 TypeScript ready
