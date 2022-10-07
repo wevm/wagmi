@@ -50,6 +50,10 @@
       "module": "./connectors/metaMask/dist/wagmi-connectors-metaMask.esm.js",
       "default": "./connectors/metaMask/dist/wagmi-connectors-metaMask.cjs.js"
     },
+    "./connectors/tallyHo": {
+      "module": "./connectors/tallyHo/dist/wagmi-connectors-tallyHo.esm.js",
+      "default": "./connectors/tallyHo/dist/wagmi-connectors-tallyHo.cjs.js"
+    },
     "./connectors/mock": {
       "module": "./connectors/mock/dist/wagmi-connectors-mock.esm.js",
       "default": "./connectors/mock/dist/wagmi-connectors-mock.cjs.js"

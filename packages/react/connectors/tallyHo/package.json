@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-connectors-tallyHo.cjs.js",
+  "module": "dist/wagmi-connectors-tallyHo.esm.js"
+}
