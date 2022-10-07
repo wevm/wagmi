@@ -19,6 +19,7 @@ import {
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { TallyHoConnector } from 'wagmi/connectors/tallyHo'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
@@ -46,6 +47,7 @@ export default function App() {
       autoConnect: true,
       connectors: [
         new MetaMaskConnector({ chains }),
+        new TallyHoConnector({ chains }),
         new CoinbaseWalletConnector({
           chains,
           options: {
