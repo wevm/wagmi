@@ -108,7 +108,7 @@
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
-    "zustand": "^4.0.0"
+    "zustand": "^4.1.1"
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
