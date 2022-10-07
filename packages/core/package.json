@@ -41,6 +41,10 @@
       "module": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.esm.js",
       "default": "./connectors/metaMask/dist/wagmi-core-connectors-metaMask.cjs.js"
     },
+    "./connectors/tallyHo": {
+      "module": "./connectors/tallyHo/dist/wagmi-core-connectors-tallyHo.esm.js",
+      "default": "./connectors/tallyHo/dist/wagmi-core-connectors-tallyHo.cjs.js"
+    },
     "./connectors/mock": {
       "module": "./connectors/mock/dist/wagmi-core-connectors-mock.esm.js",
       "default": "./connectors/mock/dist/wagmi-core-connectors-mock.cjs.js"
@@ -84,6 +88,7 @@
       "chains.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/metaMask.ts",
+      "connectors/tallyHo.ts",
       "connectors/walletConnect.ts",
       "connectors/mock/index.ts",
       "internal.ts",
