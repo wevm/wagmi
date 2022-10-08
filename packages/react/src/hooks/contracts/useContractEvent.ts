@@ -78,14 +78,16 @@ export type UseContractEventConfig<
 export function useContractEvent<
   TAbi extends Abi | readonly unknown[],
   TEventName extends string,
->({
-  address,
-  chainId,
-  abi,
-  listener,
-  eventName,
-  once,
-}: UseContractEventConfig<TAbi, TEventName>) {
+>(
+  {
+    address,
+    chainId,
+    abi,
+    listener,
+    eventName,
+    once,
+  }: UseContractEventConfig<TAbi, TEventName> = {} as any,
+) {
   const provider = useProvider({ chainId })
   const webSocketProvider = useWebSocketProvider({ chainId })
   const contract = useContract({

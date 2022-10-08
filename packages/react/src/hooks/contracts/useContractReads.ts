@@ -111,23 +111,25 @@ export function useContractReads<
     abi: TAbi
     functionName: TFunctionName
   }[],
->({
-  allowFailure = true,
-  cacheOnBlock = false,
-  cacheTime,
-  contracts,
-  overrides,
-  enabled: enabled_ = true,
-  isDataEqual = deepEqual,
-  keepPreviousData,
-  onError,
-  onSettled,
-  onSuccess,
-  select,
-  staleTime,
-  suspense,
-  watch,
-}: UseContractReadsConfig<TContracts>) {
+>(
+  {
+    allowFailure = true,
+    cacheOnBlock = false,
+    cacheTime,
+    contracts,
+    overrides,
+    enabled: enabled_ = true,
+    isDataEqual = deepEqual,
+    keepPreviousData,
+    onError,
+    onSettled,
+    onSuccess,
+    select,
+    staleTime,
+    suspense,
+    watch,
+  }: UseContractReadsConfig<TContracts> = {} as any,
+) {
   const { data: blockNumber } = useBlockNumber({
     enabled: watch || cacheOnBlock,
     watch,

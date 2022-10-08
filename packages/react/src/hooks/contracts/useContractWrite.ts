@@ -143,20 +143,22 @@ function mutationFn({
 export function useContractWrite<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->({
-  address,
-  args,
-  chainId,
-  abi,
-  functionName,
-  mode,
-  overrides,
-  request,
-  onError,
-  onMutate,
-  onSettled,
-  onSuccess,
-}: UseContractWriteConfig<TAbi, TFunctionName>) {
+>(
+  {
+    address,
+    args,
+    chainId,
+    abi,
+    functionName,
+    mode,
+    overrides,
+    request,
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  }: UseContractWriteConfig<TAbi, TFunctionName> = {} as any,
+) {
   const {
     data,
     error,

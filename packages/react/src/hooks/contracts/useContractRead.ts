@@ -78,25 +78,27 @@ function queryFn<
 export function useContractRead<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->({
-  abi,
-  address,
-  functionName,
-  args,
-  chainId: chainId_,
-  overrides,
-  cacheOnBlock = false,
-  cacheTime,
-  enabled: enabled_ = true,
-  isDataEqual = deepEqual,
-  select,
-  staleTime,
-  suspense,
-  watch,
-  onError,
-  onSettled,
-  onSuccess,
-}: UseContractReadConfig<TAbi, TFunctionName>) {
+>(
+  {
+    abi,
+    address,
+    functionName,
+    args,
+    chainId: chainId_,
+    overrides,
+    cacheOnBlock = false,
+    cacheTime,
+    enabled: enabled_ = true,
+    isDataEqual = deepEqual,
+    select,
+    staleTime,
+    suspense,
+    watch,
+    onError,
+    onSettled,
+    onSuccess,
+  }: UseContractReadConfig<TAbi, TFunctionName> = {} as any,
+) {
   const chainId = useChainId({ chainId: chainId_ })
   const { data: blockNumber } = useBlockNumber({
     chainId,

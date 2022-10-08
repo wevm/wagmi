@@ -97,21 +97,23 @@ function queryFn({
 export function usePrepareContractWrite<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->({
-  address,
-  abi,
-  functionName,
-  chainId,
-  args,
-  overrides,
-  cacheTime,
-  enabled = true,
-  staleTime,
-  suspense,
-  onError,
-  onSettled,
-  onSuccess,
-}: UsePrepareContractWriteConfig<TAbi, TFunctionName>) {
+>(
+  {
+    address,
+    abi,
+    functionName,
+    chainId,
+    args,
+    overrides,
+    cacheTime,
+    enabled = true,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  }: UsePrepareContractWriteConfig<TAbi, TFunctionName> = {} as any,
+) {
   const activeChainId = useChainId()
   const { data: signer } = useSigner<providers.JsonRpcSigner>({
     chainId: chainId ?? activeChainId,
