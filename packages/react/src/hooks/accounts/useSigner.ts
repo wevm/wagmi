@@ -38,7 +38,7 @@ export function useSigner<TSigner extends Signer>({
     ReturnType<typeof queryKey>
   >(queryKey({ chainId }), queryFn, {
     cacheTime: 0,
-    staleTime: 0,
+    staleTime: Infinity,
     suspense,
     onError,
     onSettled,

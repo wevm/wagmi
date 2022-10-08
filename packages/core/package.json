@@ -2,7 +2,7 @@
   "name": "@wagmi/core",
   "description": "Vanilla JS library for Ethereum",
   "license": "WAGMIT",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/wagmi-dev/wagmi.git",
@@ -108,7 +108,7 @@
   },
   "dependencies": {
     "eventemitter3": "^4.0.7",
-    "zustand": "^4.0.0"
+    "zustand": "^4.1.1"
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
