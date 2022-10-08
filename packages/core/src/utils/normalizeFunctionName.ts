@@ -32,8 +32,10 @@ export function normalizeFunctionName({
 
   for (const overloadFunction of overloadFunctions) {
     const matched = args.every((arg, index) => {
-      const abiParameter = overloadFunction.fragment.inputs[index]
-      return isArgOfType(arg, abiParameter as AbiParameter)
+      const abiParameter = overloadFunction.fragment.inputs[
+        index
+      ] as AbiParameter
+      return isArgOfType(arg, abiParameter)
     })
     if (matched) return overloadFunction.name
   }
@@ -54,16 +56,17 @@ export function isArgOfType(arg: unknown, abiParameter: AbiParameter): boolean {
       return argType === 'string'
     case 'string':
       return argType === 'string'
-    case 'tuple':
-      return Object.values(abiParameter.components).every(
-        (component, index) => {
-          return isArgOfType(
-            Object.values(arg as unknown[] | Record<string, unknown>)[index],
-            component as AbiParameter,
-          )
-        },
-      )
     default: {
+      if (abiParameterType === 'tuple' && 'components' in abiParameter)
+        return Object.values(abiParameter.components).every(
+          (component, index) => {
+            return isArgOfType(
+              Object.values(arg as unknown[] | Record<string, unknown>)[index],
+              component as AbiParameter,
+            )
+          },
+        )
+
       // `(u)int<M>`: (un)signed integer type of `M` bits, `0 < M <= 256`, `M % 8 == 0`
       // https://regexr.com/6v8hp
       if (
@@ -90,7 +93,7 @@ export function isArgOfType(arg: unknown, abiParameter: AbiParameter): boolean {
           arg.every((x: unknown) =>
             isArgOfType(x, {
               ...abiParameter,
-              // Pop off `[]` or `[M]` from type
+              // Pop off `[]` or `[M]` from end of type
               type: abiParameterType.replace(/(\[[0-9]{0,}\])$/, ''),
             } as AbiParameter),
           )

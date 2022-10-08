@@ -84,7 +84,7 @@ export function watchContractEvent<
 
     const signerOrProvider =
       getWebSocketProvider({ chainId }) || getProvider({ chainId })
-    contract = getContract({ address, abi, signerOrProvider })
+    contract = getContract({ address, abi, signerOrProvider }) as Contract
 
     if (once) contract.once(eventName, handler)
     else contract.on(eventName, handler)
