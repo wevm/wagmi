@@ -1,8 +1,7 @@
 import { Abi } from 'abitype'
-import { CallOverrides } from 'ethers/lib/ethers'
+import { CallOverrides, Contract } from 'ethers/lib/ethers'
 
 import { ContractMethodDoesNotExistError } from '../../errors'
-
 import {
   DefaultOptions,
   GetConfig,
@@ -53,14 +52,14 @@ export async function readContract<
     address,
     abi,
     signerOrProvider: provider,
-  })
+  }) as Contract
 
   const normalizedFunctionName = normalizeFunctionName({
     contract,
     functionName,
     args,
   })
-  const contractFunction = contract[normalizedFunctionName]
+  const contractFunction = contract.functions[normalizedFunctionName]
   if (!contractFunction)
     throw new ContractMethodDoesNotExistError({
       address,

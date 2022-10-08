@@ -1,5 +1,5 @@
 import { Abi } from 'abitype'
-import { CallOverrides } from 'ethers/lib/ethers'
+import { CallOverrides, Contract } from 'ethers/lib/ethers'
 
 import { multicallABI } from '../../constants'
 import {
@@ -67,7 +67,7 @@ export async function multicall<
   const calls = (contracts as unknown as ContractConfig[]).map(
     ({ address, abi, functionName, ...config }) => {
       const { args } = config || {}
-      const contract = getContract({ address, abi })
+      const contract = getContract({ address, abi }) as Contract
       const params = args ?? []
       const normalizedFunctionName = normalizeFunctionName({
         contract,
@@ -104,14 +104,16 @@ export async function multicall<
     success: boolean
     returnData: string
   }[]
-  const params = [...[calls], ...(overrides ? [overrides] : [])]
+  const params: any = [...[calls], ...(overrides ? [overrides] : [])]
   const results = (await multicallContract.aggregate3(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     ...params,
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
     const { address, abi, args, functionName } = contracts[i]
 
-    const contract = getContract({ address, abi })
+    const contract = getContract({ address, abi }) as Contract
     const normalizedFunctionName = normalizeFunctionName({
       contract,
       functionName,

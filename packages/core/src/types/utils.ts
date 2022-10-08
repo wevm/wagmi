@@ -21,6 +21,28 @@ export type IsNever<T> = [T] extends [never] ? true : false
 export type IsUnknown<T> = unknown extends T ? true : false
 
 /**
+ * Joins {@link Items} into string separated by {@link Separator}
+ *
+ * @param Items - Items to join
+ * @param Separator - Separator to use
+ *
+ * @example
+ * type Result = Join<['foo', 'bar'], '-'>
+ */
+export type Join<
+  Items extends string[],
+  Separator extends string | number,
+> = Items extends [infer First, ...infer Rest]
+  ? First extends string
+    ? Rest extends string[]
+      ? Rest extends []
+        ? `${First}`
+        : `${First}${Separator}${Join<Rest, Separator>}`
+      : never
+    : never
+  : ''
+
+/**
  * Check if {@link T} and {@link U} are equal
  *
  * @param T

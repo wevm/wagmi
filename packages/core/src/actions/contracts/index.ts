@@ -10,7 +10,11 @@ export {
   type PrepareWriteContractResult,
 } from './prepareWriteContract'
 
-export { getContract, type GetContractArgs } from './getContract'
+export {
+  getContract,
+  type GetContractArgs,
+  type GetContractResult,
+} from './getContract'
 
 export {
   multicall,

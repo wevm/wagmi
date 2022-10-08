@@ -1,5 +1,9 @@
 import { Abi, Address } from 'abitype'
-import { CallOverrides, PopulatedTransaction } from 'ethers/lib/ethers'
+import {
+  CallOverrides,
+  Contract,
+  PopulatedTransaction,
+} from 'ethers/lib/ethers'
 
 import {
   ConnectorNotFoundError,
@@ -83,7 +87,11 @@ export async function prepareWriteContract<
   if (!signer) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId })
 
-  const contract = getContract({ address, abi, signerOrProvider: signer })
+  const contract = getContract({
+    address,
+    abi,
+    signerOrProvider: signer,
+  }) as Contract
   const normalizedFunctionName = normalizeFunctionName({
     contract,
     functionName,

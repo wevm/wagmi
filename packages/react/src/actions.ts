@@ -62,6 +62,7 @@ export type {
   FetchTransactionResult,
   GetAccountResult,
   GetContractArgs,
+  GetContractResult,
   GetNetworkResult,
   GetProviderArgs,
   GetProviderResult,

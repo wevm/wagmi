@@ -45,6 +45,7 @@ export {
   type FetchTokenArgs,
   type FetchTokenResult,
   type GetContractArgs,
+  type GetContractResult,
   type MulticallConfig,
   type MulticallResult,
   type PrepareWriteContractConfig,
