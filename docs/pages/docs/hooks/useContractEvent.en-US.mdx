@@ -34,7 +34,7 @@ function App() {
 
 ### address (optional)
 
-Contract address or ENS name. If `address` is not defined, hook will not run.
+Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
 import { useContractEvent } from 'wagmi'
@@ -51,9 +51,9 @@ function App() {
 }
 ```
 
-### abi
+### abi (optional)
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`. If `abi` is not defined, hook will not run.
 
 ```tsx {6}
 import { useContractEvent } from 'wagmi'
@@ -70,9 +70,9 @@ function App() {
 }
 ```
 
-### eventName
+### eventName (optional)
 
-Name of the event to listen to.
+Name of the event to listen to. If `eventName` is not defined, hook will not run.
 
 ```tsx {7}
 import { useContractEvent } from 'wagmi'

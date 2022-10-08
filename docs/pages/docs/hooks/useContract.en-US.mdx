@@ -7,7 +7,7 @@ import Callout from 'nextra-theme-docs/callout'
 
 # useContract
 
-Hook for declaratively creating an ethers [Contract](https://docs.ethers.io/v5/api/contract/contract) instance.
+Hook for declaratively creating a type-safe [Contract](https://docs.ethers.io/v5/api/contract/contract) instance.
 
 ```tsx
 import { useContract } from 'wagmi'
@@ -45,7 +45,7 @@ ethers.Contract | null
 
 ### address (optional)
 
-Contract address or ENS name. If `address` is not defined, response is `null`.
+Contract address. If `address` is not defined, response is `null`.
 
 ```tsx {5}
 import { useContract } from 'wagmi'

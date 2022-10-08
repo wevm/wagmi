@@ -22,12 +22,13 @@ For this to work, you must add [const assertions](https://www.typescriptlang.org
 
 The following hooks support type inference when you add a const assertion to `abi`:
 
-- useContractEvent
-- useContractRead
-- useContractReads
-- useContractWrite
-- usePrepareContractWrite
-- useContractInfiniteReads (must also add const assertion to `args` since `abi` is in the return type)
+- [useContract](/docs/hooks/useContract)
+- [useContractEvent](/docs/hooks/useContractEvent)
+- [useContractRead](/docs/hooks/useContractRead)
+- [useContractReads](/docs/hooks/useContractReads)
+- [useContractWrite](/docs/hooks/useContractWrite)
+- [usePrepareContractWrite](/docs/hooks/usePrepareContractWrite)
+- [useContractInfiniteReads](/docs/hooks/useContractInfiniteReads) (must also add const assertion to `args` since `abi` is in the return type)
 
 For example, `useContractRead`:
 
@@ -132,4 +133,4 @@ const result = useSignTypedData({
 
 ## Configuring Internal Types
 
-For advanced use-cases, you may need to configure wagmi's internal types. Most of wagmi's ABI and EIP-712 Typed Data-related types are powered by [ABIType](https://github.com/wagmi-dev/abitype). See [ABIType's documentation](https://github.com/wagmi-dev/abitype#configuration) for more info.
+For advanced use-cases, you may want to configure wagmi's internal types. Most of wagmi's types relating to ABIs and EIP-712 Typed Data are powered by [ABIType](https://github.com/wagmi-dev/abitype). See ABIType's [documentation](https://github.com/wagmi-dev/abitype#configuration) for more info on how to configure types.

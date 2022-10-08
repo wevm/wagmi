@@ -74,7 +74,7 @@ function App() {
 
 ### adddress (optional)
 
-Contract address or ENS name. If `adddress` is not defined, hook will not run.
+Contract address. If `adddress` is not defined, hook will not run.
 
 ```tsx {5}
 import { usePrepareContractWrite } from 'wagmi'
@@ -88,9 +88,9 @@ function App() {
 }
 ```
 
-### abi
+### abi (optional)
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. If `abi` is not defined, hook will not run.
 
 ```tsx {6}
 import { usePrepareContractWrite } from 'wagmi'
@@ -104,9 +104,9 @@ function App() {
 }
 ```
 
-### functionName
+### functionName (optional)
 
-Name of function to call.
+Name of function to call. If `functionName` is not defined, hook will not run.
 
 ```tsx {7}
 import { usePrepareContractWrite } from 'wagmi'
