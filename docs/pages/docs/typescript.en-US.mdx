@@ -14,7 +14,7 @@ wagmi is written in TypeScript so the library and your projects are type-safe! T
 
 ## Type Inference
 
-wagmi can infer types based on [ABIs](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data (powered by [ABIType](https://github.com/wagmi-dev/abitype)), giving you full end-to-end type-safety from your contracts to your frontend and incredible developer experience (e.g. autocomplete contract function names and catch misspellings, type contract function arguments, etc.).
+wagmi can infer types based on [ABI](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions (powered by [ABIType](https://github.com/wagmi-dev/abitype)), giving you full end-to-end type-safety from your contracts to your frontend and incredible developer experience (e.g. autocomplete contract function names and catch misspellings, type contract function arguments, etc.).
 
 For this to work, you must add [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to contract interaction hooks' `abi` configuration parameter and `useSignTypedData`'s `types` configuration parameter.
 

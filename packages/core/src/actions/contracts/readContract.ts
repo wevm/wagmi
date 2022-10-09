@@ -67,5 +67,5 @@ export async function readContract<
     })
 
   const params = [...(args ?? []), ...(overrides ? [overrides] : [])]
-  return await contractFunction?.(...params)
+  return contractFunction?.(...params)
 }
