@@ -59,7 +59,7 @@
     "ethers": "^5.7.0",
     "jsdom": "^20.0.0",
     "lint-staged": "^13.0.3",
-    "msw": "^0.39.2",
+    "msw": "^0.47.4",
     "prettier": "^2.7.1",
     "simple-git-hooks": "^2.8.0",
     "typescript": "^4.7.4",
