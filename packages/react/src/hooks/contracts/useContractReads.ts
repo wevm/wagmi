@@ -19,6 +19,7 @@ export type UseContractReadsConfig<TContracts extends unknown[]> =
       isAbiOptional: true
       isAddressOptional: true
       isArgsOptional: true
+      isContractsOptional: true
       isFunctionNameOptional: true
     }
   > &
@@ -47,11 +48,13 @@ function queryKey<
       isAbiOptional: true
       isAddressOptional: true
       isArgsOptional: true
+      isContractsOptional: true
       isFunctionNameOptional: true
     }
   >,
   { blockNumber, chainId }: { blockNumber?: number; chainId?: number },
 ) {
+  if (!contracts) throw new Error('contracts is required')
   return [
     {
       entity: 'readContracts',
@@ -145,17 +148,19 @@ export function useContractReads<
     [allowFailure, blockNumber, cacheOnBlock, chainId, contracts, overrides],
   )
 
-  const abis = (contracts as unknown as ContractConfig[]).map(({ abi }) => abi)
-
   const enabled = React.useMemo(() => {
     let enabled = Boolean(
-      enabled_ && contracts.every((x) => x.abi && x.address && x.functionName),
+      enabled_ &&
+        contracts &&
+        contracts.every((x) => x.abi && x.address && x.functionName),
     )
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled
   }, [blockNumber, cacheOnBlock, contracts, enabled_])
 
   useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
+
+  const abis = (contracts as unknown as ContractConfig[]).map(({ abi }) => abi)
 
   return useQuery(queryKey_, queryFn({ abis }), {
     cacheTime,
@@ -165,7 +170,7 @@ export function useContractReads<
     staleTime,
     select(data) {
       const result = data.map((data, i) => {
-        const { abi, functionName } = contracts[i] as ContractConfig
+        const { abi, functionName } = (contracts?.[i] ?? {}) as ContractConfig
         return abi && functionName
           ? parseContractResult({ abi, functionName, data })
           : data

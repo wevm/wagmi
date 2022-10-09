@@ -44,7 +44,7 @@ export async function fetchBalance({
   if (token) {
     // Convert ENS name to address if required
     let resolvedAddress: Address
-    if (isAddress(addressOrName)) resolvedAddress = <Address>addressOrName
+    if (isAddress(addressOrName)) resolvedAddress = addressOrName
     else {
       const address = await provider.resolveName(addressOrName)
       // Same error `provider.getBalance` throws for invalid ENS name

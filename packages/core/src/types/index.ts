@@ -24,6 +24,7 @@ declare module 'abitype' {
 
 declare module 'ethers/lib/utils' {
   export function getAddress(address: string): Address
+  export function isAddress(address: string): address is Address
   export function verifyTypedData<
     TTypedData extends TypedData,
     TSchema extends TypedDataToPrimitiveTypes<TTypedData>,

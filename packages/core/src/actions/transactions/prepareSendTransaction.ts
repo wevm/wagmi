@@ -55,7 +55,7 @@ export async function prepareSendTransaction({
 
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)
-      ? Promise.resolve(<Address>request.to)
+      ? Promise.resolve(request.to)
       : fetchEnsAddress({ name: request.to }),
     request.gasLimit
       ? Promise.resolve(request.gasLimit)

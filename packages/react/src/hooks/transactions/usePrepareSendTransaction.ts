@@ -11,26 +11,18 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UsePrepareSendTransactionArgs = Omit<
-  PrepareSendTransactionArgs,
-  'request'
-> & {
-  request: Partial<PrepareSendTransactionArgs['request']>
-}
+export type UsePrepareSendTransactionConfig =
+  Partial<PrepareSendTransactionArgs> &
+    QueryConfig<PrepareSendTransactionResult, Error>
 
-export type UsePrepareSendTransactionConfig = QueryConfig<
-  PrepareSendTransactionResult,
-  Error
->
-
-export const queryKey = (
-  { chainId, request }: UsePrepareSendTransactionArgs,
+function queryKey(
+  { chainId, request }: Partial<PrepareSendTransactionArgs>,
   {
     activeChainId,
     signerAddress,
   }: { activeChainId: number; signerAddress?: string },
-) =>
-  [
+) {
+  return [
     {
       entity: 'prepareSendTransaction',
       activeChainId,
@@ -39,19 +31,20 @@ export const queryKey = (
       signerAddress,
     },
   ] as const
+}
 
-const queryFn =
-  ({ signer }: { signer?: FetchSignerResult }) =>
-  ({
+function queryFn({ signer }: { signer?: FetchSignerResult }) {
+  return ({
     queryKey: [{ chainId, request }],
   }: QueryFunctionArgs<typeof queryKey>) => {
-    if (!request.to) throw new Error('request.to is required')
+    if (!request?.to) throw new Error('request.to is required')
     return prepareSendTransaction({
       chainId,
       request: { ...request, to: request.to },
       signer,
     })
   }
+}
 
 /**
  * @description Hook for preparing a transaction to be sent via [`useSendTransaction`](/docs/hooks/useSendTransaction).
@@ -77,7 +70,7 @@ export function usePrepareSendTransaction({
   onError,
   onSettled,
   onSuccess,
-}: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig) {
+}: UsePrepareSendTransactionConfig = {}) {
   const activeChainId = useChainId()
   const { data: signer } = useSigner<providers.JsonRpcSigner>({
     chainId: chainId ?? activeChainId,
@@ -91,7 +84,7 @@ export function usePrepareSendTransaction({
     queryFn({ signer }),
     {
       cacheTime,
-      enabled: Boolean(enabled && signer && request.to),
+      enabled: Boolean(enabled && signer && request && request.to),
       isDataEqual: deepEqual,
       staleTime,
       suspense,

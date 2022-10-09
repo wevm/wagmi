@@ -4,13 +4,12 @@ import { describe, expect, it } from 'vitest'
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
 import {
-  UsePrepareSendTransactionArgs,
   UsePrepareSendTransactionConfig,
   usePrepareSendTransaction,
 } from './usePrepareSendTransaction'
 
 function usePrepareSendTransactionWithConnect(
-  config: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig,
+  config: UsePrepareSendTransactionConfig,
 ) {
   const { ...prepareSendTransaction } = usePrepareSendTransaction(config)
   return {

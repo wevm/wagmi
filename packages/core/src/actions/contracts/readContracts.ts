@@ -12,21 +12,19 @@ import {
   ContractsConfig,
   ContractsResult,
   DefaultOptions,
-  Options,
+  Options as Options_,
 } from '../../types/contracts'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { readContract } from './readContract'
 
+type Options = Options_ & { isContractsOptional?: boolean }
+
 export type ReadContractsConfig<
   TContracts extends unknown[],
   TOptions extends Options = DefaultOptions,
-> = {
-  /** Failures in the multicall will fail silently */
-  allowFailure?: boolean
-  /** Contracts to query */
-  contracts: readonly [
+  _Contracts = readonly [
     ...ContractsConfig<
       TContracts,
       {
@@ -35,10 +33,21 @@ export type ReadContractsConfig<
       },
       TOptions
     >,
-  ]
+  ],
+> = {
+  /** Failures in the multicall will fail silently */
+  allowFailure?: boolean
   /** Call overrides */
   overrides?: CallOverrides
-}
+} & (TOptions['isContractsOptional'] extends true
+  ? {
+      /** Contracts to query */
+      contracts?: _Contracts
+    }
+  : {
+      /** Contracts to query */
+      contracts: _Contracts
+    })
 
 export type ReadContractsResult<TContracts extends unknown[]> =
   ContractsResult<TContracts>
