@@ -59,7 +59,7 @@ export async function readContract<
     functionName,
     args,
   })
-  const contractFunction = contract.functions[normalizedFunctionName]
+  const contractFunction = contract[normalizedFunctionName]
   if (!contractFunction)
     throw new ContractMethodDoesNotExistError({
       address,
