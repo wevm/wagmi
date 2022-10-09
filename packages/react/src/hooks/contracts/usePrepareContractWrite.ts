@@ -62,10 +62,10 @@ function queryFn({
   abi?: Abi | readonly unknown[]
   signer?: FetchSignerResult
 }) {
-  if (!abi) throw new Error('abi is required')
   return ({
     queryKey: [{ args, address, chainId, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
+    if (!abi) throw new Error('abi is required')
     return prepareWriteContract({
       args,
       address,

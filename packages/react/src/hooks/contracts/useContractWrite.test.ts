@@ -534,5 +534,36 @@ describe('useContractWrite', () => {
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
     })
+
+    it.each([
+      { property: 'address' },
+      { property: 'abi' },
+      { property: 'functionName' },
+    ])('throws error when $property is undefined', async ({ property }) => {
+      const tokenId = getRandomTokenId()
+      const baseConfig = {
+        address: wagmiContractConfig.address,
+        abi: wagmiContractConfig.abi,
+        mode: 'recklesslyUnprepared',
+        functionName: 'mint',
+        args: [tokenId],
+      } as const
+      const config = {
+        ...baseConfig,
+        address: property === 'address' ? undefined : baseConfig.address,
+        abi: property === 'abi' ? undefined : baseConfig.abi,
+        functionName:
+          property === 'functionName' ? undefined : baseConfig.functionName,
+      } as const
+      const utils = renderHook(() => useContractWrite(config))
+      const { result, waitFor } = utils
+
+      await act(async () => {
+        result.current.write?.()
+      })
+
+      await waitFor(() => expect(result.current.isError).toBeTruthy())
+      expect(result.current.error?.message).toBe(`${property} is required`)
+    })
   })
 })

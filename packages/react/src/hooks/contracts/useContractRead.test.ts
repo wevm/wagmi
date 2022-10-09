@@ -180,5 +180,36 @@ describe('useContractRead', () => {
         }
       `)
     })
+
+    it.each([
+      { property: 'address' },
+      { property: 'abi' },
+      { property: 'functionName' },
+    ])('does not run when $property is undefined', async ({ property }) => {
+      const baseConfig = {
+        address: wagmigotchiContractConfig.address,
+        abi: wagmigotchiContractConfig.abi,
+        functionName: 'love',
+        args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+      } as const
+      const config = {
+        ...baseConfig,
+        address: property === 'address' ? undefined : baseConfig.address,
+        abi: property === 'abi' ? undefined : baseConfig.abi,
+        functionName:
+          property === 'functionName' ? undefined : baseConfig.functionName,
+      } as const
+      const utils = renderHook(() => useContractRead(config))
+      const { rerender, result, waitFor } = utils
+
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // @ts-expect-error assigning to readonly object
+      config[property as keyof typeof config] =
+        baseConfig[property as keyof typeof baseConfig]
+      rerender()
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    })
   })
 })

@@ -133,4 +133,18 @@ describe('useContractEvent', () => {
       })
     })
   })
+
+  describe('behavior', () => {
+    it('does not run when property is undefined', async () => {
+      const listener = vi.fn()
+      const config = {
+        abi: erc20ABI,
+        eventName: 'Transfer',
+        listener,
+        once: true,
+      } as const
+      renderHook(() => useContractEvent(config))
+      expect(listener).toHaveBeenCalledTimes(0)
+    })
+  })
 })

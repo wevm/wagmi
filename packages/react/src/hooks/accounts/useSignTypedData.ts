@@ -41,8 +41,9 @@ function mutationFn<
   TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
 >(args: SignTypedDataArgs<TTypedData, TSchema>) {
   const { domain, types, value } = args
-  if (!domain || !types || !value)
-    throw new Error('domain, types, and value are all required')
+  if (!domain) throw new Error('domain is required')
+  if (!types) throw new Error('types is required')
+  if (!value) throw new Error('value is required')
   return signTypedData({ domain, types, value } as unknown as SignTypedDataArgs<
     TTypedData,
     TSchema

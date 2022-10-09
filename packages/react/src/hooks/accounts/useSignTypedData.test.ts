@@ -244,36 +244,6 @@ describe('useSignTypedData', () => {
           }
         `)
       })
-
-      it('fails', async () => {
-        const utils = renderHook(() => useSignTypedDataWithConnect())
-        const { result, waitFor } = utils
-        await actConnect({ utils })
-
-        await act(async () => result.current.signTypedData.signTypedData())
-        await waitFor(() =>
-          expect(result.current.signTypedData.isError).toBeTruthy(),
-        )
-        expect(result.current.signTypedData).toMatchInlineSnapshot(`
-          {
-            "data": undefined,
-            "error": [Error: domain, types, and value are all required],
-            "isError": true,
-            "isIdle": false,
-            "isLoading": false,
-            "isSuccess": false,
-            "reset": [Function],
-            "signTypedData": [Function],
-            "signTypedDataAsync": [Function],
-            "status": "error",
-            "variables": {
-              "domain": undefined,
-              "types": undefined,
-              "value": undefined,
-            },
-          }
-        `)
-      })
     })
 
     describe('signTypedDataAsync', () => {
@@ -307,9 +277,7 @@ describe('useSignTypedData', () => {
         await act(async () => {
           await expect(
             result.current.signTypedData.signTypedDataAsync(),
-          ).rejects.toThrowErrorMatchingInlineSnapshot(
-            `"domain, types, and value are all required"`,
-          )
+          ).rejects.toThrowErrorMatchingInlineSnapshot('"domain is required"')
         })
         await waitFor(() =>
           expect(result.current.signTypedData.isError).toBeTruthy(),
@@ -373,6 +341,33 @@ describe('useSignTypedData', () => {
           `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
         )
       })
+    })
+
+    it.each([
+      { property: 'domain' },
+      { property: 'types' },
+      { property: 'value' },
+    ])('throws error when $property is undefined', async ({ property }) => {
+      const baseConfig = {
+        domain,
+        types,
+        value,
+      } as const
+      const config = {
+        ...baseConfig,
+        domain: property === 'domain' ? undefined : baseConfig.domain,
+        types: property === 'types' ? undefined : baseConfig.types,
+        value: property === 'value' ? undefined : baseConfig.value,
+      } as const
+      const utils = renderHook(() => useSignTypedData(config))
+      const { result, waitFor } = utils
+
+      await act(async () => {
+        result.current.signTypedData()
+      })
+
+      await waitFor(() => expect(result.current.isError).toBeTruthy())
+      expect(result.current.error?.message).toBe(`${property} is required`)
     })
   })
 })

@@ -59,10 +59,10 @@ function queryFn<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >({ abi }: { abi?: Abi | readonly unknown[] }) {
-  if (!abi) throw new Error('abi is required')
   return async ({
     queryKey: [{ address, args, chainId, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
+    if (!abi) throw new Error('abi is required')
     if (!address) throw new Error('address is required')
     return ((await readContract({
       address,

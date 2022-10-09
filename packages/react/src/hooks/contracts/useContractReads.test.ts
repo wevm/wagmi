@@ -199,4 +199,58 @@ describe('useContractRead', () => {
       })
     })
   })
+
+  describe('behavior', () => {
+    it('does not run when contracts is undefined', async () => {
+      const config = {
+        contracts: undefined,
+      } as const
+      const utils = renderHook(() => useContractReads(config))
+      const { rerender, result, waitFor } = utils
+
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // @ts-expect-error assigning to readonly object
+      config.contracts = [
+        {
+          address: wagmigotchiContractConfig.address,
+          abi: wagmigotchiContractConfig.abi,
+          functionName: 'love',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+        },
+      ]
+      rerender()
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    })
+
+    it('does not run when no all contracts are complete', async () => {
+      const config = {
+        contracts: [
+          {
+            abi: wagmigotchiContractConfig.abi,
+            functionName: 'love',
+            args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+          },
+        ],
+      } as const
+      const utils = renderHook(() => useContractReads(config))
+      const { rerender, result, waitFor } = utils
+
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+
+      // @ts-expect-error assigning to readonly object
+      config.contracts = [
+        {
+          address: wagmigotchiContractConfig.address,
+          abi: wagmigotchiContractConfig.abi,
+          functionName: 'love',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+        },
+      ]
+      rerender()
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    })
+  })
 })

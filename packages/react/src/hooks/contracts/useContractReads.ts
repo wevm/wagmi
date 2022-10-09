@@ -54,14 +54,13 @@ function queryKey<
   >,
   { blockNumber, chainId }: { blockNumber?: number; chainId?: number },
 ) {
-  if (!contracts) throw new Error('contracts is required')
   return [
     {
       entity: 'readContracts',
       allowFailure,
       blockNumber,
       chainId,
-      contracts: (contracts as unknown as ContractConfig[]).map(
+      contracts: ((contracts ?? []) as unknown as ContractConfig[]).map(
         ({ address, args, chainId, functionName }) => ({
           address,
           args,
@@ -150,9 +149,7 @@ export function useContractReads<
 
   const enabled = React.useMemo(() => {
     let enabled = Boolean(
-      enabled_ &&
-        contracts &&
-        contracts.every((x) => x.abi && x.address && x.functionName),
+      enabled_ && contracts?.every((x) => x.abi && x.address && x.functionName),
     )
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled
@@ -160,7 +157,9 @@ export function useContractReads<
 
   useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
 
-  const abis = (contracts as unknown as ContractConfig[]).map(({ abi }) => abi)
+  const abis = ((contracts ?? []) as unknown as ContractConfig[]).map(
+    ({ abi }) => abi,
+  )
 
   return useQuery(queryKey_, queryFn({ abis }), {
     cacheTime,

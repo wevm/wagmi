@@ -21,11 +21,11 @@ function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >(config: UsePrepareContractWriteConfig<TAbi, TFunctionName>) {
-  const { ...prepareContractTransaction } = usePrepareContractWrite(config)
+  const { ...prepareContractWrite } = usePrepareContractWrite(config)
   return {
     connect: useConnect(),
     network: useSwitchNetwork(),
-    prepareContractTransaction,
+    prepareContractWrite,
   }
 }
 
@@ -40,7 +40,7 @@ describe('usePrepareContractWrite', () => {
       }),
     )
 
-    const { config, ...rest } = result.current.prepareContractTransaction
+    const { config, ...rest } = result.current.prepareContractWrite
     expect(config).toBeDefined()
     expect(rest).toMatchInlineSnapshot(`
       {
@@ -87,14 +87,10 @@ describe('usePrepareContractWrite', () => {
     await actConnect({ utils })
 
     await waitFor(() =>
-      expect(result.current.prepareContractTransaction.isSuccess).toBeTruthy(),
+      expect(result.current.prepareContractWrite.isSuccess).toBeTruthy(),
     )
 
-    const {
-      config,
-      data: res,
-      ...rest
-    } = result.current.prepareContractTransaction
+    const { config, data: res, ...rest } = result.current.prepareContractWrite
     const { data, gasLimit, ...restRequest } = config?.request || {}
     expect(res).toBeDefined()
     expect(config).toBeDefined()
@@ -152,11 +148,9 @@ describe('usePrepareContractWrite', () => {
       await actConnect({ chainId: 4, utils })
 
       await waitFor(() =>
-        expect(result.current.prepareContractTransaction.isError).toBeTruthy(),
+        expect(result.current.prepareContractWrite.isError).toBeTruthy(),
       )
-      expect(
-        result.current.prepareContractTransaction.error,
-      ).toMatchInlineSnapshot(
+      expect(result.current.prepareContractWrite.error).toMatchInlineSnapshot(
         '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]',
       )
 
@@ -164,9 +158,7 @@ describe('usePrepareContractWrite', () => {
       await waitFor(() => expect(result.current.network.isSuccess).toBeTruthy())
 
       await waitFor(() =>
-        expect(
-          result.current.prepareContractTransaction.isSuccess,
-        ).toBeTruthy(),
+        expect(result.current.prepareContractWrite.isSuccess).toBeTruthy(),
       )
     })
 
@@ -183,11 +175,10 @@ describe('usePrepareContractWrite', () => {
       await actConnect({ utils })
 
       await waitFor(() =>
-        expect(result.current.prepareContractTransaction.isError).toBeTruthy(),
+        expect(result.current.prepareContractWrite.isError).toBeTruthy(),
       )
 
-      const { config, data, ...rest } =
-        result.current.prepareContractTransaction
+      const { config, data, ...rest } = result.current.prepareContractWrite
       expect(config).toBeDefined()
       expect(data).toBeUndefined()
       expect(rest).toMatchInlineSnapshot(`
@@ -233,11 +224,10 @@ describe('usePrepareContractWrite', () => {
       await actConnect({ utils })
 
       await waitFor(() =>
-        expect(result.current.prepareContractTransaction.isError).toBeTruthy(),
+        expect(result.current.prepareContractWrite.isError).toBeTruthy(),
       )
 
-      const { config, data, ...rest } =
-        result.current.prepareContractTransaction
+      const { config, data, ...rest } = result.current.prepareContractWrite
       expect(config).toBeDefined()
       expect(data).toBeUndefined()
       expect(rest).toMatchInlineSnapshot(`
@@ -270,6 +260,50 @@ describe('usePrepareContractWrite', () => {
           "status": "error",
         }
       `)
+    })
+  })
+
+  describe('behavior', () => {
+    it.each([
+      { property: 'address' },
+      { property: 'abi' },
+      { property: 'functionName' },
+    ])('does not run when $property is undefined', async ({ property }) => {
+      const tokenId = getRandomTokenId()
+      const baseConfig = {
+        address: wagmiContractConfig.address,
+        abi: wagmiContractConfig.abi,
+        functionName: 'mint',
+        args: [tokenId],
+      } as const
+      const config = {
+        ...baseConfig,
+        address: property === 'address' ? undefined : baseConfig.address,
+        abi: property === 'abi' ? undefined : baseConfig.abi,
+        functionName:
+          property === 'functionName' ? undefined : baseConfig.functionName,
+      } as const
+      const utils = renderHook(() => usePrepareContractWriteWithConnect(config))
+      const { rerender, result, waitFor } = utils
+
+      await actConnect({ utils })
+      await waitFor(() =>
+        expect(result.current.prepareContractWrite.isIdle).toBeTruthy(),
+      )
+      expect(
+        result.current.prepareContractWrite.config[
+          property as keyof typeof result.current.prepareContractWrite.config
+        ],
+      ).toBe(config[property as keyof typeof config])
+
+      // @ts-expect-error assigning to readonly object
+      config[property as keyof typeof config] =
+        baseConfig[property as keyof typeof baseConfig]
+      rerender()
+
+      await waitFor(() =>
+        expect(result.current.prepareContractWrite.isSuccess).toBeTruthy(),
+      )
     })
   })
 })

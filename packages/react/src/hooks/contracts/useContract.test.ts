@@ -35,22 +35,30 @@ describe('useContract', () => {
       expect(result.current?.provider).not.toBeNull()
     })
 
-    it('no address', async () => {
-      const { result } = renderHook(() =>
-        useContract({
-          abi: erc20ABI,
-        }),
-      )
-      expect(result.current).toBeNull()
-    })
-
-    it('no abi', async () => {
-      const { result } = renderHook(() =>
-        useContract({
+    it.each([{ property: 'address' }, { property: 'abi' }])(
+      'does not run when $property is undefined',
+      async ({ property }) => {
+        const baseConfig = {
           address: uniContractAddress,
-        }),
-      )
-      expect(result.current).toBeNull()
-    })
+          abi: erc20ABI,
+        } as const
+        const config = {
+          ...baseConfig,
+          address: property === 'address' ? undefined : baseConfig.address,
+          abi: property === 'abi' ? undefined : baseConfig.abi,
+        } as const
+        const utils = renderHook(() => useContract(config))
+        const { rerender, result } = utils
+
+        expect(result.current).toBeNull()
+
+        // @ts-expect-error assigning to readonly object
+        config[property as keyof typeof config] =
+          baseConfig[property as keyof typeof baseConfig]
+        rerender()
+
+        expect(result.current).toBeDefined()
+      },
+    )
   })
 })
