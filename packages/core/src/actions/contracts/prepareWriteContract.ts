@@ -1,16 +1,17 @@
-import { Abi, Address } from 'abitype'
-import {
-  CallOverrides,
-  Contract,
-  PopulatedTransaction,
-} from 'ethers/lib/ethers'
+import { Abi, Address, ExtractAbiFunction } from 'abitype'
+import { Contract, PopulatedTransaction } from 'ethers/lib/ethers'
 
 import {
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
 } from '../../errors'
 import { Signer } from '../../types'
-import { DefaultOptions, GetConfig, Options } from '../../types/contracts'
+import {
+  AbiStateMutabilityToOverrides,
+  DefaultOptions,
+  GetConfig,
+  Options,
+} from '../../types/contracts'
 import {
   assertActiveChain,
   minimizeContractInterface,
@@ -30,8 +31,15 @@ export type PrepareWriteContractConfig<
     functionName: TFunctionName
     /** Chain id to use for provider */
     chainId?: number
-    /** Call overrides */
-    overrides?: CallOverrides
+    /** Overrides */
+    overrides?: AbiStateMutabilityToOverrides<
+      [TAbi, TFunctionName] extends [
+        infer TAbi_ extends Abi,
+        infer TFunctionName_ extends string,
+      ]
+        ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
+        : 'nonpayable' | 'payable'
+    >
     /** Custom signer */
     signer?: TSigner | null
   },

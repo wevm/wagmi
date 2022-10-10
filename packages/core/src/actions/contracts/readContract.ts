@@ -1,8 +1,9 @@
 import { Abi } from 'abitype'
-import { CallOverrides, Contract } from 'ethers/lib/ethers'
+import { Contract } from 'ethers/lib/ethers'
 
 import { ContractMethodDoesNotExistError } from '../../errors'
 import {
+  AbiStateMutabilityToOverrides,
   DefaultOptions,
   GetConfig,
   GetReturnType,
@@ -23,7 +24,7 @@ export type ReadContractConfig<
     /** Chain id to use for provider */
     chainId?: number
     /** Call overrides */
-    overrides?: CallOverrides
+    overrides?: AbiStateMutabilityToOverrides<'pure' | 'view'>
   },
   'pure' | 'view',
   TOptions

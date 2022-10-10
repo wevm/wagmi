@@ -81,3 +81,32 @@ export type Optional<TObject, TKeys extends keyof TObject> = {
  * type Result = Or<true, false>
  */
 export type Or<T, U> = T extends true ? true : U extends true ? true : false
+
+export type ArrayOmit<T extends unknown[], E> = T['length'] extends 0
+  ? []
+  : T extends [infer THead, ...infer TRest]
+  ? THead extends E
+    ? ArrayOmit<TRest, E>
+    : [THead, ...ArrayOmit<TRest, E>]
+  : never
+
+declare const __VALUE_TO_OMIT__: unique symbol
+export type __VALUE_TO_OMIT__ = typeof __VALUE_TO_OMIT__
+export type Count<T extends readonly unknown[], E> = ArrayOmit<
+  [
+    ...{
+      [K in keyof T]: T[K] extends E ? T[K] : __VALUE_TO_OMIT__
+    },
+  ],
+  __VALUE_TO_OMIT__
+>['length']
+
+export type UnionToIntersection<Union> = (
+  Union extends unknown ? (arg: Union) => unknown : never
+) extends (arg: infer R) => unknown
+  ? R
+  : never
+
+export type ExpandObject<TObject> = TObject extends infer O
+  ? { [K in keyof O]: O[K] }
+  : never

@@ -1,5 +1,5 @@
 import { Abi } from 'abitype'
-import { CallOverrides, Contract } from 'ethers/lib/ethers'
+import { Contract } from 'ethers/lib/ethers'
 
 import { multicallABI } from '../../constants'
 import {
@@ -10,6 +10,7 @@ import {
   ProviderChainsNotFound,
 } from '../../errors'
 import {
+  AbiStateMutabilityToOverrides,
   ContractConfig,
   ContractsConfig,
   ContractsResult,
@@ -26,7 +27,9 @@ export type MulticallConfig<TContracts extends unknown[]> = {
   /** Contracts to query */
   contracts: readonly [...ContractsConfig<TContracts>]
   /** Call overrides */
-  overrides?: CallOverrides
+  overrides?:
+    | AbiStateMutabilityToOverrides<'pure'>
+    | AbiStateMutabilityToOverrides<'view'>
 }
 
 export type MulticallResult<TContracts extends unknown[]> =

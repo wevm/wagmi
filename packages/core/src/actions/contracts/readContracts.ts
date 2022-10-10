@@ -1,5 +1,4 @@
 import { Abi } from 'abitype'
-import { CallOverrides } from 'ethers'
 
 import { mainnet } from '../../chains'
 import {
@@ -9,6 +8,7 @@ import {
   ContractResultDecodeError,
 } from '../../errors'
 import {
+  AbiStateMutabilityToOverrides,
   ContractsConfig,
   ContractsResult,
   DefaultOptions,
@@ -38,7 +38,7 @@ export type ReadContractsConfig<
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Call overrides */
-  overrides?: CallOverrides
+  overrides?: AbiStateMutabilityToOverrides<'pure' | 'view'>
 } & (TOptions['isContractsOptional'] extends true
   ? {
       /** Contracts to query */

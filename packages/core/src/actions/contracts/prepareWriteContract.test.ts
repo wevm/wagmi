@@ -26,7 +26,6 @@ describe('prepareWriteContract', () => {
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
-
     const { data, gasLimit, ...rest } = request || {}
     expect(data).toBeDefined()
     expect(gasLimit).toBeDefined()

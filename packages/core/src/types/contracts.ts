@@ -5,9 +5,12 @@ import {
   AbiParameterToPrimitiveType,
   AbiParametersToPrimitiveTypes,
   AbiStateMutability,
+  Address,
   ExtractAbiFunction,
   ExtractAbiFunctionNames,
+  ResolvedConfig,
 } from 'abitype'
+import { ethers } from 'ethers'
 
 import { IsNever, NotEqual, Or } from './utils'
 
@@ -276,3 +279,32 @@ export type ContractsResult<
   ? // Dynamic-size (homogenous) UseQueryOptions array: map directly to array of results
     GetReturnType<{ abi: TAbi; functionName: TFunctionName }>[]
   : GetReturnType[]
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+export type AbiStateMutabilityToOverrides<
+  TAbiStateMutability extends AbiStateMutability,
+> = {
+  nonpayable: Overrides & { from?: Address }
+  payable: PayableOverrides & { from?: Address }
+  pure: CallOverrides
+  view: CallOverrides
+}[TAbiStateMutability]
+
+export interface Overrides extends ethers.Overrides {
+  gasLimit?: ResolvedConfig['BigIntType']
+  gasPrice?: ResolvedConfig['BigIntType']
+  maxFeePerGas?: ResolvedConfig['BigIntType']
+  maxPriorityFeePerGas?: ResolvedConfig['BigIntType']
+  nonce?: ResolvedConfig['IntType']
+}
+
+export interface PayableOverrides extends Overrides {
+  value?: ResolvedConfig['IntType'] | ResolvedConfig['BigIntType']
+}
+
+export interface CallOverrides extends PayableOverrides {
+  blockTag?: ethers.CallOverrides['blockTag']
+  from?: Address
+}

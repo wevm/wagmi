@@ -4,7 +4,7 @@
 
 **Breaking**: Updated TypeScript generics for contract interaction and typed data actions.
 
-Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi` allows TypeScript to infer `functionName`/`eventName`, `args`/`listener` types, and return types.
+Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi` allows TypeScript to infer `functionName`, `args`, `overrides`, and return types for functions, and `eventName` and `listener` types for events.
 
 ```diff
 import { readContract } from '@wagmi/core'

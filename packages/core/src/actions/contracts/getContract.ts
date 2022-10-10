@@ -5,11 +5,9 @@ import {
   AbiParameter,
   AbiParameterToPrimitiveType,
   AbiParametersToPrimitiveTypes,
-  AbiStateMutability,
   Address,
   ExtractAbiEvent,
   ExtractAbiEventNames,
-  ResolvedConfig,
 } from 'abitype'
 import {
   ContractInterface,
@@ -19,7 +17,15 @@ import {
   providers,
 } from 'ethers'
 
-import { Join } from '../../types/utils'
+import { AbiStateMutabilityToOverrides } from '../../types/contracts'
+import {
+  ArrayOmit,
+  Count,
+  ExpandObject,
+  Join,
+  UnionToIntersection,
+  __VALUE_TO_OMIT__,
+} from '../../types/utils'
 
 export type GetContractArgs<TAbi = unknown> = {
   /** Contract address */
@@ -68,15 +74,6 @@ type ContractItemName<
   ? ContractItemSignature<TAbiItem>
   : TAbiItem['name']
 
-type AbiStateMutabilityToContractOverrides<
-  TAbiStateMutability extends AbiStateMutability,
-> = {
-  nonpayable: Overrides & { from?: Address | Promise<Address> }
-  payable: PayableOverrides & { from?: Address | Promise<Address> }
-  pure: CallOverrides
-  view: CallOverrides
-}[TAbiStateMutability]
-
 type AbiFunctionReturnType<
   TAbiFunction extends AbiFunction & { type: 'function' },
 > = {
@@ -107,7 +104,7 @@ type ContractFunction<
       ...args: TAbiFunction['inputs'] extends infer TInputs extends readonly AbiParameter[]
         ? AbiParametersToPrimitiveTypes<TInputs>
         : never,
-      overrides?: AbiStateMutabilityToContractOverrides<
+      overrides?: AbiStateMutabilityToOverrides<
         TAbiFunction['stateMutability']
       >,
     ]
@@ -126,6 +123,19 @@ type GetContractFunctions<
     ? ContractFunction<TAbi[K], IsSignature>
     : never
 }[number]
+
+type RemoveDuplicates<TAbi extends Abi> = ArrayOmit<
+  [
+    ...{
+      [K in keyof TAbi]: TAbi[K] extends AbiFunction & { type: 'function' }
+        ? Count<TAbi, { name: TAbi[K]['name'] }> extends 1
+          ? TAbi[K]
+          : __VALUE_TO_OMIT__
+        : __VALUE_TO_OMIT__
+    },
+  ],
+  __VALUE_TO_OMIT__
+>
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Events
@@ -171,35 +181,6 @@ type ContractFilter<
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Ethers Overrides
-
-interface Overrides {
-  gasLimit?:
-    | ResolvedConfig['BigIntType']
-    | Promise<ResolvedConfig['BigIntType']>
-  gasPrice?:
-    | ResolvedConfig['BigIntType']
-    | Promise<ResolvedConfig['BigIntType']>
-  maxFeePerGas?:
-    | ResolvedConfig['BigIntType']
-    | Promise<ResolvedConfig['BigIntType']>
-  maxPriorityFeePerGas?:
-    | ResolvedConfig['BigIntType']
-    | Promise<ResolvedConfig['BigIntType']>
-  nonce?: ResolvedConfig['IntType'] | Promise<ResolvedConfig['IntType']>
-  type?: number
-  accessList?: ethers.Overrides['accessList']
-  customData?: Record<string, any>
-  ccipReadEnabled?: boolean
-}
-
-interface PayableOverrides extends Overrides {
-  value?: ResolvedConfig['IntType'] | ResolvedConfig['BigIntType']
-}
-
-interface CallOverrides extends PayableOverrides {
-  blockTag?: ethers.CallOverrides['blockTag']
-  from?: Address | Promise<Address>
-}
 
 type EventFilter<
   TAbi extends Abi,
@@ -310,47 +291,3 @@ export type Contract<
     removeAllListeners(eventFilter: EventFilter<TAbi>): Contract<TAbi>
     removeListener: ContractEvent<TAbi>
   }>
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Utilities
-
-type ArrayOmit<T extends unknown[], E> = T['length'] extends 0
-  ? []
-  : T extends [infer THead, ...infer TRest]
-  ? THead extends E
-    ? ArrayOmit<TRest, E>
-    : [THead, ...ArrayOmit<TRest, E>]
-  : never
-
-declare const __VALUE_TO_OMIT__: unique symbol
-type __VALUE_TO_OMIT__ = typeof __VALUE_TO_OMIT__
-type Count<T extends readonly unknown[], E> = ArrayOmit<
-  [
-    ...{
-      [K in keyof T]: T[K] extends E ? T[K] : __VALUE_TO_OMIT__
-    },
-  ],
-  __VALUE_TO_OMIT__
->['length']
-type RemoveDuplicates<TAbi extends Abi> = ArrayOmit<
-  [
-    ...{
-      [K in keyof TAbi]: TAbi[K] extends AbiFunction & { type: 'function' }
-        ? Count<TAbi, { name: TAbi[K]['name'] }> extends 1
-          ? TAbi[K]
-          : __VALUE_TO_OMIT__
-        : __VALUE_TO_OMIT__
-    },
-  ],
-  __VALUE_TO_OMIT__
->
-
-type UnionToIntersection<Union> = (
-  Union extends unknown ? (arg: Union) => unknown : never
-) extends (arg: infer R) => unknown
-  ? R
-  : never
-
-type ExpandObject<TObject> = TObject extends infer O
-  ? { [K in keyof O]: O[K] }
-  : never

@@ -47,7 +47,10 @@ type UseContractWriteMutationArgs<
         TAbi,
         TFunctionName
       >['args']
-      recklesslySetUnpreparedOverrides?: WriteContractArgs['overrides']
+      recklesslySetUnpreparedOverrides?: WriteContractArgs<
+        TAbi,
+        TFunctionName
+      >['overrides']
     }
 
 function mutationKey({

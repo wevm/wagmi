@@ -197,7 +197,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-[Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
+Overrides to pass to function call. If the function is payable, you can pass a `value` here.
 
 ```tsx {9-12}
 import { useContractWrite } from 'wagmi'

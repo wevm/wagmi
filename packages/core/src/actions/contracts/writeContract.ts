@@ -1,9 +1,10 @@
-import { Abi, Address } from 'abitype'
-import { CallOverrides, PopulatedTransaction } from 'ethers'
+import { Abi, Address, ExtractAbiFunction } from 'abitype'
+import { PopulatedTransaction } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { Signer } from '../../types'
 import {
+  AbiStateMutabilityToOverrides,
   DefaultOptions,
   GetConfig,
   Options as Options_,
@@ -56,7 +57,14 @@ export type WriteContractUnpreparedArgs<
     abi: TAbi
     functionName: TFunctionName
     /** Call overrides */
-    overrides?: CallOverrides
+    overrides?: AbiStateMutabilityToOverrides<
+      [TAbi, TFunctionName] extends [
+        infer TAbi_ extends Abi,
+        infer TFunctionName_ extends string,
+      ]
+        ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
+        : 'nonpayable' | 'payable'
+    >
   },
   'nonpayable' | 'payable',
   TOptions
