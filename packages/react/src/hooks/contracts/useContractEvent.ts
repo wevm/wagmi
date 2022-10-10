@@ -1,11 +1,11 @@
-import { IsNever, NotEqual, Or } from '@wagmi/core/internal'
 import {
-  Abi,
-  AbiEvent,
-  AbiParametersToPrimitiveTypes,
-  ExtractAbiEvent,
-  ExtractAbiEventNames,
-} from 'abitype'
+  AbiEventParametersToPrimitiveTypes,
+  Event,
+  IsNever,
+  NotEqual,
+  Or,
+} from '@wagmi/core/internal'
+import { Abi, AbiEvent, ExtractAbiEvent, ExtractAbiEventNames } from 'abitype'
 import { Contract } from 'ethers'
 import * as React from 'react'
 
@@ -13,10 +13,10 @@ import { useProvider, useWebSocketProvider } from '../providers'
 import { useContract } from './useContract'
 
 type GetListener<
-  TEvent extends AbiEvent,
+  TAbiEvent extends AbiEvent,
   TAbi = unknown,
-> = AbiParametersToPrimitiveTypes<
-  TEvent['inputs']
+> = AbiEventParametersToPrimitiveTypes<
+  TAbiEvent['inputs']
 > extends infer TArgs extends readonly unknown[]
   ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
     Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
@@ -31,7 +31,7 @@ type GetListener<
     : // We are able to infer args, spread the types.
       {
         /** Callback when event is emitted */
-        listener: (...args: TArgs) => void
+        listener: (...args: [...args: TArgs, event: Event<TAbiEvent>]) => void
       }
   : never
 

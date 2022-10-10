@@ -1,3 +1,23 @@
+export type CountOccurrences<
+  TArray extends readonly unknown[],
+  E,
+> = FilterNever<
+  [
+    ...{
+      [K in keyof TArray]: TArray[K] extends E ? TArray[K] : never
+    },
+  ]
+>['length']
+
+export type FilterNever<TArray extends readonly unknown[]> =
+  TArray['length'] extends 0
+    ? []
+    : TArray extends [infer THead, ...infer TRest]
+    ? IsNever<THead> extends true
+      ? FilterNever<TRest>
+      : [THead, ...FilterNever<TRest>]
+    : never
+
 /**
  * Check if {@link T} is `never`
  *
@@ -25,6 +45,7 @@ export type IsUnknown<T> = unknown extends T ? true : false
  *
  * @param Items - Items to join
  * @param Separator - Separator to use
+ * @returns Joined string
  *
  * @example
  * type Result = Join<['foo', 'bar'], '-'>
@@ -82,31 +103,17 @@ export type Optional<TObject, TKeys extends keyof TObject> = {
  */
 export type Or<T, U> = T extends true ? true : U extends true ? true : false
 
-export type ArrayOmit<T extends unknown[], E> = T['length'] extends 0
-  ? []
-  : T extends [infer THead, ...infer TRest]
-  ? THead extends E
-    ? ArrayOmit<TRest, E>
-    : [THead, ...ArrayOmit<TRest, E>]
-  : never
-
-declare const __VALUE_TO_OMIT__: unique symbol
-export type __VALUE_TO_OMIT__ = typeof __VALUE_TO_OMIT__
-export type Count<T extends readonly unknown[], E> = ArrayOmit<
-  [
-    ...{
-      [K in keyof T]: T[K] extends E ? T[K] : __VALUE_TO_OMIT__
-    },
-  ],
-  __VALUE_TO_OMIT__
->['length']
-
+/**
+ * Converts {@link Union} to intersection
+ *
+ * @param Union - Union to convert
+ * @returns Intersection of {@link Union}
+ *
+ * @example
+ * type Result = UnionToIntersection<'foo' | 'bar'>
+ */
 export type UnionToIntersection<Union> = (
   Union extends unknown ? (arg: Union) => unknown : never
 ) extends (arg: infer R) => unknown
   ? R
-  : never
-
-export type ExpandObject<TObject> = TObject extends infer O
-  ? { [K in keyof O]: O[K] }
   : never

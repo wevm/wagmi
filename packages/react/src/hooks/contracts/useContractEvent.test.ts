@@ -60,7 +60,7 @@ describe('useContractEvent', () => {
         listener(from, to, value) {
           expectType<ResolvedConfig['AddressType']>(from)
           expectType<ResolvedConfig['AddressType']>(to)
-          expectType<ResolvedConfig['BigIntType']>(value)
+          expectType<ResolvedConfig['BigIntType'] | null>(value)
           listener(from, to, value)
         },
       }),
@@ -78,7 +78,7 @@ describe('useContractEvent', () => {
           listener(from, to, value) {
             expectType<ResolvedConfig['AddressType']>(from)
             expectType<ResolvedConfig['AddressType']>(to)
-            expectType<ResolvedConfig['BigIntType']>(value)
+            expectType<ResolvedConfig['BigIntType'] | null>(value)
             listener(from, to, value)
           },
         }),

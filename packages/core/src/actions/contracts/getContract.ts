@@ -8,6 +8,7 @@ import {
   Address,
   ExtractAbiEvent,
   ExtractAbiEventNames,
+  ResolvedConfig,
 } from 'abitype'
 import {
   ContractInterface,
@@ -17,14 +18,16 @@ import {
   providers,
 } from 'ethers'
 
-import { AbiStateMutabilityToOverrides } from '../../types/contracts'
 import {
-  ArrayOmit,
-  Count,
-  ExpandObject,
-  Join,
+  AbiEventParametersToPrimitiveTypes,
+  AbiItemName,
+  AbiStateMutabilityToOverrides,
+  Event,
+} from '../../types/contracts'
+import {
+  CountOccurrences,
+  IsUnknown,
   UnionToIntersection,
-  __VALUE_TO_OMIT__,
 } from '../../types/utils'
 
 export type GetContractArgs<TAbi = unknown> = {
@@ -55,160 +58,18 @@ export function getContract<
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Functions
-
-type ContractItemSignature<
-  TAbiItem extends (AbiFunction & { type: 'function' }) | AbiEvent,
-> = `${TAbiItem['name']}(${Join<
-  ContractItemParameters<TAbiItem['inputs']>,
-  ','
->})`
-type ContractItemParameters<TAbiParameters extends readonly AbiParameter[]> = [
-  ...{ [K in keyof TAbiParameters]: TAbiParameters[K]['type'] },
-]
-
-type ContractItemName<
-  TAbiItem extends (AbiFunction & { type: 'function' }) | AbiEvent,
-  IsSignature extends boolean = false,
-> = IsSignature extends true
-  ? ContractItemSignature<TAbiItem>
-  : TAbiItem['name']
-
-type AbiFunctionReturnType<
-  TAbiFunction extends AbiFunction & { type: 'function' },
-> = {
-  payable: ethers.ContractTransaction
-  nonpayable: ethers.ContractTransaction
-  view: GetReturnType<TAbiFunction['outputs']>
-  pure: GetReturnType<TAbiFunction['outputs']>
-}[TAbiFunction['stateMutability']]
-type GetReturnType<TAbiParameters extends readonly AbiParameter[]> =
-  TAbiParameters['length'] extends infer TLength
-    ? TLength extends 0
-      ? void // If there are no outputs, return `void`
-      : TLength extends 1
-      ? AbiParameterToPrimitiveType<TAbiParameters[0]>
-      : {
-          [Output in TAbiParameters[number] as Output['name'] extends ''
-            ? never
-            : Output['name']]: AbiParameterToPrimitiveType<Output>
-        } & AbiParametersToPrimitiveTypes<TAbiParameters>
-    : never
-
-type ContractFunction<
-  TAbiFunction extends AbiFunction & { type: 'function' },
-  IsSignature extends boolean = false,
-> = {
-  [K in ContractItemName<TAbiFunction, IsSignature>]: (
-    ...args: [
-      ...args: TAbiFunction['inputs'] extends infer TInputs extends readonly AbiParameter[]
-        ? AbiParametersToPrimitiveTypes<TInputs>
-        : never,
-      overrides?: AbiStateMutabilityToOverrides<
-        TAbiFunction['stateMutability']
-      >,
-    ]
-  ) => Promise<AbiFunctionReturnType<TAbiFunction>>
-}
-
-type ContractFunctions<TAbi extends Abi> = ExpandObject<
-  UnionToIntersection<GetContractFunctions<TAbi, true>> &
-    UnionToIntersection<GetContractFunctions<RemoveDuplicates<TAbi>>>
->
-type GetContractFunctions<
-  TAbi extends Abi,
-  IsSignature extends boolean = false,
-> = {
-  [K in keyof TAbi]: TAbi[K] extends AbiFunction & { type: 'function' }
-    ? ContractFunction<TAbi[K], IsSignature>
-    : never
-}[number]
-
-type RemoveDuplicates<TAbi extends Abi> = ArrayOmit<
-  [
-    ...{
-      [K in keyof TAbi]: TAbi[K] extends AbiFunction & { type: 'function' }
-        ? Count<TAbi, { name: TAbi[K]['name'] }> extends 1
-          ? TAbi[K]
-          : __VALUE_TO_OMIT__
-        : __VALUE_TO_OMIT__
-    },
-  ],
-  __VALUE_TO_OMIT__
->
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Events
-
-interface ContractEvent<TAbi extends Abi> {
-  <TEventName extends ExtractAbiEventNames<TAbi>>(
-    eventName: TEventName,
-    listener: Listener<TAbi, TEventName>,
-  ): Contract<TAbi>
-  (
-    eventFilter: EventFilter<TAbi>,
-    // TODO: Improve typing
-    listener: Listener<TAbi, ExtractAbiEventNames<TAbi>>,
-  ): Contract<TAbi>
-}
-
-type ContractFilters<TAbi extends Abi> = ExpandObject<
-  UnionToIntersection<GetContractFilters<TAbi, true>> &
-    UnionToIntersection<GetContractFilters<TAbi>>
->
-type GetContractFilters<
-  TAbi extends Abi,
-  IsSignature extends boolean = false,
-> = {
-  [K in keyof TAbi]: TAbi[K] extends AbiEvent
-    ? ContractFilter<TAbi, TAbi[K], IsSignature>
-    : never
-}[number]
-
-type ContractFilter<
-  TAbi extends Abi,
-  TAbiEvent extends AbiEvent,
-  IsSignature extends boolean = false,
-> = {
-  [K in ContractItemName<TAbiEvent, IsSignature>]: (
-    ...args: [
-      ...args: TAbiEvent['inputs'] extends infer TInputs extends readonly AbiParameter[]
-        ? AbiParametersToPrimitiveTypes<TInputs>
-        : never,
-    ]
-  ) => EventFilter<TAbi> // TODO: Improve typing
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Ethers Overrides
-
-type EventFilter<
-  TAbi extends Abi,
-  TAbiEventNames = ExtractAbiEventNames<TAbi>,
-> = {
-  address?: Address
-  topics?: Array<TAbiEventNames | Array<TAbiEventNames>>
-}
-
-type Listener<
-  TAbi extends Abi,
-  TEventName extends string,
-  TAbiEvent extends AbiEvent = ExtractAbiEvent<TAbi, TEventName>,
-> = AbiParametersToPrimitiveTypes<
-  TAbiEvent['inputs']
-> extends infer TArgs extends readonly unknown[]
-  ? (...args: TArgs) => void
-  : never
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contract
 
-type PropertyKeys = 'address' | 'resolvedAddress'
-type FunctionKeys =
+// TODO: Add remaining properties
+type PropertyKeys =
+  | 'address'
   | 'attach'
-  | 'callStatic'
   | 'connect'
   | 'deployed'
+  | 'interface'
+  | 'resolvedAddress'
+type FunctionKeys =
+  | 'callStatic'
   | 'estimateGas'
   | 'functions'
   | 'populateTransaction'
@@ -225,69 +86,220 @@ type EventKeys =
   | 'removeListener'
 type BaseContract<
   TContract extends Record<
-    keyof Pick<ethers.BaseContract, PropertyKeys | FunctionKeys | EventKeys>,
+    keyof Pick<EthersContract, PropertyKeys | FunctionKeys | EventKeys>,
     unknown
   >,
-> = Omit<ethers.BaseContract, PropertyKeys | FunctionKeys | EventKeys> &
-  TContract
+> = Exclude<EthersContract, PropertyKeys | FunctionKeys | EventKeys> & TContract
+
+// TODO: Add remaining `Interface` properties
+type InterfaceKeys = 'events' | 'functions'
+type BaseInterface<
+  Interface extends Record<
+    keyof Pick<ethers.utils.Interface, InterfaceKeys>,
+    unknown
+  >,
+> = Exclude<ethers.utils.Interface, InterfaceKeys> & Interface
 
 export type Contract<
   TAbi extends Abi,
-  _Functions = ContractFunctions<TAbi>,
+  _Functions = Functions<TAbi>,
 > = _Functions &
   BaseContract<{
     address: Address
-    readonly resolvedAddress: Promise<Address>
-
-    // Functions
-
+    resolvedAddress: Promise<Address>
     attach(addressOrName: Address | string): Contract<TAbi>
-    callStatic: _Functions
     connect(
       signerOrProvider: ethers.Signer | ethers.providers.Provider | string,
     ): Contract<TAbi>
     deployed(): Promise<Contract<TAbi>>
-    estimateGas: _Functions
-    functions: _Functions
-    populateTransaction: _Functions
+    interface: BaseInterface<{
+      events: InterfaceEvents<TAbi>
+      functions: InterfaceFunctions<TAbi>
+    }>
 
-    // Events
+    callStatic: _Functions
+    estimateGas: Functions<TAbi, { ReturnType: ResolvedConfig['BigIntType'] }>
+    functions: Functions<TAbi, { ReturnTypeAsArray: true }>
+    populateTransaction: Functions<
+      TAbi,
+      { ReturnType: ethers.PopulatedTransaction }
+    >
 
-    emit<TEventName extends ExtractAbiEventNames<TAbi>>(
+    emit<TEventName extends ExtractAbiEventNames<TAbi> | ethers.EventFilter>(
       eventName: TEventName,
-      ...args: Parameters<Listener<TAbi, TEventName>>
+      ...args: AbiEventParametersToPrimitiveTypes<
+        ExtractAbiEvent<
+          TAbi,
+          TEventName extends string ? TEventName : ExtractAbiEventNames<TAbi>
+        >['inputs']
+      > extends infer TArgs extends readonly unknown[]
+        ? TArgs
+        : never
     ): boolean
-    emit(
-      eventFilter: EventFilter<TAbi>,
-      ...args: Parameters<Listener<TAbi, ExtractAbiEventNames<TAbi>>> // TODO: Improve typing for args
-    ): boolean
-    filters: ContractFilters<TAbi>
+    filters: Filters<TAbi>
     listenerCount(): number
     listenerCount<TEventName extends ExtractAbiEventNames<TAbi>>(
       eventName: TEventName,
     ): number
-    listenerCount(eventFilter: EventFilter<TAbi>): number
+    // TODO: Improve `eventFilter` type
+    listenerCount(eventFilter: ethers.EventFilter): number
     listeners(): Array<(...args: any[]) => void>
     listeners<TEventName extends ExtractAbiEventNames<TAbi>>(
       eventName: TEventName,
     ): Array<Listener<TAbi, TEventName>>
     listeners(
-      eventFilter: EventFilter<TAbi>,
-    ): Array<Listener<TAbi, ExtractAbiEventNames<TAbi>>> // TODO: Improve typing for response
-    off: ContractEvent<TAbi>
-    on: ContractEvent<TAbi>
-    once: ContractEvent<TAbi>
+      // TODO: Improve `eventFilter` and return types
+      eventFilter: ethers.EventFilter,
+    ): Array<Listener<TAbi, ExtractAbiEventNames<TAbi>>>
+    off: EventListener<TAbi>
+    on: EventListener<TAbi>
+    once: EventListener<TAbi>
     queryFilter<TEventName extends ExtractAbiEventNames<TAbi>>(
       event: TEventName,
       fromBlockOrBlockhash?: string | number,
       toBlock?: string | number,
     ): Promise<Array<ethers.Event>>
+    // TODO: Improve `eventFilter` and return types
     queryFilter(
-      eventFilter: EventFilter<TAbi>,
+      eventFilter: ethers.EventFilter,
       fromBlockOrBlockhash?: string | number,
       toBlock?: string | number,
     ): Promise<Array<ethers.Event>>
     removeAllListeners(eventName?: ExtractAbiEventNames<TAbi>): Contract<TAbi>
-    removeAllListeners(eventFilter: EventFilter<TAbi>): Contract<TAbi>
-    removeListener: ContractEvent<TAbi>
+    // TODO: Improve `eventFilter` type
+    removeAllListeners(eventFilter: ethers.EventFilter): Contract<TAbi>
+    removeListener: EventListener<TAbi>
   }>
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Functions
+
+type Functions<
+  TAbi extends Abi,
+  Options extends {
+    ReturnType?: any
+    ReturnTypeAsArray?: boolean
+  } = {
+    ReturnTypeAsArray: false
+  },
+> = UnionToIntersection<
+  {
+    [K in keyof TAbi]: TAbi[K] extends infer TAbiFunction extends AbiFunction & {
+      type: 'function'
+    }
+      ? {
+          [K in CountOccurrences<TAbi, { name: TAbiFunction['name'] }> extends 1
+            ? AbiItemName<TAbiFunction>
+            : AbiItemName<TAbiFunction, true>]: (
+            ...args: [
+              ...args: TAbiFunction['inputs'] extends infer TInputs extends readonly AbiParameter[]
+                ? AbiParametersToPrimitiveTypes<TInputs>
+                : never,
+              overrides?: AbiStateMutabilityToOverrides<
+                TAbiFunction['stateMutability']
+              >,
+            ]
+          ) => Promise<
+            IsUnknown<Options['ReturnType']> extends true
+              ? AbiFunctionReturnType<TAbiFunction> extends infer TAbiFunctionReturnType
+                ? Options['ReturnTypeAsArray'] extends true
+                  ? [TAbiFunctionReturnType]
+                  : TAbiFunctionReturnType
+                : never
+              : Options['ReturnType']
+          >
+        }
+      : never
+  }[number]
+>
+
+type AbiFunctionReturnType<
+  TAbiFunction extends AbiFunction & {
+    type: 'function'
+  },
+> = ({
+  payable: ethers.ContractTransaction
+  nonpayable: ethers.ContractTransaction
+} & {
+  [_ in
+    | 'pure'
+    | 'view']: TAbiFunction['outputs']['length'] extends infer TLength
+    ? TLength extends 0
+      ? void // If there are no outputs, return `void`
+      : TLength extends 1
+      ? AbiParameterToPrimitiveType<TAbiFunction['outputs'][0]>
+      : {
+          [Output in TAbiFunction['outputs'][number] as Output['name'] extends ''
+            ? never
+            : Output['name']]: AbiParameterToPrimitiveType<Output>
+        } & AbiParametersToPrimitiveTypes<TAbiFunction['outputs']>
+    : never
+})[TAbiFunction['stateMutability']]
+
+type InterfaceFunctions<TAbi extends Abi> = UnionToIntersection<
+  {
+    [K in keyof TAbi]: TAbi[K] extends infer TAbiFunction extends AbiFunction & {
+      type: 'function'
+    }
+      ? {
+          [K in AbiItemName<TAbiFunction, true>]: ethers.utils.FunctionFragment // TODO: Infer `FunctionFragment` type
+        }
+      : never
+  }[number]
+>
+
+type InterfaceEvents<TAbi extends Abi> = UnionToIntersection<
+  {
+    [K in keyof TAbi]: TAbi[K] extends infer TAbiEvent extends AbiEvent
+      ? {
+          [K in AbiItemName<TAbiEvent, true>]: ethers.utils.EventFragment // TODO: Infer `EventFragment` type
+        }
+      : never
+  }[number]
+>
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Events
+
+interface EventListener<TAbi extends Abi> {
+  <TEventName extends ExtractAbiEventNames<TAbi>>(
+    eventName: TEventName,
+    listener: Listener<TAbi, TEventName>,
+  ): Contract<TAbi>
+  (
+    // TODO: Improve `eventFilter` and `listener` types
+    eventFilter: ethers.EventFilter,
+    listener: Listener<TAbi, ExtractAbiEventNames<TAbi>>,
+  ): Contract<TAbi>
+}
+
+type Listener<
+  TAbi extends Abi,
+  TEventName extends string,
+  TAbiEvent extends AbiEvent = ExtractAbiEvent<TAbi, TEventName>,
+> = AbiEventParametersToPrimitiveTypes<
+  TAbiEvent['inputs']
+> extends infer TArgs extends readonly unknown[]
+  ? (...args: [...args: TArgs, event: Event<TAbiEvent>]) => void
+  : never
+
+type Filters<TAbi extends Abi> = UnionToIntersection<
+  {
+    [K in keyof TAbi]: TAbi[K] extends infer TAbiEvent extends AbiEvent
+      ? {
+          [K in CountOccurrences<TAbi, { name: TAbiEvent['name'] }> extends 1
+            ? AbiItemName<TAbiEvent>
+            : AbiItemName<TAbiEvent, true>]: (
+            ...args: TAbiEvent['inputs'] extends infer TAbiParameters extends readonly (AbiParameter & {
+              indexed?: boolean
+            })[]
+              ? AbiEventParametersToPrimitiveTypes<
+                  TAbiParameters,
+                  { AllowNull: true }
+                >
+              : never
+          ) => ethers.EventFilter
+        }
+      : never
+  }[number]
+>

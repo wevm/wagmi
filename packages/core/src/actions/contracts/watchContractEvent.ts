@@ -1,14 +1,12 @@
-import {
-  Abi,
-  AbiEvent,
-  AbiParametersToPrimitiveTypes,
-  ExtractAbiEvent,
-  ExtractAbiEventNames,
-} from 'abitype'
+import { Abi, AbiEvent, ExtractAbiEvent, ExtractAbiEventNames } from 'abitype'
 import { Contract } from 'ethers'
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
+import {
+  AbiEventParametersToPrimitiveTypes,
+  Event,
+} from '../../types/contracts'
 import { IsNever, NotEqual, Or } from '../../types/utils'
 import { getProvider, getWebSocketProvider } from '../providers'
 import { getContract } from './getContract'
@@ -48,19 +46,19 @@ export type WatchContractEventConfig<
 export type WatchContractEventCallback<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-  TEvent extends AbiEvent = TAbi extends Abi
+  TAbiEvent extends AbiEvent = TAbi extends Abi
     ? ExtractAbiEvent<TAbi, TEventName>
     : never,
 > =
   // Create local variable `TArgs` based on event input parameters
-  AbiParametersToPrimitiveTypes<
-    TEvent['inputs']
+  AbiEventParametersToPrimitiveTypes<
+    TAbiEvent['inputs']
   > extends infer TArgs extends readonly unknown[]
     ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
       Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
       ? (...args: any) => void
       : // We are able to infer args, spread the types.
-        (...args: TArgs) => void
+        (...args: [...args: TArgs, event: Event<TAbiEvent>]) => void
     : never
 
 export function watchContractEvent<

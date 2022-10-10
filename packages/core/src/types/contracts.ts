@@ -1,5 +1,6 @@
 import {
   Abi,
+  AbiEvent,
   AbiFunction,
   AbiParameter,
   AbiParameterToPrimitiveType,
@@ -12,7 +13,7 @@ import {
 } from 'abitype'
 import { ethers } from 'ethers'
 
-import { IsNever, NotEqual, Or } from './utils'
+import { IsNever, Join, NotEqual, Or } from './utils'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contract Configuration Types
@@ -308,3 +309,40 @@ export interface CallOverrides extends PayableOverrides {
   blockTag?: ethers.CallOverrides['blockTag']
   from?: Address
 }
+
+export type AbiEventParametersToPrimitiveTypes<
+  TAbiParameters extends readonly (AbiParameter & {
+    indexed?: boolean
+  })[],
+  Options extends { AllowNull: boolean } = { AllowNull: false },
+> = {
+  // TODO: Convert to labeled tuple so parameter names show up in autocomplete
+  // e.g. [foo: string, bar: string]
+  // https://github.com/microsoft/TypeScript/issues/44939
+  [K in keyof TAbiParameters]: TAbiParameters[K]['indexed'] extends true // If event is not indexed, add `null` to type
+    ?
+        | AbiParameterToPrimitiveType<TAbiParameters[K]>
+        | (Options['AllowNull'] extends true ? null : never)
+    : null
+}
+
+export type Event<TAbiEvent extends AbiEvent> = Omit<
+  ethers.Event,
+  'args' | 'event' | 'eventSignature'
+> & {
+  args: AbiEventParametersToPrimitiveTypes<TAbiEvent['inputs']>
+  event: TAbiEvent['name']
+  eventSignature: AbiItemName<TAbiEvent, true>
+}
+
+export type AbiItemName<
+  TAbiItem extends (AbiFunction & { type: 'function' }) | AbiEvent,
+  IsSignature extends boolean = false,
+> = IsSignature extends true
+  ? TAbiItem['inputs'] extends infer TAbiParameters extends readonly AbiParameter[]
+    ? `${TAbiItem['name']}(${Join<
+        [...{ [K in keyof TAbiParameters]: TAbiParameters[K]['type'] }],
+        ','
+      >})`
+    : never
+  : TAbiItem['name']
