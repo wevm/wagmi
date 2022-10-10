@@ -8,8 +8,8 @@
 import { readContract } from '@wagmi/core'
 
 const result = await readContract({
-  addressOrName: '0x…',
-  contractInterface: […],
+  address: '0x…',
+  abi: […],
   functionName: 'balanceOf',
 - args: '0x…',
 + args: ['0x…'],

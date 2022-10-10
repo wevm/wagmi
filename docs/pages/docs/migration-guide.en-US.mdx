@@ -25,29 +25,91 @@ to [extend constraints on inferred type variables](https://devblogs.microsoft.co
 
 See the wagmi [TypeScript docs](/docs/typescript) for more information on TypeScript support in this version.
 
+### `addressOrName` and `contractInterface` renamed for contract hooks
+
+`addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for the following contract hooks: `useContract`, `useContractEvent`, `useContractRead`, `useContractReads`, `useContractInfiniteReads`, `useContractWrite`, and `usePrepareContractWrite`.
+
+```diff
+import { useContractRead } from 'wagmi'
+const result = useContractRead({
+- addressOrName: '0x…',
++ address: '0x…',
+- contractInterface: […] as const,
++ abi: […] as const,
+  functionName: 'balanceOf',
+  args: ['0x…'],
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+```diff
+- import { useContractRead } from 'wagmi'
++ import { useContractRead, useEnsAddress } from 'wagmi'
++ const { data: address} = useEnsAddress({ name: 'example.eth'})
+const result = useContractRead({
+- addressOrName: 'example.eth',
++ address,
+  abi: […],
+  functionName: 'balanceOf',
+  args: ['0x…'],
+})
+```
+
+### `args` type changed for contract hooks
+
+`args` config option must now be an array for the following hooks: `useContractRead`, `useContractWrite`, `usePrepareContractWrite`, `useContractReads`, and `useContractInfiniteReads`.
+
+```diff
+const { data } = useContractRead({
+  address: '0x…',
+  abi: […],
+  functionName: 'balanceOf',
+- args: '0x…',
++ args: ['0x…'],
+})
+```
+
+### `useContractEvent`
+
+#### Configuration changes
+
+`signerOrProvider` was removed.
+
+### useContractInfiniteReads
+
+#### Configuration changes
+
+Updated `paginatedIndexesConfig` `fn` parameter return type. `fn` now returns an array instead of a single object.
+
+```diff
+useContractInfiniteReads({
+  cacheKey: 'contracts',
+  ...paginatedIndexesConfig(
+-    (index) => ({
++    (index) => [{
+      ...mlootContractConfig,
+      functionName: 'tokenURI',
+      args: [BigNumber.from(index)] as const,
+-    }),
++    }],
+    { start: 0, perPage: 10, direction: 'increment' },
+  ),
+})
+```
+
 ### `usePrepareContractWrite`
 
-#### chainId behavior
+#### Behavioral changes
 
-`usePrepareContractWrite` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
-
-If you wish to defer this check until the click handler is pressed, you can place the `chainId` in `useContractWrite` instead.
+Throws an error when a `chainId` is specified and the end-user is on a different chain id (the wrong network). If you wish to defer this check until the click handler is pressed, you can place the `chainId` in `useContractWrite` instead.
 
 ### `usePrepareSendTransaction`
 
-#### enabled behavior
+#### Behavioral changes
 
-The `usePrepareSendTransaction` hook will now only run when the end-user is connected to their wallet.
-
-This is to reach parity with `usePrepareContractWrite`.
-
-If the end-user is not connected, then the `usePrepareSendTransaction` hook will remain idle.
-
-#### chainId behavior
-
-`usePrepareSendTransaction` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
-
-If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead.
+- The `usePrepareSendTransaction` hook will now only run when the end-user is connected to their wallet. This is to reach parity with `usePrepareContractWrite`. If the end-user is not connected, then the `usePrepareSendTransaction` hook will remain idle.
+- Throws an error when a `chainId` is specified and the end-user is on a different chain id (the wrong network). If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead.
 
 ## 0.6.x Breaking changes
 

@@ -2,7 +2,7 @@
 'wagmi': minor
 ---
 
-**Breaking**: Updated TypeScript generics for contract interaction and typed data actions.
+**Breaking**: Updated TypeScript generics for contract and typed data hooks.
 
 Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `contractInterface` allows TypeScript to infer `functionName`/`eventName`, `args`/`listener` types, and return types.
 
@@ -10,11 +10,11 @@ Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-
 import { useContractRead } from 'wagmi'
 
 const result = useContractRead({
-  addressOrName: '0x…',
-- contractInterface: […],
-+ contractInterface: […] as const,
+  address: '0x…',
+- abi: […],
++ abi: […] as const,
   functionName: 'balanceOf', // will autocomplete and catch typos
-  args: ['0x…'], // inferred based on `functionName`
+  args: ['0x…'], // inferred based on `abi`, `functionName`, `args`
 })
 result.data // inferred based on `functionName`
 ```

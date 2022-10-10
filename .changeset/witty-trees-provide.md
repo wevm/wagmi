@@ -7,12 +7,11 @@
 ```diff
 import { useContractRead } from 'wagmi'
 
-const { data } = useContractRead({ 
-  addressOrName: '0x…',
-  contractInterface: […],
+const { data } = useContractRead({
+  address: '0x…',
+  abi: […],
   functionName: 'balanceOf',
 - args: '0x…',
 + args: ['0x…'],
 })
 ```
-

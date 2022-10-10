@@ -2,7 +2,7 @@
 'wagmi': minor
 ---
 
-**Breaking**: `addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for contract hooks: `useContract`, `useContractEvent`, `useContractRead`, `useContractReads`, `useContractWrite`, `usePrepareContractWrite`.
+**Breaking**: `addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for contract hooks: `useContract`, `useContractEvent`, `useContractRead`, `useContractReads`, `useContractInfiniteReads`, `useContractWrite`, `usePrepareContractWrite`.
 
 ```diff
 import { useContractRead } from 'wagmi'

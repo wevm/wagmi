@@ -9,8 +9,8 @@ import { watchContractEvent } from '@wagmi/core'
 
 - const unsubscribe = watchContractEvent(
 -   {
--     addressOrName: '0x…',
--     contractInterface: […],
+-     address: '0x…',
+-     abi: […],
 -   },
 -   'Transfer',
 -   (from, to, tokenId) => {
@@ -20,8 +20,8 @@ import { watchContractEvent } from '@wagmi/core'
 - )
 + const unsubscribe = watchContractEvent(
 +   {
-+     addressOrName: '0x…',
-+     contractInterface: […],
++     address: '0x…',
++     abi: […],
 +     eventName: 'Transfer',
 +     once: true,
 +   },
