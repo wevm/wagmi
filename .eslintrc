@@ -75,7 +75,8 @@
     "CHANGELOG.md",
     "build",
     "dist",
-    "node_modules"
+    "node_modules",
+    "templates"
   ],
   "settings": {
     "import/parsers": {

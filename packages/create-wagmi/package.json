@@ -1,0 +1,42 @@
+{
+  "name": "create-wagmi",
+  "description": "CLI to scaffold a wagmi app",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "WAGMIT",
+  "bin": {
+    "create-wagmi": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "cac": "^6.7.14",
+    "chalk": "^5.1.0",
+    "cpy": "^9.0.1",
+    "create-wagmi": "^0.0.1",
+    "cross-spawn": "^7.0.3",
+    "detect-package-manager": "^2.0.1",
+    "execa": "^6.1.0",
+    "fs-extra": "^10.1.0",
+    "ora": "^6.1.2",
+    "prompts": "^2.4.2",
+    "validate-npm-package-name": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/prompts": "^2.4.1",
+    "@types/validate-npm-package-name": "^4.0.0",
+    "tsup": "^6.2.3"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "directory": "packages/create-wagmi"
+  }
+}

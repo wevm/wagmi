@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "ES2020"
+  },
+  "include": ["src", "templates"],
+  "exclude": ["node_modules"]
+}

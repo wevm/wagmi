@@ -28,7 +28,8 @@
   },
   "preconstruct": {
     "packages": [
-      "packages/*"
+      "packages/core",
+      "packages/react"
     ]
   },
   "devDependencies": {
