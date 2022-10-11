@@ -121,6 +121,7 @@ export class MetaMaskConnector extends InjectedConnector {
     if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return
     if (ethereum.isTokenPocket) return
     if (ethereum.isTokenary) return
+    if (ethereum.isAvalanche) return
     return ethereum
   }
 

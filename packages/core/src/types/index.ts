@@ -129,6 +129,7 @@ type InjectedProviderFlags = {
   isTokenPocket?: true
   isTokenary?: true
   isTrust?: true
+  isAvalanche?: true
 }
 
 type InjectedProviders = InjectedProviderFlags & {
