@@ -60,7 +60,7 @@ function App() {
 
 ### abi (optional)
 
-Contract ABI. If `abi` is not defined, response is `null`.
+Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for properties and methods on the contract object. If `abi` is not defined, response is `null`.
 
 ```tsx {6}
 import { useContract } from 'wagmi'

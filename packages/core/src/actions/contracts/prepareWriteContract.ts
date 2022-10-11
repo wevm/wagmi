@@ -1,5 +1,5 @@
 import { Abi, Address, ExtractAbiFunction } from 'abitype'
-import { Contract, PopulatedTransaction } from 'ethers/lib/ethers'
+import { PopulatedTransaction } from 'ethers/lib/ethers'
 
 import {
   ConnectorNotFoundError,
@@ -7,9 +7,9 @@ import {
 } from '../../errors'
 import { Signer } from '../../types'
 import {
-  AbiStateMutabilityToOverrides,
   DefaultOptions,
   GetConfig,
+  GetOverridesForAbiStateMutability,
   Options,
 } from '../../types/contracts'
 import {
@@ -32,7 +32,7 @@ export type PrepareWriteContractConfig<
     /** Chain id to use for provider */
     chainId?: number
     /** Overrides */
-    overrides?: AbiStateMutabilityToOverrides<
+    overrides?: GetOverridesForAbiStateMutability<
       [TAbi, TFunctionName] extends [
         infer TAbi_ extends Abi,
         infer TFunctionName_ extends string,
@@ -99,7 +99,7 @@ export async function prepareWriteContract<
     address,
     abi,
     signerOrProvider: signer,
-  }) as Contract
+  })
   const normalizedFunctionName = normalizeFunctionName({
     contract,
     functionName,

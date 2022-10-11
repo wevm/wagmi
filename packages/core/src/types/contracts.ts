@@ -18,6 +18,9 @@ import { IsNever, Join, NotEqual, Or } from './utils'
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contract Configuration Types
 
+/**
+ * Configuration options for contract types
+ */
 export type Options = {
   /** Flag for making `abi` optional */
   isAbiOptional?: boolean
@@ -28,6 +31,9 @@ export type Options = {
   /** Flag for making `functionName` optional */
   isFunctionNameOptional?: boolean
 }
+/**
+ * Default {@link Options}
+ */
 export type DefaultOptions = {
   isAbiOptional: false
   isAddressOptional: false
@@ -35,6 +41,17 @@ export type DefaultOptions = {
   isFunctionNameOptional: false
 }
 
+/**
+ * Gets arguments of contract function
+ *
+ * @param TAbi - Contract {@link Abi}
+ * @param TFunctionName - Name of contract function
+ * @param TOptions - Options for configuring arguments. Defaults to {@link DefaultOptions}.
+ * @returns Inferred args of contract function
+ *
+ * @example
+ * type Result = GetArgs<[…], 'tokenURI'>
+ */
 type GetArgs<
   TAbi extends Abi | readonly unknown[],
   // It's important that we use `TFunction` to parse args so overloads still return the correct types
@@ -67,6 +84,9 @@ type GetArgs<
     : never
   : never
 
+/**
+ * Contract configuration object for inferring function name and arguments based on {@link TAbi}.
+ */
 export type ContractConfig<
   TContract = { [key: string]: unknown },
   TAbi extends Abi | readonly unknown[] = Abi,
@@ -113,6 +133,17 @@ export type ContractConfig<
 
 // Properties to remove from extended config since they are added by default with `ContractConfig`
 type OmitConfigProperties = 'abi' | 'args' | 'functionName'
+/**
+ * Gets configuration type of contract function
+ *
+ * @param TContract - Contract config in `{ abi: Abi, functionName: string }` format
+ * @param TAbiStateMutibility - State mutability of contract function
+ * @param TOptions - Options for configuring arguments. Defaults to {@link DefaultOptions}.
+ * @returns Inferred configuration type of contract function
+ *
+ * @example
+ * type Result = GetConfig<{ abi: […], functionName: 'tokenURI' }, 'view'>
+ */
 export type GetConfig<
   TContract = unknown,
   TAbiStateMutibility extends AbiStateMutability = AbiStateMutability,
@@ -150,7 +181,17 @@ export type GetConfig<
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contract Result Types
 
-export type GetResult<
+/**
+ * Unwraps return type of contract function
+ *
+ * @param TAbi - Contract {@link Abi}
+ * @param TFunctionName - Name of contract function
+ * @returns Inferred return type of contract function
+ *
+ * @example
+ * type Result = GetResult<[…], 'tokenURI'>
+ */
+type GetResult<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
@@ -188,6 +229,15 @@ export type GetResult<
       : never
     : never
 
+/**
+ * Gets return type of contract function
+ *
+ * @param TContract - Contract config in `{ abi: Abi, functionName: string }` format
+ * @returns Inferred return type of contract function
+ *
+ * @example
+ * type Result = GetReturnType<{ abi: […], functionName: 'tokenURI' }>
+ */
 export type GetReturnType<TContract = unknown> = TContract extends {
   abi: infer TAbi extends Abi
   functionName: infer TFunctionName extends string
@@ -208,6 +258,9 @@ type MAXIMUM_DEPTH = 20
 
 /**
  * ContractsConfig reducer recursively unwraps function arguments to infer/enforce type param
+ *
+ * @param TContracts - Array of contracts in shape of {@link ContractConfig}
+ * @returns Array of inferred contract configurations
  */
 export type ContractsConfig<
   TContracts extends unknown[],
@@ -258,6 +311,9 @@ export type ContractsConfig<
 
 /**
  * ContractsResult reducer recursively maps type param to results
+ *
+ * @param TContracts - Array of contracts in shape of {@link ContractConfig}
+ * @returns Array of inferred contract results
  */
 export type ContractsResult<
   TContracts extends unknown[],
@@ -284,34 +340,14 @@ export type ContractsResult<
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Utilities
 
-export type AbiStateMutabilityToOverrides<
-  TAbiStateMutability extends AbiStateMutability,
-> = {
-  nonpayable: Overrides & { from?: Address }
-  payable: PayableOverrides & { from?: Address }
-  pure: CallOverrides
-  view: CallOverrides
-}[TAbiStateMutability]
-
-export interface Overrides extends ethers.Overrides {
-  gasLimit?: ResolvedConfig['BigIntType']
-  gasPrice?: ResolvedConfig['BigIntType']
-  maxFeePerGas?: ResolvedConfig['BigIntType']
-  maxPriorityFeePerGas?: ResolvedConfig['BigIntType']
-  nonce?: ResolvedConfig['IntType']
-}
-
-export interface PayableOverrides extends Overrides {
-  value?: ResolvedConfig['IntType'] | ResolvedConfig['BigIntType']
-}
-
-export interface CallOverrides extends PayableOverrides {
-  blockTag?: ethers.CallOverrides['blockTag']
-  from?: Address
-}
-
+/**
+ * Converts array of {@link AbiEvent} parameters to corresponding TypeScript primitive types.
+ *
+ * @param TAbiEventParameters - Array of {@link AbiEvent} parameters to convert to TypeScript representations
+ * @returns Array of TypeScript primitive types
+ */
 export type AbiEventParametersToPrimitiveTypes<
-  TAbiParameters extends readonly (AbiParameter & {
+  TAbiEventParameters extends readonly (AbiParameter & {
     indexed?: boolean
   })[],
   Options extends { AllowNull: boolean } = { AllowNull: false },
@@ -319,22 +355,24 @@ export type AbiEventParametersToPrimitiveTypes<
   // TODO: Convert to labeled tuple so parameter names show up in autocomplete
   // e.g. [foo: string, bar: string]
   // https://github.com/microsoft/TypeScript/issues/44939
-  [K in keyof TAbiParameters]: TAbiParameters[K]['indexed'] extends true // If event is not indexed, add `null` to type
+  [K in keyof TAbiEventParameters]: TAbiEventParameters[K]['indexed'] extends true
     ?
-        | AbiParameterToPrimitiveType<TAbiParameters[K]>
+        | AbiParameterToPrimitiveType<TAbiEventParameters[K]>
+        // If event is not `indexed: true`, add `null` to type
         | (Options['AllowNull'] extends true ? null : never)
     : null
 }
 
-export type Event<TAbiEvent extends AbiEvent> = Omit<
-  ethers.Event,
-  'args' | 'event' | 'eventSignature'
-> & {
-  args: AbiEventParametersToPrimitiveTypes<TAbiEvent['inputs']>
-  event: TAbiEvent['name']
-  eventSignature: AbiItemName<TAbiEvent, true>
-}
-
+/**
+ * Get name for {@link AbiFunction} or {@link AbiEvent}
+ *
+ * @param TAbiItem - {@link AbiFunction} or {@link AbiEvent}
+ * @param IsSignature - Whether to return the signature instead of the name
+ * @returns Name or signature of function or event
+ *
+ * @example
+ * type Result = AbiItemName<{ type: 'function'; name: 'Foo'; … }>
+ */
 export type AbiItemName<
   TAbiItem extends (AbiFunction & { type: 'function' }) | AbiEvent,
   IsSignature extends boolean = false,
@@ -346,3 +384,51 @@ export type AbiItemName<
       >})`
     : never
   : TAbiItem['name']
+
+/**
+ * Get overrides for {@link AbiStateMutability}
+ *
+ * @param TAbiStateMutability - {@link AbiStateMutability}
+ * @returns Overrides for {@link TAbiStateMutability}
+ *
+ * @example
+ * type Result = GetOverridesForAbiStateMutability<'pure'>
+ */
+export type GetOverridesForAbiStateMutability<
+  TAbiStateMutability extends AbiStateMutability,
+> = {
+  nonpayable: Overrides & { from?: Address }
+  payable: PayableOverrides & { from?: Address }
+  pure: CallOverrides
+  view: CallOverrides
+}[TAbiStateMutability]
+
+// Update `ethers.Overrides` to use abitype config
+export interface Overrides extends ethers.Overrides {
+  gasLimit?: ResolvedConfig['BigIntType']
+  gasPrice?: ResolvedConfig['BigIntType']
+  maxFeePerGas?: ResolvedConfig['BigIntType']
+  maxPriorityFeePerGas?: ResolvedConfig['BigIntType']
+  nonce?: ResolvedConfig['IntType']
+}
+
+// Update `ethers.PayableOverrides` to use abitype config
+export interface PayableOverrides extends Overrides {
+  value?: ResolvedConfig['IntType'] | ResolvedConfig['BigIntType']
+}
+
+// Update `ethers.CallOverrides` to use abitype config
+export interface CallOverrides extends PayableOverrides {
+  blockTag?: ethers.CallOverrides['blockTag']
+  from?: Address
+}
+
+// Add type inference to `ethers.Event`
+export type Event<TAbiEvent extends AbiEvent> = Omit<
+  ethers.Event,
+  'args' | 'event' | 'eventSignature'
+> & {
+  args: AbiEventParametersToPrimitiveTypes<TAbiEvent['inputs']>
+  event: TAbiEvent['name']
+  eventSignature: AbiItemName<TAbiEvent, true>
+}

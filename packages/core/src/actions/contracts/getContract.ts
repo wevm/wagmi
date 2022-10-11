@@ -21,8 +21,8 @@ import {
 import {
   AbiEventParametersToPrimitiveTypes,
   AbiItemName,
-  AbiStateMutabilityToOverrides,
   Event,
+  GetOverridesForAbiStateMutability,
 } from '../../types/contracts'
 import {
   CountOccurrences,
@@ -40,7 +40,7 @@ export type GetContractArgs<TAbi = unknown> = {
 }
 
 export type GetContractResult<TAbi = unknown> = TAbi extends Abi
-  ? Contract<TAbi>
+  ? Contract<TAbi> & EthersContract
   : EthersContract
 
 export function getContract<
@@ -84,21 +84,23 @@ type EventKeys =
   | 'queryFilter'
   | 'removeAllListeners'
   | 'removeListener'
+// Create new `BaseContract` and remove keys we are going to type
 type BaseContract<
   TContract extends Record<
     keyof Pick<EthersContract, PropertyKeys | FunctionKeys | EventKeys>,
     unknown
   >,
-> = Exclude<EthersContract, PropertyKeys | FunctionKeys | EventKeys> & TContract
+> = Omit<EthersContract, PropertyKeys | FunctionKeys | EventKeys> & TContract
 
 // TODO: Add remaining `Interface` properties
 type InterfaceKeys = 'events' | 'functions'
+// Create new `Interface` and remove keys we are going to type
 type BaseInterface<
   Interface extends Record<
     keyof Pick<ethers.utils.Interface, InterfaceKeys>,
     unknown
   >,
-> = Exclude<ethers.utils.Interface, InterfaceKeys> & Interface
+> = Omit<ethers.utils.Interface, InterfaceKeys> & Interface
 
 export type Contract<
   TAbi extends Abi,
@@ -184,10 +186,14 @@ type Functions<
   },
 > = UnionToIntersection<
   {
+    // 1. Iterate through all items in ABI
+    // 2. Set non-functions to `never`
+    // 3. Convert functions to TypeScript function signatures
     [K in keyof TAbi]: TAbi[K] extends infer TAbiFunction extends AbiFunction & {
       type: 'function'
     }
       ? {
+          // If function name occurs more than once, it is overloaded. Grab full string signature as name (what ethers does).
           [K in CountOccurrences<TAbi, { name: TAbiFunction['name'] }> extends 1
             ? AbiItemName<TAbiFunction>
             : AbiItemName<TAbiFunction, true>]: (
@@ -195,11 +201,15 @@ type Functions<
               ...args: TAbiFunction['inputs'] extends infer TInputs extends readonly AbiParameter[]
                 ? AbiParametersToPrimitiveTypes<TInputs>
                 : never,
-              overrides?: AbiStateMutabilityToOverrides<
+              // Tack `overrides` onto end
+              // TODO: TypeScript doesn't preserve tuple labels when merging
+              // https://github.com/microsoft/TypeScript/issues/43020
+              overrides?: GetOverridesForAbiStateMutability<
                 TAbiFunction['stateMutability']
               >,
             ]
           ) => Promise<
+            // Return a custom return type if specified. Otherwise, calculate return type.
             IsUnknown<Options['ReturnType']> extends true
               ? AbiFunctionReturnType<TAbiFunction> extends infer TAbiFunctionReturnType
                 ? Options['ReturnTypeAsArray'] extends true
@@ -213,6 +223,7 @@ type Functions<
   }[number]
 >
 
+// Get return type for function based on `AbiStateMutability`
 type AbiFunctionReturnType<
   TAbiFunction extends AbiFunction & {
     type: 'function'

@@ -4,9 +4,9 @@ import { PopulatedTransaction } from 'ethers'
 import { ConnectorNotFoundError } from '../../errors'
 import { Signer } from '../../types'
 import {
-  AbiStateMutabilityToOverrides,
   DefaultOptions,
   GetConfig,
+  GetOverridesForAbiStateMutability,
   Options as Options_,
 } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
@@ -57,7 +57,7 @@ export type WriteContractUnpreparedArgs<
     abi: TAbi
     functionName: TFunctionName
     /** Call overrides */
-    overrides?: AbiStateMutabilityToOverrides<
+    overrides?: GetOverridesForAbiStateMutability<
       [TAbi, TFunctionName] extends [
         infer TAbi_ extends Abi,
         infer TFunctionName_ extends string,

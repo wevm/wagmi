@@ -6,7 +6,6 @@ import {
   Or,
 } from '@wagmi/core/internal'
 import { Abi, AbiEvent, ExtractAbiEvent, ExtractAbiEventNames } from 'abitype'
-import { Contract } from 'ethers'
 import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
@@ -94,7 +93,7 @@ export function useContractEvent<
     address,
     abi,
     signerOrProvider: webSocketProvider ?? provider,
-  }) as Contract
+  })
   const callbackRef = React.useRef(listener)
   callbackRef.current = listener
 

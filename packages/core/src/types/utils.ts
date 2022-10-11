@@ -1,14 +1,33 @@
+/**
+ * Count occurrences of {@link TType} in {@link TArray}
+ *
+ * @param TArray - Array to count occurrences in
+ * @param TType - Type to count occurrences of
+ * @returns Number of occurrences of {@link TType} in {@link TArray}
+ *
+ * @example
+ * type Result = CountOccurrences<['foo', 'bar', 'foo'], 'foo'>
+ */
 export type CountOccurrences<
   TArray extends readonly unknown[],
-  E,
+  TType,
 > = FilterNever<
   [
     ...{
-      [K in keyof TArray]: TArray[K] extends E ? TArray[K] : never
+      [K in keyof TArray]: TArray[K] extends TType ? TArray[K] : never
     },
   ]
 >['length']
 
+/**
+ * Removes all occurrences of `never` from {@link TArray}
+ *
+ * @param TArray - Array to filter
+ * @returns Array with `never` removed
+ *
+ * @example
+ * type Result = FilterNever<[1, 2, never, 3, never, 4]>
+ */
 export type FilterNever<TArray extends readonly unknown[]> =
   TArray['length'] extends 0
     ? []

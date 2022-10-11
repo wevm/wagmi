@@ -1,5 +1,4 @@
 import { Abi } from 'abitype'
-import { Contract } from 'ethers/lib/ethers'
 
 import { multicallABI } from '../../constants'
 import {
@@ -10,10 +9,10 @@ import {
   ProviderChainsNotFound,
 } from '../../errors'
 import {
-  AbiStateMutabilityToOverrides,
   ContractConfig,
   ContractsConfig,
   ContractsResult,
+  GetOverridesForAbiStateMutability,
 } from '../../types/contracts'
 import { logWarn, normalizeFunctionName } from '../../utils'
 import { getProvider } from '../providers'
@@ -28,8 +27,8 @@ export type MulticallConfig<TContracts extends unknown[]> = {
   contracts: readonly [...ContractsConfig<TContracts>]
   /** Call overrides */
   overrides?:
-    | AbiStateMutabilityToOverrides<'pure'>
-    | AbiStateMutabilityToOverrides<'view'>
+    | GetOverridesForAbiStateMutability<'pure'>
+    | GetOverridesForAbiStateMutability<'view'>
 }
 
 export type MulticallResult<TContracts extends unknown[]> =
@@ -70,7 +69,7 @@ export async function multicall<
   const calls = (contracts as unknown as ContractConfig[]).map(
     ({ address, abi, functionName, ...config }) => {
       const { args } = config || {}
-      const contract = getContract({ address, abi }) as Contract
+      const contract = getContract({ address, abi })
       const params = args ?? []
       const normalizedFunctionName = normalizeFunctionName({
         contract,
@@ -116,7 +115,7 @@ export async function multicall<
   return results.map(({ returnData, success }, i) => {
     const { address, abi, args, functionName } = contracts[i]
 
-    const contract = getContract({ address, abi }) as Contract
+    const contract = getContract({ address, abi })
     const normalizedFunctionName = normalizeFunctionName({
       contract,
       functionName,

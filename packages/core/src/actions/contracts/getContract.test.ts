@@ -1,36 +1,37 @@
-import { ResolvedConfig } from 'abitype'
+import { ExtractAbiEvent, ResolvedConfig } from 'abitype'
 import { ethers } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import { expectType, wagmiContractConfig } from '../../../test'
-import { Overrides } from '../../types/contracts'
+import { Event, Overrides } from '../../types/contracts'
 import { getContract } from './getContract'
 
 describe('getContract', () => {
   it('default', () => {
-    const result = getContract({
+    const contract = getContract({
       address: wagmiContractConfig.address,
       abi: wagmiContractConfig.abi,
     })
-    expect(result).toBeDefined()
+
+    expect(contract).toBeDefined()
 
     // Regular function
-    expectType<typeof result['balanceOf']>(
-      result['balanceOf'] as (
+    expectType<typeof contract['balanceOf']>(
+      contract['balanceOf'] as (
         args_0: `0x${string}`,
         args_1?: (Overrides & { from?: `0x${string}` | undefined }) | undefined,
       ) => Promise<ResolvedConfig['BigIntType']>,
     )
-    expectType<typeof result.functions['balanceOf']>(
-      result.functions['balanceOf'] as (
+    expectType<typeof contract.functions['balanceOf']>(
+      contract.functions['balanceOf'] as (
         args_0: `0x${string}`,
         args_1?: (Overrides & { from?: `0x${string}` | undefined }) | undefined,
       ) => Promise<[ResolvedConfig['BigIntType']]>,
     )
 
     // Overloaded functions
-    expectType<typeof result['safeTransferFrom(address,address,uint256)']>(
-      result['safeTransferFrom(address,address,uint256)'] as (
+    expectType<typeof contract['safeTransferFrom(address,address,uint256)']>(
+      contract['safeTransferFrom(address,address,uint256)'] as (
         args_0: `0x${string}`,
         args_1: `0x${string}`,
         args_2: ResolvedConfig['BigIntType'],
@@ -38,9 +39,9 @@ describe('getContract', () => {
       ) => Promise<ethers.ContractTransaction>,
     )
     expectType<
-      typeof result['safeTransferFrom(address,address,uint256,bytes)']
+      typeof contract['safeTransferFrom(address,address,uint256,bytes)']
     >(
-      result['safeTransferFrom(address,address,uint256,bytes)'] as (
+      contract['safeTransferFrom(address,address,uint256,bytes)'] as (
         args_0: `0x${string}`,
         args_1: `0x${string}`,
         args_2: ResolvedConfig['BigIntType'],
@@ -48,5 +49,17 @@ describe('getContract', () => {
         args_4?: (Overrides & { from?: `0x${string}` | undefined }) | undefined,
       ) => Promise<ethers.ContractTransaction>,
     )
+
+    // Events
+    ;() => {
+      contract.on('Transfer', (from, to, value, event) => {
+        expectType<ResolvedConfig['AddressType']>(from)
+        expectType<ResolvedConfig['AddressType']>(to)
+        expectType<ResolvedConfig['BigIntType']>(value)
+        expectType<
+          Event<ExtractAbiEvent<typeof wagmiContractConfig.abi, 'Transfer'>>
+        >(event)
+      })
+    }
   })
 })

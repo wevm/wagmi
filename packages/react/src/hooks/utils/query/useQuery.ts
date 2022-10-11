@@ -7,11 +7,10 @@ import {
 } from '@tanstack/react-query'
 
 import { queryClientContext as context } from '../../../context'
-
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs, trackResult } from './utils'
 
-type UseQueryResult<TData, TError> = Pick<
+export type UseQueryResult<TData, TError> = Pick<
   QueryObserverResult<TData, TError>,
   | 'data'
   | 'error'
@@ -41,7 +40,7 @@ type UseQueryResult<TData, TError> = Pick<
     | 'remove'
   >
 }
-type DefinedUseQueryResult<TData = unknown, TError = unknown> = Omit<
+export type DefinedUseQueryResult<TData = unknown, TError = unknown> = Omit<
   UseQueryResult<TData, TError>,
   'data'
 > & {

@@ -8,10 +8,10 @@ import {
   ContractResultDecodeError,
 } from '../../errors'
 import {
-  AbiStateMutabilityToOverrides,
   ContractsConfig,
   ContractsResult,
   DefaultOptions,
+  GetOverridesForAbiStateMutability,
   Options as Options_,
 } from '../../types/contracts'
 import { logWarn } from '../../utils'
@@ -38,7 +38,7 @@ export type ReadContractsConfig<
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Call overrides */
-  overrides?: AbiStateMutabilityToOverrides<'pure' | 'view'>
+  overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
 } & (TOptions['isContractsOptional'] extends true
   ? {
       /** Contracts to query */

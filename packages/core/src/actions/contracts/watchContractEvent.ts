@@ -1,5 +1,4 @@
 import { Abi, AbiEvent, ExtractAbiEvent, ExtractAbiEventNames } from 'abitype'
-import { Contract } from 'ethers'
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
@@ -76,13 +75,13 @@ export function watchContractEvent<
 ) {
   const handler = (...event: any[]) => callback(...event)
 
-  let contract: Contract
+  let contract: ReturnType<typeof getContract>
   const watchEvent = async () => {
     if (contract) contract?.off(eventName, handler)
 
     const signerOrProvider =
       getWebSocketProvider({ chainId }) || getProvider({ chainId })
-    contract = getContract({ address, abi, signerOrProvider }) as Contract
+    contract = getContract({ address, abi, signerOrProvider })
 
     if (once) contract.once(eventName, handler)
     else contract.on(eventName, handler)

@@ -1,16 +1,26 @@
 ---
 title: 'TypeScript'
-description: 'Guide for how to migrate to new versions of wagmi'
+description: 'Learn more about TypeScript support in wagmi. Full end-to-end type-safety for contract interactions, EIP-712 typed data, and more!'
 ---
 
 # TypeScript
 
-wagmi is written in TypeScript so the library and your projects are type-safe! Things to keep in mind:
+wagmi is designed to be as type-safe as possible! Things to keep in mind:
 
 - Types currently require using TypeScript v4.7.4 or greater.
 - Changes to types in this repository are considered non-breaking and are usually released as patch semver changes (otherwise every type enhancement would be a major version!).
 - It is highly recommended that you lock your `wagmi` package version to a specific patch release and upgrade with the expectation that types may be fixed or upgraded between any release.
 - The non-type-related public API of wagmi still follows semver very strictly.
+
+To ensure everything works correctly, make sure that your `tsconfig.json` has [`strict`](https://www.typescriptlang.org/tsconfig#strict) mode set to true:
+
+```json filename="tsconfig.json"
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
 
 ## Type Inference
 

@@ -1,11 +1,10 @@
 import { Abi } from 'abitype'
-import { Contract } from 'ethers/lib/ethers'
 
 import { ContractMethodDoesNotExistError } from '../../errors'
 import {
-  AbiStateMutabilityToOverrides,
   DefaultOptions,
   GetConfig,
+  GetOverridesForAbiStateMutability,
   GetReturnType,
   Options,
 } from '../../types/contracts'
@@ -24,7 +23,7 @@ export type ReadContractConfig<
     /** Chain id to use for provider */
     chainId?: number
     /** Call overrides */
-    overrides?: AbiStateMutabilityToOverrides<'pure' | 'view'>
+    overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
   },
   'pure' | 'view',
   TOptions
@@ -53,7 +52,7 @@ export async function readContract<
     address,
     abi,
     signerOrProvider: provider,
-  }) as Contract
+  })
 
   const normalizedFunctionName = normalizeFunctionName({
     contract,
