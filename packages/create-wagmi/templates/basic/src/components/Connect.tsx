@@ -1,9 +1,6 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
-import { useIsMounted } from '../hooks'
-
 export function Connect() {
-  const isMounted = useIsMounted()
   const { connector, isConnected } = useAccount()
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
@@ -19,7 +16,7 @@ export function Connect() {
         )}
 
         {connectors
-          .filter((x) => isMounted && x.ready && x.id !== connector?.id)
+          .filter((x) => x.ready && x.id !== connector?.id)
           .map((x) => (
             <button key={x.id} onClick={() => connect({ connector: x })}>
               {x.name}

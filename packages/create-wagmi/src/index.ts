@@ -16,10 +16,11 @@ import { fileURLToPath } from 'url'
 class CLIError extends Error {}
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const defaultTemplateName = 'default'
+const templatesPath = path.join(__dirname, '..', 'templates')
+const templateNames = fs.readdirSync(templatesPath)
 const log = console.log
 
-const validateName = (projectName: string) => {
+const validateProjectName = (projectName: string) => {
   const { validForNewPackages, warnings } = validateNpmPackageName(projectName)
   return {
     valid: validForNewPackages,
@@ -30,15 +31,38 @@ const validateName = (projectName: string) => {
 const cli = cac(name)
   .version(version)
   .usage(`${chalk.green('<project-directory>')} [options]`)
+  .option(
+    '-t, --template [name]',
+    `A template to bootstrap with. Available: ${templateNames.join(', ')}`,
+    {
+      default: 'basic',
+    },
+  )
   .option('--npm', 'Use npm as your package manager')
   .option('--pnpm', 'Use pnpm as your package manager')
   .option('--yarn', 'Use yarn as your package manager')
+  .option('--skip-git', 'Skips initializing the project as a git repository')
   .help()
 
 void (async () => {
   try {
     const { args, options } = cli.parse(process.argv)
     if (options.help) return
+
+    ////////////////////////////////////////////////////////////////
+
+    const templateName = options.template || options.t
+    const templatePath = path.join(templatesPath, templateName)
+
+    if (!fs.existsSync(templatePath))
+      throw new CLIError(
+        [
+          chalk.red(`🙈 the template "${templateName}" does not exist.`),
+          `👉 choose a valid name. Available: ${templateNames.join(', ')}`,
+        ].join('\n'),
+      )
+
+    ////////////////////////////////////////////////////////////////
 
     log()
     log(chalk.magenta('♥ gm, welcome to wagmi ♥'))
@@ -62,7 +86,7 @@ void (async () => {
           message: 'what would you like to name your project?',
           type: 'text',
           validate: (name) =>
-            !validateName(name).valid
+            !validateProjectName(name).valid
               ? `"${name}" is not a valid project name. Enter another name.`
               : true,
         })
@@ -73,11 +97,13 @@ void (async () => {
       log()
     }
 
-    if (!validateName(projectName).valid)
+    if (!validateProjectName(projectName).valid)
       throw new CLIError(
         [
           chalk.red(`🙈 "${projectName}" is not a valid project name.`),
-          validateName(projectName).warnings?.map((warning) => `👉 ${warning}`),
+          validateProjectName(projectName).warnings?.map(
+            (warning) => `👉 ${warning}`,
+          ),
         ].join('\n'),
       )
 
@@ -92,10 +118,6 @@ void (async () => {
           `👉 choose another name or delete the directory.`,
         ].join('\n'),
       )
-
-    const templatesPath = path.join(__dirname, '..', 'templates')
-    const templateName = defaultTemplateName
-    const templatePath = path.join(templatesPath, templateName)
 
     log(chalk.cyan('👷‍♂️ creating a new wagmi app in', chalk.green(targetPath)))
     log()
@@ -136,18 +158,20 @@ void (async () => {
 
     ////////////////////////////////////////////////////////////////
 
-    await execa('git', ['init'], { cwd: targetPath })
-    await execa('git', ['add', '.'], { cwd: targetPath })
-    await execa(
-      'git',
-      [
-        'commit',
-        '--no-verify',
-        '--message',
-        'Initial commit from create-wagmi',
-      ],
-      { cwd: targetPath },
-    )
+    if (!options.skipGit) {
+      await execa('git', ['init'], { cwd: targetPath })
+      await execa('git', ['add', '.'], { cwd: targetPath })
+      await execa(
+        'git',
+        [
+          'commit',
+          '--no-verify',
+          '--message',
+          'Initial commit from create-wagmi',
+        ],
+        { cwd: targetPath },
+      )
+    }
 
     ////////////////////////////////////////////////////////////////
 

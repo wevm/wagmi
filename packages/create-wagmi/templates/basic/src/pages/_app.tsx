@@ -47,13 +47,15 @@ const client = createClient({
 })
 
 function App({ Component, pageProps }: AppProps) {
+  const [mounted, setMounted] = React.useState(false)
+  React.useEffect(() => setMounted(true), [])
   return (
     <WagmiConfig client={client}>
       <NextHead>
         <title>wagmi</title>
       </NextHead>
 
-      <Component {...pageProps} />
+      {mounted && <Component {...pageProps} />}
     </WagmiConfig>
   )
 }
