@@ -1,5 +1,221 @@
 # wagmi
 
+## 0.7.0
+
+### Minor Changes
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `usePrepareContractWrite` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+  If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead:
+
+  ```diff
+  import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+  import { optimism } from 'wagmi/chains'
+
+  // ...
+
+  const { config } = usePrepareContractWrite({
+    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+    contractInterface: ['function mint()'],
+    functionName: 'mint',
+  })
+  const { write } = useContractWrite({
+    ...config,
+  + chainId: optimism.id
+  })
+
+  ```
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `usePrepareSendTransaction` hook will now only run when the end-user is connected to their wallet.
+
+  This is to reach parity with `usePrepareContractWrite`.
+
+  If the end-user is not connected, then the `usePrepareSendTransaction` hook will remain idle.
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `usePrepareSendTransaction` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+  If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead:
+
+  ```diff
+  import { usePrepareSendTransaction, useContractWrite } from 'wagmi'
+  import { optimism } from 'wagmi/chains'
+
+  // ...
+
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'moxey.eth',
+      value: parseEther('1'),
+    },
+  })
+  const { sendTransaction } = useSendTransaction({
+    ...config,
+  + chainId: optimism.id
+  })
+
+  ```
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `useContractEvent` no longer accepts a `signerOrProvider` configuration option.
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for contract hooks: `useContract`, `useContractEvent`, `useContractRead`, `useContractReads`, `useContractInfiniteReads`, `useContractWrite`, `usePrepareContractWrite`.
+
+  ```diff
+  import { useContractRead } from 'wagmi'
+
+  const result = useContractRead({
+  - addressOrName: '0x…',
+  + address: '0x…',
+  - contractInterface: […] as const,
+  + abi: […] as const,
+    functionName: 'balanceOf',
+    args: ['0x…'],
+  })
+  ```
+
+  If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+  ```diff
+  - import { useContractRead } from 'wagmi'
+  + import { useContractRead, useEnsAddress } from 'wagmi'
+
+  + const { data: address} = useEnsAddress({ name: 'example.eth'})
+  const result = useContractRead({
+  - addressOrName: 'example.eth',
+  + address,
+    abi: […],
+    functionName: 'balanceOf',
+    args: ['0x…'],
+  })
+  ```
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Updated TypeScript generics for contract and typed data hooks.
+
+  Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi` allows TypeScript to infer `functionName`, `args`, `overrides`, and return types for functions, and `eventName` and `listener` types for events.
+
+  ```diff
+  import { useContractRead } from 'wagmi'
+
+  const result = useContractRead({
+    address: '0x…',
+  - abi: […],
+  + abi: […] as const,
+    functionName: 'balanceOf', // will autocomplete and catch typos
+    args: ['0x…'], // inferred based on `abi`, `functionName`, `args`
+  })
+  result.data // inferred based on `functionName`
+  ```
+
+  This works for the following actions: `useContractRead`, `useContractWrite`, `usePrepareContractWrite`, `useContractReads`, `useContractInfiniteReads`, and `useContractEvent`.
+
+  Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `useSignTypedData`'s config option, `types`, allows TypeScript to infer `value`.
+
+  ```diff
+  import { useSignTypedData } from 'wagmi'
+
+  const result = useSignTypedData({
+    domain: {
+      name: 'Ether Mail',
+      version: '1',
+      chainId: 1,
+      verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+    },
+    types: {
+      Person: [
+        { name: 'name', type: 'string' },
+        { name: 'wallet', type: 'address' },
+      ],
+      Mail: [
+        { name: 'from', type: 'Person' },
+        { name: 'to', type: 'Person' },
+        { name: 'contents', type: 'string' },
+      ],
+  - },
+  + } as const,
+    value: { // `value` is inferred based on `types`
+      from: {
+        name: 'Cow',
+        wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+      },
+      to: {
+        name: 'Bob',
+        wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+      },
+      contents: 'Hello, Bob!',
+    },
+  })
+  ```
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Updated TypeScript version to `typescript@>=4.7.4`.
+
+  `@wagmi/core` can now infer types based on [ABI](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions, giving you full end-to-end type-safety from your contracts to your frontend and incredible developer experience (e.g. autocomplete contract function names and catch misspellings, type contract function arguments, etc.).
+
+  For this to work, you must upgrade to `typescript@>=4.7.4`. Why is TypeScript v4.7.4 or greater necessary? TypeScript 4.7.4 introduced the ability to [extend constraints on inferred type variables](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#extends-constraints-on-infer-type-variables), which is used extensively to help narrow types for ABIs. Good news! When upgrading TypeScript from 4.6 to 4.7 there are likely no [breaking changes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#breaking-changes) for your set up.
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Updated `paginatedIndexesConfig` `fn` parameter return type. `fn` now returns an array instead of a single object.
+
+  ```diff
+  import { BigNumber } from 'ethers'
+  import { paginatedIndexesConfig, useContractInfiniteReads } from 'wagmi'
+
+  useContractInfiniteReads({
+    cacheKey: 'contracts',
+    ...paginatedIndexesConfig(
+  -    (index) => ({
+  +    (index) => [{
+        ...mlootContractConfig,
+        functionName: 'tokenURI',
+        args: [BigNumber.from(index)] as const,
+  -    }),
+  +    }],
+      { start: 0, perPage: 10, direction: 'increment' },
+    ),
+  })
+  ```
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `args` config option must now be an array for the following hooks: `useContractRead`, `useContractWrite`, `usePrepareContractWrite`, `useContractReads`, and `useContractInfiniteReads`.
+
+  ```diff
+  import { useContractRead } from 'wagmi'
+
+  const { data } = useContractRead({
+    address: '0x…',
+    abi: […],
+    functionName: 'balanceOf',
+  - args: '0x…',
+  + args: ['0x…'],
+  })
+  ```
+
+### Patch Changes
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - The `useSigner` hook now accepts an optional `chainId` to use for signer initialization as an argument.
+
+  ```tsx
+  import { useSigner } from 'wagmi'
+  import { optimism } from 'wagmi/core'
+
+  // ...
+
+  useSigner({ chainId: optimism.id })
+  ```
+
+- [#1061](https://github.com/wagmi-dev/wagmi/pull/1061) [`a4ffe8b`](https://github.com/wagmi-dev/wagmi/commit/a4ffe8b25516d5504685ae94579da4cd8c409329) Thanks [@alecananian](https://github.com/alecananian)! - Added Arbitrum Goerli Arbiscan block explorer
+
+- [#1050](https://github.com/wagmi-dev/wagmi/pull/1050) [`73d4d47`](https://github.com/wagmi-dev/wagmi/commit/73d4d47bc679f4f9a1cf46010fe2bf858c9d0b5c) Thanks [@jxom](https://github.com/jxom)! - update dependencies
+
+  - `@coinbase/wallet-sdk@3.5.3`
+  - `@tanstack/query-sync-storage-persister@4.10.1`
+  - `@tanstack/react-query@4.10.1`
+  - `@tanstack/react-query-persist-client@4.10.1`
+  - `@walletconnect/ethereum-provider@1.8.0`
+
+- [#1048](https://github.com/wagmi-dev/wagmi/pull/1048) [`ed13074`](https://github.com/wagmi-dev/wagmi/commit/ed130747c0f28c1d9980a1328883e4000a60455e) Thanks [@Max-3-7](https://github.com/Max-3-7)! - Added support for Avalanche core wallet
+
+- [#1046](https://github.com/wagmi-dev/wagmi/pull/1046) [`ab9ecaa`](https://github.com/wagmi-dev/wagmi/commit/ab9ecaa74dfa4324279e167dd7e348319ef7d35d) Thanks [@jxom](https://github.com/jxom)! - make ethers block format validator compatible with Celo
+
+- Updated dependencies [[`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`a4ffe8b`](https://github.com/wagmi-dev/wagmi/commit/a4ffe8b25516d5504685ae94579da4cd8c409329), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`ed13074`](https://github.com/wagmi-dev/wagmi/commit/ed130747c0f28c1d9980a1328883e4000a60455e), [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663), [`ab9ecaa`](https://github.com/wagmi-dev/wagmi/commit/ab9ecaa74dfa4324279e167dd7e348319ef7d35d), [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c), [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c), [`73d4d47`](https://github.com/wagmi-dev/wagmi/commit/73d4d47bc679f4f9a1cf46010fe2bf858c9d0b5c), [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c), [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c)]:
+  - @wagmi/core@0.6.0
+
 ## 0.6.8
 
 ### Patch Changes
