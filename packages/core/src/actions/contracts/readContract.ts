@@ -50,7 +50,7 @@ export async function readContract<
   const provider = getProvider({ chainId })
   const contract = getContract({
     address,
-    abi,
+    abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     signerOrProvider: provider,
   })
 

@@ -38,12 +38,16 @@ function usePrepareContractWriteWithConnect<
     chainId?: number
   },
 ) {
-  const prepareContractWrite = usePrepareContractWrite(config)
+  const prepareContractWrite = usePrepareContractWrite({
+    ...config,
+    abi: config.abi as Abi,
+  })
   return {
     connect: useConnect(),
     prepareContractWrite,
     contractWrite: useContractWrite({
       ...prepareContractWrite.config,
+      abi: prepareContractWrite.config.abi as Abi,
       chainId: config?.chainId,
     }),
   }

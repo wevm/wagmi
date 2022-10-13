@@ -8,6 +8,7 @@ import {
   Address,
   ExtractAbiEvent,
   ExtractAbiEventNames,
+  Narrow,
   ResolvedConfig,
 } from 'abitype'
 import {
@@ -30,11 +31,11 @@ import {
   UnionToIntersection,
 } from '../../types/utils'
 
-export type GetContractArgs<TAbi = unknown> = {
+export type GetContractArgs<TAbi extends Abi | readonly unknown[] = Abi> = {
   /** Contract address */
   address: string
-  /** Contract interface or ABI */
-  abi: TAbi
+  /** Contract ABI */
+  abi: Narrow<TAbi>
   /** Signer or provider to attach to contract */
   signerOrProvider?: Signer | providers.Provider
 }
@@ -43,9 +44,7 @@ export type GetContractResult<TAbi = unknown> = TAbi extends Abi
   ? Contract<TAbi> & EthersContract
   : EthersContract
 
-export function getContract<
-  TAbi extends Abi | readonly unknown[] | ContractInterface,
->({
+export function getContract<TAbi extends Abi | readonly unknown[]>({
   address,
   abi,
   signerOrProvider,

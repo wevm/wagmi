@@ -27,7 +27,7 @@ describe('writeContract', () => {
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
-    const { hash } = await writeContract({ ...config })
+    const { hash } = await writeContract(config)
 
     expect(hash).toBeDefined()
   })

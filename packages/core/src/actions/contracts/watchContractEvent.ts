@@ -1,4 +1,10 @@
-import { Abi, AbiEvent, ExtractAbiEvent, ExtractAbiEventNames } from 'abitype'
+import {
+  Abi,
+  AbiEvent,
+  ExtractAbiEvent,
+  ExtractAbiEventNames,
+  Narrow,
+} from 'abitype'
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
@@ -17,7 +23,7 @@ type ContractEventConfig<
   /** Contract address */
   address: string
   /** Contract ABI */
-  abi: TAbi
+  abi: Narrow<TAbi>
   /** Chain id to use for provider */
   chainId?: number
   /** Event to listen for */
@@ -81,7 +87,11 @@ export function watchContractEvent<
 
     const signerOrProvider =
       getWebSocketProvider({ chainId }) || getProvider({ chainId })
-    contract = getContract({ address, abi, signerOrProvider })
+    contract = getContract({
+      address,
+      abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
+      signerOrProvider,
+    })
 
     if (once) contract.once(eventName, handler)
     else contract.on(eventName, handler)
@@ -95,9 +105,7 @@ export function watchContractEvent<
       webSocketProvider,
     }),
     watchEvent,
-    {
-      equalityFn: shallow,
-    },
+    { equalityFn: shallow },
   )
 
   return () => {

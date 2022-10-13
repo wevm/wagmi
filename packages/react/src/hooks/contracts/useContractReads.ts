@@ -87,7 +87,7 @@ function queryFn<
     const contracts = (contracts_ as unknown as ContractConfig[]).map(
       (contract, i) => ({
         ...contract,
-        abi: abis[i] as Abi | readonly unknown[],
+        abi: abis[i] as Abi,
       }),
     )
     return readContracts({

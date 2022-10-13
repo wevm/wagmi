@@ -142,7 +142,7 @@ export async function writeContract<
             address,
             args,
             chainId,
-            abi,
+            abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
             functionName,
             overrides,
           })

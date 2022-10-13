@@ -1,5 +1,5 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { TypedData, TypedDataToPrimitiveTypes } from 'abitype'
+import { TypedData } from 'abitype'
 import { verifyTypedData } from 'ethers/lib/utils'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -41,10 +41,9 @@ const value = {
   contents: 'Hello, Bob!',
 } as const
 
-function useSignTypedDataWithConnect<
-  TTypedData extends TypedData,
-  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
->(config: UseSignTypedDataConfig<TTypedData, TSchema> = {} as any) {
+function useSignTypedDataWithConnect<TTypedData extends TypedData>(
+  config: UseSignTypedDataConfig<TTypedData> = {} as any,
+) {
   return { connect: useConnect(), signTypedData: useSignTypedData(config) }
 }
 

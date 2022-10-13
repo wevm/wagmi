@@ -70,7 +70,8 @@ function queryFn({
       args,
       address,
       chainId,
-      abi,
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
       functionName,
       overrides,
       signer,
@@ -130,7 +131,11 @@ export function usePrepareContractWrite<
       } as Omit<PrepareWriteContractConfig, 'abi'>,
       { activeChainId, signerAddress: signer?._address },
     ),
-    queryFn({ abi, signer }),
+    queryFn({
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
+      signer,
+    }),
     {
       cacheTime,
       enabled: Boolean(enabled && abi && address && functionName && signer),
@@ -143,14 +148,14 @@ export function usePrepareContractWrite<
   )
   return Object.assign(prepareContractWriteQuery, {
     config: {
+      abi,
       address,
       args,
-      abi,
-      overrides,
       functionName,
-      request: undefined,
       mode: 'prepared',
+      overrides,
+      request: undefined,
       ...prepareContractWriteQuery.data,
-    } as PrepareWriteContractResult,
+    } as unknown as PrepareWriteContractResult<TAbi, TFunctionName>,
   })
 }

@@ -291,7 +291,7 @@ importers:
     specifiers:
       '@coinbase/wallet-sdk': ^3.4.1
       '@walletconnect/ethereum-provider': ^1.7.8
-      abitype: ^0.1.5
+      abitype: ^0.1.6
       ethers: ^5.7.0
       eventemitter3: ^4.0.7
       zustand: ^4.1.1
@@ -301,7 +301,7 @@ importers:
     devDependencies:
       '@coinbase/wallet-sdk': 3.5.3
       '@walletconnect/ethereum-provider': 1.8.0
-      abitype: 0.1.5
+      abitype: 0.1.6
       ethers: 5.7.1
 
   packages/react:
@@ -317,7 +317,7 @@ importers:
       '@types/use-sync-external-store': ^0.0.3
       '@wagmi/core': ^0.5.8
       '@walletconnect/ethereum-provider': ^1.8.0
-      abitype: ^0.1.5
+      abitype: ^0.1.6
       ethers: ^5.7.0
       react: ^18.1.0
       react-17: npm:react@17.0.2
@@ -338,7 +338,7 @@ importers:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
       '@types/use-sync-external-store': 0.0.3
-      abitype: 0.1.5
+      abitype: 0.1.6
       ethers: 5.7.1
       react: 18.2.0
       react-17: /react/17.0.2
@@ -4926,8 +4926,8 @@ packages:
   /abab/2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
 
-  /abitype/0.1.5:
-    resolution: {integrity: sha512-CaXWxOenPSKSIuyg1sXBXLG5nug2g7vq5LQ8FHnY4InSoImTK4CZ/mywiPGUjlWZhZS9VhE5vzKhpBysDz0qFw==}
+  /abitype/0.1.6:
+    resolution: {integrity: sha512-cdOzP4mi5pH/N3o5ly8wlw7HIqdFJVkS0RSw5p7BTvwB1gFXOqPlQJ/ZKTSCsGqd8EITJcpNuZ2h7hPX2mKECA==}
     engines: {node: '>=16', pnpm: '>=7'}
     peerDependencies:
       typescript: '>=4.7.4'

@@ -47,11 +47,16 @@ export type PrepareWriteContractConfig<
   TOptions
 >
 
-export type PrepareWriteContractResult = {
-  abi: Abi | readonly unknown[]
+export type PrepareWriteContractResult<
+  TAbi = Abi,
+  TFunctionName extends string = string,
+> = {
+  abi: TAbi extends Abi
+    ? [ExtractAbiFunction<TAbi, TFunctionName>]
+    : readonly unknown[]
   address: string
   chainId?: number
-  functionName: string
+  functionName: TFunctionName
   mode: 'prepared'
   request: PopulatedTransaction & {
     to: Address
@@ -86,18 +91,16 @@ export async function prepareWriteContract<
   functionName,
   overrides,
   signer: signer_,
-}: PrepareWriteContractConfig<
-  TAbi,
-  TFunctionName,
-  TSigner
->): Promise<PrepareWriteContractResult> {
+}: PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>): Promise<
+  PrepareWriteContractResult<TAbi, TFunctionName>
+> {
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId })
 
   const contract = getContract({
     address,
-    abi,
+    abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     signerOrProvider: signer,
   })
   const normalizedFunctionName = normalizeFunctionName({
@@ -124,15 +127,18 @@ export async function prepareWriteContract<
     (await signer.estimateGas(unsignedTransaction))
 
   const minimizedAbi = minimizeContractInterface({
-    abi,
+    abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     functionName,
-  })
+  }) as TAbi extends Abi
+    ? [ExtractAbiFunction<TAbi, TFunctionName>]
+    : readonly unknown[]
 
   return {
     abi: minimizedAbi,
     address,
     chainId,
-    functionName,
+    // TODO: Remove cast
+    functionName: functionName as TFunctionName,
     mode: 'prepared',
     request: {
       ...unsignedTransaction,

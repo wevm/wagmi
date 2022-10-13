@@ -115,7 +115,10 @@ export async function multicall<
   return results.map(({ returnData, success }, i) => {
     const { address, abi, args, functionName } = contracts[i]
 
-    const contract = getContract({ address, abi })
+    const contract = getContract({
+      address,
+      abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
+    })
     const normalizedFunctionName = normalizeFunctionName({
       contract,
       functionName,

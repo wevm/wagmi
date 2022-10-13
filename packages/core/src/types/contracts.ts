@@ -9,6 +9,7 @@ import {
   Address,
   ExtractAbiFunction,
   ExtractAbiFunctionNames,
+  Narrow,
   ResolvedConfig,
 } from 'abitype'
 import { ethers } from 'ethers'
@@ -52,7 +53,7 @@ export type DefaultOptions = {
  * @example
  * type Result = GetArgs<[…], 'tokenURI'>
  */
-type GetArgs<
+export type GetArgs<
   TAbi extends Abi | readonly unknown[],
   // It's important that we use `TFunction` to parse args so overloads still return the correct types
   TFunction extends AbiFunction & { type: 'function' },
@@ -98,11 +99,11 @@ export type ContractConfig<
 > = (TOptions['isAbiOptional'] extends true
   ? {
       /** Contract ABI */
-      abi?: TAbi
+      abi?: Narrow<TAbi>
     }
   : {
       /** Contract ABI */
-      abi: TAbi
+      abi: Narrow<TAbi>
     }) &
   (TOptions['isAddressOptional'] extends true
     ? {
@@ -172,7 +173,7 @@ export type GetConfig<
     >
   : ContractConfig<
       Omit<TContract, OmitConfigProperties>,
-      Abi | readonly unknown[],
+      Abi,
       string,
       never,
       TOptions

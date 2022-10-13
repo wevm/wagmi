@@ -12,7 +12,6 @@ describe('getContract', () => {
       address: wagmiContractConfig.address,
       abi: wagmiContractConfig.abi,
     })
-
     expect(contract).toBeDefined()
 
     // Regular function

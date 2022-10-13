@@ -68,7 +68,8 @@ function queryFn<
       address,
       args,
       chainId,
-      abi,
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
       functionName,
       overrides,
     })) ?? null) as ReadContractResult<TAbi, TFunctionName>
@@ -141,25 +142,33 @@ export function useContractRead<
     queryKey: queryKey_,
   })
 
-  return useQuery(queryKey_, queryFn({ abi }), {
-    cacheTime,
-    enabled,
-    isDataEqual,
-    select(data) {
-      const result =
-        abi && functionName
-          ? parseContractResult({
-              abi,
-              data,
-              functionName,
-            })
-          : data
-      return select ? select(result) : result
+  return useQuery(
+    queryKey_,
+    queryFn({
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
+    }),
+    {
+      cacheTime,
+      enabled,
+      isDataEqual,
+      select(data) {
+        const result =
+          abi && functionName
+            ? parseContractResult({
+                // TODO: Remove cast and still support `Narrow<TAbi>`
+                abi: abi as Abi,
+                data,
+                functionName,
+              })
+            : data
+        return select ? select(result) : result
+      },
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
     },
-    staleTime,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  )
 }

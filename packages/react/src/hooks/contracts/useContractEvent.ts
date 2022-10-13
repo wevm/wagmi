@@ -5,7 +5,13 @@ import {
   NotEqual,
   Or,
 } from '@wagmi/core/internal'
-import { Abi, AbiEvent, ExtractAbiEvent, ExtractAbiEventNames } from 'abitype'
+import {
+  Abi,
+  AbiEvent,
+  ExtractAbiEvent,
+  ExtractAbiEventNames,
+  Narrow,
+} from 'abitype'
 import * as React from 'react'
 
 import { useProvider, useWebSocketProvider } from '../providers'
@@ -44,7 +50,7 @@ type ContractEventConfig<
   /** Contract address */
   address?: string
   /** Contract ABI */
-  abi?: TAbi
+  abi?: Narrow<TAbi>
   /** Chain id to use for provider */
   chainId?: number
   /** Event to listen for */
@@ -91,7 +97,8 @@ export function useContractEvent<
   const webSocketProvider = useWebSocketProvider({ chainId })
   const contract = useContract({
     address,
-    abi,
+    // TODO: Remove cast and still support `Narrow<TAbi>`
+    abi: abi as Abi,
     signerOrProvider: webSocketProvider ?? provider,
   })
   const callbackRef = React.useRef(listener)

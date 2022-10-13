@@ -4,56 +4,47 @@ import {
   signTypedData,
 } from '@wagmi/core'
 import { Optional } from '@wagmi/core/internal'
-import { TypedData, TypedDataToPrimitiveTypes } from 'abitype'
+import { TypedData } from 'abitype'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
-export type UseSignTypedDataArgs<
-  TTypedData = unknown,
-  TSchema = unknown,
-> = Optional<
-  SignTypedDataArgs<TTypedData, TSchema>,
+export type UseSignTypedDataArgs<TTypedData = unknown> = Optional<
+  SignTypedDataArgs<TTypedData>,
   'domain' | 'types' | 'value'
 >
 
-export type UseSignTypedDataConfig<
-  TTypedData = unknown,
-  TSchema = unknown,
-> = MutationConfig<
+export type UseSignTypedDataConfig<TTypedData = unknown> = MutationConfig<
   SignTypedDataResult,
   Error,
-  SignTypedDataArgs<TTypedData, TSchema>
+  SignTypedDataArgs<TTypedData>
 > &
-  UseSignTypedDataArgs<TTypedData, TSchema>
+  UseSignTypedDataArgs<TTypedData>
 
-function mutationKey<TTypedData = unknown, TSchema = unknown>({
+function mutationKey<TTypedData = unknown>({
   domain,
   types,
   value,
-}: UseSignTypedDataArgs<TTypedData, TSchema>) {
+}: UseSignTypedDataArgs<TTypedData>) {
   return [{ entity: 'signTypedData', domain, types, value }] as const
 }
 
-function mutationFn<
-  TTypedData extends TypedData,
-  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
->(args: SignTypedDataArgs<TTypedData, TSchema>) {
+function mutationFn<TTypedData extends TypedData>(
+  args: SignTypedDataArgs<TTypedData>,
+) {
   const { domain, types, value } = args
   if (!domain) throw new Error('domain is required')
   if (!types) throw new Error('types is required')
   if (!value) throw new Error('value is required')
-  return signTypedData({ domain, types, value } as unknown as SignTypedDataArgs<
-    TTypedData,
-    TSchema
-  >)
+  return signTypedData({
+    domain,
+    types,
+    value,
+  } as unknown as SignTypedDataArgs<TTypedData>)
 }
 
-export function useSignTypedData<
-  TTypedData extends TypedData,
-  TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
->(
+export function useSignTypedData<TTypedData extends TypedData>(
   {
     domain,
     types,
@@ -62,7 +53,7 @@ export function useSignTypedData<
     onMutate,
     onSettled,
     onSuccess,
-  }: UseSignTypedDataConfig<TTypedData, TSchema> = {} as any,
+  }: UseSignTypedDataConfig<TTypedData> = {} as any,
 ) {
   const {
     data,
@@ -81,7 +72,7 @@ export function useSignTypedData<
       domain,
       types,
       value,
-    } as UseSignTypedDataArgs<TTypedData, TSchema>),
+    } as UseSignTypedDataArgs<TTypedData>),
     mutationFn,
     {
       onError,
@@ -92,32 +83,26 @@ export function useSignTypedData<
   )
 
   const signTypedData = React.useCallback(
-    <
-      TTypedDataMutate extends TypedData = TTypedData,
-      TSchemaMutate = TypedDataToPrimitiveTypes<TTypedDataMutate>,
-    >(
-      args?: UseSignTypedDataArgs<TTypedDataMutate, TSchemaMutate>,
+    <TTypedDataMutate extends TypedData = TTypedData>(
+      args?: UseSignTypedDataArgs<TTypedDataMutate>,
     ) =>
       mutate({
         domain: args?.domain ?? domain,
         types: args?.types ?? types,
         value: args?.value ?? value,
-      } as unknown as SignTypedDataArgs<TTypedData, TSchema>),
+      } as unknown as SignTypedDataArgs<TTypedData>),
     [domain, types, value, mutate],
   )
 
   const signTypedDataAsync = React.useCallback(
-    <
-      TTypedDataMutate extends TypedData = TTypedData,
-      TSchemaMutate = TypedDataToPrimitiveTypes<TTypedDataMutate>,
-    >(
-      args?: UseSignTypedDataArgs<TTypedDataMutate, TSchemaMutate>,
+    <TTypedDataMutate extends TypedData = TTypedData>(
+      args?: UseSignTypedDataArgs<TTypedDataMutate>,
     ) =>
       mutateAsync({
         domain: args?.domain ?? domain,
         types: args?.types ?? types,
         value: args?.value ?? value,
-      } as unknown as SignTypedDataArgs<TTypedData, TSchema>),
+      } as unknown as SignTypedDataArgs<TTypedData>),
     [domain, types, value, mutateAsync],
   )
 
