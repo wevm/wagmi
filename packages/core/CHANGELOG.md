@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.6.2
+
+### Patch Changes
+
+- [#1080](https://github.com/wagmi-dev/wagmi/pull/1080) [`3be5e8b`](https://github.com/wagmi-dev/wagmi/commit/3be5e8b01e58ed40cc9dab7ef9533c0197cb74d0) Thanks [@tmm](https://github.com/tmm)! - Added `abitype` to `dependencies` so types ship correctly.
+
 ## 0.6.1
 
 ### Patch Changes
