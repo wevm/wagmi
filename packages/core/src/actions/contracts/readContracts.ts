@@ -74,12 +74,15 @@ export async function readContracts<
     const contractsByChainId = (
       contracts as unknown as ContractConfig[]
     ).reduce<{
-      [chainId: number]: ContractConfig[]
-    }>((contracts, contract) => {
+      [chainId: number]: {
+        contract: ContractConfig
+        index: number
+      }[]
+    }>((contracts, contract, index) => {
       const chainId = contract.chainId ?? provider.network.chainId
       return {
         ...contracts,
-        [chainId]: [...(contracts[chainId] || []), contract],
+        [chainId]: [...(contracts[chainId] || []), { contract, index }],
       }
     }, {})
     const promises = () =>
@@ -87,12 +90,14 @@ export async function readContracts<
         multicall({
           allowFailure,
           chainId: parseInt(chainId),
-          contracts,
+          contracts: contracts.map(({ contract }) => contract),
           overrides,
         }),
       )
-    if (allowFailure)
-      return (await Promise.allSettled(promises()))
+
+    let results
+    if (allowFailure) {
+      results = (await Promise.allSettled(promises()))
         .map((result) => {
           if (result.status === 'fulfilled') return result.value
           if (result.reason instanceof ChainDoesNotSupportMulticallError) {
@@ -101,11 +106,20 @@ export async function readContracts<
           }
           return null
         })
-        .flat() as ReadContractsResult<TContracts>
+        .flat()
+    } else {
+      results = (await Promise.all(promises())).flat()
+    }
 
-    return (
-      await Promise.all(promises())
-    ).flat() as ReadContractsResult<TContracts>
+    // Reorder the contract results back to the order they were
+    // provided in.
+    const resultIndexes = Object.values(contractsByChainId)
+      .map((contracts) => contracts.map(({ index }) => index))
+      .flat()
+    return results.reduce((results, result, index) => {
+      results[resultIndexes[index]!] = result
+      return results
+    }, [] as unknown[]) as ReadContractsResult<TContracts>
   } catch (err) {
     if (err instanceof ContractResultDecodeError) throw err
     if (err instanceof ContractMethodNoResultError) throw err
