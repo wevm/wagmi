@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.7.1
+
+### Patch Changes
+
+- [#1074](https://github.com/wagmi-dev/wagmi/pull/1074) [`8db807f`](https://github.com/wagmi-dev/wagmi/commit/8db807f16149aa278c2a7db9ee5245431db12173) Thanks [@IljaDaderko](https://github.com/IljaDaderko)! - Exported `EventListener` type
+
+- Updated dependencies [[`8db807f`](https://github.com/wagmi-dev/wagmi/commit/8db807f16149aa278c2a7db9ee5245431db12173)]:
+  - @wagmi/core@0.6.1
+
 ## 0.7.0
 
 ### Minor Changes
