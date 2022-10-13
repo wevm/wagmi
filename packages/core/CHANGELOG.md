@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 0.5.8
+
+### Patch Changes
+
+- [`8cb07462`](https://github.com/wagmi-dev/wagmi/commit/8cb07462acc3c5637398d11d2451f8b8e330d553) Thanks [@jxom](https://github.com/jxom)! - Added `chainId` as an argument to `watchBlockNumber`.
+
+* [`53c1a474`](https://github.com/wagmi-dev/wagmi/commit/53c1a4747d03b685e8cfbf55361fc2a56777fb06) Thanks [@tmm](https://github.com/tmm)! - Added missing `decimals` option to `Connector` `watchAsset`
+
+- [`4d74dd4f`](https://github.com/wagmi-dev/wagmi/commit/4d74dd4ff827ba5c43c3546a218f38cee45ea76a) Thanks [@jxom](https://github.com/jxom)! - Support ERC20 contracts that represent strings as bytes32
+
 ## 0.5.7
 
 ### Patch Changes

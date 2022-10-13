@@ -27,7 +27,7 @@ describe('writeContract', () => {
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
-    const { hash } = await writeContract({ ...config })
+    const { hash } = await writeContract(config)
 
     expect(hash).toBeDefined()
   })
@@ -55,8 +55,8 @@ describe('writeContract', () => {
 
       await expect(() =>
         writeContract({
-          chainId: 69,
           ...config,
+          chainId: 69,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
@@ -69,6 +69,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowError()
@@ -79,6 +80,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
@@ -90,6 +92,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`

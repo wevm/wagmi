@@ -7,13 +7,8 @@ export type UseEnsNameArgs = Partial<FetchEnsNameArgs>
 
 export type UseEnsNameConfig = QueryConfig<FetchEnsNameResult, Error>
 
-export const queryKey = ({
-  address,
-  chainId,
-}: {
-  address?: string
-  chainId?: number
-}) => [{ entity: 'ensName', address, chainId }] as const
+export const queryKey = ({ address, chainId }: Partial<FetchEnsNameArgs>) =>
+  [{ entity: 'ensName', address, chainId }] as const
 
 const queryFn = ({
   queryKey: [{ address, chainId }],

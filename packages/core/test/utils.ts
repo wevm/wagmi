@@ -1,7 +1,9 @@
+import { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
 import { providers } from 'ethers'
 import { BigNumber, Wallet } from 'ethers/lib/ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
+import { mirrorCrowdfundContractConfig } from './constants'
 
 export function getNetwork(chain: Chain) {
   return {
@@ -182,29 +184,27 @@ function getRandomNumber(from = 1, to = 100) {
   return Math.floor(Math.random() * to) + from
 }
 
-export function getCrowdfundArgs({
+type GetCrowdfundArgs = AbiParametersToPrimitiveTypes<
+  ExtractAbiFunction<
+    typeof mirrorCrowdfundContractConfig['abi'],
+    'createCrowdfund'
+  >['inputs']
+>
+export function getCrowdfundArgs([
   tributaryConfig = {
     tributary: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    feePercentage: 250,
+    feePercentage: BigNumber.from(250),
   },
   name = `Crowdfund ${crowdfundId}`,
   symbol = `$Crowdfund${crowdfundId}-${getRandomNumber()}`,
   operatorAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
   fundingRecipientAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-  fundingGoal = '100000000000000000000',
-  operatorPercent = '100',
-}: {
-  tributaryConfig?: { tributary: string; feePercentage: number }
-  name?: string
-  symbol?: string
-  operatorAddress?: string
-  fundingRecipientAddress?: string
-  fundingGoal?: string
-  operatorPercent?: string
-} = {}) {
+  fundingGoal = BigNumber.from('100000000000000000000'),
+  operatorPercent = BigNumber.from('100'),
+]: Partial<GetCrowdfundArgs> = []): GetCrowdfundArgs {
   crowdfundId += 1
-  // do not change order of keys below
-  const data = {
+  // do not change order of values below
+  return [
     tributaryConfig,
     name,
     symbol,
@@ -212,8 +212,7 @@ export function getCrowdfundArgs({
     fundingRecipientAddress,
     fundingGoal,
     operatorPercent,
-  }
-  return Object.values(data)
+  ]
 }
 
 export function getRandomTokenId() {

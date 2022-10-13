@@ -1,3 +1,5 @@
+import { Abi, ExtractAbiFunctionNames } from 'abitype'
+
 import { getClient } from '../../client'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import {
@@ -6,14 +8,25 @@ import {
   readContract,
 } from './readContract'
 
-export type WatchReadContractConfig = ReadContractConfig & {
+export type WatchReadContractConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = ReadContractConfig<TAbi, TFunctionName> & {
   listenToBlock?: boolean
 }
-export type WatchReadContractResult = (result: ReadContractResult) => void
+export type WatchReadContractCallback<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+> = (result: ReadContractResult<TAbi, TFunctionName>) => void
 
-export function watchReadContract(
-  config: WatchReadContractConfig,
-  callback: WatchReadContractResult,
+export function watchReadContract<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'view' | 'pure'>
+    : string,
+>(
+  config: WatchReadContractConfig<TAbi, TFunctionName>,
+  callback: WatchReadContractCallback<TAbi, TFunctionName>,
 ) {
   const client = getClient()
 

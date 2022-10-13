@@ -16,8 +16,6 @@ export {
   useContractRead,
   useContractReads,
   useContractWrite,
-  useDeprecatedContractWrite,
-  useDeprecatedSendTransaction,
   useDisconnect,
   useEnsAddress,
   useEnsAvatar,
@@ -25,9 +23,11 @@ export {
   useEnsResolver,
   useFeeData,
   useInfiniteQuery,
+  useMutation,
   useNetwork,
   useProvider,
   useQuery,
+  useQueryClient,
   useSendTransaction,
   usePrepareContractWrite,
   usePrepareSendTransaction,
@@ -87,3 +87,5 @@ export type {
   Storage,
   Unit,
 } from '@wagmi/core'
+
+export type { Address } from 'abitype'

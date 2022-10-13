@@ -8,11 +8,12 @@ function Page() {
   const isMounted = useIsMounted()
   const { isConnected } = useAccount()
 
+  if (!isMounted) return null
   return (
     <>
       <Connect />
 
-      {isMounted && isConnected && (
+      {isConnected && (
         <>
           <Account />
           <NetworkSwitcher />

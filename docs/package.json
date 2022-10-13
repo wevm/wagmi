@@ -21,7 +21,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "siwe": "^1.1.6",
-    "wagmi": "^0.6.7"
+    "wagmi": "^0.6.8"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.1.6",
@@ -34,6 +34,6 @@
     "eslint-config-next": "^12.1.6",
     "postcss": "^8.4.13",
     "tailwindcss": "^3.0.24",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.4"
   }
 }

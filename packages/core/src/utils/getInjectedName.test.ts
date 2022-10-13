@@ -46,6 +46,11 @@ describe.each([
     expected: ['MetaMask', 'Unknown Wallet #1', 'Unknown Wallet #2'],
   },
   { ethereum: {}, expected: 'Injected' },
+  { ethereum: { isAvalanche: true }, expected: 'Core Wallet' },
+  {
+    ethereum: { isAvalanche: true, isMetaMask: true },
+    expected: 'Core Wallet',
+  },
 ])('getInjectedName($ethereum)', ({ ethereum, expected }) => {
   it(`returns ${expected}`, () => {
     expect(getInjectedName(<any>ethereum)).toEqual(expected)

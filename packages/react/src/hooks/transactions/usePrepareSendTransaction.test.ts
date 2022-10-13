@@ -4,13 +4,12 @@ import { describe, expect, it } from 'vitest'
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
 import {
-  UsePrepareSendTransactionArgs,
   UsePrepareSendTransactionConfig,
   usePrepareSendTransaction,
 } from './usePrepareSendTransaction'
 
 function usePrepareSendTransactionWithConnect(
-  config: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig,
+  config: UsePrepareSendTransactionConfig,
 ) {
   const { ...prepareSendTransaction } = usePrepareSendTransaction(config)
   return {
@@ -150,6 +149,37 @@ describe('usePrepareSendTransaction', () => {
 
       await act(async () => result.current.network.switchNetwork?.(1))
       await waitFor(() => expect(result.current.network.isSuccess).toBeTruthy())
+
+      await waitFor(() =>
+        expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
+      )
+    })
+  })
+
+  describe('behaviors', () => {
+    it('does not run when request is undefined', async () => {
+      const config = {
+        request: undefined,
+      } as const
+      const utils = renderHook(() =>
+        usePrepareSendTransactionWithConnect(config),
+      )
+      const { rerender, result, waitFor } = utils
+
+      await actConnect({ utils })
+      await waitFor(() =>
+        expect(result.current.prepareSendTransaction.isIdle).toBeTruthy(),
+      )
+      expect(result.current.prepareSendTransaction.config.request).toBe(
+        undefined,
+      )
+
+      // @ts-expect-error assigning to readonly object
+      config.request = {
+        to: 'moxey.eth',
+        value: BigNumber.from('10000000000000000'),
+      }
+      rerender()
 
       await waitFor(() =>
         expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),

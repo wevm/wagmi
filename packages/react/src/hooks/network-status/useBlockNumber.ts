@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query'
 import {
   FetchBlockNumberArgs,
   FetchBlockNumberResult,
@@ -9,7 +8,7 @@ import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
-import { useChainId, useQuery } from '../utils'
+import { useChainId, useQuery, useQueryClient } from '../utils'
 
 type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
   /** Function fires when a new block is created */

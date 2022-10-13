@@ -76,8 +76,8 @@ export function MintNFTForm() {
   const [tokenId, setTokenId] = React.useState('')
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -106,6 +106,14 @@ export function MintNFTForm() {
 }
 ```
 
+<Callout emoji="🤔" type="info">
+  By defining inline or adding a [const
+  assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
+  to `abi`, TypeScript will infer the correct types for `functionName` and
+  `args`. See the wagmi [TypeScript docs](/docs/typescript) for more
+  information.
+</Callout>
+
 ## Step 5: Add a debounce to the input value
 
 As the `usePrepareContractWrite` hook performs an RPC request to obtain the gas estimate **on mount** and **on every change to `args`**, we don't want to spam the RPC and become rate-limited.
@@ -122,8 +130,8 @@ export function MintNFTForm() {
   const debouncedTokenId = useDebounce(tokenId, 500)
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -173,8 +181,8 @@ export function MintNFTForm() {
   const debouncedTokenId = useDebounce(tokenId)
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -243,8 +251,8 @@ export function MintNFTForm() {
   const debouncedTokenId = useDebounce(tokenId)
 
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',
@@ -322,7 +330,7 @@ export function App() {
 
 Now let's provide some feedback to the user if the prepare hook fails, or if the write hook fails.
 
-```tsx {15-16,32,63-65}
+```tsx {16-17,33,64-66}
 import * as React from 'react'
 import {
   usePrepareContractWrite,
@@ -340,8 +348,8 @@ export function MintNFTForm() {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: [
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
       {
         name: 'mint',
         type: 'function',

@@ -1,35 +1,48 @@
-import { BytesLike, providers } from 'ethers'
+import {
+  Narrow,
+  TypedData,
+  TypedDataDomain,
+  TypedDataToPrimitiveTypes,
+} from 'abitype'
+import { TypedDataField, providers } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain, normalizeChainId } from '../../utils'
 import { fetchSigner } from './fetchSigner'
 
-export type SignTypedDataArgs = {
+export type SignTypedDataArgs<TTypedData = unknown> = {
   /** Domain or domain signature for origin or contract */
-  domain: {
-    name?: string
-    version?: string
-    /**
-     * Chain permitted for signing
-     * If signer is not active on this chain, it will attempt to programmatically switch
-     */
-    chainId?: string | number | bigint
-    verifyingContract?: string
-    salt?: BytesLike
-  }
+  domain: TypedDataDomain
   /** Named list of all type definitions */
-  types: Record<string, Array<{ name: string; type: string }>>
-  /** Data to sign */
-  value: Record<string, any>
-}
+  types: Narrow<TTypedData>
+} & (TTypedData extends TypedData
+  ? TypedDataToPrimitiveTypes<TTypedData> extends infer TSchema
+    ? TSchema[keyof TSchema] extends infer TValue
+      ? // Check if we were able to infer the shape of typed data
+        { [key: string]: any } extends TValue
+        ? {
+            /**
+             * Data to sign
+             *
+             * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link types} for type inference.
+             */
+            value: { [key: string]: unknown }
+          }
+        : {
+            /** Data to sign */
+            value: TValue
+          }
+      : never
+    : never
+  : never)
 
 export type SignTypedDataResult = string
 
-export async function signTypedData({
+export async function signTypedData<TTypedData extends TypedData>({
   domain,
   types,
   value,
-}: SignTypedDataArgs): Promise<SignTypedDataResult> {
+}: SignTypedDataArgs<TTypedData>): Promise<SignTypedDataResult> {
   const signer = await fetchSigner<providers.JsonRpcSigner>()
   if (!signer) throw new ConnectorNotFoundError()
 
@@ -38,5 +51,9 @@ export async function signTypedData({
   if (chainId) assertActiveChain({ chainId })
 
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-  return await signer._signTypedData(domain, types, value)
+  return await signer._signTypedData(
+    domain,
+    <Record<string, Array<TypedDataField>>>(<unknown>types),
+    value,
+  )
 }
