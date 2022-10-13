@@ -15,7 +15,7 @@ const domain = {
   name: 'Ether Mail',
   version: '1',
   chainId: 1,
-  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC' as const,
 }
 
 // Named list of all type definitions
@@ -29,7 +29,7 @@ const types = {
     { name: 'to', type: 'Person' },
     { name: 'contents', type: 'string' },
   ],
-}
+} as const
 
 // Data to sign
 const value = {
@@ -42,7 +42,7 @@ const value = {
     wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
   },
   contents: 'Hello, Bob!',
-}
+} as const
 
 describe('signTypedData', () => {
   beforeEach(() => {

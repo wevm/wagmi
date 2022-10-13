@@ -5,7 +5,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev",
-    "postinstall": "patch-package && remix setup node",
+    "postinstall": "remix setup node",
     "start": "remix-serve build"
   },
   "dependencies": {
@@ -15,7 +15,6 @@
     "@remix-run/serve": "^1.6.3",
     "dotenv": "^11.0.0",
     "ethers": "^5.7.0",
-    "patch-package": "^6.4.7",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "remix": "^1.6.3",
@@ -26,7 +25,7 @@
     "@remix-run/dev": "^1.6.3",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.4"
   },
   "engines": {
     "node": ">=14"

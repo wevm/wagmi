@@ -24,10 +24,18 @@ export function ContractWriteDynamic() {
     isError: isPrepareError,
     isLoading: isPreparing,
   } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint(uint256 tokenId)'],
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
-    args: [debouncedTokenId],
+    args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),
   })
   const {

@@ -22,8 +22,8 @@ import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
   const { data, isLoading, isSuccess, write } = useContractWrite(config)
@@ -79,18 +79,18 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const { sendTransaction } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 }
 ```
 
-### addressOrName
+### address (optional)
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-Contract address or ENS name.
+Contract address.
 
 ```tsx {6}
 import { useContractWrite } from 'wagmi'
@@ -98,8 +98,8 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const contractWrite = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 
@@ -119,9 +119,9 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const contractWrite = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     chainId: 1,
-    contractInterface: wagmigotchiABI,
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 
@@ -129,11 +129,13 @@ function App() {
 }
 ```
 
-### contractInterface
+### abi
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {7}
 import { useContractWrite } from 'wagmi'
@@ -141,8 +143,8 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const contractWrite = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 
@@ -162,8 +164,8 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const contractWrite = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 
@@ -175,7 +177,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-Arguments to pass to function call. Accepts `any | any[]`.
+Arguments to pass to function call.
 
 ```tsx {9}
 import { useContractWrite } from 'wagmi'
@@ -183,8 +185,8 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const contractWrite = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     args: [],
   })
@@ -197,7 +199,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-[Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
+Overrides to pass to function call. If the function is payable, you can pass a `value` here.
 
 ```tsx {9-12}
 import { useContractWrite } from 'wagmi'
@@ -205,8 +207,8 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const contractWrite = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     overrides: {
       from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
@@ -323,8 +325,8 @@ import { useContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'claim',
   })
   const { data, isLoading, isSuccess, write } = useContractWrite(config)
@@ -368,8 +370,8 @@ import { useContractWrite } from 'wagmi'
 function App() {
   const { data, isLoading, isSuccess, write } = useContractWrite({
     mode: 'recklesslyUnprepared',
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'claim',
     tokenId: 69,
   })

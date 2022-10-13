@@ -44,7 +44,11 @@ function App() {
 }
 ```
 
-<Callout>Note: The `sendTransaction` function will be undefined if the request has not been prepared (still in-flight or errored), or the end-user is not connected to a wallet.</Callout>
+<Callout>
+  Note: The `sendTransaction` function will be undefined if the request has not
+  been prepared (still in-flight or errored), or the end-user is not connected
+  to a wallet.
+</Callout>
 
 ## Return value
 
@@ -69,9 +73,9 @@ function App() {
 
 ## Configuration
 
-### request
+### request (optional)
 
-Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
+Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info. If `request` and `request.to` are not defined, hook will not run.
 
 ```tsx {5-8}
 import { usePrepareSendTransaction } from 'wagmi'
@@ -100,7 +104,7 @@ function App() {
       to: 'awkweb.eth',
       value: parseEther('1'), // 1 ETH
     },
-    chainId: optimism.id
+    chainId: optimism.id,
   })
 }
 ```

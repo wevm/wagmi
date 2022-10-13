@@ -1,4 +1,4 @@
-import { Bytes } from 'ethers/lib/utils'
+import { ResolvedConfig } from 'abitype'
 
 import {
   ConnectorNotFoundError,
@@ -9,11 +9,10 @@ import { fetchSigner } from './fetchSigner'
 
 export type SignMessageArgs = {
   /** Message to sign with wallet */
-  message: Bytes | string
+  message: string | Uint8Array
 }
 
-type Signature = string
-export type SignMessageResult = Signature
+export type SignMessageResult = ResolvedConfig['BytesType']
 
 export async function signMessage(
   args: SignMessageArgs,
@@ -21,7 +20,9 @@ export async function signMessage(
   try {
     const signer = await fetchSigner()
     if (!signer) throw new ConnectorNotFoundError()
-    return await signer.signMessage(args.message)
+    return (await signer.signMessage(
+      args.message,
+    )) as ResolvedConfig['BytesType']
   } catch (error) {
     if ((<ProviderRpcError>error).code === 4001)
       throw new UserRejectedRequestError(error)

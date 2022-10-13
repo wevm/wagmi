@@ -1,53 +1,71 @@
-import { CallOverrides, Contract } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
+import { Abi } from 'abitype'
 
-import { logWarn } from '../../utils'
-
+import { ContractMethodDoesNotExistError } from '../../errors'
+import {
+  DefaultOptions,
+  GetConfig,
+  GetOverridesForAbiStateMutability,
+  GetReturnType,
+  Options,
+} from '../../types/contracts'
+import { normalizeFunctionName } from '../../utils'
 import { getProvider } from '../providers'
-import { GetContractArgs, getContract } from './getContract'
+import { getContract } from './getContract'
 
-export type ReadContractConfig = {
-  addressOrName: GetContractArgs['addressOrName']
-  /** Arguments to pass contract method */
-  args?: any | any[]
-  /** Chain id to use for provider */
-  chainId?: number
-  contractInterface: GetContractArgs['contractInterface']
-  /** Function to invoke on the contract */
-  functionName: string
-  /** Call overrides */
-  overrides?: CallOverrides
-}
-export type ReadContractResult<Data = Result> = Data
+export type ReadContractConfig<
+  TAbi = Abi,
+  TFunctionName = string,
+  TOptions extends Options = DefaultOptions,
+> = GetConfig<
+  {
+    abi: TAbi
+    functionName: TFunctionName
+    /** Chain id to use for provider */
+    chainId?: number
+    /** Call overrides */
+    overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
+  },
+  'pure' | 'view',
+  TOptions
+>
+
+export type ReadContractResult<
+  TAbi = Abi,
+  TFunctionName = string,
+> = GetReturnType<{ abi: TAbi; functionName: TFunctionName }>
 
 export async function readContract<
-  TContract extends Contract = Contract,
-  Data = Result,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
 >({
-  addressOrName,
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   overrides,
-}: ReadContractConfig): Promise<ReadContractResult<Data>> {
+}: ReadContractConfig<TAbi, TFunctionName>): Promise<
+  ReadContractResult<TAbi, TFunctionName>
+> {
   const provider = getProvider({ chainId })
-  const contract = getContract<TContract>({
-    addressOrName,
-    contractInterface,
+  const contract = getContract({
+    address,
+    abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     signerOrProvider: provider,
   })
 
-  const params = [
-    ...(Array.isArray(args) ? args : args ? [args] : []),
-    ...(overrides ? [overrides] : []),
-  ]
-
-  const contractFunction = contract[functionName]
+  const normalizedFunctionName = normalizeFunctionName({
+    contract,
+    functionName,
+    args,
+  })
+  const contractFunction = contract[normalizedFunctionName]
   if (!contractFunction)
-    logWarn(
-      `"${functionName}" is not in the interface for contract "${addressOrName}"`,
-    )
-  const response = (await contractFunction?.(...params)) as Data
-  return response
+    throw new ContractMethodDoesNotExistError({
+      address,
+      functionName: normalizedFunctionName,
+    })
+
+  const params = [...(args ?? []), ...(overrides ? [overrides] : [])]
+  return contractFunction?.(...params)
 }

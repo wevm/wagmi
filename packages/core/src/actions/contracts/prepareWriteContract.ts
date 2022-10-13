@@ -1,41 +1,68 @@
-import {
-  CallOverrides,
-  Contract,
-  PopulatedTransaction,
-} from 'ethers/lib/ethers'
+import { Abi, Address, ExtractAbiFunction } from 'abitype'
+import { PopulatedTransaction } from 'ethers/lib/ethers'
 
 import {
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
 } from '../../errors'
-import { Address, Signer } from '../../types'
-import { assertActiveChain, minimizeContractInterface } from '../../utils'
+import { Signer } from '../../types'
+import {
+  DefaultOptions,
+  GetConfig,
+  GetOverridesForAbiStateMutability,
+  Options,
+} from '../../types/contracts'
+import {
+  assertActiveChain,
+  minimizeContractInterface,
+  normalizeFunctionName,
+} from '../../utils'
 import { fetchSigner } from '../accounts'
-import { GetContractArgs, getContract } from './getContract'
+import { getContract } from './getContract'
 
-export type PrepareWriteContractConfig<TSigner extends Signer = Signer> = Omit<
-  GetContractArgs,
-  'signerOrProvider'
-> & {
-  /** Chain ID used to validate if the signer is connected to the target chain */
-  chainId?: number
-  /** Method to call on contract */
-  functionName: string
-  /** Arguments to pass contract method */
-  args?: any | any[]
-  overrides?: CallOverrides
-  signer?: TSigner | null
-}
-
-export type PrepareWriteContractResult<TSigner extends Signer = Signer> =
-  PrepareWriteContractConfig<TSigner> & {
+export type PrepareWriteContractConfig<
+  TAbi = Abi,
+  TFunctionName = string,
+  TSigner extends Signer = Signer,
+  TOptions extends Options = DefaultOptions,
+> = GetConfig<
+  {
+    abi: TAbi
+    functionName: TFunctionName
+    /** Chain id to use for provider */
     chainId?: number
-    request: PopulatedTransaction & {
-      to: Address
-      gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-    }
-    mode: 'prepared'
+    /** Overrides */
+    overrides?: GetOverridesForAbiStateMutability<
+      [TAbi, TFunctionName] extends [
+        infer TAbi_ extends Abi,
+        infer TFunctionName_ extends string,
+      ]
+        ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
+        : 'nonpayable' | 'payable'
+    >
+    /** Custom signer */
+    signer?: TSigner | null
+  },
+  'nonpayable' | 'payable',
+  TOptions
+>
+
+export type PrepareWriteContractResult<
+  TAbi = Abi,
+  TFunctionName extends string = string,
+> = {
+  abi: TAbi extends Abi
+    ? [ExtractAbiFunction<TAbi, TFunctionName>]
+    : readonly unknown[]
+  address: string
+  chainId?: number
+  functionName: TFunctionName
+  mode: 'prepared'
+  request: PopulatedTransaction & {
+    to: Address
+    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
   }
+}
 
 /**
  * @description Prepares the parameters required for a contract write transaction.
@@ -46,52 +73,50 @@ export type PrepareWriteContractResult<TSigner extends Signer = Signer> =
  * import { prepareWriteContract, writeContract } from '@wagmi/core'
  *
  * const config = await prepareWriteContract({
- *  addressOrName: '0x...',
- *  contractInterface: wagmiAbi,
+ *  address: '0x...',
+ *  abi: wagmiAbi,
  *  functionName: 'mint',
  * })
  * const result = await writeContract(config)
  */
 export async function prepareWriteContract<
-  TContract extends Contract = Contract,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
   TSigner extends Signer = Signer,
 >({
-  addressOrName,
+  abi,
+  address,
   args,
   chainId,
-  contractInterface: contractInterface_,
   functionName,
   overrides,
   signer: signer_,
-}: PrepareWriteContractConfig): Promise<PrepareWriteContractResult<TSigner>> {
+}: PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>): Promise<
+  PrepareWriteContractResult<TAbi, TFunctionName>
+> {
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
-
   if (chainId) assertActiveChain({ chainId })
 
-  const contract = getContract<TContract>({
-    addressOrName,
-    contractInterface: contractInterface_,
+  const contract = getContract({
+    address,
+    abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     signerOrProvider: signer,
   })
-
-  const populateTransactionFn = contract.populateTransaction[functionName]
-  if (!populateTransactionFn) {
-    throw new ContractMethodDoesNotExistError({
-      addressOrName,
-      functionName,
-    })
-  }
-
-  const contractInterface = minimizeContractInterface({
-    contractInterface: contract.interface,
+  const normalizedFunctionName = normalizeFunctionName({
+    contract,
     functionName,
+    args,
   })
+  const populateTransactionFn =
+    contract.populateTransaction[normalizedFunctionName]
+  if (!populateTransactionFn)
+    throw new ContractMethodDoesNotExistError({
+      address,
+      functionName: normalizedFunctionName,
+    })
 
-  const params = [
-    ...(Array.isArray(args) ? args : args ? [args] : []),
-    ...(overrides ? [overrides] : []),
-  ]
+  const params = [...(args ?? []), ...(overrides ? [overrides] : [])]
   const unsignedTransaction = (await populateTransactionFn(
     ...params,
   )) as PopulatedTransaction & {
@@ -101,17 +126,23 @@ export async function prepareWriteContract<
     unsignedTransaction.gasLimit ||
     (await signer.estimateGas(unsignedTransaction))
 
-  return {
-    addressOrName,
-    args,
-    ...(chainId ? { chainId } : {}),
-    contractInterface,
+  const minimizedAbi = minimizeContractInterface({
+    abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     functionName,
-    overrides,
+  }) as TAbi extends Abi
+    ? [ExtractAbiFunction<TAbi, TFunctionName>]
+    : readonly unknown[]
+
+  return {
+    abi: minimizedAbi,
+    address,
+    chainId,
+    // TODO: Remove cast
+    functionName: functionName as TFunctionName,
+    mode: 'prepared',
     request: {
       ...unsignedTransaction,
       gasLimit,
     },
-    mode: 'prepared',
   }
 }

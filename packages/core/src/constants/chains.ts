@@ -358,10 +358,12 @@ export const arbitrumGoerli: Chain = {
     public: publicRpcUrls.arbitrumGoerli,
   },
   blockExplorers: {
-    default: {
+    arbitrum: {
       name: 'Arbitrum Explorer',
       url: 'https://goerli-rollup-explorer.arbitrum.io',
     },
+    etherscan: etherscanBlockExplorers.arbitrumGoerli,
+    default: etherscanBlockExplorers.arbitrumGoerli,
   },
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',

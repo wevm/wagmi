@@ -20,8 +20,6 @@ it('should expose correct exports', () => {
       "useContractRead",
       "useContractReads",
       "useContractWrite",
-      "useDeprecatedContractWrite",
-      "useDeprecatedSendTransaction",
       "useDisconnect",
       "useEnsAddress",
       "useEnsAvatar",

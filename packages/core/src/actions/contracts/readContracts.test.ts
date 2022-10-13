@@ -1,31 +1,35 @@
+import { Address, ResolvedConfig } from 'abitype'
+import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
+  expectType,
   mlootContractConfig,
   setupClient,
+  wagmiContractConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
 import { chain } from '../../constants'
 import * as multicall from './multicall'
 import * as readContract from './readContract'
-import { ReadContractsConfig, readContracts } from './readContracts'
+import { readContracts } from './readContracts'
 
-const contracts: ReadContractsConfig['contracts'] = [
+const contracts = [
   {
     ...wagmigotchiContractConfig,
     functionName: 'love',
-    args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+    args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
   },
   {
     ...wagmigotchiContractConfig,
     functionName: 'love',
-    args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+    args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
   },
   { ...wagmigotchiContractConfig, functionName: 'getAlive' },
   {
     ...mlootContractConfig,
     functionName: 'tokenOfOwnerByIndex',
-    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
   },
 ]
 
@@ -74,18 +78,18 @@ describe('readContracts', () => {
   it('falls back to readContract if multicall is not available', async () => {
     const spy = vi.spyOn(readContract, 'readContract')
     const chainId = chain.polygon.id
-    const contracts: ReadContractsConfig['contracts'] = [
+    const contracts = [
       {
         ...wagmigotchiContractConfig,
         chainId: chain.polygon.id,
         functionName: 'love',
-        args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+        args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
       },
       {
         ...wagmigotchiContractConfig,
         chainId: chain.polygon.id,
         functionName: 'love',
-        args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+        args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
       },
       {
         ...wagmigotchiContractConfig,
@@ -96,12 +100,21 @@ describe('readContracts', () => {
         ...mlootContractConfig,
         chainId: chain.polygon.id,
         functionName: 'tokenOfOwnerByIndex',
-        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
       },
-    ]
+    ] as const
     const results = await readContracts({
+      //  ^?
       contracts,
     })
+    expectType<
+      [
+        ResolvedConfig['BigIntType'],
+        ResolvedConfig['BigIntType'],
+        boolean,
+        ResolvedConfig['BigIntType'],
+      ]
+    >(results)
 
     for (const contract of contracts) {
       expect(spy).toBeCalledWith({ ...contract, chainId })
@@ -127,22 +140,32 @@ describe('readContracts', () => {
 
   describe('multi-chain', () => {
     it('default', async () => {
+      setupClient({
+        chains: [chain.mainnet, chain.polygon, chain.goerli],
+      })
+
       const spy = vi.spyOn(multicall, 'multicall')
-      const ethContracts: ReadContractsConfig['contracts'] = [
+      const ethContracts = [
         {
           ...wagmigotchiContractConfig,
           chainId: chain.mainnet.id,
           functionName: 'love',
-          args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
         },
         {
           ...wagmigotchiContractConfig,
           chainId: chain.mainnet.id,
           functionName: 'love',
-          args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+          args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
         },
-      ]
-      const polygonContracts: ReadContractsConfig['contracts'] = [
+        {
+          ...wagmigotchiContractConfig,
+          chainId: chain.mainnet.id,
+          functionName: 'love',
+          args: ['0xd2135CfB216b74109775236E36d4b433F1DF507B'],
+        },
+      ] as const
+      const polygonContracts = [
         {
           ...wagmigotchiContractConfig,
           chainId: chain.polygon.id,
@@ -152,12 +175,48 @@ describe('readContracts', () => {
           ...mlootContractConfig,
           chainId: chain.polygon.id,
           functionName: 'tokenOfOwnerByIndex',
-          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+          args: [
+            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            BigNumber.from(0),
+          ],
         },
-      ]
+      ] as const
+      const goerliContracts = [
+        {
+          ...wagmiContractConfig,
+          chainId: chain.goerli.id,
+          functionName: 'ownerOf',
+          args: [BigNumber.from(69)],
+        },
+        {
+          ...wagmiContractConfig,
+          chainId: chain.goerli.id,
+          functionName: 'balanceOf',
+          args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
+        },
+      ] as const
       const results = await readContracts({
-        contracts: [...ethContracts, ...polygonContracts],
+        contracts: [
+          ethContracts[0]!,
+          goerliContracts[0]!,
+          ethContracts[1]!,
+          polygonContracts[0]!,
+          goerliContracts[1]!,
+          polygonContracts[1]!,
+          ethContracts[2]!,
+        ],
       })
+      expectType<
+        [
+          ResolvedConfig['BigIntType'],
+          Address,
+          ResolvedConfig['BigIntType'],
+          boolean,
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+        ]
+      >(results)
 
       expect(spy).toHaveBeenCalledWith({
         allowFailure: true,
@@ -177,13 +236,22 @@ describe('readContracts', () => {
             "hex": "0x02",
             "type": "BigNumber",
           },
+          "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
           {
             "hex": "0x01",
             "type": "BigNumber",
           },
           false,
           {
+            "hex": "0x02",
+            "type": "BigNumber",
+          },
+          {
             "hex": "0x05a6db",
+            "type": "BigNumber",
+          },
+          {
+            "hex": "0x00",
             "type": "BigNumber",
           },
         ]
@@ -192,21 +260,21 @@ describe('readContracts', () => {
 
     it('falls back to readContract if multicall is not available', async () => {
       const spy = vi.spyOn(readContract, 'readContract')
-      const ethContracts: ReadContractsConfig['contracts'] = [
+      const ethContracts = [
         {
           ...wagmigotchiContractConfig,
           chainId: chain.mainnet.id,
           functionName: 'love',
-          args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+          args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
         },
         {
           ...wagmigotchiContractConfig,
           chainId: chain.mainnet.id,
           functionName: 'love',
-          args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+          args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
         },
-      ]
-      const polygonContracts: ReadContractsConfig['contracts'] = [
+      ] as const
+      const polygonContracts = [
         {
           ...wagmigotchiContractConfig,
           chainId: chain.polygon.id,
@@ -216,12 +284,24 @@ describe('readContracts', () => {
           ...mlootContractConfig,
           chainId: chain.polygon.id,
           functionName: 'tokenOfOwnerByIndex',
-          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+          args: [
+            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            BigNumber.from(0),
+          ],
         },
-      ]
+      ] as const
       const results = await readContracts({
+        //  ^?
         contracts: [...ethContracts, ...polygonContracts],
       })
+      expectType<
+        [
+          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'],
+          boolean,
+          ResolvedConfig['BigIntType'],
+        ]
+      >(results)
 
       for (const contract of ethContracts) {
         expect(spy).toBeCalledWith({ ...contract, chainId: chain.mainnet.id })
@@ -260,7 +340,10 @@ describe('readContracts', () => {
               ...mlootContractConfig,
               chainId: chain.polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+              args: [
+                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                BigNumber.from(69420),
+              ],
             },
           ],
         }),
@@ -279,13 +362,19 @@ describe('readContracts', () => {
               ...mlootContractConfig,
               chainId: chain.polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420],
+              args: [
+                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                BigNumber.from(69420),
+              ],
             },
             {
               ...mlootContractConfig,
               chainId: chain.polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69421],
+              args: [
+                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                BigNumber.from(69421),
+              ],
             },
           ],
         }),
@@ -316,13 +405,16 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"tokenOfOwnerByIndex\\",
           \\"chainId\\": 137,
           \\"args\\": [
             \\"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e\\",
-            69420
+            {
+              \\"type\\": \\"BigNumber\\",
+              \\"hex\\": \\"0x010f2c\\"
+            }
           ]
         }
 
@@ -331,13 +423,16 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"tokenOfOwnerByIndex\\",
           \\"chainId\\": 137,
           \\"args\\": [
             \\"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e\\",
-            69421
+            {
+              \\"type\\": \\"BigNumber\\",
+              \\"hex\\": \\"0x010f2d\\"
+            }
           ]
         }
 
@@ -357,7 +452,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: [10e30],
             },
           ],
@@ -378,7 +473,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: [10e30],
             },
             {
@@ -386,7 +481,7 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'ownerOf',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
               args: [10e30],
             },
           ],
@@ -418,8 +513,8 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"ownerOf\\",
           \\"chainId\\": 137,
           \\"args\\": [
@@ -432,8 +527,8 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"ownerOf\\",
           \\"chainId\\": 137,
           \\"args\\": [
@@ -457,8 +552,8 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'love',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-              args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
             },
           ],
         }),
@@ -478,8 +573,8 @@ describe('readContracts', () => {
               chainId: chain.polygon.id,
               functionName: 'love',
               // address is not the wagmigotchi contract
-              addressOrName: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-              args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              address: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+              args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
             },
           ],
         }),
@@ -509,11 +604,13 @@ describe('readContracts', () => {
 
         Config:
         {
-          \\"addressOrName\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"contractInterface\\": \\"...\\",
+          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
+          \\"abi\\": \\"...\\",
           \\"functionName\\": \\"love\\",
           \\"chainId\\": 137,
-          \\"args\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+          \\"args\\": [
+            \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
+          ]
         }
 
         Details: Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"love(address)\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.7.0)",

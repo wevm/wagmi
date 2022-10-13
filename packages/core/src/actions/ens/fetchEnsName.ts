@@ -1,8 +1,10 @@
+import { Address } from 'abitype'
+
 import { getProvider } from '../providers'
 
 export type FetchEnsNameArgs = {
   /** Address to lookup */
-  address: string
+  address: Address
   /** Chain id to use for provider */
   chainId?: number
 }

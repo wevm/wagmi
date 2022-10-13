@@ -1,10 +1,4 @@
 export {
-  deprecatedWriteContract,
-  type DeprecatedWriteContractConfig,
-  type DeprecatedWriteContractResult,
-} from './deprecatedWriteContract'
-
-export {
   fetchToken,
   type FetchTokenArgs,
   type FetchTokenResult,
@@ -16,7 +10,17 @@ export {
   type PrepareWriteContractResult,
 } from './prepareWriteContract'
 
-export { getContract, type GetContractArgs } from './getContract'
+export {
+  getContract,
+  type GetContractArgs,
+  type GetContractResult,
+} from './getContract'
+
+export {
+  multicall,
+  type MulticallConfig,
+  type MulticallResult,
+} from './multicall'
 
 export {
   readContract,
@@ -33,15 +37,21 @@ export {
 export { watchContractEvent } from './watchContractEvent'
 
 export {
+  watchMulticall,
+  type WatchMulticallConfig,
+  type WatchMulticallCallback,
+} from './watchMulticall'
+
+export {
   watchReadContract,
   type WatchReadContractConfig,
-  type WatchReadContractResult,
+  type WatchReadContractCallback,
 } from './watchReadContract'
 
 export {
   watchReadContracts,
   type WatchReadContractsConfig,
-  type WatchReadContractsResult,
+  type WatchReadContractsCallback,
 } from './watchReadContracts'
 
 export {

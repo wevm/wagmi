@@ -1,5 +1,6 @@
 import { providers } from 'ethers'
 
+import { Hash } from '../../types'
 import { getProvider } from '../providers'
 
 export type WaitForTransactionArgs = {
@@ -11,7 +12,7 @@ export type WaitForTransactionArgs = {
    */
   confirmations?: number
   /** Transaction hash to monitor */
-  hash?: string
+  hash?: Hash
   /*
    * Maximum amount of time to wait before timing out in milliseconds
    * @default 0

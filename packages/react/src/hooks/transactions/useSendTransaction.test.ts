@@ -6,7 +6,6 @@ import { describe, expect, it } from 'vitest'
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import {
-  UsePrepareSendTransactionArgs,
   UsePrepareSendTransactionConfig,
   usePrepareSendTransaction,
 } from './usePrepareSendTransaction'
@@ -26,8 +25,7 @@ function useSendTransactionWithConnect(
 }
 
 function useSendTransactionPreparedWithConnect(
-  config: UsePrepareSendTransactionArgs &
-    UsePrepareSendTransactionConfig & { chainId?: number },
+  config: UsePrepareSendTransactionConfig & { chainId?: number },
 ) {
   const prepareSendTransaction = usePrepareSendTransaction(config)
   return {

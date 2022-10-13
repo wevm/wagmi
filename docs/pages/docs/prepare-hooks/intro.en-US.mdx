@@ -58,14 +58,22 @@ See the comparison below for when a user tries to mint a sold out NFT.
 
 By using a Prepare Hook, we can perform this eager validation before the click handler is invoked.
 
-```tsx {5,17}
+```tsx {5,25}
 import * as React from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 export function MintNFT() {
   const { config, error, isError } = usePrepareContractWrite({
-    addressOrName: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
-    contractInterface: ['function mint()'],
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
   })
   const { data, write } = useContractWrite(config)

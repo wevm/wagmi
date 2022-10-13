@@ -1,8 +1,9 @@
+import { Address } from 'abitype'
 import { providers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils'
 
 import { ConnectorNotFoundError } from '../../errors'
-import { Address, Signer } from '../../types'
+import { Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { fetchEnsAddress } from '../ens'
@@ -54,7 +55,7 @@ export async function prepareSendTransaction({
 
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)
-      ? Promise.resolve(<Address>request.to)
+      ? Promise.resolve(request.to)
       : fetchEnsAddress({ name: request.to }),
     request.gasLimit
       ? Promise.resolve(request.gasLimit)

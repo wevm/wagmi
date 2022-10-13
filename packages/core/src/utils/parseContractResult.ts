@@ -1,21 +1,21 @@
+import { Abi } from 'abitype'
 import { Contract, ContractInterface } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
 
 function isPlainArray(value: unknown) {
   return Array.isArray(value) && Object.keys(value).length === value.length
 }
 
 export function parseContractResult({
-  contractInterface,
+  abi,
   data,
   functionName,
 }: {
-  contractInterface: ContractInterface
-  data: Result
+  abi: ContractInterface | Abi | readonly unknown[]
+  data: any
   functionName: string
 }) {
   if (data && isPlainArray(data)) {
-    const iface = Contract.getInterface(contractInterface)
+    const iface = Contract.getInterface(<ContractInterface>abi)
     const fragment = iface.getFunction(functionName)
 
     const isTuple = (fragment.outputs?.length || 0) > 1

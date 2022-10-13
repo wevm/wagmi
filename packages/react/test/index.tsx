@@ -74,6 +74,7 @@ export {
   useNetwork,
 } from './utils'
 export {
+  expectType,
   getCrowdfundArgs,
   getProvider,
   getSigners,

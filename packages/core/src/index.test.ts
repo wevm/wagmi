@@ -6,8 +6,6 @@ it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
       "connect",
-      "deprecatedSendTransaction",
-      "deprecatedWriteContract",
       "disconnect",
       "fetchBalance",
       "fetchBlockNumber",
@@ -24,6 +22,7 @@ it('should expose correct exports', () => {
       "getNetwork",
       "getProvider",
       "getWebSocketProvider",
+      "multicall",
       "prepareWriteContract",
       "prepareSendTransaction",
       "readContract",
@@ -36,6 +35,7 @@ it('should expose correct exports', () => {
       "watchAccount",
       "watchBlockNumber",
       "watchContractEvent",
+      "watchMulticall",
       "watchNetwork",
       "watchProvider",
       "watchReadContract",
