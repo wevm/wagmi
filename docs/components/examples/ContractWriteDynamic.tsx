@@ -3,6 +3,7 @@ import * as React from 'react'
 import {
   useAccount,
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi'
@@ -48,6 +49,7 @@ export function ContractWriteDynamic() {
   const { isLoading: isConfirming, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   })
+  const { chain } = useNetwork()
 
   if (isConnected)
     return (
@@ -67,7 +69,7 @@ export function ContractWriteDynamic() {
               value={tokenId}
             />
             <Button
-              disabled={!write}
+              disabled={isPreparing || isWriteLoading || isConfirming}
               loading={isPreparing || isWriteLoading || isConfirming}
               width="full"
               type="submit"
@@ -81,7 +83,11 @@ export function ContractWriteDynamic() {
             {isSuccess && (
               <Text>
                 Success!{' '}
-                <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+                <a
+                  href={`${chain?.blockExplorers?.default.url}/tx/${data?.hash}`}
+                >
+                  Etherscan
+                </a>
               </Text>
             )}
             <SwitchNetwork />
