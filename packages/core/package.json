@@ -107,13 +107,13 @@
     }
   },
   "dependencies": {
+    "abitype": "^0.1.6",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.1.1"
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
     "@walletconnect/ethereum-provider": "^1.7.8",
-    "abitype": "^0.1.6",
     "ethers": "^5.7.0"
   },
   "keywords": [
