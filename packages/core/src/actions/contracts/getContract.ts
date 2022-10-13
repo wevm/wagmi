@@ -271,7 +271,7 @@ type InterfaceEvents<TAbi extends Abi> = UnionToIntersection<
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Events
 
-interface EventListener<TAbi extends Abi> {
+export interface EventListener<TAbi extends Abi> {
   <TEventName extends ExtractAbiEventNames<TAbi>>(
     eventName: TEventName,
     listener: Listener<TAbi, TEventName>,
