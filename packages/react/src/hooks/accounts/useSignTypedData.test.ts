@@ -1,21 +1,18 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
+import { TypedData } from 'abitype'
 import { verifyTypedData } from 'ethers/lib/utils'
 import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
-import {
-  UseSignTypedDataArgs,
-  UseSignTypedDataConfig,
-  useSignTypedData,
-} from './useSignTypedData'
+import { UseSignTypedDataConfig, useSignTypedData } from './useSignTypedData'
 
 // All properties on a domain are optional
 const domain = {
   name: 'Ether Mail',
   version: '1',
   chainId: 1,
-  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC' as const,
 }
 
 // Named list of all type definitions
@@ -29,7 +26,7 @@ const types = {
     { name: 'to', type: 'Person' },
     { name: 'contents', type: 'string' },
   ],
-}
+} as const
 
 // Data to sign
 const value = {
@@ -42,10 +39,10 @@ const value = {
     wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
   },
   contents: 'Hello, Bob!',
-}
+} as const
 
-function useSignTypedDataWithConnect(
-  config: UseSignTypedDataArgs & UseSignTypedDataConfig = {},
+function useSignTypedDataWithConnect<TTypedData extends TypedData>(
+  config: UseSignTypedDataConfig<TTypedData> = {} as any,
 ) {
   return { connect: useConnect(), signTypedData: useSignTypedData(config) }
 }
@@ -246,36 +243,6 @@ describe('useSignTypedData', () => {
           }
         `)
       })
-
-      it('fails', async () => {
-        const utils = renderHook(() => useSignTypedDataWithConnect())
-        const { result, waitFor } = utils
-        await actConnect({ utils })
-
-        await act(async () => result.current.signTypedData.signTypedData())
-        await waitFor(() =>
-          expect(result.current.signTypedData.isError).toBeTruthy(),
-        )
-        expect(result.current.signTypedData).toMatchInlineSnapshot(`
-          {
-            "data": undefined,
-            "error": [Error: domain, types, and value are all required],
-            "isError": true,
-            "isIdle": false,
-            "isLoading": false,
-            "isSuccess": false,
-            "reset": [Function],
-            "signTypedData": [Function],
-            "signTypedDataAsync": [Function],
-            "status": "error",
-            "variables": {
-              "domain": undefined,
-              "types": undefined,
-              "value": undefined,
-            },
-          }
-        `)
-      })
     })
 
     describe('signTypedDataAsync', () => {
@@ -309,9 +276,7 @@ describe('useSignTypedData', () => {
         await act(async () => {
           await expect(
             result.current.signTypedData.signTypedDataAsync(),
-          ).rejects.toThrowErrorMatchingInlineSnapshot(
-            `"domain, types, and value are all required"`,
-          )
+          ).rejects.toThrowErrorMatchingInlineSnapshot('"domain is required"')
         })
         await waitFor(() =>
           expect(result.current.signTypedData.isError).toBeTruthy(),
@@ -336,14 +301,16 @@ describe('useSignTypedData', () => {
       await waitFor(() =>
         expect(result.current.signTypedData.isSuccess).toBeTruthy(),
       )
-      expect(
-        verifyTypedData(
-          domain,
-          types,
-          value,
-          result.current.signTypedData.data as string,
-        ),
-      ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
+
+      if (result.current.signTypedData.data)
+        expect(
+          verifyTypedData(
+            domain,
+            types,
+            value,
+            result.current.signTypedData.data,
+          ),
+        ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
     })
 
     describe('when chainId is provided in domain', () => {
@@ -373,6 +340,33 @@ describe('useSignTypedData', () => {
           `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
         )
       })
+    })
+
+    it.each([
+      { property: 'domain' },
+      { property: 'types' },
+      { property: 'value' },
+    ])('throws error when $property is undefined', async ({ property }) => {
+      const baseConfig = {
+        domain,
+        types,
+        value,
+      } as const
+      const config = {
+        ...baseConfig,
+        domain: property === 'domain' ? undefined : baseConfig.domain,
+        types: property === 'types' ? undefined : baseConfig.types,
+        value: property === 'value' ? undefined : baseConfig.value,
+      } as const
+      const utils = renderHook(() => useSignTypedData(config))
+      const { result, waitFor } = utils
+
+      await act(async () => {
+        result.current.signTypedData()
+      })
+
+      await waitFor(() => expect(result.current.isError).toBeTruthy())
+      expect(result.current.error?.message).toBe(`${property} is required`)
     })
   })
 })

@@ -16,8 +16,6 @@ export {
   useContractRead,
   useContractReads,
   useContractWrite,
-  useDeprecatedContractWrite,
-  useDeprecatedSendTransaction,
   useDisconnect,
   useEnsAddress,
   useEnsAvatar,
@@ -89,3 +87,5 @@ export type {
   Storage,
   Unit,
 } from '@wagmi/core'
+
+export type { Address } from 'abitype'

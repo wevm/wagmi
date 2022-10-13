@@ -1,4 +1,4 @@
-export { erc20ABI, erc20ABI_bytes32, erc721ABI } from './abis'
+export { erc20ABI, erc20ABI_bytes32, erc721ABI, multicallABI } from './abis'
 
 export { etherscanBlockExplorers } from './blockExplorers'
 export type { BlockExplorer, BlockExplorerName } from './blockExplorers'
@@ -10,8 +10,6 @@ export {
   defaultChains,
   defaultL2Chains,
 } from './chains'
-
-export { multicallInterface } from './multicall'
 
 export {
   alchemyRpcUrls,

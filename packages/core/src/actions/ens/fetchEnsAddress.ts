@@ -1,6 +1,6 @@
+import { Address } from 'abitype'
 import { getAddress } from 'ethers/lib/utils'
 
-import { Address } from '../../types'
 import { getProvider } from '../providers'
 
 export type FetchEnsAddressArgs = {

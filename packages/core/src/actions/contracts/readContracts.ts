@@ -1,5 +1,4 @@
-import { CallOverrides } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
+import { Abi } from 'abitype'
 
 import { mainnet } from '../../chains'
 import {
@@ -8,37 +7,74 @@ import {
   ContractMethodRevertedError,
   ContractResultDecodeError,
 } from '../../errors'
+import {
+  ContractsConfig,
+  ContractsResult,
+  DefaultOptions,
+  GetOverridesForAbiStateMutability,
+  Options as Options_,
+} from '../../types/contracts'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
-import { ReadContractConfig, readContract } from './readContract'
+import { readContract } from './readContract'
 
-export type ReadContractsContract = {
-  addressOrName: ReadContractConfig['addressOrName']
-  args?: ReadContractConfig['args']
-  chainId?: ReadContractConfig['chainId']
-  contractInterface: ReadContractConfig['contractInterface']
-  functionName: ReadContractConfig['functionName']
-}
+type Options = Options_ & { isContractsOptional?: boolean }
 
-export type ReadContractsConfig = {
-  /** Failures will fail silently */
+export type ReadContractsConfig<
+  TContracts extends unknown[],
+  TOptions extends Options = DefaultOptions,
+  _Contracts = readonly [
+    ...ContractsConfig<
+      TContracts,
+      {
+        /** Chain id to use for provider */
+        chainId?: number
+      },
+      TOptions
+    >,
+  ],
+> = {
+  /** Failures in the multicall will fail silently */
   allowFailure?: boolean
-  contracts: ReadContractsContract[]
   /** Call overrides */
-  overrides?: CallOverrides
-}
-export type ReadContractsResult<Data extends any[] = Result[]> = Data
+  overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
+} & (TOptions['isContractsOptional'] extends true
+  ? {
+      /** Contracts to query */
+      contracts?: _Contracts
+    }
+  : {
+      /** Contracts to query */
+      contracts: _Contracts
+    })
 
-export async function readContracts<Data extends any[] = Result[]>({
+export type ReadContractsResult<TContracts extends unknown[]> =
+  ContractsResult<TContracts>
+
+export async function readContracts<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+>({
   allowFailure = true,
   contracts,
   overrides,
-}: ReadContractsConfig): Promise<ReadContractsResult<Data>> {
+}: ReadContractsConfig<TContracts>): Promise<ReadContractsResult<TContracts>> {
+  type ContractConfig = {
+    abi: Abi
+    address: string
+    args: unknown[]
+    chainId?: number
+    functionName: string
+  }
+
   try {
     const provider = getProvider()
-    const contractsByChainId = contracts.reduce<{
-      [chainId: number]: ReadContractsConfig['contracts']
+    const contractsByChainId = (
+      contracts as unknown as ContractConfig[]
+    ).reduce<{
+      [chainId: number]: ContractConfig[]
     }>((contracts, contract) => {
       const chainId = contract.chainId ?? provider.network.chainId
       return {
@@ -48,14 +84,14 @@ export async function readContracts<Data extends any[] = Result[]>({
     }, {})
     const promises = () =>
       Object.entries(contractsByChainId).map(([chainId, contracts]) =>
-        multicall<Data>({
+        multicall({
           allowFailure,
           chainId: parseInt(chainId),
           contracts,
           overrides,
         }),
       )
-    if (allowFailure) {
+    if (allowFailure)
       return (await Promise.allSettled(promises()))
         .map((result) => {
           if (result.status === 'fulfilled') return result.value
@@ -65,24 +101,26 @@ export async function readContracts<Data extends any[] = Result[]>({
           }
           return null
         })
-        .flat() as Data
-    }
-    return (await Promise.all(promises())).flat() as Data
+        .flat() as ReadContractsResult<TContracts>
+
+    return (
+      await Promise.all(promises())
+    ).flat() as ReadContractsResult<TContracts>
   } catch (err) {
     if (err instanceof ContractResultDecodeError) throw err
     if (err instanceof ContractMethodNoResultError) throw err
     if (err instanceof ContractMethodRevertedError) throw err
 
     const promises = () =>
-      contracts.map((contract) => readContract({ ...contract, overrides }))
-    if (allowFailure) {
+      (contracts as unknown as ContractConfig[]).map((contract) =>
+        readContract({ ...contract, overrides }),
+      )
+    if (allowFailure)
       return (await Promise.allSettled(promises())).map((result, i) => {
         if (result.status === 'fulfilled') return result.value
-        const { addressOrName, functionName, chainId, args } = contracts[
-          i
-        ] as ReadContractsContract
+        const { address, args, chainId, functionName } = contracts[i]
         const error = new ContractMethodRevertedError({
-          addressOrName,
+          address,
           functionName,
           chainId: chainId ?? mainnet.id,
           args,
@@ -90,8 +128,8 @@ export async function readContracts<Data extends any[] = Result[]>({
         })
         logWarn(error.message)
         return null
-      }) as Data
-    }
-    return (await Promise.all(promises())) as Data
+      }) as ReadContractsResult<TContracts>
+
+    return (await Promise.all(promises())) as ReadContractsResult<TContracts>
   }
 }

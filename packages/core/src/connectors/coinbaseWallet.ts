@@ -3,6 +3,7 @@ import type {
   CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
+import { Address } from 'abitype'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
@@ -103,7 +104,7 @@ export class CoinbaseWalletConnector extends Connector<
 
   async getAccount() {
     const provider = await this.getProvider()
-    const accounts = await provider.request<string[]>({
+    const accounts = await provider.request<Address[]>({
       method: 'eth_accounts',
     })
     // return checksum address

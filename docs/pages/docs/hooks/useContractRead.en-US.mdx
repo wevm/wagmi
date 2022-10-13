@@ -20,8 +20,8 @@ import { useContractRead } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'getHunger',
   })
 }
@@ -50,49 +50,51 @@ function App() {
 
 ## Configuration
 
-### addressOrName
+### address (optional)
 
-Contract address or ENS name.
+Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
 import { useContract } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'getSleep',
   })
 }
 ```
 
-### contractInterface
+### abi (optional)
 
-Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+Contract ABI. If `abi` is not defined, hook will not run.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {6}
 import { useContract } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'getSleep',
   })
 }
 ```
 
-### functionName
+### functionName (optional)
 
-Name of function to call.
+Name of function to call. If `functionName` is not defined, hook will not run.
 
 ```tsx {7}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'getSleep',
   })
 }
@@ -100,17 +102,17 @@ function App() {
 
 ### args (optional)
 
-Arguments to pass to function call. Accepts `any | any[]`.
+Arguments to pass to function call.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'love',
-    args: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
   })
 }
 ```
@@ -119,14 +121,14 @@ function App() {
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     chainId: 1,
   })
 }
@@ -134,16 +136,16 @@ function App() {
 
 ### overrides (optional)
 
-[Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
+Overrides to pass to function call.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
   })
 }
@@ -153,14 +155,14 @@ function App() {
 
 Caches & persists the return data against the current block. Data will be considered stale when a new block arrives.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     cacheOnBlock: true,
   })
 }
@@ -170,14 +172,14 @@ function App() {
 
 Watches and refreshes data for new blocks.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     watch: true,
   })
 }
@@ -187,14 +189,14 @@ function App() {
 
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     cacheTime: 2_000,
   })
 }
@@ -204,14 +206,14 @@ function App() {
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     enabled: false,
   })
 }
@@ -221,14 +223,14 @@ function App() {
 
 Determines if the data has changed or not. Defaults to `deepEqual`.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     isDataEqual: (prev, next) => prev === next,
   })
 }
@@ -238,14 +240,14 @@ function App() {
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     staleTime: 2_000,
   })
 }
@@ -255,14 +257,14 @@ function App() {
 
 Transform or select a part of the data returned by the contract.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     select: (data) => transform(data),
   })
 }
@@ -272,14 +274,14 @@ function App() {
 
 Set this to `true` to enable suspense mode.
 
-```tsx {11}
+```tsx {8}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     suspense: true,
   })
 }
@@ -289,14 +291,14 @@ function App() {
 
 Function to invoke when fetching new data is successful.
 
-```tsx {11-13}
+```tsx {8-10}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     onSuccess(data) {
       console.log('Success', data)
     },
@@ -308,14 +310,14 @@ function App() {
 
 Function to invoke when an error is thrown while fetching new data.
 
-```tsx {11-13}
+```tsx {8-10}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     onError(error) {
       console.log('Error', error)
     },
@@ -327,14 +329,14 @@ function App() {
 
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
-```tsx {11-13}
+```tsx {8-10}
 import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
-    functionName: 'getHunger',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },

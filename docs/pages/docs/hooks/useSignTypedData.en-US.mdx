@@ -29,7 +29,7 @@ const domain = {
   version: '1',
   chainId: 1,
   verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
-}
+} as const
 
 // The named list of all type definitions
 const types = {
@@ -42,7 +42,7 @@ const types = {
     { name: 'to', type: 'Person' },
     { name: 'contents', type: 'string' },
   ],
-}
+} as const
 
 const value = {
   from: {
@@ -54,7 +54,7 @@ const value = {
     wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
   },
   contents: 'Hello, Bob!',
-}
+} as const
 ```
 
 From now on, the typed data variables (above) are referenced only by name for brevity.
@@ -124,7 +124,9 @@ function App() {
 
 ### types (optional)
 
-Typed data type definition. This can be a fixed object or a reactive state variable.
+Typed data type definition.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {6-16}
 import { useSignTypedData } from 'wagmi'

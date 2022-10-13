@@ -1,6 +1,8 @@
+import { InfiniteData } from '@tanstack/react-query'
+import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
-import { act, mlootContractConfig, renderHook } from '../../../test'
+import { act, expectType, mlootContractConfig, renderHook } from '../../../test'
 import {
   paginatedIndexesConfig,
   useContractInfiniteReads,
@@ -11,11 +13,14 @@ describe('useContractInfiniteReads', () => {
     const { result, waitFor } = renderHook(() =>
       useContractInfiniteReads({
         cacheKey: 'contracts',
-        contracts: (index = 0) => [
-          { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-          { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-          { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-        ],
+        contracts(index = 0) {
+          const args = [BigNumber.from(index)] as const
+          return [
+            { ...mlootContractConfig, functionName: 'getChest', args },
+            { ...mlootContractConfig, functionName: 'getFoot', args },
+            { ...mlootContractConfig, functionName: 'getHand', args },
+          ]
+        },
         getNextPageParam: (_, pages) => pages.length + 1,
       }),
     )
@@ -26,6 +31,7 @@ describe('useContractInfiniteReads', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
+    expectType<InfiniteData<[string, string, string]> | undefined>(res.data)
     expect(res).toMatchInlineSnapshot(`
       {
         "data": {
@@ -63,26 +69,29 @@ describe('useContractInfiniteReads', () => {
       const { result, waitFor } = renderHook(() =>
         useContractInfiniteReads({
           cacheKey: 'contracts',
-          contracts: (index = 0) => [
-            {
-              ...mlootContractConfig,
-              chainId: 1,
-              functionName: 'getChest',
-              args: [index],
-            },
-            {
-              ...mlootContractConfig,
-              chainId: 1,
-              functionName: 'getFoot',
-              args: [index],
-            },
-            {
-              ...mlootContractConfig,
-              chainId: 1,
-              functionName: 'getHand',
-              args: [index],
-            },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              {
+                ...mlootContractConfig,
+                chainId: 1,
+                functionName: 'getChest',
+                args,
+              },
+              {
+                ...mlootContractConfig,
+                chainId: 1,
+                functionName: 'getFoot',
+                args,
+              },
+              {
+                ...mlootContractConfig,
+                chainId: 1,
+                functionName: 'getHand',
+                args,
+              },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
@@ -93,6 +102,7 @@ describe('useContractInfiniteReads', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
+      expectType<InfiniteData<[string, string, string]> | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -130,11 +140,14 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           enabled: false,
           cacheKey: 'contracts-enabled',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
@@ -143,6 +156,7 @@ describe('useContractInfiniteReads', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
+      expectType<InfiniteData<[string, string, string]> | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -168,17 +182,23 @@ describe('useContractInfiniteReads', () => {
       const { result, waitFor } = renderHook(() =>
         useContractInfiniteReads({
           cacheKey: 'contracts-getNextPageParam',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
+      expectType<InfiniteData<[string, string, string]> | undefined>(
+        result.current.data,
+      )
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": {
@@ -288,17 +308,23 @@ describe('useContractInfiniteReads', () => {
       const { result, waitFor } = renderHook(() =>
         useContractInfiniteReads({
           cacheKey: 'contracts-fetchNextPage',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
+      expectType<InfiniteData<[string, string, string]> | undefined>(
+        result.current.data,
+      )
       expect(result.current).toMatchInlineSnapshot(`
         {
           "data": {
@@ -407,17 +433,21 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           enabled: false,
           cacheKey: 'contracts',
-          contracts: (index = 0) => [
-            { ...mlootContractConfig, functionName: 'getChest', args: [index] },
-            { ...mlootContractConfig, functionName: 'getFoot', args: [index] },
-            { ...mlootContractConfig, functionName: 'getHand', args: [index] },
-          ],
+          contracts(index = 0) {
+            const args = [BigNumber.from(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
           getNextPageParam: (_, pages) => pages.length + 1,
         }),
       )
 
       await act(async () => {
         const { data } = await result.current.refetch()
+        expectType<InfiniteData<[string, string, string]> | undefined>(data)
         expect(data).toMatchInlineSnapshot(`
           {
             "pageParams": [
@@ -442,11 +472,13 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           cacheKey: 'contracts-increment',
           ...paginatedIndexesConfig(
-            (index) => ({
-              ...mlootContractConfig,
-              functionName: 'tokenURI',
-              args: [index],
-            }),
+            (index) => [
+              {
+                ...mlootContractConfig,
+                functionName: 'tokenURI',
+                args: [BigNumber.from(index)] as const,
+              },
+            ],
             { start: 0, perPage: 10, direction: 'increment' },
           ),
         }),
@@ -557,11 +589,13 @@ describe('useContractInfiniteReads', () => {
         useContractInfiniteReads({
           cacheKey: 'contracts-decrement',
           ...paginatedIndexesConfig(
-            (index) => ({
-              ...mlootContractConfig,
-              functionName: 'tokenURI',
-              args: [index],
-            }),
+            (index) => [
+              {
+                ...mlootContractConfig,
+                functionName: 'tokenURI',
+                args: [BigNumber.from(index)] as const,
+              },
+            ],
             { start: 100, perPage: 10, direction: 'decrement' },
           ),
         }),
@@ -666,5 +700,98 @@ describe('useContractInfiniteReads', () => {
         }
       `)
     })
+
+    it('uses multiple contracts', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useContractInfiniteReads({
+          cacheKey: 'contracts-multiple',
+          ...paginatedIndexesConfig(
+            (index) => [
+              {
+                ...mlootContractConfig,
+                functionName: 'tokenURI',
+                args: [BigNumber.from(index)] as const,
+              },
+              {
+                ...mlootContractConfig,
+                functionName: 'getChest',
+                args: [BigNumber.from(index)] as const,
+              },
+            ],
+            { start: 0, perPage: 1, direction: 'increment' },
+          ),
+        }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+        timeout: 15_000,
+      })
+
+      expect(result.current).toMatchInlineSnapshot(`
+        {
+          "data": {
+            "pageParams": [
+              undefined,
+            ],
+            "pages": [
+              [
+                "data:application/json;base64,eyJuYW1lIjogIkJhZyAjMCIsICJkZXNjcmlwdGlvbiI6ICJNb3JlIExvb3QgaXMgYWRkaXRpb25hbCByYW5kb21pemVkIGFkdmVudHVyZXIgZ2VhciBnZW5lcmF0ZWQgYW5kIHN0b3JlZCBvbiBjaGFpbi4gTWF4aW11bSBzdXBwbHkgaXMgZHluYW1pYywgaW5jcmVhc2luZyBhdCAxLzEwdGggb2YgRXRoZXJldW0ncyBibG9jayByYXRlLiBTdGF0cywgaW1hZ2VzLCBhbmQgb3RoZXIgZnVuY3Rpb25hbGl0eSBhcmUgaW50ZW50aW9uYWxseSBvbWl0dGVkIGZvciBvdGhlcnMgdG8gaW50ZXJwcmV0LiBGZWVsIGZyZWUgdG8gdXNlIE1vcmUgTG9vdCBpbiBhbnkgd2F5IHlvdSB3YW50LiIsICJpbWFnZSI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSEJ5WlhObGNuWmxRWE53WldOMFVtRjBhVzg5SW5oTmFXNVpUV2x1SUcxbFpYUWlJSFpwWlhkQ2IzZzlJakFnTUNBek5UQWdNelV3SWo0OGMzUjViR1UrTG1KaGMyVWdleUJtYVd4c09pQjNhR2wwWlRzZ1ptOXVkQzFtWVcxcGJIazZJSE5sY21sbU95Qm1iMjUwTFhOcGVtVTZJREUwY0hnN0lIMDhMM04wZVd4bFBqeHlaV04wSUhkcFpIUm9QU0l4TURBbElpQm9aV2xuYUhROUlqRXdNQ1VpSUdacGJHdzlJbUpzWVdOcklpQXZQangwWlhoMElIZzlJakV3SWlCNVBTSXlNQ0lnWTJ4aGMzTTlJbUpoYzJVaVBrTm9jbTl1YVdOc1pUd3ZkR1Y0ZEQ0OGRHVjRkQ0I0UFNJeE1DSWdlVDBpTkRBaUlHTnNZWE56UFNKaVlYTmxJajVUYVd4cklGSnZZbVU4TDNSbGVIUStQSFJsZUhRZ2VEMGlNVEFpSUhrOUlqWXdJaUJqYkdGemN6MGlZbUZ6WlNJK1FXNWphV1Z1ZENCSVpXeHRQQzkwWlhoMFBqeDBaWGgwSUhnOUlqRXdJaUI1UFNJNE1DSWdZMnhoYzNNOUltSmhjMlVpUGt4bFlYUm9aWElnUW1Wc2RDQnZaaUJHZFhKNVBDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0l4TURBaUlHTnNZWE56UFNKaVlYTmxJajVJYjJ4NUlFZHlaV0YyWlhNOEwzUmxlSFErUEhSbGVIUWdlRDBpTVRBaUlIazlJakV5TUNJZ1kyeGhjM005SW1KaGMyVWlQa3hsWVhSb1pYSWdSMnh2ZG1WelBDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0l4TkRBaUlHTnNZWE56UFNKaVlYTmxJajVCYlhWc1pYUThMM1JsZUhRK1BIUmxlSFFnZUQwaU1UQWlJSGs5SWpFMk1DSWdZMnhoYzNNOUltSmhjMlVpUGxOcGJIWmxjaUJTYVc1blBDOTBaWGgwUGp3dmMzWm5QZz09In0=",
+                "Silk Robe",
+              ],
+            ],
+          },
+          "error": null,
+          "fetchNextPage": [Function],
+          "fetchStatus": "idle",
+          "hasNextPage": false,
+          "internal": {
+            "dataUpdatedAt": 1643673600000,
+            "errorUpdatedAt": 0,
+            "failureCount": 0,
+            "isFetchedAfterMount": true,
+            "isLoadingError": false,
+            "isPaused": false,
+            "isPlaceholderData": false,
+            "isPreviousData": false,
+            "isRefetchError": false,
+            "isStale": true,
+            "remove": [Function],
+          },
+          "isError": false,
+          "isFetched": true,
+          "isFetching": false,
+          "isFetchingNextPage": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
+
+      await act(async () => {
+        await result.current.fetchNextPage()
+      })
+
+      await waitFor(
+        () => expect(result.current.fetchStatus === 'idle').toBeTruthy(),
+        { timeout: 15_000 },
+      )
+
+      expect(result.current.data).toMatchInlineSnapshot(`
+        {
+          "pageParams": [
+            undefined,
+          ],
+          "pages": [
+            [
+              "data:application/json;base64,eyJuYW1lIjogIkJhZyAjMCIsICJkZXNjcmlwdGlvbiI6ICJNb3JlIExvb3QgaXMgYWRkaXRpb25hbCByYW5kb21pemVkIGFkdmVudHVyZXIgZ2VhciBnZW5lcmF0ZWQgYW5kIHN0b3JlZCBvbiBjaGFpbi4gTWF4aW11bSBzdXBwbHkgaXMgZHluYW1pYywgaW5jcmVhc2luZyBhdCAxLzEwdGggb2YgRXRoZXJldW0ncyBibG9jayByYXRlLiBTdGF0cywgaW1hZ2VzLCBhbmQgb3RoZXIgZnVuY3Rpb25hbGl0eSBhcmUgaW50ZW50aW9uYWxseSBvbWl0dGVkIGZvciBvdGhlcnMgdG8gaW50ZXJwcmV0LiBGZWVsIGZyZWUgdG8gdXNlIE1vcmUgTG9vdCBpbiBhbnkgd2F5IHlvdSB3YW50LiIsICJpbWFnZSI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSEJ5WlhObGNuWmxRWE53WldOMFVtRjBhVzg5SW5oTmFXNVpUV2x1SUcxbFpYUWlJSFpwWlhkQ2IzZzlJakFnTUNBek5UQWdNelV3SWo0OGMzUjViR1UrTG1KaGMyVWdleUJtYVd4c09pQjNhR2wwWlRzZ1ptOXVkQzFtWVcxcGJIazZJSE5sY21sbU95Qm1iMjUwTFhOcGVtVTZJREUwY0hnN0lIMDhMM04wZVd4bFBqeHlaV04wSUhkcFpIUm9QU0l4TURBbElpQm9aV2xuYUhROUlqRXdNQ1VpSUdacGJHdzlJbUpzWVdOcklpQXZQangwWlhoMElIZzlJakV3SWlCNVBTSXlNQ0lnWTJ4aGMzTTlJbUpoYzJVaVBrTm9jbTl1YVdOc1pUd3ZkR1Y0ZEQ0OGRHVjRkQ0I0UFNJeE1DSWdlVDBpTkRBaUlHTnNZWE56UFNKaVlYTmxJajVUYVd4cklGSnZZbVU4TDNSbGVIUStQSFJsZUhRZ2VEMGlNVEFpSUhrOUlqWXdJaUJqYkdGemN6MGlZbUZ6WlNJK1FXNWphV1Z1ZENCSVpXeHRQQzkwWlhoMFBqeDBaWGgwSUhnOUlqRXdJaUI1UFNJNE1DSWdZMnhoYzNNOUltSmhjMlVpUGt4bFlYUm9aWElnUW1Wc2RDQnZaaUJHZFhKNVBDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0l4TURBaUlHTnNZWE56UFNKaVlYTmxJajVJYjJ4NUlFZHlaV0YyWlhNOEwzUmxlSFErUEhSbGVIUWdlRDBpTVRBaUlIazlJakV5TUNJZ1kyeGhjM005SW1KaGMyVWlQa3hsWVhSb1pYSWdSMnh2ZG1WelBDOTBaWGgwUGp4MFpYaDBJSGc5SWpFd0lpQjVQU0l4TkRBaUlHTnNZWE56UFNKaVlYTmxJajVCYlhWc1pYUThMM1JsZUhRK1BIUmxlSFFnZUQwaU1UQWlJSGs5SWpFMk1DSWdZMnhoYzNNOUltSmhjMlVpUGxOcGJIWmxjaUJTYVc1blBDOTBaWGgwUGp3dmMzWm5QZz09In0=",
+              "Silk Robe",
+            ],
+          ],
+        }
+      `)
+    }, 15_000)
   })
 })

@@ -1,13 +1,14 @@
+import { BigNumber } from 'ethers'
 import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 
-import anvABI from './anv-abi.json'
+import { anvAbi } from './anv-abi'
 
 export const WriteContractPrepared = () => {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-    contractInterface: anvABI,
+    address: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
+    abi: anvAbi,
     functionName: 'claim',
-    args: parseInt('56'),
+    args: [BigNumber.from('56')],
   })
   const { write, data, error, isLoading, isError, isSuccess } =
     useContractWrite(config)
@@ -15,15 +16,7 @@ export const WriteContractPrepared = () => {
   return (
     <div>
       <div>Mint an Adjective Noun Verb:</div>
-      <button
-        disabled={isLoading || !write}
-        onClick={() =>
-          write?.({
-            recklesslySetUnpreparedArgs: [],
-            recklesslySetUnpreparedOverrides: {},
-          })
-        }
-      >
+      <button disabled={isLoading || !write} onClick={() => write?.()}>
         Mint
       </button>
       {isError && <div>{error?.message}</div>}

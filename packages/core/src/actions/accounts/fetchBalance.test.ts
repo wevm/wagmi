@@ -152,7 +152,7 @@ describe('fetchBalance', () => {
               token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
             }),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
-            '"ENS name not configured (operation=\\"resolveName(\\\\\\"thisnamedoesnotexist.eth\\\\\\")\\", code=UNSUPPORTED_OPERATION, version=ethers/5.7.0)"',
+            '"ENS name not configured (operation=\\"resolveName(\\\\\\"thisnamedoesnotexist.eth\\\\\\")\\", code=UNSUPPORTED_OPERATION, version=ethers/5.7.1)"',
           )
         })
       })

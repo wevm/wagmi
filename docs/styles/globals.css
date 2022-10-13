@@ -32,8 +32,8 @@ body {
     fixed 10px 10px / 20px 20px radial-gradient(#313131 1px, transparent 0);
 }
 
-.nextra-callout a {
-  color: inherit;
+.nextra-callout a, ul a, ol a {
+  @apply text-current;
 }
 
 sup a {

@@ -1,27 +1,27 @@
-import { BigNumber } from 'ethers/lib/ethers'
+import { Address, ResolvedConfig } from 'abitype'
 import { formatUnits, parseBytes32String } from 'ethers/lib/utils'
 
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import { ContractResultDecodeError } from '../../errors'
 import { Unit } from '../../types'
-import { GetContractArgs, readContracts } from '../contracts'
+import { readContracts } from '../contracts'
 
 export type FetchTokenArgs = {
   /** Address of ERC-20 token */
-  address: string
+  address: Address
   /** Chain id to use for provider */
   chainId?: number
   /** Units for formatting output */
   formatUnits?: Unit | number
 }
 export type FetchTokenResult = {
-  address: string
-  decimals: number
+  address: Address
+  decimals: ResolvedConfig['IntType']
   name: string
   symbol: string
   totalSupply: {
     formatted: string
-    value: BigNumber
+    value: ResolvedConfig['BigIntType']
   }
 }
 
@@ -30,19 +30,12 @@ export async function fetchToken({
   chainId,
   formatUnits: units = 'ether',
 }: FetchTokenArgs): Promise<FetchTokenResult> {
-  async function fetchToken_({
-    contractInterface,
-  }: {
-    contractInterface: GetContractArgs['contractInterface']
-  }) {
-    const erc20Config = {
-      addressOrName: address,
-      contractInterface,
-      chainId,
-    }
-    const [decimals, name, symbol, totalSupply] = await readContracts<
-      [number, string, string, BigNumber]
-    >({
+  type FetchToken_ = {
+    abi: typeof erc20ABI | typeof erc20ABI_bytes32
+  }
+  async function fetchToken_({ abi }: FetchToken_) {
+    const erc20Config = { address, abi, chainId } as const
+    const [decimals, name, symbol, totalSupply] = await readContracts({
       allowFailure: false,
       contracts: [
         { ...erc20Config, functionName: 'decimals' },
@@ -55,8 +48,8 @@ export async function fetchToken({
     return {
       address,
       decimals,
-      name,
-      symbol,
+      name: name as string, // protect against `ResolvedConfig['BytesType']`
+      symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
       totalSupply: {
         formatted: formatUnits(totalSupply, units),
         value: totalSupply,
@@ -65,14 +58,14 @@ export async function fetchToken({
   }
 
   try {
-    return await fetchToken_({ contractInterface: erc20ABI })
+    return await fetchToken_({ abi: erc20ABI })
   } catch (err) {
     // In the chance that there is an error upon decoding the contract result,
     // it could be likely that the contract data is represented as bytes32 instead
     // of a string.
     if (err instanceof ContractResultDecodeError) {
       const { name, symbol, ...rest } = await fetchToken_({
-        contractInterface: erc20ABI_bytes32,
+        abi: erc20ABI_bytes32,
       })
       return {
         name: parseBytes32String(name),

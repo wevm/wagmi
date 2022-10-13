@@ -1,104 +1,128 @@
 import {
   WriteContractArgs,
-  WriteContractPreparedArgs,
   WriteContractResult,
   writeContract,
 } from '@wagmi/core'
+import { Abi } from 'abitype'
 import * as React from 'react'
 
 import { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
-export type UseContractWriteArgs = Omit<WriteContractArgs, 'request' | 'type'> &
-  (
-    | {
-        /**
-         * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has harmful
-         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended
-         * to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
-         *
-         * `prepared`: The config has been prepared with parameters required for performing a contract write
-         * via the [`usePrepareContractWrite` hook](https://wagmi.sh/docs/prepare-hooks/usePrepareContractWrite)
-         * */
-        mode: 'prepared'
-        /** The prepared request to perform a contract write. */
-        request: WriteContractPreparedArgs['request'] | undefined
-      }
-    | {
-        mode: 'recklesslyUnprepared'
-        request?: undefined
-      }
-  )
-export type UseContractWriteMutationArgs = {
-  /**
-   * Recklessly pass through unprepared config. Note: This has
-   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
-   * it is highly recommended to not use this and instead prepare the config upfront
-   * using the `usePrepareContractWrite` function.
-   */
-  recklesslySetUnpreparedArgs?: WriteContractArgs['args']
-  recklesslySetUnpreparedOverrides?: WriteContractArgs['overrides']
-}
-export type UseContractWriteConfig = MutationConfig<
-  WriteContractResult,
-  Error,
-  UseContractWriteArgs
+export type UseContractWriteArgs<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = WriteContractArgs<
+  TAbi,
+  TFunctionName,
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isFunctionNameOptional: true
+    isRequestOptional: true
+  }
 >
 
-type ContractWriteFn = (overrideConfig?: UseContractWriteMutationArgs) => void
-type ContractWriteAsyncFn = (
-  overrideConfig?: UseContractWriteMutationArgs,
-) => Promise<WriteContractResult>
-type MutateFnReturnValue<Args, Fn> = Args extends {
-  mode: 'recklesslyUnprepared'
-}
-  ? Fn
-  : Fn | undefined
+export type UseContractWriteConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = MutationConfig<WriteContractResult, Error, UseContractWriteArgs> &
+  UseContractWriteArgs<TAbi, TFunctionName>
 
-export const mutationKey = ([
-  {
-    addressOrName,
-    args,
-    chainId,
-    contractInterface,
-    functionName,
-    overrides,
-    request,
-  },
-]: [UseContractWriteArgs]) =>
-  [
+type UseContractWriteMutationArgs<
+  Mode extends 'prepared' | 'recklesslyUnprepared',
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = Mode extends 'prepared'
+  ? undefined
+  : {
+      /**
+       * Recklessly pass through unprepared config. Note: This has
+       * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
+       * it is highly recommended to not use this and instead prepare the config upfront
+       * using the `usePrepareContractWrite` function.
+       */
+      recklesslySetUnpreparedArgs?: WriteContractArgs<
+        TAbi,
+        TFunctionName
+      >['args']
+      recklesslySetUnpreparedOverrides?: WriteContractArgs<
+        TAbi,
+        TFunctionName
+      >['overrides']
+    }
+
+function mutationKey({
+  address,
+  args,
+  chainId,
+  abi,
+  functionName,
+  overrides,
+  request,
+}: UseContractWriteArgs) {
+  return [
     {
       entity: 'writeContract',
-      addressOrName,
+      address,
       args,
       chainId,
-      contractInterface,
+      abi,
       functionName,
       overrides,
       request,
     },
   ] as const
+}
 
-const mutationFn = ({
-  addressOrName,
+function mutationFn({
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   mode,
   overrides,
   request,
-}: WriteContractArgs) => {
-  return writeContract({
-    addressOrName,
-    args,
-    chainId,
-    contractInterface,
-    functionName,
-    mode,
-    overrides,
-    request,
-  } as WriteContractArgs)
+}: WriteContractArgs<
+  Abi | readonly unknown[],
+  string,
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isFunctionNameOptional: true
+    isRequestOptional: true
+  }
+>) {
+  if (!address) throw new Error('address is required')
+  if (!abi) throw new Error('abi is required')
+  if (!functionName) throw new Error('functionName is required')
+
+  switch (mode) {
+    case 'prepared': {
+      if (!request) throw new Error('request is required')
+      return writeContract({
+        mode: 'prepared',
+        address,
+        chainId,
+        abi,
+        functionName,
+        request,
+      })
+    }
+    case 'recklesslyUnprepared':
+      return writeContract({
+        address,
+        abi,
+        functionName,
+        args,
+        chainId,
+        mode: 'recklesslyUnprepared',
+        overrides,
+      })
+  }
 }
 
 /**
@@ -112,29 +136,32 @@ const mutationFn = ({
  * import { useContractWrite, usePrepareContractWrite } from 'wagmi'
  *
  * const { config } = usePrepareContractWrite({
- *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
- *  contractInterface: wagmigotchiABI,
+ *  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+ *  abi: wagmigotchiABI,
  *  functionName: 'feed',
  * })
  * const { data, isLoading, isSuccess, write } = useContractWrite(config)
  *
  */
 export function useContractWrite<
-  Args extends UseContractWriteArgs = UseContractWriteArgs,
->({
-  addressOrName,
-  args,
-  chainId,
-  contractInterface,
-  functionName,
-  mode,
-  overrides,
-  request,
-  onError,
-  onMutate,
-  onSettled,
-  onSuccess,
-}: Args & UseContractWriteConfig) {
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+>(
+  {
+    address,
+    args,
+    chainId,
+    abi,
+    functionName,
+    mode,
+    overrides,
+    request,
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  }: UseContractWriteConfig<TAbi, TFunctionName> = {} as any,
+) {
   const {
     data,
     error,
@@ -148,18 +175,16 @@ export function useContractWrite<
     status,
     variables,
   } = useMutation(
-    mutationKey([
-      {
-        addressOrName,
-        contractInterface,
-        functionName,
-        args,
-        chainId,
-        mode,
-        overrides,
-        request,
-      } as WriteContractArgs,
-    ]),
+    mutationKey({
+      address,
+      abi,
+      functionName,
+      args,
+      chainId,
+      mode,
+      overrides,
+      request,
+    } as WriteContractArgs),
     mutationFn,
     {
       onError,
@@ -170,12 +195,18 @@ export function useContractWrite<
   )
 
   const write = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) => {
+    (
+      overrideConfig?: UseContractWriteMutationArgs<
+        typeof mode,
+        TAbi,
+        TFunctionName
+      >,
+    ) => {
       return mutate({
-        addressOrName,
+        address,
         args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
         chainId,
-        contractInterface,
+        abi,
         functionName,
         mode: overrideConfig ? 'recklesslyUnprepared' : mode,
         overrides:
@@ -184,10 +215,10 @@ export function useContractWrite<
       } as WriteContractArgs)
     },
     [
-      addressOrName,
+      address,
       args,
       chainId,
-      contractInterface,
+      abi,
       functionName,
       mode,
       mutate,
@@ -197,12 +228,18 @@ export function useContractWrite<
   )
 
   const writeAsync = React.useCallback(
-    (overrideConfig?: UseContractWriteMutationArgs) => {
+    (
+      overrideConfig?: UseContractWriteMutationArgs<
+        typeof mode,
+        TAbi,
+        TFunctionName
+      >,
+    ) => {
       return mutateAsync({
-        addressOrName,
+        address,
         args: overrideConfig?.recklesslySetUnpreparedArgs ?? args,
         chainId,
-        contractInterface,
+        abi,
         functionName,
         mode: overrideConfig ? 'recklesslyUnprepared' : mode,
         overrides:
@@ -211,10 +248,10 @@ export function useContractWrite<
       } as WriteContractArgs)
     },
     [
-      addressOrName,
+      address,
       args,
       chainId,
-      contractInterface,
+      abi,
       functionName,
       mode,
       mutateAsync,
@@ -233,11 +270,7 @@ export function useContractWrite<
     reset,
     status,
     variables,
-    write: (mode === 'prepared' && !request
-      ? undefined
-      : write) as MutateFnReturnValue<Args, ContractWriteFn>,
-    writeAsync: (mode === 'prepared' && !request
-      ? undefined
-      : writeAsync) as MutateFnReturnValue<Args, ContractWriteAsyncFn>,
+    write: mode === 'prepared' && !request ? undefined : write,
+    writeAsync: mode === 'prepared' && !request ? undefined : writeAsync,
   }
 }

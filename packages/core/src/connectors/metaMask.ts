@@ -39,10 +39,7 @@ export class MetaMaskConnector extends InjectedConnector {
       shimChainChangedDisconnect: true,
       ...options_,
     }
-    super({
-      chains,
-      options,
-    })
+    super({ chains, options })
 
     this.#UNSTABLE_shimOnConnectSelectAccount =
       options.UNSTABLE_shimOnConnectSelectAccount

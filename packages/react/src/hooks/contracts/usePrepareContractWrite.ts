@@ -4,39 +4,48 @@ import {
   PrepareWriteContractResult,
   prepareWriteContract,
 } from '@wagmi/core'
-import { providers } from 'ethers'
+import { Abi } from 'abitype'
+import { Signer, providers } from 'ethers'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useSigner } from '../accounts'
 import { useChainId, useQuery } from '../utils'
 
-export type UsePrepareContractWriteArgs = Omit<
-  PrepareWriteContractConfig,
-  'signerOrProvider'
->
-export type UsePrepareContractWriteConfig = QueryConfig<
-  PrepareWriteContractResult,
-  Error
->
+export type UsePrepareContractWriteConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+  TSigner extends Signer = Signer,
+> = PrepareWriteContractConfig<
+  TAbi,
+  TFunctionName,
+  TSigner,
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isFunctionNameOptional: true
+  }
+> &
+  QueryConfig<PrepareWriteContractResult, Error>
 
-export const queryKey = (
+function queryKey(
   {
     args,
-    addressOrName,
+    address,
     chainId,
     functionName,
     overrides,
-  }: Omit<UsePrepareContractWriteArgs, 'contractInterface'>,
+  }: Omit<PrepareWriteContractConfig, 'abi'>,
   {
     activeChainId,
     signerAddress,
   }: { activeChainId?: number; signerAddress?: string },
-) =>
-  [
+) {
+  return [
     {
       entity: 'prepareContractTransaction',
       activeChainId,
-      addressOrName,
+      address,
       args,
       chainId,
       functionName,
@@ -44,28 +53,31 @@ export const queryKey = (
       signerAddress,
     },
   ] as const
+}
 
-const queryFn =
-  ({
-    contractInterface,
-    signer,
-  }: {
-    contractInterface: UsePrepareContractWriteArgs['contractInterface']
-    signer?: FetchSignerResult
-  }) =>
-  ({
-    queryKey: [{ args, addressOrName, chainId, functionName, overrides }],
+function queryFn({
+  abi,
+  signer,
+}: {
+  abi?: Abi | readonly unknown[]
+  signer?: FetchSignerResult
+}) {
+  return ({
+    queryKey: [{ args, address, chainId, functionName, overrides }],
   }: QueryFunctionArgs<typeof queryKey>) => {
+    if (!abi) throw new Error('abi is required')
     return prepareWriteContract({
       args,
-      addressOrName,
+      address,
       chainId,
-      contractInterface,
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
       functionName,
       overrides,
       signer,
     })
   }
+}
 
 /**
  * @description Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
@@ -76,28 +88,33 @@ const queryFn =
  * import { useContractWrite, usePrepareContractWrite } from 'wagmi'
  *
  * const { config } = usePrepareContractWrite({
- *  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
- *  contractInterface: wagmigotchiABI,
+ *  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+ *  abi: wagmigotchiABI,
  *  functionName: 'feed',
  * })
  * const { data, isLoading, isSuccess, write } = useContractWrite(config)
  *
  */
-export function usePrepareContractWrite({
-  addressOrName,
-  contractInterface,
-  functionName,
-  chainId,
-  args,
-  overrides,
-  cacheTime,
-  enabled = true,
-  staleTime,
-  suspense,
-  onError,
-  onSettled,
-  onSuccess,
-}: UsePrepareContractWriteArgs & UsePrepareContractWriteConfig) {
+export function usePrepareContractWrite<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+>(
+  {
+    address,
+    abi,
+    functionName,
+    chainId,
+    args,
+    overrides,
+    cacheTime,
+    enabled = true,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  }: UsePrepareContractWriteConfig<TAbi, TFunctionName> = {} as any,
+) {
   const activeChainId = useChainId()
   const { data: signer } = useSigner<providers.JsonRpcSigner>({
     chainId: chainId ?? activeChainId,
@@ -106,18 +123,22 @@ export function usePrepareContractWrite({
   const prepareContractWriteQuery = useQuery(
     queryKey(
       {
-        addressOrName,
+        address,
         functionName,
         chainId,
         args,
         overrides,
-      },
+      } as Omit<PrepareWriteContractConfig, 'abi'>,
       { activeChainId, signerAddress: signer?._address },
     ),
-    queryFn({ contractInterface, signer }),
+    queryFn({
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
+      signer,
+    }),
     {
       cacheTime,
-      enabled: Boolean(enabled && signer),
+      enabled: Boolean(enabled && abi && address && functionName && signer),
       staleTime,
       suspense,
       onError,
@@ -127,14 +148,14 @@ export function usePrepareContractWrite({
   )
   return Object.assign(prepareContractWriteQuery, {
     config: {
-      addressOrName,
+      abi,
+      address,
       args,
-      contractInterface,
-      overrides,
       functionName,
-      request: undefined,
       mode: 'prepared',
+      overrides,
+      request: undefined,
       ...prepareContractWriteQuery.data,
-    } as PrepareWriteContractResult,
+    } as unknown as PrepareWriteContractResult<TAbi, TFunctionName>,
   })
 }

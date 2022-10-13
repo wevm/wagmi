@@ -26,7 +26,6 @@ describe('prepareWriteContract', () => {
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
-
     const { data, gasLimit, ...rest } = request || {}
     expect(data).toBeDefined()
     expect(gasLimit).toBeDefined()
@@ -59,6 +58,7 @@ describe('prepareWriteContract', () => {
       await expect(() =>
         prepareWriteContract({
           ...wagmiContractConfig,
+          // @ts-expect-error invalid function name
           functionName: 'claim',
         }),
       ).rejects.toThrowError()
@@ -79,6 +79,7 @@ describe('prepareWriteContract', () => {
       await expect(() =>
         prepareWriteContract({
           ...wagmiContractConfig,
+          // @ts-expect-error invalid function name
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
