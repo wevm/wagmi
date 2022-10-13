@@ -28,7 +28,7 @@ export function ContractWrite() {
         inputs: [],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
   })
   const {

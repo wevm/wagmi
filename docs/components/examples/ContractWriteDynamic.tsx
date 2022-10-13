@@ -33,7 +33,7 @@ export function ContractWriteDynamic() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),

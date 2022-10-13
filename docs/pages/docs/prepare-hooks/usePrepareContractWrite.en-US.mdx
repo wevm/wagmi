@@ -90,7 +90,9 @@ function App() {
 
 ### abi (optional)
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. If `abi` is not defined, hook will not run.
+Contract ABI. If `abi` is not defined, hook will not run.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {6}
 import { usePrepareContractWrite } from 'wagmi'
@@ -138,7 +140,7 @@ function App() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
     args: [69],
   })

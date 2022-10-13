@@ -133,7 +133,9 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite).
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`.
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {7}
 import { useContractWrite } from 'wagmi'

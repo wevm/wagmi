@@ -34,8 +34,8 @@ import { useContractRead } from 'wagmi'
 const result = useContractRead({
 - addressOrName: '0x…',
 + address: '0x…',
-- contractInterface: […] as const,
-+ abi: […] as const,
+- contractInterface: […],
++ abi: […],
   functionName: 'balanceOf',
   args: ['0x…'],
 })
@@ -50,7 +50,7 @@ If you were using an ENS name instead of an address, you can resolve the name to
 const result = useContractRead({
 - addressOrName: 'example.eth',
 + address,
-  abi: […] as const,
+  abi: […],
   functionName: 'balanceOf',
   args: ['0x…'],
 })
@@ -63,7 +63,7 @@ const result = useContractRead({
 ```diff
 const { data } = useContractRead({
   address: '0x…',
-  abi: […] as const,
+  abi: […],
   functionName: 'balanceOf',
 - args: '0x…',
 + args: ['0x…'],
@@ -89,7 +89,7 @@ useContractInfiniteReads({
 -    (index) => ({
 +    (index) => [{
       address: '0x…',
-      abi: […] as const,
+      abi: […],
       functionName: 'tokenURI',
       args: [BigNumber.from(index)] as const,
 -    }),

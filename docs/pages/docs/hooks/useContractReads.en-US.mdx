@@ -107,7 +107,9 @@ function App() {
 
 #### abi (optional)
 
-Contract ABI. By adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. Hook will not run unless `abi` is defined for all `contracts`.
+Contract ABI. Hook will not run unless `abi` is defined for all `contracts`.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {8,13}
 import { useContractReads } from 'wagmi'

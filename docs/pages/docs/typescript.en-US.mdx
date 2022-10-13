@@ -1,6 +1,6 @@
 ---
 title: 'TypeScript'
-description: 'Learn more about TypeScript support in wagmi. Full end-to-end type-safety for contract interactions, EIP-712 typed data, and more!'
+description: 'Full end-to-end type-safety for contract interactions, EIP-712 typed data, and more!'
 ---
 
 # TypeScript
@@ -26,7 +26,20 @@ To ensure everything works correctly, make sure that your `tsconfig.json` has [`
 
 wagmi can infer types based on [ABI](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions (powered by [ABIType](https://github.com/wagmi-dev/abitype)), giving you full end-to-end type-safety from your contracts to your frontend and incredible developer experience (e.g. autocomplete ABI function names and catch misspellings, type ABI function arguments, etc.).
 
-For this to work, you must add [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to contract interaction hooks' `abi` configuration parameter and `useSignTypedData`'s `types` configuration parameter.
+For this to work, you must either add [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to specific configuration parameters (more info on those below) or define them inline. For example, `useContractRead`'s `abi` configuration parameter:
+
+```ts
+const { data } = useContractRead({
+  abi: […], // <--- defined inline
+})
+```
+
+```ts
+const abi = […] as const // <--- const assertion
+const { data } = useContractRead({ abi })
+```
+
+If type inference isn't working, it's likely you forgot to add a `const` assertion or define the configuration parameter inline.
 
 ### Contract ABIs
 
@@ -70,7 +83,7 @@ const { data } = useContractRead({
       stateMutability: 'nonpayable',
       type: 'function',
     },
-  ] as const, // <--- const assertion
+  ],
 
   functionName: 'love',
   // ^? (property) functionName?: "getUncleanliness" | "love" | undefined

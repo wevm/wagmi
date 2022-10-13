@@ -85,7 +85,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
     args: [parseInt(tokenId)],
     enabled: Boolean(tokenId),
@@ -107,10 +107,11 @@ export function MintNFTForm() {
 ```
 
 <Callout emoji="🤔" type="info">
-  By adding a [const
+  By defining inline or adding a [const
   assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
   to `abi`, TypeScript will infer the correct types for `functionName` and
-  `args`.
+  `args`. See the wagmi [TypeScript docs](/docs/typescript) for more
+  information.
 </Callout>
 
 ## Step 5: Add a debounce to the input value
@@ -138,7 +139,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),
@@ -189,7 +190,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),
@@ -259,7 +260,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),
@@ -356,7 +357,7 @@ export function MintNFTForm() {
         inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
     args: [parseInt(debouncedTokenId)],
     enabled: Boolean(debouncedTokenId),

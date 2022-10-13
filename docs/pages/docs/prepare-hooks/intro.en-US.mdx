@@ -73,7 +73,7 @@ export function MintNFT() {
         inputs: [],
         outputs: [],
       },
-    ] as const,
+    ],
     functionName: 'mint',
   })
   const { data, write } = useContractWrite(config)
