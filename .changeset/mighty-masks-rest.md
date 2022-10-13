@@ -3,4 +3,4 @@
 'wagmi': patch
 ---
 
-Export EventListener type
+Exported `EventListener` type
