@@ -1,4 +1,4 @@
-This is a [wagmi](https://wagmi.sh) + [Create React App](https://create-react-app.dev) project bootstrapped with [`create-wagmi`](https://github.com/wagmi-dev/wagmi/tree/main/packages/create-wagmi)
+This is a [wagmi](https://wagmi.sh) + [Vite](https://vitejs.dev/) project bootstrapped with [`create-wagmi`](https://github.com/wagmi-dev/wagmi/tree/main/packages/create-wagmi)
 
 # Getting Started
 
@@ -12,4 +12,4 @@ To learn more about [Create React App](https://create-react-app.dev) or [wagmi](
 
 - [wagmi Documentation](https://wagmi.sh) – learn about wagmi Hooks and API.
 - [wagmi Examples](https://wagmi.sh/examples/connect-wallet) – a suite of simple examples using wagmi.
-- [Create React App Documentation](https://create-react-app.dev/) – learn about Create React App features and API.
+- [Vite Documentation](https://vitejs.dev/) – learn about Vite features and API.

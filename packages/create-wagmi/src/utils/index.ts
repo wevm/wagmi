@@ -1,0 +1,1 @@
+export { validatePackageName } from './validatePackageName'

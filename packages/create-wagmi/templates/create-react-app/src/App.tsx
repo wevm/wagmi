@@ -7,6 +7,8 @@ export function App() {
 
   return (
     <>
+      <h1>wagmi + Create React App</h1>
+
       <Connect />
 
       {isConnected && (

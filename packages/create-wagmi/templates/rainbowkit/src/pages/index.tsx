@@ -7,7 +7,8 @@ function Page() {
   const { isConnected } = useAccount()
   return (
     <>
-      <h1>wagmi + RainbowKit</h1>
+      <h1>wagmi + RainbowKit + Next.js</h1>
+
       <ConnectButton />
       {isConnected && <Account />}
     </>

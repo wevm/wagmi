@@ -7,9 +7,6 @@ export default defineConfig({
   clean: true,
   entry: ['src/index.ts'],
   format: ['esm'],
-  external: [...Object.keys(dependencies)],
-  // banner: {
-  //   js: "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
-  // },
+  external: Object.keys(dependencies),
   platform: 'node',
 })

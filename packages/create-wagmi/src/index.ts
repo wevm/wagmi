@@ -7,16 +7,12 @@ import { detect } from 'detect-package-manager'
 import { execa } from 'execa'
 import fs from 'fs-extra'
 import prompts from 'prompts'
-import validateNpmPackageName from 'validate-npm-package-name'
 
 import { name, version } from '../package.json'
+import { validatePackageName } from './utils'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-class CLIError extends Error {}
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url))
-const templatesPath = path.join(__dirname, '..', 'templates')
 const templates = [
   {
     name: 'next',
@@ -34,7 +30,7 @@ const templates = [
     description: 'Create a Next.js wagmi project with RainbowKit included',
   },
   {
-    name: 'vite',
+    name: 'vite-react',
     title: 'Vite',
     description: 'Create a Vite React wagmi project',
   },
@@ -44,15 +40,10 @@ const templates = [
     description: 'Create a Create React App wagmi project',
   },
 ]
-const log = console.log
 
-const validateProjectName = (projectName: string) => {
-  const { validForNewPackages, warnings } = validateNpmPackageName(projectName)
-  return {
-    valid: validForNewPackages,
-    warnings,
-  }
-}
+class CLIError extends Error {}
+
+const log = console.log
 
 const cli = cac(name)
   .version(version)
@@ -73,6 +64,11 @@ void (async () => {
   try {
     const { args, options } = cli.parse(process.argv)
     if (options.help) return
+
+    ////////////////////////////////////////////////////////////////
+
+    const __dirname = fileURLToPath(new URL('.', import.meta.url))
+    const templatesPath = path.join(__dirname, '..', 'templates')
 
     ////////////////////////////////////////////////////////////////
 
@@ -115,7 +111,7 @@ void (async () => {
           message: 'What would you like to name your project?',
           type: 'text',
           validate: (name) =>
-            !validateProjectName(name).valid
+            !validatePackageName(name).valid
               ? `"${name}" is not a valid project name. Enter another name.`
               : true,
         })
@@ -123,15 +119,14 @@ void (async () => {
       if (!projectName) throw new CLIError()
       projectPath = projectName
       log(chalk.cyan('👍 Sick name'))
-      await new Promise((resolve) => setTimeout(resolve, 500))
       log()
     }
 
-    if (!validateProjectName(projectName).valid)
+    if (!validatePackageName(projectName).valid)
       throw new CLIError(
         [
           chalk.red(`🙈 "${projectName}" is not a valid project name.`),
-          validateProjectName(projectName).warnings?.map(
+          validatePackageName(projectName).warnings?.map(
             (warning) => `👉 ${warning}`,
           ),
         ].join('\n'),
@@ -240,11 +235,11 @@ void (async () => {
     log()
     log(chalk.magenta('♥ gn ♥'))
   } catch (error) {
-    if (error instanceof CLIError) {
-      log(error.message)
-    } else {
-      log(chalk.red((<Error>error).message))
-    }
+    log(
+      error instanceof CLIError
+        ? error.message
+        : chalk.red((<Error>error).message),
+    )
     process.exit(1)
   }
 })()

@@ -1,14 +1,13 @@
-import * as React from 'react'
 import { useAccount } from 'wagmi'
 
-import { Account, Connect, NetworkSwitcher } from '../components'
+import { Account, Connect, NetworkSwitcher } from './components'
 
-function Page() {
+export function App() {
   const { isConnected } = useAccount()
 
   return (
     <>
-      <h1>wagmi + Next.js</h1>
+      <h1>wagmi + Vite</h1>
 
       <Connect />
 
@@ -21,5 +20,3 @@ function Page() {
     </>
   )
 }
-
-export default Page
