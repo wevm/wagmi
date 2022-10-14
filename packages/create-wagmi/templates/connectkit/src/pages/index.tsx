@@ -1,5 +1,4 @@
 import { ConnectKitButton } from 'connectkit'
-import * as React from 'react'
 import { useAccount } from 'wagmi'
 import { Account } from '../components'
 

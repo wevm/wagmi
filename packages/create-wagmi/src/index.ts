@@ -5,7 +5,8 @@ import chalk from 'chalk'
 import cpy from 'cpy'
 import { detect } from 'detect-package-manager'
 import { execa } from 'execa'
-import fs from 'fs-extra'
+import { existsSync, readJSON, writeFile } from 'fs-extra'
+// eslint-disable-next-line import/no-named-as-default
 import prompts from 'prompts'
 
 import { name, version } from '../package.json'
@@ -76,7 +77,7 @@ void (async () => {
 
     if (templateName) {
       const templatePath = path.join(templatesPath, templateName)
-      if (!fs.existsSync(templatePath))
+      if (!existsSync(templatePath))
         throw new CLIError(
           [
             chalk.red(`🙈 the template "${templateName}" does not exist.`),
@@ -136,7 +137,7 @@ void (async () => {
 
     const targetPath = path.join(process.cwd(), projectPath)
 
-    if (fs.existsSync(targetPath))
+    if (existsSync(targetPath))
       throw new CLIError(
         [
           chalk.red(`🙈 the directory "${projectPath}" already exists.`),
@@ -171,9 +172,9 @@ void (async () => {
       rename: (name) => name.replace(/^_dot_/, '.'),
     })
 
-    const packageJson = await fs.readJSON(path.join(targetPath, 'package.json'))
+    const packageJson = await readJSON(path.join(targetPath, 'package.json'))
     packageJson.name = projectName
-    await fs.writeFile(
+    await writeFile(
       path.join(targetPath, 'package.json'),
       JSON.stringify(packageJson, null, 2),
     )
