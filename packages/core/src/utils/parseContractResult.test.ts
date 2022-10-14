@@ -572,7 +572,7 @@ describe('parseContractResult', () => {
               },
               {
                 internalType: 'uint256',
-                name: 'firstGmTimstamp',
+                name: 'firstGmTimestamp',
                 type: 'uint256',
               },
               {
@@ -641,7 +641,7 @@ describe('parseContractResult', () => {
 
       expect(JSON.stringify(receivedSender)).toEqual(JSON.stringify(sender))
       expect(receivedSender.count).toEqual(sender[0])
-      expect(receivedSender.firstGmTimstamp).toEqual(sender[1])
+      expect(receivedSender.firstGmTimestamp).toEqual(sender[1])
       expect(receivedSender.lastGmTimestamp).toEqual(sender[2])
 
       expect(JSON.stringify(receivedTimestamps)).toEqual(

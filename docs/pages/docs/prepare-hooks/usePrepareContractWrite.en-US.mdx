@@ -24,7 +24,7 @@ import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config, error } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
   })
@@ -72,16 +72,16 @@ function App() {
 
 ## Configuration
 
-### adddress (optional)
+### address (optional)
 
-Contract address. If `adddress` is not defined, hook will not run.
+Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
   })
@@ -99,7 +99,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
   })
@@ -115,7 +115,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
   })
@@ -131,7 +131,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
     abi: [
       {
         name: 'mint',
@@ -157,7 +157,7 @@ import { optimism } from 'wagmi/chains'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     chainId: optimism.id,
@@ -174,7 +174,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     overrides: {
@@ -194,7 +194,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     cacheTime: 2_000,
@@ -211,7 +211,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     enabled: false,
@@ -228,7 +228,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     staleTime: 2_000,
@@ -245,7 +245,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     suspense: true,
@@ -262,7 +262,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     onSuccess(data) {
@@ -281,7 +281,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     onError(error) {
@@ -300,7 +300,7 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    adddress: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
     onSettled(data, error) {
