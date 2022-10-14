@@ -1,5 +1,5 @@
 {
-  "name": "example-cra",
+  "name": "wagmi-template-cra",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@types/jest": "^29.0.1",
     "@types/node": "^16.11.33",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
@@ -18,9 +19,10 @@
     "process": "^0.11.10",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.7.4",
-    "wagmi": "^0.6.8",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.6.4",
+    "util": "^0.12.4",
+    "wagmi": "^0.7.2",
     "web-vitals": "^2.1.4"
   },
   "browserslist": {

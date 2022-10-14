@@ -1,6 +1,6 @@
-import type { AppProps } from 'next/app'
-import NextHead from 'next/head'
+import { Buffer } from 'buffer'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom/client'
 
 import {
   WagmiConfig,
@@ -13,9 +13,19 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+import { App } from './App'
+import reportWebVitals from './reportWebVitals'
+
+// polyfill Buffer for client
+if (!window.Buffer) {
+  window.Buffer = Buffer
+}
 
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
+  alchemyProvider({ apiKey: process.env.REACT_APP_ALCHEMY_API_KEY }),
+  publicProvider(),
 ])
 
 const client = createClient({
@@ -46,18 +56,13 @@ const client = createClient({
   webSocketProvider,
 })
 
-function App({ Component, pageProps }: AppProps) {
-  const [mounted, setMounted] = React.useState(false)
-  React.useEffect(() => setMounted(true), [])
-  return (
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+root.render(
+  <React.StrictMode>
     <WagmiConfig client={client}>
-      <NextHead>
-        <title>wagmi</title>
-      </NextHead>
-
-      {mounted && <Component {...pageProps} />}
+      <App />
     </WagmiConfig>
-  )
-}
+  </React.StrictMode>,
+)
 
-export default App
+reportWebVitals()

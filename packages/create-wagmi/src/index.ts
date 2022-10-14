@@ -17,7 +17,33 @@ class CLIError extends Error {}
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url))
 const templatesPath = path.join(__dirname, '..', 'templates')
-const templateNames = fs.readdirSync(templatesPath)
+const templates = [
+  {
+    name: 'next',
+    title: 'Next.js',
+    description: 'Create a Next.js wagmi project',
+  },
+  {
+    name: 'connectkit',
+    title: 'Next.js + ConnectKit',
+    description: 'Create a Next.js wagmi project with ConnectKit included',
+  },
+  {
+    name: 'rainbowkit',
+    title: 'Next.js + RainbowKit',
+    description: 'Create a Next.js wagmi project with RainbowKit included',
+  },
+  {
+    name: 'vite',
+    title: 'Vite',
+    description: 'Create a Vite React wagmi project',
+  },
+  {
+    name: 'create-react-app',
+    title: 'Create React App',
+    description: 'Create a Create React App wagmi project',
+  },
+]
 const log = console.log
 
 const validateProjectName = (projectName: string) => {
@@ -33,10 +59,9 @@ const cli = cac(name)
   .usage(`${chalk.green('<project-directory>')} [options]`)
   .option(
     '-t, --template [name]',
-    `A template to bootstrap with. Available: ${templateNames.join(', ')}`,
-    {
-      default: 'basic',
-    },
+    `A template to bootstrap with. Available: ${templates
+      .map(({ name }) => name)
+      .join(', ')}`,
   )
   .option('--npm', 'Use npm as your package manager')
   .option('--pnpm', 'Use pnpm as your package manager')
@@ -51,16 +76,20 @@ void (async () => {
 
     ////////////////////////////////////////////////////////////////
 
-    const templateName = options.template || options.t
-    const templatePath = path.join(templatesPath, templateName)
+    let templateName = options.template || options.t
 
-    if (!fs.existsSync(templatePath))
-      throw new CLIError(
-        [
-          chalk.red(`🙈 the template "${templateName}" does not exist.`),
-          `👉 choose a valid name. Available: ${templateNames.join(', ')}`,
-        ].join('\n'),
-      )
+    if (templateName) {
+      const templatePath = path.join(templatesPath, templateName)
+      if (!fs.existsSync(templatePath))
+        throw new CLIError(
+          [
+            chalk.red(`🙈 the template "${templateName}" does not exist.`),
+            `👉 choose a valid name. Available: ${templates
+              .map(({ name }) => name)
+              .join(', ')}`,
+          ].join('\n'),
+        )
+    }
 
     ////////////////////////////////////////////////////////////////
 
@@ -83,7 +112,7 @@ void (async () => {
         await prompts({
           initial: 'my-wagmi-app',
           name: 'projectName',
-          message: 'what would you like to name your project?',
+          message: 'What would you like to name your project?',
           type: 'text',
           validate: (name) =>
             !validateProjectName(name).valid
@@ -91,8 +120,9 @@ void (async () => {
               : true,
         })
       ).projectName
+      if (!projectName) throw new CLIError()
       projectPath = projectName
-      log('sick name 👍')
+      log(chalk.cyan('👍 Sick name'))
       await new Promise((resolve) => setTimeout(resolve, 500))
       log()
     }
@@ -119,9 +149,29 @@ void (async () => {
         ].join('\n'),
       )
 
-    log(chalk.cyan('👷‍♂️ creating a new wagmi app in', chalk.green(targetPath)))
+    ////////////////////////////////////////////////////////////////
+
+    if (!templateName) {
+      templateName = (
+        await prompts({
+          name: 'templateName',
+          message: 'What template would you like to use?',
+          type: 'select',
+          choices: templates.map(({ description, name, title }) => ({
+            description,
+            title,
+            value: name,
+          })),
+        })
+      ).templateName
+    }
+
+    ////////////////////////////////////////////////////////////////
+
+    log(chalk.cyan('👷‍♂️ Creating a new wagmi app in', chalk.green(targetPath)))
     log()
 
+    const templatePath = path.join(templatesPath, templateName)
     await cpy(path.join(templatePath, '**', '*'), targetPath, {
       rename: (name) => name.replace(/^_dot_/, '.'),
     })
@@ -145,9 +195,9 @@ void (async () => {
 
     log(
       chalk.cyan(
-        `📦 installing dependencies with ${chalk.bold(
+        `📦 Installing dependencies with ${chalk.bold(
           packageManager,
-        )}. this may take a minute or so...`,
+        )}. This may take a minute or so...`,
       ),
     )
     log()
@@ -176,11 +226,11 @@ void (async () => {
     ////////////////////////////////////////////////////////////////
 
     log()
-    log(chalk.green(`🔥 your wagmi app has been set up!`))
+    log(chalk.green(`🔥 Your wagmi app has been set up!`))
     log()
     log(
       chalk.cyan(
-        `🚀 to start your app, run \`${chalk.bold(
+        `🚀 To start your app, run \`${chalk.bold(
           `cd ${projectPath}`,
         )}\` and then \`${chalk.bold(
           `${packageManager}${packageManager === 'npm' ? ' run' : ''} dev`,
