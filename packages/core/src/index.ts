@@ -171,6 +171,7 @@ export type {
   WebSocketProvider,
 } from './types'
 export type { Address } from 'abitype'
+export * from './types/contracts'
 
 export {
   configureChains,
