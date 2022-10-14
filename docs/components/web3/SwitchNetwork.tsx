@@ -4,7 +4,7 @@ import { chain, useNetwork, useSwitchNetwork } from 'wagmi'
 
 export function SwitchNetwork() {
   const { chain: activeChain } = useNetwork()
-  const { switchNetwork } = useSwitchNetwork()
+  const { switchNetwork, isLoading } = useSwitchNetwork()
 
   if (!activeChain) return null
   return (
@@ -17,6 +17,9 @@ export function SwitchNetwork() {
       variant="transparent"
       size="small"
       width="full"
+      center
+      disabled={isLoading}
+      loading={isLoading}
     >
       Connect to{' '}
       {activeChain?.id === chain.mainnet.id ? 'Testnet (Goerli)' : 'Mainnet'}
