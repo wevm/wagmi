@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.7.3
+
+### Patch Changes
+
+- [#1086](https://github.com/wagmi-dev/wagmi/pull/1086) [`4e28d2a`](https://github.com/wagmi-dev/wagmi/commit/4e28d2ad4c2e6b3479b728563040b9529463cbcf) Thanks [@tmm](https://github.com/tmm)! - Exposed module types.
+
+- Updated dependencies [[`4e28d2a`](https://github.com/wagmi-dev/wagmi/commit/4e28d2ad4c2e6b3479b728563040b9529463cbcf)]:
+  - @wagmi/core@0.6.3
+
 ## 0.7.2
 
 ### Patch Changes
