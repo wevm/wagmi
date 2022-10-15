@@ -15,7 +15,7 @@ export function parseContractResult({
   functionName: string
 }) {
   if (data && isPlainArray(data)) {
-    const iface = Contract.getInterface(<ContractInterface>abi)
+    const iface = Contract.getInterface(abi as ContractInterface)
     const fragment = iface.getFunction(functionName)
 
     const isTuple = (fragment.outputs?.length || 0) > 1

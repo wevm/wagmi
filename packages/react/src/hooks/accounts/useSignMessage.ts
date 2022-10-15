@@ -48,13 +48,14 @@ export function useSignMessage({
   })
 
   const signMessage = React.useCallback(
-    (args?: SignMessageArgs) => mutate(args || <SignMessageArgs>{ message }),
+    (args?: SignMessageArgs) =>
+      mutate(args || ({ message } as SignMessageArgs)),
     [message, mutate],
   )
 
   const signMessageAsync = React.useCallback(
     (args?: SignMessageArgs) =>
-      mutateAsync(args || <SignMessageArgs>{ message }),
+      mutateAsync(args || ({ message } as SignMessageArgs)),
     [message, mutateAsync],
   )
 

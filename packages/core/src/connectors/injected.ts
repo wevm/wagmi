@@ -71,7 +71,7 @@ export class InjectedConnector extends Connector<
         name =
           typeof detectedName === 'string'
             ? detectedName
-            : <string>detectedName[0]
+            : (detectedName[0] as string)
     }
 
     this.id = 'injected'
@@ -109,7 +109,7 @@ export class InjectedConnector extends Connector<
     } catch (error) {
       if (this.isUserRejectedRequestError(error))
         throw new UserRejectedRequestError(error)
-      if ((<RpcError>error).code === -32002)
+      if ((error as RpcError).code === -32002)
         throw new ResourceUnavailableError(error)
       throw error
     }
@@ -135,15 +135,13 @@ export class InjectedConnector extends Connector<
       method: 'eth_requestAccounts',
     })
     // return checksum address
-    return getAddress(<string>accounts[0])
+    return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
-    return await provider
-      .request({ method: 'eth_chainId' })
-      .then(normalizeChainId)
+    return provider.request({ method: 'eth_chainId' }).then(normalizeChainId)
   }
 
   async getProvider() {
@@ -210,7 +208,7 @@ export class InjectedConnector extends Connector<
 
       // Indicates chain is not added to provider
       if (
-        (<ProviderRpcError>error).code === 4902 ||
+        (error as ProviderRpcError).code === 4902 ||
         // Unwrapping for MetaMask Mobile
         // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
         (<RpcError<{ originalError?: { code: number } }>>error)?.data
@@ -256,7 +254,7 @@ export class InjectedConnector extends Connector<
   }) {
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
-    return await provider.request({
+    return provider.request({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',
@@ -274,7 +272,7 @@ export class InjectedConnector extends Connector<
     if (accounts.length === 0) this.emit('disconnect')
     else
       this.emit('change', {
-        account: getAddress(<string>accounts[0]),
+        account: getAddress(accounts[0] as string),
       })
   }
 
@@ -300,6 +298,6 @@ export class InjectedConnector extends Connector<
   }
 
   protected isUserRejectedRequestError(error: unknown) {
-    return (<ProviderRpcError>error).code === 4001
+    return (error as ProviderRpcError).code === 4001
   }
 }

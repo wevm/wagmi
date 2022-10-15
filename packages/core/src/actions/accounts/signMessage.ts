@@ -24,7 +24,7 @@ export async function signMessage(
       args.message,
     )) as ResolvedConfig['BytesType']
   } catch (error) {
-    if ((<ProviderRpcError>error).code === 4001)
+    if ((error as ProviderRpcError).code === 4001)
       throw new UserRejectedRequestError(error)
     throw error
   }

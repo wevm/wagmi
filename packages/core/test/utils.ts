@@ -167,9 +167,9 @@ export const accounts = [
 
 export class WalletSigner extends Wallet {
   connectUnchecked(): providers.JsonRpcSigner {
-    const uncheckedSigner = (<EthersProviderWrapper>(
-      this.provider
-    )).getUncheckedSigner(this.address)
+    const uncheckedSigner = (
+      this.provider as EthersProviderWrapper
+    ).getUncheckedSigner(this.address)
     return uncheckedSigner
   }
 }

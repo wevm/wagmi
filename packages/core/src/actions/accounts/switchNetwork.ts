@@ -21,5 +21,5 @@ export async function switchNetwork({
       connector,
     })
 
-  return await connector.switchChain(chainId)
+  return connector.switchChain(chainId)
 }

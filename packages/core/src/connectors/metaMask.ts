@@ -95,7 +95,7 @@ export class MetaMaskConnector extends InjectedConnector {
     } catch (error) {
       if (this.isUserRejectedRequestError(error))
         throw new UserRejectedRequestError(error)
-      if ((<RpcError>error).code === -32002)
+      if ((error as RpcError).code === -32002)
         throw new ResourceUnavailableError(error)
       throw error
     }

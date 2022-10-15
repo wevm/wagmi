@@ -90,9 +90,8 @@ export function configureChains<
   return {
     chains,
     provider: ({ chainId }: { chainId?: number }) => {
-      const activeChain = <TChain>(
-        (chains.find((x) => x.id === chainId) ?? defaultChains[0])
-      )
+      const activeChain = (chains.find((x) => x.id === chainId) ??
+        defaultChains[0]) as TChain
       const chainProviders = providers_[activeChain.id]
 
       if (!chainProviders || !chainProviders[0])
@@ -122,9 +121,8 @@ export function configureChains<
       })
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
-      const activeChain = <TChain>(
-        (chains.find((x) => x.id === chainId) ?? defaultChains[0])
-      )
+      const activeChain = (chains.find((x) => x.id === chainId) ??
+        defaultChains[0]) as TChain
       const chainWebSocketProviders = webSocketProviders_[activeChain.id]
 
       if (!chainWebSocketProviders) return undefined

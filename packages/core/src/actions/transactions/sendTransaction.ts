@@ -102,9 +102,9 @@ export async function sendTransaction({
     /** Go nuts!                                                        */
     /********************************************************************/
 
-    return { hash: <Hash>hash, wait }
+    return { hash: hash as Hash, wait }
   } catch (error) {
-    if ((<ProviderRpcError>error).code === 4001)
+    if ((error as ProviderRpcError).code === 4001)
       throw new UserRejectedRequestError(error)
     throw error
   }

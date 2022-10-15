@@ -49,20 +49,20 @@ export function useConnect({
 
   const connect = React.useCallback(
     (args?: Partial<ConnectArgs>) => {
-      return mutate(<ConnectArgs>{
+      return mutate({
         chainId: args?.chainId ?? chainId,
         connector: args?.connector ?? connector,
-      })
+      } as ConnectArgs)
     },
     [chainId, connector, mutate],
   )
 
   const connectAsync = React.useCallback(
     (args?: Partial<ConnectArgs>) => {
-      return mutateAsync(<ConnectArgs>{
+      return mutateAsync({
         chainId: args?.chainId ?? chainId,
         connector: args?.connector ?? connector,
-      })
+      } as ConnectArgs)
     },
     [chainId, connector, mutateAsync],
   )

@@ -51,9 +51,9 @@ export async function signTypedData<TTypedData extends TypedData>({
   if (chainId) assertActiveChain({ chainId })
 
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-  return await signer._signTypedData(
+  return signer._signTypedData(
     domain,
-    <Record<string, Array<TypedDataField>>>(<unknown>types),
+    types as unknown as Record<string, TypedDataField[]>,
     value,
   )
 }

@@ -63,7 +63,7 @@ export class CoinbaseWalletConnector extends Connector<
       this.emit('message', { type: 'connecting' })
 
       const accounts = await provider.enable()
-      const account = getAddress(<string>accounts[0])
+      const account = getAddress(accounts[0] as string)
       // Switch to chain if provided
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
@@ -77,13 +77,13 @@ export class CoinbaseWalletConnector extends Connector<
         account,
         chain: { id, unsupported },
         provider: new providers.Web3Provider(
-          <providers.ExternalProvider>(<unknown>provider),
+          provider as unknown as providers.ExternalProvider,
         ),
       }
     } catch (error) {
       if (
         /(user closed modal|accounts received is empty)/i.test(
-          (<ProviderRpcError>error).message,
+          (error as ProviderRpcError).message,
         )
       )
         throw new UserRejectedRequestError(error)
@@ -108,7 +108,7 @@ export class CoinbaseWalletConnector extends Connector<
       method: 'eth_accounts',
     })
     // return checksum address
-    return getAddress(<string>accounts[0])
+    return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
@@ -127,9 +127,9 @@ export class CoinbaseWalletConnector extends Connector<
         // @ts-expect-error This import error is not visible to TypeScript
         typeof CoinbaseWalletSDK.default === 'function'
       )
-        CoinbaseWalletSDK = (<{ default: typeof CoinbaseWalletSDK }>(
-          (<unknown>CoinbaseWalletSDK)
-        )).default
+        CoinbaseWalletSDK = (
+          CoinbaseWalletSDK as unknown as { default: typeof CoinbaseWalletSDK }
+        ).default
       this.#client = new CoinbaseWalletSDK(this.options)
 
       /**
@@ -168,7 +168,7 @@ export class CoinbaseWalletConnector extends Connector<
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <providers.ExternalProvider>(<unknown>provider),
+      provider as unknown as providers.ExternalProvider,
       chainId,
     ).getSigner(account)
   }
@@ -204,7 +204,7 @@ export class CoinbaseWalletConnector extends Connector<
       if (!chain) throw new ChainNotConfiguredError()
 
       // Indicates chain is not added to provider
-      if ((<ProviderRpcError>error).code === 4902) {
+      if ((error as ProviderRpcError).code === 4902) {
         try {
           await provider.request({
             method: 'wallet_addEthereumChain',
@@ -244,7 +244,7 @@ export class CoinbaseWalletConnector extends Connector<
     symbol: string
   }) {
     const provider = await this.getProvider()
-    return await provider.request<boolean>({
+    return provider.request<boolean>({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',
@@ -260,7 +260,7 @@ export class CoinbaseWalletConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(<string>accounts[0]) })
+    else this.emit('change', { account: getAddress(accounts[0] as string) })
   }
 
   protected onChainChanged = (chainId: number | string) => {
@@ -274,6 +274,6 @@ export class CoinbaseWalletConnector extends Connector<
   }
 
   #isUserRejectedRequestError(error: unknown) {
-    return /(user rejected)/i.test((<Error>error).message)
+    return /(user rejected)/i.test((error as Error).message)
   }
 }

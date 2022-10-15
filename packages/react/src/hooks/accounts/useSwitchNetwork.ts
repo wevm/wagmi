@@ -60,13 +60,13 @@ export function useSwitchNetwork({
 
   const switchNetwork_ = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
-      mutate(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+      mutate({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs),
     [chainId, mutate],
   )
 
   const switchNetworkAsync_ = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
-      mutateAsync(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+      mutateAsync({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs),
     [chainId, mutateAsync],
   )
 
