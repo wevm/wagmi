@@ -134,6 +134,7 @@ export function useQuery<
       dataUpdatedAt: baseQuery.dataUpdatedAt,
       errorUpdatedAt: baseQuery.errorUpdatedAt,
       failureCount: baseQuery.failureCount,
+      // TODO: Remove `isFetchedAfterMount` in next minor version (v0.8).
       isFetchedAfterMount: baseQuery.isFetchedAfterMount,
       isLoadingError: baseQuery.isLoadingError,
       isPaused: baseQuery.isPaused,
