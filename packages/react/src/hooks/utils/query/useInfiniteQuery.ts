@@ -20,6 +20,7 @@ type UseInfiniteQueryResult<TData, TError> = Pick<
   | 'hasNextPage'
   | 'isError'
   | 'isFetched'
+  | 'isFetchedAfterMount'
   | 'isFetching'
   | 'isFetchingNextPage'
   | 'isLoading'
@@ -34,7 +35,6 @@ type UseInfiniteQueryResult<TData, TError> = Pick<
     | 'dataUpdatedAt'
     | 'errorUpdatedAt'
     | 'failureCount'
-    | 'isFetchedAfterMount'
     | 'isLoadingError'
     | 'isPaused'
     | 'isPlaceholderData'
@@ -142,6 +142,7 @@ export function useInfiniteQuery<
     hasNextPage: (<any>baseQuery).hasNextPage,
     isError: baseQuery.isError,
     isFetched: baseQuery.isFetched,
+    isFetchedAfterMount: baseQuery.isFetchedAfterMount,
     isFetching: baseQuery.isFetching,
     isFetchingNextPage: (<any>baseQuery).isFetchingNextPage,
     isIdle: baseQuery.isIdle,
