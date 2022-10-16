@@ -25,6 +25,19 @@ to [extend constraints on inferred type variables](https://devblogs.microsoft.co
 
 See the wagmi [TypeScript docs](/docs/typescript) for more information on TypeScript support in this version.
 
+<Callout type="info" emoji="🤔">
+  When switching over to inferring types based on your ABIs, you may notice
+  TypeScript complaining about types that worked fine before. For example, `Type
+  'string' is not assignable to type 'BigNumber'`. Previously, you were able to
+  use `string` types in place of `BigNumber` types, `BigNumber` types in place
+  of `number` types, etc.
+  <div />
+  The types inferred directly from ABIs are more correct and strict so you will
+  need to convert your types to match. This should be pretty straightforward by
+  following the error from TypeScript. Based on the error above, `args: ['123']`
+  should be updated to `args: [BigNumber.from('123')]`.
+</Callout>
+
 ### `addressOrName` and `contractInterface` renamed for contract hooks
 
 `addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for the following contract hooks: `useContract`, `useContractEvent`, `useContractRead`, `useContractReads`, `useContractInfiniteReads`, `useContractWrite`, and `usePrepareContractWrite`.
