@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.7.5
+
+### Patch Changes
+
+- [#1103](https://github.com/wagmi-dev/wagmi/pull/1103) [`651eda0`](https://github.com/wagmi-dev/wagmi/commit/651eda06384bd0955268427f898e9337b2dc5a31) Thanks [@tmm](https://github.com/tmm)! - Bumped `abitype` dependency.
+
+- Updated dependencies [[`651eda0`](https://github.com/wagmi-dev/wagmi/commit/651eda06384bd0955268427f898e9337b2dc5a31)]:
+  - @wagmi/core@0.6.4
+
 ## 0.7.4
 
 ### Patch Changes
