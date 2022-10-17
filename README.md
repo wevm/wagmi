@@ -29,7 +29,7 @@
 - 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and Injected
 - 👟 Caching, request deduplication, multicall, batching, and persistence
 - 🌀 Auto-refresh data on wallet, block, and network changes
-- 🦄 TypeScript ready
+- 🦄 TypeScript ready (infer types from ABIs and EIP-712 Typed Data)
 - 🌳 Test suite running against forked Ethereum network
 
 ...and a lot more.

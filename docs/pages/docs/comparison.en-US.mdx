@@ -26,8 +26,9 @@ There are multiple options when it comes to React libraries for Ethereum that he
 | Their Comparison     | –                                                                                               | none                                                                                                    | none                                                                                               | none                                                                                                    |
 | Supported Frameworks | React, Vanilla JS                                                                               | React                                                                                                   | React                                                                                              | Vanilla JS                                                                                              |
 | Documentation        | ✅                                                                                              | 🛑                                                                                                      | ✅                                                                                                 | 🛑                                                                                                      |
-| Test Suite[^1]       | ✅                                                                                              | 🔶                                                                                                      | 🔶                                                                                                 | 🛑                                                                                                      |
-| Examples[^2]         | ✅                                                                                              | 🔶                                                                                                      | ✅                                                                                                 | 🔶                                                                                                      |
+| TypeScript[^1]       | ✅                                                                                              | 🔶                                                                                                      | 🔶                                                                                                 | 🔶                                                                                                      |
+| Test Suite[^2]       | ✅                                                                                              | 🔶                                                                                                      | 🔶                                                                                                 | 🛑                                                                                                      |
+| Examples[^3]         | ✅                                                                                              | 🔶                                                                                                      | ✅                                                                                                 | 🔶                                                                                                      |
 
 ## [wagmi](https://github.com/wagmi-dev/wagmi)
 
@@ -39,13 +40,14 @@ There are multiple options when it comes to React libraries for Ethereum that he
 - Auto-refresh data on wallet, block, and network changes
 - Multicall support
 - Test suite running against forked Ethereum network
-- TypeScript ready and extensive documentation
+- TypeScript ready (infer types from ABIs and EIP-712 Typed Data)
+- Extensive documentation and examples
 - Used by [ENS](https://ens.domains), [Foundation](https://foundation.app), [SushiSwap](https://sushi.com), and [more](https://github.com/wagmi-dev/wagmi/discussions/201)
 - MIT License
 
 ### Cons
 
-- Not as many connectors as `web3-react`
+- Not as many built-in connectors as `web3-react`
 
 ## [web3-react](https://github.com/Uniswap/web3-react)
 
@@ -82,15 +84,16 @@ There are multiple options when it comes to React libraries for Ethereum that he
 
 - UI component for connecting wallet
 - Supports many different connectors
-- MIT License
 
 ### Cons
 
 - Cannot be used headlessly
 - No hooks for interacting with Ethereum, fetching information, etc.
 - Almost no tests and infrequent updates
+- Apache-2.0 License
 
 ---
 
-[^1]: Runs against forked Ethereum network ✅. Mocking functionality (i.e. RPC calls) is 🔶.
-[^2]: Has multiple examples ✅. Has single example 🔶.
+[^1]: Infer types from ABIs, EIP-712 Typed Data, etc. ✅. Can add types with explicit generics, type annotations, etc. 🔶.
+[^2]: Runs against forked Ethereum network ✅. Mocking functionality (i.e. RPC calls) is 🔶.
+[^3]: Has multiple examples ✅. Has single example 🔶.
