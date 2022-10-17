@@ -35,10 +35,7 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
 
   if (
     !!onDisconnect &&
-    // we check `connecting` too because account can transition from `connecting` to `disconnected`
-    // when client fails to reconnect to connector saved in storage
-    previousAccount.current?.status !== 'connecting' &&
-    previousAccount.current?.status !== 'disconnected' &&
+    previousAccount.current?.status == 'connected' &&
     account.status === 'disconnected'
   )
     onDisconnect()
