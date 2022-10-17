@@ -107,7 +107,7 @@
     }
   },
   "dependencies": {
-    "abitype": "^0.1.6",
+    "abitype": "^0.1.7",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.1.1"
   },

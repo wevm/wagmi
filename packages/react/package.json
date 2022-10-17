@@ -110,7 +110,7 @@
     "@tanstack/react-query-persist-client": "^4.10.1",
     "@wagmi/core": "^0.6.3",
     "@walletconnect/ethereum-provider": "^1.8.0",
-    "abitype": "^0.1.6",
+    "abitype": "^0.1.7",
     "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {
