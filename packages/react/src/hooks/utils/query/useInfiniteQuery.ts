@@ -20,6 +20,7 @@ type UseInfiniteQueryResult<TData, TError> = Pick<
   | 'hasNextPage'
   | 'isError'
   | 'isFetched'
+  | 'isFetchedAfterMount'
   | 'isFetching'
   | 'isFetchingNextPage'
   | 'isLoading'
@@ -34,7 +35,6 @@ type UseInfiniteQueryResult<TData, TError> = Pick<
     | 'dataUpdatedAt'
     | 'errorUpdatedAt'
     | 'failureCount'
-    | 'isFetchedAfterMount'
     | 'isLoadingError'
     | 'isPaused'
     | 'isPlaceholderData'
@@ -142,6 +142,7 @@ export function useInfiniteQuery<
     hasNextPage: (<any>baseQuery).hasNextPage,
     isError: baseQuery.isError,
     isFetched: baseQuery.isFetched,
+    isFetchedAfterMount: baseQuery.isFetchedAfterMount,
     isFetching: baseQuery.isFetching,
     isFetchingNextPage: (<any>baseQuery).isFetchingNextPage,
     isIdle: baseQuery.isIdle,
@@ -154,6 +155,7 @@ export function useInfiniteQuery<
       dataUpdatedAt: baseQuery.dataUpdatedAt,
       errorUpdatedAt: baseQuery.errorUpdatedAt,
       failureCount: baseQuery.failureCount,
+      // TODO: Remove `isFetchedAfterMount` in next minor version (v0.8).
       isFetchedAfterMount: baseQuery.isFetchedAfterMount,
       isLoadingError: baseQuery.isLoadingError,
       isPaused: baseQuery.isPaused,

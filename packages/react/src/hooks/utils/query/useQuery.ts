@@ -17,6 +17,7 @@ export type UseQueryResult<TData, TError> = Pick<
   | 'fetchStatus'
   | 'isError'
   | 'isFetched'
+  | 'isFetchedAfterMount'
   | 'isFetching'
   | 'isLoading'
   | 'isRefetching'
@@ -30,7 +31,6 @@ export type UseQueryResult<TData, TError> = Pick<
     | 'dataUpdatedAt'
     | 'errorUpdatedAt'
     | 'failureCount'
-    | 'isFetchedAfterMount'
     | 'isLoadingError'
     | 'isPaused'
     | 'isPlaceholderData'
@@ -122,6 +122,7 @@ export function useQuery<
     fetchStatus: baseQuery.fetchStatus,
     isError: baseQuery.isError,
     isFetched: baseQuery.isFetched,
+    isFetchedAfterMount: baseQuery.isFetchedAfterMount,
     isFetching: baseQuery.isFetching,
     isIdle: baseQuery.isIdle,
     isLoading: baseQuery.isLoading,
@@ -133,6 +134,7 @@ export function useQuery<
       dataUpdatedAt: baseQuery.dataUpdatedAt,
       errorUpdatedAt: baseQuery.errorUpdatedAt,
       failureCount: baseQuery.failureCount,
+      // TODO: Remove `isFetchedAfterMount` in next minor version (v0.8).
       isFetchedAfterMount: baseQuery.isFetchedAfterMount,
       isLoadingError: baseQuery.isLoadingError,
       isPaused: baseQuery.isPaused,
