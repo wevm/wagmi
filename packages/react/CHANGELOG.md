@@ -1,5 +1,15 @@
 # wagmi
 
+## 0.7.4
+
+### Patch Changes
+
+- [#1099](https://github.com/wagmi-dev/wagmi/pull/1099) [`748e617`](https://github.com/wagmi-dev/wagmi/commit/748e61719ad706acae057be903321ebe0c2e817e) Thanks [@jxom](https://github.com/jxom)! - Added `isFetchedAfterMount` to the return value of hooks.
+
+  The `isFetchedAfterMount` will be truthy if the hook has fetched after the component has been mounted. This value can be utilized to not show the result if it has previously been cached.
+
+- [#1091](https://github.com/wagmi-dev/wagmi/pull/1091) [`a3aaf59`](https://github.com/wagmi-dev/wagmi/commit/a3aaf590e8e993017baa9a1ac50ecd63dd287caf) Thanks [@tmm](https://github.com/tmm)! - Fixed `useAccount` `onConnect`/`onDisconnect` from not firing when the account was already connected/disconnected.
+
 ## 0.7.3
 
 ### Patch Changes
