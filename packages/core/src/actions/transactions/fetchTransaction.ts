@@ -28,5 +28,5 @@ export async function fetchTransaction({
   hash,
 }: FetchTransactionArgs): Promise<FetchTransactionResult> {
   const provider = getProvider({ chainId })
-  return await provider.getTransaction(hash)
+  return provider.getTransaction(hash)
 }

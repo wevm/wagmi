@@ -38,5 +38,5 @@ export async function waitForTransaction({
   } else if (wait_) promise = wait_(confirmations)
   else throw new Error('hash or wait is required')
 
-  return await promise
+  return promise
 }

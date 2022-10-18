@@ -62,7 +62,7 @@ export class WalletConnectConnector extends Connector<
       setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
 
       const accounts = await provider.enable()
-      const account = getAddress(<string>accounts[0])
+      const account = getAddress(accounts[0] as string)
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
 
@@ -80,7 +80,7 @@ export class WalletConnectConnector extends Connector<
         ),
       }
     } catch (error) {
-      if (/user closed modal/i.test((<ProviderRpcError>error).message))
+      if (/user closed modal/i.test((error as ProviderRpcError).message))
         throw new UserRejectedRequestError(error)
       throw error
     }
@@ -102,7 +102,7 @@ export class WalletConnectConnector extends Connector<
     const provider = await this.getProvider()
     const accounts = provider.accounts
     // return checksum address
-    return getAddress(<string>accounts[0])
+    return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
@@ -176,7 +176,7 @@ export class WalletConnectConnector extends Connector<
       )
     } catch (error) {
       const message =
-        typeof error === 'string' ? error : (<ProviderRpcError>error)?.message
+        typeof error === 'string' ? error : (error as ProviderRpcError)?.message
       if (/user rejected request/i.test(message))
         throw new UserRejectedRequestError(error)
       throw new SwitchChainError(error)
@@ -185,7 +185,7 @@ export class WalletConnectConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(<string>accounts[0]) })
+    else this.emit('change', { account: getAddress(accounts[0] as string) })
   }
 
   protected onChainChanged = (chainId: number | string) => {

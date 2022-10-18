@@ -1,4 +1,4 @@
-import { BigNumberish, providers } from 'ethers'
+import { providers } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 
 import { Unit } from '../../types'
@@ -26,14 +26,12 @@ export async function fetchFeeData({
   const provider = getProvider({ chainId })
   const feeData = await provider.getFeeData()
   const formatted = {
-    gasPrice: feeData.gasPrice
-      ? formatUnits(<BigNumberish>feeData.gasPrice, units)
-      : null,
+    gasPrice: feeData.gasPrice ? formatUnits(feeData.gasPrice, units) : null,
     maxFeePerGas: feeData.maxFeePerGas
-      ? formatUnits(<BigNumberish>feeData.maxFeePerGas, units)
+      ? formatUnits(feeData.maxFeePerGas, units)
       : null,
     maxPriorityFeePerGas: feeData.maxPriorityFeePerGas
-      ? formatUnits(<BigNumberish>feeData.maxPriorityFeePerGas, units)
+      ? formatUnits(feeData.maxPriorityFeePerGas, units)
       : null,
   }
   return { ...feeData, formatted }

@@ -20,7 +20,7 @@ export async function fetchEnsAddress({
   const address = await provider.resolveName(name)
 
   try {
-    return address ? <Address>getAddress(address) : null
+    return address ? getAddress(address) : null
   } catch (_error) {
     return null
   }

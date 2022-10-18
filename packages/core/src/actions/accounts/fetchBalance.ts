@@ -46,7 +46,9 @@ export async function fetchBalance({
     let resolvedAddress: Address
     if (isAddress(addressOrName)) resolvedAddress = addressOrName
     else {
-      const address = await provider.resolveName(addressOrName)
+      const address = (await provider.resolveName(
+        addressOrName,
+      )) as Address | null
       // Same error `provider.getBalance` throws for invalid ENS name
       if (!address)
         logger.throwError(
@@ -56,7 +58,7 @@ export async function fetchBalance({
             operation: `resolveName(${JSON.stringify(addressOrName)})`,
           },
         )
-      resolvedAddress = <Address>address
+      resolvedAddress = address
     }
 
     type FetchContractBalance = {

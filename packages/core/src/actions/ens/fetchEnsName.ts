@@ -16,5 +16,5 @@ export async function fetchEnsName({
   chainId,
 }: FetchEnsNameArgs): Promise<FetchEnsNameResult> {
   const provider = getProvider({ chainId })
-  return await provider.lookupAddress(address)
+  return provider.lookupAddress(address)
 }

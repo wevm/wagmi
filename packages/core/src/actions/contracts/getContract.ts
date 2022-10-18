@@ -51,7 +51,7 @@ export function getContract<TAbi extends Abi | readonly unknown[]>({
 }: GetContractArgs<TAbi>): GetContractResult<TAbi> {
   return new EthersContract(
     address,
-    <ContractInterface>(<unknown>abi),
+    abi as unknown as ContractInterface,
     signerOrProvider,
   ) as GetContractResult<TAbi>
 }

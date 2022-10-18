@@ -9,13 +9,13 @@ export function minimizeContractInterface<
   functionName: TAbi extends Abi ? ExtractAbiFunctionNames<TAbi> : string
 }) {
   try {
-    const minimizedAbi = (<Abi>config.abi).filter(
+    const minimizedAbi = (config.abi as Abi).filter(
       (x) => x.type === 'function' && x.name === config.functionName,
     )
     if (minimizedAbi.length === 0) throw new Error('Invalid ABI')
     return minimizedAbi
   } catch (error) {
-    const abi = Contract.getInterface(<ContractInterface>config.abi).format(
+    const abi = Contract.getInterface(config.abi as ContractInterface).format(
       FormatTypes.full,
     )
     const minimizedInterface = Array.isArray(abi) ? abi : [abi]
