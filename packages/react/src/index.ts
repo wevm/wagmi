@@ -5,16 +5,16 @@ export { Context, WagmiConfig, useClient } from './context'
 export type { WagmiConfigProps } from './context'
 
 export {
-  paginatedIndexesConfig,
+  // paginatedIndexesConfig,
   useAccount,
   useBalance,
   useBlockNumber,
   useConnect,
   useContract,
   useContractEvent,
-  useContractInfiniteReads,
+  // useContractInfiniteReads,
   useContractRead,
-  useContractReads,
+  // useContractReads,
   useContractWrite,
   useDisconnect,
   useEnsAddress,
