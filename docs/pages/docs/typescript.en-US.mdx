@@ -3,6 +3,8 @@ title: 'TypeScript'
 description: 'Full end-to-end type-safety for contract interactions, EIP-712 typed data, and more!'
 ---
 
+import Callout from 'nextra-theme-docs/callout'
+
 # TypeScript
 
 wagmi is designed to be as type-safe as possible! Things to keep in mind:
@@ -40,6 +42,14 @@ const { data } = useContractRead({ abi })
 ```
 
 If type inference isn't working, it's likely you forgot to add a `const` assertion or define the configuration parameter inline.
+
+<Callout type="info">
+  Unfortunately [TypeScript doesn't support importing JSON as
+  const](https://github.com/microsoft/TypeScript/issues/32063). If you have ABIs
+  in `.json` files, you should convert the files to `.ts`, export the ABIs, and
+  add const assertions to them. (We have future integrations planned for
+  Foundry/Hardhat users to make this easier.)
+</Callout>
 
 ### Contract ABIs
 
