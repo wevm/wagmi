@@ -96,5 +96,9 @@
     "dapps",
     "wallet",
     "web3"
-  ]
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  }
 }

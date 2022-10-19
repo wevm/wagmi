@@ -1,11 +1,11 @@
 import { Address, ResolvedConfig } from 'abitype'
-import { logger } from 'ethers/lib/ethers'
+import { logger } from 'ethers'
 import {
   Logger,
   formatUnits,
   isAddress,
   parseBytes32String,
-} from 'ethers/lib/utils'
+} from 'ethers/lib/utils.js'
 
 import { getClient } from '../../client'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
