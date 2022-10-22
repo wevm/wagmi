@@ -8,6 +8,7 @@ export {
   useSignMessage,
   useSignTypedData,
   useSwitchNetwork,
+  useAllowance,
 } from './accounts'
 
 export {

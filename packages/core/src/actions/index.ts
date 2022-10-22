@@ -11,6 +11,7 @@ export {
   watchAccount,
   watchNetwork,
   watchSigner,
+  fetchAllowance,
   type ConnectArgs,
   type ConnectResult,
   type FetchBalanceArgs,
@@ -28,6 +29,8 @@ export {
   type WatchAccountCallback,
   type WatchNetworkCallback,
   type WatchSignerCallback,
+  type FetchAllowanceArgs,
+  type FetchAllowanceResult,
 } from './accounts'
 
 export {

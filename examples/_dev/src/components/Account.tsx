@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
 import { useIsMounted } from '../hooks'
+import { Allowance } from './Allowance'
 import { Balance } from './Balance'
 import { BlockNumber } from './BlockNumber'
 import { ReadContract } from './ReadContract'
@@ -53,6 +54,9 @@ export const Account = () => {
             <>
               <h4>Balance</h4>
               <Balance />
+
+              <h4>Allowance</h4>
+              <Allowance />
 
               <h4>Block Number</h4>
               <BlockNumber />

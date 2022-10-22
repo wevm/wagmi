@@ -41,3 +41,9 @@ export { watchAccount, type WatchAccountCallback } from './watchAccount'
 export { watchNetwork, type WatchNetworkCallback } from './watchNetwork'
 
 export { watchSigner, type WatchSignerCallback } from './watchSigner'
+
+export {
+  fetchAllowance,
+  type FetchAllowanceArgs,
+  type FetchAllowanceResult,
+} from './fetchAllowance'

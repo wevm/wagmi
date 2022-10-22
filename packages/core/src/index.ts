@@ -37,6 +37,7 @@ export {
   watchSigner,
   watchWebSocketProvider,
   writeContract,
+  fetchAllowance,
 } from './actions'
 export type {
   ConnectArgs,
@@ -108,6 +109,8 @@ export type {
   WriteContractPreparedArgs,
   WriteContractResult,
   WriteContractUnpreparedArgs,
+  FetchAllowanceArgs,
+  FetchAllowanceResult,
 } from './actions'
 
 export { createClient, Client } from './client'
