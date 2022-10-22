@@ -1,0 +1,268 @@
+---
+title: 'useAllowance'
+description: 'React Hook for fetching allowance information for ERC-20 tokens that support it.'
+---
+
+# useAllowance
+
+Hook for fetching allowance information for ERC-20 tokens that support it..
+
+```ts
+import { useAllowance } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+  })
+
+  if (isLoading) return <div>Fetching allowance…</div>
+  if (isError) return <div>Error fetching allowance</div>
+  return (
+    <div>
+      Allowance: {data?.formatted} {data?.symbol}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: {
+    decimals: number
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<{
+    decimals: number
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### ownerAddressOrName
+
+Address or ENS name of the owner. If `ownerAddressOrName` is not defined, hook will not run.
+
+### spenderAddressOrName
+
+Address or ENS name of the spender. If `spenderAddressOrName` is not defined, hook will not run.
+
+### token
+
+Address of the token. If `token` is not defined, hook will not run.
+
+```tsx {5-7}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+  })
+}
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+
+```tsx {8}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    chainId: 1,
+  })
+}
+```
+
+### formatUnits (optional)
+
+Formats allowance using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether` or `token`'s decimal value.
+
+```tsx {8}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    formatUnits: 'mwei',
+  })
+}
+```
+
+### watch (optional)
+
+Watches and refreshes data for new blocks.
+
+```tsx {8}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    watch: true,
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {8}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {8}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    enabled: false,
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {8}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {8}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    suspense: true,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {8-10}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {8-10}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {8-10}
+import { useAllowance } from 'wagmi'
+
+function App() {
+  const allowance = useAllowance({
+    ownerAddressOrName: 'awkweb.eth',
+    spenderAddressOrName: 'smakosh.eth',
+    token: '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
