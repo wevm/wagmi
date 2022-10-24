@@ -29,6 +29,14 @@
       "module": "./dist/wagmi.esm.js",
       "default": "./dist/wagmi.cjs.js"
     },
+    "./chains": {
+      "module": "./chains/dist/wagmi-chains.esm.js",
+      "default": "./chains/dist/wagmi-chains.cjs.js"
+    },
+    "./actions": {
+      "module": "./actions/dist/wagmi-actions.esm.js",
+      "default": "./actions/dist/wagmi-actions.cjs.js"
+    },
     "./connectors/mock": {
       "module": "./connectors/mock/dist/wagmi-connectors-mock.esm.js",
       "default": "./connectors/mock/dist/wagmi-connectors-mock.cjs.js"
@@ -69,6 +77,8 @@
   },
   "sideEffects": false,
   "files": [
+    "/actions",
+    "/chains",
     "/connectors",
     "/dist",
     "/providers"
@@ -76,6 +86,8 @@
   "preconstruct": {
     "entrypoints": [
       "index.ts",
+      "actions.ts",
+      "chains.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/injected.ts",
       "connectors/metaMask.ts",
