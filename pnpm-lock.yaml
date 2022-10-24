@@ -75,7 +75,6 @@ importers:
   docs:
     specifiers:
       '@next/bundle-analyzer': ^12.1.6
-      '@preconstruct/next': ^4.0.0
       '@reach/skip-nav': ^0.16.0
       '@types/node': ^17.0.31
       '@types/react': ^18.0.9
@@ -114,7 +113,6 @@ importers:
       wagmi: link:../packages/react
     devDependencies:
       '@next/bundle-analyzer': 12.3.1
-      '@preconstruct/next': 4.0.0
       '@types/node': 17.0.45
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
@@ -127,7 +125,6 @@ importers:
 
   examples/_dev:
     specifiers:
-      '@preconstruct/next': ^4.0.0
       '@types/node': ^17.0.31
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
@@ -146,7 +143,6 @@ importers:
       react-dom: 18.2.0_react@18.2.0
       wagmi: link:../../packages/react
     devDependencies:
-      '@preconstruct/next': 4.0.0
       '@types/node': 17.0.45
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
@@ -3255,10 +3251,6 @@ packages:
 
   /@polka/url/1.0.0-next.21:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
-    dev: true
-
-  /@preconstruct/next/4.0.0:
-    resolution: {integrity: sha512-vSrc8wFQgBErU7dKTKSQtr/DLWPHcN9jMoiWOAQodB1+B4Kpqqry6QhGYoRm0DQU5gNL+Rcp+Xb350O1E/gjsg==}
     dev: true
 
   /@reach/skip-nav/0.16.0_biqbaboplfbrettd7655fr4n2y:
