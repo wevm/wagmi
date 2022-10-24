@@ -2,9 +2,10 @@ import { defineConfig } from 'tsup'
 
 import { dependencies, peerDependencies } from './package.json'
 
-export default defineConfig((options) => ({
+export default defineConfig({
   bundle: true,
-  clean: process.env.NODE_ENV === 'production',
+  clean: true,
+  dts: true, // TODO: Generate declaration maps during development
   entry: [
     'src/index.ts',
     'src/actions.ts',
@@ -22,9 +23,4 @@ export default defineConfig((options) => ({
   external: [...Object.keys(dependencies), ...Object.keys(peerDependencies)],
   format: ['esm'],
   platform: 'browser',
-
-  // Generate declaration maps during development
-  ...(options.watch
-    ? { dts: true }
-    : { onSuccess: 'tsc --emitDeclarationOnly --declaration' }),
-}))
+})

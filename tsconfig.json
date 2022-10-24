@@ -16,7 +16,9 @@
     "noUnusedParameters": true,
     "paths": {
       "@wagmi/core": ["packages/core/src"],
-      "@wagmi/core/chains": ["packages/core/src/chains.ts"],
+      "@wagmi/core/*": ["packages/core/src/*"],
+      "wagmi": ["packages/react/src"],
+      "wagmi/*": ["packages/react/src/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
