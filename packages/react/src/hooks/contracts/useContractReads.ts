@@ -10,7 +10,12 @@ import * as React from 'react'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
+import {
+  UseQueryResult,
+  useChainId,
+  useInvalidateOnBlock,
+  useQuery,
+} from '../utils'
 
 export type UseContractReadsConfig<TContracts extends unknown[]> =
   ReadContractsConfig<
@@ -131,7 +136,8 @@ export function useContractReads<
     suspense,
     watch,
   }: UseContractReadsConfig<TContracts> = {} as any,
-) {
+  // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
+): UseQueryResult<ReadContractsResult<TContracts>, Error> {
   const { data: blockNumber } = useBlockNumber({
     enabled: watch || cacheOnBlock,
     watch,

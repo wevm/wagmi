@@ -11,12 +11,12 @@ export {
 } from './accounts'
 
 export {
-  // paginatedIndexesConfig,
+  paginatedIndexesConfig,
   useContract,
   useContractEvent,
-  // useContractInfiniteReads,
+  useContractInfiniteReads,
   useContractRead,
-  // useContractReads,
+  useContractReads,
   useContractWrite,
   usePrepareContractWrite,
   useToken,

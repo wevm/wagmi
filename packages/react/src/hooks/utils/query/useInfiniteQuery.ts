@@ -11,7 +11,7 @@ import { queryClientContext as context } from '../../../context'
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs, trackResult } from './utils'
 
-type UseInfiniteQueryResult<TData, TError> = Pick<
+export type UseInfiniteQueryResult<TData, TError> = Pick<
   InfiniteQueryObserverResult<TData, TError>,
   | 'data'
   | 'error'
