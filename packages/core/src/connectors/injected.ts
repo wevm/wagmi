@@ -42,8 +42,8 @@ export class InjectedConnector extends Connector<
   readonly name: string
   readonly ready = typeof window != 'undefined' && !!window.ethereum
 
-  #provider?: Window['ethereum']
-  #switchingChains?: boolean
+  protected provider?: Window['ethereum']
+  private switchingChains?: boolean
 
   protected shimDisconnectKey = 'injected.shimDisconnect'
 
@@ -146,8 +146,8 @@ export class InjectedConnector extends Connector<
 
   async getProvider() {
     if (typeof window !== 'undefined' && !!window.ethereum)
-      this.#provider = window.ethereum
-    return this.#provider
+      this.provider = window.ethereum
+    return this.provider
   }
 
   async getSigner({ chainId }: { chainId?: number } = {}) {
@@ -183,7 +183,7 @@ export class InjectedConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
-    if (this.options?.shimChainChangedDisconnect) this.#switchingChains = true
+    if (this.options?.shimChainChangedDisconnect) this.switchingChains = true
 
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
@@ -286,8 +286,8 @@ export class InjectedConnector extends Connector<
     // We need this as MetaMask can emit the "disconnect" event
     // upon switching chains. This workaround ensures that the
     // user currently isn't in the process of switching chains.
-    if (this.options?.shimChainChangedDisconnect && this.#switchingChains) {
-      this.#switchingChains = false
+    if (this.options?.shimChainChangedDisconnect && this.switchingChains) {
+      this.switchingChains = false
       return
     }
 

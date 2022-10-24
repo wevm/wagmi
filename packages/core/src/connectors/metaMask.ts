@@ -21,10 +21,9 @@ export type MetaMaskConnectorOptions = Pick<
 export class MetaMaskConnector extends InjectedConnector {
   readonly id = 'metaMask'
   readonly ready =
-    typeof window != 'undefined' && !!this.#findProvider(window.ethereum)
+    typeof window != 'undefined' && !!this.findProvider(window.ethereum)
 
-  #provider?: Window['ethereum']
-  #UNSTABLE_shimOnConnectSelectAccount: MetaMaskConnectorOptions['UNSTABLE_shimOnConnectSelectAccount']
+  UNSTABLE_shimOnConnectSelectAccount: MetaMaskConnectorOptions['UNSTABLE_shimOnConnectSelectAccount']
 
   constructor({
     chains,
@@ -41,7 +40,7 @@ export class MetaMaskConnector extends InjectedConnector {
     }
     super({ chains, options })
 
-    this.#UNSTABLE_shimOnConnectSelectAccount =
+    this.UNSTABLE_shimOnConnectSelectAccount =
       options.UNSTABLE_shimOnConnectSelectAccount
   }
 
@@ -61,7 +60,7 @@ export class MetaMaskConnector extends InjectedConnector {
       // Attempt to show wallet select prompt with `wallet_requestPermissions` when
       // `shimDisconnect` is active and account is in disconnected state (flag in storage)
       if (
-        this.#UNSTABLE_shimOnConnectSelectAccount &&
+        this.UNSTABLE_shimOnConnectSelectAccount &&
         this.options?.shimDisconnect &&
         !getClient().storage?.getItem(this.shimDisconnectKey)
       ) {
@@ -105,12 +104,12 @@ export class MetaMaskConnector extends InjectedConnector {
     if (typeof window !== 'undefined') {
       // TODO: Fallback to `ethereum#initialized` event for async injection
       // https://github.com/MetaMask/detect-provider#synchronous-and-asynchronous-injection=
-      this.#provider = this.#findProvider(window.ethereum)
+      this.provider = this.findProvider(window.ethereum)
     }
-    return this.#provider
+    return this.provider
   }
 
-  #getReady(ethereum?: Ethereum) {
+  private getReady(ethereum?: Ethereum) {
     const isMetaMask = !!ethereum?.isMetaMask
     if (!isMetaMask) return
     // Brave tries to make itself look like MetaMask
@@ -122,8 +121,8 @@ export class MetaMaskConnector extends InjectedConnector {
     return ethereum
   }
 
-  #findProvider(ethereum?: Ethereum) {
-    if (ethereum?.providers) return ethereum.providers.find(this.#getReady)
-    return this.#getReady(ethereum)
+  private findProvider(ethereum?: Ethereum) {
+    if (ethereum?.providers) return ethereum.providers.find(this.getReady)
+    return this.getReady(ethereum)
   }
 }

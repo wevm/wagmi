@@ -26,44 +26,44 @@ type Event = keyof Events
 export class MockProvider extends providers.BaseProvider {
   events = new EventEmitter<Events>()
 
-  #options: MockProviderOptions
-  #signer?: Signer
+  private options: MockProviderOptions
+  private signer?: Signer
 
   constructor(options: MockProviderOptions) {
     super({ name: 'Network', chainId: options.chainId ?? 1 })
-    this.#options = options
+    this.options = options
   }
 
   async enable() {
-    if (this.#options.flags?.failConnect)
+    if (this.options.flags?.failConnect)
       throw new UserRejectedRequestError(new Error('Failed to connect'))
-    if (!this.#signer) this.#signer = this.#options.signer
-    const address = await this.#signer.getAddress()
+    if (!this.signer) this.signer = this.options.signer
+    const address = await this.signer.getAddress()
     this.events.emit('accountsChanged', [address])
     return [address]
   }
 
   async disconnect() {
     this.events.emit('disconnect')
-    this.#signer = undefined
+    this.signer = undefined
   }
 
   async getAccounts() {
-    const address = await this.#signer?.getAddress()
+    const address = await this.signer?.getAddress()
     if (!address) return []
     return [getAddress(address)]
   }
 
   getSigner() {
-    const signer = this.#signer
+    const signer = this.signer
     if (!signer) throw new Error('Signer not found')
     return signer
   }
 
   async switchChain(chainId: number) {
-    if (this.#options.flags?.failSwitchChain)
+    if (this.options.flags?.failSwitchChain)
       throw new UserRejectedRequestError(new Error('Failed to switch chain'))
-    this.#options.chainId = chainId
+    this.options.chainId = chainId
     this.network.chainId = chainId
     this.events.emit('chainChanged', chainId)
   }
