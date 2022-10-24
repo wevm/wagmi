@@ -64,6 +64,12 @@ export function createClient<
       ].join('\n'),
     )
   }
+
+  // https://www.npmjs.com/package/@tanstack/vue-query -> Initialize Vue Query with the VueQueryPlugin as described in step 2
+  VueQueryPlugin.install(vueApp, {
+    queryClient,
+  } as VueQueryPluginOptions)
+
   const client = createCoreClient<TProvider, TWebSocketProvider>(config)
   if (persister)
     persistQueryClient({
@@ -77,10 +83,6 @@ export function createClient<
           (query.queryKey[0] as { persist?: boolean }).persist !== false,
       },
     })
-
-  VueQueryPlugin.install(vueApp, {
-    queryClient,
-  } as VueQueryPluginOptions)
 
   return Object.assign(client, { queryClient }) as Client
 }
