@@ -106,7 +106,7 @@
   },
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.5.3",
-    "@tanstack/vue-query": "^4.10.3",
+    "@tanstack/vue-query": "^4.13.2",
     "@tanstack/query-core": "^4.10.3",
     "@tanstack/query-sync-storage-persister": "^4.10.3",
     "@tanstack/query-persist-client-core": "^4.10.3",

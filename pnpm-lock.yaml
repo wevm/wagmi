@@ -351,7 +351,7 @@ importers:
       '@tanstack/query-core': ^4.10.3
       '@tanstack/query-persist-client-core': ^4.10.3
       '@tanstack/query-sync-storage-persister': ^4.10.3
-      '@tanstack/vue-query': ^4.10.3
+      '@tanstack/vue-query': ^4.13.2
       '@vue/composition-api': 1.7.1
       '@wagmi/core': ^0.6.4
       '@walletconnect/ethereum-provider': ^1.8.0
@@ -365,7 +365,7 @@ importers:
       '@tanstack/query-core': 4.10.3
       '@tanstack/query-persist-client-core': 4.10.3_klrae7evnefys2nloym4ezrwp4
       '@tanstack/query-sync-storage-persister': 4.10.3_klrae7evnefys2nloym4ezrwp4
-      '@tanstack/vue-query': 4.10.3_dyjqe6a6hnb4vyzxfuk6bzpiny
+      '@tanstack/vue-query': 4.13.2_dyjqe6a6hnb4vyzxfuk6bzpiny
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.8.0
       abitype: 0.1.7
@@ -3856,6 +3856,10 @@ packages:
     resolution: {integrity: sha512-+ME02sUmBfx3Pjd+0XtEthK8/4rVMD2jcxvnW9DSgFONpKtpjzfRzjY4ykzpDw1QEo2eoPvl7NS8J5mNI199aA==}
     dev: false
 
+  /@tanstack/query-core/4.13.0:
+    resolution: {integrity: sha512-PzmLQcEgC4rl2OzkiPHYPC9O79DFcMGaKsOzDEP+U4PJ+tbkcEP+Z+FQDlfvX8mCwYC7UNH7hXrQ5EdkGlJjVg==}
+    dev: false
+
   /@tanstack/query-persist-client-core/4.10.3:
     resolution: {integrity: sha512-KGNnQdUW+eAedIzVM6zugeNpmEcrtJXzX66OQWc9WugpzHvUZE/13ZvUVxStvomUw9zeR+iMAWvBEiXJam4apQ==}
     peerDependencies:
@@ -3915,8 +3919,8 @@ packages:
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
-  /@tanstack/vue-query/4.10.3_dyjqe6a6hnb4vyzxfuk6bzpiny:
-    resolution: {integrity: sha512-s5nRGVgRvLhkHCbKUz9U3QgCtSlNuL4BUg+CGTO4226EatEb3PNaL2/xzLwNEvWCdVa6hTuBB0PM9iimdZzThA==}
+  /@tanstack/vue-query/4.13.2_dyjqe6a6hnb4vyzxfuk6bzpiny:
+    resolution: {integrity: sha512-VwEwoiuUzLfeM+wQ9wgz+SHH24RvAy0AZ+C1MXBE6U6RswkcDI73OgXGtrWxP1EuTv+kac6aErfDMLWZyvuomg==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.5.0 || ^3.0.0
@@ -3925,7 +3929,7 @@ packages:
         optional: true
     dependencies:
       '@tanstack/match-sorter-utils': 8.5.14
-      '@tanstack/query-core': 4.10.3
+      '@tanstack/query-core': 4.13.0
       '@vue/composition-api': 1.7.1_vue@3.2.41
       '@vue/devtools-api': 6.4.5
       vue: 3.2.41
