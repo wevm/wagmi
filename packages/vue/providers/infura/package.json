@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-providers-infura.cjs.js",
+  "module": "dist/wagmi-providers-infura.esm.js"
+}

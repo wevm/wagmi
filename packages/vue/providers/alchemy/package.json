@@ -1,0 +1,4 @@
+{
+  "main": "dist/wagmi-providers-alchemy.cjs.js",
+  "module": "dist/wagmi-providers-alchemy.esm.js"
+}

@@ -1,0 +1,126 @@
+{
+  "name": "wagmi",
+  "description": "React Hooks for Ethereum",
+  "license": "WAGMIT",
+  "version": "0.7.5",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "directory": "packages/vue"
+  },
+  "author": "awkweb.eth",
+  "homepage": "https://wagmi.sh",
+  "ethereum": "wagmi-dev.eth",
+  "funding": [
+    {
+      "type": "gitcoin",
+      "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/wagmi-dev"
+    }
+  ],
+  "main": "dist/wagmi.cjs.js",
+  "module": "dist/wagmi.esm.js",
+  "types": "dist/wagmi.cjs.d.ts",
+  "exports": {
+    ".": {
+      "module": "./dist/wagmi.esm.js",
+      "default": "./dist/wagmi.cjs.js"
+    },
+    "./connectors/mock": {
+      "module": "./connectors/mock/dist/wagmi-connectors-mock.esm.js",
+      "default": "./connectors/mock/dist/wagmi-connectors-mock.cjs.js"
+    },
+    "./providers/infura": {
+      "module": "./providers/infura/dist/wagmi-providers-infura.esm.js",
+      "default": "./providers/infura/dist/wagmi-providers-infura.cjs.js"
+    },
+    "./providers/public": {
+      "module": "./providers/public/dist/wagmi-providers-public.esm.js",
+      "default": "./providers/public/dist/wagmi-providers-public.cjs.js"
+    },
+    "./providers/alchemy": {
+      "module": "./providers/alchemy/dist/wagmi-providers-alchemy.esm.js",
+      "default": "./providers/alchemy/dist/wagmi-providers-alchemy.cjs.js"
+    },
+    "./providers/jsonRpc": {
+      "module": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.esm.js",
+      "default": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.cjs.js"
+    },
+    "./connectors/injected": {
+      "module": "./connectors/injected/dist/wagmi-connectors-injected.esm.js",
+      "default": "./connectors/injected/dist/wagmi-connectors-injected.cjs.js"
+    },
+    "./connectors/metaMask": {
+      "module": "./connectors/metaMask/dist/wagmi-connectors-metaMask.esm.js",
+      "default": "./connectors/metaMask/dist/wagmi-connectors-metaMask.cjs.js"
+    },
+    "./connectors/walletConnect": {
+      "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js",
+      "default": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.cjs.js"
+    },
+    "./connectors/coinbaseWallet": {
+      "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
+      "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "/connectors",
+    "/dist",
+    "/providers"
+  ],
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "connectors/coinbaseWallet.ts",
+      "connectors/injected.ts",
+      "connectors/metaMask.ts",
+      "connectors/mock.ts",
+      "connectors/walletConnect.ts",
+      "providers/alchemy.ts",
+      "providers/public.ts",
+      "providers/infura.ts",
+      "providers/jsonRpc.ts"
+    ]
+  },
+  "peerDependencies": {
+    "ethers": ">=5.5.1",
+    "@vue/composition-api": "^1.1.2",
+    "vue": "^2.5.0 || ^3.0.0"
+  },
+  "dependencies": {
+    "@coinbase/wallet-sdk": "^3.5.3",
+    "@tanstack/vue-query": "^4.10.3",
+    "@tanstack/query-core": "^4.10.3",
+    "@tanstack/query-sync-storage-persister": "^4.10.3",
+    "@tanstack/query-persist-client-core": "^4.10.3",
+    "@wagmi/core": "^0.6.4",
+    "@walletconnect/ethereum-provider": "^1.8.0",
+    "abitype": "^0.1.7",
+    "vue-demi": "^0.13.11"
+  },
+  "peerDependenciesMeta": {
+    "@vue/composition-api": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "ethers": "^5.7.0",
+    "@vue/composition-api": "1.7.1",
+    "vue": "^3.2.40",
+    "vue2": "npm:vue@2"
+  },
+  "keywords": [
+    "vue",
+    "hooks",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
+}
