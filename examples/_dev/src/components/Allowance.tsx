@@ -59,7 +59,7 @@ const FindAllowance = () => {
 
   return (
     <div>
-      Find balance:{' '}
+      Find allowance:{' '}
       <input
         onChange={(e) => setValueOwner(e.target.value)}
         placeholder="Owner wallet address"
