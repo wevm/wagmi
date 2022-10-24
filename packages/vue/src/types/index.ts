@@ -6,6 +6,7 @@ import {
   TypedDataToPrimitiveTypes,
 } from 'abitype'
 import { BigNumber } from 'ethers'
+import { Ref } from 'vue-demi'
 
 declare module 'abitype' {
   export interface Config {
@@ -40,3 +41,5 @@ declare module 'ethers/lib/utils' {
       | string,
   ): string
 }
+
+export type MaybeRef<T> = Ref<T> | T
