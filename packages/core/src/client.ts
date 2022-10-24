@@ -66,8 +66,8 @@ export class Client<
   >
   webSocketProviders = new Map<number, TWebSocketProvider | undefined>()
 
-  #isAutoConnecting?: boolean
-  #lastUsedConnector?: string | null
+  private isAutoConnecting?: boolean
+  private lastUsedConnector?: string | null
 
   constructor({
     autoConnect = false,
@@ -143,8 +143,8 @@ export class Client<
     )
 
     this.storage = storage
-    this.#lastUsedConnector = storage?.getItem('wallet')
-    this.#addEffects()
+    this.lastUsedConnector = storage?.getItem('wallet')
+    this.addEffects()
 
     if (autoConnect && typeof window !== 'undefined')
       setTimeout(async () => await this.autoConnect(), 0)
@@ -205,14 +205,14 @@ export class Client<
 
   async destroy() {
     if (this.connector) await this.connector.disconnect?.()
-    this.#isAutoConnecting = false
+    this.isAutoConnecting = false
     this.clearState()
     this.store.destroy()
   }
 
   async autoConnect() {
-    if (this.#isAutoConnecting) return
-    this.#isAutoConnecting = true
+    if (this.isAutoConnecting) return
+    this.isAutoConnecting = true
 
     this.setState((x) => ({
       ...x,
@@ -220,9 +220,9 @@ export class Client<
     }))
 
     // Try last used connector first
-    const sorted = this.#lastUsedConnector
+    const sorted = this.lastUsedConnector
       ? [...this.connectors].sort((x) =>
-          x.id === this.#lastUsedConnector ? -1 : 1,
+          x.id === this.lastUsedConnector ? -1 : 1,
         )
       : this.connectors
 
@@ -252,7 +252,7 @@ export class Client<
         status: 'disconnected',
       }))
 
-    this.#isAutoConnecting = false
+    this.isAutoConnecting = false
 
     return this.data
   }
@@ -291,7 +291,7 @@ export class Client<
     this.storage?.setItem('wallet', lastUsedConnector)
   }
 
-  #addEffects() {
+  private addEffects() {
     const onChange = (data: Data<TProvider>) => {
       this.setState((x) => ({
         ...x,
