@@ -23,7 +23,7 @@ export class MetaMaskConnector extends InjectedConnector {
   readonly ready =
     typeof window != 'undefined' && !!this.findProvider(window.ethereum)
 
-  UNSTABLE_shimOnConnectSelectAccount: MetaMaskConnectorOptions['UNSTABLE_shimOnConnectSelectAccount']
+  private UNSTABLE_shimOnConnectSelectAccount: MetaMaskConnectorOptions['UNSTABLE_shimOnConnectSelectAccount']
 
   constructor({
     chains,
