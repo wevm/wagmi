@@ -65,24 +65,24 @@ export function useConnect({
     },
   )
 
-  const connect = (args?: Partial<ConnectArgs>) => {
+  const connect = computed(() => (args?: Partial<ConnectArgs>) => {
     return mutate({
       chainId: args?.chainId ?? unref<number | undefined>(chainId),
       connector: args?.connector ?? unref<Connector | undefined>(connector),
     })
-  }
+  })
 
-  const connectAsync = (args?: Partial<ConnectArgs>) => {
+  const connectAsync = computed(() => (args?: Partial<ConnectArgs>) => {
     return mutateAsync({
       chainId: args?.chainId ?? unref<number | undefined>(chainId),
       connector: args?.connector ?? unref<Connector | undefined>(connector),
     })
-  }
+  })
 
   return {
     connect,
     connectAsync,
-    connectors: client.value.connectors,
+    connectors: computed(() => client.value.connectors),
     data,
     error,
     isError,
