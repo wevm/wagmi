@@ -61,7 +61,8 @@ export function useBlockNumber({
 
   let unsubscribe: () => void | undefined
   watchEffect(() => {
-    if (!watch && !onBlock) return
+    const plainOnBlock = unref(onBlock)
+    if (!watch && !plainOnBlock) return
     unsubscribe && unsubscribe()
 
     // We need to debounce the listener as we want to opt-out
@@ -77,7 +78,7 @@ export function useBlockNumber({
           queryKey({ chainId: unref(chainId) }),
           blockNumber,
         )
-      if (onBlock) unref(onBlock)(blockNumber)
+      plainOnBlock && plainOnBlock(blockNumber)
     }, 1)
 
     const provider_ = webSocketProvider.value ?? provider.value
