@@ -17,7 +17,7 @@ export type UseConnectConfig = UseMutationOptions<
   undefined
 >
 
-export const mutationKey = (args: UseConnectArgs) =>
+export const mutationKey = (args: Partial<ConnectArgs>) =>
   [{ entity: 'connect', ...args }] as const
 
 const mutationFn = (args: UseConnectArgs) => {
@@ -39,6 +39,12 @@ export function useConnect({
 }: UseConnectArgs & UseConnectConfig = {}) {
   const client = useClient()
 
+  const computedMutationKey = computed(() => {
+    return mutationKey({
+      connector: unref<Connector | undefined>(connector),
+      chainId: unref<number | undefined>(chainId),
+    })
+  })
   const {
     data,
     error,
@@ -51,19 +57,12 @@ export function useConnect({
     reset,
     status,
     variables,
-  } = useMutation(
-    mutationKey({
-      connector: unref<Connector | undefined>(connector),
-      chainId: unref<number | undefined>(chainId),
-    }),
-    mutationFn,
-    {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
-    },
-  )
+  } = useMutation(computedMutationKey, mutationFn, {
+    onError,
+    onMutate,
+    onSettled,
+    onSuccess,
+  })
 
   const connect = computed(() => (args?: Partial<ConnectArgs>) => {
     return mutate({
