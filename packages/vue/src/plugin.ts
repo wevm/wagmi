@@ -8,6 +8,6 @@ export const wagmiVue = {
       app,
       ...options,
     })
-    initClient(client)
+    initClient(client, app)
   },
 }

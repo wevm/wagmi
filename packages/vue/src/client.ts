@@ -94,8 +94,9 @@ export type Client<
 
 const client = ref<Client | undefined>()
 
-export const initClient = (c: Client) => {
+export const initClient = (c: Client, app: App<any>) => {
   client.value = c
+  app.config.globalProperties.wagmiClient = client
 }
 
 export const useClient = () => {
