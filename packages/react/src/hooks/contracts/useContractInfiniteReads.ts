@@ -9,7 +9,7 @@ import { Abi } from 'abitype'
 import * as React from 'react'
 
 import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
-import { useInfiniteQuery } from '../utils'
+import { UseInfiniteQueryResult, useInfiniteQuery } from '../utils'
 
 export type UseContractInfiniteReadsConfig<
   TContracts extends unknown[] = unknown[],
@@ -95,7 +95,11 @@ export function useContractInfiniteReads<
   select,
   staleTime,
   suspense,
-}: UseContractInfiniteReadsConfig<TContracts, TPageParam>) {
+}: UseContractInfiniteReadsConfig<
+  TContracts,
+  TPageParam
+>): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
+UseInfiniteQueryResult<ReadContractsResult<TContracts>, Error> {
   const queryKey_ = React.useMemo(
     () => queryKey({ allowFailure, cacheKey, overrides }),
     [allowFailure, cacheKey, overrides],
@@ -136,7 +140,11 @@ export function paginatedIndexesConfig<
     start,
     direction,
   }: { perPage: number; start: number; direction: 'increment' | 'decrement' },
-) {
+): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
+{
+  contracts: UseContractInfiniteReadsConfig<TContracts>['contracts']
+  getNextPageParam: InfiniteQueryConfig<unknown[], Error>['getNextPageParam']
+} {
   const contracts = ((page = 0) =>
     [...Array(perPage).keys()]
       .map((index) => {

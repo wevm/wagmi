@@ -20,7 +20,6 @@ import {
 } from 'ethers'
 
 import {
-  AbiEventParametersToPrimitiveTypes,
   AbiItemName,
   Event,
   GetOverridesForAbiStateMutability,
@@ -128,7 +127,7 @@ export type Contract<
 
     emit<TEventName extends ExtractAbiEventNames<TAbi> | ethers.EventFilter>(
       eventName: TEventName,
-      ...args: AbiEventParametersToPrimitiveTypes<
+      ...args: AbiParametersToPrimitiveTypes<
         ExtractAbiEvent<
           TAbi,
           TEventName extends string ? TEventName : ExtractAbiEventNames<TAbi>
@@ -287,7 +286,7 @@ type Listener<
   TAbi extends Abi,
   TEventName extends string,
   TAbiEvent extends AbiEvent = ExtractAbiEvent<TAbi, TEventName>,
-> = AbiEventParametersToPrimitiveTypes<
+> = AbiParametersToPrimitiveTypes<
   TAbiEvent['inputs']
 > extends infer TArgs extends readonly unknown[]
   ? (...args: [...args: TArgs, event: Event<TAbiEvent>]) => void
@@ -303,10 +302,12 @@ type Filters<TAbi extends Abi> = UnionToIntersection<
             ...args: TAbiEvent['inputs'] extends infer TAbiParameters extends readonly (AbiParameter & {
               indexed?: boolean
             })[]
-              ? AbiEventParametersToPrimitiveTypes<
-                  TAbiParameters,
-                  { AllowNull: true }
-                >
+              ? {
+                  // Only indexed event parameters may be filtered.
+                  [K in keyof TAbiParameters]: TAbiParameters[K]['indexed'] extends true
+                    ? AbiParameterToPrimitiveType<TAbiParameters[K]> | null
+                    : null
+                }
               : never
           ) => ethers.EventFilter
         }
