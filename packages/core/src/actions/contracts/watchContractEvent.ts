@@ -1,6 +1,7 @@
 import {
   Abi,
   AbiEvent,
+  AbiParametersToPrimitiveTypes,
   ExtractAbiEvent,
   ExtractAbiEventNames,
   Narrow,
@@ -8,10 +9,7 @@ import {
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import {
-  AbiEventParametersToPrimitiveTypes,
-  Event,
-} from '../../types/contracts'
+import { Event } from '../../types/contracts'
 import { IsNever, NotEqual, Or } from '../../types/utils'
 import { getProvider, getWebSocketProvider } from '../providers'
 import { getContract } from './getContract'
@@ -56,7 +54,7 @@ export type WatchContractEventCallback<
     : never,
 > =
   // Create local variable `TArgs` based on event input parameters
-  AbiEventParametersToPrimitiveTypes<
+  AbiParametersToPrimitiveTypes<
     TAbiEvent['inputs']
   > extends infer TArgs extends readonly unknown[]
     ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
