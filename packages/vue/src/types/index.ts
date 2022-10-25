@@ -1,3 +1,4 @@
+import { QueryFunctionContext, UseQueryOptions } from '@tanstack/vue-query'
 import {
   Address,
   ResolvedConfig,
@@ -43,3 +44,20 @@ declare module 'ethers/lib/utils' {
 }
 
 export type MaybeRef<T> = Ref<T> | T
+
+export type QueryConfig<Data, Error> = Pick<
+  UseQueryOptions<Data, Error>,
+  | 'cacheTime'
+  | 'enabled'
+  | 'isDataEqual'
+  | 'keepPreviousData'
+  | 'staleTime'
+  | 'select'
+  | 'suspense'
+  | 'onError'
+  | 'onSettled'
+  | 'onSuccess'
+>
+
+export type QueryFunctionArgs<T extends (...args: any) => any> =
+  QueryFunctionContext<ReturnType<T>>
