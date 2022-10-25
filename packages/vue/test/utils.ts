@@ -7,7 +7,7 @@ import {
 import { MockConnector } from '@wagmi/core/connectors/mock'
 // import { expect } from 'vitest'
 
-import { createApp } from 'vue'
+import { createApp } from 'vue-demi'
 
 import { getProvider, getSigners } from '../../core/test/utils'
 import { CreateClientConfig, createClient } from '../src'
@@ -19,6 +19,14 @@ import {
 // import { useNetwork as useNetwork_ } from '../src/hooks/accounts/useNetwork'
 
 type Config = Partial<CreateClientConfig>
+
+// interface TestApp extends App {
+//   onUnmount: Function
+//   _unmount: Function
+//   _mixin: ComponentOptions
+//   _provided: Record<string, any>
+//   $root: TestApp
+// }
 
 export function setupClient(config: Config = {}) {
   const app = createApp({})

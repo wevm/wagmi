@@ -15,7 +15,7 @@ import {
   WebSocketProvider,
   createClient as createCoreClient,
 } from '@wagmi/core'
-import { App } from 'vue-demi'
+import { App, ComputedRef, computed, ref } from 'vue-demi'
 
 import { deserialize, serialize } from './utils'
 
@@ -23,7 +23,7 @@ export type CreateClientConfig<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = ClientConfig<TProvider, TWebSocketProvider> & {
-  vueApp: App<any> | undefined
+  app: App<any> | undefined
   queryClient?: QueryClient
   persister?: Persister | null
 }
@@ -32,7 +32,7 @@ export function createClient<
   TProvider extends Provider,
   TWebSocketProvider extends WebSocketProvider,
 >({
-  vueApp,
+  app,
   queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -56,7 +56,7 @@ export function createClient<
     : undefined,
   ...config
 }: CreateClientConfig<TProvider, TWebSocketProvider>): Client {
-  if (!vueApp) {
+  if (!app) {
     throw new Error(
       [
         'Must pass the app instance to this function',
@@ -66,7 +66,7 @@ export function createClient<
   }
 
   // https://www.npmjs.com/package/@tanstack/vue-query -> Initialize Vue Query with the VueQueryPlugin as described in step 2
-  VueQueryPlugin.install(vueApp, {
+  VueQueryPlugin.install(app, {
     queryClient,
   } as VueQueryPluginOptions)
 
@@ -92,7 +92,12 @@ export type Client<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = CoreClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
 
-export const useClient = (client: Client) => {
-  // TODO: Currently dangerous to wrap a class as such in a ref. private members issue.
-  return client
+const client = ref<Client | undefined>()
+
+export const initClient = (c: Client) => {
+  client.value = c
+}
+
+export const useClient = () => {
+  return computed(() => client.value) as ComputedRef<Client>
 }

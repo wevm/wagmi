@@ -25,14 +25,13 @@ export const useAccount = ({
   onConnect,
   onDisconnect,
 }: UseAccountConfig = {}) => {
+  const previousAccount: Partial<GetAccountResult> & {
+    current: GetAccountResult
+  } = { current: getAccount() }
   const account = ref<GetAccountResult>(getAccount())
   const unsubscribeAccount = watchAccount((acc: GetAccountResult) => {
     account.value = acc
   })
-  const previousAccount: Partial<GetAccountResult> & {
-    current: GetAccountResult
-  } = { current: getAccount() }
-
   watch(account, () => {
     if (
       !!onConnect &&
