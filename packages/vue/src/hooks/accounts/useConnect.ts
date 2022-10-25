@@ -53,8 +53,8 @@ export function useConnect({
     variables,
   } = useMutation(
     mutationKey({
-      connector,
-      chainId,
+      connector: unref<Connector | undefined>(connector),
+      chainId: unref<number | undefined>(chainId),
     }),
     mutationFn,
     {
