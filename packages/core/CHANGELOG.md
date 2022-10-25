@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.6.5
+
+### Patch Changes
+
+- [#1162](https://github.com/wagmi-dev/wagmi/pull/1162) [`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where non-indexed event parameter types were set to `null`.
+
+- [#1162](https://github.com/wagmi-dev/wagmi/pull/1162) [`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where `useContractReads` and `useContractInfiniteReads` types were slowing down TypeScript compiler.
+
 ## 0.6.4
 
 ### Patch Changes
