@@ -4,9 +4,11 @@ import {
   getAccount,
   watchAccount,
 } from '@wagmi/core'
-import { onScopeDispose, ref, watch } from 'vue-demi'
+import { onScopeDispose, ref, unref, watch } from 'vue-demi'
 
-export type UseAccountConfig = {
+import { MaybeRef } from '../../types'
+
+export type AccountConfig = {
   /** Function to invoke when connected */
   onConnect?({
     address,
@@ -21,6 +23,10 @@ export type UseAccountConfig = {
   onDisconnect?(): void
 }
 
+export type UseAccountConfig = {
+  [Property in keyof AccountConfig]: MaybeRef<AccountConfig[Property]>
+}
+
 export const useAccount = ({
   onConnect,
   onDisconnect,
@@ -33,23 +39,25 @@ export const useAccount = ({
     account.value = acc
   })
   watch(account, () => {
+    const plainConnect = unref(onConnect)
+    const plainDisconnect = unref(onDisconnect)
     if (
-      !!onConnect &&
+      !!plainConnect &&
       previousAccount.current?.status !== 'connected' &&
       account.value.status === 'connected'
     )
-      onConnect({
+      plainConnect({
         address: account.value.address,
         connector: account.value.connector as Connector,
         isReconnected: previousAccount.current?.status === 'reconnecting',
       })
 
     if (
-      !!onDisconnect &&
+      !!plainDisconnect &&
       previousAccount.current?.status == 'connected' &&
       account.value.status === 'disconnected'
     )
-      onDisconnect()
+      plainDisconnect()
     previousAccount.current = account.value as GetAccountResult
   })
   onScopeDispose(() => {

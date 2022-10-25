@@ -14,7 +14,9 @@ export function useProvider<TProvider extends Provider>({
 }: UseProviderArgs = {}) {
   const provider = ref<TProvider>(getProvider({ chainId }))
   const unsubscribe = watchProvider({ chainId }, (p: Provider) => {
-    provider.value = p
+    if (getProvider({ chainId }).network.chainId === p.network.chainId) {
+      provider.value = p
+    }
   })
   onScopeDispose(() => {
     unsubscribe()

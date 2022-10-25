@@ -21,7 +21,9 @@ export function useWebSocketProvider<
   const unsubscribe = watchWebSocketProvider<TWebSocketProvider>(
     { chainId },
     (w: GetWebSocketProviderResult) => {
-      webSocketProvider.value = w
+      if (w?.network.chainId === getWebSocketProvider({ chainId })) {
+        webSocketProvider.value = w
+      }
     },
   )
   onScopeDispose(() => {

@@ -38,7 +38,6 @@ export function useConnect({
   onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
   const client = useClient()
-
   const computedMutationKey = computed(() => {
     return mutationKey({
       connector: unref<Connector | undefined>(connector),
