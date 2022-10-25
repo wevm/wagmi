@@ -45,6 +45,7 @@ export function useConnect({
       chainId: unref<number | undefined>(chainId),
     })
   })
+
   const {
     data,
     error,
