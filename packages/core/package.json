@@ -98,6 +98,6 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "DEV=true tsup"
   }
 }
