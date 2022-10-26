@@ -12,6 +12,7 @@ export function getInjectedName(ethereum?: Ethereum) {
     if (provider.isFrame) return 'Frame'
     if (provider.isMathWallet) return 'MathWallet'
     if (provider.isOpera) return 'Opera'
+    if (provider.isPortal) return 'Ripio Portal'
     if (provider.isTally) return 'Tally'
     if (provider.isTokenPocket) return 'TokenPocket'
     if (provider.isTokenary) return 'Tokenary'
