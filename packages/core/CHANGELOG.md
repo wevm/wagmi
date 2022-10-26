@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.6.6
+
+### Patch Changes
+
+- [`81ce9e6`](https://github.com/wagmi-dev/wagmi/commit/81ce9e64d85f7d01370324c1a529988a0919894f) Thanks [@jxom](https://github.com/jxom)! - Add `isPortal` to injected MetaMask flags.
+
+- [`c2c0109`](https://github.com/wagmi-dev/wagmi/commit/c2c01096ef4cd0ffadbb49062969c208604c6194) Thanks [@jxom](https://github.com/jxom)! - Add etherscan block explorer to Optimism Goerli
+
 ## 0.6.5
 
 ### Patch Changes
