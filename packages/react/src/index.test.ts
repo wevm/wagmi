@@ -49,7 +49,6 @@ it('should expose correct exports', () => {
       "ChainDoesNotSupportMulticallError",
       "ChainMismatchError",
       "ChainNotConfiguredError",
-      "Client",
       "Connector",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
