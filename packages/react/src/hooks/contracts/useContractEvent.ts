@@ -1,13 +1,8 @@
-import {
-  AbiEventParametersToPrimitiveTypes,
-  Event,
-  IsNever,
-  NotEqual,
-  Or,
-} from '@wagmi/core/internal'
+import { Event, IsNever, NotEqual, Or } from '@wagmi/core/internal'
 import {
   Abi,
   AbiEvent,
+  AbiParametersToPrimitiveTypes,
   ExtractAbiEvent,
   ExtractAbiEventNames,
   Narrow,
@@ -20,7 +15,7 @@ import { useContract } from './useContract'
 type GetListener<
   TAbiEvent extends AbiEvent,
   TAbi = unknown,
-> = AbiEventParametersToPrimitiveTypes<
+> = AbiParametersToPrimitiveTypes<
   TAbiEvent['inputs']
 > extends infer TArgs extends readonly unknown[]
   ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.

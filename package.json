@@ -7,7 +7,7 @@
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "dev": "pnpm --parallel --filter './packages/**' dev",
     "docs:build": "pnpm --parallel --filter './packages/**' --filter docs build",
-    "docs:dev": "pnpm build && pnpm --filter docs dev",
+    "docs:dev": "pnpm dev && pnpm --filter docs dev",
     "example:cra": "pnpm build && pnpm --filter example-cra start",
     "example:next": "pnpm build && pnpm --filter example-next dev",
     "example:remix": "pnpm build && pnpm --filter example-remix dev",

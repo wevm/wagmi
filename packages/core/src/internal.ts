@@ -1,7 +1,6 @@
 export { debounce } from './utils'
 
 export type {
-  AbiEventParametersToPrimitiveTypes,
   ContractConfig,
   ContractsConfig,
   ContractsResult,

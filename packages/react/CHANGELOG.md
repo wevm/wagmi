@@ -1,5 +1,29 @@
 # wagmi
 
+## 0.7.7
+
+### Patch Changes
+
+- [#1166](https://github.com/wagmi-dev/wagmi/pull/1166) [`6fbe910`](https://github.com/wagmi-dev/wagmi/commit/6fbe91080b54e33e8543e9638ff5089e749ada3f) Thanks [@jxom](https://github.com/jxom)! - Export the React entrypoint `Client` type instead of `@wagmi/core`'s `Client`.
+
+- [`81ce9e6`](https://github.com/wagmi-dev/wagmi/commit/81ce9e64d85f7d01370324c1a529988a0919894f) Thanks [@jxom](https://github.com/jxom)! - Add `isPortal` to injected MetaMask flags.
+
+- [`c2c0109`](https://github.com/wagmi-dev/wagmi/commit/c2c01096ef4cd0ffadbb49062969c208604c6194) Thanks [@jxom](https://github.com/jxom)! - Add etherscan block explorer to Optimism Goerli
+
+- Updated dependencies [[`81ce9e6`](https://github.com/wagmi-dev/wagmi/commit/81ce9e64d85f7d01370324c1a529988a0919894f), [`c2c0109`](https://github.com/wagmi-dev/wagmi/commit/c2c01096ef4cd0ffadbb49062969c208604c6194)]:
+  - @wagmi/core@0.6.6
+
+## 0.7.6
+
+### Patch Changes
+
+- [#1162](https://github.com/wagmi-dev/wagmi/pull/1162) [`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where non-indexed event parameter types were set to `null`.
+
+- [#1162](https://github.com/wagmi-dev/wagmi/pull/1162) [`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where `useContractReads` and `useContractInfiniteReads` types were slowing down TypeScript compiler.
+
+- Updated dependencies [[`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e), [`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e)]:
+  - @wagmi/core@0.6.5
+
 ## 0.7.5
 
 ### Patch Changes
