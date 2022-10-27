@@ -4,6 +4,7 @@ import { defaultInfuraApiKey } from '../constants/rpcs'
 import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type InfuraProviderConfig = FallbackProviderConfig & {
+  // TODO: Make `apiKey` required in next minor version (v0.8).
   apiKey?: string
 }
 
