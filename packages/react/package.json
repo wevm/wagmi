@@ -29,10 +29,10 @@
       "default": "./dist/index.js"
     },
     "./actions": {
-      "default": "./actions/dist/wagmi-actions.cjs.js"
+      "default": "./dist/actions.js"
     },
     "./chains": {
-      "default": "./chains/dist/wagmi-chains.cjs.js"
+      "default": "./dist/chains.js"
     },
     "./connectors/coinbaseWallet": {
       "default": "./dist/connectors/coinbaseWallet.js"

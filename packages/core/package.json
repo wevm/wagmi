@@ -28,7 +28,7 @@
       "default": "./dist/index.js"
     },
     "./chains": {
-      "default": "./dist/chain.js"
+      "default": "./dist/chains.js"
     },
     "./internal": {
       "default": "./dist/internal.js"

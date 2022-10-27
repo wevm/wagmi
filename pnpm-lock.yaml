@@ -33,6 +33,7 @@ importers:
       eslint-plugin-react-hooks: ^4.6.0
       eslint-plugin-testing-library: ^5.8.0
       ethers: ^5.7.1
+      execa: ^6.1.0
       fs-extra: ^10.1.0
       jsdom: ^20.0.0
       lint-staged: ^13.0.3
@@ -65,6 +66,7 @@ importers:
       eslint-plugin-react-hooks: 4.6.0_eslint@8.17.0
       eslint-plugin-testing-library: 5.8.0_vhsckgnokn2tf7m5xkrurmvfv4
       ethers: 5.7.1
+      execa: 6.1.0
       fs-extra: 10.1.0
       jsdom: 20.0.1
       lint-staged: 13.0.3

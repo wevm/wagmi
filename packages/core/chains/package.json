@@ -1,4 +1,4 @@
 {
   "type": "module",
-  "main": "../dist/chain.js"
+  "main": "../dist/chains.js"
 }

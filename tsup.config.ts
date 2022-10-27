@@ -1,3 +1,4 @@
+import { execa } from 'execa'
 import { default as fs } from 'fs-extra'
 import { Options } from 'tsup'
 
@@ -8,10 +9,15 @@ type GetConfig = Omit<
   'bundle' | 'clean' | 'dts' | 'entry' | 'format'
 > & {
   entry?: string[]
+  exports?: { [key: string]: string | { default: string } }
   dev?: boolean
 }
 
-export function getConfig({ dev, ...options }: GetConfig): Options {
+export function getConfig({
+  dev,
+  exports = {},
+  ...options
+}: GetConfig): Options {
   if (!options.entry?.length) throw new Error('entry is required')
   const entry: string[] = options.entry ?? []
 
@@ -45,6 +51,7 @@ export function getConfig({ dev, ...options }: GetConfig): Options {
             `export * from '${srcTypesFile}'`,
           )
         }
+        validateExports(exports)
       },
     }
 
@@ -53,6 +60,25 @@ export function getConfig({ dev, ...options }: GetConfig): Options {
     clean: true,
     dts: true,
     format: ['esm'],
+    async onSuccess() {
+      if (typeof options.onSuccess === 'function') await options.onSuccess()
+      else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
+      validateExports(exports)
+    },
     ...options,
+  }
+}
+
+/**
+ * Validate exports point to actual files
+ */
+async function validateExports(exports: {
+  [key: string]: string | { default: string }
+}) {
+  for (const [, value] of Object.entries(exports)) {
+    if (typeof value === 'string') continue
+    const fileExists = await fs.pathExists(value.default)
+    if (!fileExists)
+      throw new Error(`File does not exist for export: ${value.default}`)
   }
 }
