@@ -124,7 +124,7 @@ const client = createClient({
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
 ```ts {10}
-import { createClient, configureChains, defaultChains } from 'wagmi'
+import { createClient, createStorage, configureChains, defaultChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains(defaultChains, [publicProvider()])
