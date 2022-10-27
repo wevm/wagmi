@@ -3,7 +3,7 @@ import { getAddress } from 'ethers/lib/utils.js'
 import { default as EventEmitter } from 'eventemitter3'
 
 import { UserRejectedRequestError } from '../../errors'
-import type { Signer } from '../../types'
+import { Signer } from '../../types'
 
 export type MockProviderOptions = {
   chainId?: number

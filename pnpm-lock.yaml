@@ -21,8 +21,8 @@ importers:
       '@types/prettier': ^2.7.0
       '@typescript-eslint/eslint-plugin': ^5.40.1
       '@typescript-eslint/parser': ^5.40.1
+      '@vitest/coverage-c8': ^0.24.3
       '@vitest/ui': ^0.18.1
-      c8: ^7.12.0
       eslint: 8.17.0
       eslint-config-prettier: ^8.5.0
       eslint-import-resolver-typescript: ^2.7.1
@@ -53,8 +53,8 @@ importers:
       '@types/prettier': 2.7.1
       '@typescript-eslint/eslint-plugin': 5.40.1_lvrd64vezopahu63du6xkdkcb4
       '@typescript-eslint/parser': 5.40.1_vhsckgnokn2tf7m5xkrurmvfv4
+      '@vitest/coverage-c8': 0.24.3_27kw3blkmldhtrtbpylvyx5eoy
       '@vitest/ui': 0.18.1
-      c8: 7.12.0
       eslint: 8.17.0
       eslint-config-prettier: 8.5.0_eslint@8.17.0
       eslint-import-resolver-typescript: 2.7.1_3yxiwxzsqipdmy4jwrlv6vgfmy
@@ -4598,6 +4598,24 @@ packages:
       vite: 3.1.8
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@vitest/coverage-c8/0.24.3_27kw3blkmldhtrtbpylvyx5eoy:
+    resolution: {integrity: sha512-tAmMyHxWYnAwGeJb7QgTuEX8aLasTg4X1/6INobXa/7wYGEJ28CACFO5iLn1HzFVPoLvhsS3luQjiflGjjSMRQ==}
+    dependencies:
+      c8: 7.12.0
+      vitest: 0.24.3_27kw3blkmldhtrtbpylvyx5eoy
+    transitivePeerDependencies:
+      - '@edge-runtime/vm'
+      - '@vitest/browser'
+      - '@vitest/ui'
+      - happy-dom
+      - jsdom
+      - less
+      - sass
+      - stylus
+      - supports-color
+      - terser
     dev: true
 
   /@vitest/ui/0.18.1:

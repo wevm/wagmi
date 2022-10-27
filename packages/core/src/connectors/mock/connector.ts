@@ -1,4 +1,3 @@
-import { providers } from 'ethers'
 import { getAddress } from 'ethers/lib/utils.js'
 
 import { Chain } from '../../types'
@@ -72,7 +71,7 @@ export class MockConnector extends Connector<
 
   async getSigner() {
     const provider = await this.getProvider()
-    return provider.getSigner() as providers.JsonRpcSigner
+    return provider.getSigner()
   }
 
   async isAuthorized() {
