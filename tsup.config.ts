@@ -29,6 +29,7 @@ export function getConfig({
       // Only need to generate one file with tsup for development since we will create links in `onSuccess`
       entry: [entry[0] as string],
       format: ['esm'],
+      silent: true,
       async onSuccess() {
         // remove all files in dist
         await fs.emptyDir('dist')
@@ -60,6 +61,8 @@ export function getConfig({
     clean: true,
     dts: true,
     format: ['esm'],
+    splitting: true,
+    target: 'es2021',
     async onSuccess() {
       if (typeof options.onSuccess === 'function') await options.onSuccess()
       else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
