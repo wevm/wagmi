@@ -196,6 +196,7 @@ export class Client<
   clearState() {
     this.setState((x) => ({
       ...x,
+      chains: undefined,
       connector: undefined,
       data: undefined,
       error: undefined,
