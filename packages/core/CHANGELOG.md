@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.6.7
+
+### Patch Changes
+
+- [#1174](https://github.com/wagmi-dev/wagmi/pull/1174) [`196a458`](https://github.com/wagmi-dev/wagmi/commit/196a458f64141e8a9f39c1b1e1af5937f692cb39) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `client.chains` (active connector chains) would be populated when there is no active connector (disconnected user).
+
+- [#1176](https://github.com/wagmi-dev/wagmi/pull/1176) [`389765f`](https://github.com/wagmi-dev/wagmi/commit/389765f7d9af063ab0df07389a2bbfbc10a41060) Thanks [@jxom](https://github.com/jxom)! - Migrate away from Alchemy RPC URLs in the public RPC URL list
+
 ## 0.6.6
 
 ### Patch Changes
