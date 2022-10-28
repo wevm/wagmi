@@ -33,6 +33,10 @@
       "module": "./chains/dist/wagmi-chains.esm.js",
       "default": "./chains/dist/wagmi-chains.cjs.js"
     },
+    "./plugin": {
+      "module": "./plugin/dist/wagmi-plugin.esm.js",
+      "default": "./plugin/dist/wagmi-plugin.cjs.js"
+    },
     "./actions": {
       "module": "./actions/dist/wagmi-actions.esm.js",
       "default": "./actions/dist/wagmi-actions.cjs.js"
@@ -81,6 +85,7 @@
     "/chains",
     "/connectors",
     "/dist",
+    "/plugin",
     "/providers"
   ],
   "preconstruct": {
@@ -88,6 +93,7 @@
       "index.ts",
       "actions.ts",
       "chains.ts",
+      "plugin.ts",
       "connectors/coinbaseWallet.ts",
       "connectors/injected.ts",
       "connectors/metaMask.ts",

@@ -87,3 +87,5 @@ export type {
 } from '@wagmi/core'
 
 export type { Address } from 'abitype'
+
+export { wagmiVue } from './plugin'
