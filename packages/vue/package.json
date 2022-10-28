@@ -1,26 +1,14 @@
 {
   "name": "wagmi",
-  "description": "React Hooks for Ethereum",
-  "license": "WAGMIT",
-  "version": "0.7.5",
+  "description": "Vue Hooks for Ethereum",
+  "license": "MIT",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "url": "https://github.com/matthewhausman/vue-ethereum-hooks.git",
     "directory": "packages/vue"
   },
   "author": "awkweb.eth",
-  "homepage": "https://wagmi.sh",
-  "ethereum": "wagmi-dev.eth",
-  "funding": [
-    {
-      "type": "gitcoin",
-      "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
-    },
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
   "main": "dist/wagmi.cjs.js",
   "module": "dist/wagmi.esm.js",
   "types": "dist/wagmi.cjs.d.ts",
