@@ -42,10 +42,10 @@ describe('connect', () => {
     })
 
     it('connects to supported chain', async () => {
-      const result = await connect({ chainId: 3, connector })
+      const result = await connect({ chainId: 5, connector })
       expect(result.chain).toMatchInlineSnapshot(`
         {
-          "id": 3,
+          "id": 5,
           "unsupported": false,
         }
       `)

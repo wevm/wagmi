@@ -42,7 +42,7 @@ describe('useNetwork', () => {
       })
 
       const { chain, chains } = result.current
-      expect(chains.length).toBe(5)
+      expect(chains.length).toBe(2)
       expect(chain?.id).toBe(1)
     })
 
@@ -72,8 +72,8 @@ describe('useNetwork', () => {
 
       await actConnect({ utils })
       expect(result.current.network?.chain?.id).toBe(1)
-      await actSwitchNetwork({ utils, chainId: 4 })
-      expect(result.current.network?.chain?.id).toBe(4)
+      await actSwitchNetwork({ utils, chainId: 5 })
+      expect(result.current.network?.chain?.id).toBe(5)
       expect(result.current.network?.chain?.unsupported).toBe(false)
     })
 

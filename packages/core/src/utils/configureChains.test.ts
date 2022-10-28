@@ -12,7 +12,7 @@ import {
   vi,
 } from 'vitest'
 
-import { chain, defaultAlchemyApiKey, defaultInfuraApiKey } from '../constants'
+import { chain } from '../constants'
 import { alchemyProvider } from '../providers/alchemy'
 import { infuraProvider } from '../providers/infura'
 import { jsonRpcProvider } from '../providers/jsonRpc'
@@ -75,18 +75,20 @@ function getHandlers({
   return handlers
 }
 
+const alchemyApiKey = 'apiKey-alchemy'
 const alchemyListener = vi.fn()
 const alchemyHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: alchemyListener,
-  rpcUrl: (chain) => `${chain.rpcUrls.alchemy}/${defaultAlchemyApiKey}`,
+  rpcUrl: (chain) => `${chain.rpcUrls.alchemy}/${alchemyApiKey}`,
 })
 
+const infuraApiKey = 'apiKey-infura'
 const infuraListener = vi.fn()
 const infuraHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: infuraListener,
-  rpcUrl: (chain) => `${chain.rpcUrls.infura}/${defaultInfuraApiKey}`,
+  rpcUrl: (chain) => `${chain.rpcUrls.infura}/${infuraApiKey}`,
 })
 
 const publicListener = vi.fn()
@@ -129,19 +131,19 @@ describe('configureChains', () => {
   describe('single provider', () => {
     describe('alchemy', () => {
       const { chains, provider } = configureChains(defaultChains, [
-        alchemyProvider({ apiKey: defaultAlchemyApiKey }),
+        alchemyProvider({ apiKey: alchemyApiKey }),
       ])
 
       it('populate chains with Alchemy RPC URLs if all chains support Alchemy', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default))
           .toMatchInlineSnapshot(`
-          [
-            "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-            "https://polygon-mainnet.g.alchemy.com/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-            "https://opt-mainnet.g.alchemy.com/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-            "https://arb-mainnet.g.alchemy.com/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-          ]
-        `)
+            [
+              "https://eth-mainnet.alchemyapi.io/v2/apiKey-alchemy",
+              "https://polygon-mainnet.g.alchemy.com/v2/apiKey-alchemy",
+              "https://opt-mainnet.g.alchemy.com/v2/apiKey-alchemy",
+              "https://arb-mainnet.g.alchemy.com/v2/apiKey-alchemy",
+            ]
+          `)
       })
 
       it('provides an AlchemyProvider instance to provider', async () => {
@@ -163,7 +165,7 @@ describe('configureChains', () => {
           configureChains(
             defaultChainsWithAvalanche,
 
-            [alchemyProvider({ apiKey: defaultAlchemyApiKey })],
+            [alchemyProvider({ apiKey: alchemyApiKey })],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid provider configuration for chain \\"Avalanche\\".
@@ -176,19 +178,19 @@ describe('configureChains', () => {
 
     describe('infura', () => {
       const { chains, provider } = configureChains(defaultChains, [
-        infuraProvider({ apiKey: defaultInfuraApiKey }),
+        infuraProvider({ apiKey: infuraApiKey }),
       ])
 
       it('configures with Infura RPC URL if all chains support Infura', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default))
           .toMatchInlineSnapshot(`
-          [
-            "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213",
-            "https://polygon-mainnet.infura.io/v3/84842078b09946638c03157f83405213",
-            "https://optimism-mainnet.infura.io/v3/84842078b09946638c03157f83405213",
-            "https://arbitrum-mainnet.infura.io/v3/84842078b09946638c03157f83405213",
-          ]
-        `)
+            [
+              "https://mainnet.infura.io/v3/apiKey-infura",
+              "https://polygon-mainnet.infura.io/v3/apiKey-infura",
+              "https://optimism-mainnet.infura.io/v3/apiKey-infura",
+              "https://arbitrum-mainnet.infura.io/v3/apiKey-infura",
+            ]
+          `)
       })
 
       it('provides an InfuraProvider instance to provider', async () => {
@@ -210,7 +212,7 @@ describe('configureChains', () => {
           configureChains(
             defaultChainsWithAvalanche,
 
-            [infuraProvider({ apiKey: defaultInfuraApiKey })],
+            [infuraProvider({ apiKey: infuraApiKey })],
           ),
         ).toThrowErrorMatchingInlineSnapshot(`
           "Could not find valid provider configuration for chain \\"Avalanche\\".
@@ -373,8 +375,8 @@ describe('configureChains', () => {
     ]
 
     const { chains, provider } = configureChains(defaultChains, [
-      alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-      infuraProvider({ apiKey: defaultInfuraApiKey }),
+      alchemyProvider({ apiKey: alchemyApiKey }),
+      infuraProvider({ apiKey: infuraApiKey }),
       jsonRpcProvider({
         rpc: (chain) => {
           if (chain.id !== avalancheChain.id) return null
@@ -386,14 +388,14 @@ describe('configureChains', () => {
     it('configures chains with correct fallbacks', async () => {
       expect(chains.map((chain) => chain.rpcUrls.default))
         .toMatchInlineSnapshot(`
-        [
-          "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-          "https://polygon-mainnet.infura.io/v3/84842078b09946638c03157f83405213",
-          "https://opt-mainnet.g.alchemy.com/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-          "https://arbitrum-mainnet.infura.io/v3/84842078b09946638c03157f83405213",
-          "https://api.avax.network/ext/bc/C/rpc",
-        ]
-      `)
+          [
+            "https://eth-mainnet.alchemyapi.io/v2/apiKey-alchemy",
+            "https://polygon-mainnet.infura.io/v3/apiKey-infura",
+            "https://opt-mainnet.g.alchemy.com/v2/apiKey-alchemy",
+            "https://arbitrum-mainnet.infura.io/v3/apiKey-infura",
+            "https://api.avax.network/ext/bc/C/rpc",
+          ]
+        `)
     })
 
     it('provides a FallbackProvider instance', async () => {
@@ -418,8 +420,8 @@ describe('configureChains', () => {
           defaultChainsWithAvalanche,
 
           [
-            alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-            infuraProvider({ apiKey: defaultInfuraApiKey }),
+            alchemyProvider({ apiKey: alchemyApiKey }),
+            infuraProvider({ apiKey: infuraApiKey }),
             jsonRpcProvider({
               rpc: (chain) => ({
                 http:
@@ -444,8 +446,8 @@ describe('configureChains', () => {
           const { provider } = configureChains(
             defaultChains,
             [
-              alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-              infuraProvider({ apiKey: defaultInfuraApiKey }),
+              alchemyProvider({ apiKey: alchemyApiKey }),
+              infuraProvider({ apiKey: infuraApiKey }),
               jsonRpcProvider({
                 rpc: (chain) => ({
                   http: `https://${chain.network}.example.com`,
@@ -465,8 +467,8 @@ describe('configureChains', () => {
           const { provider } = configureChains(
             defaultChains,
             [
-              alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-              infuraProvider({ apiKey: defaultInfuraApiKey }),
+              alchemyProvider({ apiKey: alchemyApiKey }),
+              infuraProvider({ apiKey: infuraApiKey }),
               jsonRpcProvider({
                 rpc: (chain) => ({
                   http: `https://${chain.network}.example.com`,
@@ -486,8 +488,8 @@ describe('configureChains', () => {
           const { provider } = configureChains(
             defaultChains,
             [
-              alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-              infuraProvider({ apiKey: defaultInfuraApiKey }),
+              alchemyProvider({ apiKey: alchemyApiKey }),
+              infuraProvider({ apiKey: infuraApiKey }),
               jsonRpcProvider({
                 rpc: (chain) => ({
                   http: `https://${chain.network}.example.com`,
@@ -508,8 +510,8 @@ describe('configureChains', () => {
         const { provider } = configureChains(
           defaultChains,
           [
-            alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-            infuraProvider({ apiKey: defaultInfuraApiKey }),
+            alchemyProvider({ apiKey: alchemyApiKey }),
+            infuraProvider({ apiKey: infuraApiKey }),
             jsonRpcProvider({
               rpc: (chain) => ({
                 http: `https://${chain.network}.example.com`,
@@ -531,8 +533,8 @@ describe('configureChains', () => {
         configureChains(
           defaultChains,
           [
-            alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-            infuraProvider({ apiKey: defaultInfuraApiKey }),
+            alchemyProvider({ apiKey: alchemyApiKey }),
+            infuraProvider({ apiKey: infuraApiKey }),
             jsonRpcProvider({
               rpc: (chain) => ({
                 http: `https://${chain.network}.example.com`,
@@ -551,8 +553,8 @@ describe('configureChains', () => {
       const { provider } = configureChains(
         defaultChains,
         [
-          alchemyProvider({ apiKey: defaultAlchemyApiKey }),
-          infuraProvider({ apiKey: defaultInfuraApiKey }),
+          alchemyProvider({ apiKey: alchemyApiKey }),
+          infuraProvider({ apiKey: infuraApiKey }),
           jsonRpcProvider({
             rpc: (chain) => ({
               http: `https://${chain.network}.example.com`,
@@ -575,10 +577,10 @@ describe('configureChains', () => {
         defaultChains,
         [
           alchemyProvider({
-            apiKey: defaultAlchemyApiKey,
+            apiKey: alchemyApiKey,
           }),
           infuraProvider({
-            apiKey: defaultInfuraApiKey,
+            apiKey: infuraApiKey,
           }),
           jsonRpcProvider({
             rpc: (chain) => ({
@@ -625,13 +627,13 @@ describe('configureChains', () => {
     it('assigns fallback config passed to providers', () => {
       const { provider } = configureChains(defaultChains, [
         alchemyProvider({
-          apiKey: defaultAlchemyApiKey,
+          apiKey: alchemyApiKey,
           priority: 1,
           stallTimeout: 2000,
           weight: 1,
         }),
         infuraProvider({
-          apiKey: defaultInfuraApiKey,
+          apiKey: infuraApiKey,
           priority: 2,
           stallTimeout: 3000,
           weight: 2,

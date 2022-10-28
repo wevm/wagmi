@@ -140,13 +140,13 @@ describe('usePrepareSendTransaction', () => {
       )
 
       const { result, waitFor } = utils
-      await actConnect({ chainId: 4, utils })
+      await actConnect({ chainId: 5, utils })
 
       await waitFor(() =>
         expect(result.current.prepareSendTransaction.isError).toBeTruthy(),
       )
       expect(result.current.prepareSendTransaction.error).toMatchInlineSnapshot(
-        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]',
+        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Goerli".]',
       )
 
       await act(async () => result.current.network.switchNetwork?.(1))
