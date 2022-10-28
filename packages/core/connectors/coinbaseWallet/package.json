@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-core-connectors-coinbaseWallet.cjs.js",
-  "module": "dist/wagmi-core-connectors-coinbaseWallet.esm.js"
+  "main": "dist/vue-ethereum-hooks-core-connectors-coinbaseWallet.cjs.js",
+  "module": "dist/vue-ethereum-hooks-core-connectors-coinbaseWallet.esm.js"
 }

@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-providers-alchemy.cjs.js",
-  "module": "dist/wagmi-providers-alchemy.esm.js"
+  "main": "dist/vue-ethereum-hooks-providers-alchemy.cjs.js",
+  "module": "dist/vue-ethereum-hooks-providers-alchemy.esm.js"
 }

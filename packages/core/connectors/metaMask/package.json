@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-core-connectors-metaMask.cjs.js",
-  "module": "dist/wagmi-core-connectors-metaMask.esm.js"
+  "main": "dist/vue-ethereum-hooks-core-connectors-metaMask.cjs.js",
+  "module": "dist/vue-ethereum-hooks-core-connectors-metaMask.esm.js"
 }

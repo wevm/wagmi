@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-connectors-mock.cjs.js",
-  "module": "dist/wagmi-connectors-mock.esm.js"
+  "main": "dist/vue-ethereum-hooks-connectors-mock.cjs.js",
+  "module": "dist/vue-ethereum-hooks-connectors-mock.esm.js"
 }

@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-providers-jsonRpc.cjs.js",
-  "module": "dist/wagmi-providers-jsonRpc.esm.js"
+  "main": "dist/vue-ethereum-hooks-providers-jsonRpc.cjs.js",
+  "module": "dist/vue-ethereum-hooks-providers-jsonRpc.esm.js"
 }

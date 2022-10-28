@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-plugin.cjs.js",
-  "module": "dist/wagmi-plugin.esm.js"
+  "main": "dist/vue-ethereum-hooks-plugin.cjs.js",
+  "module": "dist/vue-ethereum-hooks-plugin.esm.js"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "wagmi",
+  "name": "vue-ethereum-hooks",
   "description": "Vue Hooks for Ethereum",
   "license": "MIT",
   "version": "0.0.1",
@@ -9,61 +9,61 @@
     "directory": "packages/vue"
   },
   "author": "awkweb.eth",
-  "main": "dist/wagmi.cjs.js",
-  "module": "dist/wagmi.esm.js",
+  "main": "dist/vue-ethereum-hooks.cjs.js",
+  "module": "dist/vue-ethereum-hooks.esm.js",
   "types": "dist/wagmi.cjs.d.ts",
   "exports": {
     ".": {
-      "module": "./dist/wagmi.esm.js",
-      "default": "./dist/wagmi.cjs.js"
+      "module": "./dist/vue-ethereum-hooks.esm.js",
+      "default": "./dist/vue-ethereum-hooks.cjs.js"
     },
     "./chains": {
-      "module": "./chains/dist/wagmi-chains.esm.js",
-      "default": "./chains/dist/wagmi-chains.cjs.js"
+      "module": "./chains/dist/vue-ethereum-hooks-chains.esm.js",
+      "default": "./chains/dist/vue-ethereum-hooks-chains.cjs.js"
     },
     "./plugin": {
-      "module": "./plugin/dist/wagmi-plugin.esm.js",
-      "default": "./plugin/dist/wagmi-plugin.cjs.js"
+      "module": "./plugin/dist/vue-ethereum-hooks-plugin.esm.js",
+      "default": "./plugin/dist/vue-ethereum-hooks-plugin.cjs.js"
     },
     "./actions": {
-      "module": "./actions/dist/wagmi-actions.esm.js",
-      "default": "./actions/dist/wagmi-actions.cjs.js"
+      "module": "./actions/dist/vue-ethereum-hooks-actions.esm.js",
+      "default": "./actions/dist/vue-ethereum-hooks-actions.cjs.js"
     },
     "./connectors/mock": {
-      "module": "./connectors/mock/dist/wagmi-connectors-mock.esm.js",
-      "default": "./connectors/mock/dist/wagmi-connectors-mock.cjs.js"
+      "module": "./connectors/mock/dist/vue-ethereum-hooks-connectors-mock.esm.js",
+      "default": "./connectors/mock/dist/vue-ethereum-hooks-connectors-mock.cjs.js"
     },
     "./providers/infura": {
-      "module": "./providers/infura/dist/wagmi-providers-infura.esm.js",
-      "default": "./providers/infura/dist/wagmi-providers-infura.cjs.js"
+      "module": "./providers/infura/dist/vue-ethereum-hooks-providers-infura.esm.js",
+      "default": "./providers/infura/dist/vue-ethereum-hooks-providers-infura.cjs.js"
     },
     "./providers/public": {
-      "module": "./providers/public/dist/wagmi-providers-public.esm.js",
-      "default": "./providers/public/dist/wagmi-providers-public.cjs.js"
+      "module": "./providers/public/dist/vue-ethereum-hooks-providers-public.esm.js",
+      "default": "./providers/public/dist/vue-ethereum-hooks-providers-public.cjs.js"
     },
     "./providers/alchemy": {
-      "module": "./providers/alchemy/dist/wagmi-providers-alchemy.esm.js",
-      "default": "./providers/alchemy/dist/wagmi-providers-alchemy.cjs.js"
+      "module": "./providers/alchemy/dist/vue-ethereum-hooks-providers-alchemy.esm.js",
+      "default": "./providers/alchemy/dist/vue-ethereum-hooks-providers-alchemy.cjs.js"
     },
     "./providers/jsonRpc": {
-      "module": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.esm.js",
-      "default": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.cjs.js"
+      "module": "./providers/jsonRpc/dist/vue-ethereum-hooks-providers-jsonRpc.esm.js",
+      "default": "./providers/jsonRpc/dist/vue-ethereum-hooks-providers-jsonRpc.cjs.js"
     },
     "./connectors/injected": {
-      "module": "./connectors/injected/dist/wagmi-connectors-injected.esm.js",
-      "default": "./connectors/injected/dist/wagmi-connectors-injected.cjs.js"
+      "module": "./connectors/injected/dist/vue-ethereum-hooks-connectors-injected.esm.js",
+      "default": "./connectors/injected/dist/vue-ethereum-hooks-connectors-injected.cjs.js"
     },
     "./connectors/metaMask": {
-      "module": "./connectors/metaMask/dist/wagmi-connectors-metaMask.esm.js",
-      "default": "./connectors/metaMask/dist/wagmi-connectors-metaMask.cjs.js"
+      "module": "./connectors/metaMask/dist/vue-ethereum-hooks-connectors-metaMask.esm.js",
+      "default": "./connectors/metaMask/dist/vue-ethereum-hooks-connectors-metaMask.cjs.js"
     },
     "./connectors/walletConnect": {
-      "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js",
-      "default": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.cjs.js"
+      "module": "./connectors/walletConnect/dist/vue-ethereum-hooks-connectors-walletConnect.esm.js",
+      "default": "./connectors/walletConnect/dist/vue-ethereum-hooks-connectors-walletConnect.cjs.js"
     },
     "./connectors/coinbaseWallet": {
-      "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
-      "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
+      "module": "./connectors/coinbaseWallet/dist/vue-ethereum-hooks-connectors-coinbaseWallet.esm.js",
+      "default": "./connectors/coinbaseWallet/dist/vue-ethereum-hooks-connectors-coinbaseWallet.cjs.js"
     },
     "./package.json": "./package.json"
   },
