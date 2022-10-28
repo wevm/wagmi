@@ -4,6 +4,7 @@ import { defaultAlchemyApiKey } from '../constants'
 import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type AlchemyProviderConfig = FallbackProviderConfig & {
+  // TODO: Make `apiKey` required in next minor version (v0.8).
   apiKey?: string
 }
 

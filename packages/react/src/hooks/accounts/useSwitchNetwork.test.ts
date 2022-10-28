@@ -341,9 +341,9 @@ describe('useSwitchNetwork', () => {
               "network": "rinkeby",
               "rpcUrls": {
                 "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-                "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "default": "https://rpc.ankr.com/eth_rinkeby",
                 "infura": "https://rinkeby.infura.io/v3",
-                "public": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "public": "https://rpc.ankr.com/eth_rinkeby",
               },
               "testnet": true,
             }
