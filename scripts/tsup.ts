@@ -9,7 +9,7 @@ type GetConfig = Omit<
   'bundle' | 'clean' | 'dts' | 'entry' | 'format'
 > & {
   entry?: string[]
-  exports?: { [key: string]: string | { default: string } }
+  exports?: { [key: string]: string | { default: string; types?: string } }
   dev?: boolean
 }
 
@@ -78,10 +78,14 @@ export function getConfig({
 async function validateExports(exports: {
   [key: string]: string | { default: string }
 }) {
-  for (const [, value] of Object.entries(exports)) {
+  for (const [key, value] of Object.entries(exports)) {
     if (typeof value === 'string') continue
-    const fileExists = await fs.pathExists(value.default)
-    if (!fileExists)
-      throw new Error(`File does not exist for export: ${value.default}`)
+    for (const [type, path] of Object.entries(value)) {
+      const fileExists = await fs.pathExists(path)
+      if (!fileExists)
+        throw new Error(
+          `File does not exist for export "${type}": "${value.default}" in "${key}."`,
+        )
+    }
   }
 }

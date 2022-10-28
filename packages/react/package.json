@@ -26,39 +26,51 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./actions": {
+      "types": "./dist/actions.d.ts",
       "default": "./dist/actions.js"
     },
     "./chains": {
+      "types": "./dist/chains.d.ts",
       "default": "./dist/chains.js"
     },
     "./connectors/coinbaseWallet": {
+      "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
     },
     "./connectors/injected": {
+      "types": "./dist/connectors/injected.d.ts",
       "default": "./dist/connectors/injected.js"
     },
     "./connectors/metaMask": {
+      "types": "./dist/connectors/metaMask.d.ts",
       "default": "./dist/connectors/metaMask.js"
     },
     "./connectors/mock": {
+      "types": "./dist/connectors/mock.d.ts",
       "default": "./dist/connectors/mock.js"
     },
     "./connectors/walletConnect": {
+      "types": "./dist/connectors/walletConnect.d.ts",
       "default": "./dist/connectors/walletConnect.js"
     },
     "./providers/alchemy": {
+      "types": "./dist/providers/alchemy.d.ts",
       "default": "./dist/providers/alchemy.js"
     },
     "./providers/infura": {
+      "types": "./dist/providers/infura.d.ts",
       "default": "./dist/providers/infura.js"
     },
     "./providers/jsonRpc": {
+      "types": "./dist/providers/jsonRpc.d.ts",
       "default": "./dist/providers/jsonRpc.js"
     },
     "./providers/public": {
+      "types": "./dist/providers/public.d.ts",
       "default": "./dist/providers/public.js"
     },
     "./package.json": "./package.json"

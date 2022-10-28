@@ -26,6 +26,8 @@ export function WagmiConfig<
   children,
   client,
 }: React.PropsWithChildren<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
+  // Bailing out of using JSX
+  // https://github.com/egoist/tsup/issues/390#issuecomment-933488738
   return React.createElement(Context.Provider, {
     children: React.createElement(QueryClientProvider, {
       children,

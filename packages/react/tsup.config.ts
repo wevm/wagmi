@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup'
 
-import { getConfig } from '../../tsup.config'
+import { getConfig } from '../../scripts/tsup'
 import { dependencies, exports, peerDependencies } from './package.json'
 
 export default defineConfig(
