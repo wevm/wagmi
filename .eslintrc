@@ -17,8 +17,6 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:react-hooks/recommended",
-    "plugin:testing-library/react",
     "plugin:prettier/recommended",
     "prettier"
   ],
@@ -88,9 +86,6 @@
       "typescript": {
         "alwaysTryTypes": true
       }
-    },
-    "react": {
-      "version": "detect"
     }
   },
   "env": {

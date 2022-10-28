@@ -1,4 +1,0 @@
-{
-  "main": "dist/wagmi-connectors-metaMask.cjs.js",
-  "module": "dist/wagmi-connectors-metaMask.esm.js"
-}

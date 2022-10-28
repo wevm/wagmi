@@ -6,9 +6,6 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
     },
     environment: 'jsdom',
-    setupFiles: [
-      './packages/core/test/setup.ts',
-      './packages/react/test/setup.ts',
-    ],
+    setupFiles: ['./packages/core/test/setup.ts'],
   },
 })
