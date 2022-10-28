@@ -92,7 +92,7 @@ export const publicRpcUrls: Record<PublicChains, string> = {
   mainnet: 'https://cloudflare-eth.com',
   ropsten: 'https://rpc.ankr.com/eth_ropsten',
   rinkeby: 'https://rpc.ankr.com/eth_rinkeby',
-  goerli: 'https://rpc.goerli.mudit.blog/',
+  goerli: 'https://rpc.ankr.com/eth_goerli',
   kovan: `${infuraRpcUrls.kovan}/${defaultInfuraApiKey}`,
   sepolia: 'https://rpc.sepolia.org',
   optimism: 'https://mainnet.optimism.io',
