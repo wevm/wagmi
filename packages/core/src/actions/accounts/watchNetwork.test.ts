@@ -187,9 +187,9 @@ describe('watchNetwork', () => {
               "network": "goerli",
               "rpcUrls": {
                 "alchemy": "https://eth-goerli.alchemyapi.io/v2",
-                "default": "https://rpc.goerli.mudit.blog/",
+                "default": "https://rpc.ankr.com/eth_goerli",
                 "infura": "https://goerli.infura.io/v3",
-                "public": "https://rpc.goerli.mudit.blog/",
+                "public": "https://rpc.ankr.com/eth_goerli",
               },
               "testnet": true,
             },
@@ -388,9 +388,9 @@ describe('watchNetwork', () => {
               "network": "goerli",
               "rpcUrls": {
                 "alchemy": "https://eth-goerli.alchemyapi.io/v2",
-                "default": "https://rpc.goerli.mudit.blog/",
+                "default": "https://rpc.ankr.com/eth_goerli",
                 "infura": "https://goerli.infura.io/v3",
-                "public": "https://rpc.goerli.mudit.blog/",
+                "public": "https://rpc.ankr.com/eth_goerli",
               },
               "testnet": true,
             },
