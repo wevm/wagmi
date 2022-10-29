@@ -3,8 +3,8 @@ import type { AppProps } from 'next/app'
 import NextScript from 'next/script'
 import * as React from 'react'
 
-import '../styles/globals.css'
 import 'nextra-theme-docs/style.css'
+import '../styles/globals.css'
 
 // https://github.com/import-js/eslint-plugin-import/issues/1868
 // eslint-disable-next-line import/no-unresolved
