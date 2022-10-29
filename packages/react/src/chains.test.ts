@@ -13,6 +13,8 @@ it('should expose correct exports', () => {
       "hardhat",
       "kovan",
       "sepolia",
+      "bsc",
+      "bscTestnet",
       "localhost",
       "mainnet",
       "optimism",

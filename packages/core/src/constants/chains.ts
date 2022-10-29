@@ -9,6 +9,8 @@ export const chainId = {
   goerli: 5,
   kovan: 42,
   sepolia: 11_155_111,
+  bsc: 56,
+  bscTestnet: 97,
   optimism: 10,
   optimismKovan: 69,
   optimismGoerli: 420,
@@ -161,6 +163,38 @@ export const sepolia: Chain = {
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
     blockCreated: 751532,
+  },
+  testnet: true,
+}
+
+export const bsc: Chain = {
+  id: chainId.bsc,
+  name: 'BNB Smart Chain',
+  network: 'bsc',
+  nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+  rpcUrls: {
+    default: publicRpcUrls.bsc,
+    public: publicRpcUrls.bsc,
+  },
+  blockExplorers: {
+    etherscan: etherscanBlockExplorers.bsc,
+    default: etherscanBlockExplorers.bsc,
+  },
+  testnet: false,
+}
+
+export const bscTestnet: Chain = {
+  id: chainId.bscTestnet,
+  name: 'BNB Smart Chain Testnet',
+  network: 'bsc-testnet',
+  nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+  rpcUrls: {
+    default: publicRpcUrls.bscTestnet,
+    public: publicRpcUrls.bscTestnet,
+  },
+  blockExplorers: {
+    etherscan: etherscanBlockExplorers.bscTestnet,
+    default: etherscanBlockExplorers.bscTestnet,
   },
   testnet: true,
 }
@@ -408,6 +442,8 @@ export const chain = {
   goerli,
   kovan,
   sepolia,
+  bsc,
+  bscTestnet,
   optimism,
   optimismGoerli,
   optimismKovan,
@@ -428,6 +464,8 @@ export const allChains = [
   goerli,
   kovan,
   sepolia,
+  bsc,
+  bscTestnet,
   optimism,
   optimismKovan,
   optimismGoerli,

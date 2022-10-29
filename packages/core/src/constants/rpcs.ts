@@ -79,6 +79,8 @@ type PublicChains = Extract<
   | 'goerli'
   | 'kovan'
   | 'sepolia'
+  | 'bsc'
+  | 'bscTestnet'
   | 'optimism'
   | 'optimismKovan'
   | 'optimismGoerli'
@@ -95,6 +97,8 @@ export const publicRpcUrls: Record<PublicChains, string> = {
   goerli: 'https://rpc.ankr.com/eth_goerli',
   kovan: `${infuraRpcUrls.kovan}/${defaultInfuraApiKey}`,
   sepolia: 'https://rpc.sepolia.org',
+  bsc: 'https://bsc-dataseed.binance.org',
+  bscTestnet: 'https://data-seed-prebsc-1-s1.binance.org:8545',
   optimism: 'https://mainnet.optimism.io',
   optimismKovan: 'https://kovan.optimism.io',
   optimismGoerli: 'https://goerli.optimism.io',

@@ -11,6 +11,8 @@ type EtherscanChains = Extract<
   | 'goerli'
   | 'kovan'
   | 'sepolia'
+  | 'bsc'
+  | 'bscTestnet'
   | 'optimism'
   | 'optimismKovan'
   | 'optimismGoerli'
@@ -44,6 +46,14 @@ export const etherscanBlockExplorers: Record<EtherscanChains, BlockExplorer> = {
   sepolia: {
     name: 'Etherscan',
     url: 'https://sepolia.etherscan.io',
+  },
+  bsc: {
+    name: 'Etherscan',
+    url: 'https://bscscan.com/',
+  },
+  bscTestnet: {
+    name: 'Etherscan',
+    url: 'https://testnet.bscscan.com/',
   },
   optimism: {
     name: 'Etherscan',

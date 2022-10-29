@@ -7,6 +7,8 @@ export {
   hardhat,
   kovan,
   sepolia,
+  bsc,
+  bscTestnet,
   localhost,
   mainnet,
   optimism,
