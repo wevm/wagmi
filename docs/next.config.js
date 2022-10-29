@@ -1,8 +1,11 @@
 const withNextra = require('nextra')({
   theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.js',
+  themeConfig: './theme.config.tsx',
   unstable_contentDump: true,
-  unstable_flexsearch: true,
+  unstable_defaultShowCopyCode: true,
+  unstable_flexsearch: {
+    codeblocks: true,
+  },
   unstable_staticImage: true,
 })
 

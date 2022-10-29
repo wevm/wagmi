@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 // eslint-disable-next-line import/no-unresolved
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 import { LogoType } from '../core'
 
@@ -57,7 +57,7 @@ export function Header({ showGitcoinBanner }: Props) {
         <LogoType />
       </div>
 
-      <p className="text-center text-lg mb-6 text-gray-500 md:!text-2xl">
+      <p className="text-center text-lg mb-6 mt-2 text-gray-500 md:!text-2xl">
         {title}
       </p>
 
