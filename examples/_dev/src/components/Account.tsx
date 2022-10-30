@@ -21,7 +21,7 @@ export const Account = () => {
     onDisconnect: () => console.log('disconnected'),
   })
   const ensAvatar = useEnsAvatar({
-    addressOrName: account?.address,
+    address: account?.address,
     chainId: 1,
   })
   const ensName = useEnsName({ address: account?.address, chainId: 1 })
