@@ -9,6 +9,17 @@ import Callout from 'nextra-theme-docs/callout'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
 
+## 0.8.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.7.x` docs
+  [here](https://0.7.x.wagmi.sh).
+</Callout>
+
+### CommonJS Support Dropped
+
+wagmi no longer supports CommonJS and only supports [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). If you are using modern tooling, like [Next.js](https://nextjs.org), [Vite](https://vitejs.dev), or [Vitest](https://vitest.dev), you likely don't need to do anything! [Remix](https://remix.run/docs/en/v1/pages/gotchas#importing-esm-packages) and [Jest](https://jestjs.io/docs/ecmascript-modules) require some additional configuration. Check out [this guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info on ESM support and Frequently Asked Questions across various tools and setups.
+
 ## 0.7.x Breaking changes
 
 <Callout>
