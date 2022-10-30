@@ -785,19 +785,16 @@ export const erc4626ABI = [
     inputs: [
       {
         indexed: true,
-
         name: 'owner',
         type: 'address',
       },
       {
         indexed: true,
-
         name: 'spender',
         type: 'address',
       },
       {
         indexed: false,
-
         name: 'value',
         type: 'uint256',
       },
@@ -810,25 +807,21 @@ export const erc4626ABI = [
     inputs: [
       {
         indexed: true,
-
         name: 'sender',
         type: 'address',
       },
       {
         indexed: true,
-
         name: 'receiver',
         type: 'address',
       },
       {
         indexed: false,
-
         name: 'assets',
         type: 'uint256',
       },
       {
         indexed: false,
-
         name: 'shares',
         type: 'uint256',
       },
@@ -841,19 +834,16 @@ export const erc4626ABI = [
     inputs: [
       {
         indexed: true,
-
         name: 'from',
         type: 'address',
       },
       {
         indexed: true,
-
         name: 'to',
         type: 'address',
       },
       {
         indexed: false,
-
         name: 'value',
         type: 'uint256',
       },
@@ -866,31 +856,26 @@ export const erc4626ABI = [
     inputs: [
       {
         indexed: true,
-
         name: 'sender',
         type: 'address',
       },
       {
         indexed: true,
-
         name: 'receiver',
         type: 'address',
       },
       {
         indexed: true,
-
         name: 'owner',
         type: 'address',
       },
       {
         indexed: false,
-
         name: 'assets',
         type: 'uint256',
       },
       {
         indexed: false,
-
         name: 'shares',
         type: 'uint256',
       },
