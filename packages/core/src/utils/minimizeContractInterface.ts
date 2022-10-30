@@ -1,6 +1,6 @@
 import { Abi, ExtractAbiFunctionNames } from 'abitype'
-import { Contract, ContractInterface } from 'ethers/lib/ethers'
-import { FormatTypes } from 'ethers/lib/utils'
+import { Contract, ContractInterface } from 'ethers'
+import { FormatTypes } from 'ethers/lib/utils.js'
 
 export function minimizeContractInterface<
   TAbi extends Abi | readonly unknown[],

@@ -1,5 +1,5 @@
 import { Address, ResolvedConfig } from 'abitype'
-import { formatUnits, parseBytes32String } from 'ethers/lib/utils'
+import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
 
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import { ContractResultDecodeError } from '../../errors'

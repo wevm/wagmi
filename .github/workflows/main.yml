@@ -41,8 +41,8 @@ jobs:
           path: |
             node_modules
             docs/node_modules
-            examples/*/node_modules
-            packages/*/node_modules
+            examples/**/node_modules
+            packages/**/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install Dependencies
@@ -76,8 +76,8 @@ jobs:
           path: |
             node_modules
             docs/node_modules
-            examples/*/node_modules
-            packages/*/node_modules
+            examples/**/node_modules
+            packages/**/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Lint code
@@ -109,8 +109,8 @@ jobs:
           path: |
             node_modules
             docs/node_modules
-            examples/*/node_modules
-            packages/*/node_modules
+            examples/**/node_modules
+            packages/**/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build
@@ -143,8 +143,8 @@ jobs:
           path: |
             node_modules
             docs/node_modules
-            examples/*/node_modules
-            packages/*/node_modules
+            examples/**/node_modules
+            packages/**/node_modules
             packages/**/dist
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install rust

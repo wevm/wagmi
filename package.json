@@ -2,11 +2,11 @@
   "name": "root",
   "scripts": {
     "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 15578840",
-    "build": "preconstruct build",
+    "build": "pnpm --filter './packages/**' build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
-    "dev": "preconstruct dev",
-    "docs:build": "pnpm dev && pnpm --filter docs build",
+    "dev": "pnpm --parallel --filter './packages/**' dev",
+    "docs:build": "pnpm --parallel --filter './packages/**' --filter docs build",
     "docs:dev": "pnpm dev && pnpm --filter docs dev",
     "example:cra": "pnpm build && pnpm --filter example-cra start",
     "example:next": "pnpm build && pnpm --filter example-next dev",
@@ -17,7 +17,7 @@
     "lint:format": "prettier --write",
     "lint:types": "tsc --noEmit",
     "playground": "pnpm dev && pnpm --filter example-dev dev",
-    "postinstall": "preconstruct dev",
+    "postinstall": "pnpm dev",
     "preinstall": "npx only-allow pnpm",
     "prepare": "npx simple-git-hooks",
     "test": "vitest",
@@ -26,32 +26,18 @@
     "test:ui": "vitest --ui",
     "test:update": "vitest --update"
   },
-  "preconstruct": {
-    "___experimentalFlags_WILL_CHANGE_IN_PATCH": {
-      "exports": true
-    },
-    "exports": true,
-    "packages": [
-      "packages/core",
-      "packages/react"
-    ]
-  },
   "devDependencies": {
-    "@babel/core": "^7.19.0",
-    "@babel/preset-env": "^7.19.0",
-    "@babel/preset-react": "^7.18.6",
-    "@babel/preset-typescript": "^7.18.6",
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.24.4",
-    "@ethersproject/providers": "^5.7.0",
-    "@preconstruct/cli": "^2.2.1",
+    "@ethersproject/providers": "^5.7.1",
     "@types/eslint": "^8.4.6",
+    "@types/fs-extra": "^9.0.13",
     "@types/node": "17.0.21",
     "@types/prettier": "^2.7.0",
-    "@typescript-eslint/eslint-plugin": "^5.37.0",
-    "@typescript-eslint/parser": "^5.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.1",
+    "@typescript-eslint/parser": "^5.40.1",
+    "@vitest/coverage-c8": "^0.24.3",
     "@vitest/ui": "^0.18.1",
-    "c8": "^7.12.0",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -60,16 +46,19 @@
     "eslint-plugin-mdx": "^2.0.4",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-testing-library": "^5.6.4",
-    "ethers": "^5.7.0",
+    "eslint-plugin-testing-library": "^5.8.0",
+    "ethers": "^5.7.1",
+    "execa": "^6.1.0",
+    "fs-extra": "^10.1.0",
     "jsdom": "^20.0.0",
     "lint-staged": "^13.0.3",
     "msw": "^0.47.4",
     "prettier": "^2.7.1",
-    "simple-git-hooks": "^2.8.0",
+    "simple-git-hooks": "^2.8.1",
+    "tsup": "^6.3.0",
     "typescript": "^4.7.4",
-    "vite": "^2.9.15",
-    "vitest": "^0.18.1"
+    "vite": "^3.1.6",
+    "vitest": "^0.24.3"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

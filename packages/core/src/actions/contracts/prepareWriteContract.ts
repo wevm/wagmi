@@ -1,5 +1,5 @@
 import { Abi, Address, ExtractAbiFunction } from 'abitype'
-import { PopulatedTransaction } from 'ethers/lib/ethers'
+import { PopulatedTransaction } from 'ethers'
 
 import {
   ConnectorNotFoundError,

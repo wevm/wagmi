@@ -1,5 +1,5 @@
 import { Abi } from 'abitype'
-import { Contract, ContractInterface } from 'ethers/lib/ethers'
+import { Contract, ContractInterface } from 'ethers'
 
 function isPlainArray(value: unknown) {
   return Array.isArray(value) && Object.keys(value).length === value.length
