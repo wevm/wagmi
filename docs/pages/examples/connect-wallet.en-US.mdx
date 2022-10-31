@@ -15,7 +15,9 @@ The example below uses [`useConnect`](/docs/hooks/useConnect), [`useAccount`](/d
 <ConnectWallet />
 
 <Callout emoji="🚀">
-  Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) to get started with pre-built interface on top of wagmi for managing wallet connections.
+  Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev)
+  to get started with pre-built interface on top of wagmi for managing wallet
+  connections.
 </Callout>
 
 ## Step 1: Configuring Connectors
@@ -132,7 +134,7 @@ import {
 
 export function Profile() {
   const { address, connector, isConnected } = useAccount()
-  const { data: ensAvatar } = useEnsAvatar({ addressOrName: address })
+  const { data: ensAvatar } = useEnsAvatar({ address })
   const { data: ensName } = useEnsName({ address })
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()

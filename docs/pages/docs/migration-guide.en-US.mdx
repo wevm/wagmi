@@ -20,6 +20,52 @@ If you are coming from an earlier version of `wagmi`, you will need to make sure
 
 wagmi no longer supports CommonJS and only supports [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). If you are using modern tooling, like [Next.js](https://nextjs.org), [Vite](https://vitejs.dev), or [Vitest](https://vitest.dev), you likely don't need to do anything! [Remix](https://remix.run/docs/en/v1/pages/gotchas#importing-esm-packages) and [Jest](https://jestjs.io/docs/ecmascript-modules) require some additional configuration. Check out [this guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info on ESM support and Frequently Asked Questions across various tools and setups.
 
+### `useBalance`
+
+#### Configuration changes
+
+`addressOrName` renamed to `address`.
+
+```diff
+const result = useBalance({
+- addressOrName: '0x…',
++ address: '0x…',
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+```diff
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
+const result = useBalance({
+- addressOrName: 'example.eth',
++ address,
+})
+```
+
+### `useEnsAvatar`
+
+#### Configuration changes
+
+`addressOrName` renamed to `address`.
+
+```diff
+const result = useEnsAvatar({
+- addressOrName: '0x…',
++ address: '0x…',
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+```diff
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
+const result = useEnsAvatar({
+- addressOrName: 'example.eth',
++ address,
+})
+```
+
 ## 0.7.x Breaking changes
 
 <Callout>
@@ -70,7 +116,7 @@ If you were using an ENS name instead of an address, you can resolve the name to
 ```diff
 - import { useContractRead } from 'wagmi'
 + import { useContractRead, useEnsAddress } from 'wagmi'
-+ const { data: address} = useEnsAddress({ name: 'example.eth'})
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
 const result = useContractRead({
 - addressOrName: 'example.eth',
 + address,
