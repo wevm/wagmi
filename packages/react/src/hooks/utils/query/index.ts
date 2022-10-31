@@ -1,5 +1,8 @@
 export { useBaseQuery } from './useBaseQuery'
-export { useInfiniteQuery } from './useInfiniteQuery'
+export {
+  useInfiniteQuery,
+  type UseInfiniteQueryResult,
+} from './useInfiniteQuery'
 export { useMutation } from './useMutation'
-export { useQuery } from './useQuery'
+export { useQuery, type UseQueryResult } from './useQuery'
 export { useQueryClient } from './useQueryClient'

@@ -1,7 +1,13 @@
 import { getDefaultProvider } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
-import { getProvider, getSigners, getWebSocketProvider } from '../test'
+import {
+  getProvider,
+  getSigners,
+  getWebSocketProvider,
+  setupClient,
+} from '../test'
+import { connect, disconnect } from './actions'
 import { Client, createClient, getClient } from './client'
 import { MockConnector } from './connectors/mock'
 import { defaultChains } from './constants'
@@ -91,6 +97,31 @@ describe('createClient', () => {
           provider,
         })
         expect(client.status).toMatchInlineSnapshot(`"disconnected"`)
+      })
+    })
+
+    describe('chains', () => {
+      it('default', async () => {
+        const client = setupClient({ chains: defaultChains })
+        expect(client.chains).toBeUndefined()
+      })
+
+      it('autoConnect', async () => {
+        const client = setupClient({ chains: defaultChains })
+        expect(client.chains).toBeUndefined()
+        await client.autoConnect()
+        expect(client.chains?.length).toEqual(5)
+        await disconnect()
+        expect(client.chains).toBeUndefined()
+      })
+
+      it('connect', async () => {
+        const client = setupClient({ chains: defaultChains })
+        expect(client.chains).toBeUndefined()
+        await connect({ connector: client.connectors[0]! })
+        expect(client.chains?.length).toEqual(5)
+        await disconnect()
+        expect(client.chains).toBeUndefined()
       })
     })
 

@@ -89,11 +89,11 @@ type PublicChains = Extract<
   | 'arbitrumGoerli'
 >
 export const publicRpcUrls: Record<PublicChains, string> = {
-  mainnet: `${alchemyRpcUrls.mainnet}/${defaultAlchemyApiKey}`,
-  ropsten: `${alchemyRpcUrls.ropsten}/${defaultAlchemyApiKey}`,
-  rinkeby: `${alchemyRpcUrls.rinkeby}/${defaultAlchemyApiKey}`,
-  goerli: `${alchemyRpcUrls.goerli}/${defaultAlchemyApiKey}`,
-  kovan: `${alchemyRpcUrls.kovan}/${defaultAlchemyApiKey}`,
+  mainnet: 'https://cloudflare-eth.com',
+  ropsten: 'https://rpc.ankr.com/eth_ropsten',
+  rinkeby: 'https://rpc.ankr.com/eth_rinkeby',
+  goerli: 'https://rpc.ankr.com/eth_goerli',
+  kovan: `${infuraRpcUrls.kovan}/${defaultInfuraApiKey}`,
   sepolia: 'https://rpc.sepolia.org',
   optimism: 'https://mainnet.optimism.io',
   optimismKovan: 'https://kovan.optimism.io',

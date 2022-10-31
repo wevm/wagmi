@@ -132,6 +132,7 @@ export {
   defaultL2Chains,
   erc20ABI,
   erc721ABI,
+  erc4626ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
   publicRpcUrls,
@@ -174,7 +175,6 @@ export type {
   WebSocketProvider,
 } from './types'
 export type { Address } from 'abitype'
-export * from './types/contracts'
 
 export {
   configureChains,

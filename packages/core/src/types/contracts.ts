@@ -342,29 +342,6 @@ export type ContractsResult<
 // Utilities
 
 /**
- * Converts array of {@link AbiEvent} parameters to corresponding TypeScript primitive types.
- *
- * @param TAbiEventParameters - Array of {@link AbiEvent} parameters to convert to TypeScript representations
- * @returns Array of TypeScript primitive types
- */
-export type AbiEventParametersToPrimitiveTypes<
-  TAbiEventParameters extends readonly (AbiParameter & {
-    indexed?: boolean
-  })[],
-  Options extends { AllowNull: boolean } = { AllowNull: false },
-> = {
-  // TODO: Convert to labeled tuple so parameter names show up in autocomplete
-  // e.g. [foo: string, bar: string]
-  // https://github.com/microsoft/TypeScript/issues/44939
-  [K in keyof TAbiEventParameters]: TAbiEventParameters[K]['indexed'] extends true
-    ?
-        | AbiParameterToPrimitiveType<TAbiEventParameters[K]>
-        // If event is not `indexed: true`, add `null` to type
-        | (Options['AllowNull'] extends true ? null : never)
-    : null
-}
-
-/**
  * Get name for {@link AbiFunction} or {@link AbiEvent}
  *
  * @param TAbiItem - {@link AbiFunction} or {@link AbiEvent}
@@ -429,7 +406,7 @@ export type Event<TAbiEvent extends AbiEvent> = Omit<
   ethers.Event,
   'args' | 'event' | 'eventSignature'
 > & {
-  args: AbiEventParametersToPrimitiveTypes<TAbiEvent['inputs']>
+  args: AbiParametersToPrimitiveTypes<TAbiEvent['inputs']>
   event: TAbiEvent['name']
   eventSignature: AbiItemName<TAbiEvent, true>
 }

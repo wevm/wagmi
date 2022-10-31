@@ -1,5 +1,5 @@
 export { createClient } from './client'
-export type { CreateClientConfig } from './client'
+export type { Client, CreateClientConfig } from './client'
 
 export { Context, WagmiConfig, useClient } from './context'
 export type { WagmiConfigProps } from './context'
@@ -49,7 +49,6 @@ export {
   ChainDoesNotSupportMulticallError,
   ChainMismatchError,
   ChainNotConfiguredError,
-  Client,
   Connector,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
@@ -75,6 +74,7 @@ export {
   defaultL2Chains,
   erc20ABI,
   erc721ABI,
+  erc4626ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
   publicRpcUrls,

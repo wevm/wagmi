@@ -3,7 +3,7 @@ title: 'Sign-In with Ethereum Example'
 description: 'Learn how to use the SIWE authentication standard with wagmi.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 import { SignInWithEthereum } from '../../components/examples'
 
@@ -26,7 +26,7 @@ Implementing SIWE only takes four steps:
 3. Verify submitted SIWE message and signature via POST request
 4. Add validated SIWE fields to session (via JWT, cookie, etc.)
 
-<Callout>
+<Callout type="info">
   This guide uses Next.js [API
   Routes](https://nextjs.org/docs/api-routes/introduction) for the backend and
   [`iron-session`](https://github.com/vvo/iron-session) to secure the user
@@ -342,7 +342,7 @@ export function Profile() {
 
 That's it! You now have a way for users to securely sign in to an app using Ethereum wallets. You can start building rich web apps that use persistent user sessions while still letting users control their login identity (and so much more). Check out the [Sign-In with Ethereum](https://login.xyz) website for more info.
 
-<Callout emoji="⚠️">
+<Callout type="warning">
   While it might be tempting to combine the "Connect Wallet" and "Sign In" steps
   into a single action, this causes issues with deep linking for WalletConnect
   on iOS. This is because the browser doesn't open the corresponding native app

@@ -228,10 +228,8 @@ export const optimismGoerli: Chain = {
     public: publicRpcUrls.optimismGoerli,
   },
   blockExplorers: {
-    default: {
-      name: 'Blockscout',
-      url: 'https://blockscout.com/optimism/goerli',
-    },
+    etherscan: etherscanBlockExplorers.optimismGoerli,
+    default: etherscanBlockExplorers.optimismGoerli,
   },
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',

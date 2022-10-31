@@ -3,7 +3,7 @@ title: 'Public'
 description: 'Official wagmi Provider for public RPC providers.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 # Public
 
@@ -25,7 +25,7 @@ const { chains, provider } = configureChains(
 )
 ```
 
-<Callout emoji="⚠️">
+<Callout type="warning">
   Only having `publicProvider` in your providers will make the chain use the
   public RPC URL which could lead to rate-limiting. It is recommended to also
   include another provider in your list (such as: `alchemyProvider`,

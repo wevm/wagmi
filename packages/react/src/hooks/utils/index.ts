@@ -4,6 +4,8 @@ export {
   useInfiniteQuery,
   useMutation,
   useQueryClient,
+  type UseInfiniteQueryResult,
+  type UseQueryResult,
 } from './query'
 export { useChainId } from './useChainId'
 export { useForceUpdate } from './useForceUpdate'
