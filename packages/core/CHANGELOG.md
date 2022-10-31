@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.6.8
+
+### Patch Changes
+
+- [#1132](https://github.com/wagmi-dev/wagmi/pull/1132) [`d41c0d6`](https://github.com/wagmi-dev/wagmi/commit/d41c0d650f8c0e54145758685b7604b8909d7ae0) Thanks [@toniocodo](https://github.com/toniocodo)! - Added ERC-4626 ABI
+
+- [#1201](https://github.com/wagmi-dev/wagmi/pull/1201) [`9a07efa`](https://github.com/wagmi-dev/wagmi/commit/9a07efaa397d3ba03f2edbe527c359f21e22139a) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where non-checksum addresses did not resolve with an ENS name
+
 ## 0.6.7
 
 ### Patch Changes

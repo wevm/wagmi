@@ -3,7 +3,7 @@ title: 'Send Transaction'
 description: 'Learn how to send transactions with wagmi.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 import { SendTransaction } from '../../components/examples'
 
 # Send Transaction
@@ -80,8 +80,7 @@ You will need to:
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
 import { usePrepareSendTransaction } from 'wagmi'
-import { utils } from 'ethers';
-
+import { utils } from 'ethers'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -177,7 +176,7 @@ Clicking the "Send" button will trigger the `sendTransaction` function and insta
 
 However, there is currently no feedback on the status of the transaction. We will add some feedback in the next step.
 
-<Callout emoji="🤔" type="info">
+<Callout type="info">
   [Why do I need a `usePrepareSendTransaction` & `useSendTransaction`
   hook?](/docs/prepare-hooks/intro)
 </Callout>
