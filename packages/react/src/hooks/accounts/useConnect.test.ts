@@ -333,7 +333,7 @@ describe('useConnect', () => {
         )
 
         await act(async () => {
-          result.current.connect.connect({ chainId: 3 })
+          result.current.connect.connect({ chainId: 5 })
         })
 
         await waitFor(() =>
@@ -353,7 +353,7 @@ describe('useConnect', () => {
             "data": {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
-                "id": 3,
+                "id": 5,
                 "unsupported": false,
               },
               "connector": "<MockConnector>",
@@ -368,7 +368,7 @@ describe('useConnect', () => {
             "reset": [Function],
             "status": "success",
             "variables": {
-              "chainId": 3,
+              "chainId": 5,
               "connector": "<MockConnector>",
             },
           }
@@ -449,7 +449,7 @@ describe('useConnect', () => {
             {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
-                "id": 3,
+                "id": 5,
                 "unsupported": false,
               },
               "connector": "<MockConnector>",
@@ -513,12 +513,12 @@ describe('useConnect', () => {
         const { result, waitFor } = renderHook(() => useConnect({ connector }))
 
         await act(async () => {
-          const res = await result.current.connectAsync({ chainId: 3 })
+          const res = await result.current.connectAsync({ chainId: 5 })
           expect(res).toMatchInlineSnapshot(`
             {
               "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
               "chain": {
-                "id": 3,
+                "id": 5,
                 "unsupported": false,
               },
               "connector": "<MockConnector>",
@@ -574,7 +574,7 @@ describe('useConnect', () => {
     it('connects to a supported chain', async () => {
       const { result, waitFor } = renderHook(() =>
         useConnect({
-          chainId: 3,
+          chainId: 5,
           connector: new MockConnector({
             options: {
               signer: getSigners()[0]!,
@@ -587,7 +587,7 @@ describe('useConnect', () => {
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
       expect(result.current.data?.chain).toMatchInlineSnapshot(`
         {
-          "id": 3,
+          "id": 5,
           "unsupported": false,
         }
       `)

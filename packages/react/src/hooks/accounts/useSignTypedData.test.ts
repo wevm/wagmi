@@ -329,7 +329,7 @@ describe('useSignTypedData', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actConnect({ chainId: 4, connector, utils })
+        await actConnect({ chainId: 5, connector, utils })
 
         await act(async () => result.current.signTypedData.signTypedData())
         await waitFor(() =>
@@ -337,7 +337,7 @@ describe('useSignTypedData', () => {
         )
 
         expect(result.current.signTypedData.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
+          '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Goerli".]',
         )
       })
     })
