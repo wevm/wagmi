@@ -1,5 +1,90 @@
 # wagmi
 
+## 0.0.0-20221031055808
+
+### Minor Changes
+
+- [#1185](https://github.com/wagmi-dev/wagmi/pull/1185) [`051b06e4`](https://github.com/wagmi-dev/wagmi/commit/051b06e4b590a644c4dfc101f964c9ef80839810) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Removed the following deprecated chains:
+
+  - `ropsten`
+  - `rinkeby`
+  - `kovan`
+  - `optimismKovan`
+  - `arbitrumRinkeby`
+
+  If you feel you still need to include one of these testnets in your application, you will have to define it manually:
+
+  ```diff
+  -import { rinkeby } from 'wagmi'
+  +import { Chain } from 'wagmi'
+
+  +export const rinkeby: Chain = {
+  + id: 4,
+  + name: 'Rinkeby',
+  + network: 'rinkeby',
+  + nativeCurrency: { name: 'Rinkeby Ether', symbol: 'ETH', decimals: 18 },
+  + rpcUrls: {
+  +   alchemy: 'https://eth-rinkeby.alchemyapi.io/v2',
+  +   default: 'https://rpc.ankr.com/eth_rinkeby',
+  +   infura: 'https://rinkeby.infura.io/v3',
+  +   public: 'https://rpc.ankr.com/eth_rinkeby',
+  +  },
+  + blockExplorers: {
+  +   etherscan: 'https://rinkeby.etherscan.io',
+  +   default: 'https://rinkeby.etherscan.io',
+  + },
+  + ens: {
+  +   address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  + },
+  + multicall: {
+  +   address: '0xca11bde05977b3631167028862be2a173976ca11',
+  +   blockCreated: 10299530,
+  + },
+  + testnet: true,
+  }
+  ```
+
+  You can reference these removed chains [here](https://github.com/wagmi-dev/wagmi/blob/389765f7d9af063ab0df07389a2bbfbc10a41060/packages/core/src/constants/chains.ts).
+
+- [#1185](https://github.com/wagmi-dev/wagmi/pull/1185) [`051b06e4`](https://github.com/wagmi-dev/wagmi/commit/051b06e4b590a644c4dfc101f964c9ef80839810) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Made `apiKey` required on `infuraProvider` and `alchemyProvider`.
+
+  ```diff
+  import { configureChains } from 'wagmi'
+
+  const config = configureChains(defaultChains, [
+  - alchemyProvider(),
+  + alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY })
+  ])
+  ```
+
+  You can find your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/), or your Infura API key from the [Infura Dashboard](https://infura.io/login).
+
+- [#1203](https://github.com/wagmi-dev/wagmi/pull/1203) [`bb5b7b10`](https://github.com/wagmi-dev/wagmi/commit/bb5b7b1027f5612f4dd51d2033983dea8dd3d573) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `addressOrName` renamed to `address` for `useBalance` and `useEnsAvatar`.
+
+  ```diff
+  const result = useBalance({
+  - addressOrName: '0x…',
+  + address: '0x…',
+  })
+  ```
+
+  If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+  ```diff
+  + const { data: address } = useEnsAddress({ name: 'example.eth' })
+  const result = useBalance({
+  - addressOrName: 'example.eth',
+  + address,
+  })
+  ```
+
+- [#1173](https://github.com/wagmi-dev/wagmi/pull/1173) [`d68afa7e`](https://github.com/wagmi-dev/wagmi/commit/d68afa7ea0da179e640978b3386014d869fec477) Thanks [@tmm](https://github.com/tmm)! - Removed CommonJS support
+
+### Patch Changes
+
+- Updated dependencies [[`051b06e4`](https://github.com/wagmi-dev/wagmi/commit/051b06e4b590a644c4dfc101f964c9ef80839810), [`bb5b7b10`](https://github.com/wagmi-dev/wagmi/commit/bb5b7b1027f5612f4dd51d2033983dea8dd3d573), [`051b06e4`](https://github.com/wagmi-dev/wagmi/commit/051b06e4b590a644c4dfc101f964c9ef80839810), [`d68afa7e`](https://github.com/wagmi-dev/wagmi/commit/d68afa7ea0da179e640978b3386014d869fec477)]:
+  - @wagmi/core@0.0.0-20221031055808
+
 ## 0.7.9
 
 ### Patch Changes
