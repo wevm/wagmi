@@ -89,11 +89,11 @@ describe('useContractRead', () => {
           contractReads: useContractReads({
             contracts,
           }),
-          contractReadsWithoutContextKey: useContractReads({
+          contractReadswithoutScopeKey: useContractReads({
             contracts,
             enabled: false,
           }),
-          contractReadsWithContextKey: useContractReads({
+          contractReadswithScopeKey: useContractReads({
             contracts,
             scopeKey: 'wagmi',
             enabled: false,
@@ -106,11 +106,11 @@ describe('useContractRead', () => {
       )
       await waitFor(() =>
         expect(
-          result.current.contractReadsWithoutContextKey.isSuccess,
+          result.current.contractReadswithoutScopeKey.isSuccess,
         ).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.contractReadsWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.contractReadswithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

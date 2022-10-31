@@ -88,11 +88,11 @@ describe('useBalance', () => {
             balance: useBalance({
               addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
             }),
-            balanceWithoutContextKey: useBalance({
+            balancewithoutScopeKey: useBalance({
               addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
               enabled: false,
             }),
-            balanceWithContextKey: useBalance({
+            balancewithScopeKey: useBalance({
               addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
               scopeKey: 'wagmi',
               enabled: false,
@@ -104,12 +104,10 @@ describe('useBalance', () => {
           expect(result.current.balance.isSuccess).toBeTruthy(),
         )
         await waitFor(() =>
-          expect(
-            result.current.balanceWithoutContextKey.isSuccess,
-          ).toBeTruthy(),
+          expect(result.current.balancewithoutScopeKey.isSuccess).toBeTruthy(),
         )
         await waitFor(() =>
-          expect(result.current.balanceWithContextKey.isIdle).toBeTruthy(),
+          expect(result.current.balancewithScopeKey.isIdle).toBeTruthy(),
         )
       })
 

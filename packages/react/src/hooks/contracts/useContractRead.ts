@@ -32,7 +32,7 @@ export type UseContractReadConfig<
     watch?: boolean
   }
 
-type QueryKeyArgs = Partial<Omit<ReadContractConfig, 'abi'>>
+type QueryKeyArgs = Omit<ReadContractConfig, 'abi'>
 type QueryKeyConfig = Pick<UseContractReadConfig, 'scopeKey'> & {
   blockNumber?: number
 }
@@ -69,8 +69,6 @@ function queryFn<
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!abi) throw new Error('abi is required')
     if (!address) throw new Error('address is required')
-    if (!args) throw new Error('args is required')
-    if (!functionName) throw new Error('functionName is required')
     return ((await readContract({
       address,
       args,
@@ -125,7 +123,7 @@ export function useContractRead<
         functionName,
         overrides,
         scopeKey,
-      }),
+      } as Omit<ReadContractConfig, 'abi'>),
     [
       address,
       args,

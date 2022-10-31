@@ -52,11 +52,11 @@ describe('useWaitForTransaction', () => {
           transaction: useWaitForTransaction({
             hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
           }),
-          transactionWithoutContextKey: useWaitForTransaction({
+          transactionwithoutScopeKey: useWaitForTransaction({
             hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
             enabled: false,
           }),
-          transactionWithContextKey: useWaitForTransaction({
+          transactionwithScopeKey: useWaitForTransaction({
             hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
             scopeKey: 'wagmi',
             enabled: false,
@@ -69,11 +69,11 @@ describe('useWaitForTransaction', () => {
       )
       await waitFor(() =>
         expect(
-          result.current.transactionWithoutContextKey.isSuccess,
+          result.current.transactionwithoutScopeKey.isSuccess,
         ).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.transactionWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.transactionwithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

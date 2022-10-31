@@ -111,11 +111,11 @@ describe('useEnsName', () => {
           ensName: useEnsName({
             address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
           }),
-          ensNameWithoutContextKey: useEnsName({
+          ensNamewithoutScopeKey: useEnsName({
             address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
             enabled: false,
           }),
-          ensNameWithContextKey: useEnsName({
+          ensNamewithScopeKey: useEnsName({
             address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
             scopeKey: 'wagmi',
             enabled: false,
@@ -125,10 +125,10 @@ describe('useEnsName', () => {
 
       await waitFor(() => expect(result.current.ensName.isSuccess).toBeTruthy())
       await waitFor(() =>
-        expect(result.current.ensNameWithoutContextKey.isSuccess).toBeTruthy(),
+        expect(result.current.ensNamewithoutScopeKey.isSuccess).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.ensNameWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.ensNamewithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

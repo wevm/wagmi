@@ -39,11 +39,11 @@ describe('useEnsAddress', () => {
           ensAddress: useEnsAddress({
             name: 'imhiring.eth',
           }),
-          ensAddressWithoutContextKey: useEnsAddress({
+          ensAddresswithoutScopeKey: useEnsAddress({
             name: 'imhiring.eth',
             enabled: false,
           }),
-          ensAddressWithContextKey: useEnsAddress({
+          ensAddresswithScopeKey: useEnsAddress({
             name: 'imhiring.eth',
             scopeKey: 'wagmi',
             enabled: false,
@@ -55,12 +55,10 @@ describe('useEnsAddress', () => {
         expect(result.current.ensAddress.isSuccess).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(
-          result.current.ensAddressWithoutContextKey.isSuccess,
-        ).toBeTruthy(),
+        expect(result.current.ensAddresswithoutScopeKey.isSuccess).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.ensAddressWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.ensAddresswithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

@@ -35,10 +35,10 @@ describe('useFeeData', () => {
       const { result, waitFor } = renderHook(() => {
         return {
           feeData: useFeeData(),
-          feeDataWithoutContextKey: useFeeData({
+          feeDatawithoutScopeKey: useFeeData({
             enabled: false,
           }),
-          feeDataWithContextKey: useFeeData({
+          feeDatawithScopeKey: useFeeData({
             scopeKey: 'wagmi',
             enabled: false,
           }),
@@ -47,10 +47,10 @@ describe('useFeeData', () => {
 
       await waitFor(() => expect(result.current.feeData.isSuccess).toBeTruthy())
       await waitFor(() =>
-        expect(result.current.feeDataWithoutContextKey.isSuccess).toBeTruthy(),
+        expect(result.current.feeDatawithoutScopeKey.isSuccess).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.feeDataWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.feeDatawithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

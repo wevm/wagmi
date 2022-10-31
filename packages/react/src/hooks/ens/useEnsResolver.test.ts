@@ -44,11 +44,11 @@ describe('useEnsResolver', () => {
           ensResolver: useEnsResolver({
             name: 'imhiring.eth',
           }),
-          ensResolverWithoutContextKey: useEnsResolver({
+          ensResolverwithoutScopeKey: useEnsResolver({
             name: 'imhiring.eth',
             enabled: false,
           }),
-          ensResolverWithContextKey: useEnsResolver({
+          ensResolverwithScopeKey: useEnsResolver({
             name: 'imhiring.eth',
             scopeKey: 'wagmi',
             enabled: false,
@@ -61,11 +61,11 @@ describe('useEnsResolver', () => {
       )
       await waitFor(() =>
         expect(
-          result.current.ensResolverWithoutContextKey.isSuccess,
+          result.current.ensResolverwithoutScopeKey.isSuccess,
         ).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.ensResolverWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.ensResolverwithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

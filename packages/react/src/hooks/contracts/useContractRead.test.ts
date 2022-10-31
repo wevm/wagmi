@@ -95,14 +95,14 @@ describe('useContractRead', () => {
             args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
             chainId: 1,
           }),
-          contractReadWithoutContextKey: useContractRead({
+          contractReadwithoutScopeKey: useContractRead({
             ...wagmigotchiContractConfig,
             functionName: 'love',
             args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
             chainId: 1,
             enabled: false,
           }),
-          contractReadWithContextKey: useContractRead({
+          contractReadwithScopeKey: useContractRead({
             ...wagmigotchiContractConfig,
             functionName: 'love',
             args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
@@ -118,11 +118,11 @@ describe('useContractRead', () => {
       )
       await waitFor(() =>
         expect(
-          result.current.contractReadWithoutContextKey.isSuccess,
+          result.current.contractReadwithoutScopeKey.isSuccess,
         ).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.contractReadWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.contractReadwithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

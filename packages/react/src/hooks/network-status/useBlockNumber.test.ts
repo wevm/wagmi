@@ -35,10 +35,10 @@ describe('useBlockNumber', () => {
       const { result, waitFor } = renderHook(() => {
         return {
           blockNumber: useBlockNumber(),
-          blockNumberWithoutContextKey: useBlockNumber({
+          blockNumberwithoutScopeKey: useBlockNumber({
             enabled: false,
           }),
-          blockNumberWithContextKey: useBlockNumber({
+          blockNumberwithScopeKey: useBlockNumber({
             scopeKey: 'wagmi',
             enabled: false,
           }),
@@ -50,11 +50,11 @@ describe('useBlockNumber', () => {
       )
       await waitFor(() =>
         expect(
-          result.current.blockNumberWithoutContextKey.isSuccess,
+          result.current.blockNumberwithoutScopeKey.isSuccess,
         ).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.blockNumberWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.blockNumberwithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

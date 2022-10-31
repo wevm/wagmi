@@ -162,11 +162,11 @@ describe('useEnsAvatar', () => {
           ensAvatar: useEnsAvatar({
             addressOrName: 'nick.eth',
           }),
-          ensAvatarWithoutContextKey: useEnsAvatar({
+          ensAvatarwithoutScopeKey: useEnsAvatar({
             addressOrName: 'nick.eth',
             enabled: false,
           }),
-          ensAvatarWithContextKey: useEnsAvatar({
+          ensAvatarwithScopeKey: useEnsAvatar({
             addressOrName: 'nick.eth',
             scopeKey: 'wagmi',
             enabled: false,
@@ -178,12 +178,10 @@ describe('useEnsAvatar', () => {
         expect(result.current.ensAvatar.isSuccess).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(
-          result.current.ensAvatarWithoutContextKey.isSuccess,
-        ).toBeTruthy(),
+        expect(result.current.ensAvatarwithoutScopeKey.isSuccess).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.ensAvatarWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.ensAvatarwithScopeKey.isIdle).toBeTruthy(),
       )
     })
 

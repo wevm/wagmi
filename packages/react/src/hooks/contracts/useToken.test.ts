@@ -141,11 +141,11 @@ describe('useToken', () => {
           token: useToken({
             address: ensTokenAddress,
           }),
-          tokenWithoutContextKey: useToken({
+          tokenwithoutScopeKey: useToken({
             address: ensTokenAddress,
             enabled: false,
           }),
-          tokenWithContextKey: useToken({
+          tokenwithScopeKey: useToken({
             address: ensTokenAddress,
             scopeKey: 'wagmi',
             enabled: false,
@@ -155,10 +155,10 @@ describe('useToken', () => {
 
       await waitFor(() => expect(result.current.token.isSuccess).toBeTruthy())
       await waitFor(() =>
-        expect(result.current.tokenWithoutContextKey.isSuccess).toBeTruthy(),
+        expect(result.current.tokenwithoutScopeKey.isSuccess).toBeTruthy(),
       )
       await waitFor(() =>
-        expect(result.current.tokenWithContextKey.isIdle).toBeTruthy(),
+        expect(result.current.tokenwithScopeKey.isIdle).toBeTruthy(),
       )
     })
 
