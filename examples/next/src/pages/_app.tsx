@@ -12,10 +12,11 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { WalletConnectConnectorV2 } from 'wagmi/connectors/walletConnectV2'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
+  alchemyProvider({ apiKey: '_Y1djHlMomg9Hw5sTiZU3CZhKpLbPX-h' }),
 ])
 
 const client = createClient({
@@ -33,6 +34,10 @@ const client = createClient({
       options: {
         qrcode: true,
       },
+    }),
+    new WalletConnectConnectorV2({
+      chains,
+      options: {},
     }),
     new InjectedConnector({
       chains,
