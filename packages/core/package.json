@@ -101,7 +101,7 @@
   "peerDependencies": {
     "@coinbase/wallet-sdk": ">=3.3.0",
     "@walletconnect/ethereum-provider": ">=1.7.5",
-    "@walletconnect/universal-provider": "2.1.0",
+    "@walletconnect/universal-provider": "^2.1.0",
     "ethers": ">=5.5.1"
   },
   "peerDependenciesMeta": {
@@ -123,7 +123,7 @@
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
     "@walletconnect/ethereum-provider": "^1.7.8",
-    "@walletconnect/universal-provider": "2.1.0",
+    "@walletconnect/universal-provider": "^2.1.0",
     "lokijs": "^1.5.12",
     "ethers": "^5.7.0"
   },
