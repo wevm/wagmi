@@ -94,6 +94,21 @@ function App() {
 }
 ```
 
+### contextKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    contextKey: 'wagmi',
+  })
+}
+```
+
 ### formatUnits (optional)
 
 Formats balance using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether` or `token`'s decimal value.

@@ -38,6 +38,37 @@ describe('useEnsResolver', () => {
   })
 
   describe('configuration', () => {
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensResolver: useEnsResolver({
+            name: 'imhiring.eth',
+          }),
+          ensResolverWithoutContextKey: useEnsResolver({
+            name: 'imhiring.eth',
+            enabled: false,
+          }),
+          ensResolverWithContextKey: useEnsResolver({
+            name: 'imhiring.eth',
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.ensResolver.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.ensResolverWithoutContextKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensResolverWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsResolver({ chainId: 1, name: 'awkweb.eth' }),

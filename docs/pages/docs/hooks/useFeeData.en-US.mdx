@@ -123,6 +123,20 @@ function App() {
 }
 ```
 
+### contextKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useFeeData } from 'wagmi'
+
+function App() {
+  const feeData = useFeeData({
+    contextKey: 'wagmi',
+  })
+}
+```
+
 ### enabled (optional)
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.

@@ -128,6 +128,24 @@ function App() {
 }
 ```
 
+### contextKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {9}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    contextKey: 'wagmi',
+  })
+}
+```
+
 ### enabled (optional)
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.

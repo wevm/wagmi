@@ -135,6 +135,33 @@ describe('useToken', () => {
       })
     })
 
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          token: useToken({
+            address: ensTokenAddress,
+          }),
+          tokenWithoutContextKey: useToken({
+            address: ensTokenAddress,
+            enabled: false,
+          }),
+          tokenWithContextKey: useToken({
+            address: ensTokenAddress,
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.token.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.tokenWithoutContextKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.tokenWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useToken({ address: ensTokenAddress, chainId: 1 }),

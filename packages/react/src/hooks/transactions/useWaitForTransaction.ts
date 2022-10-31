@@ -8,22 +8,26 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseWaitForTransactionArgs = Partial<WaitForTransactionArgs>
-
 export type UseWaitForTransactionConfig = QueryConfig<
   WaitForTransactionResult,
   Error
 >
 
-export const queryKey = ({
+type QueryKeyArgs = UseWaitForTransactionArgs
+type QueryKeyConfig = Pick<UseWaitForTransactionConfig, 'contextKey'>
+
+function queryKey({
+  contextKey,
   confirmations,
   chainId,
   hash,
   timeout,
   wait,
-}: Partial<WaitForTransactionArgs>) =>
-  [
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
     {
       entity: 'waitForTransaction',
+      contextKey,
       confirmations,
       chainId,
       hash,
@@ -31,14 +35,16 @@ export const queryKey = ({
       wait,
     },
   ] as const
+}
 
-const queryFn = ({
+function queryFn({
   queryKey: [{ chainId, confirmations, hash, timeout, wait }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   return waitForTransaction({ chainId, confirmations, hash, timeout, wait })
 }
 
 export function useWaitForTransaction({
+  contextKey,
   chainId: chainId_,
   confirmations,
   hash,
@@ -55,7 +61,7 @@ export function useWaitForTransaction({
   const chainId = useChainId({ chainId: chainId_ })
 
   return useQuery(
-    queryKey({ chainId, confirmations, hash, timeout, wait }),
+    queryKey({ contextKey, chainId, confirmations, hash, timeout, wait }),
     queryFn,
     {
       cacheTime,

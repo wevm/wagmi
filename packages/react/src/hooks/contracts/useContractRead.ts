@@ -32,16 +32,20 @@ export type UseContractReadConfig<
     watch?: boolean
   }
 
-function queryKey(
-  {
-    address,
-    args,
-    chainId,
-    functionName,
-    overrides,
-  }: Omit<ReadContractConfig, 'abi'>,
-  { blockNumber }: { blockNumber?: number },
-) {
+type QueryKeyArgs = Partial<Omit<ReadContractConfig, 'abi'>>
+type QueryKeyConfig = Pick<UseContractReadConfig, 'contextKey'> & {
+  blockNumber?: number
+}
+
+function queryKey({
+  address,
+  args,
+  blockNumber,
+  chainId,
+  contextKey,
+  functionName,
+  overrides,
+}: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'readContract',
@@ -49,6 +53,7 @@ function queryKey(
       args,
       blockNumber,
       chainId,
+      contextKey,
       functionName,
       overrides,
     },
@@ -64,6 +69,8 @@ function queryFn<
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!abi) throw new Error('abi is required')
     if (!address) throw new Error('address is required')
+    if (!args) throw new Error('args is required')
+    if (!functionName) throw new Error('functionName is required')
     return ((await readContract({
       address,
       args,
@@ -83,6 +90,7 @@ export function useContractRead<
   {
     abi,
     address,
+    contextKey,
     functionName,
     args,
     chainId: chainId_,
@@ -109,22 +117,22 @@ export function useContractRead<
 
   const queryKey_ = React.useMemo(
     () =>
-      queryKey(
-        {
-          address,
-          args,
-          chainId,
-          functionName,
-          overrides,
-        } as Omit<ReadContractConfig, 'abi'>,
-        { blockNumber: cacheOnBlock ? blockNumber : undefined },
-      ),
+      queryKey({
+        address,
+        args,
+        blockNumber: cacheOnBlock ? blockNumber : undefined,
+        chainId,
+        contextKey,
+        functionName,
+        overrides,
+      }),
     [
       address,
       args,
       blockNumber,
       cacheOnBlock,
       chainId,
+      contextKey,
       functionName,
       overrides,
     ],

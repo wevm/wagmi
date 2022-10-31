@@ -31,6 +31,33 @@ describe('useBlockNumber', () => {
   })
 
   describe('configuration', () => {
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          blockNumber: useBlockNumber(),
+          blockNumberWithoutContextKey: useBlockNumber({
+            enabled: false,
+          }),
+          blockNumberWithContextKey: useBlockNumber({
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.blockNumber.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.blockNumberWithoutContextKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.blockNumberWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useBlockNumber({ chainId: 1 }),

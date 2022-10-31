@@ -95,6 +95,21 @@ function App() {
 }
 ```
 
+### contextKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {6}
+import { useEnsName } from 'wagmi'
+
+function App() {
+  const ensName = useEnsName({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    contextKey: 'wagmi',
+  })
+}
+```
+
 ### enabled (optional)
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.

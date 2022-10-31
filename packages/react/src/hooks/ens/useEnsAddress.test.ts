@@ -33,6 +33,37 @@ describe('useEnsAddress', () => {
   })
 
   describe('configuration', () => {
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensAddress: useEnsAddress({
+            name: 'imhiring.eth',
+          }),
+          ensAddressWithoutContextKey: useEnsAddress({
+            name: 'imhiring.eth',
+            enabled: false,
+          }),
+          ensAddressWithContextKey: useEnsAddress({
+            name: 'imhiring.eth',
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.ensAddress.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.ensAddressWithoutContextKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensAddressWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAddress({ chainId: 1, name: 'awkweb.eth' }),

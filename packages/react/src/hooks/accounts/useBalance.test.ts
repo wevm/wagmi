@@ -82,6 +82,37 @@ describe('useBalance', () => {
         `)
       })
 
+      it('contextKey', async () => {
+        const { result, waitFor } = renderHook(() => {
+          return {
+            balance: useBalance({
+              addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            }),
+            balanceWithoutContextKey: useBalance({
+              addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+              enabled: false,
+            }),
+            balanceWithContextKey: useBalance({
+              addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+              contextKey: 'wagmi',
+              enabled: false,
+            }),
+          }
+        })
+
+        await waitFor(() =>
+          expect(result.current.balance.isSuccess).toBeTruthy(),
+        )
+        await waitFor(() =>
+          expect(
+            result.current.balanceWithoutContextKey.isSuccess,
+          ).toBeTruthy(),
+        )
+        await waitFor(() =>
+          expect(result.current.balanceWithContextKey.isIdle).toBeTruthy(),
+        )
+      })
+
       it('name', async () => {
         const { result, waitFor } = renderHook(() =>
           useBalance({

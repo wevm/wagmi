@@ -31,6 +31,29 @@ describe('useFeeData', () => {
   })
 
   describe('configuration', () => {
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          feeData: useFeeData(),
+          feeDataWithoutContextKey: useFeeData({
+            enabled: false,
+          }),
+          feeDataWithContextKey: useFeeData({
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.feeData.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.feeDataWithoutContextKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.feeDataWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() => useFeeData({ chainId: 1 }))
 

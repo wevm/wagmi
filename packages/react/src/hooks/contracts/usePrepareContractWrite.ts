@@ -28,19 +28,21 @@ export type UsePrepareContractWriteConfig<
 > &
   QueryConfig<PrepareWriteContractResult, Error>
 
-function queryKey(
-  {
-    args,
-    address,
-    chainId,
-    functionName,
-    overrides,
-  }: Omit<PrepareWriteContractConfig, 'abi'>,
-  {
-    activeChainId,
-    signerAddress,
-  }: { activeChainId?: number; signerAddress?: string },
-) {
+type QueryKeyArgs = Omit<PrepareWriteContractConfig, 'abi'>
+type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'contextKey'> & {
+  activeChainId?: number
+  signerAddress?: string
+}
+
+function queryKey({
+  activeChainId,
+  args,
+  address,
+  chainId,
+  functionName,
+  overrides,
+  signerAddress,
+}: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'prepareContractTransaction',
@@ -67,11 +69,11 @@ function queryFn({
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!abi) throw new Error('abi is required')
     return prepareWriteContract({
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
       args,
       address,
       chainId,
-      // TODO: Remove cast and still support `Narrow<TAbi>`
-      abi: abi as Abi,
       functionName,
       overrides,
       signer,
@@ -104,6 +106,7 @@ export function usePrepareContractWrite<
     abi,
     functionName,
     chainId,
+    contextKey,
     args,
     overrides,
     cacheTime,
@@ -121,16 +124,16 @@ export function usePrepareContractWrite<
   })
 
   const prepareContractWriteQuery = useQuery(
-    queryKey(
-      {
-        address,
-        functionName,
-        chainId,
-        args,
-        overrides,
-      } as Omit<PrepareWriteContractConfig, 'abi'>,
-      { activeChainId, signerAddress: signer?._address },
-    ),
+    queryKey({
+      activeChainId,
+      address,
+      args,
+      chainId,
+      contextKey,
+      functionName,
+      signerAddress: signer?._address,
+      overrides,
+    } as Omit<PrepareWriteContractConfig, 'abi'>),
     queryFn({
       // TODO: Remove cast and still support `Narrow<TAbi>`
       abi: abi as Abi,

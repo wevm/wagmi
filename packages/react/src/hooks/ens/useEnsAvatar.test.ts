@@ -156,6 +156,37 @@ describe('useEnsAvatar', () => {
       })
     })
 
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensAvatar: useEnsAvatar({
+            addressOrName: 'nick.eth',
+          }),
+          ensAvatarWithoutContextKey: useEnsAvatar({
+            addressOrName: 'nick.eth',
+            enabled: false,
+          }),
+          ensAvatarWithContextKey: useEnsAvatar({
+            addressOrName: 'nick.eth',
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.ensAvatar.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.ensAvatarWithoutContextKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensAvatarWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({

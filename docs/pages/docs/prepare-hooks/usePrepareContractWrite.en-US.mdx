@@ -107,6 +107,23 @@ function App() {
 }
 ```
 
+### contextKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {7}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    contextKey: 'wagmi'
+    functionName: 'feed',
+  })
+}
+```
+
 ### functionName (optional)
 
 Name of function to call. If `functionName` is not defined, hook will not run.

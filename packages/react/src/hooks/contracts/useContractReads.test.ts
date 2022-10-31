@@ -83,6 +83,37 @@ describe('useContractRead', () => {
   })
 
   describe('configuration', () => {
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          contractReads: useContractReads({
+            contracts,
+          }),
+          contractReadsWithoutContextKey: useContractReads({
+            contracts,
+            enabled: false,
+          }),
+          contractReadsWithContextKey: useContractReads({
+            contracts,
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.contractReads.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.contractReadsWithoutContextKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.contractReadsWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useContractReads({

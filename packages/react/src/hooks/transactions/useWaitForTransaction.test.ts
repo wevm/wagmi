@@ -46,7 +46,38 @@ describe('useWaitForTransaction', () => {
   })
 
   describe('configuration', () => {
-    it('chainId,', async () => {
+    it('contextKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          transaction: useWaitForTransaction({
+            hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
+          }),
+          transactionWithoutContextKey: useWaitForTransaction({
+            hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
+            enabled: false,
+          }),
+          transactionWithContextKey: useWaitForTransaction({
+            hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
+            contextKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.transaction.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.transactionWithoutContextKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.transactionWithContextKey.isIdle).toBeTruthy(),
+      )
+    })
+
+    it('chainId', async () => {
       let hash: Hash | undefined = undefined
       const utils = renderHook(() =>
         useWaitForTransactionWithSendTransactionAndConnect({
