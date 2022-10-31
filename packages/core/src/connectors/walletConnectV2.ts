@@ -136,9 +136,17 @@ export class WalletConnectConnectorV2 extends Connector<
         await import('@walletconnect/universal-provider')
       ).default
 
+      const projectId = process.env.WALLETCONNECT_PROJECT_ID
+
+      if (!projectId) {
+        throw new Error(
+          'Please get a WalletConnect v2 projectID from https://cloud.walletconnect.com/',
+        )
+      }
+
       this.#provider = await WalletConnectProvider.init({
         ...this.options,
-        projectId: '2f05ae7f1116030fde2d36508f472bfb',
+        projectId,
       })
 
       if (chainId) {
