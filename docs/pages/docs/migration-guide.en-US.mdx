@@ -3,7 +3,7 @@ title: 'Migration Guide'
 description: 'Guide for how to migrate to new versions of wagmi'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 # Migration Guide
 
@@ -25,7 +25,7 @@ to [extend constraints on inferred type variables](https://devblogs.microsoft.co
 
 See the wagmi [TypeScript docs](/docs/typescript) for more information on TypeScript support in this version.
 
-<Callout type="info" emoji="🤔">
+<Callout type="info">
   When switching over to inferring types based on your ABIs, you may notice
   TypeScript complaining about types that worked fine before. For example, `Type
   'string' is not assignable to type 'BigNumber'`. Previously, you were able to
