@@ -83,7 +83,7 @@ describe('useContractRead', () => {
   })
 
   describe('configuration', () => {
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           contractReads: useContractReads({
@@ -95,7 +95,7 @@ describe('useContractRead', () => {
           }),
           contractReadsWithContextKey: useContractReads({
             contracts,
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

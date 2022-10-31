@@ -91,20 +91,6 @@ function App() {
 }
 ```
 
-### contextKey (optional)
-
-Scopes the cache to a given context. Hooks that have identical context will share the same cache.
-
-```tsx {5}
-import { useBlockNumber } from 'wagmi'
-
-function App() {
-  const blockNumber = useBlockNumber({
-    contextKey: 'wagmi',
-  })
-}
-```
-
 ### enabled (optional)
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
@@ -115,6 +101,20 @@ import { useBlockNumber } from 'wagmi'
 function App() {
   const blockNumber = useBlockNumber({
     enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    scopeKey: 'wagmi',
   })
 }
 ```

@@ -82,7 +82,7 @@ describe('useBalance', () => {
         `)
       })
 
-      it('contextKey', async () => {
+      it('scopeKey', async () => {
         const { result, waitFor } = renderHook(() => {
           return {
             balance: useBalance({
@@ -94,7 +94,7 @@ describe('useBalance', () => {
             }),
             balanceWithContextKey: useBalance({
               addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-              contextKey: 'wagmi',
+              scopeKey: 'wagmi',
               enabled: false,
             }),
           }

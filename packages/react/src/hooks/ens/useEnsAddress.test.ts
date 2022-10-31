@@ -33,7 +33,7 @@ describe('useEnsAddress', () => {
   })
 
   describe('configuration', () => {
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           ensAddress: useEnsAddress({
@@ -45,7 +45,7 @@ describe('useEnsAddress', () => {
           }),
           ensAddressWithContextKey: useEnsAddress({
             name: 'imhiring.eth',
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

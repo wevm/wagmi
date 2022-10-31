@@ -33,7 +33,7 @@ export type UseContractReadConfig<
   }
 
 type QueryKeyArgs = Partial<Omit<ReadContractConfig, 'abi'>>
-type QueryKeyConfig = Pick<UseContractReadConfig, 'contextKey'> & {
+type QueryKeyConfig = Pick<UseContractReadConfig, 'scopeKey'> & {
   blockNumber?: number
 }
 
@@ -42,9 +42,9 @@ function queryKey({
   args,
   blockNumber,
   chainId,
-  contextKey,
   functionName,
   overrides,
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -53,9 +53,9 @@ function queryKey({
       args,
       blockNumber,
       chainId,
-      contextKey,
       functionName,
       overrides,
+      scopeKey,
     },
   ] as const
 }
@@ -90,7 +90,6 @@ export function useContractRead<
   {
     abi,
     address,
-    contextKey,
     functionName,
     args,
     chainId: chainId_,
@@ -99,6 +98,7 @@ export function useContractRead<
     cacheTime,
     enabled: enabled_ = true,
     isDataEqual = deepEqual,
+    scopeKey,
     select,
     staleTime,
     suspense,
@@ -122,9 +122,9 @@ export function useContractRead<
         args,
         blockNumber: cacheOnBlock ? blockNumber : undefined,
         chainId,
-        contextKey,
         functionName,
         overrides,
+        scopeKey,
       }),
     [
       address,
@@ -132,9 +132,9 @@ export function useContractRead<
       blockNumber,
       cacheOnBlock,
       chainId,
-      contextKey,
       functionName,
       overrides,
+      scopeKey,
     ],
   )
 

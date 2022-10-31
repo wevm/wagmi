@@ -12,14 +12,14 @@ export type UseFeeDataArgs = Partial<FetchFeeDataArgs> & {
 export type UseFeedDataConfig = QueryConfig<FetchFeeDataResult, Error>
 
 type QueryKeyArgs = Partial<FetchFeeDataArgs>
-type QueryKeyConfig = Pick<UseFeedDataConfig, 'contextKey'>
+type QueryKeyConfig = Pick<UseFeedDataConfig, 'scopeKey'>
 
 function queryKey({
   chainId,
-  contextKey,
   formatUnits,
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'feeData', chainId, contextKey, formatUnits }] as const
+  return [{ entity: 'feeData', chainId, formatUnits, scopeKey }] as const
 }
 
 function queryFn({
@@ -31,9 +31,9 @@ function queryFn({
 export function useFeeData({
   cacheTime,
   chainId: chainId_,
-  contextKey,
   enabled = true,
   formatUnits = 'wei',
+  scopeKey,
   staleTime,
   suspense,
   watch,
@@ -44,7 +44,7 @@ export function useFeeData({
   const chainId = useChainId({ chainId: chainId_ })
 
   const feeDataQuery = useQuery(
-    queryKey({ chainId, contextKey, formatUnits }),
+    queryKey({ chainId, formatUnits, scopeKey }),
     queryFn,
     {
       cacheTime,

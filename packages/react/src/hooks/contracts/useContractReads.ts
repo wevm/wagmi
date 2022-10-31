@@ -47,7 +47,7 @@ type QueryKeyArgs<TContracts extends unknown[]> = ReadContractsConfig<
 >
 type QueryKeyConfig<TContracts extends unknown[]> = Pick<
   UseContractReadsConfig<TContracts>,
-  'contextKey'
+  'scopeKey'
 > & {
   blockNumber?: number
   chainId?: number
@@ -60,17 +60,21 @@ function queryKey<
     abi: TAbi
     functionName: TFunctionName
   }[],
->(
-  { allowFailure, contracts, overrides }: QueryKeyArgs<TContracts>,
-  { blockNumber, contextKey, chainId }: QueryKeyConfig<TContracts>,
-) {
+>({
+  allowFailure,
+  blockNumber,
+  chainId,
+  contracts,
+  overrides,
+  scopeKey,
+}: QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>) {
   return [
     {
       entity: 'readContracts',
       allowFailure,
       blockNumber,
       chainId,
-      contextKey,
+      scopeKey,
       contracts: ((contracts ?? []) as unknown as ContractConfig[]).map(
         ({ address, args, chainId, functionName }) => ({
           address,
@@ -129,7 +133,7 @@ export function useContractReads<
     allowFailure = true,
     cacheOnBlock = false,
     cacheTime,
-    contextKey,
+    scopeKey,
     contracts,
     overrides,
     enabled: enabled_ = true,
@@ -153,20 +157,20 @@ export function useContractReads<
 
   const queryKey_ = React.useMemo(
     () =>
-      queryKey(
-        { allowFailure, contracts, overrides },
-        {
-          blockNumber: cacheOnBlock ? blockNumber : undefined,
-          chainId,
-          contextKey,
-        },
-      ),
+      queryKey({
+        allowFailure,
+        blockNumber: cacheOnBlock ? blockNumber : undefined,
+        chainId,
+        contracts,
+        overrides,
+        scopeKey,
+      }),
     [
       allowFailure,
       blockNumber,
       cacheOnBlock,
       chainId,
-      contextKey,
+      scopeKey,
       contracts,
       overrides,
     ],

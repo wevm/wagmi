@@ -32,21 +32,21 @@ type QueryKeyArgs = {
   cacheKey: UseContractInfiniteReadsConfig['cacheKey']
   overrides: UseContractInfiniteReadsConfig['overrides']
 }
-type QueryKeyConfig = Pick<UseContractInfiniteReadsConfig, 'contextKey'>
+type QueryKeyConfig = Pick<UseContractInfiniteReadsConfig, 'scopeKey'>
 
 function queryKey({
   allowFailure,
   cacheKey,
-  contextKey,
   overrides,
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'readContractsInfinite',
       allowFailure,
       cacheKey,
-      contextKey,
       overrides,
+      scopeKey,
     },
   ] as const
 }
@@ -88,7 +88,6 @@ export function useContractInfiniteReads<
   allowFailure,
   cacheKey,
   cacheTime,
-  contextKey,
   contracts,
   enabled: enabled_ = true,
   getNextPageParam,
@@ -98,6 +97,7 @@ export function useContractInfiniteReads<
   onSettled,
   onSuccess,
   overrides,
+  scopeKey,
   select,
   staleTime,
   suspense,
@@ -107,8 +107,8 @@ export function useContractInfiniteReads<
 >): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 UseInfiniteQueryResult<ReadContractsResult<TContracts>, Error> {
   const queryKey_ = React.useMemo(
-    () => queryKey({ allowFailure, cacheKey, contextKey, overrides }),
-    [allowFailure, cacheKey, contextKey, overrides],
+    () => queryKey({ allowFailure, cacheKey, overrides, scopeKey }),
+    [allowFailure, cacheKey, overrides, scopeKey],
   )
 
   const enabled = React.useMemo(() => {

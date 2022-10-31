@@ -9,7 +9,7 @@ export type UseTokenConfig = QueryConfig<FetchTokenResult, Error>
 type QueryKeyArgs = Partial<FetchTokenArgs> & {
   chainId?: number
 }
-type QueryKeyConfig = Pick<UseTokenConfig, 'contextKey'> & {
+type QueryKeyConfig = Pick<UseTokenConfig, 'scopeKey'> & {
   activeChainId?: number
   signerAddress?: string
 }
@@ -17,12 +17,10 @@ type QueryKeyConfig = Pick<UseTokenConfig, 'contextKey'> & {
 function queryKey({
   address,
   chainId,
-  contextKey,
   formatUnits,
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
-  return [
-    { entity: 'token', address, chainId, contextKey, formatUnits },
-  ] as const
+  return [{ entity: 'token', address, chainId, formatUnits, scopeKey }] as const
 }
 
 function queryFn({
@@ -37,8 +35,8 @@ export function useToken({
   chainId: chainId_,
   formatUnits = 'ether',
   cacheTime,
-  contextKey,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -48,7 +46,7 @@ export function useToken({
   const chainId = useChainId({ chainId: chainId_ })
 
   return useQuery(
-    queryKey({ address, chainId, contextKey, formatUnits }),
+    queryKey({ address, chainId, formatUnits, scopeKey }),
     queryFn,
     {
       cacheTime,

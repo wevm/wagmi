@@ -16,7 +16,7 @@ export type UsePrepareSendTransactionConfig =
     QueryConfig<PrepareSendTransactionResult, Error>
 
 type QueryKeyArgs = Partial<PrepareSendTransactionArgs>
-type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'contextKey'> & {
+type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> & {
   activeChainId: number
   signerAddress?: string
 }
@@ -24,17 +24,17 @@ type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'contextKey'> & {
 function queryKey({
   activeChainId,
   chainId,
-  contextKey,
   request,
+  scopeKey,
   signerAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'prepareSendTransaction',
       activeChainId,
-      contextKey,
       chainId,
       request,
+      scopeKey,
       signerAddress,
     },
   ] as const
@@ -69,10 +69,10 @@ function queryFn({ signer }: { signer?: FetchSignerResult }) {
  */
 export function usePrepareSendTransaction({
   chainId,
-  contextKey,
   request,
   cacheTime,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -88,8 +88,8 @@ export function usePrepareSendTransaction({
     queryKey({
       activeChainId,
       chainId,
-      contextKey,
       request,
+      scopeKey,
       signerAddress: signer?._address,
     }),
     queryFn({ signer }),

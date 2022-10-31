@@ -95,21 +95,6 @@ function App() {
 }
 ```
 
-### contextKey (optional)
-
-Scopes the cache to a given context. Hooks that have identical context will share the same cache.
-
-```tsx {6}
-import { useEnsAddress } from 'wagmi'
-
-function App() {
-  const ensAddress = useEnsAddress({
-    name: 'awkweb.eth',
-    contextKey: 'wagmi',
-  })
-}
-```
-
 ### enabled (optional)
 
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
@@ -121,6 +106,21 @@ function App() {
   const ensAddress = useEnsAddress({
     name: 'awkweb.eth',
     enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    scopeKey: 'wagmi',
   })
 }
 ```

@@ -135,7 +135,7 @@ describe('useToken', () => {
       })
     })
 
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           token: useToken({
@@ -147,7 +147,7 @@ describe('useToken', () => {
           }),
           tokenWithContextKey: useToken({
             address: ensTokenAddress,
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

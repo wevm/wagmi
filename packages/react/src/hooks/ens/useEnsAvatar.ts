@@ -11,14 +11,14 @@ export type UseEnsAvatarArgs = Partial<FetchEnsAvatarArgs>
 export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 
 type QueryKeyArgs = UseEnsAvatarArgs
-type QueryKeyConfig = Pick<UseEnsLookupConfig, 'contextKey'>
+type QueryKeyConfig = Pick<UseEnsLookupConfig, 'scopeKey'>
 
 function queryKey({
   addressOrName,
   chainId,
-  contextKey,
+  scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensAvatar', addressOrName, chainId, contextKey }] as const
+  return [{ entity: 'ensAvatar', addressOrName, chainId, scopeKey }] as const
 }
 
 function queryFn({
@@ -32,8 +32,8 @@ export function useEnsAvatar({
   addressOrName,
   cacheTime,
   chainId: chainId_,
-  contextKey,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -42,7 +42,7 @@ export function useEnsAvatar({
 }: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ addressOrName, chainId, contextKey }), queryFn, {
+  return useQuery(queryKey({ addressOrName, chainId, scopeKey }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && addressOrName && chainId),
     staleTime,

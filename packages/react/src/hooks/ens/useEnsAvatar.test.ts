@@ -156,7 +156,7 @@ describe('useEnsAvatar', () => {
       })
     })
 
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           ensAvatar: useEnsAvatar({
@@ -168,7 +168,7 @@ describe('useEnsAvatar', () => {
           }),
           ensAvatarWithContextKey: useEnsAvatar({
             addressOrName: 'nick.eth',
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

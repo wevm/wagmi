@@ -38,7 +38,7 @@ describe('useEnsResolver', () => {
   })
 
   describe('configuration', () => {
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           ensResolver: useEnsResolver({
@@ -50,7 +50,7 @@ describe('useEnsResolver', () => {
           }),
           ensResolverWithContextKey: useEnsResolver({
             name: 'imhiring.eth',
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

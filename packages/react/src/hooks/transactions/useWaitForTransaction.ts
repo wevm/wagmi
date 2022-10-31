@@ -14,23 +14,23 @@ export type UseWaitForTransactionConfig = QueryConfig<
 >
 
 type QueryKeyArgs = UseWaitForTransactionArgs
-type QueryKeyConfig = Pick<UseWaitForTransactionConfig, 'contextKey'>
+type QueryKeyConfig = Pick<UseWaitForTransactionConfig, 'scopeKey'>
 
 function queryKey({
-  contextKey,
   confirmations,
   chainId,
   hash,
+  scopeKey,
   timeout,
   wait,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'waitForTransaction',
-      contextKey,
       confirmations,
       chainId,
       hash,
+      scopeKey,
       timeout,
       wait,
     },
@@ -44,7 +44,6 @@ function queryFn({
 }
 
 export function useWaitForTransaction({
-  contextKey,
   chainId: chainId_,
   confirmations,
   hash,
@@ -52,6 +51,7 @@ export function useWaitForTransaction({
   wait,
   cacheTime,
   enabled = true,
+  scopeKey,
   staleTime,
   suspense,
   onError,
@@ -61,7 +61,7 @@ export function useWaitForTransaction({
   const chainId = useChainId({ chainId: chainId_ })
 
   return useQuery(
-    queryKey({ contextKey, chainId, confirmations, hash, timeout, wait }),
+    queryKey({ chainId, confirmations, hash, scopeKey, timeout, wait }),
     queryFn,
     {
       cacheTime,

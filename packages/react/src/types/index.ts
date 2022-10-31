@@ -64,7 +64,7 @@ export type QueryConfig<Data, Error> = Pick<
   | 'onSuccess'
 > & {
   /** Scope the cache to a given context. */
-  contextKey?: string
+  scopeKey?: string
 }
 
 export type InfiniteQueryConfig<Data, Error> = Pick<
@@ -82,7 +82,7 @@ export type InfiniteQueryConfig<Data, Error> = Pick<
   | 'onSuccess'
 > & {
   /** Scope the cache to a given context. */
-  contextKey?: string
+  scopeKey?: string
 }
 
 export type MutationConfig<Data, Error, Variables = void> = {

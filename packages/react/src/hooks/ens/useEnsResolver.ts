@@ -11,14 +11,10 @@ export type UseEnsResolverArgs = Partial<FetchEnsResolverArgs>
 export type UseEnsResolverConfig = QueryConfig<FetchEnsResolverResult, Error>
 
 type QueryKeyArgs = UseEnsResolverArgs
-type QueryKeyConfig = Pick<UseEnsResolverConfig, 'contextKey'>
+type QueryKeyConfig = Pick<UseEnsResolverConfig, 'scopeKey'>
 
-function queryKey({
-  chainId,
-  contextKey,
-  name,
-}: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensResolver', chainId, contextKey, name }] as const
+function queryKey({ chainId, name, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'ensResolver', chainId, name, scopeKey }] as const
 }
 
 function queryFn({
@@ -31,9 +27,9 @@ function queryFn({
 export function useEnsResolver({
   cacheTime,
   chainId: chainId_,
-  contextKey,
-  enabled = true,
   name,
+  enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -42,7 +38,7 @@ export function useEnsResolver({
 }: UseEnsResolverArgs & UseEnsResolverConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ chainId, contextKey, name }), queryFn, {
+  return useQuery(queryKey({ chainId, name, scopeKey }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && chainId && name),
     staleTime,

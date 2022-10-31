@@ -31,7 +31,7 @@ describe('useFeeData', () => {
   })
 
   describe('configuration', () => {
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           feeData: useFeeData(),
@@ -39,7 +39,7 @@ describe('useFeeData', () => {
             enabled: false,
           }),
           feeDataWithContextKey: useFeeData({
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

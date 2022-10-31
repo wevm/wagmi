@@ -29,7 +29,7 @@ export type UsePrepareContractWriteConfig<
   QueryConfig<PrepareWriteContractResult, Error>
 
 type QueryKeyArgs = Omit<PrepareWriteContractConfig, 'abi'>
-type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'contextKey'> & {
+type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
   activeChainId?: number
   signerAddress?: string
 }
@@ -106,11 +106,11 @@ export function usePrepareContractWrite<
     abi,
     functionName,
     chainId,
-    contextKey,
     args,
     overrides,
     cacheTime,
     enabled = true,
+    scopeKey,
     staleTime,
     suspense,
     onError,
@@ -129,8 +129,8 @@ export function usePrepareContractWrite<
       address,
       args,
       chainId,
-      contextKey,
       functionName,
+      scopeKey,
       signerAddress: signer?._address,
       overrides,
     } as Omit<PrepareWriteContractConfig, 'abi'>),

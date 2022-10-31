@@ -31,7 +31,7 @@ describe('useBlockNumber', () => {
   })
 
   describe('configuration', () => {
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           blockNumber: useBlockNumber(),
@@ -39,7 +39,7 @@ describe('useBlockNumber', () => {
             enabled: false,
           }),
           blockNumberWithContextKey: useBlockNumber({
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

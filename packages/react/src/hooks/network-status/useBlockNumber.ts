@@ -19,10 +19,10 @@ export type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
 export type UseBlockNumberConfig = QueryConfig<FetchBlockNumberResult, Error>
 
 type QueryKeyArgs = Partial<FetchBlockNumberArgs>
-type QueryKeyConfig = Pick<UseBlockNumberConfig, 'contextKey'>
+type QueryKeyConfig = Pick<UseBlockNumberConfig, 'scopeKey'>
 
-function queryKey({ chainId, contextKey }: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'blockNumber', chainId, contextKey }] as const
+function queryKey({ chainId, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'blockNumber', chainId, scopeKey }] as const
 }
 
 function queryFn({
@@ -34,8 +34,8 @@ function queryFn({
 export function useBlockNumber({
   cacheTime = 0,
   chainId: chainId_,
-  contextKey,
   enabled = true,
+  scopeKey,
   staleTime,
   suspense,
   watch = false,
@@ -61,7 +61,7 @@ export function useBlockNumber({
       // Just to be safe in case the provider implementation
       // calls the event callback after .off() has been called
       if (watch)
-        queryClient.setQueryData(queryKey({ chainId, contextKey }), blockNumber)
+        queryClient.setQueryData(queryKey({ chainId, scopeKey }), blockNumber)
       if (onBlock) onBlock(blockNumber)
     }, 1)
 
@@ -73,7 +73,7 @@ export function useBlockNumber({
     }
   }, [
     chainId,
-    contextKey,
+    scopeKey,
     onBlock,
     provider,
     queryClient,
@@ -81,7 +81,7 @@ export function useBlockNumber({
     webSocketProvider,
   ])
 
-  return useQuery(queryKey({ contextKey, chainId }), queryFn, {
+  return useQuery(queryKey({ scopeKey, chainId }), queryFn, {
     cacheTime,
     enabled,
     staleTime,

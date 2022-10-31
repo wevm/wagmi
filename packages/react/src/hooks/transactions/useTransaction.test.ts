@@ -37,7 +37,7 @@ describe('useTransaction', () => {
   })
 
   describe('configuration', () => {
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           transaction: useTransaction({
@@ -49,7 +49,7 @@ describe('useTransaction', () => {
           }),
           transactionWithContextKey: useTransaction({
             hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

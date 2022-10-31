@@ -11,14 +11,10 @@ export type UseEnsAddressArgs = Partial<FetchEnsAddressArgs>
 export type UseEnsAddressConfig = QueryConfig<FetchEnsAddressResult, Error>
 
 type QueryKeyArgs = UseEnsAddressArgs
-type QueryKeyConfig = Pick<UseEnsAddressConfig, 'contextKey'>
+type QueryKeyConfig = Pick<UseEnsAddressConfig, 'scopeKey'>
 
-function queryKey({
-  chainId,
-  contextKey,
-  name,
-}: QueryKeyArgs & QueryKeyConfig) {
-  return [{ entity: 'ensAddress', chainId, contextKey, name }] as const
+function queryKey({ chainId, name, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'ensAddress', chainId, name, scopeKey }] as const
 }
 
 function queryFn({
@@ -31,9 +27,9 @@ function queryFn({
 export function useEnsAddress({
   cacheTime,
   chainId: chainId_,
-  contextKey,
   enabled = true,
   name,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -42,7 +38,7 @@ export function useEnsAddress({
 }: UseEnsAddressArgs & UseEnsAddressConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ chainId, contextKey, name }), queryFn, {
+  return useQuery(queryKey({ chainId, name, scopeKey }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && chainId && name),
     staleTime,

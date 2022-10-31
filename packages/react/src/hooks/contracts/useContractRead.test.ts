@@ -86,7 +86,7 @@ describe('useContractRead', () => {
       `)
     })
 
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           contractRead: useContractRead({
@@ -107,7 +107,7 @@ describe('useContractRead', () => {
             functionName: 'love',
             args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
             chainId: 1,
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }

@@ -105,7 +105,7 @@ describe('useEnsName', () => {
       })
     })
 
-    it('contextKey', async () => {
+    it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
           ensName: useEnsName({
@@ -117,7 +117,7 @@ describe('useEnsName', () => {
           }),
           ensNameWithContextKey: useEnsName({
             address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
-            contextKey: 'wagmi',
+            scopeKey: 'wagmi',
             enabled: false,
           }),
         }
