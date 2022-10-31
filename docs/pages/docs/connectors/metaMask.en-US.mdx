@@ -3,7 +3,7 @@ title: 'MetaMask'
 description: 'Official wagmi Connector for MetaMask.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 # MetaMask
 
@@ -80,7 +80,7 @@ const connector = new MetaMaskConnector({
 
 #### UNSTABLE_shimOnConnectSelectAccount
 
-<Callout emoji="🚧">
+<Callout type="warning">
   This is an experimental feature. It's stable enough to show up in the docs,
   but should be used with care. If you have any feedback, [create a
   discussion](https://github.com/wagmi-dev/wagmi/discussions).

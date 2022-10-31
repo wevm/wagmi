@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+// eslint-disable-next-line import/no-unresolved
 import { locales } from 'nextra/locales'
 
 const redirects: Record<string, string> = {
