@@ -19,7 +19,7 @@ export function Connect() {
       return
     }
     if (uri) {
-      Modal.open(uri.replace('irn', 'iridium'), () => {
+      Modal.open(uri, () => {
         console.log('EVENT: v2 modal closed')
       })
       setUri('')
