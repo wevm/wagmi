@@ -1,5 +1,5 @@
 import Modal from '@walletconnect/qrcode-modal'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 import { useIsMounted } from '../hooks'
@@ -13,7 +13,7 @@ export function Connect() {
   const { disconnect } = useDisconnect()
   const { uri, setUri } = useWalletConnectV2()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isConnected) {
       Modal.close()
       return
