@@ -21,7 +21,7 @@ declare module 'abitype' {
   }
 }
 
-declare module 'ethers/lib/utils' {
+declare module 'ethers/lib/utils.js' {
   export function getAddress(address: string): Address
   export function verifyTypedData<
     TTypedData extends TypedData,

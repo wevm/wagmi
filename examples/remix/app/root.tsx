@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import * as React from 'react'
 import {
   Links,
   LiveReload,
@@ -36,7 +36,7 @@ export const meta: MetaFunction = () => {
 export default function App() {
   const { alchemyApiKey } = useLoaderData()
 
-  const client = useMemo(() => {
+  const client = React.useMemo(() => {
     const { chains, provider, webSocketProvider } = configureChains(
       defaultChains,
       [alchemyProvider({ apiKey: alchemyApiKey })],

@@ -1,6 +1,6 @@
 import { AbiParameter } from 'abitype'
 import { BigNumber, Contract } from 'ethers'
-import { FunctionFragment, isAddress } from 'ethers/lib/utils'
+import { FunctionFragment, isAddress } from 'ethers/lib/utils.js'
 
 /**
  * Get normalized function name from contract
