@@ -21,7 +21,7 @@ export function Header({ showGitcoinBanner }: Props) {
     <header className="mb-10 flex flex-col items-center">
       {showGitcoinBanner && (
         <div className="mb-4">
-          <Callout emoji="🚀">
+          <Callout type="info">
             wagmi is participating in{' '}
             <a
               target="_blank"
