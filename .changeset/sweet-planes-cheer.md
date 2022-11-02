@@ -3,4 +3,4 @@
 'wagmi': patch
 ---
 
-feat(injected): add kucoin wallet support
+Added Kucoin wallet support to `InjectedConnector`
