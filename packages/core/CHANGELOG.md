@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.6.9
+
+### Patch Changes
+
+- [#1207](https://github.com/wagmi-dev/wagmi/pull/1207) [`c73d463`](https://github.com/wagmi-dev/wagmi/commit/c73d463d65c9dbfcfe709187e47323a769589741) Thanks [@lvshaoping007](https://github.com/lvshaoping007)! - Added Kucoin wallet support to `InjectedConnector`
+
 ## 0.6.8
 
 ### Patch Changes
