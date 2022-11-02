@@ -35,6 +35,24 @@ export type UseContractReadsConfig<TContracts extends unknown[]> =
       watch?: boolean
     }
 
+type QueryKeyArgs<TContracts extends unknown[]> = ReadContractsConfig<
+  TContracts,
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isContractsOptional: true
+    isFunctionNameOptional: true
+  }
+>
+type QueryKeyConfig<TContracts extends unknown[]> = Pick<
+  UseContractReadsConfig<TContracts>,
+  'scopeKey'
+> & {
+  blockNumber?: number
+  chainId?: number
+}
+
 function queryKey<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
@@ -42,29 +60,21 @@ function queryKey<
     abi: TAbi
     functionName: TFunctionName
   }[],
->(
-  {
-    allowFailure,
-    contracts,
-    overrides,
-  }: ReadContractsConfig<
-    TContracts,
-    {
-      isAbiOptional: true
-      isAddressOptional: true
-      isArgsOptional: true
-      isContractsOptional: true
-      isFunctionNameOptional: true
-    }
-  >,
-  { blockNumber, chainId }: { blockNumber?: number; chainId?: number },
-) {
+>({
+  allowFailure,
+  blockNumber,
+  chainId,
+  contracts,
+  overrides,
+  scopeKey,
+}: QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>) {
   return [
     {
       entity: 'readContracts',
       allowFailure,
       blockNumber,
       chainId,
+      scopeKey,
       contracts: ((contracts ?? []) as unknown as ContractConfig[]).map(
         ({ address, args, chainId, functionName }) => ({
           address,
@@ -123,6 +133,7 @@ export function useContractReads<
     allowFailure = true,
     cacheOnBlock = false,
     cacheTime,
+    scopeKey,
     contracts,
     overrides,
     enabled: enabled_ = true,
@@ -146,11 +157,23 @@ export function useContractReads<
 
   const queryKey_ = React.useMemo(
     () =>
-      queryKey(
-        { allowFailure, contracts, overrides },
-        { blockNumber: cacheOnBlock ? blockNumber : undefined, chainId },
-      ),
-    [allowFailure, blockNumber, cacheOnBlock, chainId, contracts, overrides],
+      queryKey({
+        allowFailure,
+        blockNumber: cacheOnBlock ? blockNumber : undefined,
+        chainId,
+        contracts,
+        overrides,
+        scopeKey,
+      }),
+    [
+      allowFailure,
+      blockNumber,
+      cacheOnBlock,
+      chainId,
+      scopeKey,
+      contracts,
+      overrides,
+    ],
   )
 
   const enabled = React.useMemo(() => {
