@@ -174,6 +174,7 @@ type InjectedProviderFlags = {
   isTokenary?: true
   isTrust?: true
   isAvalanche?: true
+  isKuCoinWallet?: true
 }
 
 type InjectedProviders = InjectedProviderFlags & {

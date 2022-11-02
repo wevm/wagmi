@@ -4,6 +4,7 @@ export function getInjectedName(ethereum?: Ethereum) {
   if (!ethereum) return 'Injected'
 
   const getName = (provider: Ethereum) => {
+    if (provider.isKuCoinWallet) return 'KuCoin Wallet'
     if (provider.isAvalanche) return 'Core Wallet'
     if (provider.isBitKeep) return 'BitKeep'
     if (provider.isBraveWallet) return 'Brave Wallet'
