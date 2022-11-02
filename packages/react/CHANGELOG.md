@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.7.10
+
+### Patch Changes
+
+- [#1206](https://github.com/wagmi-dev/wagmi/pull/1206) [`15ff089`](https://github.com/wagmi-dev/wagmi/commit/15ff0896216abecf5967294ae5aeb26ea7fb480b) Thanks [@jxom](https://github.com/jxom)! - Added `scopeKey` as a configuration option to the Hooks which scope its cache to a given context. Hooks that have identical scope will share the same cache.
+
+- [#1207](https://github.com/wagmi-dev/wagmi/pull/1207) [`c73d463`](https://github.com/wagmi-dev/wagmi/commit/c73d463d65c9dbfcfe709187e47323a769589741) Thanks [@lvshaoping007](https://github.com/lvshaoping007)! - Added Kucoin wallet support to `InjectedConnector`
+
+- Updated dependencies [[`c73d463`](https://github.com/wagmi-dev/wagmi/commit/c73d463d65c9dbfcfe709187e47323a769589741)]:
+  - @wagmi/core@0.6.9
+
 ## 0.7.9
 
 ### Patch Changes
