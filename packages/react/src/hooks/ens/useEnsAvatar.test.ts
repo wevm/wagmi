@@ -8,6 +8,7 @@ import { useEnsAvatar } from './useEnsAvatar'
 
 const handlers = [
   // brantly.eth
+  // 0x983110309620d911731ac0932219af06091b6744
   rest.get(
     'https://wrappedpunks.com:3000/api/punks/metadata/2430',
     (_req, res, ctx) =>
@@ -23,6 +24,7 @@ const handlers = [
         }),
       ),
   ),
+  // nick.eth
   // 0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5
   rest.get(
     'https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x11ef687cfeb2e353670479f2dcc76af2bc6b3935000000000002c40000000001',
@@ -160,14 +162,14 @@ describe('useEnsAvatar', () => {
       const { result, waitFor } = renderHook(() => {
         return {
           ensAvatar: useEnsAvatar({
-            addressOrName: 'nick.eth',
+            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
           }),
           ensAvatarwithoutScopeKey: useEnsAvatar({
-            addressOrName: 'nick.eth',
+            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
             enabled: false,
           }),
           ensAvatarwithScopeKey: useEnsAvatar({
-            addressOrName: 'nick.eth',
+            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
             scopeKey: 'wagmi',
             enabled: false,
           }),
