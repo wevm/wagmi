@@ -12,18 +12,31 @@ export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
 
 export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
 
-export const queryKey = ({
+type QueryKeyArgs = Partial<FetchBalanceArgs>
+type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
+
+function queryKey({
   address,
   chainId,
   formatUnits,
+  scopeKey,
   token,
-}: Partial<FetchBalanceArgs> & {
-  chainId?: number
-}) => [{ entity: 'balance', address, chainId, formatUnits, token }] as const
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
+    {
+      entity: 'balance',
+      address,
+      chainId,
+      formatUnits,
+      scopeKey,
+      token,
+    },
+  ] as const
+}
 
-const queryFn = ({
+function queryFn({
   queryKey: [{ address, chainId, formatUnits, token }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   if (!address) throw new Error('address is required')
   return fetchBalance({ address, chainId, formatUnits, token })
 }
@@ -34,6 +47,7 @@ export function useBalance({
   chainId: chainId_,
   enabled = true,
   formatUnits,
+  scopeKey,
   staleTime,
   suspense,
   token,
@@ -44,7 +58,7 @@ export function useBalance({
 }: UseBalanceArgs & UseBalanceConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
   const balanceQuery = useQuery(
-    queryKey({ address, chainId, formatUnits, token }),
+    queryKey({ address, chainId, formatUnits, scopeKey, token }),
     queryFn,
     {
       cacheTime,

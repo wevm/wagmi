@@ -81,6 +81,33 @@ describe('useBalance', () => {
         `)
     })
 
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          balance: useBalance({
+            address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          }),
+          balancewithoutScopeKey: useBalance({
+            address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            enabled: false,
+          }),
+          balancewithScopeKey: useBalance({
+            address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.balance.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.balancewithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.balancewithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useBalance({
