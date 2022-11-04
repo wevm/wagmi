@@ -16,8 +16,9 @@ export type UseSignerConfig = Omit<
 > &
   FetchSignerArgs
 
-export const queryKey = ({ chainId }: FetchSignerArgs) =>
-  [{ entity: 'signer', chainId, persist: false }] as const
+export function queryKey({ chainId }: FetchSignerArgs) {
+  return [{ entity: 'signer', chainId, persist: false }] as const
+}
 
 function queryFn<TSigner extends Signer>({
   queryKey: [{ chainId }],

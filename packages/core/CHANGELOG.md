@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.6.10
+
+### Patch Changes
+
+- [#1232](https://github.com/wagmi-dev/wagmi/pull/1232) [`c0ca509`](https://github.com/wagmi-dev/wagmi/commit/c0ca509506dcf6d98b058df549dc761c9a5f3d1c) Thanks [@tmm](https://github.com/tmm)! - Added validation to check that chain is configured for connector when accessing `Signer`.
+
 ## 0.6.9
 
 ### Patch Changes

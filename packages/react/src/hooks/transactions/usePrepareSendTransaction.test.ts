@@ -156,6 +156,28 @@ describe('usePrepareSendTransaction', () => {
         expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
       )
     })
+
+    it('should throw an error if chainId is not configured', async () => {
+      const utils = renderHook(() =>
+        usePrepareSendTransactionWithConnect({
+          request: {
+            to: 'moxey.eth',
+            value: BigNumber.from('10000000000000000'),
+          },
+          chainId: 69_420,
+        }),
+      )
+
+      const { result, waitFor } = utils
+      await actConnect({ chainId: 69_420, utils })
+
+      await waitFor(() =>
+        expect(result.current.prepareSendTransaction.isError).toBeTruthy(),
+      )
+      expect(result.current.prepareSendTransaction.error).toMatchInlineSnapshot(
+        '[ChainNotConfigured: Chain "69420" not configured for connector "mock".]',
+      )
+    })
   })
 
   describe('behaviors', () => {

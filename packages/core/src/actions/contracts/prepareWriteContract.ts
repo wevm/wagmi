@@ -96,7 +96,7 @@ export async function prepareWriteContract<
 > {
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId })
+  if (chainId) assertActiveChain({ chainId, signer })
 
   const contract = getContract({
     address,

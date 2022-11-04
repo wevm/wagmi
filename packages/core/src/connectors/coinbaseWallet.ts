@@ -201,7 +201,8 @@ export class CoinbaseWalletConnector extends Connector<
       )
     } catch (error) {
       const chain = this.chains.find((x) => x.id === chainId)
-      if (!chain) throw new ChainNotConfiguredError()
+      if (!chain)
+        throw new ChainNotConfiguredError({ chainId, connectorId: this.id })
 
       // Indicates chain is not added to provider
       if ((error as ProviderRpcError).code === 4902) {

@@ -79,6 +79,30 @@ describe('sendTransaction', () => {
       )
     })
 
+    it('chain not configured for connector', async () => {
+      await connect({ connector: client.connectors[0]!, chainId: 420 })
+
+      const signers = getSigners()
+      const to = signers[1]
+      const toAddress = (await to?.getAddress()) || ''
+
+      const config = await prepareSendTransaction({
+        request: {
+          to: toAddress,
+          value: parseEther('10'),
+        },
+      })
+
+      expect(() =>
+        sendTransaction({
+          chainId: 420,
+          ...config,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Chain \\"420\\" not configured for connector \\"mock\\"."',
+      )
+    })
+
     it('insufficient balance', async () => {
       await connect({ connector: client.connectors[0]! })
 

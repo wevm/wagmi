@@ -190,6 +190,24 @@ describe('prepareSendTransaction', () => {
       )
     })
 
+    it('chain not configured for connector', async () => {
+      await connect({ connector, chainId: 69_420 })
+
+      const request = {
+        gasLimit: BigNumber.from('1000000'),
+        to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+        value: BigNumber.from('10000000000000000'), // 0.01 ETH
+      }
+      await expect(() =>
+        prepareSendTransaction({
+          request,
+          chainId: 69_420,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Chain \\"69420\\" not configured for connector \\"mock\\"."',
+      )
+    })
+
     it('fetchEnsAddress throws', async () => {
       vi.spyOn(fetchEnsAddress, 'fetchEnsAddress').mockRejectedValue(
         new Error('error'),

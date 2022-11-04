@@ -50,8 +50,7 @@ export async function prepareSendTransaction({
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
-
-  if (chainId) assertActiveChain({ chainId })
+  if (chainId) assertActiveChain({ chainId, signer })
 
   const [to, gasLimit] = await Promise.all([
     isAddress(request.to)
