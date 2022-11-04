@@ -131,7 +131,7 @@ export async function writeContract<
 
   const signer = await fetchSigner<TSigner>()
   if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId })
+  if (chainId) assertActiveChain({ chainId, signer })
   if (mode === 'prepared')
     if (!request_) throw new Error('`request` is required')
 

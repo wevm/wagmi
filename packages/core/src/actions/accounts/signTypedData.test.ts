@@ -92,6 +92,27 @@ describe('signTypedData', () => {
           `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby\\"."`,
         )
       })
+
+      it('throws if chain not configured for connector', async () => {
+        await connect({
+          chainId: 69_420,
+          connector: new MockConnector({
+            options: {
+              flags: { noSwitchChain: true },
+              signer: getSigners()[0]!,
+            },
+          }),
+        })
+        await expect(
+          signTypedData({
+            domain: { ...domain, chainId: 69_420 },
+            types,
+            value,
+          }),
+        ).rejects.toThrowErrorMatchingInlineSnapshot(
+          '"Chain \\"69420\\" not configured for connector \\"mock\\"."',
+        )
+      })
     })
   })
 })

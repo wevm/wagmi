@@ -2,14 +2,15 @@ import {
   FetchSignerResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
+  Signer,
   prepareWriteContract,
 } from '@wagmi/core'
 import { Abi } from 'abitype'
-import { Signer, providers } from 'ethers'
+import { providers } from 'ethers'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useSigner } from '../accounts'
-import { useChainId, useQuery } from '../utils'
+import { useNetwork, useSigner } from '../accounts'
+import { useQuery } from '../utils'
 
 export type UsePrepareContractWriteConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
@@ -118,14 +119,12 @@ export function usePrepareContractWrite<
     onSuccess,
   }: UsePrepareContractWriteConfig<TAbi, TFunctionName> = {} as any,
 ) {
-  const activeChainId = useChainId()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({
-    chainId: chainId ?? activeChainId,
-  })
+  const { chain: activeChain } = useNetwork()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
 
   const prepareContractWriteQuery = useQuery(
     queryKey({
-      activeChainId,
+      activeChainId: activeChain?.id,
       address,
       args,
       chainId,
@@ -149,6 +148,7 @@ export function usePrepareContractWrite<
       onSuccess,
     },
   )
+
   return Object.assign(prepareContractWriteQuery, {
     config: {
       abi,

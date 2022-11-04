@@ -63,6 +63,24 @@ describe('writeContract', () => {
       )
     })
 
+    it('chain not configured for connector', async () => {
+      await connect({ connector, chainId: 69_420 })
+      const config = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+      })
+
+      await expect(() =>
+        writeContract({
+          ...config,
+          chainId: 69_420,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Chain \\"69420\\" not configured for connector \\"mock\\"."',
+      )
+    })
+
     it('contract method error', async () => {
       await connect({ connector })
       await expect(() =>
