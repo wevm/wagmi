@@ -8,8 +8,8 @@ import {
 import { providers } from 'ethers'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useSigner } from '../accounts'
-import { useChainId, useQuery } from '../utils'
+import { useNetwork, useSigner } from '../accounts'
+import { useQuery } from '../utils'
 
 export type UsePrepareSendTransactionConfig =
   Partial<PrepareSendTransactionArgs> &
@@ -17,7 +17,7 @@ export type UsePrepareSendTransactionConfig =
 
 type QueryKeyArgs = Partial<PrepareSendTransactionArgs>
 type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> & {
-  activeChainId: number
+  activeChainId?: number
   signerAddress?: string
 }
 
@@ -79,14 +79,12 @@ export function usePrepareSendTransaction({
   onSettled,
   onSuccess,
 }: UsePrepareSendTransactionConfig = {}) {
-  const activeChainId = useChainId()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({
-    chainId: chainId ?? activeChainId,
-  })
+  const { chain: activeChain } = useNetwork()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
 
   const prepareSendTransactionQuery = useQuery(
     queryKey({
-      activeChainId,
+      activeChainId: activeChain?.id,
       chainId,
       request,
       scopeKey,

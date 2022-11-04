@@ -39,4 +39,25 @@ describe('assertActiveChain', () => {
     })
     assertActiveChain({ chainId: 1 })
   })
+
+  it('errors when signer is on wrong chain', async () => {
+    const signer = getSigners()[0]!
+    ;(
+      signer.provider as unknown as { network: { chainId: number } }
+    ).network.chainId = 1
+    await connect({
+      chainId: 5,
+      connector: new MockConnector({
+        options: {
+          flags: { noSwitchChain: true },
+          signer,
+        },
+      }),
+    })
+    expect(() =>
+      assertActiveChain({ chainId: 5, signer }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Chain \\"5\\" not configured for connector \\"mock\\"."',
+    )
+  })
 })
