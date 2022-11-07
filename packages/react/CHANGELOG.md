@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.7.13
+
+### Patch Changes
+
+- [#1250](https://github.com/wagmi-dev/wagmi/pull/1250) [`ce2e0f4`](https://github.com/wagmi-dev/wagmi/commit/ce2e0f4a46b8fd1c509ead552012ef4c072a525b) Thanks [@tmm](https://github.com/tmm)! - Added support for Trust Wallet browser extension.
+
+- Updated dependencies [[`ce2e0f4`](https://github.com/wagmi-dev/wagmi/commit/ce2e0f4a46b8fd1c509ead552012ef4c072a525b)]:
+  - @wagmi/core@0.6.12
+
 ## 0.7.12
 
 ### Patch Changes
