@@ -8,20 +8,22 @@ import { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsAvatarArgs = Partial<FetchEnsAvatarArgs>
-
 export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 
-export const queryKey = ({
+type QueryKeyArgs = UseEnsAvatarArgs
+type QueryKeyConfig = Pick<UseEnsLookupConfig, 'scopeKey'>
+
+function queryKey({
   addressOrName,
   chainId,
-}: {
-  addressOrName?: UseEnsAvatarArgs['addressOrName']
-  chainId?: number
-}) => [{ entity: 'ensAvatar', addressOrName, chainId }] as const
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'ensAvatar', addressOrName, chainId, scopeKey }] as const
+}
 
-const queryFn = ({
+function queryFn({
   queryKey: [{ addressOrName, chainId }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   if (!addressOrName) throw new Error('addressOrName is required')
   return fetchEnsAvatar({ addressOrName, chainId })
 }
@@ -31,6 +33,7 @@ export function useEnsAvatar({
   cacheTime,
   chainId: chainId_,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -39,7 +42,7 @@ export function useEnsAvatar({
 }: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ addressOrName, chainId }), queryFn, {
+  return useQuery(queryKey({ addressOrName, chainId, scopeKey }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && addressOrName && chainId),
     staleTime,

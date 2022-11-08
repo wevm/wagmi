@@ -56,7 +56,7 @@ function App() {
 Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
-import { useContract } from 'wagmi'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -74,7 +74,7 @@ Contract ABI. If `abi` is not defined, hook will not run.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {6}
-import { useContract } from 'wagmi'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -233,6 +233,23 @@ function App() {
     abi: wagmigotchiABI,
     functionName: 'getSleep',
     isDataEqual: (prev, next) => prev === next,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {7}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    scopeKey: 'wagmi',
+    functionName: 'getSleep',
   })
 }
 ```

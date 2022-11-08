@@ -110,6 +110,21 @@ function App() {
 }
 ```
 
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    scopeKey: 'wagmi',
+  })
+}
+```
+
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `1000 * 60 * 60 * 24` (24 hours).

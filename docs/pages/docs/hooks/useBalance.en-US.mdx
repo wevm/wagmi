@@ -184,6 +184,21 @@ function App() {
 }
 ```
 
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical scope will share the same cache.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    scopeKey: 'wagmi',
+  })
+}
+```
+
 ### suspense (optional)
 
 Set this to `true` to enable suspense mode.

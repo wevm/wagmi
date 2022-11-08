@@ -94,6 +94,20 @@ function App() {
 }
 ```
 
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    scopeKey: 'wagmi',
+  })
+}
+```
+
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.

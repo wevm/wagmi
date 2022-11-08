@@ -79,7 +79,7 @@ export async function sendTransaction({
     if (!request.to) throw new Error('`to` is required')
   }
 
-  if (chainId) assertActiveChain({ chainId })
+  if (chainId) assertActiveChain({ chainId, signer })
 
   try {
     // Why don't we just use `signer.sendTransaction`?

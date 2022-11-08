@@ -144,6 +144,21 @@ function App() {
 }
 ```
 
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {6}
+import { useToken } from 'wagmi'
+
+function App() {
+  const token = useToken({
+    address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
+    scopeKey: 'wagmi',
+  })
+}
+```
+
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `1000 * 60 * 60 * 24` (24 hours).

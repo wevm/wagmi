@@ -378,6 +378,32 @@ function App() {
 }
 ```
 
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    scopeKey: 'wagmi',
+    contracts: [
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getAlive',
+      },
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getBoredom',
+      },
+    ],
+  })
+}
+```
+
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.

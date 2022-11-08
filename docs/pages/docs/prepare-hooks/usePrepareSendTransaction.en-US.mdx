@@ -146,6 +146,24 @@ function App() {
 }
 ```
 
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {9}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    scopeKey: 'wagmi',
+  })
+}
+```
+
 ### staleTime (optional)
 
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale.

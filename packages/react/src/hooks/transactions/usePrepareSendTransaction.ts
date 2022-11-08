@@ -8,26 +8,33 @@ import {
 import { providers } from 'ethers'
 
 import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useSigner } from '../accounts'
-import { useChainId, useQuery } from '../utils'
+import { useNetwork, useSigner } from '../accounts'
+import { useQuery } from '../utils'
 
 export type UsePrepareSendTransactionConfig =
   Partial<PrepareSendTransactionArgs> &
     QueryConfig<PrepareSendTransactionResult, Error>
 
-function queryKey(
-  { chainId, request }: Partial<PrepareSendTransactionArgs>,
-  {
-    activeChainId,
-    signerAddress,
-  }: { activeChainId: number; signerAddress?: string },
-) {
+type QueryKeyArgs = Partial<PrepareSendTransactionArgs>
+type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> & {
+  activeChainId?: number
+  signerAddress?: string
+}
+
+function queryKey({
+  activeChainId,
+  chainId,
+  request,
+  scopeKey,
+  signerAddress,
+}: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'prepareSendTransaction',
       activeChainId,
       chainId,
       request,
+      scopeKey,
       signerAddress,
     },
   ] as const
@@ -65,22 +72,24 @@ export function usePrepareSendTransaction({
   request,
   cacheTime,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,
   onSuccess,
 }: UsePrepareSendTransactionConfig = {}) {
-  const activeChainId = useChainId()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({
-    chainId: chainId ?? activeChainId,
-  })
+  const { chain: activeChain } = useNetwork()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
 
   const prepareSendTransactionQuery = useQuery(
-    queryKey(
-      { request, chainId },
-      { activeChainId, signerAddress: signer?._address },
-    ),
+    queryKey({
+      activeChainId: activeChain?.id,
+      chainId,
+      request,
+      scopeKey,
+      signerAddress: signer?._address,
+    }),
     queryFn({ signer }),
     {
       cacheTime,

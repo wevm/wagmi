@@ -32,16 +32,20 @@ export type UseContractReadConfig<
     watch?: boolean
   }
 
-function queryKey(
-  {
-    address,
-    args,
-    chainId,
-    functionName,
-    overrides,
-  }: Omit<ReadContractConfig, 'abi'>,
-  { blockNumber }: { blockNumber?: number },
-) {
+type QueryKeyArgs = Omit<ReadContractConfig, 'abi'>
+type QueryKeyConfig = Pick<UseContractReadConfig, 'scopeKey'> & {
+  blockNumber?: number
+}
+
+function queryKey({
+  address,
+  args,
+  blockNumber,
+  chainId,
+  functionName,
+  overrides,
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'readContract',
@@ -51,6 +55,7 @@ function queryKey(
       chainId,
       functionName,
       overrides,
+      scopeKey,
     },
   ] as const
 }
@@ -91,6 +96,7 @@ export function useContractRead<
     cacheTime,
     enabled: enabled_ = true,
     isDataEqual = deepEqual,
+    scopeKey,
     select,
     staleTime,
     suspense,
@@ -109,16 +115,15 @@ export function useContractRead<
 
   const queryKey_ = React.useMemo(
     () =>
-      queryKey(
-        {
-          address,
-          args,
-          chainId,
-          functionName,
-          overrides,
-        } as Omit<ReadContractConfig, 'abi'>,
-        { blockNumber: cacheOnBlock ? blockNumber : undefined },
-      ),
+      queryKey({
+        address,
+        args,
+        blockNumber: cacheOnBlock ? blockNumber : undefined,
+        chainId,
+        functionName,
+        overrides,
+        scopeKey,
+      } as Omit<ReadContractConfig, 'abi'>),
     [
       address,
       args,
@@ -127,6 +132,7 @@ export function useContractRead<
       chainId,
       functionName,
       overrides,
+      scopeKey,
     ],
   )
 

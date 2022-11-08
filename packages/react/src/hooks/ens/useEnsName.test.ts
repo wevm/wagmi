@@ -105,6 +105,33 @@ describe('useEnsName', () => {
       })
     })
 
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensName: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+          }),
+          ensNamewithoutScopeKey: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+            enabled: false,
+          }),
+          ensNamewithScopeKey: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.ensName.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.ensNamewithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensNamewithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsName({
