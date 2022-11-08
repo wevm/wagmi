@@ -68,10 +68,6 @@
       "module": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.esm.js",
       "default": "./connectors/coinbaseWallet/dist/wagmi-core-connectors-coinbaseWallet.cjs.js"
     },
-    "./connectors/walletConnectV2": {
-      "module": "./connectors/walletConnectV2/dist/wagmi-core-connectors-walletConnectV2.esm.js",
-      "default": "./connectors/walletConnectV2/dist/wagmi-core-connectors-walletConnectV2.cjs.js"
-    },
     "./package.json": "./package.json"
   },
   "sideEffects": false,
@@ -89,7 +85,6 @@
       "connectors/coinbaseWallet.ts",
       "connectors/metaMask.ts",
       "connectors/walletConnect.ts",
-      "connectors/walletConnectV2.ts",
       "connectors/mock/index.ts",
       "internal.ts",
       "providers/alchemy.ts",
@@ -102,6 +97,7 @@
     "@coinbase/wallet-sdk": ">=3.3.0",
     "@walletconnect/ethereum-provider": ">=1.7.5",
     "@walletconnect/universal-provider": "^2.1.0",
+    "@walletconnect/qrcode-modal": "^1.8.0",
     "ethers": ">=5.5.1"
   },
   "peerDependenciesMeta": {
@@ -112,6 +108,9 @@
       "optional": true
     },
     "@walletconnect/universal-provider": {
+      "optional": true
+    },
+    "@walletconnect/qrcode-modal": {
       "optional": true
     }
   },
@@ -124,6 +123,7 @@
     "@coinbase/wallet-sdk": "^3.4.1",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "@walletconnect/universal-provider": "^2.1.0",
+    "@walletconnect/qrcode-modal": "^1.8.0",
     "lokijs": "^1.5.12",
     "ethers": "^5.7.0"
   },

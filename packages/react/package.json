@@ -73,10 +73,6 @@
       "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
       "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
     },
-    "./connectors/walletConnectV2": {
-      "module": "./connectors/walletConnectV2/dist/wagmi-connectors-walletConnectV2.esm.js",
-      "default": "./connectors/walletConnectV2/dist/wagmi-connectors-walletConnectV2.cjs.js"
-    },
     "./package.json": "./package.json"
   },
   "sideEffects": false,
@@ -97,7 +93,6 @@
       "connectors/metaMask.ts",
       "connectors/mock.ts",
       "connectors/walletConnect.ts",
-      "connectors/walletConnectV2.ts",
       "providers/alchemy.ts",
       "providers/public.ts",
       "providers/infura.ts",
