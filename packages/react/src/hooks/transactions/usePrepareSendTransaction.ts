@@ -2,7 +2,6 @@ import {
   FetchSignerResult,
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
-  deepEqual,
   prepareSendTransaction,
 } from '@wagmi/core'
 import { providers } from 'ethers'
@@ -94,7 +93,6 @@ export function usePrepareSendTransaction({
     {
       cacheTime,
       enabled: Boolean(enabled && signer && request && request.to),
-      isDataEqual: deepEqual,
       staleTime,
       suspense,
       onError,

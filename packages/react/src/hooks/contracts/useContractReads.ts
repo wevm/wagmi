@@ -1,7 +1,6 @@
 import {
   ReadContractsConfig,
   ReadContractsResult,
-  deepEqual,
   parseContractResult,
   readContracts,
 } from '@wagmi/core'
@@ -137,7 +136,8 @@ export function useContractReads<
     contracts,
     overrides,
     enabled: enabled_ = true,
-    isDataEqual = deepEqual,
+    structuralSharing,
+    isDataEqual,
     keepPreviousData,
     onError,
     onSettled,
@@ -193,6 +193,7 @@ export function useContractReads<
   return useQuery(queryKey_, queryFn({ abis }), {
     cacheTime,
     enabled,
+    structuralSharing,
     isDataEqual,
     keepPreviousData,
     staleTime,

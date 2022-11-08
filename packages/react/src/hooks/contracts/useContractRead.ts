@@ -1,7 +1,6 @@
 import {
   ReadContractConfig,
   ReadContractResult,
-  deepEqual,
   parseContractResult,
   readContract,
 } from '@wagmi/core'
@@ -95,7 +94,8 @@ export function useContractRead<
     cacheOnBlock = false,
     cacheTime,
     enabled: enabled_ = true,
-    isDataEqual = deepEqual,
+    structuralSharing,
+    isDataEqual,
     scopeKey,
     select,
     staleTime,
@@ -157,6 +157,7 @@ export function useContractRead<
     {
       cacheTime,
       enabled,
+      structuralSharing,
       isDataEqual,
       select(data) {
         const result =

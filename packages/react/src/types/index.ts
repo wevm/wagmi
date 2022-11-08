@@ -54,6 +54,7 @@ export type QueryConfig<Data, Error> = Pick<
   UseQueryOptions<Data, Error>,
   | 'cacheTime'
   | 'enabled'
+  | 'structuralSharing'
   | 'isDataEqual'
   | 'keepPreviousData'
   | 'staleTime'
@@ -72,6 +73,7 @@ export type InfiniteQueryConfig<Data, Error> = Pick<
   | 'cacheTime'
   | 'enabled'
   | 'getNextPageParam'
+  | 'structuralSharing'
   | 'isDataEqual'
   | 'keepPreviousData'
   | 'select'

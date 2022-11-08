@@ -354,9 +354,39 @@ function App() {
 }
 ```
 
-### isDataEqual (optional)
+### structuralSharing (optional)
 
-Determines if the data has changed or not. Defaults to `deepEqual`.
+Enables smart replcaing of cached data between queries. If some subtree of new value equals to old, hook will reuse it to save link and prevent rerenders. Defaults to `true`.
+
+If set to `false`, structural sharing between query results will be disabled.
+
+If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
+
+```tsx {15}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    structuralSharing: (prev, next) => (prev === next ? prev : next),
+  })
+}
+```
+
+### isDataEqual (deprecated, optional)
+
+**Deprecated**. Use `structuralSharing` instead.
+
+Determines if the data has changed or not. Defaults to `undefined`.
 
 ```tsx {15}
 import { useContractReads } from 'wagmi'
