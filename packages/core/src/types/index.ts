@@ -158,11 +158,13 @@ type WatchAssetParams = {
 }
 
 type InjectedProviderFlags = {
+  isAvalanche?: true
   isBitKeep?: true
   isBraveWallet?: true
   isCoinbaseWallet?: true
   isExodus?: true
   isFrame?: true
+  isKuCoinWallet?: true
   isMathWallet?: true
   isMetaMask?: true
   isOneInchAndroidWallet?: true
@@ -173,8 +175,7 @@ type InjectedProviderFlags = {
   isTokenPocket?: true
   isTokenary?: true
   isTrust?: true
-  isAvalanche?: true
-  isKuCoinWallet?: true
+  isTrustWallet?: true
 }
 
 type InjectedProviders = InjectedProviderFlags & {

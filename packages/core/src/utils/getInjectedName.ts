@@ -4,22 +4,22 @@ export function getInjectedName(ethereum?: Ethereum) {
   if (!ethereum) return 'Injected'
 
   const getName = (provider: Ethereum) => {
-    if (provider.isKuCoinWallet) return 'KuCoin Wallet'
     if (provider.isAvalanche) return 'Core Wallet'
     if (provider.isBitKeep) return 'BitKeep'
     if (provider.isBraveWallet) return 'Brave Wallet'
     if (provider.isCoinbaseWallet) return 'Coinbase Wallet'
     if (provider.isExodus) return 'Exodus'
     if (provider.isFrame) return 'Frame'
+    if (provider.isKuCoinWallet) return 'KuCoin Wallet'
     if (provider.isMathWallet) return 'MathWallet'
+    if (provider.isOneInchIOSWallet || provider.isOneInchAndroidWallet)
+      return '1inch Wallet'
     if (provider.isOpera) return 'Opera'
     if (provider.isPortal) return 'Ripio Portal'
     if (provider.isTally) return 'Tally'
     if (provider.isTokenPocket) return 'TokenPocket'
     if (provider.isTokenary) return 'Tokenary'
-    if (provider.isTrust) return 'Trust Wallet'
-    if (provider.isOneInchIOSWallet || provider.isOneInchAndroidWallet)
-      return '1inch Wallet'
+    if (provider.isTrust || provider.isTrustWallet) return 'Trust Wallet'
     if (provider.isMetaMask) return 'MetaMask'
   }
 

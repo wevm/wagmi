@@ -1,5 +1,23 @@
 # wagmi
 
+## 0.7.13
+
+### Patch Changes
+
+- [#1250](https://github.com/wagmi-dev/wagmi/pull/1250) [`ce2e0f4`](https://github.com/wagmi-dev/wagmi/commit/ce2e0f4a46b8fd1c509ead552012ef4c072a525b) Thanks [@tmm](https://github.com/tmm)! - Added support for Trust Wallet browser extension.
+
+- Updated dependencies [[`ce2e0f4`](https://github.com/wagmi-dev/wagmi/commit/ce2e0f4a46b8fd1c509ead552012ef4c072a525b)]:
+  - @wagmi/core@0.6.12
+
+## 0.7.12
+
+### Patch Changes
+
+- [#1234](https://github.com/wagmi-dev/wagmi/pull/1234) [`3ff9303`](https://github.com/wagmi-dev/wagmi/commit/3ff930349250f62137cca4ca3b382522882abf8a) Thanks [@tmm](https://github.com/tmm)! - Fixed issue with adding chain to wallet without block explorer URL.
+
+- Updated dependencies [[`3ff9303`](https://github.com/wagmi-dev/wagmi/commit/3ff930349250f62137cca4ca3b382522882abf8a)]:
+  - @wagmi/core@0.6.11
+
 ## 0.7.11
 
 ### Patch Changes

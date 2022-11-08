@@ -116,11 +116,11 @@ export class MetaMaskConnector extends InjectedConnector {
     // Brave tries to make itself look like MetaMask
     // Could also try RPC `web3_clientVersion` if following is unreliable
     if (ethereum.isBraveWallet && !ethereum._events && !ethereum._state) return
+    if (ethereum.isAvalanche) return
+    if (ethereum.isKuCoinWallet) return
+    if (ethereum.isPortal) return
     if (ethereum.isTokenPocket) return
     if (ethereum.isTokenary) return
-    if (ethereum.isAvalanche) return
-    if (ethereum.isPortal) return
-    if (ethereum.isKuCoinWallet) return
     return ethereum
   }
 

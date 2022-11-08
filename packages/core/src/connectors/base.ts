@@ -75,7 +75,6 @@ export abstract class Connector<
         blockExplorer.url,
         ...Object.values(blockExplorers).map((x) => x.url),
       ]
-    return []
   }
 
   protected isChainUnsupported(chainId: number) {

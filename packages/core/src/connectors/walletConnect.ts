@@ -17,8 +17,9 @@ import { Connector } from './base'
  * - imToken (token.im)
  * - MetaMask (metamask.io)
  * - Rainbow (rainbow.me)
+ * - Trust Wallet (trustwallet.com)
  */
-const switchChainAllowedRegex = /(imtoken|metamask|rainbow)/i
+const switchChainAllowedRegex = /(imtoken|metamask|rainbow|trust wallet)/i
 
 type WalletConnectOptions = ConstructorParameters<
   typeof WalletConnectProvider

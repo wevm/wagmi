@@ -108,7 +108,7 @@ const result = useBalance({
 })
 ```
 
-If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action. This allows the ENS-to-address resolution to be cached instead of being wasted work before.
 
 ```diff
 + const { data: address } = useEnsAddress({ name: 'example.eth' })
@@ -131,7 +131,7 @@ const result = useEnsAvatar({
 })
 ```
 
-If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action. This allows the ENS-to-address resolution to be cached instead of being wasted work before.
 
 ```diff
 + const { data: address } = useEnsAddress({ name: 'example.eth' })
