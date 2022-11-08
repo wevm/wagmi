@@ -1,4 +1,9 @@
-import type WalletConnectProvider from '@walletconnect/ethereum-provider'
+import WalletConnectProvider from '@walletconnect/ethereum-provider'
+// eslint-disable-next-line import/no-named-as-default
+import Modal from '@walletconnect/qrcode-modal'
+import UniversalProvider, {
+  NamespaceConfig,
+} from '@walletconnect/universal-provider'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils'
 
@@ -21,14 +26,36 @@ import { Connector } from './base'
  */
 const switchChainAllowedRegex = /(imtoken|metamask|rainbow|trust wallet)/i
 
-type WalletConnectOptions = ConstructorParameters<
+/**
+ * Config for the WalletConnect Sign Client
+ */
+const v2Config = {
+  namespace: 'eip155',
+  methods: [
+    'eth_sendTransaction',
+    'eth_signTransaction',
+    'eth_sign',
+    'personal_sign',
+    'eth_signTypedData',
+  ],
+  events: ['chainChanged', 'accountsChanged'],
+}
+
+type WalletConnectV1Options = ConstructorParameters<
   typeof WalletConnectProvider
 >[0]
-
+type WalletConnectV2Options = ConstructorParameters<typeof UniversalProvider>[0]
+type WalletConnectCustomOptions = {
+  version?: '1' | '2'
+  qrcode?: true | false
+}
+type WalletConnectOptions = WalletConnectV1Options &
+  WalletConnectV2Options &
+  WalletConnectCustomOptions
 type WalletConnectSigner = providers.JsonRpcSigner
 
 export class WalletConnectConnector extends Connector<
-  WalletConnectProvider,
+  WalletConnectProvider | UniversalProvider,
   WalletConnectOptions,
   WalletConnectSigner
 > {
@@ -36,10 +63,11 @@ export class WalletConnectConnector extends Connector<
   readonly name = 'WalletConnect'
   readonly ready = true
 
-  #provider?: WalletConnectProvider
-
+  #provider?: WalletConnectProvider | UniversalProvider
+  #version: '1' | '2'
   constructor(config: { chains?: Chain[]; options: WalletConnectOptions }) {
     super(config)
+    this.#version = this.options.version || '1'
   }
 
   async connect({ chainId }: { chainId?: number } = {}) {
@@ -55,9 +83,23 @@ export class WalletConnectConnector extends Connector<
         chainId: targetChainId,
         create: true,
       })
+
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
+
+      if (this.#version === '2') {
+        try {
+          provider.on('session_delete', this.onDisconnect)
+          provider.on('display_uri', this.#onUri)
+
+          await provider.connect({
+            namespaces: this.#getConfig(),
+          })
+        } finally {
+          if (this.options.qrcode !== false) Modal.close()
+        }
+      }
 
       // Defer message to the next tick to ensure wallet connect data (provided by `.enable()`) is available
       setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
@@ -67,12 +109,17 @@ export class WalletConnectConnector extends Connector<
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
 
-      // Not all WalletConnect options support programmatic chain switching
-      // Only enable for wallet options that do
-      const walletName = provider.connector?.peerMeta?.name ?? ''
-      if (switchChainAllowedRegex.test(walletName))
+      if (this.#version === '1' && provider instanceof WalletConnectProvider) {
+        // Not all WalletConnect options support programmatic chain switching
+        // Only enable for wallet options that do
+        const walletName = provider.connector?.peerMeta?.name ?? ''
+        if (switchChainAllowedRegex.test(walletName))
+          this.switchChain = this.#switchChain
+      } else {
+        // in v2 chain switching is allowed programatically
+        // as the user approves the chains when approving the pairing
         this.switchChain = this.#switchChain
-
+      }
       return {
         account,
         chain: { id, unsupported },
@@ -95,20 +142,38 @@ export class WalletConnectConnector extends Connector<
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
 
-    typeof localStorage !== 'undefined' &&
-      localStorage.removeItem('walletconnect')
+    if (this.#version == '1') {
+      typeof localStorage !== 'undefined' &&
+        localStorage.removeItem('walletconnect')
+    } else {
+      provider.removeListener('session_delete', this.onDisconnect)
+      provider.removeListener('display_uri', this.#onUri)
+    }
   }
 
   async getAccount() {
     const provider = await this.getProvider()
-    const accounts = provider.accounts
+
+    let accounts
+    if (this.#version == '1' && provider instanceof WalletConnectProvider) {
+      accounts = provider.accounts
+    } else {
+      accounts = await provider.enable()
+    }
     // return checksum address
     return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
     const provider = await this.getProvider()
-    const chainId = normalizeChainId(provider.chainId)
+    let chainId
+    if (this.#version == '1' && provider instanceof WalletConnectProvider) {
+      chainId = normalizeChainId(provider.chainId)
+    } else {
+      chainId = normalizeChainId(
+        await provider.request({ method: 'eth_chainId' }),
+      )
+    }
     return chainId
   }
 
@@ -118,21 +183,43 @@ export class WalletConnectConnector extends Connector<
   }: { chainId?: number; create?: boolean } = {}) {
     // Force create new provider
     if (!this.#provider || chainId || create) {
-      const rpc = !this.options?.infuraId
-        ? this.chains.reduce(
-            (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
-            {},
-          )
-        : {}
+      if (this.#version === '1') {
+        const rpc = !this.options?.infuraId
+          ? this.chains.reduce(
+              (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
+              {},
+            )
+          : {}
+
+        const WalletConnectProvider = (
+          await import('@walletconnect/ethereum-provider')
+        ).default
+        this.#provider = new WalletConnectProvider({
+          ...this.options,
+          chainId,
+          rpc: { ...rpc, ...this.options?.rpc },
+        })
+
+        return this.#provider
+      }
 
       const WalletConnectProvider = (
-        await import('@walletconnect/ethereum-provider')
+        await import('@walletconnect/universal-provider')
       ).default
-      this.#provider = new WalletConnectProvider({
+
+      if (!this.options.projectId) {
+        throw new Error(
+          'Please get a WalletConnect v2 projectID from https://cloud.walletconnect.com/',
+        )
+      }
+
+      this.#provider = await WalletConnectProvider.init({
         ...this.options,
-        chainId,
-        rpc: { ...rpc, ...this.options?.rpc },
       })
+
+      if (chainId) {
+        this.#provider.setDefaultChain(`${v2Config.namespace}:${chainId}`)
+      }
     }
 
     return this.#provider
@@ -197,5 +284,29 @@ export class WalletConnectConnector extends Connector<
 
   protected onDisconnect = () => {
     this.emit('disconnect')
+  }
+
+  #onUri = (uri: string) => {
+    console.log('EVENT: DISPLAY_URI', uri)
+    if (this.options.qrcode !== false) {
+      Modal.open(uri, () => {
+        console.log('EVENT: v2 modal closed')
+      })
+    }
+    this.emit('message', { type: 'display_uri', data: uri })
+  }
+
+  #getConfig = (): NamespaceConfig => {
+    return {
+      [v2Config.namespace]: {
+        methods: v2Config.methods,
+        events: v2Config.events,
+        chains: this.chains.map((chain) => `${v2Config.namespace}:${chain.id}`),
+        rpcMap: this.chains.reduce(
+          (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
+          {},
+        ),
+      },
+    }
   }
 }
