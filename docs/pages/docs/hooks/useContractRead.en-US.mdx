@@ -220,9 +220,9 @@ function App() {
 }
 ```
 
-### isDataEqual (optional)
+### isDataEqual (deprecated, optional)
 
-Determines if the data has changed or not. Defaults to `deepEqual`.
+Use [`structuralSharing`](#structuralsharing-optional) instead.
 
 ```tsx {8}
 import { useContractRead } from 'wagmi'
@@ -284,6 +284,25 @@ function App() {
     abi: wagmigotchiABI,
     functionName: 'getSleep',
     select: (data) => transform(data),
+  })
+}
+```
+
+### structuralSharing (optional)
+
+Keep referential identity of data and prevent rerenders. Defaults to `true`. If set to `false`, structural sharing between query results will be disabled.
+
+If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    structuralSharing: (prev, next) => (prev === next ? prev : next),
   })
 }
 ```

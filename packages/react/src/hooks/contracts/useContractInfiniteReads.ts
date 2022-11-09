@@ -1,7 +1,6 @@
 import {
   ReadContractsConfig,
   ReadContractsResult,
-  deepEqual,
   readContracts,
 } from '@wagmi/core'
 import { ContractsConfig } from '@wagmi/core/internal'
@@ -91,7 +90,7 @@ export function useContractInfiniteReads<
   contracts,
   enabled: enabled_ = true,
   getNextPageParam,
-  isDataEqual = deepEqual,
+  isDataEqual,
   keepPreviousData,
   onError,
   onSettled,
@@ -100,6 +99,7 @@ export function useContractInfiniteReads<
   scopeKey,
   select,
   staleTime,
+  structuralSharing,
   suspense,
 }: UseContractInfiniteReadsConfig<
   TContracts,
@@ -124,6 +124,7 @@ UseInfiniteQueryResult<ReadContractsResult<TContracts>, Error> {
     keepPreviousData,
     select,
     staleTime,
+    structuralSharing,
     suspense,
     onError,
     onSettled,

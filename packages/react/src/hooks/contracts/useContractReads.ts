@@ -1,7 +1,6 @@
 import {
   ReadContractsConfig,
   ReadContractsResult,
-  deepEqual,
   parseContractResult,
   readContracts,
 } from '@wagmi/core'
@@ -133,17 +132,18 @@ export function useContractReads<
     allowFailure = true,
     cacheOnBlock = false,
     cacheTime,
-    scopeKey,
     contracts,
-    overrides,
     enabled: enabled_ = true,
-    isDataEqual = deepEqual,
+    isDataEqual,
     keepPreviousData,
     onError,
     onSettled,
     onSuccess,
+    overrides,
+    scopeKey,
     select,
     staleTime,
+    structuralSharing,
     suspense,
     watch,
   }: UseContractReadsConfig<TContracts> = {} as any,
@@ -205,6 +205,7 @@ export function useContractReads<
       }) as ReadContractsResult<TContracts>
       return select ? select(result) : result
     },
+    structuralSharing,
     suspense,
     onError,
     onSettled,

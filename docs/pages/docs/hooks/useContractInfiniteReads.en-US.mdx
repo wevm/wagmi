@@ -487,9 +487,9 @@ function App() {
 }
 ```
 
-### isDataEqual (optional)
+### isDataEqual (deprecated, optional)
 
-Determines if the data has changed or not. Defaults to `deepEqual`.
+Use [`structuralSharing`](#structuralsharing-optional) instead.
 
 ```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
@@ -582,6 +582,41 @@ function App() {
       ]
     },
     select: (data) => transform(data),
+  })
+}
+```
+
+### structuralSharing (optional)
+
+Keep referential identity of data and prevent rerenders. Defaults to `true`. If set to `false`, structural sharing between query results will be disabled.
+
+If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
+
+```tsx {24}
+import { useContractInfiniteReads } from 'wagmi'
+import { BigNumber } from 'ethers'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts(param = 0) {
+      const args = [BigNumber.from(param)] as const
+      return [
+        {
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
+    structuralSharing: (prev, next) => (prev === next ? prev : next),
   })
 }
 ```
