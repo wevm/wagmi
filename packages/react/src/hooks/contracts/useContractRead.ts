@@ -1,7 +1,6 @@
 import {
   ReadContractConfig,
   ReadContractResult,
-  deepEqual,
   parseContractResult,
   readContract,
 } from '@wagmi/core'
@@ -88,22 +87,23 @@ export function useContractRead<
   {
     abi,
     address,
-    functionName,
     args,
-    chainId: chainId_,
-    overrides,
     cacheOnBlock = false,
     cacheTime,
+    chainId: chainId_,
     enabled: enabled_ = true,
-    isDataEqual = deepEqual,
-    scopeKey,
-    select,
-    staleTime,
-    suspense,
-    watch,
+    functionName,
+    isDataEqual,
     onError,
     onSettled,
     onSuccess,
+    overrides,
+    scopeKey,
+    select,
+    staleTime,
+    structuralSharing,
+    suspense,
+    watch,
   }: UseContractReadConfig<TAbi, TFunctionName> = {} as any,
 ) {
   const chainId = useChainId({ chainId: chainId_ })
@@ -171,6 +171,7 @@ export function useContractRead<
         return select ? select(result) : result
       },
       staleTime,
+      structuralSharing,
       suspense,
       onError,
       onSettled,

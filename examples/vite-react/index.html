@@ -4,15 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>wagmi</title>
-    <script>window.global = window;</script>
+    <script>
+      window.global = window
+    </script>
     <script type="module">
-      import process from "process";
-      import { Buffer } from "buffer";
-      import EventEmitter from "events";
-      
-      window.process = process;
-      window.Buffer = Buffer;
-      window.EventEmitter = EventEmitter;
+      import process from 'process'
+      import { Buffer } from 'buffer'
+      import EventEmitter from 'events'
+
+      window.process = process
+      window.Buffer = Buffer
+      window.EventEmitter = EventEmitter
     </script>
   </head>
   <body>

@@ -97,7 +97,7 @@ importers:
       siwe: ^1.1.6
       tailwindcss: ^3.0.24
       typescript: ^4.7.4
-      wagmi: ^0.7.13
+      wagmi: ^0.7.14
     dependencies:
       '@reach/skip-nav': 0.16.0_biqbaboplfbrettd7655fr4n2y
       degen: 0.0.49_biqbaboplfbrettd7655fr4n2y
@@ -138,7 +138,7 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.7.4
-      wagmi: ^0.7.13
+      wagmi: ^0.7.14
     dependencies:
       ethers: 5.7.2
       next: 12.3.2_biqbaboplfbrettd7655fr4n2y
@@ -168,7 +168,7 @@ importers:
       react-scripts: 5.0.1
       typescript: ^4.7.4
       util: ^0.12.4
-      wagmi: ^0.7.13
+      wagmi: ^0.7.14
       web-vitals: ^2.1.4
     dependencies:
       '@types/node': 16.18.3
@@ -198,7 +198,7 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.7.4
-      wagmi: ^0.7.13
+      wagmi: ^0.7.14
     dependencies:
       ethers: 5.7.2
       next: 12.3.2_biqbaboplfbrettd7655fr4n2y
@@ -229,7 +229,7 @@ importers:
       remix: ^1.6.3
       safe-event-emitter: ^1.0.1
       typescript: ^4.7.4
-      wagmi: ^0.7.13
+      wagmi: ^0.7.14
     dependencies:
       '@esbuild-plugins/node-globals-polyfill': 0.1.1
       '@esbuild-plugins/node-modules-polyfill': 0.1.4
@@ -262,7 +262,7 @@ importers:
       typescript: ^4.7.4
       util: ^0.12.4
       vite: ^2.9.8
-      wagmi: ^0.7.13
+      wagmi: ^0.7.14
     dependencies:
       buffer: 6.0.3
       ethers: 5.7.2
@@ -305,9 +305,9 @@ importers:
   packages/react:
     specifiers:
       '@coinbase/wallet-sdk': ^3.5.3
-      '@tanstack/query-sync-storage-persister': ^4.10.1
-      '@tanstack/react-query': ^4.10.1
-      '@tanstack/react-query-persist-client': ^4.10.1
+      '@tanstack/query-sync-storage-persister': ^4.14.5
+      '@tanstack/react-query': ^4.14.5
+      '@tanstack/react-query-persist-client': ^4.14.5
       '@testing-library/react': ^13.3.0
       '@testing-library/react-hooks': ^8.0.1
       '@types/react': ^18.0.9
@@ -323,7 +323,7 @@ importers:
       react-dom-17: npm:react-dom@17.0.2
       use-sync-external-store: ^1.2.0
     dependencies:
-      '@coinbase/wallet-sdk': 3.5.4
+      '@coinbase/wallet-sdk': 3.5.3
       '@tanstack/query-sync-storage-persister': 4.14.5
       '@tanstack/react-query': 4.14.5_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.14.5_5ranp5o74eejvyb3vbwp2u74vy

@@ -12,7 +12,7 @@ export function useSyncExternalStoreWithTracked<
   subscribe: (onStoreChange: () => void) => () => void,
   getSnapshot: () => Snapshot,
   getServerSnapshot: undefined | null | (() => Snapshot) = getSnapshot,
-  isEqual: (a: Selection, b: Selection) => boolean = (a, b) => deepEqual(a, b),
+  isEqual: (a: Selection, b: Selection) => boolean = deepEqual,
 ) {
   const trackedKeys = React.useRef<string[]>([])
   const result = useSyncExternalStoreWithSelector(
