@@ -87,23 +87,23 @@ export function useContractRead<
   {
     abi,
     address,
-    functionName,
     args,
-    chainId: chainId_,
-    overrides,
     cacheOnBlock = false,
     cacheTime,
+    chainId: chainId_,
     enabled: enabled_ = true,
-    structuralSharing,
+    functionName,
     isDataEqual,
-    scopeKey,
-    select,
-    staleTime,
-    suspense,
-    watch,
     onError,
     onSettled,
     onSuccess,
+    overrides,
+    scopeKey,
+    select,
+    staleTime,
+    structuralSharing,
+    suspense,
+    watch,
   }: UseContractReadConfig<TAbi, TFunctionName> = {} as any,
 ) {
   const chainId = useChainId({ chainId: chainId_ })
@@ -157,7 +157,6 @@ export function useContractRead<
     {
       cacheTime,
       enabled,
-      structuralSharing,
       isDataEqual,
       select(data) {
         const result =
@@ -172,6 +171,7 @@ export function useContractRead<
         return select ? select(result) : result
       },
       staleTime,
+      structuralSharing,
       suspense,
       onError,
       onSettled,
