@@ -1,3 +1,4 @@
+import { replaceEqualDeep } from '@tanstack/react-query'
 import {
   ReadContractsConfig,
   ReadContractsResult,
@@ -91,7 +92,7 @@ export function useContractInfiniteReads<
   contracts,
   enabled: enabled_ = true,
   getNextPageParam,
-  isDataEqual = deepEqual,
+  isDataEqual,
   keepPreviousData,
   onError,
   onSettled,
@@ -100,6 +101,10 @@ export function useContractInfiniteReads<
   scopeKey,
   select,
   staleTime,
+  structuralSharing = (oldData, newData) =>
+    deepEqual(oldData, newData)
+      ? oldData
+      : (replaceEqualDeep(oldData, newData) as any),
   suspense,
 }: UseContractInfiniteReadsConfig<
   TContracts,
@@ -124,6 +129,7 @@ UseInfiniteQueryResult<ReadContractsResult<TContracts>, Error> {
     keepPreviousData,
     select,
     staleTime,
+    structuralSharing,
     suspense,
     onError,
     onSettled,

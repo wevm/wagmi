@@ -1,5 +1,17 @@
 # wagmi
 
+## 0.7.15
+
+### Patch Changes
+
+- [#1262](https://github.com/wagmi-dev/wagmi/pull/1262) [`45e2ca4`](https://github.com/wagmi-dev/wagmi/commit/45e2ca4d1f33a7b1165c387d420b8d47f4f66935) Thanks [@tmm](https://github.com/tmm)! - Added default for `structuralSharing` for `useContractRead`, `useContractReads`, and `useContractInfiniteReads`.
+
+## 0.7.14
+
+### Patch Changes
+
+- [#1260](https://github.com/wagmi-dev/wagmi/pull/1260) [`0e12f03`](https://github.com/wagmi-dev/wagmi/commit/0e12f0380442bccca9ed18991e783819778032fe) Thanks [@ilmpc](https://github.com/ilmpc)! - Deprecated `isDataEqual` option from and added `structuralSharing` option to `useContractRead`, `useContractReads`, and `useContractInfiniteReads`.
+
 ## 0.7.13
 
 ### Patch Changes

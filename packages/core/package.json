@@ -98,7 +98,8 @@
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
-    "@walletconnect/ethereum-provider": "^1.7.8"
+    "@walletconnect/ethereum-provider": "^1.7.8",
+    "typescript": "^4.7.4"
   },
   "keywords": [
     "eth",

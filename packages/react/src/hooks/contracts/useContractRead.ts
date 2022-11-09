@@ -1,3 +1,4 @@
+import { replaceEqualDeep } from '@tanstack/react-query'
 import {
   ReadContractConfig,
   ReadContractResult,
@@ -88,22 +89,26 @@ export function useContractRead<
   {
     abi,
     address,
-    functionName,
     args,
-    chainId: chainId_,
-    overrides,
     cacheOnBlock = false,
     cacheTime,
+    chainId: chainId_,
     enabled: enabled_ = true,
-    isDataEqual = deepEqual,
-    scopeKey,
-    select,
-    staleTime,
-    suspense,
-    watch,
+    functionName,
+    isDataEqual,
     onError,
     onSettled,
     onSuccess,
+    overrides,
+    scopeKey,
+    select,
+    staleTime,
+    structuralSharing = (oldData, newData) =>
+      deepEqual(oldData, newData)
+        ? oldData
+        : (replaceEqualDeep(oldData, newData) as any),
+    suspense,
+    watch,
   }: UseContractReadConfig<TAbi, TFunctionName> = {} as any,
 ) {
   const chainId = useChainId({ chainId: chainId_ })
@@ -171,6 +176,7 @@ export function useContractRead<
         return select ? select(result) : result
       },
       staleTime,
+      structuralSharing,
       suspense,
       onError,
       onSettled,
