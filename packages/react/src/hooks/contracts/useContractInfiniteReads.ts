@@ -1,6 +1,8 @@
+import { replaceEqualDeep } from '@tanstack/react-query'
 import {
   ReadContractsConfig,
   ReadContractsResult,
+  deepEqual,
   readContracts,
 } from '@wagmi/core'
 import { ContractsConfig } from '@wagmi/core/internal'
@@ -99,7 +101,10 @@ export function useContractInfiniteReads<
   scopeKey,
   select,
   staleTime,
-  structuralSharing,
+  structuralSharing = (oldData, newData) =>
+    deepEqual(oldData, newData)
+      ? oldData
+      : (replaceEqualDeep(oldData, newData) as any),
   suspense,
 }: UseContractInfiniteReadsConfig<
   TContracts,

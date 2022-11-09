@@ -454,7 +454,7 @@ function App() {
 
 ### structuralSharing (optional)
 
-Keep referential identity of data and prevent rerenders. Defaults to `true`. If set to `false`, structural sharing between query results will be disabled.
+Keep referential identity of data and prevent rerenders. Defaults to `(oldData, newData) => deepEqual(oldData, newData) ? oldData : replaceEqualDeep(oldData, newData)`. If set to `false`, structural sharing between query results will be disabled.
 
 If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
 
