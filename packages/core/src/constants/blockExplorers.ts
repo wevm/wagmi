@@ -6,18 +6,13 @@ export type BlockExplorer = { name: string; url: string }
 type EtherscanChains = Extract<
   ChainName,
   | 'mainnet'
-  | 'ropsten'
-  | 'rinkeby'
   | 'goerli'
-  | 'kovan'
   | 'sepolia'
   | 'optimism'
-  | 'optimismKovan'
   | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
   | 'arbitrum'
-  | 'arbitrumRinkeby'
   | 'arbitrumGoerli'
 >
 export const etherscanBlockExplorers: Record<EtherscanChains, BlockExplorer> = {
@@ -25,21 +20,9 @@ export const etherscanBlockExplorers: Record<EtherscanChains, BlockExplorer> = {
     name: 'Etherscan',
     url: 'https://etherscan.io',
   },
-  ropsten: {
-    name: 'Etherscan',
-    url: 'https://ropsten.etherscan.io',
-  },
-  rinkeby: {
-    name: 'Etherscan',
-    url: 'https://rinkeby.etherscan.io',
-  },
   goerli: {
     name: 'Etherscan',
     url: 'https://goerli.etherscan.io',
-  },
-  kovan: {
-    name: 'Etherscan',
-    url: 'https://kovan.etherscan.io',
   },
   sepolia: {
     name: 'Etherscan',
@@ -48,10 +31,6 @@ export const etherscanBlockExplorers: Record<EtherscanChains, BlockExplorer> = {
   optimism: {
     name: 'Etherscan',
     url: 'https://optimistic.etherscan.io',
-  },
-  optimismKovan: {
-    name: 'Etherscan',
-    url: 'https://kovan-optimistic.etherscan.io',
   },
   optimismGoerli: {
     name: 'Etherscan',
@@ -66,6 +45,5 @@ export const etherscanBlockExplorers: Record<EtherscanChains, BlockExplorer> = {
     url: 'https://mumbai.polygonscan.com',
   },
   arbitrum: { name: 'Arbiscan', url: 'https://arbiscan.io' },
-  arbitrumRinkeby: { name: 'Arbiscan', url: 'https://testnet.arbiscan.io' },
   arbitrumGoerli: { name: 'Arbiscan', url: 'https://goerli.arbiscan.io' },
 } as const

@@ -16,7 +16,7 @@ type QueryKeyArgs = Partial<FetchBalanceArgs>
 type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
 
 function queryKey({
-  addressOrName,
+  address,
   chainId,
   formatUnits,
   scopeKey,
@@ -25,7 +25,7 @@ function queryKey({
   return [
     {
       entity: 'balance',
-      addressOrName,
+      address,
       chainId,
       formatUnits,
       scopeKey,
@@ -35,14 +35,14 @@ function queryKey({
 }
 
 function queryFn({
-  queryKey: [{ addressOrName, chainId, formatUnits, token }],
+  queryKey: [{ address, chainId, formatUnits, token }],
 }: QueryFunctionArgs<typeof queryKey>) {
-  if (!addressOrName) throw new Error('address is required')
-  return fetchBalance({ addressOrName, chainId, formatUnits, token })
+  if (!address) throw new Error('address is required')
+  return fetchBalance({ address, chainId, formatUnits, token })
 }
 
 export function useBalance({
-  addressOrName,
+  address,
   cacheTime,
   chainId: chainId_,
   enabled = true,
@@ -58,11 +58,11 @@ export function useBalance({
 }: UseBalanceArgs & UseBalanceConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
   const balanceQuery = useQuery(
-    queryKey({ addressOrName, chainId, formatUnits, scopeKey, token }),
+    queryKey({ address, chainId, formatUnits, scopeKey, token }),
     queryFn,
     {
       cacheTime,
-      enabled: Boolean(enabled && addressOrName),
+      enabled: Boolean(enabled && address),
       staleTime,
       suspense,
       onError,
@@ -76,7 +76,7 @@ export function useBalance({
     if (!enabled) return
     if (!watch) return
     if (!blockNumber) return
-    if (!addressOrName) return
+    if (!address) return
     balanceQuery.refetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockNumber])

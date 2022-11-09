@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "baseUrl": ".",
     "downlevelIteration": true,
     "esModuleInterop": true,
-    "incremental": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["es2019", "es2017", "dom"],
@@ -14,6 +14,12 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "paths": {
+      "@wagmi/core": ["packages/core/src"],
+      "@wagmi/core/*": ["packages/core/src/*"],
+      "wagmi": ["packages/react/src"],
+      "wagmi/*": ["packages/react/src/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,

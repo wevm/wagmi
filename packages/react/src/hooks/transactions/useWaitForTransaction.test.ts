@@ -1,5 +1,5 @@
 import { Hash } from '@wagmi/core'
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'

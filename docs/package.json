@@ -11,7 +11,7 @@
   "dependencies": {
     "@reach/skip-nav": "^0.16.0",
     "degen": "^0.0.49",
-    "ethers": "^5.7.0",
+    "ethers": "^5.7.1",
     "fathom-client": "^3.5.0",
     "iron-session": "^6.1.3",
     "next": "^12.2.0",
@@ -21,7 +21,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "siwe": "^1.1.6",
-    "wagmi": "^0.7.15"
+    "wagmi": "workspace:*"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.1.6",

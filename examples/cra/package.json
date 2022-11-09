@@ -7,7 +7,7 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "buffer": "^6.0.3",
-    "ethers": "^5.7.0",
+    "ethers": "^5.7.1",
     "events": "^3.3.0",
     "process": "^0.11.10",
     "react": "^18.1.0",
@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test  --transformIgnorePatterns \"node_modules/(?!@?wagmi)/\"",
     "eject": "react-scripts eject"
   },
   "browserslist": {

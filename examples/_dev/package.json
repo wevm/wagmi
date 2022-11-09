@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "ethers": "^5.7.0",
+    "ethers": "^5.7.1",
     "next": "^12.2.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "wagmi": "^0.7.15"
+    "wagmi": "workspace:*"
   },
   "devDependencies": {
     "@preconstruct/next": "^4.0.0",

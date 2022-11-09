@@ -18,7 +18,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
   })
 
   if (isLoading) return <div>Fetching avatar…</div>
@@ -51,16 +51,16 @@ function App() {
 
 ## Configuration
 
-### addressOrName (optional)
+### address (optional)
 
-Address or ENS name to fetch avatar for. If `addressOrName` is not defined, hook will not run.
+Address or ENS name to fetch avatar for. If `address` is not defined, hook will not run.
 
 ```tsx {5}
 import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'moxey.eth',
+    address: '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
   })
 }
 ```
@@ -74,7 +74,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     chainId: 1,
   })
 }
@@ -89,7 +89,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     cacheTime: 2_000,
   })
 }
@@ -104,7 +104,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     enabled: false,
   })
 }
@@ -134,7 +134,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     staleTime: 2_000,
   })
 }
@@ -149,7 +149,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     suspense: true,
   })
 }
@@ -164,7 +164,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     onSuccess(data) {
       console.log('Success', data)
     },
@@ -181,7 +181,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     onError(error) {
       console.log('Error', error)
     },
@@ -198,7 +198,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },

@@ -1,4 +1,4 @@
-import { verifyTypedData } from 'ethers/lib/utils'
+import { verifyTypedData } from 'ethers/lib/utils.js'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
@@ -78,7 +78,7 @@ describe('signTypedData', () => {
     describe('when chainId is provided in domain', () => {
       it("throws mismatch if chainId doesn't match signer", async () => {
         await connect({
-          chainId: 4,
+          chainId: 5,
           connector: new MockConnector({
             options: {
               flags: { noSwitchChain: true },
@@ -89,7 +89,7 @@ describe('signTypedData', () => {
         await expect(
           signTypedData({ domain, types, value }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby\\"."`,
+          '"Chain mismatch: Expected \\"Ethereum\\", received \\"Goerli\\"."',
         )
       })
 

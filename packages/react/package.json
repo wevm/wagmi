@@ -21,57 +21,57 @@
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "main": "dist/wagmi.cjs.js",
-  "module": "dist/wagmi.esm.js",
-  "types": "dist/wagmi.cjs.d.ts",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "module": "./dist/wagmi.esm.js",
-      "default": "./dist/wagmi.cjs.js"
-    },
-    "./chains": {
-      "module": "./chains/dist/wagmi-chains.esm.js",
-      "default": "./chains/dist/wagmi-chains.cjs.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./actions": {
-      "module": "./actions/dist/wagmi-actions.esm.js",
-      "default": "./actions/dist/wagmi-actions.cjs.js"
+      "types": "./dist/actions.d.ts",
+      "default": "./dist/actions.js"
     },
-    "./connectors/mock": {
-      "module": "./connectors/mock/dist/wagmi-connectors-mock.esm.js",
-      "default": "./connectors/mock/dist/wagmi-connectors-mock.cjs.js"
-    },
-    "./providers/infura": {
-      "module": "./providers/infura/dist/wagmi-providers-infura.esm.js",
-      "default": "./providers/infura/dist/wagmi-providers-infura.cjs.js"
-    },
-    "./providers/public": {
-      "module": "./providers/public/dist/wagmi-providers-public.esm.js",
-      "default": "./providers/public/dist/wagmi-providers-public.cjs.js"
-    },
-    "./providers/alchemy": {
-      "module": "./providers/alchemy/dist/wagmi-providers-alchemy.esm.js",
-      "default": "./providers/alchemy/dist/wagmi-providers-alchemy.cjs.js"
-    },
-    "./providers/jsonRpc": {
-      "module": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.esm.js",
-      "default": "./providers/jsonRpc/dist/wagmi-providers-jsonRpc.cjs.js"
-    },
-    "./connectors/injected": {
-      "module": "./connectors/injected/dist/wagmi-connectors-injected.esm.js",
-      "default": "./connectors/injected/dist/wagmi-connectors-injected.cjs.js"
-    },
-    "./connectors/metaMask": {
-      "module": "./connectors/metaMask/dist/wagmi-connectors-metaMask.esm.js",
-      "default": "./connectors/metaMask/dist/wagmi-connectors-metaMask.cjs.js"
-    },
-    "./connectors/walletConnect": {
-      "module": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.esm.js",
-      "default": "./connectors/walletConnect/dist/wagmi-connectors-walletConnect.cjs.js"
+    "./chains": {
+      "types": "./dist/chains.d.ts",
+      "default": "./dist/chains.js"
     },
     "./connectors/coinbaseWallet": {
-      "module": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.esm.js",
-      "default": "./connectors/coinbaseWallet/dist/wagmi-connectors-coinbaseWallet.cjs.js"
+      "types": "./dist/connectors/coinbaseWallet.d.ts",
+      "default": "./dist/connectors/coinbaseWallet.js"
+    },
+    "./connectors/injected": {
+      "types": "./dist/connectors/injected.d.ts",
+      "default": "./dist/connectors/injected.js"
+    },
+    "./connectors/metaMask": {
+      "types": "./dist/connectors/metaMask.d.ts",
+      "default": "./dist/connectors/metaMask.js"
+    },
+    "./connectors/mock": {
+      "types": "./dist/connectors/mock.d.ts",
+      "default": "./dist/connectors/mock.js"
+    },
+    "./connectors/walletConnect": {
+      "types": "./dist/connectors/walletConnect.d.ts",
+      "default": "./dist/connectors/walletConnect.js"
+    },
+    "./providers/alchemy": {
+      "types": "./dist/providers/alchemy.d.ts",
+      "default": "./dist/providers/alchemy.js"
+    },
+    "./providers/infura": {
+      "types": "./dist/providers/infura.d.ts",
+      "default": "./dist/providers/infura.js"
+    },
+    "./providers/jsonRpc": {
+      "types": "./dist/providers/jsonRpc.d.ts",
+      "default": "./dist/providers/jsonRpc.js"
+    },
+    "./providers/public": {
+      "types": "./dist/providers/public.d.ts",
+      "default": "./dist/providers/public.js"
     },
     "./package.json": "./package.json"
   },
@@ -83,22 +83,6 @@
     "/dist",
     "/providers"
   ],
-  "preconstruct": {
-    "entrypoints": [
-      "index.ts",
-      "actions.ts",
-      "chains.ts",
-      "connectors/coinbaseWallet.ts",
-      "connectors/injected.ts",
-      "connectors/metaMask.ts",
-      "connectors/mock.ts",
-      "connectors/walletConnect.ts",
-      "providers/alchemy.ts",
-      "providers/public.ts",
-      "providers/infura.ts",
-      "providers/jsonRpc.ts"
-    ]
-  },
   "peerDependencies": {
     "ethers": ">=5.5.1",
     "react": ">=17.0.0"
@@ -108,7 +92,7 @@
     "@tanstack/query-sync-storage-persister": "^4.14.5",
     "@tanstack/react-query": "^4.14.5",
     "@tanstack/react-query-persist-client": "^4.14.5",
-    "@wagmi/core": "^0.6.12",
+    "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "^1.8.0",
     "abitype": "^0.1.7",
     "use-sync-external-store": "^1.2.0"
@@ -119,11 +103,11 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "@types/use-sync-external-store": "^0.0.3",
-    "ethers": "^5.7.0",
     "react": "^18.1.0",
     "react-17": "npm:react@17.0.2",
     "react-dom": "^18.1.0",
-    "react-dom-17": "npm:react-dom@17.0.2"
+    "react-dom-17": "npm:react-dom@17.0.2",
+    "typescript": "^4.7.4"
   },
   "keywords": [
     "react",
@@ -133,5 +117,9 @@
     "dapps",
     "wallet",
     "web3"
-  ]
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "DEV=true tsup"
+  }
 }

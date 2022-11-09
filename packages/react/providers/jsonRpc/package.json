@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-providers-jsonRpc.cjs.js",
-  "module": "dist/wagmi-providers-jsonRpc.esm.js"
+  "type": "module",
+  "main": "../../dist/providers/jsonRpc.js"
 }

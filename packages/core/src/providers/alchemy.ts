@@ -1,19 +1,18 @@
 import { providers } from 'ethers'
 
-import { defaultAlchemyApiKey } from '../constants'
 import { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type AlchemyProviderConfig = FallbackProviderConfig & {
-  // TODO: Make `apiKey` required in next minor version (v0.8).
-  apiKey?: string
+  /** Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/). */
+  apiKey: string
 }
 
 export function alchemyProvider({
-  apiKey = defaultAlchemyApiKey,
+  apiKey,
   priority,
   stallTimeout,
   weight,
-}: AlchemyProviderConfig = {}): ChainProviderFn<
+}: AlchemyProviderConfig): ChainProviderFn<
   providers.AlchemyProvider,
   providers.AlchemyWebSocketProvider
 > {

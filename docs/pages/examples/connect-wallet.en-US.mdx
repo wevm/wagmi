@@ -134,7 +134,7 @@ import {
 
 export function Profile() {
   const { address, connector, isConnected } = useAccount()
-  const { data: ensAvatar } = useEnsAvatar({ addressOrName: address })
+  const { data: ensAvatar } = useEnsAvatar({ address })
   const { data: ensName } = useEnsName({ address })
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()

@@ -1,6 +1,5 @@
 import { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
-import { providers } from 'ethers'
-import { BigNumber, Wallet } from 'ethers/lib/ethers'
+import { BigNumber, Wallet, providers } from 'ethers'
 
 import { Chain, allChains, chain as chain_ } from '../src'
 import { mirrorCrowdfundContractConfig } from './constants'

@@ -26,16 +26,16 @@ export function WagmiConfig<
   children,
   client,
 }: React.PropsWithChildren<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
-  return (
-    <Context.Provider value={client as unknown as Client}>
-      <QueryClientProvider
-        client={client.queryClient}
-        context={queryClientContext}
-      >
-        {children}
-      </QueryClientProvider>
-    </Context.Provider>
-  )
+  // Bailing out of using JSX
+  // https://github.com/egoist/tsup/issues/390#issuecomment-933488738
+  return React.createElement(Context.Provider, {
+    children: React.createElement(QueryClientProvider, {
+      children,
+      client: client.queryClient,
+      context: queryClientContext,
+    }),
+    value: client as unknown as Client,
+  })
 }
 
 export function useClient<

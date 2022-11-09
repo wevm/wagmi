@@ -1,6 +1,6 @@
 import { Address } from 'abitype'
 import { providers } from 'ethers'
-import { isAddress } from 'ethers/lib/utils'
+import { isAddress } from 'ethers/lib/utils.js'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { Signer } from '../../types'

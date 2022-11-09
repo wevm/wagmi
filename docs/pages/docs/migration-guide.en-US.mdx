@@ -9,6 +9,138 @@ import { Callout } from 'nextra-theme-docs'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
 
+## 0.8.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.7.x` docs
+  [here](https://0.7.x.wagmi.sh).
+</Callout>
+
+### CommonJS Support Dropped
+
+wagmi no longer supports CommonJS and only supports [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). If you are using modern tooling, like [Next.js](https://nextjs.org), [Vite](https://vitejs.dev), or [Vitest](https://vitest.dev), you likely don't need to do anything! [Remix](https://remix.run/docs/en/v1/pages/gotchas#importing-esm-packages) and [Jest](https://jestjs.io/docs/ecmascript-modules) require some additional configuration. Check out [this guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info on ESM support and Frequently Asked Questions across various tools and setups.
+
+### Deprecated chains removed
+
+Removed the following deprecated chains:
+
+- `ropsten`
+- `rinkeby`
+- `kovan`
+- `optimismKovan`
+- `arbitrumRinkeby`
+
+If you feel you still need to include one of these testnets in your application, you will have to define it manually:
+
+```diff
+-import { chain } from 'wagmi'
++import { Chain } from 'wagmi'
+
+-export const rinkeby = chain.rinkeby
++export const rinkeby: Chain = {
++ id: 4,
++ name: 'Rinkeby',
++ network: 'rinkeby',
++ nativeCurrency: { name: 'Rinkeby Ether', symbol: 'ETH', decimals: 18 },
++ rpcUrls: {
++   alchemy: 'https://eth-rinkeby.alchemyapi.io/v2',
++   default: 'https://rpc.ankr.com/eth_rinkeby',
++   infura: 'https://rinkeby.infura.io/v3',
++   public: 'https://rpc.ankr.com/eth_rinkeby',
++  },
++ blockExplorers: {
++   etherscan: 'https://rinkeby.etherscan.io',
++   default: 'https://rinkeby.etherscan.io',
++ },
++ ens: {
++   address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
++ },
++ multicall: {
++   address: '0xca11bde05977b3631167028862be2a173976ca11',
++   blockCreated: 10299530,
++ },
++ testnet: true,
+}
+```
+
+You can reference these removed chains [here](https://github.com/wagmi-dev/wagmi/blob/389765f7d9af063ab0df07389a2bbfbc10a41060/packages/core/src/constants/chains.ts).
+
+### `alchemyProvider`
+
+Made `apiKey` required on `alchemyProvider`.
+
+```diff
+import { configureChains } from 'wagmi'
+
+const config = configureChains(defaultChains, [
+- alchemyProvider(),
++ alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY })
+])
+```
+
+You can find your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/), or your Infura API key from the [Infura Dashboard](https://infura.io/login).
+
+### `infuraProvider`
+
+Made `apiKey` required on `infuraProvider`.
+
+```diff
+import { configureChains } from 'wagmi'
+
+const config = configureChains(defaultChains, [
+- infuraProvider(),
++ infuraProvider({ apiKey: process.env.INFURA_API_KEY })
+])
+```
+
+You can find your Infura API key from the [Infura Dashboard](https://infura.io/login), or your Infura API key from the [Infura Dashboard](https://infura.io/login).
+
+### `useBalance`
+
+#### Configuration changes
+
+`addressOrName` renamed to `address`.
+
+```diff
+const result = useBalance({
+- addressOrName: '0x…',
++ address: '0x…',
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action. This allows the ENS-to-address resolution to be cached instead of being wasted work before.
+
+```diff
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
+const result = useBalance({
+- addressOrName: 'example.eth',
++ address,
+})
+```
+
+### `useEnsAvatar`
+
+#### Configuration changes
+
+`addressOrName` renamed to `address`.
+
+```diff
+const result = useEnsAvatar({
+- addressOrName: '0x…',
++ address: '0x…',
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action. This allows the ENS-to-address resolution to be cached instead of being wasted work before.
+
+```diff
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
+const result = useEnsAvatar({
+- addressOrName: 'example.eth',
++ address,
+})
+```
+
 ## 0.7.x Breaking changes
 
 <Callout>
@@ -59,7 +191,7 @@ If you were using an ENS name instead of an address, you can resolve the name to
 ```diff
 - import { useContractRead } from 'wagmi'
 + import { useContractRead, useEnsAddress } from 'wagmi'
-+ const { data: address} = useEnsAddress({ name: 'example.eth'})
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
 const result = useContractRead({
 - addressOrName: 'example.eth',
 + address,
