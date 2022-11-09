@@ -1,6 +1,5 @@
 ---
-'wagmi': minor
+'wagmi': patch
 ---
 
-Deprecate isDataEqual
-Add structuralSharing option from useQuery
+Deprecated `isDataEqual` option from and added `structuralSharing` option to `useContractRead`, `useContractReads`, and `useContractInfiniteReads`.
