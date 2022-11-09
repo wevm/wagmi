@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.7.14
+
+### Patch Changes
+
+- [#1260](https://github.com/wagmi-dev/wagmi/pull/1260) [`0e12f03`](https://github.com/wagmi-dev/wagmi/commit/0e12f0380442bccca9ed18991e783819778032fe) Thanks [@ilmpc](https://github.com/ilmpc)! - Deprecated `isDataEqual` option from and added `structuralSharing` option to `useContractRead`, `useContractReads`, and `useContractInfiniteReads`.
+
 ## 0.7.13
 
 ### Patch Changes
