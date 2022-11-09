@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.8.1
+
+### Patch Changes
+
+- [#1272](https://github.com/wagmi-dev/wagmi/pull/1272) [`1f7fc41`](https://github.com/wagmi-dev/wagmi/commit/1f7fc419f7960bbdc51dfa85c2f33b89f1ecc1bf) Thanks [@tmm](https://github.com/tmm)! - Fixed ethers import path
+
+- Updated dependencies [[`1f7fc41`](https://github.com/wagmi-dev/wagmi/commit/1f7fc419f7960bbdc51dfa85c2f33b89f1ecc1bf)]:
+  - @wagmi/core@0.7.1
+
 ## 0.8.0
 
 ### Minor Changes

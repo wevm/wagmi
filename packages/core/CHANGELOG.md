@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.7.1
+
+### Patch Changes
+
+- [#1272](https://github.com/wagmi-dev/wagmi/pull/1272) [`1f7fc41`](https://github.com/wagmi-dev/wagmi/commit/1f7fc419f7960bbdc51dfa85c2f33b89f1ecc1bf) Thanks [@tmm](https://github.com/tmm)! - Fixed ethers import path
+
 ## 0.7.0
 
 ### Minor Changes
