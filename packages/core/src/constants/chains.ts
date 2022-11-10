@@ -4,18 +4,13 @@ import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from './rpcs'
 
 export const chainId = {
   mainnet: 1,
-  ropsten: 3,
-  rinkeby: 4,
   goerli: 5,
-  kovan: 42,
   sepolia: 11_155_111,
   optimism: 10,
-  optimismKovan: 69,
   optimismGoerli: 420,
   polygon: 137,
   polygonMumbai: 80_001,
   arbitrum: 42_161,
-  arbitrumRinkeby: 421_611,
   arbitrumGoerli: 421_613,
   localhost: 1_337,
   hardhat: 31_337,
@@ -47,56 +42,6 @@ export const mainnet: Chain = {
   },
 }
 
-export const ropsten: Chain = {
-  id: chainId.ropsten,
-  name: 'Ropsten',
-  network: 'ropsten',
-  nativeCurrency: { name: 'Ropsten Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: {
-    alchemy: alchemyRpcUrls.ropsten,
-    default: publicRpcUrls.ropsten,
-    infura: infuraRpcUrls.ropsten,
-    public: publicRpcUrls.ropsten,
-  },
-  blockExplorers: {
-    etherscan: etherscanBlockExplorers.ropsten,
-    default: etherscanBlockExplorers.ropsten,
-  },
-  ens: {
-    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  },
-  multicall: {
-    address: '0xca11bde05977b3631167028862be2a173976ca11',
-    blockCreated: 12063863,
-  },
-  testnet: true,
-}
-
-export const rinkeby: Chain = {
-  id: chainId.rinkeby,
-  name: 'Rinkeby',
-  network: 'rinkeby',
-  nativeCurrency: { name: 'Rinkeby Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: {
-    alchemy: alchemyRpcUrls.rinkeby,
-    default: publicRpcUrls.rinkeby,
-    infura: infuraRpcUrls.rinkeby,
-    public: publicRpcUrls.rinkeby,
-  },
-  blockExplorers: {
-    etherscan: etherscanBlockExplorers.rinkeby,
-    default: etherscanBlockExplorers.rinkeby,
-  },
-  ens: {
-    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  },
-  multicall: {
-    address: '0xca11bde05977b3631167028862be2a173976ca11',
-    blockCreated: 10299530,
-  },
-  testnet: true,
-}
-
 export const goerli: Chain = {
   id: chainId.goerli,
   name: 'Goerli',
@@ -118,28 +63,6 @@ export const goerli: Chain = {
   multicall: {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
     blockCreated: 6507670,
-  },
-  testnet: true,
-}
-
-export const kovan: Chain = {
-  id: chainId.kovan,
-  name: 'Kovan',
-  network: 'kovan',
-  nativeCurrency: { name: 'Kovan Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: {
-    alchemy: alchemyRpcUrls.kovan,
-    default: publicRpcUrls.kovan,
-    infura: infuraRpcUrls.kovan,
-    public: publicRpcUrls.kovan,
-  },
-  blockExplorers: {
-    etherscan: etherscanBlockExplorers.kovan,
-    default: etherscanBlockExplorers.kovan,
-  },
-  multicall: {
-    address: '0xca11bde05977b3631167028862be2a173976ca11',
-    blockCreated: 30285908,
   },
   testnet: true,
 }
@@ -184,32 +107,6 @@ export const optimism: Chain = {
     address: '0xca11bde05977b3631167028862be2a173976ca11',
     blockCreated: 4286263,
   },
-}
-
-export const optimismKovan: Chain = {
-  id: chainId.optimismKovan,
-  name: 'Optimism Kovan',
-  network: 'optimism-kovan',
-  nativeCurrency: {
-    name: 'Kovan Ether',
-    symbol: 'ETH',
-    decimals: 18,
-  },
-  rpcUrls: {
-    alchemy: alchemyRpcUrls.optimismKovan,
-    default: publicRpcUrls.optimismKovan,
-    infura: infuraRpcUrls.optimismKovan,
-    public: publicRpcUrls.optimismKovan,
-  },
-  blockExplorers: {
-    etherscan: etherscanBlockExplorers.optimismKovan,
-    default: etherscanBlockExplorers.optimismKovan,
-  },
-  multicall: {
-    address: '0xca11bde05977b3631167028862be2a173976ca11',
-    blockCreated: 1418387,
-  },
-  testnet: true,
 }
 
 export const optimismGoerli: Chain = {
@@ -310,36 +207,6 @@ export const arbitrum: Chain = {
   },
 }
 
-export const arbitrumRinkeby: Chain = {
-  id: chainId.arbitrumRinkeby,
-  name: 'Arbitrum Rinkeby',
-  network: 'arbitrum-rinkeby',
-  nativeCurrency: {
-    name: 'Arbitrum Rinkeby Ether',
-    symbol: 'ETH',
-    decimals: 18,
-  },
-  rpcUrls: {
-    alchemy: alchemyRpcUrls.arbitrumRinkeby,
-    default: publicRpcUrls.arbitrumRinkeby,
-    infura: infuraRpcUrls.arbitrumRinkeby,
-    public: publicRpcUrls.arbitrumRinkeby,
-  },
-  blockExplorers: {
-    arbitrum: {
-      name: 'Arbitrum Explorer',
-      url: 'https://rinkeby-explorer.arbitrum.io',
-    },
-    etherscan: etherscanBlockExplorers.arbitrumRinkeby,
-    default: etherscanBlockExplorers.arbitrumRinkeby,
-  },
-  multicall: {
-    address: '0xca11bde05977b3631167028862be2a173976ca11',
-    blockCreated: 10228837,
-  },
-  testnet: true,
-}
-
 export const arbitrumGoerli: Chain = {
   id: chainId.arbitrumGoerli,
   name: 'Arbitrum Goerli',
@@ -403,19 +270,14 @@ export const foundry: Chain = {
  */
 export const chain = {
   mainnet,
-  ropsten,
-  rinkeby,
   goerli,
-  kovan,
   sepolia,
   optimism,
   optimismGoerli,
-  optimismKovan,
   polygon,
   polygonMumbai,
   arbitrum,
   arbitrumGoerli,
-  arbitrumRinkeby,
   localhost,
   hardhat,
   foundry,
@@ -423,31 +285,24 @@ export const chain = {
 
 export const allChains = [
   mainnet,
-  ropsten,
-  rinkeby,
   goerli,
-  kovan,
   sepolia,
   optimism,
-  optimismKovan,
   optimismGoerli,
   polygon,
   polygonMumbai,
   arbitrum,
   arbitrumGoerli,
-  arbitrumRinkeby,
   localhost,
   hardhat,
   foundry,
 ]
 
-export const defaultChains: Chain[] = [mainnet, ropsten, rinkeby, goerli, kovan]
+export const defaultChains: Chain[] = [mainnet, goerli]
 
 export const defaultL2Chains: Chain[] = [
   arbitrum,
-  arbitrumRinkeby,
   arbitrumGoerli,
   optimism,
-  optimismKovan,
   optimismGoerli,
 ]

@@ -19,35 +19,38 @@ describe('switchNetwork', () => {
   describe('args', () => {
     it('chainId', async () => {
       await connect({ connector })
-      expect(await switchNetwork({ chainId: 69 })).toMatchInlineSnapshot(`
+      expect(await switchNetwork({ chainId: 5 })).toMatchInlineSnapshot(`
         {
           "blockExplorers": {
             "default": {
               "name": "Etherscan",
-              "url": "https://kovan-optimistic.etherscan.io",
+              "url": "https://goerli.etherscan.io",
             },
             "etherscan": {
               "name": "Etherscan",
-              "url": "https://kovan-optimistic.etherscan.io",
+              "url": "https://goerli.etherscan.io",
             },
           },
-          "id": 69,
+          "ens": {
+            "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+          },
+          "id": 5,
           "multicall": {
             "address": "0xca11bde05977b3631167028862be2a173976ca11",
-            "blockCreated": 1418387,
+            "blockCreated": 6507670,
           },
-          "name": "Optimism Kovan",
+          "name": "Goerli",
           "nativeCurrency": {
             "decimals": 18,
-            "name": "Kovan Ether",
+            "name": "Goerli Ether",
             "symbol": "ETH",
           },
-          "network": "optimism-kovan",
+          "network": "goerli",
           "rpcUrls": {
-            "alchemy": "https://opt-kovan.g.alchemy.com/v2",
-            "default": "https://kovan.optimism.io",
-            "infura": "https://optimism-kovan.infura.io/v3",
-            "public": "https://kovan.optimism.io",
+            "alchemy": "https://eth-goerli.alchemyapi.io/v2",
+            "default": "https://rpc.ankr.com/eth_goerli",
+            "infura": "https://goerli.infura.io/v3",
+            "public": "https://rpc.ankr.com/eth_goerli",
           },
           "testnet": true,
         }

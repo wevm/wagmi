@@ -1,5 +1,5 @@
-import { BigNumber } from 'ethers/lib/ethers'
-import { parseEther } from 'ethers/lib/utils'
+import { BigNumber } from 'ethers'
+import { parseEther } from 'ethers/lib/utils.js'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'

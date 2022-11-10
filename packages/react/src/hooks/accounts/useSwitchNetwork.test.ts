@@ -41,7 +41,7 @@ describe('useSwitchNetwork', () => {
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       const { chains, ...res } = result.current
-      expect(chains.length).toMatchInlineSnapshot(`5`)
+      expect(chains.length).toMatchInlineSnapshot('2')
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -164,7 +164,7 @@ describe('useSwitchNetwork', () => {
 
         const { chains, data, ...res } = result.current.network
         expect(data?.id).toMatchInlineSnapshot(`4`)
-        expect(chains.length).toMatchInlineSnapshot(`5`)
+        expect(chains.length).toMatchInlineSnapshot('2')
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -198,7 +198,7 @@ describe('useSwitchNetwork', () => {
 
         const { chains, data, ...res } = result.current.network
         expect(data?.id).toMatchInlineSnapshot(`4`)
-        expect(chains.length).toMatchInlineSnapshot(`5`)
+        expect(chains.length).toMatchInlineSnapshot('2')
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -237,7 +237,7 @@ describe('useSwitchNetwork', () => {
         await waitFor(() => expect(result.current.network.isError).toBeTruthy())
 
         const { chains, ...res } = result.current.network
-        expect(chains.length).toMatchInlineSnapshot(`5`)
+        expect(chains.length).toMatchInlineSnapshot('2')
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
@@ -276,7 +276,7 @@ describe('useSwitchNetwork', () => {
 
         const { chains, data, ...res } = result.current.network
         expect(data?.id).toMatchInlineSnapshot(`69`)
-        expect(chains.length).toMatchInlineSnapshot(`5`)
+        expect(chains.length).toMatchInlineSnapshot('2')
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -302,7 +302,7 @@ describe('useSwitchNetwork', () => {
         const utils = renderHook(() =>
           useSwitchNetworkWithConnect({
             network: {
-              chainId: 4,
+              chainId: 5,
             },
           }),
         )
@@ -317,33 +317,33 @@ describe('useSwitchNetwork', () => {
               "blockExplorers": {
                 "default": {
                   "name": "Etherscan",
-                  "url": "https://rinkeby.etherscan.io",
+                  "url": "https://goerli.etherscan.io",
                 },
                 "etherscan": {
                   "name": "Etherscan",
-                  "url": "https://rinkeby.etherscan.io",
+                  "url": "https://goerli.etherscan.io",
                 },
               },
               "ens": {
                 "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               },
-              "id": 4,
+              "id": 5,
               "multicall": {
                 "address": "0xca11bde05977b3631167028862be2a173976ca11",
-                "blockCreated": 10299530,
+                "blockCreated": 6507670,
               },
-              "name": "Rinkeby",
+              "name": "Goerli",
               "nativeCurrency": {
                 "decimals": 18,
-                "name": "Rinkeby Ether",
+                "name": "Goerli Ether",
                 "symbol": "ETH",
               },
-              "network": "rinkeby",
+              "network": "goerli",
               "rpcUrls": {
-                "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-                "default": "https://rpc.ankr.com/eth_rinkeby",
-                "infura": "https://rinkeby.infura.io/v3",
-                "public": "https://rpc.ankr.com/eth_rinkeby",
+                "alchemy": "https://eth-goerli.alchemyapi.io/v2",
+                "default": "https://rpc.ankr.com/eth_goerli",
+                "infura": "https://goerli.infura.io/v3",
+                "public": "https://rpc.ankr.com/eth_goerli",
               },
               "testnet": true,
             }

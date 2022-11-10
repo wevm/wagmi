@@ -1,11 +1,5 @@
 import { Address, ResolvedConfig } from 'abitype'
-import { logger } from 'ethers/lib/ethers'
-import {
-  Logger,
-  formatUnits,
-  isAddress,
-  parseBytes32String,
-} from 'ethers/lib/utils'
+import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
 
 import { getClient } from '../../client'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
@@ -15,8 +9,8 @@ import { readContracts } from '../contracts'
 import { getProvider } from '../providers'
 
 export type FetchBalanceArgs = {
-  /** Address or ENS name */
-  addressOrName: string
+  /** Address of balance to check */
+  address: Address
   /** Chain id to use for provider */
   chainId?: number
   /** Units for formatting output */
@@ -33,7 +27,7 @@ export type FetchBalanceResult = {
 }
 
 export async function fetchBalance({
-  addressOrName,
+  address,
   chainId,
   formatUnits: unit,
   token,
@@ -42,25 +36,6 @@ export async function fetchBalance({
   const provider = getProvider({ chainId })
 
   if (token) {
-    // Convert ENS name to address if required
-    let resolvedAddress: Address
-    if (isAddress(addressOrName)) resolvedAddress = addressOrName
-    else {
-      const address = (await provider.resolveName(
-        addressOrName,
-      )) as Address | null
-      // Same error `provider.getBalance` throws for invalid ENS name
-      if (!address)
-        logger.throwError(
-          'ENS name not configured',
-          Logger.errors.UNSUPPORTED_OPERATION,
-          {
-            operation: `resolveName(${JSON.stringify(addressOrName)})`,
-          },
-        )
-      resolvedAddress = address
-    }
-
     type FetchContractBalance = {
       abi: typeof erc20ABI | typeof erc20ABI_bytes32
     }
@@ -72,7 +47,7 @@ export async function fetchBalance({
           {
             ...erc20Config,
             functionName: 'balanceOf',
-            args: [resolvedAddress],
+            args: [address],
           },
           { ...erc20Config, functionName: 'decimals' },
           { ...erc20Config, functionName: 'symbol' },
@@ -106,7 +81,7 @@ export async function fetchBalance({
   }
 
   const chains = [...(client.provider.chains || []), ...(client.chains ?? [])]
-  const value = await provider.getBalance(addressOrName)
+  const value = await provider.getBalance(address)
   const chain = chains.find((x) => x.id === provider.network.chainId)
   return {
     decimals: chain?.nativeCurrency?.decimals ?? 18,

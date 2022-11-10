@@ -110,7 +110,7 @@ describe('createClient', () => {
         const client = setupClient({ chains: defaultChains })
         expect(client.chains).toBeUndefined()
         await client.autoConnect()
-        expect(client.chains?.length).toEqual(5)
+        expect(client.chains?.length).toEqual(2)
         await disconnect()
         expect(client.chains).toBeUndefined()
       })
@@ -119,7 +119,7 @@ describe('createClient', () => {
         const client = setupClient({ chains: defaultChains })
         expect(client.chains).toBeUndefined()
         await connect({ connector: client.connectors[0]! })
-        expect(client.chains?.length).toEqual(5)
+        expect(client.chains?.length).toEqual(2)
         await disconnect()
         expect(client.chains).toBeUndefined()
       })
@@ -190,23 +190,23 @@ describe('createClient', () => {
         const client = createClient({
           provider: getProvider,
         })
-        const provider = client.getProvider({ chainId: 69 })
-        expect(provider === client.getProvider({ chainId: 69 })).toBeTruthy()
+        const provider = client.getProvider({ chainId: 5 })
+        expect(provider === client.getProvider({ chainId: 5 })).toBeTruthy()
         expect(client.providers).toMatchInlineSnapshot(`
           Map {
             -1 => "<Provider network={1} />",
-            69 => "<Provider network={69} />",
+            5 => "<Provider network={5} />",
           }
         `)
         client.setState((x) => ({
           ...x,
-          data: { ...x.data, chain: { id: 69, unsupported: false } },
+          data: { ...x.data, chain: { id: 5, unsupported: false } },
         }))
-        expect(provider === client.getProvider({ chainId: 69 })).toBeFalsy()
+        expect(provider === client.getProvider({ chainId: 5 })).toBeFalsy()
         expect(client.providers).toMatchInlineSnapshot(`
           Map {
             -1 => "<Provider network={1} />",
-            69 => "<Provider network={69} />",
+            5 => "<Provider network={5} />",
           }
         `)
       })
@@ -221,7 +221,7 @@ describe('createClient', () => {
                 if (key === 'wagmi.store')
                   return JSON.stringify(
                     JSON.stringify({
-                      state: { data: { chain: { id: 69 } } },
+                      state: { data: { chain: { id: 5 } } },
                     }),
                   )
                 return null
@@ -232,7 +232,7 @@ describe('createClient', () => {
         })
         expect(client.providers).toMatchInlineSnapshot(`
           Map {
-            69 => "<Provider network={69} />",
+            5 => "<Provider network={5} />",
           }
         `)
       })
@@ -307,27 +307,27 @@ describe('createClient', () => {
           provider: getProvider,
           webSocketProvider: getWebSocketProvider,
         })
-        const provider = client.getWebSocketProvider({ chainId: 69 })
+        const provider = client.getWebSocketProvider({ chainId: 5 })
         expect(
-          provider === client.getWebSocketProvider({ chainId: 69 }),
+          provider === client.getWebSocketProvider({ chainId: 5 }),
         ).toBeTruthy()
         expect(client.webSocketProviders).toMatchInlineSnapshot(`
           Map {
             -1 => "<WebSocketProvider network={1} />",
-            69 => "<WebSocketProvider network={69} />",
+            5 => "<WebSocketProvider network={5} />",
           }
         `)
         client.setState((x) => ({
           ...x,
-          data: { ...x.data, chain: { id: 69, unsupported: false } },
+          data: { ...x.data, chain: { id: 5, unsupported: false } },
         }))
         expect(
-          provider === client.getWebSocketProvider({ chainId: 69 }),
+          provider === client.getWebSocketProvider({ chainId: 5 }),
         ).toBeFalsy()
         expect(client.webSocketProviders).toMatchInlineSnapshot(`
           Map {
             -1 => "<WebSocketProvider network={1} />",
-            69 => "<WebSocketProvider network={69} />",
+            5 => "<WebSocketProvider network={5} />",
           }
         `)
       })
@@ -342,7 +342,7 @@ describe('createClient', () => {
                 if (key === 'wagmi.store')
                   return JSON.stringify(
                     JSON.stringify({
-                      state: { data: { chain: { id: 69 } } },
+                      state: { data: { chain: { id: 5 } } },
                     }),
                   )
                 return null
@@ -354,7 +354,7 @@ describe('createClient', () => {
         })
         expect(client.webSocketProviders).toMatchInlineSnapshot(`
           Map {
-            69 => "<WebSocketProvider network={69} />",
+            5 => "<WebSocketProvider network={5} />",
           }
         `)
       })

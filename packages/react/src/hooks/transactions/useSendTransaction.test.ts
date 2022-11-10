@@ -1,6 +1,6 @@
 import { TransactionResponse } from '@ethersproject/providers'
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
@@ -80,7 +80,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actConnect({ chainId: 4, connector, utils })
+        await actConnect({ chainId: 5, connector, utils })
 
         await waitFor(() =>
           expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
@@ -95,7 +95,7 @@ describe('useSendTransaction', () => {
         )
 
         expect(result.current.sendTransaction.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
+          '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Goerli".]',
         )
       })
     })

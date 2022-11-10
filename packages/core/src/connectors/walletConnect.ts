@@ -1,6 +1,7 @@
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
 // eslint-disable-next-line import/no-named-as-default
 import Modal from '@walletconnect/qrcode-modal'
+// eslint-disable-next-line import/no-named-as-default
 import UniversalProvider, {
   NamespaceConfig,
 } from '@walletconnect/universal-provider'

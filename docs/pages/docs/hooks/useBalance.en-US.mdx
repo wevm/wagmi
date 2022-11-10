@@ -18,7 +18,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
   })
 
   if (isLoading) return <div>Fetching balance…</div>
@@ -65,16 +65,16 @@ function App() {
 
 ## Configuration
 
-### addressOrName (optional)
+### address (optional)
 
-Address or ENS name to fetch balance for. If `addressOrName` is not defined, hook will not run.
+Address to fetch balance for. If `address` is not defined, hook will not run.
 
 ```tsx {5}
 import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
   })
 }
 ```
@@ -88,7 +88,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     chainId: 1,
   })
 }
@@ -103,7 +103,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     formatUnits: 'gwei',
   })
 }
@@ -111,14 +111,14 @@ function App() {
 
 ### token (optional)
 
-Address for ERC-20 token. If `token` is provided, hook fetches token balance instead of Ethereum balance. For example, we can fetch `awkweb.eth`'s current [$UNI](https://etherscan.io/address/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984) balance.
+Address for ERC-20 token. If `token` is provided, hook fetches token balance instead of Ethereum balance. For example, we can fetch `0xA0Cf798816D4b9b9866b5330EEa46a18382f251e`'s current [$UNI](https://etherscan.io/address/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984) balance.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
   })
 }
@@ -133,7 +133,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     watch: true,
   })
 }
@@ -148,7 +148,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     cacheTime: 2_000,
   })
 }
@@ -163,7 +163,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     enabled: false,
   })
 }
@@ -178,7 +178,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     staleTime: 2_000,
   })
 }
@@ -208,7 +208,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     suspense: true,
   })
 }
@@ -223,7 +223,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     onError(error) {
       console.log('Error', error)
     },
@@ -240,7 +240,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },
@@ -257,7 +257,7 @@ import { useBalance } from 'wagmi'
 
 function App() {
   const balance = useBalance({
-    addressOrName: 'awkweb.eth',
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
     onSuccess(data) {
       console.log('Success', data)
     },

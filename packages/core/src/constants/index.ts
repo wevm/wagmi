@@ -17,13 +17,7 @@ export {
   defaultL2Chains,
 } from './chains'
 
-export {
-  alchemyRpcUrls,
-  defaultAlchemyApiKey,
-  defaultInfuraApiKey,
-  infuraRpcUrls,
-  publicRpcUrls,
-} from './rpcs'
+export { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from './rpcs'
 export type { RpcProviderName } from './rpcs'
 
 export { units } from './units'
