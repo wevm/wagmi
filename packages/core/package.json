@@ -107,11 +107,11 @@
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
     "@walletconnect/ethereum-provider": "^1.7.8",
+    "typescript": "^4.7.4",
     "@walletconnect/universal-provider": "^2.1.0",
     "@walletconnect/qrcode-modal": "^1.8.0",
     "lokijs": "^1.5.12",
-    "ethers": "^5.7.0",
-    "typescript": "^4.7.4"
+    "ethers": "^5.7.0"
   },
   "keywords": [
     "eth",
