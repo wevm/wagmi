@@ -257,15 +257,6 @@ function App() {
 }
 ```
 
-<Callout type="info">
-  `useWaitForTransaction` `onSuccess` and `onError` reflect the HTTP network
-  state (e.g. HTTP request failed) versus EVM network state (e.g. transaction
-  failed to mine). You should inspect the `data` from `onSuccess` to find out if
-  the transaction failed. `data` is an ethers
-  [`TransactionReceipt`](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionReceipt)
-  with `status=1` if successful or `status=0` if it was reverted.
-</Callout>
-
 ### onSettled (optional)
 
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
