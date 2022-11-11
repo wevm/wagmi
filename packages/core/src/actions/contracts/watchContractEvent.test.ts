@@ -1,4 +1,4 @@
-import { ResolvedConfig } from 'abitype'
+import type { ResolvedConfig } from 'abitype'
 import { describe, it } from 'vitest'
 
 import { expectType, mlootContractConfig } from '../../../test'

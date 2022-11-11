@@ -3,18 +3,18 @@ import type {
   CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
+import type { ProviderRpcError } from '../errors'
 import {
   AddChainError,
   ChainNotConfiguredError,
-  ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 

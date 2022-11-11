@@ -1,5 +1,4 @@
 import { Button, Stack, Text } from 'degen'
-import * as React from 'react'
 import { useConnect } from 'wagmi'
 
 import { useIsMounted } from '../../hooks'

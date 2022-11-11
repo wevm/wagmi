@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useAccount } from 'wagmi'
 
 import { Account, Connect, NetworkSwitcher } from '../components'

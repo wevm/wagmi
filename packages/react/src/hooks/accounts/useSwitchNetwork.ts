@@ -1,12 +1,9 @@
-import {
-  SwitchNetworkArgs,
-  SwitchNetworkResult,
-  switchNetwork,
-} from '@wagmi/core'
+import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { switchNetwork } from '@wagmi/core'
 import * as React from 'react'
 
 import { useClient } from '../../context'
-import { MutationConfig } from '../../types'
+import type { MutationConfig } from '../../types'
 import { useForceUpdate, useMutation } from '../utils'
 
 export type UseSwitchNetworkArgs = Partial<SwitchNetworkArgs>

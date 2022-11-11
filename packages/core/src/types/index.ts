@@ -1,13 +1,13 @@
-import {
+import type {
   Address,
   ResolvedConfig,
   TypedData,
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import { Signer as BaseSigner, BigNumber, providers } from 'ethers'
+import type { Signer as BaseSigner, BigNumber, providers } from 'ethers'
 
-import {
+import type {
   BlockExplorer,
   BlockExplorerName,
   RpcProviderName,

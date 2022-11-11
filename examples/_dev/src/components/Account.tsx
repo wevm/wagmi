@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
 import { useIsMounted } from '../hooks'

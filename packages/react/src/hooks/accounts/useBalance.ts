@@ -1,7 +1,8 @@
-import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
+import type { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
+import { fetchBalance } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 

@@ -1,7 +1,9 @@
-import {
+import type {
   QueryKey,
   QueryObserver,
   UseBaseQueryOptions,
+} from '@tanstack/react-query'
+import {
   notifyManager,
   useIsRestoring,
   useQueryClient,

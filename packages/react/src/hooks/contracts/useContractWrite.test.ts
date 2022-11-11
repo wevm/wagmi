@@ -1,4 +1,4 @@
-import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import type { Abi, ExtractAbiFunctionNames } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
@@ -14,11 +14,10 @@ import {
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
-import { UseContractWriteConfig, useContractWrite } from './useContractWrite'
-import {
-  UsePrepareContractWriteConfig,
-  usePrepareContractWrite,
-} from './usePrepareContractWrite'
+import type { UseContractWriteConfig } from './useContractWrite'
+import { useContractWrite } from './useContractWrite'
+import type { UsePrepareContractWriteConfig } from './usePrepareContractWrite'
+import { usePrepareContractWrite } from './usePrepareContractWrite'
 
 function useContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],

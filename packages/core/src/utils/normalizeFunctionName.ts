@@ -1,5 +1,6 @@
-import { AbiParameter } from 'abitype'
-import { BigNumber, Contract } from 'ethers'
+import type { AbiParameter } from 'abitype'
+import type { Contract } from 'ethers'
+import { BigNumber } from 'ethers'
 import { FunctionFragment, isAddress } from 'ethers/lib/utils.js'
 
 /**

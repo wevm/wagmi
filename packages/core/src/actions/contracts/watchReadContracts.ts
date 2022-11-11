@@ -1,12 +1,9 @@
-import { Abi } from 'abitype'
+import type { Abi } from 'abitype'
 
 import { getClient } from '../../client'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
-import {
-  ReadContractsConfig,
-  ReadContractsResult,
-  readContracts,
-} from './readContracts'
+import type { ReadContractsConfig, ReadContractsResult } from './readContracts'
+import { readContracts } from './readContracts'
 
 export type WatchReadContractsConfig<TContracts extends unknown[]> =
   ReadContractsConfig<TContracts> & {

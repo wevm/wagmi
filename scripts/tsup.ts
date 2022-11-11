@@ -1,6 +1,6 @@
 import { execa } from 'execa'
 import { default as fs } from 'fs-extra'
-import { Options } from 'tsup'
+import type { Options } from 'tsup'
 
 import path from 'path'
 

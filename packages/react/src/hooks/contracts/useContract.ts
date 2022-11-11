@@ -1,5 +1,6 @@
-import { GetContractArgs, GetContractResult, getContract } from '@wagmi/core'
-import { Abi } from 'abitype'
+import type { GetContractArgs, GetContractResult } from '@wagmi/core'
+import { getContract } from '@wagmi/core'
+import type { Abi } from 'abitype'
 
 import * as React from 'react'
 

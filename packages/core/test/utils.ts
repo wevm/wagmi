@@ -1,8 +1,9 @@
-import { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
+import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
 import { BigNumber, Wallet, providers } from 'ethers'
 
-import { Chain, allChains, chain as chain_ } from '../src'
-import { mirrorCrowdfundContractConfig } from './constants'
+import type { Chain } from '../src'
+import { allChains, chain as chain_ } from '../src'
+import type { mirrorCrowdfundContractConfig } from './constants'
 
 export function getNetwork(chain: Chain) {
   return {

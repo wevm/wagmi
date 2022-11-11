@@ -1,7 +1,8 @@
-import { FetchFeeDataArgs, FetchFeeDataResult, fetchFeeData } from '@wagmi/core'
+import type { FetchFeeDataArgs, FetchFeeDataResult } from '@wagmi/core'
+import { fetchFeeData } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 

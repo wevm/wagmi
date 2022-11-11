@@ -1,8 +1,8 @@
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { default as EventEmitter } from 'eventemitter3'
 
 import { defaultChains } from '../constants'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 
 export type ConnectorData<Provider = any> = {
   account?: Address

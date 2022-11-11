@@ -1,7 +1,7 @@
 import { getNetwork } from '../actions'
 import { getClient } from '../client'
 import { ChainMismatchError, ChainNotConfiguredError } from '../errors'
-import { Signer } from '../types'
+import type { Signer } from '../types'
 
 export function assertActiveChain({
   chainId,

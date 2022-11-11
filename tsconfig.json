@@ -7,7 +7,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "lib": ["es2019", "es2017", "dom"],
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
     "noImplicitAny": true,
@@ -32,6 +32,6 @@
       "@ethersproject/providers"
     ]
   },
-  "exclude": ["node_modules", "**/dist/**"],
-  "include": ["packages/**/*"]
+  "exclude": ["**/node_modules/**", "**/dist/**"],
+  "include": ["packages/**/*", "scripts/**/*", "vitest.config.ts"]
 }

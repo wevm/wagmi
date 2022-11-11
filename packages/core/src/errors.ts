@@ -1,6 +1,6 @@
 import { getProvider } from './actions'
-import { Connector } from './connectors'
-import { Chain } from './types'
+import type { Connector } from './connectors'
+import type { Chain } from './types'
 
 /**
  * Error subclass implementing JSON RPC 2.0 errors and Ethereum RPC errors per EIP-1474.

@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { setupClient } from '../../../test'
 import { connect } from './connect'
 import { disconnect } from './disconnect'
-import { GetAccountResult } from './getAccount'
+import type { GetAccountResult } from './getAccount'
 import { watchAccount } from './watchAccount'
 
 describe('watchAccount', () => {

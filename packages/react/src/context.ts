@@ -1,8 +1,9 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Provider, WebSocketProvider } from '@wagmi/core'
+import type { QueryClient } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import type { Provider, WebSocketProvider } from '@wagmi/core'
 import * as React from 'react'
 
-import { Client } from './client'
+import type { Client } from './client'
 
 export const Context = React.createContext<
   Client<Provider, WebSocketProvider> | undefined

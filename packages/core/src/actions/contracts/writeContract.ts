@@ -1,9 +1,9 @@
-import { Abi, Address, ExtractAbiFunction } from 'abitype'
-import { PopulatedTransaction } from 'ethers'
+import type { Abi, Address, ExtractAbiFunction } from 'abitype'
+import type { PopulatedTransaction } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
-import { Signer } from '../../types'
-import {
+import type { Signer } from '../../types'
+import type {
   DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,
@@ -11,7 +11,8 @@ import {
 } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
-import { SendTransactionResult, sendTransaction } from '../transactions'
+import type { SendTransactionResult } from '../transactions'
+import { sendTransaction } from '../transactions'
 import { prepareWriteContract } from './prepareWriteContract'
 
 type Options = Options_ & { isRequestOptional?: boolean }

@@ -1,6 +1,6 @@
-import { providers } from 'ethers'
+import type { providers } from 'ethers'
 
-import { Hash } from '../../types'
+import type { Hash } from '../../types'
 import { getProvider } from '../providers'
 
 export type FetchTransactionArgs = {
