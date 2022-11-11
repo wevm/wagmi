@@ -6,7 +6,6 @@ import {
   default as NextDocument,
   NextScript,
 } from 'next/document'
-import * as React from 'react'
 
 class Document extends NextDocument {
   render() {

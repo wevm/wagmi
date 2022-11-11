@@ -1,4 +1,4 @@
-import { QueryKey } from '@tanstack/react-query'
+import type { QueryKey } from '@tanstack/react-query'
 
 import { useBlockNumber } from '../network-status'
 import { useQueryClient } from './query'

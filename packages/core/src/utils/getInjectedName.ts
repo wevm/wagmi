@@ -1,4 +1,4 @@
-import { Ethereum } from '../types'
+import type { Ethereum } from '../types'
 
 export function getInjectedName(ethereum?: Ethereum) {
   if (!ethereum) return 'Injected'

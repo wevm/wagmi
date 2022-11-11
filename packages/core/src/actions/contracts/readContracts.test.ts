@@ -1,4 +1,4 @@
-import { Address, ResolvedConfig } from 'abitype'
+import type { Address, ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 

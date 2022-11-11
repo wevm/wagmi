@@ -1,4 +1,4 @@
-import { PersistedClient } from '@tanstack/react-query-persist-client'
+import type { PersistedClient } from '@tanstack/react-query-persist-client'
 import { BigNumber } from 'ethers'
 
 const findAndReplace = (

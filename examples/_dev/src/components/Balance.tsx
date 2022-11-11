@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Address, useAccount, useBalance } from 'wagmi'
+import type { Address } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
 
 export const Balance = () => {
   return (

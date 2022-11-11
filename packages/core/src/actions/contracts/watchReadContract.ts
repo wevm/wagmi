@@ -1,12 +1,9 @@
-import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import type { Abi, ExtractAbiFunctionNames } from 'abitype'
 
 import { getClient } from '../../client'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
-import {
-  ReadContractConfig,
-  ReadContractResult,
-  readContract,
-} from './readContract'
+import type { ReadContractConfig, ReadContractResult } from './readContract'
+import { readContract } from './readContract'
 
 export type WatchReadContractConfig<
   TAbi extends Abi | readonly unknown[] = Abi,

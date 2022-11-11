@@ -1,8 +1,9 @@
-import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
+import type { ConnectArgs, ConnectResult } from '@wagmi/core'
+import { connect } from '@wagmi/core'
 import * as React from 'react'
 
 import { useClient } from '../../context'
-import { MutationConfig } from '../../types'
+import type { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
 export type UseConnectArgs = Partial<ConnectArgs>

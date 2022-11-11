@@ -1,4 +1,5 @@
-import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
+import type { GetAccountResult } from '@wagmi/core'
+import { getAccount, watchAccount } from '@wagmi/core'
 import * as React from 'react'
 
 import { useSyncExternalStoreWithTracked } from '../utils'

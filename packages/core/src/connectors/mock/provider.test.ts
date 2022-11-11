@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners } from '../../../test'
-import { Signer } from '../../types'
+import type { Signer } from '../../types'
 import { MockProvider } from './provider'
 
 describe('MockProvider', () => {

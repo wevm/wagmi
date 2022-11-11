@@ -1,4 +1,4 @@
-import { ChainName } from './chains'
+import type { ChainName } from './chains'
 
 export type RpcProviderName = 'alchemy' | 'infura' | 'public'
 

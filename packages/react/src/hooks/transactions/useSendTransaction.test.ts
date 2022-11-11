@@ -1,19 +1,17 @@
-import { TransactionResponse } from '@ethersproject/providers'
+import type { TransactionResponse } from '@ethersproject/providers'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
-import {
-  UsePrepareSendTransactionConfig,
-  usePrepareSendTransaction,
-} from './usePrepareSendTransaction'
-import {
+import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
+import { usePrepareSendTransaction } from './usePrepareSendTransaction'
+import type {
   UseSendTransactionArgs,
   UseSendTransactionConfig,
-  useSendTransaction,
 } from './useSendTransaction'
+import { useSendTransaction } from './useSendTransaction'
 
 function useSendTransactionWithConnect(
   config: UseSendTransactionArgs & UseSendTransactionConfig,

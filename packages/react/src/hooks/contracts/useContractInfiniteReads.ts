@@ -1,16 +1,13 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
-import {
-  ReadContractsConfig,
-  ReadContractsResult,
-  deepEqual,
-  readContracts,
-} from '@wagmi/core'
-import { ContractsConfig } from '@wagmi/core/internal'
-import { Abi } from 'abitype'
+import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
+import { deepEqual, readContracts } from '@wagmi/core'
+import type { ContractsConfig } from '@wagmi/core/internal'
+import type { Abi } from 'abitype'
 import * as React from 'react'
 
-import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
-import { UseInfiniteQueryResult, useInfiniteQuery } from '../utils'
+import type { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
+import type { UseInfiniteQueryResult } from '../utils'
+import { useInfiniteQuery } from '../utils'
 
 export type UseContractInfiniteReadsConfig<
   TContracts extends unknown[] = unknown[],

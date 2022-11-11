@@ -1,8 +1,8 @@
 import { providers } from 'ethers'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
+import type { Mock } from 'vitest'
 import {
-  Mock,
   afterAll,
   afterEach,
   beforeAll,
@@ -18,7 +18,7 @@ import { infuraProvider } from '../providers/infura'
 import { jsonRpcProvider } from '../providers/jsonRpc'
 
 import { publicProvider } from '../providers/public'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 import { configureChains } from './configureChains'
 
 const avalancheChain: Chain = {

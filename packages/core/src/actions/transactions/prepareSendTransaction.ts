@@ -1,9 +1,9 @@
-import { Address } from 'abitype'
-import { providers } from 'ethers'
+import type { Address } from 'abitype'
+import type { providers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils.js'
 
 import { ConnectorNotFoundError } from '../../errors'
-import { Signer } from '../../types'
+import type { Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { fetchEnsAddress } from '../ens'

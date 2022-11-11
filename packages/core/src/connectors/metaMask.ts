@@ -1,12 +1,13 @@
 import { getClient } from '../client'
+import type { RpcError } from '../errors'
 import {
   ConnectorNotFoundError,
   ResourceUnavailableError,
-  RpcError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain, Ethereum } from '../types'
-import { InjectedConnector, InjectedConnectorOptions } from './injected'
+import type { Chain, Ethereum } from '../types'
+import type { InjectedConnectorOptions } from './injected'
+import { InjectedConnector } from './injected'
 
 export type MetaMaskConnectorOptions = Pick<
   InjectedConnectorOptions,

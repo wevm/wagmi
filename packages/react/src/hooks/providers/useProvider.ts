@@ -1,9 +1,5 @@
-import {
-  GetProviderArgs,
-  Provider,
-  getProvider,
-  watchProvider,
-} from '@wagmi/core'
+import type { GetProviderArgs, Provider } from '@wagmi/core'
+import { getProvider, watchProvider } from '@wagmi/core'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
 export type UseProviderArgs = Partial<GetProviderArgs>

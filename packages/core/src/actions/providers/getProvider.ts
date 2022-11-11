@@ -1,5 +1,5 @@
 import { getClient } from '../../client'
-import { Provider } from '../../types'
+import type { Provider } from '../../types'
 
 export type GetProviderArgs = {
   /** Chain id to use for provider */

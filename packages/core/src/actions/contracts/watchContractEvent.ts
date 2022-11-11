@@ -1,4 +1,4 @@
-import {
+import type {
   Abi,
   AbiEvent,
   AbiParametersToPrimitiveTypes,
@@ -9,8 +9,8 @@ import {
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import { Event } from '../../types/contracts'
-import { IsNever, NotEqual, Or } from '../../types/utils'
+import type { Event } from '../../types/contracts'
+import type { IsNever, NotEqual, Or } from '../../types/utils'
 import { getProvider, getWebSocketProvider } from '../providers'
 import { getContract } from './getContract'
 

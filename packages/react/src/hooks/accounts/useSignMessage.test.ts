@@ -3,11 +3,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
-import {
-  UseSignMessageArgs,
-  UseSignMessageConfig,
-  useSignMessage,
-} from './useSignMessage'
+import type { UseSignMessageArgs, UseSignMessageConfig } from './useSignMessage'
+import { useSignMessage } from './useSignMessage'
 
 const messages = {
   string: 'The quick brown fox jumped over the lazy dogs.',

@@ -1,6 +1,7 @@
 import { useTheme } from 'next-themes'
 import { useRouter } from 'next/router'
-import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
+import type { DocsThemeConfig } from 'nextra-theme-docs'
+import { useConfig } from 'nextra-theme-docs'
 
 const github = 'https://github.com/wagmi-dev/wagmi'
 

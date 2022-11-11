@@ -15,7 +15,6 @@
     "lint": "eslint . --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
-    "lint:types": "tsc --noEmit",
     "playground": "pnpm dev && pnpm --filter example-dev dev",
     "postinstall": "pnpm dev",
     "preinstall": "npx only-allow pnpm",
@@ -24,7 +23,8 @@
     "test:coverage": "vitest run --coverage",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
-    "test:update": "vitest --update"
+    "test:update": "vitest --update",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.6",

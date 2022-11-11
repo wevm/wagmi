@@ -1,11 +1,12 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { TypedData } from 'abitype'
+import type { TypedData } from 'abitype'
 import { verifyTypedData } from 'ethers/lib/utils.js'
 import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
-import { UseSignTypedDataConfig, useSignTypedData } from './useSignTypedData'
+import type { UseSignTypedDataConfig } from './useSignTypedData'
+import { useSignTypedData } from './useSignTypedData'
 
 // All properties on a domain are optional
 const domain = {

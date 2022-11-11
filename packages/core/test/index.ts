@@ -1,4 +1,5 @@
-import { Chain, ClientConfig, createClient } from '../src'
+import type { Chain, ClientConfig } from '../src'
+import { createClient } from '../src'
 import { MockConnector } from '../src/connectors/mock'
 import { getProvider, getSigners } from './utils'
 

@@ -1,5 +1,4 @@
 import { verifyMessage } from 'ethers/lib/utils'
-import * as React from 'react'
 import { useSignMessage } from 'wagmi'
 
 export const SignMessage = () => {

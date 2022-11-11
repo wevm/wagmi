@@ -1,13 +1,13 @@
-import {
+import type {
   SendTransactionArgs,
   SendTransactionPreparedRequest,
   SendTransactionResult,
   SendTransactionUnpreparedRequest,
-  sendTransaction,
 } from '@wagmi/core'
+import { sendTransaction } from '@wagmi/core'
 import * as React from 'react'
 
-import { MutationConfig } from '../../types'
+import type { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
 export type UseSendTransactionArgs = Omit<

@@ -1,10 +1,7 @@
-import {
-  FetchEnsAddressArgs,
-  FetchEnsAddressResult,
-  fetchEnsAddress,
-} from '@wagmi/core'
+import type { FetchEnsAddressArgs, FetchEnsAddressResult } from '@wagmi/core'
+import { fetchEnsAddress } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsAddressArgs = Partial<FetchEnsAddressArgs>

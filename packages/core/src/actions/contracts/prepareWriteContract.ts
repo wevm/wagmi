@@ -1,12 +1,12 @@
-import { Abi, Address, ExtractAbiFunction } from 'abitype'
-import { PopulatedTransaction } from 'ethers'
+import type { Abi, Address, ExtractAbiFunction } from 'abitype'
+import type { PopulatedTransaction } from 'ethers'
 
 import {
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
 } from '../../errors'
-import { Signer } from '../../types'
-import {
+import type { Signer } from '../../types'
+import type {
   DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,

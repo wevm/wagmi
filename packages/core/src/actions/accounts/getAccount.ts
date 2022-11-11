@@ -1,5 +1,6 @@
-import { Client, Data, getClient } from '../../client'
-import { Provider } from '../../types'
+import type { Client, Data } from '../../client'
+import { getClient } from '../../client'
+import type { Provider } from '../../types'
 
 export type GetAccountResult<TProvider extends Provider = Provider> =
   | {

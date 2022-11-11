@@ -1,10 +1,10 @@
-import {
+import type {
   Narrow,
   TypedData,
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import { TypedDataField, providers } from 'ethers'
+import type { TypedDataField, providers } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain, normalizeChainId } from '../../utils'

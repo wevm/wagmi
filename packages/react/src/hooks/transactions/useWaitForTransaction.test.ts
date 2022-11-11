@@ -1,15 +1,15 @@
-import { Hash } from '@wagmi/core'
+import type { Hash } from '@wagmi/core'
 import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import { useSendTransaction } from './useSendTransaction'
-import {
+import type {
   UseWaitForTransactionArgs,
   UseWaitForTransactionConfig,
-  useWaitForTransaction,
 } from './useWaitForTransaction'
+import { useWaitForTransaction } from './useWaitForTransaction'
 
 function useWaitForTransactionWithSendTransactionAndConnect(
   config: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {},
