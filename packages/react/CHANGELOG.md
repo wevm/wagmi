@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.8.2
+
+### Patch Changes
+
+- [`e9f806b6`](https://github.com/wagmi-dev/wagmi/commit/e9f806b652ba62effb3ddac464815e447fc287f6) Thanks [@tmm](https://github.com/tmm)! - Bumped abitype and zustand versions.
+
+- [#1290](https://github.com/wagmi-dev/wagmi/pull/1290) [`88450052`](https://github.com/wagmi-dev/wagmi/commit/88450052b9f070fe53e18d84f72918c410b961f0) Thanks [@tmm](https://github.com/tmm)! - Fixed `useAccount`'s' `onConnect` callback `isReconnected` flag.
+
+- Updated dependencies [[`e9f806b6`](https://github.com/wagmi-dev/wagmi/commit/e9f806b652ba62effb3ddac464815e447fc287f6)]:
+  - @wagmi/core@0.7.2
+
 ## 0.8.1
 
 ### Patch Changes
