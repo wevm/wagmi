@@ -21,27 +21,32 @@ export type UseAccountConfig = {
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
-  const previousAccount = React.useRef<typeof account>()
+  const previousAccountRef = React.useRef<typeof account>()
+  const previousAccount = previousAccountRef.current ?? ({} as typeof account)
 
   if (
     !!onConnect &&
-    previousAccount.current?.status !== 'connected' &&
+    (previousAccount.status !== 'connected' ||
+      previousAccount.status === undefined) &&
     account.status === 'connected'
   )
     onConnect({
       address: account.address,
       connector: account.connector,
-      isReconnected: previousAccount.current?.status === 'reconnecting',
+      isReconnected:
+        previousAccount.status === 'reconnecting' ||
+        // when `previousAccount.status` is `undefined`, it means connector connected immediately
+        previousAccount.status === undefined,
     })
 
   if (
     !!onDisconnect &&
-    previousAccount.current?.status == 'connected' &&
+    previousAccount.status === 'connected' &&
     account.status === 'disconnected'
   )
     onDisconnect()
 
-  previousAccount.current = account
+  previousAccountRef.current = account
 
   return account
 }
