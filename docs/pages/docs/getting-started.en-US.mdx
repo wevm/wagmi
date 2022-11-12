@@ -61,12 +61,11 @@ import {
   createClient,
   configureChains,
   chain,
-  defaultChains,
 } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.mainnet, chain.optimism],
   [publicProvider()],
 )
 
