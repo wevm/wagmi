@@ -1,4 +1,4 @@
-import { Abi } from 'abitype'
+import type { Abi } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
@@ -12,10 +12,8 @@ import {
 } from '../../../test'
 import { useConnect } from '../accounts'
 import { useSwitchNetwork } from '../accounts/useSwitchNetwork'
-import {
-  UsePrepareContractWriteConfig,
-  usePrepareContractWrite,
-} from './usePrepareContractWrite'
+import type { UsePrepareContractWriteConfig } from './usePrepareContractWrite'
+import { usePrepareContractWrite } from './usePrepareContractWrite'
 
 function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],

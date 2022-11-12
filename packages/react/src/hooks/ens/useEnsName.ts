@@ -1,6 +1,7 @@
-import { FetchEnsNameArgs, FetchEnsNameResult, fetchEnsName } from '@wagmi/core'
+import type { FetchEnsNameArgs, FetchEnsNameResult } from '@wagmi/core'
+import { fetchEnsName } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsNameArgs = Partial<FetchEnsNameArgs>

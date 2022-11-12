@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.7.2
+
+### Patch Changes
+
+- [`e9f806b6`](https://github.com/wagmi-dev/wagmi/commit/e9f806b652ba62effb3ddac464815e447fc287f6) Thanks [@tmm](https://github.com/tmm)! - Bumped abitype and zustand versions.
+
 ## 0.7.1
 
 ### Patch Changes

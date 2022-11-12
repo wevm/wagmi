@@ -1,8 +1,7 @@
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
-import * as React from 'react'
+import type { Chain } from 'wagmi'
 import {
-  Chain,
   WagmiConfig,
   chain,
   configureChains,
@@ -45,8 +44,8 @@ const avalanche: Chain = {
 const { chains, provider, webSocketProvider } = configureChains(
   [...defaultChains, chain.optimism, avalanche],
   [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
-    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY }),
+    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! }),
     jsonRpcProvider({
       rpc: (chain) => {
         if (chain.id !== avalanche.id) return null

@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
-import * as React from 'react'
 
 import {
   WagmiConfig,
@@ -15,7 +14,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY }),
+  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
 ])
 
 const client = createClient({

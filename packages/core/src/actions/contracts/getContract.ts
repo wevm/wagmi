@@ -1,4 +1,4 @@
-import {
+import type {
   Abi,
   AbiEvent,
   AbiFunction,
@@ -11,20 +11,15 @@ import {
   Narrow,
   ResolvedConfig,
 } from 'abitype'
-import {
-  ContractInterface,
-  Contract as EthersContract,
-  Signer,
-  ethers,
-  providers,
-} from 'ethers'
+import type { ContractInterface, Signer, ethers, providers } from 'ethers'
+import { Contract as EthersContract } from 'ethers'
 
-import {
+import type {
   AbiItemName,
   Event,
   GetOverridesForAbiStateMutability,
 } from '../../types/contracts'
-import {
+import type {
   CountOccurrences,
   IsUnknown,
   UnionToIntersection,
@@ -238,9 +233,13 @@ type AbiFunctionReturnType<
       : TLength extends 1
       ? AbiParameterToPrimitiveType<TAbiFunction['outputs'][0]>
       : {
-          [Output in TAbiFunction['outputs'][number] as Output['name'] extends ''
-            ? never
-            : Output['name']]: AbiParameterToPrimitiveType<Output>
+          [Output in TAbiFunction['outputs'][number] as Output extends {
+            name: string
+          }
+            ? Output['name'] extends ''
+              ? never
+              : Output['name']
+            : never]: AbiParameterToPrimitiveType<Output>
         } & AbiParametersToPrimitiveTypes<TAbiFunction['outputs']>
     : never
 })[TAbiFunction['stateMutability']]

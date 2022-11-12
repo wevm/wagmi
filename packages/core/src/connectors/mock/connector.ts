@@ -1,9 +1,11 @@
 import { getAddress } from 'ethers/lib/utils.js'
 
-import { Chain } from '../../types'
+import type { Chain } from '../../types'
 import { normalizeChainId } from '../../utils'
-import { Connector, ConnectorData } from '../base'
-import { MockProvider, MockProviderOptions } from './provider'
+import type { ConnectorData } from '../base'
+import { Connector } from '../base'
+import type { MockProviderOptions } from './provider'
+import { MockProvider } from './provider'
 
 export class MockConnector extends Connector<
   MockProvider,

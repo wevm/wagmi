@@ -1,4 +1,4 @@
-import { IronSessionOptions } from 'iron-session'
+import type { IronSessionOptions } from 'iron-session'
 
 export const ironOptions: IronSessionOptions = {
   cookieName: 'siwe',

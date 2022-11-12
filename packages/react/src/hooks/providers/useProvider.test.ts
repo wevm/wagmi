@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 
 import { actConnect, actSwitchNetwork, renderHook } from '../../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
-import { UseProviderArgs, useProvider } from './useProvider'
+import type { UseProviderArgs } from './useProvider'
+import { useProvider } from './useProvider'
 
 function useProviderWithConnectAndNetwork(config: UseProviderArgs = {}) {
   return {

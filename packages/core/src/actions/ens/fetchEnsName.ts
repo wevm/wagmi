@@ -1,4 +1,4 @@
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { getAddress } from 'ethers/lib/utils.js'
 
 import { getProvider } from '../providers'

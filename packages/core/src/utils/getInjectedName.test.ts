@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
+import type { Ethereum } from '../types'
+
 import { getInjectedName } from './getInjectedName'
 
 describe.each([
@@ -60,6 +62,6 @@ describe.each([
   { ethereum: {}, expected: 'Injected' },
 ])('getInjectedName($ethereum)', ({ ethereum, expected }) => {
   it(`returns ${expected}`, () => {
-    expect(getInjectedName(<any>ethereum)).toEqual(expected)
+    expect(getInjectedName(ethereum as Ethereum)).toEqual(expected)
   })
 })

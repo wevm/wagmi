@@ -1,5 +1,5 @@
 import { getClient } from '../../client'
-import { WebSocketProvider } from '../../types'
+import type { WebSocketProvider } from '../../types'
 
 export type GetWebSocketProviderArgs = {
   /** Chain id to use for provider */

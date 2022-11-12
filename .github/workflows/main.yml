@@ -83,7 +83,7 @@ jobs:
       - name: Lint code
         run: pnpm lint
       - name: Check types
-        run: pnpm lint:types
+        run: pnpm typecheck
 
   build:
     name: Build

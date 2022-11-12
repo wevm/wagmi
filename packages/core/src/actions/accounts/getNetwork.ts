@@ -1,5 +1,5 @@
 import { getClient } from '../../client'
-import { Chain } from '../../types'
+import type { Chain } from '../../types'
 
 export type GetNetworkResult = {
   chain?: Chain & {

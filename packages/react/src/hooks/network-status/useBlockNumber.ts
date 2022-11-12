@@ -1,12 +1,9 @@
-import {
-  FetchBlockNumberArgs,
-  FetchBlockNumberResult,
-  fetchBlockNumber,
-} from '@wagmi/core'
+import type { FetchBlockNumberArgs, FetchBlockNumberResult } from '@wagmi/core'
+import { fetchBlockNumber } from '@wagmi/core'
 import { debounce } from '@wagmi/core/internal'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId, useQuery, useQueryClient } from '../utils'
 

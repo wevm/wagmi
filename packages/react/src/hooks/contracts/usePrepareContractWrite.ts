@@ -1,14 +1,14 @@
-import {
+import type {
   FetchSignerResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
   Signer,
-  prepareWriteContract,
 } from '@wagmi/core'
-import { Abi } from 'abitype'
-import { providers } from 'ethers'
+import { prepareWriteContract } from '@wagmi/core'
+import type { Abi } from 'abitype'
+import type { providers } from 'ethers'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'
 import { useQuery } from '../utils'
 

@@ -1,10 +1,7 @@
-import {
-  FetchTransactionArgs,
-  FetchTransactionResult,
-  fetchTransaction,
-} from '@wagmi/core'
+import type { FetchTransactionArgs, FetchTransactionResult } from '@wagmi/core'
+import { fetchTransaction } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseTransactionArgs = Partial<FetchTransactionArgs>

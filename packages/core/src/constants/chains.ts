@@ -1,4 +1,4 @@
-import { Chain } from '../types'
+import type { Chain } from '../types'
 import { etherscanBlockExplorers } from './blockExplorers'
 import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from './rpcs'
 

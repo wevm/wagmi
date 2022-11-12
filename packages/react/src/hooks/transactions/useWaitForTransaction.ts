@@ -1,10 +1,10 @@
-import {
+import type {
   WaitForTransactionArgs,
   WaitForTransactionResult,
-  waitForTransaction,
 } from '@wagmi/core'
+import { waitForTransaction } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseWaitForTransactionArgs = Partial<WaitForTransactionArgs>

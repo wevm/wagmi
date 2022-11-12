@@ -1,10 +1,7 @@
-import {
-  FetchEnsAvatarArgs,
-  FetchEnsAvatarResult,
-  fetchEnsAvatar,
-} from '@wagmi/core'
+import type { FetchEnsAvatarArgs, FetchEnsAvatarResult } from '@wagmi/core'
+import { fetchEnsAvatar } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsAvatarArgs = Partial<FetchEnsAvatarArgs>
