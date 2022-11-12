@@ -13,7 +13,7 @@ import { useNetwork, useSigner } from '../accounts'
 import { useQuery } from '../utils'
 
 export type UsePrepareContractWriteConfig<
-  TAbi extends Abi | readonly unknown[] = Abi,
+  TAbi = Abi,
   TFunctionName extends string = string,
   TSigner extends Signer = Signer,
 > = PrepareWriteContractConfig<
@@ -27,7 +27,7 @@ export type UsePrepareContractWriteConfig<
     isFunctionNameOptional: true
   }
 > &
-  QueryConfig<PrepareWriteContractResult, Error>
+  QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName>, Error>
 
 type QueryKeyArgs = Omit<PrepareWriteContractConfig, 'abi'>
 type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
