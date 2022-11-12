@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.7.3
+
+### Patch Changes
+
+- [#1294](https://github.com/wagmi-dev/wagmi/pull/1294) [`b2f88949`](https://github.com/wagmi-dev/wagmi/commit/b2f88949f32aabaf13f318472648cd51a8b7f2e7) Thanks [@tmm](https://github.com/tmm)! - Set `abi` return type value for `prepareContractWrite` as more permissive when not inferrable as `Abi`.
+
 ## 0.7.2
 
 ### Patch Changes
