@@ -3,7 +3,7 @@ title: 'Getting Started'
 description: 'Get started building with wagmi!'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 
 # Getting Started
 
@@ -42,23 +42,23 @@ Want to learn more? Check out the [`create-wagmi` CLI docs](/docs/create-wagmi).
 Install wagmi and its ethers peer dependency.
 
 {/* prettier-ignore-start */}
-<Nextra.Tabs items={['npm', 'pnpm', 'yarn']}>
-  <Nextra.Tab>
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+  <Tab>
 ```bash
 npm i wagmi ethers
 ```
-  </Nextra.Tab>
-  <Nextra.Tab>
+  </Tab>
+  <Tab>
 ```bash
 pnpm i wagmi ethers
 ```
-  </Nextra.Tab>
-  <Nextra.Tab>
+  </Tab>
+  <Tab>
 ```bash
 yarn add wagmi ethers
 ```
-  </Nextra.Tab>
-</Nextra.Tabs>
+  </Tab>
+</Tabs>
 {/* prettier-ignore-end */}
 
 ### Configure chains
@@ -89,12 +89,11 @@ import {
   createClient,
   configureChains,
   chain,
-  defaultChains,
 } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [chain.mainnet, chain.optimism],
   [publicProvider()],
 )
 

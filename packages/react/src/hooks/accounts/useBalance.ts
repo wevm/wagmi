@@ -1,7 +1,8 @@
-import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
+import type { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
+import { fetchBalance } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 
@@ -12,29 +13,42 @@ export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
 
 export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
 
-export const queryKey = ({
-  addressOrName,
+type QueryKeyArgs = Partial<FetchBalanceArgs>
+type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
+
+function queryKey({
+  address,
   chainId,
   formatUnits,
+  scopeKey,
   token,
-}: Partial<FetchBalanceArgs> & {
-  chainId?: number
-}) =>
-  [{ entity: 'balance', addressOrName, chainId, formatUnits, token }] as const
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
+    {
+      entity: 'balance',
+      address,
+      chainId,
+      formatUnits,
+      scopeKey,
+      token,
+    },
+  ] as const
+}
 
-const queryFn = ({
-  queryKey: [{ addressOrName, chainId, formatUnits, token }],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  if (!addressOrName) throw new Error('address is required')
-  return fetchBalance({ addressOrName, chainId, formatUnits, token })
+function queryFn({
+  queryKey: [{ address, chainId, formatUnits, token }],
+}: QueryFunctionArgs<typeof queryKey>) {
+  if (!address) throw new Error('address is required')
+  return fetchBalance({ address, chainId, formatUnits, token })
 }
 
 export function useBalance({
-  addressOrName,
+  address,
   cacheTime,
   chainId: chainId_,
   enabled = true,
   formatUnits,
+  scopeKey,
   staleTime,
   suspense,
   token,
@@ -45,11 +59,11 @@ export function useBalance({
 }: UseBalanceArgs & UseBalanceConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
   const balanceQuery = useQuery(
-    queryKey({ addressOrName, chainId, formatUnits, token }),
+    queryKey({ address, chainId, formatUnits, scopeKey, token }),
     queryFn,
     {
       cacheTime,
-      enabled: Boolean(enabled && addressOrName),
+      enabled: Boolean(enabled && address),
       staleTime,
       suspense,
       onError,
@@ -63,7 +77,7 @@ export function useBalance({
     if (!enabled) return
     if (!watch) return
     if (!blockNumber) return
-    if (!addressOrName) return
+    if (!address) return
     balanceQuery.refetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockNumber])

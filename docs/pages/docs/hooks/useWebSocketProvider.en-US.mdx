@@ -34,10 +34,10 @@ WebSocketProvider
 Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/docs/client#websocketprovider-optional) for this to work correctly.
 
 ```tsx {5}
-import { useProvider } from 'wagmi'
+import { useWebSocketProvider } from 'wagmi'
 
 function App() {
-  const provider = useProvider({
+  const webSocketProvider = useWebSocketProvider({
     chainId: 1,
   })
 }

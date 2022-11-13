@@ -13,7 +13,7 @@ describe('useChainId', () => {
     describe.each([
       { chainId: undefined, expected: 1 },
       { chainId: 1, expected: 1 },
-      { chainId: 4, expected: 4 },
+      { chainId: 5, expected: 5 },
       { chainId: 12345, expected: 1 },
     ])('useChainId({ chainId: $chainId })', ({ chainId, expected }) => {
       it(`returns ${expected}`, () => {

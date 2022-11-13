@@ -1,7 +1,7 @@
-import { providers } from 'ethers'
-import { formatUnits } from 'ethers/lib/utils'
+import type { providers } from 'ethers'
+import { formatUnits } from 'ethers/lib/utils.js'
 
-import { Unit } from '../../types'
+import type { Unit } from '../../types'
 import { getProvider } from '../providers'
 
 export type FetchFeeDataArgs = {

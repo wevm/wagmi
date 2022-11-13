@@ -1,4 +1,5 @@
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
+import { getAddress } from 'ethers/lib/utils.js'
 
 import { getProvider } from '../providers'
 
@@ -16,5 +17,5 @@ export async function fetchEnsName({
   chainId,
 }: FetchEnsNameArgs): Promise<FetchEnsNameResult> {
   const provider = getProvider({ chainId })
-  return provider.lookupAddress(address)
+  return provider.lookupAddress(getAddress(address))
 }

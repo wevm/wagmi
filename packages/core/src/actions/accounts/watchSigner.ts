@@ -1,8 +1,9 @@
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import { Signer } from '../../types'
-import { FetchSignerArgs, FetchSignerResult, fetchSigner } from './fetchSigner'
+import type { Signer } from '../../types'
+import type { FetchSignerArgs, FetchSignerResult } from './fetchSigner'
+import { fetchSigner } from './fetchSigner'
 
 export type WatchSignerArgs = FetchSignerArgs
 

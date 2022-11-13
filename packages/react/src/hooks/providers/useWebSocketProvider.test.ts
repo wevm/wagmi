@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getWebSocketProvider, renderHook, setupClient } from '../../../test'
-import { Client } from '../../client'
+import type { Client } from '../../client'
 import { useWebSocketProvider } from './useWebSocketProvider'
 
 describe('useWebSocketProvider', () => {

@@ -6,7 +6,7 @@ import { useBalance } from './useBalance'
 describe('useBalance', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
-      useBalance({ addressOrName: 'awkweb.eth' }),
+      useBalance({ address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' }),
     )
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
@@ -43,19 +43,18 @@ describe('useBalance', () => {
   })
 
   describe('configuration', () => {
-    describe('addressOrName', () => {
-      it('address', async () => {
-        const { result, waitFor } = renderHook(() =>
-          useBalance({
-            addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-          }),
-        )
+    it('address', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useBalance({
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+        }),
+      )
 
-        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
-        expect(res).toMatchInlineSnapshot(`
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      expect(res).toMatchInlineSnapshot(`
           {
             "data": {
               "decimals": 18,
@@ -80,50 +79,41 @@ describe('useBalance', () => {
             "status": "success",
           }
         `)
-      })
+    })
 
-      it('name', async () => {
-        const { result, waitFor } = renderHook(() =>
-          useBalance({
-            addressOrName: 'medha.eth',
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          balance: useBalance({
+            address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
           }),
-        )
-
-        await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
-
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { internal, ...res } = result.current
-        expect(res).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "decimals": 18,
-              "formatted": "0.048320181048190068",
-              "symbol": "ETH",
-              "value": {
-                "hex": "0xabaaf2dadc2474",
-                "type": "BigNumber",
-              },
-            },
-            "error": null,
-            "fetchStatus": "idle",
-            "isError": false,
-            "isFetched": true,
-            "isFetchedAfterMount": true,
-            "isFetching": false,
-            "isIdle": false,
-            "isLoading": false,
-            "isRefetching": false,
-            "isSuccess": true,
-            "refetch": [Function],
-            "status": "success",
-          }
-        `)
+          balancewithoutScopeKey: useBalance({
+            address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            enabled: false,
+          }),
+          balancewithScopeKey: useBalance({
+            address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
       })
+
+      await waitFor(() => expect(result.current.balance.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.balancewithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.balancewithScopeKey.isIdle).toBeTruthy(),
+      )
     })
 
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
-        useBalance({ chainId: 1, addressOrName: 'awkweb.eth' }),
+        useBalance({
+          chainId: 1,
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+        }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -160,7 +150,7 @@ describe('useBalance', () => {
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
         useBalance({
-          addressOrName: 'moxey.eth',
+          address: '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
           enabled: false,
         }),
       )
@@ -190,7 +180,10 @@ describe('useBalance', () => {
 
     it('formatUnits', async () => {
       const { result, waitFor } = renderHook(() =>
-        useBalance({ addressOrName: 'awkweb.eth', formatUnits: 'gwei' }),
+        useBalance({
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          formatUnits: 'gwei',
+        }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -227,7 +220,10 @@ describe('useBalance', () => {
     it('token', async () => {
       const ensTokenAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
       const { result, waitFor } = renderHook(() =>
-        useBalance({ addressOrName: 'awkweb.eth', token: ensTokenAddress }),
+        useBalance({
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          token: ensTokenAddress,
+        }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -265,7 +261,10 @@ describe('useBalance', () => {
   describe('return value', () => {
     it('refetch', async () => {
       const { result } = renderHook(() =>
-        useBalance({ enabled: false, addressOrName: 'worm.eth' }),
+        useBalance({
+          enabled: false,
+          address: '0xfb843f8c4992efdb6b42349c35f025ca55742d33',
+        }),
       )
 
       await act(async () => {
@@ -286,7 +285,7 @@ describe('useBalance', () => {
   })
 
   describe('behavior', () => {
-    it('does nothing when `addressOrName` is missing', async () => {
+    it('does nothing when `address` is missing', async () => {
       const { result, waitFor } = renderHook(() => useBalance())
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
@@ -315,7 +314,7 @@ describe('useBalance', () => {
     it('token', async () => {
       const { result, waitFor } = renderHook(() =>
         useBalance({
-          addressOrName: 'awkweb.eth',
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
           token: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
         }),
       )

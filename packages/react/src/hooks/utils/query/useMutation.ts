@@ -1,8 +1,10 @@
-import {
+import type {
   MutationFunction,
   MutationKey,
   UseMutationOptions,
   UseMutationResult,
+} from '@tanstack/react-query'
+import {
   parseMutationArgs,
   useMutation as useMutation_,
 } from '@tanstack/react-query'

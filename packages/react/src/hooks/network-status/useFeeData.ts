@@ -1,27 +1,31 @@
-import { FetchFeeDataArgs, FetchFeeDataResult, fetchFeeData } from '@wagmi/core'
+import type { FetchFeeDataArgs, FetchFeeDataResult } from '@wagmi/core'
+import { fetchFeeData } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useQuery } from '../utils'
 
-type UseFeeDataArgs = Partial<FetchFeeDataArgs> & {
+export type UseFeeDataArgs = Partial<FetchFeeDataArgs> & {
   /** Subscribe to changes */
   watch?: boolean
 }
-
 export type UseFeedDataConfig = QueryConfig<FetchFeeDataResult, Error>
 
-export const queryKey = ({
+type QueryKeyArgs = Partial<FetchFeeDataArgs>
+type QueryKeyConfig = Pick<UseFeedDataConfig, 'scopeKey'>
+
+function queryKey({
   chainId,
   formatUnits,
-}: Partial<FetchFeeDataArgs> & {
-  chainId?: number
-}) => [{ entity: 'feeData', chainId, formatUnits }] as const
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'feeData', chainId, formatUnits, scopeKey }] as const
+}
 
-const queryFn = ({
+function queryFn({
   queryKey: [{ chainId, formatUnits }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   return fetchFeeData({ chainId, formatUnits })
 }
 
@@ -30,6 +34,7 @@ export function useFeeData({
   chainId: chainId_,
   enabled = true,
   formatUnits = 'wei',
+  scopeKey,
   staleTime,
   suspense,
   watch,
@@ -39,15 +44,19 @@ export function useFeeData({
 }: UseFeeDataArgs & UseFeedDataConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  const feeDataQuery = useQuery(queryKey({ chainId, formatUnits }), queryFn, {
-    cacheTime,
-    enabled,
-    staleTime,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  const feeDataQuery = useQuery(
+    queryKey({ chainId, formatUnits, scopeKey }),
+    queryFn,
+    {
+      cacheTime,
+      enabled,
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
 
   const { data: blockNumber } = useBlockNumber({ chainId, watch })
   React.useEffect(() => {

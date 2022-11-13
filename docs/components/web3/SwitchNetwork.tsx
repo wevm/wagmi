@@ -1,5 +1,4 @@
 import { Button } from 'degen'
-import * as React from 'react'
 import { chain, useNetwork, useSwitchNetwork } from 'wagmi'
 
 export function SwitchNetwork() {

@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { Result } from 'ethers/lib/utils'
+import type { Result } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { parseContractResult } from './parseContractResult'

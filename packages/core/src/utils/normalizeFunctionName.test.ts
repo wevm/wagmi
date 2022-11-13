@@ -1,6 +1,6 @@
-import { AbiParameter } from 'abitype'
+import type { AbiParameter } from 'abitype'
 import { BigNumber, Contract } from 'ethers'
-import { toUtf8Bytes } from 'ethers/lib/utils'
+import { toUtf8Bytes } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { wagmiContractConfig } from '../../test'

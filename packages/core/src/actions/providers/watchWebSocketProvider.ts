@@ -1,10 +1,10 @@
 import { getClient } from '../../client'
-import { WebSocketProvider } from '../../types'
-import {
+import type { WebSocketProvider } from '../../types'
+import type {
   GetWebSocketProviderArgs,
   GetWebSocketProviderResult,
-  getWebSocketProvider,
 } from './getWebSocketProvider'
+import { getWebSocketProvider } from './getWebSocketProvider'
 
 export type WatchWebSocketProviderCallback<
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,

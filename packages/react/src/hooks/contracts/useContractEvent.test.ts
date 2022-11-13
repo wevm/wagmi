@@ -1,5 +1,6 @@
-import { Hash, erc20ABI } from '@wagmi/core'
-import {
+import type { Hash } from '@wagmi/core'
+import { erc20ABI } from '@wagmi/core'
+import type {
   Abi,
   ExtractAbiEventNames,
   ExtractAbiFunctionNames,
@@ -16,13 +17,15 @@ import {
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
-import {
+import type {
   UseWaitForTransactionArgs,
   UseWaitForTransactionConfig,
-  useWaitForTransaction,
 } from '../transactions/useWaitForTransaction'
-import { UseContractEventConfig, useContractEvent } from './useContractEvent'
-import { UseContractWriteConfig, useContractWrite } from './useContractWrite'
+import { useWaitForTransaction } from '../transactions/useWaitForTransaction'
+import type { UseContractEventConfig } from './useContractEvent'
+import { useContractEvent } from './useContractEvent'
+import type { UseContractWriteConfig } from './useContractWrite'
+import { useContractWrite } from './useContractWrite'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 

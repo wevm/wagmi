@@ -1,9 +1,9 @@
-import { Abi, Address, ExtractAbiFunction } from 'abitype'
-import { PopulatedTransaction } from 'ethers'
+import type { Abi, Address, ExtractAbiFunction } from 'abitype'
+import type { PopulatedTransaction } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
-import { Signer } from '../../types'
-import {
+import type { Signer } from '../../types'
+import type {
   DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,
@@ -11,7 +11,8 @@ import {
 } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
-import { SendTransactionResult, sendTransaction } from '../transactions'
+import type { SendTransactionResult } from '../transactions'
+import { sendTransaction } from '../transactions'
 import { prepareWriteContract } from './prepareWriteContract'
 
 type Options = Options_ & { isRequestOptional?: boolean }
@@ -131,7 +132,7 @@ export async function writeContract<
 
   const signer = await fetchSigner<TSigner>()
   if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId })
+  if (chainId) assertActiveChain({ chainId, signer })
   if (mode === 'prepared')
     if (!request_) throw new Error('`request` is required')
 

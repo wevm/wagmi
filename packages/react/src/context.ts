@@ -1,8 +1,9 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Provider, WebSocketProvider } from '@wagmi/core'
+import type { QueryClient } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
+import type { Provider, WebSocketProvider } from '@wagmi/core'
 import * as React from 'react'
 
-import { Client } from './client'
+import type { Client } from './client'
 
 export const Context = React.createContext<
   Client<Provider, WebSocketProvider> | undefined
@@ -26,16 +27,16 @@ export function WagmiConfig<
   children,
   client,
 }: React.PropsWithChildren<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
-  return (
-    <Context.Provider value={client as unknown as Client}>
-      <QueryClientProvider
-        client={client.queryClient}
-        context={queryClientContext}
-      >
-        {children}
-      </QueryClientProvider>
-    </Context.Provider>
-  )
+  // Bailing out of using JSX
+  // https://github.com/egoist/tsup/issues/390#issuecomment-933488738
+  return React.createElement(Context.Provider, {
+    children: React.createElement(QueryClientProvider, {
+      children,
+      client: client.queryClient,
+      context: queryClientContext,
+    }),
+    value: client as unknown as Client,
+  })
 }
 
 export function useClient<

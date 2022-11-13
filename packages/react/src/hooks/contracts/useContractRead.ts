@@ -1,14 +1,10 @@
-import {
-  ReadContractConfig,
-  ReadContractResult,
-  deepEqual,
-  parseContractResult,
-  readContract,
-} from '@wagmi/core'
-import { Abi } from 'abitype'
+import { replaceEqualDeep } from '@tanstack/react-query'
+import type { ReadContractConfig, ReadContractResult } from '@wagmi/core'
+import { deepEqual, parseContractResult, readContract } from '@wagmi/core'
+import type { Abi } from 'abitype'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
@@ -32,16 +28,20 @@ export type UseContractReadConfig<
     watch?: boolean
   }
 
-function queryKey(
-  {
-    address,
-    args,
-    chainId,
-    functionName,
-    overrides,
-  }: Omit<ReadContractConfig, 'abi'>,
-  { blockNumber }: { blockNumber?: number },
-) {
+type QueryKeyArgs = Omit<ReadContractConfig, 'abi'>
+type QueryKeyConfig = Pick<UseContractReadConfig, 'scopeKey'> & {
+  blockNumber?: number
+}
+
+function queryKey({
+  address,
+  args,
+  blockNumber,
+  chainId,
+  functionName,
+  overrides,
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'readContract',
@@ -51,6 +51,7 @@ function queryKey(
       chainId,
       functionName,
       overrides,
+      scopeKey,
     },
   ] as const
 }
@@ -83,21 +84,26 @@ export function useContractRead<
   {
     abi,
     address,
-    functionName,
     args,
-    chainId: chainId_,
-    overrides,
     cacheOnBlock = false,
     cacheTime,
+    chainId: chainId_,
     enabled: enabled_ = true,
-    isDataEqual = deepEqual,
-    select,
-    staleTime,
-    suspense,
-    watch,
+    functionName,
+    isDataEqual,
     onError,
     onSettled,
     onSuccess,
+    overrides,
+    scopeKey,
+    select,
+    staleTime,
+    structuralSharing = (oldData, newData) =>
+      deepEqual(oldData, newData)
+        ? oldData
+        : (replaceEqualDeep(oldData, newData) as any),
+    suspense,
+    watch,
   }: UseContractReadConfig<TAbi, TFunctionName> = {} as any,
 ) {
   const chainId = useChainId({ chainId: chainId_ })
@@ -109,16 +115,15 @@ export function useContractRead<
 
   const queryKey_ = React.useMemo(
     () =>
-      queryKey(
-        {
-          address,
-          args,
-          chainId,
-          functionName,
-          overrides,
-        } as Omit<ReadContractConfig, 'abi'>,
-        { blockNumber: cacheOnBlock ? blockNumber : undefined },
-      ),
+      queryKey({
+        address,
+        args,
+        blockNumber: cacheOnBlock ? blockNumber : undefined,
+        chainId,
+        functionName,
+        overrides,
+        scopeKey,
+      } as Omit<ReadContractConfig, 'abi'>),
     [
       address,
       args,
@@ -127,6 +132,7 @@ export function useContractRead<
       chainId,
       functionName,
       overrides,
+      scopeKey,
     ],
   )
 
@@ -165,6 +171,7 @@ export function useContractRead<
         return select ? select(result) : result
       },
       staleTime,
+      structuralSharing,
       suspense,
       onError,
       onSettled,

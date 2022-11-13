@@ -1,9 +1,10 @@
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import { Connector } from '../../connectors'
-import { Provider } from '../../types'
-import { GetAccountResult, getAccount } from './getAccount'
+import type { Connector } from '../../connectors'
+import type { Provider } from '../../types'
+import type { GetAccountResult } from './getAccount'
+import { getAccount } from './getAccount'
 
 export type WatchAccountCallback<TProvider extends Provider = Provider> = (
   data: GetAccountResult<TProvider>,

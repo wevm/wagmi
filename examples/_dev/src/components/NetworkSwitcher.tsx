@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useNetwork, useSwitchNetwork } from 'wagmi'
 
 export const NetworkSwitcher = () => {

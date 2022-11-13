@@ -1,11 +1,12 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { TypedData } from 'abitype'
-import { verifyTypedData } from 'ethers/lib/utils'
+import type { TypedData } from 'abitype'
+import { verifyTypedData } from 'ethers/lib/utils.js'
 import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
-import { UseSignTypedDataConfig, useSignTypedData } from './useSignTypedData'
+import type { UseSignTypedDataConfig } from './useSignTypedData'
+import { useSignTypedData } from './useSignTypedData'
 
 // All properties on a domain are optional
 const domain = {
@@ -329,7 +330,7 @@ describe('useSignTypedData', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actConnect({ chainId: 4, connector, utils })
+        await actConnect({ chainId: 5, connector, utils })
 
         await act(async () => result.current.signTypedData.signTypedData())
         await waitFor(() =>
@@ -337,7 +338,7 @@ describe('useSignTypedData', () => {
         )
 
         expect(result.current.signTypedData.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
+          '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Goerli".]',
         )
       })
     })

@@ -8,7 +8,7 @@ import {
   setupClient,
   useAccount,
 } from '../../../test'
-import { UseAccountConfig } from './useAccount'
+import type { UseAccountConfig } from './useAccount'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 

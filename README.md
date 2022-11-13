@@ -157,7 +157,7 @@ Thanks to julianhutton.eth ([@julianjhutton](https://twitter.com/julianjhutton))
 
 ## License
 
-[WAGMIT](/LICENSE) License
+[MIT](/LICENSE) License
 
 <br />
 

@@ -1,10 +1,7 @@
-import { ResolvedConfig } from 'abitype'
+import type { ResolvedConfig } from 'abitype'
 
-import {
-  ConnectorNotFoundError,
-  ProviderRpcError,
-  UserRejectedRequestError,
-} from '../../errors'
+import type { ProviderRpcError } from '../../errors'
+import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 import { fetchSigner } from './fetchSigner'
 
 export type SignMessageArgs = {

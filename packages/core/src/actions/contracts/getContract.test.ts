@@ -1,9 +1,9 @@
-import { ExtractAbiEvent, ResolvedConfig } from 'abitype'
-import { ethers } from 'ethers'
+import type { ExtractAbiEvent, ResolvedConfig } from 'abitype'
+import type { ethers } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import { expectType, wagmiContractConfig } from '../../../test'
-import { Event, Overrides } from '../../types/contracts'
+import type { Event, Overrides } from '../../types/contracts'
 import { getContract } from './getContract'
 
 describe('getContract', () => {

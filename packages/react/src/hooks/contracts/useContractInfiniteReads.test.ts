@@ -1,4 +1,4 @@
-import { InfiniteData } from '@tanstack/react-query'
+import type { InfiniteData } from '@tanstack/react-query'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 

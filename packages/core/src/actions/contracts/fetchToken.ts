@@ -1,9 +1,9 @@
-import { Address, ResolvedConfig } from 'abitype'
-import { formatUnits, parseBytes32String } from 'ethers/lib/utils'
+import type { Address, ResolvedConfig } from 'abitype'
+import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
 
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import { ContractResultDecodeError } from '../../errors'
-import { Unit } from '../../types'
+import type { Unit } from '../../types'
 import { readContracts } from '../contracts'
 
 export type FetchTokenArgs = {

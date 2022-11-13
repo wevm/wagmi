@@ -1,13 +1,8 @@
-import {
-  FetchSignerArgs,
-  FetchSignerResult,
-  Signer,
-  fetchSigner,
-  watchSigner,
-} from '@wagmi/core'
+import type { FetchSignerArgs, FetchSignerResult, Signer } from '@wagmi/core'
+import { fetchSigner, watchSigner } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery, useQueryClient } from '../utils'
 
 export type UseSignerConfig = Omit<
@@ -16,12 +11,15 @@ export type UseSignerConfig = Omit<
 > &
   FetchSignerArgs
 
-export const queryKey = ({ chainId }: FetchSignerArgs) =>
-  [{ entity: 'signer', chainId, persist: false }] as const
+export function queryKey({ chainId }: FetchSignerArgs) {
+  return [{ entity: 'signer', chainId, persist: false }] as const
+}
 
-const queryFn = <TSigner extends Signer>({
+function queryFn<TSigner extends Signer>({
   queryKey: [{ chainId }],
-}: QueryFunctionArgs<typeof queryKey>) => fetchSigner<TSigner>({ chainId })
+}: QueryFunctionArgs<typeof queryKey>) {
+  return fetchSigner<TSigner>({ chainId })
+}
 
 export function useSigner<TSigner extends Signer>({
   chainId: chainId_,

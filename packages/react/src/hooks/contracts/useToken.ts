@@ -1,23 +1,32 @@
-import { FetchTokenArgs, FetchTokenResult, fetchToken } from '@wagmi/core'
+import type { FetchTokenArgs, FetchTokenResult } from '@wagmi/core'
+import { fetchToken } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseTokenArgs = Partial<FetchTokenArgs>
-
 export type UseTokenConfig = QueryConfig<FetchTokenResult, Error>
 
-export const queryKey = ({
+type QueryKeyArgs = Partial<FetchTokenArgs> & {
+  chainId?: number
+}
+type QueryKeyConfig = Pick<UseTokenConfig, 'scopeKey'> & {
+  activeChainId?: number
+  signerAddress?: string
+}
+
+function queryKey({
   address,
   chainId,
   formatUnits,
-}: Partial<FetchTokenArgs> & {
-  chainId?: number
-}) => [{ entity: 'token', address, chainId, formatUnits }] as const
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'token', address, chainId, formatUnits, scopeKey }] as const
+}
 
-const queryFn = ({
+function queryFn({
   queryKey: [{ address, chainId, formatUnits }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   if (!address) throw new Error('address is required')
   return fetchToken({ address, chainId, formatUnits })
 }
@@ -28,6 +37,7 @@ export function useToken({
   formatUnits = 'ether',
   cacheTime,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -36,13 +46,17 @@ export function useToken({
 }: UseTokenArgs & UseTokenConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ address, chainId, formatUnits }), queryFn, {
-    cacheTime,
-    enabled: Boolean(enabled && address),
-    staleTime,
-    suspense,
-    onError,
-    onSettled,
-    onSuccess,
-  })
+  return useQuery(
+    queryKey({ address, chainId, formatUnits, scopeKey }),
+    queryFn,
+    {
+      cacheTime,
+      enabled: Boolean(enabled && address),
+      staleTime,
+      suspense,
+      onError,
+      onSettled,
+      onSuccess,
+    },
+  )
 }

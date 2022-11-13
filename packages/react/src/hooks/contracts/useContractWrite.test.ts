@@ -1,4 +1,4 @@
-import { Abi, ExtractAbiFunctionNames } from 'abitype'
+import type { Abi, ExtractAbiFunctionNames } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
@@ -14,11 +14,10 @@ import {
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
-import { UseContractWriteConfig, useContractWrite } from './useContractWrite'
-import {
-  UsePrepareContractWriteConfig,
-  usePrepareContractWrite,
-} from './usePrepareContractWrite'
+import type { UseContractWriteConfig } from './useContractWrite'
+import { useContractWrite } from './useContractWrite'
+import type { UsePrepareContractWriteConfig } from './usePrepareContractWrite'
+import { usePrepareContractWrite } from './usePrepareContractWrite'
 
 function useContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
@@ -33,21 +32,14 @@ function useContractWriteWithConnect<
 function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->(
-  config: UsePrepareContractWriteConfig<TAbi, TFunctionName> & {
-    chainId?: number
-  },
-) {
-  const prepareContractWrite = usePrepareContractWrite({
-    ...config,
-    abi: config.abi as Abi,
-  })
+>(config: UsePrepareContractWriteConfig<TAbi, TFunctionName>) {
+  const prepareContractWrite = usePrepareContractWrite({ ...config })
   return {
     connect: useConnect(),
     prepareContractWrite,
     contractWrite: useContractWrite({
       ...prepareContractWrite.config,
-      abi: prepareContractWrite.config.abi as Abi,
+      abi: prepareContractWrite.config.abi,
       chainId: config?.chainId,
     }),
   }

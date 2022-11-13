@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest'
 
 import { actConnect, actSwitchNetwork, renderHook } from '../../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
-import { UseProviderArgs, useProvider } from './useProvider'
+import type { UseProviderArgs } from './useProvider'
+import { useProvider } from './useProvider'
 
 function useProviderWithConnectAndNetwork(config: UseProviderArgs = {}) {
   return {
@@ -28,9 +29,9 @@ describe('useProvider', () => {
       let chainId = 1
       const { result, rerender } = renderHook(() => useProvider({ chainId }))
       expect(result.current).toMatchInlineSnapshot(`"<Provider network={1} />"`)
-      chainId = 4
+      chainId = 5
       rerender()
-      expect(result.current).toMatchInlineSnapshot(`"<Provider network={4} />"`)
+      expect(result.current).toMatchInlineSnapshot('"<Provider network={5} />"')
     })
   })
 
@@ -43,10 +44,10 @@ describe('useProvider', () => {
       )
 
       await actConnect({ utils })
-      await actSwitchNetwork({ utils, chainId: 4 })
+      await actSwitchNetwork({ utils, chainId: 5 })
 
       expect(result.current.provider).toMatchInlineSnapshot(
-        `"<Provider network={4} />"`,
+        '"<Provider network={5} />"',
       )
     })
   })

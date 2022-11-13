@@ -1,5 +1,5 @@
 import { getClient } from '../../client'
-import { Signer } from '../../types'
+import type { Signer } from '../../types'
 
 export type FetchSignerArgs = {
   /** Chain ID to use for signer */

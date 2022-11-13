@@ -3,10 +3,8 @@ import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
-import {
-  UsePrepareSendTransactionConfig,
-  usePrepareSendTransaction,
-} from './usePrepareSendTransaction'
+import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
+import { usePrepareSendTransaction } from './usePrepareSendTransaction'
 
 function usePrepareSendTransactionWithConnect(
   config: UsePrepareSendTransactionConfig,
@@ -140,13 +138,13 @@ describe('usePrepareSendTransaction', () => {
       )
 
       const { result, waitFor } = utils
-      await actConnect({ chainId: 4, utils })
+      await actConnect({ chainId: 5, utils })
 
       await waitFor(() =>
         expect(result.current.prepareSendTransaction.isError).toBeTruthy(),
       )
       expect(result.current.prepareSendTransaction.error).toMatchInlineSnapshot(
-        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]',
+        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Goerli".]',
       )
 
       await act(async () => result.current.network.switchNetwork?.(1))
@@ -154,6 +152,28 @@ describe('usePrepareSendTransaction', () => {
 
       await waitFor(() =>
         expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
+      )
+    })
+
+    it('should throw an error if chainId is not configured', async () => {
+      const utils = renderHook(() =>
+        usePrepareSendTransactionWithConnect({
+          request: {
+            to: 'moxey.eth',
+            value: BigNumber.from('10000000000000000'),
+          },
+          chainId: 69_420,
+        }),
+      )
+
+      const { result, waitFor } = utils
+      await actConnect({ chainId: 69_420, utils })
+
+      await waitFor(() =>
+        expect(result.current.prepareSendTransaction.isError).toBeTruthy(),
+      )
+      expect(result.current.prepareSendTransaction.error).toMatchInlineSnapshot(
+        '[ChainNotConfigured: Chain "69420" not configured for connector "mock".]',
       )
     })
   })

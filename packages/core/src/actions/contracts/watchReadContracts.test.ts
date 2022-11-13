@@ -1,4 +1,4 @@
-import { ResolvedConfig } from 'abitype'
+import type { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, it } from 'vitest'
 

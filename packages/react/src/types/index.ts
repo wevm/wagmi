@@ -1,17 +1,17 @@
-import {
+import type {
   QueryFunctionContext,
   UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
 } from '@tanstack/react-query'
-import {
+import type {
   Address,
   ResolvedConfig,
   TypedData,
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import { BigNumber } from 'ethers'
+import type { BigNumber } from 'ethers'
 
 declare module 'abitype' {
   export interface Config {
@@ -21,7 +21,7 @@ declare module 'abitype' {
   }
 }
 
-declare module 'ethers/lib/utils' {
+declare module 'ethers/lib/utils.js' {
   export function getAddress(address: string): Address
   export function verifyTypedData<
     TTypedData extends TypedData,
@@ -56,13 +56,17 @@ export type QueryConfig<Data, Error> = Pick<
   | 'enabled'
   | 'isDataEqual'
   | 'keepPreviousData'
-  | 'staleTime'
   | 'select'
+  | 'staleTime'
+  | 'structuralSharing'
   | 'suspense'
   | 'onError'
   | 'onSettled'
   | 'onSuccess'
->
+> & {
+  /** Scope the cache to a given context. */
+  scopeKey?: string
+}
 
 export type InfiniteQueryConfig<Data, Error> = Pick<
   UseInfiniteQueryOptions<Data, Error>,
@@ -73,11 +77,15 @@ export type InfiniteQueryConfig<Data, Error> = Pick<
   | 'keepPreviousData'
   | 'select'
   | 'staleTime'
+  | 'structuralSharing'
   | 'suspense'
   | 'onError'
   | 'onSettled'
   | 'onSuccess'
->
+> & {
+  /** Scope the cache to a given context. */
+  scopeKey?: string
+}
 
 export type MutationConfig<Data, Error, Variables = void> = {
   /** Function fires if mutation encounters error */
