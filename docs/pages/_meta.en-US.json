@@ -11,5 +11,9 @@
   "examples": {
     "title": "Examples",
     "type": "page"
+  },
+  "core": {
+    "title": "@wagmi/core",
+    "type": "page"
   }
 }
