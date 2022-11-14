@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { renderHook } from '../test'
 import { useClient } from './context'
+import { renderHook } from './test'
 
 describe('useClient', () => {
   describe('mounts', () => {

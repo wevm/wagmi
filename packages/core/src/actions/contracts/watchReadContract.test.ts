@@ -2,7 +2,7 @@ import type { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, it } from 'vitest'
 
-import { expectType, mlootContractConfig } from '../../../test'
+import { expectType, mlootContractConfig } from '../../test'
 import { watchReadContract } from './watchReadContract'
 
 describe('watchReadContract', () => {

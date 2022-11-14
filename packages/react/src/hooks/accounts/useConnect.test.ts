@@ -1,7 +1,7 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, getSigners, renderHook, useAccount } from '../../../test'
+import { act, getSigners, renderHook, useAccount } from '../../test'
 import type { UseConnectArgs, UseConnectConfig } from './useConnect'
 import { useConnect } from './useConnect'
 

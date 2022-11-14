@@ -44,6 +44,7 @@ it('should expose correct exports', () => {
       "watchWebSocketProvider",
       "writeContract",
       "createClient",
+      "getClient",
       "Client",
       "Connector",
       "InjectedConnector",

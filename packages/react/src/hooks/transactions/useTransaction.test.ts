@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { act, renderHook } from '../../../test'
+import { act, renderHook } from '../../test'
 import { useTransaction } from './useTransaction'
 
 describe('useTransaction', () => {

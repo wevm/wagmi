@@ -8,7 +8,7 @@ import {
   renderHook,
   setupClient,
   useNetwork,
-} from '../../../test'
+} from '../../test'
 import type { UseConnectArgs, UseConnectConfig } from './useConnect'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'

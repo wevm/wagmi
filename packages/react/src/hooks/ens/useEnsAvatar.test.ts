@@ -3,7 +3,7 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
-import { act, renderHook } from '../../../test'
+import { act, renderHook } from '../../test'
 import { useEnsAvatar } from './useEnsAvatar'
 
 const handlers = [

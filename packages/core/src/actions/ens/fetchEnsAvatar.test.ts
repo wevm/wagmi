@@ -10,8 +10,8 @@ import {
   it,
 } from 'vitest'
 
-import { setupClient } from '../../../test'
 import { chain } from '../../constants'
+import { setupClient } from '../../test'
 import { fetchEnsAvatar } from './fetchEnsAvatar'
 
 const handlers = [

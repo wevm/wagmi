@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
-import { act, renderHook } from '../../../test'
+import { act, renderHook } from '../../test'
 import { useForceUpdate } from './useForceUpdate'
 
 function useForceUpdateWithCounter() {

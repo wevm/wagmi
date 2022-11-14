@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupClient } from '../../test'
 import { fetchEnsResolver } from './fetchEnsResolver'
 
 describe('fetchEnsResolver', () => {

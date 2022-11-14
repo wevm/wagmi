@@ -6,8 +6,8 @@ import {
 } from '@testing-library/react'
 import * as React from 'react'
 
-import { WagmiConfig } from '../src'
-import type { Client } from '../src/client'
+import { WagmiConfig } from '..'
+import type { Client } from '../client'
 import { setupClient } from './utils'
 
 export const queryClient = new QueryClient({
@@ -84,4 +84,4 @@ export {
   mlootContractConfig,
   wagmiContractConfig,
   wagmigotchiContractConfig,
-} from '../../core/test'
+} from '@wagmi/core/test'

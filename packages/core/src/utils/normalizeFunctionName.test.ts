@@ -3,7 +3,8 @@ import { BigNumber, Contract } from 'ethers'
 import { toUtf8Bytes } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
-import { wagmiContractConfig } from '../../test'
+import { wagmiContractConfig } from '../test'
+
 import { isArgOfType, normalizeFunctionName } from './normalizeFunctionName'
 
 describe('normalizeFunctionName', () => {

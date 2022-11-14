@@ -1,7 +1,7 @@
 import type { ResolvedConfig } from 'abitype'
 import { describe, it } from 'vitest'
 
-import { expectType, mlootContractConfig } from '../../../test'
+import { expectType, mlootContractConfig } from '../../test'
 import { watchContractEvent } from './watchContractEvent'
 
 describe('watchContractEvent', () => {

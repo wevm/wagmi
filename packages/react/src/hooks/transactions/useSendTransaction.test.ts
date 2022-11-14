@@ -3,7 +3,7 @@ import { MockConnector } from '@wagmi/core/connectors/mock'
 import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
-import { act, actConnect, getSigners, renderHook } from '../../../test'
+import { act, actConnect, getSigners, renderHook } from '../../test'
 import { useConnect } from '../accounts'
 import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
 import { usePrepareSendTransaction } from './usePrepareSendTransaction'

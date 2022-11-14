@@ -68,6 +68,14 @@
       "types": "./dist/providers/jsonRpc.d.ts",
       "default": "./dist/providers/jsonRpc.js"
     },
+    "./test": {
+      "types": "./dist/test/index.d.ts",
+      "default": "./dist/test/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "default": "./dist/utils/index.js"
+    },
     "./package.json": "./package.json"
   },
   "sideEffects": false,

@@ -18,6 +18,8 @@ export default defineConfig(
       'src/providers/public.ts',
       'src/providers/infura.ts',
       'src/providers/jsonRpc.ts',
+      'src/test/index.ts',
+      'src/utils/index.ts',
     ],
     exports,
     external: [...Object.keys(dependencies), ...Object.keys(peerDependencies)],

@@ -1,13 +1,13 @@
 import { BigNumber } from 'ethers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { chain } from '../../constants'
 import {
   mlootContractConfig,
   setupClient,
   wagmigotchiContractConfig,
-} from '../../../test'
+} from '../../test'
 
-import { chain } from '../../constants'
 import { multicall } from './multicall'
 
 const contracts = [

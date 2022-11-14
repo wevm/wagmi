@@ -7,7 +7,8 @@ import {
   renderHook,
   setupClient,
   useAccount,
-} from '../../../test'
+} from '../../test'
+
 import type { UseAccountConfig } from './useAccount'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'

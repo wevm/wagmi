@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupClient } from '../../test'
+
 import { connect } from './connect'
 import { disconnect } from './disconnect'
 import { switchNetwork } from './switchNetwork'

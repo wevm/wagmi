@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { renderHook } from '../../../test'
+import { renderHook } from '../../test'
 import { useChainId } from './useChainId'
 
 describe('useChainId', () => {

@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
 import { getClient } from '../../client'
 import { MockConnector } from '../../connectors/mock'
+import { getSigners, setupClient } from '../../test'
 import { connect } from './connect'
 
 const connector = new MockConnector({

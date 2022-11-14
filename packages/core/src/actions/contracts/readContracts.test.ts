@@ -2,14 +2,14 @@ import type { Address, ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { chain } from '../../constants'
 import {
   expectType,
   mlootContractConfig,
   setupClient,
   wagmiContractConfig,
   wagmigotchiContractConfig,
-} from '../../../test'
-import { chain } from '../../constants'
+} from '../../test'
 import * as multicall from './multicall'
 import * as readContract from './readContract'
 import { readContracts } from './readContracts'

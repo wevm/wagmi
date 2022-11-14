@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, actConnect, renderHook, useAccount } from '../../../test'
+import { act, actConnect, renderHook, useAccount } from '../../test'
 import { useConnect } from './useConnect'
 import type { UseDisconnectConfig } from './useDisconnect'
 import { useDisconnect } from './useDisconnect'

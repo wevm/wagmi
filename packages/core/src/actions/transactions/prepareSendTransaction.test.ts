@@ -1,8 +1,8 @@
 import { BigNumber } from 'ethers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
+import { getSigners, setupClient } from '../../test'
 import { connect, fetchSigner } from '../accounts'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'
 import { getProvider } from '../providers'

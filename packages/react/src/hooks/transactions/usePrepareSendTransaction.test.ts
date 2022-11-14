@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
-import { act, actConnect, renderHook } from '../../../test'
+import { act, actConnect, renderHook } from '../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
 import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
 import { usePrepareSendTransaction } from './usePrepareSendTransaction'

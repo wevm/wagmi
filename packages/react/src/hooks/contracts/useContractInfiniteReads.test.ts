@@ -2,7 +2,7 @@ import type { InfiniteData } from '@tanstack/react-query'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
-import { act, expectType, mlootContractConfig, renderHook } from '../../../test'
+import { act, expectType, mlootContractConfig, renderHook } from '../../test'
 import {
   paginatedIndexesConfig,
   useContractInfiniteReads,

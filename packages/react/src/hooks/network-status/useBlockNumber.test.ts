@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { act, renderHook } from '../../../test'
+import { act, renderHook } from '../../test'
 import { useBlockNumber } from './useBlockNumber'
 
 describe('useBlockNumber', () => {

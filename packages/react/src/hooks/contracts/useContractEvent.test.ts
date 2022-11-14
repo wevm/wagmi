@@ -15,7 +15,7 @@ import {
   getRandomTokenId,
   renderHook,
   wagmiContractConfig,
-} from '../../../test'
+} from '../../test'
 import { useConnect } from '../accounts'
 import type {
   UseWaitForTransactionArgs,

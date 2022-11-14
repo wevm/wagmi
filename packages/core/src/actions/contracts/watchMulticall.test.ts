@@ -6,7 +6,7 @@ import {
   expectType,
   mlootContractConfig,
   wagmigotchiContractConfig,
-} from '../../../test'
+} from '../../test'
 import { watchMulticall } from './watchMulticall'
 
 describe('watchMulticall', () => {

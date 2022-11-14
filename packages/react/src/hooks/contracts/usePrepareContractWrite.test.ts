@@ -9,7 +9,7 @@ import {
   mlootContractConfig,
   renderHook,
   wagmiContractConfig,
-} from '../../../test'
+} from '../../test'
 import { useConnect } from '../accounts'
 import { useSwitchNetwork } from '../accounts/useSwitchNetwork'
 import type { UsePrepareContractWriteConfig } from './usePrepareContractWrite'

@@ -1,7 +1,7 @@
 import * as ReactDOM from 'react-dom'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { act, cleanup, renderHook } from '../../../test'
+import { act, cleanup, renderHook } from '../../test'
 import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked'
 
 function createExternalStore<State>(initialState: State) {

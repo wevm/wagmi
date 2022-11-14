@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { getSigners } from '../../../test'
+import { getSigners } from '../../test'
 import type { Signer } from '../../types'
 import { MockConnector } from './connector'
 

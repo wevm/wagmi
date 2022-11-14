@@ -1,7 +1,7 @@
 import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils.js'
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, actConnect, renderHook } from '../../../test'
+import { act, actConnect, renderHook } from '../../test'
 import { useConnect } from './useConnect'
 import type { UseSignMessageArgs, UseSignMessageConfig } from './useSignMessage'
 import { useSignMessage } from './useSignMessage'

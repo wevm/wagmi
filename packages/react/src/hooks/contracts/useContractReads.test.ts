@@ -8,7 +8,7 @@ import {
   mlootContractConfig,
   renderHook,
   wagmigotchiContractConfig,
-} from '../../../test'
+} from '../../test'
 import { useContractReads } from './useContractReads'
 
 const contracts = [

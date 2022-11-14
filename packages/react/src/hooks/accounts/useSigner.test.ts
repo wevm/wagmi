@@ -7,7 +7,7 @@ import {
   actSwitchNetwork,
   renderHook,
   setupClient,
-} from '../../../test'
+} from '../../test'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 import { useSigner } from './useSigner'

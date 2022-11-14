@@ -7,8 +7,8 @@ export default defineConfig({
     },
     environment: 'jsdom',
     setupFiles: [
-      './packages/core/test/setup.ts',
-      './packages/react/test/setup.ts',
+      './packages/core/src/test/setup.ts',
+      './packages/react/src/test/setup.ts',
     ],
   },
 })

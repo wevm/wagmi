@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { actConnect, actSwitchNetwork, renderHook } from '../../../test'
+import { actConnect, actSwitchNetwork, renderHook } from '../../test'
 import { useConnect, useSwitchNetwork } from '../accounts'
 import type { UseProviderArgs } from './useProvider'
 import { useProvider } from './useProvider'

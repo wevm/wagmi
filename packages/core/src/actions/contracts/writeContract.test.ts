@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
+import { MockConnector } from '../../connectors/mock'
 import {
   getRandomTokenId,
   getSigners,
   setupClient,
   wagmiContractConfig,
-} from '../../../test'
-import { MockConnector } from '../../connectors/mock'
+} from '../../test'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
 import { writeContract } from './writeContract'

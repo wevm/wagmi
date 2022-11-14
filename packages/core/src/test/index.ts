@@ -1,6 +1,7 @@
-import type { Chain, ClientConfig } from '../src'
-import { createClient } from '../src'
-import { MockConnector } from '../src/connectors/mock'
+import type { ClientConfig } from '../client'
+import { createClient } from '../client'
+import { MockConnector } from '../connectors/mock'
+import type { Chain } from '../types'
 import { getProvider, getSigners } from './utils'
 
 type Config = Partial<ClientConfig> & { chains?: Chain[] }

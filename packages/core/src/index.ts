@@ -110,7 +110,7 @@ export type {
   WriteContractUnpreparedArgs,
 } from './actions'
 
-export { createClient, Client } from './client'
+export { createClient, getClient, Client } from './client'
 export type { ClientConfig } from './client'
 
 export { Connector, InjectedConnector } from './connectors'

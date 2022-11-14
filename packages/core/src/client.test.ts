@@ -1,17 +1,17 @@
 import { getDefaultProvider } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
-import {
-  getProvider,
-  getSigners,
-  getWebSocketProvider,
-  setupClient,
-} from '../test'
 import { connect, disconnect } from './actions'
 import { Client, createClient, getClient } from './client'
 import { MockConnector } from './connectors/mock'
 import { defaultChains } from './constants'
 import { createStorage, noopStorage } from './storage'
+import {
+  getProvider,
+  getSigners,
+  getWebSocketProvider,
+  setupClient,
+} from './test'
 
 const provider = () =>
   Object.assign(getDefaultProvider(), { chains: defaultChains })

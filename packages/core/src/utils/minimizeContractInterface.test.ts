@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { mlootContractConfig } from '../../test'
+import { mlootContractConfig } from '../test'
+
 import { minimizeContractInterface } from './minimizeContractInterface'
 
 describe('minimizeContractInterface', () => {

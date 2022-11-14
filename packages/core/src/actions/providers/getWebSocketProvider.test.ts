@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import {
   getWebSocketProvider as getWebSocketProvider_,
   setupClient,
-} from '../../../test'
+} from '../../test'
 import { getWebSocketProvider } from './getWebSocketProvider'
 
 describe('getWebSocketProvider', () => {

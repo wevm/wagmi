@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
 import type { Client } from '../../client'
 import { MockConnector } from '../../connectors/mock'
+import { getSigners, setupClient } from '../../test'
 import { connect } from './connect'
 import { disconnect } from './disconnect'
 

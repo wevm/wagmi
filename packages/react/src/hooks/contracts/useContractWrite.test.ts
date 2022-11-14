@@ -12,7 +12,7 @@ import {
   mlootContractConfig,
   renderHook,
   wagmiContractConfig,
-} from '../../../test'
+} from '../../test'
 import { useConnect } from '../accounts'
 import type { UseContractWriteConfig } from './useContractWrite'
 import { useContractWrite } from './useContractWrite'

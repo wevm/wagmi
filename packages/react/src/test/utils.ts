@@ -3,15 +3,16 @@ import { act } from '@testing-library/react'
 import type { Connector, Provider, WebSocketProvider } from '@wagmi/core'
 import { defaultChains } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
+
 import { expect } from 'vitest'
 
 import type { renderHook } from '.'
-import { getProvider, getSigners } from '../../core/test/utils'
-import type { CreateClientConfig } from '../src'
-import { createClient } from '../src'
-import type { UseAccountConfig } from '../src/hooks/accounts/useAccount'
-import { useAccount as useAccount_ } from '../src/hooks/accounts/useAccount'
-import { useNetwork as useNetwork_ } from '../src/hooks/accounts/useNetwork'
+import type { CreateClientConfig } from '..'
+import { createClient } from '..'
+import { getProvider, getSigners } from '../../../core/src/test/utils'
+import type { UseAccountConfig } from '../hooks/accounts/useAccount'
+import { useAccount as useAccount_ } from '../hooks/accounts/useAccount'
+import { useNetwork as useNetwork_ } from '../hooks/accounts/useNetwork'
 
 type Config = Partial<CreateClientConfig>
 

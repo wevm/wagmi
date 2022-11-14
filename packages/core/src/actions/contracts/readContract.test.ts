@@ -7,7 +7,7 @@ import {
   mlootContractConfig,
   setupClient,
   wagmigotchiContractConfig,
-} from '../../../test'
+} from '../../test'
 import { readContract } from './readContract'
 
 describe('readContract', () => {

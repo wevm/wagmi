@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupClient } from '../../test'
 import { getProvider } from './getProvider'
 
 describe('getProvider', () => {

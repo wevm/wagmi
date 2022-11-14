@@ -8,7 +8,7 @@ import {
   getSigners,
   renderHook,
   setupClient,
-} from '../../../test'
+} from '../../test'
 import type { UseConnectArgs, UseConnectConfig } from './useConnect'
 import { useConnect } from './useConnect'
 import type {

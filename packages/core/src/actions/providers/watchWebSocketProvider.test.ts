@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { getWebSocketProvider, setupClient } from '../../../test'
+import { getWebSocketProvider, setupClient } from '../../test'
 import { connect } from '../accounts/connect'
 import { disconnect } from '../accounts/disconnect'
 import type { GetWebSocketProviderResult } from './getWebSocketProvider'

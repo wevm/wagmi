@@ -3,7 +3,7 @@ import type { TypedData } from 'abitype'
 import { verifyTypedData } from 'ethers/lib/utils.js'
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, actConnect, getSigners, renderHook } from '../../../test'
+import { act, actConnect, getSigners, renderHook } from '../../test'
 import { useConnect } from './useConnect'
 import type { UseSignTypedDataConfig } from './useSignTypedData'
 import { useSignTypedData } from './useSignTypedData'
