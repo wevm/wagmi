@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.7.4
+
+### Patch Changes
+
+- [#1309](https://github.com/wagmi-dev/wagmi/pull/1309) [`1f4a4261`](https://github.com/wagmi-dev/wagmi/commit/1f4a4261247b1d3a90e3123157bc851a35d49b9c) Thanks [@tmm](https://github.com/tmm)! - Fixed internal type
+
 ## 0.7.3
 
 ### Patch Changes
