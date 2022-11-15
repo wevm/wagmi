@@ -2,8 +2,8 @@ import type {
   Abi,
   AbiEvent,
   AbiFunction,
-  AbiParameter,
   AbiParameterToPrimitiveType,
+  AbiParameter as AbiParameter_,
   AbiParametersToPrimitiveTypes,
   AbiStateMutability,
   Address,
@@ -15,6 +15,11 @@ import type {
 import type { ethers } from 'ethers'
 
 import type { IsNever, Join, NotEqual, Or } from './utils'
+
+// TODO: Removed during build for some reason so proxying here
+// and exporting from `src/internal.ts` for now
+// https://github.com/wagmi-dev/wagmi/issues/1306
+export type AbiParameter = AbiParameter_
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contract Configuration Types
