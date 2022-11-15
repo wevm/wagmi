@@ -8,10 +8,6 @@
     "dev": "pnpm --parallel --filter './packages/**' dev",
     "docs:build": "pnpm --parallel --filter './packages/**' --filter docs build",
     "docs:dev": "pnpm dev && pnpm --filter docs dev",
-    "example:cra": "pnpm build && pnpm --filter example-cra start",
-    "example:next": "pnpm build && pnpm --filter example-next dev",
-    "example:remix": "pnpm build && pnpm --filter example-remix dev",
-    "example:vite-react": "pnpm build && pnpm --filter example-vite-react dev",
     "lint": "eslint . --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
@@ -74,11 +70,5 @@
   "packageManager": "pnpm@7.5.0",
   "engines": {
     "pnpm": ">=7"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "@remix-run/dev@1.7.2": "examples/remix/patches/@remix-run__dev@1.7.2.patch",
-      "safe-event-emitter@1.0.1": "examples/remix/patches/safe-event-emitter@1.0.1.patch"
-    }
   }
 }
