@@ -1,10 +1,9 @@
 import type { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { assertType, describe, expect, it } from 'vitest'
 
 import {
   act,
-  expectType,
   mlootContractConfig,
   renderHook,
   wagmigotchiContractConfig,
@@ -25,7 +24,7 @@ describe('useContractRead', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
-    expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+    assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
     expect(res).toMatchInlineSnapshot(`
       {
         "data": {
@@ -63,7 +62,7 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+      assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -140,7 +139,7 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+      assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -174,7 +173,7 @@ describe('useContractRead', () => {
 
       await act(async () => {
         const { data } = await result.current.refetch()
-        expectType<ResolvedConfig['BigIntType'] | undefined>(data)
+        assertType<ResolvedConfig['BigIntType'] | undefined>(data)
         expect(data).toMatchInlineSnapshot(`
           {
             "hex": "0x02",
@@ -202,7 +201,7 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+      assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
