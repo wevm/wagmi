@@ -1,32 +1,30 @@
 import type { ResolvedConfig } from 'abitype'
-import { describe, it } from 'vitest'
+import { assertType, describe } from 'vitest'
 
-import { expectType, mlootContractConfig } from '../../../test'
+import { mlootContractConfig } from '../../../test'
 import { watchContractEvent } from './watchContractEvent'
 
 describe('watchContractEvent', () => {
-  it.skip('types', () => {
-    watchContractEvent(
-      {
-        ...mlootContractConfig,
-        eventName: 'Transfer',
-      },
-      (result) => {
-        // ^?
-        expectType<ResolvedConfig['AddressType']>(result)
-      },
-    )
+  watchContractEvent(
+    {
+      ...mlootContractConfig,
+      eventName: 'Transfer',
+    },
+    (result) => {
+      // ^?
+      assertType<ResolvedConfig['AddressType']>(result)
+    },
+  )
 
-    watchContractEvent(
-      {
-        address: '0x123',
-        abi: [],
-        eventName: 'Transfer',
-      },
-      (result) => {
-        // ^?
-        expectType<unknown>(result)
-      },
-    )
-  })
+  watchContractEvent(
+    {
+      address: '0x123',
+      abi: [],
+      eventName: 'Transfer',
+    },
+    (result) => {
+      // ^?
+      assertType<unknown>(result)
+    },
+  )
 })

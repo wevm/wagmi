@@ -3,10 +3,10 @@ import { BigNumber } from 'ethers'
 import { assertType, describe } from 'vitest'
 
 import { mlootContractConfig, wagmigotchiContractConfig } from '../../../test'
-import { watchMulticall } from './watchMulticall'
+import { watchReadContracts } from './watchReadContracts'
 
-describe('watchMulticall', () => {
-  watchMulticall(
+describe('watchReadContracts', () => {
+  watchReadContracts(
     {
       contracts: [
         {
@@ -43,7 +43,7 @@ describe('watchMulticall', () => {
     },
   )
 
-  watchMulticall(
+  watchReadContracts(
     {
       contracts: [
         {

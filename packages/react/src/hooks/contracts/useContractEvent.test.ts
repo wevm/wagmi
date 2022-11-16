@@ -6,12 +6,11 @@ import type {
   ExtractAbiFunctionNames,
   ResolvedConfig,
 } from 'abitype'
-import { describe, expect, it, vi } from 'vitest'
+import { assertType, describe, expect, it, vi } from 'vitest'
 
 import {
   act,
   actConnect,
-  expectType,
   getRandomTokenId,
   renderHook,
   wagmiContractConfig,
@@ -61,9 +60,9 @@ describe('useContractEvent', () => {
         abi: erc20ABI,
         eventName: 'Transfer',
         listener(from, to, value) {
-          expectType<ResolvedConfig['AddressType']>(from)
-          expectType<ResolvedConfig['AddressType']>(to)
-          expectType<ResolvedConfig['BigIntType'] | null>(value)
+          assertType<ResolvedConfig['AddressType']>(from)
+          assertType<ResolvedConfig['AddressType']>(to)
+          assertType<ResolvedConfig['BigIntType'] | null>(value)
           listener(from, to, value)
         },
       }),
@@ -79,9 +78,9 @@ describe('useContractEvent', () => {
           abi: erc20ABI,
           eventName: 'Transfer',
           listener(from, to, value) {
-            expectType<ResolvedConfig['AddressType']>(from)
-            expectType<ResolvedConfig['AddressType']>(to)
-            expectType<ResolvedConfig['BigIntType'] | null>(value)
+            assertType<ResolvedConfig['AddressType']>(from)
+            assertType<ResolvedConfig['AddressType']>(to)
+            assertType<ResolvedConfig['BigIntType'] | null>(value)
             listener(from, to, value)
           },
         }),
@@ -102,9 +101,9 @@ describe('useContractEvent', () => {
                 ...wagmiContractConfig,
                 eventName: 'Transfer',
                 listener(from, to, value) {
-                  expectType<ResolvedConfig['AddressType']>(from)
-                  expectType<ResolvedConfig['AddressType']>(to)
-                  expectType<ResolvedConfig['BigIntType']>(value)
+                  assertType<ResolvedConfig['AddressType']>(from)
+                  assertType<ResolvedConfig['AddressType']>(to)
+                  assertType<ResolvedConfig['BigIntType']>(value)
                   listener(from, to, value)
                 },
               },
