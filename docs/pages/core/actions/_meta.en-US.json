@@ -1,4 +1,5 @@
 {
   "getAccount": "getAccount",
-  "getBalance": "getBalance"
+  "fetchBalance": "fetchBalance",
+  "fetchBlockNumber": "fetchBlockNumber"
 }
