@@ -15,6 +15,9 @@ describe('useClient', () => {
             "connectors": [
               "<MockConnector>",
             ],
+            "logger": {
+              "warn": [Function],
+            },
             "provider": [Function],
             "storage": {
               "getItem": [Function],
@@ -22,6 +25,9 @@ describe('useClient', () => {
               "setItem": [Function],
             },
             "webSocketProvider": undefined,
+          },
+          "providers": Map {
+            -1 => "<Provider network={1} />",
           },
           "queryClient": QueryClient {
             "defaultOptions": {
@@ -64,6 +70,7 @@ describe('useClient', () => {
             "getState": [Function],
             "persist": {
               "clearStorage": [Function],
+              "getOptions": [Function],
               "hasHydrated": [Function],
               "onFinishHydration": [Function],
               "onHydrate": [Function],
@@ -73,6 +80,7 @@ describe('useClient', () => {
             "setState": [Function],
             "subscribe": [Function],
           },
+          "webSocketProviders": Map {},
         }
       `)
     })

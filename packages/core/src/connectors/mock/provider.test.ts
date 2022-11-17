@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners } from '../../../test'
-import { Signer } from '../../types'
+import type { Signer } from '../../types'
 import { MockProvider } from './provider'
 
 describe('MockProvider', () => {
@@ -75,7 +75,7 @@ describe('MockProvider', () => {
           "_mnemonic": [Function],
           "_signingKey": [Function],
           "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-          "provider": "<Provider network={31337} />",
+          "provider": "<Provider network={1} />",
         }
       `)
     })

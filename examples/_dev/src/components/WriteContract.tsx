@@ -1,14 +1,15 @@
+import { BigNumber } from 'ethers'
 import { useState } from 'react'
 import { useContractWrite } from 'wagmi'
 
-import anvABI from './anv-abi.json'
+import { anvAbi } from './anv-abi'
 
 export const WriteContract = () => {
   const { write, data, error, isLoading, isError, isSuccess } =
     useContractWrite({
       mode: 'recklesslyUnprepared',
-      addressOrName: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-      contractInterface: anvABI,
+      address: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
+      abi: anvAbi,
       functionName: 'claim',
       chainId: 1,
     })
@@ -27,7 +28,7 @@ export const WriteContract = () => {
         <button
           disabled={isLoading}
           onClick={() =>
-            write?.({ recklesslySetUnpreparedArgs: parseInt(tokenId) })
+            write?.({ recklesslySetUnpreparedArgs: [BigNumber.from(tokenId)] })
           }
         >
           Mint

@@ -1,9 +1,10 @@
-import { ConnectArgs, ConnectResult, connect } from '@wagmi/core'
+import type { ConnectArgs, ConnectResult } from '@wagmi/core'
+import { connect } from '@wagmi/core'
 import * as React from 'react'
-import { useMutation } from 'react-query'
 
 import { useClient } from '../../context'
-import { MutationConfig } from '../../types'
+import type { MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseConnectArgs = Partial<ConnectArgs>
 
@@ -49,20 +50,20 @@ export function useConnect({
 
   const connect = React.useCallback(
     (args?: Partial<ConnectArgs>) => {
-      return mutate(<ConnectArgs>{
+      return mutate({
         chainId: args?.chainId ?? chainId,
         connector: args?.connector ?? connector,
-      })
+      } as ConnectArgs)
     },
     [chainId, connector, mutate],
   )
 
   const connectAsync = React.useCallback(
     (args?: Partial<ConnectArgs>) => {
-      return mutateAsync(<ConnectArgs>{
+      return mutateAsync({
         chainId: args?.chainId ?? chainId,
         connector: args?.connector ?? connector,
-      })
+      } as ConnectArgs)
     },
     [chainId, connector, mutateAsync],
   )

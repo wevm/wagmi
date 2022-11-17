@@ -1,8 +1,9 @@
+import { BigNumber } from 'ethers'
 import { useContractReads } from 'wagmi'
 
 export const wagmigotchiContractConfig = {
-  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  contractInterface: [
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: [
     {
       inputs: [],
       name: 'getAlive',
@@ -18,11 +19,11 @@ export const wagmigotchiContractConfig = {
       type: 'function',
     },
   ],
-}
+} as const
 
 export const mlootContractConfig = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: [
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: [
     {
       inputs: [
         { internalType: 'address', name: 'owner', type: 'address' },
@@ -34,7 +35,7 @@ export const mlootContractConfig = {
       type: 'function',
     },
   ],
-}
+} as const
 
 export function ReadContracts() {
   const { data, isSuccess, isLoading } = useContractReads({
@@ -42,20 +43,20 @@ export function ReadContracts() {
       {
         ...wagmigotchiContractConfig,
         functionName: 'love',
-        args: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+        args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
       },
       {
         ...wagmigotchiContractConfig,
         functionName: 'love',
-        args: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+        args: ['0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC'],
       },
       { ...wagmigotchiContractConfig, functionName: 'getAlive' },
       {
         ...mlootContractConfig,
         functionName: 'tokenOfOwnerByIndex',
-        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0],
+        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
       },
-    ],
+    ] as const,
   })
 
   return (

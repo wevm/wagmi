@@ -1,7 +1,7 @@
-import { GetAccountResult, getAccount, watchAccount } from '@wagmi/core'
+import type { GetAccountResult } from '@wagmi/core'
+import { getAccount, watchAccount } from '@wagmi/core'
 import * as React from 'react'
 
-import { useClient } from '../../context'
 import { useSyncExternalStoreWithTracked } from '../utils'
 
 export type UseAccountConfig = {
@@ -21,36 +21,32 @@ export type UseAccountConfig = {
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
+  const previousAccountRef = React.useRef<typeof account>()
+  const previousAccount = previousAccountRef.current ?? ({} as typeof account)
 
-  const { subscribe } = useClient()
+  if (
+    !!onConnect &&
+    (previousAccount.status !== 'connected' ||
+      previousAccount.status === undefined) &&
+    account.status === 'connected'
+  )
+    onConnect({
+      address: account.address,
+      connector: account.connector,
+      isReconnected:
+        previousAccount.status === 'reconnecting' ||
+        // when `previousAccount.status` is `undefined`, it means connector connected immediately
+        previousAccount.status === undefined,
+    })
 
-  React.useEffect(() => {
-    // No need to subscribe if these callbacks aren't defined
-    if (!onConnect && !onDisconnect) return
+  if (
+    !!onDisconnect &&
+    previousAccount.status === 'connected' &&
+    account.status === 'disconnected'
+  )
+    onDisconnect()
 
-    // Trigger update when status changes
-    const unsubscribe = subscribe(
-      (state) => state.status,
-      (status, prevStatus) => {
-        if (!!onConnect && status === 'connected') {
-          const { address, connector } = getAccount()
-          onConnect({
-            address,
-            connector,
-            isReconnected: prevStatus === 'reconnecting',
-          })
-        }
-
-        if (
-          !!onDisconnect &&
-          prevStatus !== 'connecting' &&
-          status === 'disconnected'
-        )
-          onDisconnect()
-      },
-    )
-    return unsubscribe
-  }, [onConnect, onDisconnect, subscribe])
+  previousAccountRef.current = account
 
   return account
 }

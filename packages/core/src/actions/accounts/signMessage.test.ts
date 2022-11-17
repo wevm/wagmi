@@ -1,4 +1,4 @@
-import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils'
+import { toUtf8Bytes, verifyMessage } from 'ethers/lib/utils.js'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'

@@ -1,37 +1,42 @@
-import {
-  FetchSignerResult,
-  Signer,
-  fetchSigner,
-  watchSigner,
-} from '@wagmi/core'
+import type { FetchSignerArgs, FetchSignerResult, Signer } from '@wagmi/core'
+import { fetchSigner, watchSigner } from '@wagmi/core'
 import * as React from 'react'
-import { useQueryClient } from 'react-query'
 
-import { QueryConfig } from '../../types'
-import { useQuery } from '../utils'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId, useQuery, useQueryClient } from '../utils'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,
   'cacheTime' | 'staleTime' | 'enabled'
->
+> &
+  FetchSignerArgs
 
-export const queryKey = () => [{ entity: 'signer' }] as const
+export function queryKey({ chainId }: FetchSignerArgs) {
+  return [{ entity: 'signer', chainId, persist: false }] as const
+}
 
-const queryFn = <TSigner extends Signer>() => fetchSigner<TSigner>()
+function queryFn<TSigner extends Signer>({
+  queryKey: [{ chainId }],
+}: QueryFunctionArgs<typeof queryKey>) {
+  return fetchSigner<TSigner>({ chainId })
+}
 
 export function useSigner<TSigner extends Signer>({
+  chainId: chainId_,
   suspense,
   onError,
   onSettled,
   onSuccess,
 }: UseSignerConfig = {}) {
+  const chainId = useChainId({ chainId: chainId_ })
   const signerQuery = useQuery<
     FetchSignerResult<TSigner>,
     Error,
-    FetchSignerResult<TSigner>
-  >(queryKey(), queryFn, {
+    FetchSignerResult<TSigner>,
+    ReturnType<typeof queryKey>
+  >(queryKey({ chainId }), queryFn, {
     cacheTime: 0,
-    staleTime: 0,
+    staleTime: Infinity,
     suspense,
     onError,
     onSettled,
@@ -40,11 +45,11 @@ export function useSigner<TSigner extends Signer>({
 
   const queryClient = useQueryClient()
   React.useEffect(() => {
-    const unwatch = watchSigner((signer) =>
-      queryClient.setQueryData(queryKey(), signer),
+    const unwatch = watchSigner({ chainId }, (signer) =>
+      queryClient.setQueryData(queryKey({ chainId }), signer),
     )
     return unwatch
-  }, [queryClient])
+  }, [queryClient, chainId])
 
   return signerQuery
 }

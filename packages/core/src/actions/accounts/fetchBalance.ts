@@ -1,32 +1,33 @@
-import { BigNumber, logger } from 'ethers/lib/ethers'
-import { Logger, formatUnits, isAddress } from 'ethers/lib/utils'
+import type { Address, ResolvedConfig } from 'abitype'
+import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
 
 import { getClient } from '../../client'
-import { erc20ABI } from '../../constants'
-import { Unit } from '../../types'
+import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
+import { ContractResultDecodeError } from '../../errors'
+import type { Unit } from '../../types'
 import { readContracts } from '../contracts'
 import { getProvider } from '../providers'
 
 export type FetchBalanceArgs = {
-  /** Address or ENS name */
-  addressOrName: string
+  /** Address of balance to check */
+  address: Address
   /** Chain id to use for provider */
   chainId?: number
   /** Units for formatting output */
   formatUnits?: Unit | number
   /** ERC-20 address */
-  token?: string
+  token?: Address
 }
 
 export type FetchBalanceResult = {
-  decimals: number
+  decimals: ResolvedConfig['IntType']
   formatted: string
   symbol: string
-  value: BigNumber
+  value: ResolvedConfig['BigIntType']
 }
 
 export async function fetchBalance({
-  addressOrName,
+  address,
   chainId,
   formatUnits: unit,
   token,
@@ -35,52 +36,52 @@ export async function fetchBalance({
   const provider = getProvider({ chainId })
 
   if (token) {
-    const erc20Config = {
-      addressOrName: token,
-      contractInterface: erc20ABI,
-      chainId,
+    type FetchContractBalance = {
+      abi: typeof erc20ABI | typeof erc20ABI_bytes32
     }
-
-    // Convert ENS name to address if required
-    let resolvedAddress: string
-    if (isAddress(addressOrName)) resolvedAddress = addressOrName
-    else {
-      const address = await provider.resolveName(addressOrName)
-      // Same error `provider.getBalance` throws for invalid ENS name
-      if (!address)
-        logger.throwError(
-          'ENS name not configured',
-          Logger.errors.UNSUPPORTED_OPERATION,
+    const fetchContractBalance = async ({ abi }: FetchContractBalance) => {
+      const erc20Config = { abi, address: token, chainId } as const
+      const [value, decimals, symbol] = await readContracts({
+        allowFailure: false,
+        contracts: [
           {
-            operation: `resolveName(${JSON.stringify(addressOrName)})`,
+            ...erc20Config,
+            functionName: 'balanceOf',
+            args: [address],
           },
-        )
-      resolvedAddress = address
+          { ...erc20Config, functionName: 'decimals' },
+          { ...erc20Config, functionName: 'symbol' },
+        ],
+      })
+      return {
+        decimals,
+        formatted: formatUnits(value ?? '0', unit ?? decimals),
+        symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
+        value,
+      }
     }
 
-    const [value, decimals, symbol] = await readContracts<
-      [BigNumber, number, string]
-    >({
-      allowFailure: false,
-      contracts: [
-        { ...erc20Config, functionName: 'balanceOf', args: resolvedAddress },
-        { ...erc20Config, functionName: 'decimals' },
-        {
-          ...erc20Config,
-          functionName: 'symbol',
-        },
-      ],
-    })
-    return {
-      decimals,
-      formatted: formatUnits(value ?? '0', unit ?? decimals),
-      symbol,
-      value,
+    try {
+      return await fetchContractBalance({ abi: erc20ABI })
+    } catch (err) {
+      // In the chance that there is an error upon decoding the contract result,
+      // it could be likely that the contract data is represented as bytes32 instead
+      // of a string.
+      if (err instanceof ContractResultDecodeError) {
+        const { symbol, ...rest } = await fetchContractBalance({
+          abi: erc20ABI_bytes32,
+        })
+        return {
+          symbol: parseBytes32String(symbol),
+          ...rest,
+        }
+      }
+      throw err
     }
   }
 
   const chains = [...(client.provider.chains || []), ...(client.chains ?? [])]
-  const value = await provider.getBalance(addressOrName)
+  const value = await provider.getBalance(address)
   const chain = chains.find((x) => x.id === provider.network.chainId)
   return {
     decimals: chain?.nativeCurrency?.decimals ?? 18,

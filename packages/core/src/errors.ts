@@ -1,6 +1,6 @@
 import { getProvider } from './actions'
-import { Connector } from './connectors'
-import { Chain } from './types'
+import type { Connector } from './connectors'
+import type { Chain } from './types'
 
 /**
  * Error subclass implementing JSON RPC 2.0 errors and Ethereum RPC errors per EIP-1474.
@@ -98,7 +98,16 @@ export class ChainMismatchError extends Error {
 
 export class ChainNotConfiguredError extends Error {
   name = 'ChainNotConfigured'
-  message = 'Chain not configured'
+
+  constructor({
+    chainId,
+    connectorId,
+  }: {
+    chainId: number
+    connectorId: string
+  }) {
+    super(`Chain "${chainId}" not configured for connector "${connectorId}".`)
+  }
 }
 
 export class ConnectorAlreadyConnectedError extends Error {
@@ -115,11 +124,11 @@ export class ContractMethodDoesNotExistError extends Error {
   name = 'ContractMethodDoesNotExistError'
 
   constructor({
-    addressOrName,
+    address,
     chainId,
     functionName,
   }: {
-    addressOrName: string
+    address: string
     chainId?: number
     functionName: string
   }) {
@@ -128,11 +137,11 @@ export class ContractMethodDoesNotExistError extends Error {
     const blockExplorer = chain?.blockExplorers?.default
     super(
       [
-        `Function "${functionName}" on contract "${addressOrName}" does not exist.`,
+        `Function "${functionName}" on contract "${address}" does not exist.`,
         ...(blockExplorer
           ? [
               '',
-              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${addressOrName}#readContract`,
+              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${address}#readContract`,
             ]
           : []),
       ].join('\n'),
@@ -144,28 +153,113 @@ export class ContractMethodNoResultError extends Error {
   name = 'ContractMethodNoResultError'
 
   constructor({
-    addressOrName,
+    address,
+    args,
     chainId,
     functionName,
   }: {
-    addressOrName: string
-    chainId?: number
+    address: string
+    args: any
+    chainId: number
     functionName: string
   }) {
-    const { chains, network } = getProvider()
-    const chain = chains?.find(({ id }) => id === (chainId || network.chainId))
-    const blockExplorer = chain?.blockExplorers?.default
     super(
       [
-        `Function "${functionName}" on contract "${addressOrName}" returned an empty response.`,
+        'Contract read returned an empty response. This could be due to any of the following:',
+        `- The contract does not have the function "${functionName}",`,
+        '- The parameters passed to the contract function may be invalid, or',
+        '- The address is not a contract.',
         '',
-        `Are you sure the function "${functionName}" exists on this contract?`,
-        ...(blockExplorer
-          ? [
-              '',
-              `${blockExplorer?.name}: ${blockExplorer?.url}/address/${addressOrName}#readContract`,
-            ]
-          : []),
+        `Config:`,
+        JSON.stringify(
+          {
+            address,
+            abi: '...',
+            functionName,
+            chainId,
+            args,
+          },
+          null,
+          2,
+        ),
+      ].join('\n'),
+    )
+  }
+}
+
+export class ContractMethodRevertedError extends Error {
+  name = 'ContractMethodRevertedError'
+
+  constructor({
+    address,
+    args,
+    chainId,
+    functionName,
+    errorMessage,
+  }: {
+    address: string
+    args: any
+    chainId: number
+    functionName: string
+    errorMessage: string
+  }) {
+    super(
+      [
+        'Contract method reverted with an error.',
+        '',
+        `Config:`,
+        JSON.stringify(
+          {
+            address,
+            abi: '...',
+            functionName,
+            chainId,
+            args,
+          },
+          null,
+          2,
+        ),
+        '',
+        `Details: ${errorMessage}`,
+      ].join('\n'),
+    )
+  }
+}
+
+export class ContractResultDecodeError extends Error {
+  name = 'ContractResultDecodeError'
+
+  constructor({
+    address,
+    args,
+    chainId,
+    functionName,
+    errorMessage,
+  }: {
+    address: string
+    args: any
+    chainId: number
+    functionName: string
+    errorMessage: string
+  }) {
+    super(
+      [
+        'Failed to decode contract function result.',
+        '',
+        `Config:`,
+        JSON.stringify(
+          {
+            address,
+            abi: '...',
+            functionName,
+            chainId,
+            args,
+          },
+          null,
+          2,
+        ),
+        '',
+        `Details: ${errorMessage}`,
       ].join('\n'),
     )
   }

@@ -3,7 +3,7 @@ title: 'useContractReads'
 description: 'React Hook for calling multiple ethers Contract read-only methods.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 # useContractReads
 
@@ -21,12 +21,12 @@ The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb5
 import { useContractReads } from 'wagmi'
 
 const wagmigotchiContract = {
-  addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  contractInterface: wagmigotchiABI,
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
 }
 const mlootContract = {
-  addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-  contractInterface: mlootABI,
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: mlootABI,
 }
 
 function App() {
@@ -67,6 +67,7 @@ function App() {
   isSuccess: boolean
   isError: boolean
   isFetched: boolean
+  isFetchedAfterMount: boolean
   isRefetching: boolean
   refetch: (options: {
     throwOnError: boolean
@@ -80,9 +81,9 @@ function App() {
 
 ### contracts
 
-#### addressOrName
+#### address (optional)
 
-Contract address or ENS name.
+Contract address. Hook will not run unless `address` is defined for all `contracts`.
 
 ```tsx {7,12}
 import { useContractReads } from 'wagmi'
@@ -91,13 +92,13 @@ function App() {
   const { data, isError, isLoading } = useContractReads({
     contracts: [
       {
-        addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-        contractInterface: wagmigotchiABI,
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
         functionName: 'getAlive',
       },
       {
-        addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-        contractInterface: wagmigotchiABI,
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
         functionName: 'getBoredom',
       },
     ],
@@ -105,9 +106,11 @@ function App() {
 }
 ```
 
-#### contractInterface
+#### abi (optional)
 
-Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+Contract ABI. Hook will not run unless `abi` is defined for all `contracts`.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {8,13}
 import { useContractReads } from 'wagmi'
@@ -116,13 +119,13 @@ function App() {
   const { data, isError, isLoading } = useContractReads({
     contracts: [
       {
-        addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-        contractInterface: wagmigotchiABI,
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
         functionName: 'getAlive',
       },
       {
-        addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-        contractInterface: wagmigotchiABI,
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
         functionName: 'getBoredom',
       },
     ],
@@ -130,9 +133,9 @@ function App() {
 }
 ```
 
-#### functionName
+#### functionName (optional)
 
-Name of function to call.
+Name of function to call. Hook will not run unless `functionName` is defined for all `contracts`.
 
 ```tsx {9,14}
 import { useContractReads } from 'wagmi'
@@ -141,13 +144,13 @@ function App() {
   const { data, isError, isLoading } = useContractReads({
     contracts: [
       {
-        addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-        contractInterface: wagmigotchiABI,
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
         functionName: 'getAlive',
       },
       {
-        addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-        contractInterface: wagmigotchiABI,
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
         functionName: 'getBoredom',
       },
     ],
@@ -157,7 +160,7 @@ function App() {
 
 #### args (optional)
 
-Arguments to pass to function call. Accepts `any | any[]`.
+Arguments to pass to function call.
 
 ```tsx {10,16}
 import { useContractReads } from 'wagmi'
@@ -166,14 +169,14 @@ function App() {
   const { data, isError, isLoading } = useContractReads({
     contracts: [
       {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
+        address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        abi: mlootABI,
         functionName: 'getChest',
         args: [69],
       },
       {
-        addressOrName: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
-        contractInterface: mlootABI,
+        address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        abi: mlootABI,
         functionName: 'getWaist',
         args: [69],
       },
@@ -233,7 +236,7 @@ function App() {
 
 ### overrides (optional)
 
-[Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
+Overrides to pass to function call.
 
 ```tsx {15}
 import { useContractReads } from 'wagmi'
@@ -351,9 +354,9 @@ function App() {
 }
 ```
 
-### isDataEqual (optional)
+### isDataEqual (deprecated, optional)
 
-Determines if the data has changed or not. Defaults to `deepEqual`.
+Use [`structuralSharing`](#structuralsharing-optional) instead.
 
 ```tsx {15}
 import { useContractReads } from 'wagmi'
@@ -371,6 +374,32 @@ function App() {
       },
     ],
     isDataEqual: (prev, next) => prev === next,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    scopeKey: 'wagmi',
+    contracts: [
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getAlive',
+      },
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getBoredom',
+      },
+    ],
   })
 }
 ```
@@ -419,6 +448,32 @@ function App() {
       },
     ],
     select: (data) => transform(data),
+  })
+}
+```
+
+### structuralSharing (optional)
+
+Keep referential identity of data and prevent rerenders. Defaults to `(oldData, newData) => deepEqual(oldData, newData) ? oldData : replaceEqualDeep(oldData, newData)`. If set to `false`, structural sharing between query results will be disabled.
+
+If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
+
+```tsx {15}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    structuralSharing: (prev, next) => (prev === next ? prev : next),
   })
 }
 ```

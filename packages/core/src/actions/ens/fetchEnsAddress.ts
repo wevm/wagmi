@@ -1,6 +1,6 @@
-import { getAddress } from 'ethers/lib/utils'
+import type { Address } from 'abitype'
+import { getAddress } from 'ethers/lib/utils.js'
 
-import { Address } from '../../types'
 import { getProvider } from '../providers'
 
 export type FetchEnsAddressArgs = {
@@ -20,7 +20,7 @@ export async function fetchEnsAddress({
   const address = await provider.resolveName(name)
 
   try {
-    return address ? <Address>getAddress(address) : null
+    return address ? getAddress(address) : null
   } catch (_error) {
     return null
   }

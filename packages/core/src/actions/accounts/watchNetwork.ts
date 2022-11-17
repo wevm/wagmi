@@ -1,8 +1,9 @@
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import { Chain } from '../../types'
-import { GetNetworkResult, getNetwork } from './getNetwork'
+import type { Chain } from '../../types'
+import type { GetNetworkResult } from './getNetwork'
+import { getNetwork } from './getNetwork'
 
 export type WatchNetworkCallback = (data: GetNetworkResult) => void
 

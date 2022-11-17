@@ -1,14 +1,11 @@
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
 import { getClient } from '../client'
-import {
-  ProviderRpcError,
-  SwitchChainError,
-  UserRejectedRequestError,
-} from '../errors'
-import { Chain } from '../types'
+import type { ProviderRpcError } from '../errors'
+import { SwitchChainError, UserRejectedRequestError } from '../errors'
+import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -17,8 +14,9 @@ import { Connector } from './base'
  * - imToken (token.im)
  * - MetaMask (metamask.io)
  * - Rainbow (rainbow.me)
+ * - Trust Wallet (trustwallet.com)
  */
-const switchChainAllowedRegex = /(imtoken|metamask|rainbow)/i
+const switchChainAllowedRegex = /(imtoken|metamask|rainbow|trust wallet)/i
 
 type WalletConnectOptions = ConstructorParameters<
   typeof WalletConnectProvider
@@ -62,7 +60,7 @@ export class WalletConnectConnector extends Connector<
       setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
 
       const accounts = await provider.enable()
-      const account = getAddress(<string>accounts[0])
+      const account = getAddress(accounts[0] as string)
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
 
@@ -76,11 +74,11 @@ export class WalletConnectConnector extends Connector<
         account,
         chain: { id, unsupported },
         provider: new providers.Web3Provider(
-          <providers.ExternalProvider>provider,
+          provider as providers.ExternalProvider,
         ),
       }
     } catch (error) {
-      if (/user closed modal/i.test((<ProviderRpcError>error).message))
+      if (/user closed modal/i.test((error as ProviderRpcError).message))
         throw new UserRejectedRequestError(error)
       throw error
     }
@@ -102,7 +100,7 @@ export class WalletConnectConnector extends Connector<
     const provider = await this.getProvider()
     const accounts = provider.accounts
     // return checksum address
-    return getAddress(<string>accounts[0])
+    return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
@@ -143,7 +141,8 @@ export class WalletConnectConnector extends Connector<
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <providers.ExternalProvider>provider,
+      provider as providers.ExternalProvider,
+      chainId,
     ).getSigner(account)
   }
 
@@ -175,7 +174,7 @@ export class WalletConnectConnector extends Connector<
       )
     } catch (error) {
       const message =
-        typeof error === 'string' ? error : (<ProviderRpcError>error)?.message
+        typeof error === 'string' ? error : (error as ProviderRpcError)?.message
       if (/user rejected request/i.test(message))
         throw new UserRejectedRequestError(error)
       throw new SwitchChainError(error)
@@ -184,7 +183,7 @@ export class WalletConnectConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(<string>accounts[0]) })
+    else this.emit('change', { account: getAddress(accounts[0] as string) })
   }
 
   protected onChainChanged = (chainId: number | string) => {

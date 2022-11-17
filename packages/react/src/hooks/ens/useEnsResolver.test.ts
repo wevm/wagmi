@@ -19,12 +19,13 @@ describe('useEnsResolver', () => {
           "_resolvedAddress": undefined,
           "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
           "name": "imhiring.eth",
-          "provider": "<Provider network={31337} />",
+          "provider": "<Provider network={1} />",
         },
         "error": null,
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
+        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
@@ -37,6 +38,37 @@ describe('useEnsResolver', () => {
   })
 
   describe('configuration', () => {
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensResolver: useEnsResolver({
+            name: 'imhiring.eth',
+          }),
+          ensResolverwithoutScopeKey: useEnsResolver({
+            name: 'imhiring.eth',
+            enabled: false,
+          }),
+          ensResolverwithScopeKey: useEnsResolver({
+            name: 'imhiring.eth',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.ensResolver.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.ensResolverwithoutScopeKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensResolverwithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsResolver({ chainId: 1, name: 'awkweb.eth' }),
@@ -58,6 +90,7 @@ describe('useEnsResolver', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -88,6 +121,7 @@ describe('useEnsResolver', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,
@@ -115,12 +149,13 @@ describe('useEnsResolver', () => {
               "_resolvedAddress": undefined,
               "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
               "name": "awkweb.eth",
-              "provider": "<Provider network={31337} />",
+              "provider": "<Provider network={1} />",
             },
             "error": null,
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -148,6 +183,7 @@ describe('useEnsResolver', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -174,7 +210,7 @@ describe('useEnsResolver', () => {
             "_resolvedAddress": undefined,
             "address": "0x4976fb03C32e5B8cfe2b6cCB31c09Ba78EBaBa41",
             "name": "worm.eth",
-            "provider": "<Provider network={31337} />",
+            "provider": "<Provider network={1} />",
           }
         `)
       })
@@ -196,6 +232,7 @@ describe('useEnsResolver', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,

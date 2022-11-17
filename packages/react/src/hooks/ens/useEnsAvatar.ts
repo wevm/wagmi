@@ -1,36 +1,36 @@
-import {
-  FetchEnsAvatarArgs,
-  FetchEnsAvatarResult,
-  fetchEnsAvatar,
-} from '@wagmi/core'
+import type { FetchEnsAvatarArgs, FetchEnsAvatarResult } from '@wagmi/core'
+import { fetchEnsAvatar } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsAvatarArgs = Partial<FetchEnsAvatarArgs>
-
 export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 
-export const queryKey = ({
-  addressOrName,
-  chainId,
-}: {
-  addressOrName?: UseEnsAvatarArgs['addressOrName']
-  chainId?: number
-}) => [{ entity: 'ensAvatar', addressOrName, chainId }] as const
+type QueryKeyArgs = UseEnsAvatarArgs
+type QueryKeyConfig = Pick<UseEnsLookupConfig, 'scopeKey'>
 
-const queryFn = ({
-  queryKey: [{ addressOrName, chainId }],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  if (!addressOrName) throw new Error('addressOrName is required')
-  return fetchEnsAvatar({ addressOrName, chainId })
+function queryKey({
+  address,
+  chainId,
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'ensAvatar', address, chainId, scopeKey }] as const
+}
+
+function queryFn({
+  queryKey: [{ address, chainId }],
+}: QueryFunctionArgs<typeof queryKey>) {
+  if (!address) throw new Error('address is required')
+  return fetchEnsAvatar({ address, chainId })
 }
 
 export function useEnsAvatar({
-  addressOrName,
+  address,
   cacheTime,
   chainId: chainId_,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -39,9 +39,9 @@ export function useEnsAvatar({
 }: UseEnsAvatarArgs & UseEnsLookupConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ addressOrName, chainId }), queryFn, {
+  return useQuery(queryKey({ address, chainId, scopeKey }), queryFn, {
     cacheTime,
-    enabled: Boolean(enabled && addressOrName && chainId),
+    enabled: Boolean(enabled && address && chainId),
     staleTime,
     suspense,
     onError,

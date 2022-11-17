@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, renderHook, useAccount } from '../../../test'
 import { useConnect } from './useConnect'
-import { UseDisconnectConfig, useDisconnect } from './useDisconnect'
+import type { UseDisconnectConfig } from './useDisconnect'
+import { useDisconnect } from './useDisconnect'
 
 function useDisconnectWithConnect(config: UseDisconnectConfig = {}) {
   return { connect: useConnect(), disconnect: useDisconnect(config) }

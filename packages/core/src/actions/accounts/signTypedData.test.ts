@@ -1,4 +1,4 @@
-import { verifyTypedData } from 'ethers/lib/utils'
+import { verifyTypedData } from 'ethers/lib/utils.js'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
@@ -15,7 +15,7 @@ const domain = {
   name: 'Ether Mail',
   version: '1',
   chainId: 1,
-  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC' as const,
 }
 
 // Named list of all type definitions
@@ -29,7 +29,7 @@ const types = {
     { name: 'to', type: 'Person' },
     { name: 'contents', type: 'string' },
   ],
-}
+} as const
 
 // Data to sign
 const value = {
@@ -42,7 +42,7 @@ const value = {
     wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
   },
   contents: 'Hello, Bob!',
-}
+} as const
 
 describe('signTypedData', () => {
   beforeEach(() => {
@@ -78,7 +78,7 @@ describe('signTypedData', () => {
     describe('when chainId is provided in domain', () => {
       it("throws mismatch if chainId doesn't match signer", async () => {
         await connect({
-          chainId: 4,
+          chainId: 5,
           connector: new MockConnector({
             options: {
               flags: { noSwitchChain: true },
@@ -89,7 +89,28 @@ describe('signTypedData', () => {
         await expect(
           signTypedData({ domain, types, value }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
-          `"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby\\"."`,
+          '"Chain mismatch: Expected \\"Ethereum\\", received \\"Goerli\\"."',
+        )
+      })
+
+      it('throws if chain not configured for connector', async () => {
+        await connect({
+          chainId: 69_420,
+          connector: new MockConnector({
+            options: {
+              flags: { noSwitchChain: true },
+              signer: getSigners()[0]!,
+            },
+          }),
+        })
+        await expect(
+          signTypedData({
+            domain: { ...domain, chainId: 69_420 },
+            types,
+            value,
+          }),
+        ).rejects.toThrowErrorMatchingInlineSnapshot(
+          '"Chain \\"69420\\" not configured for connector \\"mock\\"."',
         )
       })
     })

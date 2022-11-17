@@ -1,5 +1,5 @@
 import { getClient } from '../../client'
-import { WebSocketProvider } from '../../types'
+import type { WebSocketProvider } from '../../types'
 
 export type GetWebSocketProviderArgs = {
   /** Chain id to use for provider */
@@ -16,7 +16,7 @@ export function getWebSocketProvider<
   chainId,
 }: GetWebSocketProviderArgs = {}): GetWebSocketProviderResult<TWebSocketProvider> {
   const client = getClient<any, TWebSocketProvider>()
-  if (chainId && typeof client.config.webSocketProvider === 'function')
-    return client.config.webSocketProvider({ chainId })
+  if (chainId)
+    return client.getWebSocketProvider({ chainId }) || client.webSocketProvider
   return client.webSocketProvider
 }

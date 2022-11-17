@@ -1,6 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient, wagmiContractConfig } from '../../../test'
+import {
+  getRandomTokenId,
+  getSigners,
+  setupClient,
+  wagmiContractConfig,
+} from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -20,8 +25,9 @@ describe('writeContract', () => {
     const config = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
+      args: [getRandomTokenId()],
     })
-    const { hash } = await writeContract({ ...config })
+    const { hash } = await writeContract(config)
 
     expect(hash).toBeDefined()
   })
@@ -32,6 +38,7 @@ describe('writeContract', () => {
       ...wagmiContractConfig,
       mode: 'recklesslyUnprepared',
       functionName: 'mint',
+      args: [getRandomTokenId()],
     })
 
     expect(hash).toBeDefined()
@@ -43,15 +50,34 @@ describe('writeContract', () => {
       const config = await prepareWriteContract({
         ...wagmiContractConfig,
         functionName: 'mint',
+        args: [getRandomTokenId()],
       })
 
       await expect(() =>
         writeContract({
-          chainId: 69,
           ...config,
+          chainId: 69,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 69\\", received \\"Ethereum\\"."`,
+      )
+    })
+
+    it('chain not configured for connector', async () => {
+      await connect({ connector, chainId: 69_420 })
+      const config = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+      })
+
+      await expect(() =>
+        writeContract({
+          ...config,
+          chainId: 69_420,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Chain \\"69420\\" not configured for connector \\"mock\\"."',
       )
     })
 
@@ -61,6 +87,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowError()
@@ -71,6 +98,7 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
@@ -82,13 +110,14 @@ describe('writeContract', () => {
         writeContract({
           ...wagmiContractConfig,
           mode: 'recklesslyUnprepared',
+          // @ts-expect-error function does not exist
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-              "Function \\"wagmi\\" on contract \\"0xaf0326d92b97df1221759476b072abfd8084f9be\\" does not exist.
+        "Function \\"wagmi\\" on contract \\"0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2\\" does not exist.
 
-              Etherscan: https://etherscan.io/address/0xaf0326d92b97df1221759476b072abfd8084f9be#readContract"
-            `)
+        Etherscan: https://etherscan.io/address/0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2#readContract"
+      `)
     })
   })
 })

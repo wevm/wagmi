@@ -3,17 +3,18 @@ import type {
   CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
+import type { Address } from 'abitype'
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
+import type { ProviderRpcError } from '../errors'
 import {
   AddChainError,
   ChainNotConfiguredError,
-  ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -62,7 +63,7 @@ export class CoinbaseWalletConnector extends Connector<
       this.emit('message', { type: 'connecting' })
 
       const accounts = await provider.enable()
-      const account = getAddress(<string>accounts[0])
+      const account = getAddress(accounts[0] as string)
       // Switch to chain if provided
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
@@ -76,13 +77,13 @@ export class CoinbaseWalletConnector extends Connector<
         account,
         chain: { id, unsupported },
         provider: new providers.Web3Provider(
-          <providers.ExternalProvider>(<unknown>provider),
+          provider as unknown as providers.ExternalProvider,
         ),
       }
     } catch (error) {
       if (
         /(user closed modal|accounts received is empty)/i.test(
-          (<ProviderRpcError>error).message,
+          (error as ProviderRpcError).message,
         )
       )
         throw new UserRejectedRequestError(error)
@@ -103,11 +104,11 @@ export class CoinbaseWalletConnector extends Connector<
 
   async getAccount() {
     const provider = await this.getProvider()
-    const accounts = await provider.request<string[]>({
+    const accounts = await provider.request<Address[]>({
       method: 'eth_accounts',
     })
     // return checksum address
-    return getAddress(<string>accounts[0])
+    return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
@@ -118,12 +119,6 @@ export class CoinbaseWalletConnector extends Connector<
 
   async getProvider() {
     if (!this.#provider) {
-      const chain =
-        this.chains.find((chain) => chain.id === this.options.chainId) ||
-        this.chains[0]
-      const chainId = this.options.chainId || chain?.id
-      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
-
       let CoinbaseWalletSDK = (await import('@coinbase/wallet-sdk')).default
       // Workaround for Vite dev import errors
       // https://github.com/vitejs/vite/issues/7112
@@ -132,23 +127,49 @@ export class CoinbaseWalletConnector extends Connector<
         // @ts-expect-error This import error is not visible to TypeScript
         typeof CoinbaseWalletSDK.default === 'function'
       )
-        CoinbaseWalletSDK = (<{ default: typeof CoinbaseWalletSDK }>(
-          (<unknown>CoinbaseWalletSDK)
-        )).default
-
+        CoinbaseWalletSDK = (
+          CoinbaseWalletSDK as unknown as { default: typeof CoinbaseWalletSDK }
+        ).default
       this.#client = new CoinbaseWalletSDK(this.options)
+
+      /**
+       * Mock implementations to retrieve private `walletExtension` method
+       * from the Coinbase Wallet SDK.
+       */
+      abstract class WalletProvider {
+        // https://github.com/coinbase/coinbase-wallet-sdk/blob/b4cca90022ffeb46b7bbaaab9389a33133fe0844/packages/wallet-sdk/src/provider/CoinbaseWalletProvider.ts#L927-L936
+        abstract getChainId(): number
+      }
+      abstract class Client {
+        // https://github.com/coinbase/coinbase-wallet-sdk/blob/b4cca90022ffeb46b7bbaaab9389a33133fe0844/packages/wallet-sdk/src/CoinbaseWalletSDK.ts#L233-L235
+        abstract get walletExtension(): WalletProvider | undefined
+      }
+      const walletExtensionChainId = (
+        this.#client as unknown as Client
+      ).walletExtension?.getChainId()
+
+      const chain =
+        this.chains.find((chain) =>
+          this.options.chainId
+            ? chain.id === this.options.chainId
+            : chain.id === walletExtensionChainId,
+        ) || this.chains[0]
+      const chainId = this.options.chainId || chain?.id
+      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
+
       this.#provider = this.#client.makeWeb3Provider(jsonRpcUrl, chainId)
     }
     return this.#provider
   }
 
-  async getSigner() {
+  async getSigner({ chainId }: { chainId?: number } = {}) {
     const [provider, account] = await Promise.all([
       this.getProvider(),
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <providers.ExternalProvider>(<unknown>provider),
+      provider as unknown as providers.ExternalProvider,
+      chainId,
     ).getSigner(account)
   }
 
@@ -180,10 +201,11 @@ export class CoinbaseWalletConnector extends Connector<
       )
     } catch (error) {
       const chain = this.chains.find((x) => x.id === chainId)
-      if (!chain) throw new ChainNotConfiguredError()
+      if (!chain)
+        throw new ChainNotConfiguredError({ chainId, connectorId: this.id })
 
       // Indicates chain is not added to provider
-      if ((<ProviderRpcError>error).code === 4902) {
+      if ((error as ProviderRpcError).code === 4902) {
         try {
           await provider.request({
             method: 'wallet_addEthereumChain',
@@ -223,7 +245,7 @@ export class CoinbaseWalletConnector extends Connector<
     symbol: string
   }) {
     const provider = await this.getProvider()
-    return await provider.request<boolean>({
+    return provider.request<boolean>({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',
@@ -239,7 +261,7 @@ export class CoinbaseWalletConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(<string>accounts[0]) })
+    else this.emit('change', { account: getAddress(accounts[0] as string) })
   }
 
   protected onChainChanged = (chainId: number | string) => {
@@ -253,6 +275,6 @@ export class CoinbaseWalletConnector extends Connector<
   }
 
   #isUserRejectedRequestError(error: unknown) {
-    return /(user rejected)/i.test((<Error>error).message)
+    return /(user rejected)/i.test((error as Error).message)
   }
 }

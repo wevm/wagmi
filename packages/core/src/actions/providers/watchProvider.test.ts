@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { setupClient } from '../../../test'
 import { connect } from '../accounts/connect'
 import { disconnect } from '../accounts/disconnect'
-import { GetProviderResult } from './getProvider'
+import type { GetProviderResult } from './getProvider'
 import { watchProvider } from './watchProvider'
 
 describe('watchProvider', () => {
@@ -21,7 +21,7 @@ describe('watchProvider', () => {
     expect(providers).toMatchInlineSnapshot(`
       [
         "<Provider network={1} />",
-        "<Provider network={31337} />",
+        "<Provider network={1} />",
         "<Provider network={1} />",
       ]
     `)

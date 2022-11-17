@@ -3,7 +3,7 @@ title: 'Contract Write'
 description: 'Learn how to perform a contract write with wagmi.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 import { ContractWrite } from '../../components/examples'
 
 # Contract Write
@@ -41,14 +41,22 @@ You will need to:
 1. Add the hook
 2. Pass in your contract configuration (address, contract interface, and function name)
 
-```tsx {2,5-9}
+```tsx {2,5-17}
 import * as React from 'react'
 import { usePrepareContractWrite } from 'wagmi'
 
 export function MintNFT() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-    contractInterface: ['function mint()'],
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
   })
 
@@ -71,14 +79,22 @@ We will need to:
 3. Hook it up to our button element via an `onClick` prop.
 4. Disable the button when the `write` function is not ready (still preparing).
 
-```tsx {2,10,14-16}
+```tsx {2,18,22-24}
 import * as React from 'react'
 import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 export function MintNFT() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-    contractInterface: ['function mint()'],
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
   })
   const { write } = useContractWrite(config)
@@ -97,7 +113,7 @@ Clicking the "Mint" button will invoke the `mint` function on the contract and m
 
 However, there is currently no feedback to show when the `mint` transaction is successful. We will add some feedback in the next step.
 
-<Callout emoji="🤔" type="info">
+<Callout type="info">
   [Why do I need a `usePrepareContractWrite` & `useContractWrite`
   hook?](/docs/prepare-hooks/intro)
 </Callout>
@@ -112,7 +128,7 @@ We will need to:
 2. Add loading state to the button when the transaction is pending.
 3. Add a success state for when the transaction is successful.
 
-```tsx {5,16-18,22-32}
+```tsx {5,24-26,30-40}
 import * as React from 'react'
 import {
   usePrepareContractWrite,
@@ -122,8 +138,16 @@ import {
 
 export function MintNFT() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-    contractInterface: ['function mint()'],
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
   })
   const { data, write } = useContractWrite(config)
@@ -179,7 +203,7 @@ export function App() {
 
 Now let's provide some feedback to the user if the prepare hook fails, or if the write hook fails.
 
-```tsx {11-12,18,37-39}
+```tsx {11-12,26,45-47}
 import * as React from 'react'
 import {
   usePrepareContractWrite,
@@ -193,8 +217,16 @@ export function MintNFT() {
     error: prepareError,
     isError: isPrepareError,
   } = usePrepareContractWrite({
-    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-    contractInterface: ['function mint()'],
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
   })
   const { data, error, isError, write } = useContractWrite(config)

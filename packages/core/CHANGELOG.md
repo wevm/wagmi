@@ -1,5 +1,490 @@
 # @wagmi/core
 
+## 0.7.4
+
+### Patch Changes
+
+- [#1309](https://github.com/wagmi-dev/wagmi/pull/1309) [`1f4a4261`](https://github.com/wagmi-dev/wagmi/commit/1f4a4261247b1d3a90e3123157bc851a35d49b9c) Thanks [@tmm](https://github.com/tmm)! - Fixed internal type
+
+## 0.7.3
+
+### Patch Changes
+
+- [#1294](https://github.com/wagmi-dev/wagmi/pull/1294) [`b2f88949`](https://github.com/wagmi-dev/wagmi/commit/b2f88949f32aabaf13f318472648cd51a8b7f2e7) Thanks [@tmm](https://github.com/tmm)! - Set `abi` return type value for `prepareContractWrite` as more permissive when not inferrable as `Abi`.
+
+## 0.7.2
+
+### Patch Changes
+
+- [`e9f806b6`](https://github.com/wagmi-dev/wagmi/commit/e9f806b652ba62effb3ddac464815e447fc287f6) Thanks [@tmm](https://github.com/tmm)! - Bumped abitype and zustand versions.
+
+## 0.7.1
+
+### Patch Changes
+
+- [#1272](https://github.com/wagmi-dev/wagmi/pull/1272) [`1f7fc41`](https://github.com/wagmi-dev/wagmi/commit/1f7fc419f7960bbdc51dfa85c2f33b89f1ecc1bf) Thanks [@tmm](https://github.com/tmm)! - Fixed ethers import path
+
+## 0.7.0
+
+### Minor Changes
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Removed the following deprecated chains:
+
+  - `ropsten`
+  - `rinkeby`
+  - `kovan`
+  - `optimismKovan`
+  - `arbitrumRinkeby`
+
+  If you feel you still need to include one of these testnets in your application, you will have to define it manually:
+
+  ```diff
+  -import { rinkeby } from 'wagmi'
+  +import { Chain } from 'wagmi'
+
+  +export const rinkeby: Chain = {
+  + id: 4,
+  + name: 'Rinkeby',
+  + network: 'rinkeby',
+  + nativeCurrency: { name: 'Rinkeby Ether', symbol: 'ETH', decimals: 18 },
+  + rpcUrls: {
+  +   alchemy: 'https://eth-rinkeby.alchemyapi.io/v2',
+  +   default: 'https://rpc.ankr.com/eth_rinkeby',
+  +   infura: 'https://rinkeby.infura.io/v3',
+  +   public: 'https://rpc.ankr.com/eth_rinkeby',
+  +  },
+  + blockExplorers: {
+  +   etherscan: 'https://rinkeby.etherscan.io',
+  +   default: 'https://rinkeby.etherscan.io',
+  + },
+  + ens: {
+  +   address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  + },
+  + multicall: {
+  +   address: '0xca11bde05977b3631167028862be2a173976ca11',
+  +   blockCreated: 10299530,
+  + },
+  + testnet: true,
+  }
+  ```
+
+  You can reference these removed chains [here](https://github.com/wagmi-dev/wagmi/blob/389765f7d9af063ab0df07389a2bbfbc10a41060/packages/core/src/constants/chains.ts).
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `addressOrName` renamed to `address` for `fetchBalance` and `fetchEnsAvatar`.
+
+  ```diff
+  const result = await fetchBalance({
+  - addressOrName: '0x…',
+  + address: '0x…',
+  })
+  ```
+
+  If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+  ```diff
+  + const { data: address } = await fetchEnsAddress({ name: 'example.eth' })
+  const result = await fetchBalance({
+  - addressOrName: 'example.eth',
+  + address,
+  })
+  ```
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Made `apiKey` required on `infuraProvider` and `alchemyProvider`.
+
+  ```diff
+  import { configureChains } from 'wagmi'
+
+  const config = configureChains(defaultChains, [
+  - alchemyProvider(),
+  + alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY })
+  ])
+  ```
+
+  You can find your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/), or your Infura API key from the [Infura Dashboard](https://infura.io/login).
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - Removed CommonJS support
+
+## 0.6.12
+
+### Patch Changes
+
+- [#1250](https://github.com/wagmi-dev/wagmi/pull/1250) [`ce2e0f4`](https://github.com/wagmi-dev/wagmi/commit/ce2e0f4a46b8fd1c509ead552012ef4c072a525b) Thanks [@tmm](https://github.com/tmm)! - Added support for Trust Wallet browser extension.
+
+## 0.6.11
+
+### Patch Changes
+
+- [#1234](https://github.com/wagmi-dev/wagmi/pull/1234) [`3ff9303`](https://github.com/wagmi-dev/wagmi/commit/3ff930349250f62137cca4ca3b382522882abf8a) Thanks [@tmm](https://github.com/tmm)! - Fixed issue with adding chain to wallet without block explorer URL.
+
+## 0.6.10
+
+### Patch Changes
+
+- [#1232](https://github.com/wagmi-dev/wagmi/pull/1232) [`c0ca509`](https://github.com/wagmi-dev/wagmi/commit/c0ca509506dcf6d98b058df549dc761c9a5f3d1c) Thanks [@tmm](https://github.com/tmm)! - Added validation to check that chain is configured for connector when accessing `Signer`.
+
+## 0.6.9
+
+### Patch Changes
+
+- [#1207](https://github.com/wagmi-dev/wagmi/pull/1207) [`c73d463`](https://github.com/wagmi-dev/wagmi/commit/c73d463d65c9dbfcfe709187e47323a769589741) Thanks [@lvshaoping007](https://github.com/lvshaoping007)! - Added Kucoin wallet support to `InjectedConnector`
+
+## 0.6.8
+
+### Patch Changes
+
+- [#1132](https://github.com/wagmi-dev/wagmi/pull/1132) [`d41c0d6`](https://github.com/wagmi-dev/wagmi/commit/d41c0d650f8c0e54145758685b7604b8909d7ae0) Thanks [@toniocodo](https://github.com/toniocodo)! - Added ERC-4626 ABI
+
+- [#1201](https://github.com/wagmi-dev/wagmi/pull/1201) [`9a07efa`](https://github.com/wagmi-dev/wagmi/commit/9a07efaa397d3ba03f2edbe527c359f21e22139a) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where non-checksum addresses did not resolve with an ENS name
+
+## 0.6.7
+
+### Patch Changes
+
+- [#1174](https://github.com/wagmi-dev/wagmi/pull/1174) [`196a458`](https://github.com/wagmi-dev/wagmi/commit/196a458f64141e8a9f39c1b1e1af5937f692cb39) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `client.chains` (active connector chains) would be populated when there is no active connector (disconnected user).
+
+- [#1176](https://github.com/wagmi-dev/wagmi/pull/1176) [`389765f`](https://github.com/wagmi-dev/wagmi/commit/389765f7d9af063ab0df07389a2bbfbc10a41060) Thanks [@jxom](https://github.com/jxom)! - Migrate away from Alchemy RPC URLs in the public RPC URL list
+
+## 0.6.6
+
+### Patch Changes
+
+- [`81ce9e6`](https://github.com/wagmi-dev/wagmi/commit/81ce9e64d85f7d01370324c1a529988a0919894f) Thanks [@jxom](https://github.com/jxom)! - Add `isPortal` to injected MetaMask flags.
+
+- [`c2c0109`](https://github.com/wagmi-dev/wagmi/commit/c2c01096ef4cd0ffadbb49062969c208604c6194) Thanks [@jxom](https://github.com/jxom)! - Add etherscan block explorer to Optimism Goerli
+
+## 0.6.5
+
+### Patch Changes
+
+- [#1162](https://github.com/wagmi-dev/wagmi/pull/1162) [`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where non-indexed event parameter types were set to `null`.
+
+- [#1162](https://github.com/wagmi-dev/wagmi/pull/1162) [`30335b3`](https://github.com/wagmi-dev/wagmi/commit/30335b3199fb425e398e9c492b50c68d5e2ade7e) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where `useContractReads` and `useContractInfiniteReads` types were slowing down TypeScript compiler.
+
+## 0.6.4
+
+### Patch Changes
+
+- [#1103](https://github.com/wagmi-dev/wagmi/pull/1103) [`651eda0`](https://github.com/wagmi-dev/wagmi/commit/651eda06384bd0955268427f898e9337b2dc5a31) Thanks [@tmm](https://github.com/tmm)! - Bumped `abitype` dependency.
+
+## 0.6.3
+
+### Patch Changes
+
+- [#1086](https://github.com/wagmi-dev/wagmi/pull/1086) [`4e28d2a`](https://github.com/wagmi-dev/wagmi/commit/4e28d2ad4c2e6b3479b728563040b9529463cbcf) Thanks [@tmm](https://github.com/tmm)! - Exposed module types.
+
+## 0.6.2
+
+### Patch Changes
+
+- [#1080](https://github.com/wagmi-dev/wagmi/pull/1080) [`3be5e8b`](https://github.com/wagmi-dev/wagmi/commit/3be5e8b01e58ed40cc9dab7ef9533c0197cb74d0) Thanks [@tmm](https://github.com/tmm)! - Added `abitype` to `dependencies` so types ship correctly.
+
+## 0.6.1
+
+### Patch Changes
+
+- [#1074](https://github.com/wagmi-dev/wagmi/pull/1074) [`8db807f`](https://github.com/wagmi-dev/wagmi/commit/8db807f16149aa278c2a7db9ee5245431db12173) Thanks [@IljaDaderko](https://github.com/IljaDaderko)! - Exported `EventListener` type
+
+## 0.6.0
+
+### Minor Changes
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `watchSigner` now requires an arguments object (that accepts an optional `chainId`) as it's first parameter.
+
+  ```diff
+  import { watchSigner } from `@wagmi/core`
+
+  -watchSigner(signer => {
+  +watchSigner({}, signer => {
+    console.log('new signer!', signer)
+  })
+  ```
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `prepareSendTransaction` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for contract actions: `getContract`, `multicall`, `prepareWriteContract`, `readContract`, `readContracts`, `watchContractEvent`, `watchMulticall`, `watchReadContract`, `watchReadContracts`, `writeContract`.
+
+  ```diff
+  import { readContract } from '@wagmi/core'
+
+  const result = await readContract({
+  - addressOrName: '0x…',
+  + address: '0x…',
+  - contractInterface: […] as const,
+  + abi: […] as const,
+    functionName: 'balanceOf',
+    args: ['0x…'],
+  })
+  ```
+
+  If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+  ```diff
+  - import { readContract } from '@wagmi/core'
+  + import { fetchEnsAddress, readContract } from '@wagmi/core'
+
+  + const address = await fetchEnsAddress('example.eth')
+  const result = await readContract({
+  - addressOrName: 'example.eth',
+  + address,
+    abi: […] as const,
+    functionName: 'balanceOf',
+    args: ['0x…'],
+  })
+  ```
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `prepareWriteContract` now throws when a `chainId` is specified and the end-user is on a different chain id (the wrong network).
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: `prepareSendTransaction` now only accepts a `signer` instead of `signerOrProvider`.
+
+  This is to reach parity with `prepareWriteContract`.
+
+  If no `signer` is provided, wagmi will use the signer that is currently connected. If no user is connected, then `prepareWriteContract` will throw an error.
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `args` config option must now be an array for the following actions: `readContract`, `writeContract`, `prepareWriteContract`, `multicall`, `readContracts`, `watchMulticall`, and `watchReadContracts`.
+
+  ```diff
+  import { readContract } from '@wagmi/core'
+
+  const result = await readContract({
+    address: '0x…',
+    abi: […],
+    functionName: 'balanceOf',
+  - args: '0x…',
+  + args: ['0x…'],
+  })
+  ```
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `watchContractEvent` now accepts a configuration object and callback instead of positional arguments.
+
+  ```diff
+  import { watchContractEvent } from '@wagmi/core'
+
+  - const unsubscribe = watchContractEvent(
+  -   {
+  -     address: '0x…',
+  -     abi: […],
+  -   },
+  -   'Transfer',
+  -   (from, to, tokenId) => {
+  -     // ...
+  -   },
+  -   { once: true },
+  - )
+  + const unsubscribe = watchContractEvent(
+  +   {
+  +     address: '0x…',
+  +     abi: […],
+  +     eventName: 'Transfer',
+  +     once: true,
+  +   },
+  +   (from, to, tokenId) => {
+  +     // ...
+  +   },
+  + )
+  ```
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Updated TypeScript version to `typescript@>=4.7.4`.
+
+  `@wagmi/core` can now infer types based on [ABI](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions, giving you full end-to-end type-safety from your contracts to your frontend and incredible developer experience (e.g. autocomplete contract function names and catch misspellings, type contract function arguments, etc.).
+
+  For this to work, you must upgrade to `typescript@>=4.7.4`. Why is TypeScript v4.7.4 or greater necessary? TypeScript 4.7.4 introduced the ability to [extend constraints on inferred type variables](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#extends-constraints-on-infer-type-variables), which is used extensively to help narrow types for ABIs. Good news! When upgrading TypeScript from 4.6 to 4.7 there are likely no [breaking changes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#breaking-changes) for your set up.
+
+- [#941](https://github.com/wagmi-dev/wagmi/pull/941) [`0c96009`](https://github.com/wagmi-dev/wagmi/commit/0c96009398647a515a57f72ef25c32724f7c978c) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Updated TypeScript generics for contract interaction and typed data actions.
+
+  Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi` allows TypeScript to infer `functionName`, `args`, `overrides`, and return types for functions, and `eventName` and `listener` types for events.
+
+  ```diff
+  import { readContract } from '@wagmi/core'
+
+  const result = await readContract({
+    address: '0x…',
+  - abi: […],
+  + abi: […] as const,
+    functionName: 'balanceOf', // will autocomplete and catch typos
+    args: ['0x…'], // inferred based on `functionName`
+  })
+  result // inferred based on `functionName`
+  ```
+
+  This works for the following actions: `readContract`, `writeContract`, `prepareWriteContract`, `multicall`, `readContracts`, `watchMulticall`, `watchReadContracts`, and `watchContractEvent`.
+
+  Adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `signTypedData`'s config option, `types`, allows TypeScript to infer `value`.
+
+  ```diff
+  import { signTypedData } from '@wagmi/core'
+
+  const result = await signTypedData({
+    domain: {
+      name: 'Ether Mail',
+      version: '1',
+      chainId: 1,
+      verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+    },
+    types: {
+      Person: [
+        { name: 'name', type: 'string' },
+        { name: 'wallet', type: 'address' },
+      ],
+      Mail: [
+        { name: 'from', type: 'Person' },
+        { name: 'to', type: 'Person' },
+        { name: 'contents', type: 'string' },
+      ],
+  - },
+  + } as const,
+    value: { // `value` is inferred based on `types`
+      from: {
+        name: 'Cow',
+        wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+      },
+      to: {
+        name: 'Bob',
+        wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+      },
+      contents: 'Hello, Bob!',
+    },
+  })
+  ```
+
+### Patch Changes
+
+- [#1061](https://github.com/wagmi-dev/wagmi/pull/1061) [`a4ffe8b`](https://github.com/wagmi-dev/wagmi/commit/a4ffe8b25516d5504685ae94579da4cd8c409329) Thanks [@alecananian](https://github.com/alecananian)! - Added Arbitrum Goerli Arbiscan block explorer
+
+- [#940](https://github.com/wagmi-dev/wagmi/pull/940) [`b6cb8f4`](https://github.com/wagmi-dev/wagmi/commit/b6cb8f4cd15eb13073bc7e9ecb4bfa2c261c0663) Thanks [@jxom](https://github.com/jxom)! - The `fetchSigner` action now accepts an optional `chainId` to use for signer initialization as an argument.
+
+  ```tsx
+  import { fetchSigner } from '@wagmi/core'
+  import { optimism } from '@wagmi/core/chains'
+
+  // ...
+
+  fetchSigner({ chainId: optimism.id })
+  ```
+
+- [#1048](https://github.com/wagmi-dev/wagmi/pull/1048) [`ed13074`](https://github.com/wagmi-dev/wagmi/commit/ed130747c0f28c1d9980a1328883e4000a60455e) Thanks [@Max-3-7](https://github.com/Max-3-7)! - Added support for Avalanche core wallet
+
+- [#1046](https://github.com/wagmi-dev/wagmi/pull/1046) [`ab9ecaa`](https://github.com/wagmi-dev/wagmi/commit/ab9ecaa74dfa4324279e167dd7e348319ef7d35d) Thanks [@jxom](https://github.com/jxom)! - make ethers block format validator compatible with Celo
+
+- [#1050](https://github.com/wagmi-dev/wagmi/pull/1050) [`73d4d47`](https://github.com/wagmi-dev/wagmi/commit/73d4d47bc679f4f9a1cf46010fe2bf858c9d0b5c) Thanks [@jxom](https://github.com/jxom)! - update dependencies
+
+  - `zustand@4.1.1`
+
+## 0.5.8
+
+### Patch Changes
+
+- [`8cb07462`](https://github.com/wagmi-dev/wagmi/commit/8cb07462acc3c5637398d11d2451f8b8e330d553) Thanks [@jxom](https://github.com/jxom)! - Added `chainId` as an argument to `watchBlockNumber`.
+
+* [`53c1a474`](https://github.com/wagmi-dev/wagmi/commit/53c1a4747d03b685e8cfbf55361fc2a56777fb06) Thanks [@tmm](https://github.com/tmm)! - Added missing `decimals` option to `Connector` `watchAsset`
+
+- [`4d74dd4f`](https://github.com/wagmi-dev/wagmi/commit/4d74dd4ff827ba5c43c3546a218f38cee45ea76a) Thanks [@jxom](https://github.com/jxom)! - Support ERC20 contracts that represent strings as bytes32
+
+## 0.5.7
+
+### Patch Changes
+
+- [`aa51bc4d`](https://github.com/wagmi-dev/wagmi/commit/aa51bc4dc5683bf0178597d2fdb8f2e9d82e7970) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue in `CoinbaseWalletConnector` where the browser extension would unintendedly reset the network when the browser is refreshed.
+
+* [#955](https://github.com/wagmi-dev/wagmi/pull/955) [`e326cd80`](https://github.com/wagmi-dev/wagmi/commit/e326cd80fe65267db623eb6c80ccdd75572914cf) Thanks [@0xFlicker](https://github.com/0xFlicker)! - Added Infura RPC URL for Sepolia
+
+- [`cec14089`](https://github.com/wagmi-dev/wagmi/commit/cec14089500c86687226ab272b4c3fcb85ae3d69) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useProvider` & `getProvider` were not returning referentially equal providers.
+
+* [`cec14089`](https://github.com/wagmi-dev/wagmi/commit/cec14089500c86687226ab272b4c3fcb85ae3d69) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where the `watch` option was not respecting the neighboring `chainId` option in `useBlockNumber`.
+
+- [`cec14089`](https://github.com/wagmi-dev/wagmi/commit/cec14089500c86687226ab272b4c3fcb85ae3d69) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where block listeners (via `watch`) were firing excessively on L2 chains.
+
+## 0.5.6
+
+### Patch Changes
+
+- [#936](https://github.com/wagmi-dev/wagmi/pull/936) [`3329d1f`](https://github.com/wagmi-dev/wagmi/commit/3329d1f5880431566e14ac1640f48d0975aec4c2) Thanks [@jxom](https://github.com/jxom)! - Added the ability to provide a custom logger to override how logs are broadcasted to the consumer in wagmi.
+
+  A custom logger can be provided to the wagmi client via `logger`.
+
+  ### API
+
+  ```tsx
+  logger?: {
+    warn: typeof console.warn | null
+  }
+  ```
+
+  ### Examples
+
+  **Passing in a custom logger**
+
+  You can pass in a function to define your own custom logger.
+
+  ```diff
+  + import { logWarn } from './logger';
+
+  const client = createClient({
+    ...
+  + logger: {
+  +   warn: message => logWarn(message)
+  + }
+    ...
+  })
+  ```
+
+  **Disabling a logger**
+
+  You can disable a logger by passing `null` as the value.
+
+  ```diff
+  const client = createClient({
+    ...
+  + logger: {
+  +   warn: null
+  + }
+    ...
+  })
+  ```
+
+* [#889](https://github.com/wagmi-dev/wagmi/pull/889) [`27788ed`](https://github.com/wagmi-dev/wagmi/commit/27788ed989b5dc26849c7945fb91a92e56766018) Thanks [@jxom](https://github.com/jxom)! - Make multicall & readContracts more error robust
+
+## 0.5.5
+
+### Patch Changes
+
+- [#912](https://github.com/wagmi-dev/wagmi/pull/912) [`e529e12`](https://github.com/wagmi-dev/wagmi/commit/e529e125c713ed3ef24a59c6bf226fe4deee7ac9) Thanks [@zouhangwithsweet](https://github.com/zouhangwithsweet)! - Added BitKeep to injected flags
+
+- [#912](https://github.com/wagmi-dev/wagmi/pull/910) Thanks [@mytangying](https://github.com/zouhangwithsweet)! - Added MathWallet to injected flags
+
+- [#904](https://github.com/wagmi-dev/wagmi/pull/904) [`c231058`](https://github.com/wagmi-dev/wagmi/commit/c23105850f335f8798031e14c7098b7dee8c2975) Thanks [@jxom](https://github.com/jxom)! - Minimized contract interface returned from `prepareWriteContract`.
+
+## 0.5.4
+
+### Patch Changes
+
+- [#852](https://github.com/wagmi-dev/wagmi/pull/852) [`c3192d0`](https://github.com/wagmi-dev/wagmi/commit/c3192d0663aa332ae9edfd9dd49b333454013ab7) Thanks [@skeithc](https://github.com/skeithc)! - Added support for the Sepolia testnet
+
+## 0.5.3
+
+### Patch Changes
+
+- [#835](https://github.com/wagmi-dev/wagmi/pull/835) [`1b85e54`](https://github.com/wagmi-dev/wagmi/commit/1b85e54ae654e2564cf5bc2dae6411fe0a25875c) Thanks [@jxom](https://github.com/jxom)! - Update `@coinbase/wallet-sdk` to `3.4.1`
+
+* [#834](https://github.com/wagmi-dev/wagmi/pull/834) [`9655879`](https://github.com/wagmi-dev/wagmi/commit/96558793b0319df47aefafa6b7b9c959068d491b) Thanks [@jxom](https://github.com/jxom)! - Update zustand to `4.0.0`
+
+## 0.5.2
+
+### Patch Changes
+
+- [#823](https://github.com/wagmi-dev/wagmi/pull/823) [`10b8b78`](https://github.com/wagmi-dev/wagmi/commit/10b8b78605b7246b2c55b8d69f96663906e5cd20) Thanks [@tmm](https://github.com/tmm)! - Add Optimism Goerli to `chain` lookup.
+
+## 0.5.1
+
+### Patch Changes
+
+- [#767](https://github.com/wagmi-dev/wagmi/pull/767) [`e9392f3`](https://github.com/wagmi-dev/wagmi/commit/e9392f396e48e928bd9d2522e3ad671c589f08cb) Thanks [@klyap](https://github.com/klyap)! - Add Optimism Goerli chain ahead of [Kovan deprecation](https://dev.optimism.io/kovan-to-goerli).
+
+* [#817](https://github.com/wagmi-dev/wagmi/pull/817) [`7e5cac7`](https://github.com/wagmi-dev/wagmi/commit/7e5cac75815dcd8aa563462342a4853fc5207735) Thanks [@alecananian](https://github.com/alecananian)! - Added custom name mapping for 1inch Wallet injected provider
+
+- [#806](https://github.com/wagmi-dev/wagmi/pull/806) [`0b34e56`](https://github.com/wagmi-dev/wagmi/commit/0b34e56db97e6dcdb71088e0149b2d55ebc604a5) Thanks [@vmichalik](https://github.com/vmichalik)! - Fix canonical testnet native asset symbols by changing them to ETH
+
+* [#778](https://github.com/wagmi-dev/wagmi/pull/778) [`0892908`](https://github.com/wagmi-dev/wagmi/commit/08929084eeeba1a3a55aa098fa9d92a243685ad5) Thanks [@0xcadams](https://github.com/0xcadams)! - Add Arbitrum Goerli chain.
+
 ## 0.5.0
 
 ### Minor Changes

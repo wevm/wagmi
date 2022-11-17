@@ -46,6 +46,7 @@ function App() {
   isSuccess: boolean
   isError: boolean
   isFetched: boolean
+  isFetchedAfterMount: boolean
   isRefetching: boolean
   refetch: (options: {
     throwOnError: boolean
@@ -132,6 +133,20 @@ import { useFeeData } from 'wagmi'
 function App() {
   const feeData = useFeeData({
     enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useFeeData } from 'wagmi'
+
+function App() {
+  const feeData = useFeeData({
+    scopeKey: 'wagmi',
   })
 }
 ```

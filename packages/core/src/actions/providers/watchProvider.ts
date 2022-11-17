@@ -1,6 +1,7 @@
 import { getClient } from '../../client'
-import { Provider } from '../../types'
-import { GetProviderArgs, GetProviderResult, getProvider } from './getProvider'
+import type { Provider } from '../../types'
+import type { GetProviderArgs, GetProviderResult } from './getProvider'
+import { getProvider } from './getProvider'
 
 export type WatchProviderCallback<TProvider extends Provider = Provider> = (
   provider: GetProviderResult<TProvider>,

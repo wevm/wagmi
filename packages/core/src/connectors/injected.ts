@@ -1,18 +1,18 @@
+import type { Address } from 'abitype'
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
 import { getClient } from '../client'
+import type { ProviderRpcError, RpcError } from '../errors'
 import {
   AddChainError,
   ChainNotConfiguredError,
   ConnectorNotFoundError,
-  ProviderRpcError,
   ResourceUnavailableError,
-  RpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 import { getInjectedName, normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -21,14 +21,12 @@ export type InjectedConnectorOptions = {
   name?: string | ((detectedName: string | string[]) => string)
   /**
    * MetaMask 10.9.3 emits disconnect event when chain is changed.
-   * This flag prevents the `"disconnect"` event from being emitted upon switching chains.
-   * @see https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334
+   * This flag prevents the `"disconnect"` event from being emitted upon switching chains. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334) for more info.
    */
   shimChainChangedDisconnect?: boolean
   /**
    * MetaMask and other injected providers do not support programmatic disconnect.
-   * This flag simulates the disconnect behavior by keeping track of connection status in storage.
-   * @see https://github.com/MetaMask/metamask-extension/issues/10353
+   * This flag simulates the disconnect behavior by keeping track of connection status in storage. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/10353) for more info.
    * @default true
    */
   shimDisconnect?: boolean
@@ -50,11 +48,16 @@ export class InjectedConnector extends Connector<
 
   constructor({
     chains,
-    options = { shimDisconnect: true },
+    options: options_,
   }: {
     chains?: Chain[]
     options?: InjectedConnectorOptions
   } = {}) {
+    const options = {
+      shimDisconnect: true,
+      shimChainChangedDisconnect: true,
+      ...options_,
+    }
     super({ chains, options })
 
     let name = 'Injected'
@@ -67,7 +70,7 @@ export class InjectedConnector extends Connector<
         name =
           typeof detectedName === 'string'
             ? detectedName
-            : <string>detectedName[0]
+            : (detectedName[0] as string)
     }
 
     this.id = 'injected'
@@ -105,7 +108,7 @@ export class InjectedConnector extends Connector<
     } catch (error) {
       if (this.isUserRejectedRequestError(error))
         throw new UserRejectedRequestError(error)
-      if ((<RpcError>error).code === -32002)
+      if ((error as RpcError).code === -32002)
         throw new ResourceUnavailableError(error)
       throw error
     }
@@ -131,15 +134,13 @@ export class InjectedConnector extends Connector<
       method: 'eth_requestAccounts',
     })
     // return checksum address
-    return getAddress(<string>accounts[0])
+    return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
-    return await provider
-      .request({ method: 'eth_chainId' })
-      .then(normalizeChainId)
+    return provider.request({ method: 'eth_chainId' }).then(normalizeChainId)
   }
 
   async getProvider() {
@@ -148,13 +149,14 @@ export class InjectedConnector extends Connector<
     return this.#provider
   }
 
-  async getSigner() {
+  async getSigner({ chainId }: { chainId?: number } = {}) {
     const [provider, account] = await Promise.all([
       this.getProvider(),
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <providers.ExternalProvider>provider,
+      provider as providers.ExternalProvider,
+      chainId,
     ).getSigner(account)
   }
 
@@ -201,14 +203,15 @@ export class InjectedConnector extends Connector<
       )
     } catch (error) {
       const chain = this.chains.find((x) => x.id === chainId)
-      if (!chain) throw new ChainNotConfiguredError()
+      if (!chain)
+        throw new ChainNotConfiguredError({ chainId, connectorId: this.id })
 
       // Indicates chain is not added to provider
       if (
-        (<ProviderRpcError>error).code === 4902 ||
+        (error as ProviderRpcError).code === 4902 ||
         // Unwrapping for MetaMask Mobile
         // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
-        (<RpcError<{ originalError?: { code: number } }>>error)?.data
+        (error as RpcError<{ originalError?: { code: number } }>)?.data
           ?.originalError?.code === 4902
       ) {
         try {
@@ -244,14 +247,14 @@ export class InjectedConnector extends Connector<
     image,
     symbol,
   }: {
-    address: string
+    address: Address
     decimals?: number
     image?: string
     symbol: string
   }) {
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
-    return await provider.request({
+    return provider.request({
       method: 'wallet_watchAsset',
       params: {
         type: 'ERC20',
@@ -267,7 +270,10 @@ export class InjectedConnector extends Connector<
 
   protected onAccountsChanged = (accounts: string[]) => {
     if (accounts.length === 0) this.emit('disconnect')
-    else this.emit('change', { account: getAddress(<string>accounts[0]) })
+    else
+      this.emit('change', {
+        account: getAddress(accounts[0] as string),
+      })
   }
 
   protected onChainChanged = (chainId: number | string) => {
@@ -292,6 +298,6 @@ export class InjectedConnector extends Connector<
   }
 
   protected isUserRejectedRequestError(error: unknown) {
-    return (<ProviderRpcError>error).code === 4001
+    return (error as ProviderRpcError).code === 4001
   }
 }

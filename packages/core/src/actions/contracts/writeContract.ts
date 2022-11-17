@@ -1,13 +1,29 @@
-import { CallOverrides, PopulatedTransaction, providers } from 'ethers'
+import type { Abi, Address, ExtractAbiFunction } from 'abitype'
+import type { PopulatedTransaction } from 'ethers'
 
-import { ChainMismatchError, ConnectorNotFoundError } from '../../errors'
-import { Address } from '../../types'
-import { fetchSigner, getNetwork } from '../accounts'
-import { SendTransactionResult, sendTransaction } from '../transactions'
-import { GetContractArgs } from './getContract'
+import { ConnectorNotFoundError } from '../../errors'
+import type { Signer } from '../../types'
+import type {
+  DefaultOptions,
+  GetConfig,
+  GetOverridesForAbiStateMutability,
+  Options as Options_,
+} from '../../types/contracts'
+import { assertActiveChain } from '../../utils'
+import { fetchSigner } from '../accounts'
+import type { SendTransactionResult } from '../transactions'
+import { sendTransaction } from '../transactions'
 import { prepareWriteContract } from './prepareWriteContract'
 
-export type WriteContractPreparedArgs = {
+type Options = Options_ & { isRequestOptional?: boolean }
+type Request = PopulatedTransaction & {
+  to: Address
+  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+}
+
+export type WriteContractPreparedArgs<
+  TOptions extends Options = DefaultOptions,
+> = {
   /**
    * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
    * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
@@ -18,26 +34,64 @@ export type WriteContractPreparedArgs = {
    * via the {@link prepareWriteContract} function
    * */
   mode: 'prepared'
-  /** The prepared request. */
-  request: PopulatedTransaction & {
-    to: Address
-    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-  }
-}
-export type WriteContractUnpreparedArgs = {
-  mode: 'recklesslyUnprepared'
-  request?: undefined
-}
+  args?: never
+  overrides?: never
+} & (TOptions['isRequestOptional'] extends true
+  ? {
+      /** The prepared request. */
+      request?: Request
+    }
+  : {
+      /** The prepared request. */
+      request: Request
+    })
 
-export type WriteContractArgs = Omit<GetContractArgs, 'signerOrProvider'> & {
-  /** Chain ID used to validate if the signer is connected to the target chain */
-  chainId?: number
-  /** Method to call on contract */
-  functionName: string
-  /** Arguments to pass contract method */
-  args?: any | any[]
-  overrides?: CallOverrides
-} & (WriteContractUnpreparedArgs | WriteContractPreparedArgs)
+export type WriteContractUnpreparedArgs<
+  TAbi = Abi,
+  TFunctionName = string,
+  TOptions extends Options = DefaultOptions,
+> = {
+  mode: 'recklesslyUnprepared'
+  request?: never
+} & GetConfig<
+  {
+    abi: TAbi
+    functionName: TFunctionName
+    /** Call overrides */
+    overrides?: GetOverridesForAbiStateMutability<
+      [TAbi, TFunctionName] extends [
+        infer TAbi_ extends Abi,
+        infer TFunctionName_ extends string,
+      ]
+        ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
+        : 'nonpayable' | 'payable'
+    >
+  },
+  'nonpayable' | 'payable',
+  TOptions
+>
+
+export type WriteContractArgs<
+  TAbi = Abi,
+  TFunctionName = string,
+  TOptions extends Options = DefaultOptions,
+> = Omit<
+  GetConfig<
+    {
+      abi: TAbi
+      functionName: TFunctionName
+      /** Chain id to use for provider */
+      chainId?: number
+    },
+    'nonpayable' | 'payable',
+    TOptions
+  >,
+  'args'
+> &
+  (
+    | WriteContractUnpreparedArgs<TAbi, TFunctionName, TOptions>
+    | WriteContractPreparedArgs<TOptions>
+  )
 export type WriteContractResult = SendTransactionResult
 
 /**
@@ -50,54 +104,46 @@ export type WriteContractResult = SendTransactionResult
  * import { prepareWriteContract, writeContract } from '@wagmi/core'
  *
  * const config = await prepareWriteContract({
- *   addressOrName: '0x...',
- *   contractInterface: wagmiAbi,
+ *   address: '0x...',
+ *   abi: wagmiAbi,
  *   functionName: 'mint',
  * })
  * const result = await writeContract(config)
  */
-export async function writeContract({
-  addressOrName,
+export async function writeContract<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TSigner extends Signer = Signer,
+>({
+  address,
   args,
   chainId,
-  contractInterface,
+  abi,
   functionName,
   mode,
   overrides,
   request: request_,
-}: WriteContractArgs): Promise<WriteContractResult> {
-  /********************************************************************/
-  /** START: iOS App Link cautious code.                              */
-  /** Do not perform any async operations in this block.              */
-  /** Ref: wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
-  /********************************************************************/
+}: WriteContractArgs<TAbi, TFunctionName>): Promise<WriteContractResult> {
+  /****************************************************************************/
+  /** START: iOS App Link cautious code.                                      */
+  /** Do not perform any async operations in this block.                      */
+  /** Ref: https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
+  /****************************************************************************/
 
-  const signer = await fetchSigner<providers.JsonRpcSigner>()
+  const signer = await fetchSigner<TSigner>()
   if (!signer) throw new ConnectorNotFoundError()
-
-  const { chain: activeChain, chains } = getNetwork()
-  const activeChainId = activeChain?.id
-  if (chainId && chainId !== activeChainId) {
-    throw new ChainMismatchError({
-      activeChain:
-        chains.find((x) => x.id === activeChainId)?.name ??
-        `Chain ${activeChainId}`,
-      targetChain:
-        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
-    })
-  }
-
-  if (mode === 'prepared') {
+  if (chainId) assertActiveChain({ chainId, signer })
+  if (mode === 'prepared')
     if (!request_) throw new Error('`request` is required')
-  }
 
   const request =
     mode === 'recklesslyUnprepared'
       ? (
-          await prepareWriteContract({
-            addressOrName,
+          await prepareWriteContract<Abi | readonly unknown[], string>({
+            address,
             args,
-            contractInterface,
+            chainId,
+            abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
             functionName,
             overrides,
           })

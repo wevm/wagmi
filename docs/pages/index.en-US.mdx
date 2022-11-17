@@ -2,31 +2,34 @@
 title: 'wagmi: React Hooks for Ethereum'
 ---
 
-import { Header } from '../components/docs'
+import { Tabs, Tab } from 'nextra-theme-docs'
 
-<Header />
+import { Header } from '../components/docs'
+import { Sponsors } from '../components/docs'
+
+<Header showGitcoinBanner={new Date() >= new Date('2022-09-07') && new Date() < new Date('2022-09-23')} />
 
 **wagmi** is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.
 
 {/* prettier-ignore-start */}
 <div className="max-w-xs mx-auto mt-5 mb-8 text-center install">
-  <Nextra.Tabs items={['npm', 'pnpm', 'yarn']}>
-    <Nextra.Tab>
+  <Tabs items={['npm', 'pnpm', 'yarn']}>
+    <Tab>
 ```bash
 npm i wagmi ethers
 ```
-    </Nextra.Tab>
-    <Nextra.Tab>
+    </Tab>
+    <Tab>
 ```bash
 pnpm i wagmi ethers
 ```
-    </Nextra.Tab>
-    <Nextra.Tab>
+    </Tab>
+    <Tab>
 ```bash
 yarn add wagmi ethers
 ```
-    </Nextra.Tab>
-  </Nextra.Tabs>
+    </Tab>
+  </Tabs>
 </div>
 {/* prettier-ignore-end */}
 
@@ -91,7 +94,7 @@ wagmi supports all these features out-of-the-box:
 - Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and Injected
 - Caching, request deduplication, multicall, batching, and persistence
 - Auto-refresh data on wallet, block, and network changes
-- TypeScript ready
+- TypeScript ready (infer types from ABIs and EIP-712 Typed Data)
 - Test suite running against forked Ethereum network
 
 ...and a lot more.
@@ -100,7 +103,7 @@ wagmi supports all these features out-of-the-box:
 
 Check out the following places for more wagmi-related content:
 
-- Follow [@awkweb](https://twitter.com/awkweb) and [@wagmi_sh](https://twitter.com/wagmi_sh) on Twitter for project updates
+- Follow [@wagmi_sh](https://twitter.com/wagmi_sh), [@awkweb](https://twitter.com/awkweb), and [@jakemoxey](https://twitter.com/jakemoxey) on Twitter for project updates
 - Join the [discussions on GitHub](https://github.com/wagmi-dev/wagmi/discussions)
 - Share [your project/organization](https://github.com/wagmi-dev/wagmi/discussions/201) that uses wagmi
 - Browse the [awesome-wagmi](https://github.com/wagmi-dev/awesome-wagmi) list of awesome projects and resources
@@ -109,6 +112,10 @@ Check out the following places for more wagmi-related content:
 
 Help support future development and make wagmi a sustainable open-source project. Thank you 🙏
 
-- [GitHub Sponsors](https://github.com/sponsors/tmm?metadata_campaign=docs_support)
+- [GitHub Sponsors](https://github.com/sponsors/wagmi-dev?metadata_campaign=docs_support)
 - [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
 - [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
+
+## Sponsors
+
+<Sponsors />

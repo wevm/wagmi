@@ -12,7 +12,7 @@ describe('getWebSocketProvider', () => {
       webSocketProvider: getWebSocketProvider_,
     })
     expect(getWebSocketProvider()).toMatchInlineSnapshot(
-      `"<WebSocketProvider network={31337} />"`,
+      '"<WebSocketProvider network={1} />"',
     )
   })
 
@@ -22,6 +22,16 @@ describe('getWebSocketProvider', () => {
       expect(webSocketProvider).toMatchInlineSnapshot(
         `"<WebSocketProvider network={1} />"`,
       )
+    })
+  })
+
+  describe('behavior', () => {
+    it('referentially equal', async () => {
+      setupClient()
+      expect(
+        getWebSocketProvider({ chainId: 1 }) ===
+          getWebSocketProvider({ chainId: 1 }),
+      ).toBeTruthy()
     })
   })
 })

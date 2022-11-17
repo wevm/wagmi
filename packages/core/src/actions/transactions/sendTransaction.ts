@@ -1,13 +1,11 @@
-import { providers } from 'ethers'
+import type { Address } from 'abitype'
+import type { providers } from 'ethers'
 
-import {
-  ChainMismatchError,
-  ConnectorNotFoundError,
-  ProviderRpcError,
-  UserRejectedRequestError,
-} from '../../errors'
-import { Address, Signer } from '../../types'
-import { fetchSigner, getNetwork } from '../accounts'
+import type { ProviderRpcError } from '../../errors'
+import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
+import type { Hash, Signer } from '../../types'
+import { assertActiveChain } from '../../utils'
+import { fetchSigner } from '../accounts'
 
 export type SendTransactionPreparedRequest = {
   /**
@@ -37,7 +35,7 @@ export type SendTransactionArgs = {
 } & (SendTransactionPreparedRequest | SendTransactionUnpreparedRequest)
 
 export type SendTransactionResult = {
-  hash: providers.TransactionResponse['hash']
+  hash: Hash
   wait: providers.TransactionResponse['wait']
 }
 
@@ -78,17 +76,7 @@ export async function sendTransaction({
     if (!request.to) throw new Error('`to` is required')
   }
 
-  const { chain: activeChain, chains } = getNetwork()
-  const activeChainId = activeChain?.id
-  if (chainId && chainId !== activeChain?.id) {
-    throw new ChainMismatchError({
-      activeChain:
-        chains.find((x) => x.id === activeChainId)?.name ??
-        `Chain ${activeChainId}`,
-      targetChain:
-        chains.find((x) => x.id === chainId)?.name ?? `Chain ${chainId}`,
-    })
-  }
+  if (chainId) assertActiveChain({ chainId, signer })
 
   try {
     // Why don't we just use `signer.sendTransaction`?
@@ -99,9 +87,9 @@ export async function sendTransaction({
     // when using it in a click handler (iOS deep linking issues,
     // delay to open wallet, etc).
 
-    const uncheckedSigner = (<providers.JsonRpcSigner>(
-      signer
-    )).connectUnchecked?.()
+    const uncheckedSigner = (
+      signer as providers.JsonRpcSigner
+    ).connectUnchecked?.()
     const { hash, wait } = await (uncheckedSigner ?? signer).sendTransaction(
       request,
     )
@@ -111,9 +99,9 @@ export async function sendTransaction({
     /** Go nuts!                                                        */
     /********************************************************************/
 
-    return { hash, wait }
+    return { hash: hash as Hash, wait }
   } catch (error) {
-    if ((<ProviderRpcError>error).code === 4001)
+    if ((error as ProviderRpcError).code === 4001)
       throw new UserRejectedRequestError(error)
     throw error
   }

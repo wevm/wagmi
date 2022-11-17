@@ -1,13 +1,14 @@
-import {
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import { QueryClient } from '@tanstack/react-query'
+import type { Persister } from '@tanstack/react-query-persist-client'
+import { persistQueryClient } from '@tanstack/react-query-persist-client'
+import type {
   ClientConfig,
   Client as CoreClient,
   Provider,
   WebSocketProvider,
-  createClient as createCoreClient,
 } from '@wagmi/core'
-import { QueryClient } from 'react-query'
-import { createWebStoragePersister } from 'react-query/createWebStoragePersister'
-import { Persister, persistQueryClient } from 'react-query/persistQueryClient'
+import { createClient as createCoreClient } from '@wagmi/core'
 
 import { deserialize, serialize } from './utils'
 
@@ -36,7 +37,7 @@ export function createClient<
     },
   }),
   persister = typeof window !== 'undefined'
-    ? createWebStoragePersister({
+    ? createSyncStoragePersister({
         key: 'wagmi.cache',
         storage: window.localStorage,
         serialize,
@@ -51,7 +52,11 @@ export function createClient<
       queryClient,
       persister,
       dehydrateOptions: {
-        shouldDehydrateQuery: (query) => query.cacheTime !== 0,
+        shouldDehydrateQuery: (query) =>
+          query.cacheTime !== 0 &&
+          // Note: adding a `persist` flag to a query key will instruct the
+          // persister whether or not to persist the response of the query.
+          (query.queryKey[0] as { persist?: boolean }).persist !== false,
       },
     })
   return Object.assign(client, { queryClient })

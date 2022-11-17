@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getWebSocketProvider, renderHook, setupClient } from '../../../test'
-import { Client } from '../../client'
+import type { Client } from '../../client'
 import { useWebSocketProvider } from './useWebSocketProvider'
 
 describe('useWebSocketProvider', () => {
@@ -17,7 +17,7 @@ describe('useWebSocketProvider', () => {
       initialProps: { client },
     })
     expect(result.current).toMatchInlineSnapshot(
-      `"<WebSocketProvider network={31337} />"`,
+      '"<WebSocketProvider network={1} />"',
     )
   })
 

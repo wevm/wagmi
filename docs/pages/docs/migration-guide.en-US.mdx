@@ -3,11 +3,259 @@ title: 'Migration Guide'
 description: 'Guide for how to migrate to new versions of wagmi'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 # Migration Guide
 
-If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following hooks & API's listed below.
+If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
+
+## 0.8.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.7.x` docs
+  [here](https://0.7.x.wagmi.sh).
+</Callout>
+
+### CommonJS Support Dropped
+
+wagmi no longer supports CommonJS and only supports [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). If you are using modern tooling, like [Next.js](https://nextjs.org), [Vite](https://vitejs.dev), or [Vitest](https://vitest.dev), you likely don't need to do anything! [Remix](https://remix.run/docs/en/v1/pages/gotchas#importing-esm-packages) and [Jest](https://jestjs.io/docs/ecmascript-modules) require some additional configuration. Check out [this guide](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) for more info on ESM support and Frequently Asked Questions across various tools and setups.
+
+### Deprecated chains removed
+
+Removed the following deprecated chains:
+
+- `ropsten`
+- `rinkeby`
+- `kovan`
+- `optimismKovan`
+- `arbitrumRinkeby`
+
+If you feel you still need to include one of these testnets in your application, you will have to define it manually:
+
+```diff
+-import { chain } from 'wagmi'
++import { Chain } from 'wagmi'
+
+-export const rinkeby = chain.rinkeby
++export const rinkeby: Chain = {
++ id: 4,
++ name: 'Rinkeby',
++ network: 'rinkeby',
++ nativeCurrency: { name: 'Rinkeby Ether', symbol: 'ETH', decimals: 18 },
++ rpcUrls: {
++   alchemy: 'https://eth-rinkeby.alchemyapi.io/v2',
++   default: 'https://rpc.ankr.com/eth_rinkeby',
++   infura: 'https://rinkeby.infura.io/v3',
++   public: 'https://rpc.ankr.com/eth_rinkeby',
++  },
++ blockExplorers: {
++   etherscan: 'https://rinkeby.etherscan.io',
++   default: 'https://rinkeby.etherscan.io',
++ },
++ ens: {
++   address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
++ },
++ multicall: {
++   address: '0xca11bde05977b3631167028862be2a173976ca11',
++   blockCreated: 10299530,
++ },
++ testnet: true,
+}
+```
+
+You can reference these removed chains [here](https://github.com/wagmi-dev/wagmi/blob/389765f7d9af063ab0df07389a2bbfbc10a41060/packages/core/src/constants/chains.ts).
+
+### `alchemyProvider`
+
+Made `apiKey` required on `alchemyProvider`.
+
+```diff
+import { configureChains } from 'wagmi'
+
+const config = configureChains(defaultChains, [
+- alchemyProvider(),
++ alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY })
+])
+```
+
+You can find your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/), or your Infura API key from the [Infura Dashboard](https://infura.io/login).
+
+### `infuraProvider`
+
+Made `apiKey` required on `infuraProvider`.
+
+```diff
+import { configureChains } from 'wagmi'
+
+const config = configureChains(defaultChains, [
+- infuraProvider(),
++ infuraProvider({ apiKey: process.env.INFURA_API_KEY })
+])
+```
+
+You can find your Infura API key from the [Infura Dashboard](https://infura.io/login), or your Infura API key from the [Infura Dashboard](https://infura.io/login).
+
+### `useBalance`
+
+#### Configuration changes
+
+`addressOrName` renamed to `address`.
+
+```diff
+const result = useBalance({
+- addressOrName: '0x…',
++ address: '0x…',
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action. This allows the ENS-to-address resolution to be cached instead of being wasted work before.
+
+```diff
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
+const result = useBalance({
+- addressOrName: 'example.eth',
++ address,
+})
+```
+
+### `useEnsAvatar`
+
+#### Configuration changes
+
+`addressOrName` renamed to `address`.
+
+```diff
+const result = useEnsAvatar({
+- addressOrName: '0x…',
++ address: '0x…',
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action. This allows the ENS-to-address resolution to be cached instead of being wasted work before.
+
+```diff
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
+const result = useEnsAvatar({
+- addressOrName: 'example.eth',
++ address,
+})
+```
+
+## 0.7.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.6.x` docs
+  [here](https://0.6.x.wagmi.sh).
+</Callout>
+
+### Upgrade to `typescript@>=4.7.4`
+
+wagmi can now infer types based on [ABI](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions, giving you full end-to-end type-safety from your contracts to your frontend and incredible developer experience (e.g. autocomplete ABI function names and catch misspellings, type ABI function arguments, etc.).
+
+For this to work, you must upgrade to `typescript@>=4.7.4`. Why is TypeScript v4.7.4 or greater necessary? TypeScript 4.7.4 introduced the ability
+to [extend constraints on inferred type variables](https://devblogs.microsoft.com/typescript/announcing-typescript-4-7/#extends-constraints-on-infer-type-variables), which is used extensively to help narrow types for ABIs. Good news! When upgrading TypeScript from 4.6 to 4.7 there are likely no [breaking changes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-7.html#breaking-changes) for your set up.
+
+See the wagmi [TypeScript docs](/docs/typescript) for more information on TypeScript support in this version.
+
+<Callout type="info">
+  When switching over to inferring types based on your ABIs, you may notice
+  TypeScript complaining about types that worked fine before. For example, `Type
+  'string' is not assignable to type 'BigNumber'`. Previously, you were able to
+  use `string` types in place of `BigNumber` types, `BigNumber` types in place
+  of `number` types, etc.
+  <div />
+  The types inferred directly from ABIs are more correct and strict so you will
+  need to convert your types to match. This should be pretty straightforward by
+  following the error from TypeScript. Based on the error above, `args: ['123']`
+  should be updated to `args: [BigNumber.from('123')]`.
+</Callout>
+
+### `addressOrName` and `contractInterface` renamed for contract hooks
+
+`addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for the following contract hooks: `useContract`, `useContractEvent`, `useContractRead`, `useContractReads`, `useContractInfiniteReads`, `useContractWrite`, and `usePrepareContractWrite`.
+
+```diff
+import { useContractRead } from 'wagmi'
+const result = useContractRead({
+- addressOrName: '0x…',
++ address: '0x…',
+- contractInterface: […],
++ abi: […],
+  functionName: 'balanceOf',
+  args: ['0x…'],
+})
+```
+
+If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+```diff
+- import { useContractRead } from 'wagmi'
++ import { useContractRead, useEnsAddress } from 'wagmi'
++ const { data: address } = useEnsAddress({ name: 'example.eth' })
+const result = useContractRead({
+- addressOrName: 'example.eth',
++ address,
+  abi: […],
+  functionName: 'balanceOf',
+  args: ['0x…'],
+})
+```
+
+### `args` type changed for contract hooks
+
+`args` config option must now be an array for the following hooks: `useContractRead`, `useContractWrite`, `usePrepareContractWrite`, `useContractReads`, and `useContractInfiniteReads`.
+
+```diff
+const { data } = useContractRead({
+  address: '0x…',
+  abi: […],
+  functionName: 'balanceOf',
+- args: '0x…',
++ args: ['0x…'],
+})
+```
+
+### `useContractEvent`
+
+#### Configuration changes
+
+`signerOrProvider` was removed.
+
+### useContractInfiniteReads
+
+#### Configuration changes
+
+Updated `paginatedIndexesConfig` `fn` parameter return type. `fn` now returns an array instead of a single object.
+
+```diff
+useContractInfiniteReads({
+  cacheKey: 'contracts',
+  ...paginatedIndexesConfig(
+-    (index) => ({
++    (index) => [{
+      address: '0x…',
+      abi: […],
+      functionName: 'tokenURI',
+      args: [BigNumber.from(index)] as const,
+-    }),
++    }],
+    { start: 0, perPage: 10, direction: 'increment' },
+  ),
+})
+```
+
+### `usePrepareContractWrite`
+
+#### Behavioral changes
+
+Throws an error when a `chainId` is specified and the end-user is on a different chain id (the wrong network). If you wish to defer this check until the click handler is pressed, you can place the `chainId` in `useContractWrite` instead.
+
+### `usePrepareSendTransaction`
+
+#### Behavioral changes
+
+- The `usePrepareSendTransaction` hook will now only run when the end-user is connected to their wallet. This is to reach parity with `usePrepareContractWrite`. If the end-user is not connected, then the `usePrepareSendTransaction` hook will remain idle.
+- Throws an error when a `chainId` is specified and the end-user is on a different chain id (the wrong network). If you wish to defer this check until the click handler is pressed, you can place `chainId` in `useContractWrite` instead.
 
 ## 0.6.x Breaking changes
 
@@ -30,7 +278,7 @@ All the breaking changes in this release are related to the introduction of [Pre
 
 If a `chainId` is passed to `useContractWrite`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -141,7 +389,7 @@ const { write } = useContractWrite(config)
 
 If a `chainId` is passed to `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 

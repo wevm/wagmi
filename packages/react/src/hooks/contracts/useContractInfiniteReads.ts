@@ -1,96 +1,116 @@
-import {
-  ReadContractResult,
-  ReadContractsConfig,
-  deepEqual,
-  readContracts,
-} from '@wagmi/core'
+import { replaceEqualDeep } from '@tanstack/react-query'
+import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
+import { deepEqual, readContracts } from '@wagmi/core'
+import type { ContractsConfig } from '@wagmi/core/internal'
+import type { Abi } from 'abitype'
 import * as React from 'react'
 
-import { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
+import type { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
+import type { UseInfiniteQueryResult } from '../utils'
 import { useInfiniteQuery } from '../utils'
 
-export type UseContractInfiniteReadsConfig<TPageParam = any> =
-  InfiniteQueryConfig<ReadContractResult, Error> &
-    Omit<ReadContractsConfig, 'contracts'> & {
-      cacheKey: string
-      contracts: (pageParam: TPageParam) => ReadContractsConfig['contracts']
-    }
+export type UseContractInfiniteReadsConfig<
+  TContracts extends unknown[] = unknown[],
+  TPageParam = unknown,
+> = Pick<ReadContractsConfig<TContracts>, 'allowFailure' | 'overrides'> & {
+  cacheKey: string
+  contracts(pageParam: TPageParam): readonly [
+    ...ContractsConfig<
+      TContracts,
+      {
+        /** Chain id to use for provider */
+        chainId?: number
+      }
+    >,
+  ]
+} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error>
 
-export const paginatedIndexesConfig = (
-  fn: (index: number) => ReadContractsConfig['contracts'][0],
-  {
-    perPage,
-    start,
-    direction,
-  }: { perPage: number; start: number; direction: 'increment' | 'decrement' },
-): Pick<
-  UseContractInfiniteReadsConfig<number>,
-  'contracts' | 'getNextPageParam'
-> => {
-  return {
-    getNextPageParam: (lastPage, pages) =>
-      lastPage?.length === perPage ? pages.length : undefined,
-    contracts: (page = 0) =>
-      [...Array(perPage).keys()]
-        .map((index) => {
-          return direction === 'increment'
-            ? start + index + page * perPage
-            : start - index - page * perPage
-        })
-        .filter((index) => index >= 0)
-        .map(fn),
-  }
+type QueryKeyArgs = {
+  allowFailure: UseContractInfiniteReadsConfig['allowFailure']
+  cacheKey: UseContractInfiniteReadsConfig['cacheKey']
+  overrides: UseContractInfiniteReadsConfig['overrides']
 }
+type QueryKeyConfig = Pick<UseContractInfiniteReadsConfig, 'scopeKey'>
 
-export const queryKey = ([{ cacheKey, overrides }]: [
-  {
-    cacheKey: UseContractInfiniteReadsConfig['cacheKey']
-    overrides: UseContractInfiniteReadsConfig['overrides']
-  },
-]) =>
-  [
+function queryKey({
+  allowFailure,
+  cacheKey,
+  overrides,
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
     {
       entity: 'readContractsInfinite',
+      allowFailure,
       cacheKey,
       overrides,
+      scopeKey,
     },
   ] as const
+}
 
-const queryFn =
-  <TPageParam>({
-    contracts,
-  }: {
-    contracts: UseContractInfiniteReadsConfig<TPageParam>['contracts']
-  }) =>
-  ({
-    queryKey: [{ overrides }],
+function queryFn<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends {
+    abi: TAbi
+    functionName: TFunctionName
+  }[],
+  TPageParam = unknown,
+>({
+  contracts,
+}: {
+  contracts: UseContractInfiniteReadsConfig<TContracts, TPageParam>['contracts']
+}) {
+  return ({
+    queryKey: [{ allowFailure, overrides }],
     pageParam,
   }: QueryFunctionArgs<typeof queryKey>) => {
     return readContracts({
+      allowFailure,
       contracts: contracts(pageParam || undefined),
       overrides,
     })
   }
+}
 
-export function useContractInfiniteReads<TPageParam = any>({
+export function useContractInfiniteReads<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends {
+    abi: TAbi
+    functionName: TFunctionName
+  }[],
+  TPageParam = any,
+>({
+  allowFailure,
   cacheKey,
   cacheTime,
   contracts,
   enabled: enabled_ = true,
   getNextPageParam,
-  isDataEqual = deepEqual,
+  isDataEqual,
   keepPreviousData,
   onError,
   onSettled,
   onSuccess,
   overrides,
+  scopeKey,
   select,
   staleTime,
+  structuralSharing = (oldData, newData) =>
+    deepEqual(oldData, newData)
+      ? oldData
+      : (replaceEqualDeep(oldData, newData) as any),
   suspense,
-}: UseContractInfiniteReadsConfig<TPageParam>) {
+}: UseContractInfiniteReadsConfig<
+  TContracts,
+  TPageParam
+>): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
+UseInfiniteQueryResult<ReadContractsResult<TContracts>, Error> {
   const queryKey_ = React.useMemo(
-    () => queryKey([{ cacheKey, overrides }]),
-    [cacheKey, overrides],
+    () => queryKey({ allowFailure, cacheKey, overrides, scopeKey }),
+    [allowFailure, cacheKey, overrides, scopeKey],
   )
 
   const enabled = React.useMemo(() => {
@@ -106,9 +126,49 @@ export function useContractInfiniteReads<TPageParam = any>({
     keepPreviousData,
     select,
     staleTime,
+    structuralSharing,
     suspense,
     onError,
     onSettled,
     onSuccess,
   })
+}
+
+// TODO: Fix return type inference for `useContractInfiniteReads` when using `paginatedIndexesConfig`
+export function paginatedIndexesConfig<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends {
+    abi: TAbi
+    functionName: TFunctionName
+  }[],
+>(
+  fn: UseContractInfiniteReadsConfig<TContracts>['contracts'],
+  {
+    perPage,
+    start,
+    direction,
+  }: { perPage: number; start: number; direction: 'increment' | 'decrement' },
+): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
+{
+  contracts: UseContractInfiniteReadsConfig<TContracts>['contracts']
+  getNextPageParam: InfiniteQueryConfig<unknown[], Error>['getNextPageParam']
+} {
+  const contracts = ((page = 0) =>
+    [...Array(perPage).keys()]
+      .map((index) => {
+        return direction === 'increment'
+          ? start + index + page * perPage
+          : start - index - page * perPage
+      })
+      .filter((index) => index >= 0)
+      .map(fn)
+      .flat()) as unknown as typeof fn
+
+  return {
+    contracts,
+    getNextPageParam(lastPage: unknown[], pages: unknown[]) {
+      return lastPage?.length === perPage ? pages.length : undefined
+    },
+  }
 }

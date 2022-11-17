@@ -1,36 +1,1289 @@
-// https://ethereum.org/en/developers/docs/standards/tokens/erc-20
+/**
+ * [ERC-20 Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20)
+ */
 export const erc20ABI = [
-  'event Approval(address indexed _owner, address indexed _spender, uint256 _value)',
-  'event Transfer(address indexed _from, address indexed _to, uint256 _value)',
-  'function allowance(address _owner, address _spender) public view returns (uint256 remaining)',
-  'function approve(address _spender, uint256 _value) public returns (bool success)',
-  'function balanceOf(address _owner) public view returns (uint256 balance)',
-  'function decimals() public view returns (uint8)',
-  'function name() public view returns (string)',
-  'function symbol() public view returns (string)',
-  'function totalSupply() public view returns (uint256)',
-  'function transfer(address _to, uint256 _value) public returns (bool success)',
-  'function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)',
-]
+  {
+    type: 'event',
+    name: 'Approval',
+    inputs: [
+      {
+        indexed: true,
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'event',
+    name: 'Transfer',
+    inputs: [
+      {
+        indexed: true,
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'to',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'allowance',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        name: 'spender',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'approve',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'balanceOf',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'decimals',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint8',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'name',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'symbol',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'totalSupply',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'transfer',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'transferFrom',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+] as const
 
-// https://ethereum.org/en/developers/docs/standards/tokens/erc-721
+/**
+ * [bytes32-flavored ERC-20](https://docs.makerdao.com/smart-contract-modules/mkr-module#4.-gotchas-potential-source-of-user-error)
+ * for tokens (ie. Maker) that use bytes32 instead of string.
+ */
+export const erc20ABI_bytes32 = [
+  {
+    type: 'event',
+    name: 'Approval',
+    inputs: [
+      {
+        indexed: true,
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'event',
+    name: 'Transfer',
+    inputs: [
+      {
+        indexed: true,
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'to',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'allowance',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        name: 'spender',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'approve',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'balanceOf',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'decimals',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint8',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'name',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'symbol',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'totalSupply',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'transfer',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'transferFrom',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+] as const
+
+/**
+ * [ERC-721 Non-Fungible Token Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-721)
+ */
 export const erc721ABI = [
-  'event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId)',
-  'event ApprovalForAll(address indexed _owner, address indexed _operator, bool _approved)',
-  'event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId)',
-  'function approve(address _approved, uint256 _tokenId) external payable',
-  'function balanceOf(address _owner) external view returns (uint256)',
-  'function getApproved(uint256 _tokenId) external view returns (address)',
-  'function isApprovedForAll(address _owner, address _operator) external view returns (bool)',
-  'function name() view returns (string memory)',
-  'function ownerOf(uint256 _tokenId) external view returns (address)',
-  'function safeTransferFrom(address _from, address _to, uint256 _tokenId) external payable',
-  'function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes data) external payable',
-  'function setApprovalForAll(address _operator, bool _approved) external',
-  'function symbol() view returns (string memory)',
-  'function tokenByIndex(uint256 _index) view returns (uint256)',
-  'function tokenOfOwnerByIndex(address _owner, uint256 _index) view returns (uint256 tokenId)',
-  'function tokenURI(uint256 _tokenId) view returns (string memory)',
-  'function totalSupply() view returns (uint256)',
-  'function transferFrom(address _from, address _to, uint256 _tokenId) external payable',
-]
+  {
+    type: 'event',
+    name: 'Approval',
+    inputs: [
+      {
+        indexed: true,
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'event',
+    name: 'ApprovalForAll',
+    inputs: [
+      {
+        indexed: true,
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'approved',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    type: 'event',
+    name: 'Transfer',
+    inputs: [
+      {
+        indexed: true,
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'to',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'approve',
+    stateMutability: 'payable',
+    inputs: [
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    type: 'function',
+    name: 'balanceOf',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'getApproved',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'isApprovedForAll',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        name: 'operator',
+        type: 'address',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'name',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'ownerOf',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'safeTransferFrom',
+    stateMutability: 'payable',
+    inputs: [
+      {
+        name: 'from',
+        type: 'address',
+      },
+      {
+        name: 'to',
+        type: 'address',
+      },
+      {
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    type: 'function',
+    name: 'safeTransferFrom',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'from',
+        type: 'address',
+      },
+      {
+        name: 'to',
+        type: 'address',
+      },
+      {
+        name: 'id',
+        type: 'uint256',
+      },
+      {
+        name: 'data',
+        type: 'bytes',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    type: 'function',
+    name: 'setApprovalForAll',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        name: 'approved',
+        type: 'bool',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    type: 'function',
+    name: 'symbol',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'tokenByIndex',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'tokenByIndex',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'tokenURI',
+    stateMutability: 'view',
+    inputs: [
+      {
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'totalSupply',
+    stateMutability: 'view',
+    inputs: [],
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    type: 'function',
+    name: 'transferFrom',
+    stateMutability: 'payable',
+    inputs: [
+      {
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        name: 'tokeId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+] as const
+
+/**
+ * [Multicall3](https://github.com/mds1/multicall)
+ */
+export const multicallABI = [
+  {
+    inputs: [
+      {
+        components: [
+          {
+            name: 'target',
+            type: 'address',
+          },
+          {
+            name: 'allowFailure',
+            type: 'bool',
+          },
+          {
+            name: 'callData',
+            type: 'bytes',
+          },
+        ],
+        name: 'calls',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'aggregate3',
+    outputs: [
+      {
+        components: [
+          {
+            name: 'success',
+            type: 'bool',
+          },
+          {
+            name: 'returnData',
+            type: 'bytes',
+          },
+        ],
+        name: 'returnData',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+] as const
+
+/**
+ * [ERC-4626 Tokenized Vaults Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-4626)
+ */
+export const erc4626ABI = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+    name: 'Approval',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'receiver',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'assets',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    name: 'Deposit',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'to',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+    name: 'Transfer',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'receiver',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        name: 'assets',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    name: 'Withdraw',
+    type: 'event',
+  },
+  {
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        name: 'spender',
+        type: 'address',
+      },
+    ],
+    name: 'allowance',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'approve',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'asset',
+    outputs: [
+      {
+        name: 'assetTokenAddress',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'balanceOf',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    name: 'convertToAssets',
+    outputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    name: 'convertToShares',
+    outputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+      {
+        name: 'receiver',
+        type: 'address',
+      },
+    ],
+    name: 'deposit',
+    outputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'caller',
+        type: 'address',
+      },
+    ],
+    name: 'maxDeposit',
+    outputs: [
+      {
+        name: 'maxAssets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'caller',
+        type: 'address',
+      },
+    ],
+    name: 'maxMint',
+    outputs: [
+      {
+        name: 'maxShares',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: 'maxRedeem',
+    outputs: [
+      {
+        name: 'maxShares',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: 'maxWithdraw',
+    outputs: [
+      {
+        name: 'maxAssets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+      {
+        name: 'receiver',
+        type: 'address',
+      },
+    ],
+    name: 'mint',
+    outputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    name: 'previewDeposit',
+    outputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    name: 'previewMint',
+    outputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    name: 'previewRedeem',
+    outputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    name: 'previewWithdraw',
+    outputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+      {
+        name: 'receiver',
+        type: 'address',
+      },
+      {
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: 'redeem',
+    outputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalAssets',
+    outputs: [
+      {
+        name: 'totalManagedAssets',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
+      {
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'to',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'transfer',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'from',
+        type: 'address',
+      },
+      {
+        name: 'to',
+        type: 'address',
+      },
+      {
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'transferFrom',
+    outputs: [
+      {
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        name: 'assets',
+        type: 'uint256',
+      },
+      {
+        name: 'receiver',
+        type: 'address',
+      },
+      {
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: 'withdraw',
+    outputs: [
+      {
+        name: 'shares',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+] as const

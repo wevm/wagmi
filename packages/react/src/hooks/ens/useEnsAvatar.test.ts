@@ -8,6 +8,7 @@ import { useEnsAvatar } from './useEnsAvatar'
 
 const handlers = [
   // brantly.eth
+  // 0x983110309620d911731ac0932219af06091b6744
   rest.get(
     'https://wrappedpunks.com:3000/api/punks/metadata/2430',
     (_req, res, ctx) =>
@@ -24,6 +25,7 @@ const handlers = [
       ),
   ),
   // nick.eth
+  // 0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5
   rest.get(
     'https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x11ef687cfeb2e353670479f2dcc76af2bc6b3935000000000002c40000000001',
     (_req, res, ctx) =>
@@ -63,7 +65,7 @@ describe('useEnsAvatar', () => {
 
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
-      useEnsAvatar({ addressOrName: 'nick.eth' }),
+      useEnsAvatar({ address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5' }),
     )
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
@@ -79,6 +81,7 @@ describe('useEnsAvatar', () => {
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
+        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
@@ -91,11 +94,11 @@ describe('useEnsAvatar', () => {
   })
 
   describe('configuration', () => {
-    describe('addressOrName', () => {
+    describe('address', () => {
       it('has avatar', async () => {
         const { result, waitFor } = renderHook(() =>
           useEnsAvatar({
-            addressOrName: 'nick.eth',
+            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
           }),
         )
 
@@ -112,6 +115,7 @@ describe('useEnsAvatar', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -126,7 +130,7 @@ describe('useEnsAvatar', () => {
       it('does not have avatar', async () => {
         const { result, waitFor } = renderHook(() =>
           useEnsAvatar({
-            addressOrName: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
+            address: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
           }),
         )
 
@@ -141,6 +145,7 @@ describe('useEnsAvatar', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -153,10 +158,39 @@ describe('useEnsAvatar', () => {
       })
     })
 
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensAvatar: useEnsAvatar({
+            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+          }),
+          ensAvatarwithoutScopeKey: useEnsAvatar({
+            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            enabled: false,
+          }),
+          ensAvatarwithScopeKey: useEnsAvatar({
+            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.ensAvatar.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensAvatarwithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensAvatarwithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: 'nick.eth',
+          address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
           chainId: 1,
         }),
       )
@@ -172,6 +206,7 @@ describe('useEnsAvatar', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -186,7 +221,7 @@ describe('useEnsAvatar', () => {
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: 'brantly.eth',
+          address: '0x983110309620d911731ac0932219af06091b6744',
           enabled: false,
         }),
       )
@@ -202,6 +237,7 @@ describe('useEnsAvatar', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,
@@ -218,7 +254,7 @@ describe('useEnsAvatar', () => {
     it('refetch', async () => {
       const { result } = renderHook(() =>
         useEnsAvatar({
-          addressOrName: 'nick.eth',
+          address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
           enabled: false,
         }),
       )
@@ -233,7 +269,7 @@ describe('useEnsAvatar', () => {
   })
 
   describe('behavior', () => {
-    it('does nothing when `addressOrName` is missing', async () => {
+    it('does nothing when `address` is missing', async () => {
       const { result, waitFor } = renderHook(() => useEnsAvatar())
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
@@ -247,6 +283,7 @@ describe('useEnsAvatar', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,

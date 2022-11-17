@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest'
 
-import { erc20ABI } from '../../constants'
+import { wagmiContractConfig } from '../../../test'
 import { getContract } from './getContract'
 
 describe('getContract', () => {
   it('default', () => {
-    const result = getContract({
-      addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-      contractInterface: erc20ABI,
+    const contract = getContract({
+      address: wagmiContractConfig.address,
+      abi: wagmiContractConfig.abi,
     })
-    expect(result).toBeDefined()
+    expect(contract).toBeDefined()
   })
 })

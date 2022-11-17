@@ -1,6 +1,6 @@
-import { providers } from 'ethers'
+import type { providers } from 'ethers'
 
-import { Hash } from '../../types'
+import type { Hash } from '../../types'
 import { getProvider } from '../providers'
 
 export type FetchTransactionArgs = {
@@ -28,5 +28,5 @@ export async function fetchTransaction({
   hash,
 }: FetchTransactionArgs): Promise<FetchTransactionResult> {
   const provider = getProvider({ chainId })
-  return await provider.getTransaction(hash)
+  return provider.getTransaction(hash)
 }

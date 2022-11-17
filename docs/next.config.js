@@ -1,8 +1,11 @@
 const withNextra = require('nextra')({
   theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.js',
+  themeConfig: './theme.config.tsx',
   unstable_contentDump: true,
-  unstable_flexsearch: true,
+  unstable_defaultShowCopyCode: true,
+  unstable_flexsearch: {
+    codeblocks: true,
+  },
   unstable_staticImage: true,
 })
 
@@ -25,6 +28,12 @@ const config = {
         destination: '/examples/:path*',
         permanent: true,
       },
+      {
+        source: '/gitcoin',
+        destination:
+          'https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum',
+        permanent: false,
+      },
     ]
   },
   typescript: {
@@ -34,6 +43,9 @@ const config = {
 }
 
 if (process.env.NODE_ENV === 'development') {
+  // We don't use Preconstruct anymore, but the Next.js plugin works great for
+  // development with our custom set up in packages' `tsup.config.ts`.
+  // https://github.com/preconstruct/preconstruct/tree/main/packages/next
   const withPreconstruct = require('@preconstruct/next')
   module.exports = withPreconstruct(withNextra(config))
 } else {

@@ -6,9 +6,7 @@ import { getProvider } from './getProvider'
 describe('getProvider', () => {
   it('default', async () => {
     setupClient()
-    expect(getProvider()).toMatchInlineSnapshot(
-      `"<Provider network={31337} />"`,
-    )
+    expect(getProvider()).toMatchInlineSnapshot('"<Provider network={1} />"')
   })
 
   describe('args', () => {
@@ -17,6 +15,15 @@ describe('getProvider', () => {
       expect(getProvider({ chainId: 1 })).toMatchInlineSnapshot(
         `"<Provider network={1} />"`,
       )
+    })
+  })
+
+  describe('behavior', () => {
+    it('referentially equal', async () => {
+      setupClient()
+      expect(
+        getProvider({ chainId: 1 }) === getProvider({ chainId: 1 }),
+      ).toBeTruthy()
     })
   })
 })

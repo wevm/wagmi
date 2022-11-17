@@ -1,13 +1,13 @@
+import { QueryClient } from '@tanstack/react-query'
+import type { RenderHookOptions } from '@testing-library/react'
 import {
-  RenderHookOptions,
   renderHook as defaultRenderHook,
   waitFor,
 } from '@testing-library/react'
 import * as React from 'react'
-import { QueryClient } from 'react-query'
 
 import { WagmiConfig } from '../src'
-import { Client } from '../src/client'
+import type { Client } from '../src/client'
 import { setupClient } from './utils'
 
 export const queryClient = new QueryClient({
@@ -77,7 +77,7 @@ export {
   getCrowdfundArgs,
   getProvider,
   getSigners,
-  getTotalSupply,
+  getRandomTokenId,
   getWebSocketProvider,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,

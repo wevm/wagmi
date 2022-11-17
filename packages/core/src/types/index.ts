@@ -1,13 +1,54 @@
-import { Signer as BaseSigner, providers } from 'ethers'
+import type {
+  Address,
+  ResolvedConfig,
+  TypedData,
+  TypedDataDomain,
+  TypedDataToPrimitiveTypes,
+} from 'abitype'
+import type { Signer as BaseSigner, BigNumber, providers } from 'ethers'
 
-import {
+import type {
   BlockExplorer,
   BlockExplorerName,
   RpcProviderName,
   units,
 } from '../constants'
 
-export type Address = `0x${string}`
+declare module 'abitype' {
+  export interface Config {
+    // TODO: Drop `BigNumber` once ethers supports `bigint` natively
+    BigIntType: BigNumber
+    IntType: number
+  }
+}
+
+declare module 'ethers/lib/utils.js' {
+  export function getAddress(address: string): Address
+  export function isAddress(address: string): address is Address
+  export function verifyTypedData<
+    TTypedData extends TypedData,
+    TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
+  >(
+    domain: TypedDataDomain,
+    types: TTypedData,
+    value: TSchema[keyof TSchema] extends infer TValue
+      ? { [x: string]: any } extends TValue
+        ? Record<string, any>
+        : TValue
+      : never,
+    signature:
+      | {
+          r: string
+          s?: string
+          _vs?: string
+          recoveryParam?: number
+          v?: number
+        }
+      | ResolvedConfig['BytesType']
+      | string,
+  ): string
+}
+
 export type Hash = `0x${string}`
 
 export type Chain = {
@@ -33,11 +74,13 @@ export type Chain = {
   }
   /** ENS registry */
   ens?: {
-    address: string
+    address: Address
   }
-  /** Chain multicall contract */
+  /**
+   * Chain [multicall3 contract](https://github.com/mds1/multicall)
+   */
   multicall?: {
-    address: string
+    address: Address
     blockCreated: number
   }
   /** Flag for test networks */
@@ -104,9 +147,9 @@ type WatchAssetParams = {
   type: 'ERC20'
   options: {
     /** Address of token contract */
-    address: string
+    address: Address
     /** Number of token decimals */
-    decimals: number
+    decimals: ResolvedConfig['IntType']
     /** String url of token logo */
     image?: string
     /** A ticker symbol or shorthand, up to 5 characters */
@@ -115,16 +158,24 @@ type WatchAssetParams = {
 }
 
 type InjectedProviderFlags = {
+  isAvalanche?: true
+  isBitKeep?: true
   isBraveWallet?: true
   isCoinbaseWallet?: true
   isExodus?: true
   isFrame?: true
+  isKuCoinWallet?: true
+  isMathWallet?: true
   isMetaMask?: true
+  isOneInchAndroidWallet?: true
+  isOneInchIOSWallet?: true
   isOpera?: true
+  isPortal?: true
   isTally?: true
   isTokenPocket?: true
   isTokenary?: true
   isTrust?: true
+  isTrustWallet?: true
 }
 
 type InjectedProviders = InjectedProviderFlags & {
@@ -161,9 +212,9 @@ export interface Ethereum extends InjectedProviders {
    * EIP-1193: Ethereum Provider JavaScript API
    * https://eips.ethereum.org/EIPS/eip-1193
    */
-  request(args: { method: 'eth_accounts' }): Promise<string[]>
+  request(args: { method: 'eth_accounts' }): Promise<Address[]>
   request(args: { method: 'eth_chainId' }): Promise<string>
-  request(args: { method: 'eth_requestAccounts' }): Promise<string[]>
+  request(args: { method: 'eth_requestAccounts' }): Promise<Address[]>
 
   /**
    * EIP-1474: Remote procedure call specification

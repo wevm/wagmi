@@ -1,14 +1,10 @@
-import {
-  SwitchNetworkArgs,
-  SwitchNetworkResult,
-  switchNetwork,
-} from '@wagmi/core'
+import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
+import { switchNetwork } from '@wagmi/core'
 import * as React from 'react'
-import { useMutation } from 'react-query'
 
 import { useClient } from '../../context'
-import { MutationConfig } from '../../types'
-import { useForceUpdate } from '../utils'
+import type { MutationConfig } from '../../types'
+import { useForceUpdate, useMutation } from '../utils'
 
 export type UseSwitchNetworkArgs = Partial<SwitchNetworkArgs>
 
@@ -61,13 +57,13 @@ export function useSwitchNetwork({
 
   const switchNetwork_ = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
-      mutate(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+      mutate({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs),
     [chainId, mutate],
   )
 
   const switchNetworkAsync_ = React.useCallback(
     (chainId_?: SwitchNetworkArgs['chainId']) =>
-      mutateAsync(<SwitchNetworkArgs>{ chainId: chainId_ ?? chainId }),
+      mutateAsync({ chainId: chainId_ ?? chainId } as SwitchNetworkArgs),
     [chainId, mutateAsync],
   )
 

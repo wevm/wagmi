@@ -1,14 +1,14 @@
 import { Button, Stack, Text } from 'degen'
-import * as React from 'react'
 import {
   useAccount,
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi'
 
 import { PreviewWrapper } from '../core'
-import { Account, WalletSelector } from '../web3'
+import { Account, SwitchNetwork, WalletSelector } from '../web3'
 
 export function ContractWrite() {
   const { isConnected } = useAccount()
@@ -19,8 +19,16 @@ export function ContractWrite() {
     isError: isPrepareError,
     isLoading: isPreparing,
   } = usePrepareContractWrite({
-    addressOrName: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-    contractInterface: ['function mint()'],
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ],
     functionName: 'mint',
   })
   const {
@@ -33,6 +41,7 @@ export function ContractWrite() {
   const { isLoading: isConfirming, isSuccess } = useWaitForTransaction({
     hash: data?.hash,
   })
+  const { chain } = useNetwork()
 
   if (isConnected)
     return (
@@ -40,9 +49,10 @@ export function ContractWrite() {
         <Stack>
           <Account />
           <Button
-            disabled={!write}
+            disabled={isPreparing || isWriteLoading || isConfirming}
             loading={isPreparing || isWriteLoading || isConfirming}
             onClick={() => write?.()}
+            center
             width="full"
           >
             {isConfirming ? 'Minting...' : 'Mint'}
@@ -54,9 +64,14 @@ export function ContractWrite() {
           {isSuccess && (
             <Text>
               Success!{' '}
-              <a href={`https://etherscan.io/tx/${data?.hash}`}>Etherscan</a>
+              <a
+                href={`${chain?.blockExplorers?.default.url}/tx/${data?.hash}`}
+              >
+                Etherscan
+              </a>
             </Text>
           )}
+          <SwitchNetwork />
         </Stack>
       </PreviewWrapper>
     )

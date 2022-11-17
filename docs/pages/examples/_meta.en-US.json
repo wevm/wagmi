@@ -1,0 +1,9 @@
+{
+  "connect-wallet": "Connect Wallet",
+  "send-transaction": "Send Transaction",
+  "contract-write": "Contract Write",
+  "contract-write-dynamic": "Contract Write (Dynamic Args)",
+  "sign-message": "Sign Message",
+  "sign-in-with-ethereum": "Sign-In with Ethereum",
+  "custom-connector": "Create Custom Connector"
+}

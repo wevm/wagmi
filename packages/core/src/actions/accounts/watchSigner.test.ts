@@ -15,7 +15,7 @@ describe('watchSigner', () => {
     const client = setupClient()
 
     let counter = 0
-    const unsubscribe = watchSigner((data) => {
+    const unsubscribe = watchSigner({}, (data) => {
       if (counter === 0)
         expect(data).toMatchInlineSnapshot(`
           WalletSigner {
@@ -23,7 +23,7 @@ describe('watchSigner', () => {
             "_mnemonic": [Function],
             "_signingKey": [Function],
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "provider": "<Provider network={31337} />",
+            "provider": "<Provider network={1} />",
           }
         `)
       else if (counter === 1) expect(data).toMatchInlineSnapshot(`null`)
@@ -39,7 +39,7 @@ describe('watchSigner', () => {
     const client = setupClient()
 
     let counter = 0
-    const unwatch = watchSigner((data) => {
+    const unwatch = watchSigner({}, (data) => {
       if (counter === 0)
         expect(data).toMatchInlineSnapshot(`
           WalletSigner {
@@ -47,7 +47,7 @@ describe('watchSigner', () => {
             "_mnemonic": [Function],
             "_signingKey": [Function],
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "provider": "<Provider network={31337} />",
+            "provider": "<Provider network={1} />",
           }
         `)
       else if (counter === 1)
@@ -57,7 +57,7 @@ describe('watchSigner', () => {
             "_mnemonic": [Function],
             "_signingKey": [Function],
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "provider": "<Provider network={31337} />",
+            "provider": "<Provider network={1} />",
           }
         `)
       counter += 1

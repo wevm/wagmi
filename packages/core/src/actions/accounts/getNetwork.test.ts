@@ -55,10 +55,7 @@ describe('getNetwork', () => {
             },
             "network": "homestead",
             "rpcUrls": {
-              "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-              "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              "infura": "https://mainnet.infura.io/v3",
-              "public": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+              "default": "http://127.0.0.1:8545",
             },
             "unsupported": false,
           },
@@ -91,78 +88,10 @@ describe('getNetwork', () => {
               "network": "homestead",
               "rpcUrls": {
                 "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-                "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "default": "https://cloudflare-eth.com",
                 "infura": "https://mainnet.infura.io/v3",
-                "public": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "public": "https://cloudflare-eth.com",
               },
-            },
-            {
-              "blockExplorers": {
-                "default": {
-                  "name": "Etherscan",
-                  "url": "https://ropsten.etherscan.io",
-                },
-                "etherscan": {
-                  "name": "Etherscan",
-                  "url": "https://ropsten.etherscan.io",
-                },
-              },
-              "ens": {
-                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
-              },
-              "id": 3,
-              "multicall": {
-                "address": "0xca11bde05977b3631167028862be2a173976ca11",
-                "blockCreated": 12063863,
-              },
-              "name": "Ropsten",
-              "nativeCurrency": {
-                "decimals": 18,
-                "name": "Ropsten Ether",
-                "symbol": "ROP",
-              },
-              "network": "ropsten",
-              "rpcUrls": {
-                "alchemy": "https://eth-ropsten.alchemyapi.io/v2",
-                "default": "https://eth-ropsten.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-                "infura": "https://ropsten.infura.io/v3",
-                "public": "https://eth-ropsten.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              },
-              "testnet": true,
-            },
-            {
-              "blockExplorers": {
-                "default": {
-                  "name": "Etherscan",
-                  "url": "https://rinkeby.etherscan.io",
-                },
-                "etherscan": {
-                  "name": "Etherscan",
-                  "url": "https://rinkeby.etherscan.io",
-                },
-              },
-              "ens": {
-                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
-              },
-              "id": 4,
-              "multicall": {
-                "address": "0xca11bde05977b3631167028862be2a173976ca11",
-                "blockCreated": 10299530,
-              },
-              "name": "Rinkeby",
-              "nativeCurrency": {
-                "decimals": 18,
-                "name": "Rinkeby Ether",
-                "symbol": "RIN",
-              },
-              "network": "rinkeby",
-              "rpcUrls": {
-                "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-                "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-                "infura": "https://rinkeby.infura.io/v3",
-                "public": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              },
-              "testnet": true,
             },
             {
               "blockExplorers": {
@@ -187,45 +116,14 @@ describe('getNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Goerli Ether",
-                "symbol": "GOR",
+                "symbol": "ETH",
               },
               "network": "goerli",
               "rpcUrls": {
                 "alchemy": "https://eth-goerli.alchemyapi.io/v2",
-                "default": "https://eth-goerli.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "default": "https://rpc.ankr.com/eth_goerli",
                 "infura": "https://goerli.infura.io/v3",
-                "public": "https://eth-goerli.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              },
-              "testnet": true,
-            },
-            {
-              "blockExplorers": {
-                "default": {
-                  "name": "Etherscan",
-                  "url": "https://kovan.etherscan.io",
-                },
-                "etherscan": {
-                  "name": "Etherscan",
-                  "url": "https://kovan.etherscan.io",
-                },
-              },
-              "id": 42,
-              "multicall": {
-                "address": "0xca11bde05977b3631167028862be2a173976ca11",
-                "blockCreated": 30285908,
-              },
-              "name": "Kovan",
-              "nativeCurrency": {
-                "decimals": 18,
-                "name": "Kovan Ether",
-                "symbol": "KOV",
-              },
-              "network": "kovan",
-              "rpcUrls": {
-                "alchemy": "https://eth-kovan.alchemyapi.io/v2",
-                "default": "https://eth-kovan.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-                "infura": "https://kovan.infura.io/v3",
-                "public": "https://eth-kovan.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "public": "https://rpc.ankr.com/eth_goerli",
               },
               "testnet": true,
             },
@@ -236,7 +134,7 @@ describe('getNetwork', () => {
 
     it('unsupported chain', async () => {
       await connect({
-        chainId: 69,
+        chainId: 10,
         connector: new MockConnector({
           options: {
             signer: getSigners()[0]!,
@@ -249,32 +147,31 @@ describe('getNetwork', () => {
             "blockExplorers": {
               "default": {
                 "name": "Etherscan",
-                "url": "https://kovan-optimistic.etherscan.io",
+                "url": "https://optimistic.etherscan.io",
               },
               "etherscan": {
                 "name": "Etherscan",
-                "url": "https://kovan-optimistic.etherscan.io",
+                "url": "https://optimistic.etherscan.io",
               },
             },
-            "id": 69,
+            "id": 10,
             "multicall": {
               "address": "0xca11bde05977b3631167028862be2a173976ca11",
-              "blockCreated": 1418387,
+              "blockCreated": 4286263,
             },
-            "name": "Optimism Kovan",
+            "name": "Optimism",
             "nativeCurrency": {
               "decimals": 18,
-              "name": "Kovan Ether",
-              "symbol": "KOR",
+              "name": "Ether",
+              "symbol": "ETH",
             },
-            "network": "optimism-kovan",
+            "network": "optimism",
             "rpcUrls": {
-              "alchemy": "https://opt-kovan.g.alchemy.com/v2",
-              "default": "https://kovan.optimism.io",
-              "infura": "https://optimism-kovan.infura.io/v3",
-              "public": "https://kovan.optimism.io",
+              "alchemy": "https://opt-mainnet.g.alchemy.com/v2",
+              "default": "https://mainnet.optimism.io",
+              "infura": "https://optimism-mainnet.infura.io/v3",
+              "public": "https://mainnet.optimism.io",
             },
-            "testnet": true,
             "unsupported": true,
           },
           "chains": [
@@ -306,78 +203,10 @@ describe('getNetwork', () => {
               "network": "homestead",
               "rpcUrls": {
                 "alchemy": "https://eth-mainnet.alchemyapi.io/v2",
-                "default": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "default": "https://cloudflare-eth.com",
                 "infura": "https://mainnet.infura.io/v3",
-                "public": "https://eth-mainnet.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "public": "https://cloudflare-eth.com",
               },
-            },
-            {
-              "blockExplorers": {
-                "default": {
-                  "name": "Etherscan",
-                  "url": "https://ropsten.etherscan.io",
-                },
-                "etherscan": {
-                  "name": "Etherscan",
-                  "url": "https://ropsten.etherscan.io",
-                },
-              },
-              "ens": {
-                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
-              },
-              "id": 3,
-              "multicall": {
-                "address": "0xca11bde05977b3631167028862be2a173976ca11",
-                "blockCreated": 12063863,
-              },
-              "name": "Ropsten",
-              "nativeCurrency": {
-                "decimals": 18,
-                "name": "Ropsten Ether",
-                "symbol": "ROP",
-              },
-              "network": "ropsten",
-              "rpcUrls": {
-                "alchemy": "https://eth-ropsten.alchemyapi.io/v2",
-                "default": "https://eth-ropsten.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-                "infura": "https://ropsten.infura.io/v3",
-                "public": "https://eth-ropsten.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              },
-              "testnet": true,
-            },
-            {
-              "blockExplorers": {
-                "default": {
-                  "name": "Etherscan",
-                  "url": "https://rinkeby.etherscan.io",
-                },
-                "etherscan": {
-                  "name": "Etherscan",
-                  "url": "https://rinkeby.etherscan.io",
-                },
-              },
-              "ens": {
-                "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
-              },
-              "id": 4,
-              "multicall": {
-                "address": "0xca11bde05977b3631167028862be2a173976ca11",
-                "blockCreated": 10299530,
-              },
-              "name": "Rinkeby",
-              "nativeCurrency": {
-                "decimals": 18,
-                "name": "Rinkeby Ether",
-                "symbol": "RIN",
-              },
-              "network": "rinkeby",
-              "rpcUrls": {
-                "alchemy": "https://eth-rinkeby.alchemyapi.io/v2",
-                "default": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-                "infura": "https://rinkeby.infura.io/v3",
-                "public": "https://eth-rinkeby.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              },
-              "testnet": true,
             },
             {
               "blockExplorers": {
@@ -402,45 +231,14 @@ describe('getNetwork', () => {
               "nativeCurrency": {
                 "decimals": 18,
                 "name": "Goerli Ether",
-                "symbol": "GOR",
+                "symbol": "ETH",
               },
               "network": "goerli",
               "rpcUrls": {
                 "alchemy": "https://eth-goerli.alchemyapi.io/v2",
-                "default": "https://eth-goerli.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "default": "https://rpc.ankr.com/eth_goerli",
                 "infura": "https://goerli.infura.io/v3",
-                "public": "https://eth-goerli.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-              },
-              "testnet": true,
-            },
-            {
-              "blockExplorers": {
-                "default": {
-                  "name": "Etherscan",
-                  "url": "https://kovan.etherscan.io",
-                },
-                "etherscan": {
-                  "name": "Etherscan",
-                  "url": "https://kovan.etherscan.io",
-                },
-              },
-              "id": 42,
-              "multicall": {
-                "address": "0xca11bde05977b3631167028862be2a173976ca11",
-                "blockCreated": 30285908,
-              },
-              "name": "Kovan",
-              "nativeCurrency": {
-                "decimals": 18,
-                "name": "Kovan Ether",
-                "symbol": "KOV",
-              },
-              "network": "kovan",
-              "rpcUrls": {
-                "alchemy": "https://eth-kovan.alchemyapi.io/v2",
-                "default": "https://eth-kovan.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
-                "infura": "https://kovan.infura.io/v3",
-                "public": "https://eth-kovan.alchemyapi.io/v2/_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+                "public": "https://rpc.ankr.com/eth_goerli",
               },
               "testnet": true,
             },

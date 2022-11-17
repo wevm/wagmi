@@ -1,28 +1,45 @@
+import type { Hash } from '@wagmi/core'
 import { erc20ABI } from '@wagmi/core'
-import { describe, expect, it, vi } from 'vitest'
+import type {
+  Abi,
+  ExtractAbiEventNames,
+  ExtractAbiFunctionNames,
+  ResolvedConfig,
+} from 'abitype'
+import { assertType, describe, expect, it, vi } from 'vitest'
 
-import { act, actConnect, renderHook, wagmiContractConfig } from '../../../test'
-import { useConnect } from '../accounts'
 import {
+  act,
+  actConnect,
+  getRandomTokenId,
+  renderHook,
+  wagmiContractConfig,
+} from '../../../test'
+import { useConnect } from '../accounts'
+import type {
   UseWaitForTransactionArgs,
   UseWaitForTransactionConfig,
-  useWaitForTransaction,
 } from '../transactions/useWaitForTransaction'
-import { UseContractEventConfig, useContractEvent } from './useContractEvent'
-import {
-  UseContractWriteArgs,
-  UseContractWriteConfig,
-  useContractWrite,
-} from './useContractWrite'
+import { useWaitForTransaction } from '../transactions/useWaitForTransaction'
+import type { UseContractEventConfig } from './useContractEvent'
+import { useContractEvent } from './useContractEvent'
+import type { UseContractWriteConfig } from './useContractWrite'
+import { useContractWrite } from './useContractWrite'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
-function useContractEventWithWrite(config: {
+function useContractEventWithWrite<
+  TAbi extends Abi | readonly unknown[],
+  TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
+  TFunctionName extends TAbi extends Abi
+    ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
+    : string,
+>(config: {
   contractEvent: {
-    config: UseContractEventConfig
+    config: UseContractEventConfig<TAbi, TEventName>
   }
   contractWrite: {
-    config: UseContractWriteArgs & UseContractWriteConfig
+    config: UseContractWriteConfig<TAbi, TFunctionName>
   }
   waitForTransaction?: UseWaitForTransactionArgs & UseWaitForTransactionConfig
 }) {
@@ -39,20 +56,43 @@ describe('useContractEvent', () => {
     const listener = vi.fn()
     renderHook(() =>
       useContractEvent({
-        addressOrName: uniContractAddress,
-        contractInterface: erc20ABI,
+        address: uniContractAddress,
+        abi: erc20ABI,
         eventName: 'Transfer',
-        listener,
+        listener(from, to, value) {
+          assertType<ResolvedConfig['AddressType']>(from)
+          assertType<ResolvedConfig['AddressType']>(to)
+          assertType<ResolvedConfig['BigIntType'] | null>(value)
+          listener(from, to, value)
+        },
       }),
     )
     expect(listener).toHaveBeenCalledTimes(0)
   })
 
   describe('configuration', () => {
+    it('address', () => {
+      const listener = vi.fn()
+      renderHook(() =>
+        useContractEvent({
+          abi: erc20ABI,
+          eventName: 'Transfer',
+          listener(from, to, value) {
+            assertType<ResolvedConfig['AddressType']>(from)
+            assertType<ResolvedConfig['AddressType']>(to)
+            assertType<ResolvedConfig['BigIntType'] | null>(value)
+            listener(from, to, value)
+          },
+        }),
+      )
+      expect(listener).toHaveBeenCalledTimes(0)
+    })
+
     describe('once', () => {
       it('listens', async () => {
-        let hash: string | undefined = undefined
+        let hash: Hash | undefined = undefined
 
+        const tokenId = getRandomTokenId()
         const listener = vi.fn()
         const utils = renderHook(() =>
           useContractEventWithWrite({
@@ -60,7 +100,12 @@ describe('useContractEvent', () => {
               config: {
                 ...wagmiContractConfig,
                 eventName: 'Transfer',
-                listener,
+                listener(from, to, value) {
+                  assertType<ResolvedConfig['AddressType']>(from)
+                  assertType<ResolvedConfig['AddressType']>(to)
+                  assertType<ResolvedConfig['BigIntType']>(value)
+                  listener(from, to, value)
+                },
               },
             },
             contractWrite: {
@@ -68,6 +113,7 @@ describe('useContractEvent', () => {
                 mode: 'recklesslyUnprepared',
                 ...wagmiContractConfig,
                 functionName: 'mint',
+                args: [tokenId],
               },
             },
             waitForTransaction: { hash },
@@ -85,9 +131,22 @@ describe('useContractEvent', () => {
         await waitFor(() =>
           expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
         )
-
-        expect(listener).toHaveBeenCalled()
+        await waitFor(() => expect(listener).toHaveBeenCalled())
       })
+    })
+  })
+
+  describe('behavior', () => {
+    it('does not run when property is undefined', async () => {
+      const listener = vi.fn()
+      const config = {
+        abi: erc20ABI,
+        eventName: 'Transfer',
+        listener,
+        once: true,
+      } as const
+      renderHook(() => useContractEvent(config))
+      expect(listener).toHaveBeenCalledTimes(0)
     })
   })
 })

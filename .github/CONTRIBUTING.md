@@ -83,7 +83,7 @@ Once in the project's root directory, run the following command to install the p
 pnpm install
 ```
 
-After the install completes, [Preconstruct](https://github.com/preconstruct/preconstruct) links packages across the project for development and [git hooks](https://github.com/toplenboren/simple-git-hooks) are set up.
+After the install completes, pnpm links packages across the project for development and [git hooks](https://github.com/toplenboren/simple-git-hooks) are set up.
 
 <div align="right">
   <a href="#basic-guide">&uarr; back to top</a></b>
@@ -181,7 +181,7 @@ If your PR is making changes to an area that already has a changeset (e.g. there
 
 ### Releasing
 
-The first time a PR with a changeset is merged after a release, a new PR will automatically be created called `Version Packages`. Any subsequent PRs with changesets will automatically update this existing version packages PR. Merging this PR triggers the release process by publishing to npm and cleaning up the changeset files.
+The first time a PR with a changeset is merged after a release, a new PR will automatically be created called `chore: version packages`. Any subsequent PRs with changesets will automatically update this existing version packages PR. Merging this PR triggers the release process by publishing to npm and cleaning up the changeset files.
 
 ### Creating a snapshot release
 

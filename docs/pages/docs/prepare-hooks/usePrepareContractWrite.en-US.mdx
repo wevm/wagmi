@@ -3,6 +3,8 @@ title: 'usePrepareContractWrite'
 description: 'Hook for preparing a contract write.'
 ---
 
+import { Callout } from 'nextra-theme-docs'
+
 # usePrepareContractWrite
 
 Hook for preparing a contract write to be sent via [`useContractWrite`](/docs/hooks/useContractWrite).
@@ -22,8 +24,8 @@ import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config, error } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
   const { write } = useContractWrite(config)
@@ -41,7 +43,11 @@ function App() {
 }
 ```
 
-Note: The `write` function will be undefined if the config has not been prepared (still in-flight or errored).
+<Callout>
+  Note: The `write` function will be undefined if the config has not been
+  prepared (still in-flight or errored), or the end-user is not connected to a
+  wallet.
+</Callout>
 
 ## Return value
 
@@ -55,6 +61,7 @@ Note: The `write` function will be undefined if the config has not been prepared
   isSuccess: boolean
   isError: boolean
   isFetched: boolean
+  isFetchedAfterMount: boolean
   isRefetching: boolean
   refetch: (options: {
     throwOnError: boolean
@@ -66,49 +73,51 @@ Note: The `write` function will be undefined if the config has not been prepared
 
 ## Configuration
 
-### addressOrName
+### address (optional)
 
-Contract address or ENS name.
+Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 }
 ```
 
-### contractInterface
+### abi (optional)
 
-Contract ABI in JSON or JS object format. An [ethers Interface](https://docs.ethers.io/v5/api/utils/abi/interface) is also allowed.
+Contract ABI. If `abi` is not defined, hook will not run.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {6}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 }
 ```
 
-### functionName
+### functionName (optional)
 
-Name of function to call.
+Name of function to call. If `functionName` is not defined, hook will not run.
 
 ```tsx {7}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
   })
 }
@@ -116,32 +125,58 @@ function App() {
 
 ### args (optional)
 
-Arguments to pass to function call. Accepts `any | any[]`.
+Arguments to pass to function call.
 
-```tsx {8}
+```tsx {16}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+    args: [69],
+  })
+}
+```
+
+### chainId (optional)
+
+Chain ID used to validate if the user is connected to the target chain.
+
+```tsx {9}
+import { usePrepareContractWrite } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
-    args: [],
+    chainId: optimism.id,
   })
 }
 ```
 
 ### overrides (optional)
 
-[Overrides](https://docs.ethers.io/v5/api/contract/contract/#Contract-functionsCall) to pass to function call.
+Overrides to pass to function call. If the function is payable, you can pass a `value` here.
 
 ```tsx {8-11}
 import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     overrides: {
       from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
@@ -160,8 +195,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     cacheTime: 2_000,
   })
@@ -177,10 +212,27 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {7}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    scopeKey: 'wagmi'
+    functionName: 'feed',
   })
 }
 ```
@@ -194,8 +246,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     staleTime: 2_000,
   })
@@ -211,8 +263,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     suspense: true,
   })
@@ -228,8 +280,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     onSuccess(data) {
       console.log('Success', data)
@@ -247,8 +299,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     onError(error) {
       console.log('Error', error)
@@ -266,8 +318,8 @@ import { usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
-    addressOrName: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    contractInterface: wagmigotchiABI,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
     functionName: 'feed',
     onSettled(data, error) {
       console.log('Settled', { data, error })

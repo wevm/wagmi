@@ -1,3 +1,4 @@
+import type { Address } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
 import { act, getSigners, renderHook } from '../../../test'
@@ -22,6 +23,7 @@ describe('useEnsName', () => {
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
+        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
@@ -51,6 +53,7 @@ describe('useEnsName', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -64,7 +67,7 @@ describe('useEnsName', () => {
 
       it('invalid address', async () => {
         const { result, waitFor } = renderHook(() =>
-          useEnsName({ address: '3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj' }),
+          useEnsName({ address: '3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj' as any }),
         )
 
         await waitFor(() => expect(result.current.isError).toBeTruthy())
@@ -74,10 +77,11 @@ describe('useEnsName', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: invalid address (argument="address", value="3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj", code=INVALID_ARGUMENT, version=address/5.6.0)],
+            "error": [Error: invalid address (argument="address", value="3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj", code=INVALID_ARGUMENT, version=address/5.7.0)],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -90,7 +94,7 @@ describe('useEnsName', () => {
       })
 
       it('does not have name', async () => {
-        const address = await getSigners()[0]?.getAddress()
+        const address = (await getSigners()[0]?.getAddress()) as Address
         const { result, waitFor } = renderHook(() => useEnsName({ address }))
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
@@ -99,6 +103,33 @@ describe('useEnsName', () => {
         const { internal, ...res } = result.current
         expect(res.data).toMatchInlineSnapshot(`null`)
       })
+    })
+
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensName: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+          }),
+          ensNamewithoutScopeKey: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+            enabled: false,
+          }),
+          ensNamewithScopeKey: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.ensName.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.ensNamewithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensNamewithScopeKey.isIdle).toBeTruthy(),
+      )
     })
 
     it('chainId', async () => {
@@ -120,6 +151,7 @@ describe('useEnsName', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -150,6 +182,7 @@ describe('useEnsName', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,
@@ -193,6 +226,7 @@ describe('useEnsName', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,

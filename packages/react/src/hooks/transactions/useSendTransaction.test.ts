@@ -1,20 +1,17 @@
-import { TransactionResponse } from '@ethersproject/providers'
+import type { TransactionResponse } from '@ethersproject/providers'
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { parseEther } from 'ethers/lib/utils'
+import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
-import {
-  UsePrepareSendTransactionArgs,
-  UsePrepareSendTransactionConfig,
-  usePrepareSendTransaction,
-} from './usePrepareSendTransaction'
-import {
+import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
+import { usePrepareSendTransaction } from './usePrepareSendTransaction'
+import type {
   UseSendTransactionArgs,
   UseSendTransactionConfig,
-  useSendTransaction,
 } from './useSendTransaction'
+import { useSendTransaction } from './useSendTransaction'
 
 function useSendTransactionWithConnect(
   config: UseSendTransactionArgs & UseSendTransactionConfig,
@@ -26,8 +23,7 @@ function useSendTransactionWithConnect(
 }
 
 function useSendTransactionPreparedWithConnect(
-  config: UsePrepareSendTransactionArgs &
-    UsePrepareSendTransactionConfig & { chainId?: number },
+  config: UsePrepareSendTransactionConfig & { chainId?: number },
 ) {
   const prepareSendTransaction = usePrepareSendTransaction(config)
   return {
@@ -64,7 +60,7 @@ describe('useSendTransaction', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('unable to switch', async () => {
+      it('recklesslyUnprepared - unable to switch', async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
@@ -72,8 +68,9 @@ describe('useSendTransaction', () => {
           },
         })
         const utils = renderHook(() =>
-          useSendTransactionPreparedWithConnect({
+          useSendTransactionWithConnect({
             chainId: 1,
+            mode: 'recklesslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -81,7 +78,7 @@ describe('useSendTransaction', () => {
           }),
         )
         const { result, waitFor } = utils
-        await actConnect({ chainId: 4, connector, utils })
+        await actConnect({ chainId: 5, connector, utils })
 
         await waitFor(() =>
           expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
@@ -96,7 +93,7 @@ describe('useSendTransaction', () => {
         )
 
         expect(result.current.sendTransaction.error).toMatchInlineSnapshot(
-          `[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]`,
+          '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Goerli".]',
         )
       })
     })

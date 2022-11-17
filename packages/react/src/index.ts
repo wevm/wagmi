@@ -1,5 +1,5 @@
 export { createClient } from './client'
-export type { CreateClientConfig } from './client'
+export type { Client, CreateClientConfig } from './client'
 
 export { Context, WagmiConfig, useClient } from './context'
 export type { WagmiConfigProps } from './context'
@@ -16,8 +16,6 @@ export {
   useContractRead,
   useContractReads,
   useContractWrite,
-  useDeprecatedContractWrite,
-  useDeprecatedSendTransaction,
   useDisconnect,
   useEnsAddress,
   useEnsAvatar,
@@ -25,9 +23,11 @@ export {
   useEnsResolver,
   useFeeData,
   useInfiniteQuery,
+  useMutation,
   useNetwork,
   useProvider,
   useQuery,
+  useQueryClient,
   useSendTransaction,
   usePrepareContractWrite,
   usePrepareSendTransaction,
@@ -48,11 +48,13 @@ export {
   ChainDoesNotSupportMulticallError,
   ChainMismatchError,
   ChainNotConfiguredError,
-  Client,
   Connector,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
+  ContractMethodDoesNotExistError,
   ContractMethodNoResultError,
+  ContractMethodRevertedError,
+  ContractResultDecodeError,
   ProviderChainsNotFound,
   ProviderRpcError,
   ResourceUnavailableError,
@@ -71,6 +73,7 @@ export {
   defaultL2Chains,
   erc20ABI,
   erc721ABI,
+  erc4626ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
   publicRpcUrls,
@@ -84,3 +87,5 @@ export type {
   Storage,
   Unit,
 } from '@wagmi/core'
+
+export type { Address } from 'abitype'

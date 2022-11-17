@@ -39,6 +39,7 @@ function App() {
   isSuccess: boolean
   isError: boolean
   isFetched: boolean
+  isFetchedAfterMount: boolean
   isRefetching: boolean
   refetch: (options: {
     throwOnError: boolean
@@ -105,6 +106,21 @@ function App() {
   const ensResolver = useEnsResolver({
     name: 'awkweb.eth',
     enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {6}
+import { useEnsResolver } from 'wagmi'
+
+function App() {
+  const ensResolver = useEnsResolver({
+    name: 'awkweb.eth',
+    scopeKey: 'wagmi',
   })
 }
 ```

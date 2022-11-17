@@ -1,10 +1,11 @@
+import type { Address } from 'abitype'
 import { default as EventEmitter } from 'eventemitter3'
 
 import { defaultChains } from '../constants'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 
 export type ConnectorData<Provider = any> = {
-  account?: string
+  account?: Address
   chain?: { id: number; unsupported: boolean }
   provider?: Provider
 }
@@ -49,7 +50,7 @@ export abstract class Connector<
     chainId?: number
   }): Promise<Required<ConnectorData>>
   abstract disconnect(): Promise<void>
-  abstract getAccount(): Promise<string>
+  abstract getAccount(): Promise<Address>
   abstract getChainId(): Promise<number>
   abstract getProvider(config?: { chainId?: number }): Promise<Provider>
   abstract getSigner(config?: { chainId?: number }): Promise<Signer>
@@ -57,11 +58,12 @@ export abstract class Connector<
   switchChain?(chainId: number): Promise<Chain>
   watchAsset?(asset: {
     address: string
+    decimals?: number
     image?: string
     symbol: string
   }): Promise<boolean>
 
-  protected abstract onAccountsChanged(accounts: string[]): void
+  protected abstract onAccountsChanged(accounts: Address[]): void
   protected abstract onChainChanged(chain: number | string): void
   protected abstract onDisconnect(error: Error): void
 
@@ -73,7 +75,6 @@ export abstract class Connector<
         blockExplorer.url,
         ...Object.values(blockExplorers).map((x) => x.url),
       ]
-    return []
   }
 
   protected isChainUnsupported(chainId: number) {

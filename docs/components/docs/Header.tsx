@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 // eslint-disable-next-line import/no-unresolved
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 import { LogoType } from '../core'
 
@@ -21,18 +21,33 @@ export function Header({ showGitcoinBanner }: Props) {
     <header className="mb-10 flex flex-col items-center">
       {showGitcoinBanner && (
         <div className="mb-4">
-          <Callout emoji="🚀">
-            wagmi is participating in Gitcoin Grant Round 14 until June 23.
-            Please consider supporting development. Funds will be matched with
-            Quadratic Funding. Go{' '}
+          <Callout type="info">
+            wagmi is participating in{' '}
+            <a
+              target="_blank"
+              href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+              rel="noopener noreferrer"
+            >
+              Gitcoin Grant Round 15
+            </a>{' '}
+            until September 22. Contributions are matched with{' '}
+            <a
+              href="https://finematics.com/quadratic-funding-explained"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Quadratic Funding
+            </a>{' '}
+            (e.g. $1 turns into $27). If you find wagmi useful, please consider
+            supporting development{' '}
             <a
               target="_blank"
               href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
               rel="noopener noreferrer"
             >
               here
-            </a>{' '}
-            to contribute :)
+            </a>
+            . Thank you 🙏
           </Callout>
         </div>
       )}
@@ -42,7 +57,7 @@ export function Header({ showGitcoinBanner }: Props) {
         <LogoType />
       </div>
 
-      <p className="text-center text-lg mb-6 text-gray-500 md:!text-2xl">
+      <p className="text-center text-lg mb-6 mt-2 text-gray-500 md:!text-2xl">
         {title}
       </p>
 
@@ -104,12 +119,12 @@ export function Header({ showGitcoinBanner }: Props) {
 
         <a
           aria-label="Sponsors"
-          href="https://github.com/sponsors/tmm?metadata_campaign=docs_header"
+          href="https://github.com/sponsors/wagmi-dev?metadata_campaign=docs_header"
           className="h-5"
         >
           <img
             alt=""
-            src="https://img.shields.io/github/sponsors/tmm?colorA=2B323B&colorB=1e2329&style=flat&label=Sponsors"
+            src="https://img.shields.io/github/sponsors/wagmi-dev?colorA=2B323B&colorB=1e2329&style=flat&label=Sponsors"
           />
         </a>
       </div>

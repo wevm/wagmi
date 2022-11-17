@@ -37,6 +37,7 @@ describe('useToken', () => {
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
+        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
@@ -80,6 +81,7 @@ describe('useToken', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -105,14 +107,22 @@ describe('useToken', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [ContractMethodNoResultError: Function "decimals" on contract "0xa0cf798816d4b9b9866b5330eea46a18382f251e" returned an empty response.
+            "error": [ContractMethodNoResultError: Contract read returned an empty response. This could be due to any of the following:
+          - The contract does not have the function "decimals",
+          - The parameters passed to the contract function may be invalid, or
+          - The address is not a contract.
 
-          Are you sure the function "decimals" exists on this contract?
-
-          Etherscan: https://etherscan.io/address/0xa0cf798816d4b9b9866b5330eea46a18382f251e#readContract],
+          Config:
+          {
+            "address": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
+            "abi": "...",
+            "functionName": "decimals",
+            "chainId": 1
+          }],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -123,6 +133,33 @@ describe('useToken', () => {
           }
         `)
       })
+    })
+
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          token: useToken({
+            address: ensTokenAddress,
+          }),
+          tokenwithoutScopeKey: useToken({
+            address: ensTokenAddress,
+            enabled: false,
+          }),
+          tokenwithScopeKey: useToken({
+            address: ensTokenAddress,
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.token.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.tokenwithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.tokenwithScopeKey.isIdle).toBeTruthy(),
+      )
     })
 
     it('chainId', async () => {
@@ -153,6 +190,7 @@ describe('useToken', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -178,6 +216,7 @@ describe('useToken', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,
@@ -217,6 +256,7 @@ describe('useToken', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -271,6 +311,7 @@ describe('useToken', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,

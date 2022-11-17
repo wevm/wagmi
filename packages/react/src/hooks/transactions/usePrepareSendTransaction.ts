@@ -1,38 +1,55 @@
-import {
+import type {
+  FetchSignerResult,
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
-  deepEqual,
-  prepareSendTransaction,
 } from '@wagmi/core'
+import { prepareSendTransaction } from '@wagmi/core'
+import type { providers } from 'ethers'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useProvider } from '../providers'
-import { useChainId, useQuery } from '../utils'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useNetwork, useSigner } from '../accounts'
+import { useQuery } from '../utils'
 
-export type UsePrepareSendTransactionArgs = Omit<
-  PrepareSendTransactionArgs,
-  'request'
-> & {
-  request: Partial<PrepareSendTransactionArgs['request']>
+export type UsePrepareSendTransactionConfig =
+  Partial<PrepareSendTransactionArgs> &
+    QueryConfig<PrepareSendTransactionResult, Error>
+
+type QueryKeyArgs = Partial<PrepareSendTransactionArgs>
+type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> & {
+  activeChainId?: number
+  signerAddress?: string
 }
 
-export type UsePrepareSendTransactionConfig = QueryConfig<
-  PrepareSendTransactionResult,
-  Error
->
-
-export const queryKey = ({
+function queryKey({
+  activeChainId,
   chainId,
   request,
-}: UsePrepareSendTransactionArgs & {
-  chainId?: number
-}) => [{ entity: 'prepareSendTransaction', chainId, request }] as const
+  scopeKey,
+  signerAddress,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
+    {
+      entity: 'prepareSendTransaction',
+      activeChainId,
+      chainId,
+      request,
+      scopeKey,
+      signerAddress,
+    },
+  ] as const
+}
 
-const queryFn = ({
-  queryKey: [{ request }],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  if (!request.to) throw new Error('request.to is required')
-  return prepareSendTransaction({ request: { ...request, to: request.to } })
+function queryFn({ signer }: { signer?: FetchSignerResult }) {
+  return ({
+    queryKey: [{ chainId, request }],
+  }: QueryFunctionArgs<typeof queryKey>) => {
+    if (!request?.to) throw new Error('request.to is required')
+    return prepareSendTransaction({
+      chainId,
+      request: { ...request, to: request.to },
+      signer,
+    })
+  }
 }
 
 /**
@@ -50,25 +67,32 @@ const queryFn = ({
  * const result = useSendTransaction(config)
  */
 export function usePrepareSendTransaction({
+  chainId,
   request,
   cacheTime,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
   onSettled,
   onSuccess,
-}: UsePrepareSendTransactionArgs & UsePrepareSendTransactionConfig) {
-  const chainId = useChainId()
-  const provider = useProvider()
+}: UsePrepareSendTransactionConfig = {}) {
+  const { chain: activeChain } = useNetwork()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
 
   const prepareSendTransactionQuery = useQuery(
-    queryKey({ request, chainId }),
-    queryFn,
+    queryKey({
+      activeChainId: activeChain?.id,
+      chainId,
+      request,
+      scopeKey,
+      signerAddress: signer?._address,
+    }),
+    queryFn({ signer }),
     {
       cacheTime,
-      enabled: Boolean(enabled && provider && request.to),
-      isDataEqual: deepEqual,
+      enabled: Boolean(enabled && signer && request && request.to),
       staleTime,
       suspense,
       onError,

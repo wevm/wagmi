@@ -18,6 +18,7 @@ describe('useBlockNumber', () => {
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
+        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
@@ -30,6 +31,33 @@ describe('useBlockNumber', () => {
   })
 
   describe('configuration', () => {
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          blockNumber: useBlockNumber(),
+          blockNumberwithoutScopeKey: useBlockNumber({
+            enabled: false,
+          }),
+          blockNumberwithScopeKey: useBlockNumber({
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.blockNumber.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.blockNumberwithoutScopeKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.blockNumberwithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useBlockNumber({ chainId: 1 }),
@@ -46,6 +74,7 @@ describe('useBlockNumber', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -73,6 +102,7 @@ describe('useBlockNumber', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,

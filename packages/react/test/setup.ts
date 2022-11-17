@@ -4,8 +4,7 @@ import { vi } from 'vitest'
 Date.now = vi.fn(() => new Date(Date.UTC(2022, 1, 1)).valueOf())
 
 type ReactVersion = '17' | '18'
-const reactVersion: ReactVersion =
-  <ReactVersion>process.env.REACT_VERSION || '18'
+const reactVersion = (process.env.REACT_VERSION as ReactVersion) || '18'
 
 vi.mock('@testing-library/react', async () => {
   const packages = {
@@ -13,5 +12,5 @@ vi.mock('@testing-library/react', async () => {
     '17': '@testing-library/react-hooks',
   }
 
-  return await vi.importActual(packages[reactVersion])
+  return vi.importActual(packages[reactVersion])
 })

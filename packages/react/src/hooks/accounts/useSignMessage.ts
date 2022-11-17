@@ -1,8 +1,9 @@
-import { SignMessageArgs, SignMessageResult, signMessage } from '@wagmi/core'
+import type { SignMessageArgs, SignMessageResult } from '@wagmi/core'
+import { signMessage } from '@wagmi/core'
 import * as React from 'react'
-import { useMutation } from 'react-query'
 
-import { MutationConfig } from '../../types'
+import type { MutationConfig } from '../../types'
+import { useMutation } from '../utils'
 
 export type UseSignMessageArgs = Partial<SignMessageArgs>
 
@@ -48,13 +49,14 @@ export function useSignMessage({
   })
 
   const signMessage = React.useCallback(
-    (args?: SignMessageArgs) => mutate(args || <SignMessageArgs>{ message }),
+    (args?: SignMessageArgs) =>
+      mutate(args || ({ message } as SignMessageArgs)),
     [message, mutate],
   )
 
   const signMessageAsync = React.useCallback(
     (args?: SignMessageArgs) =>
-      mutateAsync(args || <SignMessageArgs>{ message }),
+      mutateAsync(args || ({ message } as SignMessageArgs)),
     [message, mutateAsync],
   )
 

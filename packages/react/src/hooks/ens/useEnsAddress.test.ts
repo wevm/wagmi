@@ -20,6 +20,7 @@ describe('useEnsAddress', () => {
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
+        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
@@ -32,6 +33,35 @@ describe('useEnsAddress', () => {
   })
 
   describe('configuration', () => {
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensAddress: useEnsAddress({
+            name: 'imhiring.eth',
+          }),
+          ensAddresswithoutScopeKey: useEnsAddress({
+            name: 'imhiring.eth',
+            enabled: false,
+          }),
+          ensAddresswithScopeKey: useEnsAddress({
+            name: 'imhiring.eth',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.ensAddress.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensAddresswithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensAddresswithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAddress({ chainId: 1, name: 'awkweb.eth' }),
@@ -48,6 +78,7 @@ describe('useEnsAddress', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -78,6 +109,7 @@ describe('useEnsAddress', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,
@@ -106,6 +138,7 @@ describe('useEnsAddress', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -133,6 +166,7 @@ describe('useEnsAddress', () => {
             "fetchStatus": "idle",
             "isError": false,
             "isFetched": true,
+            "isFetchedAfterMount": true,
             "isFetching": false,
             "isIdle": false,
             "isLoading": false,
@@ -176,6 +210,7 @@ describe('useEnsAddress', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,

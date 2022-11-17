@@ -1,21 +1,23 @@
-import {
+import type {
   QueryFunction,
   QueryKey,
-  QueryObserver,
   QueryObserverResult,
   UseQueryOptions,
-} from 'react-query'
+} from '@tanstack/react-query'
+import { QueryObserver } from '@tanstack/react-query'
 
+import { queryClientContext as context } from '../../../context'
 import { useBaseQuery } from './useBaseQuery'
 import { parseQueryArgs, trackResult } from './utils'
 
-type UseQueryResult<TData, TError> = Pick<
+export type UseQueryResult<TData, TError> = Pick<
   QueryObserverResult<TData, TError>,
   | 'data'
   | 'error'
   | 'fetchStatus'
   | 'isError'
   | 'isFetched'
+  | 'isFetchedAfterMount'
   | 'isFetching'
   | 'isLoading'
   | 'isRefetching'
@@ -29,7 +31,6 @@ type UseQueryResult<TData, TError> = Pick<
     | 'dataUpdatedAt'
     | 'errorUpdatedAt'
     | 'failureCount'
-    | 'isFetchedAfterMount'
     | 'isLoadingError'
     | 'isPaused'
     | 'isPlaceholderData'
@@ -39,15 +40,13 @@ type UseQueryResult<TData, TError> = Pick<
     | 'remove'
   >
 }
+export type DefinedUseQueryResult<TData = unknown, TError = unknown> = Omit<
+  UseQueryResult<TData, TError>,
+  'data'
+> & {
+  data: TData
+}
 
-export function useQuery<
-  TQueryFnData = unknown,
-  TError = unknown,
-  TData = TQueryFnData,
-  TQueryKey extends QueryKey = QueryKey,
->(
-  options: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-): UseQueryResult<TData, TError>
 export function useQuery<
   TQueryFnData = unknown,
   TError = unknown,
@@ -57,9 +56,23 @@ export function useQuery<
   queryKey: TQueryKey,
   options?: Omit<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'queryKey'
-  >,
+    'queryKey' | 'initialData'
+  > & { initialData?: () => undefined },
 ): UseQueryResult<TData, TError>
+
+export function useQuery<
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+>(
+  queryKey: TQueryKey,
+  options?: Omit<
+    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+    'queryKey' | 'initialData'
+  > & { initialData: TQueryFnData | (() => TQueryFnData) },
+): DefinedUseQueryResult<TData, TError>
+
 export function useQuery<
   TQueryFnData = unknown,
   TError = unknown,
@@ -70,9 +83,24 @@ export function useQuery<
   queryFn: QueryFunction<TQueryFnData, TQueryKey>,
   options?: Omit<
     UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
-    'queryKey' | 'queryFn'
-  >,
+    'queryKey' | 'queryFn' | 'initialData'
+  > & { initialData?: () => undefined },
 ): UseQueryResult<TData, TError>
+
+export function useQuery<
+  TQueryFnData = unknown,
+  TError = unknown,
+  TData = TQueryFnData,
+  TQueryKey extends QueryKey = QueryKey,
+>(
+  queryKey: TQueryKey,
+  queryFn: QueryFunction<TQueryFnData, TQueryKey>,
+  options?: Omit<
+    UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
+    'queryKey' | 'queryFn' | 'initialData'
+  > & { initialData: TQueryFnData | (() => TQueryFnData) },
+): DefinedUseQueryResult<TData, TError>
+
 export function useQuery<
   TQueryFnData,
   TError,
@@ -86,7 +114,7 @@ export function useQuery<
   arg3?: UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>,
 ): UseQueryResult<TData, TError> {
   const parsedOptions = parseQueryArgs(arg1, arg2, arg3)
-  const baseQuery = useBaseQuery(parsedOptions, QueryObserver)
+  const baseQuery = useBaseQuery({ context, ...parsedOptions }, QueryObserver)
 
   const result = {
     data: baseQuery.data,
@@ -94,6 +122,7 @@ export function useQuery<
     fetchStatus: baseQuery.fetchStatus,
     isError: baseQuery.isError,
     isFetched: baseQuery.isFetched,
+    isFetchedAfterMount: baseQuery.isFetchedAfterMount,
     isFetching: baseQuery.isFetching,
     isIdle: baseQuery.isIdle,
     isLoading: baseQuery.isLoading,
@@ -105,6 +134,7 @@ export function useQuery<
       dataUpdatedAt: baseQuery.dataUpdatedAt,
       errorUpdatedAt: baseQuery.errorUpdatedAt,
       failureCount: baseQuery.failureCount,
+      // TODO: Remove `isFetchedAfterMount` in next minor version (v0.8).
       isFetchedAfterMount: baseQuery.isFetchedAfterMount,
       isLoadingError: baseQuery.isLoadingError,
       isPaused: baseQuery.isPaused,

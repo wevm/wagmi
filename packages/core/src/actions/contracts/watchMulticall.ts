@@ -1,15 +1,25 @@
+import type { Abi } from 'abitype'
+
 import { getClient } from '../../client'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
-import { MulticallConfig, MulticallResult, multicall } from './multicall'
+import type { MulticallConfig, MulticallResult } from './multicall'
+import { multicall } from './multicall'
 
-export type WatchMulticallConfig = MulticallConfig & {
-  listenToBlock?: boolean
-}
-export type WatchMulticallResult = (result: MulticallResult) => void
+export type WatchMulticallConfig<TContracts extends unknown[]> =
+  MulticallConfig<TContracts> & {
+    listenToBlock?: boolean
+  }
+export type WatchMulticallCallback<TContracts extends unknown[]> = (
+  results: MulticallResult<TContracts>,
+) => void
 
-export function watchMulticall(
-  config: WatchMulticallConfig,
-  callback: WatchMulticallResult,
+export function watchMulticall<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+>(
+  config: WatchMulticallConfig<TContracts>,
+  callback: WatchMulticallCallback<TContracts>,
 ) {
   const client = getClient()
 

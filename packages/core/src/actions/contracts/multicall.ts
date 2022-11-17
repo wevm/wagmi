@@ -1,45 +1,49 @@
-import { CallOverrides } from 'ethers/lib/ethers'
-import { Result } from 'ethers/lib/utils'
+import type { Abi } from 'abitype'
 
-import { multicallInterface } from '../../constants'
+import { multicallABI } from '../../constants'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,
+  ContractMethodRevertedError,
+  ContractResultDecodeError,
   ProviderChainsNotFound,
 } from '../../errors'
+import type {
+  ContractConfig,
+  ContractsConfig,
+  ContractsResult,
+  GetOverridesForAbiStateMutability,
+} from '../../types/contracts'
+import { logWarn, normalizeFunctionName } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
-import { ReadContractConfig } from './readContract'
 
-type MulticallContract = {
-  addressOrName: ReadContractConfig['addressOrName']
-  args?: ReadContractConfig['args']
-  contractInterface: ReadContractConfig['contractInterface']
-  functionName: ReadContractConfig['functionName']
-}
-
-export type MulticallConfig = {
+export type MulticallConfig<TContracts extends unknown[]> = {
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Chain id to use for provider */
   chainId?: number
-  contracts: MulticallContract[]
+  /** Contracts to query */
+  contracts: readonly [...ContractsConfig<TContracts>]
   /** Call overrides */
-  overrides?: CallOverrides
+  overrides?:
+    | GetOverridesForAbiStateMutability<'pure'>
+    | GetOverridesForAbiStateMutability<'view'>
 }
-export type MulticallResult<Data extends any[] = Result[]> = Data
 
-type AggregateResult = {
-  success: boolean
-  returnData: string
-}[]
+export type MulticallResult<TContracts extends unknown[]> =
+  ContractsResult<TContracts>
 
-export async function multicall<Data extends any[] = Result[]>({
+export async function multicall<
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+>({
   allowFailure = true,
   chainId,
   contracts,
   overrides,
-}: MulticallConfig): Promise<MulticallResult<Data>> {
+}: MulticallConfig<TContracts>): Promise<MulticallResult<TContracts>> {
   const provider = getProvider({ chainId })
   if (!provider.chains) throw new ProviderChainsNotFound()
 
@@ -58,67 +62,119 @@ export async function multicall<Data extends any[] = Result[]>({
     })
 
   const multicallContract = getContract({
-    addressOrName: chain.multicall.address,
-    contractInterface: multicallInterface,
+    address: chain.multicall.address,
+    abi: multicallABI,
     signerOrProvider: provider,
   })
-  const calls = contracts.map(
-    ({ addressOrName, contractInterface, functionName, ...config }) => {
+  const calls = (contracts as unknown as ContractConfig[]).map(
+    ({ address, abi, functionName, ...config }) => {
       const { args } = config || {}
-      const contract = getContract({
-        addressOrName,
-        contractInterface,
-      })
-      const params = Array.isArray(args) ? args : args ? [args] : []
-      const callData = contract.interface.encodeFunctionData(
+      const contract = getContract({ address, abi })
+      const params = args ?? []
+      const normalizedFunctionName = normalizeFunctionName({
+        contract,
         functionName,
-        params,
-      )
-      if (!contract[functionName])
-        console.warn(
-          `"${functionName}" is not in the interface for contract "${addressOrName}"`,
+        args,
+      })
+      try {
+        const contractFunction = contract[normalizedFunctionName]
+        if (!contractFunction)
+          logWarn(
+            `"${normalizedFunctionName}" is not in the interface for contract "${address}"`,
+          )
+        const callData = contract.interface.encodeFunctionData(
+          normalizedFunctionName,
+          params,
         )
-      return {
-        target: addressOrName,
-        allowFailure,
-        callData,
+        return {
+          target: address,
+          allowFailure,
+          callData,
+        }
+      } catch (err) {
+        if (!allowFailure) throw err
+        return {
+          target: address,
+          allowFailure,
+          callData: '0x',
+        }
       }
     },
   )
-  const params = [...[calls], ...(overrides ? [overrides] : [])]
+
+  type AggregateResult = {
+    success: boolean
+    returnData: string
+  }[]
+  const params: any = [...[calls], ...(overrides ? [overrides] : [])]
   const results = (await multicallContract.aggregate3(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     ...params,
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
-    if (!success) return null
-    const { addressOrName, contractInterface, functionName } = <
-      MulticallContract
-    >contracts[i]
+    const { address, abi, args, functionName } = contracts[i]
 
-    if (returnData === '0x') {
-      const err = new ContractMethodNoResultError({
-        addressOrName,
-        chainId: chain.id,
-        functionName,
-      })
-      if (!allowFailure) throw err
-      console.warn(err.message)
+    const contract = getContract({
+      address,
+      abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
+    })
+    const normalizedFunctionName = normalizeFunctionName({
+      contract,
+      functionName,
+      args,
+    })
+
+    if (!success) {
+      let error
+      try {
+        contract.interface.decodeFunctionResult(
+          normalizedFunctionName,
+          returnData,
+        )
+      } catch (err) {
+        error = new ContractMethodRevertedError({
+          address,
+          args,
+          chainId: chain.id,
+          functionName: normalizedFunctionName,
+          errorMessage: (err as Error).message,
+        })
+        if (!allowFailure) throw error
+        logWarn(error.message)
+      }
       return null
     }
 
-    const contract = getContract({
-      addressOrName,
-      contractInterface,
-    })
+    if (returnData === '0x') {
+      const error = new ContractMethodNoResultError({
+        address,
+        args,
+        chainId: chain.id,
+        functionName: normalizedFunctionName,
+      })
+      if (!allowFailure) throw error
+      logWarn(error.message)
+      return null
+    }
+
     try {
       const result = contract.interface.decodeFunctionResult(
-        functionName,
+        normalizedFunctionName,
         returnData,
       )
       return Array.isArray(result) && result.length === 1 ? result[0] : result
     } catch (err) {
-      if (!allowFailure) throw err
+      const error = new ContractResultDecodeError({
+        address,
+        args,
+        chainId: chain.id,
+        functionName: normalizedFunctionName,
+        errorMessage: (err as Error).message,
+      })
+      if (!allowFailure) throw error
+      logWarn(error.message)
       return null
     }
-  }) as Data
+  }) as MulticallResult<TContracts>
 }

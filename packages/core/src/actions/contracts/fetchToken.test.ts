@@ -38,9 +38,33 @@ describe('fetchToken', () => {
             address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
           })
         } catch (error) {
-          expect((<Error>error).message).toContain('call revert exception')
+          expect((error as Error).message).toContain(
+            'returned an empty response',
+          )
         }
       })
+    })
+
+    it('bytes32 contract', async () => {
+      expect(
+        await fetchToken({
+          address: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
+        }),
+      ).toMatchInlineSnapshot(`
+        {
+          "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+          "decimals": 18,
+          "name": "Maker",
+          "symbol": "MKR",
+          "totalSupply": {
+            "formatted": "977631.036950888222010062",
+            "value": {
+              "hex": "0xcf057c15cb9b4eb7aace",
+              "type": "BigNumber",
+            },
+          },
+        }
+      `)
     })
 
     it('chainId', async () => {

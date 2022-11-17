@@ -18,6 +18,7 @@ describe('useFeeData', () => {
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
+        "isFetchedAfterMount": true,
         "isFetching": false,
         "isIdle": false,
         "isLoading": false,
@@ -30,6 +31,29 @@ describe('useFeeData', () => {
   })
 
   describe('configuration', () => {
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          feeData: useFeeData(),
+          feeDatawithoutScopeKey: useFeeData({
+            enabled: false,
+          }),
+          feeDatawithScopeKey: useFeeData({
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.feeData.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.feeDatawithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.feeDatawithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() => useFeeData({ chainId: 1 }))
 
@@ -44,6 +68,7 @@ describe('useFeeData', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,
@@ -75,6 +100,7 @@ describe('useFeeData', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isIdle": true,
           "isLoading": false,
@@ -102,6 +128,7 @@ describe('useFeeData', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
+          "isFetchedAfterMount": true,
           "isFetching": false,
           "isIdle": false,
           "isLoading": false,

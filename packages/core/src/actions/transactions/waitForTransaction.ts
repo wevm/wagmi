@@ -1,5 +1,6 @@
-import { providers } from 'ethers'
+import type { providers } from 'ethers'
 
+import type { Hash } from '../../types'
 import { getProvider } from '../providers'
 
 export type WaitForTransactionArgs = {
@@ -11,7 +12,7 @@ export type WaitForTransactionArgs = {
    */
   confirmations?: number
   /** Transaction hash to monitor */
-  hash?: string
+  hash?: Hash
   /*
    * Maximum amount of time to wait before timing out in milliseconds
    * @default 0
@@ -37,5 +38,5 @@ export async function waitForTransaction({
   } else if (wait_) promise = wait_(confirmations)
   else throw new Error('hash or wait is required')
 
-  return await promise
+  return promise
 }

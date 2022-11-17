@@ -1,11 +1,17 @@
 import { getDefaultProvider } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
-import { getProvider, getSigners, getWebSocketProvider } from '../test'
+import {
+  getProvider,
+  getSigners,
+  getWebSocketProvider,
+  setupClient,
+} from '../test'
+import { connect, disconnect } from './actions'
 import { Client, createClient, getClient } from './client'
 import { MockConnector } from './connectors/mock'
 import { defaultChains } from './constants'
-import { createStorage } from './storage'
+import { createStorage, noopStorage } from './storage'
 
 const provider = () =>
   Object.assign(getDefaultProvider(), { chains: defaultChains })
@@ -94,6 +100,31 @@ describe('createClient', () => {
       })
     })
 
+    describe('chains', () => {
+      it('default', async () => {
+        const client = setupClient({ chains: defaultChains })
+        expect(client.chains).toBeUndefined()
+      })
+
+      it('autoConnect', async () => {
+        const client = setupClient({ chains: defaultChains })
+        expect(client.chains).toBeUndefined()
+        await client.autoConnect()
+        expect(client.chains?.length).toEqual(2)
+        await disconnect()
+        expect(client.chains).toBeUndefined()
+      })
+
+      it('connect', async () => {
+        const client = setupClient({ chains: defaultChains })
+        expect(client.chains).toBeUndefined()
+        await connect({ connector: client.connectors[0]! })
+        expect(client.chains?.length).toEqual(2)
+        await disconnect()
+        expect(client.chains).toBeUndefined()
+      })
+    })
+
     describe('connectors', () => {
       it('default', () => {
         const client = createClient({
@@ -138,8 +169,72 @@ describe('createClient', () => {
           provider: getProvider(),
         })
         expect(client.provider).toMatchInlineSnapshot(
-          `"<Provider network={31337} />"`,
+          '"<Provider network={1} />"',
         )
+      })
+    })
+
+    describe('providers', () => {
+      it('default', () => {
+        const client = createClient({
+          provider: getProvider,
+        })
+        expect(client.providers).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<Provider network={1} />",
+          }
+        `)
+      })
+
+      it('chainId changes bust cache', () => {
+        const client = createClient({
+          provider: getProvider,
+        })
+        const provider = client.getProvider({ chainId: 5 })
+        expect(provider === client.getProvider({ chainId: 5 })).toBeTruthy()
+        expect(client.providers).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<Provider network={1} />",
+            5 => "<Provider network={5} />",
+          }
+        `)
+        client.setState((x) => ({
+          ...x,
+          data: { ...x.data, chain: { id: 5, unsupported: false } },
+        }))
+        expect(provider === client.getProvider({ chainId: 5 })).toBeFalsy()
+        expect(client.providers).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<Provider network={1} />",
+            5 => "<Provider network={5} />",
+          }
+        `)
+      })
+
+      it('autoConnect w/ stored chainId', () => {
+        const client = createClient({
+          autoConnect: true,
+          storage: createStorage({
+            storage: {
+              ...noopStorage,
+              getItem(key) {
+                if (key === 'wagmi.store')
+                  return JSON.stringify(
+                    JSON.stringify({
+                      state: { data: { chain: { id: 5 } } },
+                    }),
+                  )
+                return null
+              },
+            },
+          }),
+          provider: getProvider,
+        })
+        expect(client.providers).toMatchInlineSnapshot(`
+          Map {
+            5 => "<Provider network={5} />",
+          }
+        `)
       })
     })
 
@@ -189,8 +284,79 @@ describe('createClient', () => {
         })
         await client.webSocketProvider?.destroy()
         expect(client.webSocketProvider).toMatchInlineSnapshot(
-          `"<WebSocketProvider network={31337} />"`,
+          '"<WebSocketProvider network={1} />"',
         )
+      })
+    })
+
+    describe('webSocketProviders', () => {
+      it('default', () => {
+        const client = createClient({
+          provider,
+          webSocketProvider: getWebSocketProvider,
+        })
+        expect(client.webSocketProviders).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<WebSocketProvider network={1} />",
+          }
+        `)
+      })
+
+      it('chainId changes bust cache', () => {
+        const client = createClient({
+          provider: getProvider,
+          webSocketProvider: getWebSocketProvider,
+        })
+        const provider = client.getWebSocketProvider({ chainId: 5 })
+        expect(
+          provider === client.getWebSocketProvider({ chainId: 5 }),
+        ).toBeTruthy()
+        expect(client.webSocketProviders).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<WebSocketProvider network={1} />",
+            5 => "<WebSocketProvider network={5} />",
+          }
+        `)
+        client.setState((x) => ({
+          ...x,
+          data: { ...x.data, chain: { id: 5, unsupported: false } },
+        }))
+        expect(
+          provider === client.getWebSocketProvider({ chainId: 5 }),
+        ).toBeFalsy()
+        expect(client.webSocketProviders).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<WebSocketProvider network={1} />",
+            5 => "<WebSocketProvider network={5} />",
+          }
+        `)
+      })
+
+      it('autoConnect w/ stored chainId', () => {
+        const client = createClient({
+          autoConnect: true,
+          storage: createStorage({
+            storage: {
+              ...noopStorage,
+              getItem(key) {
+                if (key === 'wagmi.store')
+                  return JSON.stringify(
+                    JSON.stringify({
+                      state: { data: { chain: { id: 5 } } },
+                    }),
+                  )
+                return null
+              },
+            },
+          }),
+          provider: getProvider,
+          webSocketProvider: getWebSocketProvider,
+        })
+        expect(client.webSocketProviders).toMatchInlineSnapshot(`
+          Map {
+            5 => "<WebSocketProvider network={5} />",
+          }
+        `)
       })
     })
   })
