@@ -5,15 +5,15 @@
     "display": "hidden"
   },
   "docs": {
-    "title": "Docs",
+    "title": "React",
+    "type": "page"
+  },
+  "core": {
+    "title": "Core",
     "type": "page"
   },
   "examples": {
     "title": "Examples",
-    "type": "page"
-  },
-  "core": {
-    "title": "@wagmi/core",
     "type": "page"
   }
 }
