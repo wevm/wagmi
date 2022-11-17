@@ -110,6 +110,7 @@ export function useContractRead<
   const { data: blockNumber } = useBlockNumber({
     chainId,
     enabled: watch || cacheOnBlock,
+    scopeKey: watch || cacheOnBlock ? undefined : 'idle',
     watch,
   })
 
