@@ -45,13 +45,15 @@
     "ethers": ">=5.5.1"
   },
   "dependencies": {
+    "abitype": "^0.1.8",
     "cac": "^6.7.12",
     "dedent": "^0.7.0",
     "find-up": "^6.3.0",
     "fs-extra": "^10.1.0",
     "node-fetch": "^3.2.9",
     "pathe": "^0.3.2",
-    "picocolors": "^1.0.0"
+    "picocolors": "^1.0.0",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",

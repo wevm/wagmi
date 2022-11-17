@@ -10,7 +10,7 @@ import {
   it,
 } from 'vitest'
 
-import { SourceFn } from '../config'
+import type { SourceFn } from '../config'
 import { etherscan } from './etherscan'
 
 const apiKey = 'abc'
@@ -62,9 +62,9 @@ describe('etherscan', () => {
 
     afterAll(() => server.close())
 
-    it('fetches contract interface', async () => {
-      const contractInterface = await source({ address })
-      expect(contractInterface).toMatchSnapshot()
+    it('fetches ABI', async () => {
+      const abi = await source({ address })
+      expect(abi).toMatchSnapshot()
     })
 
     it('fails to fetch for unverified contract', async () => {

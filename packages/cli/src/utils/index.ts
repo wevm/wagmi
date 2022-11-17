@@ -1,3 +1,3 @@
+export { AbiSchema } from './abi'
 export { findConfig } from './findConfig'
-export { parseContractInterface } from './parseContractInterface'
 export { resolveConfig } from './resolveConfig'

@@ -1,9 +1,9 @@
+import type { Abi } from 'abitype'
 import { default as fse } from 'fs-extra'
 
 import { extname } from 'pathe'
 
 import type { SourceFn } from '../config'
-import type { ContractInterface } from '../types'
 import { pathToFileURL } from 'node:url'
 
 type FsConfig = {
@@ -14,15 +14,15 @@ type FsConfig = {
 }
 
 export function fs({ path }: FsConfig): SourceFn {
-  const cache: Record<string, ContractInterface> = {}
+  const cache: Record<string, Abi> = {}
   return async () => {
-    if (cache[path]) return cache[path] as ContractInterface
+    if (cache[path]) return cache[path] as Abi
     if (!fse.existsSync(path)) throw new Error('File not found')
 
-    let contractInterface: ContractInterface
+    let abi: Abi
     const file = await fse.readFile(path, 'utf-8')
     if (extname(path) === '.json') {
-      contractInterface = JSON.parse(file)
+      abi = JSON.parse(file)
     } else {
       // Load default export from JS or TS file
       const fileBase = `${path}.timestamp-${Date.now()}`
@@ -30,14 +30,14 @@ export function fs({ path }: FsConfig): SourceFn {
       fse.writeFileSync(fileNameTemp, file)
       try {
         const fileUrl = `${pathToFileURL(fileBase)}.mjs`
-        contractInterface = (await import(fileUrl)).default
-        if (!contractInterface) throw new Error('Missing default export')
+        abi = (await import(fileUrl)).default
+        if (!abi) throw new Error('Missing default export')
       } finally {
         fse.unlinkSync(fileNameTemp)
       }
     }
 
-    cache[path] = contractInterface
-    return contractInterface
+    cache[path] = abi
+    return abi
   }
 }

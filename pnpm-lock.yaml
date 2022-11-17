@@ -161,6 +161,7 @@ importers:
     specifiers:
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
+      abitype: ^0.1.8
       cac: ^6.7.12
       dedent: ^0.7.0
       find-up: ^6.3.0
@@ -169,7 +170,9 @@ importers:
       node-fetch: ^3.2.9
       pathe: ^0.3.2
       picocolors: ^1.0.0
+      zod: ^3.19.1
     dependencies:
+      abitype: 0.1.8
       cac: 6.7.14
       dedent: 0.7.0
       find-up: 6.3.0
@@ -177,6 +180,7 @@ importers:
       node-fetch: 3.3.0
       pathe: 0.3.9
       picocolors: 1.0.0
+      zod: 3.19.1
     devDependencies:
       '@types/dedent': 0.7.0
       '@types/fs-extra': 9.0.13
@@ -2339,6 +2343,13 @@ packages:
       typescript: '>=4.7.4'
     dependencies:
       typescript: 4.8.4
+    dev: false
+
+  /abitype/0.1.8:
+    resolution: {integrity: sha512-2pde0KepTzdfu19ZrzYTYVIWo69+6UbBCY4B1RDiwWgo2XZtFSJhF6C+XThuRXbbZ823J0Rw1Y5cP0NXYVcCdQ==}
+    engines: {pnpm: '>=7'}
+    peerDependencies:
+      typescript: '>=4.7.4'
     dev: false
 
   /abitype/0.1.8_typescript@4.8.4:
@@ -9608,6 +9619,10 @@ packages:
   /yocto-queue/1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
+    dev: false
+
+  /zod/3.19.1:
+    resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
     dev: false
 
   /zustand/4.1.4:

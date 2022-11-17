@@ -1,8 +1,9 @@
+import type { Abi } from 'abitype'
 import { getAddress, isAddress } from 'ethers/lib/utils.js'
 
 import * as logger from '../logger'
-import type { Contract, ContractInterface } from '../types'
-import { findConfig, parseContractInterface, resolveConfig } from '../utils'
+import type { Contract } from '../types'
+import { AbiSchema, findConfig, resolveConfig } from '../utils'
 
 export type Generate = {
   config?: string
@@ -26,22 +27,22 @@ export async function generate({ config: config_, root }: Generate) {
 
     // Retrieve source
     const address = getAddress(contract.address)
-    let contractInterface: ContractInterface
+    let abi: Abi
     if (typeof contract.source === 'function')
-      contractInterface = await contract.source({ address })
-    else contractInterface = contract.source
+      abi = await contract.source({ address })
+    else abi = contract.source
 
     // Parse contract interface into types
-    const parsed = parseContractInterface(contractInterface)
+    const parsed = AbiSchema.parse(abi)
     console.log({
-      contractInterface,
+      abi,
       parsed,
     })
 
     contracts.push({
-      addressOrName: address,
+      abi: parsed,
+      address: address,
       name: contract.name,
-      contractInterface,
     })
     contractNames.add(contract.name)
   }

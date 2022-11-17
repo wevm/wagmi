@@ -1,18 +1,15 @@
+import type { Abi } from 'abitype'
 import fetch from 'node-fetch'
 
 import type { SourceFn } from '../config'
-import type { ContractInterface } from '../types'
 
 const apiUrls = {
-  // Mainnet
+  // Ethereum
   [1]: 'https://api.etherscan.io/api',
-  [3]: 'https://api-ropsten.etherscan.io/api',
-  [4]: 'https://api-rinkeby.etherscan.io/api',
   [5]: 'https://api-goerli.etherscan.io/api',
-  [42]: 'https://api-kovan.etherscan.io/api',
   // Optimism
   [10]: 'https://api-optimistic.etherscan.io/api',
-  [69]: 'https://api-kovan-optimistic.etherscan.io/api',
+  [69]: 'https://api-goerli-optimistic.etherscan.io/api',
   // Polygon
   [137]: 'https://api.polygonscan.com/api',
   [80_001]: 'https://api-testnet.polygonscan.com/api',
@@ -38,8 +35,8 @@ type EtherscanConfig = {
   /**
    * Etherscan API key
    *
-   * API keys are specific per network (e.g. Mainnet) and include testnets (e.g. Goerli). Create or manage keys:
-   * - [Mainnet](https://etherscan.io/myapikey)
+   * API keys are specific per network and include testnets (e.g. Ethereum Mainnet and Goerli share same API key). Create or manage keys:
+   * - [Ethereum](https://etherscan.io/myapikey)
    * - [Arbitrum](https://arbiscan.io/myapikey)
    * - [Avalanche](https://snowtrace.io/myapikey)
    * - [BNB Smart Chain](https://bscscan.com/myapikey)
@@ -56,7 +53,7 @@ type EtherscanConfig = {
 }
 
 export function etherscan({ apiKey, chainId }: EtherscanConfig): SourceFn {
-  const cache: Record<string, ContractInterface> = {}
+  const cache: Record<string, Abi> = {}
   return async ({ address }) => {
     const baseUrl = apiUrls[chainId]
     if (!baseUrl) throw new Error(`No API url found for chain id "${chainId}"`)
@@ -64,7 +61,7 @@ export function etherscan({ apiKey, chainId }: EtherscanConfig): SourceFn {
     const apiUrl = `${baseUrl}?module=contract&action=getabi&address=${address}${
       apiKey ? `&apikey=${apiKey}` : ''
     }`
-    if (cache[apiUrl]) return cache[apiUrl] as ContractInterface
+    if (cache[apiUrl]) return cache[apiUrl] as Abi
 
     type EtherscanResponse =
       | { status: '1'; message: 'OK'; result: string }
@@ -73,8 +70,8 @@ export function etherscan({ apiKey, chainId }: EtherscanConfig): SourceFn {
     const data = (await response.json()) as EtherscanResponse
     if (data.status === '0') throw new Error(data.result)
 
-    const contractInterface = JSON.parse(data.result) as ContractInterface
-    cache[apiUrl] = contractInterface
-    return contractInterface
+    const abi = JSON.parse(data.result) as Abi
+    cache[apiUrl] = abi
+    return abi
   }
 }
