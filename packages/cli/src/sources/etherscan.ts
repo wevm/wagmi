@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 
-import { SourceFn } from '../config'
-import { ContractInterface } from '../types'
+import type { SourceFn } from '../config'
+import type { ContractInterface } from '../types'
 
 const apiUrls = {
   // Mainnet

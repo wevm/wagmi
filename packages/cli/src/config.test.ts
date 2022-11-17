@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
 
-import { Config, defineConfig } from './config'
+import type { Config } from './config'
+import { defineConfig } from './config'
 
 test('defineConfig', () => {
   const config: Config = {

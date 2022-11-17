@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import { cac } from 'cac'
 
-import { version } from '../package.json'
+import packageJson from '../package.json'
+import { generate, init } from './commands'
 import * as logger from './logger'
 
 const cli = cac('wagmi')
@@ -10,21 +11,15 @@ cli
   .command('generate', 'generate code based on configuration')
   .option('-c, --config <path>', '[string] path to config file')
   .option('-r, --root <path>', '[string] root path')
-  .action(async ({ config, root }: { config?: string; root?: string }) => {
-    const { generate } = await import('./commands')
-    await generate({ config, root })
-  })
+  .action(generate)
 
 cli
   .command('init', 'create configuration file')
   .example((name) => `${name} init`)
-  .action(async () => {
-    const { init } = await import('./commands')
-    await init()
-  })
+  .action(init)
 
 cli.help()
-cli.version(version)
+cli.version(packageJson.version)
 
 void (async () => {
   try {
@@ -32,7 +27,7 @@ void (async () => {
     cli.parse(process.argv, { run: false })
     await cli.runMatchedCommand()
   } catch (error) {
-    logger.error((<Error>error).message)
+    logger.error((error as Error).message)
     process.exit(1)
   }
 })()

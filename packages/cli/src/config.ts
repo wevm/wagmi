@@ -1,4 +1,4 @@
-import { ContractInterface } from './types'
+import type { ContractInterface } from './types'
 
 export type SourceFn = (config: {
   address: string

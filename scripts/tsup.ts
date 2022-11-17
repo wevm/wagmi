@@ -18,12 +18,10 @@ export function getConfig({
   exports = {},
   ...options
 }: GetConfig): Options {
-  if (!options.entry?.length) throw new Error('entry is required')
-  const entry: string[] = options.entry ?? []
-
   // Hacks tsup to create Preconstruct-like linked packages for development
   // https://github.com/preconstruct/preconstruct
-  if (dev)
+  if (dev) {
+    const entry: string[] = options.entry ?? []
     return {
       clean: true,
       // Only need to generate one file with tsup for development since we will create links in `onSuccess`
@@ -55,6 +53,7 @@ export function getConfig({
         validateExports(exports)
       },
     }
+  }
 
   return {
     bundle: true,

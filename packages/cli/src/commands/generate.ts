@@ -1,7 +1,7 @@
-import { getAddress, isAddress } from 'ethers/lib/utils'
+import { getAddress, isAddress } from 'ethers/lib/utils.js'
 
 import * as logger from '../logger'
-import { Contract, ContractInterface } from '../types'
+import type { Contract, ContractInterface } from '../types'
 import { findConfig, parseContractInterface, resolveConfig } from '../utils'
 
 export type Generate = {

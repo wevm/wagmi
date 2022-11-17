@@ -2,8 +2,8 @@ import { default as fse } from 'fs-extra'
 
 import { extname } from 'pathe'
 
-import { SourceFn } from '../config'
-import { ContractInterface } from '../types'
+import type { SourceFn } from '../config'
+import type { ContractInterface } from '../types'
 import { pathToFileURL } from 'node:url'
 
 type FsConfig = {

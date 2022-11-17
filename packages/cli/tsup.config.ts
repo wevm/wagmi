@@ -1,12 +1,12 @@
 import { defineConfig } from 'tsup'
 
-export default defineConfig({
-  clean: true,
-  dts: true,
-  entry: {
-    index: './src/index.ts',
-    bin: './src/cli.ts',
-    config: './src/config.ts',
-  },
-  format: ['esm'],
-})
+import { getConfig } from '../../scripts/tsup'
+import { dependencies, exports, peerDependencies } from './package.json'
+
+export default defineConfig(
+  getConfig({
+    entry: ['src/index.ts', 'src/cli.ts', 'src/config.ts'],
+    exports,
+    external: [...Object.keys(dependencies), ...Object.keys(peerDependencies)],
+  }),
+)

@@ -17,9 +17,9 @@ describe('logger', () => {
     { level: 'error' },
   ])('${level}()', ({ level }) => {
     it(`logs message "${level}"`, () => {
-      const spy = vi.spyOn(logger, <any>level)
+      const spy = vi.spyOn(logger, level as any)
       spy.mockImplementation(mockLog)
-      const loggerFn = (<any>logger)[level]
+      const loggerFn = (logger as any)[level]
       loggerFn(level)
       expect(spy).toHaveBeenCalledWith(level)
     })
