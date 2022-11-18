@@ -79,7 +79,7 @@
     "/dist"
   ],
   "peerDependencies": {
-    "@coinbase/wallet-sdk": ">=3.3.0",
+    "@coinbase/wallet-sdk": ">=3.6.0",
     "@walletconnect/ethereum-provider": ">=1.7.5",
     "ethers": ">=5.5.1"
   },
@@ -97,7 +97,7 @@
     "zustand": "^4.1.4"
   },
   "devDependencies": {
-    "@coinbase/wallet-sdk": "^3.4.1",
+    "@coinbase/wallet-sdk": "^3.6.0",
     "@walletconnect/ethereum-provider": "^1.7.8",
     "typescript": "^4.7.4"
   },
