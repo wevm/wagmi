@@ -1,13 +1,13 @@
 ---
 title: 'readContracts'
-description: 'React Hook for calling multiple ethers Contract read-only methods.'
+description: 'Action for calling multiple ethers Contract read-only methods.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
 # readContracts
 
-Hook for calling multiple ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) methods.
+Action for calling multiple ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) methods.
 
 ```tsx
 import { readContracts } from '@wagmi/core'
@@ -92,7 +92,7 @@ const data = await readContracts({
 
 Contract ABI.
 
-By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/docs/typescript) for more information.
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and action result. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {7,12}
 import { readContracts } from '@wagmi/core'
