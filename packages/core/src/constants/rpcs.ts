@@ -57,6 +57,8 @@ type PublicChains = Extract<
   | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
+  | 'fantom'
+  | 'fantomTest'
   | 'arbitrum'
   | 'arbitrumGoerli'
 >
@@ -68,6 +70,8 @@ export const publicRpcUrls: Record<PublicChains, string> = {
   optimismGoerli: 'https://goerli.optimism.io',
   polygon: 'https://polygon-rpc.com',
   polygonMumbai: 'https://matic-mumbai.chainstacklabs.com',
+  fantom: 'https://rpc.ankr.com/fantom/',
+  fantomTest: 'https://rpc.testnet.fantom.network/',
   arbitrum: 'https://arb1.arbitrum.io/rpc',
   arbitrumGoerli: 'https://goerli-rollup.arbitrum.io/rpc',
 } as const

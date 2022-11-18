@@ -11,4 +11,6 @@ export {
   optimismGoerli,
   polygon,
   polygonMumbai,
+  fantom,
+  fantomTest,
 } from '@wagmi/core/chains'

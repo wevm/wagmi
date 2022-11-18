@@ -12,6 +12,8 @@ type EtherscanChains = Extract<
   | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
+  | 'fantom'
+  | 'fantomTest'
   | 'arbitrum'
   | 'arbitrumGoerli'
 >
@@ -43,6 +45,14 @@ export const etherscanBlockExplorers: Record<EtherscanChains, BlockExplorer> = {
   polygonMumbai: {
     name: 'PolygonScan',
     url: 'https://mumbai.polygonscan.com',
+  },
+  fantom: {
+    name: 'FTMScan',
+    url: 'https://ftmscan.com/',
+  },
+  fantomTest: {
+    name: 'FTMScan',
+    url: 'https://testnet.ftmscan.com/',
   },
   arbitrum: { name: 'Arbiscan', url: 'https://arbiscan.io' },
   arbitrumGoerli: { name: 'Arbiscan', url: 'https://goerli.arbiscan.io' },

@@ -10,6 +10,8 @@ export const chainId = {
   optimismGoerli: 420,
   polygon: 137,
   polygonMumbai: 80_001,
+  fantom: 250,
+  fantomTest: 4_002,
   arbitrum: 42_161,
   arbitrumGoerli: 421_613,
   localhost: 1_337,
@@ -182,6 +184,47 @@ export const polygonMumbai: Chain = {
   testnet: true,
 }
 
+export const fantom: Chain = {
+  id: chainId.fantom,
+  name: 'Fantom',
+  network: 'fantom',
+  nativeCurrency: { name: 'FTM', symbol: 'FTM', decimals: 18 },
+  rpcUrls: {
+    alchemy: alchemyRpcUrls.fantom,
+    default: publicRpcUrls.fantom,
+    infura: infuraRpcUrls.fantom,
+    public: publicRpcUrls.fantom,
+  },
+  blockExplorers: {
+    etherscan: etherscanBlockExplorers.fantom,
+    default: etherscanBlockExplorers.fantom,
+  },
+  multicall: {
+    address: '0xc61eD1b8c58bcf0493AC995f481dcCDD16168925',
+    blockCreated: 50105758,
+  },
+}
+
+export const fantomTest: Chain = {
+  id: chainId.fantomTest,
+  name: 'FantomTest',
+  network: 'fantomTest',
+  nativeCurrency: { name: 'FTM', symbol: 'FTM', decimals: 18 },
+  rpcUrls: {
+    alchemy: alchemyRpcUrls.fantomTest,
+    default: publicRpcUrls.fantomTest,
+    infura: infuraRpcUrls.fantomTest,
+    public: publicRpcUrls.fantomTest,
+  },
+  blockExplorers: {
+    etherscan: etherscanBlockExplorers.fantomTest,
+    default: etherscanBlockExplorers.fantomTest,
+  },
+  multicall: {
+    address: '0x2B2d6557cD5F3A804a7922cC19E9396A830A86B1',
+    blockCreated: 11437448,
+  },
+}
 export const arbitrum: Chain = {
   id: chainId.arbitrum,
   name: 'Arbitrum One',
@@ -276,6 +319,8 @@ export const chain = {
   optimismGoerli,
   polygon,
   polygonMumbai,
+  fantom,
+  fantomTest,
   arbitrum,
   arbitrumGoerli,
   localhost,
@@ -291,6 +336,8 @@ export const allChains = [
   optimismGoerli,
   polygon,
   polygonMumbai,
+  fantom,
+  fantomTest,
   arbitrum,
   arbitrumGoerli,
   localhost,
