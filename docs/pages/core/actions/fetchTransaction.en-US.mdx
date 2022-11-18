@@ -1,0 +1,42 @@
+---
+title: 'fetchTransaction'
+description: 'Action for fetching transaction by hash.'
+---
+
+# fetchTransaction
+
+Action for fetching transaction by hash.
+
+```ts
+import { fetchTransaction } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { fetchTransaction } from 'wagmi'
+
+const data = await fetchTransaction({
+  hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+})
+```
+
+## Return Value
+
+```tsx
+TransactionResponse
+```
+
+## Configuration
+
+### hash
+
+Hash of the transaction.
+
+```tsx {4}
+import { fetchTransaction } from 'wagmi'
+
+const transaction = await fetchTransaction({
+  hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+})
+```
