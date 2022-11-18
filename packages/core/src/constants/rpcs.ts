@@ -10,6 +10,8 @@ type AlchemyChains = Extract<
   | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
+  | 'fantom'
+  | 'fantomTest'
   | 'arbitrum'
   | 'arbitrumGoerli'
 >
@@ -20,6 +22,8 @@ export const alchemyRpcUrls: Record<AlchemyChains, string> = {
   optimismGoerli: 'https://opt-goerli.g.alchemy.com/v2',
   polygon: 'https://polygon-mainnet.g.alchemy.com/v2',
   polygonMumbai: 'https://polygon-mumbai.g.alchemy.com/v2',
+  fantom: 'https://rpc.ankr.com/fantom/',
+  fantomTest: 'https://rpc.testnet.fantom.network/',
   arbitrum: 'https://arb-mainnet.g.alchemy.com/v2',
   arbitrumGoerli: 'https://arb-goerli.g.alchemy.com/v2',
 } as const
@@ -33,6 +37,8 @@ type InfuraChains = Extract<
   | 'optimismGoerli'
   | 'polygon'
   | 'polygonMumbai'
+  | 'fantom'
+  | 'fantomTest'
   | 'arbitrum'
   | 'arbitrumGoerli'
 >
@@ -44,6 +50,9 @@ export const infuraRpcUrls: Record<InfuraChains, string> = {
   optimismGoerli: 'https://optimism-goerli.infura.io/v3',
   polygon: 'https://polygon-mainnet.infura.io/v3',
   polygonMumbai: 'https://polygon-mumbai.infura.io/v3',
+  fantom: 'https://rpc.ankr.com/fantom/',
+  fantomTest: 'https://rpc.testnet.fantom.network/',
+
   arbitrum: 'https://arbitrum-mainnet.infura.io/v3',
   arbitrumGoerli: 'https://arbitrum-goerli.infura.io/v3',
 } as const

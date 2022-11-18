@@ -1,0 +1,140 @@
+Arguments: 
+  /Users/k/.nvm/versions/node/v16.15.0/bin/node /Users/k/.nvm/versions/node/v16.15.0/bin/yarn
+
+PATH: 
+  /Users/k/.nvm/versions/node/v16.15.0/bin:/Users/k/Library/pnpm:/Users/k/flutter/bin:/Users/k/Library/pnpm:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/k/.nvm/versions/node/v18.12.1/bin:/Users/k/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/Users/k/.local/share/solana/install/active_release/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Users/k/Library/pnpm:/Users/k/flutter/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/k/.nvm/versions/node/v18.12.1/bin:/Users/k/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/Users/k/.local/share/solana/install/active_release/bin:/Users/k/.cargo/bin:/Users/k/.foundry/bin:/usr/local/zig:/Users/k/go/bin:/Users/k/bin:/Users/k/.foundry/bin:/usr/local/zig:/Users/k/go/bin:/Users/k/bin
+
+Yarn version: 
+  1.22.18
+
+Node version: 
+  16.15.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: ENOENT: no such file or directory, copyfile '/Users/k/Library/Caches/Yarn/v6/npm-buffer-6.0.3-2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6-integrity/node_modules/buffer/AUTHORS.md' -> '/Users/k/src/github.com/0xkaz/wagmi3/packages/core/node_modules/@coinbase/wallet-sdk/node_modules/buffer/AUTHORS.md'
+
+npm manifest: 
+  {
+    "name": "@wagmi/core",
+    "description": "Vanilla JS library for Ethereum",
+    "license": "MIT",
+    "version": "0.7.4",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/wagmi-dev/wagmi.git",
+      "directory": "packages/core"
+    },
+    "author": "awkweb.eth",
+    "ethereum": "wagmi-dev.eth",
+    "funding": [
+      {
+        "type": "gitcoin",
+        "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+      },
+      {
+        "type": "github",
+        "url": "https://github.com/sponsors/wagmi-dev"
+      }
+    ],
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./chains": {
+        "types": "./dist/chains.d.ts",
+        "default": "./dist/chains.js"
+      },
+      "./internal": {
+        "types": "./dist/internal.d.ts",
+        "default": "./dist/internal.js"
+      },
+      "./connectors/coinbaseWallet": {
+        "types": "./dist/connectors/coinbaseWallet.d.ts",
+        "default": "./dist/connectors/coinbaseWallet.js"
+      },
+      "./connectors/metaMask": {
+        "types": "./dist/connectors/metaMask.d.ts",
+        "default": "./dist/connectors/metaMask.js"
+      },
+      "./connectors/mock": {
+        "types": "./dist/connectors/mock/index.d.ts",
+        "default": "./dist/connectors/mock/index.js"
+      },
+      "./connectors/walletConnect": {
+        "types": "./dist/connectors/walletConnect.d.ts",
+        "default": "./dist/connectors/walletConnect.js"
+      },
+      "./providers/infura": {
+        "types": "./dist/providers/infura.d.ts",
+        "default": "./dist/providers/infura.js"
+      },
+      "./providers/public": {
+        "types": "./dist/providers/public.d.ts",
+        "default": "./dist/providers/public.js"
+      },
+      "./providers/alchemy": {
+        "types": "./dist/providers/alchemy.d.ts",
+        "default": "./dist/providers/alchemy.js"
+      },
+      "./providers/jsonRpc": {
+        "types": "./dist/providers/jsonRpc.d.ts",
+        "default": "./dist/providers/jsonRpc.js"
+      },
+      "./package.json": "./package.json"
+    },
+    "sideEffects": false,
+    "files": [
+      "/chains",
+      "/connectors",
+      "/internal",
+      "/providers",
+      "/dist"
+    ],
+    "peerDependencies": {
+      "@coinbase/wallet-sdk": ">=3.3.0",
+      "@walletconnect/ethereum-provider": ">=1.7.5",
+      "ethers": ">=5.5.1"
+    },
+    "peerDependenciesMeta": {
+      "@coinbase/wallet-sdk": {
+        "optional": true
+      },
+      "@walletconnect/ethereum-provider": {
+        "optional": true
+      }
+    },
+    "dependencies": {
+      "abitype": "^0.1.8",
+      "eventemitter3": "^4.0.7",
+      "zustand": "^4.1.4"
+    },
+    "devDependencies": {
+      "@coinbase/wallet-sdk": "^3.4.1",
+      "@walletconnect/ethereum-provider": "^1.7.8",
+      "typescript": "^4.7.4"
+    },
+    "keywords": [
+      "eth",
+      "ethereum",
+      "dapps",
+      "wallet",
+      "web3"
+    ],
+    "scripts": {
+      "build": "tsup",
+      "dev": "DEV=true tsup"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
