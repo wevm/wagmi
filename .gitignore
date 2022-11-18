@@ -5,7 +5,7 @@
 .pnpm-debug.log*
 cache
 coverage
-dist
+
 node_modules
 tsconfig.tsbuildinfo
 
