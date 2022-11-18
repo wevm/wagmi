@@ -9,5 +9,6 @@
   "readContracts": "readContracts",
   "sendTransaction": "sendTransaction",
   "waitForTransaction": "waitForTransaction",
+  "watchContractEvent": "watchContractEvent",
   "writeContract": "writeContract"
 }
