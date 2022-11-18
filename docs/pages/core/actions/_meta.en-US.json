@@ -3,6 +3,7 @@
   "fetchBalance": "fetchBalance",
   "fetchBlockNumber": "fetchBlockNumber",
   "fetchTransaction": "fetchTransaction",
+  "prepareSendTransaction": "prepareSendTransaction",
   "prepareWriteContract": "prepareWriteContract",
   "readContract": "readContract",
   "readContracts": "readContracts",
