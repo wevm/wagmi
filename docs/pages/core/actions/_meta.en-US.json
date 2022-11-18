@@ -6,5 +6,6 @@
   "prepareWriteContract": "prepareWriteContract",
   "readContract": "readContract",
   "readContracts": "readContracts",
+  "waitForTransaction": "waitForTransaction",
   "writeContract": "writeContract"
 }
