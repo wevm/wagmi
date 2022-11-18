@@ -16,7 +16,7 @@ import { readContract } from '@wagmi/core'
 ```ts
 import { readContract } from '@wagmi/core'
 
-const data = readContract({
+const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'getHunger',
@@ -42,7 +42,7 @@ The address of the contract.
 ```tsx {4}
 import { readContract } from '@wagmi/core'
 
-const data = readContract({
+const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'getHunger',
@@ -56,7 +56,7 @@ The ABI of the contract.
 ```tsx {5}
 import { readContract } from '@wagmi/core'
 
-const data = readContract({
+const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'getHunger',
@@ -70,7 +70,7 @@ The name of the function on the contract to call.
 ```tsx {6}
 import { readContract } from '@wagmi/core'
 
-const data = readContract({
+const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'getHunger',
@@ -84,7 +84,7 @@ Arguments to pass to function call.
 ```tsx {7}
 import { readContract } from '@wagmi/core'
 
-const data = readContract({
+const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'love',
@@ -99,7 +99,7 @@ Force a specific chain id for the request. The wagmi `Client`'s ethers `provider
 ```tsx {7}
 import { readContract } from '@wagmi/core'
 
-const data = readContract({
+const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'love',
@@ -114,7 +114,7 @@ Overrides to pass to function call.
 ```tsx {7}
 import { readContract } from '@wagmi/core'
 
-const data = readContract({
+const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'love',

@@ -2,5 +2,6 @@
   "getAccount": "getAccount",
   "fetchBalance": "fetchBalance",
   "fetchBlockNumber": "fetchBlockNumber",
-  "readContract": "readContract"
+  "readContract": "readContract",
+  "writeContract": "writeContract"
 }
