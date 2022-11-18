@@ -4,5 +4,6 @@
   "fetchBlockNumber": "fetchBlockNumber",
   "prepareWriteContract": "prepareWriteContract",
   "readContract": "readContract",
+  "readContracts": "readContracts",
   "writeContract": "writeContract"
 }
