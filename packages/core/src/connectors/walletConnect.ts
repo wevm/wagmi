@@ -1,14 +1,11 @@
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
 import { getClient } from '../client'
-import {
-  ProviderRpcError,
-  SwitchChainError,
-  UserRejectedRequestError,
-} from '../errors'
-import { Chain } from '../types'
+import type { ProviderRpcError } from '../errors'
+import { SwitchChainError, UserRejectedRequestError } from '../errors'
+import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -17,8 +14,9 @@ import { Connector } from './base'
  * - imToken (token.im)
  * - MetaMask (metamask.io)
  * - Rainbow (rainbow.me)
+ * - Trust Wallet (trustwallet.com)
  */
-const switchChainAllowedRegex = /(imtoken|metamask|rainbow)/i
+const switchChainAllowedRegex = /(imtoken|metamask|rainbow|trust wallet)/i
 
 type WalletConnectOptions = ConstructorParameters<
   typeof WalletConnectProvider
@@ -76,7 +74,7 @@ export class WalletConnectConnector extends Connector<
         account,
         chain: { id, unsupported },
         provider: new providers.Web3Provider(
-          <providers.ExternalProvider>provider,
+          provider as providers.ExternalProvider,
         ),
       }
     } catch (error) {
@@ -143,7 +141,7 @@ export class WalletConnectConnector extends Connector<
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <providers.ExternalProvider>provider,
+      provider as providers.ExternalProvider,
       chainId,
     ).getSigner(account)
   }

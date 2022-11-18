@@ -1,4 +1,4 @@
 {
-  "main": "dist/wagmi-core-connectors-walletConnect.cjs.js",
-  "module": "dist/wagmi-core-connectors-walletConnect.esm.js"
+  "type": "module",
+  "main": "../../dist/connectors/walletConnect.js"
 }

@@ -1,27 +1,22 @@
-import {
-  FetchEnsResolverArgs,
-  FetchEnsResolverResult,
-  fetchEnsResolver,
-} from '@wagmi/core'
+import type { FetchEnsResolverArgs, FetchEnsResolverResult } from '@wagmi/core'
+import { fetchEnsResolver } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsResolverArgs = Partial<FetchEnsResolverArgs>
-
 export type UseEnsResolverConfig = QueryConfig<FetchEnsResolverResult, Error>
 
-export const queryKey = ({
-  chainId,
-  name,
-}: {
-  chainId?: number
-  name?: string
-}) => [{ entity: 'ensResolver', chainId, name }] as const
+type QueryKeyArgs = UseEnsResolverArgs
+type QueryKeyConfig = Pick<UseEnsResolverConfig, 'scopeKey'>
 
-const queryFn = ({
+function queryKey({ chainId, name, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'ensResolver', chainId, name, scopeKey }] as const
+}
+
+function queryFn({
   queryKey: [{ chainId, name }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   if (!name) throw new Error('name is required')
   return fetchEnsResolver({ chainId, name })
 }
@@ -29,8 +24,9 @@ const queryFn = ({
 export function useEnsResolver({
   cacheTime,
   chainId: chainId_,
-  enabled = true,
   name,
+  enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -39,7 +35,7 @@ export function useEnsResolver({
 }: UseEnsResolverArgs & UseEnsResolverConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ chainId, name }), queryFn, {
+  return useQuery(queryKey({ chainId, name, scopeKey }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && chainId && name),
     staleTime,

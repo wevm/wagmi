@@ -3,7 +3,7 @@ import {
   ConnectorNotFoundError,
   SwitchChainNotSupportedError,
 } from '../../errors'
-import { Chain } from '../../types'
+import type { Chain } from '../../types'
 
 export type SwitchNetworkArgs = {
   chainId: number

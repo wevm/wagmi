@@ -1,30 +1,30 @@
-import {
-  FetchBlockNumberArgs,
-  FetchBlockNumberResult,
-  fetchBlockNumber,
-} from '@wagmi/core'
+import type { FetchBlockNumberArgs, FetchBlockNumberResult } from '@wagmi/core'
+import { fetchBlockNumber } from '@wagmi/core'
 import { debounce } from '@wagmi/core/internal'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId, useQuery, useQueryClient } from '../utils'
 
-type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
+export type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
   /** Function fires when a new block is created */
   onBlock?: (blockNumber: number) => void
   /** Subscribe to changes */
   watch?: boolean
 }
-
 export type UseBlockNumberConfig = QueryConfig<FetchBlockNumberResult, Error>
 
-export const queryKey = ({ chainId }: { chainId?: number }) =>
-  [{ entity: 'blockNumber', chainId }] as const
+type QueryKeyArgs = Partial<FetchBlockNumberArgs>
+type QueryKeyConfig = Pick<UseBlockNumberConfig, 'scopeKey'>
 
-const queryFn = ({
+function queryKey({ chainId, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'blockNumber', chainId, scopeKey }] as const
+}
+
+function queryFn({
   queryKey: [{ chainId }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   return fetchBlockNumber({ chainId })
 }
 
@@ -32,6 +32,7 @@ export function useBlockNumber({
   cacheTime = 0,
   chainId: chainId_,
   enabled = true,
+  scopeKey,
   staleTime,
   suspense,
   watch = false,
@@ -56,7 +57,8 @@ export function useBlockNumber({
     const listener = debounce((blockNumber: number) => {
       // Just to be safe in case the provider implementation
       // calls the event callback after .off() has been called
-      if (watch) queryClient.setQueryData(queryKey({ chainId }), blockNumber)
+      if (watch)
+        queryClient.setQueryData(queryKey({ chainId, scopeKey }), blockNumber)
       if (onBlock) onBlock(blockNumber)
     }, 1)
 
@@ -66,9 +68,17 @@ export function useBlockNumber({
     return () => {
       provider_.off('block', listener)
     }
-  }, [chainId, onBlock, provider, queryClient, watch, webSocketProvider])
+  }, [
+    chainId,
+    scopeKey,
+    onBlock,
+    provider,
+    queryClient,
+    watch,
+    webSocketProvider,
+  ])
 
-  return useQuery(queryKey({ chainId }), queryFn, {
+  return useQuery(queryKey({ scopeKey, chainId }), queryFn, {
     cacheTime,
     enabled,
     staleTime,

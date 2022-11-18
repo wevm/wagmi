@@ -1,4 +1,4 @@
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
 import { act, getSigners, renderHook } from '../../../test'
@@ -103,6 +103,33 @@ describe('useEnsName', () => {
         const { internal, ...res } = result.current
         expect(res.data).toMatchInlineSnapshot(`null`)
       })
+    })
+
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          ensName: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+          }),
+          ensNamewithoutScopeKey: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+            enabled: false,
+          }),
+          ensNamewithScopeKey: useEnsName({
+            address: '0xb0623c91c65621df716ab8afe5f66656b21a9108',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() => expect(result.current.ensName.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.ensNamewithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.ensNamewithScopeKey.isIdle).toBeTruthy(),
+      )
     })
 
     it('chainId', async () => {

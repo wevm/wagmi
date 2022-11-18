@@ -1,9 +1,9 @@
-import {
+import type {
   Abi,
   AbiEvent,
   AbiFunction,
-  AbiParameter,
   AbiParameterToPrimitiveType,
+  AbiParameter as AbiParameter_,
   AbiParametersToPrimitiveTypes,
   AbiStateMutability,
   Address,
@@ -12,9 +12,14 @@ import {
   Narrow,
   ResolvedConfig,
 } from 'abitype'
-import { ethers } from 'ethers'
+import type { ethers } from 'ethers'
 
-import { IsNever, Join, NotEqual, Or } from './utils'
+import type { IsNever, Join, NotEqual, Or } from './utils'
+
+// TODO: Removed during build for some reason so proxying here
+// and exporting from `src/internal.ts` for now
+// https://github.com/wagmi-dev/wagmi/issues/1306
+export type AbiParameter = AbiParameter_
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contract Configuration Types
@@ -222,9 +227,11 @@ type GetResult<
            * | `[{ name: 'foo', type: 'uint256' }, { name: '', type: 'string' }]`    | `readonly [bigint, string] & { foo: bigint }`              |
            */
           {
-            [Output in TOutputs[number] as Output['name'] extends ''
-              ? never
-              : Output['name']]: AbiParameterToPrimitiveType<Output>
+            [Output in TOutputs[number] as Output extends { name: string }
+              ? Output['name'] extends ''
+                ? never
+                : Output['name']
+              : never]: AbiParameterToPrimitiveType<Output>
           } & AbiParametersToPrimitiveTypes<TOutputs>
         : unknown
       : never

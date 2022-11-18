@@ -1,8 +1,8 @@
-import { InfiniteData } from '@tanstack/react-query'
+import type { InfiniteData } from '@tanstack/react-query'
 import { BigNumber } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { assertType, describe, expect, it } from 'vitest'
 
-import { act, expectType, mlootContractConfig, renderHook } from '../../../test'
+import { act, mlootContractConfig, renderHook } from '../../../test'
 import {
   paginatedIndexesConfig,
   useContractInfiniteReads,
@@ -31,7 +31,7 @@ describe('useContractInfiniteReads', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
-    expectType<InfiniteData<[string, string, string]> | undefined>(res.data)
+    assertType<InfiniteData<[string, string, string]> | undefined>(res.data)
     expect(res).toMatchInlineSnapshot(`
       {
         "data": {
@@ -103,7 +103,7 @@ describe('useContractInfiniteReads', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<InfiniteData<[string, string, string]> | undefined>(res.data)
+      assertType<InfiniteData<[string, string, string]> | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -158,7 +158,7 @@ describe('useContractInfiniteReads', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<InfiniteData<[string, string, string]> | undefined>(res.data)
+      assertType<InfiniteData<[string, string, string]> | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -199,7 +199,7 @@ describe('useContractInfiniteReads', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      expectType<InfiniteData<[string, string, string]> | undefined>(
+      assertType<InfiniteData<[string, string, string]> | undefined>(
         result.current.data,
       )
       expect(result.current).toMatchInlineSnapshot(`
@@ -327,7 +327,7 @@ describe('useContractInfiniteReads', () => {
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
 
-      expectType<InfiniteData<[string, string, string]> | undefined>(
+      assertType<InfiniteData<[string, string, string]> | undefined>(
         result.current.data,
       )
       expect(result.current).toMatchInlineSnapshot(`
@@ -454,7 +454,7 @@ describe('useContractInfiniteReads', () => {
 
       await act(async () => {
         const { data } = await result.current.refetch()
-        expectType<InfiniteData<[string, string, string]> | undefined>(data)
+        assertType<InfiniteData<[string, string, string]> | undefined>(data)
         expect(data).toMatchInlineSnapshot(`
           {
             "pageParams": [

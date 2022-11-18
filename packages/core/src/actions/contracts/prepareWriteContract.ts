@@ -1,12 +1,12 @@
-import { Abi, Address, ExtractAbiFunction } from 'abitype'
-import { PopulatedTransaction } from 'ethers/lib/ethers'
+import type { Abi, Address, ExtractAbiFunction } from 'abitype'
+import type { PopulatedTransaction } from 'ethers'
 
 import {
   ConnectorNotFoundError,
   ContractMethodDoesNotExistError,
 } from '../../errors'
-import { Signer } from '../../types'
-import {
+import type { Signer } from '../../types'
+import type {
   DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,
@@ -51,9 +51,7 @@ export type PrepareWriteContractResult<
   TAbi = Abi,
   TFunctionName extends string = string,
 > = {
-  abi: TAbi extends Abi
-    ? [ExtractAbiFunction<TAbi, TFunctionName>]
-    : readonly unknown[]
+  abi: TAbi extends Abi ? [ExtractAbiFunction<TAbi, TFunctionName>] : TAbi
   address: string
   chainId?: number
   functionName: TFunctionName
@@ -96,7 +94,7 @@ export async function prepareWriteContract<
 > {
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId })
+  if (chainId) assertActiveChain({ chainId, signer })
 
   const contract = getContract({
     address,
@@ -129,10 +127,7 @@ export async function prepareWriteContract<
   const minimizedAbi = minimizeContractInterface({
     abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     functionName,
-  }) as TAbi extends Abi
-    ? [ExtractAbiFunction<TAbi, TFunctionName>]
-    : readonly unknown[]
-
+  }) as TAbi extends Abi ? [ExtractAbiFunction<TAbi, TFunctionName>] : TAbi
   return {
     abi: minimizedAbi,
     address,

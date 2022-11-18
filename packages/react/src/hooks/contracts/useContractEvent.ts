@@ -1,5 +1,5 @@
-import { Event, IsNever, NotEqual, Or } from '@wagmi/core/internal'
-import {
+import type { Event, IsNever, NotEqual, Or } from '@wagmi/core/internal'
+import type {
   Abi,
   AbiEvent,
   AbiParametersToPrimitiveTypes,

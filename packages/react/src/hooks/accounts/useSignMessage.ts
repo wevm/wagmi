@@ -1,7 +1,8 @@
-import { SignMessageArgs, SignMessageResult, signMessage } from '@wagmi/core'
+import type { SignMessageArgs, SignMessageResult } from '@wagmi/core'
+import { signMessage } from '@wagmi/core'
 import * as React from 'react'
 
-import { MutationConfig } from '../../types'
+import type { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
 export type UseSignMessageArgs = Partial<SignMessageArgs>

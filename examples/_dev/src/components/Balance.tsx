@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { Address } from 'wagmi'
 import { useAccount, useBalance } from 'wagmi'
 
 export const Balance = () => {
@@ -17,7 +18,7 @@ export const Balance = () => {
 const AccountBalance = () => {
   const { address } = useAccount()
   const { data, refetch } = useBalance({
-    addressOrName: address,
+    address,
     watch: true,
   })
 
@@ -31,7 +32,9 @@ const AccountBalance = () => {
 
 const FindBalance = () => {
   const [address, setAddress] = useState('')
-  const { data, isLoading, refetch } = useBalance({ addressOrName: address })
+  const { data, isLoading, refetch } = useBalance({
+    address: address as Address,
+  })
 
   const [value, setValue] = useState('')
 

@@ -1,9 +1,9 @@
-import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
+import type { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
+import { fetchBalance } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useBlockNumber } from '../network-status'
-import { useChainId, useQuery } from '../utils'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
   /** Subscribe to changes */
@@ -12,29 +12,42 @@ export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
 
 export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
 
-export const queryKey = ({
-  addressOrName,
+type QueryKeyArgs = Partial<FetchBalanceArgs>
+type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
+
+function queryKey({
+  address,
   chainId,
   formatUnits,
+  scopeKey,
   token,
-}: Partial<FetchBalanceArgs> & {
-  chainId?: number
-}) =>
-  [{ entity: 'balance', addressOrName, chainId, formatUnits, token }] as const
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [
+    {
+      entity: 'balance',
+      address,
+      chainId,
+      formatUnits,
+      scopeKey,
+      token,
+    },
+  ] as const
+}
 
-const queryFn = ({
-  queryKey: [{ addressOrName, chainId, formatUnits, token }],
-}: QueryFunctionArgs<typeof queryKey>) => {
-  if (!addressOrName) throw new Error('address is required')
-  return fetchBalance({ addressOrName, chainId, formatUnits, token })
+function queryFn({
+  queryKey: [{ address, chainId, formatUnits, token }],
+}: QueryFunctionArgs<typeof queryKey>) {
+  if (!address) throw new Error('address is required')
+  return fetchBalance({ address, chainId, formatUnits, token })
 }
 
 export function useBalance({
-  addressOrName,
+  address,
   cacheTime,
   chainId: chainId_,
   enabled = true,
   formatUnits,
+  scopeKey,
   staleTime,
   suspense,
   token,
@@ -44,29 +57,25 @@ export function useBalance({
   onSuccess,
 }: UseBalanceArgs & UseBalanceConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
-  const balanceQuery = useQuery(
-    queryKey({ addressOrName, chainId, formatUnits, token }),
-    queryFn,
-    {
-      cacheTime,
-      enabled: Boolean(enabled && addressOrName),
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    },
+  const queryKey_ = React.useMemo(
+    () => queryKey({ address, chainId, formatUnits, scopeKey, token }),
+    [address, chainId, formatUnits, scopeKey, token],
   )
+  const balanceQuery = useQuery(queryKey_, queryFn, {
+    cacheTime,
+    enabled: Boolean(enabled && address),
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 
-  const { data: blockNumber } = useBlockNumber({ chainId, watch })
-  React.useEffect(() => {
-    if (!enabled) return
-    if (!watch) return
-    if (!blockNumber) return
-    if (!addressOrName) return
-    balanceQuery.refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockNumber])
+  useInvalidateOnBlock({
+    chainId,
+    enabled: Boolean(enabled && watch && address),
+    queryKey: queryKey_,
+  })
 
   return balanceQuery
 }

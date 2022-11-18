@@ -1,18 +1,26 @@
-import { FetchEnsNameArgs, FetchEnsNameResult, fetchEnsName } from '@wagmi/core'
+import type { FetchEnsNameArgs, FetchEnsNameResult } from '@wagmi/core'
+import { fetchEnsName } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsNameArgs = Partial<FetchEnsNameArgs>
-
 export type UseEnsNameConfig = QueryConfig<FetchEnsNameResult, Error>
 
-export const queryKey = ({ address, chainId }: Partial<FetchEnsNameArgs>) =>
-  [{ entity: 'ensName', address, chainId }] as const
+type QueryKeyArgs = UseEnsNameArgs
+type QueryKeyConfig = Pick<UseEnsNameConfig, 'scopeKey'>
 
-const queryFn = ({
+function queryKey({
+  address,
+  chainId,
+  scopeKey,
+}: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'ensName', address, chainId, scopeKey }] as const
+}
+
+function queryFn({
   queryKey: [{ address, chainId }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   if (!address) throw new Error('address is required')
   return fetchEnsName({ address, chainId })
 }
@@ -22,6 +30,7 @@ export function useEnsName({
   cacheTime,
   chainId: chainId_,
   enabled = true,
+  scopeKey,
   staleTime = 1_000 * 60 * 60 * 24, // 24 hours
   suspense,
   onError,
@@ -30,7 +39,7 @@ export function useEnsName({
 }: UseEnsNameArgs & UseEnsNameConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ address, chainId }), queryFn, {
+  return useQuery(queryKey({ address, chainId, scopeKey }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && address && chainId),
     staleTime,

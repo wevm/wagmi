@@ -1,10 +1,9 @@
-import { ResolvedConfig } from 'abitype'
+import type { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { assertType, describe, expect, it } from 'vitest'
 
 import {
   act,
-  expectType,
   mlootContractConfig,
   renderHook,
   wagmigotchiContractConfig,
@@ -25,7 +24,7 @@ describe('useContractRead', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
-    expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+    assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
     expect(res).toMatchInlineSnapshot(`
       {
         "data": {
@@ -63,7 +62,7 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+      assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {
@@ -86,6 +85,46 @@ describe('useContractRead', () => {
       `)
     })
 
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          contractRead: useContractRead({
+            ...wagmigotchiContractConfig,
+            functionName: 'love',
+            args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+            chainId: 1,
+          }),
+          contractReadwithoutScopeKey: useContractRead({
+            ...wagmigotchiContractConfig,
+            functionName: 'love',
+            args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+            chainId: 1,
+            enabled: false,
+          }),
+          contractReadwithScopeKey: useContractRead({
+            ...wagmigotchiContractConfig,
+            functionName: 'love',
+            args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+            chainId: 1,
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.contractRead.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.contractReadwithoutScopeKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.contractReadwithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
         useContractRead({
@@ -100,7 +139,7 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+      assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -134,7 +173,7 @@ describe('useContractRead', () => {
 
       await act(async () => {
         const { data } = await result.current.refetch()
-        expectType<ResolvedConfig['BigIntType'] | undefined>(data)
+        assertType<ResolvedConfig['BigIntType'] | undefined>(data)
         expect(data).toMatchInlineSnapshot(`
           {
             "hex": "0x02",
@@ -162,7 +201,7 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<ResolvedConfig['BigIntType'] | undefined>(res.data)
+      assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
           "data": {

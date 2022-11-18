@@ -12,7 +12,7 @@ describe('assertActiveChain', () => {
 
   it('errors when on wrong chain', async () => {
     await connect({
-      chainId: 4,
+      chainId: 5,
       connector: new MockConnector({
         options: {
           flags: { noSwitchChain: true },
@@ -23,7 +23,7 @@ describe('assertActiveChain', () => {
     expect(() =>
       assertActiveChain({ chainId: 1 }),
     ).toThrowErrorMatchingInlineSnapshot(
-      '"Chain mismatch: Expected \\"Ethereum\\", received \\"Rinkeby\\"."',
+      '"Chain mismatch: Expected \\"Ethereum\\", received \\"Goerli\\"."',
     )
   })
 
@@ -38,5 +38,26 @@ describe('assertActiveChain', () => {
       }),
     })
     assertActiveChain({ chainId: 1 })
+  })
+
+  it('errors when signer is on wrong chain', async () => {
+    const signer = getSigners()[0]!
+    ;(
+      signer.provider as unknown as { network: { chainId: number } }
+    ).network.chainId = 1
+    await connect({
+      chainId: 5,
+      connector: new MockConnector({
+        options: {
+          flags: { noSwitchChain: true },
+          signer,
+        },
+      }),
+    })
+    expect(() =>
+      assertActiveChain({ chainId: 5, signer }),
+    ).toThrowErrorMatchingInlineSnapshot(
+      '"Chain \\"5\\" not configured for connector \\"mock\\"."',
+    )
   })
 })

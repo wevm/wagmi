@@ -1,10 +1,11 @@
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import { Provider } from '../../types'
+import type { Provider } from '../../types'
 import { debounce } from '../../utils'
 import { getProvider, getWebSocketProvider } from '../providers'
-import { FetchBlockNumberResult, fetchBlockNumber } from './fetchBlockNumber'
+import type { FetchBlockNumberResult } from './fetchBlockNumber'
+import { fetchBlockNumber } from './fetchBlockNumber'
 
 export type WatchBlockNumberArgs = { chainId?: number; listen: boolean }
 export type WatchBlockNumberCallback = (

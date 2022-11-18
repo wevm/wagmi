@@ -1,9 +1,9 @@
-import { BigNumber } from 'ethers/lib/ethers'
-import { parseEther } from 'ethers/lib/utils'
+import { BigNumber } from 'ethers'
+import { parseEther } from 'ethers/lib/utils.js'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
-import { Client } from '../../client'
+import type { Client } from '../../client'
 import { connect } from '../accounts'
 import { prepareSendTransaction } from './prepareSendTransaction'
 import { sendTransaction } from './sendTransaction'
@@ -76,6 +76,30 @@ describe('sendTransaction', () => {
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 420\\", received \\"Ethereum\\"."`,
+      )
+    })
+
+    it('chain not configured for connector', async () => {
+      await connect({ connector: client.connectors[0]!, chainId: 420 })
+
+      const signers = getSigners()
+      const to = signers[1]
+      const toAddress = (await to?.getAddress()) || ''
+
+      const config = await prepareSendTransaction({
+        request: {
+          to: toAddress,
+          value: parseEther('10'),
+        },
+      })
+
+      expect(() =>
+        sendTransaction({
+          chainId: 420,
+          ...config,
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Chain \\"420\\" not configured for connector \\"mock\\"."',
       )
     })
 

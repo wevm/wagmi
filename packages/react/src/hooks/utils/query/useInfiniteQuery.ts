@@ -1,11 +1,11 @@
-import {
-  InfiniteQueryObserver,
+import type {
   InfiniteQueryObserverResult,
   QueryFunction,
   QueryKey,
   QueryObserver,
   UseInfiniteQueryOptions,
 } from '@tanstack/react-query'
+import { InfiniteQueryObserver } from '@tanstack/react-query'
 
 import { queryClientContext as context } from '../../../context'
 import { useBaseQuery } from './useBaseQuery'
@@ -137,14 +137,14 @@ export function useInfiniteQuery<
   const result = {
     data: baseQuery.data,
     error: baseQuery.error,
-    fetchNextPage: (<any>baseQuery).fetchNextPage,
+    fetchNextPage: (baseQuery as any).fetchNextPage,
     fetchStatus: baseQuery.fetchStatus,
-    hasNextPage: (<any>baseQuery).hasNextPage,
+    hasNextPage: (baseQuery as any).hasNextPage,
     isError: baseQuery.isError,
     isFetched: baseQuery.isFetched,
     isFetchedAfterMount: baseQuery.isFetchedAfterMount,
     isFetching: baseQuery.isFetching,
-    isFetchingNextPage: (<any>baseQuery).isFetchingNextPage,
+    isFetchingNextPage: (baseQuery as any).isFetchingNextPage,
     isIdle: baseQuery.isIdle,
     isLoading: baseQuery.isLoading,
     isRefetching: baseQuery.isRefetching,

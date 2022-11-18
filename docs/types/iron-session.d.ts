@@ -1,4 +1,4 @@
-import { SiweMessage } from 'siwe'
+import type { SiweMessage } from 'siwe'
 
 declare module 'iron-session' {
   interface IronSessionData {

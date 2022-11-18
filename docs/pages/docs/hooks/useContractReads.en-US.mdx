@@ -3,7 +3,7 @@ title: 'useContractReads'
 description: 'React Hook for calling multiple ethers Contract read-only methods.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 # useContractReads
 
@@ -354,9 +354,9 @@ function App() {
 }
 ```
 
-### isDataEqual (optional)
+### isDataEqual (deprecated, optional)
 
-Determines if the data has changed or not. Defaults to `deepEqual`.
+Use [`structuralSharing`](#structuralsharing-optional) instead.
 
 ```tsx {15}
 import { useContractReads } from 'wagmi'
@@ -374,6 +374,32 @@ function App() {
       },
     ],
     isDataEqual: (prev, next) => prev === next,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    scopeKey: 'wagmi',
+    contracts: [
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getAlive',
+      },
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getBoredom',
+      },
+    ],
   })
 }
 ```
@@ -422,6 +448,32 @@ function App() {
       },
     ],
     select: (data) => transform(data),
+  })
+}
+```
+
+### structuralSharing (optional)
+
+Keep referential identity of data and prevent rerenders. Defaults to `(oldData, newData) => deepEqual(oldData, newData) ? oldData : replaceEqualDeep(oldData, newData)`. If set to `false`, structural sharing between query results will be disabled.
+
+If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
+
+```tsx {15}
+import { useContractReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractReads({
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    structuralSharing: (prev, next) => (prev === next ? prev : next),
   })
 }
 ```

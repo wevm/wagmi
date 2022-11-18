@@ -1,4 +1,4 @@
-import { QueryKey } from '@tanstack/react-query'
+import type { QueryKey } from '@tanstack/react-query'
 
 import { useBlockNumber } from '../network-status'
 import { useQueryClient } from './query'
@@ -18,5 +18,6 @@ export function useInvalidateOnBlock({
     onBlock: enabled
       ? () => queryClient.invalidateQueries(queryKey)
       : undefined,
+    scopeKey: enabled ? undefined : 'idle',
   })
 }

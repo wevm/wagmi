@@ -1,10 +1,10 @@
-import {
+import type {
   QueryFunction,
   QueryKey,
-  QueryObserver,
   QueryObserverResult,
   UseQueryOptions,
 } from '@tanstack/react-query'
+import { QueryObserver } from '@tanstack/react-query'
 
 import { queryClientContext as context } from '../../../context'
 import { useBaseQuery } from './useBaseQuery'

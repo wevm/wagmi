@@ -1,6 +1,6 @@
 # \_dev
 
-This example is for playing around with wagmi during development. It uses [Preconstruct](https://github.com/preconstruct/preconstruct) to set up local links between packages.
+This example is for playing around with wagmi during development.
 
 To get started, run:
 

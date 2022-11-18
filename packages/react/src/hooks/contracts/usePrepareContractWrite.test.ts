@@ -1,4 +1,4 @@
-import { Abi } from 'abitype'
+import type { Abi } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
@@ -12,10 +12,8 @@ import {
 } from '../../../test'
 import { useConnect } from '../accounts'
 import { useSwitchNetwork } from '../accounts/useSwitchNetwork'
-import {
-  UsePrepareContractWriteConfig,
-  usePrepareContractWrite,
-} from './usePrepareContractWrite'
+import type { UsePrepareContractWriteConfig } from './usePrepareContractWrite'
+import { usePrepareContractWrite } from './usePrepareContractWrite'
 
 function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
@@ -147,13 +145,13 @@ describe('usePrepareContractWrite', () => {
       )
 
       const { result, waitFor } = utils
-      await actConnect({ chainId: 4, utils })
+      await actConnect({ chainId: 5, utils })
 
       await waitFor(() =>
         expect(result.current.prepareContractWrite.isError).toBeTruthy(),
       )
       expect(result.current.prepareContractWrite.error).toMatchInlineSnapshot(
-        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Rinkeby".]',
+        '[ChainMismatchError: Chain mismatch: Expected "Ethereum", received "Goerli".]',
       )
 
       await act(async () => result.current.network.switchNetwork?.(1))
@@ -161,6 +159,28 @@ describe('usePrepareContractWrite', () => {
 
       await waitFor(() =>
         expect(result.current.prepareContractWrite.isSuccess).toBeTruthy(),
+      )
+    })
+
+    it('should throw an error if chainId is not configured', async () => {
+      const tokenId = getRandomTokenId()
+      const utils = renderHook(() =>
+        usePrepareContractWriteWithConnect({
+          ...wagmiContractConfig,
+          chainId: 69_420,
+          functionName: 'mint',
+          args: [tokenId],
+        }),
+      )
+
+      const { result, waitFor } = utils
+      await actConnect({ chainId: 69_420, utils })
+
+      await waitFor(() =>
+        expect(result.current.prepareContractWrite.isError).toBeTruthy(),
+      )
+      expect(result.current.prepareContractWrite.error).toMatchInlineSnapshot(
+        '[ChainNotConfigured: Chain "69420" not configured for connector "mock".]',
       )
     })
 

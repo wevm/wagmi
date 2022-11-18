@@ -1,10 +1,10 @@
-import {
+import type {
   Narrow,
   TypedData,
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import { TypedDataField, providers } from 'ethers'
+import type { TypedDataField, providers } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain, normalizeChainId } from '../../utils'
@@ -48,7 +48,7 @@ export async function signTypedData<TTypedData extends TypedData>({
 
   const { chainId: chainId_ } = domain
   const chainId = chainId_ ? normalizeChainId(chainId_) : undefined
-  if (chainId) assertActiveChain({ chainId })
+  if (chainId) assertActiveChain({ chainId, signer })
 
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
   return signer._signTypedData(

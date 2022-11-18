@@ -9,13 +9,14 @@ import {
   setupClient,
   useNetwork,
 } from '../../../test'
-import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
+import type { UseConnectArgs, UseConnectConfig } from './useConnect'
+import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
-import {
+import type {
   UseSwitchNetworkArgs,
   UseSwitchNetworkConfig,
-  useSwitchNetwork,
 } from './useSwitchNetwork'
+import { useSwitchNetwork } from './useSwitchNetwork'
 
 function useNetworkWithConnectAndDisconnect(
   config: {
@@ -42,7 +43,7 @@ describe('useNetwork', () => {
       })
 
       const { chain, chains } = result.current
-      expect(chains.length).toBe(5)
+      expect(chains.length).toBe(2)
       expect(chain?.id).toBe(1)
     })
 
@@ -72,8 +73,8 @@ describe('useNetwork', () => {
 
       await actConnect({ utils })
       expect(result.current.network?.chain?.id).toBe(1)
-      await actSwitchNetwork({ utils, chainId: 4 })
-      expect(result.current.network?.chain?.id).toBe(4)
+      await actSwitchNetwork({ utils, chainId: 5 })
+      expect(result.current.network?.chain?.id).toBe(5)
       expect(result.current.network?.chain?.unsupported).toBe(false)
     })
 

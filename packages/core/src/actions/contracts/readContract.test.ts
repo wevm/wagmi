@@ -1,9 +1,8 @@
-import { ResolvedConfig } from 'abitype'
+import type { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { assertType, beforeEach, describe, expect, it } from 'vitest'
 
 import {
-  expectType,
   mlootContractConfig,
   setupClient,
   wagmigotchiContractConfig,
@@ -30,7 +29,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<ResolvedConfig['BigIntType']>(result)
+      assertType<ResolvedConfig['BigIntType']>(result)
     })
 
     it('contract args', async () => {
@@ -46,7 +45,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<ResolvedConfig['BigIntType']>(result)
+      assertType<ResolvedConfig['BigIntType']>(result)
     })
 
     it('overrides', async () => {
@@ -63,7 +62,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<ResolvedConfig['BigIntType']>(result)
+      assertType<ResolvedConfig['BigIntType']>(result)
     })
   })
 
@@ -84,7 +83,7 @@ describe('readContract', () => {
           "type": "BigNumber",
         }
       `)
-      expectType<ResolvedConfig['BigIntType']>(result)
+      assertType<ResolvedConfig['BigIntType']>(result)
     })
   })
 })

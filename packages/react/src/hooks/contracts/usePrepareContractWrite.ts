@@ -1,18 +1,19 @@
-import {
+import type {
   FetchSignerResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
-  prepareWriteContract,
+  Signer,
 } from '@wagmi/core'
-import { Abi } from 'abitype'
-import { Signer, providers } from 'ethers'
+import { prepareWriteContract } from '@wagmi/core'
+import type { Abi } from 'abitype'
+import type { providers } from 'ethers'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useSigner } from '../accounts'
-import { useChainId, useQuery } from '../utils'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useNetwork, useSigner } from '../accounts'
+import { useQuery } from '../utils'
 
 export type UsePrepareContractWriteConfig<
-  TAbi extends Abi | readonly unknown[] = Abi,
+  TAbi = Abi,
   TFunctionName extends string = string,
   TSigner extends Signer = Signer,
 > = PrepareWriteContractConfig<
@@ -26,21 +27,23 @@ export type UsePrepareContractWriteConfig<
     isFunctionNameOptional: true
   }
 > &
-  QueryConfig<PrepareWriteContractResult, Error>
+  QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName>, Error>
 
-function queryKey(
-  {
-    args,
-    address,
-    chainId,
-    functionName,
-    overrides,
-  }: Omit<PrepareWriteContractConfig, 'abi'>,
-  {
-    activeChainId,
-    signerAddress,
-  }: { activeChainId?: number; signerAddress?: string },
-) {
+type QueryKeyArgs = Omit<PrepareWriteContractConfig, 'abi'>
+type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
+  activeChainId?: number
+  signerAddress?: string
+}
+
+function queryKey({
+  activeChainId,
+  args,
+  address,
+  chainId,
+  functionName,
+  overrides,
+  signerAddress,
+}: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'prepareContractTransaction',
@@ -67,11 +70,11 @@ function queryFn({
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!abi) throw new Error('abi is required')
     return prepareWriteContract({
+      // TODO: Remove cast and still support `Narrow<TAbi>`
+      abi: abi as Abi,
       args,
       address,
       chainId,
-      // TODO: Remove cast and still support `Narrow<TAbi>`
-      abi: abi as Abi,
       functionName,
       overrides,
       signer,
@@ -108,6 +111,7 @@ export function usePrepareContractWrite<
     overrides,
     cacheTime,
     enabled = true,
+    scopeKey,
     staleTime,
     suspense,
     onError,
@@ -115,22 +119,20 @@ export function usePrepareContractWrite<
     onSuccess,
   }: UsePrepareContractWriteConfig<TAbi, TFunctionName> = {} as any,
 ) {
-  const activeChainId = useChainId()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({
-    chainId: chainId ?? activeChainId,
-  })
+  const { chain: activeChain } = useNetwork()
+  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
 
   const prepareContractWriteQuery = useQuery(
-    queryKey(
-      {
-        address,
-        functionName,
-        chainId,
-        args,
-        overrides,
-      } as Omit<PrepareWriteContractConfig, 'abi'>,
-      { activeChainId, signerAddress: signer?._address },
-    ),
+    queryKey({
+      activeChainId: activeChain?.id,
+      address,
+      args,
+      chainId,
+      functionName,
+      scopeKey,
+      signerAddress: signer?._address,
+      overrides,
+    } as Omit<PrepareWriteContractConfig, 'abi'>),
     queryFn({
       // TODO: Remove cast and still support `Narrow<TAbi>`
       abi: abi as Abi,
@@ -146,6 +148,7 @@ export function usePrepareContractWrite<
       onSuccess,
     },
   )
+
   return Object.assign(prepareContractWriteQuery, {
     config: {
       abi,

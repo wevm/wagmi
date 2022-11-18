@@ -1,4 +1,4 @@
-import { Abi } from 'abitype'
+import type { Abi } from 'abitype'
 
 import { multicallABI } from '../../constants'
 import {
@@ -8,7 +8,7 @@ import {
   ContractResultDecodeError,
   ProviderChainsNotFound,
 } from '../../errors'
-import {
+import type {
   ContractConfig,
   ContractsConfig,
   ContractsResult,

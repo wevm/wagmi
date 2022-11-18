@@ -73,6 +73,7 @@ export {
   defaultL2Chains,
   erc20ABI,
   erc721ABI,
+  erc4626ABI,
   etherscanBlockExplorers,
   infuraRpcUrls,
   publicRpcUrls,

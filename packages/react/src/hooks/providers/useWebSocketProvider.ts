@@ -1,9 +1,5 @@
-import {
-  GetWebSocketProviderArgs,
-  WebSocketProvider,
-  getWebSocketProvider,
-  watchWebSocketProvider,
-} from '@wagmi/core'
+import type { GetWebSocketProviderArgs, WebSocketProvider } from '@wagmi/core'
+import { getWebSocketProvider, watchWebSocketProvider } from '@wagmi/core'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 
 export type UseWebSocketProviderArgs = Partial<GetWebSocketProviderArgs>

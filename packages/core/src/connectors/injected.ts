@@ -1,19 +1,18 @@
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
 import { getClient } from '../client'
+import type { ProviderRpcError, RpcError } from '../errors'
 import {
   AddChainError,
   ChainNotConfiguredError,
   ConnectorNotFoundError,
-  ProviderRpcError,
   ResourceUnavailableError,
-  RpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 import { getInjectedName, normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -156,7 +155,7 @@ export class InjectedConnector extends Connector<
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <providers.ExternalProvider>provider,
+      provider as providers.ExternalProvider,
       chainId,
     ).getSigner(account)
   }
@@ -204,14 +203,15 @@ export class InjectedConnector extends Connector<
       )
     } catch (error) {
       const chain = this.chains.find((x) => x.id === chainId)
-      if (!chain) throw new ChainNotConfiguredError()
+      if (!chain)
+        throw new ChainNotConfiguredError({ chainId, connectorId: this.id })
 
       // Indicates chain is not added to provider
       if (
         (error as ProviderRpcError).code === 4902 ||
         // Unwrapping for MetaMask Mobile
         // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
-        (<RpcError<{ originalError?: { code: number } }>>error)?.data
+        (error as RpcError<{ originalError?: { code: number } }>)?.data
           ?.originalError?.code === 4902
       ) {
         try {

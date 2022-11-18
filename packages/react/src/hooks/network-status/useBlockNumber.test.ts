@@ -31,6 +31,33 @@ describe('useBlockNumber', () => {
   })
 
   describe('configuration', () => {
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          blockNumber: useBlockNumber(),
+          blockNumberwithoutScopeKey: useBlockNumber({
+            enabled: false,
+          }),
+          blockNumberwithScopeKey: useBlockNumber({
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.blockNumber.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.blockNumberwithoutScopeKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.blockNumberwithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useBlockNumber({ chainId: 1 }),

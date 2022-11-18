@@ -1,22 +1,22 @@
-import {
-  FetchTransactionArgs,
-  FetchTransactionResult,
-  fetchTransaction,
-} from '@wagmi/core'
+import type { FetchTransactionArgs, FetchTransactionResult } from '@wagmi/core'
+import { fetchTransaction } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-type UseTransactionArgs = Partial<FetchTransactionArgs>
-
+export type UseTransactionArgs = Partial<FetchTransactionArgs>
 export type UseTransactionConfig = QueryConfig<FetchTransactionResult, Error>
 
-const queryKey = ({ chainId, hash }: Partial<FetchTransactionArgs>) =>
-  [{ entity: 'transaction', chainId, hash }] as const
+type QueryKeyArgs = UseTransactionArgs
+type QueryKeyConfig = Pick<UseTransactionConfig, 'scopeKey'>
 
-const queryFn = ({
+function queryKey({ chainId, hash, scopeKey }: QueryKeyArgs & QueryKeyConfig) {
+  return [{ entity: 'transaction', chainId, hash, scopeKey }] as const
+}
+
+function queryFn({
   queryKey: [{ chainId, hash }],
-}: QueryFunctionArgs<typeof queryKey>) => {
+}: QueryFunctionArgs<typeof queryKey>) {
   if (!hash) throw new Error('hash is required')
   return fetchTransaction({ chainId, hash })
 }
@@ -37,6 +37,7 @@ export function useTransaction({
   chainId: chainId_,
   enabled = true,
   hash,
+  scopeKey,
   staleTime,
   suspense,
   onError,
@@ -45,7 +46,7 @@ export function useTransaction({
 }: UseTransactionArgs & UseTransactionConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  return useQuery(queryKey({ chainId, hash }), queryFn, {
+  return useQuery(queryKey({ chainId, hash, scopeKey }), queryFn, {
     cacheTime,
     enabled: Boolean(enabled && hash),
     staleTime,

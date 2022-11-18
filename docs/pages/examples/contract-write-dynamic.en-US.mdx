@@ -3,7 +3,7 @@ title: 'Contract Write'
 description: 'Learn how to perform a contract write with wagmi.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 import { ContractWriteDynamic } from '../../components/examples'
 
 # Contract Write (Dynamic Args)
@@ -106,7 +106,7 @@ export function MintNFTForm() {
 }
 ```
 
-<Callout emoji="🤔" type="info">
+<Callout type="info">
   By defining inline or adding a [const
   assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
   to `abi`, TypeScript will infer the correct types for `functionName` and
@@ -221,7 +221,7 @@ Clicking the "Mint" button will invoke the `mint` function on the contract and m
 
 However, there is currently no feedback to show when the `mint` transaction is successful. We will add some feedback in the next step.
 
-<Callout emoji="🤔" type="info">
+<Callout type="info">
   [Why do I need a `usePrepareContractWrite` & `useContractWrite`
   hook?](/docs/prepare-hooks/intro)
 </Callout>

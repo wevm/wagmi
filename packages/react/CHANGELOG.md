@@ -1,5 +1,195 @@
 # wagmi
 
+## 0.8.5
+
+### Patch Changes
+
+- [#1282](https://github.com/wagmi-dev/wagmi/pull/1282) [`6d286c9e`](https://github.com/wagmi-dev/wagmi/commit/6d286c9ed6f64a9872352904d4d171a6bc1c7a96) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useContractRead` would perform an unnecessary rerender if another hook had `watch` enabled.
+
+## 0.8.4
+
+### Patch Changes
+
+- [#1309](https://github.com/wagmi-dev/wagmi/pull/1309) [`1f4a4261`](https://github.com/wagmi-dev/wagmi/commit/1f4a4261247b1d3a90e3123157bc851a35d49b9c) Thanks [@tmm](https://github.com/tmm)! - Fixed internal type
+
+- Updated dependencies [[`1f4a4261`](https://github.com/wagmi-dev/wagmi/commit/1f4a4261247b1d3a90e3123157bc851a35d49b9c)]:
+  - @wagmi/core@0.7.4
+
+## 0.8.3
+
+### Patch Changes
+
+- [#1294](https://github.com/wagmi-dev/wagmi/pull/1294) [`b2f88949`](https://github.com/wagmi-dev/wagmi/commit/b2f88949f32aabaf13f318472648cd51a8b7f2e7) Thanks [@tmm](https://github.com/tmm)! - Set `abi` return type value for `usePrepareContractWrite` as more permissive when not inferrable as `Abi`.
+
+- Updated dependencies [[`b2f88949`](https://github.com/wagmi-dev/wagmi/commit/b2f88949f32aabaf13f318472648cd51a8b7f2e7)]:
+  - @wagmi/core@0.7.3
+
+## 0.8.2
+
+### Patch Changes
+
+- [`e9f806b6`](https://github.com/wagmi-dev/wagmi/commit/e9f806b652ba62effb3ddac464815e447fc287f6) Thanks [@tmm](https://github.com/tmm)! - Bumped abitype and zustand versions.
+
+- [#1290](https://github.com/wagmi-dev/wagmi/pull/1290) [`88450052`](https://github.com/wagmi-dev/wagmi/commit/88450052b9f070fe53e18d84f72918c410b961f0) Thanks [@tmm](https://github.com/tmm)! - Fixed `useAccount`'s' `onConnect` callback `isReconnected` flag.
+
+- Updated dependencies [[`e9f806b6`](https://github.com/wagmi-dev/wagmi/commit/e9f806b652ba62effb3ddac464815e447fc287f6)]:
+  - @wagmi/core@0.7.2
+
+## 0.8.1
+
+### Patch Changes
+
+- [#1272](https://github.com/wagmi-dev/wagmi/pull/1272) [`1f7fc41`](https://github.com/wagmi-dev/wagmi/commit/1f7fc419f7960bbdc51dfa85c2f33b89f1ecc1bf) Thanks [@tmm](https://github.com/tmm)! - Fixed ethers import path
+
+- Updated dependencies [[`1f7fc41`](https://github.com/wagmi-dev/wagmi/commit/1f7fc419f7960bbdc51dfa85c2f33b89f1ecc1bf)]:
+  - @wagmi/core@0.7.1
+
+## 0.8.0
+
+### Minor Changes
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Removed the following deprecated chains:
+
+  - `ropsten`
+  - `rinkeby`
+  - `kovan`
+  - `optimismKovan`
+  - `arbitrumRinkeby`
+
+  If you feel you still need to include one of these testnets in your application, you will have to define it manually:
+
+  ```diff
+  -import { rinkeby } from 'wagmi'
+  +import { Chain } from 'wagmi'
+
+  +export const rinkeby: Chain = {
+  + id: 4,
+  + name: 'Rinkeby',
+  + network: 'rinkeby',
+  + nativeCurrency: { name: 'Rinkeby Ether', symbol: 'ETH', decimals: 18 },
+  + rpcUrls: {
+  +   alchemy: 'https://eth-rinkeby.alchemyapi.io/v2',
+  +   default: 'https://rpc.ankr.com/eth_rinkeby',
+  +   infura: 'https://rinkeby.infura.io/v3',
+  +   public: 'https://rpc.ankr.com/eth_rinkeby',
+  +  },
+  + blockExplorers: {
+  +   etherscan: 'https://rinkeby.etherscan.io',
+  +   default: 'https://rinkeby.etherscan.io',
+  + },
+  + ens: {
+  +   address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  + },
+  + multicall: {
+  +   address: '0xca11bde05977b3631167028862be2a173976ca11',
+  +   blockCreated: 10299530,
+  + },
+  + testnet: true,
+  }
+  ```
+
+  You can reference these removed chains [here](https://github.com/wagmi-dev/wagmi/blob/389765f7d9af063ab0df07389a2bbfbc10a41060/packages/core/src/constants/chains.ts).
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: Made `apiKey` required on `infuraProvider` and `alchemyProvider`.
+
+  ```diff
+  import { configureChains } from 'wagmi'
+
+  const config = configureChains(defaultChains, [
+  - alchemyProvider(),
+  + alchemyProvider({ apiKey: process.env.ALCHEMY_API_KEY })
+  ])
+  ```
+
+  You can find your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/), or your Infura API key from the [Infura Dashboard](https://infura.io/login).
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - **Breaking**: `addressOrName` renamed to `address` for `useBalance` and `useEnsAvatar`.
+
+  ```diff
+  const result = useBalance({
+  - addressOrName: '0x…',
+  + address: '0x…',
+  })
+  ```
+
+  If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
+
+  ```diff
+  + const { data: address } = useEnsAddress({ name: 'example.eth' })
+  const result = useBalance({
+  - addressOrName: 'example.eth',
+  + address,
+  })
+  ```
+
+- [#1202](https://github.com/wagmi-dev/wagmi/pull/1202) [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2) Thanks [@tmm](https://github.com/tmm)! - Removed CommonJS support
+
+### Patch Changes
+
+- Updated dependencies [[`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2), [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2), [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2), [`9bf56af`](https://github.com/wagmi-dev/wagmi/commit/9bf56af3c30bdb80abb1e785c002e00986fadfb2)]:
+  - @wagmi/core@0.7.0
+
+## 0.7.15
+
+### Patch Changes
+
+- [#1262](https://github.com/wagmi-dev/wagmi/pull/1262) [`45e2ca4`](https://github.com/wagmi-dev/wagmi/commit/45e2ca4d1f33a7b1165c387d420b8d47f4f66935) Thanks [@tmm](https://github.com/tmm)! - Added default for `structuralSharing` for `useContractRead`, `useContractReads`, and `useContractInfiniteReads`.
+
+## 0.7.14
+
+### Patch Changes
+
+- [#1260](https://github.com/wagmi-dev/wagmi/pull/1260) [`0e12f03`](https://github.com/wagmi-dev/wagmi/commit/0e12f0380442bccca9ed18991e783819778032fe) Thanks [@ilmpc](https://github.com/ilmpc)! - Deprecated `isDataEqual` option from and added `structuralSharing` option to `useContractRead`, `useContractReads`, and `useContractInfiniteReads`.
+
+## 0.7.13
+
+### Patch Changes
+
+- [#1250](https://github.com/wagmi-dev/wagmi/pull/1250) [`ce2e0f4`](https://github.com/wagmi-dev/wagmi/commit/ce2e0f4a46b8fd1c509ead552012ef4c072a525b) Thanks [@tmm](https://github.com/tmm)! - Added support for Trust Wallet browser extension.
+
+- Updated dependencies [[`ce2e0f4`](https://github.com/wagmi-dev/wagmi/commit/ce2e0f4a46b8fd1c509ead552012ef4c072a525b)]:
+  - @wagmi/core@0.6.12
+
+## 0.7.12
+
+### Patch Changes
+
+- [#1234](https://github.com/wagmi-dev/wagmi/pull/1234) [`3ff9303`](https://github.com/wagmi-dev/wagmi/commit/3ff930349250f62137cca4ca3b382522882abf8a) Thanks [@tmm](https://github.com/tmm)! - Fixed issue with adding chain to wallet without block explorer URL.
+
+- Updated dependencies [[`3ff9303`](https://github.com/wagmi-dev/wagmi/commit/3ff930349250f62137cca4ca3b382522882abf8a)]:
+  - @wagmi/core@0.6.11
+
+## 0.7.11
+
+### Patch Changes
+
+- [#1232](https://github.com/wagmi-dev/wagmi/pull/1232) [`c0ca509`](https://github.com/wagmi-dev/wagmi/commit/c0ca509506dcf6d98b058df549dc761c9a5f3d1c) Thanks [@tmm](https://github.com/tmm)! - Added validation to check that chain is configured for connector when accessing `Signer`.
+
+- Updated dependencies [[`c0ca509`](https://github.com/wagmi-dev/wagmi/commit/c0ca509506dcf6d98b058df549dc761c9a5f3d1c)]:
+  - @wagmi/core@0.6.10
+
+## 0.7.10
+
+### Patch Changes
+
+- [#1206](https://github.com/wagmi-dev/wagmi/pull/1206) [`15ff089`](https://github.com/wagmi-dev/wagmi/commit/15ff0896216abecf5967294ae5aeb26ea7fb480b) Thanks [@jxom](https://github.com/jxom)! - Added `scopeKey` as a configuration option to the Hooks which scope its cache to a given context. Hooks that have identical scope will share the same cache.
+
+- [#1207](https://github.com/wagmi-dev/wagmi/pull/1207) [`c73d463`](https://github.com/wagmi-dev/wagmi/commit/c73d463d65c9dbfcfe709187e47323a769589741) Thanks [@lvshaoping007](https://github.com/lvshaoping007)! - Added Kucoin wallet support to `InjectedConnector`
+
+- Updated dependencies [[`c73d463`](https://github.com/wagmi-dev/wagmi/commit/c73d463d65c9dbfcfe709187e47323a769589741)]:
+  - @wagmi/core@0.6.9
+
+## 0.7.9
+
+### Patch Changes
+
+- [#1201](https://github.com/wagmi-dev/wagmi/pull/1201) [`9a07efa`](https://github.com/wagmi-dev/wagmi/commit/9a07efaa397d3ba03f2edbe527c359f21e22139a) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where non-checksum addresses did not resolve with an ENS name
+
+- [#1132](https://github.com/wagmi-dev/wagmi/pull/1132) [`d41c0d6`](https://github.com/wagmi-dev/wagmi/commit/d41c0d650f8c0e54145758685b7604b8909d7ae0) Thanks [@toniocodo](https://github.com/toniocodo)! - Added ERC-4626 ABI
+
+- Updated dependencies [[`d41c0d6`](https://github.com/wagmi-dev/wagmi/commit/d41c0d650f8c0e54145758685b7604b8909d7ae0), [`9a07efa`](https://github.com/wagmi-dev/wagmi/commit/9a07efaa397d3ba03f2edbe527c359f21e22139a)]:
+  - @wagmi/core@0.6.8
+
 ## 0.7.8
 
 ### Patch Changes

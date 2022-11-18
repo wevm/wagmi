@@ -3,18 +3,18 @@ import type {
   CoinbaseWalletSDK,
 } from '@coinbase/wallet-sdk'
 import type { CoinbaseWalletSDKOptions } from '@coinbase/wallet-sdk/dist/CoinbaseWalletSDK'
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { providers } from 'ethers'
-import { getAddress, hexValue } from 'ethers/lib/utils'
+import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
+import type { ProviderRpcError } from '../errors'
 import {
   AddChainError,
   ChainNotConfiguredError,
-  ProviderRpcError,
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import { Chain } from '../types'
+import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -201,7 +201,8 @@ export class CoinbaseWalletConnector extends Connector<
       )
     } catch (error) {
       const chain = this.chains.find((x) => x.id === chainId)
-      if (!chain) throw new ChainNotConfiguredError()
+      if (!chain)
+        throw new ChainNotConfiguredError({ chainId, connectorId: this.id })
 
       // Indicates chain is not added to provider
       if ((error as ProviderRpcError).code === 4902) {

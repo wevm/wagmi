@@ -1,15 +1,15 @@
-import { Hash } from '@wagmi/core'
-import { parseEther } from 'ethers/lib/utils'
+import type { Hash } from '@wagmi/core'
+import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
 import { useConnect } from '../accounts'
 import { useSendTransaction } from './useSendTransaction'
-import {
+import type {
   UseWaitForTransactionArgs,
   UseWaitForTransactionConfig,
-  useWaitForTransaction,
 } from './useWaitForTransaction'
+import { useWaitForTransaction } from './useWaitForTransaction'
 
 function useWaitForTransactionWithSendTransactionAndConnect(
   config: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {},
@@ -46,7 +46,38 @@ describe('useWaitForTransaction', () => {
   })
 
   describe('configuration', () => {
-    it('chainId,', async () => {
+    it('scopeKey', async () => {
+      const { result, waitFor } = renderHook(() => {
+        return {
+          transaction: useWaitForTransaction({
+            hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
+          }),
+          transactionwithoutScopeKey: useWaitForTransaction({
+            hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
+            enabled: false,
+          }),
+          transactionwithScopeKey: useWaitForTransaction({
+            hash: '0x5a44238ce14eced257ca19146505cce273f8bb552d35fd1a68737e2f0f95ab4b',
+            scopeKey: 'wagmi',
+            enabled: false,
+          }),
+        }
+      })
+
+      await waitFor(() =>
+        expect(result.current.transaction.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(
+          result.current.transactionwithoutScopeKey.isSuccess,
+        ).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.current.transactionwithScopeKey.isIdle).toBeTruthy(),
+      )
+    })
+
+    it('chainId', async () => {
       let hash: Hash | undefined = undefined
       const utils = renderHook(() =>
         useWaitForTransactionWithSendTransactionAndConnect({

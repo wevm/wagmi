@@ -3,7 +3,7 @@ title: 'Injected'
 description: 'Official wagmi Connector for Injected wallets, like MetaMask.'
 ---
 
-import Callout from 'nextra-theme-docs/callout'
+import { Callout } from 'nextra-theme-docs'
 
 # Injected
 
@@ -21,7 +21,7 @@ import { InjectedConnector } from 'wagmi/connectors/injected'
 const connector = new InjectedConnector()
 ```
 
-<Callout emoji="💼">
+<Callout type="info">
   Injected wallets can set up custom name mappings in wagmi. You can [see the
   full list and add to it
   here](https://github.com/wagmi-dev/wagmi/blob/main/packages/core/src/utils/getInjectedName.ts).

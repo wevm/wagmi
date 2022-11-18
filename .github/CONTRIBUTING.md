@@ -83,7 +83,7 @@ Once in the project's root directory, run the following command to install the p
 pnpm install
 ```
 
-After the install completes, [Preconstruct](https://github.com/preconstruct/preconstruct) links packages across the project for development and [git hooks](https://github.com/toplenboren/simple-git-hooks) are set up.
+After the install completes, pnpm links packages across the project for development and [git hooks](https://github.com/toplenboren/simple-git-hooks) are set up.
 
 <div align="right">
   <a href="#basic-guide">&uarr; back to top</a></b>

@@ -10,13 +10,12 @@ describe('fetchBalance', () => {
       setupClient()
     })
 
-    describe('addressOrName', () => {
-      it('address', async () => {
-        expect(
-          await fetchBalance({
-            addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-          }),
-        ).toMatchInlineSnapshot(`
+    it('address', async () => {
+      expect(
+        await fetchBalance({
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+        }),
+      ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
             "formatted": "0.40742480512617271",
@@ -27,31 +26,12 @@ describe('fetchBalance', () => {
             },
           }
         `)
-      })
-
-      it('name', async () => {
-        expect(
-          await fetchBalance({
-            addressOrName: 'awkweb.eth',
-          }),
-        ).toMatchInlineSnapshot(`
-          {
-            "decimals": 18,
-            "formatted": "0.40742480512617271",
-            "symbol": "ETH",
-            "value": {
-              "hex": "0x05a776b39e3a7026",
-              "type": "BigNumber",
-            },
-          }
-        `)
-      })
     })
 
     it('chainId', async () => {
       expect(
         await fetchBalance({
-          addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
           chainId: 1,
         }),
       ).toMatchInlineSnapshot(`
@@ -70,7 +50,7 @@ describe('fetchBalance', () => {
     it('formatUnits', async () => {
       expect(
         await fetchBalance({
-          addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
           formatUnits: 'gwei',
         }),
       ).toMatchInlineSnapshot(`
@@ -90,7 +70,7 @@ describe('fetchBalance', () => {
       it('address', async () => {
         expect(
           await fetchBalance({
-            addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
             token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
           }),
         ).toMatchInlineSnapshot(`
@@ -109,7 +89,7 @@ describe('fetchBalance', () => {
       it('bytes32 contract', async () => {
         expect(
           await fetchBalance({
-            addressOrName: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
+            address: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
             token: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
           }),
         ).toMatchInlineSnapshot(`
@@ -124,38 +104,6 @@ describe('fetchBalance', () => {
           }
         `)
       })
-
-      describe('name', () => {
-        it('valid', async () => {
-          expect(
-            await fetchBalance({
-              addressOrName: 'awkweb.eth',
-              token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-            }),
-          ).toMatchInlineSnapshot(`
-            {
-              "decimals": 18,
-              "formatted": "18.0553",
-              "symbol": "UNI",
-              "value": {
-                "hex": "0xfa914fb05d1c4000",
-                "type": "BigNumber",
-              },
-            }
-          `)
-        })
-
-        it('not configured', async () => {
-          await expect(
-            fetchBalance({
-              addressOrName: 'thisnamedoesnotexist.eth',
-              token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-            }),
-          ).rejects.toThrowErrorMatchingInlineSnapshot(
-            '"ENS name not configured (operation=\\"resolveName(\\\\\\"thisnamedoesnotexist.eth\\\\\\")\\", code=UNSUPPORTED_OPERATION, version=ethers/5.7.1)"',
-          )
-        })
-      })
     })
   })
 
@@ -163,7 +111,7 @@ describe('fetchBalance', () => {
     it('token with less than 18 decimals formats units correctly', async () => {
       expect(
         await fetchBalance({
-          addressOrName: 'awkweb.eth',
+          address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
           token: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
         }),
       ).toMatchInlineSnapshot(`

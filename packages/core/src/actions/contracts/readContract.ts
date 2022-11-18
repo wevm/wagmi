@@ -1,7 +1,7 @@
-import { Abi } from 'abitype'
+import type { Abi } from 'abitype'
 
 import { ContractMethodDoesNotExistError } from '../../errors'
-import {
+import type {
   DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,

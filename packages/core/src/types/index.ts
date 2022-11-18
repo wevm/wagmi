@@ -1,13 +1,13 @@
-import {
+import type {
   Address,
   ResolvedConfig,
   TypedData,
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import { Signer as BaseSigner, BigNumber, providers } from 'ethers'
+import type { Signer as BaseSigner, BigNumber, providers } from 'ethers'
 
-import {
+import type {
   BlockExplorer,
   BlockExplorerName,
   RpcProviderName,
@@ -22,7 +22,7 @@ declare module 'abitype' {
   }
 }
 
-declare module 'ethers/lib/utils' {
+declare module 'ethers/lib/utils.js' {
   export function getAddress(address: string): Address
   export function isAddress(address: string): address is Address
   export function verifyTypedData<
@@ -158,11 +158,13 @@ type WatchAssetParams = {
 }
 
 type InjectedProviderFlags = {
+  isAvalanche?: true
   isBitKeep?: true
   isBraveWallet?: true
   isCoinbaseWallet?: true
   isExodus?: true
   isFrame?: true
+  isKuCoinWallet?: true
   isMathWallet?: true
   isMetaMask?: true
   isOneInchAndroidWallet?: true
@@ -173,7 +175,7 @@ type InjectedProviderFlags = {
   isTokenPocket?: true
   isTokenary?: true
   isTrust?: true
-  isAvalanche?: true
+  isTrustWallet?: true
 }
 
 type InjectedProviders = InjectedProviderFlags & {
