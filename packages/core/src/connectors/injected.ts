@@ -150,14 +150,15 @@ export class InjectedConnector extends Connector<
   }
 
   async getSigner({ chainId }: { chainId?: number } = {}) {
-    const [provider, account] = await Promise.all([
-      this.getProvider(),
-      this.getAccount(),
-    ])
+    const provider = await this.getProvider()
+    if (!provider) throw new ConnectorNotFoundError()
+    const accounts = await provider.request({
+      method: 'eth_accounts',
+    })
     return new providers.Web3Provider(
       provider as providers.ExternalProvider,
       chainId,
-    ).getSigner(account)
+    ).getSigner(accounts[0])
   }
 
   async isAuthorized() {
