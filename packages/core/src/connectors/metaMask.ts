@@ -66,12 +66,8 @@ export class MetaMaskConnector extends InjectedConnector {
         this.options?.shimDisconnect &&
         !getClient().storage?.getItem(this.shimDisconnectKey)
       ) {
-        const accounts = await provider
-          .request({
-            method: 'eth_accounts',
-          })
-          .catch(() => [])
-        const isConnected = !!accounts[0]
+        const account = await this.getAccount().catch(() => [])
+        const isConnected = !!account
         if (isConnected)
           await provider.request({
             method: 'wallet_requestPermissions',
