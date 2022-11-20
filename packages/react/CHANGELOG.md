@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.8.5
+
+### Patch Changes
+
+- [#1282](https://github.com/wagmi-dev/wagmi/pull/1282) [`6d286c9e`](https://github.com/wagmi-dev/wagmi/commit/6d286c9ed6f64a9872352904d4d171a6bc1c7a96) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useContractRead` would perform an unnecessary rerender if another hook had `watch` enabled.
+
 ## 0.8.4
 
 ### Patch Changes

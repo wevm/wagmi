@@ -232,12 +232,12 @@ function SignInButton({
   }, [])
 
   const { address } = useAccount()
-  const { chain: activeChain } = useNetwork()
+  const { chain } = useNetwork()
   const { signMessageAsync } = useSignMessage()
 
   const signIn = async () => {
     try {
-      const chainId = activeChain?.id
+      const chainId = chain?.id
       if (!address || !chainId) return
 
       setState((x) => ({ ...x, loading: true }))

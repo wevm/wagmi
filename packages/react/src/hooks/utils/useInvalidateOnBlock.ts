@@ -18,5 +18,6 @@ export function useInvalidateOnBlock({
     onBlock: enabled
       ? () => queryClient.invalidateQueries(queryKey)
       : undefined,
+    scopeKey: enabled ? undefined : 'idle',
   })
 }

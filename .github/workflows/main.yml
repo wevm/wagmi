@@ -169,6 +169,11 @@ jobs:
         run: pnpm test:coverage
         env:
           REACT_VERSION: ${{ matrix.react-version }}
+      - name: Test types
+        if: matrix.react-version == 18
+        run: pnpm test:typecheck
+        env:
+          REACT_VERSION: ${{ matrix.react-version }}
       - name: Test React 17
         if: matrix.react-version == 17
         run: |
