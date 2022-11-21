@@ -12,5 +12,6 @@
   "waitForTransaction": "waitForTransaction",
   "watchContractEvent": "watchContractEvent",
   "watchMulticall": "watchMulticall",
+  "watchReadContracts": "watchReadContracts",
   "writeContract": "writeContract"
 }

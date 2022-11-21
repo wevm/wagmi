@@ -1,16 +1,16 @@
 ---
-title: 'watchMulticall'
-description: 'Action for subscribing to multicall changes.'
+title: 'watchReadContracts'
+description: 'Action for subscribing to readContracts changes.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
-# watchMulticall
+# watchReadContracts
 
-Action for subscribing to [multicall](/core/actions/multicall) changes.
+Action for subscribing to [readContracts](/core/actions/readContracts) changes.
 
 ```tsx
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ By default, the callback will be invoked on chain change.
 To listen for block changes, you can use the [`listenToBlock` config](#listentoblock-optional).
 
 ```tsx {20}
-import { multicall, watchMulticall } from '@wagmi/core'
+import { readContracts, watchReadContracts } from '@wagmi/core'
 
 const config = {
   contracts: [
@@ -38,8 +38,8 @@ const config = {
   ],
 }
 
-let data = await multicall(config)
-watchMulticall(config, (data_) => (data = data_))
+let data = await readContracts(config)
+watchReadContracts(config, (data_) => (data = data_))
 ```
 
 ## Configuration
@@ -51,9 +51,9 @@ watchMulticall(config, (data_) => (data = data_))
 Contract address.
 
 ```tsx {7,12}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-watchMulticall(
+watchReadContracts(
   {
     contracts: [
       {
@@ -79,9 +79,9 @@ Contract ABI.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and action result. See the wagmi [TypeScript docs](/docs/typescript) for more information.
 
 ```tsx {8,13}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-const data = await watchMulticall(
+const data = await watchReadContracts(
   {
     contracts: [
       {
@@ -105,9 +105,9 @@ const data = await watchMulticall(
 Name of function to call.
 
 ```tsx {9,14}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-const data = await watchMulticall(
+const data = await watchReadContracts(
   {
     contracts: [
       {
@@ -131,9 +131,9 @@ const data = await watchMulticall(
 Arguments to pass to function call.
 
 ```tsx {10,16}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-const data = await watchMulticall(
+const data = await watchReadContracts(
   {
     contracts: [
       {
@@ -159,9 +159,9 @@ const data = await watchMulticall(
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
 
 ```tsx {9,14}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-const data = await watchMulticall(
+const data = await watchReadContracts(
   {
     contracts: [
       {
@@ -185,9 +185,9 @@ const data = await watchMulticall(
 If a contract read fails while fetching, it will fail silently and not throw an error.
 
 ```tsx {15}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-const data = await watchMulticall(
+const data = await watchReadContracts(
   {
     contracts: [
       {
@@ -207,12 +207,12 @@ const data = await watchMulticall(
 
 ### listenToBlock (optional)
 
-Listen for block changes & invoke `multicall`.
+Listen for block changes & invoke `readContracts`.
 
 ```tsx {19}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-const data = await watchMulticall(
+const data = await watchReadContracts(
   {
     contracts: [
       {
@@ -239,9 +239,9 @@ const data = await watchMulticall(
 Overrides to pass to function call.
 
 ```tsx {15}
-import { watchMulticall } from '@wagmi/core'
+import { watchReadContracts } from '@wagmi/core'
 
-const data = await watchMulticall(
+const data = await watchReadContracts(
   {
     contracts: [
       {
