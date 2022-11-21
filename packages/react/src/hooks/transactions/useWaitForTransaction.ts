@@ -13,7 +13,10 @@ export type UseWaitForTransactionConfig = QueryConfig<
   Error
 >
 
-type QueryKeyArgs = UseWaitForTransactionArgs
+type QueryKeyArgs = Omit<UseWaitForTransactionArgs, 'hash' | 'wait'> & {
+  hash?: UseWaitForTransactionArgs['hash']
+  wait?: UseWaitForTransactionArgs['wait']
+}
 type QueryKeyConfig = Pick<UseWaitForTransactionConfig, 'scopeKey'>
 
 function queryKey({
@@ -40,7 +43,8 @@ function queryKey({
 function queryFn({
   queryKey: [{ chainId, confirmations, hash, timeout, wait }],
 }: QueryFunctionArgs<typeof queryKey>) {
-  return waitForTransaction({ chainId, confirmations, hash, timeout, wait })
+  if (hash) return waitForTransaction({ chainId, confirmations, hash, timeout })
+  if (wait) return waitForTransaction({ chainId, confirmations, timeout, wait })
 }
 
 export function useWaitForTransaction({
