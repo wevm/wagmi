@@ -1,0 +1,43 @@
+---
+title: 'fetchSigner'
+description: 'Action for accessing ethers Signer object for connected account.'
+---
+
+# fetchSigner
+
+Action for accessing ethers [Signer](https://docs.ethers.io/v5/api/signer) object for connected account.
+
+```ts
+import { fetchSigner } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
+
+```ts
+import { fetchSigner } from '@wagmi/core'
+
+const signer = await fetchSigner()
+```
+
+## Return Value
+
+```ts
+Signer
+```
+
+## Configuration
+
+### chainId (optional)
+
+Chain ID to use for signer.
+
+```ts {5}
+import { fetchSigner } from '@wagmi/core'
+import { optimism } from '@wagmi/core/chains'
+
+const signer = await fetchSigner({
+  chainId: optimism.id,
+})
+```

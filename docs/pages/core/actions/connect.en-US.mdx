@@ -1,0 +1,66 @@
+---
+title: 'connect'
+description: 'Action for connecting to account with connectors.'
+---
+
+# connect
+
+Action for connecting to account with connectors.
+
+```ts
+import { connect } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { connect } from '@wagmi/core'
+import { InjectedConnector } from '@wagmi/core/connectors/injected'
+
+const result = await connect({
+  connector: new InjectedConnector(),
+})
+```
+
+## Return Value
+
+```ts
+{
+  address: `0x${string}`
+  chain: {
+    id: number
+    unsupported?: boolean
+  }
+  connector: Connector
+  provider: Provider
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Chain ID to connect.
+
+```ts {5}
+import { chain, connect } from '@wagmi/core'
+import { InjectedConnector } from '@wagmi/core/connectors/injected'
+
+const result = await connect({
+  chainId: chain.optimism.id,
+  connector: new InjectedConnector(),
+})
+```
+
+### connector
+
+Connector to use for connecting wallet.
+
+```ts {5}
+import { connect } from '@wagmi/core'
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+
+const result = await connect({
+  connector: new WalletConnectConnector(),
+})
+```

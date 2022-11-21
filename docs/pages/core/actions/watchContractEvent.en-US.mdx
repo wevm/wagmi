@@ -32,7 +32,7 @@ const unwatch = watchContractEvent({
 
 `unwatch` is a function that can be called to unsubscribe from the event.
 
-## Arguments
+## Configuration
 
 ### address
 
@@ -55,7 +55,7 @@ const unwatch = watchContractEvent({
 
 Contract ABI.
 
-By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`. See the wagmi [TypeScript docs](/docs/typescript) for more information.
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`. See the wagmi [TypeScript docs](/core/typescript) for more information.
 
 ```tsx {5}
 import { watchContractEvent } from '@wagmi/core'

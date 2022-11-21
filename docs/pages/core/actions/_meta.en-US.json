@@ -1,7 +1,12 @@
 {
+  "connect": "connect",
+  "disconnect": "disconnect",
   "getAccount": "getAccount",
+  "getContract": "getContract",
+  "getNetwork": "getNetwork",
   "fetchBalance": "fetchBalance",
   "fetchBlockNumber": "fetchBlockNumber",
+  "fetchSigner": "fetchSigner",
   "fetchTransaction": "fetchTransaction",
   "multicall": "multicall",
   "prepareSendTransaction": "prepareSendTransaction",
