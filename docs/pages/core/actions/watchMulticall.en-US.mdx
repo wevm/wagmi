@@ -9,7 +9,7 @@ import { Callout } from 'nextra-theme-docs'
 
 Action for subscribing to [multicall](/core/actions/multicall) changes.
 
-```tsx
+```ts
 import { watchMulticall } from '@wagmi/core'
 ```
 
@@ -19,7 +19,7 @@ By default, the callback will be invoked on chain change.
 
 To listen for block changes, you can use the [`listenToBlock` config](#listentoblock-optional).
 
-```tsx {20}
+```ts {20}
 import { multicall, watchMulticall } from '@wagmi/core'
 
 const config = {
@@ -50,7 +50,7 @@ watchMulticall(config, (data_) => (data = data_))
 
 Contract address.
 
-```tsx {7,12}
+```ts {7,12}
 import { watchMulticall } from '@wagmi/core'
 
 watchMulticall(
@@ -78,7 +78,7 @@ Contract ABI.
 
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and action result. See the wagmi [TypeScript docs](/core/typescript) for more information.
 
-```tsx {8,13}
+```ts {8,13}
 import { watchMulticall } from '@wagmi/core'
 
 const data = await watchMulticall(
@@ -104,7 +104,7 @@ const data = await watchMulticall(
 
 Name of function to call.
 
-```tsx {9,14}
+```ts {9,14}
 import { watchMulticall } from '@wagmi/core'
 
 const data = await watchMulticall(
@@ -130,7 +130,7 @@ const data = await watchMulticall(
 
 Arguments to pass to function call.
 
-```tsx {10,16}
+```ts {10,16}
 import { watchMulticall } from '@wagmi/core'
 
 const data = await watchMulticall(
@@ -156,9 +156,9 @@ const data = await watchMulticall(
 
 #### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
 
-```tsx {9,14}
+```ts {9,14}
 import { watchMulticall } from '@wagmi/core'
 
 const data = await watchMulticall(
@@ -184,7 +184,7 @@ const data = await watchMulticall(
 
 If a contract read fails while fetching, it will fail silently and not throw an error.
 
-```tsx {15}
+```ts {15}
 import { watchMulticall } from '@wagmi/core'
 
 const data = await watchMulticall(
@@ -209,7 +209,7 @@ const data = await watchMulticall(
 
 Listen for block changes & invoke `multicall`.
 
-```tsx {19}
+```ts {19}
 import { watchMulticall } from '@wagmi/core'
 
 const data = await watchMulticall(
@@ -238,7 +238,7 @@ const data = await watchMulticall(
 
 Overrides to pass to function call.
 
-```tsx {15}
+```ts {15}
 import { watchMulticall } from '@wagmi/core'
 
 const data = await watchMulticall(

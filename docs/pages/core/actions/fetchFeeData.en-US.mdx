@@ -1,0 +1,61 @@
+---
+title: 'fetchFeeData'
+description: 'Action for fetching network fee information.'
+---
+
+# fetchFeeData
+
+Action for fetching network fee information.
+
+```ts
+import { fetchFeeData } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { fetchFeeData } from '@wagmi/core'
+
+const feeData = await fetchFeeData()
+```
+
+## Return Value
+
+```ts
+{
+  gasPrice: BigNumber
+  maxFeePerGas: BigNumber
+  maxPriorityFeePerGas: BigNumber
+  formatted: {
+    gasPrice: string
+    maxFeePerGas: string
+    maxPriorityFeePerGas: string
+  }
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {4}
+import { fetchFeeData } from '@wagmi/core'
+
+const feeData = await fetchFeeData({
+  chainId: 1,
+})
+```
+
+### formatUnits (optional)
+
+Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `wei`.
+
+```ts {4}
+import { fetchFeeData } from '@wagmi/core'
+
+const feeData = await fetchFeeData({
+  formatUnits: 'gwei',
+})
+```

@@ -1,0 +1,79 @@
+---
+title: 'fetchToken'
+description: 'Action for fetching ERC-20 token information.'
+---
+
+# fetchToken
+
+Action for fetching ERC-20 token information.
+
+```ts
+import { fetchToken } from '@wagmi/core'
+```
+
+## Usage
+
+The follow examples use [$ENS](https://etherscan.io/token/0xc18360217d8f7ab5e7c516566761ea12ce7f9d72).
+
+```ts
+import { fetchToken } from '@wagmi/core'
+
+const token = await fetchToken({
+  address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
+})
+```
+
+## Return Value
+
+```ts
+{
+  address: string
+  decimals: number
+  name: string
+  symbol: string
+  totalSupply: {
+    formatted: string
+    value: BigNumber
+  }
+}
+```
+
+## Configuration
+
+### address
+
+Address of ERC-20 token.
+
+```ts {4}
+import { fetchToken } from '@wagmi/core'
+
+const token = await fetchToken({
+  address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { fetchToken } from '@wagmi/core'
+
+const token = await fetchToken({
+  address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
+  chainId: 1,
+})
+```
+
+### formatUnits (optional)
+
+Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+
+```ts {5}
+import { fetchToken } from '@wagmi/core'
+
+const token = await fetchToken({
+  address: '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72',
+  formatUnits: 'gwei',
+})
+```

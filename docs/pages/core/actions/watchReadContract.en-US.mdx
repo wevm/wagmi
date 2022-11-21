@@ -36,7 +36,7 @@ watchReadContract(config, (data_) => (data = data_))
 
 The address of the contract.
 
-```tsx {5}
+```ts {5}
 import { watchReadContract } from '@wagmi/core'
 
 watchReadContract(
@@ -53,7 +53,7 @@ watchReadContract(
 
 The ABI of the contract.
 
-```tsx {6}
+```ts {6}
 import { watchReadContract } from '@wagmi/core'
 
 watchReadContract(
@@ -70,7 +70,7 @@ watchReadContract(
 
 The name of the function on the contract to call.
 
-```tsx {7}
+```ts {7}
 import { watchReadContract } from '@wagmi/core'
 
 watchReadContract(
@@ -87,7 +87,7 @@ watchReadContract(
 
 Arguments to pass to function call.
 
-```tsx {8}
+```ts {8}
 import { watchReadContract } from '@wagmi/core'
 
 watchReadContract(
@@ -103,9 +103,9 @@ watchReadContract(
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
 
-```tsx {8}
+```ts {8}
 import { watchReadContract } from '@wagmi/core'
 
 watchReadContract(
@@ -123,7 +123,7 @@ watchReadContract(
 
 Listen for block changes & invoke `multicall`.
 
-```tsx {8}
+```ts {8}
 import { watchReadContract } from '@wagmi/core'
 
 watchReadContract(
@@ -141,7 +141,7 @@ watchReadContract(
 
 Overrides to pass to function call.
 
-```tsx {8}
+```ts {8}
 import { watchReadContract } from '@wagmi/core'
 
 watchReadContract(

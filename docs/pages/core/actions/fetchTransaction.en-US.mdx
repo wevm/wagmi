@@ -8,13 +8,13 @@ description: 'Action for fetching transaction by hash.'
 Action for fetching transaction by hash.
 
 ```ts
-import { fetchTransaction } from 'wagmi'
+import { fetchTransaction } from '@wagmi/core'
 ```
 
 ## Usage
 
-```tsx
-import { fetchTransaction } from 'wagmi'
+```ts
+import { fetchTransaction } from '@wagmi/core'
 
 const transaction = await fetchTransaction({
   hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
@@ -23,7 +23,7 @@ const transaction = await fetchTransaction({
 
 ## Return Value
 
-```tsx
+```ts
 TransactionResponse
 ```
 
@@ -33,8 +33,8 @@ TransactionResponse
 
 Hash of the transaction.
 
-```tsx {4}
-import { fetchTransaction } from 'wagmi'
+```ts {4}
+import { fetchTransaction } from '@wagmi/core'
 
 const transaction = await fetchTransaction({
   hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',

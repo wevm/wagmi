@@ -17,7 +17,7 @@ import { writeContract } from '@wagmi/core'
 
 The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
 
-```tsx
+```ts
 import { prepareWriteContract, writeContract } from '@wagmi/core'
 
 const config = await prepareawait WriteContract({
@@ -46,7 +46,7 @@ const data = await writeContract(config)
 - `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `prepareWriteContract` action.
 - `prepared`: The config has been prepared with parameters required for performing a contract write via the [`prepareWriteContract` action](/core/actions/prepareContractWrite)
 
-```tsx {4}
+```ts {4}
 import { writeContract } from '@wagmi/core'
 
 const { sendTransaction } = await writeContract({
@@ -65,7 +65,7 @@ Contract ABI.
 
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/core/typescript) for more information.
 
-```tsx {5}
+```ts {5}
 import { writeContract } from '@wagmi/core'
 
 const { hash } = await writeContract({
@@ -82,7 +82,7 @@ const { hash } = await writeContract({
 
 Contract address.
 
-```tsx {6}
+```ts {6}
 import { writeContract } from '@wagmi/core'
 
 const { sendTransaction } = await writeContract({
@@ -99,7 +99,7 @@ const { sendTransaction } = await writeContract({
 
 Name of function to call.
 
-```tsx {7}
+```ts {7}
 import { writeContract } from '@wagmi/core'
 
 const { hash } = await writeContract({
@@ -116,7 +116,7 @@ const { hash } = await writeContract({
 
 Arguments to pass to function call.
 
-```tsx {8}
+```ts {8}
 import { writeContract } from '@wagmi/core'
 
 const { hash } = await writeContract({
@@ -134,7 +134,7 @@ const { hash } = await writeContract({
 
 Overrides to pass to function call. If the function is payable, you can pass a `value` here.
 
-```tsx {8-11}
+```ts {8-11}
 import { writeContract } from '@wagmi/core'
 
 const { hash } = await writeContract({
@@ -155,7 +155,7 @@ const { hash } = await writeContract({
 
 Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
 
-```tsx {8}
+```ts {8}
 import { writeContract } from '@wagmi/core'
 
 const { sendTransaction } = await writeContract({
@@ -173,7 +173,7 @@ const { sendTransaction } = await writeContract({
 
 The request to use when sending the contract transaction.
 
-```tsx {6}
+```ts {6}
 import { prepareWriteContract, writeContract } from '@wagmi/core'
 
 const { config } = await prepareWriteContract({ ... })
@@ -193,7 +193,7 @@ It is possible to use `writeContract` without pairing it with `prepareWriteContr
   use it as a last resort.
 </Callout>
 
-```tsx {4-8}
+```ts {4-8}
 import { writeContract } from '@wagmi/core'
 
 const { hash } = await writeContract({

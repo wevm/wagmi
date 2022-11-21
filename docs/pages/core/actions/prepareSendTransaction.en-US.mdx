@@ -11,7 +11,7 @@ Action for preparing a transaction to be sent via [`sendTransaction`](/core/acti
 
 Eagerly fetches the parameters required for sending a transaction such as the gas estimate and resolving an ENS address (if required).
 
-```tsx
+```ts
 import { prepareSendTransaction } from '@wagmi/core'
 ```
 
@@ -19,7 +19,7 @@ import { prepareSendTransaction } from '@wagmi/core'
 
 `prepareSendTransaction` gives back a "prepared config" to be sent through to `sendTransaction`.
 
-```tsx
+```ts
 import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
 
 const config = await prepareSendTransaction({
@@ -33,7 +33,7 @@ const { hash } = await sendTransaction(config)
 
 ## Return value
 
-```tsx
+```ts
 {
   mode: 'prepared'
   request: PopulatedTransaction
@@ -46,7 +46,7 @@ const { hash } = await sendTransaction(config)
 
 Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
 
-```tsx {4-7}
+```ts {4-7}
 import { prepareSendTransaction } from '@wagmi/core'
 
 const { config } = await prepareSendTransaction({
@@ -61,7 +61,7 @@ const { config } = await prepareSendTransaction({
 
 Chain ID used to validate if the user is connected to the target chain.
 
-```tsx {8}
+```ts {8}
 import { prepareSendTransaction } from '@wagmi/core'
 
 const { config } = await prepareSendTransaction({

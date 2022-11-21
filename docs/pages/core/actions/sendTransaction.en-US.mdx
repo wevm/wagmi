@@ -9,13 +9,13 @@ import { Callout } from 'nextra-theme-docs'
 
 Action for sending a transaction.
 
-```tsx
+```ts
 import { sendTransaction } from '@wagmi/core'
 ```
 
 ## Usage
 
-```tsx {6}
+```ts {6}
 import { sendTransaction, prepareSendTransaction } from '@wagmi/core'
 
 const config = await prepareSendTransaction({
@@ -26,7 +26,7 @@ const { hash } = await sendTransaction(config)
 
 ## Return Value
 
-```tsx
+```ts
 {
   hash: `0x${string}`,
   wait: (confirmations?: number) => Promise<TransactionReceipt>,
@@ -42,7 +42,7 @@ const { hash } = await sendTransaction(config)
 - `recklesslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `prepareSendTransaction` action.
 - `prepared`: The request has been prepared with parameters required for sending a transaction via the `prepareSendTransaction` action
 
-```tsx {4}
+```ts {4}
 import { sendTransaction } from '@wagmi/core'
 
 const { sendTransaction } = await sendTransaction({
@@ -60,7 +60,7 @@ const { sendTransaction } = await sendTransaction({
 
 The request to use when sending the transaction.
 
-```tsx {7}
+```ts {7}
 import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
 
 
@@ -82,7 +82,7 @@ It is possible to use `sendTransaction` without pairing it with `prepareSendTran
   use it as a last resort.
 </Callout>
 
-```tsx {4-6}
+```ts {4-6}
 import { sendTransaction } from '@wagmi/core'
 
 const { hash } = await sendTransaction({

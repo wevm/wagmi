@@ -39,7 +39,7 @@ ReadContractResult<TAbi, TFunctionName>
 
 The address of the contract.
 
-```tsx {4}
+```ts {4}
 import { readContract } from '@wagmi/core'
 
 const data = await readContract({
@@ -53,7 +53,7 @@ const data = await readContract({
 
 The ABI of the contract.
 
-```tsx {5}
+```ts {5}
 import { readContract } from '@wagmi/core'
 
 const data = await readContract({
@@ -67,7 +67,7 @@ const data = await readContract({
 
 The name of the function on the contract to call.
 
-```tsx {6}
+```ts {6}
 import { readContract } from '@wagmi/core'
 
 const data = await readContract({
@@ -81,7 +81,7 @@ const data = await readContract({
 
 Arguments to pass to function call.
 
-```tsx {7}
+```ts {7}
 import { readContract } from '@wagmi/core'
 
 const data = await readContract({
@@ -94,9 +94,9 @@ const data = await readContract({
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/docs/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
 
-```tsx {7}
+```ts {7}
 import { readContract } from '@wagmi/core'
 
 const data = await readContract({
@@ -111,7 +111,7 @@ const data = await readContract({
 
 Overrides to pass to function call.
 
-```tsx {7}
+```ts {7}
 import { readContract } from '@wagmi/core'
 
 const data = await readContract({

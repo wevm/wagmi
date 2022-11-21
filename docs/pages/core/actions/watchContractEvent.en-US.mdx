@@ -7,7 +7,7 @@ description: 'Action for subscribing to ethers Contract events.'
 
 Action for subscribing to ethers Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
 
-```tsx
+```ts
 import { watchContractEvent } from '@wagmi/core'
 ```
 
@@ -15,7 +15,7 @@ import { watchContractEvent } from '@wagmi/core'
 
 The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
 
-```tsx
+```ts
 import { watchContractEvent } from '@wagmi/core'
 
 const unwatch = watchContractEvent({
@@ -38,7 +38,7 @@ const unwatch = watchContractEvent({
 
 Contract address.
 
-```tsx {4}
+```ts {4}
 import { watchContractEvent } from '@wagmi/core'
 
 const unwatch = watchContractEvent({
@@ -57,7 +57,7 @@ Contract ABI.
 
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`. See the wagmi [TypeScript docs](/core/typescript) for more information.
 
-```tsx {5}
+```ts {5}
 import { watchContractEvent } from '@wagmi/core'
 
 const unwatch = watchContractEvent({
@@ -74,7 +74,7 @@ const unwatch = watchContractEvent({
 
 Name of the event to listen to.
 
-```tsx {6}
+```ts {6}
 import { watchContractEvent } from '@wagmi/core'
 
 const unwatch = watchContractEvent({
@@ -91,7 +91,7 @@ const unwatch = watchContractEvent({
 
 Callback that receives event.
 
-```tsx {7-9}
+```ts {7-9}
 import { watchContractEvent } from '@wagmi/core'
 
 const unwatch = watchContractEvent({
@@ -106,9 +106,9 @@ const unwatch = watchContractEvent({
 
 ### chainId (optional)
 
-Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/docs/client#websocketprovider-optional) for this to work correctly.
+Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/core/client#websocketprovider-optional) for this to work correctly.
 
-```tsx {10}
+```ts {10}
 import { watchContractEvent } from '@wagmi/core'
 
 const unwatch = watchContractEvent({
@@ -126,7 +126,7 @@ const unwatch = watchContractEvent({
 
 Receive only a single event, then stop listener. Defaults to `false`.
 
-```tsx {10}
+```ts {10}
 import { watchContractEvent } from '@wagmi/core'
 
 const unwatch = watchContractEvent({
