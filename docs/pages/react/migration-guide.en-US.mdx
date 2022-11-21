@@ -9,6 +9,19 @@ import { Callout } from 'nextra-theme-docs'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
 
+## 0.9.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.8.x` docs
+  [here](https://0.8.x.wagmi.sh).
+</Callout>
+
+### useWaitForTransaction
+
+#### Behavioral changes
+
+`useWaitForTransaction` will now return an `error` (and invoke the `onError` callback) if the transaction has reverted.
+
 ## 0.8.x Breaking changes
 
 <Callout>
