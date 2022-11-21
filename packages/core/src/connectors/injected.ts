@@ -90,7 +90,10 @@ export class InjectedConnector extends Connector<
 
       this.emit('message', { type: 'connecting' })
 
-      const account = await this.getAccount()
+      const accounts = await provider.request({
+        method: 'eth_requestAccounts',
+      })
+      const account = getAddress(accounts[0] as string)
       // Switch to chain if provided
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)
@@ -131,7 +134,7 @@ export class InjectedConnector extends Connector<
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
     const accounts = await provider.request({
-      method: 'eth_requestAccounts',
+      method: 'eth_accounts',
     })
     // return checksum address
     return getAddress(accounts[0] as string)
@@ -171,10 +174,7 @@ export class InjectedConnector extends Connector<
 
       const provider = await this.getProvider()
       if (!provider) throw new ConnectorNotFoundError()
-      const accounts = await provider.request({
-        method: 'eth_accounts',
-      })
-      const account = accounts[0]
+      const account = await this.getAccount()
       return !!account
     } catch {
       return false
