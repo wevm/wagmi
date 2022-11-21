@@ -3,6 +3,7 @@
   "fetchBalance": "fetchBalance",
   "fetchBlockNumber": "fetchBlockNumber",
   "fetchTransaction": "fetchTransaction",
+  "multicall": "multicall",
   "prepareSendTransaction": "prepareSendTransaction",
   "prepareWriteContract": "prepareWriteContract",
   "readContract": "readContract",
@@ -10,5 +11,6 @@
   "sendTransaction": "sendTransaction",
   "waitForTransaction": "waitForTransaction",
   "watchContractEvent": "watchContractEvent",
+  "watchMulticall": "watchMulticall",
   "writeContract": "writeContract"
 }
