@@ -156,8 +156,8 @@ If you're interested in contributing, please read the [contributing docs](/.gith
 
 ## Authors
 
-- awkweb.eth ([@awkweb](https://twitter.com/awkweb)) – [Mirror](https://mirror.xyz)
-- moxey.eth ([@jakemoxey](https://twitter.com/jakemoxey)) – [Rainbow](https://rainbow.me)
+- [@tmm](https://github.com/tmm) (awkweb.eth, [Twitter](https://twitter.com/awkweb))
+- [@jxom](https://github.com/jxom) (moxey.eth, [Twitter](https://twitter.com/jakemoxey))
 
 Thanks to julianhutton.eth ([@julianjhutton](https://twitter.com/julianjhutton)) for providing the awesome logo!
 
