@@ -1,0 +1,24 @@
+---
+title: 'watchAccount'
+description: 'Action for subscribing to account changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchAccount
+
+Action for subscribing to [account](/core/actions/getAccount) changes.
+
+```ts
+import { watchAccount } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when connected account changes.
+
+```ts
+import { watchAccount } from '@wagmi/core'
+
+const unwatch = watchAccount((account) => console.log(account))
+```

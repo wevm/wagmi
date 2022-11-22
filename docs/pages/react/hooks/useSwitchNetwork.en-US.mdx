@@ -1,0 +1,158 @@
+---
+title: 'useSwitchNetwork'
+description: 'React Hook for switching networks with a connector.'
+---
+
+# useSwitchNetwork
+
+Hook for switching networks with a connector.
+
+```tsx
+import { useSwitchNetwork } from 'wagmi'
+```
+
+## Usage
+
+Some wallet apps do not support programmatic network switching and `switchNetwork` will be `undefined`. For those situations, you can typically switch networks in the wallet app and wagmi will stay up-to-date.
+
+```tsx
+import { useNetwork, useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const { chain } = useNetwork()
+  const { chains, error, isLoading, pendingChainId, switchNetwork } =
+    useSwitchNetwork()
+
+  return (
+    <>
+      {chain && <div>Connected to {chain.name}</div>}
+
+      {chains.map((x) => (
+        <button
+          disabled={!switchNetwork || x.id === chain?.id}
+          key={x.id}
+          onClick={() => switchNetwork?.(x.id)}
+        >
+          {x.name}
+          {isLoading && pendingChainId === x.id && ' (switching)'}
+        </button>
+      ))}
+
+      <div>{error && error.message}</div>
+    </>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  chains: Chain[]
+  data?: Chain
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  pendingChainId?: number
+  switchNetwork?: (chainId?: number) => void
+  switchNetworkAsync?: (chainId?: number) => Promise<Chain>
+  status: 'idle' | 'error' | 'loading' | 'success'
+  reset: () => void
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Chain id to switch to. Useful if you want to switch to a specific chain, instead of [displaying a list](/react/hooks/useNetwork#usage).
+
+```tsx {5}
+import { useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const network = useSwitchNetwork({
+    chainId: 69,
+  })
+}
+```
+
+### throwForSwitchChainNotSupported (optional)
+
+Flag that forces `switchNetwork` to be defined, even if the connected wallet does not support programmatic network switching.
+
+```tsx {5}
+import { useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const network = useSwitchNetwork({
+    throwForSwitchChainNotSupported: true,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to switch network.
+
+```tsx {5-7}
+import { useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const network = useSwitchNetwork({
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before switch network function and is passed same variables switch network function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a switch network failure.
+
+```tsx {5-7}
+import { useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const network = useSwitchNetwork({
+    onMutate(args) {
+      console.log('Mutate', args)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when switch network is settled (either successfully switched, or an error has thrown).
+
+```tsx {5-7}
+import { useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const network = useSwitchNetwork({
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when switch network is successful.
+
+```tsx {5-7}
+import { useSwitchNetwork } from 'wagmi'
+
+function App() {
+  const network = useSwitchNetwork({
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

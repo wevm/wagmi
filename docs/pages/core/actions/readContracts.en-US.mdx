@@ -1,0 +1,229 @@
+---
+title: 'readContracts'
+description: 'Action for calling multiple ethers Contract read-only methods.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# readContracts
+
+Action for calling multiple ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) methods.
+
+```ts
+import { readContracts } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) & [more loot](https://etherscan.io/address/0x1dfe7ca09e99d10835bf73044a23b73fc20623df) contracts.
+
+```ts
+import { readContracts } from '@wagmi/core'
+
+const wagmigotchiContract = {
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+}
+const mlootContract = {
+  address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+  abi: mlootABI,
+}
+
+const data = await readContracts({
+  contracts: [
+    {
+      ...wagmigotchiContract,
+      functionName: 'getAlive',
+    },
+    {
+      ...wagmigotchiContract,
+      functionName: 'getBoredom',
+    },
+    {
+      ...mlootContract,
+      functionName: 'getChest',
+      args: [69],
+    },
+    {
+      ...mlootContract,
+      functionName: 'getWaist',
+      args: [69],
+    },
+  ],
+})
+```
+
+## Return Value
+
+```ts
+ReadContractResult[]
+```
+
+`ReadContractResult` provides an inferred type from the `outputs` on `functionName` in the ABI (ie. the return type of the contract method). [Learn more](/core/typescript#type-inference).
+
+## Configuration
+
+### contracts
+
+#### address
+
+Contract address.
+
+```ts {6,11}
+import { readContracts } from '@wagmi/core'
+
+const data = await readContracts({
+  contracts: [
+    {
+      address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      abi: wagmigotchiABI,
+      functionName: 'getAlive',
+    },
+    {
+      address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      abi: wagmigotchiABI,
+      functionName: 'getBoredom',
+    },
+  ],
+})
+```
+
+#### abi
+
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and action result. See the wagmi [TypeScript docs](/core/typescript) for more information.
+
+```ts {7,12}
+import { readContracts } from '@wagmi/core'
+
+const data = await readContracts({
+  contracts: [
+    {
+      address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      abi: wagmigotchiABI,
+      functionName: 'getAlive',
+    },
+    {
+      address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      abi: wagmigotchiABI,
+      functionName: 'getBoredom',
+    },
+  ],
+})
+```
+
+#### functionName
+
+Name of function to call.
+
+```ts {8,13}
+import { readContracts } from '@wagmi/core'
+
+const data = await readContracts({
+  contracts: [
+    {
+      address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      abi: wagmigotchiABI,
+      functionName: 'getAlive',
+    },
+    {
+      address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      abi: wagmigotchiABI,
+      functionName: 'getBoredom',
+    },
+  ],
+})
+```
+
+#### args
+
+Arguments to pass to function call.
+
+```ts {9,15}
+import { readContracts } from '@wagmi/core'
+
+const data = await readContracts({
+  contracts: [
+    {
+      address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+      abi: mlootABI,
+      functionName: 'getChest',
+      args: [69],
+    },
+    {
+      address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+      abi: mlootABI,
+      functionName: 'getWaist',
+      args: [69],
+    },
+  ],
+})
+```
+
+#### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {8,13}
+import { readContracts, chain } from '@wagmi/core'
+
+const data = await readContracts({
+  contracts: [
+    {
+      ...wagmigotchiContract,
+      functionName: 'getAlive',
+      chainId: chain.mainnet.id,
+    },
+    {
+      ...wagmigotchiContract,
+      functionName: 'getBoredom',
+      chainId: chain.mainnet.id,
+    },
+  ],
+})
+```
+
+### allowFailure (optional)
+
+If a contract read fails while fetching, it will fail silently and not throw an error.
+
+```ts {14}
+import { readContracts } from '@wagmi/core'
+
+const data = await readContracts({
+  contracts: [
+    {
+      ...wagmigotchiContract,
+      functionName: 'getAlive',
+    },
+    {
+      ...wagmigotchiContract,
+      functionName: 'getBoredom',
+    },
+  ],
+  allowFailure: false,
+})
+```
+
+### overrides (optional)
+
+Overrides to pass to function call.
+
+```ts {14}
+import { readContracts } from '@wagmi/core'
+
+const data = await readContracts({
+  contracts: [
+    {
+      ...wagmigotchiContract,
+      functionName: 'getAlive',
+    },
+    {
+      ...wagmigotchiContract,
+      functionName: 'getBoredom',
+    },
+  ],
+  overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+})
+```

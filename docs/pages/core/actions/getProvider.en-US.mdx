@@ -1,0 +1,40 @@
+---
+title: 'getProvider'
+description: "Action for accessing Client's ethers Provider."
+---
+
+# getProvider
+
+Action for accessing `Client`'s ethers Provider.
+
+```ts
+import { getProvider } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { getProvider } from '@wagmi/core'
+
+const provider = getProvider()
+```
+
+## Return Value
+
+```ts
+Provider
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { getProvider } from '@wagmi/core'
+
+const provider = getProvider({
+  chainId: 1,
+})
+```

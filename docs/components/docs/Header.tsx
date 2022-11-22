@@ -57,7 +57,7 @@ export function Header({ showGitcoinBanner }: Props) {
         <LogoType />
       </div>
 
-      <p className="text-center text-lg mb-6 mt-2 text-gray-500 md:!text-2xl">
+      <p className="text-center text-lg mb-6 mt-2 text-gray-500 md:!text-xl">
         {title}
       </p>
 

@@ -1,0 +1,113 @@
+---
+title: 'useSigner'
+description: 'React Hook for accessing ethers Signer object for connected account.'
+---
+
+# useSigner
+
+Hook for accessing ethers [Signer](https://docs.ethers.io/v5/api/signer) object for connected account.
+
+```ts
+import { useSigner } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
+
+```tsx {4, 9}
+import { useContract, useSigner } from 'wagmi'
+
+function App() {
+  const { data: signer, isError, isLoading } = useSigner()
+
+  const contract = useContract({
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    signerOrProvider: signer,
+  })
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: Signer
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Chain ID to use for signer.
+
+```tsx {5-7}
+import { useContract, useSigner } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { data: signer } = useSigner({
+    chainId: optimism.id,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {5-7}
+import { useContract, useSigner } from 'wagmi'
+
+function App() {
+  const { data: signer } = useSigner({
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {5-7}
+import { useContract, useSigner } from 'wagmi'
+
+function App() {
+  const { data: signer } = useSigner({
+    onSettled(data, error) {
+      console.log('Settled', data, error)
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {5-7}
+import { useContract, useSigner } from 'wagmi'
+
+function App() {
+  const { data: signer } = useSigner({
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

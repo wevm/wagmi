@@ -1,0 +1,185 @@
+---
+title: 'useTransaction'
+description: 'React Hook for fetching transaction by hash.'
+---
+
+# useTransaction
+
+Hook for fetching transaction by hash.
+
+```ts
+import { useTransaction } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useTransaction({
+    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  })
+
+  if (isLoading) return <div>Fetching transaction…</div>
+  if (isError) return <div>Error fetching transaction</div>
+  return <div>Transaction: {JSON.stringify(data)}</div>
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: TransactionResponse
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<TransactionResponse>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+
+```tsx {5}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    chainId: 1,
+    hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {5}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {5}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    scopeKey: 'wagmi',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {5}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {5}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    suspense: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {5-7}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {5-7}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {5-7}
+import { useTransaction } from 'wagmi'
+
+function App() {
+  const transaction = useTransaction({
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```

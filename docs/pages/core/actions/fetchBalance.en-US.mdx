@@ -1,0 +1,86 @@
+---
+title: 'fetchBalance'
+description: 'Action for fetching balance information for Ethereum or ERC-20 tokens.'
+---
+
+# fetchBalance
+
+Action for fetching balance information for Ethereum or ERC-20 tokens.
+
+```ts
+import { fetchBalance } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { fetchBalance } from '@wagmi/core'
+
+const balance = await fetchBalance({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+})
+```
+
+## Return Value
+
+```ts
+{
+  decimals: number
+  formatted: string
+  symbol: string
+  value: BigNumber
+}
+```
+
+## Configuration
+
+### address
+
+Address to fetch balance for.
+
+```ts {5}
+import { fetchBalance } from '@wagmi/core'
+
+const balance = await fetchBalance({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The @wagmi/core `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { fetchBalance } from '@wagmi/core'
+
+const balance = await fetchBalance({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  chainId: 1,
+})
+```
+
+### formatUnits (optional)
+
+Formats balance using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether` or `token`'s decimal value.
+
+```ts {5}
+import { fetchBalance } from '@wagmi/core'
+
+const balance = await fetchBalance({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  formatUnits: 'gwei',
+})
+```
+
+### token (optional)
+
+Address for ERC-20 token. If `token` is provided, action fetches token balance instead of Ethereum balance. For example, we can fetch `0xA0Cf798816D4b9b9866b5330EEa46a18382f251e`'s current [$UNI](https://etherscan.io/address/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984) balance.
+
+```ts {5}
+import { fetchBalance } from '@wagmi/core'
+
+const balance = await fetchBalance({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+})
+```

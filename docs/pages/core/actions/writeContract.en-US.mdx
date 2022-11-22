@@ -1,0 +1,206 @@
+---
+title: 'writeContract'
+description: 'Action for calling a ethers Contract write method.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# writeContract
+
+Action for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+```ts
+import { writeContract } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
+
+```ts
+import { prepareWriteContract, writeContract } from '@wagmi/core'
+
+const config = await prepareawait WriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+})
+const data = await writeContract(config)
+```
+
+## Return Value
+
+```ts
+{
+  hash: `0x${string}`,
+  wait: (confirmations?: number) => Promise<TransactionReceipt>,
+}
+```
+
+## Configuration
+
+### mode
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/core/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `prepareWriteContract` action.
+- `prepared`: The config has been prepared with parameters required for performing a contract write via the [`prepareWriteContract` action](/core/actions/prepareContractWrite)
+
+```ts {4}
+import { writeContract } from '@wagmi/core'
+
+const { sendTransaction } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+})
+```
+
+### abi
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/core/typescript) for more information.
+
+```ts {5}
+import { writeContract } from '@wagmi/core'
+
+const { hash } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  abi: wagmigotchiABI,
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  functionName: 'feed',
+})
+```
+
+### address
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Contract address.
+
+```ts {6}
+import { writeContract } from '@wagmi/core'
+
+const { sendTransaction } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  abi: wagmigotchiABI,
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  functionName: 'feed',
+})
+```
+
+### functionName
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Name of function to call.
+
+```ts {7}
+import { writeContract } from '@wagmi/core'
+
+const { hash } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+})
+```
+
+### args (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Arguments to pass to function call.
+
+```ts {8}
+import { writeContract } from '@wagmi/core'
+
+const { hash } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  args: [],
+})
+```
+
+### overrides (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Overrides to pass to function call. If the function is payable, you can pass a `value` here.
+
+```ts {8-11}
+import { writeContract } from '@wagmi/core'
+
+const { hash } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  overrides: {
+    from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    value: ethers.utils.parseEther('0.01'),
+  },
+})
+```
+
+### chainId (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+
+```ts {8}
+import { writeContract } from '@wagmi/core'
+
+const { sendTransaction } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  chainId: 1,
+})
+```
+
+### request (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+The request to use when sending the contract transaction.
+
+```ts {6}
+import { prepareWriteContract, writeContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({ ... })
+const { hash } = await writeContract({
+  ...config,
+  request: config.request
+})
+```
+
+## Reckless Usage
+
+It is possible to use `writeContract` without pairing it with `prepareWriteContract` action by using "recklessly unprepared" mode.
+
+<Callout>
+  This usage is not recommended. It comes with [UX
+  pitfalls](/core/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
+</Callout>
+
+```ts {4-8}
+import { writeContract } from '@wagmi/core'
+
+const { hash } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'claim',
+  tokenId: 69,
+})
+```

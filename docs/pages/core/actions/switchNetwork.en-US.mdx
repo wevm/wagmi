@@ -1,0 +1,44 @@
+---
+title: 'switchNetwork'
+description: 'Action for switching networks with a connector.'
+---
+
+# switchNetwork
+
+Action for switching networks with a connector.
+
+```ts
+import { switchNetwork } from '@wagmi/core'
+```
+
+## Usage
+
+Some wallet apps do not support programmatic network switching and `switchNetwork` will throw an error, `SwitchChainNotSupportedError`. For those situations, you can typically switch networks in the wallet app and wagmi will stay up-to-date.
+
+```ts
+import { switchNetwork } from '@wagmi/core'
+
+const network = await switchNetwork({
+  chainId: 1,
+})
+```
+
+## Return Value
+
+```ts
+Chain
+```
+
+## Configuration
+
+### chainId
+
+Chain id to switch to.
+
+```ts {4}
+import { switchNetwork } from '@wagmi/core'
+
+const network = await switchNetwork({
+  chainId: 69,
+})
+```

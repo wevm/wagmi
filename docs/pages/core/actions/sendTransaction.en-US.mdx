@@ -1,0 +1,93 @@
+---
+title: 'sendTransaction'
+description: 'Action for sending a transaction.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# sendTransaction
+
+Action for sending a transaction.
+
+```ts
+import { sendTransaction } from '@wagmi/core'
+```
+
+## Usage
+
+```ts {6}
+import { sendTransaction, prepareSendTransaction } from '@wagmi/core'
+
+const config = await prepareSendTransaction({
+  request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+})
+const { hash } = await sendTransaction(config)
+```
+
+## Return Value
+
+```ts
+{
+  hash: `0x${string}`,
+  wait: (confirmations?: number) => Promise<TransactionReceipt>,
+}
+```
+
+## Configuration
+
+### mode
+
+> This is automatically populated when using [`prepareSendTransaction` action](/core/actions/prepareSendTransaction).
+
+- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `prepareSendTransaction` action.
+- `prepared`: The request has been prepared with parameters required for sending a transaction via the `prepareSendTransaction` action
+
+```ts {4}
+import { sendTransaction } from '@wagmi/core'
+
+const { sendTransaction } = await sendTransaction({
+  mode: 'recklesslyUnprepared',
+  request: {
+    to: 'moxey.eth',
+    value: BigNumber.from('10000000000000000'),
+  },
+})
+```
+
+### request
+
+> This is automatically populated when using [`prepareSendTransaction` action](/core/actions/prepareSendTransaction).
+
+The request to use when sending the transaction.
+
+```ts {7}
+import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
+
+
+  const config = await prepareSendTransaction({ ... })
+  const { hash } = await sendTransaction({
+    ...config,
+    request: config.request
+  })
+
+```
+
+## Reckless Usage
+
+It is possible to use `sendTransaction` without pairing it with `prepareSendTransaction` by using "recklessly unprepared" mode.
+
+<Callout>
+  This usage is not recommended. It comes with [UX
+  pitfalls](/core/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
+</Callout>
+
+```ts {4-6}
+import { sendTransaction } from '@wagmi/core'
+
+const { hash } = await sendTransaction({
+  mode: 'recklesslyUnprepared',
+  to: 'moxey.eth',
+  value: BigNumber.from('10000000000000000'),
+})
+```

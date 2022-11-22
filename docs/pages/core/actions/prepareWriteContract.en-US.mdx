@@ -1,0 +1,146 @@
+---
+title: 'prepareWriteContract'
+description: 'Action for preparing a contract write.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# prepareWriteContract
+
+Action for preparing a contract write to be sent via [`writeContract`](/core/actions/writeContract).
+
+Eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+
+```ts
+import { prepareWriteContract } from '@wagmi/core'
+```
+
+## Usage
+
+`prepareWriteContract` gives back a "prepared config" to be sent through to `writeContract`.
+
+```ts {4-6}
+import { prepareWriteContract, writeContract } from '@wagmi/core'
+
+const config = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+})
+const { hash } = await writeContract(config)
+```
+
+## Return value
+
+```ts
+{
+  abi: Abi
+  address: Address
+  chainId: number
+  functionName: string
+  mode: 'prepared'
+  request: PopulatedTransaction
+}
+```
+
+## Configuration
+
+### address
+
+Contract address.
+
+```ts {4}
+import { prepareWriteContract } from '@wagmi/core'
+
+const config = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+})
+```
+
+### abi
+
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/core/typescript) for more information.
+
+```ts {5}
+import { prepareWriteContract } from '@wagmi/core'
+
+const config = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+})
+```
+
+### functionName
+
+Name of function to call.
+
+```ts {6}
+import { prepareWriteContract } from '@wagmi/core'
+
+const config = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+})
+```
+
+### args
+
+Arguments to pass to function call.
+
+```ts {15}
+import { prepareWriteContract } from '@wagmi/core'
+
+const config = await prepareWriteContract({
+  address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+  abi: [
+    {
+      name: 'mint',
+      type: 'function',
+      stateMutability: 'nonpayable',
+      inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+      outputs: [],
+    },
+  ],
+  functionName: 'mint',
+  args: [69],
+})
+```
+
+### chainId (optional)
+
+Chain ID used to validate if the user is connected to the target chain.
+
+```ts {7}
+import { prepareWriteContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  chainId: 1,
+})
+```
+
+### overrides (optional)
+
+Overrides to pass to function call. If the function is payable, you can pass a `value` here.
+
+```ts {7-10}
+import { prepareWriteContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  overrides: {
+    from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    value: ethers.utils.parseEther('0.01'),
+  },
+})
+```

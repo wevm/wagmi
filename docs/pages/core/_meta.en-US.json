@@ -1,0 +1,9 @@
+{
+  "getting-started": "Getting Started",
+  "typescript": "TypeScript",
+  "client": "Client",
+  "providers": "Providers",
+  "connectors": "Connectors",
+  "actions": "Actions",
+  "constants": "Constants"
+}

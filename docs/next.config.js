@@ -19,6 +19,16 @@ const config = {
   redirects: () => {
     return [
       {
+        source: '/docs/create-wagmi',
+        destination: '/cli/create-wagmi',
+        permanent: true,
+      },
+      {
+        source: '/docs/:path*',
+        destination: '/react/:path*',
+        permanent: true,
+      },
+      {
         source: '/examples',
         destination: '/examples/connect-wallet',
         statusCode: 302,

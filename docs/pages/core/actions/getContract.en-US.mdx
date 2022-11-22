@@ -1,0 +1,76 @@
+---
+title: 'getContract'
+description: 'Action for declaratively creating an ethers Contract instance.'
+---
+
+# getContract
+
+Action for creating a type-safe [Contract](https://docs.ethers.io/v5/api/contract/contract) instance.
+
+```ts
+import { getContract } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
+
+```ts
+import { getContract } from '@wagmi/core'
+
+const contract = getContract({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+})
+```
+
+## Return Value
+
+```ts
+ethers.Contract | null
+```
+
+## Configuration
+
+### address
+
+Contract address.
+
+```ts {4}
+import { getContract } from '@wagmi/core'
+
+const contract = getContract({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+})
+```
+
+### abi
+
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for properties and methods on the contract object. See the wagmi [TypeScript docs](/core/typescript) for more information.
+
+```ts {5}
+import { getContract } from '@wagmi/core'
+
+const contract = getContract({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+})
+```
+
+### signerOrProvider (optional)
+
+An ethers [Provider](https://docs.ethers.io/v5/api/providers/provider/#Provider) or [Signer](https://docs.ethers.io/v5/api/signer/#Signer).
+
+```ts {7}
+import { getContract, getProvider } from '@wagmi/core'
+
+const provider = getProvider()
+const contract = getContract({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  signerOrProvider: provider,
+})
+```

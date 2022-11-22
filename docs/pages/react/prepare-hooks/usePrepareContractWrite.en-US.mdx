@@ -1,0 +1,329 @@
+---
+title: 'usePrepareContractWrite'
+description: 'Hook for preparing a contract write.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# usePrepareContractWrite
+
+Hook for preparing a contract write to be sent via [`useContractWrite`](/react/hooks/useContractWrite).
+
+Eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+
+```tsx
+import { usePrepareContractWrite } from 'wagmi'
+```
+
+## Usage
+
+`usePrepareContractWrite` gives back a "prepared config" to be sent through to `useContractWrite`.
+
+```tsx {4-8}
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+function App() {
+  const { config, error } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+  const { write } = useContractWrite(config)
+
+  return (
+    <>
+      <button disabled={!write} onClick={() => write?.()}>
+        Feed
+      </button>
+      {error && (
+        <div>An error occurred preparing the transaction: {error.message}</div>
+      )}
+    </>
+  )
+}
+```
+
+<Callout>
+  Note: The `write` function will be undefined if the config has not been
+  prepared (still in-flight or errored), or the end-user is not connected to a
+  wallet.
+</Callout>
+
+## Return value
+
+```tsx
+{
+  data?: PrepareWriteContractResult
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<PrepareWriteContractResult>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### address (optional)
+
+Contract address. If `address` is not defined, hook will not run.
+
+```tsx {5}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+}
+```
+
+### abi (optional)
+
+Contract ABI. If `abi` is not defined, hook will not run.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/react/typescript) for more information.
+
+```tsx {6}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+}
+```
+
+### functionName (optional)
+
+Name of function to call. If `functionName` is not defined, hook will not run.
+
+```tsx {7}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+}
+```
+
+### args (optional)
+
+Arguments to pass to function call.
+
+```tsx {16}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [{ internalType: 'uint32', name: 'tokenId', type: 'uint32' }],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+    args: [69],
+  })
+}
+```
+
+### chainId (optional)
+
+Chain ID used to validate if the user is connected to the target chain.
+
+```tsx {9}
+import { usePrepareContractWrite } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    chainId: optimism.id,
+  })
+}
+```
+
+### overrides (optional)
+
+Overrides to pass to function call. If the function is payable, you can pass a `value` here.
+
+```tsx {8-11}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    overrides: {
+      from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      value: ethers.utils.parseEther('0.01'),
+    },
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the prepared config should remain in the cache.
+
+```tsx {8}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {8}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {7}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    scopeKey: 'wagmi'
+    functionName: 'feed',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after prepared config is considered stale. If set to `Infinity` the data will never be considered stale.
+
+```tsx {8}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {8}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    suspense: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching is successful.
+
+```tsx {8-10}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {8-10}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {8-10}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
