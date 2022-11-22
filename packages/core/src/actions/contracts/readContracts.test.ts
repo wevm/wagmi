@@ -1,9 +1,8 @@
 import type { Address, ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { assertType, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
-  expectType,
   mlootContractConfig,
   setupClient,
   wagmiContractConfig,
@@ -107,7 +106,7 @@ describe('readContracts', () => {
       //  ^?
       contracts,
     })
-    expectType<
+    assertType<
       [
         ResolvedConfig['BigIntType'],
         ResolvedConfig['BigIntType'],
@@ -206,7 +205,7 @@ describe('readContracts', () => {
           ethContracts[2]!,
         ],
       })
-      expectType<
+      assertType<
         [
           ResolvedConfig['BigIntType'],
           Address,
@@ -294,7 +293,7 @@ describe('readContracts', () => {
         //  ^?
         contracts: [...ethContracts, ...polygonContracts],
       })
-      expectType<
+      assertType<
         [
           ResolvedConfig['BigIntType'],
           ResolvedConfig['BigIntType'],

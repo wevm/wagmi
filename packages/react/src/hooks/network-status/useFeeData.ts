@@ -3,8 +3,7 @@ import { fetchFeeData } from '@wagmi/core'
 import * as React from 'react'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useBlockNumber } from '../network-status'
-import { useChainId, useQuery } from '../utils'
+import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseFeeDataArgs = Partial<FetchFeeDataArgs> & {
   /** Subscribe to changes */
@@ -44,28 +43,30 @@ export function useFeeData({
 }: UseFeeDataArgs & UseFeedDataConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
-  const feeDataQuery = useQuery(
-    queryKey({ chainId, formatUnits, scopeKey }),
-    queryFn,
-    {
-      cacheTime,
-      enabled,
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    },
+  const queryKey_ = React.useMemo(
+    () =>
+      queryKey({
+        chainId,
+        formatUnits,
+        scopeKey,
+      }),
+    [chainId, formatUnits, scopeKey],
   )
+  const feeDataQuery = useQuery(queryKey_, queryFn, {
+    cacheTime,
+    enabled,
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 
-  const { data: blockNumber } = useBlockNumber({ chainId, watch })
-  React.useEffect(() => {
-    if (!enabled) return
-    if (!watch) return
-    if (!blockNumber) return
-    feeDataQuery.refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockNumber])
+  useInvalidateOnBlock({
+    chainId,
+    enabled: enabled && watch,
+    queryKey: queryKey_,
+  })
 
   return feeDataQuery
 }

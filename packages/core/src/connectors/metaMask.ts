@@ -1,3 +1,6 @@
+import type { Address } from 'abitype'
+import { getAddress } from 'ethers/lib/utils.js'
+
 import { getClient } from '../client'
 import type { RpcError } from '../errors'
 import {
@@ -61,17 +64,14 @@ export class MetaMaskConnector extends InjectedConnector {
 
       // Attempt to show wallet select prompt with `wallet_requestPermissions` when
       // `shimDisconnect` is active and account is in disconnected state (flag in storage)
+      let account: Address | null = null
       if (
         this.#UNSTABLE_shimOnConnectSelectAccount &&
         this.options?.shimDisconnect &&
         !getClient().storage?.getItem(this.shimDisconnectKey)
       ) {
-        const accounts = await provider
-          .request({
-            method: 'eth_accounts',
-          })
-          .catch(() => [])
-        const isConnected = !!accounts[0]
+        account = await this.getAccount().catch(() => null)
+        const isConnected = !!account
         if (isConnected)
           await provider.request({
             method: 'wallet_requestPermissions',
@@ -79,7 +79,13 @@ export class MetaMaskConnector extends InjectedConnector {
           })
       }
 
-      const account = await this.getAccount()
+      if (!account) {
+        const accounts = await provider.request({
+          method: 'eth_requestAccounts',
+        })
+        account = getAddress(accounts[0] as string)
+      }
+
       // Switch to chain if provided
       let id = await this.getChainId()
       let unsupported = this.isChainUnsupported(id)

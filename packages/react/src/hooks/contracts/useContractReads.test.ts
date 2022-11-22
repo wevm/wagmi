@@ -1,10 +1,9 @@
 import type { ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { assertType, describe, expect, it } from 'vitest'
 
 import {
   act,
-  expectType,
   mlootContractConfig,
   renderHook,
   wagmigotchiContractConfig,
@@ -40,7 +39,7 @@ describe('useContractRead', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { internal, ...res } = result.current
-    expectType<
+    assertType<
       | [
           ResolvedConfig['BigIntType'],
           ResolvedConfig['BigIntType'],
@@ -167,7 +166,7 @@ describe('useContractRead', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
-      expectType<
+      assertType<
         | [
             ResolvedConfig['BigIntType'],
             ResolvedConfig['BigIntType'],
@@ -204,7 +203,7 @@ describe('useContractRead', () => {
 
       await act(async () => {
         const { data } = await result.current.refetch()
-        expectType<
+        assertType<
           | [
               ResolvedConfig['BigIntType'],
               ResolvedConfig['BigIntType'],

@@ -9,5 +9,6 @@
   "connectors": "Connectors",
   "hooks": "Hooks",
   "prepare-hooks": "Prepare Hooks",
-  "constants": "Constants"
+  "constants": "Constants",
+  "create-wagmi": "create-wagmi"
 }
