@@ -87,7 +87,7 @@ import { InjectedConnector } from '@wagmi/core/connectors/injected'
 const { address } = await connect({
   connector: new InjectedConnector(),
 })
-const ensName = fetchEnsName({ address })
+const ensName = await fetchEnsName({ address })
 ```
 
 Want to learn more? Continue on reading the documentation.
