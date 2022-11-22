@@ -8,7 +8,10 @@
     "url": "https://github.com/wagmi-dev/wagmi.git",
     "directory": "packages/react"
   },
-  "author": "awkweb.eth",
+  "contributors": [
+    "awkweb.eth <t@wagmi.sh>",
+    "jxom.eth <j@wagmi.sh>"
+  ],
   "homepage": "https://wagmi.sh",
   "ethereum": "wagmi-dev.eth",
   "funding": [
