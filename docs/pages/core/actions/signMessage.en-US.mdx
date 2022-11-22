@@ -1,0 +1,44 @@
+---
+title: 'signMessage'
+description: 'Action for signing messages with connected account.'
+---
+
+# signMessage
+
+Action for signing messages with connected account.
+
+```ts
+import { signMessage } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the message: `gm wagmi frens`.
+
+```ts
+import { signMessage } from '@wagmi/core'
+
+const signature = await signMessage({
+  message: 'gm wagmi frens',
+})
+```
+
+## Return Value
+
+```ts
+string
+```
+
+## Configuration
+
+### message
+
+Message to sign with wallet.
+
+```ts {7}
+import { signMessage } from '@wagmi/core'
+
+const signature = await signMessage({
+  message: 'gm wagmi frens',
+})
+```

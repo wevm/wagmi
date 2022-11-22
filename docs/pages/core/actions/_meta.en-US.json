@@ -18,9 +18,18 @@
   "readContract": "readContract",
   "readContracts": "readContracts",
   "sendTransaction": "sendTransaction",
+  "signMessage": "signMessage",
+  "signTypedData": "signTypedData",
+  "switchNetwork": "switchNetwork",
   "waitForTransaction": "waitForTransaction",
+  "watchAccount": "watchAccount",
+  "watchBlockNumber": "watchBlockNumber",
   "watchContractEvent": "watchContractEvent",
   "watchMulticall": "watchMulticall",
+  "watchNetwork": "watchNetwork",
+  "watchProvider": "watchProvider",
   "watchReadContracts": "watchReadContracts",
+  "watchSigner": "watchSigner",
+  "watchWebSocketProvider": "watchWebSocketProvider",
   "writeContract": "writeContract"
 }
