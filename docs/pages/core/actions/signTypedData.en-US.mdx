@@ -14,7 +14,7 @@ import { Callout } from 'nextra-theme-docs'
 
 Action for signing typed data with connected account.
 
-```tsx
+```ts
 import { signTypedData } from '@wagmi/core'
 ```
 
@@ -59,7 +59,7 @@ const value = {
 
 From now on, the typed data variables (above) are referenced only by name for brevity.
 
-```tsx
+```ts
 import { signTypedData } from '@wagmi/core'
 
 const signature = await signTypedData({
@@ -71,7 +71,7 @@ const signature = await signTypedData({
 
 ## Return Value
 
-```tsx
+```ts
 string
 ```
 
@@ -81,7 +81,7 @@ string
 
 Typed data domain.
 
-```tsx {4-9}
+```ts {4-9}
 import { signTypedData } from '@wagmi/core'
 
 const signature = await signTypedData({
@@ -102,7 +102,7 @@ Typed data type definition.
 
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/core/typescript) for more information.
 
-```tsx {5-15}
+```ts {5-15}
 import { signTypedData } from '@wagmi/core'
 
 const signature = signTypedData({
@@ -126,7 +126,7 @@ const signature = signTypedData({
 
 Typed data value.
 
-```tsx {6-16}
+```ts {6-16}
 import { signTypedData } from '@wagmi/core'
 
 const signature = signTypedData({

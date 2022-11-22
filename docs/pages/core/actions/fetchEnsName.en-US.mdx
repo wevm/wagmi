@@ -13,7 +13,7 @@ import { fetchEnsName } from '@wagmi/core'
 
 ## Usage
 
-```tsx
+```ts
 import { fetchEnsName } from '@wagmi/core'
 
 const ensName = await fetchEnsName({
@@ -23,7 +23,7 @@ const ensName = await fetchEnsName({
 
 ## Return Value
 
-```tsx
+```ts
 string
 ```
 
@@ -33,7 +33,7 @@ string
 
 Address to fetch ENS name for.
 
-```tsx {5}
+```ts {5}
 import { fetchEnsName } from '@wagmi/core'
 
 function App() {
@@ -47,7 +47,7 @@ function App() {
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
 
-```tsx {6}
+```ts {6}
 import { fetchEnsName } from '@wagmi/core'
 
 function App() {

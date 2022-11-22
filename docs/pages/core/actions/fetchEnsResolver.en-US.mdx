@@ -13,7 +13,7 @@ import { fetchEnsResolver } from '@wagmi/core'
 
 ## Usage
 
-```tsx
+```ts
 import { fetchEnsResolver } from '@wagmi/core'
 
 const resolver = await fetchEnsResolver({
@@ -23,7 +23,7 @@ const resolver = await fetchEnsResolver({
 
 ## Return Value
 
-```tsx
+```ts
 EnsResolver
 ```
 
@@ -33,7 +33,7 @@ EnsResolver
 
 ENS name to fetch resolver for.
 
-```tsx {5}
+```ts {5}
 import { fetchEnsResolver } from '@wagmi/core'
 
 const resolver = await fetchEnsResolver({
@@ -45,7 +45,7 @@ const resolver = await fetchEnsResolver({
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
 
-```tsx {6}
+```ts {6}
 import { fetchEnsResolver } from '@wagmi/core'
 
 const resolver = await fetchEnsResolver({
