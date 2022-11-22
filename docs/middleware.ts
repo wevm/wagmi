@@ -7,6 +7,7 @@ const redirects: Record<string, string> = {
   '/docs/connectors/coinbase-wallet': '/docs/connectors/coinbaseWallet',
   '/docs/connectors/metamask': '/docs/connectors/metaMask',
   '/docs/connectors/walletconnect': '/docs/connectors/walletConnect',
+  '/docs/create-wagmi': '/cli/create-wagmi',
   '/docs/migrating-to-030': '/docs/migrating-to-03', // Tweeted wrong link: https://twitter.com/awkweb/status/1518607780332122116
   '/docs/migrating-to-03': '/docs/migration-guide',
   '/docs/provider': '/docs/WagmiConfig',

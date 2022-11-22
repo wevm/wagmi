@@ -1,0 +1,207 @@
+---
+title: 'useEnsAddress'
+description: 'React Hook for fetching address for ENS name.'
+---
+
+# useEnsAddress
+
+Hook for fetching address for ENS name.
+
+```ts
+import { useEnsAddress } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useEnsAddress({
+    name: 'awkweb.eth',
+  })
+
+  if (isLoading) return <div>Fetching address…</div>
+  if (isError) return <div>Error fetching address</div>
+  return <div>Address: {data}</div>
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: string
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<string>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    chainId: 1,
+  })
+}
+```
+
+### name (optional)
+
+ENS name to fetch address for. If `name` is not defined, hook will not run.
+
+```tsx {5}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'moxey.eth',
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    scopeKey: 'wagmi',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `1000 * 60 * 60 * 24` (24 hours).
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {6}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    suspense: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {6-8}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {6-8}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {6-8}
+import { useEnsAddress } from 'wagmi'
+
+function App() {
+  const ensAddress = useEnsAddress({
+    name: 'awkweb.eth',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```

@@ -43,7 +43,7 @@ const data = await writeContract(config)
 
 > This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
 
-- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `prepareWriteContract` action.
+- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/core/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `prepareWriteContract` action.
 - `prepared`: The config has been prepared with parameters required for performing a contract write via the [`prepareWriteContract` action](/core/actions/prepareContractWrite)
 
 ```ts {4}
@@ -189,7 +189,7 @@ It is possible to use `writeContract` without pairing it with `prepareWriteContr
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  pitfalls](/core/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
   use it as a last resort.
 </Callout>
 

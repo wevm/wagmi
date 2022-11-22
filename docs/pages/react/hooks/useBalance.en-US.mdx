@@ -1,0 +1,266 @@
+---
+title: 'useBalance'
+description: 'React Hook for fetching balance information for Ethereum or ERC-20 tokens.'
+---
+
+# useBalance
+
+Hook for fetching balance information for Ethereum or ERC-20 tokens.
+
+```ts
+import { useBalance } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useBalance } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  })
+
+  if (isLoading) return <div>Fetching balance…</div>
+  if (isError) return <div>Error fetching balance</div>
+  return (
+    <div>
+      Balance: {data?.formatted} {data?.symbol}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: {
+    decimals: number
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<{
+    decimals: number
+    formatted: string
+    symbol: string
+    value: BigNumber
+  }>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### address (optional)
+
+Address to fetch balance for. If `address` is not defined, hook will not run.
+
+```tsx {5}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  })
+}
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    chainId: 1,
+  })
+}
+```
+
+### formatUnits (optional)
+
+Formats balance using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether` or `token`'s decimal value.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    formatUnits: 'gwei',
+  })
+}
+```
+
+### token (optional)
+
+Address for ERC-20 token. If `token` is provided, hook fetches token balance instead of Ethereum balance. For example, we can fetch `0xA0Cf798816D4b9b9866b5330EEa46a18382f251e`'s current [$UNI](https://etherscan.io/address/0x1f9840a85d5af5bf1d1762f925bdaddc4201f984) balance.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    token: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+  })
+}
+```
+
+### watch (optional)
+
+Watches and refreshes data for new blocks.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    watch: true,
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    enabled: false,
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    staleTime: 2_000,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical scope will share the same cache.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    addressOrName: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    scopeKey: 'wagmi',
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {6}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    suspense: true,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {6-8}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {6-8}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {6-8}
+import { useBalance } from 'wagmi'
+
+function App() {
+  const balance = useBalance({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

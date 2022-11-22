@@ -8,7 +8,7 @@ import { ContractWrite } from '../../components/examples'
 
 # Contract Write
 
-The following example teaches you how to implement a simple "Mint NFT" component using wagmi. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`usePrepareContractWrite`](/docs/prepare-hooks/usePrepareContractWrite), [`useContractWrite`](/docs/hooks/useContractWrite) & [`useWaitForTransaction`](/docs/hooks/useWaitForTransaction) hooks. Try it out before moving on.
+The following example teaches you how to implement a simple "Mint NFT" component using wagmi. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`usePrepareContractWrite`](/react/prepare-hooks/usePrepareContractWrite), [`useContractWrite`](/react/hooks/useContractWrite) & [`useWaitForTransaction`](/react/hooks/useWaitForTransaction) hooks. Try it out before moving on.
 
 <ContractWrite />
 
@@ -34,7 +34,7 @@ export function MintNFT() {
 
 ## Step 3: Add the `usePrepareContractWrite` hook
 
-Add the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+Add the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
 
 You will need to:
 
@@ -70,7 +70,7 @@ export function MintNFT() {
 
 ## Step 4: Add the `useContractWrite` hook
 
-Now add the [`useContractWrite` hook](/docs/hooks/useContractWrite). This hook performs the actual contract write transaction.
+Now add the [`useContractWrite` hook](/react/hooks/useContractWrite). This hook performs the actual contract write transaction.
 
 We will need to:
 
@@ -115,12 +115,12 @@ However, there is currently no feedback to show when the `mint` transaction is s
 
 <Callout type="info">
   [Why do I need a `usePrepareContractWrite` & `useContractWrite`
-  hook?](/docs/prepare-hooks/intro)
+  hook?](/react/prepare-hooks/intro)
 </Callout>
 
 ## Step 5: Add the `useWaitForTransaction` hook
 
-Using the [`useWaitForTransaction` hook](/docs/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
+Using the [`useWaitForTransaction` hook](/react/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
 
 We will need to:
 

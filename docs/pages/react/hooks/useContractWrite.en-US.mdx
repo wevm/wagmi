@@ -1,0 +1,387 @@
+---
+title: 'useContractWrite'
+description: 'React Hook for calling a ethers Contract write method.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# useContractWrite
+
+Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+```tsx
+import { useContractWrite } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
+
+```tsx
+import { useContractWrite, usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+  const { data, isLoading, isSuccess, write } = useContractWrite(config)
+
+  return (
+    <div>
+      <button disabled={!write} onClick={() => write?.()}>
+        Feed
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+<Callout>
+  It is highly recommended to pair `useContractWrite` with the
+  [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite)
+  to [avoid UX
+  pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+</Callout>
+
+## Return Value
+
+```tsx
+{
+  data?: TransactionResponse
+  error?: Error
+  isError: boolean
+  isIdle: boolean
+  isLoading: boolean
+  isSuccess: boolean
+  write: ((args?: WriteContractConfig) => void) | undefined
+  writeAsync: ((args?: WriteContractConfig) => Promise<TransactionResponse>) | undefined
+  reset: () => void
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### mode
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
+- `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite)
+
+```tsx {5}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { sendTransaction } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+}
+```
+
+### address (optional)
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+Contract address.
+
+```tsx {6}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### chainId (optional)
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+
+```tsx {7}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    chainId: 1,
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### abi
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/react/typescript) for more information.
+
+```tsx {7}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### functionName
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+Name of function to call.
+
+```tsx {8}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### args (optional)
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+Arguments to pass to function call.
+
+```tsx {9}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    args: [],
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### overrides (optional)
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+Overrides to pass to function call. If the function is payable, you can pass a `value` here.
+
+```tsx {9-12}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const contractWrite = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    overrides: {
+      from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+      value: ethers.utils.parseEther('0.01'),
+    },
+  })
+
+  return <button onClick={() => write()}>Feed</button>
+}
+```
+
+### request (optional)
+
+> This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+
+The request to use when sending the contract transaction.
+
+```tsx {7}
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({ ... })
+  const { sendTransaction } = useContractWrite({
+    ...config,
+    request: config.request
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to write.
+
+```tsx {7-9}
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({ ... })
+  const { write } = useContractWrite({
+    ...config,
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before the contract write function and is passed same variables the contract write function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a failure.
+
+```tsx {7-9}
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({ ... })
+  const { write } = useContractWrite({
+    ...config,
+    onMutate({ args, overrides }) {
+      console.log('Mutate', { args, overrides })
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when write is settled (either successfully sent, or an error has thrown).
+
+```tsx {7-9}
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({ ... })
+  const { write } = useContractWrite({
+    ...config,
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when write is successful.
+
+```tsx {7-9}
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({ ... })
+  const { write } = useContractWrite({
+    ...config,
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+## Override Config
+
+It is possible to pass through override config. Any override config prefixed with `recklesslySetUnprepared` means that it will break the previously prepared config. It will need to prepare the request again at the time of invoking `write`/`writeAsync`.
+
+<Callout>
+  This usage is not recommended. It comes with [UX
+  pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
+</Callout>
+
+```tsx {17-21}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'claim',
+  })
+  const { data, isLoading, isSuccess, write } = useContractWrite(config)
+
+  return (
+    <div>
+      <button
+        disabled={!write}
+        onClick={() =>
+          write({
+            recklesslySetUnpreparedArgs: 69,
+            recklesslySetUnpreparedOverrides: {
+              from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+              value: ethers.utils.parseEther('0.01'),
+            },
+          })
+        }
+      >
+        Claim
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+## Reckless Usage
+
+It is possible to use `useContractWrite` without pairing it with `usePrepareContractWrite` by using "recklessly unprepared" mode.
+
+<Callout>
+  This usage is not recommended. It comes with [UX
+  pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  use it as a last resort.
+</Callout>
+
+```tsx {5-9}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    mode: 'recklesslyUnprepared',
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'claim',
+    tokenId: 69,
+  })
+
+  return (
+    <div>
+      <button onClick={() => write()}>Claim</button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
