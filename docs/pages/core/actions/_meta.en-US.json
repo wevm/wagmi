@@ -3,6 +3,10 @@
   "disconnect": "disconnect",
   "fetchBalance": "fetchBalance",
   "fetchBlockNumber": "fetchBlockNumber",
+  "fetchEnsAddress": "fetchEnsAddress",
+  "fetchEnsAvatar": "fetchEnsAvatar",
+  "fetchEnsName": "fetchEnsName",
+  "fetchEnsResolver": "fetchEnsResolver",
   "fetchFeeData": "fetchFeeData",
   "fetchSigner": "fetchSigner",
   "fetchTransaction": "fetchTransaction",
@@ -21,6 +25,7 @@
   "waitForTransaction": "waitForTransaction",
   "watchContractEvent": "watchContractEvent",
   "watchMulticall": "watchMulticall",
+  "watchReadContract": "watchReadContract",
   "watchReadContracts": "watchReadContracts",
   "writeContract": "writeContract"
 }
