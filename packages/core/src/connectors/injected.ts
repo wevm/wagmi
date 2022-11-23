@@ -19,6 +19,8 @@ import { Connector } from './base'
 export type InjectedConnectorOptions = {
   /** Name of connector */
   name?: string | ((detectedName: string | string[]) => string)
+  /** Get injected provider */
+  getProvider?: () => Window['ethereum'] | undefined
   /**
    * MetaMask 10.9.3 emits disconnect event when chain is changed.
    * This flag prevents the `"disconnect"` event from being emitted upon switching chains. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334) for more info.
@@ -39,7 +41,7 @@ export class InjectedConnector extends Connector<
 > {
   readonly id: string
   readonly name: string
-  readonly ready = typeof window != 'undefined' && !!window.ethereum
+  readonly ready: boolean = false
 
   #provider?: Window['ethereum']
   #switchingChains?: boolean
@@ -60,11 +62,13 @@ export class InjectedConnector extends Connector<
     }
     super({ chains, options })
 
+    const provider = this.#getProviderFromOptionsOrWindow()
+
     let name = 'Injected'
     const overrideName = options.name
     if (typeof overrideName === 'string') name = overrideName
-    else if (typeof window !== 'undefined') {
-      const detectedName = getInjectedName(window.ethereum)
+    else if (provider) {
+      const detectedName = getInjectedName(provider)
       if (overrideName) name = overrideName(detectedName)
       else
         name =
@@ -75,6 +79,8 @@ export class InjectedConnector extends Connector<
 
     this.id = 'injected'
     this.name = name
+    this.ready = !!provider
+    this.#provider = provider
   }
 
   async connect({ chainId }: { chainId?: number } = {}) {
@@ -147,8 +153,10 @@ export class InjectedConnector extends Connector<
   }
 
   async getProvider() {
-    if (typeof window !== 'undefined' && !!window.ethereum)
-      this.#provider = window.ethereum
+    if (this.#provider) return this.#provider
+
+    this.#provider = this.#getProviderFromOptionsOrWindow()
+
     return this.#provider
   }
 
@@ -299,5 +307,13 @@ export class InjectedConnector extends Connector<
 
   protected isUserRejectedRequestError(error: unknown) {
     return (error as ProviderRpcError).code === 4001
+  }
+
+  #getProviderFromOptionsOrWindow() {
+    return this.options?.getProvider
+      ? this.options.getProvider()
+      : typeof window != 'undefined'
+      ? window.ethereum
+      : undefined
   }
 }

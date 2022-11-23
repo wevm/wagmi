@@ -88,6 +88,24 @@ const connector = new InjectedConnector({
 })
 ```
 
+#### getProvider
+
+Function to get the provider from the injected wallet. Defaults to `window.ethereum`.
+
+```ts {5-9}
+import { InjectedConnector } from '@wagmi/core/connectors/injected'
+
+const connector = new InjectedConnector({
+  options: {
+    options: {
+      name: 'SubWallet',
+      getProvider: () =>
+        typeof window !== 'undefined' ? window.SubWallet : undefined,
+    },
+  },
+})
+```
+
 #### shimChainChangedDisconnect
 
 Certain versions of MetaMask [emit the `"disconnect"` event when chain is changed](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334). This flag prevents the `"disconnect"` event from being emitted upon switching chains. Defaults to `false`.
