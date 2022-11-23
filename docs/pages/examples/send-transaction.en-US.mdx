@@ -8,7 +8,7 @@ import { SendTransaction } from '../../components/examples'
 
 # Send Transaction
 
-The following example teaches you how to send transactions in wagmi. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`usePrepareSendTransaction`](/docs/prepare-hooks/usePrepareSendTransaction), [`useSendTransaction`](/docs/hooks/useSendTransaction) & [`useWaitForTransaction`](/docs/hooks/useWaitForTransaction) hooks. Try it out before moving on.
+The following example teaches you how to send transactions in wagmi. The example below builds on the [Connect Wallet Example](/examples/connect-wallet) and uses the [`usePrepareSendTransaction`](/react/prepare-hooks/usePrepareSendTransaction), [`useSendTransaction`](/react/hooks/useSendTransaction) & [`useWaitForTransaction`](/react/hooks/useWaitForTransaction) hooks. Try it out before moving on.
 
 <SendTransaction />
 
@@ -68,7 +68,7 @@ export function SendTransaction() {
 
 ## Step 4: Add the `usePrepareSendTransaction` hook
 
-Create a new component and add the [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction). This hook eagerly fetches the parameters required for sending a transaction such as the gas estimate.
+Create a new component and add the [`usePrepareSendTransaction` hook](/react/prepare-hooks/usePrepareSendTransaction). This hook eagerly fetches the parameters required for sending a transaction such as the gas estimate.
 
 You will need to:
 
@@ -118,7 +118,7 @@ export function SendTransaction() {
 
 ## Step 5: Add the `useSendTransaction` hook
 
-Now add the [`useSendTransaction` hook](/docs/hooks/useSendTransaction). This hook performs the actual transaction.
+Now add the [`useSendTransaction` hook](/react/hooks/useSendTransaction). This hook performs the actual transaction.
 
 We will need to:
 
@@ -178,12 +178,12 @@ However, there is currently no feedback on the status of the transaction. We wil
 
 <Callout type="info">
   [Why do I need a `usePrepareSendTransaction` & `useSendTransaction`
-  hook?](/docs/prepare-hooks/intro)
+  hook?](/react/prepare-hooks/intro)
 </Callout>
 
 ## Step 6: Add the `useWaitForTransaction` hook
 
-Using the [`useWaitForTransaction` hook](/docs/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
+Using the [`useWaitForTransaction` hook](/react/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
 
 We will need to:
 

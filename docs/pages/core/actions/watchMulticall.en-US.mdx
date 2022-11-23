@@ -1,0 +1,260 @@
+---
+title: 'watchMulticall'
+description: 'Action for subscribing to multicall changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchMulticall
+
+Action for subscribing to [multicall](/core/actions/multicall) changes.
+
+```ts
+import { watchMulticall } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked on chain change.
+
+To listen for block changes, you can use the [`listenToBlock` config](#listentoblock-optional).
+
+```ts {20}
+import { multicall, watchMulticall } from '@wagmi/core'
+
+const config = {
+  contracts: [
+    {
+      address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+      abi: wagmigotchiABI,
+      functionName: 'getBoredom',
+    },
+    {
+      address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+      abi: mlootABI,
+      functionName: 'getWaist',
+      args: [69],
+    },
+  ],
+}
+
+let data = await multicall(config)
+watchMulticall(config, (data_) => (data = data_))
+```
+
+## Configuration
+
+### contracts
+
+#### address
+
+Contract address.
+
+```ts {7,12}
+import { watchMulticall } from '@wagmi/core'
+
+watchMulticall(
+  {
+    contracts: [
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getAlive',
+      },
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getBoredom',
+      },
+    ],
+  },
+  (data) => console.log(data),
+)
+```
+
+#### abi
+
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and action result. See the wagmi [TypeScript docs](/core/typescript) for more information.
+
+```ts {8,13}
+import { watchMulticall } from '@wagmi/core'
+
+const data = await watchMulticall(
+  {
+    contracts: [
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getAlive',
+      },
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getBoredom',
+      },
+    ],
+  },
+  (data) => console.log(data),
+)
+```
+
+#### functionName
+
+Name of function to call.
+
+```ts {9,14}
+import { watchMulticall } from '@wagmi/core'
+
+const data = await watchMulticall(
+  {
+    contracts: [
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getAlive',
+      },
+      {
+        address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        abi: wagmigotchiABI,
+        functionName: 'getBoredom',
+      },
+    ],
+  },
+  (data) => console.log(data),
+)
+```
+
+#### args
+
+Arguments to pass to function call.
+
+```ts {10,16}
+import { watchMulticall } from '@wagmi/core'
+
+const data = await watchMulticall(
+  {
+    contracts: [
+      {
+        address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        abi: mlootABI,
+        functionName: 'getChest',
+        args: [69],
+      },
+      {
+        address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        abi: mlootABI,
+        functionName: 'getWaist',
+        args: [69],
+      },
+    ],
+  },
+  (data) => console.log(data),
+)
+```
+
+#### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {9,14}
+import { watchMulticall } from '@wagmi/core'
+
+const data = await watchMulticall(
+  {
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+        chainId: 1,
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+        chainId: 1,
+      },
+    ],
+  },
+  (data) => console.log(data),
+)
+```
+
+### allowFailure (optional)
+
+If a contract read fails while fetching, it will fail silently and not throw an error.
+
+```ts {15}
+import { watchMulticall } from '@wagmi/core'
+
+const data = await watchMulticall(
+  {
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    allowFailure: false,
+  },
+  (data) => console.log(data),
+)
+```
+
+### listenToBlock (optional)
+
+Listen for block changes & invoke `multicall`.
+
+```ts {19}
+import { watchMulticall } from '@wagmi/core'
+
+const data = await watchMulticall(
+  {
+    contracts: [
+      {
+        address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        abi: mlootABI,
+        functionName: 'getChest',
+        args: [69],
+      },
+      {
+        address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+        abi: mlootABI,
+        functionName: 'getWaist',
+        args: [69],
+      },
+    ],
+    listenToBlock: true,
+  },
+  (data) => console.log(data),
+)
+```
+
+### overrides (optional)
+
+Overrides to pass to function call.
+
+```ts {15}
+import { watchMulticall } from '@wagmi/core'
+
+const data = await watchMulticall(
+  {
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  },
+  (data) => console.log(data),
+)
+```

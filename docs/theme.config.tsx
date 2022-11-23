@@ -7,26 +7,45 @@ const github = 'https://github.com/wagmi-dev/wagmi'
 
 const translations = {
   'en-US': {
-    description:
-      'wagmi is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.',
+    description: {
+      core: 'Documentation for @wagmi/core',
+      cli: 'Documentation for CLI tools',
+      examples: 'Examples',
+      react:
+        'wagmi is a collection of React Hooks containing everything you need to start working with Ethereum. wagmi makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more — all with caching, request deduplication, and persistence.',
+    },
     feedbackLink: 'Question? Give us feedback →',
     poweredBy: 'Powered by',
-    subTitle: 'React Hooks for Ethereum',
+    subTitle: {
+      core: 'VanillaJS for Ethereum',
+      cli: 'wagmi CLI tools',
+      examples: 'wagmi Examples',
+      react: 'React Hooks for Ethereum',
+    },
   },
 } as const
 type Language = keyof typeof translations
 
+function getSectionName(path: string) {
+  if (/^\/core\/*/.test(path)) return 'core'
+  if (/^\/cli\/*/.test(path)) return 'cli'
+  if (/^\/examples\/*/.test(path)) return 'examples'
+  return 'react'
+}
+
 function Head() {
   const { frontMatter } = useConfig()
-  const { locale } = useRouter()
+  const { locale, pathname } = useRouter()
   const { systemTheme } = useTheme()
 
+  const sectionName = getSectionName(pathname)
   const description =
-    frontMatter.description || translations[locale as Language].description
+    frontMatter.description ||
+    translations[locale as Language].description[sectionName]
   const title_ =
     frontMatter.title && !frontMatter.title.startsWith('wagmi')
       ? frontMatter.title + ' – wagmi'
-      : `wagmi: ${translations[locale as Language].subTitle}`
+      : `wagmi: ${translations[locale as Language].subTitle[sectionName]}`
 
   return (
     <>
@@ -96,12 +115,26 @@ function FooterText() {
 }
 
 function Logo() {
-  const { locale } = useRouter()
+  const { locale, pathname } = useRouter()
+  const sectionName = getSectionName(pathname)
   return (
     <>
-      <span className="mr-2 font-extrabold">wagmi</span>
+      <svg
+        className="h-5 w-auto mr-4"
+        viewBox="0 0 421 198"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M47.9961 119.99C47.9961 133.244 58.7404 143.988 71.9942 143.988H119.99C133.244 143.988 143.988 133.244 143.988 119.99V23.9981C143.988 10.7443 154.733 0 167.986 0C181.24 0 191.984 10.7443 191.984 23.9981V119.99C191.984 133.244 202.729 143.988 215.983 143.988H263.979C277.232 143.988 287.977 133.244 287.977 119.99V23.9981C287.977 10.7443 298.721 0 311.975 0C325.229 0 335.973 10.7443 335.973 23.9981V167.986C335.973 181.24 325.229 191.984 311.975 191.984H23.9981C10.7443 191.984 0 181.24 0 167.986L8.47642e-06 23.9981C9.4127e-06 10.7443 10.7443 0 23.9981 0C37.2518 0 47.9961 10.7443 47.9961 23.9981L47.9961 119.99ZM388.54 197.698C406.212 197.698 420.538 183.373 420.538 165.701C420.538 148.029 406.212 133.704 388.54 133.704C370.869 133.704 356.543 148.029 356.543 165.701C356.543 183.373 370.869 197.698 388.54 197.698Z"
+          fill="white"
+        />
+      </svg>
+
       <span className="text-gray-600 font-normal hidden md:inline">
-        {translations[locale as Language].subTitle}
+        {translations[locale as Language].subTitle[sectionName]}
       </span>
     </>
   )

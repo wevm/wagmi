@@ -1,0 +1,46 @@
+---
+title: 'watchSigner'
+description: 'Action for subscribing to Signer changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchSigner
+
+Action for subscribing to [Signer](/core/actions/fetchSigner) changes.
+
+```ts
+import { watchSigner } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when Provider changes.
+
+```ts
+import { watchSigner } from '@wagmi/core'
+
+const unwatch = watchSigner(
+  {
+    chainId: 1,
+  },
+  (provider) => console.log(provider),
+)
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the Signer.
+
+```ts {5}
+import { watchSigner } from '@wagmi/core'
+
+const unwatch = watchSigner(
+  {
+    chainId: 1,
+  },
+  (provider) => console.log(provider),
+)
+```

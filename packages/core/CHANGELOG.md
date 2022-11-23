@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.7.5
+
+### Patch Changes
+
+- [`1169914a`](https://github.com/wagmi-dev/wagmi/commit/1169914a0f0ad2810ca1c536b1f1bc6c20f2c1be) Thanks [@jxom](https://github.com/jxom)! - Use `get_accounts` for `getSigner` in InjectedConnector
+
 ## 0.7.4
 
 ### Patch Changes

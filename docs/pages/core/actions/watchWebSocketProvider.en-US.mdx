@@ -1,0 +1,46 @@
+---
+title: 'watchWebSocketProvider'
+description: 'Action for subscribing to WebSocketProvider changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchWebSocketProvider
+
+Action for subscribing to [WebSocketProvider](/core/actions/getWebSocketProvider) changes.
+
+```ts
+import { watchWebSocketProvider } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when WebSocket Provider changes.
+
+```ts
+import { watchWebSocketProvider } from '@wagmi/core'
+
+const unwatch = watchWebSocketProvider(
+  {
+    chainId: 1,
+  },
+  (webSockerProvider) => console.log(webSockerProvider),
+)
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the WebSocket Provider. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { watchWebSocketProvider } from '@wagmi/core'
+
+const unwatch = watchWebSocketProvider(
+  {
+    chainId: 1,
+  },
+  (webSockerProvider) => console.log(webSockerProvider),
+)
+```

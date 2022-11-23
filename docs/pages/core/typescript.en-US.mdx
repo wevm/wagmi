@@ -1,0 +1,164 @@
+---
+title: 'TypeScript'
+description: 'Full end-to-end type-safety for contract interactions, EIP-712 typed data, and more!'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# TypeScript
+
+wagmi is designed to be as type-safe as possible! Things to keep in mind:
+
+- Types currently require using TypeScript v4.7.4 or greater.
+- Changes to types in this repository are considered non-breaking and are usually released as patch semver changes (otherwise every type enhancement would be a major version!).
+- It is highly recommended that you lock your `@wagmi/core` package version to a specific patch release and upgrade with the expectation that types may be fixed or upgraded between any release.
+- The non-type-related public API of wagmi still follows semver very strictly.
+
+To ensure everything works correctly, make sure that your `tsconfig.json` has [`strict`](https://www.typescriptlang.org/tsconfig#strict) mode set to true:
+
+```json filename="tsconfig.json"
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+## Type Inference
+
+wagmi can infer types based on [ABI](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) and [EIP-712](https://eips.ethereum.org/EIPS/eip-712) Typed Data definitions (powered by [ABIType](https://github.com/wagmi-dev/abitype)), giving you full end-to-end type-safety from your contracts to your frontend and incredible developer experience (e.g. autocomplete ABI function names and catch misspellings, type ABI function arguments, etc.).
+
+For this to work, you must either add [const assertions](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to specific configuration parameters (more info on those below) or define them inline. For example, `readContract`'s `abi` configuration parameter:
+
+```ts
+const result = readContract({
+  abi: […], // <--- defined inline
+})
+```
+
+```ts
+const abi = […] as const // <--- const assertion
+const result = readContract({ abi })
+```
+
+If type inference isn't working, it's likely you forgot to add a `const` assertion or define the configuration parameter inline.
+
+<Callout type="info">
+  Unfortunately [TypeScript doesn't support importing JSON as
+  const](https://github.com/microsoft/TypeScript/issues/32063). If you have ABIs
+  in `.json` files, you should convert the files to `.ts`, export the ABIs, and
+  add const assertions to them. (We have future integrations planned for
+  Foundry/Hardhat users to make this easier.)
+</Callout>
+
+### Contract ABIs
+
+The following actions support type inference when you add a const assertion to `abi`:
+
+- [getContract](/core/actions/getContract)
+- [multicall](/core/actions/multicall)
+- [prepareContractWrite](/core/prepare-hooks/usePrepareContractWrite)
+- [readContract](/core/actions/readContract)
+- [readContracts](/core/actions/readContracts)
+- [watchContractEvent](/core/actions/watchContractEvent)
+- [watchMulticall](/core/actions/watchMulticall)
+- [watchReadContract](/core/actions/watchReadContract)
+- [watchReadContracts](/core/actions/watchReadContracts)
+- [writeContract](/core/actions/writeContract)
+
+For example, `readContract`:
+
+```ts
+import { readContract } from '@wagmi/core'
+
+const result = await readContract({
+  //    ^? const data: BigNumber
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: [
+    {
+      name: 'getUncleanliness',
+      inputs: [],
+      outputs: [{ name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      name: 'love',
+      inputs: [{ name: '', type: 'address' }],
+      outputs: [{ name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      name: 'play',
+      inputs: [],
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+  ],
+
+  functionName: 'love',
+  // ^? (property) functionName: "getUncleanliness" | "love"
+  // Notice how "play" is not included since it is not a "read" function
+
+  args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+  // ^? (property) args: readonly [`0x${string}`]
+})
+```
+
+### EIP-712 Typed Data
+
+Adding a const assertion to `types` adds type inference to `signTypedData`'s `value` configuration parameter:
+
+```ts
+import { signTypedData } from '@wagmi/core'
+
+const result = await signTypedData({
+  domain: {
+    name: 'Ether Mail',
+    version: '1',
+    chainId: 1,
+    verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  },
+
+  types: {
+    Person: [
+      { name: 'name', type: 'string' },
+      { name: 'wallet', type: 'address' },
+    ],
+    Mail: [
+      { name: 'from', type: 'Person' },
+      { name: 'to', type: 'Person' },
+      { name: 'contents', type: 'string' },
+    ],
+  },
+
+  value: {
+    // ^? (parameter) value: { name: string; wallet: `0x${string}` } | {
+    //     from: {
+    //         name: string;
+    //         wallet: `0x${string}`;
+    //     };
+    //     to: {
+    //         name: string;
+    //         wallet: `0x${string}`;
+    //     };
+    //     contents: string;
+    // }
+    from: {
+      name: 'Cow',
+      wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+    },
+    to: {
+      name: 'Bob',
+      wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+    },
+    contents: 'Hello, Bob!',
+  },
+})
+```
+
+## Configuring Internal Types
+
+For advanced use-cases, you may want to configure wagmi's internal types. Most of wagmi's types relating to ABIs and EIP-712 Typed Data are powered by [ABIType](https://github.com/wagmi-dev/abitype). See ABIType's [documentation](https://github.com/wagmi-dev/abitype#configuration) for more info on how to configure types.

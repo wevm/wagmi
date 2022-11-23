@@ -1,0 +1,123 @@
+---
+title: 'readContract'
+description: 'Action for calling an ethers Contract read-only method.'
+---
+
+# readContract
+
+Action for calling an ethers Contract read-only method.
+
+```ts
+import { readContract } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'getHunger',
+})
+```
+
+## Return Value
+
+The data returned from invoking the contract method.
+
+```ts
+ReadContractResult<TAbi, TFunctionName>
+```
+
+`ReadContractResult` provides an inferred type from the `outputs` on `functionName` in the ABI (ie. the return type of the contract method). [Learn more](/core/typescript#type-inference).
+
+## Configuration
+
+### address
+
+The address of the contract.
+
+```ts {4}
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'getHunger',
+})
+```
+
+### abi
+
+The ABI of the contract.
+
+```ts {5}
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'getHunger',
+})
+```
+
+### functionName
+
+The name of the function on the contract to call.
+
+```ts {6}
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'getHunger',
+})
+```
+
+### args (optional)
+
+Arguments to pass to function call.
+
+```ts {7}
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'love',
+  args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {7}
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'love',
+  chainId: 1,
+})
+```
+
+### overrides (optional)
+
+Overrides to pass to function call.
+
+```ts {7}
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'love',
+  overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+})
+```

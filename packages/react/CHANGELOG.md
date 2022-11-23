@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.8.6
+
+### Patch Changes
+
+- [`1169914a`](https://github.com/wagmi-dev/wagmi/commit/1169914a0f0ad2810ca1c536b1f1bc6c20f2c1be) Thanks [@jxom](https://github.com/jxom)! - Use `get_accounts` for `getSigner` in InjectedConnector
+
+- Updated dependencies [[`1169914a`](https://github.com/wagmi-dev/wagmi/commit/1169914a0f0ad2810ca1c536b1f1bc6c20f2c1be)]:
+  - @wagmi/core@0.7.5
+
 ## 0.8.5
 
 ### Patch Changes

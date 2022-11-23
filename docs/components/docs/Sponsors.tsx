@@ -41,13 +41,23 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/looksrare-light.svg',
     },
   },
+  {
+    id: 'partydao',
+    name: 'PartyDAO',
+    href: 'https://twitter.com/prtyDAO',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/partydao-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/partydao-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
   const { resolvedTheme } = useTheme()
   const mode = (resolvedTheme ?? 'dark') as 'dark' | 'light'
   return (
-    <div className="flex my-5 gap-2">
+    <div className="flex my-5 gap-2 flex-wrap">
       {sponsors.map((sponsor) => (
         <a href={sponsor.href} key={sponsor.id}>
           <picture>

@@ -1,0 +1,141 @@
+---
+title: 'watchContractEvent'
+description: 'Action for subscribing to ethers Contract events.'
+---
+
+# watchContractEvent
+
+Action for subscribing to ethers Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
+
+```ts
+import { watchContractEvent } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
+
+```ts
+import { watchContractEvent } from '@wagmi/core'
+
+const unwatch = watchContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+  listener(node, label, owner) {
+    console.log(node, label, owner)
+  },
+})
+```
+
+## Return Value
+
+`unwatch` is a function that can be called to unsubscribe from the event.
+
+## Configuration
+
+### address
+
+Contract address.
+
+```ts {4}
+import { watchContractEvent } from '@wagmi/core'
+
+const unwatch = watchContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+  listener(node, label, owner) {
+    console.log(node, label, owner)
+  },
+})
+```
+
+### abi
+
+Contract ABI.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`. See the wagmi [TypeScript docs](/core/typescript) for more information.
+
+```ts {5}
+import { watchContractEvent } from '@wagmi/core'
+
+const unwatch = watchContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+  listener(node, label, owner) {
+    console.log(node, label, owner)
+  },
+})
+```
+
+### eventName
+
+Name of the event to listen to.
+
+```ts {6}
+import { watchContractEvent } from '@wagmi/core'
+
+const unwatch = watchContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewResolver',
+  listener(node, resolver) {
+    console.log(node, resolver)
+  },
+})
+```
+
+### listener
+
+Callback that receives event.
+
+```ts {7-9}
+import { watchContractEvent } from '@wagmi/core'
+
+const unwatch = watchContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+  listener(node, label, owner) {
+    console.log(node, label, owner)
+  },
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/core/client#websocketprovider-optional) for this to work correctly.
+
+```ts {10}
+import { watchContractEvent } from '@wagmi/core'
+
+const unwatch = watchContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+  listener(node, label, owner) {
+    console.log(node, label, owner)
+  },
+  chainId: 1,
+})
+```
+
+### once (optional)
+
+Receive only a single event, then stop listener. Defaults to `false`.
+
+```ts {10}
+import { watchContractEvent } from '@wagmi/core'
+
+const unwatch = watchContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+  listener(node, label, owner) {
+    console.log(node, label, owner)
+  },
+  once: true,
+})
+```

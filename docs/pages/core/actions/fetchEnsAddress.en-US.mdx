@@ -1,0 +1,55 @@
+---
+title: 'fetchEnsAddress'
+description: 'Action for fetching address for ENS name.'
+---
+
+# fetchEnsAddress
+
+Action for fetching address for ENS name.
+
+```ts
+import { fetchEnsAddress } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { fetchEnsAddress } from '@wagmi/core'
+
+const address = await fetchEnsAddress({
+  name: 'awkweb.eth',
+})
+```
+
+## Return Value
+
+```ts
+string
+```
+
+## Configuration
+
+### name
+
+ENS name to fetch address for.
+
+```ts {4}
+import { fetchEnsAddress } from '@wagmi/core'
+
+const address = await fetchEnsAddress({
+  name: 'moxey.eth',
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { fetchEnsAddress } from '@wagmi/core'
+
+const address = await fetchEnsAddress({
+  name: 'awkweb.eth',
+  chainId: 1,
+})
+```
