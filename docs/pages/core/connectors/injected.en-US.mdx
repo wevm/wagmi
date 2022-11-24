@@ -92,16 +92,14 @@ const connector = new InjectedConnector({
 
 Function to get the provider from the injected wallet. Defaults to `window.ethereum`.
 
-```ts {5-9}
+```ts {4-8}
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
 
 const connector = new InjectedConnector({
   options: {
-    options: {
-      name: 'SubWallet',
-      getProvider: () =>
-        typeof window !== 'undefined' ? window.SubWallet : undefined,
-    },
+    name: 'SubWallet',
+    getProvider: () =>
+      typeof window !== 'undefined' ? window.SubWallet : undefined,
   },
 })
 ```
