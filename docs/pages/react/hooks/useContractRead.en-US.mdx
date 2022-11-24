@@ -1,0 +1,382 @@
+---
+title: 'useContractRead'
+description: 'React Hook for calling an ethers Contract read-only method.'
+---
+
+# useContractRead
+
+Hook for calling an ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) method.
+
+```tsx
+import { useContractRead } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
+
+```tsx
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getHunger',
+  })
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: Result
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<Result>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### address (optional)
+
+Contract address. If `address` is not defined, hook will not run.
+
+```tsx {5}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
+}
+```
+
+### abi (optional)
+
+Contract ABI. If `abi` is not defined, hook will not run.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/react/typescript) for more information.
+
+```tsx {6}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
+}
+```
+
+### functionName (optional)
+
+Name of function to call. If `functionName` is not defined, hook will not run.
+
+```tsx {7}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+  })
+}
+```
+
+### args (optional)
+
+Arguments to pass to function call.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'love',
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
+  })
+}
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    chainId: 1,
+  })
+}
+```
+
+### overrides (optional)
+
+Overrides to pass to function call.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  })
+}
+```
+
+### cacheOnBlock (optional)
+
+Caches & persists the return data against the current block. Data will be considered stale when a new block arrives.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    cacheOnBlock: true,
+  })
+}
+```
+
+### watch (optional)
+
+Watches and refreshes data for new blocks.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    watch: true,
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    enabled: false,
+  })
+}
+```
+
+### isDataEqual (deprecated, optional)
+
+Use [`structuralSharing`](#structuralsharing-optional) instead.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    isDataEqual: (prev, next) => prev === next,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {7}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    scopeKey: 'wagmi',
+    functionName: 'getSleep',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    staleTime: 2_000,
+  })
+}
+```
+
+### select (optional)
+
+Transform or select a part of the data returned by the contract.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    select: (data) => transform(data),
+  })
+}
+```
+
+### structuralSharing (optional)
+
+Keep referential identity of data and prevent rerenders. Defaults to `(oldData, newData) => deepEqual(oldData, newData) ? oldData : replaceEqualDeep(oldData, newData)`. If set to `false`, structural sharing between query results will be disabled.
+
+If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    structuralSharing: (prev, next) => (prev === next ? prev : next),
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {8}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    suspense: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {8-10}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {8-10}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {8-10}
+import { useContractRead } from 'wagmi'
+
+function App() {
+  const contractRead = useContractRead({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getSleep',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```

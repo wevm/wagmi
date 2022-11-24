@@ -8,12 +8,5 @@
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
-  "ignore": [
-    "docs",
-    "example-dev",
-    "example-cra",
-    "example-next",
-    "example-remix",
-    "example-vite-react"
-  ]
+  "ignore": ["docs", "example-dev"]
 }

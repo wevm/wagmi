@@ -1,9 +1,12 @@
 import { persist, subscribeWithSelector } from 'zustand/middleware'
-import { Mutate, StoreApi, default as create } from 'zustand/vanilla'
+import type { Mutate, StoreApi } from 'zustand/vanilla'
+import { default as create } from 'zustand/vanilla'
 
-import { Connector, ConnectorData, InjectedConnector } from './connectors'
-import { ClientStorage, createStorage, noopStorage } from './storage'
-import { Provider, WebSocketProvider } from './types'
+import type { Connector, ConnectorData } from './connectors'
+import { InjectedConnector } from './connectors'
+import type { ClientStorage } from './storage'
+import { createStorage, noopStorage } from './storage'
+import type { Provider, WebSocketProvider } from './types'
 
 export type ClientConfig<
   TProvider extends Provider = Provider,
@@ -117,6 +120,7 @@ export class Client<
       subscribeWithSelector(
         persist(
           () =>
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             <State<TProvider, TWebSocketProvider>>{
               connectors:
                 typeof connectors === 'function' ? connectors() : connectors,

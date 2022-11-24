@@ -1,12 +1,12 @@
-import {
+import type {
   FetchSignerResult,
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
-  prepareSendTransaction,
 } from '@wagmi/core'
-import { providers } from 'ethers'
+import { prepareSendTransaction } from '@wagmi/core'
+import type { providers } from 'ethers'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'
 import { useQuery } from '../utils'
 

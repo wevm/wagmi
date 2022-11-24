@@ -83,7 +83,7 @@ jobs:
       - name: Lint code
         run: pnpm lint
       - name: Check types
-        run: pnpm lint:types
+        run: pnpm typecheck
 
   build:
     name: Build
@@ -167,6 +167,11 @@ jobs:
       - name: Test React 18
         if: matrix.react-version == 18
         run: pnpm test:coverage
+        env:
+          REACT_VERSION: ${{ matrix.react-version }}
+      - name: Test types
+        if: matrix.react-version == 18
+        run: pnpm test:typecheck
         env:
           REACT_VERSION: ${{ matrix.react-version }}
       - name: Test React 17

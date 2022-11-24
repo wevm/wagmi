@@ -9,12 +9,13 @@ import {
   renderHook,
   setupClient,
 } from '../../../test'
-import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
-import {
+import type { UseConnectArgs, UseConnectConfig } from './useConnect'
+import { useConnect } from './useConnect'
+import type {
   UseSwitchNetworkArgs,
   UseSwitchNetworkConfig,
-  useSwitchNetwork,
 } from './useSwitchNetwork'
+import { useSwitchNetwork } from './useSwitchNetwork'
 
 function useSwitchNetworkWithConnect(
   config: {

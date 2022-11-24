@@ -1,15 +1,10 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
-import {
-  ReadContractConfig,
-  ReadContractResult,
-  deepEqual,
-  parseContractResult,
-  readContract,
-} from '@wagmi/core'
-import { Abi } from 'abitype'
+import type { ReadContractConfig, ReadContractResult } from '@wagmi/core'
+import { deepEqual, parseContractResult, readContract } from '@wagmi/core'
+import type { Abi } from 'abitype'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
@@ -115,6 +110,7 @@ export function useContractRead<
   const { data: blockNumber } = useBlockNumber({
     chainId,
     enabled: watch || cacheOnBlock,
+    scopeKey: watch || cacheOnBlock ? undefined : 'idle',
     watch,
   })
 

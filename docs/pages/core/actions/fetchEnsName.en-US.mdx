@@ -1,0 +1,59 @@
+---
+title: 'fetchEnsName'
+description: 'Action for fetching ENS name for address.'
+---
+
+# fetchEnsName
+
+Action for fetching ENS name for address.
+
+```ts
+import { fetchEnsName } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { fetchEnsName } from '@wagmi/core'
+
+const ensName = await fetchEnsName({
+  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+})
+```
+
+## Return Value
+
+```ts
+string
+```
+
+## Configuration
+
+### address
+
+Address to fetch ENS name for.
+
+```ts {5}
+import { fetchEnsName } from '@wagmi/core'
+
+function App() {
+  const ensName = await fetchEnsName({
+    address: '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
+  })
+}
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {6}
+import { fetchEnsName } from '@wagmi/core'
+
+function App() {
+  const ensName = await fetchEnsName({
+    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    chainId: 1,
+  })
+}
+```

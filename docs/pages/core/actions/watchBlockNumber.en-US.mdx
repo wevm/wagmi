@@ -1,0 +1,61 @@
+---
+title: 'watchBlockNumber'
+description: 'Action for subscribing to block number changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchBlockNumber
+
+Action for subscribing to [block number](/core/actions/fetchBlockNumber) changes.
+
+```ts
+import { watchBlockNumber } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when Provider/WebSocketProvider changes.
+
+```ts
+import { watchBlockNumber } from '@wagmi/core'
+
+const unwatch = watchBlockNumber(
+  {
+    chainId: 1,
+  },
+  (blockNumber) => console.log(blockNumber),
+)
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { watchBlockNumber } from '@wagmi/core'
+
+const unwatch = watchBlockNumber(
+  {
+    chainId: 1,
+  },
+  (blockNumber) => console.log(blockNumber),
+)
+```
+
+### listen (optional)
+
+Listen to network for block number changes.
+
+```ts {5}
+import { watchBlockNumber } from '@wagmi/core'
+
+const unwatch = watchBlockNumber(
+  {
+    listen: true,
+  },
+  (blockNumber) => console.log(blockNumber),
+)
+```

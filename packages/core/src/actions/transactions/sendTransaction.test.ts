@@ -3,7 +3,7 @@ import { parseEther } from 'ethers/lib/utils.js'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
-import { Client } from '../../client'
+import type { Client } from '../../client'
 import { connect } from '../accounts'
 import { prepareSendTransaction } from './prepareSendTransaction'
 import { sendTransaction } from './sendTransaction'

@@ -1,12 +1,9 @@
-import { Address } from 'abitype'
-import { providers } from 'ethers'
+import type { Address } from 'abitype'
+import type { providers } from 'ethers'
 
-import {
-  ConnectorNotFoundError,
-  ProviderRpcError,
-  UserRejectedRequestError,
-} from '../../errors'
-import { Hash, Signer } from '../../types'
+import type { ProviderRpcError } from '../../errors'
+import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
+import type { Hash, Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 
@@ -90,9 +87,9 @@ export async function sendTransaction({
     // when using it in a click handler (iOS deep linking issues,
     // delay to open wallet, etc).
 
-    const uncheckedSigner = (<providers.JsonRpcSigner>(
-      signer
-    )).connectUnchecked?.()
+    const uncheckedSigner = (
+      signer as providers.JsonRpcSigner
+    ).connectUnchecked?.()
     const { hash, wait } = await (uncheckedSigner ?? signer).sendTransaction(
       request,
     )

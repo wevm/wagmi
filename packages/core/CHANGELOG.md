@@ -1,5 +1,29 @@
 # @wagmi/core
 
+## 0.7.5
+
+### Patch Changes
+
+- [`1169914a`](https://github.com/wagmi-dev/wagmi/commit/1169914a0f0ad2810ca1c536b1f1bc6c20f2c1be) Thanks [@jxom](https://github.com/jxom)! - Use `get_accounts` for `getSigner` in InjectedConnector
+
+## 0.7.4
+
+### Patch Changes
+
+- [#1309](https://github.com/wagmi-dev/wagmi/pull/1309) [`1f4a4261`](https://github.com/wagmi-dev/wagmi/commit/1f4a4261247b1d3a90e3123157bc851a35d49b9c) Thanks [@tmm](https://github.com/tmm)! - Fixed internal type
+
+## 0.7.3
+
+### Patch Changes
+
+- [#1294](https://github.com/wagmi-dev/wagmi/pull/1294) [`b2f88949`](https://github.com/wagmi-dev/wagmi/commit/b2f88949f32aabaf13f318472648cd51a8b7f2e7) Thanks [@tmm](https://github.com/tmm)! - Set `abi` return type value for `prepareContractWrite` as more permissive when not inferrable as `Abi`.
+
+## 0.7.2
+
+### Patch Changes
+
+- [`e9f806b6`](https://github.com/wagmi-dev/wagmi/commit/e9f806b652ba62effb3ddac464815e447fc287f6) Thanks [@tmm](https://github.com/tmm)! - Bumped abitype and zustand versions.
+
 ## 0.7.1
 
 ### Patch Changes

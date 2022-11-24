@@ -2,7 +2,8 @@ import { MockConnector } from '@wagmi/core/connectors/mock'
 import { describe, expect, it, vi } from 'vitest'
 
 import { act, getSigners, renderHook, useAccount } from '../../../test'
-import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
+import type { UseConnectArgs, UseConnectConfig } from './useConnect'
+import { useConnect } from './useConnect'
 
 const connector = new MockConnector({
   options: { signer: getSigners()[0]! },

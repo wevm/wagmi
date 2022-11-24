@@ -1,4 +1,4 @@
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
 import { act, getSigners, renderHook } from '../../../test'

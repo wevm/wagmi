@@ -2,7 +2,8 @@ import { erc20ABI } from '@wagmi/core'
 import { describe, expect, it } from 'vitest'
 
 import { getProvider, renderHook } from '../../../test'
-import { UseContractConfig, useContract } from './useContract'
+import type { UseContractConfig } from './useContract'
+import { useContract } from './useContract'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 

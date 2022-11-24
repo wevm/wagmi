@@ -2,19 +2,15 @@ import WalletConnectProvider from '@walletconnect/ethereum-provider'
 // eslint-disable-next-line import/no-named-as-default
 import Modal from '@walletconnect/qrcode-modal'
 // eslint-disable-next-line import/no-named-as-default
-import UniversalProvider, {
-  NamespaceConfig,
-} from '@walletconnect/universal-provider'
+import type { NamespaceConfig } from '@walletconnect/universal-provider'
+import type UniversalProvider from '@walletconnect/universal-provider'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
 import { getClient } from '../client'
-import {
-  ProviderRpcError,
-  SwitchChainError,
-  UserRejectedRequestError,
-} from '../errors'
-import { Chain } from '../types'
+import type { ProviderRpcError } from '../errors'
+import { SwitchChainError, UserRejectedRequestError } from '../errors'
+import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -125,7 +121,7 @@ export class WalletConnectConnector extends Connector<
         account,
         chain: { id, unsupported },
         provider: new providers.Web3Provider(
-          <providers.ExternalProvider>provider,
+          provider as providers.ExternalProvider,
         ),
       }
     } catch (error) {
@@ -232,7 +228,7 @@ export class WalletConnectConnector extends Connector<
       this.getAccount(),
     ])
     return new providers.Web3Provider(
-      <providers.ExternalProvider>provider,
+      provider as providers.ExternalProvider,
       chainId,
     ).getSigner(account)
   }

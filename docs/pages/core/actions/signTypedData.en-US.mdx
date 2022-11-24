@@ -1,0 +1,147 @@
+---
+title: 'signTypedData'
+description: 'Action for signing typed data with connected account.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# signTypedData
+
+<Callout type="warning">
+  This hook uses an experimental ethers feature. If using it, please specify the
+  exact version of ethers you are using (e.g. specify "5.6.0", not "^5.6.0").
+</Callout>
+
+Action for signing typed data with connected account.
+
+```ts
+import { signTypedData } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the typed data:
+
+```ts
+// All properties on a domain are optional
+const domain = {
+  name: 'Ether Mail',
+  version: '1',
+  chainId: 1,
+  verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+} as const
+
+// The named list of all type definitions
+const types = {
+  Person: [
+    { name: 'name', type: 'string' },
+    { name: 'wallet', type: 'address' },
+  ],
+  Mail: [
+    { name: 'from', type: 'Person' },
+    { name: 'to', type: 'Person' },
+    { name: 'contents', type: 'string' },
+  ],
+} as const
+
+const value = {
+  from: {
+    name: 'Cow',
+    wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+  },
+  to: {
+    name: 'Bob',
+    wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+  },
+  contents: 'Hello, Bob!',
+} as const
+```
+
+From now on, the typed data variables (above) are referenced only by name for brevity.
+
+```ts
+import { signTypedData } from '@wagmi/core'
+
+const signature = await signTypedData({
+  domain,
+  types,
+  value,
+})
+```
+
+## Return Value
+
+```ts
+string
+```
+
+## Configuration
+
+### domain
+
+Typed data domain.
+
+```ts {4-9}
+import { signTypedData } from '@wagmi/core'
+
+const signature = await signTypedData({
+  domain: {
+    name: 'Ether Mail',
+    version: '1',
+    chainId: 1,
+    verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  },
+  types,
+  value,
+})
+```
+
+### types
+
+Typed data type definition.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/core/typescript) for more information.
+
+```ts {5-15}
+import { signTypedData } from '@wagmi/core'
+
+const signature = signTypedData({
+  domain,
+  types: {
+    Person: [
+      { name: 'name', type: 'string' },
+      { name: 'wallet', type: 'address' },
+    ],
+    Mail: [
+      { name: 'from', type: 'Person' },
+      { name: 'to', type: 'Person' },
+      { name: 'contents', type: 'string' },
+    ],
+  },
+  value,
+})
+```
+
+### value
+
+Typed data value.
+
+```ts {6-16}
+import { signTypedData } from '@wagmi/core'
+
+const signature = signTypedData({
+  domain,
+  types,
+  value: {
+    from: {
+      name: 'Cow',
+      wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+    },
+    to: {
+      name: 'Bob',
+      wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+    },
+    contents: 'Hello, Bob!',
+  },
+})
+```

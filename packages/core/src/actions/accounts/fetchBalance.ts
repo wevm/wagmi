@@ -1,10 +1,10 @@
-import { Address, ResolvedConfig } from 'abitype'
+import type { Address, ResolvedConfig } from 'abitype'
 import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
 
 import { getClient } from '../../client'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import { ContractResultDecodeError } from '../../errors'
-import { Unit } from '../../types'
+import type { Unit } from '../../types'
 import { readContracts } from '../contracts'
 import { getProvider } from '../providers'
 

@@ -1,10 +1,7 @@
-import {
-  FetchEnsResolverArgs,
-  FetchEnsResolverResult,
-  fetchEnsResolver,
-} from '@wagmi/core'
+import type { FetchEnsResolverArgs, FetchEnsResolverResult } from '@wagmi/core'
+import { fetchEnsResolver } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseEnsResolverArgs = Partial<FetchEnsResolverArgs>

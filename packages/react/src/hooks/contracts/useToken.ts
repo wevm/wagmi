@@ -1,6 +1,7 @@
-import { FetchTokenArgs, FetchTokenResult, fetchToken } from '@wagmi/core'
+import type { FetchTokenArgs, FetchTokenResult } from '@wagmi/core'
+import { fetchToken } from '@wagmi/core'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
 export type UseTokenArgs = Partial<FetchTokenArgs>

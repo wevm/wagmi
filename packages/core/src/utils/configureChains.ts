@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import {
+import type {
   Chain,
   ChainProviderFn,
   Provider,

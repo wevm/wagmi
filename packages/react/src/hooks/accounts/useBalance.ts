@@ -1,9 +1,9 @@
-import { FetchBalanceArgs, FetchBalanceResult, fetchBalance } from '@wagmi/core'
+import type { FetchBalanceArgs, FetchBalanceResult } from '@wagmi/core'
+import { fetchBalance } from '@wagmi/core'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useBlockNumber } from '../network-status'
-import { useChainId, useQuery } from '../utils'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
   /** Subscribe to changes */
@@ -57,29 +57,25 @@ export function useBalance({
   onSuccess,
 }: UseBalanceArgs & UseBalanceConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
-  const balanceQuery = useQuery(
-    queryKey({ address, chainId, formatUnits, scopeKey, token }),
-    queryFn,
-    {
-      cacheTime,
-      enabled: Boolean(enabled && address),
-      staleTime,
-      suspense,
-      onError,
-      onSettled,
-      onSuccess,
-    },
+  const queryKey_ = React.useMemo(
+    () => queryKey({ address, chainId, formatUnits, scopeKey, token }),
+    [address, chainId, formatUnits, scopeKey, token],
   )
+  const balanceQuery = useQuery(queryKey_, queryFn, {
+    cacheTime,
+    enabled: Boolean(enabled && address),
+    staleTime,
+    suspense,
+    onError,
+    onSettled,
+    onSuccess,
+  })
 
-  const { data: blockNumber } = useBlockNumber({ chainId, watch })
-  React.useEffect(() => {
-    if (!enabled) return
-    if (!watch) return
-    if (!blockNumber) return
-    if (!address) return
-    balanceQuery.refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockNumber])
+  useInvalidateOnBlock({
+    chainId,
+    enabled: Boolean(enabled && watch && address),
+    queryKey: queryKey_,
+  })
 
   return balanceQuery
 }

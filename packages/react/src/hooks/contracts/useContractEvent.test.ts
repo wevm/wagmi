@@ -1,28 +1,30 @@
-import { Hash, erc20ABI } from '@wagmi/core'
-import {
+import type { Hash } from '@wagmi/core'
+import { erc20ABI } from '@wagmi/core'
+import type {
   Abi,
   ExtractAbiEventNames,
   ExtractAbiFunctionNames,
   ResolvedConfig,
 } from 'abitype'
-import { describe, expect, it, vi } from 'vitest'
+import { assertType, describe, expect, it, vi } from 'vitest'
 
 import {
   act,
   actConnect,
-  expectType,
   getRandomTokenId,
   renderHook,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
-import {
+import type {
   UseWaitForTransactionArgs,
   UseWaitForTransactionConfig,
-  useWaitForTransaction,
 } from '../transactions/useWaitForTransaction'
-import { UseContractEventConfig, useContractEvent } from './useContractEvent'
-import { UseContractWriteConfig, useContractWrite } from './useContractWrite'
+import { useWaitForTransaction } from '../transactions/useWaitForTransaction'
+import type { UseContractEventConfig } from './useContractEvent'
+import { useContractEvent } from './useContractEvent'
+import type { UseContractWriteConfig } from './useContractWrite'
+import { useContractWrite } from './useContractWrite'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
@@ -58,9 +60,9 @@ describe('useContractEvent', () => {
         abi: erc20ABI,
         eventName: 'Transfer',
         listener(from, to, value) {
-          expectType<ResolvedConfig['AddressType']>(from)
-          expectType<ResolvedConfig['AddressType']>(to)
-          expectType<ResolvedConfig['BigIntType'] | null>(value)
+          assertType<ResolvedConfig['AddressType']>(from)
+          assertType<ResolvedConfig['AddressType']>(to)
+          assertType<ResolvedConfig['BigIntType'] | null>(value)
           listener(from, to, value)
         },
       }),
@@ -76,9 +78,9 @@ describe('useContractEvent', () => {
           abi: erc20ABI,
           eventName: 'Transfer',
           listener(from, to, value) {
-            expectType<ResolvedConfig['AddressType']>(from)
-            expectType<ResolvedConfig['AddressType']>(to)
-            expectType<ResolvedConfig['BigIntType'] | null>(value)
+            assertType<ResolvedConfig['AddressType']>(from)
+            assertType<ResolvedConfig['AddressType']>(to)
+            assertType<ResolvedConfig['BigIntType'] | null>(value)
             listener(from, to, value)
           },
         }),
@@ -99,9 +101,9 @@ describe('useContractEvent', () => {
                 ...wagmiContractConfig,
                 eventName: 'Transfer',
                 listener(from, to, value) {
-                  expectType<ResolvedConfig['AddressType']>(from)
-                  expectType<ResolvedConfig['AddressType']>(to)
-                  expectType<ResolvedConfig['BigIntType']>(value)
+                  assertType<ResolvedConfig['AddressType']>(from)
+                  assertType<ResolvedConfig['AddressType']>(to)
+                  assertType<ResolvedConfig['BigIntType']>(value)
                   listener(from, to, value)
                 },
               },

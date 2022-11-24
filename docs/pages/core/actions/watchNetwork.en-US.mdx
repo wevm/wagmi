@@ -1,0 +1,24 @@
+---
+title: 'watchNetwork'
+description: 'Action for subscribing to network changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchNetwork
+
+Action for subscribing to [network](/core/actions/getNetwork) changes.
+
+```ts
+import { watchNetwork } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when network changes.
+
+```ts
+import { watchNetwork } from '@wagmi/core'
+
+const unwatch = watchNetwork((network) => console.log(network))
+```

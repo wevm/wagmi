@@ -1,0 +1,34 @@
+---
+title: 'getAccount'
+description: 'Action for accessing account data and connection status.'
+---
+
+# getAccount
+
+Action for accessing account data and connection status.
+
+```ts
+import { getAccount } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { getAccount } from '@wagmi/core'
+
+const account = getAccount()
+```
+
+## Return Value
+
+```ts
+{
+  address?: string
+  connector?: Connector
+  isConnecting: boolean
+  isReconnecting: boolean
+  isConnected: boolean
+  isDisconnected: boolean
+  status: 'connecting' | 'reconnecting' | 'connected' | 'disconnected'
+}
+```

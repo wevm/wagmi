@@ -1,0 +1,40 @@
+---
+title: 'fetchBlockNumber'
+description: 'Action for fetching the current block number.'
+---
+
+# fetchBlockNumber
+
+Action for fetching the current block number.
+
+```ts
+import { fetchBlockNumber } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { fetchBlockNumber } from '@wagmi/core'
+
+const blockNumber = await fetchBlockNumber()
+```
+
+## Return Value
+
+```ts
+number
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {4}
+import { fetchBlockNumber } from '@wagmi/core'
+
+const blockNumber = fetchBlockNumber({
+  chainId: 1,
+})
+```

@@ -1,0 +1,55 @@
+---
+title: 'fetchEnsResolver'
+description: 'Action for fetching resolver for ENS name.'
+---
+
+# fetchEnsResolver
+
+Action for fetching the resolver for ENS name.
+
+```ts
+import { fetchEnsResolver } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { fetchEnsResolver } from '@wagmi/core'
+
+const resolver = await fetchEnsResolver({
+  name: 'awkweb.eth',
+})
+```
+
+## Return Value
+
+```ts
+EnsResolver
+```
+
+## Configuration
+
+### name
+
+ENS name to fetch resolver for.
+
+```ts {5}
+import { fetchEnsResolver } from '@wagmi/core'
+
+const resolver = await fetchEnsResolver({
+  name: 'moxey.eth',
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {6}
+import { fetchEnsResolver } from '@wagmi/core'
+
+const resolver = await fetchEnsResolver({
+  name: 'awkweb.eth',
+  chainId: 1,
+})
+```

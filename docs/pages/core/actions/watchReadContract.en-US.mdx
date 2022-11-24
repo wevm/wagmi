@@ -1,0 +1,156 @@
+---
+title: 'watchReadContract'
+description: 'Action for subscribing to readContract changes.'
+---
+
+# watchReadContract
+
+Action for subscribing to [readContract](/core/actions/readContract) changes.
+
+```ts
+import { watchReadContract } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked on chain change.
+
+To listen for block changes, you can use the [`listenToBlock` config](#listentoblock-optional).
+
+```ts
+import { watchReadContract } from '@wagmi/core'
+
+const config = {
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'getHunger',
+}
+
+let data = await readContract(config)
+watchReadContract(config, (data_) => (data = data_))
+```
+
+## Configuration
+
+### address
+
+The address of the contract.
+
+```ts {5}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getHunger',
+  },
+  (data) => console.log(data),
+)
+```
+
+### abi
+
+The ABI of the contract.
+
+```ts {6}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getHunger',
+  },
+  (data) => console.log(data),
+)
+```
+
+### functionName
+
+The name of the function on the contract to call.
+
+```ts {7}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getHunger',
+  },
+  (data) => console.log(data),
+)
+```
+
+### args (optional)
+
+Arguments to pass to function call.
+
+```ts {8}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'love',
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
+  },
+  (data) => console.log(data),
+)
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {8}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'love',
+    chainId: 1,
+  },
+  (data) => console.log(data),
+)
+```
+
+### listenToBlock (optional)
+
+Listen for block changes & invoke `multicall`.
+
+```ts {8}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'love',
+    listenToBlock: true,
+  },
+  (data) => console.log(data),
+)
+```
+
+### overrides (optional)
+
+Overrides to pass to function call.
+
+```ts {8}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'love',
+    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  },
+  (data) => console.log(data),
+)
+```

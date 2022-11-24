@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { ChainProviderFn, FallbackProviderConfig } from '../types'
+import type { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type AlchemyProviderConfig = FallbackProviderConfig & {
   /** Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/). */

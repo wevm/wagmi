@@ -1,17 +1,17 @@
-import {
+import type {
   QueryFunctionContext,
   UseInfiniteQueryOptions,
   UseMutationOptions,
   UseQueryOptions,
 } from '@tanstack/react-query'
-import {
+import type {
   Address,
   ResolvedConfig,
   TypedData,
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import { BigNumber } from 'ethers'
+import type { BigNumber } from 'ethers'
 
 declare module 'abitype' {
   export interface Config {

@@ -1,6 +1,6 @@
 import { providers } from 'ethers'
 
-import { ChainProviderFn, FallbackProviderConfig } from '../types'
+import type { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type InfuraProviderConfig = FallbackProviderConfig & {
   /** Your Infura API key from the [Infura Dashboard](https://infura.io/login). */

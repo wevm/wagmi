@@ -1,0 +1,40 @@
+---
+title: 'getWebSocketProvider'
+description: "Action for accessing the Client's ethers WebSocket Provider."
+---
+
+# getWebSocketProvider
+
+Action for accessing the `Client`'s ethers WebSocket Provider.
+
+```ts
+import { getWebSocketProvider } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { getWebSocketProvider } from '@wagmi/core'
+
+const webSocketProvider = getWebSocketProvider()
+```
+
+## Return Value
+
+```ts
+WebSocketProvider
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/core/client#websocketprovider-optional) for this to work correctly.
+
+```ts {5}
+import { getWebSocketProvider } from '@wagmi/core'
+
+const webSocketProvider = getWebSocketProvider({
+  chainId: 1,
+})
+```

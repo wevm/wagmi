@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { setupClient } from '../../../test'
 import { connect } from './connect'
-import { GetNetworkResult } from './getNetwork'
+import type { GetNetworkResult } from './getNetwork'
 import { switchNetwork } from './switchNetwork'
 import { watchNetwork } from './watchNetwork'
 

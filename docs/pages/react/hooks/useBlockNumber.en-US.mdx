@@ -1,0 +1,212 @@
+---
+title: 'useBlockNumber'
+description: 'React Hook for fetching the current block number.'
+---
+
+# useBlockNumber
+
+Hook for fetching the current block number.
+
+```ts
+import { useBlockNumber } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useBlockNumber()
+
+  if (isLoading) return <div>Fetching block number…</div>
+  if (isError) return <div>Error fetching block number</div>
+  return <div>Block number: {data}</div>
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: number
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<number>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    chainId: 1,
+  })
+}
+```
+
+### watch (optional)
+
+Watches and refreshes data for new blocks.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    watch: true,
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache. Defaults to `0`.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    scopeKey: 'wagmi',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {5}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    suspense: true,
+  })
+}
+```
+
+### onBlock (optional)
+
+Function to invoke when a new block is created.
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onBlock(blockNumber) {
+      console.log('New block: ', blockNumber)
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {5-7}
+import { useBlockNumber } from 'wagmi'
+
+function App() {
+  const blockNumber = useBlockNumber({
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```

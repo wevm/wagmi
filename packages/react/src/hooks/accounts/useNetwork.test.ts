@@ -9,13 +9,14 @@ import {
   setupClient,
   useNetwork,
 } from '../../../test'
-import { UseConnectArgs, UseConnectConfig, useConnect } from './useConnect'
+import type { UseConnectArgs, UseConnectConfig } from './useConnect'
+import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
-import {
+import type {
   UseSwitchNetworkArgs,
   UseSwitchNetworkConfig,
-  useSwitchNetwork,
 } from './useSwitchNetwork'
+import { useSwitchNetwork } from './useSwitchNetwork'
 
 function useNetworkWithConnectAndDisconnect(
   config: {

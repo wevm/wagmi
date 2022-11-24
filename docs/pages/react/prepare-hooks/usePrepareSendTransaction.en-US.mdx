@@ -1,0 +1,261 @@
+---
+title: 'usePrepareSendTransaction'
+description: 'Hook for preparing a transaction to be sent.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# usePrepareSendTransaction
+
+Hook for preparing a transaction to be sent via [`useSendTransaction`](/react/hooks/useSendTransaction).
+
+Eagerly fetches the parameters required for sending a transaction such as the gas estimate and resolving an ENS address (if required).
+
+```tsx
+import { usePrepareSendTransaction } from 'wagmi'
+```
+
+## Usage
+
+`usePrepareSendTransaction` gives back a "prepared config" to be sent through to `useSendTransaction`.
+
+```tsx {4-9}
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
+
+function App() {
+  const { config, error } = usePrepareSendTransaction({
+    request: {
+      to: 'moxey.eth',
+      value: parseEther('1'),
+    },
+  })
+  const { sendTransaction } = useSendTransaction(config)
+
+  return (
+    <>
+      <button disabled={!sendTransaction} onClick={() => sendTransaction?.()}>
+        Send Transaction
+      </button>
+      {error && (
+        <div>An error occurred preparing the transaction: {error.message}</div>
+      )}
+    </>
+  )
+}
+```
+
+<Callout>
+  Note: The `sendTransaction` function will be undefined if the request has not
+  been prepared (still in-flight or errored), or the end-user is not connected
+  to a wallet.
+</Callout>
+
+## Return value
+
+```tsx
+{
+  data?: PrepareSendTransactionResult
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  refetch: (options: {
+    throwOnError: boolean
+    cancelRefetch: boolean
+  }) => Promise<PrepareSendTransactionResult>
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### request (optional)
+
+Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info. If `request` and `request.to` are not defined, hook will not run.
+
+```tsx {5-8}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+  })
+}
+```
+
+### chainId (optional)
+
+Chain ID used to validate if the user is connected to the target chain.
+
+```tsx {10}
+import { usePrepareSendTransaction } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    chainId: optimism.id,
+  })
+}
+```
+
+### cacheTime (optional)
+
+Time (in ms) which the data should remain in the cache.
+
+```tsx {9}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    cacheTime: 2_000,
+  })
+}
+```
+
+### enabled (optional)
+
+Set this to `false` to disable this query from automatically running. Defaults to `true`.
+
+```tsx {9}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    enabled: false,
+  })
+}
+```
+
+### scopeKey (optional)
+
+Scopes the cache to a given context. Hooks that have identical context will share the same cache.
+
+```tsx {9}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    scopeKey: 'wagmi',
+  })
+}
+```
+
+### staleTime (optional)
+
+Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale.
+
+```tsx {9}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    staleTime: 2_000,
+  })
+}
+```
+
+### suspense (optional)
+
+Set this to `true` to enable suspense mode.
+
+```tsx {9}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    suspense: true,
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {9-11}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {9-11}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {9-11}
+import { usePrepareSendTransaction } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareSendTransaction({
+    request: {
+      to: 'awkweb.eth',
+      value: parseEther('1'), // 1 ETH
+    },
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```

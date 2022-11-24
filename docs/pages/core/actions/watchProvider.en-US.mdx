@@ -1,0 +1,46 @@
+---
+title: 'watchProvider'
+description: 'Action for subscribing to Provider changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchProvider
+
+Action for subscribing to [Provider](/core/actions/getProvider) changes.
+
+```ts
+import { watchProvider } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when Provider changes.
+
+```ts
+import { watchProvider } from '@wagmi/core'
+
+const unwatch = watchProvider(
+  {
+    chainId: 1,
+  },
+  (provider) => console.log(provider),
+)
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the Provider. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { watchProvider } from '@wagmi/core'
+
+const unwatch = watchProvider(
+  {
+    chainId: 1,
+  },
+  (provider) => console.log(provider),
+)
+```

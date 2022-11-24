@@ -8,7 +8,7 @@ import { ContractWriteDynamic } from '../../components/examples'
 
 # Contract Write (Dynamic Args)
 
-The following example teaches you how to implement a "Mint NFT" form that takes in a dynamic argument (token ID) using wagmi. The example below builds on the [Contract Write Example](/examples/contract-write) and uses the [`usePrepareContractWrite`](/docs/prepare-hooks/usePrepareContractWrite), [`useContractWrite`](/docs/hooks/useContractWrite) & [`useWaitForTransaction`](/docs/hooks/useWaitForTransaction) hooks. Try it out before moving on.
+The following example teaches you how to implement a "Mint NFT" form that takes in a dynamic argument (token ID) using wagmi. The example below builds on the [Contract Write Example](/examples/contract-write) and uses the [`usePrepareContractWrite`](/react/prepare-hooks/usePrepareContractWrite), [`useContractWrite`](/react/hooks/useContractWrite) & [`useWaitForTransaction`](/react/hooks/useWaitForTransaction) hooks. Try it out before moving on.
 
 <ContractWriteDynamic />
 
@@ -61,7 +61,7 @@ export function MintNFTForm() {
 
 ## Step 4: Add the `usePrepareContractWrite` hook
 
-Add the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
+Add the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite). This hook eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
 
 You will need to:
 
@@ -110,7 +110,7 @@ export function MintNFTForm() {
   By defining inline or adding a [const
   assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions)
   to `abi`, TypeScript will infer the correct types for `functionName` and
-  `args`. See the wagmi [TypeScript docs](/docs/typescript) for more
+  `args`. See the wagmi [TypeScript docs](/react/typescript) for more
   information.
 </Callout>
 
@@ -162,7 +162,7 @@ export function MintNFTForm() {
 
 ## Step 6: Add the `useContractWrite` hook
 
-Now add the [`useContractWrite` hook](/docs/hooks/useContractWrite). This hook performs the actual contract write transaction.
+Now add the [`useContractWrite` hook](/react/hooks/useContractWrite). This hook performs the actual contract write transaction.
 
 We will need to:
 
@@ -223,12 +223,12 @@ However, there is currently no feedback to show when the `mint` transaction is s
 
 <Callout type="info">
   [Why do I need a `usePrepareContractWrite` & `useContractWrite`
-  hook?](/docs/prepare-hooks/intro)
+  hook?](/react/prepare-hooks/intro)
 </Callout>
 
 ## Step 7: Add the `useWaitForTransaction` hook
 
-Using the [`useWaitForTransaction` hook](/docs/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
+Using the [`useWaitForTransaction` hook](/react/hooks/useWaitForTransaction) provides you with the ability to show feedback on the status of the transaction to the user.
 
 We will need to:
 

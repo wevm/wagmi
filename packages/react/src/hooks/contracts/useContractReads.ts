@@ -1,22 +1,13 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
-import {
-  ReadContractsConfig,
-  ReadContractsResult,
-  deepEqual,
-  parseContractResult,
-  readContracts,
-} from '@wagmi/core'
-import { Abi, Address } from 'abitype'
+import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
+import { deepEqual, parseContractResult, readContracts } from '@wagmi/core'
+import type { Abi, Address } from 'abitype'
 import * as React from 'react'
 
-import { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
-import {
-  UseQueryResult,
-  useChainId,
-  useInvalidateOnBlock,
-  useQuery,
-} from '../utils'
+import type { UseQueryResult } from '../utils'
+import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseContractReadsConfig<TContracts extends unknown[]> =
   ReadContractsConfig<

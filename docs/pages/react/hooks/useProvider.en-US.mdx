@@ -1,0 +1,44 @@
+---
+title: 'useProvider'
+description: "React Hook for accessing Client's ethers Provider."
+---
+
+# useProvider
+
+Hook for accessing `Client`'s ethers Provider.
+
+```ts
+import { useProvider } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useProvider } from 'wagmi'
+
+function App() {
+  const provider = useProvider()
+}
+```
+
+## Return Value
+
+```tsx
+Provider
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+
+```tsx {5}
+import { useProvider } from 'wagmi'
+
+function App() {
+  const provider = useProvider({
+    chainId: 1,
+  })
+}
+```

@@ -5,13 +5,13 @@ description: 'Learn how to build a custom connector for wagmi'
 
 # Create Custom Connector
 
-wagmi has a number of [built-in](/docs/connectors/injected) [Connectors](/docs/connectors/walletconnect) that cover support for tens of millions of wallets. If none of the built-in connectors work for your app, you can create a custom Connector. Creating a custom Connector is surprisingly easy to do.
+wagmi has a number of [built-in](/react/connectors/injected) [Connectors](/react/connectors/walletconnect) that cover support for tens of millions of wallets. If none of the built-in connectors work for your app, you can create a custom Connector. Creating a custom Connector is surprisingly easy to do.
 
 ## Prerequisite: Decide What Type of Connector to Create
 
 You can ask yourself the following questions to decide what type of connector to create:
 
-- **Do you want to create a connector for an [injected](/docs/connectors/injected) wallet (e.g. browser wallet or extension)?** You can likely extend the `InjectedConnector` class. The `MetaMaskConnector` is a good example of this (check out the [source code](https://github.com/wagmi-dev/wagmi/blob/main/packages/core/src/connectors/metaMask.ts) for more info).
+- **Do you want to create a connector for an [injected](/react/connectors/injected) wallet (e.g. browser wallet or extension)?** You can likely extend the `InjectedConnector` class. The `MetaMaskConnector` is a good example of this (check out the [source code](https://github.com/wagmi-dev/wagmi/blob/main/packages/core/src/connectors/metaMask.ts) for more info).
 - **Do you want to create a non-injected connector (e.g. wrap an existing SDK)?** Both `WalletConnectConnector` and `CoinbaseWalletConnector` wrap underlying SDKs and are good examples of this. Continue reading to learn more!
 
 ## Step 1: Extend Connector
