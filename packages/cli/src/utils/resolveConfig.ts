@@ -1,6 +1,6 @@
 import { default as fse } from 'fs-extra'
 
-import { Config } from '../config'
+import type { Config } from '../config'
 import { pathToFileURL } from 'node:url'
 
 type ResolveConfig = {

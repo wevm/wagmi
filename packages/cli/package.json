@@ -8,7 +8,10 @@
     "url": "https://github.com/wagmi-dev/wagmi.git",
     "directory": "packages/cli"
   },
-  "author": "awkweb.eth",
+  "contributors": [
+    "awkweb.eth <t@wagmi.sh>",
+    "jxom.eth <j@wagmi.sh>"
+  ],
   "ethereum": "wagmi-dev.eth",
   "funding": [
     {
@@ -45,7 +48,7 @@
     "ethers": ">=5.5.1"
   },
   "dependencies": {
-    "abitype": "^0.1.8",
+    "abitype": "^0.2.3",
     "cac": "^6.7.12",
     "dedent": "^0.7.0",
     "find-up": "^6.3.0",

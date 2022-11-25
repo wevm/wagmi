@@ -161,7 +161,7 @@ importers:
     specifiers:
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
-      abitype: ^0.1.8
+      abitype: ^0.2.3
       cac: ^6.7.12
       dedent: ^0.7.0
       find-up: ^6.3.0
@@ -172,7 +172,7 @@ importers:
       picocolors: ^1.0.0
       zod: ^3.19.1
     dependencies:
-      abitype: 0.1.8
+      abitype: 0.2.3_zod@3.19.1
       cac: 6.7.14
       dedent: 0.7.0
       find-up: 6.3.0
@@ -2345,13 +2345,6 @@ packages:
       typescript: 4.8.4
     dev: false
 
-  /abitype/0.1.8:
-    resolution: {integrity: sha512-2pde0KepTzdfu19ZrzYTYVIWo69+6UbBCY4B1RDiwWgo2XZtFSJhF6C+XThuRXbbZ823J0Rw1Y5cP0NXYVcCdQ==}
-    engines: {pnpm: '>=7'}
-    peerDependencies:
-      typescript: '>=4.7.4'
-    dev: false
-
   /abitype/0.1.8_typescript@4.8.4:
     resolution: {integrity: sha512-2pde0KepTzdfu19ZrzYTYVIWo69+6UbBCY4B1RDiwWgo2XZtFSJhF6C+XThuRXbbZ823J0Rw1Y5cP0NXYVcCdQ==}
     engines: {pnpm: '>=7'}
@@ -2359,6 +2352,19 @@ packages:
       typescript: '>=4.7.4'
     dependencies:
       typescript: 4.8.4
+    dev: false
+
+  /abitype/0.2.3_zod@3.19.1:
+    resolution: {integrity: sha512-oHmWdmd4YNzhyfrwm2TOpj3FidTGmzT83PvangdLLN7kwA8eFN93WKN7RytxIneWKu4uZCUjKEQ6joezIy52AA==}
+    engines: {pnpm: '>=7'}
+    peerDependencies:
+      typescript: '>=4.7.4'
+      zod: '>=3.19.1'
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      zod: 3.19.1
     dev: false
 
   /acorn-globals/7.0.1:

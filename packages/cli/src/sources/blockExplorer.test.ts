@@ -1,3 +1,4 @@
+import type { Abi } from 'abitype'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import {
@@ -11,7 +12,7 @@ import {
 } from 'vitest'
 
 import type { SourceFn } from '../config'
-import { etherscan } from './etherscan'
+import { blockExplorer } from './blockExplorer'
 
 const apiKey = 'abc'
 const address = '0xaf0326d92b97df1221759476b072abfd8084f9be'
@@ -47,13 +48,31 @@ const server = setupServer(...handlers)
 
 describe('etherscan', () => {
   it('creates etherscan source', () => {
-    expect(etherscan({ apiKey, chainId: 1 })).toBeDefined()
+    expect(
+      blockExplorer({
+        getApiUrl({ address }) {
+          return `https://example.com/${address}`
+        },
+      }),
+    ).toBeDefined()
   })
 
   describe('calls', () => {
     let source: SourceFn
     beforeEach(() => {
-      source = etherscan({ apiKey, chainId: 1 })
+      source = blockExplorer({
+        getApiUrl({ address }) {
+          const baseUrl = 'https://api.etherscan.io/api'
+          return `${baseUrl}?module=contract&action=getabi&address=${address}&apikey=${apiKey}`
+        },
+        async getAbi({ response }) {
+          const data = (await response.json()) as
+            | { status: '1'; message: 'OK'; result: string }
+            | { status: '0'; message: 'NOTOK'; result: string }
+          if (data.status === '0') throw new Error(data.result)
+          return JSON.parse(data.result) as Abi
+        },
+      })
     })
 
     beforeAll(() => server.listen())
@@ -72,14 +91,6 @@ describe('etherscan', () => {
         source({ address: unverifiedContractAddress }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Contract source code not verified"',
-      )
-    })
-
-    it('throws when chainId is not provided', async () => {
-      await expect(
-        etherscan({ apiKey })({ address }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"\\"chainId\\" is required. Either pass it to the source function (e.g. `etherscan({ chainId: 1 })`) or the top-level contract config."',
       )
     })
   })

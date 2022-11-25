@@ -1,7 +1,5 @@
-import type { Abi } from 'abitype'
-import fetch from 'node-fetch'
-
 import type { SourceFn } from '../config'
+import { blockExplorer } from './blockExplorer'
 
 const apiUrls = {
   // Ethereum
@@ -45,33 +43,33 @@ type EtherscanConfig = {
    * - [Optimism](https://optimistic.etherscan.io/myapikey)
    * - [Polygon](https://polygonscan.com/myapikey)
    */
-  apiKey?: string
+  apiKey: string
+  // TODO: Add baseUrl
   /**
    * Chain id to use for fetching contract interface
    */
-  chainId: ChainId
+  chainId?: ChainId
 }
 
 export function etherscan({ apiKey, chainId }: EtherscanConfig): SourceFn {
-  const cache: Record<string, Abi> = {}
-  return async ({ address }) => {
-    const baseUrl = apiUrls[chainId]
-    if (!baseUrl) throw new Error(`No API url found for chain id "${chainId}"`)
-
-    const apiUrl = `${baseUrl}?module=contract&action=getabi&address=${address}${
-      apiKey ? `&apikey=${apiKey}` : ''
-    }`
-    if (cache[apiUrl]) return cache[apiUrl] as Abi
-
-    type EtherscanResponse =
-      | { status: '1'; message: 'OK'; result: string }
-      | { status: '0'; message: 'NOTOK'; result: string }
-    const response = await fetch(apiUrl)
-    const data = (await response.json()) as EtherscanResponse
-    if (data.status === '0') throw new Error(data.result)
-
-    const abi = JSON.parse(data.result) as Abi
-    cache[apiUrl] = abi
-    return abi
-  }
+  return blockExplorer({
+    getApiUrl({ address }) {
+      if (!chainId)
+        throw new Error(
+          `"chainId" is required. Either pass it to the source function (e.g. \`etherscan({ chainId: 1 })\`) or the top-level contract config.`,
+        )
+      const baseUrl = apiUrls[chainId as ChainId]
+      if (!baseUrl)
+        throw new Error(`No API url found for chain id "${chainId}"`)
+      return `${baseUrl}?module=contract&action=getabi&address=${address}&apikey=${apiKey}`
+    },
+    async getAbi({ response }) {
+      type EtherscanResponse =
+        | { status: '1'; message: 'OK'; result: string }
+        | { status: '0'; message: 'NOTOK'; result: string }
+      const data = (await response.json()) as EtherscanResponse
+      if (data.status === '0') throw new Error(data.result)
+      return JSON.parse(data.result)
+    },
+  })
 }
