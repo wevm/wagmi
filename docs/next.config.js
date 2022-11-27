@@ -18,6 +18,7 @@ const config = {
   reactStrictMode: true,
   redirects: () => {
     return [
+      // Redirects for old docs
       {
         source: '/docs/create-wagmi',
         destination: '/cli/create-wagmi',
@@ -29,15 +30,27 @@ const config = {
         permanent: true,
       },
       {
-        source: '/examples',
-        destination: '/examples/connect-wallet',
-        statusCode: 302,
-      },
-      {
         source: '/guides/:path*',
         destination: '/examples/:path*',
         permanent: true,
       },
+      // Redirect paths to first page in section
+      {
+        source: '/react',
+        destination: '/react/getting-started',
+        permanent: true,
+      },
+      {
+        source: '/core',
+        destination: '/core/getting-started',
+        permanent: true,
+      },
+      {
+        source: '/examples',
+        destination: '/examples/connect-wallet',
+        statusCode: 302,
+      },
+      // External redirects
       {
         source: '/gitcoin',
         destination:
