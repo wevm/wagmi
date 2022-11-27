@@ -1,8 +1,7 @@
 import type { Abi, Address } from 'abitype'
-import { Abi as AbiSchema } from 'abitype/zod'
-import type { ZodError } from 'zod'
+import { camelCase } from 'change-case'
+import { default as dedent } from 'dedent'
 
-import type { SourceFn } from '../config'
 import { Config } from '../config'
 
 import * as logger from '../logger'
@@ -22,87 +21,61 @@ export async function generate({ config, root }: Generate) {
 
   const contractNames = new Set<string>()
   type Contract = {
-    abi: Abi | Record<number, Abi>
-    address: Address | Record<number, Address>
+    abi: Abi
+    address?: Address | Record<number, Address>
+    content: string
     name: string
   }
-  const contracts: Record<string, Contract> = {}
+  const contracts: Contract[] = []
   for (const contract of parsedConfig.contracts) {
-    const contractName = contract.name
-    logger.log(`Fetching contract interface for ${contractName}`)
-    if (contractNames.has(contractName))
-      throw new Error('Contract name must be unique')
-
-    // Retrieve source
-    if ('deployments' in contract) {
-      for (const deployment of contract.deployments) {
-        const abi = await retrieveSourceAbi({
-          name: contract.name,
-          ...deployment,
-        })
-        if (contract.name in contracts)
-          contracts[contractName] = {
-            ...contracts[contractName]!,
-            abi: {
-              ...(contracts[contractName]!.abi as Record<number, Abi>),
-              [deployment.chainId]: abi,
-            },
-            address: {
-              ...(contracts[contractName]!.address as Record<number, Address>),
-              [deployment.chainId]: deployment.address,
-            },
-          }
-        else
-          contracts[contractName] = {
-            abi: {
-              [deployment.chainId]: abi,
-            },
-            address: {
-              [deployment.chainId]: deployment.address,
-            },
-            name: contractName,
-          }
+    if (typeof contract === 'function') {
+      const result = await contract()
+      for (const { address, name, source } of result) {
+        parsedConfig.contracts.push({ address, name, source })
       }
-    } else {
-      const abi = await retrieveSourceAbi(contract)
-      contracts[contract.name] = {
-        abi,
-        ...contract,
-      }
+      continue
     }
 
-    contractNames.add(contract.name)
-  }
+    const { address, source, name } = contract
+    logger.log(`Fetching ABI for ${name}`)
+    if (contractNames.has(name)) throw new Error('Contract name must be unique')
 
-  console.log(contracts)
+    // Fetch ABI from source
+    let abi: Abi
+    if (typeof source === 'function') {
+      try {
+        abi = await source({ address })
+      } catch (error) {
+        throw new Error(`Failed to fetch contract ABI for ${name}`)
+      }
+    } else abi = source
+
+    // Create template for contract
+    const abiName = getAbiName(name)
+    const addressName = getAddressName(name)
+    let content = dedent`
+      const ${abiName} = ${JSON.stringify(abi)} as const
+      const ${addressName} = ${JSON.stringify(address)} as const
+    `
+    if (address) {
+      const configName = getContractConfigName(name)
+      content = dedent`
+        ${content}
+        const ${configName} = { address: ${addressName}, abi: ${abiName} } as const
+      `
+    }
+
+    contracts.push({ abi, address, content, name })
+    contractNames.add(name)
+  }
 }
 
-async function retrieveSourceAbi(contract: {
-  address: Address
-  chainId?: number
-  name: string
-  source: Abi | SourceFn
-}) {
-  let abi: Abi
-  if (typeof contract.source === 'function') {
-    try {
-      abi = await contract.source({
-        address: contract.address,
-        chainId: contract.chainId,
-      })
-      console.log('foo')
-    } catch (error) {
-      console.log('bar')
-      throw new Error(`Failed to fetch contract ABI for ${contract.name}`)
-    }
-  } else abi = contract.source
-
-  console.log('baz')
-  try {
-    return await AbiSchema.parseAsync(abi)
-  } catch (error) {
-    logger.warn(abi)
-    const zodError = error as ZodError<typeof AbiSchema>
-    throw new Error(`Invalid format for ${contract.name} ABI`)
-  }
+function getAbiName(contractName: string) {
+  return `${camelCase(contractName)}ABI`
+}
+function getAddressName(contractName: string) {
+  return `${camelCase(contractName)}Address`
+}
+function getContractConfigName(contractName: string) {
+  return `${camelCase(contractName)}Config`
 }

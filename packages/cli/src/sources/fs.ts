@@ -8,7 +8,7 @@ import { pathToFileURL } from 'node:url'
 
 type FsConfig = {
   /**
-   * Source file containing contract interface
+   * Source file containing ABI
    */
   path: string
 }
@@ -20,10 +20,10 @@ export function fs({ path }: FsConfig): SourceFn {
     if (!fse.existsSync(path)) throw new Error('File not found')
 
     let abi: Abi
-    const file = await fse.readFile(path, 'utf-8')
     if (extname(path) === '.json') {
-      abi = JSON.parse(file)
+      abi = await fse.readJSON(path)
     } else {
+      const file = await fse.readFile(path, 'utf-8')
       // Load default export from JS or TS file
       const fileBase = `${path}.timestamp-${Date.now()}`
       const fileNameTemp = `${fileBase}.mjs`

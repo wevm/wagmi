@@ -6,7 +6,9 @@ import type { SourceFn } from '../config'
 
 type BlockExplorerConfig = {
   /** Function for returning a block explorer URL to request ABI from */
-  getApiUrl(config: { address: Address }): Promise<string> | string
+  getApiUrl(config: {
+    address: Address | Record<string | number, Address>
+  }): Promise<string> | string
   /**
    * Function for returning ABI from API response
    * @default ({ response }) => response.json()

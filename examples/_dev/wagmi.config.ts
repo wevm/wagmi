@@ -2,32 +2,6 @@ import { defineConfig, etherscan } from '@wagmi/cli'
 
 const apiKey = 'MK9NWF5JSK6JPWDMVTIJF4RZ466VD2XEPZ'
 
-// Generated ABI
-// const ensRegistryAbi = [...]
-
-// Generated contract config (if address provided)
-// const ensRegistryContractConfig = {
-//   address: {
-//     1: '0x314159265dd8dbb310642f98f50c066173c1259b',
-//     5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
-//   },
-//   abi: [...],
-// }
-
-// Generated hooks for contract
-// useEnsRegistryRead({
-//   chainId: 1 | 5
-// })
-
-// Generated hooks for contract functions
-// useEnsRegistryOwner({
-//   args: [node: ]
-//   chainId: 1 | 5
-// })
-
-// TODO: Address can also be optional
-// chop abis into invidual functions/events
-
 export default defineConfig({
   contracts: [
     {
@@ -41,8 +15,9 @@ export default defineConfig({
         1: '0x314159265dd8dbb310642f98f50c066173c1259b',
         5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
       },
-      source: etherscan({ apiKey }),
+      source: etherscan({ apiKey, chainId: 1 }),
     },
+    // foundry({ path: './src/contracts' }),
     // {
     //   address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
     //   name: 'WagmiMintFs',
