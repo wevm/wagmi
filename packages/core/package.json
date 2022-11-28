@@ -101,7 +101,9 @@
   },
   "devDependencies": {
     "@coinbase/wallet-sdk": "^3.4.1",
+    "@types/react": "^18.0.9",
     "@walletconnect/ethereum-provider": "^1.7.8",
+    "react": "^18.1.0",
     "typescript": "^4.7.4"
   },
   "keywords": [
