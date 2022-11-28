@@ -41,7 +41,7 @@ export class InjectedConnector extends Connector<
 > {
   readonly id: string
   readonly name: string
-  readonly ready: boolean = false
+  readonly ready: boolean
 
   #provider?: Window['ethereum']
   #switchingChains?: boolean
