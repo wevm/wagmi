@@ -98,7 +98,7 @@ We've only scratched the surface for what you can do with wagmi!
 
 —
 
-Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) to get started with pre-built interface on top of wagmi for managing wallet connections.
+Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) or [Web3Modal](https://web3modal.com) to get started with pre-built interface on top of wagmi for managing wallet connections.
 
 ## Community
 
