@@ -5,7 +5,7 @@ import { assertType, describe, it } from 'vitest'
 
 import { useContractInfiniteReads } from './useContractInfiniteReads'
 
-describe('useContractRead', () => {
+describe('useContractReads', () => {
   it('default', () => {
     const { data } = useContractInfiniteReads({
       cacheKey: 'contracts',
