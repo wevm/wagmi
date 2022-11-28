@@ -26,7 +26,7 @@ const contracts = [
   },
 ] as const
 
-describe('useContractRead', () => {
+describe('useContractInfiniteReads', () => {
   it('default', () => {
     const { data } = useContractReads({
       contracts,
