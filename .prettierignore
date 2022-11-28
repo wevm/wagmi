@@ -6,5 +6,5 @@ CHANGELOG.md
 // Once prettier fixes MDX ignore ranges
 // https://github.com/prettier/prettier/pull/12208
 docs/pages/index.en-US.mdx
-docs/pages/docs/getting-started.en-US.mdx
+docs/pages/react/getting-started.en-US.mdx
 docs/pages/core/getting-started.en-US.mdx

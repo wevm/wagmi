@@ -8,6 +8,7 @@ const github = 'https://github.com/wagmi-dev/wagmi'
 const translations = {
   'en-US': {
     description: {
+      blog: 'Updates from the wagmi core team',
       core: 'Documentation for @wagmi/core',
       cli: 'Documentation for CLI tools',
       examples: 'Examples',
@@ -17,16 +18,25 @@ const translations = {
     feedbackLink: 'Question? Give us feedback →',
     poweredBy: 'Powered by',
     subTitle: {
+      blog: 'React Hooks for Ethereum',
       core: 'VanillaJS for Ethereum',
-      cli: 'wagmi CLI tools',
-      examples: 'wagmi Examples',
+      cli: 'React Hooks for Ethereum',
+      examples: 'React Hooks for Ethereum',
       react: 'React Hooks for Ethereum',
+    },
+    name: {
+      blog: 'wagmi',
+      core: '@wagmi/core',
+      cli: 'wagmi',
+      examples: 'wagmi',
+      react: 'wagmi',
     },
   },
 } as const
 type Language = keyof typeof translations
 
 function getSectionName(path: string) {
+  if (/^\/blog\/*/.test(path)) return 'blog'
   if (/^\/core\/*/.test(path)) return 'core'
   if (/^\/cli\/*/.test(path)) return 'cli'
   if (/^\/examples\/*/.test(path)) return 'examples'
@@ -42,10 +52,18 @@ function Head() {
   const description =
     frontMatter.description ||
     translations[locale as Language].description[sectionName]
-  const title_ =
-    frontMatter.title && !frontMatter.title.startsWith('wagmi')
-      ? frontMatter.title + ' – wagmi'
-      : `wagmi: ${translations[locale as Language].subTitle[sectionName]}`
+  const ogImage = frontMatter.image ?? 'https://wagmi.sh/og.png'
+
+  let title_
+  if (frontMatter.title) {
+    if (sectionName === 'blog') title_ = frontMatter.title
+    else
+      title_ = `${frontMatter.title} – ${
+        translations[locale as Language].name[sectionName]
+      }`
+  } else {
+    title_ = `wagmi: ${translations[locale as Language].subTitle[sectionName]}`
+  }
 
   return (
     <>
@@ -58,7 +76,7 @@ function Head() {
       <meta name="description" content={description} />
       <meta name="og:description" content={description} />
       <meta name="og:title" content={title_} />
-      <meta name="og:image" content="https://wagmi.sh/og.png" />
+      <meta name="og:image" content={ogImage} />
       <meta name="twitter:card" content="summary_large_image" />
 
       {/* Misc */}
