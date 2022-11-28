@@ -20,7 +20,18 @@ If you are coming from an earlier version of `wagmi`, you will need to make sure
 
 #### Behavioral changes
 
-`useWaitForTransaction` will now return an `error` (and invoke the `onError` callback) if the transaction has reverted.
+`useWaitForTransaction` will now return an `error` (and invoke the `onError` callback) if the transaction has been reverted, replaced or cancelled.
+
+#### Configuration changes
+
+Removed the `wait` config option on `useWaitForTransaction`. Use the transaction `hash` instead.
+
+```diff
+const { data } = useWaitForTransaction({
+- wait: transaction.wait
++ hash: transaction.hash
+})
+```
 
 ## 0.8.x Breaking changes
 
