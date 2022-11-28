@@ -11,6 +11,7 @@ import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 export type UseContractReadConfig<
   TAbi = Abi,
   TFunctionName = string,
+  TSelectData = ReadContractResult<TAbi, TFunctionName>,
 > = ReadContractConfig<
   TAbi,
   TFunctionName,
@@ -21,7 +22,7 @@ export type UseContractReadConfig<
     isFunctionNameOptional: true
   }
 > &
-  QueryConfig<ReadContractResult<TAbi, TFunctionName>, Error> & {
+  QueryConfig<ReadContractResult<TAbi, TFunctionName>, Error, TSelectData> & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
     /** Subscribe to changes */
@@ -80,6 +81,7 @@ function queryFn<
 export function useContractRead<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
+  TSelectData = ReadContractResult<TAbi, TFunctionName>,
 >(
   {
     abi,
@@ -104,7 +106,7 @@ export function useContractRead<
         : (replaceEqualDeep(oldData, newData) as any),
     suspense,
     watch,
-  }: UseContractReadConfig<TAbi, TFunctionName> = {} as any,
+  }: UseContractReadConfig<TAbi, TFunctionName, TSelectData> = {} as any,
 ) {
   const chainId = useChainId({ chainId: chainId_ })
   const { data: blockNumber } = useBlockNumber({
