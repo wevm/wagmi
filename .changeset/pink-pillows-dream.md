@@ -4,7 +4,7 @@
 
 Added `getProvider` to `InjectedConnector` options.
 
-Example: 
+Example:
 
 ```ts
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
@@ -16,3 +16,4 @@ const connector = new InjectedConnector({
       typeof window !== 'undefined' ? window.SubWallet : undefined,
   },
 })
+```

@@ -312,7 +312,7 @@ export class InjectedConnector extends Connector<
   #getProviderFromOptionsOrWindow() {
     return this.options?.getProvider
       ? this.options.getProvider()
-      : typeof window != 'undefined'
+      : typeof window !== 'undefined'
       ? window.ethereum
       : undefined
   }
