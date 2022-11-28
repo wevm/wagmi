@@ -50,8 +50,8 @@ declare module 'ethers/lib/utils.js' {
 export type QueryFunctionArgs<T extends (...args: any) => any> =
   QueryFunctionContext<ReturnType<T>>
 
-export type QueryConfig<TQueryFnData, TError, TData = TQueryFnData> = Pick<
-  UseQueryOptions<TQueryFnData, TError, TData>,
+export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
+  UseQueryOptions<TData, TError, TSelectData>,
   | 'cacheTime'
   | 'enabled'
   | 'isDataEqual'
@@ -68,12 +68,8 @@ export type QueryConfig<TQueryFnData, TError, TData = TQueryFnData> = Pick<
   scopeKey?: string
 }
 
-export type InfiniteQueryConfig<
-  TQueryFnData,
-  TError,
-  TData = TQueryFnData,
-> = Pick<
-  UseInfiniteQueryOptions<TQueryFnData, TError, TData>,
+export type InfiniteQueryConfig<TData, TError, TSelectData = TData> = Pick<
+  UseInfiniteQueryOptions<TData, TError, TSelectData>,
   | 'cacheTime'
   | 'enabled'
   | 'getNextPageParam'

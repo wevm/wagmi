@@ -11,7 +11,7 @@ import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseContractReadsConfig<
   TContracts extends unknown[],
-  TData = ReadContractsResult<TContracts>,
+  TSelectData = ReadContractsResult<TContracts>,
 > = ReadContractsConfig<
   TContracts,
   {
@@ -22,7 +22,7 @@ export type UseContractReadsConfig<
     isFunctionNameOptional: true
   }
 > &
-  QueryConfig<ReadContractsResult<TContracts>, Error, TData> & {
+  QueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
     /** Subscribe to changes */
@@ -122,7 +122,7 @@ export function useContractReads<
     abi: TAbi
     functionName: TFunctionName
   }[],
-  TData = ReadContractsResult<TContracts>,
+  TSelectData = ReadContractsResult<TContracts>,
 >(
   {
     allowFailure = true,
@@ -145,9 +145,9 @@ export function useContractReads<
         : (replaceEqualDeep(oldData, newData) as any),
     suspense,
     watch,
-  }: UseContractReadsConfig<TContracts, TData> = {} as any,
+  }: UseContractReadsConfig<TContracts, TSelectData> = {} as any,
   // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
-): UseQueryResult<TData, Error> {
+): UseQueryResult<TSelectData, Error> {
   const { data: blockNumber } = useBlockNumber({
     enabled: watch || cacheOnBlock,
     watch,
@@ -202,7 +202,7 @@ export function useContractReads<
           ? parseContractResult({ abi, functionName, data })
           : data
       }) as ReadContractsResult<TContracts>
-      return (select ? select(result) : result) as TData
+      return (select ? select(result) : result) as TSelectData
     },
     structuralSharing,
     suspense,

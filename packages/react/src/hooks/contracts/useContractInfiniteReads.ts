@@ -12,7 +12,7 @@ import { useInfiniteQuery } from '../utils'
 export type UseContractInfiniteReadsConfig<
   TContracts extends unknown[] = unknown[],
   TPageParam = unknown,
-  TData = ReadContractsResult<TContracts>,
+  TSelectData = ReadContractsResult<TContracts>,
 > = Pick<ReadContractsConfig<TContracts>, 'allowFailure' | 'overrides'> & {
   cacheKey: string
   contracts(pageParam: TPageParam): readonly [
@@ -24,7 +24,7 @@ export type UseContractInfiniteReadsConfig<
       }
     >,
   ]
-} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TData>
+} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData>
 
 type QueryKeyArgs = {
   allowFailure: UseContractInfiniteReadsConfig['allowFailure']
@@ -83,7 +83,7 @@ export function useContractInfiniteReads<
     functionName: TFunctionName
   }[],
   TPageParam = any,
-  TData = ReadContractsResult<TContracts>,
+  TSelectData = ReadContractsResult<TContracts>,
 >({
   allowFailure,
   cacheKey,
@@ -108,9 +108,9 @@ export function useContractInfiniteReads<
 }: UseContractInfiniteReadsConfig<
   TContracts,
   TPageParam,
-  TData
+  TSelectData
 >): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
-UseInfiniteQueryResult<TData, Error> {
+UseInfiniteQueryResult<TSelectData, Error> {
   const queryKey_ = React.useMemo(
     () => queryKey({ allowFailure, cacheKey, overrides, scopeKey }),
     [allowFailure, cacheKey, overrides, scopeKey],
@@ -145,7 +145,7 @@ export function paginatedIndexesConfig<
     abi: TAbi
     functionName: TFunctionName
   }[],
-  TData = ReadContractsResult<TContracts>,
+  TSelectData = ReadContractsResult<TContracts>,
 >(
   fn: UseContractInfiniteReadsConfig<TContracts>['contracts'],
   {
@@ -159,7 +159,7 @@ export function paginatedIndexesConfig<
   getNextPageParam: InfiniteQueryConfig<
     unknown[],
     Error,
-    TData
+    TSelectData
   >['getNextPageParam']
 } {
   const contracts = ((page = 0) =>
