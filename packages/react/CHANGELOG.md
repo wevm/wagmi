@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.8.7
+
+### Patch Changes
+
+- [#1384](https://github.com/wagmi-dev/wagmi/pull/1384) [`027e88d6`](https://github.com/wagmi-dev/wagmi/commit/027e88d6e5f8d028d46ee78aec8500701e0173d9) Thanks [@tmm](https://github.com/tmm)! - Fixed issue reconnecting after disconnect with `MetaMaskConnector` in MetaMask mobile browser.
+
+- [#1377](https://github.com/wagmi-dev/wagmi/pull/1377) [`089c4f3b`](https://github.com/wagmi-dev/wagmi/commit/089c4f3b3b8ce5cf7807f144410e2f64b72e0580) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where transforming `useContractRead`, `useContractReads` or `useContractInfiniteReads`'s return data via `select` wasn't inferring the type.
+
+- Updated dependencies [[`027e88d6`](https://github.com/wagmi-dev/wagmi/commit/027e88d6e5f8d028d46ee78aec8500701e0173d9)]:
+  - @wagmi/core@0.7.6
+
 ## 0.8.6
 
 ### Patch Changes

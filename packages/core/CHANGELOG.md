@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.7.6
+
+### Patch Changes
+
+- [#1384](https://github.com/wagmi-dev/wagmi/pull/1384) [`027e88d6`](https://github.com/wagmi-dev/wagmi/commit/027e88d6e5f8d028d46ee78aec8500701e0173d9) Thanks [@tmm](https://github.com/tmm)! - Fixed issue reconnecting after disconnect with `MetaMaskConnector` in MetaMask mobile browser.
+
 ## 0.7.5
 
 ### Patch Changes
