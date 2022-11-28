@@ -13,10 +13,7 @@ export type UseWaitForTransactionConfig = QueryConfig<
   Error
 >
 
-type QueryKeyArgs = Omit<UseWaitForTransactionArgs, 'hash' | 'wait'> & {
-  hash?: UseWaitForTransactionArgs['hash']
-  wait?: UseWaitForTransactionArgs['wait']
-}
+type QueryKeyArgs = Partial<UseWaitForTransactionArgs>
 type QueryKeyConfig = Pick<UseWaitForTransactionConfig, 'scopeKey'>
 
 function queryKey({
@@ -25,7 +22,6 @@ function queryKey({
   hash,
   scopeKey,
   timeout,
-  wait,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -35,16 +31,15 @@ function queryKey({
       hash,
       scopeKey,
       timeout,
-      wait,
     },
   ] as const
 }
 
 function queryFn({
-  queryKey: [{ chainId, confirmations, hash, timeout, wait }],
+  queryKey: [{ chainId, confirmations, hash, timeout }],
 }: QueryFunctionArgs<typeof queryKey>) {
-  if (hash) return waitForTransaction({ chainId, confirmations, hash, timeout })
-  if (wait) return waitForTransaction({ chainId, confirmations, timeout, wait })
+  if (!hash) throw new Error('hash is required')
+  return waitForTransaction({ chainId, confirmations, hash, timeout })
 }
 
 export function useWaitForTransaction({
@@ -52,7 +47,6 @@ export function useWaitForTransaction({
   confirmations,
   hash,
   timeout,
-  wait,
   cacheTime,
   enabled = true,
   scopeKey,
@@ -65,11 +59,11 @@ export function useWaitForTransaction({
   const chainId = useChainId({ chainId: chainId_ })
 
   return useQuery(
-    queryKey({ chainId, confirmations, hash, scopeKey, timeout, wait }),
+    queryKey({ chainId, confirmations, hash, scopeKey, timeout }),
     queryFn,
     {
       cacheTime,
-      enabled: Boolean(enabled && (hash || wait)),
+      enabled: Boolean(enabled && hash),
       staleTime,
       suspense,
       onError,
