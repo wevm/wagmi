@@ -20,11 +20,11 @@ export type InjectedConnectorOptions = {
   /** Name of connector */
   name?: string | ((detectedName: string | string[]) => string)
   /**
-  * Get [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Provider to use in connector
-  *
-  * @default
-  * () => typeof window !== 'undefined' ? window.ethereum : undefined
-  */
+   * Get [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Provider to use in connector
+   *
+   * @default
+   * () => typeof window !== 'undefined' ? window.ethereum : undefined
+   */
   getProvider?: () => Window['ethereum'] | undefined
   /**
    * MetaMask 10.9.3 emits disconnect event when chain is changed.
@@ -39,9 +39,13 @@ export type InjectedConnectorOptions = {
   shimDisconnect?: boolean
 }
 
+export interface ConnectorOptions extends InjectedConnectorOptions {
+  getProvider: () => Window['ethereum'] | undefined
+}
+
 export class InjectedConnector extends Connector<
   Window['ethereum'],
-  InjectedConnectorOptions | undefined,
+  ConnectorOptions,
   providers.JsonRpcSigner
 > {
   readonly id: string
@@ -63,11 +67,13 @@ export class InjectedConnector extends Connector<
     const options = {
       shimDisconnect: true,
       shimChainChangedDisconnect: true,
+      getProvider: () =>
+        typeof window !== 'undefined' ? window.ethereum : undefined,
       ...options_,
     }
     super({ chains, options })
 
-    const provider = this.#getProviderFromOptionsOrWindow()
+    const provider = this.options.getProvider()
 
     let name = 'Injected'
     const overrideName = options.name
@@ -115,7 +121,7 @@ export class InjectedConnector extends Connector<
       }
 
       // Add shim to storage signalling wallet is connected
-      if (this.options?.shimDisconnect)
+      if (this.options.shimDisconnect)
         getClient().storage?.setItem(this.shimDisconnectKey, true)
 
       return { account, chain: { id, unsupported }, provider }
@@ -137,7 +143,7 @@ export class InjectedConnector extends Connector<
     provider.removeListener('disconnect', this.onDisconnect)
 
     // Remove shim signalling wallet is disconnected
-    if (this.options?.shimDisconnect)
+    if (this.options.shimDisconnect)
       getClient().storage?.removeItem(this.shimDisconnectKey)
   }
 
@@ -160,7 +166,7 @@ export class InjectedConnector extends Connector<
   async getProvider() {
     if (this.#provider) return this.#provider
 
-    this.#provider = this.#getProviderFromOptionsOrWindow()
+    this.#provider = this.options.getProvider()
 
     return this.#provider
   }
@@ -179,7 +185,7 @@ export class InjectedConnector extends Connector<
   async isAuthorized() {
     try {
       if (
-        this.options?.shimDisconnect &&
+        this.options.shimDisconnect &&
         // If shim does not exist in storage, wallet is disconnected
         !getClient().storage?.getItem(this.shimDisconnectKey)
       )
@@ -195,7 +201,7 @@ export class InjectedConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
-    if (this.options?.shimChainChangedDisconnect) this.#switchingChains = true
+    if (this.options.shimChainChangedDisconnect) this.#switchingChains = true
 
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
@@ -299,26 +305,18 @@ export class InjectedConnector extends Connector<
     // We need this as MetaMask can emit the "disconnect" event
     // upon switching chains. This workaround ensures that the
     // user currently isn't in the process of switching chains.
-    if (this.options?.shimChainChangedDisconnect && this.#switchingChains) {
+    if (this.options.shimChainChangedDisconnect && this.#switchingChains) {
       this.#switchingChains = false
       return
     }
 
     this.emit('disconnect')
     // Remove shim signalling wallet is disconnected
-    if (this.options?.shimDisconnect)
+    if (this.options.shimDisconnect)
       getClient().storage?.removeItem(this.shimDisconnectKey)
   }
 
   protected isUserRejectedRequestError(error: unknown) {
     return (error as ProviderRpcError).code === 4001
-  }
-
-  #getProviderFromOptionsOrWindow() {
-    return this.options?.getProvider
-      ? this.options.getProvider()
-      : typeof window !== 'undefined'
-      ? window.ethereum
-      : undefined
   }
 }

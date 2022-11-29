@@ -24,8 +24,7 @@ export type MetaMaskConnectorOptions = Pick<
 
 export class MetaMaskConnector extends InjectedConnector {
   readonly id = 'metaMask'
-  readonly ready =
-    typeof window != 'undefined' && !!this.#findProvider(window.ethereum)
+  readonly ready: boolean
 
   #provider?: Window['ethereum']
   #UNSTABLE_shimOnConnectSelectAccount: MetaMaskConnectorOptions['UNSTABLE_shimOnConnectSelectAccount']
@@ -45,6 +44,7 @@ export class MetaMaskConnector extends InjectedConnector {
     }
     super({ chains, options })
 
+    this.ready = !!this.#findProvider(this.options.getProvider())
     this.#UNSTABLE_shimOnConnectSelectAccount =
       options.UNSTABLE_shimOnConnectSelectAccount
   }
@@ -109,11 +109,10 @@ export class MetaMaskConnector extends InjectedConnector {
   }
 
   async getProvider() {
-    if (typeof window !== 'undefined') {
-      // TODO: Fallback to `ethereum#initialized` event for async injection
-      // https://github.com/MetaMask/detect-provider#synchronous-and-asynchronous-injection=
-      this.#provider = this.#findProvider(window.ethereum)
-    }
+    // TODO: Fallback to `ethereum#initialized` event for async injection
+    // https://github.com/MetaMask/detect-provider#synchronous-and-asynchronous-injection=
+    this.#provider = this.#findProvider(this.options.getProvider())
+
     return this.#provider
   }
 
