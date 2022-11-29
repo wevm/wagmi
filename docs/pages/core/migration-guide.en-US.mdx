@@ -1,0 +1,29 @@
+---
+title: 'Migration Guide'
+description: 'Guide for how to migrate to new versions of @wagmi/core'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# Migration Guide
+
+If you are coming from an earlier version of `@wagmi/core`, you will need to make sure to update the following APIs listed below.
+
+## 0.8.x Breaking changes
+
+### waitForTransaction
+
+#### Behavioral changes
+
+`waitForTransaction` will throw an error if the transaction has been reverted or cancelled.
+
+#### Configuration changes
+
+Removed the `wait` config option on `waitForTransaction`. Use the transaction `hash` instead.
+
+```diff
+const { data } = await waitForTransaction({
+- wait: transaction.wait
++ hash: transaction.hash
+})
+```

@@ -13,10 +13,7 @@ export type UseWaitForTransactionConfig = QueryConfig<
   Error
 >
 
-type QueryKeyArgs = Omit<UseWaitForTransactionArgs, 'hash' | 'wait'> & {
-  hash?: UseWaitForTransactionArgs['hash']
-  wait?: UseWaitForTransactionArgs['wait']
-}
+type QueryKeyArgs = Partial<UseWaitForTransactionArgs>
 type QueryKeyConfig = Pick<UseWaitForTransactionConfig, 'scopeKey'>
 
 function queryKey({
@@ -25,7 +22,6 @@ function queryKey({
   hash,
   scopeKey,
   timeout,
-  wait,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -35,16 +31,27 @@ function queryKey({
       hash,
       scopeKey,
       timeout,
-      wait,
     },
   ] as const
 }
 
 function queryFn({
-  queryKey: [{ chainId, confirmations, hash, timeout, wait }],
-}: QueryFunctionArgs<typeof queryKey>) {
-  if (hash) return waitForTransaction({ chainId, confirmations, hash, timeout })
-  if (wait) return waitForTransaction({ chainId, confirmations, timeout, wait })
+  onSpeedUp,
+}: {
+  onSpeedUp?: WaitForTransactionArgs['onSpeedUp']
+}) {
+  return ({
+    queryKey: [{ chainId, confirmations, hash, timeout }],
+  }: QueryFunctionArgs<typeof queryKey>) => {
+    if (!hash) throw new Error('hash is required')
+    return waitForTransaction({
+      chainId,
+      confirmations,
+      hash,
+      onSpeedUp,
+      timeout,
+    })
+  }
 }
 
 export function useWaitForTransaction({
@@ -52,24 +59,24 @@ export function useWaitForTransaction({
   confirmations,
   hash,
   timeout,
-  wait,
   cacheTime,
   enabled = true,
   scopeKey,
   staleTime,
   suspense,
   onError,
+  onSpeedUp,
   onSettled,
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
 
   return useQuery(
-    queryKey({ chainId, confirmations, hash, scopeKey, timeout, wait }),
-    queryFn,
+    queryKey({ chainId, confirmations, hash, scopeKey, timeout }),
+    queryFn({ onSpeedUp }),
     {
       cacheTime,
-      enabled: Boolean(enabled && (hash || wait)),
+      enabled: Boolean(enabled && hash),
       staleTime,
       suspense,
       onError,
