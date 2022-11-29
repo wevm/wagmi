@@ -158,22 +158,18 @@ importers:
   packages/core:
     specifiers:
       '@coinbase/wallet-sdk': ^3.4.1
-      '@types/react': ^18.0.9
       '@walletconnect/ethereum-provider': ^1.7.8
       abitype: ^0.1.8
       eventemitter3: ^4.0.7
-      react: ^18.1.0
       typescript: ^4.7.4
       zustand: ^4.1.4
     dependencies:
       abitype: 0.1.8_typescript@4.8.4
       eventemitter3: 4.0.7
-      zustand: 4.1.4_react@18.2.0
+      zustand: 4.1.4
     devDependencies:
       '@coinbase/wallet-sdk': 3.5.3
-      '@types/react': 18.0.21
       '@walletconnect/ethereum-provider': 1.8.0
-      react: 18.2.0
       typescript: 4.8.4
 
   packages/react:
@@ -8824,6 +8820,12 @@ packages:
       requires-port: 1.0.0
     dev: true
 
+  /use-sync-external-store/1.2.0:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dev: false
+
   /use-sync-external-store/1.2.0_react@18.2.0:
     resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
     peerDependencies:
@@ -9405,7 +9407,7 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zustand/4.1.4_react@18.2.0:
+  /zustand/4.1.4:
     resolution: {integrity: sha512-k2jVOlWo8p4R83mQ+/uyB8ILPO2PCJOf+QVjcL+1PbMCk1w5OoPYpAIxy9zd93FSfmJqoH6lGdwzzjwqJIRU5A==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -9417,8 +9419,7 @@ packages:
       react:
         optional: true
     dependencies:
-      react: 18.2.0
-      use-sync-external-store: 1.2.0_react@18.2.0
+      use-sync-external-store: 1.2.0
     dev: false
 
   /zwitch/2.0.2:
