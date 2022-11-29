@@ -147,7 +147,7 @@ export class Client<
             }),
             // Serialization is handled in `storage`.
             serialize: (state) => state as unknown as string,
-            version: 1,
+            version: 2,
           },
         ),
       ),
