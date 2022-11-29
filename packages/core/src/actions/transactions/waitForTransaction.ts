@@ -1,5 +1,6 @@
 import type { TransactionResponse } from '@ethersproject/providers'
-import type { BigNumber, providers } from 'ethers'
+import type { ResolvedConfig } from 'abitype'
+import type { providers } from 'ethers'
 import { toUtf8String } from 'ethers/lib/utils.js'
 
 import type { Hash } from '../../types'
@@ -12,7 +13,7 @@ type EthersReplaceable = {
   from: string
   nonce: number
   to: string
-  value: BigNumber
+  value: ResolvedConfig['BigIntType']
   startBlock: number
 }
 
@@ -57,9 +58,9 @@ export async function waitForTransaction({
       data: transaction.data,
       from: transaction.from,
       nonce: transaction.nonce,
+      startBlock: blockNumber,
       to: transaction.to,
       value: transaction.value,
-      startBlock: blockNumber,
     }
   }
 
