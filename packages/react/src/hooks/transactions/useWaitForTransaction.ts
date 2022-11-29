@@ -36,10 +36,22 @@ function queryKey({
 }
 
 function queryFn({
-  queryKey: [{ chainId, confirmations, hash, timeout }],
-}: QueryFunctionArgs<typeof queryKey>) {
-  if (!hash) throw new Error('hash is required')
-  return waitForTransaction({ chainId, confirmations, hash, timeout })
+  onSpeedUp,
+}: {
+  onSpeedUp?: WaitForTransactionArgs['onSpeedUp']
+}) {
+  return ({
+    queryKey: [{ chainId, confirmations, hash, timeout }],
+  }: QueryFunctionArgs<typeof queryKey>) => {
+    if (!hash) throw new Error('hash is required')
+    return waitForTransaction({
+      chainId,
+      confirmations,
+      hash,
+      onSpeedUp,
+      timeout,
+    })
+  }
 }
 
 export function useWaitForTransaction({
@@ -53,6 +65,7 @@ export function useWaitForTransaction({
   staleTime,
   suspense,
   onError,
+  onSpeedUp,
   onSettled,
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
@@ -60,7 +73,7 @@ export function useWaitForTransaction({
 
   return useQuery(
     queryKey({ chainId, confirmations, hash, scopeKey, timeout }),
-    queryFn,
+    queryFn({ onSpeedUp }),
     {
       cacheTime,
       enabled: Boolean(enabled && hash),

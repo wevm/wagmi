@@ -79,6 +79,19 @@ const waitForTransaction = await waitForTransaction({
 })
 ```
 
+### onSpeedUp (optional)
+
+Callback to invoke when the transaction has been sped up (replaced with higher gas fee values).
+
+```ts {5}
+import { waitForTransaction } from '@wagmi/core'
+
+const waitForTransaction = await waitForTransaction({
+  hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+  onSpeedUp: (transaction) => console.log(transaction),
+})
+```
+
 ### timeout (optional)
 
 Maximum amount of time to wait before timing out in milliseconds. Defaults to `0` (will wait until transaction processes).
@@ -89,27 +102,5 @@ import { waitForTransaction } from '@wagmi/core'
 const waitForTransaction = await waitForTransaction({
   hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
   timeout: 2_000, // 2 seconds
-})
-```
-
-### wait (optional)
-
-Function that resolves to processed transaction receipt. Works well with [`writeContract`](/core/actions/writeContract)/[`prepareWriteContract`](/core/actions/prepareWriteContract) and [`sendTransaction`](/core/actions/sendTransaction)'s `wait`.
-
-```ts {8}
-import {
-  prepareWriteContract,
-  waitForTransaction,
-  writeContract,
-} from '@wagmi/core'
-
-const { config } = await prepareWriteContract({
-  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  abi: wagmigotchiABI,
-  functionName: 'feed',
-})
-const { wait } = await writeContract(config)
-const waitForTransaction = await waitForTransaction({
-  wait,
 })
 ```

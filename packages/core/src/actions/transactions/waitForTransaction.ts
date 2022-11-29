@@ -1,3 +1,4 @@
+import type { TransactionResponse } from '@ethersproject/providers'
 import type { BigNumber, providers } from 'ethers'
 import { toUtf8String } from 'ethers/lib/utils.js'
 
@@ -25,6 +26,8 @@ export type WaitForTransactionArgs = {
   confirmations?: number
   /** Transaction hash to monitor */
   hash: Hash
+  /** Callback to invoke when the transaction has been sped up. */
+  onSpeedUp?: (transaction: TransactionResponse) => void
   /*
    * Maximum amount of time to wait before timing out in milliseconds
    * @default 0
@@ -38,6 +41,7 @@ export async function waitForTransaction({
   chainId,
   confirmations = 1,
   hash,
+  onSpeedUp,
   timeout = 0,
 }: WaitForTransactionArgs): Promise<WaitForTransactionResult> {
   const provider = getProvider({ chainId })
@@ -74,6 +78,7 @@ export async function waitForTransaction({
     return receipt
   } catch (err: any) {
     if (err?.reason === 'repriced') {
+      onSpeedUp?.(err.replacement as TransactionResponse)
       return waitForTransaction({
         hash: err.replacement?.hash,
         confirmations,
