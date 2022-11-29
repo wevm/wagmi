@@ -28,7 +28,7 @@ export async function connect<TProvider extends Provider = Provider>({
 }: ConnectArgs): Promise<ConnectResult<TProvider>> {
   const client = getClient()
   const activeConnector = client.connector
-  if (connector.id === activeConnector?.id)
+  if (activeConnector && connector.id === activeConnector.id)
     throw new ConnectorAlreadyConnectedError()
 
   try {
