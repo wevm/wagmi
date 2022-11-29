@@ -160,10 +160,21 @@ export class WalletConnectConnector extends Connector<
     const id = hexValue(chainId)
 
     try {
-      await provider.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: id }],
-      })
+      // Set up a race between `wallet_switchEthereumChain` & the `chainChanged` event
+      // to ensure the chain has been switched. This is because there could be a case
+      // where a wallet may not resolve the `wallet_switchEthereumChain` method, or
+      // resolves slower than `chainChanged`.
+      await Promise.race([
+        provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: id }],
+        }),
+        new Promise((res) =>
+          this.on('change', ({ chain }) => {
+            if (chain?.id === chainId) res(chainId)
+          }),
+        ),
+      ])
       return (
         this.chains.find((x) => x.id === chainId) ?? {
           id: chainId,
