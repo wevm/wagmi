@@ -19,7 +19,12 @@ import { Connector } from './base'
 export type InjectedConnectorOptions = {
   /** Name of connector */
   name?: string | ((detectedName: string | string[]) => string)
-  /** Get injected provider */
+  /**
+  * Get [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Provider to use in connector
+  *
+  * @default
+  * () => typeof window !== 'undefined' ? window.ethereum : undefined
+  */
   getProvider?: () => Window['ethereum'] | undefined
   /**
    * MetaMask 10.9.3 emits disconnect event when chain is changed.
