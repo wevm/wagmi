@@ -1,0 +1,9 @@
+{
+  "paradigm-wagmi": {
+    "title": "Paradigm x wagmi",
+    "type": "page",
+    "theme": {
+      "sidebar": false
+    }
+  }
+}

@@ -57,19 +57,39 @@ export function Sponsors() {
   const { resolvedTheme } = useTheme()
   const mode = (resolvedTheme ?? 'dark') as 'dark' | 'light'
   return (
-    <div className="flex my-5 gap-2 flex-wrap">
-      {sponsors.map((sponsor) => (
-        <a href={sponsor.href} key={sponsor.id}>
+    <div className="my-5">
+      <div className="mb-2 -ml-2">
+        <a href="https://paradigm.xyz" className="inline-block">
           <picture>
             <img
-              alt={sponsor.name}
-              src={sponsor.logo[mode]}
+              alt="Paradigm"
+              src={
+                {
+                  dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/paradigm-dark.svg',
+                  light:
+                    'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/paradigm-light.svg',
+                }[mode]
+              }
               width="auto"
-              className="h-12"
+              className="h-24"
             />
           </picture>
         </a>
-      ))}
+      </div>
+      <div className="flex gap-2 flex-wrap">
+        {sponsors.map((sponsor) => (
+          <a href={sponsor.href} key={sponsor.id}>
+            <picture>
+              <img
+                alt={sponsor.name}
+                src={sponsor.logo[mode]}
+                width="auto"
+                className="h-12"
+              />
+            </picture>
+          </a>
+        ))}
+      </div>
     </div>
   )
 }

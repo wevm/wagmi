@@ -98,7 +98,7 @@ We've only scratched the surface for what you can do with wagmi!
 
 —
 
-Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) to get started with pre-built interface on top of wagmi for managing wallet connections.
+Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) or [Web3Modal](https://web3modal.com) to get started with pre-built interface on top of wagmi for managing wallet connections.
 
 ## Community
 
@@ -118,6 +118,15 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
 - [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
 
 ## Sponsors
+
+<a href="https://paradigm.xyz">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/paradigm-dark.svg">
+    <img alt="family logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/paradigm-light.svg" width="auto" height="70">
+  </picture>
+</a>
+
+<br>
 
 <a href="https://twitter.com/family">
   <picture>
