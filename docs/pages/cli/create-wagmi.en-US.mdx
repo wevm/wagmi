@@ -3,39 +3,73 @@ title: 'create-wagmi'
 description: 'The easiest way to get started with wagmi'
 ---
 
+import { Tabs, Tab } from 'nextra-theme-docs'
+
 # `create-wagmi` CLI
 
 Get up and running quickly with wagmi by using the `create-wagmi` CLI. This tool interactively scaffolds a new wagmi project for you so you can start building instantly without the hassle of setting up `git`, installing packages, worrying about TypeScript configuration, etc.
 
 To get started, `create-wagmi` can be instantiated with one of your favorite package managers:
 
+{/* prettier-ignore-start */}
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+  <Tab>
 ```bash
 npm init wagmi
-# or
+```
+  </Tab>
+  <Tab>
+```bash
 pnpm create wagmi
-# or
+```
+  </Tab>
+  <Tab>
+```bash
 yarn create wagmi
 ```
+  </Tab>
+</Tabs>
+{/* prettier-ignore-end */}
 
 ## Templates
 
 By default, `create-wagmi` scaffolds a basic Next.js application with wagmi. However, you can specify a custom template by passing the `--template`/`-t` flag:
 
+{/* prettier-ignore-start */}
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+  <Tab>
 ```bash
-npm init wagmi -- --template next-with-connectkit
-# or
-pnpm create wagmi --template next-with-connectkit
-# or
-yarn create wagmi --template next-with-connectkit
+npm init wagmi -- --template next-connectkit
 ```
+  </Tab>
+  <Tab>
+```bash
+pnpm create wagmi --template next-connectkit
+```
+  </Tab>
+  <Tab>
+```bash
+yarn create wagmi --template next-connectkit
+```
+  </Tab>
+</Tabs>
+{/* prettier-ignore-end */}
 
 `create-wagmi` currently comes with the following templates:
 
+### Next.js
+
 - `next` (default): A Next.js wagmi project.
-- `next-with-connectkit`: A Next.js wagmi project with ConnectKit included.
-- `next-with-rainbowkit`: A Next.js wagmi project with RainbowKit included.
+- `next-connectkit`: A Next.js wagmi project with [ConnectKit](https://github.com/family/connectkit) included.
+- `next-rainbowkit`: A Next.js wagmi project with [RainbowKit](https://github.com/rainbow-me/rainbowkit) included.
+- `next-web3modal`: A Next.js wagmi project with [Web3Modal](https://github.com/WalletConnect/web3modal) included.
+
+### Vite
+
 - `vite-react`: A Vite (React) wagmi project.
-- `create-react-app`: A Create React App wagmi project
+- `vite-react-connectkit`: A Vite (React) wagmi project with [ConnectKit](https://github.com/family/connectkit) included.
+- `vite-react-rainbowkit`: A Vite (React) wagmi project with [RainbowKit](https://github.com/rainbow-me/rainbowkit) included.
+- `vite-react-web3modal`: A Vite (React) wagmi project with [Web3Modal](https://github.com/WalletConnect/web3modal) included.
 
 ## Options
 
