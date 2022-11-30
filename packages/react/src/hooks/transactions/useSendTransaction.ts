@@ -18,12 +18,12 @@ export type UseSendTransactionArgs = Omit<
     | {
         /**
          * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
-         * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it
+         * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it
          * is highly recommended to not use this and instead prepare the request upfront
          * using the `usePrepareSendTransaction` hook.
          *
          * `prepared`: The request has been prepared with parameters required for sending a transaction
-         * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/docs/prepare-hooks/usePrepareSendTransaction)
+         * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/react/prepare-hooks/usePrepareSendTransaction)
          * */
         mode: 'prepared'
         /** The prepared request to send the transaction. */
@@ -38,7 +38,7 @@ export type UseSendTransactionArgs = Omit<
 export type UseSendTransactionMutationArgs = {
   /**
    * Recklessly pass through an unprepared `request`. Note: This has
-   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is
+   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is
    * highly recommended to not use this and instead prepare the request upfront
    * using the `usePrepareSendTransaction` hook.
    */
@@ -77,7 +77,7 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  * @description Hook for sending a transaction.
  *
  * It is recommended to pair this with the [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction)
- * to [avoid UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+ * to [avoid UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'

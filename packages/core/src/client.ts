@@ -369,7 +369,7 @@ export function getClient<
 >() {
   if (!client) {
     throw new Error(
-      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/docs/client',
+      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client',
     )
   }
   return client as unknown as Client<TProvider, TWebSocketProvider>
