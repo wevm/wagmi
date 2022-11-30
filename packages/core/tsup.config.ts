@@ -8,7 +8,6 @@ export default defineConfig(
     dev: process.env.DEV === 'true',
     entry: [
       'src/index.ts',
-      'src/chains.ts',
       'src/connectors/coinbaseWallet.ts',
       'src/connectors/metaMask.ts',
       'src/connectors/walletConnect.ts',
