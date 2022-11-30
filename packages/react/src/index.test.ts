@@ -43,8 +43,6 @@ it('should expose correct exports', () => {
       "useTransaction",
       "useWaitForTransaction",
       "useWebSocketProvider",
-      "deserialize",
-      "serialize",
       "AddChainError",
       "ChainDoesNotSupportMulticallError",
       "ChainMismatchError",
@@ -72,6 +70,7 @@ it('should expose correct exports', () => {
       "deepEqual",
       "defaultChains",
       "defaultL2Chains",
+      "deserialize",
       "erc20ABI",
       "erc721ABI",
       "erc4626ABI",
@@ -79,6 +78,7 @@ it('should expose correct exports', () => {
       "infuraRpcUrls",
       "publicRpcUrls",
       "readContracts",
+      "serialize",
     ]
   `)
 })
