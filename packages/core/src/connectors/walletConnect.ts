@@ -180,7 +180,7 @@ export class WalletConnectConnector extends Connector<
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
-          rpcUrls: { default: '' },
+          rpcUrls: { default: { http: [''] } },
         }
       )
     } catch (error) {

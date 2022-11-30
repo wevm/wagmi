@@ -31,10 +31,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./chains": {
-      "types": "./dist/chains.d.ts",
-      "default": "./dist/chains.js"
-    },
     "./internal": {
       "types": "./dist/internal.d.ts",
       "default": "./dist/internal.js"
@@ -75,7 +71,6 @@
   },
   "sideEffects": false,
   "files": [
-    "/chains",
     "/connectors",
     "/internal",
     "/providers",
@@ -95,6 +90,7 @@
     }
   },
   "dependencies": {
+    "@wagmi/chains": "0.0.0-20221130204930",
     "abitype": "^0.1.8",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.1.4"

@@ -31,7 +31,7 @@ export function getProvider({
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
-  const url = foundryMainnet.rpcUrls.default
+  const url = foundryMainnet.rpcUrls.default.http[0]
   const provider = new EthersProviderWrapper(url, getNetwork(chain))
   provider.pollingInterval = 1_000
   return Object.assign(provider, { chains })
@@ -48,7 +48,7 @@ export function getWebSocketProvider({
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
-  const url = foundryMainnet.rpcUrls.default.replace('http', 'ws')
+  const url = foundryMainnet.rpcUrls.default.http[0]!.replace('http', 'ws')
   const webSocketProvider = Object.assign(
     new EthersWebSocketProviderWrapper(url, getNetwork(chain)),
     { chains },

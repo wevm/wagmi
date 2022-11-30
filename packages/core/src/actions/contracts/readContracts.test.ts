@@ -40,7 +40,10 @@ const warn = vi
 describe('readContracts', () => {
   beforeEach(() => {
     setupClient({
-      chains: [chain.mainnet, { ...chain.polygon, multicall: undefined }],
+      chains: [
+        chain.mainnet,
+        { ...chain.polygon, contracts: { multicall3: undefined } },
+      ],
     })
     warnMessages = []
   })

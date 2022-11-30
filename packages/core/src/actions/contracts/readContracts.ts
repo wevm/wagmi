@@ -1,6 +1,6 @@
+import { mainnet } from '@wagmi/chains'
 import type { Abi } from 'abitype'
 
-import { mainnet } from '../../chains'
 import {
   ChainDoesNotSupportMulticallError,
   ContractMethodNoResultError,

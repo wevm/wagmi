@@ -9,7 +9,7 @@ describe('WalletConnectConnector', () => {
       chains: defaultChains,
       options: {
         rpc: {
-          [chain.foundry.id]: chain.foundry.rpcUrls.default,
+          [chain.foundry.id]: chain.foundry.rpcUrls.default.http[0]!,
         },
       },
     })

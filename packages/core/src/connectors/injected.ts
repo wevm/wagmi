@@ -198,7 +198,7 @@ export class InjectedConnector extends Connector<
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
-          rpcUrls: { default: '' },
+          rpcUrls: { default: { http: [''] } },
         }
       )
     } catch (error) {
@@ -222,7 +222,11 @@ export class InjectedConnector extends Connector<
                 chainId: id,
                 chainName: chain.name,
                 nativeCurrency: chain.nativeCurrency,
-                rpcUrls: [chain.rpcUrls.public ?? chain.rpcUrls.default],
+                rpcUrls: [
+                  chain.rpcUrls.public?.http[0] ??
+                    chain.rpcUrls.default.http[0] ??
+                    '',
+                ],
                 blockExplorerUrls: this.getBlockExplorerUrls(chain),
               },
             ],

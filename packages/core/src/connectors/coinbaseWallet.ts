@@ -155,7 +155,8 @@ export class CoinbaseWalletConnector extends Connector<
             : chain.id === walletExtensionChainId,
         ) || this.chains[0]
       const chainId = this.options.chainId || chain?.id
-      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
+      const jsonRpcUrl =
+        this.options.jsonRpcUrl || chain?.rpcUrls.default.http[0]
 
       this.#provider = this.#client.makeWeb3Provider(jsonRpcUrl, chainId)
     }
@@ -196,7 +197,7 @@ export class CoinbaseWalletConnector extends Connector<
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
-          rpcUrls: { default: '' },
+          rpcUrls: { default: { http: [''] } },
         }
       )
     } catch (error) {

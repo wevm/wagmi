@@ -19,7 +19,9 @@ export function getNetwork(): GetNetworkResult {
     id: chainId,
     name: `Chain ${chainId}`,
     network: `${chainId}`,
-    rpcUrls: { default: '' },
+    rpcUrls: {
+      default: { http: [''] },
+    },
   }
 
   return {

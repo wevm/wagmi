@@ -121,18 +121,13 @@ export type {
 } from './connectors'
 
 export {
-  alchemyRpcUrls,
   allChains,
   chain,
-  chainId,
   defaultChains,
   defaultL2Chains,
   erc20ABI,
   erc721ABI,
   erc4626ABI,
-  etherscanBlockExplorers,
-  infuraRpcUrls,
-  publicRpcUrls,
   units,
 } from './constants'
 

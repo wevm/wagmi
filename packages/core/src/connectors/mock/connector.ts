@@ -94,7 +94,7 @@ export class MockConnector extends Connector<
         id: chainId,
         name: `Chain ${chainId}`,
         network: `${chainId}`,
-        rpcUrls: { default: '' },
+        rpcUrls: { default: { http: [''] } },
       }
     )
   }

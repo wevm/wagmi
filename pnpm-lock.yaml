@@ -158,12 +158,14 @@ importers:
   packages/core:
     specifiers:
       '@coinbase/wallet-sdk': ^3.6.0
+      '@wagmi/chains': 0.0.0-20221130204930
       '@walletconnect/ethereum-provider': ^1.7.8
       abitype: ^0.1.8
       eventemitter3: ^4.0.7
       typescript: ^4.7.4
       zustand: ^4.1.4
     dependencies:
+      '@wagmi/chains': 0.0.0-20221130204930
       abitype: 0.1.8_typescript@4.8.4
       eventemitter3: 4.0.7
       zustand: 4.1.4
@@ -2111,6 +2113,10 @@ packages:
     dependencies:
       sirv: 2.0.2
     dev: true
+
+  /@wagmi/chains/0.0.0-20221130204930:
+    resolution: {integrity: sha512-/Xf0/mkOPLrdi+IqlfI6+XHNU2B7V/OhyD2opey92WogsL3It9A+Z3AUFChM0y7uZY7PEW3aIuMJpxhkcX1iSA==}
+    dev: false
 
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}

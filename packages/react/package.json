@@ -36,10 +36,6 @@
       "types": "./dist/actions.d.ts",
       "default": "./dist/actions.js"
     },
-    "./chains": {
-      "types": "./dist/chains.d.ts",
-      "default": "./dist/chains.js"
-    },
     "./connectors/coinbaseWallet": {
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
@@ -81,7 +77,6 @@
   "sideEffects": false,
   "files": [
     "/actions",
-    "/chains",
     "/connectors",
     "/dist",
     "/providers"
