@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 0.7.7
+
+### Patch Changes
+
+- [#1386](https://github.com/wagmi-dev/wagmi/pull/1386) [`206a2adb`](https://github.com/wagmi-dev/wagmi/commit/206a2adbb4ee5149a364543b34612050ccf78c21) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `persister` would still use `window.localStorage` instead of the wagmi `storage`.
+
+- [#1376](https://github.com/wagmi-dev/wagmi/pull/1376) [`a70a9528`](https://github.com/wagmi-dev/wagmi/commit/a70a9528f93f4d7fea28b7652751dfef2dcacf9b) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `switchChain` on `WalletConnectConnector` would not resolve.
+
+- [#1386](https://github.com/wagmi-dev/wagmi/pull/1386) [`206a2adb`](https://github.com/wagmi-dev/wagmi/commit/206a2adbb4ee5149a364543b34612050ccf78c21) Thanks [@jxom](https://github.com/jxom)! - Added `serialize`/`deserialize` as config options to `createStorage`.
+
+- [#1392](https://github.com/wagmi-dev/wagmi/pull/1392) [`88afc849`](https://github.com/wagmi-dev/wagmi/commit/88afc84978afe9689ab7364633e4422ecd7699ea) Thanks [@tmm](https://github.com/tmm)! - Added check for active connector when connecting
+
 ## 0.7.6
 
 ### Patch Changes
