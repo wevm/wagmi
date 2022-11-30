@@ -12,6 +12,7 @@ import { useInfiniteQuery } from '../utils'
 export type UseContractInfiniteReadsConfig<
   TContracts extends unknown[] = unknown[],
   TPageParam = unknown,
+  TSelectData = ReadContractsResult<TContracts>,
 > = Pick<ReadContractsConfig<TContracts>, 'allowFailure' | 'overrides'> & {
   cacheKey: string
   contracts(pageParam: TPageParam): readonly [
@@ -23,7 +24,7 @@ export type UseContractInfiniteReadsConfig<
       }
     >,
   ]
-} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error>
+} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData>
 
 type QueryKeyArgs = {
   allowFailure: UseContractInfiniteReadsConfig['allowFailure']
@@ -82,6 +83,7 @@ export function useContractInfiniteReads<
     functionName: TFunctionName
   }[],
   TPageParam = any,
+  TSelectData = ReadContractsResult<TContracts>,
 >({
   allowFailure,
   cacheKey,
@@ -105,9 +107,10 @@ export function useContractInfiniteReads<
   suspense,
 }: UseContractInfiniteReadsConfig<
   TContracts,
-  TPageParam
+  TPageParam,
+  TSelectData
 >): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
-UseInfiniteQueryResult<ReadContractsResult<TContracts>, Error> {
+UseInfiniteQueryResult<TSelectData, Error> {
   const queryKey_ = React.useMemo(
     () => queryKey({ allowFailure, cacheKey, overrides, scopeKey }),
     [allowFailure, cacheKey, overrides, scopeKey],
@@ -142,6 +145,7 @@ export function paginatedIndexesConfig<
     abi: TAbi
     functionName: TFunctionName
   }[],
+  TSelectData = ReadContractsResult<TContracts>,
 >(
   fn: UseContractInfiniteReadsConfig<TContracts>['contracts'],
   {
@@ -152,7 +156,11 @@ export function paginatedIndexesConfig<
 ): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 {
   contracts: UseContractInfiniteReadsConfig<TContracts>['contracts']
-  getNextPageParam: InfiniteQueryConfig<unknown[], Error>['getNextPageParam']
+  getNextPageParam: InfiniteQueryConfig<
+    unknown[],
+    Error,
+    TSelectData
+  >['getNextPageParam']
 } {
   const contracts = ((page = 0) =>
     [...Array(perPage).keys()]

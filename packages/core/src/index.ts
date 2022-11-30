@@ -176,8 +176,10 @@ export type { Address } from 'abitype'
 export {
   configureChains,
   deepEqual,
+  deserialize,
   minimizeContractInterface,
   normalizeChainId,
   parseContractResult,
+  serialize,
 } from './utils'
 export type { ConfigureChainsConfig } from './utils'

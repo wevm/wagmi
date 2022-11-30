@@ -9,23 +9,25 @@ import { useBlockNumber } from '../network-status'
 import type { UseQueryResult } from '../utils'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
-export type UseContractReadsConfig<TContracts extends unknown[]> =
-  ReadContractsConfig<
-    TContracts,
-    {
-      isAbiOptional: true
-      isAddressOptional: true
-      isArgsOptional: true
-      isContractsOptional: true
-      isFunctionNameOptional: true
-    }
-  > &
-    QueryConfig<ReadContractsResult<TContracts>, Error> & {
-      /** If set to `true`, the cache will depend on the block number */
-      cacheOnBlock?: boolean
-      /** Subscribe to changes */
-      watch?: boolean
-    }
+export type UseContractReadsConfig<
+  TContracts extends unknown[],
+  TSelectData = ReadContractsResult<TContracts>,
+> = ReadContractsConfig<
+  TContracts,
+  {
+    isAbiOptional: true
+    isAddressOptional: true
+    isArgsOptional: true
+    isContractsOptional: true
+    isFunctionNameOptional: true
+  }
+> &
+  QueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> & {
+    /** If set to `true`, the cache will depend on the block number */
+    cacheOnBlock?: boolean
+    /** Subscribe to changes */
+    watch?: boolean
+  }
 
 type QueryKeyArgs<TContracts extends unknown[]> = ReadContractsConfig<
   TContracts,
@@ -120,6 +122,7 @@ export function useContractReads<
     abi: TAbi
     functionName: TFunctionName
   }[],
+  TSelectData = ReadContractsResult<TContracts>,
 >(
   {
     allowFailure = true,
@@ -142,9 +145,9 @@ export function useContractReads<
         : (replaceEqualDeep(oldData, newData) as any),
     suspense,
     watch,
-  }: UseContractReadsConfig<TContracts> = {} as any,
+  }: UseContractReadsConfig<TContracts, TSelectData> = {} as any,
   // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
-): UseQueryResult<ReadContractsResult<TContracts>, Error> {
+): UseQueryResult<TSelectData, Error> {
   const { data: blockNumber } = useBlockNumber({
     enabled: watch || cacheOnBlock,
     watch,
@@ -199,7 +202,7 @@ export function useContractReads<
           ? parseContractResult({ abi, functionName, data })
           : data
       }) as ReadContractsResult<TContracts>
-      return select ? select(result) : result
+      return (select ? select(result) : result) as TSelectData
     },
     structuralSharing,
     suspense,

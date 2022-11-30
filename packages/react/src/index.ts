@@ -41,8 +41,6 @@ export {
   useWebSocketProvider,
 } from './hooks'
 
-export { deserialize, serialize } from './utils'
-
 export {
   AddChainError,
   ChainDoesNotSupportMulticallError,
@@ -71,6 +69,7 @@ export {
   deepEqual,
   defaultChains,
   defaultL2Chains,
+  deserialize,
   erc20ABI,
   erc721ABI,
   erc4626ABI,
@@ -78,6 +77,7 @@ export {
   infuraRpcUrls,
   publicRpcUrls,
   readContracts,
+  serialize,
 } from '@wagmi/core'
 export type {
   Chain,

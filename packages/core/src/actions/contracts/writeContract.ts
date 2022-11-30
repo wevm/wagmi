@@ -26,7 +26,7 @@ export type WriteContractPreparedArgs<
 > = {
   /**
    * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
-   * [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
+   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
    * it is highly recommended to not use this and instead prepare the request upfront
    * using the {@link prepareWriteContract} function.
    *
@@ -98,7 +98,7 @@ export type WriteContractResult = SendTransactionResult
  * @description Function to call a contract write method.
  *
  * It is recommended to pair this with the {@link prepareWriteContract} function
- * to avoid [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+ * to avoid [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { prepareWriteContract, writeContract } from '@wagmi/core'
@@ -127,7 +127,7 @@ export async function writeContract<
   /****************************************************************************/
   /** START: iOS App Link cautious code.                                      */
   /** Do not perform any async operations in this block.                      */
-  /** Ref: https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints */
+  /** Ref: https://wagmi.sh/react/prepare-hooks/intro#ios-app-link-constraints */
   /****************************************************************************/
 
   const signer = await fetchSigner<TSigner>()

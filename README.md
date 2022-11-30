@@ -119,6 +119,15 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 ## Sponsors
 
+<a href="https://paradigm.xyz">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/paradigm-dark.svg">
+    <img alt="family logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/paradigm-light.svg" width="auto" height="70">
+  </picture>
+</a>
+
+<br>
+
 <a href="https://twitter.com/family">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/family-dark.svg">

@@ -1,5 +1,29 @@
 # wagmi
 
+## 0.8.8
+
+### Patch Changes
+
+- [#1386](https://github.com/wagmi-dev/wagmi/pull/1386) [`206a2adb`](https://github.com/wagmi-dev/wagmi/commit/206a2adbb4ee5149a364543b34612050ccf78c21) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `persister` would still use `window.localStorage` instead of the wagmi `storage`.
+
+- [#1376](https://github.com/wagmi-dev/wagmi/pull/1376) [`a70a9528`](https://github.com/wagmi-dev/wagmi/commit/a70a9528f93f4d7fea28b7652751dfef2dcacf9b) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `switchChain` on `WalletConnectConnector` would not resolve.
+
+- [#1392](https://github.com/wagmi-dev/wagmi/pull/1392) [`88afc849`](https://github.com/wagmi-dev/wagmi/commit/88afc84978afe9689ab7364633e4422ecd7699ea) Thanks [@tmm](https://github.com/tmm)! - Added check for active connector when connecting
+
+- Updated dependencies [[`206a2adb`](https://github.com/wagmi-dev/wagmi/commit/206a2adbb4ee5149a364543b34612050ccf78c21), [`a70a9528`](https://github.com/wagmi-dev/wagmi/commit/a70a9528f93f4d7fea28b7652751dfef2dcacf9b), [`206a2adb`](https://github.com/wagmi-dev/wagmi/commit/206a2adbb4ee5149a364543b34612050ccf78c21), [`88afc849`](https://github.com/wagmi-dev/wagmi/commit/88afc84978afe9689ab7364633e4422ecd7699ea)]:
+  - @wagmi/core@0.7.7
+
+## 0.8.7
+
+### Patch Changes
+
+- [#1384](https://github.com/wagmi-dev/wagmi/pull/1384) [`027e88d6`](https://github.com/wagmi-dev/wagmi/commit/027e88d6e5f8d028d46ee78aec8500701e0173d9) Thanks [@tmm](https://github.com/tmm)! - Fixed issue reconnecting after disconnect with `MetaMaskConnector` in MetaMask mobile browser.
+
+- [#1377](https://github.com/wagmi-dev/wagmi/pull/1377) [`089c4f3b`](https://github.com/wagmi-dev/wagmi/commit/089c4f3b3b8ce5cf7807f144410e2f64b72e0580) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where transforming `useContractRead`, `useContractReads` or `useContractInfiniteReads`'s return data via `select` wasn't inferring the type.
+
+- Updated dependencies [[`027e88d6`](https://github.com/wagmi-dev/wagmi/commit/027e88d6e5f8d028d46ee78aec8500701e0173d9)]:
+  - @wagmi/core@0.7.6
+
 ## 0.8.6
 
 ### Patch Changes

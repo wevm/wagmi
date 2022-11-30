@@ -98,7 +98,7 @@ describe('useClient', () => {
           `
           [Error: \`useClient\` must be used within \`WagmiConfig\`.
 
-          Read more: https://wagmi.sh/docs/WagmiConfig]
+          Read more: https://wagmi.sh/react/WagmiConfig]
         `,
         )
       }

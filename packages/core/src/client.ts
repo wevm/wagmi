@@ -129,6 +129,11 @@ export class Client<
               webSocketProvider: this.getWebSocketProvider({ chainId }),
             },
           {
+            // Deserialization is handled in `storage`.
+            deserialize: (state) =>
+              state as unknown as {
+                state: Partial<State<TProvider, TWebSocketProvider>>
+              },
             name: storeKey,
             getStorage: () => storage,
             partialize: (state) => ({
@@ -140,7 +145,9 @@ export class Client<
               }),
               chains: state?.chains,
             }),
-            version: 1,
+            // Serialization is handled in `storage`.
+            serialize: (state) => state as unknown as string,
+            version: 2,
           },
         ),
       ),
@@ -362,7 +369,7 @@ export function getClient<
 >() {
   if (!client) {
     throw new Error(
-      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/docs/client',
+      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client',
     )
   }
   return client as unknown as Client<TProvider, TWebSocketProvider>
