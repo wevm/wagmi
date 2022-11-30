@@ -18,6 +18,7 @@ importers:
       '@typescript-eslint/parser': ^5.40.1
       '@vitest/coverage-c8': ^0.25.2
       '@vitest/ui': ^0.25.2
+      '@wagmi/chains': 0.0.0-20221130204930
       eslint: 8.17.0
       eslint-config-prettier: ^8.5.0
       eslint-import-resolver-typescript: ^2.7.1
@@ -51,6 +52,7 @@ importers:
       '@typescript-eslint/parser': 5.40.1_vhsckgnokn2tf7m5xkrurmvfv4
       '@vitest/coverage-c8': 0.25.2_x2zn6a5llgt6lhphkokshgpjpi
       '@vitest/ui': 0.25.2
+      '@wagmi/chains': 0.0.0-20221130204930
       eslint: 8.17.0
       eslint-config-prettier: 8.5.0_eslint@8.17.0
       eslint-import-resolver-typescript: 2.7.1_3yxiwxzsqipdmy4jwrlv6vgfmy
@@ -2116,7 +2118,6 @@ packages:
 
   /@wagmi/chains/0.0.0-20221130204930:
     resolution: {integrity: sha512-/Xf0/mkOPLrdi+IqlfI6+XHNU2B7V/OhyD2opey92WogsL3It9A+Z3AUFChM0y7uZY7PEW3aIuMJpxhkcX1iSA==}
-    dev: false
 
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}

@@ -35,6 +35,7 @@
     "@typescript-eslint/parser": "^5.40.1",
     "@vitest/coverage-c8": "^0.25.2",
     "@vitest/ui": "^0.25.2",
+    "@wagmi/chains": "0.0.0-20221130204930",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",

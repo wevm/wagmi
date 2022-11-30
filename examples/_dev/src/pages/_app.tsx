@@ -29,11 +29,13 @@ const avalanche: Chain = {
     symbol: 'AVAX',
   },
   rpcUrls: {
-    default: 'https://api.avax.network/ext/bc/C/rpc',
+    default: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
   },
-  multicall: {
-    address: '0xca11bde05977b3631167028862be2a173976ca11',
-    blockCreated: 11907934,
+  contracts: {
+    multicall3: {
+      address: '0xca11bde05977b3631167028862be2a173976ca11',
+      blockCreated: 11907934,
+    },
   },
   blockExplorers: {
     default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
@@ -42,7 +44,7 @@ const avalanche: Chain = {
 }
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [...defaultChains, chain.optimism, avalanche],
+  [...defaultChains, chain.optimism],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
     infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! }),
@@ -50,7 +52,7 @@ const { chains, provider, webSocketProvider } = configureChains(
       rpc: (chain) => {
         if (chain.id !== avalanche.id) return null
         return {
-          http: chain.rpcUrls.default,
+          http: chain.rpcUrls.default.http[0]!,
         }
       },
     }),
