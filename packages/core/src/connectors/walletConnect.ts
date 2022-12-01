@@ -1,9 +1,8 @@
 import WalletConnectProvider from '@walletconnect/ethereum-provider'
-// eslint-disable-next-line import/no-named-as-default
-import Modal from '@walletconnect/qrcode-modal'
-// eslint-disable-next-line import/no-named-as-default
-import type { NamespaceConfig } from '@walletconnect/universal-provider'
-import type UniversalProvider from '@walletconnect/universal-provider'
+import type {
+  default as UniversalProvider,
+  UniversalProviderOpts,
+} from '@walletconnect/universal-provider'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
@@ -13,15 +12,6 @@ import { SwitchChainError, UserRejectedRequestError } from '../errors'
 import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
-
-/**
- * Wallets that support chain switching through WalletConnect
- * - imToken (token.im)
- * - MetaMask (metamask.io)
- * - Rainbow (rainbow.me)
- * - Trust Wallet (trustwallet.com)
- */
-const switchChainAllowedRegex = /(imtoken|metamask|rainbow|trust wallet)/i
 
 /**
  * Config for the WalletConnect Sign Client
@@ -38,33 +28,43 @@ const v2Config = {
   events: ['chainChanged', 'accountsChanged'],
 }
 
-type WalletConnectV1Options = ConstructorParameters<
-  typeof WalletConnectProvider
->[0]
-type WalletConnectV2Options = ConstructorParameters<typeof UniversalProvider>[0]
-type WalletConnectCustomOptions = {
-  version?: '1' | '2'
-  qrcode?: true | false
-}
-type WalletConnectOptions = WalletConnectV1Options &
-  WalletConnectV2Options &
-  WalletConnectCustomOptions
-type WalletConnectSigner = providers.JsonRpcSigner
+type WalletConnectConnectorOptions = {
+  /** Use WalletConnect QR Code modal */
+  qrcode?: boolean
+} & (
+  | ({
+      version?: '1'
+    } & ConstructorParameters<typeof WalletConnectProvider>[0])
+  | ({
+      /**
+       * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+       */
+      projectId: NonNullable<UniversalProviderOpts['projectId']>
+      version: '2'
+    } & Omit<UniversalProviderOpts, 'projectId'>)
+)
 
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider | UniversalProvider,
-  WalletConnectOptions,
-  WalletConnectSigner
+  WalletConnectConnectorOptions,
+  providers.JsonRpcSigner
 > {
   readonly id = 'walletConnect'
   readonly name = 'WalletConnect'
   readonly ready = true
 
   #provider?: WalletConnectProvider | UniversalProvider
-  #version: '1' | '2'
-  constructor(config: { chains?: Chain[]; options: WalletConnectOptions }) {
+
+  constructor(config: {
+    chains?: Chain[]
+    options: WalletConnectConnectorOptions
+  }) {
     super(config)
-    this.#version = this.options.version || '1'
+  }
+
+  get version() {
+    if ('version' in this.options) return this.options.version
+    return '1'
   }
 
   async connect({ chainId }: { chainId?: number } = {}) {
@@ -85,16 +85,48 @@ export class WalletConnectConnector extends Connector<
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
 
-      if (this.#version === '2') {
-        try {
-          provider.on('session_delete', this.onDisconnect)
-          provider.on('display_uri', this.#onUri)
+      if (this.version === '2') {
+        provider.on('session_delete', this.onDisconnect)
 
-          await provider.connect({
-            namespaces: this.#getConfig(),
-          })
-        } finally {
-          if (this.options.qrcode !== false) Modal.close()
+        await Promise.race([
+          provider.connect({
+            namespaces: {
+              [v2Config.namespace]: {
+                methods: v2Config.methods,
+                events: v2Config.events,
+                chains: this.chains.map(
+                  (chain) => `${v2Config.namespace}:${chain.id}`,
+                ),
+                rpcMap: this.chains.reduce(
+                  (rpc, chain) => ({
+                    ...rpc,
+                    [chain.id]: chain.rpcUrls.default,
+                  }),
+                  {},
+                ),
+              },
+            },
+          }),
+          ...(this.options.qrcode
+            ? // When using WalletConnect QR Code Modal, open modal and listen for close callback.
+              // If modal is closed, reject promise so `catch` block for `connect` is called.
+              [
+                new Promise((_res, reject) =>
+                  provider.on('display_uri', async (uri: string) => {
+                    const { default: Modal } = await import(
+                      '@walletconnect/qrcode-modal'
+                    )
+                    Modal.open(uri, () => reject(new Error('user rejected')))
+                  }),
+                ),
+              ]
+            : []),
+        ])
+
+        // If execution reaches here, connection was successful and we can close modal.
+        if (this.options.qrcode) {
+          const { default: Modal } = await import('@walletconnect/qrcode-modal')
+          Modal.close()
         }
       }
 
@@ -106,17 +138,29 @@ export class WalletConnectConnector extends Connector<
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
 
-      if (this.#version === '1' && provider instanceof WalletConnectProvider) {
-        // Not all WalletConnect options support programmatic chain switching
-        // Only enable for wallet options that do
+      // Not all WalletConnect v1 options support programmatic chain switching.
+      // Only enable for wallet options that do.
+      if (provider instanceof WalletConnectProvider) {
         const walletName = provider.connector?.peerMeta?.name ?? ''
+        console.log({ walletName })
+
+        /**
+         * Wallets that support chain switching through WalletConnect
+         * - imToken (token.im)
+         * - MetaMask (metamask.io)
+         * - Omni (omni.app)
+         * - Rainbow (rainbow.me)
+         * - Trust Wallet (trustwallet.com)
+         */
+        const switchChainAllowedRegex =
+          /(imtoken|metamask|omni|rainbow|trust wallet)/i
         if (switchChainAllowedRegex.test(walletName))
           this.switchChain = this.#switchChain
-      } else {
-        // in v2 chain switching is allowed programatically
-        // as the user approves the chains when approving the pairing
-        this.switchChain = this.#switchChain
       }
+      // In v2, chain switching is allowed programatically
+      // as the user approves the chains when approving the pairing
+      else this.switchChain = this.#switchChain
+
       return {
         account,
         chain: { id, unsupported },
@@ -125,8 +169,17 @@ export class WalletConnectConnector extends Connector<
         ),
       }
     } catch (error) {
-      if (/user closed modal/i.test((error as ProviderRpcError).message))
+      // WalletConnect v1: "user closed modal"
+      // WalletConnect v2: "user rejected"
+      if (
+        /user closed modal|user rejected/i.test(
+          (error as ProviderRpcError).message,
+        )
+      ) {
+        if (this.version === '2' && this.options.qrcode)
+          (await import('@walletconnect/qrcode-modal')).default.close()
         throw new UserRejectedRequestError(error)
+      }
       throw error
     }
   }
@@ -139,39 +192,30 @@ export class WalletConnectConnector extends Connector<
     provider.removeListener('chainChanged', this.onChainChanged)
     provider.removeListener('disconnect', this.onDisconnect)
 
-    if (this.#version == '1') {
-      typeof localStorage !== 'undefined' &&
-        localStorage.removeItem('walletconnect')
-    } else {
+    if (this.version === '1' && typeof localStorage !== 'undefined')
+      // Remove local storage session so user can connect again
+      localStorage.removeItem('walletconnect')
+    else {
       provider.removeListener('session_delete', this.onDisconnect)
-      provider.removeListener('display_uri', this.#onUri)
+      provider.removeListener('display_uri', this.onDisplayUri)
     }
   }
 
   async getAccount() {
     const provider = await this.getProvider()
-
     let accounts
-    if (this.#version == '1' && provider instanceof WalletConnectProvider) {
-      accounts = provider.accounts
-    } else {
-      accounts = await provider.enable()
-    }
+    if (provider instanceof WalletConnectProvider) accounts = provider.accounts
+    else accounts = await provider.enable() // TODO: Should we use `.request({ method: 'eth_accounts' })` instead?
+
     // return checksum address
     return getAddress(accounts[0] as string)
   }
 
   async getChainId() {
     const provider = await this.getProvider()
-    let chainId
-    if (this.#version == '1' && provider instanceof WalletConnectProvider) {
-      chainId = normalizeChainId(provider.chainId)
-    } else {
-      chainId = normalizeChainId(
-        await provider.request({ method: 'eth_chainId' }),
-      )
-    }
-    return chainId
+    if (provider instanceof WalletConnectProvider)
+      return normalizeChainId(provider.chainId)
+    return normalizeChainId(await provider.request({ method: 'eth_chainId' }))
   }
 
   async getProvider({
@@ -180,7 +224,7 @@ export class WalletConnectConnector extends Connector<
   }: { chainId?: number; create?: boolean } = {}) {
     // Force create new provider
     if (!this.#provider || chainId || create) {
-      if (this.#version === '1') {
+      if (!('version' in this.options) || this.options.version === '1') {
         const rpc = !this.options?.infuraId
           ? this.chains.reduce(
               (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
@@ -196,26 +240,17 @@ export class WalletConnectConnector extends Connector<
           chainId,
           rpc: { ...rpc, ...this.options?.rpc },
         })
-
         return this.#provider
-      }
-
-      const WalletConnectProvider = (
-        await import('@walletconnect/universal-provider')
-      ).default
-
-      if (!this.options.projectId) {
-        throw new Error(
-          'Please get a WalletConnect v2 projectID from https://cloud.walletconnect.com/',
+      } else {
+        const WalletConnectProvider = (
+          await import('@walletconnect/universal-provider')
+        ).default
+        this.#provider = await WalletConnectProvider.init(
+          this.options as UniversalProviderOpts,
         )
-      }
-
-      this.#provider = await WalletConnectProvider.init({
-        ...this.options,
-      })
-
-      if (chainId) {
-        this.#provider.setDefaultChain(`${v2Config.namespace}:${chainId}`)
+        if (chainId)
+          this.#provider.setDefaultChain(`${v2Config.namespace}:${chainId}`)
+        return this.#provider
       }
     }
 
@@ -237,7 +272,7 @@ export class WalletConnectConnector extends Connector<
     try {
       const account = await this.getAccount()
       return !!account
-    } catch {
+    } catch (error) {
       return false
     }
   }
@@ -294,27 +329,7 @@ export class WalletConnectConnector extends Connector<
     this.emit('disconnect')
   }
 
-  #onUri = (uri: string) => {
-    console.log('EVENT: DISPLAY_URI', uri)
-    if (this.options.qrcode !== false) {
-      Modal.open(uri, () => {
-        console.log('EVENT: v2 modal closed')
-      })
-    }
+  protected onDisplayUri = (uri: string) => {
     this.emit('message', { type: 'display_uri', data: uri })
-  }
-
-  #getConfig = (): NamespaceConfig => {
-    return {
-      [v2Config.namespace]: {
-        methods: v2Config.methods,
-        events: v2Config.events,
-        chains: this.chains.map((chain) => `${v2Config.namespace}:${chain.id}`),
-        rpcMap: this.chains.reduce(
-          (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
-          {},
-        ),
-      },
-    }
   }
 }
