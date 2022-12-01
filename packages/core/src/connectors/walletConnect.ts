@@ -77,46 +77,49 @@ export class WalletConnectConnector extends Connector<
         provider.on('session_delete', this.onDisconnect)
         provider.on('display_uri', this.onDisplayUri)
 
-        await Promise.race([
-          provider.connect({
-            namespaces: {
-              [sharedConfig.namespace]: {
-                methods: [
-                  'eth_sendTransaction',
-                  'eth_sign',
-                  'eth_signTransaction',
-                  'eth_signTypedData',
-                  'personal_sign',
-                ],
-                events: ['accountsChanged', 'chainChanged'],
-                chains: this.chains.map(
-                  (chain) => `${sharedConfig.namespace}:${chain.id}`,
-                ),
-                rpcMap: this.chains.reduce(
-                  (rpc, chain) => ({
-                    ...rpc,
-                    [chain.id]: chain.rpcUrls.default,
-                  }),
-                  {},
-                ),
+        // skip provider.connect if there is an active session
+        if (!(provider as UniversalProvider).session) {
+          await Promise.race([
+            provider.connect({
+              namespaces: {
+                [sharedConfig.namespace]: {
+                  methods: [
+                    'eth_sendTransaction',
+                    'eth_sign',
+                    'eth_signTransaction',
+                    'eth_signTypedData',
+                    'personal_sign',
+                  ],
+                  events: ['accountsChanged', 'chainChanged'],
+                  chains: this.chains.map(
+                    (chain) => `${sharedConfig.namespace}:${chain.id}`,
+                  ),
+                  rpcMap: this.chains.reduce(
+                    (rpc, chain) => ({
+                      ...rpc,
+                      [chain.id]: chain.rpcUrls.default,
+                    }),
+                    {},
+                  ),
+                },
               },
-            },
-          }),
-          ...(this.options.qrcode
-            ? // When using WalletConnect QR Code Modal, open modal and listen for close callback.
-              // If modal is closed, reject promise so `catch` block for `connect` is called.
-              [
-                new Promise((_res, reject) =>
-                  provider.on('display_uri', async (uri: string) => {
-                    const { default: Modal } = await import(
-                      '@walletconnect/qrcode-modal'
-                    )
-                    Modal.open(uri, () => reject(new Error('user rejected')))
-                  }),
-                ),
-              ]
-            : []),
-        ])
+            }),
+            ...(this.options.qrcode
+              ? // When using WalletConnect QR Code Modal, open modal and listen for close callback.
+                // If modal is closed, reject promise so `catch` block for `connect` is called.
+                [
+                  new Promise((_res, reject) =>
+                    provider.on('display_uri', async (uri: string) => {
+                      const { default: Modal } = await import(
+                        '@walletconnect/qrcode-modal'
+                      )
+                      Modal.open(uri, () => reject(new Error('user rejected')))
+                    }),
+                  ),
+                ]
+              : []),
+          ])
+        }
 
         // If execution reaches here, connection was successful and we can close modal.
         if (this.options.qrcode) {
