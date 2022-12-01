@@ -18,7 +18,7 @@ importers:
       '@typescript-eslint/parser': ^5.40.1
       '@vitest/coverage-c8': ^0.25.2
       '@vitest/ui': ^0.25.2
-      '@wagmi/chains': 0.0.0-20221130204930
+      '@wagmi/chains': 0.0.0-20221201004721
       eslint: 8.17.0
       eslint-config-prettier: ^8.5.0
       eslint-import-resolver-typescript: ^2.7.1
@@ -52,7 +52,7 @@ importers:
       '@typescript-eslint/parser': 5.40.1_vhsckgnokn2tf7m5xkrurmvfv4
       '@vitest/coverage-c8': 0.25.2_x2zn6a5llgt6lhphkokshgpjpi
       '@vitest/ui': 0.25.2
-      '@wagmi/chains': 0.0.0-20221130204930
+      '@wagmi/chains': 0.0.0-20221201004721
       eslint: 8.17.0
       eslint-config-prettier: 8.5.0_eslint@8.17.0
       eslint-import-resolver-typescript: 2.7.1_3yxiwxzsqipdmy4jwrlv6vgfmy
@@ -134,7 +134,7 @@ importers:
       '@types/node': ^17.0.31
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
-      '@wagmi/chains': 0.0.0-20221130204930
+      '@wagmi/chains': 0.0.0-20221201004721
       eslint: ^8.15.0
       eslint-config-next: ^12.1.6
       ethers: ^5.7.1
@@ -144,7 +144,7 @@ importers:
       typescript: ^4.7.4
       wagmi: workspace:*
     dependencies:
-      '@wagmi/chains': 0.0.0-20221130204930
+      '@wagmi/chains': 0.0.0-20221201004721
       ethers: 5.7.1
       next: 12.3.1_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -162,14 +162,14 @@ importers:
   packages/core:
     specifiers:
       '@coinbase/wallet-sdk': ^3.6.0
-      '@wagmi/chains': 0.0.0-20221130204930
+      '@wagmi/chains': 0.0.0-20221201004721
       '@walletconnect/ethereum-provider': ^1.7.8
       abitype: ^0.1.8
       eventemitter3: ^4.0.7
       typescript: ^4.7.4
       zustand: ^4.1.4
     dependencies:
-      '@wagmi/chains': 0.0.0-20221130204930
+      '@wagmi/chains': 0.0.0-20221201004721
       abitype: 0.1.8_typescript@4.8.4
       eventemitter3: 4.0.7
       zustand: 4.1.4
@@ -2118,8 +2118,8 @@ packages:
       sirv: 2.0.2
     dev: true
 
-  /@wagmi/chains/0.0.0-20221130204930:
-    resolution: {integrity: sha512-/Xf0/mkOPLrdi+IqlfI6+XHNU2B7V/OhyD2opey92WogsL3It9A+Z3AUFChM0y7uZY7PEW3aIuMJpxhkcX1iSA==}
+  /@wagmi/chains/0.0.0-20221201004721:
+    resolution: {integrity: sha512-LmMQr7Q0eFS2F9EC3ToqcdX5VH1qgqQ2sVMKhSb6LN8j//r1hAjY5KwU+IfVBzdcPOwvlO8mf9ALpv5OIOZ/zQ==}
 
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}

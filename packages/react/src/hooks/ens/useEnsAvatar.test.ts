@@ -1,8 +1,7 @@
+import { foundry } from '@wagmi/chains'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
-
-import { foundry } from '../../../../core/src/constants/chains'
 
 import { act, renderHook } from '../../../test'
 import { useEnsAvatar } from './useEnsAvatar'

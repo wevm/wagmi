@@ -180,6 +180,7 @@ export class WalletConnectConnector extends Connector<
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
+          nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
           rpcUrls: { default: { http: [''] } },
         }
       )

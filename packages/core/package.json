@@ -90,7 +90,7 @@
     }
   },
   "dependencies": {
-    "@wagmi/chains": "0.0.0-20221130204930",
+    "@wagmi/chains": "0.0.0-20221201004721",
     "abitype": "^0.1.8",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.1.4"

@@ -1,4 +1,3 @@
-import { mainnet } from '@wagmi/chains'
 import type { Abi } from 'abitype'
 
 import {
@@ -139,7 +138,7 @@ export async function readContracts<
         const error = new ContractMethodRevertedError({
           address,
           functionName,
-          chainId: chainId ?? mainnet.id,
+          chainId: chainId ?? 1,
           args,
           errorMessage: result.reason,
         })

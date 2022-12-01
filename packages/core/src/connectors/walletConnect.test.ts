@@ -1,8 +1,7 @@
+import { foundry } from '@wagmi/chains'
 import { describe, expect, it } from 'vitest'
 
 import { testChains } from '../../test'
-
-import { foundry } from '../constants/chains'
 
 import { WalletConnectConnector } from './walletConnect'
 

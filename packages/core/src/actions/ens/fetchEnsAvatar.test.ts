@@ -1,3 +1,4 @@
+import { foundry } from '@wagmi/chains'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import {
@@ -11,7 +12,6 @@ import {
 } from 'vitest'
 
 import { setupClient } from '../../../test'
-import { foundry } from '../../constants/chains'
 import { fetchEnsAvatar } from './fetchEnsAvatar'
 
 const handlers = [

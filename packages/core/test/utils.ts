@@ -1,10 +1,9 @@
-import { goerli, mainnet, optimism, polygon } from '@wagmi/chains'
+import { foundry, goerli, mainnet, optimism, polygon } from '@wagmi/chains'
 
 import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
 import { BigNumber, Wallet, providers } from 'ethers'
 
 import type { Chain } from '../src'
-import { foundry } from '../src/constants/chains'
 
 import type { mirrorCrowdfundContractConfig } from './constants'
 
