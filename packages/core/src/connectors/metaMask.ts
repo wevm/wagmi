@@ -73,10 +73,13 @@ export class MetaMaskConnector extends InjectedConnector {
         account = await this.getAccount().catch(() => null)
         const isConnected = !!account
         if (isConnected)
-          await provider.request({
-            method: 'wallet_requestPermissions',
-            params: [{ eth_accounts: {} }],
-          })
+          // Attempt to show another prompt for selecting wallet if already connected
+          await provider
+            .request({
+              method: 'wallet_requestPermissions',
+              params: [{ eth_accounts: {} }],
+            })
+            .catch(() => null)
       }
 
       if (!account) {

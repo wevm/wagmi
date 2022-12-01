@@ -81,9 +81,11 @@ it('should expose correct exports', () => {
       "noopStorage",
       "configureChains",
       "deepEqual",
+      "deserialize",
       "minimizeContractInterface",
       "normalizeChainId",
       "parseContractResult",
+      "serialize",
     ]
   `)
 })

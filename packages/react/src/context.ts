@@ -51,7 +51,7 @@ export function useClient<
     throw new Error(
       [
         '`useClient` must be used within `WagmiConfig`.\n',
-        'Read more: https://wagmi.sh/docs/WagmiConfig',
+        'Read more: https://wagmi.sh/react/WagmiConfig',
       ].join('\n'),
     )
   return client

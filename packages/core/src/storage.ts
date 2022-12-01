@@ -1,3 +1,5 @@
+import { deserialize as deserialize_, serialize as serialize_ } from './utils'
+
 type BaseStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
 
 export type ClientStorage = {
@@ -13,18 +15,22 @@ export const noopStorage: BaseStorage = {
 }
 
 export function createStorage({
-  storage,
+  deserialize = deserialize_,
   key: prefix = 'wagmi',
+  serialize = serialize_,
+  storage,
 }: {
-  storage: BaseStorage
+  deserialize?: <T>(value: string) => T
   key?: string
+  serialize?: <T>(value: T) => string
+  storage: BaseStorage
 }): ClientStorage {
   return {
     ...storage,
     getItem: (key, defaultState = null) => {
       const value = storage.getItem(`${prefix}.${key}`)
       try {
-        return value ? JSON.parse(value) : defaultState
+        return value ? deserialize(value) : defaultState
       } catch (error) {
         console.warn(error)
         return defaultState
@@ -35,7 +41,7 @@ export function createStorage({
         storage.removeItem(`${prefix}.${key}`)
       } else {
         try {
-          storage.setItem(`${prefix}.${key}`, JSON.stringify(value))
+          storage.setItem(`${prefix}.${key}`, serialize(value))
         } catch (err) {
           console.error(err)
         }
