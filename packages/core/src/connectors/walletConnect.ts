@@ -77,7 +77,7 @@ export class WalletConnectConnector extends Connector<
         provider.on('session_delete', this.onDisconnect)
         provider.on('display_uri', this.onDisplayUri)
 
-        // skip provider.connect if there is an active session
+        // skip `provider.connect` if there is an active session
         if (!(provider as UniversalProvider).session) {
           await Promise.race([
             provider.connect({
@@ -119,19 +119,34 @@ export class WalletConnectConnector extends Connector<
                 ]
               : []),
           ])
-        }
 
-        // If execution reaches here, connection was successful and we can close modal.
-        if (this.options.qrcode) {
-          const { default: Modal } = await import('@walletconnect/qrcode-modal')
-          Modal.close()
+          // If execution reaches here, connection was successful and we can close modal.
+          if (this.options.qrcode) {
+            const { default: Modal } = await import(
+              '@walletconnect/qrcode-modal'
+            )
+            Modal.close()
+          }
         }
       }
 
       // Defer message to the next tick to ensure wallet connect data (provided by `.enable()`) is available
       setTimeout(() => this.emit('message', { type: 'connecting' }), 0)
 
-      const accounts = await provider.enable()
+      const accounts = (await Promise.race([
+        provider.enable(),
+        // When using WalletConnect v1 QR Code Modal, handle user rejection request from wallet
+        ...(this.version === '1' && this.options.qrcode
+          ? [
+              new Promise((_res, reject) =>
+                (provider as WalletConnectProvider).connector.on(
+                  'disconnect',
+                  () => reject(new Error('user rejected')),
+                ),
+              ),
+            ]
+          : []),
+      ])) as string[]
       const account = getAddress(accounts[0] as string)
       const id = await this.getChainId()
       const unsupported = this.isChainUnsupported(id)
@@ -141,7 +156,6 @@ export class WalletConnectConnector extends Connector<
       if (this.version === '1') {
         const walletName =
           (provider as WalletConnectProvider).connector?.peerMeta?.name ?? ''
-        console.log({ walletName })
 
         /**
          * Wallets that support chain switching through WalletConnect
@@ -205,7 +219,10 @@ export class WalletConnectConnector extends Connector<
     let accounts
     if (this.version === '1')
       accounts = (provider as WalletConnectProvider).accounts
-    else accounts = await provider.enable() // TODO: Should we use `.request({ method: 'eth_accounts' })` instead?
+    else
+      accounts = (await provider.request({
+        method: 'eth_accounts',
+      })) as string[]
 
     // return checksum address
     return getAddress(accounts[0] as string)
