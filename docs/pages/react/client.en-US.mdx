@@ -14,12 +14,13 @@ import { createClient } from 'wagmi'
 ## Usage
 
 ```ts
-import { createClient, configureChains, defaultChains } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
-])
+const { provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
 
 const client = createClient({
   provider,
@@ -34,10 +35,10 @@ const client = createClient({
 Enables reconnecting to last used connector on mount. Defaults to `false`.
 
 ```ts {7}
-import { createClient, configureChains, defaultChains } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider } = configureChains(defaultChains, [publicProvider()])
+const { provider } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   autoConnect: true,
@@ -50,12 +51,12 @@ const client = createClient({
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
 ```ts {9-17}
-import { createClient, configureChains, defaultChains } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
-const { chains, provider } = configureChains(defaultChains, [publicProvider()])
+const { chains, provider } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   connectors: [
@@ -76,12 +77,12 @@ const client = createClient({
 Adds the ability to provide a custom logger to override how logs are broadcasted in wagmi. Defaults to `console` logging.
 
 ```ts {4,9-11}
-import { createClient, configureChains, defaultChains } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 import { logWarn } from './logger'
 
-const { provider } = configureChains(defaultChains, [publicProvider()])
+const { provider } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   logger: {
@@ -109,10 +110,10 @@ const client = createClient({
 ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.
 
 ```ts {7}
-import { createClient, configureChains, defaultChains } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider } = configureChains(defaultChains, [publicProvider()])
+const { provider } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   provider,
@@ -123,16 +124,11 @@ const client = createClient({
 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
-```ts {13}
-import {
-  createClient,
-  createStorage,
-  configureChains,
-  defaultChains,
-} from 'wagmi'
+```ts {8}
+import { createClient, createStorage, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider } = configureChains(defaultChains, [publicProvider()])
+const { provider } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   provider,
@@ -144,13 +140,14 @@ const client = createClient({
 
 ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
-```ts {10}
-import { createClient, configureChains, defaultChains } from 'wagmi'
+```ts {11}
+import { createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
-])
+const { provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
 
 const client = createClient({
   provider,

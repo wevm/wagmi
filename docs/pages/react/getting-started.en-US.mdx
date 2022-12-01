@@ -74,14 +74,16 @@ yarn add wagmi ethers
 First, configure your desired chains to be used by wagmi, and the providers you want to use.
 
 ```tsx
-import { configureChains, chain } from 'wagmi'
+import { configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet],
   [publicProvider()],
 )
 ```
+
+This example uses the Ethereum Mainnet chain (`mainnet`) from `wagmi`, however, you can also pass in any [EVM-compatible chain](/react/chains).
 
 Note: In a production app, it is not recommended to only pass `publicProvider` to `configureChains` as you will probably face rate-limiting on the public provider endpoints. It is recommended to also pass an [`alchemyProvider`](/react/providers/alchemy) or [`infuraProvider`](/react/providers/infura) as well.
 
@@ -92,11 +94,11 @@ Note: In a production app, it is not recommended to only pass `publicProvider` t
 Next, create a wagmi `Client` instance using [`createClient`](/react/client), and pass the result from `configureChains` to it.
 
 ```tsx {9-13}
-import { WagmiConfig, createClient, configureChains, chain } from 'wagmi'
+import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.optimism],
+  [mainnet],
   [publicProvider()],
 )
 

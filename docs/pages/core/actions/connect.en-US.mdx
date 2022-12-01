@@ -42,15 +42,18 @@ const result = await connect({
 
 Chain ID to connect.
 
-```ts {5}
-import { chain, connect } from '@wagmi/core'
+```ts {6}
+import { optimism } from '@wagmi/chains'
+import { connect } from '@wagmi/core'
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
 
 const result = await connect({
-  chainId: chain.optimism.id,
+  chainId: optimism.id,
   connector: new InjectedConnector(),
 })
 ```
+
+Note: The above example is using the `optimism` chain from [`@wagmi/chains`](/core/chains#wagmichains).
 
 ### connector
 
