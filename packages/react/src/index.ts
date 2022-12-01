@@ -67,6 +67,8 @@ export {
   erc20ABI,
   erc721ABI,
   erc4626ABI,
+  goerli,
+  mainnet,
   readContracts,
   serialize,
 } from '@wagmi/core'

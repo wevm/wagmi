@@ -1,6 +1,6 @@
 import { Box, Button, Skeleton, Stack } from 'degen'
 import * as React from 'react'
-import { chain, useAccount, useNetwork } from 'wagmi'
+import { mainnet, useAccount, useNetwork } from 'wagmi'
 
 import { formatAddress } from '../../lib/address'
 import { PreviewWrapper } from '../core'
@@ -55,7 +55,7 @@ export function SignInWithEthereum() {
             <Skeleton width="full" radius="2xLarge">
               <SiweButton
                 address={accountData.address as string}
-                chainId={activeChain?.id ?? chain.mainnet.id}
+                chainId={activeChain?.id ?? mainnet.id}
                 onSuccess={({ address }) => setAddress(address)}
               />
             </Skeleton>

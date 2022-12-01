@@ -169,3 +169,5 @@ export {
   serialize,
 } from './utils'
 export type { ConfigureChainsConfig } from './utils'
+
+export { mainnet, goerli } from '@wagmi/chains'

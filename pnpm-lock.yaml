@@ -83,6 +83,7 @@ importers:
       '@types/node': ^17.0.31
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
+      '@wagmi/chains': 0.0.0-20221201004721
       autoprefixer: ^10.4.7
       degen: ^0.0.49
       eslint: ^8.15.0
@@ -103,6 +104,7 @@ importers:
       wagmi: workspace:*
     dependencies:
       '@reach/skip-nav': 0.16.0_biqbaboplfbrettd7655fr4n2y
+      '@wagmi/chains': 0.0.0-20221201004721
       degen: 0.0.49_biqbaboplfbrettd7655fr4n2y
       ethers: 5.7.1
       fathom-client: 3.5.0

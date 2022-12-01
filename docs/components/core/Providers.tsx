@@ -4,7 +4,8 @@ import {
   WagmiConfig,
   configureChains,
   createClient,
-  defaultChains,
+  goerli,
+  mainnet,
 } from 'wagmi'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -14,9 +15,10 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! }),
-])
+const { chains, provider, webSocketProvider } = configureChains(
+  [mainnet, goerli],
+  [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! })],
+)
 
 const client = createClient({
   autoConnect: true,
