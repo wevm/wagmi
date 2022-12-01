@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react'
+import { goerli, mainnet } from '@wagmi/chains'
 
 import type { Connector, Provider, WebSocketProvider } from '@wagmi/core'
-import { defaultChains } from '@wagmi/core'
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { expect } from 'vitest'
 
@@ -24,7 +24,8 @@ export function setupClient(config: Config = {}) {
         },
       }),
     ],
-    provider: ({ chainId }) => getProvider({ chainId, chains: defaultChains }),
+    provider: ({ chainId }) =>
+      getProvider({ chainId, chains: [mainnet, goerli] }),
     ...config,
   })
 }

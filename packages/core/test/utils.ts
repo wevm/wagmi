@@ -1,8 +1,11 @@
+import { goerli, mainnet, optimism, polygon } from '@wagmi/chains'
+
 import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
 import { BigNumber, Wallet, providers } from 'ethers'
 
 import type { Chain } from '../src'
-import { allChains, chain as chain_ } from '../src'
+import { foundry } from '../src/constants/chains'
+
 import type { mirrorCrowdfundContractConfig } from './constants'
 
 export function getNetwork(chain: Chain) {
@@ -14,11 +17,11 @@ export function getNetwork(chain: Chain) {
 }
 
 const foundryMainnet: Chain = {
-  ...chain_.mainnet,
-  rpcUrls: chain_.foundry.rpcUrls,
+  ...mainnet,
+  rpcUrls: foundry.rpcUrls,
 }
 
-const testChains = [foundryMainnet, ...allChains]
+export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
 
 class EthersProviderWrapper extends providers.StaticJsonRpcProvider {
   toJSON() {

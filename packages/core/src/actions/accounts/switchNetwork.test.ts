@@ -1,13 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getSigners, setupClient, testChains } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
-import { allChains } from '../../constants'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
 
 const connector = new MockConnector({
-  chains: allChains,
+  chains: testChains,
   options: { signer: getSigners()[0]! },
 })
 

@@ -1,15 +1,18 @@
 import { describe, expect, it } from 'vitest'
 
-import { chain, defaultChains } from '../constants'
+import { testChains } from '../../test'
+
+import { foundry } from '../constants/chains'
+
 import { WalletConnectConnector } from './walletConnect'
 
 describe('WalletConnectConnector', () => {
   it('inits', () => {
     const connector = new WalletConnectConnector({
-      chains: defaultChains,
+      chains: testChains,
       options: {
         rpc: {
-          [chain.foundry.id]: chain.foundry.rpcUrls.default.http[0]!,
+          [foundry.id]: foundry.rpcUrls.default.http[0]!,
         },
       },
     })

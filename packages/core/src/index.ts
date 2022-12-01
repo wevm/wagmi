@@ -120,16 +120,7 @@ export type {
   InjectedConnectorOptions,
 } from './connectors'
 
-export {
-  allChains,
-  chain,
-  defaultChains,
-  defaultL2Chains,
-  erc20ABI,
-  erc721ABI,
-  erc4626ABI,
-  units,
-} from './constants'
+export { erc20ABI, erc721ABI, erc4626ABI, units } from './constants'
 
 export {
   AddChainError,

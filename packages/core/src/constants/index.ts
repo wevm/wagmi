@@ -6,6 +6,4 @@ export {
   multicallABI,
 } from './abis'
 
-export { chain, allChains, defaultChains, defaultL2Chains } from './chains'
-
 export { units } from './units'

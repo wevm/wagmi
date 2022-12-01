@@ -134,6 +134,7 @@ importers:
       '@types/node': ^17.0.31
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
+      '@wagmi/chains': 0.0.0-20221130204930
       eslint: ^8.15.0
       eslint-config-next: ^12.1.6
       ethers: ^5.7.1
@@ -143,6 +144,7 @@ importers:
       typescript: ^4.7.4
       wagmi: workspace:*
     dependencies:
+      '@wagmi/chains': 0.0.0-20221130204930
       ethers: 5.7.1
       next: 12.3.1_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0

@@ -1,3 +1,4 @@
+import { mainnet, polygon } from '@wagmi/chains'
 import { BigNumber } from 'ethers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -7,7 +8,6 @@ import {
   wagmigotchiContractConfig,
 } from '../../../test'
 
-import { chain } from '../../constants'
 import { multicall } from './multicall'
 
 const contracts = [
@@ -40,10 +40,7 @@ const warn = vi
 describe('multicall', () => {
   beforeEach(() => {
     setupClient({
-      chains: [
-        chain.mainnet,
-        { ...chain.polygon, contracts: { multicall3: undefined } },
-      ],
+      chains: [mainnet, { ...polygon, contracts: { multicall3: undefined } }],
     })
     warnMessages = []
   })
@@ -438,7 +435,7 @@ describe('multicall', () => {
   describe('errors', () => {
     it('should throw if the chain does not support multicall', async () => {
       await expect(
-        multicall({ contracts, chainId: chain.polygon.id }),
+        multicall({ contracts, chainId: polygon.id }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain \\"Polygon\\" does not support multicall."`,
       )

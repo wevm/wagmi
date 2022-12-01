@@ -1,7 +1,7 @@
+import { goerli, mainnet } from '@wagmi/chains'
 import type { Address } from 'abitype'
 import { default as EventEmitter } from 'eventemitter3'
 
-import { defaultChains } from '../constants'
 import type { Chain } from '../types'
 
 export type ConnectorData<Provider = any> = {
@@ -35,7 +35,7 @@ export abstract class Connector<
   abstract readonly ready: boolean
 
   constructor({
-    chains = defaultChains,
+    chains = [mainnet, goerli],
     options,
   }: {
     chains?: Chain[]
