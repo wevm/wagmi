@@ -1,4 +1,4 @@
-import WalletConnectProvider from '@walletconnect/ethereum-provider'
+import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import type {
   default as UniversalProvider,
   UniversalProviderOpts,
@@ -13,23 +13,13 @@ import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
-/**
- * Config for the WalletConnect Sign Client
- */
-const v2Config = {
+// Shared config for WalletConnect v2
+const sharedConfig = {
   namespace: 'eip155',
-  methods: [
-    'eth_sendTransaction',
-    'eth_signTransaction',
-    'eth_sign',
-    'personal_sign',
-    'eth_signTypedData',
-  ],
-  events: ['chainChanged', 'accountsChanged'],
 }
 
-type WalletConnectConnectorOptions = {
-  /** Use WalletConnect QR Code modal */
+type WalletConnectOptions = {
+  /** When `true`, uses default WalletConnect QR Code modal */
   qrcode?: boolean
 } & (
   | ({
@@ -44,10 +34,12 @@ type WalletConnectConnectorOptions = {
     } & Omit<UniversalProviderOpts, 'projectId'>)
 )
 
+type WalletConnectSigner = providers.JsonRpcSigner
+
 export class WalletConnectConnector extends Connector<
   WalletConnectProvider | UniversalProvider,
-  WalletConnectConnectorOptions,
-  providers.JsonRpcSigner
+  WalletConnectOptions,
+  WalletConnectSigner
 > {
   readonly id = 'walletConnect'
   readonly name = 'WalletConnect'
@@ -55,10 +47,7 @@ export class WalletConnectConnector extends Connector<
 
   #provider?: WalletConnectProvider | UniversalProvider
 
-  constructor(config: {
-    chains?: Chain[]
-    options: WalletConnectConnectorOptions
-  }) {
+  constructor(config: { chains?: Chain[]; options: WalletConnectOptions }) {
     super(config)
   }
 
@@ -80,22 +69,28 @@ export class WalletConnectConnector extends Connector<
         chainId: targetChainId,
         create: true,
       })
-
       provider.on('accountsChanged', this.onAccountsChanged)
       provider.on('chainChanged', this.onChainChanged)
       provider.on('disconnect', this.onDisconnect)
 
       if (this.version === '2') {
         provider.on('session_delete', this.onDisconnect)
+        provider.on('display_uri', this.onDisplayUri)
 
         await Promise.race([
           provider.connect({
             namespaces: {
-              [v2Config.namespace]: {
-                methods: v2Config.methods,
-                events: v2Config.events,
+              [sharedConfig.namespace]: {
+                methods: [
+                  'eth_sendTransaction',
+                  'eth_sign',
+                  'eth_signTransaction',
+                  'eth_signTypedData',
+                  'personal_sign',
+                ],
+                events: ['accountsChanged', 'chainChanged'],
                 chains: this.chains.map(
-                  (chain) => `${v2Config.namespace}:${chain.id}`,
+                  (chain) => `${sharedConfig.namespace}:${chain.id}`,
                 ),
                 rpcMap: this.chains.reduce(
                   (rpc, chain) => ({
@@ -140,8 +135,9 @@ export class WalletConnectConnector extends Connector<
 
       // Not all WalletConnect v1 options support programmatic chain switching.
       // Only enable for wallet options that do.
-      if (provider instanceof WalletConnectProvider) {
-        const walletName = provider.connector?.peerMeta?.name ?? ''
+      if (this.version === '1') {
+        const walletName =
+          (provider as WalletConnectProvider).connector?.peerMeta?.name ?? ''
         console.log({ walletName })
 
         /**
@@ -204,7 +200,8 @@ export class WalletConnectConnector extends Connector<
   async getAccount() {
     const provider = await this.getProvider()
     let accounts
-    if (provider instanceof WalletConnectProvider) accounts = provider.accounts
+    if (this.version === '1')
+      accounts = (provider as WalletConnectProvider).accounts
     else accounts = await provider.enable() // TODO: Should we use `.request({ method: 'eth_accounts' })` instead?
 
     // return checksum address
@@ -213,8 +210,8 @@ export class WalletConnectConnector extends Connector<
 
   async getChainId() {
     const provider = await this.getProvider()
-    if (provider instanceof WalletConnectProvider)
-      return normalizeChainId(provider.chainId)
+    if (this.version === '1')
+      return normalizeChainId((provider as WalletConnectProvider).chainId)
     return normalizeChainId(await provider.request({ method: 'eth_chainId' }))
   }
 
@@ -249,7 +246,7 @@ export class WalletConnectConnector extends Connector<
           this.options as UniversalProviderOpts,
         )
         if (chainId)
-          this.#provider.setDefaultChain(`${v2Config.namespace}:${chainId}`)
+          this.#provider.setDefaultChain(`${sharedConfig.namespace}:${chainId}`)
         return this.#provider
       }
     }
@@ -272,7 +269,7 @@ export class WalletConnectConnector extends Connector<
     try {
       const account = await this.getAccount()
       return !!account
-    } catch (error) {
+    } catch {
       return false
     }
   }
