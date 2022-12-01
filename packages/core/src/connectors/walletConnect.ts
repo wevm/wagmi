@@ -109,24 +109,21 @@ export class WalletConnectConnector extends Connector<
                 // If modal is closed, reject promise so `catch` block for `connect` is called.
                 [
                   new Promise((_res, reject) =>
-                    provider.on('display_uri', async (uri: string) => {
-                      const { default: Modal } = await import(
-                        '@walletconnect/qrcode-modal'
-                      )
-                      Modal.open(uri, () => reject(new Error('user rejected')))
-                    }),
+                    provider.on('display_uri', async (uri: string) =>
+                      (
+                        await import('@walletconnect/qrcode-modal')
+                      ).default.open(uri, () =>
+                        reject(new Error('user rejected')),
+                      ),
+                    ),
                   ),
                 ]
               : []),
           ])
 
           // If execution reaches here, connection was successful and we can close modal.
-          if (this.options.qrcode) {
-            const { default: Modal } = await import(
-              '@walletconnect/qrcode-modal'
-            )
-            Modal.close()
-          }
+          if (this.options.qrcode)
+            (await import('@walletconnect/qrcode-modal')).default.close()
         }
       }
 
