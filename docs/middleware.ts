@@ -23,5 +23,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  return locales(request)
+  const skipMiddlewareRegex = /^\/favicon|media\/.+/
+  if (!skipMiddlewareRegex.test(request.nextUrl.pathname))
+    return locales(request)
 }
