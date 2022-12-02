@@ -183,7 +183,10 @@ export function useContractReads<
     return enabled
   }, [blockNumber, cacheOnBlock, contracts, enabled_])
 
-  useInvalidateOnBlock({ enabled: watch && !cacheOnBlock, queryKey: queryKey_ })
+  useInvalidateOnBlock({
+    enabled: Boolean(enabled && watch && !cacheOnBlock),
+    queryKey: queryKey_,
+  })
 
   const abis = ((contracts ?? []) as unknown as ContractConfig[]).map(
     ({ abi }) => abi,
