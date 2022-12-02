@@ -183,7 +183,7 @@ export class WalletConnectConnector extends Connector<
       // WalletConnect v2: "user rejected"
       if (
         /user closed modal|user rejected/i.test(
-          (error as ProviderRpcError).message,
+          (error as ProviderRpcError)?.message,
         )
       ) {
         if (this.version === '2' && this.options.qrcode)
@@ -196,7 +196,13 @@ export class WalletConnectConnector extends Connector<
 
   async disconnect() {
     const provider = await this.getProvider()
-    await provider.disconnect()
+    try {
+      await provider.disconnect()
+    } catch (error) {
+      // If the session does not exist, we don't want to throw.
+      if (/No matching key/i.test((error as Error).message)) return
+      throw error
+    }
 
     provider.removeListener('accountsChanged', this.onAccountsChanged)
     provider.removeListener('chainChanged', this.onChainChanged)
