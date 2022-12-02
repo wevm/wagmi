@@ -15,6 +15,16 @@ If you are coming from an earlier version of `@wagmi/core`, you will need to mak
 
 With the introduction of the [`@wagmi/chains` package](https://npm.im/@wagmi/chains), `@wagmi/core` no longer exports the following:
 
+- `chain`
+- `allChains`
+- `defaultChains`
+- `defaultL2Chains`
+- `chainId`
+- `etherscanBlockExplorers`
+- `alchemyRpcUrls`, `infuraRpcUrls`, `publicRpcUrls`
+
+Read below for migration steps.
+
 #### Removed `chain`
 
 The `chain` export has been removed. `@wagmi/core` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygon`, `optimism`, etc), you will need to import it from the [`@wagmi/chains` package](https://npm.im/@wagmi/chains).
