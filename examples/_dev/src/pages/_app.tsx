@@ -47,9 +47,10 @@ const client = createClient({
       chains,
       options: {
         name: (detectedName) =>
-          `Injected (${typeof detectedName === 'string'
-            ? detectedName
-            : detectedName.join(', ')
+          `Injected (${
+            typeof detectedName === 'string'
+              ? detectedName
+              : detectedName.join(', ')
           })`,
         shimDisconnect: true,
       },
