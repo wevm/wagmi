@@ -4,15 +4,15 @@ import { ProviderRpcError, RpcError } from './errors'
 
 describe('RpcError', () => {
   it('creates', () => {
-    expect(new RpcError(-32004, 'Method not supported')).toBeInstanceOf(
-      RpcError,
-    )
+    expect(
+      new RpcError('Method not supported', { code: -32004 }),
+    ).toBeInstanceOf(RpcError)
   })
 
   describe('fails', () => {
     it('invalid code', () => {
       try {
-        new RpcError(4001.5, 'User rejected request')
+        new RpcError('User rejected request', { code: 4001.5 })
       } catch (error) {
         expect(error).toMatchInlineSnapshot(
           `[Error: "code" must be an integer.]`,
@@ -22,7 +22,7 @@ describe('RpcError', () => {
 
     it('invalid message', () => {
       try {
-        new RpcError(-32004, '')
+        new RpcError('', { code: -32004 })
       } catch (error) {
         expect(error).toMatchInlineSnapshot(
           `[Error: "message" must be a nonempty string.]`,
@@ -34,9 +34,9 @@ describe('RpcError', () => {
 
 describe('ProviderRpcError', () => {
   it('creates', () => {
-    expect(new ProviderRpcError(4001, 'User rejected request')).toBeInstanceOf(
-      ProviderRpcError,
-    )
+    expect(
+      new ProviderRpcError('User rejected request', { code: 4001 }),
+    ).toBeInstanceOf(ProviderRpcError)
   })
 
   it('fails', () => {
