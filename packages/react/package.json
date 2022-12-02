@@ -91,7 +91,7 @@
     "react": ">=17.0.0"
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.5.3",
+    "@coinbase/wallet-sdk": "^3.6.0",
     "@tanstack/query-sync-storage-persister": "^4.14.5",
     "@tanstack/react-query": "^4.14.5",
     "@tanstack/react-query-persist-client": "^4.14.5",

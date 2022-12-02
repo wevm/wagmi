@@ -64,7 +64,7 @@ export function useFeeData({
 
   useInvalidateOnBlock({
     chainId,
-    enabled: enabled && watch,
+    enabled: Boolean(enabled && watch),
     queryKey: queryKey_,
   })
 
