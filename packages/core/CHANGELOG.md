@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.7.9
+
+### Patch Changes
+
+- [#1411](https://github.com/wagmi-dev/wagmi/pull/1411) [`659be184`](https://github.com/wagmi-dev/wagmi/commit/659be1840c613ce9f7aca9ac96694c4f60da4a66) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where block invalidation was not properly disabled when setting `enabled: false`.
+
 ## 0.7.8
 
 ### Patch Changes
