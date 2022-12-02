@@ -20,7 +20,7 @@ export type InjectedConnectorOptions = {
   /** Name of connector */
   name?: string | ((detectedName: string | string[]) => string)
   /**
-   * Get [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Provider to use in connector
+   * [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target
    *
    * @default
    * () => typeof window !== 'undefined' ? window.ethereum : undefined
@@ -39,9 +39,8 @@ export type InjectedConnectorOptions = {
   shimDisconnect?: boolean
 }
 
-export interface ConnectorOptions extends InjectedConnectorOptions {
-  getProvider: () => Window['ethereum'] | undefined
-}
+type ConnectorOptions = InjectedConnectorOptions &
+  Required<Pick<InjectedConnectorOptions, 'getProvider'>>
 
 export class InjectedConnector extends Connector<
   Window['ethereum'],
@@ -73,25 +72,19 @@ export class InjectedConnector extends Connector<
     }
     super({ chains, options })
 
-    const provider = this.options.getProvider()
-
-    let name = 'Injected'
-    const overrideName = options.name
-    if (typeof overrideName === 'string') name = overrideName
+    const provider = options.getProvider()
+    if (typeof options.name === 'string') this.name = options.name
     else if (provider) {
       const detectedName = getInjectedName(provider)
-      if (overrideName) name = overrideName(detectedName)
-      else
-        name =
-          typeof detectedName === 'string'
-            ? detectedName
-            : (detectedName[0] as string)
-    }
+      if (options.name) this.name = options.name(detectedName)
+      else {
+        if (typeof detectedName === 'string') this.name = detectedName
+        else this.name = detectedName[0] as string
+      }
+    } else this.name = 'Injected'
 
     this.id = 'injected'
-    this.name = name
     this.ready = !!provider
-    this.#provider = provider
   }
 
   async connect({ chainId }: { chainId?: number } = {}) {
@@ -164,10 +157,8 @@ export class InjectedConnector extends Connector<
   }
 
   async getProvider() {
-    if (this.#provider) return this.#provider
-
-    this.#provider = this.options.getProvider()
-
+    const provider = this.options.getProvider()
+    if (provider) this.#provider = provider
     return this.#provider
   }
 
