@@ -57,7 +57,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 
 ```diff
 - import { defaultChains } from 'wagmi'
-+ import { mainnet, goerli } from 'wagmi'
++ import { mainnet, goerli } from '@wagmi/chains'
 + const defaultChains = [mainnet, goerli]
 ```
 
@@ -72,7 +72,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 +   polygonMumbai,
 +   optimism,
 +   optimismGoerli
-+ } from 'wagmi'
++ } from '@wagmi/chains'
 + const defaultL2Chains = [
 +  arbitrum,
 +  arbitrumGoerli,
