@@ -77,6 +77,8 @@ it('should expose correct exports', () => {
       "normalizeChainId",
       "parseContractResult",
       "serialize",
+      "mainnet",
+      "goerli",
     ]
   `)
 })
