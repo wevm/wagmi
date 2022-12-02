@@ -103,14 +103,17 @@ describe('useSyncExternalStoreWithTracked', () => {
     const renders: any[] = []
 
     renderHook(() => {
-      const state = useExternalStore(externalStore, (state) => {
-        renders.push(state)
-      })
+      const { foo, gm, isGonnaMakeIt } = useExternalStore(
+        externalStore,
+        (state) => {
+          renders.push(state)
+        },
+      )
 
       return {
-        foo: state.foo,
-        gm: state.gm,
-        isGonnaMakeIt: state.isGonnaMakeIt,
+        foo,
+        gm,
+        isGonnaMakeIt,
       }
     })
 
@@ -134,7 +137,7 @@ describe('useSyncExternalStoreWithTracked', () => {
     `)
   })
 
-  it('does not rerender when no values are being tracked', async () => {
+  it('rerenders when no values are being tracked', async () => {
     const externalStore = createExternalStore({
       foo: 'bar',
       gm: 'wagmi',
@@ -147,8 +150,6 @@ describe('useSyncExternalStoreWithTracked', () => {
       useExternalStore(externalStore, (state) => {
         renders.push(state)
       })
-
-      return 'test'
     })
 
     act(() => {
@@ -161,6 +162,11 @@ describe('useSyncExternalStoreWithTracked', () => {
           "foo": "bar",
           "gm": "wagmi",
           "isGonnaMakeIt": false,
+        },
+        {
+          "foo": "bar",
+          "gm": "wagmi",
+          "isGonnaMakeIt": true,
         },
       ]
     `)
