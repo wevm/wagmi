@@ -21,7 +21,7 @@ export function useSyncExternalStoreWithTracked<
     getServerSnapshot,
     (x) => x,
     (a, b) => {
-      if (isPlainObject(a) && isPlainObject(b)) {
+      if (isPlainObject(a) && isPlainObject(b) && trackedKeys.current.length) {
         for (const key of trackedKeys.current) {
           const equal = isEqual(
             (a as { [key: string]: any })[key],
