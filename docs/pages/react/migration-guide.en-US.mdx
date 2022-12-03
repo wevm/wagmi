@@ -16,6 +16,24 @@ If you are coming from an earlier version of `wagmi`, you will need to make sure
   [here](https://0.8.x.wagmi.sh).
 </Callout>
 
+### useEnsResolver
+
+#### Behavioral changes
+
+`useEnsResolver`'s result is no longer persisted by the query client since it cannot serialize its prototype methods.
+
+#### Configuration changes
+
+Removed the `cacheTime` and `staleTime` config options.
+
+```diff
+const { data } = useEnsResolver({
+  name: 'wagmi-dev.eth',
+- cacheTime: 2000,
+- staleTime: 2000,
+})
+```
+
 ### useWaitForTransaction
 
 #### Behavioral changes
@@ -28,8 +46,8 @@ Removed the `wait` config option on `useWaitForTransaction`. Use the transaction
 
 ```diff
 const { data } = useWaitForTransaction({
-- wait: transaction.wait
-+ hash: transaction.hash
+- wait: transaction.wait,
++ hash: transaction.hash,
 })
 ```
 
