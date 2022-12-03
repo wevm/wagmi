@@ -1,7 +1,9 @@
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
-html {
-  font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1, 'ss06' 1 !important;
+body {
+  font-feature-settings: 'rlig' 1, 'calt' 1;
 }
 
 [data-reach-skip-link] {
@@ -31,6 +33,10 @@ ol a {
 sup a {
   @apply text-current;
   text-decoration: none;
+}
+
+code.text-\[\.9em\] {
+  font-size: 14px;
 }
 
 .footnotes {
