@@ -147,7 +147,7 @@ export function useContractRead<
 
   useInvalidateOnBlock({
     chainId,
-    enabled: watch && !cacheOnBlock,
+    enabled: Boolean(enabled && watch && !cacheOnBlock),
     queryKey: queryKey_,
   })
 

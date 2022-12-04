@@ -1,5 +1,37 @@
 # wagmi
 
+## 0.8.10
+
+### Patch Changes
+
+- [#1411](https://github.com/wagmi-dev/wagmi/pull/1411) [`659be184`](https://github.com/wagmi-dev/wagmi/commit/659be1840c613ce9f7aca9ac96694c4f60da4a66) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where block invalidation was not properly disabled when setting `enabled: false`.
+
+- [#1409](https://github.com/wagmi-dev/wagmi/pull/1409) [`b557b3ee`](https://github.com/wagmi-dev/wagmi/commit/b557b3ee4fc58217e61d860fc3d1109d2abc813e) Thanks [@jxom](https://github.com/jxom)! - Ensure that `useSyncExternalStoreWithTracked` rerenders when no values are being tracked.
+
+- Updated dependencies [[`659be184`](https://github.com/wagmi-dev/wagmi/commit/659be1840c613ce9f7aca9ac96694c4f60da4a66)]:
+  - @wagmi/core@0.7.9
+
+## 0.8.9
+
+### Patch Changes
+
+- [#1406](https://github.com/wagmi-dev/wagmi/pull/1406) [`4f18c450`](https://github.com/wagmi-dev/wagmi/commit/4f18c450a4d7952bfcfa6c533348ffbe55893d3c) Thanks [@tmm](https://github.com/tmm)! - Function for selecting the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target. Defaults to `() => typeof window !== 'undefined' ? window.ethereum : undefined`.
+
+  ```ts
+  import { InjectedConnector } from 'wagmi/connectors/injected'
+
+  const connector = new InjectedConnector({
+    options: {
+      name: 'My Injected Wallet',
+      getProvider: () =>
+        typeof window !== 'undefined' ? window.myInjectedWallet : undefined,
+    },
+  })
+  ```
+
+- Updated dependencies [[`4f18c450`](https://github.com/wagmi-dev/wagmi/commit/4f18c450a4d7952bfcfa6c533348ffbe55893d3c)]:
+  - @wagmi/core@0.7.8
+
 ## 0.8.8
 
 ### Patch Changes
