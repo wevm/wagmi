@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.8.10
+
+### Patch Changes
+
+- [#1411](https://github.com/wagmi-dev/wagmi/pull/1411) [`659be184`](https://github.com/wagmi-dev/wagmi/commit/659be1840c613ce9f7aca9ac96694c4f60da4a66) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where block invalidation was not properly disabled when setting `enabled: false`.
+
+- [#1409](https://github.com/wagmi-dev/wagmi/pull/1409) [`b557b3ee`](https://github.com/wagmi-dev/wagmi/commit/b557b3ee4fc58217e61d860fc3d1109d2abc813e) Thanks [@jxom](https://github.com/jxom)! - Ensure that `useSyncExternalStoreWithTracked` rerenders when no values are being tracked.
+
+- Updated dependencies [[`659be184`](https://github.com/wagmi-dev/wagmi/commit/659be1840c613ce9f7aca9ac96694c4f60da4a66)]:
+  - @wagmi/core@0.7.9
+
 ## 0.8.9
 
 ### Patch Changes
