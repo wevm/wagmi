@@ -179,6 +179,8 @@ export class WalletConnectConnector extends Connector<
         ),
       }
     } catch (error) {
+      if (this.version === '2' && this.options.qrcode)
+        (await import('@walletconnect/qrcode-modal')).default.close()
       // WalletConnect v1: "user closed modal"
       // WalletConnect v2: "user rejected"
       if (
@@ -186,8 +188,6 @@ export class WalletConnectConnector extends Connector<
           (error as ProviderRpcError)?.message,
         )
       ) {
-        if (this.version === '2' && this.options.qrcode)
-          (await import('@walletconnect/qrcode-modal')).default.close()
         throw new UserRejectedRequestError(error)
       }
       throw error
