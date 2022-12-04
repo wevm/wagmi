@@ -17,6 +17,22 @@ If you wish to extend to other EVM-compatible chains (like Polygon, Optimism, BS
 
 The `wagmi/chains` entrypoint proxies the [`@wagmi/chains` NPM package](https://npm.im/@wagmi/chains), an official wagmi package which contains references to popular EVM-compatible chains such as: Polygon, Optimism, Avalanche, and more.
 
+### Usage
+
+Import your chains from the entrypoint and use them in your wagmi app:
+
+```tsx
+import { configureChains } from 'wagmi'
+import { avalanche, bsc, mainnet } from 'wagmi/chains'
+
+const { chains, provider } = configureChains(
+  [mainnet, avalanche, bsc],
+  ...
+)
+```
+
+[Read more on configuring chains](/react/providers/configuring-chains)
+
 ### Supported chains
 
 - `mainnet`
@@ -39,20 +55,6 @@ The `wagmi/chains` entrypoint proxies the [`@wagmi/chains` NPM package](https://
 - `hardhat`
 
 > Want to add a chain that's not listed here? Head to the [wagmi References monorepo](https://github.com/wagmi-dev/references) and read the [Contributing Guide](https://github.com/wagmi-dev/references/blob/main/.github/CONTRIBUTING.md) before opening a pull request.
-
-### Usage
-
-Import your chains from the entrypoint and use them in your wagmi app:
-
-```tsx
-import { configureChains } from 'wagmi'
-import { avalanche, bsc, mainnet } from 'wagmi/chains'
-
-const { chains, provider } = configureChains(
-  [mainnet, avalanche, bsc],
-  ...
-)
-```
 
 ## Build your own
 
