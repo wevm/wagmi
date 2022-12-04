@@ -4,7 +4,7 @@ import NextScript from 'next/script'
 import * as React from 'react'
 
 import 'nextra-theme-docs/style.css'
-import '../styles/globals.css'
+import '../style.css'
 
 // https://github.com/import-js/eslint-plugin-import/issues/1868
 // eslint-disable-next-line import/no-unresolved

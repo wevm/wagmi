@@ -1,6 +1,4 @@
 import { useRouter } from 'next/router'
-// eslint-disable-next-line import/no-unresolved
-import { Callout } from 'nextra-theme-docs'
 
 import { LogoType } from '../core'
 
@@ -8,56 +6,38 @@ const TITLE_WITH_TRANSLATIONS: Record<string, string> = {
   'en-US': 'React Hooks for Ethereum',
 }
 
-type Props = {
-  showGitcoinBanner?: boolean
-}
-
-export function Header({ showGitcoinBanner }: Props) {
+export function Header() {
   const { locale, defaultLocale = 'en-US' } = useRouter()
   const resolvedLocale = locale || defaultLocale
   const title = TITLE_WITH_TRANSLATIONS[resolvedLocale]
 
   return (
     <header className="mb-10 flex flex-col items-center">
-      {showGitcoinBanner && (
-        <div className="mb-4">
-          <Callout type="info">
-            wagmi is participating in{' '}
-            <a
-              target="_blank"
-              href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
-              rel="noopener noreferrer"
-            >
-              Gitcoin Grant Round 15
-            </a>{' '}
-            until September 22. Contributions are matched with{' '}
-            <a
-              href="https://finematics.com/quadratic-funding-explained"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Quadratic Funding
-            </a>{' '}
-            (e.g. $1 turns into $27). If you find wagmi useful, please consider
-            supporting development{' '}
-            <a
-              target="_blank"
-              href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
-              rel="noopener noreferrer"
-            >
-              here
-            </a>
-            . Thank you 🙏
-          </Callout>
-        </div>
-      )}
-
       <div className="mt-8 w-auto h-12 md:h-14">
         <h1 className="sr-only">wagmi</h1>
-        <LogoType />
+        <span>
+          <LogoType />
+          <style jsx>{`
+            span {
+              padding: 0.5rem 0.5rem 0.5rem 0;
+              mask-image: linear-gradient(
+                60deg,
+                black 25%,
+                rgba(0, 0, 0, 0.2) 50%,
+                black 75%
+              );
+              mask-size: 400%;
+              mask-position: 0%;
+            }
+            span:hover {
+              mask-position: 100%;
+              transition: mask-position 1s ease, -webkit-mask-position 1s ease;
+            }
+          `}</style>
+        </span>
       </div>
 
-      <p className="text-center text-lg mb-6 mt-2 text-gray-500 md:!text-xl">
+      <p className="text-center text-lg mb-6 mt-3 text-gray-500 md:!text-xl">
         {title}
       </p>
 
