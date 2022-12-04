@@ -15,7 +15,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@wagmi/chains": ["node_modules/@wagmi/chains/dist"],
+      "@wagmi/chains": ["packages/core/node_modules/@wagmi/chains/dist"],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
       "wagmi": ["packages/react/src"],

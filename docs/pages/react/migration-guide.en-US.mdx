@@ -177,6 +177,11 @@ Note that you will also need to ensure that usage is migrated:
 The `multicall` and `ens` attributes have been moved into the `contracts` object:
 
 ```diff
+type Contract = {
+  address: Address
+  blockCreated?: number
+}
+
 type Chain = {
   ...
 - multicall: Contract
