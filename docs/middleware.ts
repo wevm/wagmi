@@ -11,6 +11,7 @@ const redirects: Record<string, string> = {
   '/docs/migrating-to-030': '/docs/migrating-to-03', // Tweeted wrong link: https://twitter.com/awkweb/status/1518607780332122116
   '/docs/migrating-to-03': '/docs/migration-guide',
   '/docs/provider': '/docs/WagmiConfig',
+  '/react/prepare-hooks/intro': '/react/prepare-hooks',
 }
 
 export function middleware(request: NextRequest) {
@@ -23,7 +24,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  const skipMiddlewareRegex = /^\/favicon|media\/.+/
+  const skipMiddlewareRegex = /^\/assets|favicon\/.+/
   if (!skipMiddlewareRegex.test(request.nextUrl.pathname))
     return locales(request)
 }

@@ -1,12 +1,14 @@
-const withNextra = require('nextra')({
+import nextra from 'nextra'
+import withPreconstruct from '@preconstruct/next'
+
+const withNextra = nextra({
+  defaultShowCopyCode: true,
+  flexsearch: {
+    codeblocks: false
+  },
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.tsx',
-  unstable_contentDump: true,
-  unstable_defaultShowCopyCode: true,
-  unstable_flexsearch: {
-    codeblocks: true,
-  },
-  unstable_staticImage: true,
+  staticImage: true,
 })
 
 /** @type {import('next').NextConfig} */
@@ -16,7 +18,7 @@ const config = {
     defaultLocale: 'en-US',
   },
   reactStrictMode: true,
-  redirects: () => {
+  redirects() {
     return [
       // Redirects for old docs
       {
@@ -65,15 +67,7 @@ const config = {
   },
 }
 
-if (process.env.NODE_ENV === 'development') {
-  // We don't use Preconstruct anymore, but the Next.js plugin works great for
-  // development with our custom set up in packages' `tsup.config.ts`.
-  // https://github.com/preconstruct/preconstruct/tree/main/packages/next
-  const withPreconstruct = require('@preconstruct/next')
-  module.exports = withPreconstruct(withNextra(config))
-} else {
-  const withBundleAnalyzer = require('@next/bundle-analyzer')({
-    enabled: process.env.ANALYZE === 'true',
-  })
-  module.exports = withBundleAnalyzer(withNextra(config))
-}
+// We don't use Preconstruct anymore, but the Next.js plugin works great for
+// development with our custom set up in packages' `tsup.config.ts`.
+// https://github.com/preconstruct/preconstruct/tree/main/packages/next
+export default process.env.NODE_ENV === 'development' ? withPreconstruct(withNextra(config)) : withNextra(config)

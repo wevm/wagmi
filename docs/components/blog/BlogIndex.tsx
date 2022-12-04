@@ -18,17 +18,18 @@ export function BlogIndex({ more = 'Read more' }) {
 
           <div className="">
             <h3 className="text-2xl font-bold mb-4">
-              <Link href={page.route}>
-                <a style={{ color: 'inherit', textDecoration: 'none' }}>
-                  {page.meta?.title || page.frontMatter?.title || page.name}
-                </a>
+              <Link
+                href={page.route}
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                {page.meta?.title || page.frontMatter?.title || page.name}
               </Link>
             </h3>
 
             <p className="opacity-80 mb-3">
               {page.frontMatter?.description}{' '}
-              <Link href={page.route}>
-                <a className="nx-text-primary-500 underline">{more + ' →'}</a>
+              <Link href={page.route} className="nx-text-primary-500 underline">
+                {more + ' →'}
               </Link>
             </p>
 
