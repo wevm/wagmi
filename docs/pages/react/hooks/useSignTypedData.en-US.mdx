@@ -124,6 +124,13 @@ function App() {
 
 ### types (optional)
 
+<Callout type="warning">
+  Since we use Ethers.js under the hood, you SHOULD not include EIP712Domain in
+  the types object as Ethers.js already include it by default. Doing so will
+  cause an exception when trying to sign the message. [Click here for more
+  details](https://github.com/ethers-io/ethers.js/issues/687#issuecomment-1209458789).
+</Callout>
+
 Typed data type definition.
 
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/react/typescript) for more information.
