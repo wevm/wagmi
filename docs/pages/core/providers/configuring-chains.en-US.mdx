@@ -22,8 +22,8 @@ import { configureChains } from '@wagmi/core'
 - `webSocketProvider`: to optionally pass to `createClient`
 
 ```ts
-import { mainnet, polygon, optimism } from '@wagmi/chains'
 import { configureChains, createClient } from '@wagmi/core'
+import { mainnet, polygon, optimism } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
@@ -40,7 +40,7 @@ const wagmiClient = createClient({
 })
 ```
 
-Note: The above example is using chains from [`@wagmi/chains`](/core/chains#wagmichains).
+Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ### Multiple providers
 
@@ -52,8 +52,8 @@ The `configureChains` function accepts multiple providers. This is useful if not
 - Ensuring the responses are legitimate by setting a `targetQuorum`.
 
 ```ts
-import { avalanche, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { avalanche, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { infuraProvider } from '@wagmi/core/providers/infura'
 import { publicProvider } from '@wagmi/core/providers/public'
@@ -97,8 +97,8 @@ To guarantee a static quorum, you can provide a `minQuorum` as an config option.
 Chains that need to be configured.
 
 ```ts {6}
-import { mainnet, optimism, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains } = configureChains(
@@ -114,8 +114,8 @@ The providers the app supports.
 If a provider does not support a chain, it will fall back onto the next one in the array. If no RPC URLs are found, `configureChains` will throw an error.
 
 ```ts {8}
-import { mainnet, optimism, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
@@ -132,8 +132,8 @@ const { chains } = configureChains(
 The frequency in milliseconds at which the provider polls. Defaults to `4000`.
 
 ```ts {13}
-import { mainnet, optimism, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
@@ -153,8 +153,8 @@ const { chains } = configureChains(
 Sets the target quorum. Defaults to `1`.
 
 ```ts {13}
-import { mainnet, optimism, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
@@ -174,8 +174,8 @@ const { chains } = configureChains(
 Sets the minimum quorum that must be accepted by the providers. Defaults to `1`.
 
 ```ts {13}
-import { mainnet, optimism, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
@@ -195,8 +195,8 @@ const { chains } = configureChains(
 The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {13}
-import { mainnet, optimism, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 

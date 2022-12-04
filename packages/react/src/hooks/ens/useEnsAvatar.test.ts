@@ -1,9 +1,10 @@
-import { foundry } from '@wagmi/chains'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 import { act, renderHook } from '../../../test'
+import { foundry } from '../../chains'
+
 import { useEnsAvatar } from './useEnsAvatar'
 
 const handlers = [

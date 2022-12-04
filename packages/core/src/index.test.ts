@@ -43,6 +43,8 @@ it('should expose correct exports', () => {
       "watchSigner",
       "watchWebSocketProvider",
       "writeContract",
+      "mainnet",
+      "goerli",
       "createClient",
       "Client",
       "Connector",
@@ -77,8 +79,6 @@ it('should expose correct exports', () => {
       "normalizeChainId",
       "parseContractResult",
       "serialize",
-      "mainnet",
-      "goerli",
     ]
   `)
 })

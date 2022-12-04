@@ -1,6 +1,7 @@
 import type { Address } from 'abitype'
 import { getAddress } from 'ethers/lib/utils.js'
 
+import type { Chain } from '../chains'
 import { getClient } from '../client'
 import type { RpcError } from '../errors'
 import {
@@ -8,7 +9,7 @@ import {
   ResourceUnavailableError,
   UserRejectedRequestError,
 } from '../errors'
-import type { Chain, Ethereum } from '../types'
+import type { Ethereum } from '../types'
 import type { InjectedConnectorOptions } from './injected'
 import { InjectedConnector } from './injected'
 

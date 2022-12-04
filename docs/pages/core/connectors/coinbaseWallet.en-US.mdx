@@ -31,7 +31,7 @@ const connector = new CoinbaseWalletConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet, optimism, polygon } from '@wagmi/chains'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
 
 const connector = new CoinbaseWalletConnector({
@@ -43,7 +43,7 @@ const connector = new CoinbaseWalletConnector({
 })
 ```
 
-Note: The above example is using chains from [`@wagmi/chains`](/core/chains#wagmichains).
+Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ### options
 

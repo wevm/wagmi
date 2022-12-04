@@ -1,4 +1,3 @@
-import { mainnet, polygon } from '@wagmi/chains'
 import { BigNumber } from 'ethers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -7,6 +6,7 @@ import {
   setupClient,
   wagmigotchiContractConfig,
 } from '../../../test'
+import { mainnet, polygon } from '../../chains'
 
 import { multicall } from './multicall'
 

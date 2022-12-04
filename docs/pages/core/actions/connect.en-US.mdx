@@ -43,8 +43,8 @@ const result = await connect({
 Chain ID to connect.
 
 ```ts {6}
-import { optimism } from '@wagmi/chains'
 import { connect } from '@wagmi/core'
+import { optimism } from '@wagmi/core/chains'
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
 
 const result = await connect({
@@ -53,7 +53,7 @@ const result = await connect({
 })
 ```
 
-Note: The above example is using the `optimism` chain from [`@wagmi/chains`](/core/chains#wagmichains).
+Note: The above example is using the `optimism` chain from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ### connector
 

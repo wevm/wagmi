@@ -1,7 +1,7 @@
 import shallow from 'zustand/shallow'
 
+import type { Chain } from '../../chains'
 import { getClient } from '../../client'
-import type { Chain } from '../../types'
 import type { GetNetworkResult } from './getNetwork'
 import { getNetwork } from './getNetwork'
 

@@ -1,8 +1,8 @@
-import { goerli, mainnet } from '@wagmi/chains'
 import type { Address } from 'abitype'
 import { default as EventEmitter } from 'eventemitter3'
 
-import type { Chain } from '../types'
+import type { Chain } from '../chains'
+import { goerli, mainnet } from '../chains'
 
 export type ConnectorData<Provider = any> = {
   account?: Address

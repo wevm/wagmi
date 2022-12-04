@@ -1,6 +1,7 @@
 import { providers } from 'ethers'
 
-import type { Chain, ChainProviderFn, FallbackProviderConfig } from '../types'
+import type { Chain } from '../chains'
+import type { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type JsonRpcProviderConfig = FallbackProviderConfig & {
   rpc: (chain: Chain) => { http: string; webSocket?: string } | null

@@ -2,6 +2,7 @@ import type { Address } from 'abitype'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
+import type { Chain } from '../chains'
 import { getClient } from '../client'
 import type { ProviderRpcError, RpcError } from '../errors'
 import {
@@ -12,7 +13,6 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import type { Chain } from '../types'
 import { getInjectedName, normalizeChainId } from '../utils'
 import { Connector } from './base'
 

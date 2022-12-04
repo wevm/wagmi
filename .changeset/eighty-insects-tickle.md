@@ -2,7 +2,7 @@
 'wagmi': minor
 ---
 
-**Breaking**: With the introduction of the [`@wagmi/chains` package](https://npm.im/@wagmi/chains), `wagmi` no longer exports the following:
+**Breaking**: With the introduction of the [`wagmi/chains` entrypoint](/react/chains#wagmichains), `wagmi` no longer exports the following:
 
 - `chain`
 - `allChains`
@@ -16,18 +16,15 @@ Read below for migration steps.
 
 #### Removed `chain`
 
-The `chain` export has been removed. `wagmi` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygon`, `optimism`, etc), you will need to import it from the [`@wagmi/chains` package](https://npm.im/@wagmi/chains).
-
-```
-npm i @wagmi/chains
-```
+The `chain` export has been removed. `wagmi` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygon`, `optimism`, etc), you will need to import it from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ```diff
 import {
 - chain
   configureChains
 } from 'wagmi'
-+ import { mainnet, polygon, optimism } from '@wagmi/chains'
++ import { mainnet, polygon, optimism } from 'wagmi/chains'
+
 const { ... } = configureChains(
 - [chain.mainnet, chain.polygon, chain.optimism],
 + [mainnet, polygon, optimism],
@@ -39,15 +36,12 @@ const { ... } = configureChains(
 
 #### Removed `allChains`
 
-The `allChains` export has been removed. If you need a list of all chains, you can utilize [`@wagmi/chains` package](https://npm.im/@wagmi/chains).
-
-```
-npm i @wagmi/chains
-```
+The `allChains` export has been removed. If you need a list of all chains, you can utilize [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ```diff
 - import { allChains } from 'wagmi'
-+ import * as allChains from '@wagmi/chains'
++ import * as allChains from 'wagmi/chains'
+
 const { ... } = configureChains(allChains, ...)
 ```
 
@@ -57,7 +51,8 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 
 ```diff
 - import { defaultChains } from 'wagmi'
-+ import { mainnet, goerli } from '@wagmi/chains'
++ import { mainnet, goerli } from 'wagmi/chains'
+
 + const defaultChains = [mainnet, goerli]
 ```
 
@@ -72,7 +67,8 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 +   polygonMumbai,
 +   optimism,
 +   optimismGoerli
-+ } from '@wagmi/chains'
++ } from 'wagmi/chains'
+
 + const defaultL2Chains = [
 +  arbitrum,
 +  arbitrumGoerli,
@@ -91,7 +87,8 @@ The `chainId` export has been removed. You can extract a chain ID from the chain
 
 ```diff
 - import { chainId } from 'wagmi'
-+ import { mainnet, polygon, optimism } from '@wagmi/chains'
++ import { mainnet, polygon, optimism } from 'wagmi/chains'
+
 -const mainnetChainId = chainId.mainnet
 -const polygonChainId = chainId.polygon
 -const optimismChainId = chainId.optimism
@@ -106,7 +103,8 @@ The `etherscanBlockExplorers` export has been removed. You can extract a block e
 
 ```diff
 - import { etherscanBlockExplorers } from 'wagmi'
-+ import { mainnet, polygon, optimism } from '@wagmi/chains'
++ import { mainnet, polygon, optimism } from 'wagmi/chains'
+
 -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
 -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
 -const optimismEtherscanBlockExplorer = etherscanBlockExplorers.optimism
@@ -121,7 +119,8 @@ The `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls` exports have been remove
 
 ```diff
 - import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from 'wagmi'
-+ import { mainnet } from '@wagmi/chains'
++ import { mainnet } from 'wagmi/chains'
+
 -const mainnetAlchemyRpcUrl = alchemyRpcUrls.mainnet
 -const mainnetInfuraRpcUrl = infuraRpcUrls.mainnet
 -const mainnetOptimismRpcUrl = publicRpcUrls.mainnet

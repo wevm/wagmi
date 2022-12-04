@@ -1,6 +1,6 @@
 import { getAddress } from 'ethers/lib/utils.js'
 
-import type { Chain } from '../../types'
+import type { Chain } from '../../chains'
 import { normalizeChainId } from '../../utils'
 import type { ConnectorData } from '../base'
 import { Connector } from '../base'

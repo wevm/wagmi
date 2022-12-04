@@ -110,6 +110,9 @@ export type {
   WriteContractUnpreparedArgs,
 } from './actions'
 
+export { mainnet, goerli } from './chains'
+export type { Chain } from './chains'
+
 export { createClient, Client } from './client'
 export type { ClientConfig } from './client'
 
@@ -146,7 +149,6 @@ export { createStorage, noopStorage } from './storage'
 export type { ClientStorage as Storage } from './storage'
 
 export type {
-  Chain,
   ChainProviderFn,
   Ethereum,
   FallbackProviderConfig,
@@ -169,5 +171,3 @@ export {
   serialize,
 } from './utils'
 export type { ConfigureChainsConfig } from './utils'
-
-export { mainnet, goerli } from '@wagmi/chains'

@@ -16,8 +16,8 @@ import { infuraProvider } from 'wagmi/providers/infura'
 ## Usage
 
 ```ts
-import { mainnet, polygon } from '@wagmi/chains'
 import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 
 const { chains, provider } = configureChains(
@@ -26,7 +26,7 @@ const { chains, provider } = configureChains(
 )
 ```
 
-Note: The above example is using chains from [`@wagmi/chains`](/react/chains#wagmichains).
+Note: The above example is using chains from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ## Return Value
 
@@ -45,8 +45,8 @@ Note: The above example is using chains from [`@wagmi/chains`](/react/chains#wag
 Your Infura API key from the [Infura Dashboard](https://infura.io/login).
 
 ```ts {7}
-import { mainnet, polygon } from '@wagmi/chains'
 import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 
 const { chains, provider } = configureChains(
@@ -60,8 +60,8 @@ const { chains, provider } = configureChains(
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
 ```ts {11,13}
-import { mainnet, polygon } from '@wagmi/chains'
 import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -82,8 +82,8 @@ const { chains, provider } = configureChains(
 The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {11}
-import { mainnet, polygon } from '@wagmi/chains'
 import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -104,8 +104,8 @@ const { chains, provider } = configureChains(
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
 ```ts {11,13}
-import { mainnet, polygon } from '@wagmi/chains'
 import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 

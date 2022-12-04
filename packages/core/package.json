@@ -31,6 +31,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./chains": {
+      "types": "./dist/chains.d.ts",
+      "default": "./dist/chains.js"
+    },
     "./internal": {
       "types": "./dist/internal.d.ts",
       "default": "./dist/internal.js"
@@ -71,6 +75,7 @@
   },
   "sideEffects": false,
   "files": [
+    "/chains",
     "/connectors",
     "/internal",
     "/providers",

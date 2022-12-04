@@ -1,4 +1,3 @@
-import { goerli, mainnet } from '@wagmi/chains'
 import { getDefaultProvider } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
@@ -10,6 +9,7 @@ import {
   testChains,
 } from '../test'
 import { connect, disconnect } from './actions'
+import { goerli, mainnet } from './chains'
 import { Client, createClient, getClient } from './client'
 import { MockConnector } from './connectors/mock'
 import { createStorage, noopStorage } from './storage'

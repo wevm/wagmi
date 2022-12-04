@@ -1,4 +1,3 @@
-import { arbitrum, mainnet, optimism, polygon } from '@wagmi/chains'
 import { providers } from 'ethers'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
@@ -13,12 +12,12 @@ import {
   vi,
 } from 'vitest'
 
+import type { Chain } from '../chains'
+import { arbitrum, mainnet, optimism, polygon } from '../chains'
 import { alchemyProvider } from '../providers/alchemy'
 import { infuraProvider } from '../providers/infura'
 import { jsonRpcProvider } from '../providers/jsonRpc'
-
 import { publicProvider } from '../providers/public'
-import type { Chain } from '../types'
 import { configureChains } from './configureChains'
 
 const avalancheChain: Chain = {

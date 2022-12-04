@@ -1,7 +1,7 @@
-import { avalanche, goerli, mainnet, optimism } from '@wagmi/chains'
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'

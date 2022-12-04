@@ -16,8 +16,8 @@ import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 ## Usage
 
 ```ts
-import { mainnet, optimism, polygon } from '@wagmi/chains'
 import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 
 const { chains, provider } = configureChains(
@@ -26,7 +26,7 @@ const { chains, provider } = configureChains(
 )
 ```
 
-Note: The above example is using chains from [`@wagmi/chains`](/core/chains#wagmichains).
+Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ## Return Value
 

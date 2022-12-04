@@ -1,4 +1,3 @@
-import type { Chain } from '@wagmi/chains'
 import type {
   Address,
   ResolvedConfig,
@@ -8,9 +7,8 @@ import type {
 } from 'abitype'
 import type { Signer as BaseSigner, BigNumber, providers } from 'ethers'
 
+import type { Chain } from '../chains'
 import type { units } from '../constants'
-
-export type { Chain }
 
 declare module 'abitype' {
   export interface Config {

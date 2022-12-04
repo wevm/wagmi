@@ -1,4 +1,3 @@
-import { goerli, mainnet, polygon } from '@wagmi/chains'
 import type { Address, ResolvedConfig } from 'abitype'
 import { BigNumber } from 'ethers'
 import { assertType, beforeEach, describe, expect, it, vi } from 'vitest'
@@ -9,6 +8,8 @@ import {
   wagmiContractConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
+import { goerli, mainnet, polygon } from '../../chains'
+
 import * as multicall from './multicall'
 import * as readContract from './readContract'
 import { readContracts } from './readContracts'

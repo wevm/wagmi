@@ -290,8 +290,8 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {16,23}
-import { optimism } from '@wagmi/chains'
 import { useContractReads } from 'wagmi'
+import { optimism } from 'wagmi/chains'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -320,7 +320,7 @@ function App() {
 }
 ```
 
-Note: The above example is using the `optimism` chain from [`@wagmi/chains`](/react/chains#wagmichains).
+Note: The above example is using the `optimism` chain from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ### getNextPageParam (optional)
 
