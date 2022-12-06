@@ -113,7 +113,7 @@ export type {
 export { mainnet, goerli } from './chains'
 export type { Chain } from './chains'
 
-export { createClient, Client } from './client'
+export { createClient, getClient, Client } from './client'
 export type { ClientConfig } from './client'
 
 export { Connector, InjectedConnector } from './connectors'

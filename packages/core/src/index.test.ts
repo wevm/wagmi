@@ -46,6 +46,7 @@ it('should expose correct exports', () => {
       "mainnet",
       "goerli",
       "createClient",
+      "getClient",
       "Client",
       "Connector",
       "InjectedConnector",
