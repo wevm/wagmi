@@ -35,10 +35,6 @@
       "types": "./dist/chains.d.ts",
       "default": "./dist/chains.js"
     },
-    "./internal": {
-      "types": "./dist/internal.d.ts",
-      "default": "./dist/internal.js"
-    },
     "./connectors/coinbaseWallet": {
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
@@ -54,6 +50,14 @@
     "./connectors/walletConnect": {
       "types": "./dist/connectors/walletConnect.d.ts",
       "default": "./dist/connectors/walletConnect.js"
+    },
+    "./internal": {
+      "types": "./dist/internal/index.d.ts",
+      "default": "./dist/internal/index.js"
+    },
+    "./internal/test": {
+      "types": "./dist/internal/test.d.ts",
+      "default": "./dist/internal/test.js"
     },
     "./providers/infura": {
       "types": "./dist/providers/infura.d.ts",
