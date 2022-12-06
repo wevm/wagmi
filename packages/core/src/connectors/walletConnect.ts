@@ -1,8 +1,6 @@
 import type WalletConnectProvider from '@walletconnect/ethereum-provider'
-import type {
-  default as UniversalProvider,
-  UniversalProviderOpts,
-} from '@walletconnect/universal-provider'
+import type { UniversalProviderOpts } from '@walletconnect/universal-provider'
+import { default as UniversalProvider } from '@walletconnect/universal-provider'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
@@ -235,7 +233,10 @@ export class WalletConnectConnector extends Connector<
     const provider = await this.getProvider()
     if (this.version === '1')
       return normalizeChainId((provider as WalletConnectProvider).chainId)
-    return normalizeChainId(await provider.request({ method: 'eth_chainId' }))
+    return (
+      getClient().data?.chain?.id ??
+      normalizeChainId(await provider.request({ method: 'eth_chainId' }))
+    )
   }
 
   async getProvider({
@@ -282,10 +283,17 @@ export class WalletConnectConnector extends Connector<
       this.getProvider({ chainId }),
       this.getAccount(),
     ])
-    return new providers.Web3Provider(
-      provider as providers.ExternalProvider,
-      chainId,
-    ).getSigner(account)
+    const chainId_ = await this.getChainId()
+    const provider_: providers.ExternalProvider = {
+      ...provider,
+      async request(args) {
+        return await provider.request(
+          args,
+          `${sharedConfig.namespace}:${chainId ?? chainId_}`,
+        )
+      },
+    }
+    return new providers.Web3Provider(provider_, chainId).getSigner(account)
   }
 
   async isAuthorized() {
@@ -302,21 +310,27 @@ export class WalletConnectConnector extends Connector<
     const id = hexValue(chainId)
 
     try {
-      // Set up a race between `wallet_switchEthereumChain` & the `chainChanged` event
-      // to ensure the chain has been switched. This is because there could be a case
-      // where a wallet may not resolve the `wallet_switchEthereumChain` method, or
-      // resolves slower than `chainChanged`.
-      await Promise.race([
-        provider.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: id }],
-        }),
-        new Promise((res) =>
-          this.on('change', ({ chain }) => {
-            if (chain?.id === chainId) res(chainId)
+      if (this.version === '1') {
+        // Set up a race between `wallet_switchEthereumChain` & the `chainChanged` event
+        // to ensure the chain has been switched. This is because there could be a case
+        // where a wallet may not resolve the `wallet_switchEthereumChain` method, or
+        // resolves slower than `chainChanged`.
+        await Promise.race([
+          provider.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: id }],
           }),
-        ),
-      ])
+          new Promise((res) =>
+            this.on('change', ({ chain }) => {
+              if (chain?.id === chainId) res(chainId)
+            }),
+          ),
+        ])
+      }
+      if (this.version === '2' && provider instanceof UniversalProvider) {
+        provider.setDefaultChain(`${sharedConfig.namespace}:${chainId}`)
+        this.onChainChanged(chainId)
+      }
       return (
         this.chains.find((x) => x.id === chainId) ?? {
           id: chainId,
