@@ -1,2 +1,2 @@
 export { defineConfig, type Config } from './config'
-export { etherscan, fs } from './sources'
+export { blockExplorer, etherscan, foundry, hardhat, fs } from './sources'

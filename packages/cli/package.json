@@ -48,14 +48,17 @@
     "ethers": ">=5.5.1"
   },
   "dependencies": {
-    "abitype": "^0.2.4",
+    "abitype": "^0.2.5",
     "cac": "^6.7.12",
     "change-case": "^4.1.2",
+    "chokidar": "^3.5.3",
     "dedent": "^0.7.0",
+    "execa": "^6.1.0",
     "find-up": "^6.3.0",
     "fs-extra": "^10.1.0",
+    "globby": "^13.1.2",
     "node-fetch": "^3.2.9",
-    "pathe": "^0.3.2",
+    "pathe": "^1.0.0",
     "picocolors": "^1.0.0",
     "zod": "^3.19.1"
   },

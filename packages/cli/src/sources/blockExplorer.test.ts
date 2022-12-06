@@ -11,7 +11,6 @@ import {
   it,
 } from 'vitest'
 
-import type { SourceFn } from '../config'
 import { blockExplorer } from './blockExplorer'
 
 const apiKey = 'abc'
@@ -65,7 +64,7 @@ describe('etherscan', () => {
           const baseUrl = 'https://api.etherscan.io/api'
           return `${baseUrl}?module=contract&action=getabi&address=${address}&apikey=${apiKey}`
         },
-        async getAbi({ response }) {
+        async parseAbi({ response }) {
           const data = (await response.json()) as
             | { status: '1'; message: 'OK'; result: string }
             | { status: '0'; message: 'NOTOK'; result: string }

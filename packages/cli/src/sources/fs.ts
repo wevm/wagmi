@@ -3,7 +3,6 @@ import { default as fse } from 'fs-extra'
 
 import { extname } from 'pathe'
 
-import type { SourceFn } from '../config'
 import { pathToFileURL } from 'node:url'
 
 type FsConfig = {
@@ -13,7 +12,7 @@ type FsConfig = {
   path: string
 }
 
-export function fs({ path }: FsConfig): SourceFn {
+export function fs({ path }: FsConfig) {
   const cache: Record<string, Abi> = {}
   return async () => {
     if (cache[path]) return cache[path] as Abi
@@ -27,7 +26,7 @@ export function fs({ path }: FsConfig): SourceFn {
       // Load default export from JS or TS file
       const fileBase = `${path}.timestamp-${Date.now()}`
       const fileNameTemp = `${fileBase}.mjs`
-      fse.writeFileSync(fileNameTemp, file)
+      await fse.writeFile(fileNameTemp, file)
       try {
         const fileUrl = `${pathToFileURL(fileBase)}.mjs`
         abi = (await import(fileUrl)).default

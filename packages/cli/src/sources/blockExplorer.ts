@@ -1,36 +1,45 @@
-import type { Abi, Address } from 'abitype'
+import type { Abi } from 'abitype'
 import type { Response } from 'node-fetch'
 import fetch from 'node-fetch'
 
-import type { SourceFn } from '../config'
+import type { ContractConfig } from '../config'
 
 type BlockExplorerConfig = {
-  /** Function for returning a block explorer URL to request ABI from */
+  /** Contract address. */
+  address: ContractConfig['address']
+  /** Function for returning a block explorer URL to request ABI from. */
   getApiUrl(config: {
-    address: Address | Record<string | number, Address>
+    address?: ContractConfig['address']
   }): Promise<string> | string
+  /** Contract name. */
+  name: ContractConfig['name']
   /**
-   * Function for returning ABI from API response
+   * Function for parsing ABI from API response.
+   *
    * @default ({ response }) => response.json()
    */
-  getAbi?({ response }: { response: Response }): Promise<Abi> | Abi
+  parseAbi?({ response }: { response: Response }): Promise<Abi> | Abi
 }
 
 export function blockExplorer({
+  address,
   getApiUrl,
-  getAbi = ({ response }) => response.json() as Promise<Abi>,
-}: BlockExplorerConfig): SourceFn {
+  name,
+  parseAbi = ({ response }) => response.json() as Promise<Abi>,
+}: BlockExplorerConfig): ContractConfig {
   const cache: Record<string, Abi> = {}
-  return async ({ address }) => {
-    if (!address) throw new Error(`"address" is required`)
+  return {
+    address,
+    name,
+    async source() {
+      const apiUrl = await getApiUrl({ address })
+      if (cache[apiUrl]) return cache[apiUrl] as Abi
 
-    const apiUrl = await getApiUrl({ address })
-    if (cache[apiUrl]) return cache[apiUrl] as Abi
+      const response = await fetch(apiUrl)
+      const abi = await parseAbi({ response })
 
-    const response = await fetch(apiUrl)
-    const abi = await getAbi({ response })
-
-    cache[apiUrl] = abi
-    return abi
+      cache[apiUrl] = abi
+      return abi
+    },
   }
 }

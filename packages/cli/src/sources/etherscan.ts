@@ -1,7 +1,7 @@
 import type { Abi } from 'abitype'
 import { z } from 'zod'
 
-import type { SourceFn } from '../config'
+import type { ContractConfig } from '../config'
 import { blockExplorer } from './blockExplorer'
 
 const apiUrls = {
@@ -34,7 +34,19 @@ type ChainId = keyof typeof apiUrls
 
 type EtherscanConfig = {
   /**
-   * Etherscan API key
+   * Contract address or addresses.
+   *
+   * Accepts an object `{ [chainId]: address }` to support multiple chains.
+   *
+   * @example
+   * {
+   *   1: '0x314159265dd8dbb310642f98f50c066173c1259b',
+   *   5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+   * }
+   */
+  address: NonNullable<ContractConfig['address']>
+  /**
+   * Etherscan API key.
    *
    * API keys are specific per network and include testnets (e.g. Ethereum Mainnet and Goerli share same API key). Create or manage keys:
    * - [Ethereum](https://etherscan.io/myapikey)
@@ -48,9 +60,13 @@ type EtherscanConfig = {
    */
   apiKey: string
   /**
-   * Chain id to use for fetching ABI
+   * Chain id to use for fetching ABI.
+   *
+   * If `address` is an object, `chainId` is used to select the address.
    */
   chainId: ChainId
+  /** Contract name. */
+  name: ContractConfig['name']
 }
 
 const EtherscanResponse = z.discriminatedUnion('status', [
@@ -66,9 +82,11 @@ const EtherscanResponse = z.discriminatedUnion('status', [
   }),
 ])
 
-export function etherscan({ apiKey, chainId }: EtherscanConfig): SourceFn {
+export function etherscan({ address, apiKey, chainId, name }: EtherscanConfig) {
   return blockExplorer({
+    address,
     getApiUrl({ address }) {
+      if (!address) throw new Error('address is required')
       const baseUrl = apiUrls[chainId as ChainId]
       if (!baseUrl)
         throw new Error(`No API url found for chain id "${chainId}"`)
@@ -78,12 +96,13 @@ export function etherscan({ apiKey, chainId }: EtherscanConfig): SourceFn {
         throw new Error(`No contract address found for chainId "${chainId}"`)
       return `${baseUrl}?module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`
     },
-    async getAbi({ response }) {
+    async parseAbi({ response }) {
       const json = await response.json()
       const parsed = await EtherscanResponse.safeParseAsync(json)
       if (!parsed.success) throw new Error(parsed.error.message)
       if (parsed.data.status === '0') throw new Error(parsed.data.result)
       return parsed.data.result
     },
+    name,
   })
 }

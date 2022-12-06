@@ -1,8 +1,8 @@
-import type { Abi, ResolvedConfig } from 'abitype'
+import type { Abi, Address } from 'abitype'
 
 export type Contract = {
   abi: Abi
-  address: ResolvedConfig['AddressType']
+  address?: Address | Record<number, Address>
+  content: string
   name: string
-  chainId?: number
 }
