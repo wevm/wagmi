@@ -1,19 +1,8 @@
 ---
-title: 'Migration Guide'
-description: 'Guide for how to migrate to new versions of @wagmi/core'
+'@wagmi/core': minor
 ---
 
-import { Callout } from 'nextra-theme-docs'
-
-# Migration Guide
-
-If you are coming from an earlier version of `@wagmi/core`, you will need to make sure to update the following APIs listed below.
-
-## 0.8.x Breaking changes
-
-### Chain exports
-
-With the introduction of the [`@wagmi/core/chains` entrypoint](/core/chains), `@wagmi/core` no longer exports the following:
+**Breaking**: With the introduction of the [`@wagmi/core/chains` entrypoint](/core/chains), `@wagmi/core` no longer exports the following:
 
 - `chain`
 - `allChains`
@@ -138,77 +127,4 @@ The `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls` exports have been remove
 +const mainnetAlchemyRpcUrl = mainnet.rpcUrls.alchemy
 +const mainnetInfuraRpcUrl = mainnet.rpcUrls.infura
 +const mainnetOptimismRpcUrl = mainnet.rpcUrls.optimism
-```
-
-### `Chain` type
-
-#### RPC URLs
-
-The `rpcUrls` shape has changed to include an array of URLs, and also the transport method (`http` or `webSocket`):
-
-```diff
-type Chain = {
-  ...
-  rpcUrls: {
--   [key: string]: string
-+   [key: string]: {
-+     http: string[]
-+     webSocket: string[]
-+   }
-  }
-  ...
-}
-```
-
-Note that you will also need to ensure that usage is migrated:
-
-```diff
-- const rpcUrl = mainnet.rpcUrls.alchemy
-+ const rpcUrl = mainnet.rpcUrls.alchemy.http[0]
-```
-
-#### Contracts
-
-The `multicall` and `ens` attributes have been moved into the `contracts` object:
-
-```diff
-type Contract = {
-  address: Address
-  blockCreated?: number
-}
-
-type Chain = {
-  ...
-- multicall: Contract
-- ens: Contract
-+ contracts: {
-+   multicall3: Contract
-+   ensRegistry: Contract
-+ }
-  ...
-}
-```
-
-Note that you will also need to ensure that usage is migrated:
-
-```diff
-- const multicallContract = mainnet.multicall
-+ const multicallContract = mainnet.contracts.multicall3
-```
-
-### waitForTransaction
-
-#### Behavioral changes
-
-`waitForTransaction` will throw an error if the transaction has been reverted or cancelled.
-
-#### Configuration changes
-
-Removed the `wait` config option on `waitForTransaction`. Use the transaction `hash` instead.
-
-```diff
-const { data } = await waitForTransaction({
-- wait: transaction.wait
-+ hash: transaction.hash
-})
 ```

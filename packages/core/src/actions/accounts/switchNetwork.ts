@@ -1,9 +1,9 @@
+import type { Chain } from '../../chains'
 import { getClient } from '../../client'
 import {
   ConnectorNotFoundError,
   SwitchChainNotSupportedError,
 } from '../../errors'
-import type { Chain } from '../../types'
 
 export type SwitchNetworkArgs = {
   chainId: number

@@ -32,12 +32,13 @@ function App() {
 A wagmi [`Client`](/react/client) instance that consists of configuration options. Defaults to `createClient()`.
 
 ```tsx {8-12,16}
-import { createClient, configureChains, defaultChains } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider, webSocketProvider } = configureChains(defaultChains, [
-  publicProvider(),
-])
+const { provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
 
 const client = createClient({
   provider,

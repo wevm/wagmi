@@ -12,13 +12,12 @@ import {
   vi,
 } from 'vitest'
 
-import { chain } from '../constants'
+import type { Chain } from '../chains'
+import { arbitrum, mainnet, optimism, polygon } from '../chains'
 import { alchemyProvider } from '../providers/alchemy'
 import { infuraProvider } from '../providers/infura'
 import { jsonRpcProvider } from '../providers/jsonRpc'
-
 import { publicProvider } from '../providers/public'
-import type { Chain } from '../types'
 import { configureChains } from './configureChains'
 
 const avalancheChain: Chain = {
@@ -34,22 +33,23 @@ const avalancheChain: Chain = {
     symbol: 'AVAX',
   },
   rpcUrls: {
-    default: 'https://api.avax.network/ext/bc/C/rpc',
+    default: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
   },
   testnet: false,
 }
 
 const defaultChains = [
   {
-    ...chain.mainnet,
+    ...mainnet,
     rpcUrls: {
-      ...chain.mainnet.rpcUrls,
-      default: 'https://eth-mainnet.alchemyapi.io/v2',
+      ...mainnet.rpcUrls,
+      alchemy: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
+      default: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
     },
   },
-  chain.polygon,
-  chain.optimism,
-  chain.arbitrum,
+  polygon,
+  optimism,
+  arbitrum,
 ]
 const defaultChainsWithAvalanche = [...defaultChains, avalancheChain]
 
@@ -80,7 +80,7 @@ const alchemyListener = vi.fn()
 const alchemyHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: alchemyListener,
-  rpcUrl: (chain) => `${chain.rpcUrls.alchemy}/${alchemyApiKey}`,
+  rpcUrl: (chain) => `${chain.rpcUrls.alchemy?.http[0]}/${alchemyApiKey}`,
 })
 
 const infuraApiKey = 'apiKey-infura'
@@ -88,14 +88,14 @@ const infuraListener = vi.fn()
 const infuraHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: infuraListener,
-  rpcUrl: (chain) => `${chain.rpcUrls.infura}/${infuraApiKey}`,
+  rpcUrl: (chain) => `${chain.rpcUrls.infura?.http[0]}/${infuraApiKey}`,
 })
 
 const publicListener = vi.fn()
 const publicHandlers = getHandlers({
   chains: defaultChainsWithAvalanche,
   listener: publicListener,
-  rpcUrl: (chain) => chain.rpcUrls.default,
+  rpcUrl: (chain) => chain.rpcUrls.default.http[0]!,
 })
 
 const jsonRpcListener = vi.fn()
@@ -135,7 +135,7 @@ describe('configureChains', () => {
       ])
 
       it('populate chains with Alchemy RPC URLs if all chains support Alchemy', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default))
+        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
           .toMatchInlineSnapshot(`
             [
               "https://eth-mainnet.alchemyapi.io/v2/apiKey-alchemy",
@@ -148,7 +148,7 @@ describe('configureChains', () => {
 
       it('provides an AlchemyProvider instance to provider', async () => {
         expect(
-          provider({ chainId: chain.mainnet.id }) instanceof
+          provider({ chainId: mainnet.id }) instanceof
             providers.AlchemyProvider,
         ).toBeTruthy()
       })
@@ -182,7 +182,7 @@ describe('configureChains', () => {
       ])
 
       it('configures with Infura RPC URL if all chains support Infura', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default))
+        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
           .toMatchInlineSnapshot(`
             [
               "https://mainnet.infura.io/v3/apiKey-infura",
@@ -195,8 +195,7 @@ describe('configureChains', () => {
 
       it('provides an InfuraProvider instance to provider', async () => {
         expect(
-          provider({ chainId: chain.mainnet.id }) instanceof
-            providers.InfuraProvider,
+          provider({ chainId: mainnet.id }) instanceof providers.InfuraProvider,
         ).toBeTruthy()
       })
 
@@ -229,21 +228,21 @@ describe('configureChains', () => {
       ])
 
       it('configures chains with default RPC URL', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default))
+        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
           .toMatchInlineSnapshot(`
-          [
-            "https://eth-mainnet.alchemyapi.io/v2",
-            "https://polygon-rpc.com",
-            "https://mainnet.optimism.io",
-            "https://arb1.arbitrum.io/rpc",
-            "https://api.avax.network/ext/bc/C/rpc",
-          ]
-        `)
+            [
+              "https://eth-mainnet.alchemyapi.io/v2",
+              "https://polygon-rpc.com",
+              "https://mainnet.optimism.io",
+              "https://arb1.arbitrum.io/rpc",
+              "https://api.avax.network/ext/bc/C/rpc",
+            ]
+          `)
       })
 
       it('provides a StaticJsonRpcProvider instance', async () => {
         expect(
-          provider({ chainId: chain.mainnet.id }) instanceof
+          provider({ chainId: mainnet.id }) instanceof
             providers.StaticJsonRpcProvider,
         ).toBeTruthy()
       })
@@ -256,17 +255,14 @@ describe('configureChains', () => {
       })
 
       it('throws an error if a chain does not have a default RPC URL', () => {
-        const polygon = { ...chain.polygon, rpcUrls: { default: '' } }
+        const polygon_: Chain = {
+          ...polygon,
+          rpcUrls: { default: { http: [''] } },
+        }
 
         expect(() =>
           configureChains(
-            [
-              chain.mainnet,
-              polygon,
-              chain.optimism,
-              chain.arbitrum,
-              avalancheChain,
-            ],
+            [mainnet, polygon_, optimism, arbitrum, avalancheChain],
 
             [publicProvider()],
           ),
@@ -289,22 +285,22 @@ describe('configureChains', () => {
       ])
 
       it('configure chains with provided RPC URLs for JSON RPC provider', async () => {
-        expect(chains.map((chain) => chain.rpcUrls.default))
+        expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
           .toMatchInlineSnapshot(`
-          [
-            "https://homestead.example.com",
-            "https://matic.example.com",
-            "https://optimism.example.com",
-            "https://arbitrum.example.com",
-            "https://avalanche.example.com",
-          ]
-        `)
+            [
+              "https://homestead.example.com",
+              "https://matic.example.com",
+              "https://optimism.example.com",
+              "https://arbitrum.example.com",
+              "https://avalanche.example.com",
+            ]
+          `)
       })
 
       it('provides a StaticJsonRpcProvider instance', async () => {
-        expect(
-          provider({ chainId: chain.mainnet.id }).constructor.name,
-        ).toEqual('StaticJsonRpcProvider')
+        expect(provider({ chainId: mainnet.id }).constructor.name).toEqual(
+          'StaticJsonRpcProvider',
+        )
       })
 
       it('provides a JsonRpcProvider instance if `static` option is falsy', async () => {
@@ -316,9 +312,9 @@ describe('configureChains', () => {
             static: false,
           }),
         ])
-        expect(
-          provider({ chainId: chain.mainnet.id }).constructor.name,
-        ).toEqual('JsonRpcProvider')
+        expect(provider({ chainId: mainnet.id }).constructor.name).toEqual(
+          'JsonRpcProvider',
+        )
       })
 
       defaultChainsWithAvalanche.forEach((chain) => {
@@ -357,20 +353,20 @@ describe('configureChains', () => {
   })
 
   describe('multiple providers', () => {
-    const polygon = {
-      ...chain.polygon,
-      rpcUrls: { ...chain.polygon.rpcUrls, alchemy: '' },
+    const polygon_: Chain = {
+      ...polygon,
+      rpcUrls: { ...polygon.rpcUrls, alchemy: { http: [''] } },
     }
-    const arbitrum = {
-      ...chain.arbitrum,
-      rpcUrls: { ...chain.arbitrum.rpcUrls, alchemy: '' },
+    const arbitrum_: Chain = {
+      ...arbitrum,
+      rpcUrls: { ...arbitrum.rpcUrls, alchemy: { http: [''] } },
     }
 
-    const defaultChains = [
-      chain.mainnet,
-      polygon,
-      chain.optimism,
-      arbitrum,
+    const defaultChains: Chain[] = [
+      mainnet,
+      polygon_,
+      optimism,
+      arbitrum_,
       avalancheChain,
     ]
 
@@ -380,16 +376,16 @@ describe('configureChains', () => {
       jsonRpcProvider({
         rpc: (chain) => {
           if (chain.id !== avalancheChain.id) return null
-          return { http: chain.rpcUrls.default }
+          return { http: chain.rpcUrls.default.http[0]! }
         },
       }),
     ])
 
     it('configures chains with correct fallbacks', async () => {
-      expect(chains.map((chain) => chain.rpcUrls.default))
+      expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
         .toMatchInlineSnapshot(`
           [
-            "https://eth-mainnet.alchemyapi.io/v2/apiKey-alchemy",
+            "https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy",
             "https://polygon-mainnet.infura.io/v3/apiKey-infura",
             "https://opt-mainnet.g.alchemy.com/v2/apiKey-alchemy",
             "https://arbitrum-mainnet.infura.io/v3/apiKey-infura",
@@ -400,8 +396,7 @@ describe('configureChains', () => {
 
     it('provides a FallbackProvider instance', async () => {
       expect(
-        provider({ chainId: chain.mainnet.id }) instanceof
-          providers.FallbackProvider,
+        provider({ chainId: mainnet.id }) instanceof providers.FallbackProvider,
       ).toBeTruthy()
     })
 
@@ -425,7 +420,9 @@ describe('configureChains', () => {
             jsonRpcProvider({
               rpc: (chain) => ({
                 http:
-                  chain.id === avalancheChain.id ? '' : chain.rpcUrls.default,
+                  chain.id === avalancheChain.id
+                    ? ''
+                    : chain.rpcUrls.default.http[0]!,
               }),
             }),
           ],
@@ -566,7 +563,7 @@ describe('configureChains', () => {
       )
 
       expect(() =>
-        provider({ chainId: chain.mainnet.id }).getBlockNumber(),
+        provider({ chainId: mainnet.id }).getBlockNumber(),
       ).toThrowError()
     })
   })
@@ -592,7 +589,7 @@ describe('configureChains', () => {
       )
 
       const fallbackProvider = provider({
-        chainId: chain.mainnet.id,
+        chainId: mainnet.id,
       }) as providers.FallbackProvider
 
       expect(
@@ -649,7 +646,7 @@ describe('configureChains', () => {
       ])
 
       const fallbackProvider = provider({
-        chainId: chain.mainnet.id,
+        chainId: mainnet.id,
       }) as providers.FallbackProvider
 
       expect(

@@ -2,10 +2,10 @@ import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
+import type { Chain } from '../chains'
 import { getClient } from '../client'
 import type { ProviderRpcError } from '../errors'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
-import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -180,7 +180,8 @@ export class WalletConnectConnector extends Connector<
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
-          rpcUrls: { default: '' },
+          nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
+          rpcUrls: { default: { http: [''] } },
         }
       )
     } catch (error) {

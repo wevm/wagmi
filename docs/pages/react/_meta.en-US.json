@@ -5,6 +5,7 @@
   "typescript": "TypeScript",
   "client": "Client",
   "WagmiConfig": "WagmiConfig",
+  "chains": "Chains",
   "providers": "Providers",
   "connectors": "Connectors",
   "hooks": "Hooks",

@@ -1,13 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getSigners, setupClient, testChains } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
-import { allChains } from '../../constants'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
 
 const connector = new MockConnector({
-  chains: allChains,
+  chains: testChains,
   options: { signer: getSigners()[0]! },
 })
 
@@ -31,26 +30,45 @@ describe('switchNetwork', () => {
               "url": "https://goerli.etherscan.io",
             },
           },
-          "ens": {
-            "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+          "contracts": {
+            "ensRegistry": {
+              "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+            },
+            "multicall3": {
+              "address": "0xca11bde05977b3631167028862be2a173976ca11",
+              "blockCreated": 6507670,
+            },
           },
           "id": 5,
-          "multicall": {
-            "address": "0xca11bde05977b3631167028862be2a173976ca11",
-            "blockCreated": 6507670,
-          },
           "name": "Goerli",
           "nativeCurrency": {
             "decimals": 18,
             "name": "Goerli Ether",
-            "symbol": "ETH",
+            "symbol": "GOR",
           },
           "network": "goerli",
           "rpcUrls": {
-            "alchemy": "https://eth-goerli.alchemyapi.io/v2",
-            "default": "https://rpc.ankr.com/eth_goerli",
-            "infura": "https://goerli.infura.io/v3",
-            "public": "https://rpc.ankr.com/eth_goerli",
+            "alchemy": {
+              "http": [
+                "https://eth-goerli.g.alchemy.com/v2",
+              ],
+              "webSocket": [
+                "wss://eth-goerli.g.alchemy.com/v2",
+              ],
+            },
+            "default": {
+              "http": [
+                "https://rpc.ankr.com/eth_goerli",
+              ],
+            },
+            "infura": {
+              "http": [
+                "https://goerli.infura.io/v3",
+              ],
+              "webSocket": [
+                "wss://goerli.infura.io/ws/v3",
+              ],
+            },
           },
           "testnet": true,
         }

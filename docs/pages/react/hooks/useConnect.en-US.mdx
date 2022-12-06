@@ -91,13 +91,16 @@ Chain ID to connect.
 
 ```tsx {6}
 import { chain, useConnect } from 'wagmi'
+import { optimism } from 'wagmi/chains'
 
 function App() {
   const connect = useConnect({
-    chainId: chain.optimism.id,
+    chainId: optimism.id,
   })
 }
 ```
+
+Note: The above example is using the `optimism` chain from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ### connector (optional)
 

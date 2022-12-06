@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
+import type { Chain } from '../chains'
 import type {
-  Chain,
   ChainProviderFn,
   Provider,
   ProviderWithFallbackConfig,

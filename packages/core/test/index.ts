@@ -31,4 +31,5 @@ export {
   getRandomTokenId,
   getWebSocketProvider,
   getSigners,
+  testChains,
 } from './utils'

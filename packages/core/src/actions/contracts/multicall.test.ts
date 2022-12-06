@@ -6,8 +6,8 @@ import {
   setupClient,
   wagmigotchiContractConfig,
 } from '../../../test'
+import { mainnet, polygon } from '../../chains'
 
-import { chain } from '../../constants'
 import { multicall } from './multicall'
 
 const contracts = [
@@ -40,7 +40,7 @@ const warn = vi
 describe('multicall', () => {
   beforeEach(() => {
     setupClient({
-      chains: [chain.mainnet, { ...chain.polygon, multicall: undefined }],
+      chains: [mainnet, { ...polygon, contracts: { multicall3: undefined } }],
     })
     warnMessages = []
   })
@@ -435,7 +435,7 @@ describe('multicall', () => {
   describe('errors', () => {
     it('should throw if the chain does not support multicall', async () => {
       await expect(
-        multicall({ contracts, chainId: chain.polygon.id }),
+        multicall({ contracts, chainId: polygon.id }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain \\"Polygon\\" does not support multicall."`,
       )
