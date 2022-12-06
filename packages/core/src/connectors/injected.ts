@@ -20,6 +20,13 @@ export type InjectedConnectorOptions = {
   /** Name of connector */
   name?: string | ((detectedName: string | string[]) => string)
   /**
+   * [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target
+   *
+   * @default
+   * () => typeof window !== 'undefined' ? window.ethereum : undefined
+   */
+  getProvider?: () => Window['ethereum'] | undefined
+  /**
    * MetaMask 10.9.3 emits disconnect event when chain is changed.
    * This flag prevents the `"disconnect"` event from being emitted upon switching chains. See [GitHub issue](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334) for more info.
    */
@@ -32,14 +39,17 @@ export type InjectedConnectorOptions = {
   shimDisconnect?: boolean
 }
 
+type ConnectorOptions = InjectedConnectorOptions &
+  Required<Pick<InjectedConnectorOptions, 'getProvider'>>
+
 export class InjectedConnector extends Connector<
   Window['ethereum'],
-  InjectedConnectorOptions | undefined,
+  ConnectorOptions,
   providers.JsonRpcSigner
 > {
   readonly id: string
   readonly name: string
-  readonly ready = typeof window != 'undefined' && !!window.ethereum
+  readonly ready: boolean
 
   #provider?: Window['ethereum']
   #switchingChains?: boolean
@@ -56,25 +66,25 @@ export class InjectedConnector extends Connector<
     const options = {
       shimDisconnect: true,
       shimChainChangedDisconnect: true,
+      getProvider: () =>
+        typeof window !== 'undefined' ? window.ethereum : undefined,
       ...options_,
     }
     super({ chains, options })
 
-    let name = 'Injected'
-    const overrideName = options.name
-    if (typeof overrideName === 'string') name = overrideName
-    else if (typeof window !== 'undefined') {
-      const detectedName = getInjectedName(window.ethereum)
-      if (overrideName) name = overrideName(detectedName)
-      else
-        name =
-          typeof detectedName === 'string'
-            ? detectedName
-            : (detectedName[0] as string)
-    }
+    const provider = options.getProvider()
+    if (typeof options.name === 'string') this.name = options.name
+    else if (provider) {
+      const detectedName = getInjectedName(provider)
+      if (options.name) this.name = options.name(detectedName)
+      else {
+        if (typeof detectedName === 'string') this.name = detectedName
+        else this.name = detectedName[0] as string
+      }
+    } else this.name = 'Injected'
 
     this.id = 'injected'
-    this.name = name
+    this.ready = !!provider
   }
 
   async connect({ chainId }: { chainId?: number } = {}) {
@@ -104,7 +114,7 @@ export class InjectedConnector extends Connector<
       }
 
       // Add shim to storage signalling wallet is connected
-      if (this.options?.shimDisconnect)
+      if (this.options.shimDisconnect)
         getClient().storage?.setItem(this.shimDisconnectKey, true)
 
       return { account, chain: { id, unsupported }, provider }
@@ -126,7 +136,7 @@ export class InjectedConnector extends Connector<
     provider.removeListener('disconnect', this.onDisconnect)
 
     // Remove shim signalling wallet is disconnected
-    if (this.options?.shimDisconnect)
+    if (this.options.shimDisconnect)
       getClient().storage?.removeItem(this.shimDisconnectKey)
   }
 
@@ -147,8 +157,8 @@ export class InjectedConnector extends Connector<
   }
 
   async getProvider() {
-    if (typeof window !== 'undefined' && !!window.ethereum)
-      this.#provider = window.ethereum
+    const provider = this.options.getProvider()
+    if (provider) this.#provider = provider
     return this.#provider
   }
 
@@ -166,7 +176,7 @@ export class InjectedConnector extends Connector<
   async isAuthorized() {
     try {
       if (
-        this.options?.shimDisconnect &&
+        this.options.shimDisconnect &&
         // If shim does not exist in storage, wallet is disconnected
         !getClient().storage?.getItem(this.shimDisconnectKey)
       )
@@ -182,7 +192,7 @@ export class InjectedConnector extends Connector<
   }
 
   async switchChain(chainId: number) {
-    if (this.options?.shimChainChangedDisconnect) this.#switchingChains = true
+    if (this.options.shimChainChangedDisconnect) this.#switchingChains = true
 
     const provider = await this.getProvider()
     if (!provider) throw new ConnectorNotFoundError()
@@ -286,14 +296,14 @@ export class InjectedConnector extends Connector<
     // We need this as MetaMask can emit the "disconnect" event
     // upon switching chains. This workaround ensures that the
     // user currently isn't in the process of switching chains.
-    if (this.options?.shimChainChangedDisconnect && this.#switchingChains) {
+    if (this.options.shimChainChangedDisconnect && this.#switchingChains) {
       this.#switchingChains = false
       return
     }
 
     this.emit('disconnect')
     // Remove shim signalling wallet is disconnected
-    if (this.options?.shimDisconnect)
+    if (this.options.shimDisconnect)
       getClient().storage?.removeItem(this.shimDisconnectKey)
   }
 

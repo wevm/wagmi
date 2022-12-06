@@ -18,7 +18,7 @@ export function ValidationComparisonTable() {
               <video
                 id="lazy"
                 controls
-                src="/docs/lazy-mint.mp4"
+                src="/assets/lazy-mint.mp4"
                 style={{ width: 300, paddingBottom: 8 }}
               />
               <label htmlFor="lazy" style={{ fontSize: '14px' }}>
@@ -31,7 +31,7 @@ export function ValidationComparisonTable() {
               <video
                 id="eager"
                 controls
-                src="/docs/eager-mint.mp4"
+                src="/assets/eager-mint.mp4"
                 style={{ width: 300, paddingBottom: 8 }}
               />
               <label htmlFor="eager" style={{ fontSize: '14px' }}>

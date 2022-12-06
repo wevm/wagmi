@@ -1,5 +1,29 @@
 # @wagmi/core
 
+## 0.7.9
+
+### Patch Changes
+
+- [#1411](https://github.com/wagmi-dev/wagmi/pull/1411) [`659be184`](https://github.com/wagmi-dev/wagmi/commit/659be1840c613ce9f7aca9ac96694c4f60da4a66) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where block invalidation was not properly disabled when setting `enabled: false`.
+
+## 0.7.8
+
+### Patch Changes
+
+- [#1406](https://github.com/wagmi-dev/wagmi/pull/1406) [`4f18c450`](https://github.com/wagmi-dev/wagmi/commit/4f18c450a4d7952bfcfa6c533348ffbe55893d3c) Thanks [@tmm](https://github.com/tmm)! - Function for selecting the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target. Defaults to `() => typeof window !== 'undefined' ? window.ethereum : undefined`.
+
+  ```ts
+  import { InjectedConnector } from '@wagmi/core/connectors/injected'
+
+  const connector = new InjectedConnector({
+    options: {
+      name: 'My Injected Wallet',
+      getProvider: () =>
+        typeof window !== 'undefined' ? window.myInjectedWallet : undefined,
+    },
+  })
+  ```
+
 ## 0.7.7
 
 ### Patch Changes
