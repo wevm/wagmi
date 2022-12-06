@@ -1,0 +1,4 @@
+{
+  "type": "module",
+  "main": "../../dist/internal/test.js"
+}
