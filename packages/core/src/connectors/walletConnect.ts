@@ -117,7 +117,10 @@ export class WalletConnectConnector extends Connector<
     if (!this.#provider || chainId || create) {
       const rpc = !this.options?.infuraId
         ? this.chains.reduce(
-            (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
+            (rpc, chain) => ({
+              ...rpc,
+              [chain.id]: chain.rpcUrls.default.http[0],
+            }),
             {},
           )
         : {}
