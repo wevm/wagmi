@@ -6,7 +6,7 @@ import { UserRejectedRequestError } from '../../errors'
 import type { Signer } from '../../types'
 
 export type MockProviderOptions = {
-  chainId?: number
+  chainId: number
   flags?: {
     isAuthorized?: boolean
     failConnect?: boolean
@@ -30,7 +30,7 @@ export class MockProvider extends providers.BaseProvider {
   #signer?: Signer
 
   constructor(options: MockProviderOptions) {
-    super({ name: 'Network', chainId: options.chainId ?? 1 })
+    super({ name: 'Network', chainId: options.chainId })
     this.#options = options
   }
 
