@@ -23,7 +23,7 @@ export default defineConfig({
       // namePrefix: 'HelloFoundry',
       // out: 'artifacts',
       project: '../hello_foundry',
-      watch: true,
+      // watch: true,
     }),
 
     ////////////////////////////////////////////////////////////////

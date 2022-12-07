@@ -1,15 +1,10 @@
 import { camelCase } from 'change-case'
-import type { WatchOptions } from 'chokidar'
-import { watch } from 'chokidar'
+import type { FSWatcher, WatchOptions } from 'chokidar'
 import { default as dedent } from 'dedent'
-import { execa } from 'execa'
 import { default as fse } from 'fs-extra'
-
-import { basename } from 'pathe'
 
 import type { ContractConfig, Watch } from '../config'
 import { Config } from '../config'
-
 import * as logger from '../logger'
 import type { Contract } from '../types'
 import { findConfig, resolveConfig } from '../utils'
@@ -46,74 +41,100 @@ export async function generate({ config, root }: Generate) {
     contractNames.add(name)
   }
 
-  const watchers = []
+  // Write output to file
+  await writeContracts(Object.values(contracts))
+  if (!watchConfigs.length) {
+    logger.log('Done!')
+    return
+  }
+
+  const { watch } = await import('chokidar')
+
+  // Watch for changes
+  let timeout: NodeJS.Timeout | null
+  const delay = 100
+  const watchers: FSWatcher[] = []
   const watchOptions: WatchOptions = {
-    awaitWriteFinish: false,
+    atomic: true,
+    awaitWriteFinish: true,
+    ignoreInitial: true,
+    persistent: true,
   }
   for (const watchConfig of watchConfigs) {
-    let ready = false
     const watcher = watch(watchConfig.paths, watchOptions)
+    watcher.on('all', async (event, path) => {
+      if (event !== 'change' && event !== 'add' && event !== 'unlink') return
 
-    watcher.on('change', async (path) => {
-      if (!ready) return
-      const contractConfig = await watchConfig.onChange(path)
-      if (!contractConfig) return
-      console.log('change', path)
-      contracts[contractConfig.name] = await getContract(contractConfig)
+      let needsWrite = false
+      if (event === 'change') {
+        const contractConfig = await watchConfig.onChange(path)
+        if (!contractConfig) return
+        contracts[contractConfig.name] = await getContract(contractConfig)
+        needsWrite = true
+      } else if (event === 'add') {
+        const contractConfig = await watchConfig.onAdd?.(path)
+        if (!contractConfig) return
+        contracts[contractConfig.name] = await getContract(contractConfig)
+        contractNames.add(contractConfig.name)
+        needsWrite = true
+      } else if (event === 'unlink') {
+        const name = await watchConfig.onRemove?.(path)
+        if (!name) return
+        delete contracts[name]
+        contractNames.delete(name)
+        needsWrite = true
+      }
 
-      await writeContracts(Object.values(contracts))
+      if (needsWrite) {
+        console.log(event, path)
+        if (timeout) clearTimeout(timeout)
+        timeout = setTimeout(async () => {
+          console.log('Saving…')
+          timeout = null
+          await writeContracts(Object.values(contracts))
+          console.log('Saving!')
+        }, delay)
+        needsWrite = false
+      }
     })
     watcher.on('ready', async () => {
       if (watchConfig.command) {
         console.log(`Running watch command: ${watchConfig.command}`)
         const [command, ...parts] = watchConfig.command.split(' ')
+        const { execa } = await import('execa')
         await execa(command!, parts).stdout?.pipe(process.stdout)
       }
-      ready = true
     })
-
-    if (watchConfig.onAdd)
-      watcher.on('add', async (path) => {
-        if (!ready) return
-        const contractConfig = await watchConfig.onAdd?.(path)
-        if (!contractConfig) return
-        console.log('add', path)
-        contracts[contractConfig.name] = await getContract(contractConfig)
-        contractNames.add(contractConfig.name)
-
-        await writeContracts(Object.values(contracts))
-      })
-    if (watchConfig.onRemove)
-      watcher.on('unlink', async (path) => {
-        if (!ready) return
-        const name = await watchConfig.onRemove?.(path)
-        if (!name) return
-        console.log('unlink', path)
-        delete contracts[name]
-        contractNames.delete(name)
-
-        await writeContracts(Object.values(contracts))
-      })
 
     watchers.push(watcher)
   }
 
-  if (watchers.length)
-    watch(configPath).on('change', (path) => {
-      logger.log(
-        `> Found a change in ${basename(
-          path,
-        )}. Restart generate to see the changes in effect.`,
-      )
-    })
+  // Watch config file for changes
+  watch(configPath).on('change', async (path) => {
+    const { basename } = await import('pathe')
+    logger.log(
+      `> Found a change in ${basename(
+        path,
+      )}. Restart generate to see the changes in effect.`,
+    )
+  })
 
-  await writeContracts(Object.values(contracts))
+  // Display message and close watchers on Ctrl+C exit
+  process.once('SIGINT', shutdown)
+  process.once('SIGTERM', shutdown)
+  function shutdown() {
+    logger.log('Shutting down watch…')
+    for (const watcher of watchers) {
+      watcher.close()
+    }
+  }
 }
 
 async function writeContracts(
   contracts: Contract[],
   filename = 'wagmi-generated',
 ) {
+  // Assemble content
   let content = dedent`
     // Generated by @wagmi/cli
     // ${new Date().toISOString()}
@@ -126,8 +147,18 @@ async function writeContracts(
     `
   }
 
+  // Format and write output
   const cwd = process.cwd()
-  await fse.writeFile(`${cwd}/src/${filename}.ts`, content, {})
+  const outPath = `${cwd}/src/${filename}.ts`
+  const dprint = (await import('dprint-node')).default
+  const formatted = await dprint.format(outPath, content, {
+    bracePosition: 'nextLine',
+    quoteProps: 'asNeeded',
+    quoteStyle: 'alwaysSingle',
+    semiColons: 'asi',
+    trailingCommas: 'onlyMultiLine',
+  })
+  await fse.writeFile(outPath, formatted, {})
 }
 
 async function getContract({ address, name, source }: ContractConfig) {

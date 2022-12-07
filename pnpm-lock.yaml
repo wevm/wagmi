@@ -166,6 +166,7 @@ importers:
       change-case: ^4.1.2
       chokidar: ^3.5.3
       dedent: ^0.7.0
+      dprint-node: ^1.0.7
       execa: ^6.1.0
       find-up: ^6.3.0
       fixturez: ^1.1.0
@@ -174,13 +175,15 @@ importers:
       node-fetch: ^3.2.9
       pathe: ^1.0.0
       picocolors: ^1.0.0
+      typescript: ^4.7.4
       zod: ^3.19.1
     dependencies:
-      abitype: 0.2.5_zod@3.19.1
+      abitype: 0.2.5_kq6yedqphapbrhvn2h3pqu2wla
       cac: 6.7.14
       change-case: 4.1.2
       chokidar: 3.5.3
       dedent: 0.7.0
+      dprint-node: 1.0.7
       execa: 6.1.0
       find-up: 6.3.0
       fs-extra: 10.1.0
@@ -193,6 +196,7 @@ importers:
       '@types/dedent': 0.7.0
       '@types/fs-extra': 9.0.13
       fixturez: 1.1.0
+      typescript: 4.8.4
 
   packages/core:
     specifiers:
@@ -2350,7 +2354,7 @@ packages:
       typescript: 4.8.4
     dev: false
 
-  /abitype/0.2.5_zod@3.19.1:
+  /abitype/0.2.5_kq6yedqphapbrhvn2h3pqu2wla:
     resolution: {integrity: sha512-t1iiokWYpkrziu4WL2Gb6YdGvaP9ZKs7WnA39TI8TsW2E99GVRgDPW/xOKhzoCdyxOYt550CNYEFluCwGaFHaA==}
     engines: {pnpm: '>=7'}
     peerDependencies:
@@ -2360,6 +2364,7 @@ packages:
       zod:
         optional: true
     dependencies:
+      typescript: 4.8.4
       zod: 3.19.1
     dev: false
 
@@ -3532,6 +3537,12 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /detect-libc/1.0.3:
+    resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
+    engines: {node: '>=0.10'}
+    hasBin: true
+    dev: false
+
   /detective/5.2.1:
     resolution: {integrity: sha512-v9XE1zRnz1wRtgurGu0Bs8uHKFSTdteYZNbIPFVhUZ39L/S79ppMpdmVOZAnoz1jfEFodc48n6MX483Xo3t1yw==}
     engines: {node: '>=0.8.0'}
@@ -3606,6 +3617,12 @@ packages:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
     dev: true
+
+  /dprint-node/1.0.7:
+    resolution: {integrity: sha512-NTZOW9A7ipb0n7z7nC3wftvsbceircwVHSgzobJsEQa+7RnOMbhrfX5IflA6CtC4GA63DSAiHYXa4JKEy9F7cA==}
+    dependencies:
+      detect-libc: 1.0.3
+    dev: false
 
   /duplexer/0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
