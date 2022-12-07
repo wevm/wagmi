@@ -22,15 +22,16 @@ import { configureChains } from 'wagmi'
 - `webSocketProvider`: to optionally pass to `createClient`
 
 ```ts
-import { configureChains, createClient, defaultChains } from 'wagmi'
+import { configureChains, createClient } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
-const { chains, provider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
-  publicProvider(),
-])
+const { chains, provider } = configureChains(
+  [mainnet, optimism],
+  [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
+)
 
 const wagmiClient = createClient({
   autoConnect: true,
@@ -39,10 +40,7 @@ const wagmiClient = createClient({
 })
 ```
 
-<Callout type="warning">
-  If a user has their wallet connected to a chain that is unsupported by your
-  app, the `provider` will use the first chain listed in the `chains` array.
-</Callout>
+Find a list of supported chains in wagmi [here](/core/chains).
 
 ### Multiple providers
 
@@ -54,40 +52,18 @@ The `configureChains` function accepts multiple providers. This is useful if not
 - Ensuring the responses are legitimate by setting a `targetQuorum`.
 
 ```ts
-import { Chain, configureChains } from 'wagmi'
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-
-const avalancheChain: Chain = {
-  id: 43_114,
-  name: 'Avalanche',
-  network: 'avalanche',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'Avalanche',
-    symbol: 'AVAX',
-  },
-  rpcUrls: {
-    default: 'https://api.avax.network/ext/bc/C/rpc',
-  },
-  blockExplorers: {
-    default: { name: 'SnowTrace', url: 'https://snowtrace.io' },
-  },
-  testnet: false,
-}
+import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains(
-  [chain.mainnet, avalancheChain],
+  [mainnet, avalanche],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
-    jsonRpcProvider({
-      rpc: (chain) => {
-        if (chain.id !== avalancheChain.id) return null
-        return { http: chain.rpcUrls.default }
-      },
-    }),
+    publicProvider(),
   ],
 )
 ```
@@ -98,16 +74,11 @@ If the `targetQuorum` option is set to a value greater than `1`, it will dispatc
 
 ```tsx
 const { provider } = configureChains(
-  [chain.mainnet, avalancheChain],
+  [mainnet, avalanche],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
-    jsonRpcProvider({
-      rpc: (chain) => {
-        if (chain.id !== avalancheChain.id) return null
-        return { http: chain.rpcUrls.default }
-      },
-    }),
+    publicProvider(),
   ],
   { targetQuorum: 2 },
 )
@@ -126,13 +97,11 @@ To guarantee a static quorum, you can provide a `minQuorum` as an config option.
 Chains that need to be configured.
 
 ```ts {5}
-import { chain, configureChains } from 'wagmi'
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains } = configureChains(
-  [chain.mainnet, chain.optimism],
-  [publicProvider()],
-)
+const { chains } = configureChains([mainnet, optimism], [publicProvider()])
 ```
 
 ### providers
@@ -142,12 +111,13 @@ The providers the app supports.
 If a provider does not support a chain, it will fall back onto the next one in the array. If no RPC URLs are found, `configureChains` will throw an error.
 
 ```ts {7}
-import { chain, configureChains } from 'wagmi'
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains } = configureChains(
-  [chain.mainnet, chain.optimism],
+  [mainnet, optimism],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 ```
@@ -158,13 +128,14 @@ const { chains } = configureChains(
 
 The frequency in milliseconds at which the provider polls. Defaults to `4000`.
 
-```ts {12}
-import { chain, configureChains } from 'wagmi'
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains } = configureChains(
-  [chain.mainnet, chain.optimism],
+  [mainnet, optimism],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -178,13 +149,14 @@ const { chains } = configureChains(
 
 Sets the target quorum. Defaults to `1`.
 
-```ts {12}
-import { chain, configureChains } from 'wagmi'
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains } = configureChains(
-  [chain.mainnet, chain.optimism],
+  [mainnet, optimism],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -198,13 +170,14 @@ const { chains } = configureChains(
 
 Sets the minimum quorum that must be accepted by the providers. Defaults to `1`.
 
-```ts {12}
-import { chain, configureChains } from 'wagmi'
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains } = configureChains(
-  [chain.mainnet, chain.optimism],
+  [mainnet, optimism],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
@@ -218,13 +191,14 @@ const { chains } = configureChains(
 
 The timeout in milliseconds after which another provider will be attempted.
 
-```ts {12}
-import { chain, configureChains } from 'wagmi'
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains } = configureChains(
-  [chain.mainnet, chain.optimism],
+  [mainnet, optimism],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),

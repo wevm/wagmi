@@ -165,24 +165,27 @@ const data = await readContracts({
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
 
-```ts {8,13}
-import { readContracts, chain } from '@wagmi/core'
+```ts {9,14}
+import { readContracts } from '@wagmi/core'
+import { optimism } from '@wagmi/core/chains'
 
 const data = await readContracts({
   contracts: [
     {
       ...wagmigotchiContract,
       functionName: 'getAlive',
-      chainId: chain.mainnet.id,
+      chainId: optimism.id,
     },
     {
       ...wagmigotchiContract,
       functionName: 'getBoredom',
-      chainId: chain.mainnet.id,
+      chainId: optimism.id,
     },
   ],
 })
 ```
+
+Note: The above example is using the `optimism` chain from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ### allowFailure (optional)
 

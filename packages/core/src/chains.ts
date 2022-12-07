@@ -1,14 +1,22 @@
 export {
   arbitrum,
   arbitrumGoerli,
+  avalanche,
+  avalancheFuji,
+  bsc,
+  bscTestnet,
+  fantom,
+  fantomTestnet,
   foundry,
   goerli,
   hardhat,
-  sepolia,
   localhost,
   mainnet,
   optimism,
   optimismGoerli,
   polygon,
   polygonMumbai,
-} from './constants/chains'
+  sepolia,
+} from '@wagmi/chains'
+
+export type { Chain } from '@wagmi/chains'

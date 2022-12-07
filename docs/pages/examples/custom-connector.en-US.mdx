@@ -53,12 +53,12 @@ export class CoolWalletConnector extends Connector<
 Once your custom Connector class is set up, you are ready to use it! You can plug it in anywhere built-in connectors work.
 
 ```ts
-import { defaultChains, createClient } from 'wagmi'
+import { createClient, mainnet } from 'wagmi'
 
 import { CoolWalletConnector } from './CoolWalletConnector'
 
 const connector = new CoolWalletConnector({
-  chains: defaultChains,
+  chains: [mainnet],
   options: {
     // Custom connector options
   },

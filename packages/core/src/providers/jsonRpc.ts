@@ -1,6 +1,7 @@
 import { providers } from 'ethers'
 
-import type { Chain, ChainProviderFn, FallbackProviderConfig } from '../types'
+import type { Chain } from '../chains'
+import type { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type JsonRpcProviderConfig = FallbackProviderConfig & {
   rpc: (chain: Chain) => { http: string; webSocket?: string } | null
@@ -25,7 +26,7 @@ export function jsonRpcProvider({
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: rpcConfig.http,
+          default: { http: [rpcConfig.http] },
         },
       },
       provider: () => {
@@ -33,7 +34,7 @@ export function jsonRpcProvider({
           ? providers.StaticJsonRpcProvider
           : providers.JsonRpcProvider
         const provider = new RpcProvider(rpcConfig.http, {
-          ensAddress: chain.ens?.address,
+          ensAddress: chain.contracts?.ensRegistry?.address,
           chainId: chain.id,
           name: chain.network,
         })

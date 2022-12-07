@@ -128,6 +128,7 @@ importers:
       '@types/node': ^17.0.31
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
+      '@wagmi/chains': 0.0.0-20221201004721
       eslint: ^8.15.0
       eslint-config-next: ^12.1.6
       ethers: ^5.7.1
@@ -137,6 +138,7 @@ importers:
       typescript: ^4.9.3
       wagmi: workspace:*
     dependencies:
+      '@wagmi/chains': 0.0.0-20221201004721
       ethers: 5.7.1
       next: 12.3.1_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -153,24 +155,26 @@ importers:
 
   packages/core:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.4.1
+      '@coinbase/wallet-sdk': ^3.6.0
+      '@wagmi/chains': ^0.1.0
       '@walletconnect/ethereum-provider': ^1.7.8
       abitype: ^0.1.8
       eventemitter3: ^4.0.7
       typescript: ^4.9.3
       zustand: ^4.1.4
     dependencies:
+      '@wagmi/chains': 0.1.0
       abitype: 0.1.8_typescript@4.9.3
       eventemitter3: 4.0.7
       zustand: 4.1.4
     devDependencies:
-      '@coinbase/wallet-sdk': 3.5.3
+      '@coinbase/wallet-sdk': 3.6.0
       '@walletconnect/ethereum-provider': 1.8.0
       typescript: 4.9.3
 
   packages/react:
     specifiers:
-      '@coinbase/wallet-sdk': ^3.5.3
+      '@coinbase/wallet-sdk': ^3.6.0
       '@tanstack/query-sync-storage-persister': ^4.14.5
       '@tanstack/react-query': ^4.14.5
       '@tanstack/react-query-persist-client': ^4.14.5
@@ -189,7 +193,7 @@ importers:
       typescript: ^4.9.3
       use-sync-external-store: ^1.2.0
     dependencies:
-      '@coinbase/wallet-sdk': 3.5.3
+      '@coinbase/wallet-sdk': 3.6.0
       '@tanstack/query-sync-storage-persister': 4.14.5
       '@tanstack/react-query': 4.14.5_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.14.5_5ranp5o74eejvyb3vbwp2u74vy
@@ -521,8 +525,8 @@ packages:
       prettier: 2.8.0
     dev: true
 
-  /@coinbase/wallet-sdk/3.5.3:
-    resolution: {integrity: sha512-kaGMk9KyiSLPm1+BvCQSc99ku9gn0j+M1+2Beii+4gx/lRVhutlzmn6l+5zTB/n3xri25iTr+SxjMZLlMfW8Hg==}
+  /@coinbase/wallet-sdk/3.6.0:
+    resolution: {integrity: sha512-p7RHnbhWiwVr9viX9Z5KLxKgzGoJRKcAN/BYRTsodnesgA7y+omangXncsxY+5eyQSflEL7Dqs0dv/yeDsomow==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
@@ -2198,6 +2202,14 @@ packages:
     dependencies:
       sirv: 2.0.2
     dev: true
+
+  /@wagmi/chains/0.0.0-20221201004721:
+    resolution: {integrity: sha512-LmMQr7Q0eFS2F9EC3ToqcdX5VH1qgqQ2sVMKhSb6LN8j//r1hAjY5KwU+IfVBzdcPOwvlO8mf9ALpv5OIOZ/zQ==}
+    dev: false
+
+  /@wagmi/chains/0.1.0:
+    resolution: {integrity: sha512-seQVLZRHG2id8xqG+VnieFQ2gdavwa5Do+90lxbm/5EqiBo0S9LPFns6BKsSjW8o8T6UnmqzqhZwd4Q6cz8fFg==}
+    dev: false
 
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}

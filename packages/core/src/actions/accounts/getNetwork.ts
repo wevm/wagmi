@@ -1,5 +1,5 @@
+import type { Chain } from '../../chains'
 import { getClient } from '../../client'
-import type { Chain } from '../../types'
 
 export type GetNetworkResult = {
   chain?: Chain & {
@@ -19,7 +19,10 @@ export function getNetwork(): GetNetworkResult {
     id: chainId,
     name: `Chain ${chainId}`,
     network: `${chainId}`,
-    rpcUrls: { default: '' },
+    nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
+    rpcUrls: {
+      default: { http: [''] },
+    },
   }
 
   return {

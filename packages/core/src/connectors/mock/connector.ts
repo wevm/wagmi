@@ -1,6 +1,6 @@
 import { getAddress } from 'ethers/lib/utils.js'
 
-import type { Chain } from '../../types'
+import type { Chain } from '../../chains'
 import { normalizeChainId } from '../../utils'
 import type { ConnectorData } from '../base'
 import { Connector } from '../base'
@@ -94,7 +94,8 @@ export class MockConnector extends Connector<
         id: chainId,
         name: `Chain ${chainId}`,
         network: `${chainId}`,
-        rpcUrls: { default: '' },
+        nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
+        rpcUrls: { default: { http: [''] } },
       }
     )
   }

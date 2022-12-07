@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["es2019", "es2017", "dom"],
+    "lib": ["es2021", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -15,6 +15,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
+      "@wagmi/chains": ["packages/core/node_modules/@wagmi/chains/dist"],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
       "wagmi": ["packages/react/src"],
@@ -33,5 +34,10 @@
     ]
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
-  "include": ["packages/**/*", "scripts/**/*", "vitest.config.ts"]
+  "include": [
+    "examples/**/*",
+    "packages/**/*",
+    "scripts/**/*",
+    "vitest.config.ts"
+  ]
 }

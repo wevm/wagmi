@@ -1,8 +1,8 @@
 import type { Address } from 'abitype'
 import { default as EventEmitter } from 'eventemitter3'
 
-import { defaultChains } from '../constants'
-import type { Chain } from '../types'
+import type { Chain } from '../chains'
+import { goerli, mainnet } from '../chains'
 
 export type ConnectorData<Provider = any> = {
   account?: Address
@@ -35,7 +35,7 @@ export abstract class Connector<
   abstract readonly ready: boolean
 
   constructor({
-    chains = defaultChains,
+    chains = [mainnet, goerli],
     options,
   }: {
     chains?: Chain[]

@@ -189,8 +189,9 @@ function App() {
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
-```tsx {9,14}
-import { useContractReads, chain } from 'wagmi'
+```tsx {10,15}
+import { useContractReads } from 'wagmi'
+import { optimism } from 'wagmi/chains'
 
 function App() {
   const { data, isError, isLoading } = useContractReads({
@@ -198,17 +199,19 @@ function App() {
       {
         ...wagmigotchiContract,
         functionName: 'getAlive',
-        chainId: chain.mainnet.id,
+        chainId: optimism.id,
       },
       {
         ...wagmigotchiContract,
         functionName: 'getBoredom',
-        chainId: chain.mainnet.id,
+        chainId: optimism.id,
       },
     ],
   })
 }
 ```
+
+Note: The above example is using the `optimism` chain from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ### allowFailure (optional)
 

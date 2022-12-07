@@ -16,14 +16,17 @@ import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 ## Usage
 
 ```ts
-import { chain, configureChains } from '@wagmi/core'
+import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet, optimism, polygon],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' })],
 )
 ```
+
+Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ## Return Value
 
@@ -42,11 +45,11 @@ const { chains, provider } = configureChains(
 Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/).
 
 ```ts {6}
-import { chain, configureChains } from '@wagmi/core'
+import { configureChains, mainnet } from '@wagmi/core'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' })],
 )
 ```
@@ -56,12 +59,12 @@ const { chains, provider } = configureChains(
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
 ```ts {10,12}
-import { chain, configureChains } from '@wagmi/core'
+import { configureChains, mainnet } from '@wagmi/core'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet],
   [
     alchemyProvider({
       apiKey: 'yourAlchemyApiKey',
@@ -77,12 +80,12 @@ const { chains, provider } = configureChains(
 The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {10}
-import { chain, configureChains } from '@wagmi/core'
+import { configureChains, mainnet } from '@wagmi/core'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet],
   [
     alchemyProvider({
       apiKey: 'yourAlchemyApiKey',
@@ -98,12 +101,12 @@ const { chains, provider } = configureChains(
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
 ```ts {10,12}
-import { chain, configureChains } from '@wagmi/core'
+import { configureChains, mainnet } from '@wagmi/core'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet],
   [
     alchemyProvider({
       apiKey: 'yourAlchemyApiKey',

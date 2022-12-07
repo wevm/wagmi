@@ -1,34 +1,36 @@
 import { getProvider } from './actions'
+import type { Chain } from './chains'
 import type { Connector } from './connectors'
-import type { Chain } from './types'
 
 /**
  * Error subclass implementing JSON RPC 2.0 errors and Ethereum RPC errors per EIP-1474.
  * @see https://eips.ethereum.org/EIPS/eip-1474
  */
 export class RpcError<T = undefined> extends Error {
+  readonly cause: unknown
   readonly code: number
   readonly data?: T
-  readonly internal?: unknown
 
   constructor(
-    /** Number error code */
-    code: number,
     /** Human-readable string */
     message: string,
-    /** Low-level error */
-    internal?: unknown,
-    /** Other useful information about error */
-    data?: T,
+    options: {
+      cause?: unknown
+      /** Number error code */
+      code: number
+      /** Other useful information about error */
+      data?: T
+    },
   ) {
+    const { cause, code, data } = options
     if (!Number.isInteger(code)) throw new Error('"code" must be an integer.')
     if (!message || typeof message !== 'string')
       throw new Error('"message" must be a nonempty string.')
 
     super(message)
+    this.cause = cause
     this.code = code
     this.data = data
-    this.internal = internal
   }
 }
 
@@ -42,24 +44,26 @@ export class ProviderRpcError<T = undefined> extends RpcError<T> {
    * `code` must be an integer in the 1000 <= 4999 range.
    */
   constructor(
-    /**
-     * Number error code
-     * @see https://eips.ethereum.org/EIPS/eip-1193#error-standards
-     */
-    code: 4001 | 4100 | 4200 | 4900 | 4901 | 4902,
     /** Human-readable string */
     message: string,
-    /** Low-level error */
-    internal?: unknown,
-    /** Other useful information about error */
-    data?: T,
+    options: {
+      cause?: unknown
+      /**
+       * Number error code
+       * @see https://eips.ethereum.org/EIPS/eip-1193#error-standards
+       */
+      code: 4001 | 4100 | 4200 | 4900 | 4901 | 4902
+      /** Other useful information about error */
+      data?: T
+    },
   ) {
+    const { cause, code, data } = options
     if (!(Number.isInteger(code) && code >= 1000 && code <= 4999))
       throw new Error(
         '"code" must be an integer such that: 1000 <= code <= 4999',
       )
 
-    super(code, message, internal, data)
+    super(message, { cause, code, data })
   }
 }
 
@@ -288,16 +292,16 @@ export class ProviderChainsNotFound extends Error {
 export class ResourceUnavailableError extends RpcError {
   name = 'ResourceUnavailable'
 
-  constructor(error: unknown) {
-    super(-32002, 'Resource unavailable', error)
+  constructor(cause: unknown) {
+    super('Resource unavailable', { cause, code: -32002 })
   }
 }
 
 export class SwitchChainError extends ProviderRpcError {
   name = 'SwitchChainError'
 
-  constructor(error: unknown) {
-    super(4902, 'Error switching chain', error)
+  constructor(cause: unknown) {
+    super('Error switching chain', { cause, code: 4902 })
   }
 }
 
@@ -312,7 +316,7 @@ export class SwitchChainNotSupportedError extends Error {
 export class UserRejectedRequestError extends ProviderRpcError {
   name = 'UserRejectedRequestError'
 
-  constructor(error: unknown) {
-    super(4001, 'User rejected request', error)
+  constructor(cause: unknown) {
+    super('User rejected request', { cause, code: 4001 })
   }
 }

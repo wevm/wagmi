@@ -30,11 +30,11 @@ const connector = new WalletConnectConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { chain } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
-  chains: [chain.mainnet, chain.optimism],
+  chains: [mainnet, optimism],
   options: {
     qrcode: true,
   },

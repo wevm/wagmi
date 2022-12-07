@@ -35,13 +35,15 @@ const connector = new InjectedConnector()
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { chain } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 const connector = new InjectedConnector({
-  chains: [chain.mainnet, chain.optimism],
+  chains: [mainnet, optimism],
 })
 ```
+
+Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ### options (optional)
 

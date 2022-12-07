@@ -16,11 +16,12 @@ import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 ## Usage
 
 ```ts
-import { chain, configureChains } from '@wagmi/core'
+import { configureChains } from '@wagmi/core'
+import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet, polygon],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
@@ -30,6 +31,8 @@ const { chains, provider } = configureChains(
   ],
 )
 ```
+
+Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ## Return Value
 
@@ -47,12 +50,13 @@ const { chains, provider } = configureChains(
 
 Accepts a function which provides the `chain` and expects to receive a `http` URL and optionally a `webSocket` URL.
 
-```ts {8-11}
-import { chain, configureChains } from '@wagmi/core'
+```ts {9-12}
+import { configureChains } from '@wagmi/core'
+import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet, polygon],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
@@ -68,12 +72,13 @@ const { chains, provider } = configureChains(
 
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
-```ts {8}
-import { chain, configureChains } from '@wagmi/core'
+```ts {9}
+import { configureChains } from '@wagmi/core'
+import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet, polygon],
   [
     jsonRpcProvider({
       priority: 0,
@@ -91,12 +96,13 @@ const { chains, provider } = configureChains(
 
 The timeout in milliseconds after which another provider will be attempted.
 
-```ts {12}
-import { chain, configureChains } from '@wagmi/core'
+```ts {13,15}
+import { configureChains } from '@wagmi/core'
+import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet, polygon],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
@@ -114,12 +120,13 @@ const { chains, provider } = configureChains(
 
 Flag to indicate if the provider should return a [`StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider) or [`JsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#JsonRpcProvider). Defaults to `true`.
 
-```ts {12}
-import { chain, configureChains } from '@wagmi/core'
+```ts {13}
+import { configureChains } from '@wagmi/core'
+import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet, polygon],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
@@ -136,12 +143,13 @@ const { chains, provider } = configureChains(
 
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
-```ts {12}
-import { chain, configureChains } from '@wagmi/core'
+```ts {13}
+import { configureChains } from '@wagmi/core'
+import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
+  [mainnet, polygon],
   [
     jsonRpcProvider({
       rpc: (chain) => ({

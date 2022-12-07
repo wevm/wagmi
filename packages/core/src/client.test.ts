@@ -6,15 +6,16 @@ import {
   getSigners,
   getWebSocketProvider,
   setupClient,
+  testChains,
 } from '../test'
 import { connect, disconnect } from './actions'
+import { goerli, mainnet } from './chains'
 import { Client, createClient, getClient } from './client'
 import { MockConnector } from './connectors/mock'
-import { defaultChains } from './constants'
 import { createStorage, noopStorage } from './storage'
 
 const provider = () =>
-  Object.assign(getDefaultProvider(), { chains: defaultChains })
+  Object.assign(getDefaultProvider(), { chains: testChains })
 
 describe('createClient', () => {
   it('returns client', () => {
@@ -102,12 +103,12 @@ describe('createClient', () => {
 
     describe('chains', () => {
       it('default', async () => {
-        const client = setupClient({ chains: defaultChains })
+        const client = setupClient({ chains: [mainnet, goerli] })
         expect(client.chains).toBeUndefined()
       })
 
       it('autoConnect', async () => {
-        const client = setupClient({ chains: defaultChains })
+        const client = setupClient({ chains: [mainnet, goerli] })
         expect(client.chains).toBeUndefined()
         await client.autoConnect()
         expect(client.chains?.length).toEqual(2)
@@ -116,7 +117,7 @@ describe('createClient', () => {
       })
 
       it('connect', async () => {
-        const client = setupClient({ chains: defaultChains })
+        const client = setupClient({ chains: [mainnet, goerli] })
         expect(client.chains).toBeUndefined()
         await connect({ connector: client.connectors[0]! })
         expect(client.chains?.length).toEqual(2)

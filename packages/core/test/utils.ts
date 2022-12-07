@@ -2,7 +2,8 @@ import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
 import { BigNumber, Wallet, providers } from 'ethers'
 
 import type { Chain } from '../src'
-import { allChains, chain as chain_ } from '../src'
+import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
+
 import type { mirrorCrowdfundContractConfig } from './constants'
 
 export function getNetwork(chain: Chain) {
@@ -14,11 +15,11 @@ export function getNetwork(chain: Chain) {
 }
 
 const foundryMainnet: Chain = {
-  ...chain_.mainnet,
-  rpcUrls: chain_.foundry.rpcUrls,
+  ...mainnet,
+  rpcUrls: foundry.rpcUrls,
 }
 
-const testChains = [foundryMainnet, ...allChains]
+export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
 
 class EthersProviderWrapper extends providers.StaticJsonRpcProvider {
   toJSON() {
@@ -31,7 +32,7 @@ export function getProvider({
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
-  const url = foundryMainnet.rpcUrls.default
+  const url = foundryMainnet.rpcUrls.default.http[0]
   const provider = new EthersProviderWrapper(url, getNetwork(chain))
   provider.pollingInterval = 1_000
   return Object.assign(provider, { chains })
@@ -48,7 +49,7 @@ export function getWebSocketProvider({
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
-  const url = foundryMainnet.rpcUrls.default.replace('http', 'ws')
+  const url = foundryMainnet.rpcUrls.default.http[0]!.replace('http', 'ws')
   const webSocketProvider = Object.assign(
     new EthersWebSocketProviderWrapper(url, getNetwork(chain)),
     { chains },
