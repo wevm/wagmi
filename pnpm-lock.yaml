@@ -157,6 +157,7 @@ importers:
     specifiers:
       '@coinbase/wallet-sdk': ^3.6.0
       '@wagmi/chains': ^0.1.0
+      '@wagmi/connectors': 0.0.0-20221207010710
       '@walletconnect/ethereum-provider': ^1.7.8
       abitype: ^0.1.8
       eventemitter3: ^4.0.7
@@ -164,6 +165,7 @@ importers:
       zustand: ^4.1.4
     dependencies:
       '@wagmi/chains': 0.1.0
+      '@wagmi/connectors': 0.0.0-20221207010710_typescript@4.9.3
       abitype: 0.1.8_typescript@4.9.3
       eventemitter3: 4.0.7
       zustand: 4.1.4
@@ -2209,6 +2211,27 @@ packages:
 
   /@wagmi/chains/0.1.0:
     resolution: {integrity: sha512-seQVLZRHG2id8xqG+VnieFQ2gdavwa5Do+90lxbm/5EqiBo0S9LPFns6BKsSjW8o8T6UnmqzqhZwd4Q6cz8fFg==}
+    dev: false
+
+  /@wagmi/connectors/0.0.0-20221207010710_typescript@4.9.3:
+    resolution: {integrity: sha512-TsGsDnSFuuR2L/svf1+MwqDMu4wuChWDbpSRGCuyeSI1IOthDhvU0Lyp/xs0LFKfalP5PpZmhkO+CuhHOfW7sQ==}
+    peerDependencies:
+      '@wagmi/core': 0.8.x
+      ethers: ^5.0.0
+    dependencies:
+      '@coinbase/wallet-sdk': 3.6.0
+      '@walletconnect/ethereum-provider': 1.8.0
+      abitype: 0.1.8_typescript@4.9.3
+      eventemitter3: 4.0.7
+    transitivePeerDependencies:
+      - '@babel/core'
+      - bufferutil
+      - debug
+      - encoding
+      - react-native
+      - supports-color
+      - typescript
+      - utf-8-validate
     dev: false
 
   /@walletconnect/browser-utils/1.8.0:

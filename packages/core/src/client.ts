@@ -3,7 +3,7 @@ import type { Mutate, StoreApi } from 'zustand/vanilla'
 import { default as create } from 'zustand/vanilla'
 
 import type { Connector, ConnectorData } from './connectors'
-import { InjectedConnector } from './connectors'
+import { InjectedConnector } from './connectors/injected'
 import type { ClientStorage } from './storage'
 import { createStorage, noopStorage } from './storage'
 import type { Provider, WebSocketProvider } from './types'

@@ -16,6 +16,12 @@
     "noUnusedParameters": true,
     "paths": {
       "@wagmi/chains": ["packages/core/node_modules/@wagmi/chains/dist"],
+      "@wagmi/connectors": [
+        "packages/core/node_modules/@wagmi/connectors/dist"
+      ],
+      "@wagmi/connectors/*": [
+        "packages/core/node_modules/@wagmi/connectors/dist/*"
+      ],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
       "wagmi": ["packages/react/src"],
