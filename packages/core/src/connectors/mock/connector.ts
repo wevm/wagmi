@@ -26,7 +26,7 @@ export class MockConnector extends Connector<
     options,
   }: {
     chains?: Chain[]
-    options: MockProviderOptions
+    options: MockConnectorOptions
   }) {
     super({
       chains,
