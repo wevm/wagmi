@@ -100,7 +100,7 @@
   },
   "dependencies": {
     "@wagmi/chains": "^0.1.0",
-    "@wagmi/connectors": "0.0.0-20221207010710",
+    "@wagmi/connectors": "0.0.0-20221207013603",
     "abitype": "^0.1.8",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.1.4"
