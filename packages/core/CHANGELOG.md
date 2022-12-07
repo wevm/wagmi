@@ -1,5 +1,217 @@
 # @wagmi/core
 
+## 0.8.0
+
+### Minor Changes
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: the shape of the `Chain` type has been modified.
+
+  #### RPC URLs
+
+  The `rpcUrls` shape has changed to include an array of URLs, and also the transport method (`http` or `webSocket`):
+
+  ```diff
+  type Chain = {
+    ...
+    rpcUrls: {
+  -   [key: string]: string
+  +   [key: string]: {
+  +     http: string[]
+  +     webSocket: string[]
+  +   }
+    }
+    ...
+  }
+  ```
+
+  Note that you will also need to ensure that usage is migrated:
+
+  ```diff
+  - const rpcUrl = mainnet.rpcUrls.alchemy
+  + const rpcUrl = mainnet.rpcUrls.alchemy.http[0]
+  ```
+
+  #### Contracts
+
+  The `multicall` and `ens` attributes have been moved into the `contracts` object:
+
+  ```diff
+  type Contract = {
+    address: Address
+    blockCreated?: number
+  }
+
+  type Chain = {
+    ...
+  - multicall: Contract
+  - ens: Contract
+  + contracts: {
+  +   multicall3: Contract
+  +   ensRegistry: Contract
+  + }
+    ...
+  }
+  ```
+
+  Note that you will also need to ensure that usage is migrated:
+
+  ```diff
+  - const multicallContract = mainnet.multicall
+  + const multicallContract = mainnet.contracts.multicall3
+  ```
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Upgraded `@coinbase/wallet-sdk` peer dependency to `3.6.0`.
+
+  **Migration steps**: Update `@coinbase/wallet-sdk` to `^3.6.0`.
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Removed the `wait` argument on `waitForTransaction`. Use the transaction `hash` instead.
+
+  ```diff
+  const data = await waitForTransaction({
+  - wait: transaction.wait
+  + hash: transaction.hash
+  })
+  ```
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: With the introduction of the [`@wagmi/core/chains` entrypoint](/core/chains), `@wagmi/core` no longer exports the following:
+
+  - `chain`
+  - `allChains`
+  - `defaultChains`
+  - `defaultL2Chains`
+  - `chainId`
+  - `etherscanBlockExplorers`
+  - `alchemyRpcUrls`, `infuraRpcUrls`, `publicRpcUrls`
+
+  Read below for migration steps.
+
+  #### Removed `chain`
+
+  The `chain` export has been removed. `@wagmi/core` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygon`, `optimism`, etc), you will need to import it from the [`@wagmi/core/chains` entrypoint](/core/chains).
+
+  ```diff
+  import {
+  - chain
+    configureChains
+  } from '@wagmi/core'
+  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+
+  const { ... } = configureChains(
+  - [chain.mainnet, chain.polygon, chain.optimism],
+  + [mainnet, polygon, optimism],
+    {
+      ...
+    }
+  )
+  ```
+
+  #### Removed `allChains`
+
+  The `allChains` export has been removed. If you need a list of all chains, you can utilize [`@wagmi/core/chains` entrypoint](/core/chains).
+
+  ```diff
+  - import { allChains } from '@wagmi/core'
+  + import * as allChains from '@wagmi/core/chains'
+
+  const { ... } = configureChains(allChains, ...)
+  ```
+
+  #### Removed `defaultChains` & `defaultL2Chains`
+
+  The `defaultChains` & `defaultL2Chains` exports have been removed. If you still need the `defaultChains` or `defaultL2Chains` exports, you can build them yourself:
+
+  ```diff
+  - import { defaultChains } from '@wagmi/core'
+  + import { mainnet, goerli } from '@wagmi/core/chains'
+
+  + const defaultChains = [mainnet, goerli]
+  ```
+
+  > The `defaultChains` export was previously populated with `mainnet` & `goerli`.
+
+  ```diff
+  - import { defaultL2Chains } from '@wagmi/core'
+  + import {
+  +   arbitrum,
+  +   arbitrumGoerli,
+  +   polygon,
+  +   polygonMumbai,
+  +   optimism,
+  +   optimismGoerli
+  + } from '@wagmi/core/chains'
+
+  + const defaultL2Chains = [
+  +  arbitrum,
+  +  arbitrumGoerli,
+  +  polygon,
+  +  polygonMumbai,
+  +  optimism
+  +  optimismGoerli
+  + ]
+  ```
+
+  > The `defaultL2Chains` export was previously populated with `arbitrum` & `optimism`.
+
+  #### Removed `chainId`
+
+  The `chainId` export has been removed. You can extract a chain ID from the chain itself.
+
+  ```diff
+  - import { chainId } from '@wagmi/core'
+  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+
+  -const mainnetChainId = chainId.mainnet
+  -const polygonChainId = chainId.polygon
+  -const optimismChainId = chainId.optimism
+  +const mainnetChainId = mainnet.chainId
+  +const polygonChainId = polygon.chainId
+  +const optimismChainId = optimism.chainId
+  ```
+
+  #### Removed `etherscanBlockExplorers`
+
+  The `etherscanBlockExplorers` export has been removed. You can extract a block explorer from the chain itself.
+
+  ```diff
+  - import { etherscanBlockExplorers } from '@wagmi/core'
+  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+
+  -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
+  -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
+  -const optimismEtherscanBlockExplorer = etherscanBlockExplorers.optimism
+  +const mainnetEtherscanBlockExplorer = mainnet.blockExplorer
+  +const polygonEtherscanBlockExplorer = polygon.blockExplorer
+  +const optimismEtherscanBlockExplorer = optimism.blockExplorer
+  ```
+
+  #### Removed `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls`
+
+  The `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls` exports have been removed. You can extract a RPC URL from the chain itself.
+
+  ```diff
+  - import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from '@wagmi/core'
+  + import { mainnet } from '@wagmi/core/chains'
+
+  -const mainnetAlchemyRpcUrl = alchemyRpcUrls.mainnet
+  -const mainnetInfuraRpcUrl = infuraRpcUrls.mainnet
+  -const mainnetOptimismRpcUrl = publicRpcUrls.mainnet
+  +const mainnetAlchemyRpcUrl = mainnet.rpcUrls.alchemy
+  +const mainnetInfuraRpcUrl = mainnet.rpcUrls.infura
+  +const mainnetOptimismRpcUrl = mainnet.rpcUrls.optimism
+  ```
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Changed `waitForTransaction` behavior to throw an error if the transaction reverted.
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - Updated errors to use `cause` instead of `internal`
+
+### Patch Changes
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - `waitForTransaction` now respects repriced (sped up) transactions.
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - Export `getClient`
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - `waitForTransaction` now throws an error for cancelled or replaced transactions.
+
 ## 0.7.9
 
 ### Patch Changes
