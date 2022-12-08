@@ -50,10 +50,13 @@ export async function signTypedData<TTypedData extends TypedData>({
   const chainId = chainId_ ? normalizeChainId(chainId_) : undefined
   if (chainId) assertActiveChain({ chainId, signer })
 
+  const types_ = Object.entries(types)
+    .filter(([key]) => key !== 'EIP712Domain')
+    .reduce((types, [key, attributes]: [string, TypedDataField[]]) => {
+      types[key] = attributes.filter((attr) => attr.type !== 'EIP712Domain')
+      return types
+    }, {} as Record<string, TypedDataField[]>)
+
   // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-  return signer._signTypedData(
-    domain,
-    types as unknown as Record<string, TypedDataField[]>,
-    value,
-  )
+  return signer._signTypedData(domain, types_, value)
 }
