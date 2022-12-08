@@ -166,7 +166,9 @@ const config: DocsThemeConfig = {
         openGraph: {
           ...defaultSeoProps.openGraph,
           description: frontMatter.description,
-          images: frontMatter.image ? [{ url: frontMatter.image }] : [],
+          images: frontMatter.image
+            ? [{ url: frontMatter.image }]
+            : defaultSeoProps.openGraph.images,
           title: frontMatter.title,
         },
         titleTemplate: `%s – wagmi`,
