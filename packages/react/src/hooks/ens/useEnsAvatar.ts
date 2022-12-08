@@ -1,5 +1,5 @@
 import type { FetchEnsAvatarArgs, FetchEnsAvatarResult } from '@wagmi/core'
-import { fetchEnsAvatar } from '@wagmi/core'
+import { fetchDotbitAvatar, fetchEnsAvatar } from '@wagmi/core'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
@@ -18,11 +18,14 @@ function queryKey({
   return [{ entity: 'ensAvatar', address, chainId, scopeKey }] as const
 }
 
-function queryFn({
+async function queryFn({
   queryKey: [{ address, chainId }],
 }: QueryFunctionArgs<typeof queryKey>) {
   if (!address) throw new Error('address is required')
-  return fetchEnsAvatar({ address, chainId })
+  return (
+    (await fetchEnsAvatar({ address, chainId })) ||
+    (await fetchDotbitAvatar({ address, chainId }))
+  )
 }
 
 export function useEnsAvatar({

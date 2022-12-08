@@ -9,6 +9,8 @@ it('should expose correct exports', () => {
       "disconnect",
       "fetchBalance",
       "fetchBlockNumber",
+      "fetchDotbitAvatar",
+      "fetchDotbitName",
       "fetchEnsAddress",
       "fetchEnsAvatar",
       "fetchEnsName",

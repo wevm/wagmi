@@ -3,6 +3,8 @@ export {
   disconnect,
   fetchBalance,
   fetchBlockNumber,
+  fetchDotbitAvatar,
+  fetchDotbitName,
   fetchEnsAddress,
   fetchEnsAvatar,
   fetchEnsName,
