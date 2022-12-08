@@ -75,6 +75,22 @@ describe('signTypedData', () => {
       )
     })
 
+    it('can verify typed data w/ EIP712Domain type', async () => {
+      await connect({ connector })
+      const types_ = {
+        ...types,
+        EIP712Domain: [
+          { name: 'name', type: 'string' },
+          { name: 'version', type: 'string' },
+        ],
+        Mail: [...types.Mail, { name: 'test', type: 'EIP712Domain' }],
+      }
+      const res = await signTypedData({ domain, types: types_, value })
+      expect(verifyTypedData(domain, types, value, res)).toMatchInlineSnapshot(
+        `"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`,
+      )
+    })
+
     describe('when chainId is provided in domain', () => {
       it("throws mismatch if chainId doesn't match signer", async () => {
         await connect({
