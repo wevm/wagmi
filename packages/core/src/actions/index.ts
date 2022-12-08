@@ -67,6 +67,15 @@ export {
 } from './contracts'
 
 export {
+  fetchDotbitAvatar,
+  fetchDotbitName,
+  type FetchDotbitAvatarArgs,
+  type FetchDotbitAvatarResult,
+  type FetchDotbitNameArgs,
+  type FetchDotbitNameResult,
+} from './dotbit'
+
+export {
   fetchEnsAddress,
   fetchEnsAvatar,
   fetchEnsName,
