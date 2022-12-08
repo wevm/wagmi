@@ -22,14 +22,9 @@ export {
   useToken,
 } from './contracts'
 
-export {
-  useDotbitAvatar,
-  useDotbitName,
-  useEnsAddress,
-  useEnsAvatar,
-  useEnsName,
-  useEnsResolver,
-} from './ens'
+export { useDotbitAvatar, useDotbitName } from './dotbit'
+
+export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
 
 export { useBlockNumber, useFeeData } from './network-status'
 
