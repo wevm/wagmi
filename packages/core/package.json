@@ -87,7 +87,9 @@
   ],
   "peerDependencies": {
     "@coinbase/wallet-sdk": ">=3.6.0",
+    "@dotbit/plugin-avatar": ">=0.0.1",
     "@walletconnect/ethereum-provider": ">=1.7.5",
+    "dotbit": ">=0.4.13",
     "ethers": ">=5.5.1"
   },
   "peerDependenciesMeta": {

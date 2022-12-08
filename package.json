@@ -26,6 +26,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.25.2",
+    "@dotbit/plugin-avatar": "0.0.1",
     "@ethersproject/providers": "^5.7.1",
     "@types/eslint": "^8.4.10",
     "@types/fs-extra": "^9.0.13",
@@ -35,6 +36,7 @@
     "@typescript-eslint/parser": "^5.45.0",
     "@vitest/coverage-c8": "^0.25.3",
     "@vitest/ui": "^0.25.3",
+    "dotbit": "0.4.13",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
