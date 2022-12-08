@@ -23,7 +23,7 @@ describe('fetchDotbitAvatar', () => {
         it('custom', async () => {
           expect(
             await fetchDotbitAvatar({
-              address: '0x1d643fac9a463c9d544506006a6348c234da485f',
+              address: '0xEa8e1d16624CBf0290AB887129bB70E5Cdb4b557',
             }),
           ).toMatchInlineSnapshot(`"https://thiscatdoesnotexist.com"`)
         })
@@ -33,7 +33,7 @@ describe('fetchDotbitAvatar', () => {
     it('chainId', async () => {
       expect(
         await fetchDotbitAvatar({
-          address: '0x1d643fac9a463c9d544506006a6348c234da485f',
+          address: '0xEa8e1d16624CBf0290AB887129bB70E5Cdb4b557',
           chainId: 1,
         }),
       ).toMatchInlineSnapshot(`"https://thiscatdoesnotexist.com"`)

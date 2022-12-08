@@ -10,7 +10,7 @@ describe('useDotbitAvatar', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useDotbitAvatar({
-        address: '0x1d643fac9a463c9d544506006a6348c234da485f',
+        address: '0xEa8e1d16624CBf0290AB887129bB70E5Cdb4b557',
       }),
     )
 
@@ -44,7 +44,7 @@ describe('useDotbitAvatar', () => {
       it('has avatar', async () => {
         const { result, waitFor } = renderHook(() =>
           useDotbitAvatar({
-            address: '0x1d643fac9a463c9d544506006a6348c234da485f',
+            address: '0xEa8e1d16624CBf0290AB887129bB70E5Cdb4b557',
           }),
         )
 
@@ -107,7 +107,7 @@ describe('useDotbitAvatar', () => {
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useDotbitAvatar({
-          address: '0x1d643fac9a463c9d544506006a6348c234da485f',
+          address: '0xEa8e1d16624CBf0290AB887129bB70E5Cdb4b557',
           chainId: 1,
         }),
       )
@@ -171,7 +171,7 @@ describe('useDotbitAvatar', () => {
     it('refetch', async () => {
       const { result } = renderHook(() =>
         useDotbitAvatar({
-          address: '0x1d643fac9a463c9d544506006a6348c234da485f',
+          address: '0xEa8e1d16624CBf0290AB887129bB70E5Cdb4b557',
           enabled: false,
         }),
       )
