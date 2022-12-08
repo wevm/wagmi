@@ -26,7 +26,6 @@ export async function fetchDotbitAvatar({
   if (!account) {
     return null
   }
-  console.log(address, account)
   const avatar = await dotbit.avatar(account.account)
   return avatar?.url || null
 }
