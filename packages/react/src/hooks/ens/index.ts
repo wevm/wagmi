@@ -1,3 +1,5 @@
+export { useDotbitAvatar } from './useDotbitAvatar'
+export { useDotbitName } from './useDotbitName'
 export { useEnsAddress } from './useEnsAddress'
 export { useEnsAvatar } from './useEnsAvatar'
 export { useEnsName } from './useEnsName'

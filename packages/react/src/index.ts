@@ -17,6 +17,8 @@ export {
   useContractReads,
   useContractWrite,
   useDisconnect,
+  useDotbitAvatar,
+  useDotbitName,
   useEnsAddress,
   useEnsAvatar,
   useEnsName,

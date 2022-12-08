@@ -1,5 +1,5 @@
 import type { FetchEnsNameArgs, FetchEnsNameResult } from '@wagmi/core'
-import { fetchDotbitName, fetchEnsName } from '@wagmi/core'
+import { fetchEnsName } from '@wagmi/core'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
@@ -18,14 +18,11 @@ function queryKey({
   return [{ entity: 'ensName', address, chainId, scopeKey }] as const
 }
 
-async function queryFn({
+function queryFn({
   queryKey: [{ address, chainId }],
 }: QueryFunctionArgs<typeof queryKey>) {
   if (!address) throw new Error('address is required')
-  return (
-    (await fetchEnsName({ address, chainId })) ||
-    (await fetchDotbitName({ address, chainId }))
-  )
+  return fetchEnsName({ address, chainId })
 }
 
 export function useEnsName({

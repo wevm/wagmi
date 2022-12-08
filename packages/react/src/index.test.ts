@@ -21,6 +21,8 @@ it('should expose correct exports', () => {
       "useContractReads",
       "useContractWrite",
       "useDisconnect",
+      "useDotbitAvatar",
+      "useDotbitName",
       "useEnsAddress",
       "useEnsAvatar",
       "useEnsName",
