@@ -1,5 +1,279 @@
 # @wagmi/core
 
+## 0.8.2
+
+### Patch Changes
+
+- [#1442](https://github.com/wagmi-dev/wagmi/pull/1442) [`cde15289`](https://github.com/wagmi-dev/wagmi/commit/cde152899c758dea10787412b0aef669ed7202b2) Thanks [@0xproflupin](https://github.com/0xproflupin)! - Added Phantom wallet support to `InjectedConnector`
+
+- [#1448](https://github.com/wagmi-dev/wagmi/pull/1448) [`c6075f3a`](https://github.com/wagmi-dev/wagmi/commit/c6075f3a16885d850ad2656272351f9517c9f67b) Thanks [@tmm](https://github.com/tmm)! - Updated [ABIType](https://github.com/wagmi-dev/abitype) version.
+
+- [#1444](https://github.com/wagmi-dev/wagmi/pull/1444) [`310a8bc4`](https://github.com/wagmi-dev/wagmi/commit/310a8bc428ce4e7f68377f581b45dcdd64381cce) Thanks [@jxom](https://github.com/jxom)! - Assert that a `connector` exists before invoking the callback in `watchSigner`.
+
+- [#1434](https://github.com/wagmi-dev/wagmi/pull/1434) [`100e2a3b`](https://github.com/wagmi-dev/wagmi/commit/100e2a3b22f4602716554487b1d98738e053be76) Thanks [@tmm](https://github.com/tmm)! - Updated `MockConnector` `chainId` behavior to default to first chain from `chains` if not provided in `options`.
+
+## 0.8.1
+
+### Patch Changes
+
+- [#1437](https://github.com/wagmi-dev/wagmi/pull/1437) [`c34a3dc6`](https://github.com/wagmi-dev/wagmi/commit/c34a3dc6396e6473d9f0505fad88ec910f8f5275) Thanks [@jxom](https://github.com/jxom)! - Omitted `"EIP712Domain"` type from `signTypedData` `types` arg since ethers throws an [internal error](https://github.com/ethers-io/ethers.js/blob/c80fcddf50a9023486e9f9acb1848aba4c19f7b6/packages/hash/src.ts/typed-data.ts#L466) if you include it.
+
+- [#1445](https://github.com/wagmi-dev/wagmi/pull/1445) [`51dd53cb`](https://github.com/wagmi-dev/wagmi/commit/51dd53cba3fe0f79fa1393270b738194577ddf54) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where the wagmi client wouldn't rehydrate the store in local storage when `autoConnect` is truthy.
+
+## 0.8.0
+
+### Minor Changes
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: the shape of the `Chain` type has been modified.
+
+  #### RPC URLs
+
+  The `rpcUrls` shape has changed to include an array of URLs, and also the transport method (`http` or `webSocket`):
+
+  ```diff
+  type Chain = {
+    ...
+    rpcUrls: {
+  -   [key: string]: string
+  +   [key: string]: {
+  +     http: string[]
+  +     webSocket: string[]
+  +   }
+    }
+    ...
+  }
+  ```
+
+  Note that you will also need to ensure that usage is migrated:
+
+  ```diff
+  - const rpcUrl = mainnet.rpcUrls.alchemy
+  + const rpcUrl = mainnet.rpcUrls.alchemy.http[0]
+  ```
+
+  #### Contracts
+
+  The `multicall` and `ens` attributes have been moved into the `contracts` object:
+
+  ```diff
+  type Contract = {
+    address: Address
+    blockCreated?: number
+  }
+
+  type Chain = {
+    ...
+  - multicall: Contract
+  - ens: Contract
+  + contracts: {
+  +   multicall3: Contract
+  +   ensRegistry: Contract
+  + }
+    ...
+  }
+  ```
+
+  Note that you will also need to ensure that usage is migrated:
+
+  ```diff
+  - const multicallContract = mainnet.multicall
+  + const multicallContract = mainnet.contracts.multicall3
+  ```
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Upgraded `@coinbase/wallet-sdk` peer dependency to `3.6.0`.
+
+  **Migration steps**: Update `@coinbase/wallet-sdk` to `^3.6.0`.
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Removed the `wait` argument on `waitForTransaction`. Use the transaction `hash` instead.
+
+  ```diff
+  const data = await waitForTransaction({
+  - wait: transaction.wait
+  + hash: transaction.hash
+  })
+  ```
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: With the introduction of the [`@wagmi/core/chains` entrypoint](/core/chains), `@wagmi/core` no longer exports the following:
+
+  - `chain`
+  - `allChains`
+  - `defaultChains`
+  - `defaultL2Chains`
+  - `chainId`
+  - `etherscanBlockExplorers`
+  - `alchemyRpcUrls`, `infuraRpcUrls`, `publicRpcUrls`
+
+  Read below for migration steps.
+
+  #### Removed `chain`
+
+  The `chain` export has been removed. `@wagmi/core` now only exports the `mainnet` & `goerli` chains. If you need to use an alternative chain (`polygon`, `optimism`, etc), you will need to import it from the [`@wagmi/core/chains` entrypoint](/core/chains).
+
+  ```diff
+  import {
+  - chain
+    configureChains
+  } from '@wagmi/core'
+  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+
+  const { ... } = configureChains(
+  - [chain.mainnet, chain.polygon, chain.optimism],
+  + [mainnet, polygon, optimism],
+    {
+      ...
+    }
+  )
+  ```
+
+  #### Removed `allChains`
+
+  The `allChains` export has been removed. If you need a list of all chains, you can utilize [`@wagmi/core/chains` entrypoint](/core/chains).
+
+  ```diff
+  - import { allChains } from '@wagmi/core'
+  + import * as allChains from '@wagmi/core/chains'
+
+  const { ... } = configureChains(allChains, ...)
+  ```
+
+  #### Removed `defaultChains` & `defaultL2Chains`
+
+  The `defaultChains` & `defaultL2Chains` exports have been removed. If you still need the `defaultChains` or `defaultL2Chains` exports, you can build them yourself:
+
+  ```diff
+  - import { defaultChains } from '@wagmi/core'
+  + import { mainnet, goerli } from '@wagmi/core/chains'
+
+  + const defaultChains = [mainnet, goerli]
+  ```
+
+  > The `defaultChains` export was previously populated with `mainnet` & `goerli`.
+
+  ```diff
+  - import { defaultL2Chains } from '@wagmi/core'
+  + import {
+  +   arbitrum,
+  +   arbitrumGoerli,
+  +   polygon,
+  +   polygonMumbai,
+  +   optimism,
+  +   optimismGoerli
+  + } from '@wagmi/core/chains'
+
+  + const defaultL2Chains = [
+  +  arbitrum,
+  +  arbitrumGoerli,
+  +  polygon,
+  +  polygonMumbai,
+  +  optimism
+  +  optimismGoerli
+  + ]
+  ```
+
+  > The `defaultL2Chains` export was previously populated with `arbitrum` & `optimism`.
+
+  #### Removed `chainId`
+
+  The `chainId` export has been removed. You can extract a chain ID from the chain itself.
+
+  ```diff
+  - import { chainId } from '@wagmi/core'
+  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+
+  -const mainnetChainId = chainId.mainnet
+  -const polygonChainId = chainId.polygon
+  -const optimismChainId = chainId.optimism
+  +const mainnetChainId = mainnet.chainId
+  +const polygonChainId = polygon.chainId
+  +const optimismChainId = optimism.chainId
+  ```
+
+  #### Removed `etherscanBlockExplorers`
+
+  The `etherscanBlockExplorers` export has been removed. You can extract a block explorer from the chain itself.
+
+  ```diff
+  - import { etherscanBlockExplorers } from '@wagmi/core'
+  + import { mainnet, polygon, optimism } from '@wagmi/core/chains'
+
+  -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
+  -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
+  -const optimismEtherscanBlockExplorer = etherscanBlockExplorers.optimism
+  +const mainnetEtherscanBlockExplorer = mainnet.blockExplorer
+  +const polygonEtherscanBlockExplorer = polygon.blockExplorer
+  +const optimismEtherscanBlockExplorer = optimism.blockExplorer
+  ```
+
+  #### Removed `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls`
+
+  The `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls` exports have been removed. You can extract a RPC URL from the chain itself.
+
+  ```diff
+  - import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from '@wagmi/core'
+  + import { mainnet } from '@wagmi/core/chains'
+
+  -const mainnetAlchemyRpcUrl = alchemyRpcUrls.mainnet
+  -const mainnetInfuraRpcUrl = infuraRpcUrls.mainnet
+  -const mainnetOptimismRpcUrl = publicRpcUrls.mainnet
+  +const mainnetAlchemyRpcUrl = mainnet.rpcUrls.alchemy
+  +const mainnetInfuraRpcUrl = mainnet.rpcUrls.infura
+  +const mainnetOptimismRpcUrl = mainnet.rpcUrls.optimism
+  ```
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: Changed `waitForTransaction` behavior to throw an error if the transaction reverted.
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - Updated errors to use `cause` instead of `internal`
+
+### Patch Changes
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - `waitForTransaction` now respects repriced (sped up) transactions.
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - Export `getClient`
+
+- [#1344](https://github.com/wagmi-dev/wagmi/pull/1344) [`57a19374`](https://github.com/wagmi-dev/wagmi/commit/57a1937464a4ccf72719fc86c38d1734f6306652) Thanks [@jxom](https://github.com/jxom)! - `waitForTransaction` now throws an error for cancelled or replaced transactions.
+
+## 0.7.9
+
+### Patch Changes
+
+- [#1411](https://github.com/wagmi-dev/wagmi/pull/1411) [`659be184`](https://github.com/wagmi-dev/wagmi/commit/659be1840c613ce9f7aca9ac96694c4f60da4a66) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where block invalidation was not properly disabled when setting `enabled: false`.
+
+## 0.7.8
+
+### Patch Changes
+
+- [#1406](https://github.com/wagmi-dev/wagmi/pull/1406) [`4f18c450`](https://github.com/wagmi-dev/wagmi/commit/4f18c450a4d7952bfcfa6c533348ffbe55893d3c) Thanks [@tmm](https://github.com/tmm)! - Function for selecting the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target. Defaults to `() => typeof window !== 'undefined' ? window.ethereum : undefined`.
+
+  ```ts
+  import { InjectedConnector } from '@wagmi/core/connectors/injected'
+
+  const connector = new InjectedConnector({
+    options: {
+      name: 'My Injected Wallet',
+      getProvider: () =>
+        typeof window !== 'undefined' ? window.myInjectedWallet : undefined,
+    },
+  })
+  ```
+
+## 0.7.7
+
+### Patch Changes
+
+- [#1386](https://github.com/wagmi-dev/wagmi/pull/1386) [`206a2adb`](https://github.com/wagmi-dev/wagmi/commit/206a2adbb4ee5149a364543b34612050ccf78c21) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `persister` would still use `window.localStorage` instead of the wagmi `storage`.
+
+- [#1376](https://github.com/wagmi-dev/wagmi/pull/1376) [`a70a9528`](https://github.com/wagmi-dev/wagmi/commit/a70a9528f93f4d7fea28b7652751dfef2dcacf9b) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where `switchChain` on `WalletConnectConnector` would not resolve.
+
+- [#1386](https://github.com/wagmi-dev/wagmi/pull/1386) [`206a2adb`](https://github.com/wagmi-dev/wagmi/commit/206a2adbb4ee5149a364543b34612050ccf78c21) Thanks [@jxom](https://github.com/jxom)! - Added `serialize`/`deserialize` as config options to `createStorage`.
+
+- [#1392](https://github.com/wagmi-dev/wagmi/pull/1392) [`88afc849`](https://github.com/wagmi-dev/wagmi/commit/88afc84978afe9689ab7364633e4422ecd7699ea) Thanks [@tmm](https://github.com/tmm)! - Added check for active connector when connecting
+
+## 0.7.6
+
+### Patch Changes
+
+- [#1384](https://github.com/wagmi-dev/wagmi/pull/1384) [`027e88d6`](https://github.com/wagmi-dev/wagmi/commit/027e88d6e5f8d028d46ee78aec8500701e0173d9) Thanks [@tmm](https://github.com/tmm)! - Fixed issue reconnecting after disconnect with `MetaMaskConnector` in MetaMask mobile browser.
+
 ## 0.7.5
 
 ### Patch Changes

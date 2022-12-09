@@ -1,5 +1,5 @@
 import { Button } from 'degen'
-import { chain, useNetwork, useSwitchNetwork } from 'wagmi'
+import { goerli, mainnet, useNetwork, useSwitchNetwork } from 'wagmi'
 
 export function SwitchNetwork() {
   const { chain: activeChain } = useNetwork()
@@ -9,9 +9,9 @@ export function SwitchNetwork() {
   return (
     <Button
       onClick={() =>
-        activeChain.id === chain.mainnet.id
-          ? switchNetwork?.(chain.goerli.id)
-          : switchNetwork?.(chain.mainnet.id)
+        activeChain.id === mainnet.id
+          ? switchNetwork?.(goerli.id)
+          : switchNetwork?.(mainnet.id)
       }
       variant="transparent"
       size="small"
@@ -21,7 +21,7 @@ export function SwitchNetwork() {
       loading={isLoading}
     >
       Connect to{' '}
-      {activeChain?.id === chain.mainnet.id ? 'Testnet (Goerli)' : 'Mainnet'}
+      {activeChain?.id === mainnet.id ? 'Testnet (Goerli)' : 'Mainnet'}
     </Button>
   )
 }

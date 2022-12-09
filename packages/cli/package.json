@@ -54,6 +54,7 @@
     "chokidar": "^3.5.3",
     "dedent": "^0.7.0",
     "dprint-node": "^1.0.7",
+    "ethers": "^5.7.1",
     "execa": "^6.1.0",
     "find-up": "^6.3.0",
     "fs-extra": "^10.1.0",

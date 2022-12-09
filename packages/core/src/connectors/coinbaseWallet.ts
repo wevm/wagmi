@@ -7,6 +7,7 @@ import type { Address } from 'abitype'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
+import type { Chain } from '../chains'
 import type { ProviderRpcError } from '../errors'
 import {
   AddChainError,
@@ -14,7 +15,6 @@ import {
   SwitchChainError,
   UserRejectedRequestError,
 } from '../errors'
-import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -155,7 +155,8 @@ export class CoinbaseWalletConnector extends Connector<
             : chain.id === walletExtensionChainId,
         ) || this.chains[0]
       const chainId = this.options.chainId || chain?.id
-      const jsonRpcUrl = this.options.jsonRpcUrl || chain?.rpcUrls.default
+      const jsonRpcUrl =
+        this.options.jsonRpcUrl || chain?.rpcUrls.default.http[0]
 
       this.#provider = this.#client.makeWeb3Provider(jsonRpcUrl, chainId)
     }
@@ -196,7 +197,8 @@ export class CoinbaseWalletConnector extends Connector<
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
-          rpcUrls: { default: '' },
+          nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
+          rpcUrls: { default: { http: [''] } },
         }
       )
     } catch (error) {
@@ -214,7 +216,10 @@ export class CoinbaseWalletConnector extends Connector<
                 chainId: id,
                 chainName: chain.name,
                 nativeCurrency: chain.nativeCurrency,
-                rpcUrls: [chain.rpcUrls.public ?? chain.rpcUrls.default],
+                rpcUrls: [
+                  chain.rpcUrls.public?.http[0] ??
+                    chain.rpcUrls.default.http[0],
+                ],
                 blockExplorerUrls: this.getBlockExplorerUrls(chain),
               },
             ],

@@ -1,5 +1,3 @@
-export { debounce } from './utils'
-
 export type {
   AbiParameter,
   ContractConfig,
@@ -9,5 +7,7 @@ export type {
   GetArgs,
   GetConfig,
   GetReturnType,
-} from './types/contracts'
-export type { IsNever, NotEqual, Optional, Or } from './types/utils'
+} from '../types/contracts'
+export type { IsNever, NotEqual, Optional, Or } from '../types/utils'
+
+export { debounce } from '../utils'

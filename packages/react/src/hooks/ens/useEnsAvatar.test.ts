@@ -1,9 +1,10 @@
-import { chain } from '@wagmi/core'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 import { act, renderHook } from '../../../test'
+import { foundry } from '../../chains'
+
 import { useEnsAvatar } from './useEnsAvatar'
 
 const handlers = [
@@ -51,7 +52,7 @@ describe('useEnsAvatar', () => {
   beforeAll(() =>
     server.listen({
       onUnhandledRequest(req) {
-        if (req.url.origin !== chain.foundry.rpcUrls.default)
+        if (req.url.origin !== foundry.rpcUrls.default.http[0])
           console.warn(
             `Found an unhandled ${req.method} request to ${req.url.href}`,
           )

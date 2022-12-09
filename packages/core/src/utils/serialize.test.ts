@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { describe, expect, it } from 'vitest'
 
 import { serialize } from './serialize'
@@ -47,31 +46,6 @@ const circularObject = Object.assign({}, complexObject, {
       reference: {},
     },
   },
-})
-
-const specialObject = Object.assign({}, complexObject, {
-  react: React.createElement('main', {
-    children: [
-      React.createElement('h1', { children: 'Title' }),
-      React.createElement('p', { children: 'Content' }),
-      React.createElement('p', { children: 'Content' }),
-      React.createElement('p', { children: 'Content' }),
-      React.createElement('p', { children: 'Content' }),
-      React.createElement('div', {
-        children: [
-          React.createElement('div', {
-            children: 'Item',
-            style: { flex: '1 1 auto' },
-          }),
-          React.createElement('div', {
-            children: 'Item',
-            style: { flex: '1 1 0' },
-          }),
-        ],
-        style: { display: 'flex' },
-      }),
-    ],
-  }),
 })
 
 circularObject.deeply.nested.reference = circularObject
@@ -159,36 +133,6 @@ describe('stringify', () => {
       })()
 
       expect(result).toEqual(JSON.stringify(circularObject, circularReplacer))
-    })
-
-    it('should handle special objects', () => {
-      const result = serialize(specialObject)
-
-      expect(result).toEqual(JSON.stringify(specialObject))
-    })
-
-    it('should handle special objects with a custom circular replacer', () => {
-      const result = serialize(
-        specialObject,
-        null,
-        null,
-        (_key: string, _value: string, referenceKey: string) => referenceKey,
-      )
-      const circularReplacer = (() => {
-        const cache: any[] = []
-
-        return (_key: string, value: any) => {
-          if (value && typeof value === 'object' && ~cache.indexOf(value)) {
-            return '.'
-          }
-
-          cache.push(value)
-
-          return value
-        }
-      })()
-
-      expect(result).toEqual(JSON.stringify(specialObject, circularReplacer))
     })
   })
 

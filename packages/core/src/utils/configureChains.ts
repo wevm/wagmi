@@ -1,7 +1,7 @@
 import { providers } from 'ethers'
 
+import type { Chain } from '../chains'
 import type {
-  Chain,
   ChainProviderFn,
   Provider,
   ProviderWithFallbackConfig,
@@ -81,7 +81,7 @@ export function configureChains<
         [
           `Could not find valid provider configuration for chain "${chain.name}".\n`,
           "You may need to add `jsonRpcProvider` to `configureChains` with the chain's RPC URLs.",
-          'Read more: https://wagmi.sh/docs/providers/jsonRpc',
+          'Read more: https://wagmi.sh/react/providers/jsonRpc',
         ].join('\n'),
       )
     }

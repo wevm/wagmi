@@ -1,6 +1,9 @@
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
 import { QueryClient } from '@tanstack/react-query'
-import type { Persister } from '@tanstack/react-query-persist-client'
+import type {
+  PersistedClient,
+  Persister,
+} from '@tanstack/react-query-persist-client'
 import { persistQueryClient } from '@tanstack/react-query-persist-client'
 import type {
   ClientConfig,
@@ -8,9 +11,11 @@ import type {
   Provider,
   WebSocketProvider,
 } from '@wagmi/core'
-import { createClient as createCoreClient } from '@wagmi/core'
-
-import { deserialize, serialize } from './utils'
+import {
+  createClient as createCoreClient,
+  createStorage,
+  noopStorage,
+} from '@wagmi/core'
 
 export type CreateClientConfig<
   TProvider extends Provider = Provider,
@@ -36,17 +41,28 @@ export function createClient<
       },
     },
   }),
+  storage = createStorage({
+    storage:
+      typeof window !== 'undefined' && window.localStorage
+        ? window.localStorage
+        : noopStorage,
+  }),
   persister = typeof window !== 'undefined'
     ? createSyncStoragePersister({
-        key: 'wagmi.cache',
-        storage: window.localStorage,
-        serialize,
-        deserialize,
+        key: 'cache',
+        storage,
+        // Serialization is handled in `storage`.
+        serialize: (x) => x as unknown as string,
+        // Deserialization is handled in `storage`.
+        deserialize: (x) => x as unknown as PersistedClient,
       })
     : undefined,
   ...config
 }: CreateClientConfig<TProvider, TWebSocketProvider>) {
-  const client = createCoreClient<TProvider, TWebSocketProvider>(config)
+  const client = createCoreClient<TProvider, TWebSocketProvider>({
+    ...config,
+    storage,
+  })
   if (persister)
     persistQueryClient({
       queryClient,

@@ -1,15 +1,19 @@
 import { getAddress } from 'ethers/lib/utils.js'
 
-import type { Chain } from '../../types'
+import type { Chain } from '../../chains'
 import { normalizeChainId } from '../../utils'
 import type { ConnectorData } from '../base'
 import { Connector } from '../base'
 import type { MockProviderOptions } from './provider'
 import { MockProvider } from './provider'
 
+type MockConnectorOptions = Omit<MockProviderOptions, 'chainId'> & {
+  chainId?: number
+}
+
 export class MockConnector extends Connector<
   MockProvider,
-  MockProviderOptions
+  MockConnectorOptions
 > {
   readonly id = 'mock'
   readonly name = 'Mock'
@@ -17,8 +21,20 @@ export class MockConnector extends Connector<
 
   #provider?: MockProvider
 
-  constructor(config: { chains?: Chain[]; options: MockProviderOptions }) {
-    super(config)
+  constructor({
+    chains,
+    options,
+  }: {
+    chains?: Chain[]
+    options: MockConnectorOptions
+  }) {
+    super({
+      chains,
+      options: {
+        ...options,
+        chainId: options.chainId ?? chains?.[0]?.id,
+      },
+    })
   }
 
   async connect({ chainId }: { chainId?: number } = {}) {
@@ -67,7 +83,10 @@ export class MockConnector extends Connector<
 
   async getProvider({ chainId }: { chainId?: number } = {}) {
     if (!this.#provider || chainId)
-      this.#provider = new MockProvider({ ...this.options, chainId })
+      this.#provider = new MockProvider({
+        ...this.options,
+        chainId: chainId ?? this.options.chainId ?? this.chains[0]!.id,
+      })
     return this.#provider
   }
 
@@ -94,7 +113,8 @@ export class MockConnector extends Connector<
         id: chainId,
         name: `Chain ${chainId}`,
         network: `${chainId}`,
-        rpcUrls: { default: '' },
+        nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
+        rpcUrls: { default: { http: [''] } },
       }
     )
   }

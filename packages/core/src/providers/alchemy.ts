@@ -17,13 +17,13 @@ export function alchemyProvider({
   providers.AlchemyWebSocketProvider
 > {
   return function (chain) {
-    if (!chain.rpcUrls.alchemy) return null
+    if (!chain.rpcUrls.alchemy?.http[0]) return null
     return {
       chain: {
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: `${chain.rpcUrls.alchemy}/${apiKey}`,
+          default: { http: [`${chain.rpcUrls.alchemy?.http[0]}/${apiKey}`] },
         },
       },
       provider: () => {

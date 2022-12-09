@@ -10,12 +10,12 @@ export function publicProvider({
   weight,
 }: PublicProviderConfig = {}): ChainProviderFn<providers.StaticJsonRpcProvider> {
   return function (chain) {
-    if (!chain.rpcUrls.default) return null
+    if (!chain.rpcUrls.default.http[0]) return null
     return {
       chain,
       provider: () => {
         const provider = new providers.StaticJsonRpcProvider(
-          chain.rpcUrls.default,
+          chain.rpcUrls.default.http[0],
           {
             chainId: chain.id,
             name: chain.network,

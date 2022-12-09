@@ -17,13 +17,13 @@ export function infuraProvider({
   providers.InfuraWebSocketProvider
 > {
   return function (chain) {
-    if (!chain.rpcUrls.infura) return null
+    if (!chain.rpcUrls.infura?.http[0]) return null
     return {
       chain: {
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: `${chain.rpcUrls.infura}/${apiKey}`,
+          default: { http: [`${chain.rpcUrls.infura?.http[0]}/${apiKey}`] },
         },
       },
       provider: () => {

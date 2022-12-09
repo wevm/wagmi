@@ -31,17 +31,19 @@ const connector = new CoinbaseWalletConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { chain } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { CoinbaseWalletConnector } from '@wagmi/core/connectors/coinbaseWallet'
 
 const connector = new CoinbaseWalletConnector({
-  chains: [chain.mainnet, chain.optimism],
+  chains: [mainnet, optimism, polygon],
   options: {
     appName: 'wagmi.sh',
     jsonRpcUrl: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
   },
 })
 ```
+
+Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
 
 ### options
 

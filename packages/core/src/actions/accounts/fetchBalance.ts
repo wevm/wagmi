@@ -84,9 +84,9 @@ export async function fetchBalance({
   const value = await provider.getBalance(address)
   const chain = chains.find((x) => x.id === provider.network.chainId)
   return {
-    decimals: chain?.nativeCurrency?.decimals ?? 18,
+    decimals: chain?.nativeCurrency.decimals ?? 18,
     formatted: formatUnits(value ?? '0', unit ?? 'ether'),
-    symbol: chain?.nativeCurrency?.symbol ?? 'ETH',
+    symbol: chain?.nativeCurrency.symbol ?? 'ETH',
     value,
   }
 }

@@ -289,8 +289,9 @@ function App() {
 
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
-```tsx {15,22}
-import { useContractReads, chain } from 'wagmi'
+```tsx {16,23}
+import { useContractReads } from 'wagmi'
+import { optimism } from 'wagmi/chains'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -304,20 +305,22 @@ function App() {
           abi: mlootABI,
           functionName: 'getChest',
           args,
-          chainId: chain.mainnet.id,
+          chainId: optimism.id,
         },
         {
           address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
           abi: mlootABI,
           functionName: 'getWaist',
           args,
-          chainId: chain.mainnet.id,
+          chainId: optimism.id,
         },
       ]
     },
   })
 }
 ```
+
+Note: The above example is using the `optimism` chain from the [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ### getNextPageParam (optional)
 

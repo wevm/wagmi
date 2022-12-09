@@ -2,10 +2,10 @@ import type WalletConnectProvider from '@walletconnect/ethereum-provider'
 import { providers } from 'ethers'
 import { getAddress, hexValue } from 'ethers/lib/utils.js'
 
+import type { Chain } from '../chains'
 import { getClient } from '../client'
 import type { ProviderRpcError } from '../errors'
 import { SwitchChainError, UserRejectedRequestError } from '../errors'
-import type { Chain } from '../types'
 import { normalizeChainId } from '../utils'
 import { Connector } from './base'
 
@@ -117,7 +117,10 @@ export class WalletConnectConnector extends Connector<
     if (!this.#provider || chainId || create) {
       const rpc = !this.options?.infuraId
         ? this.chains.reduce(
-            (rpc, chain) => ({ ...rpc, [chain.id]: chain.rpcUrls.default }),
+            (rpc, chain) => ({
+              ...rpc,
+              [chain.id]: chain.rpcUrls.default.http[0],
+            }),
             {},
           )
         : {}
@@ -160,16 +163,28 @@ export class WalletConnectConnector extends Connector<
     const id = hexValue(chainId)
 
     try {
-      await provider.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: id }],
-      })
+      // Set up a race between `wallet_switchEthereumChain` & the `chainChanged` event
+      // to ensure the chain has been switched. This is because there could be a case
+      // where a wallet may not resolve the `wallet_switchEthereumChain` method, or
+      // resolves slower than `chainChanged`.
+      await Promise.race([
+        provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: id }],
+        }),
+        new Promise((res) =>
+          this.on('change', ({ chain }) => {
+            if (chain?.id === chainId) res(chainId)
+          }),
+        ),
+      ])
       return (
         this.chains.find((x) => x.id === chainId) ?? {
           id: chainId,
           name: `Chain ${id}`,
           network: `${id}`,
-          rpcUrls: { default: '' },
+          nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
+          rpcUrls: { default: { http: [''] } },
         }
       )
     } catch (error) {

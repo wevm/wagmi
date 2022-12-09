@@ -10,7 +10,10 @@ describe('MockProvider', () => {
   beforeEach(() => {
     const signers = getSigners()
     signer = signers[0]!
-    provider = new MockProvider({ signer })
+    provider = new MockProvider({
+      chainId: 1,
+      signer,
+    })
   })
 
   it('constructor', () => {
@@ -28,6 +31,7 @@ describe('MockProvider', () => {
       const signers = getSigners()
       signer = signers[0]!
       const provider = new MockProvider({
+        chainId: 1,
         flags: { failConnect: true },
         signer,
       })
@@ -89,6 +93,7 @@ describe('MockProvider', () => {
 
     it('fails', async () => {
       const provider = new MockProvider({
+        chainId: 1,
         flags: { failSwitchChain: true },
         signer,
       })

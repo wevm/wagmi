@@ -19,5 +19,9 @@
   "examples": {
     "title": "Examples",
     "type": "page"
+  },
+  "blog": {
+    "title": "Blog",
+    "type": "page"
   }
 }

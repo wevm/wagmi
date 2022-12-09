@@ -30,18 +30,19 @@ const connector = new WalletConnectConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { chain } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
-  chains: [chain.mainnet, chain.optimism],
+  chains: [mainnet, optimism, polygon],
   options: {
     qrcode: true,
   },
 })
 ```
 
-Note: Upon connection, the connector will connect to the previously connected chain unless otherwise specified by a [`chainId` config on useConnect](/core/hooks/useConnect#chainid-optional).
+- The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
+- Upon connection, the connector will connect to the previously connected chain unless otherwise specified by a [`chainId` config on useConnect](/core/hooks/useConnect#chainid-optional).
 
 ### options
 

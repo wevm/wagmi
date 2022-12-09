@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "lib": ["es2019", "es2017", "dom"],
+    "lib": ["es2021", "dom"],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -18,7 +18,11 @@
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
       "wagmi": ["packages/react/src"],
-      "wagmi/*": ["packages/react/src/*"]
+      "wagmi/*": ["packages/react/src/*"],
+      // TODO: Remove once issue is fixed
+      // https://github.com/microsoft/TypeScript/issues/48212
+      "@wagmi/chains": ["packages/core/node_modules/@wagmi/chains/dist"],
+      "abitype": ["node_modules/abitype/dist"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -33,5 +37,10 @@
     ]
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
-  "include": ["packages/**/*", "scripts/**/*", "vitest.config.ts"]
+  "include": [
+    "examples/**/*",
+    "packages/**/*",
+    "scripts/**/*",
+    "vitest.config.ts"
+  ]
 }
