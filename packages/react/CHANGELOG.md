@@ -1,5 +1,20 @@
 # wagmi
 
+## 0.9.2
+
+### Patch Changes
+
+- [#1442](https://github.com/wagmi-dev/wagmi/pull/1442) [`cde15289`](https://github.com/wagmi-dev/wagmi/commit/cde152899c758dea10787412b0aef669ed7202b2) Thanks [@0xproflupin](https://github.com/0xproflupin)! - Added Phantom wallet support to `InjectedConnector`
+
+- [#1448](https://github.com/wagmi-dev/wagmi/pull/1448) [`c6075f3a`](https://github.com/wagmi-dev/wagmi/commit/c6075f3a16885d850ad2656272351f9517c9f67b) Thanks [@tmm](https://github.com/tmm)! - Updated [ABIType](https://github.com/wagmi-dev/abitype) version.
+
+- [#1444](https://github.com/wagmi-dev/wagmi/pull/1444) [`310a8bc4`](https://github.com/wagmi-dev/wagmi/commit/310a8bc428ce4e7f68377f581b45dcdd64381cce) Thanks [@jxom](https://github.com/jxom)! - Assert that a `connector` exists before invoking the callback in `watchSigner`.
+
+- [#1434](https://github.com/wagmi-dev/wagmi/pull/1434) [`100e2a3b`](https://github.com/wagmi-dev/wagmi/commit/100e2a3b22f4602716554487b1d98738e053be76) Thanks [@tmm](https://github.com/tmm)! - Updated `MockConnector` `chainId` behavior to default to first chain from `chains` if not provided in `options`.
+
+- Updated dependencies [[`cde15289`](https://github.com/wagmi-dev/wagmi/commit/cde152899c758dea10787412b0aef669ed7202b2), [`c6075f3a`](https://github.com/wagmi-dev/wagmi/commit/c6075f3a16885d850ad2656272351f9517c9f67b), [`310a8bc4`](https://github.com/wagmi-dev/wagmi/commit/310a8bc428ce4e7f68377f581b45dcdd64381cce), [`100e2a3b`](https://github.com/wagmi-dev/wagmi/commit/100e2a3b22f4602716554487b1d98738e053be76)]:
+  - @wagmi/core@0.8.2
+
 ## 0.9.1
 
 ### Patch Changes
