@@ -130,6 +130,7 @@ type InjectedProviderFlags = {
   isOneInchAndroidWallet?: true
   isOneInchIOSWallet?: true
   isOpera?: true
+  isPhantom?: true
   isPortal?: true
   isTally?: true
   isTokenPocket?: true
