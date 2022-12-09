@@ -61,8 +61,7 @@ describe('createClient', () => {
           const storage = createStorage({
             storage: {
               getItem: (key) => localStorage[key],
-              setItem: (key, value) =>
-                (localStorage[key] = JSON.stringify(value)),
+              setItem: (key, value) => (localStorage[key] = value),
               removeItem: (key) => delete localStorage[key],
             },
           })
@@ -220,11 +219,9 @@ describe('createClient', () => {
               ...noopStorage,
               getItem(key) {
                 if (key === 'wagmi.store')
-                  return JSON.stringify(
-                    JSON.stringify({
-                      state: { data: { chain: { id: 5 } } },
-                    }),
-                  )
+                  return JSON.stringify({
+                    state: { data: { chain: { id: 5 } } },
+                  })
                 return null
               },
             },
@@ -341,11 +338,9 @@ describe('createClient', () => {
               ...noopStorage,
               getItem(key) {
                 if (key === 'wagmi.store')
-                  return JSON.stringify(
-                    JSON.stringify({
-                      state: { data: { chain: { id: 5 } } },
-                    }),
-                  )
+                  return JSON.stringify({
+                    state: { data: { chain: { id: 5 } } },
+                  })
                 return null
               },
             },
