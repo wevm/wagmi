@@ -18,6 +18,7 @@
       "@wagmi/chains": ["packages/core/node_modules/@wagmi/chains/dist"],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
+      "abitype": ["packages/core/node_modules/abitype/dist"],
       "wagmi": ["packages/react/src"],
       "wagmi/*": ["packages/react/src/*"]
     },
