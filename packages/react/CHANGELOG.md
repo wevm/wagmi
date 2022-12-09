@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.9.1
+
+### Patch Changes
+
+- [#1437](https://github.com/wagmi-dev/wagmi/pull/1437) [`c34a3dc6`](https://github.com/wagmi-dev/wagmi/commit/c34a3dc6396e6473d9f0505fad88ec910f8f5275) Thanks [@jxom](https://github.com/jxom)! - Omitted `"EIP712Domain"` type from `signTypedData` `types` arg since ethers throws an [internal error](https://github.com/ethers-io/ethers.js/blob/c80fcddf50a9023486e9f9acb1848aba4c19f7b6/packages/hash/src.ts/typed-data.ts#L466) if you include it.
+
+- [#1445](https://github.com/wagmi-dev/wagmi/pull/1445) [`51dd53cb`](https://github.com/wagmi-dev/wagmi/commit/51dd53cba3fe0f79fa1393270b738194577ddf54) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where the wagmi client wouldn't rehydrate the store in local storage when `autoConnect` is truthy.
+
+- Updated dependencies [[`c34a3dc6`](https://github.com/wagmi-dev/wagmi/commit/c34a3dc6396e6473d9f0505fad88ec910f8f5275), [`51dd53cb`](https://github.com/wagmi-dev/wagmi/commit/51dd53cba3fe0f79fa1393270b738194577ddf54)]:
+  - @wagmi/core@0.8.1
+
 ## 0.9.0
 
 ### Minor Changes
