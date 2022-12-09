@@ -99,9 +99,10 @@ export class Client<
     let chainId: number | undefined
     if (autoConnect) {
       try {
-        const rawState = storage.getItem(storeKey, '')
-        const data: Data<TProvider> | undefined = JSON.parse(rawState || '{}')
-          ?.state?.data
+        const rawState = storage.getItem<{
+          state: State<TProvider, TWebSocketProvider>
+        }>(storeKey)
+        const data: Data<TProvider> | undefined = rawState?.state?.data
         // If account exists in localStorage, set status to reconnecting
         status = data?.account ? 'reconnecting' : 'connecting'
         chainId = data?.chain?.id
