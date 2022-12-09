@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { setupClient } from '../../../test'
+
 import { connect } from './connect'
 import { disconnect } from './disconnect'
 import { switchNetwork } from './switchNetwork'
@@ -31,6 +32,7 @@ describe('watchSigner', () => {
     })
 
     await connect({ connector: client.connectors[0]! })
+    await new Promise((res) => setTimeout(res, 0)) // wait until next tick
     await disconnect()
     unsubscribe()
   })
