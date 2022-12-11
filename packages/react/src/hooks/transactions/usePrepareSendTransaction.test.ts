@@ -202,7 +202,6 @@ describe('usePrepareSendTransaction', () => {
         value: BigNumber.from('10000000000000000'),
       }
       rerender()
-      await actConnect({ utils })
 
       await waitFor(() =>
         expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),

@@ -324,7 +324,6 @@ describe('usePrepareContractWrite', () => {
       config[property as keyof typeof config] =
         baseConfig[property as keyof typeof baseConfig]
       rerender()
-      await actConnect({ utils })
 
       await waitFor(() =>
         expect(result.current.prepareContractWrite.isSuccess).toBeTruthy(),
