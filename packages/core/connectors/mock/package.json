@@ -1,4 +1,4 @@
 {
   "type": "module",
-  "main": "../../dist/connectors/mock/index.js"
+  "main": "../../dist/connectors/mock.js"
 }

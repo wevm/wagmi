@@ -17,19 +17,20 @@ If you want to contribute, but aren't sure where to start, you can create a [new
 This guide is intended to help you get started with contributing. By following these steps, you will understand the development process and workflow.
 
 1. [Cloning the repository](#cloning-the-repository)
-2. [Installing Node.js and pnpm](#installing-nodejs-and-pnpm)
-3. [Installing dependencies](#installing-dependencies)
-4. [Starting the development playground](#starting-the-development-playground)
-5. [Running the test suite](#running-the-test-suite)
-6. [Writing documentation](#writing-documentation)
-7. [Submitting a pull request](#submitting-a-pull-request)
+2. [Initializing the `references/` submodule](#initializing-the-references-submodule)
+3. [Installing Node.js and pnpm](#installing-nodejs-and-pnpm)
+4. [Installing dependencies](#installing-dependencies)
+5. [Starting the development playground](#starting-the-development-playground)
+6. [Running the test suite](#running-the-test-suite)
+7. [Writing documentation](#writing-documentation)
+8. [Submitting a pull request](#submitting-a-pull-request)
 
 ## Advanced guide
 
 This guide covers more advanced topics. Pick the topics based on your needs.
 
-8. [Versioning](#versioning)
-9. [Testing against React 17](#testing-against-react-17)
+9. [Versioning](#versioning)
+10. [Testing against React 17](#testing-against-react-17)
 
 <br>
 
@@ -49,6 +50,21 @@ Or the [GitHub CLI](https://cli.github.com):
 
 ```bash
 gh repo clone wagmi-dev/wagmi
+```
+
+<div align="right">
+  <a href="#basic-guide">&uarr; back to top</a></b>
+</div>
+
+## Initializing the `references/` submodule
+
+To make development easier with the [References monorepo](https://github.com/wagmi-dev/references), we have included it as a git submodule via the `references/` directory.
+
+You will need to initialize the submodule:
+
+```bash
+git submodule init
+git submodule update
 ```
 
 <div align="right">

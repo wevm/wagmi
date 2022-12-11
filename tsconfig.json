@@ -15,13 +15,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
+      "@wagmi/chains": ["references/packages/chains/src"],
+      "@wagmi/connectors": ["references/packages/connectors/src"],
+      "@wagmi/connectors/*": ["references/packages/connectors/src/*"],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
       "wagmi": ["packages/react/src"],
       "wagmi/*": ["packages/react/src/*"],
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/48212
-      "@wagmi/chains": ["packages/core/node_modules/@wagmi/chains/dist"],
       "abitype": ["packages/core/node_modules/abitype/dist"]
     },
     "resolveJsonModule": true,

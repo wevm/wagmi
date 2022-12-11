@@ -2,10 +2,10 @@
   "name": "root",
   "scripts": {
     "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 15578840",
-    "build": "pnpm --filter './packages/**' build",
+    "build": "pnpm --filter './packages/**' --filter './references/packages/**' build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
-    "dev": "pnpm --parallel --filter './packages/**' dev",
+    "dev": "pnpm --parallel --filter './packages/**' --filter './references/packages/**' dev",
     "docs:build": "pnpm --parallel --filter './packages/**' --filter docs build",
     "docs:dev": "pnpm dev && pnpm --filter docs dev",
     "lint": "eslint . --cache",
@@ -74,7 +74,8 @@
   },
   "pnpm": {
     "overrides": {
-      "esbuild": "0.15.13"
+      "esbuild": "0.15.13",
+      "@wagmi/connectors>@wagmi/core": "workspace:*"
     }
   }
 }
