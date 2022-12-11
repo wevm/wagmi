@@ -18,14 +18,16 @@ The following examples use the [ENS Registry](https://etherscan.io/address/0x000
 ```ts
 import { watchContractEvent } from '@wagmi/core'
 
-const unwatch = watchContractEvent({
-  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  abi: ensRegistryABI,
-  eventName: 'NewOwner',
-  listener(node, label, owner) {
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+  },
+  (node, label, owner) => {
     console.log(node, label, owner)
   },
-})
+)
 ```
 
 ## Return Value
@@ -41,14 +43,16 @@ Contract address.
 ```ts {4}
 import { watchContractEvent } from '@wagmi/core'
 
-const unwatch = watchContractEvent({
-  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  abi: ensRegistryABI,
-  eventName: 'NewOwner',
-  listener(node, label, owner) {
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+  },
+  (node, label, owner) => {
     console.log(node, label, owner)
   },
-})
+)
 ```
 
 ### abi
@@ -60,14 +64,16 @@ By defining inline or adding a [const assertion](https://www.typescriptlang.org/
 ```ts {5}
 import { watchContractEvent } from '@wagmi/core'
 
-const unwatch = watchContractEvent({
-  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  abi: ensRegistryABI,
-  eventName: 'NewOwner',
-  listener(node, label, owner) {
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+  },
+  (node, label, owner) => {
     console.log(node, label, owner)
   },
-})
+)
 ```
 
 ### eventName
@@ -77,14 +83,16 @@ Name of the event to listen to.
 ```ts {6}
 import { watchContractEvent } from '@wagmi/core'
 
-const unwatch = watchContractEvent({
-  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  abi: ensRegistryABI,
-  eventName: 'NewResolver',
-  listener(node, resolver) {
-    console.log(node, resolver)
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewResolver',
   },
-})
+  (node, label, owner) => {
+    console.log(node, label, owner)
+  },
+)
 ```
 
 ### listener
@@ -94,14 +102,16 @@ Callback that receives event.
 ```ts {7-9}
 import { watchContractEvent } from '@wagmi/core'
 
-const unwatch = watchContractEvent({
-  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  abi: ensRegistryABI,
-  eventName: 'NewOwner',
-  listener(node, label, owner) {
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+  },
+  (node, label, owner) => {
     console.log(node, label, owner)
   },
-})
+)
 ```
 
 ### chainId (optional)
@@ -111,15 +121,17 @@ Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must 
 ```ts {10}
 import { watchContractEvent } from '@wagmi/core'
 
-const unwatch = watchContractEvent({
-  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  abi: ensRegistryABI,
-  eventName: 'NewOwner',
-  listener(node, label, owner) {
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+    chainId: 1,
+  },
+  (node, label, owner) => {
     console.log(node, label, owner)
   },
-  chainId: 1,
-})
+)
 ```
 
 ### once (optional)
@@ -129,13 +141,16 @@ Receive only a single event, then stop listener. Defaults to `false`.
 ```ts {10}
 import { watchContractEvent } from '@wagmi/core'
 
-const unwatch = watchContractEvent({
-  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-  abi: ensRegistryABI,
-  eventName: 'NewOwner',
-  listener(node, label, owner) {
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+
+    once: true,
+  },
+  (node, label, owner) => {
     console.log(node, label, owner)
   },
-  once: true,
-})
+)
 ```
