@@ -1,0 +1,109 @@
+---
+title: 'Mock'
+description: 'Mock wagmi Connector useful for testing.'
+---
+
+# Mock
+
+The `MockConnector` is a mocked `Connector` implementation useful for things like testing.
+
+```ts
+import { MockConnector } from '@wagmi/core/connectors/mock'
+```
+
+## Usage
+
+```ts
+import { MockConnector } from '@wagmi/core/connectors/mock'
+
+const connector = new MockConnector()
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { MockConnector } from '@wagmi/core/connectors/mock'
+import { mainnet, optimism } from '@wagmi/core/chains'
+
+const connector = new MockConnector({
+  chains: [mainnet, optimism],
+})
+```
+
+### options
+
+Options for configuring the connector.
+
+```ts {5-7}
+import { MockConnector } from '@wagmi/core/connectors/mock'
+import { providers } from 'ethers'
+
+const connector = new MockConnector({
+  options: {
+    signer: new providers.JsonRpcSigner(…),
+  },
+})
+```
+
+#### chainId (optional)
+
+Chain ID to use for the connector. Defaults to first chain in `chains`.
+
+```ts {7}
+import { MockConnector } from '@wagmi/core/connectors/mock'
+import { mainnet } from '@wagmi/core/chains'
+import { providers } from 'ethers'
+
+const connector = new MockConnector({
+  options: {
+    chainId: mainnet.id,
+    signer: new providers.JsonRpcSigner(…),
+  },
+})
+```
+
+#### flags (optional)
+
+Flags to simulate specific behavior of the connector.
+
+```ts {7-9}
+import { MockConnector } from '@wagmi/core/connectors/mock'
+import { mainnet } from '@wagmi/core/chains'
+import { providers } from 'ethers'
+
+const connector = new MockConnector({
+  options: {
+    flags: {
+      failConnect: true,
+    },
+    signer: new providers.JsonRpcSigner(…),
+  },
+})
+```
+
+| Name              | Type      | Description                                                                    |
+| ----------------- | --------- | ------------------------------------------------------------------------------ |
+| `isAuthorized`    | `boolean` | Turns on authorized status to connector allowing autoconnect behavior to work. |
+| `failConnect`     | `boolean` | Throws an error when attempting to connect.                                    |
+| `failSwitchChain` | `boolean` | Throws an error when attempting to switch chains.                              |
+| `noSwitchChain`   | `boolean` | Disables the ability to switch chains.                                         |
+
+#### signer
+
+Signer to initialize connector with.
+
+```ts {7}
+import { MockConnector } from '@wagmi/core/connectors/mock'
+import { mainnet } from '@wagmi/core/chains'
+import { providers } from 'ethers'
+
+const connector = new MockConnector({
+  options: {
+    signer: new providers.JsonRpcSigner(…),
+  },
+})
+```
