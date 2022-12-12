@@ -35,6 +35,10 @@
       "types": "./dist/chains.d.ts",
       "default": "./dist/chains.js"
     },
+    "./connectors": {
+      "types": "./dist/connectors/index.d.ts",
+      "default": "./dist/connectors/index.js"
+    },
     "./connectors/coinbaseWallet": {
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
