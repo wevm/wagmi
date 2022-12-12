@@ -10,13 +10,13 @@ import { Callout } from 'nextra-theme-docs'
 The `InjectedConnector` supports wallets that inject an Ethereum Provider into the browser or window. The MetaMask browser extension is the most popular example of this.
 
 ```ts
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 ```
 
 ## Usage
 
 ```ts
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector()
 ```
@@ -36,7 +36,7 @@ Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
 import { mainnet, optimism, polygon } from '@wagmi/core/chains'
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector({
   chains: [mainnet, optimism, polygon],
@@ -50,7 +50,7 @@ Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains
 Options for configuring the connector.
 
 ```ts {4-6}
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector({
   options: {
@@ -64,7 +64,7 @@ const connector = new InjectedConnector({
 Function for selecting the [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193) Ethereum Provider to target. Defaults to `() => typeof window !== 'undefined' ? window.ethereum : undefined`.
 
 ```ts {6-7}
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector({
   options: {
@@ -80,7 +80,7 @@ const connector = new InjectedConnector({
 Name of connector instead of trying to detect from browser.
 
 ```ts {5}
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector({
   options: {
@@ -92,7 +92,7 @@ const connector = new InjectedConnector({
 `name` can also be set to a function, which has the `detectedName` as the first parameter. `detectedName` can be a list of multiple detected names if there are multiple injected wallets detected.
 
 ```ts {5-10}
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector({
   options: {
@@ -111,7 +111,7 @@ const connector = new InjectedConnector({
 Certain versions of MetaMask [emit the `"disconnect"` event when chain is changed](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334). This flag prevents the `"disconnect"` event from being emitted upon switching chains. Defaults to `false`.
 
 ```ts {5}
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector({
   options: {
@@ -125,7 +125,7 @@ const connector = new InjectedConnector({
 MetaMask and other injected providers [do not support programmatic disconnect](https://github.com/MetaMask/metamask-extension/issues/10353). This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
 
 ```ts {5}
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { InjectedConnector } from '@wagmi/core/connectors'
 
 const connector = new InjectedConnector({
   options: {
