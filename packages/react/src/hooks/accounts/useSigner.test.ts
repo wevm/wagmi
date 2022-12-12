@@ -64,25 +64,25 @@ describe('useSigner', () => {
     it('is not connected', async () => {
       const { result, waitFor } = renderHook(() => useSigner())
 
-      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": null,
+          "data": undefined,
           "error": null,
           "fetchStatus": "idle",
           "isError": false,
-          "isFetched": true,
-          "isFetchedAfterMount": true,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
-          "isIdle": false,
+          "isIdle": true,
           "isLoading": false,
           "isRefetching": false,
-          "isSuccess": true,
+          "isSuccess": false,
           "refetch": [Function],
-          "status": "success",
+          "status": "idle",
         }
       `)
     })
@@ -125,25 +125,25 @@ describe('useSigner', () => {
 
       await actDisconnect({ utils })
 
-      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
+      await waitFor(() => expect(result.current.signer.isIdle).toBeTruthy())
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal: _, ...res2 } = result.current.signer
       expect(res2).toMatchInlineSnapshot(`
         {
-          "data": null,
+          "data": undefined,
           "error": null,
           "fetchStatus": "idle",
           "isError": false,
-          "isFetched": true,
-          "isFetchedAfterMount": true,
+          "isFetched": false,
+          "isFetchedAfterMount": false,
           "isFetching": false,
-          "isIdle": false,
+          "isIdle": true,
           "isLoading": false,
           "isRefetching": false,
-          "isSuccess": true,
+          "isSuccess": false,
           "refetch": [Function],
-          "status": "success",
+          "status": "idle",
         }
       `)
     })
