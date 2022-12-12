@@ -43,6 +43,10 @@
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
     },
+    "./connectors/ledger": {
+      "types": "./dist/connectors/ledger.d.ts",
+      "default": "./dist/connectors/ledger.js"
+    },
     "./connectors/metaMask": {
       "types": "./dist/connectors/metaMask.d.ts",
       "default": "./dist/connectors/metaMask.js"

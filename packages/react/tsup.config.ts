@@ -13,6 +13,7 @@ export default defineConfig(
       'src/connectors/coinbaseWallet.ts',
       'src/connectors/index.ts',
       'src/connectors/injected.ts',
+      'src/connectors/ledger.ts',
       'src/connectors/metaMask.ts',
       'src/connectors/mock.ts',
       'src/connectors/walletConnect.ts',
