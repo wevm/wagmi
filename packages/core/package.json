@@ -35,17 +35,25 @@
       "types": "./dist/chains.d.ts",
       "default": "./dist/chains.js"
     },
+    "./connectors": {
+      "types": "./dist/connectors/index.d.ts",
+      "default": "./dist/connectors/index.js"
+    },
     "./connectors/coinbaseWallet": {
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
+    },
+    "./connectors/ledger": {
+      "types": "./dist/connectors/ledger.d.ts",
+      "default": "./dist/connectors/ledger.js"
     },
     "./connectors/metaMask": {
       "types": "./dist/connectors/metaMask.d.ts",
       "default": "./dist/connectors/metaMask.js"
     },
     "./connectors/mock": {
-      "types": "./dist/connectors/mock/index.d.ts",
-      "default": "./dist/connectors/mock/index.js"
+      "types": "./dist/connectors/mock.d.ts",
+      "default": "./dist/connectors/mock.js"
     },
     "./connectors/walletConnect": {
       "types": "./dist/connectors/walletConnect.d.ts",
@@ -99,7 +107,8 @@
     }
   },
   "dependencies": {
-    "@wagmi/chains": "^0.1.0",
+    "@wagmi/chains": "workspace:*",
+    "@wagmi/connectors": "workspace:*",
     "abitype": "^0.2.5",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.1.4"

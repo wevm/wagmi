@@ -1,3 +1,5 @@
-export { InjectedConnector, type InjectedConnectorOptions } from './injected'
+export type { ConnectorData, ConnectorEvents } from '@wagmi/connectors'
+export { Connector } from '@wagmi/connectors'
 
-export { Connector, type ConnectorData, type ConnectorEvents } from './base'
+export type { InjectedConnectorOptions } from '@wagmi/connectors/injected'
+export { InjectedConnector } from '@wagmi/connectors/injected'

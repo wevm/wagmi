@@ -40,6 +40,10 @@
       "types": "./dist/chains.d.ts",
       "default": "./dist/chains.js"
     },
+    "./connectors": {
+      "types": "./dist/connectors/index.d.ts",
+      "default": "./dist/connectors/index.js"
+    },
     "./connectors/coinbaseWallet": {
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
@@ -47,6 +51,10 @@
     "./connectors/injected": {
       "types": "./dist/connectors/injected.d.ts",
       "default": "./dist/connectors/injected.js"
+    },
+    "./connectors/ledger": {
+      "types": "./dist/connectors/ledger.d.ts",
+      "default": "./dist/connectors/ledger.js"
     },
     "./connectors/metaMask": {
       "types": "./dist/connectors/metaMask.d.ts",

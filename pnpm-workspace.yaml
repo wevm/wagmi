@@ -3,3 +3,4 @@ packages:
   - 'docs'
   - 'examples/*'
   - 'packages/*'
+  - 'references/packages/*'

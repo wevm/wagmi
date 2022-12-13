@@ -2,10 +2,10 @@
   "name": "root",
   "scripts": {
     "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 15578840",
-    "build": "pnpm --filter './packages/**' build",
+    "build": "pnpm --filter './packages/**' --filter './references/packages/**' build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
-    "dev": "pnpm --parallel --filter './packages/**' dev",
+    "dev": "pnpm --parallel --filter './packages/**' --filter './references/packages/**' dev",
     "docs:build": "pnpm --parallel --filter './packages/**' --filter docs build",
     "docs:dev": "pnpm dev && pnpm --filter docs dev",
     "lint": "eslint . --cache",
@@ -13,7 +13,7 @@
     "lint:format": "prettier --write",
     "playground": "pnpm dev && pnpm --filter example-dev dev",
     "postinstall": "pnpm dev",
-    "preinstall": "npx only-allow pnpm",
+    "preinstall": "git submodule init && git submodule update && npx only-allow pnpm",
     "prepare": "npx simple-git-hooks",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -71,5 +71,11 @@
   "packageManager": "pnpm@7.5.0",
   "engines": {
     "pnpm": ">=7"
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.15.13",
+      "@wagmi/connectors>@wagmi/core": "workspace:*"
+    }
   }
 }
