@@ -1,6 +1,8 @@
 import { default as fse } from 'fs-extra'
+import { z } from 'zod'
 
 import { Config } from '../config'
+import { fromZodError } from '../errors'
 import { pathToFileURL } from 'node:url'
 
 type ResolveConfig = {
@@ -20,7 +22,12 @@ export async function resolveConfig({
     const config = (await import(fileUrl)).default
     // TODO: Strip TypeScript by bundling before parsing
     // https://github.com/vitejs/vite/blob/main/packages/vite/src/node/config.ts#LL939
-    return Config.parseAsync(config)
+    const parsed = await Config.parseAsync(config)
+    return parsed
+  } catch (error) {
+    if (error instanceof z.ZodError)
+      throw fromZodError(error, { prefix: 'Invalid Config' })
+    throw error
   } finally {
     fse.unlinkSync(fileNameTemp)
   }

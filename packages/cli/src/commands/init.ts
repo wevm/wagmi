@@ -26,6 +26,7 @@ export async function init() {
       import { defineConfig } from '@wagmi/cli'
       
       export default defineConfig({
+        outDir: 'src/generated/wagmi.ts',
         contracts: [],
         plugins: [],
       })
@@ -38,6 +39,7 @@ export async function init() {
        * @type {import('@wagmi/cli').Config}
        **/
       export default {
+        outDir: 'src/generated/wagmi.js',
         contracts: [],
         plugins: [],
       }

@@ -1,26 +1,42 @@
 import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
 import { default as dedent } from 'dedent'
+import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
+import { z } from 'zod'
 
 import type { Contract, ContractSource, Watch } from '../config'
+import { fromZodError } from '../errors'
 import * as logger from '../logger'
 import { findConfig, resolveConfig } from '../utils'
 
-export type Generate = {
-  config?: string
-  root?: string
-}
+const Generate = z.object({
+  config: z.string().optional(),
+  root: z.string().optional(),
+  watch: z.boolean().optional(),
+})
+export type Generate = z.infer<typeof Generate>
 
 type ContractResult = Contract & {
   content: string
 }
 
 export async function generate(options: Generate) {
+  // Validate command options
+  try {
+    await Generate.parseAsync(options)
+  } catch (error) {
+    if (error instanceof z.ZodError)
+      throw fromZodError(error, { prefix: 'Invalid option' })
+    throw error
+  }
+
+  // Get config file
   const configPath = await findConfig(options)
   if (!configPath) throw new Error(`Config not found at "${configPath}"`)
   const resolvedConfig = await resolveConfig({ configPath })
 
+  // Collect contracts and watch configs
   const contracts = new Map<string, ContractResult>()
   const watchConfigs: Watch[] = []
   for (const config of resolvedConfig.contracts) {
@@ -39,8 +55,11 @@ export async function generate(options: Generate) {
   }
 
   // Write output to file
-  await writeContracts(Array.from(contracts.values()))
-  if (!watchConfigs.length) return
+  await writeContracts({
+    contracts: Array.from(contracts.values()),
+    filename: resolvedConfig.out,
+  })
+  if (!(options.watch && watchConfigs.length)) return
 
   // Watch for changes
   const { watch } = await import('chokidar')
@@ -55,9 +74,9 @@ export async function generate(options: Generate) {
   }
   for (const watchConfig of watchConfigs) {
     const watcher = watch(watchConfig.paths, watchOptions)
+    // Watch for changes to files, new files, and deleted files
     watcher.on('all', async (event, path) => {
       if (event !== 'change' && event !== 'add' && event !== 'unlink') return
-
       let needsWrite = false
       if (event === 'change') {
         const contractConfig = await watchConfig.onChange(path)
@@ -80,23 +99,32 @@ export async function generate(options: Generate) {
       if (needsWrite) {
         if (timeout) clearTimeout(timeout)
         timeout = setTimeout(async () => {
-          console.log('Saving…')
           timeout = null
-          await writeContracts(Array.from(contracts.values()))
-          console.log('Saving!')
+          await writeContracts({
+            contracts: Array.from(contracts.values()),
+            filename: resolvedConfig.out,
+          })
+          logger.log('Saved!')
         }, delay)
         needsWrite = false
       }
     })
+    // Run parallel command on ready
     watcher.on('ready', async () => {
       if (watchConfig.command) {
-        console.log(`Running watch command: ${watchConfig.command}`)
-        const [command, ...parts] = watchConfig.command.split(' ')
+        let command
+        if (typeof watchConfig.command === 'string')
+          command = watchConfig.command.split(' ')
+        else {
+          const resolvedCommand = await watchConfig.command()
+          if (!resolvedCommand) return
+          command = resolvedCommand.split(' ')
+        }
+        const [file, ...args] = command
         const { execa } = await import('execa')
-        await execa(command!, parts).stdout?.pipe(process.stdout)
+        await execa(file!, args).stdout?.pipe(process.stdout)
       }
     })
-
     watchers.push(watcher)
   }
 
@@ -106,11 +134,11 @@ export async function generate(options: Generate) {
     logger.log(
       `> Found a change in ${basename(
         path,
-      )}. Restart for changes to take effect.`,
+      )}. Restart process for changes to take effect.`,
     )
   })
 
-  // Display message and close watchers on Ctrl+C exit
+  // Display message and close watchers on exit
   process.once('SIGINT', shutdown)
   process.once('SIGTERM', shutdown)
   function shutdown() {
@@ -122,6 +150,7 @@ export async function generate(options: Generate) {
 }
 
 async function getContract({ abi: source, address, name }: ContractSource) {
+  // Resolve ABI from source
   let abi
   if (typeof source === 'function') {
     try {
@@ -131,27 +160,35 @@ async function getContract({ abi: source, address, name }: ContractSource) {
     }
   } else abi = source
 
+  // Check if project is using TypeScript
+  const cwd = process.cwd()
+  const tsconfig = await findUp('tsconfig.json', { cwd })
+  const constAssertion = tsconfig ? ' as const' : ''
+
   const abiName = `${camelCase(name)}ABI`
   const addressName = `${camelCase(name)}Address`
   let content = dedent`
-    export const ${abiName} = ${JSON.stringify(source)} as const
+    export const ${abiName} = ${JSON.stringify(source)}${constAssertion}
   `
   if (address) {
     const configName = `${camelCase(name)}Config`
     content = dedent`
       ${content}
-      export const ${addressName} = ${JSON.stringify(address)} as const
-      export const ${configName} = { address: ${addressName}, abi: ${abiName} } as const
+      export const ${addressName} = ${JSON.stringify(address)}${constAssertion}
+      export const ${configName} = { address: ${addressName}, abi: ${abiName} }${constAssertion}
     `
   }
 
   return { abi, address, content, name } as const
 }
 
-async function writeContracts(
-  contracts: ContractResult[],
-  filename = 'wagmi-generated',
-) {
+async function writeContracts({
+  contracts,
+  filename,
+}: {
+  contracts: ContractResult[]
+  filename: string
+}) {
   // Assemble content
   let content = dedent`
     // Generated by @wagmi/cli
@@ -167,14 +204,14 @@ async function writeContracts(
 
   // Format and write output
   const cwd = process.cwd()
-  const outPath = `${cwd}/src/${filename}.ts`
+  const outPath = `${cwd}/${filename}`
   const dprint = (await import('dprint-node')).default
-  const formatted = await dprint.format(outPath, content, {
+  const formatted = dprint.format(outPath, content, {
     bracePosition: 'nextLine',
     quoteProps: 'asNeeded',
     quoteStyle: 'alwaysSingle',
     semiColons: 'asi',
     trailingCommas: 'onlyMultiLine',
   })
-  await fse.writeFile(outPath, formatted, {})
+  await fse.writeFile(outPath, formatted)
 }

@@ -45,8 +45,13 @@ const ContractSource = Contract.merge(
 export type ContractSource = z.infer<typeof ContractSource>
 
 const Watch = z.object({
-  /** Optional command to run along with watch process */
-  command: z.string().optional(),
+  /** Command to run along with watch process */
+  command: z
+    .union([
+      z.string(),
+      z.function().args().returns(z.promise(z.string().nullable())),
+    ])
+    .optional(),
   /** Paths to watch for changes. */
   paths: z.string().array(),
   /** Callback that fires when file is added */
@@ -86,7 +91,8 @@ const ContractsSource = z.object({
 export type ContractsSource = z.infer<typeof ContractsSource>
 
 export const Config = z.object({
-  contracts: z.union([ContractSource, ContractsSource]).array(),
+  contracts: z.union([ContractSource, ContractsSource]).array().nonempty(),
+  out: z.string(),
   plugins: z.string().array().optional(),
 })
 // TODO: Figure out way for JSDoc to show up without needing to recreate type

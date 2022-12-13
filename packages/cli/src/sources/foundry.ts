@@ -17,16 +17,13 @@ type FoundryConfig = {
   artifacts?: string
   /** Artifact files to exclude. */
   exclude?: string[]
+  watchCommand?: string | false
   /** Artifact files to include. */
   include?: string[]
   /** Optional prefix to prepend to artifact names. */
   namePrefix?: string
   /** Path to foundry project. */
   project: string
-  /**
-   * Watch for changes in project's artifacts.
-   */
-  watch?: boolean | { artifacts: true; project?: boolean }
 }
 
 const defaultExcludes = [
@@ -57,7 +54,7 @@ export function foundry({
   include = ['*.json'],
   namePrefix = '',
   project,
-  watch,
+  watchCommand = `forge build --root ${resolve(project)} --watch`,
 }: FoundryConfig): ContractsSource {
   function getContractName(artifactPath: string) {
     const filename = basename(artifactPath)
@@ -81,24 +78,8 @@ export function foundry({
   }
 
   const artifactsDirectory = `${project}/${artifacts}`
-  const watchObject =
-    typeof watch === 'boolean' ? { artifacts: watch, project: watch } : watch
-
   return {
     async contracts() {
-      if (watchObject?.project) {
-        try {
-          await execa('forge', ['--version'])
-        } catch (error) {
-          throw new Error(dedent`
-            Foundry must be installed to run project in watch mode.
-
-            Install Foundry to use watch mode:
-            https://book.getfoundry.sh/getting-started/installation
-          `)
-        }
-      }
-
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
@@ -111,26 +92,35 @@ export function foundry({
       return contracts
     },
     name: 'Foundry',
-    watch: watchObject?.artifacts
-      ? {
-          command: watchObject.project
-            ? `forge build --root ${resolve(project)} --watch`
-            : undefined,
-          paths: [artifactsDirectory],
-          async onAdd(path) {
-            const artifactPaths = await getArtifactPaths(artifactsDirectory)
-            if (!artifactPaths.includes(path)) return
-            return getContract(path)
-          },
-          async onChange(path) {
-            const artifactPaths = await getArtifactPaths(artifactsDirectory)
-            if (!artifactPaths.includes(path)) return
-            return getContract(path)
-          },
-          onRemove(path) {
-            return getContractName(path)
-          },
+    watch: {
+      async command() {
+        if (!watchCommand) return null
+        try {
+          await execa('forge', ['--version'])
+        } catch (error) {
+          throw new Error(dedent`
+              Foundry must be installed to run project in watch mode.
+  
+              Install Foundry to use watch mode:
+              https://book.getfoundry.sh/getting-started/installation
+            `)
         }
-      : undefined,
+        return watchCommand
+      },
+      paths: [artifactsDirectory],
+      async onAdd(path) {
+        const artifactPaths = await getArtifactPaths(artifactsDirectory)
+        if (!artifactPaths.includes(path)) return
+        return getContract(path)
+      },
+      async onChange(path) {
+        const artifactPaths = await getArtifactPaths(artifactsDirectory)
+        if (!artifactPaths.includes(path)) return
+        return getContract(path)
+      },
+      onRemove(path) {
+        return getContractName(path)
+      },
+    },
   }
 }
