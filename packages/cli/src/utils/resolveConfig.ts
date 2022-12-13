@@ -1,6 +1,6 @@
 import { default as fse } from 'fs-extra'
 
-import type { Config } from '../config'
+import { Config } from '../config'
 import { pathToFileURL } from 'node:url'
 
 type ResolveConfig = {
@@ -17,7 +17,10 @@ export async function resolveConfig({
   fse.writeFileSync(fileNameTemp, code)
   try {
     const fileUrl = `${pathToFileURL(fileBase)}.mjs`
-    return (await import(fileUrl)).default
+    const config = (await import(fileUrl)).default
+    // TODO: Strip TypeScript by bundling before parsing
+    // https://github.com/vitejs/vite/blob/main/packages/vite/src/node/config.ts#LL939
+    return Config.parseAsync(config)
   } finally {
     fse.unlinkSync(fileNameTemp)
   }

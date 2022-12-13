@@ -49,7 +49,7 @@ describe('etherscan', () => {
   it('creates etherscan source', () => {
     expect(
       blockExplorer({
-        getApiUrl({ address }) {
+        url({ address }) {
           return `https://example.com/${address}`
         },
       }),
@@ -60,11 +60,11 @@ describe('etherscan', () => {
     let source: SourceFn
     beforeEach(() => {
       source = blockExplorer({
-        getApiUrl({ address }) {
+        url({ address }) {
           const baseUrl = 'https://api.etherscan.io/api'
           return `${baseUrl}?module=contract&action=getabi&address=${address}&apikey=${apiKey}`
         },
-        async parseAbi({ response }) {
+        async parse({ response }) {
           const data = (await response.json()) as
             | { status: '1'; message: 'OK'; result: string }
             | { status: '0'; message: 'NOTOK'; result: string }

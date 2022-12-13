@@ -1,16 +1,12 @@
+import dedent from 'dedent'
+import { execa } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 
-import type { ContractFn } from '../config'
+import type { ContractsSource } from '../config'
 
 type FoundryConfig = {
-  /** Artifact files to exclude. */
-  exclude?: string[]
-  /** Artifact files to include. */
-  include?: string[]
-  /** Optional prefix to prepend to artifact names. */
-  namePrefix?: string
   /**
    * Project's artifacts directory.
    *
@@ -18,13 +14,19 @@ type FoundryConfig = {
    *
    * @default 'out/'
    */
-  out?: string
+  artifacts?: string
+  /** Artifact files to exclude. */
+  exclude?: string[]
+  /** Artifact files to include. */
+  include?: string[]
+  /** Optional prefix to prepend to artifact names. */
+  namePrefix?: string
   /** Path to foundry project. */
   project: string
   /**
-   * Watch for changes in the project's artifacts directory located at `out`.
+   * Watch for changes in project's artifacts.
    */
-  watch?: boolean | { out: true; project?: boolean }
+  watch?: boolean | { artifacts: true; project?: boolean }
 }
 
 const defaultExcludes = [
@@ -50,17 +52,13 @@ const defaultExcludes = [
  * Source for ABIs from [Foundry](https://github.com/foundry-rs/foundry) project
  */
 export function foundry({
+  artifacts = 'out',
   exclude = defaultExcludes,
   include = ['*.json'],
   namePrefix = '',
-  out = 'out',
   project,
   watch,
-}: FoundryConfig): ContractFn {
-  const artifactsDirectory = `${project}/${out}`
-  const watchMode =
-    typeof watch === 'boolean' ? { out: watch, project: watch } : watch ?? false
-
+}: FoundryConfig): ContractsSource {
   function getContractName(artifactPath: string) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)
@@ -70,8 +68,8 @@ export function foundry({
   async function getContract(artifactPath: string) {
     const artifact = await fse.readJSON(artifactPath)
     return {
+      abi: artifact.abi,
       name: getContractName(artifactPath),
-      source: artifact.abi,
     }
   }
 
@@ -82,26 +80,40 @@ export function foundry({
     ])
   }
 
-  async function getContracts(paths: string[]) {
-    const contracts = []
-    for (const artifactPath of paths) {
-      const contract = await getContract(artifactPath)
-      if (!contract.source?.length) continue
-      contracts.push(contract)
-    }
-    return contracts
-  }
+  const artifactsDirectory = `${project}/${artifacts}`
+  const watchObject =
+    typeof watch === 'boolean' ? { artifacts: watch, project: watch } : watch
 
   return {
     async contracts() {
+      if (watchObject?.project) {
+        try {
+          await execa('forge', ['--version'])
+        } catch (error) {
+          throw new Error(dedent`
+            Foundry must be installed to run project in watch mode.
+
+            Install Foundry to use watch mode:
+            https://book.getfoundry.sh/getting-started/installation
+          `)
+        }
+      }
+
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
-      return getContracts(artifactPaths)
+      const contracts = []
+      for (const artifactPath of artifactPaths) {
+        const contract = await getContract(artifactPath)
+        if (!contract.abi?.length) continue
+        contracts.push(contract)
+      }
+      return contracts
     },
-    watch: watchMode
+    name: 'Foundry',
+    watch: watchObject?.artifacts
       ? {
-          command: watchMode.project
+          command: watchObject.project
             ? `forge build --root ${resolve(project)} --watch`
             : undefined,
           paths: [artifactsDirectory],

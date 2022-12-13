@@ -1,8 +1,8 @@
-import type { Abi } from 'abitype'
 import { z } from 'zod'
 
-import type { ContractConfig } from '../config'
-import { blockExplorer } from './blockExplorer'
+import type { Contract } from '../config'
+
+import { type BlockExplorerConfig, blockExplorer } from './blockExplorer'
 
 const apiUrls = {
   // Ethereum
@@ -32,19 +32,7 @@ const apiUrls = {
 }
 type ChainId = keyof typeof apiUrls
 
-type EtherscanConfig = {
-  /**
-   * Contract address or addresses.
-   *
-   * Accepts an object `{ [chainId]: address }` to support multiple chains.
-   *
-   * @example
-   * {
-   *   1: '0x314159265dd8dbb310642f98f50c066173c1259b',
-   *   5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
-   * }
-   */
-  address: NonNullable<ContractConfig['address']>
+type EtherscanConfig = Pick<BlockExplorerConfig, 'contracts'> & {
   /**
    * Etherscan API key.
    *
@@ -65,15 +53,13 @@ type EtherscanConfig = {
    * If `address` is an object, `chainId` is used to select the address.
    */
   chainId: ChainId
-  /** Contract name. */
-  name: ContractConfig['name']
 }
 
 const EtherscanResponse = z.discriminatedUnion('status', [
   z.object({
     status: z.literal('1'),
     message: z.literal('OK'),
-    result: z.string().transform((val) => JSON.parse(val) as Abi),
+    result: z.string().transform((val) => JSON.parse(val) as Contract['abi']),
   }),
   z.object({
     status: z.literal('0'),
@@ -82,27 +68,27 @@ const EtherscanResponse = z.discriminatedUnion('status', [
   }),
 ])
 
-export function etherscan({ address, apiKey, chainId, name }: EtherscanConfig) {
+export function etherscan({ apiKey, chainId, contracts }: EtherscanConfig) {
   return blockExplorer({
-    address,
-    getApiUrl({ address }) {
-      if (!address) throw new Error('address is required')
-      const baseUrl = apiUrls[chainId as ChainId]
-      if (!baseUrl)
-        throw new Error(`No API url found for chain id "${chainId}"`)
-      const contractAddress =
-        typeof address === 'string' ? address : address[chainId]
-      if (!contractAddress)
-        throw new Error(`No contract address found for chainId "${chainId}"`)
-      return `${baseUrl}?module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`
-    },
-    async parseAbi({ response }) {
+    contracts,
+    name: 'Etherscan',
+    async parse({ response }) {
       const json = await response.json()
       const parsed = await EtherscanResponse.safeParseAsync(json)
       if (!parsed.success) throw new Error(parsed.error.message)
       if (parsed.data.status === '0') throw new Error(parsed.data.result)
       return parsed.data.result
     },
-    name,
+    url({ address }) {
+      if (!address) throw new Error('address is required')
+      const baseUrl = apiUrls[chainId as ChainId]
+      if (!baseUrl)
+        throw new Error(`No API URL found for chain id "${chainId}"`)
+      const contractAddress =
+        typeof address === 'string' ? address : address[chainId]
+      if (!contractAddress)
+        throw new Error(`No address found for chainId "${chainId}"`)
+      return `${baseUrl}?module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`
+    },
   })
 }

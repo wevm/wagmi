@@ -3,10 +3,8 @@ import type { FSWatcher, WatchOptions } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { default as fse } from 'fs-extra'
 
-import type { ContractConfig, Watch } from '../config'
-import { Config } from '../config'
+import type { Contract, ContractSource, Watch } from '../config'
 import * as logger from '../logger'
-import type { Contract } from '../types'
 import { findConfig, resolveConfig } from '../utils'
 
 export type Generate = {
@@ -14,43 +12,38 @@ export type Generate = {
   root?: string
 }
 
-export async function generate({ config, root }: Generate) {
-  const configPath = await findConfig({ config, root })
-  if (!configPath) throw new Error('No config found')
+type ContractResult = Contract & {
+  content: string
+}
 
+export async function generate(options: Generate) {
+  const configPath = await findConfig(options)
+  if (!configPath) throw new Error(`Config not found at "${configPath}"`)
   const resolvedConfig = await resolveConfig({ configPath })
-  const parsedConfig = await Config.parseAsync(resolvedConfig)
 
-  const contractNames = new Set<string>()
-  const contracts: { [name: string]: Contract } = {}
+  const contracts = new Map<string, ContractResult>()
   const watchConfigs: Watch[] = []
-  for (const contractConfig of parsedConfig.contracts) {
-    if ('contracts' in contractConfig) {
-      const resolvedContracts = await contractConfig.contracts()
-      parsedConfig.contracts.push(...resolvedContracts)
-      if (contractConfig.watch) watchConfigs.push(contractConfig.watch)
+  for (const config of resolvedConfig.contracts) {
+    if ('contracts' in config) {
+      const resolvedContracts = await config.contracts()
+      resolvedConfig.contracts.push(...resolvedContracts)
+      if (config.watch) watchConfigs.push(config.watch)
       continue
     }
 
-    const { address, source, name } = contractConfig
-    logger.log(`Fetching ABI for ${name}`)
-    if (contractNames.has(name)) throw new Error('Contract name must be unique')
-
-    const contract = await getContract({ address, name, source })
-    contracts[name] = contract
-    contractNames.add(name)
+    logger.log(`Fetching ABI for ${config.name}…`)
+    if (contracts.has(config.name))
+      throw new Error(`Contract name "${config.name}" is not unique.`)
+    const contract = await getContract(config)
+    contracts.set(config.name, contract)
   }
 
   // Write output to file
-  await writeContracts(Object.values(contracts))
-  if (!watchConfigs.length) {
-    logger.log('Done!')
-    return
-  }
-
-  const { watch } = await import('chokidar')
+  await writeContracts(Array.from(contracts.values()))
+  if (!watchConfigs.length) return
 
   // Watch for changes
+  const { watch } = await import('chokidar')
   let timeout: NodeJS.Timeout | null
   const delay = 100
   const watchers: FSWatcher[] = []
@@ -69,29 +62,27 @@ export async function generate({ config, root }: Generate) {
       if (event === 'change') {
         const contractConfig = await watchConfig.onChange(path)
         if (!contractConfig) return
-        contracts[contractConfig.name] = await getContract(contractConfig)
+        contracts.set(contractConfig.name, await getContract(contractConfig))
         needsWrite = true
       } else if (event === 'add') {
         const contractConfig = await watchConfig.onAdd?.(path)
         if (!contractConfig) return
-        contracts[contractConfig.name] = await getContract(contractConfig)
-        contractNames.add(contractConfig.name)
+        contracts.set(contractConfig.name, await getContract(contractConfig))
         needsWrite = true
       } else if (event === 'unlink') {
         const name = await watchConfig.onRemove?.(path)
         if (!name) return
-        delete contracts[name]
-        contractNames.delete(name)
+        contracts.delete(name)
         needsWrite = true
       }
 
+      // Debounce writes
       if (needsWrite) {
-        console.log(event, path)
         if (timeout) clearTimeout(timeout)
         timeout = setTimeout(async () => {
           console.log('Saving…')
           timeout = null
-          await writeContracts(Object.values(contracts))
+          await writeContracts(Array.from(contracts.values()))
           console.log('Saving!')
         }, delay)
         needsWrite = false
@@ -109,13 +100,13 @@ export async function generate({ config, root }: Generate) {
     watchers.push(watcher)
   }
 
-  // Watch config file for changes
+  // Watch `@wagmi/cli` config file for changes
   watch(configPath).on('change', async (path) => {
     const { basename } = await import('pathe')
     logger.log(
       `> Found a change in ${basename(
         path,
-      )}. Restart generate to see the changes in effect.`,
+      )}. Restart for changes to take effect.`,
     )
   })
 
@@ -130,8 +121,35 @@ export async function generate({ config, root }: Generate) {
   }
 }
 
+async function getContract({ abi: source, address, name }: ContractSource) {
+  let abi
+  if (typeof source === 'function') {
+    try {
+      abi = await source({ address })
+    } catch (error) {
+      throw new Error(`Failed to fetch contract ABI for ${name}`)
+    }
+  } else abi = source
+
+  const abiName = `${camelCase(name)}ABI`
+  const addressName = `${camelCase(name)}Address`
+  let content = dedent`
+    export const ${abiName} = ${JSON.stringify(source)} as const
+  `
+  if (address) {
+    const configName = `${camelCase(name)}Config`
+    content = dedent`
+      ${content}
+      export const ${addressName} = ${JSON.stringify(address)} as const
+      export const ${configName} = { address: ${addressName}, abi: ${abiName} } as const
+    `
+  }
+
+  return { abi, address, content, name } as const
+}
+
 async function writeContracts(
-  contracts: Contract[],
+  contracts: ContractResult[],
   filename = 'wagmi-generated',
 ) {
   // Assemble content
@@ -159,41 +177,4 @@ async function writeContracts(
     trailingCommas: 'onlyMultiLine',
   })
   await fse.writeFile(outPath, formatted, {})
-}
-
-async function getContract({ address, name, source }: ContractConfig) {
-  let abi
-  if (typeof source === 'function') {
-    try {
-      abi = await source({ address })
-    } catch (error) {
-      throw new Error(`Failed to fetch contract ABI for ${name}`)
-    }
-  } else abi = source
-
-  const abiName = getAbiName(name)
-  const addressName = getAddressName(name)
-  let content = dedent`
-    export const ${abiName} = ${JSON.stringify(abi)} as const
-  `
-  if (address) {
-    const configName = getContractConfigName(name)
-    content = dedent`
-      ${content}
-      export const ${addressName} = ${JSON.stringify(address)} as const
-      export const ${configName} = { address: ${addressName}, abi: ${abiName} } as const
-    `
-  }
-
-  return { abi, address, content, name }
-}
-
-function getAbiName(contractName: string) {
-  return `${camelCase(contractName)}ABI`
-}
-function getAddressName(contractName: string) {
-  return `${camelCase(contractName)}Address`
-}
-function getContractConfigName(contractName: string) {
-  return `${camelCase(contractName)}Config`
 }

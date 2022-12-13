@@ -1,45 +1,46 @@
-import type { Abi } from 'abitype'
 import type { Response } from 'node-fetch'
 import fetch from 'node-fetch'
 
-import type { ContractConfig } from '../config'
+import type { Contract, ContractsSource } from '../config'
 
-type BlockExplorerConfig = {
-  /** Contract address. */
-  address: ContractConfig['address']
-  /** Function for returning a block explorer URL to request ABI from. */
-  getApiUrl(config: {
-    address?: ContractConfig['address']
-  }): Promise<string> | string
-  /** Contract name. */
-  name: ContractConfig['name']
+export type BlockExplorerConfig = {
+  contracts: Omit<Contract, 'abi'>[]
+  name?: ContractsSource['name']
   /**
-   * Function for parsing ABI from API response.
+   * Function for parsing ABI from fetch response.
    *
    * @default ({ response }) => response.json()
    */
-  parseAbi?({ response }: { response: Response }): Promise<Abi> | Abi
+  parse?({
+    response,
+  }: {
+    response: Response
+  }): Promise<Contract['abi']> | Contract['abi']
+  /** Function for returning a block explorer URL to request ABI from. */
+  url(config: { address?: Contract['address'] }): Promise<string> | string
 }
 
 export function blockExplorer({
-  address,
-  getApiUrl,
-  name,
-  parseAbi = ({ response }) => response.json() as Promise<Abi>,
-}: BlockExplorerConfig): ContractConfig {
-  const cache: Record<string, Abi> = {}
+  contracts: contractConfigs,
+  parse = ({ response }) => response.json() as Promise<Contract['abi']>,
+  url,
+}: BlockExplorerConfig): ContractsSource {
+  const cache: Record<string, Contract['abi']> = {}
   return {
-    address,
-    name,
-    async source() {
-      const apiUrl = await getApiUrl({ address })
-      if (cache[apiUrl]) return cache[apiUrl] as Abi
-
-      const response = await fetch(apiUrl)
-      const abi = await parseAbi({ response })
-
-      cache[apiUrl] = abi
-      return abi
+    async contracts() {
+      const contracts = []
+      for (const { address, name } of contractConfigs) {
+        const endpoint = await url({ address })
+        let abi = cache[endpoint]
+        if (!abi) {
+          const response = await fetch(endpoint)
+          abi = await parse({ response })
+          cache[endpoint] = abi
+        }
+        contracts.push({ abi, address, name })
+      }
+      return contracts
     },
+    name: 'Block Explorer',
   }
 }
