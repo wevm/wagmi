@@ -17,7 +17,15 @@ type FoundryConfig = {
   artifacts?: string
   /** Artifact files to exclude. */
   exclude?: string[]
-  watchCommand?: string | false
+  /** [Forge](https://book.getfoundry.sh/forge) configuration */
+  forge?: {
+    /** Remove build artifacts and cache directories on start up. */
+    clean?: boolean
+    /** Build project before fetching artifacts. */
+    build?: boolean
+    /** Rebuild every time a watched file or directory is changed. */
+    rebuild?: boolean
+  }
   /** Artifact files to include. */
   include?: string[]
   /** Optional prefix to prepend to artifact names. */
@@ -51,10 +59,14 @@ const defaultExcludes = [
 export function foundry({
   artifacts = 'out',
   exclude = defaultExcludes,
+  forge = {
+    clean: false,
+    build: true,
+    rebuild: true,
+  },
   include = ['*.json'],
   namePrefix = '',
   project,
-  watchCommand = `forge build --root ${resolve(project)} --watch`,
 }: FoundryConfig): ContractsSource {
   function getContractName(artifactPath: string) {
     const filename = basename(artifactPath)
@@ -77,9 +89,28 @@ export function foundry({
     ])
   }
 
+  async function assertForgeInstalled() {
+    try {
+      execa('forge', ['--version'])
+    } catch (error) {
+      throw new Error(dedent`
+        Forge not installed. Install with Foundry:
+        https://book.getfoundry.sh/getting-started/installation
+      `)
+    }
+  }
+
   const artifactsDirectory = `${project}/${artifacts}`
   return {
     async contracts() {
+      if (forge?.clean || forge?.build) {
+        await assertForgeInstalled()
+        if (forge.clean)
+          await execa('forge', ['clean'], { cwd: resolve(project) })
+        if (forge.build)
+          await execa('forge', ['build'], { cwd: resolve(project) })
+      }
+
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
@@ -93,20 +124,14 @@ export function foundry({
     },
     name: 'Foundry',
     watch: {
-      async command() {
-        if (!watchCommand) return null
-        try {
-          await execa('forge', ['--version'])
-        } catch (error) {
-          throw new Error(dedent`
-              Foundry must be installed to run project in watch mode.
-  
-              Install Foundry to use watch mode:
-              https://book.getfoundry.sh/getting-started/installation
-            `)
-        }
-        return watchCommand
-      },
+      command: forge?.rebuild
+        ? async () => {
+            await assertForgeInstalled()
+            await execa('forge', ['build', '--watch'], {
+              cwd: resolve(project),
+            }).stdout?.pipe(process.stdout)
+          }
+        : undefined,
       paths: [artifactsDirectory],
       async onAdd(path) {
         const artifactPaths = await getArtifactPaths(artifactsDirectory)

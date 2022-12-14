@@ -47,10 +47,9 @@ export type ContractSource = z.infer<typeof ContractSource>
 const Watch = z.object({
   /** Command to run along with watch process */
   command: z
-    .union([
-      z.string(),
-      z.function().args().returns(z.promise(z.string().nullable())),
-    ])
+    .function()
+    .args()
+    .returns(z.union([z.void(), z.void().promise()]))
     .optional(),
   /** Paths to watch for changes. */
   paths: z.string().array(),

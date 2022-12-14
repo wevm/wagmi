@@ -3,6 +3,7 @@ import type { FSWatcher, WatchOptions } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
+import ora from 'ora'
 import { z } from 'zod'
 
 import type { Contract, ContractSource, Watch } from '../config'
@@ -22,6 +23,7 @@ type ContractResult = Contract & {
 }
 
 export async function generate(options: Generate) {
+  let spinner = ora('Generating code for contracts').start()
   // Validate command options
   try {
     await Generate.parseAsync(options)
@@ -39,27 +41,38 @@ export async function generate(options: Generate) {
   // Collect contracts and watch configs
   const contracts = new Map<string, ContractResult>()
   const watchConfigs: Watch[] = []
-  for (const config of resolvedConfig.contracts) {
+  for (const [index, config] of resolvedConfig.contracts.entries()) {
     if ('contracts' in config) {
+      spinner.text = `Loading config for "${config.name}"`
       const resolvedContracts = await config.contracts()
-      resolvedConfig.contracts.push(...resolvedContracts)
+      resolvedConfig.contracts.splice(index + 1, 0, ...resolvedContracts)
       if (config.watch) watchConfigs.push(config.watch)
       continue
     }
 
-    logger.log(`Fetching ABI for ${config.name}…`)
     if (contracts.has(config.name))
       throw new Error(`Contract name "${config.name}" is not unique.`)
+    spinner.text = `Resolving contracts for "${config.name}"`
     const contract = await getContract(config)
     contracts.set(config.name, contract)
   }
+  spinner.text = `Resolved ${Array.from(contracts.values()).length} contracts`
+  spinner.succeed()
+
+  spinner = ora('Running plugins').start()
+  spinner.text = 'Finished plugins'
+  spinner.succeed()
 
   // Write output to file
+  spinner = ora(`Saving to "${resolvedConfig.out}"`).start()
   await writeContracts({
     contracts: Array.from(contracts.values()),
     filename: resolvedConfig.out,
   })
-  if (!(options.watch && watchConfigs.length)) return
+  spinner.text = `Saved to "${resolvedConfig.out}"`
+  spinner.succeed()
+  if (!options.watch) return
+  if (!watchConfigs.length) return
 
   // Watch for changes
   const { watch } = await import('chokidar')
@@ -110,21 +123,10 @@ export async function generate(options: Generate) {
       }
     })
     // Run parallel command on ready
-    watcher.on('ready', async () => {
-      if (watchConfig.command) {
-        let command
-        if (typeof watchConfig.command === 'string')
-          command = watchConfig.command.split(' ')
-        else {
-          const resolvedCommand = await watchConfig.command()
-          if (!resolvedCommand) return
-          command = resolvedCommand.split(' ')
-        }
-        const [file, ...args] = command
-        const { execa } = await import('execa')
-        await execa(file!, args).stdout?.pipe(process.stdout)
-      }
-    })
+    if (watchConfig.command)
+      watcher.on('ready', async () => {
+        await watchConfig?.command?.()
+      })
     watchers.push(watcher)
   }
 

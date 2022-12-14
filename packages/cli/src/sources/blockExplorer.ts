@@ -22,6 +22,7 @@ export type BlockExplorerConfig = {
 
 export function blockExplorer({
   contracts: contractConfigs,
+  name,
   parse = ({ response }) => response.json() as Promise<Contract['abi']>,
   url,
 }: BlockExplorerConfig): ContractsSource {
@@ -41,6 +42,6 @@ export function blockExplorer({
       }
       return contracts
     },
-    name: 'Block Explorer',
+    name: name ?? 'Block Explorer',
   }
 }
