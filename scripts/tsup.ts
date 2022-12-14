@@ -1,3 +1,4 @@
+import dedent from 'dedent'
 import { execa } from 'execa'
 import { default as fs } from 'fs-extra'
 import type { Options } from 'tsup'
@@ -52,7 +53,8 @@ export function getConfig({
             `export * from '${srcTypesFile}'`,
           )
         }
-        validateExports(exports)
+        await validateExports(exports)
+        await generateProxyPackageEntrypoints(exports)
       },
     }
 
@@ -66,7 +68,8 @@ export function getConfig({
     async onSuccess() {
       if (typeof options.onSuccess === 'function') await options.onSuccess()
       else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
-      validateExports(exports)
+      await validateExports(exports)
+      await generateProxyPackageEntrypoints(exports)
     },
     ...options,
   }
@@ -87,5 +90,23 @@ async function validateExports(exports: {
           `File does not exist for export "${type}": "${value.default}" in "${key}."`,
         )
     }
+  }
+}
+
+async function generateProxyPackageEntrypoints(exports: {
+  [key: string]: string | { default: string }
+}) {
+  for (const [key, value] of Object.entries(exports)) {
+    if (typeof value === 'string') continue
+    if (key === '.') continue
+    if (!value.default) continue
+    await fs.ensureDir(key)
+    await fs.outputFile(
+      `${key}/package.json`,
+      dedent`{
+        "type": "module",
+        "main": "${path.relative(key, value.default)}"
+      }`,
+    )
   }
 }
