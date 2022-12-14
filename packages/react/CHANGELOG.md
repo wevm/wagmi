@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.9.3
+
+### Patch Changes
+
+- [#1431](https://github.com/wagmi-dev/wagmi/pull/1431) [`af28f8f9`](https://github.com/wagmi-dev/wagmi/commit/af28f8f9cfc227e7c391927fdb934183edb5c2dc) Thanks [@jxom](https://github.com/jxom)! - Re-export connectors from `@wagmi/connectors`
+
+- [#1431](https://github.com/wagmi-dev/wagmi/pull/1431) [`af28f8f9`](https://github.com/wagmi-dev/wagmi/commit/af28f8f9cfc227e7c391927fdb934183edb5c2dc) Thanks [@jxom](https://github.com/jxom)! - Added `LedgerConnector` connector
+
+- Updated dependencies [[`af28f8f9`](https://github.com/wagmi-dev/wagmi/commit/af28f8f9cfc227e7c391927fdb934183edb5c2dc), [`af28f8f9`](https://github.com/wagmi-dev/wagmi/commit/af28f8f9cfc227e7c391927fdb934183edb5c2dc)]:
+  - @wagmi/core@0.8.3
+
 ## 0.9.2
 
 ### Patch Changes
