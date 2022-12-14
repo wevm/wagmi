@@ -220,7 +220,7 @@ importers:
   references/packages/connectors:
     specifiers:
       '@coinbase/wallet-sdk': ^3.5.4
-      '@ledgerhq/connect-kit-loader': ^1.0.0
+      '@ledgerhq/connect-kit-loader': ^1.0.1
       '@wagmi/core': workspace:*
       '@walletconnect/ethereum-provider': ^1.8.0
       abitype: ^0.1.8
@@ -228,7 +228,7 @@ importers:
       eventemitter3: ^4.0.7
     dependencies:
       '@coinbase/wallet-sdk': 3.6.0
-      '@ledgerhq/connect-kit-loader': 1.0.0
+      '@ledgerhq/connect-kit-loader': 1.0.1
       '@walletconnect/ethereum-provider': 1.8.0
       abitype: 0.1.8
       eventemitter3: 4.0.7
@@ -1015,8 +1015,8 @@ packages:
       '@json-rpc-tools/types': 1.7.6
       '@pedrouid/environment': 1.0.1
 
-  /@ledgerhq/connect-kit-loader/1.0.0:
-    resolution: {integrity: sha512-TQnVSwg8WKUx5WUQtGKJurFpnpeaVHmJfKdElVMBgccfHska6+4XA+554NjHQ46GvI/V0wknFShnudTRqc5JXg==}
+  /@ledgerhq/connect-kit-loader/1.0.1:
+    resolution: {integrity: sha512-OAJh9rMaypS1ttrSMwPznXqglJGcP3WPTTgz9YAKfkaMyUtZcHx7hCj4d6f7DdSVZOgWcyEYfZ8M2QrA2gtvgQ==}
     dev: false
 
   /@manypkg/find-root/1.1.0:
