@@ -31,7 +31,7 @@ Note: The above example is using chains from [`@wagmi/core/chains` entrypoint](/
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { LedgerConnector } from '@wagmi/connectors/coinbaseWallet'
+import { LedgerConnector } from '@wagmi/connectors/ledger'
 import { mainnet } from '@wagmi/core/chains'
 
 const connector = new LedgerConnector({
@@ -46,7 +46,7 @@ const connector = new LedgerConnector({
 The Chain ID of the connecting chain.
 
 ```ts {5}
-import { LedgerConnector } from '@wagmi/connectors/coinbaseWallet'
+import { LedgerConnector } from '@wagmi/connectors/ledger'
 
 const connector = new LedgerConnector({
   options: {
@@ -60,7 +60,7 @@ const connector = new LedgerConnector({
 Toggle debug logging for Ledger Connect Kit.
 
 ```ts {5}
-import { LedgerConnector } from '@wagmi/connectors/coinbaseWallet'
+import { LedgerConnector } from '@wagmi/connectors/ledger'
 
 const connector = new LedgerConnector({
   options: {
@@ -74,7 +74,7 @@ const connector = new LedgerConnector({
 A Chain ID (key) / RPC URL (value) map.
 
 ```ts {5-7}
-import { LedgerConnector } from '@wagmi/connectors/coinbaseWallet'
+import { LedgerConnector } from '@wagmi/connectors/ledger'
 
 const connector = new LedgerConnector({
   options: {
