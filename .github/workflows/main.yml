@@ -181,7 +181,7 @@ jobs:
         run: anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER &
         env:
           ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
-      - name: Test React 18
+      - name: Test `@wagmi/core` and `wagmi` (React 18)
         if: matrix.react-version == 18
         run: pnpm test:coverage
         env:
@@ -191,7 +191,7 @@ jobs:
         run: pnpm test:typecheck
         env:
           REACT_VERSION: ${{ matrix.react-version }}
-      - name: Test React 17
+      - name: Test `wagmi` (React 17)
         if: matrix.react-version == 17
         run: |
           cd packages/react
