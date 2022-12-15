@@ -2,18 +2,18 @@
   "name": "root",
   "scripts": {
     "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 15578840",
-    "build": "pnpm --filter './packages/**' build",
+    "build": "pnpm -r --filter './packages/**' --filter './references/packages/**' build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
-    "dev": "pnpm --parallel --filter './packages/**' dev",
-    "docs:build": "pnpm --parallel --filter './packages/**' --filter docs build",
+    "dev": "pnpm -r --filter './packages/**' --filter './references/packages/**' dev",
+    "docs:build": "pnpm -r --filter './packages/**' --filter './references/packages/**' --filter docs build",
     "docs:dev": "pnpm dev && pnpm --filter docs dev",
     "lint": "eslint . --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
     "playground": "pnpm dev && pnpm --filter example-dev dev",
+    "preinstall": "git submodule init && git submodule update && pnpm i --filter './references/packages/**' --ignore-scripts && npx only-allow pnpm",
     "postinstall": "pnpm dev",
-    "preinstall": "npx only-allow pnpm",
     "prepare": "npx simple-git-hooks",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -27,6 +27,7 @@
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.25.2",
     "@ethersproject/providers": "^5.7.1",
+    "@types/dedent": "^0.7.0",
     "@types/eslint": "^8.4.10",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "17.0.21",
@@ -36,6 +37,7 @@
     "@vitest/coverage-c8": "^0.25.8",
     "@vitest/ui": "^0.25.8",
     "abitype": "^0.2.5",
+    "dedent": "^0.7.0",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
@@ -71,5 +73,11 @@
   "packageManager": "pnpm@7.5.0",
   "engines": {
     "pnpm": ">=7"
+  },
+  "pnpm": {
+    "overrides": {
+      "esbuild": "0.15.13",
+      "@wagmi/connectors>@wagmi/core": "workspace:*"
+    }
   }
 }

@@ -4,7 +4,7 @@ import withPreconstruct from '@preconstruct/next'
 const withNextra = nextra({
   defaultShowCopyCode: true,
   flexsearch: {
-    codeblocks: false
+    codeblocks: false,
   },
   theme: 'nextra-theme-docs',
   themeConfig: './theme.config.tsx',
@@ -70,4 +70,6 @@ const config = {
 // We don't use Preconstruct anymore, but the Next.js plugin works great for
 // development with our custom set up in packages' `tsup.config.ts`.
 // https://github.com/preconstruct/preconstruct/tree/main/packages/next
-export default process.env.NODE_ENV === 'development' ? withPreconstruct(withNextra(config)) : withNextra(config)
+export default process.env.NODE_ENV === 'development'
+  ? withPreconstruct(withNextra(config))
+  : withNextra(config)

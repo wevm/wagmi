@@ -1,0 +1,3 @@
+[submodule "references"]
+	path = references
+	url = https://github.com/wagmi-dev/references.git

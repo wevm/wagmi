@@ -20,6 +20,8 @@ jobs:
         pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: pnpm/action-setup@v2.2.4
         with:
           version: ${{ matrix.pnpm-version }}
@@ -44,6 +46,7 @@ jobs:
             examples/**/node_modules
             packages/**/node_modules
             packages/**/dist
+            references/packages/**/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
@@ -62,6 +65,8 @@ jobs:
         pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: pnpm/action-setup@v2.2.4
         with:
           version: ${{ matrix.pnpm-version }}
@@ -79,6 +84,7 @@ jobs:
             examples/**/node_modules
             packages/**/node_modules
             packages/**/dist
+            references/packages/**/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Lint code
         run: pnpm lint
@@ -95,6 +101,8 @@ jobs:
         pnpm-version: [7]
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: pnpm/action-setup@v2.2.4
         with:
           version: ${{ matrix.pnpm-version }}
@@ -112,6 +120,7 @@ jobs:
             examples/**/node_modules
             packages/**/node_modules
             packages/**/dist
+            references/packages/**/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Build
         run: pnpm build
@@ -129,6 +138,8 @@ jobs:
         react-version: [17, 18]
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: pnpm/action-setup@v2.2.4
         with:
           version: ${{ matrix.pnpm-version }}
@@ -146,6 +157,7 @@ jobs:
             examples/**/node_modules
             packages/**/node_modules
             packages/**/dist
+            references/packages/**/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install rust
         uses: actions-rs/toolchain@v1
