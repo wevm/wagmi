@@ -161,11 +161,11 @@ jobs:
             packages/**/dist
             references/packages/**/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
-      - name: Cache Anvil RPC calls
+      - name: Cache Anvil
         uses: 'actions/cache@v3'
         with:
           path: ~/.foundry/cache/rpc/**/${{ env.ANVIL_BLOCK_NUMBER }}
-          key: anvil-${{ secrets.ANVIL_FORK_URL }}-${{ env.ANVIL_BLOCK_NUMBER }}
+          key: foundry-anvil-${{ env.ANVIL_BLOCK_NUMBER }}
       - name: Install rust
         uses: actions-rs/toolchain@v1
         with:
@@ -200,3 +200,6 @@ jobs:
           pnpm test:run react
         env:
           REACT_VERSION: ${{ matrix.react-version }}
+      # Need to shutdown Anvil so cache gets created
+      - name: Shutdown Anvil
+        run: pkill -2 anvil
