@@ -54,7 +54,7 @@ export function getConfig({
           )
         }
         await validateExports(exports)
-        await generateProxyPackageEntrypoints(exports)
+        await generateProxyPackages(exports)
       },
     }
 
@@ -69,18 +69,20 @@ export function getConfig({
       if (typeof options.onSuccess === 'function') await options.onSuccess()
       else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
       await validateExports(exports)
-      await generateProxyPackageEntrypoints(exports)
+      await generateProxyPackages(exports)
     },
     ...options,
   }
 }
 
+type Exports = {
+  [key: string]: string | { default: string }
+}
+
 /**
  * Validate exports point to actual files
  */
-async function validateExports(exports: {
-  [key: string]: string | { default: string }
-}) {
+async function validateExports(exports: Exports) {
   for (const [key, value] of Object.entries(exports)) {
     if (typeof value === 'string') continue
     for (const [type, path] of Object.entries(value)) {
@@ -93,9 +95,10 @@ async function validateExports(exports: {
   }
 }
 
-async function generateProxyPackageEntrypoints(exports: {
-  [key: string]: string | { default: string }
-}) {
+/**
+ * Generate proxy packages files for each export
+ */
+async function generateProxyPackages(exports: Exports) {
   const ignorePaths = []
   for (const [key, value] of Object.entries(exports)) {
     if (typeof value === 'string') continue
@@ -107,9 +110,15 @@ async function generateProxyPackageEntrypoints(exports: {
       dedent`{
         "type": "module",
         "main": "${path.relative(key, value.default)}"
-      }\n`,
+      }`,
     )
     ignorePaths.push(key)
   }
-  await fs.outputFile('.gitignore', `${ignorePaths.join('/**\n')}/**`)
+  await fs.outputFile(
+    '.gitignore',
+    dedent`
+    # Generated file. Do not edit directly.
+    ${ignorePaths.join('/**\n')}/**
+  `,
+  )
 }
