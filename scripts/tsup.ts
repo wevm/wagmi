@@ -119,7 +119,7 @@ async function generateProxyPackages(exports: Exports) {
         "main": "${entrypoint}"
       }`,
     )
-    ignorePaths.push(key)
+    ignorePaths.push(key.replace(/^\.\//g, ''))
   }
   await fs.outputFile(
     '.gitignore',
