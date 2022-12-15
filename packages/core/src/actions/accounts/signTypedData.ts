@@ -6,7 +6,8 @@ import type {
 } from 'abitype'
 import type { TypedDataField, providers } from 'ethers'
 
-import { ConnectorNotFoundError } from '../../errors'
+import type { EthersError, ProviderRpcError } from '../../errors'
+import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 import { assertActiveChain, normalizeChainId } from '../../utils'
 import { fetchSigner } from './fetchSigner'
 
@@ -57,6 +58,15 @@ export async function signTypedData<TTypedData extends TypedData>({
       return types
     }, {} as Record<string, TypedDataField[]>)
 
-  // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
-  return signer._signTypedData(domain, types_, value)
+  try {
+    // Method name may be changed in the future, see https://docs.ethers.io/v5/api/signer/#Signer-signTypedData
+    return await signer._signTypedData(domain, types_, value)
+  } catch (error) {
+    if (
+      (error as ProviderRpcError).code === 4001 ||
+      (error as EthersError).code === 'ACTION_REJECTED'
+    )
+      throw new UserRejectedRequestError(error)
+    throw error
+  }
 }

@@ -1,3 +1,5 @@
+import type { Logger } from 'ethers/lib/utils.js'
+
 import { getProvider } from './actions'
 import type { Chain } from './chains'
 import type { Connector } from './connectors'
@@ -319,4 +321,11 @@ export class UserRejectedRequestError extends ProviderRpcError {
   constructor(cause: unknown) {
     super('User rejected request', { cause, code: 4001 })
   }
+}
+
+// Ethers does not have an error type so we can use this for casting
+// https://github.com/ethers-io/ethers.js/blob/main/packages/logger/src.ts/index.ts#L268
+export type EthersError = Error & {
+  reason: string
+  code: keyof typeof Logger.errors
 }

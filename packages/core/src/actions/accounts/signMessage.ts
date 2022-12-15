@@ -1,6 +1,6 @@
 import type { ResolvedConfig } from 'abitype'
 
-import type { ProviderRpcError } from '../../errors'
+import type { EthersError, ProviderRpcError } from '../../errors'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 import { fetchSigner } from './fetchSigner'
 
@@ -21,7 +21,10 @@ export async function signMessage(
       args.message,
     )) as ResolvedConfig['BytesType']
   } catch (error) {
-    if ((error as ProviderRpcError).code === 4001)
+    if (
+      (error as ProviderRpcError).code === 4001 ||
+      (error as EthersError).code === 'ACTION_REJECTED'
+    )
       throw new UserRejectedRequestError(error)
     throw error
   }
