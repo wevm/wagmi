@@ -1,7 +1,7 @@
 import type { Address } from 'abitype'
 import type { providers } from 'ethers'
 
-import type { ProviderRpcError } from '../../errors'
+import type { EthersError, ProviderRpcError } from '../../errors'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 import type { Hash, Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
@@ -101,7 +101,10 @@ export async function sendTransaction({
 
     return { hash: hash as Hash, wait }
   } catch (error) {
-    if ((error as ProviderRpcError).code === 4001)
+    if (
+      (error as ProviderRpcError).code === 4001 ||
+      (error as EthersError).code === 'ACTION_REJECTED'
+    )
       throw new UserRejectedRequestError(error)
     throw error
   }
