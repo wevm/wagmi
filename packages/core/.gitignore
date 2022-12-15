@@ -1,0 +1,14 @@
+# Generated file. Do not edit directly.
+chains/**
+connectors/**
+connectors/coinbaseWallet/**
+connectors/ledger/**
+connectors/metaMask/**
+connectors/mock/**
+connectors/walletConnect/**
+internal/**
+internal/test/**
+providers/infura/**
+providers/public/**
+providers/alchemy/**
+providers/jsonRpc/**

@@ -1,3 +1,4 @@
+import dedent from 'dedent'
 import { execa } from 'execa'
 import { default as fs } from 'fs-extra'
 import type { Options } from 'tsup'
@@ -52,7 +53,8 @@ export function getConfig({
             `export * from '${srcTypesFile}'`,
           )
         }
-        validateExports(exports)
+        await validateExports(exports)
+        await generateProxyPackages(exports)
       },
     }
 
@@ -66,18 +68,21 @@ export function getConfig({
     async onSuccess() {
       if (typeof options.onSuccess === 'function') await options.onSuccess()
       else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
-      validateExports(exports)
+      await validateExports(exports)
+      await generateProxyPackages(exports)
     },
     ...options,
   }
 }
 
+type Exports = {
+  [key: string]: string | { default: string }
+}
+
 /**
  * Validate exports point to actual files
  */
-async function validateExports(exports: {
-  [key: string]: string | { default: string }
-}) {
+async function validateExports(exports: Exports) {
   for (const [key, value] of Object.entries(exports)) {
     if (typeof value === 'string') continue
     for (const [type, path] of Object.entries(value)) {
@@ -88,4 +93,39 @@ async function validateExports(exports: {
         )
     }
   }
+}
+
+/**
+ * Generate proxy packages files for each export
+ */
+async function generateProxyPackages(exports: Exports) {
+  const ignorePaths = []
+  for (const [key, value] of Object.entries(exports)) {
+    if (typeof value === 'string') continue
+    if (key === '.') continue
+    if (!value.default) continue
+    await fs.ensureDir(key)
+    const entrypoint = path.relative(key, value.default)
+    const fileExists = await fs.pathExists(value.default)
+    if (!fileExists)
+      throw new Error(
+        `Proxy package "${key}" entrypoint "${entrypoint}" does not exist.`,
+      )
+
+    await fs.outputFile(
+      `${key}/package.json`,
+      dedent`{
+        "type": "module",
+        "main": "${entrypoint}"
+      }`,
+    )
+    ignorePaths.push(key.replace(/^\.\//g, ''))
+  }
+  await fs.outputFile(
+    '.gitignore',
+    dedent`
+    # Generated file. Do not edit directly.
+    ${ignorePaths.join('/**\n')}/**
+  `,
+  )
 }
