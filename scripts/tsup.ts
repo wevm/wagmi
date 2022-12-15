@@ -96,6 +96,7 @@ async function validateExports(exports: {
 async function generateProxyPackageEntrypoints(exports: {
   [key: string]: string | { default: string }
 }) {
+  const ignorePaths = []
   for (const [key, value] of Object.entries(exports)) {
     if (typeof value === 'string') continue
     if (key === '.') continue
@@ -106,7 +107,9 @@ async function generateProxyPackageEntrypoints(exports: {
       dedent`{
         "type": "module",
         "main": "${path.relative(key, value.default)}"
-      }`,
+      }\n`,
     )
+    ignorePaths.push(key)
   }
+  await fs.outputFile('.gitignore', `${ignorePaths.join('/**\n')}/**`)
 }
