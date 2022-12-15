@@ -47,6 +47,7 @@ export function useBlockNumber({
   const queryClient = useQueryClient()
 
   React.useEffect(() => {
+    if (!enabled) return
     if (!watch && !onBlock) return
 
     // We need to debounce the listener as we want to opt-out
@@ -76,6 +77,7 @@ export function useBlockNumber({
     queryClient,
     watch,
     webSocketProvider,
+    enabled,
   ])
 
   return useQuery(queryKey({ scopeKey, chainId }), queryFn, {
