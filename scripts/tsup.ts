@@ -68,7 +68,25 @@ export function getConfig({
     async onSuccess() {
       if (typeof options.onSuccess === 'function') await options.onSuccess()
       else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
-      await validateExports(exports)
+
+      try {
+        await validateExports(exports)
+      } catch (error) {
+        // `onSuccess` can run before type definitions are created so check again if failure
+        // https://github.com/egoist/tsup/issues/700
+        if (
+          (error as Error).message.includes(
+            'File does not exist for export "types"',
+          )
+        ) {
+          await new Promise((resolve) =>
+            setTimeout(async () => {
+              await validateExports(exports)
+              resolve(true)
+            }, 3_500),
+          )
+        } else throw error
+      }
       await generateProxyPackages(exports)
     },
     ...options,
@@ -121,6 +139,8 @@ async function generateProxyPackages(exports: Exports) {
     )
     ignorePaths.push(key.replace(/^\.\//g, ''))
   }
+
+  if (ignorePaths.length === 0) return
   await fs.outputFile(
     '.gitignore',
     dedent`
