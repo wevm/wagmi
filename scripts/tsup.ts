@@ -105,11 +105,18 @@ async function generateProxyPackages(exports: Exports) {
     if (key === '.') continue
     if (!value.default) continue
     await fs.ensureDir(key)
+    const entrypoint = path.relative(key, value.default)
+    const fileExists = await fs.pathExists(value.default)
+    if (!fileExists)
+      throw new Error(
+        `Proxy package "${key}" entrypoint "${entrypoint}" does not exist.`,
+      )
+
     await fs.outputFile(
       `${key}/package.json`,
       dedent`{
         "type": "module",
-        "main": "${path.relative(key, value.default)}"
+        "main": "${entrypoint}"
       }`,
     )
     ignorePaths.push(key)
