@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 0.8.4
+
+### Patch Changes
+
+- [#1508](https://github.com/wagmi-dev/wagmi/pull/1508) [`0b50b62f`](https://github.com/wagmi-dev/wagmi/commit/0b50b62f7389619e429509a3e337e451e823b059) Thanks [@jxom](https://github.com/jxom)! - Updated `@wagmi/chains` to `0.1.3`.
+
+- [#1504](https://github.com/wagmi-dev/wagmi/pull/1504) [`11b8b794`](https://github.com/wagmi-dev/wagmi/commit/11b8b794fbfd4a2b40f39962e2758e9fbf48cb54) Thanks [@tmm](https://github.com/tmm)! - Converted ethers custom "ACTION_REJECTED" error to standard RPC Error.
+
 ## 0.8.3
 
 ### Patch Changes
