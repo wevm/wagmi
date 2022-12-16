@@ -5,9 +5,14 @@ import { default as nodeFetch } from 'node-fetch'
 import type { Contract, ContractsSource } from '../config'
 
 type Request = { url: RequestInfo; init?: RequestInit | undefined }
-
 export type FetchConfig = {
+  /**
+   * Contracts to fetch ABIs for.
+   */
   contracts: Omit<Contract, 'abi'>[]
+  /**
+   * Name of source.
+   */
   name?: ContractsSource['name']
   /**
    * Function for parsing ABI from fetch response.
@@ -19,10 +24,15 @@ export type FetchConfig = {
   }: {
     response: Response
   }): Promise<Contract['abi']> | Contract['abi']
-  /** Function for returning a request to fetch ABI from. */
+  /**
+   * Function for returning a request to fetch ABI from.
+   */
   request(config: { address?: Contract['address'] }): Promise<Request> | Request
 }
 
+/**
+ * Fetches and parses contract ABIs from network resource with `fetch`.
+ */
 export function fetch({
   contracts: contractConfigs,
   name = 'Fetch',

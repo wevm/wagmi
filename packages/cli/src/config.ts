@@ -111,6 +111,9 @@ export const Config = z.object({
 // TODO: Figure out way for JSDoc to show up without needing to recreate type
 export type Config = z.infer<typeof Config>
 
+/**
+ * Creates `@wagmi/cli` config object.
+ */
 export function defineConfig(config: Config) {
   return config
 }

@@ -13,8 +13,17 @@ export type BlockExplorerConfig = {
    * Base URL for block explorer.
    */
   baseUrl: string
+  /**
+   * Contracts to fetch ABIs for.
+   */
   contracts: Omit<Contract, 'abi'>[]
+  /**
+   * Function to get address from contract config.
+   */
   getAddress?(config: { address: Contract['address'] }): Address
+  /**
+   * Name of source.
+   */
   name?: ContractsSource['name']
 }
 
@@ -31,6 +40,9 @@ const BlockExplorerResponse = z.discriminatedUnion('status', [
   }),
 ])
 
+/**
+ * Fetches contract ABIs from block explorers, supporting `?module=contract&action=getabi` requests.
+ */
 export function blockExplorer({
   apiKey,
   baseUrl,

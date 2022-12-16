@@ -6,9 +6,13 @@ import { fromZodError } from '../errors'
 import { pathToFileURL } from 'node:url'
 
 type ResolveConfig = {
+  /** Path to config file */
   configPath: string
 }
 
+/**
+ * Bundles, validates, and returns wagmi config object from path.
+ */
 export async function resolveConfig({
   configPath,
 }: ResolveConfig): Promise<Config> {
@@ -20,10 +24,8 @@ export async function resolveConfig({
   try {
     const fileUrl = `${pathToFileURL(fileBase)}.mjs`
     const config = (await import(fileUrl)).default
-    // TODO: Strip TypeScript by bundling before parsing
-    // https://github.com/vitejs/vite/blob/main/packages/vite/src/node/config.ts#LL939
-    const parsed = await Config.parseAsync(config)
-    return parsed
+    // TODO: Bundle before parsing
+    return await Config.parseAsync(config)
   } catch (error) {
     if (error instanceof z.ZodError)
       throw fromZodError(error, { prefix: 'Invalid Config' })

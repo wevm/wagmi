@@ -1,6 +1,9 @@
-import { format as prettier, resolveConfig } from 'prettier'
-
+/**
+ * Formats string of code.
+ * @param content Code to format
+ */
 export async function format(content: string) {
+  const { format: prettier, resolveConfig } = await import('prettier')
   const config = await resolveConfig(process.cwd())
   return prettier(content, {
     arrowParens: 'always',

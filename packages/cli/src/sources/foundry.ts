@@ -6,40 +6,6 @@ import { basename, extname, resolve } from 'pathe'
 
 import type { ContractsSource } from '../config'
 
-type FoundryConfig = {
-  /**
-   * Project's artifacts directory.
-   *
-   * Same as your project's `--out` (`-o`) option.
-   *
-   * @default 'out/'
-   */
-  artifacts?: string
-  /** Artifact files to exclude. */
-  exclude?: string[]
-  /** [Forge](https://book.getfoundry.sh/forge) configuration */
-  forge?: {
-    /** Remove build artifacts and cache directories on start up. */
-    clean?: boolean
-    /** Build project before fetching artifacts. */
-    build?: boolean
-    /**
-     * Path to `forge` command
-     *
-     * @default "forge"
-     */
-    path?: string
-    /** Rebuild every time a watched file or directory is changed. */
-    rebuild?: boolean
-  }
-  /** Artifact files to include. */
-  include?: string[]
-  /** Optional prefix to prepend to artifact names. */
-  namePrefix?: string
-  /** Path to foundry project. */
-  project: string
-}
-
 const defaultExcludes = [
   'Common.sol/**',
   'Components.sol/**',
@@ -59,8 +25,42 @@ const defaultExcludes = [
   '**.t.sol/*.json',
 ]
 
+type FoundryConfig = {
+  /**
+   * Project's artifacts directory.
+   *
+   * Same as your project's `--out` (`-o`) option.
+   *
+   * @default 'out/'
+   */
+  artifacts?: string
+  /** Artifact files to exclude. */
+  exclude?: string[]
+  /** [Forge](https://book.getfoundry.sh/forge) configuration */
+  forge?: {
+    /** Remove build artifacts and cache directories on start up. */
+    clean?: boolean
+    /** Build Foundry project before fetching artifacts. */
+    build?: boolean
+    /**
+     * Path to `forge` executable command
+     *
+     * @default "forge"
+     */
+    path?: string
+    /** Rebuild every time a watched file or directory is changed. */
+    rebuild?: boolean
+  }
+  /** Artifact files to include. */
+  include?: string[]
+  /** Optional prefix to prepend to artifact names. */
+  namePrefix?: string
+  /** Path to foundry project. */
+  project: string
+}
+
 /**
- * Source for ABIs from [Foundry](https://github.com/foundry-rs/foundry) project
+ * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.
  */
 export function foundry({
   artifacts = 'out',

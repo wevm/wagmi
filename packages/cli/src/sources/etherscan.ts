@@ -50,9 +50,15 @@ type EtherscanConfig<TChainId extends number> = {
    * If `address` is an object, `chainId` is used to select the address.
    */
   chainId: TChainId
+  /**
+   * Contracts to fetch ABIs for.
+   */
   contracts: Omit<Contract<ChainId, TChainId>, 'abi'>[]
 }
 
+/**
+ * Fetches contract ABIs from Etherscan.
+ */
 export function etherscan<TChainId extends ChainId>({
   apiKey,
   chainId,

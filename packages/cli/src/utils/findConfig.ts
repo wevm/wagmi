@@ -11,10 +11,15 @@ const configFiles = [
 ]
 
 type FindConfig = {
+  /** Config file name */
   config?: string
+  /** Config file directory */
   root?: string
 }
 
+/**
+ * Resolves path to wagmi CLI config file.
+ */
 export async function findConfig({ config, root }: FindConfig = {}) {
   const rootDir = resolve(root || process.cwd())
   if (config) return resolve(rootDir, config)

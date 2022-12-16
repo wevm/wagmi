@@ -49,7 +49,6 @@
   },
   "dependencies": {
     "abitype": "^0.2.5",
-    "bundle-require": "^3.1.2",
     "cac": "^6.7.12",
     "change-case": "^4.1.2",
     "chokidar": "^3.5.3",
