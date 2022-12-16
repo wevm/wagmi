@@ -23,6 +23,12 @@ type FoundryConfig = {
     clean?: boolean
     /** Build project before fetching artifacts. */
     build?: boolean
+    /**
+     * Path to `forge` command
+     *
+     * @default "forge"
+     */
+    path?: string
     /** Rebuild every time a watched file or directory is changed. */
     rebuild?: boolean
   }
@@ -59,11 +65,12 @@ const defaultExcludes = [
 export function foundry({
   artifacts = 'out',
   exclude = defaultExcludes,
-  forge = {
-    clean: false,
-    build: true,
-    rebuild: true,
-  },
+  forge: {
+    clean = false,
+    build = true,
+    path: forgeExecutable = 'forge',
+    rebuild = true,
+  } = {},
   include = ['*.json'],
   namePrefix = '',
   project,
@@ -91,7 +98,7 @@ export function foundry({
 
   async function assertForgeInstalled() {
     try {
-      execa('forge', ['--version'])
+      await execa(forgeExecutable, ['--version'])
     } catch (error) {
       throw new Error(dedent`
         Forge not installed. Install with Foundry:
@@ -103,12 +110,12 @@ export function foundry({
   const artifactsDirectory = `${project}/${artifacts}`
   return {
     async contracts() {
-      if (forge?.clean || forge?.build) {
+      if (clean || build) {
         await assertForgeInstalled()
-        if (forge.clean)
-          await execa('forge', ['clean'], { cwd: resolve(project) })
-        if (forge.build)
-          await execa('forge', ['build'], { cwd: resolve(project) })
+        if (clean)
+          await execa(forgeExecutable, ['clean'], { cwd: resolve(project) })
+        if (build)
+          await execa(forgeExecutable, ['build'], { cwd: resolve(project) })
       }
 
       if (!fse.pathExistsSync(artifactsDirectory))
@@ -124,10 +131,10 @@ export function foundry({
     },
     name: 'Foundry',
     watch: {
-      command: forge?.rebuild
+      command: rebuild
         ? async () => {
             await assertForgeInstalled()
-            await execa('forge', ['build', '--watch'], {
+            await execa(forgeExecutable, ['build', '--watch'], {
               cwd: resolve(project),
             }).stdout?.pipe(process.stdout)
           }

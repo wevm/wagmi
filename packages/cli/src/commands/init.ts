@@ -1,12 +1,18 @@
 import dedent from 'dedent'
 import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
+import { z } from 'zod'
 
-import { defaultConfig } from '../config'
+import { Config, defaultConfig } from '../config'
 import * as logger from '../logger'
 import { findConfig, format } from '../utils'
 
-export async function init() {
+const Init = z.object({
+  config: Config.optional(),
+})
+export type Init = z.infer<typeof Init>
+
+export async function init({ config = defaultConfig }: Init = {}) {
   logger.log('Creating config…')
   // Check for exisiting config file
   const configPath = await findConfig()
@@ -26,7 +32,7 @@ export async function init() {
     content = dedent(`
       import { defineConfig } from '@wagmi/cli'
       
-      export default defineConfig(${JSON.stringify(defaultConfig)})
+      export default defineConfig(${JSON.stringify(config)})
     `)
   else
     content = dedent(`
@@ -35,7 +41,7 @@ export async function init() {
       /**
        * @type {import('@wagmi/cli').Config}
        **/
-      export default ${JSON.stringify(defaultConfig)}
+      export default ${JSON.stringify(config)}
     `)
   const formatted = await format(content)
   await fse.writeFile(outPath, formatted)

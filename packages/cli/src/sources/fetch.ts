@@ -1,3 +1,4 @@
+// TODO: Remove `node-fetch` dependency when Node 18 is used more and `fetch` is stable.
 import type { RequestInfo, RequestInit, Response } from 'node-fetch'
 import { default as nodeFetch } from 'node-fetch'
 

@@ -163,6 +163,7 @@ importers:
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
       abitype: ^0.2.5
+      bundle-require: ^3.1.2
       cac: ^6.7.12
       change-case: ^4.1.2
       chokidar: ^3.5.3
@@ -183,6 +184,7 @@ importers:
       zod: ^3.19.1
     dependencies:
       abitype: 0.2.5_mkwmprc7oyb3grronxuch43asa
+      bundle-require: 3.1.2_esbuild@0.15.13
       cac: 6.7.14
       change-case: 4.1.2
       chokidar: 3.5.3
@@ -3068,7 +3070,6 @@ packages:
     dependencies:
       esbuild: 0.15.13
       load-tsconfig: 0.2.3
-    dev: true
 
   /c8/7.12.0:
     resolution: {integrity: sha512-CtgQrHOkyxr5koX1wEUmN/5cfDa2ckbHRA4Gy5LAL0zaCFtVWJS5++n+w4/sr2GWGerBxgTjpKeDclk/Qk6W/A==}
@@ -6259,7 +6260,6 @@ packages:
   /load-tsconfig/0.2.3:
     resolution: {integrity: sha512-iyT2MXws+dc2Wi6o3grCFtGXpeMvHmJqS27sMPGtV2eUu4PeFnG+33I8BlFK1t1NWMjOpcx9bridn5yxLDX2gQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-    dev: true
 
   /load-yaml-file/0.2.0:
     resolution: {integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==}
