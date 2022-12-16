@@ -53,7 +53,6 @@
     "change-case": "^4.1.2",
     "chokidar": "^3.5.3",
     "dedent": "^0.7.0",
-    "dprint-node": "^1.0.7",
     "esbuild": "^0.16.5",
     "ethers": "^5.7.1",
     "execa": "^6.1.0",
@@ -64,6 +63,7 @@
     "ora": "^6.1.2",
     "pathe": "^1.0.0",
     "picocolors": "^1.0.0",
+    "prettier": "^2.8.1",
     "zod": "^3.19.1"
   },
   "devDependencies": {

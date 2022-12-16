@@ -3,6 +3,7 @@ import fixtures from 'fixturez'
 import { default as fse } from 'fs-extra'
 import { describe, expect, it, vi } from 'vitest'
 
+import { defaultConfig } from '../config'
 import { findConfig } from './findConfig'
 import { resolveConfig } from './resolveConfig'
 
@@ -20,10 +21,7 @@ describe('resolveConfig', () => {
     const content = dedent(`
       import { defineConfig } from '@wagmi/cli'
       
-      export default defineConfig({
-        contracts: [],
-        plugins: [],
-      })
+      export default defineConfig(${JSON.stringify(defaultConfig)})
     `)
     fse.writeFile(config, content)
 
@@ -32,6 +30,7 @@ describe('resolveConfig', () => {
       .toMatchInlineSnapshot(`
       {
         "contracts": [],
+        "out": "src/generated/wagmi.ts",
         "plugins": [],
       }
     `)

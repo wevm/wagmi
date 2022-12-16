@@ -1,47 +1,63 @@
-import type { Response } from 'node-fetch'
-import fetch from 'node-fetch'
+import { z } from 'zod'
 
 import type { Contract, ContractsSource } from '../config'
+import { fetch } from './fetch'
 
 export type BlockExplorerConfig = {
-  contracts: Omit<Contract, 'abi'>[]
-  name?: ContractsSource['name']
   /**
-   * Function for parsing ABI from fetch response.
-   *
-   * @default ({ response }) => response.json()
+   * API key for block explorer. Appended to the request URL as query param `&apikey=${apiKey}`.
    */
-  parse?({
-    response,
-  }: {
-    response: Response
-  }): Promise<Contract['abi']> | Contract['abi']
-  /** Function for returning a block explorer URL to request ABI from. */
-  url(config: { address?: Contract['address'] }): Promise<string> | string
+  apiKey?: string
+  /**
+   * Base URL for block explorer.
+   */
+  baseUrl: string
+  contracts: Omit<Contract, 'abi'>[]
+  getAddress?(config: { address: Contract['address'] }): string
+  name?: ContractsSource['name']
 }
 
+const BlockExplorerResponse = z.discriminatedUnion('status', [
+  z.object({
+    status: z.literal('1'),
+    message: z.literal('OK'),
+    result: z.string().transform((val) => JSON.parse(val) as Contract['abi']),
+  }),
+  z.object({
+    status: z.literal('0'),
+    message: z.literal('NOTOK'),
+    result: z.string(),
+  }),
+])
+
 export function blockExplorer({
-  contracts: contractConfigs,
-  name,
-  parse = ({ response }) => response.json() as Promise<Contract['abi']>,
-  url,
+  apiKey,
+  baseUrl,
+  contracts,
+  getAddress = ({ address }) => {
+    if (!address) throw new Error('address is required')
+    if (typeof address === 'string') return address
+    return Object.values(address)[0]!
+  },
+  name = 'Block Explorer',
 }: BlockExplorerConfig): ContractsSource {
-  const cache: Record<string, Contract['abi']> = {}
-  return {
-    async contracts() {
-      const contracts = []
-      for (const { address, name } of contractConfigs) {
-        const endpoint = await url({ address })
-        let abi = cache[endpoint]
-        if (!abi) {
-          const response = await fetch(endpoint)
-          abi = await parse({ response })
-          cache[endpoint] = abi
-        }
-        contracts.push({ abi, address, name })
-      }
-      return contracts
+  return fetch({
+    contracts,
+    name,
+    async parse({ response }) {
+      const json = await response.json()
+      const parsed = await BlockExplorerResponse.safeParseAsync(json)
+      if (!parsed.success) throw new Error(parsed.error.message)
+      if (parsed.data.status === '0') throw new Error(parsed.data.result)
+      return parsed.data.result
     },
-    name: name ?? 'Block Explorer',
-  }
+    request({ address }) {
+      if (!address) throw new Error('address is required')
+      return {
+        url: `${baseUrl}?module=contract&action=getabi&address=${getAddress({
+          address,
+        })}${apiKey ? `&apikey=${apiKey}` : ''}`,
+      }
+    },
+  })
 }

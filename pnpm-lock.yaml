@@ -167,7 +167,6 @@ importers:
       change-case: ^4.1.2
       chokidar: ^3.5.3
       dedent: ^0.7.0
-      dprint-node: ^1.0.7
       esbuild: 0.15.13
       ethers: ^5.7.1
       execa: ^6.1.0
@@ -179,6 +178,7 @@ importers:
       ora: ^6.1.2
       pathe: ^1.0.0
       picocolors: ^1.0.0
+      prettier: ^2.8.1
       typescript: ^4.7.4
       zod: ^3.19.1
     dependencies:
@@ -187,7 +187,6 @@ importers:
       change-case: 4.1.2
       chokidar: 3.5.3
       dedent: 0.7.0
-      dprint-node: 1.0.7
       esbuild: 0.15.13
       ethers: 5.7.1
       execa: 6.1.0
@@ -198,6 +197,7 @@ importers:
       ora: 6.1.2
       pathe: 1.0.0
       picocolors: 1.0.0
+      prettier: 2.8.1
       zod: 3.19.1
     devDependencies:
       '@types/dedent': 0.7.0
@@ -3730,12 +3730,6 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /detect-libc/1.0.3:
-    resolution: {integrity: sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==}
-    engines: {node: '>=0.10'}
-    hasBin: true
-    dev: false
-
   /detective/5.2.1:
     resolution: {integrity: sha512-v9XE1zRnz1wRtgurGu0Bs8uHKFSTdteYZNbIPFVhUZ39L/S79ppMpdmVOZAnoz1jfEFodc48n6MX483Xo3t1yw==}
     engines: {node: '>=0.8.0'}
@@ -3810,12 +3804,6 @@ packages:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
     dev: true
-
-  /dprint-node/1.0.7:
-    resolution: {integrity: sha512-NTZOW9A7ipb0n7z7nC3wftvsbceircwVHSgzobJsEQa+7RnOMbhrfX5IflA6CtC4GA63DSAiHYXa4JKEy9F7cA==}
-    dependencies:
-      detect-libc: 1.0.3
-    dev: false
 
   /eastasianwidth/0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -7934,7 +7922,6 @@ packages:
     resolution: {integrity: sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
-    dev: true
 
   /pretty-format/27.5.1:
     resolution: {integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==}

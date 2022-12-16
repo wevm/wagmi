@@ -9,7 +9,7 @@ import { z } from 'zod'
 import type { Contract, ContractSource, Watch } from '../config'
 import { fromZodError } from '../errors'
 import * as logger from '../logger'
-import { findConfig, resolveConfig } from '../utils'
+import { findConfig, format, resolveConfig } from '../utils'
 
 const Generate = z.object({
   config: z.string().optional(),
@@ -207,13 +207,6 @@ async function writeContracts({
   // Format and write output
   const cwd = process.cwd()
   const outPath = `${cwd}/${filename}`
-  const dprint = (await import('dprint-node')).default
-  const formatted = dprint.format(outPath, content, {
-    bracePosition: 'nextLine',
-    quoteProps: 'asNeeded',
-    quoteStyle: 'alwaysSingle',
-    semiColons: 'asi',
-    trailingCommas: 'onlyMultiLine',
-  })
+  const formatted = await format(content)
   await fse.writeFile(outPath, formatted)
 }

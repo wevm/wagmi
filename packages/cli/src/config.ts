@@ -90,7 +90,7 @@ const ContractsSource = z.object({
 export type ContractsSource = z.infer<typeof ContractsSource>
 
 export const Config = z.object({
-  contracts: z.union([ContractSource, ContractsSource]).array().nonempty(),
+  contracts: z.union([ContractSource, ContractsSource]).array(),
   out: z.string(),
   plugins: z.string().array().optional(),
 })
@@ -99,4 +99,10 @@ export type Config = z.infer<typeof Config>
 
 export function defineConfig(config: Config) {
   return config
+}
+
+export const defaultConfig: Config = {
+  out: 'src/generated/wagmi.ts',
+  contracts: [],
+  plugins: [],
 }

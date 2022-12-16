@@ -2,8 +2,9 @@ import dedent from 'dedent'
 import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
 
+import { defaultConfig } from '../config'
 import * as logger from '../logger'
-import { findConfig } from '../utils'
+import { findConfig, format } from '../utils'
 
 export async function init() {
   logger.log('Creating config…')
@@ -18,18 +19,14 @@ export async function init() {
   // Check if project is using TypeScript
   const tsconfig = await findUp('tsconfig.json', { cwd })
   const extension = tsconfig ? 'ts' : 'js'
-  const configName = `${cwd}/wagmi.config.${extension}`
+  const outPath = `${cwd}/wagmi.config.${extension}`
 
   let content: string
   if (tsconfig)
     content = dedent(`
       import { defineConfig } from '@wagmi/cli'
       
-      export default defineConfig({
-        outDir: 'src/generated/wagmi.ts',
-        contracts: [],
-        plugins: [],
-      })
+      export default defineConfig(${JSON.stringify(defaultConfig)})
     `)
   else
     content = dedent(`
@@ -38,12 +35,9 @@ export async function init() {
       /**
        * @type {import('@wagmi/cli').Config}
        **/
-      export default {
-        outDir: 'src/generated/wagmi.js',
-        contracts: [],
-        plugins: [],
-      }
+      export default ${JSON.stringify(defaultConfig)}
     `)
-  await fse.writeFile(configName, content, {})
-  logger.success(`Config created at "${configName}"`)
+  const formatted = await format(content)
+  await fse.writeFile(outPath, formatted)
+  logger.success(`Config created at "${outPath}"`)
 }

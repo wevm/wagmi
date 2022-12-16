@@ -1,7 +1,4 @@
-import { z } from 'zod'
-
-import type { Contract } from '../config'
-
+import type { ContractsSource } from '../config'
 import { type BlockExplorerConfig, blockExplorer } from './blockExplorer'
 
 const apiUrls = {
@@ -55,40 +52,25 @@ type EtherscanConfig = Pick<BlockExplorerConfig, 'contracts'> & {
   chainId: ChainId
 }
 
-const EtherscanResponse = z.discriminatedUnion('status', [
-  z.object({
-    status: z.literal('1'),
-    message: z.literal('OK'),
-    result: z.string().transform((val) => JSON.parse(val) as Contract['abi']),
-  }),
-  z.object({
-    status: z.literal('0'),
-    message: z.literal('NOTOK'),
-    result: z.string(),
-  }),
-])
-
-export function etherscan({ apiKey, chainId, contracts }: EtherscanConfig) {
+export function etherscan({
+  apiKey,
+  chainId,
+  contracts,
+}: EtherscanConfig): ContractsSource {
   return blockExplorer({
+    apiKey,
+    baseUrl: apiUrls[chainId as ChainId],
     contracts,
-    name: 'Etherscan',
-    async parse({ response }) {
-      const json = await response.json()
-      const parsed = await EtherscanResponse.safeParseAsync(json)
-      if (!parsed.success) throw new Error(parsed.error.message)
-      if (parsed.data.status === '0') throw new Error(parsed.data.result)
-      return parsed.data.result
-    },
-    url({ address }) {
+    getAddress({ address }) {
       if (!address) throw new Error('address is required')
-      const baseUrl = apiUrls[chainId as ChainId]
-      if (!baseUrl)
-        throw new Error(`No API URL found for chain id "${chainId}"`)
-      const contractAddress =
-        typeof address === 'string' ? address : address[chainId]
+      if (typeof address === 'string') return address
+      const contractAddress = address[chainId]
       if (!contractAddress)
-        throw new Error(`No address found for chainId "${chainId}"`)
-      return `${baseUrl}?module=contract&action=getabi&address=${contractAddress}&apikey=${apiKey}`
+        throw new Error(
+          `No address found for chainId "${chainId}". Make sure chainId "${chainId}" is set as an address.`,
+        )
+      return contractAddress
     },
+    name: 'Etherscan',
   })
 }

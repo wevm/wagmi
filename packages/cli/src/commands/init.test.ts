@@ -41,10 +41,8 @@ describe('init', () => {
       /**
        * @type {import('@wagmi/cli').Config}
        **/
-      export default {
-        contracts: [],
-        plugins: [],
-      }"
+      export default { out: 'src/generated/wagmi.ts', contracts: [], plugins: [] }
+      "
     `)
   })
 
@@ -67,9 +65,11 @@ describe('init', () => {
       "import { defineConfig } from '@wagmi/cli'
 
       export default defineConfig({
+        out: 'src/generated/wagmi.ts',
         contracts: [],
         plugins: [],
-      })"
+      })
+      "
     `)
   })
 

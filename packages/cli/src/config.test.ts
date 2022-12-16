@@ -6,6 +6,7 @@ import { defineConfig } from './config'
 test('defineConfig', () => {
   const config: Config = {
     contracts: [],
+    out: 'wagmi.ts',
     plugins: [],
   }
   expect(defineConfig(config)).toEqual(config)
