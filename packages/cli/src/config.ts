@@ -1,6 +1,6 @@
+import { getAddress } from '@ethersproject/address'
 import type { Address as AddressType } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
-import { getAddress } from 'ethers/lib/utils.js'
 import { z } from 'zod'
 
 const Address = z
