@@ -17,11 +17,21 @@ describe('etherscan', () => {
   afterAll(() => server.close())
 
   it('fetches ABI', async () => {
-    expect(
+    await expect(
       etherscan({
         apiKey,
         chainId: 1,
         contracts: [{ name: 'WagmiMintExample', address }],
+      }).contracts(),
+    ).resolves.toMatchSnapshot()
+  })
+
+  it('fetches ABI with multichain deployment', async () => {
+    await expect(
+      etherscan({
+        apiKey,
+        chainId: 1,
+        contracts: [{ name: 'WagmiMintExample', address: { 1: address } }],
       }).contracts(),
     ).resolves.toMatchSnapshot()
   })
@@ -37,6 +47,19 @@ describe('etherscan', () => {
       }).contracts(),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Contract source code not verified"',
+    )
+  })
+
+  it('missing address for chainId', async () => {
+    await expect(
+      etherscan({
+        apiKey,
+        chainId: 1,
+        // @ts-expect-error `chainId` and `keyof typeof contracts[number].address` mismatch
+        contracts: [{ name: 'WagmiMintExample', address: { 10: address } }],
+      }).contracts(),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      '"No address found for chainId \\"1\\". Make sure chainId \\"1\\" is set as an address."',
     )
   })
 })

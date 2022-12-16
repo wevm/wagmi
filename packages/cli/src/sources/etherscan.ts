@@ -1,5 +1,5 @@
-import type { ContractsSource } from '../config'
-import { type BlockExplorerConfig, blockExplorer } from './blockExplorer'
+import type { Contract, ContractsSource } from '../config'
+import { blockExplorer } from './blockExplorer'
 
 const apiUrls = {
   // Ethereum
@@ -29,7 +29,7 @@ const apiUrls = {
 }
 type ChainId = keyof typeof apiUrls
 
-type EtherscanConfig = Pick<BlockExplorerConfig, 'contracts'> & {
+type EtherscanConfig<TChainId extends number> = {
   /**
    * Etherscan API key.
    *
@@ -49,18 +49,19 @@ type EtherscanConfig = Pick<BlockExplorerConfig, 'contracts'> & {
    *
    * If `address` is an object, `chainId` is used to select the address.
    */
-  chainId: ChainId
+  chainId: TChainId
+  contracts: Omit<Contract<ChainId, TChainId>, 'abi'>[]
 }
 
-export function etherscan({
+export function etherscan<TChainId extends ChainId>({
   apiKey,
   chainId,
   contracts,
-}: EtherscanConfig): ContractsSource {
+}: EtherscanConfig<TChainId>): ContractsSource {
   return blockExplorer({
     apiKey,
     baseUrl: apiUrls[chainId as ChainId],
-    contracts,
+    contracts: contracts as Omit<Contract, 'abi'>[],
     getAddress({ address }) {
       if (!address) throw new Error('address is required')
       if (typeof address === 'string') return address

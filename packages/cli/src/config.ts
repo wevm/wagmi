@@ -7,10 +7,19 @@ const Address = z
   .string()
   .regex(/^0x[a-fA-F0-9]{40}$/, { message: 'Invalid address' })
   .transform((val) => getAddress(val)) as z.ZodType<AddressType>
-const MultiChainAddress = z.record(z.string(), Address)
+const MultiChainAddress = z.record(z.number(), Address)
 const Contract = z.object({
-  /** Contract ABI */
   abi: AbiSchema,
+  address: z.union([Address, MultiChainAddress]).optional(),
+  name: z.string(),
+})
+type ZodContract = z.infer<typeof Contract>
+export type Contract<
+  TChainId extends number = number,
+  RequiredChainId extends number | undefined = undefined,
+> = {
+  /** Contract ABI */
+  abi: ZodContract['abi']
   /**
    * Contract address or addresses.
    *
@@ -25,15 +34,19 @@ const Contract = z.object({
    *   5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
    * }
    */
-  address: z.union([Address, MultiChainAddress]).optional(),
+  address?:
+    | AddressType
+    | (RequiredChainId extends number
+        ? Record<RequiredChainId, AddressType> &
+            Partial<Record<TChainId, AddressType>>
+        : Record<TChainId, AddressType>)
   /**
    * Name of contract
    *
    * Used for names of generated code
    */
-  name: z.string(),
-})
-export type Contract = z.infer<typeof Contract>
+  name: ZodContract['name']
+}
 
 const AbiFn = z
   .function()
@@ -42,7 +55,8 @@ const AbiFn = z
 const ContractSource = Contract.merge(
   z.object({ abi: z.union([AbiFn, AbiSchema]) }),
 )
-export type ContractSource = z.infer<typeof ContractSource>
+export type ContractSource = Omit<z.infer<typeof ContractSource>, 'address'> &
+  Pick<Contract, 'address'>
 
 const Watch = z.object({
   /** Command to run along with watch process */

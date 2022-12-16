@@ -4,7 +4,7 @@ export default defineConfig({
   out: 'src/wagmi.ts',
   contracts: [
     etherscan({
-      apiKey: process.env.ETHERSCAN_API_KEY,
+      apiKey: 'MK9NWF5JSK6JPWDMVTIJF4RZ466VD2XEPZ',
       chainId: 1,
       contracts: [
         {

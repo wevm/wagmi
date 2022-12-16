@@ -18,11 +18,21 @@ describe('blockExplorer', () => {
   afterAll(() => server.close())
 
   it('fetches ABI', async () => {
-    expect(
+    await expect(
       blockExplorer({
         apiKey,
         baseUrl,
         contracts: [{ name: 'WagmiMintExample', address }],
+      }).contracts(),
+    ).resolves.toMatchSnapshot()
+  })
+
+  it('fetches ABI with multichain deployment', async () => {
+    await expect(
+      blockExplorer({
+        apiKey,
+        baseUrl,
+        contracts: [{ name: 'WagmiMintExample', address: { 1: address } }],
       }).contracts(),
     ).resolves.toMatchSnapshot()
   })

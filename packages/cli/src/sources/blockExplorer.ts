@@ -1,3 +1,4 @@
+import type { Address } from 'abitype'
 import { z } from 'zod'
 
 import type { Contract, ContractsSource } from '../config'
@@ -13,7 +14,7 @@ export type BlockExplorerConfig = {
    */
   baseUrl: string
   contracts: Omit<Contract, 'abi'>[]
-  getAddress?(config: { address: Contract['address'] }): string
+  getAddress?(config: { address: Contract['address'] }): Address
   name?: ContractsSource['name']
 }
 
