@@ -10,15 +10,10 @@ type GetConfig = Omit<
   'bundle' | 'clean' | 'dts' | 'entry' | 'format'
 > & {
   entry?: string[]
-  exports?: { [key: string]: string | { default: string; types?: string } }
   dev?: boolean
 }
 
-export function getConfig({
-  dev,
-  exports = {},
-  ...options
-}: GetConfig): Options {
+export function getConfig({ dev, ...options }: GetConfig): Options {
   if (!options.entry?.length) throw new Error('entry is required')
   const entry: string[] = options.entry ?? []
 
@@ -53,8 +48,9 @@ export function getConfig({
             `export * from '${srcTypesFile}'`,
           )
         }
-        await validateExports(exports)
+        const exports = await generateExports(entry)
         await generateProxyPackages(exports)
+        await validateExports(exports)
       },
     }
 
@@ -69,6 +65,8 @@ export function getConfig({
       if (typeof options.onSuccess === 'function') await options.onSuccess()
       else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
 
+      const exports = await generateExports(entry)
+      await generateProxyPackages(exports)
       try {
         await validateExports(exports)
       } catch (error) {
@@ -87,14 +85,50 @@ export function getConfig({
           )
         } else throw error
       }
-      await generateProxyPackages(exports)
     },
     ...options,
   }
 }
 
 type Exports = {
-  [key: string]: string | { default: string }
+  [key: string]: string | { types?: string; default: string }
+}
+
+/**
+ * Generate exports from entry files
+ */
+async function generateExports(entry: string[]) {
+  const exports: Exports = {}
+  for (const file of entry) {
+    const extension = path.extname(file)
+    const fileWithoutExtension = file.replace(extension, '')
+    const name = fileWithoutExtension
+      .replace(/^src\//g, './')
+      .replace(/\/index$/, '')
+    const distSourceFile = `${fileWithoutExtension.replace(
+      /^src\//g,
+      './dist/',
+    )}.js`
+    const distTypesFile = `${fileWithoutExtension.replace(
+      /^src\//g,
+      './dist/',
+    )}.d.ts`
+    exports[name] = {
+      types: distTypesFile,
+      default: distSourceFile,
+    }
+  }
+
+  exports['./package.json'] = './package.json'
+
+  const packageJson = await fs.readJSON('package.json')
+  packageJson.exports = exports
+  await fs.writeFile(
+    'package.json',
+    JSON.stringify(packageJson, null, 2) + '\n',
+  )
+
+  return exports
 }
 
 /**

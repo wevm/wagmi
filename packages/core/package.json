@@ -43,6 +43,10 @@
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
     },
+    "./connectors/injected": {
+      "types": "./dist/connectors/injected.d.ts",
+      "default": "./dist/connectors/injected.js"
+    },
     "./connectors/ledger": {
       "types": "./dist/connectors/ledger.d.ts",
       "default": "./dist/connectors/ledger.js"
@@ -67,21 +71,21 @@
       "types": "./dist/internal/test.d.ts",
       "default": "./dist/internal/test.js"
     },
-    "./providers/infura": {
-      "types": "./dist/providers/infura.d.ts",
-      "default": "./dist/providers/infura.js"
-    },
-    "./providers/public": {
-      "types": "./dist/providers/public.d.ts",
-      "default": "./dist/providers/public.js"
-    },
     "./providers/alchemy": {
       "types": "./dist/providers/alchemy.d.ts",
       "default": "./dist/providers/alchemy.js"
     },
+    "./providers/infura": {
+      "types": "./dist/providers/infura.d.ts",
+      "default": "./dist/providers/infura.js"
+    },
     "./providers/jsonRpc": {
       "types": "./dist/providers/jsonRpc.d.ts",
       "default": "./dist/providers/jsonRpc.js"
+    },
+    "./providers/public": {
+      "types": "./dist/providers/public.d.ts",
+      "default": "./dist/providers/public.js"
     },
     "./package.json": "./package.json"
   },
