@@ -22,7 +22,7 @@ describe('resolveConfig', () => {
     vi.resetAllMocks()
   })
 
-  it('finds config file', async () => {
+  it('resolves config', async () => {
     const temp = f.temp()
 
     const config = `${temp}/wagmi.config.ts`
@@ -38,7 +38,29 @@ describe('resolveConfig', () => {
       .toMatchInlineSnapshot(`
       {
         "contracts": [],
-        "out": "src/generated/wagmi.ts",
+        "out": "src/generated.ts",
+        "plugins": [],
+      }
+    `)
+  })
+
+  it('resolves function config', async () => {
+    const temp = f.temp()
+
+    const config = `${temp}/wagmi.config.ts`
+    const content = dedent(`
+      import { defineConfig } from '@wagmi/cli'
+      
+      export default defineConfig(() => (${JSON.stringify(defaultConfig)}))
+    `)
+    fse.writeFile(config, content)
+
+    const configPath = await findConfig({ config })
+    await expect(resolveConfig({ configPath: configPath! })).resolves
+      .toMatchInlineSnapshot(`
+      {
+        "contracts": [],
+        "out": "src/generated.ts",
         "plugins": [],
       }
     `)

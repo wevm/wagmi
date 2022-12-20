@@ -1,7 +1,8 @@
 import type { Address } from 'abitype'
 import { z } from 'zod'
 
-import type { Contract, ContractsSource } from '../config'
+import type { Contract } from '../config'
+import { fromZodError } from '../errors'
 import { fetch } from './fetch'
 
 export type BlockExplorerConfig = {
@@ -24,7 +25,7 @@ export type BlockExplorerConfig = {
   /**
    * Name of source.
    */
-  name?: ContractsSource['name']
+  name?: Contract['name']
 }
 
 const BlockExplorerResponse = z.discriminatedUnion('status', [
@@ -53,14 +54,15 @@ export function blockExplorer({
     return Object.values(address)[0]!
   },
   name = 'Block Explorer',
-}: BlockExplorerConfig): ContractsSource {
+}: BlockExplorerConfig) {
   return fetch({
     contracts,
     name,
     async parse({ response }) {
       const json = await response.json()
       const parsed = await BlockExplorerResponse.safeParseAsync(json)
-      if (!parsed.success) throw new Error(parsed.error.message)
+      if (!parsed.success)
+        throw fromZodError(parsed.error, { prefix: 'Invalid response' })
       if (parsed.data.status === '0') throw new Error(parsed.data.result)
       return parsed.data.result
     },

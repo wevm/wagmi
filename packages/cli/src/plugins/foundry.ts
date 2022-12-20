@@ -4,7 +4,7 @@ import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 
-import type { ContractsSource } from '../config'
+import type { Plugin } from '../config'
 
 const defaultExcludes = [
   'Common.sol/**',
@@ -59,6 +59,9 @@ type FoundryConfig = {
   project: string
 }
 
+type FoundryResult = Omit<Plugin, 'contracts'> &
+  Required<Pick<Plugin, 'contracts'>>
+
 /**
  * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.
  */
@@ -74,7 +77,7 @@ export function foundry({
   include = ['*.json'],
   namePrefix = '',
   project,
-}: FoundryConfig): ContractsSource {
+}: FoundryConfig): FoundryResult {
   function getContractName(artifactPath: string) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)
@@ -96,30 +99,17 @@ export function foundry({
     ])
   }
 
-  async function assertForgeInstalled() {
-    try {
-      await execa(forgeExecutable, ['--version'])
-    } catch (error) {
-      throw new Error(dedent`
-        Forge not installed. Install with Foundry:
-        https://book.getfoundry.sh/getting-started/installation
-      `)
-    }
-  }
-
   const artifactsDirectory = `${project}/${artifacts}`
+
   return {
     async contracts() {
-      if (clean || build) {
-        await assertForgeInstalled()
-        if (clean)
-          await execa(forgeExecutable, ['clean'], { cwd: resolve(project) })
-        if (build)
-          await execa(forgeExecutable, ['build'], { cwd: resolve(project) })
-      }
-
+      if (clean)
+        await execa(forgeExecutable, ['clean'], { cwd: resolve(project) })
+      if (build)
+        await execa(forgeExecutable, ['build'], { cwd: resolve(project) })
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
+
       const artifactPaths = await getArtifactPaths(artifactsDirectory)
       const contracts = []
       for (const artifactPath of artifactPaths) {
@@ -130,10 +120,20 @@ export function foundry({
       return contracts
     },
     name: 'Foundry',
+    async validate() {
+      if (clean || build || rebuild)
+        try {
+          await execa(forgeExecutable, ['--version'])
+        } catch (error) {
+          throw new Error(dedent`
+            Forge not installed. Install with Foundry:
+            https://book.getfoundry.sh/getting-started/installation
+          `)
+        }
+    },
     watch: {
       command: rebuild
         ? async () => {
-            await assertForgeInstalled()
             await execa(forgeExecutable, ['build', '--watch'], {
               cwd: resolve(project),
             }).stdout?.pipe(process.stdout)

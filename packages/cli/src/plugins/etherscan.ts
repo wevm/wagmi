@@ -1,4 +1,4 @@
-import type { Contract, ContractsSource } from '../config'
+import type { Contract } from '../config'
 import { blockExplorer } from './blockExplorer'
 
 const apiUrls = {
@@ -63,7 +63,7 @@ export function etherscan<TChainId extends ChainId>({
   apiKey,
   chainId,
   contracts,
-}: EtherscanConfig<TChainId>): ContractsSource {
+}: EtherscanConfig<TChainId>) {
   return blockExplorer({
     apiKey,
     baseUrl: apiUrls[chainId as ChainId],

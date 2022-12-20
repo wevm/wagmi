@@ -23,7 +23,7 @@ describe('blockExplorer', () => {
         apiKey,
         baseUrl,
         contracts: [{ name: 'WagmiMintExample', address }],
-      }).contracts(),
+      }).contracts!(),
     ).resolves.toMatchSnapshot()
   })
 
@@ -33,7 +33,7 @@ describe('blockExplorer', () => {
         apiKey,
         baseUrl,
         contracts: [{ name: 'WagmiMintExample', address: { 1: address } }],
-      }).contracts(),
+      }).contracts!(),
     ).resolves.toMatchSnapshot()
   })
 
@@ -45,7 +45,7 @@ describe('blockExplorer', () => {
         contracts: [
           { name: 'WagmiMintExample', address: unverifiedContractAddress },
         ],
-      }).contracts(),
+      }).contracts!(),
     ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Contract source code not verified"',
     )

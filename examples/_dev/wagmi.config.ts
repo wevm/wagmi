@@ -1,8 +1,21 @@
 import { defineConfig, etherscan, foundry } from '@wagmi/cli'
 
 export default defineConfig({
-  out: 'src/wagmi.ts',
+  out: 'src/generated.ts',
   contracts: [
+    {
+      name: 'WagmiMintInline',
+      address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+      abi: [
+        {
+          inputs: [],
+          stateMutability: 'nonpayable',
+          type: 'constructor',
+        },
+      ],
+    },
+  ],
+  plugins: [
     etherscan({
       apiKey: 'MK9NWF5JSK6JPWDMVTIJF4RZ466VD2XEPZ',
       chainId: 1,
@@ -28,16 +41,5 @@ export default defineConfig({
         rebuild: true,
       },
     }),
-    {
-      name: 'WagmiMintInline',
-      address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-      abi: [
-        {
-          inputs: [],
-          stateMutability: 'nonpayable',
-          type: 'constructor',
-        },
-      ],
-    },
   ],
 })

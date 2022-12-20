@@ -2,9 +2,10 @@
 import type { RequestInfo, RequestInit, Response } from 'node-fetch'
 import { default as nodeFetch } from 'node-fetch'
 
-import type { Contract, ContractsSource } from '../config'
+import type { Contract, Plugin } from '../config'
 
-type Request = { url: RequestInfo; init?: RequestInit | undefined }
+type Request = { url: RequestInfo; init?: RequestInit }
+
 export type FetchConfig = {
   /**
    * Contracts to fetch ABIs for.
@@ -13,7 +14,7 @@ export type FetchConfig = {
   /**
    * Name of source.
    */
-  name?: ContractsSource['name']
+  name?: Contract['name']
   /**
    * Function for parsing ABI from fetch response.
    *
@@ -30,6 +31,9 @@ export type FetchConfig = {
   request(config: { address?: Contract['address'] }): Promise<Request> | Request
 }
 
+type FetchResult = Omit<Plugin, 'contracts'> &
+  Required<Pick<Plugin, 'contracts'>>
+
 /**
  * Fetches and parses contract ABIs from network resource with `fetch`.
  */
@@ -38,19 +42,14 @@ export function fetch({
   name = 'Fetch',
   parse = ({ response }) => response.json() as Promise<Contract['abi']>,
   request,
-}: FetchConfig): ContractsSource {
-  const cache: Record<string, Contract['abi']> = {}
+}: FetchConfig): FetchResult {
   return {
     async contracts() {
       const contracts = []
       for (const contract of contractConfigs) {
         const { url, init } = await request(contract)
-        let abi = cache[url.toString()]
-        if (!abi) {
-          const response = await nodeFetch(url, init)
-          abi = await parse({ response })
-          cache[url.toString()] = abi
-        }
+        const response = await nodeFetch(url, init)
+        const abi = await parse({ response })
         contracts.push({ abi, address: contract.address, name: contract.name })
       }
       return contracts

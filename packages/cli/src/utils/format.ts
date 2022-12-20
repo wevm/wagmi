@@ -1,11 +1,12 @@
+import prettier from 'prettier'
+
 /**
  * Formats string of code.
  * @param content Code to format
  */
 export async function format(content: string) {
-  const { format: prettier, resolveConfig } = await import('prettier')
-  const config = await resolveConfig(process.cwd())
-  return prettier(content, {
+  const config = await prettier.resolveConfig(process.cwd())
+  return prettier.format(content, {
     arrowParens: 'always',
     endOfLine: 'lf',
     parser: 'typescript',

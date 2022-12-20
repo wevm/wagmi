@@ -1,2 +1,2 @@
 export { defineConfig, type Config } from './config'
-export { blockExplorer, etherscan, fetch, foundry } from './sources'
+export { blockExplorer, etherscan, fetch, foundry, react } from './plugins'

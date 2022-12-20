@@ -1,25 +1,13 @@
-import { getAddress } from '@ethersproject/address'
-import type { Address as AddressType } from 'abitype'
-import { Abi as AbiSchema } from 'abitype/zod'
-import { z } from 'zod'
+import type { Abi, Address } from 'abitype'
 
-const Address = z
-  .string()
-  .regex(/^0x[a-fA-F0-9]{40}$/, { message: 'Invalid address' })
-  .transform((val) => getAddress(val)) as z.ZodType<AddressType>
-const MultiChainAddress = z.record(z.number(), Address)
-const Contract = z.object({
-  abi: AbiSchema,
-  address: z.union([Address, MultiChainAddress]).optional(),
-  name: z.string(),
-})
-type ZodContract = z.infer<typeof Contract>
 export type Contract<
   TChainId extends number = number,
   RequiredChainId extends number | undefined = undefined,
 > = {
-  /** Contract ABI */
-  abi: ZodContract['abi']
+  /**
+   * Contract ABI
+   */
+  abi: Abi
   /**
    * Contract address or addresses.
    *
@@ -35,91 +23,72 @@ export type Contract<
    * }
    */
   address?:
-    | AddressType
+    | Address
     | (RequiredChainId extends number
-        ? Record<RequiredChainId, AddressType> &
-            Partial<Record<TChainId, AddressType>>
-        : Record<TChainId, AddressType>)
+        ? Record<RequiredChainId, Address> & Partial<Record<TChainId, Address>>
+        : Record<TChainId, Address>)
   /**
-   * Name of contract
+   * Name of contract.
    *
-   * Used for names of generated code
+   * Used for names of generated code.
    */
-  name: ZodContract['name']
+  name: string
 }
 
-const AbiFn = z
-  .function()
-  .args(z.any())
-  .returns(z.union([AbiSchema, AbiSchema.promise()]))
-const ContractSource = Contract.merge(
-  z.object({ abi: z.union([AbiFn, AbiSchema]) }),
-)
-export type ContractSource = Omit<z.infer<typeof ContractSource>, 'address'> &
-  Pick<Contract, 'address'>
+export type ResolvedContract = Contract & {
+  /** Generated string content */
+  content: string
+}
 
-const Watch = z.object({
+export type Watch = {
   /** Command to run along with watch process */
-  command: z
-    .function()
-    .args()
-    .returns(z.union([z.void(), z.void().promise()]))
-    .optional(),
+  command?: () => void | Promise<void>
   /** Paths to watch for changes. */
-  paths: z.string().array(),
+  paths: string[]
   /** Callback that fires when file is added */
-  onAdd: z
-    .function()
-    .args(z.string())
-    .returns(
-      z.union([
-        z.union([Contract, z.undefined()]),
-        z.union([Contract, z.undefined()]).promise(),
-      ]),
-    )
-    .optional(),
+  onAdd?: (path: string) => Contract | Promise<Contract | undefined> | undefined
   /** Callback that fires when file changes */
-  onChange: z
-    .function()
-    .args(z.string())
-    .returns(
-      z.union([
-        z.union([Contract, z.undefined()]),
-        z.union([Contract, z.undefined()]).promise(),
-      ]),
-    ),
+  onChange: (
+    path: string,
+  ) => Contract | Promise<Contract | undefined> | undefined
   /** Callback that fires when file is removed */
-  onRemove: z
-    .function()
-    .args(z.string())
-    .returns(z.union([z.string(), z.string().promise()]))
-    .optional(),
-})
-export type Watch = z.infer<typeof Watch>
-const ContractsSource = z.object({
-  name: z.string(),
-  contracts: z.function().args().returns(Contract.array().promise()),
-  watch: Watch.optional(),
-})
-export type ContractsSource = z.infer<typeof ContractsSource>
+  onRemove?: (path: string) => string | Promise<string> | undefined
+}
 
-export const Config = z.object({
-  contracts: z.union([ContractSource, ContractsSource]).array(),
-  out: z.string(),
-  plugins: z.string().array().optional(),
-})
-// TODO: Figure out way for JSDoc to show up without needing to recreate type
-export type Config = z.infer<typeof Config>
+export type Plugin = {
+  /** Contracts provided by plugin */
+  contracts?(): Contract[] | Promise<Contract[]>
+  /** Plugin name */
+  name: string
+  /** Run plugin logic */
+  run?(config: {
+    contracts: ResolvedContract[]
+  }): ResolvedContract[] | Promise<ResolvedContract[]>
+  /**
+   * Validate plugin configuration or other @wagmi/cli settings require for plugin.
+   */
+  validate?(): void | Promise<void>
+  /** File system watch config */
+  watch?: Watch
+}
 
-/**
- * Creates `@wagmi/cli` config object.
- */
-export function defineConfig(config: Config) {
+export type Config = {
+  /** Contracts to generate code for */
+  contracts?: Contract[]
+  /** Output file path */
+  out: string
+  /** Plugins to run */
+  plugins?: Plugin[]
+}
+
+export function defineConfig(
+  config: Config | (() => Config | Promise<Config>),
+) {
   return config
 }
 
 export const defaultConfig: Config = {
-  out: 'src/generated/wagmi.ts',
+  out: 'src/generated.ts',
   contracts: [],
   plugins: [],
 }

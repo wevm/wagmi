@@ -1,8 +1,6 @@
 import { default as fse } from 'fs-extra'
-import { z } from 'zod'
 
-import { Config } from '../config'
-import { fromZodError } from '../errors'
+import type { Config } from '../config'
 import { pathToFileURL } from 'node:url'
 
 type ResolveConfig = {
@@ -24,12 +22,9 @@ export async function resolveConfig({
   try {
     const fileUrl = `${pathToFileURL(fileBase)}.mjs`
     const config = (await import(fileUrl)).default
+    if (typeof config !== 'function') return config
     // TODO: Bundle before parsing
-    return await Config.parseAsync(config)
-  } catch (error) {
-    if (error instanceof z.ZodError)
-      throw fromZodError(error, { prefix: 'Invalid Config' })
-    throw error
+    return await config()
   } finally {
     fse.unlinkSync(fileNameTemp)
   }

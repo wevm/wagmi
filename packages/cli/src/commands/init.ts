@@ -1,16 +1,15 @@
 import dedent from 'dedent'
 import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
-import { z } from 'zod'
 
-import { Config, defaultConfig } from '../config'
+import type { Config } from '../config'
+import { defaultConfig } from '../config'
 import * as logger from '../logger'
 import { findConfig, format } from '../utils'
 
-const Init = z.object({
-  config: Config.optional(),
-})
-export type Init = z.infer<typeof Init>
+export type Init = {
+  config?: Config
+}
 
 export async function init({ config = defaultConfig }: Init = {}) {
   logger.log('Creating config…')
