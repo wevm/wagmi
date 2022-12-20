@@ -20,6 +20,7 @@ export {
   useContractWrite,
   usePrepareContractWrite,
   useToken,
+  type UseContractConfig,
 } from './contracts'
 
 export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'

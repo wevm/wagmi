@@ -1,4 +1,4 @@
-export { useContract } from './useContract'
+export { useContract, type UseContractConfig } from './useContract'
 export { useContractEvent } from './useContractEvent'
 export {
   useContractInfiniteReads,

@@ -17,6 +17,8 @@ export {
   polygon,
   polygonMumbai,
   sepolia,
+  taraxa,
+  taraxaTestnet,
 } from '@wagmi/chains'
 
 export type { Chain } from '@wagmi/chains'

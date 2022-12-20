@@ -1,5 +1,6 @@
 import { getAddress } from '@ethersproject/address'
 import { Address } from 'abitype'
+import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
 import { default as dedent } from 'dedent'
@@ -7,7 +8,12 @@ import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
 import { z } from 'zod'
 
-import type { Contract, ResolvedContract, Watch } from '../config'
+import type {
+  Contract,
+  PluginContent,
+  ResolvedContract,
+  Watch,
+} from '../config'
 import { fromZodError } from '../errors'
 import * as logger from '../logger'
 import { findConfig, format, resolveConfig } from '../utils'
@@ -76,22 +82,31 @@ export async function generate(options: Generate) {
 
   // Run plugins
   let pluginCount = 0
-  const processedContracts = []
+  let pluginContracts = [...resolvedContracts.values()]
+  let pluginContent: PluginContent = {
+    header: [],
+    imports: [],
+  }
   for (const plugin of plugins) {
     if (!plugin.run) continue
     logger.log(`Running plugin "${plugin.name}"`)
-    const contracts = await plugin.run({
-      contracts: [...resolvedContracts.values()],
+    const { contracts, content } = await plugin.run({
+      content: pluginContent,
+      contracts: pluginContracts,
+      isTypeScript,
     })
-    processedContracts.push(...contracts)
+    pluginContracts = contracts
+    pluginContent = {
+      header: [...pluginContent.header, ...content.header],
+      imports: [...pluginContent.imports, ...content.imports],
+    }
     pluginCount++
   }
   if (pluginCount) logger.log(`Ran ${plugins.length} ${pluginCount} plugins.`)
-  else processedContracts.push(...resolvedContracts.values())
 
   // Validate contract names in case any changed during plugin run
   const contracts = new Map<string, ResolvedContract>()
-  for (const contract of processedContracts) {
+  for (const contract of pluginContracts) {
     if (contracts.has(contract.name))
       throw new Error(`Contract name "${contract.name}" is not unique.`)
     contracts.set(contract.name, contract)
@@ -100,6 +115,7 @@ export async function generate(options: Generate) {
   // Write output to file
   logger.log(`Saving to "${resolvedConfig.out}"`)
   await writeContracts({
+    content: pluginContent,
     contracts: [...contracts.values()],
     filename: resolvedConfig.out,
   })
@@ -138,18 +154,23 @@ export async function generate(options: Generate) {
         let addedContract = contract
         for (const plugin of plugins) {
           if (!plugin.run) continue
-          const processed = await plugin.run({
+          const resolved = await plugin.run({
+            content: { header: [], imports: [] }, // TODO
             contracts: [contract],
+            isTypeScript,
           })
-          addedContract = processed[0]!
+          addedContract = resolved.contracts[0]!
+          // for (const import_ of resolved.imports ?? []) {
+          //   if (!pluginImports.includes(import_)) pluginImports.push(import_)
+          // }
         }
 
-        contracts.set(contractConfig.name, addedContract)
+        contracts.set(addedContract.name, addedContract)
         needsWrite = true
       } else if (event === 'unlink') {
         const name = await watchConfig.onRemove?.(path)
         if (!name) return
-
+        // TODO: Remove imports if no other contracts use them
         contracts.delete(name)
         needsWrite = true
       }
@@ -160,6 +181,7 @@ export async function generate(options: Generate) {
         timeout = setTimeout(async () => {
           timeout = null
           await writeContracts({
+            content: { header: [], imports: [] }, // TODO
             contracts: [...resolvedContracts.values()],
             filename: resolvedConfig.out,
           })
@@ -206,7 +228,7 @@ const Address = z
 // FIX: Coerce not working at the moment
 // https://github.com/colinhacks/zod/issues/1681
 const MultiChainAddress = z.record(z.coerce.number(), Address)
-const AddressConfig = z.union([Address, MultiChainAddress])
+const AddressSchema = z.union([Address, MultiChainAddress])
 
 async function getContract({
   abi,
@@ -216,19 +238,34 @@ async function getContract({
 }: Contract & { isTypeScript: boolean }): Promise<ResolvedContract> {
   const constAssertion = isTypeScript ? ' as const' : ''
   const abiName = `${camelCase(name)}ABI`
-  const addressName = `${camelCase(name)}Address`
+  try {
+    abi = await AbiSchema.parseAsync(abi)
+  } catch (error) {
+    if (error instanceof z.ZodError)
+      throw fromZodError(error, { prefix: 'Invalid ABI' })
+    throw error
+  }
   let content = dedent`
+    /////////////////////////////////////////////////////////////////
+    // ${name}
+    /////////////////////////////////////////////////////////////////
+
     export const ${abiName} = ${JSON.stringify(abi)}${constAssertion}
   `
+
+  let meta: ResolvedContract['meta'] = {
+    abiName,
+  }
   if (address) {
     let resolvedAddress
     try {
-      resolvedAddress = await AddressConfig.parseAsync(address)
+      resolvedAddress = await AddressSchema.parseAsync(address)
     } catch (error) {
       if (error instanceof z.ZodError)
         throw fromZodError(error, { prefix: 'Invalid address' })
       throw error
     }
+    const addressName = `${camelCase(name)}Address`
     const configName = `${camelCase(name)}Config`
     content = dedent`
       ${content}
@@ -237,28 +274,39 @@ async function getContract({
       null,
       2,
     )}${constAssertion}
+    
       export const ${configName} = { address: ${addressName}, abi: ${abiName} }${constAssertion}
     `
+    meta = {
+      ...meta,
+      addressName,
+      configName,
+    }
   }
 
-  return { abi, address, content, name }
+  return { abi, address, content, meta, name }
 }
 
 async function writeContracts({
+  content,
   contracts,
   filename,
 }: {
+  content: PluginContent
   contracts: ResolvedContract[]
   filename: string
 }) {
-  // Assemble content
-  let content = dedent`
+  // Assemble code
+  let code = dedent`
     // Generated by @wagmi/cli
     // ${new Date().toISOString()}
+    ${content.imports?.join('/n') ?? ''}
+    
+    ${content.header?.join('/n') ?? ''}
   `
   for (const contract of contracts) {
-    content = dedent`
-      ${content}
+    code = dedent`
+      ${code}
 
       ${contract.content}
     `
@@ -267,6 +315,6 @@ async function writeContracts({
   // Format and write output
   const cwd = process.cwd()
   const outPath = `${cwd}/${filename}`
-  const formatted = await format(content)
+  const formatted = await format(code)
   await fse.writeFile(outPath, formatted)
 }

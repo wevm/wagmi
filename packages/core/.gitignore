@@ -2,13 +2,14 @@
 chains/**
 connectors/**
 connectors/coinbaseWallet/**
+connectors/injected/**
 connectors/ledger/**
 connectors/metaMask/**
 connectors/mock/**
 connectors/walletConnect/**
 internal/**
 internal/test/**
-providers/infura/**
-providers/public/**
 providers/alchemy/**
+providers/infura/**
 providers/jsonRpc/**
+providers/public/**

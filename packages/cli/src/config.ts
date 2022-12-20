@@ -38,6 +38,11 @@ export type Contract<
 export type ResolvedContract = Contract & {
   /** Generated string content */
   content: string
+  meta: {
+    abiName: string
+    addressName?: string
+    configName?: string
+  } & { [key: string]: string }
 }
 
 export type Watch = {
@@ -55,6 +60,11 @@ export type Watch = {
   onRemove?: (path: string) => string | Promise<string> | undefined
 }
 
+export type PluginContent = { header: string[]; imports: string[] }
+type RunResult = {
+  content: PluginContent
+  contracts: ResolvedContract[]
+}
 export type Plugin = {
   /** Contracts provided by plugin */
   contracts?(): Contract[] | Promise<Contract[]>
@@ -62,8 +72,13 @@ export type Plugin = {
   name: string
   /** Run plugin logic */
   run?(config: {
+    content: {
+      header: string[]
+      imports: string[]
+    }
     contracts: ResolvedContract[]
-  }): ResolvedContract[] | Promise<ResolvedContract[]>
+    isTypeScript: boolean
+  }): RunResult | Promise<RunResult>
   /**
    * Validate plugin configuration or other @wagmi/cli settings require for plugin.
    */

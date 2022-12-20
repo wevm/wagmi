@@ -38,6 +38,10 @@
       "types": "./dist/config.d.ts",
       "default": "./dist/config.js"
     },
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "default": "./dist/plugins/index.js"
+    },
     "./package.json": "./package.json"
   },
   "sideEffects": false,

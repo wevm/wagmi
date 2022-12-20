@@ -23,6 +23,8 @@ it('should expose correct exports', () => {
       "polygon",
       "polygonMumbai",
       "sepolia",
+      "taraxa",
+      "taraxaTestnet",
     ]
   `)
 })

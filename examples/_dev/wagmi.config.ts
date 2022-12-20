@@ -1,4 +1,5 @@
-import { defineConfig, etherscan, foundry } from '@wagmi/cli'
+import { defineConfig } from '@wagmi/cli'
+import { etherscan, foundry, react } from '@wagmi/cli/plugins'
 
 export default defineConfig({
   out: 'src/generated.ts',
@@ -41,5 +42,6 @@ export default defineConfig({
         rebuild: true,
       },
     }),
+    react({}),
   ],
 })

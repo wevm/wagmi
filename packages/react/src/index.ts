@@ -39,6 +39,7 @@ export {
   useTransaction,
   useWaitForTransaction,
   useWebSocketProvider,
+  type UseContractConfig,
 } from './hooks'
 
 export {
