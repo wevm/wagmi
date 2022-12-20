@@ -27,11 +27,25 @@ export function infuraProvider({
         },
       },
       provider: () => {
-        const provider = new providers.InfuraProvider(chain.id, apiKey)
+        const provider = new providers.InfuraProvider(
+          {
+            chainId: chain.id,
+            name: chain.network,
+            ensAddress: chain.contracts?.ensRegistry?.address,
+          },
+          apiKey,
+        )
         return Object.assign(provider, { priority, stallTimeout, weight })
       },
       webSocketProvider: () =>
-        new providers.InfuraWebSocketProvider(chain.id, apiKey),
+        new providers.InfuraWebSocketProvider(
+          {
+            chainId: chain.id,
+            name: chain.network,
+            ensAddress: chain.contracts?.ensRegistry?.address,
+          },
+          apiKey,
+        ),
     }
   }
 }
