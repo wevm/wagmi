@@ -15,6 +15,8 @@ describe('jsonRpc', () => {
       contracts: {
         ...foundryChain.contracts,
         ensRegistry: {
+          // An exact copy of the ENS registry deployed by the ENS Deployer that contains no entries
+          // Every lookup will return `null` with no error
           address: '0xcc984772c14382b0d429c82d37e6925bffa3ee3c',
         },
       },
