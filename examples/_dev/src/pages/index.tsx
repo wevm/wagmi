@@ -1,4 +1,5 @@
 import { Account, Connect, NetworkSwitcher } from '../components'
+import { useHelloFoundryCounter } from '../generated'
 import { useIsMounted } from '../hooks'
 
 const Page = () => {

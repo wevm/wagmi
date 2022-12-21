@@ -2,7 +2,7 @@
 import type { RequestInfo, RequestInit, Response } from 'node-fetch'
 import { default as nodeFetch } from 'node-fetch'
 
-import type { Contract, Plugin } from '../config'
+import type { ContractConfig, Plugin } from '../config'
 
 type Request = { url: RequestInfo; init?: RequestInit }
 
@@ -10,11 +10,11 @@ export type FetchConfig = {
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Omit<Contract, 'abi'>[]
+  contracts: Omit<ContractConfig, 'abi'>[]
   /**
    * Name of source.
    */
-  name?: Contract['name']
+  name?: ContractConfig['name']
   /**
    * Function for parsing ABI from fetch response.
    *
@@ -24,11 +24,13 @@ export type FetchConfig = {
     response,
   }: {
     response: Response
-  }): Promise<Contract['abi']> | Contract['abi']
+  }): Promise<ContractConfig['abi']> | ContractConfig['abi']
   /**
    * Function for returning a request to fetch ABI from.
    */
-  request(config: { address?: Contract['address'] }): Promise<Request> | Request
+  request(config: {
+    address?: ContractConfig['address']
+  }): Promise<Request> | Request
 }
 
 type FetchResult = Omit<Plugin, 'contracts'> &
@@ -40,7 +42,7 @@ type FetchResult = Omit<Plugin, 'contracts'> &
 export function fetch({
   contracts: contractConfigs,
   name = 'Fetch',
-  parse = ({ response }) => response.json() as Promise<Contract['abi']>,
+  parse = ({ response }) => response.json() as Promise<ContractConfig['abi']>,
   request,
 }: FetchConfig): FetchResult {
   return {

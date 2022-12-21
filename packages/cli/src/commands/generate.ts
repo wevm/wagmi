@@ -10,8 +10,9 @@ import { z } from 'zod'
 
 import type {
   Contract,
-  PluginContent,
-  ResolvedContract,
+  ContractConfig,
+  Plugin,
+  PluginRunResult,
   Watch,
 } from '../config'
 import { fromZodError } from '../errors'
@@ -30,7 +31,7 @@ export type Generate = z.infer<typeof Generate>
 
 export async function generate(options: Generate) {
   logger.log('Generating code…')
-  // Validate command options
+  // Validate command line options
   try {
     await Generate.parseAsync(options)
   } catch (error) {
@@ -39,20 +40,11 @@ export async function generate(options: Generate) {
     throw error
   }
 
-  // Get config file
+  // Get cli config file
   const configPath = await findConfig(options)
   if (!configPath) throw new Error(`Config not found at "${configPath}"`)
   const resolvedConfig = await resolveConfig({ configPath })
-
-  // Check if project is using TypeScript
-  let isTypeScript = false
-  try {
-    const cwd = process.cwd()
-    const tsconfig = await findUp('tsconfig.json', { cwd })
-    isTypeScript = !!tsconfig
-  } catch {
-    isTypeScript = false
-  }
+  const isTypeScript = await isProjectUsingTypeScript()
 
   // Collect contracts and watch configs
   const contractConfigs = resolvedConfig.contracts ?? []
@@ -62,61 +54,38 @@ export async function generate(options: Generate) {
     logger.log(`Validating plugin "${plugin.name}"`)
     await plugin.validate?.()
     if (plugin.watch) watchConfigs.push(plugin.watch)
-    if (!plugin.contracts) continue
-    logger.log(`Getting contracts for plugin "${plugin.name}"`)
-    const contracts = await plugin.contracts()
-    contractConfigs.push(...contracts)
-    logger.log(`Found ${contracts.length} contracts`)
+    if (plugin.contracts) {
+      logger.log(`Getting contracts for plugin "${plugin.name}"`)
+      const contracts = await plugin.contracts()
+      contractConfigs.push(...contracts)
+      logger.log(`Found ${contracts.length} contracts`)
+    }
   }
 
-  // Resolve contracts
-  const resolvedContracts = new Map<string, ResolvedContract>()
+  // Get contracts from config
+  const contractNames = new Set<string>()
+  const contracts: Contract[] = []
   for (const config of contractConfigs) {
-    if (resolvedContracts.has(config.name))
+    if (contractNames.has(config.name))
       throw new Error(`Contract name "${config.name}" is not unique.`)
     logger.log(`Resolving contract "${config.name}"`)
     const contract = await getContract({ ...config, isTypeScript })
-    resolvedContracts.set(config.name, contract)
+    contracts.push(contract)
   }
-  logger.log(`Resolved ${[...resolvedContracts.values()].length} contracts.`)
 
-  // Run plugins
-  let pluginCount = 0
-  let pluginContracts = [...resolvedContracts.values()]
-  let pluginContent: PluginContent = {
-    header: [],
-    imports: [],
-  }
-  for (const plugin of plugins) {
-    if (!plugin.run) continue
-    logger.log(`Running plugin "${plugin.name}"`)
-    const { contracts, content } = await plugin.run({
-      content: pluginContent,
-      contracts: pluginContracts,
-      isTypeScript,
-    })
-    pluginContracts = contracts
-    pluginContent = {
-      header: [...pluginContent.header, ...content.header],
-      imports: [...pluginContent.imports, ...content.imports],
-    }
-    pluginCount++
-  }
-  if (pluginCount) logger.log(`Ran ${plugins.length} ${pluginCount} plugins.`)
-
-  // Validate contract names in case any changed during plugin run
-  const contracts = new Map<string, ResolvedContract>()
-  for (const contract of pluginContracts) {
-    if (contracts.has(contract.name))
+  // Run plugins and validate contract names
+  const result = await runPlugins({ plugins, contracts, isTypeScript })
+  const contractMap = new Map<string, Contract>()
+  for (const contract of contracts) {
+    if (contractMap.has(contract.name))
       throw new Error(`Contract name "${contract.name}" is not unique.`)
-    contracts.set(contract.name, contract)
+    contractMap.set(contract.name, contract)
   }
 
   // Write output to file
   logger.log(`Saving to "${resolvedConfig.out}"`)
   await writeContracts({
-    content: pluginContent,
-    contracts: [...contracts.values()],
+    ...result,
     filename: resolvedConfig.out,
   })
   logger.log(`Saved to "${resolvedConfig.out}"`)
@@ -145,33 +114,18 @@ export async function generate(options: Generate) {
       if (event !== 'change' && event !== 'add' && event !== 'unlink') return
       let needsWrite = false
       if (event === 'change' || event === 'add') {
-        const watchFn =
+        const eventFn =
           event === 'change' ? watchConfig.onChange : watchConfig.onAdd
-        const contractConfig = await watchFn?.(path)
-        if (!contractConfig) return
-
-        const contract = await getContract({ ...contractConfig, isTypeScript })
-        let addedContract = contract
-        for (const plugin of plugins) {
-          if (!plugin.run) continue
-          const resolved = await plugin.run({
-            content: { header: [], imports: [] }, // TODO
-            contracts: [contract],
-            isTypeScript,
-          })
-          addedContract = resolved.contracts[0]!
-          // for (const import_ of resolved.imports ?? []) {
-          //   if (!pluginImports.includes(import_)) pluginImports.push(import_)
-          // }
-        }
-
-        contracts.set(addedContract.name, addedContract)
+        const config = await eventFn?.(path)
+        if (!config) return
+        logger.log(`Resolving contract "${config.name}"`)
+        const contract = await getContract({ ...config, isTypeScript })
+        contractMap.set(contract.name, contract)
         needsWrite = true
       } else if (event === 'unlink') {
         const name = await watchConfig.onRemove?.(path)
         if (!name) return
-        // TODO: Remove imports if no other contracts use them
-        contracts.delete(name)
+        contractMap.delete(name)
         needsWrite = true
       }
 
@@ -180,9 +134,13 @@ export async function generate(options: Generate) {
         if (timeout) clearTimeout(timeout)
         timeout = setTimeout(async () => {
           timeout = null
+          const result = await runPlugins({
+            plugins,
+            contracts: [...contractMap.values()],
+            isTypeScript,
+          })
           await writeContracts({
-            content: { header: [], imports: [] }, // TODO
-            contracts: [...resolvedContracts.values()],
+            ...result,
             filename: resolvedConfig.out,
           })
           logger.log('Saved!')
@@ -225,9 +183,10 @@ const Address = z
   .string()
   .regex(/^0x[a-fA-F0-9]{40}$/, { message: 'Invalid address' })
   .transform((val) => getAddress(val)) as z.ZodType<Address>
-// FIX: Coerce not working at the moment
-// https://github.com/colinhacks/zod/issues/1681
-const MultiChainAddress = z.record(z.coerce.number(), Address)
+const MultiChainAddress = z.record(
+  z.string().transform((val) => parseInt(val)),
+  Address,
+)
 const AddressSchema = z.union([Address, MultiChainAddress])
 
 async function getContract({
@@ -235,7 +194,7 @@ async function getContract({
   address,
   name,
   isTypeScript,
-}: Contract & { isTypeScript: boolean }): Promise<ResolvedContract> {
+}: ContractConfig & { isTypeScript: boolean }): Promise<Contract> {
   const constAssertion = isTypeScript ? ' as const' : ''
   const abiName = `${camelCase(name)}ABI`
   try {
@@ -253,9 +212,7 @@ async function getContract({
     export const ${abiName} = ${JSON.stringify(abi)}${constAssertion}
   `
 
-  let meta: ResolvedContract['meta'] = {
-    abiName,
-  }
+  let meta: Contract['meta'] = { abiName }
   if (address) {
     let resolvedAddress
     try {
@@ -265,23 +222,30 @@ async function getContract({
         throw fromZodError(error, { prefix: 'Invalid address' })
       throw error
     }
+
     const addressName = `${camelCase(name)}Address`
     const configName = `${camelCase(name)}Config`
-    content = dedent`
-      ${content}
-      export const ${addressName} = ${JSON.stringify(
-      resolvedAddress,
-      null,
-      2,
-    )}${constAssertion}
-    
-      export const ${configName} = { address: ${addressName}, abi: ${abiName} }${constAssertion}
-    `
     meta = {
       ...meta,
       addressName,
       configName,
     }
+
+    const addressContent =
+      typeof resolvedAddress === 'string'
+        ? JSON.stringify(resolvedAddress)
+        : // Remove quotes from chain id key
+          JSON.stringify(resolvedAddress, null, 2).replace(
+            /^\s*"(\d)":/gm,
+            '$1:',
+          )
+    content = dedent`
+      ${content}
+
+      export const ${addressName} = ${addressContent}${constAssertion}
+
+      export const ${configName} = { address: ${addressName}, abi: ${abiName} }${constAssertion}
+    `
   }
 
   return { abi, address, content, meta, name }
@@ -292,8 +256,8 @@ async function writeContracts({
   contracts,
   filename,
 }: {
-  content: PluginContent
-  contracts: ResolvedContract[]
+  content: PluginRunResult['content']
+  contracts: Contract[]
   filename: string
 }) {
   // Assemble code
@@ -317,4 +281,44 @@ async function writeContracts({
   const outPath = `${cwd}/${filename}`
   const formatted = await format(code)
   await fse.writeFile(outPath, formatted)
+}
+
+async function runPlugins(config: {
+  contracts: Contract[]
+  isTypeScript: boolean
+  plugins: Plugin[]
+}) {
+  let pluginRunResult: PluginRunResult = {
+    content: {
+      header: [],
+      imports: [],
+    },
+    contracts: config.contracts,
+  }
+  for (const plugin of config.plugins) {
+    if (!plugin.run) continue
+    logger.log(`Running plugin "${plugin.name}"`)
+    const { contracts, content } = await plugin.run({
+      ...pluginRunResult,
+      isTypeScript: config.isTypeScript,
+    })
+    pluginRunResult = {
+      content: {
+        header: [...pluginRunResult.content.header, ...content.header],
+        imports: [...pluginRunResult.content.imports, ...content.imports],
+      },
+      contracts,
+    }
+  }
+  return pluginRunResult
+}
+
+async function isProjectUsingTypeScript() {
+  try {
+    const cwd = process.cwd()
+    const tsconfig = await findUp('tsconfig.json', { cwd })
+    return !!tsconfig
+  } catch {
+    return false
+  }
 }

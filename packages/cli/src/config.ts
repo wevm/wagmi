@@ -1,6 +1,6 @@
 import type { Abi, Address } from 'abitype'
 
-export type Contract<
+export type ContractConfig<
   TChainId extends number = number,
   RequiredChainId extends number | undefined = undefined,
 > = {
@@ -35,9 +35,10 @@ export type Contract<
   name: string
 }
 
-export type ResolvedContract = Contract & {
+export type Contract = ContractConfig & {
   /** Generated string content */
   content: string
+  /** Meta info about contract */
   meta: {
     abiName: string
     addressName?: string
@@ -51,34 +52,33 @@ export type Watch = {
   /** Paths to watch for changes. */
   paths: string[]
   /** Callback that fires when file is added */
-  onAdd?: (path: string) => Contract | Promise<Contract | undefined> | undefined
+  onAdd?: (
+    path: string,
+  ) => ContractConfig | Promise<ContractConfig | undefined> | undefined
   /** Callback that fires when file changes */
   onChange: (
     path: string,
-  ) => Contract | Promise<Contract | undefined> | undefined
+  ) => ContractConfig | Promise<ContractConfig | undefined> | undefined
   /** Callback that fires when file is removed */
   onRemove?: (path: string) => string | Promise<string> | undefined
 }
 
-export type PluginContent = { header: string[]; imports: string[] }
-type RunResult = {
-  content: PluginContent
-  contracts: ResolvedContract[]
+type Content = { header: string[]; imports: string[] }
+export type PluginRunResult = {
+  content: Content
+  contracts: Contract[]
 }
 export type Plugin = {
   /** Contracts provided by plugin */
-  contracts?(): Contract[] | Promise<Contract[]>
+  contracts?(): ContractConfig[] | Promise<ContractConfig[]>
   /** Plugin name */
   name: string
   /** Run plugin logic */
   run?(config: {
-    content: {
-      header: string[]
-      imports: string[]
-    }
-    contracts: ResolvedContract[]
+    content: Content
+    contracts: Contract[]
     isTypeScript: boolean
-  }): RunResult | Promise<RunResult>
+  }): PluginRunResult | Promise<PluginRunResult>
   /**
    * Validate plugin configuration or other @wagmi/cli settings require for plugin.
    */
@@ -89,7 +89,7 @@ export type Plugin = {
 
 export type Config = {
   /** Contracts to generate code for */
-  contracts?: Contract[]
+  contracts?: ContractConfig[]
   /** Output file path */
   out: string
   /** Plugins to run */

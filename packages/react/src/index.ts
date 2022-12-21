@@ -40,6 +40,7 @@ export {
   useWaitForTransaction,
   useWebSocketProvider,
   type UseContractConfig,
+  type UseContractReadConfig,
 } from './hooks'
 
 export {

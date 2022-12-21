@@ -1,4 +1,4 @@
-import type { Contract } from '../config'
+import type { ContractConfig } from '../config'
 import { blockExplorer } from './blockExplorer'
 
 const apiUrls = {
@@ -53,7 +53,7 @@ type EtherscanConfig<TChainId extends number> = {
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Omit<Contract<ChainId, TChainId>, 'abi'>[]
+  contracts: Omit<ContractConfig<ChainId, TChainId>, 'abi'>[]
 }
 
 /**
@@ -67,7 +67,7 @@ export function etherscan<TChainId extends ChainId>({
   return blockExplorer({
     apiKey,
     baseUrl: apiUrls[chainId as ChainId],
-    contracts: contracts as Omit<Contract, 'abi'>[],
+    contracts: contracts as Omit<ContractConfig, 'abi'>[],
     getAddress({ address }) {
       if (!address) throw new Error('address is required')
       if (typeof address === 'string') return address

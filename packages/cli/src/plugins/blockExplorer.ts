@@ -1,7 +1,7 @@
 import type { Address } from 'abitype'
 import { z } from 'zod'
 
-import type { Contract } from '../config'
+import type { ContractConfig } from '../config'
 import { fromZodError } from '../errors'
 import { fetch } from './fetch'
 
@@ -17,22 +17,24 @@ export type BlockExplorerConfig = {
   /**
    * Contracts to fetch ABIs for.
    */
-  contracts: Omit<Contract, 'abi'>[]
+  contracts: Omit<ContractConfig, 'abi'>[]
   /**
    * Function to get address from contract config.
    */
-  getAddress?(config: { address: Contract['address'] }): Address
+  getAddress?(config: { address: ContractConfig['address'] }): Address
   /**
    * Name of source.
    */
-  name?: Contract['name']
+  name?: ContractConfig['name']
 }
 
 const BlockExplorerResponse = z.discriminatedUnion('status', [
   z.object({
     status: z.literal('1'),
     message: z.literal('OK'),
-    result: z.string().transform((val) => JSON.parse(val) as Contract['abi']),
+    result: z
+      .string()
+      .transform((val) => JSON.parse(val) as ContractConfig['abi']),
   }),
   z.object({
     status: z.literal('0'),
