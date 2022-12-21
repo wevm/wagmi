@@ -44,7 +44,7 @@ describe('switchNetwork', () => {
           "nativeCurrency": {
             "decimals": 18,
             "name": "Goerli Ether",
-            "symbol": "GOR",
+            "symbol": "ETH",
           },
           "network": "goerli",
           "rpcUrls": {
