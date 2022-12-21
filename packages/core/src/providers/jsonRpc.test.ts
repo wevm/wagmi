@@ -24,7 +24,9 @@ describe('jsonRpc', () => {
   describe('ens lookup', () => {
     it('default', async () => {
       const { provider: providerFactory } = jsonRpcProvider({
-        rpc: () => foundryChain.rpcUrls['default'].http[0],
+        rpc: () => ({
+          http: foundryChain.rpcUrls['default'].http[0]!,
+        }),
       })(foundryChain)!
       const provider = providerFactory()
       expect(
@@ -36,7 +38,9 @@ describe('jsonRpc', () => {
 
     it('default', async () => {
       const { provider: providerFactory } = jsonRpcProvider({
-        rpc: () => foundryChain.rpcUrls['default'].http[0],
+        rpc: () => ({
+          http: foundryChain.rpcUrls['default'].http[0]!,
+        }),
       })(foundryChainCustomRegistry)!
       const provider = providerFactory()
       expect(
