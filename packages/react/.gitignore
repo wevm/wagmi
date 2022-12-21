@@ -1,14 +1,14 @@
 # Generated file. Do not edit directly.
 actions/**
 chains/**
-connectors/coinbaseWallet/**
 connectors/**
+connectors/coinbaseWallet/**
 connectors/injected/**
 connectors/ledger/**
 connectors/metaMask/**
 connectors/mock/**
 connectors/walletConnect/**
 providers/alchemy/**
-providers/public/**
 providers/infura/**
 providers/jsonRpc/**
+providers/public/**

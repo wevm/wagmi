@@ -40,13 +40,13 @@
       "types": "./dist/chains.d.ts",
       "default": "./dist/chains.js"
     },
-    "./connectors/coinbaseWallet": {
-      "types": "./dist/connectors/coinbaseWallet.d.ts",
-      "default": "./dist/connectors/coinbaseWallet.js"
-    },
     "./connectors": {
       "types": "./dist/connectors/index.d.ts",
       "default": "./dist/connectors/index.js"
+    },
+    "./connectors/coinbaseWallet": {
+      "types": "./dist/connectors/coinbaseWallet.d.ts",
+      "default": "./dist/connectors/coinbaseWallet.js"
     },
     "./connectors/injected": {
       "types": "./dist/connectors/injected.d.ts",
@@ -72,10 +72,6 @@
       "types": "./dist/providers/alchemy.d.ts",
       "default": "./dist/providers/alchemy.js"
     },
-    "./providers/public": {
-      "types": "./dist/providers/public.d.ts",
-      "default": "./dist/providers/public.js"
-    },
     "./providers/infura": {
       "types": "./dist/providers/infura.d.ts",
       "default": "./dist/providers/infura.js"
@@ -83,6 +79,10 @@
     "./providers/jsonRpc": {
       "types": "./dist/providers/jsonRpc.d.ts",
       "default": "./dist/providers/jsonRpc.js"
+    },
+    "./providers/public": {
+      "types": "./dist/providers/public.d.ts",
+      "default": "./dist/providers/public.js"
     },
     "./package.json": "./package.json"
   },
