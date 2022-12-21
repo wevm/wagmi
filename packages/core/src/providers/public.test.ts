@@ -32,7 +32,7 @@ describe('publicProviders', () => {
       ).toMatchInlineSnapshot(`"awkweb.eth"`)
     })
 
-    it('default', async () => {
+    it('custom', async () => {
       const { provider: providerFactory } = publicProvider()(
         foundryChainCustomRegistry,
       )!

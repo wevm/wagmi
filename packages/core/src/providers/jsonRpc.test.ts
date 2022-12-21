@@ -36,7 +36,7 @@ describe('jsonRpc', () => {
       ).toMatchInlineSnapshot(`"awkweb.eth"`)
     })
 
-    it('default', async () => {
+    it('custom', async () => {
       const { provider: providerFactory } = jsonRpcProvider({
         rpc: () => ({
           http: foundryChain.rpcUrls['default'].http[0]!,
