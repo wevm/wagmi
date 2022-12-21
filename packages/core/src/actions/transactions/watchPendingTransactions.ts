@@ -3,7 +3,6 @@ import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
 import type { Provider } from '../../types'
-import { debounce } from '../../utils'
 import { getProvider, getWebSocketProvider } from '../providers'
 
 export type WatchPendingTransactionsResult = Transaction
@@ -16,19 +15,12 @@ export function watchPendingTransactions(
   args: WatchPendingTransactionsArgs,
   callback: WatchPendingTransactionsCallback,
 ) {
-  // We need to debounce the listener as we want to opt-out
-  // of the behavior where ethers emits a "block" event for
-  // every block that was missed in between the `pollingInterval`.
-  // We are setting a wait time of 1 as emitting an event in
-  // ethers takes ~0.1ms.
-  const debouncedCallback = debounce(callback, 1)
-
   let previousProvider: Provider
   const createListener = (provider: Provider) => {
     if (previousProvider) {
-      previousProvider?.off('pending', debouncedCallback)
+      previousProvider?.off('pending', callback)
     }
-    provider.on('pending', debouncedCallback)
+    provider.on('pending', callback)
     previousProvider = provider
   }
 
@@ -54,7 +46,7 @@ export function watchPendingTransactions(
 
   return () => {
     unsubscribe()
-    provider_?.off('pending', debouncedCallback)
-    previousProvider?.off('pending', debouncedCallback)
+    provider_?.off('pending', callback)
+    previousProvider?.off('pending', callback)
   }
 }
