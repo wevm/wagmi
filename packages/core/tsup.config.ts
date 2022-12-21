@@ -14,6 +14,7 @@ export default defineConfig(
       'src/connectors/injected.ts',
       'src/connectors/ledger.ts',
       'src/connectors/metaMask.ts',
+      'src/connectors/bitKeep.ts',
       'src/connectors/mock.ts',
       'src/connectors/walletConnect.ts',
       'src/internal/index.ts',
