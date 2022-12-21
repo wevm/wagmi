@@ -1,50 +1,156 @@
 import { pascalCase } from 'change-case'
 import dedent from 'dedent'
 
-import type { Plugin } from '../config'
+import type { Contract, Plugin } from '../config'
 
 type ReactConfig = {
   hooks?: {
+    /**
+     * Generate `useContract` hook.
+     *
+     * @default true
+     */
     useContract?: boolean
-    useContractEvent?: boolean
+    /**
+     * Generate `useContractRead` hook.
+     *
+     * @default true
+     */
     useContractRead?: boolean
+    /**
+     * Generate hook for each "read" function in contract ABI.
+     *
+     * @default true
+     */
+    useContractFunctionRead?: boolean
+    /**
+     * Generate `useContractWrite` hook.
+     *
+     * @default true
+     */
     useContractWrite?: boolean
-    usePrepareContractWrite?: boolean
+    /**
+     * Generate hook for each "write" function in contract ABI.
+     *
+     * @default true
+     */
+    useContractFunctionWrite?: boolean
   }
+}
+
+// shared:
+// x generated hook name
+// x default config to `{}`?
+// x underlying hook name
+// x hardcode `abi` (and `address`/`functionName` if applicable)
+// - tsdoc (@inheritDoc?)
+// typescript:
+// - generics?
+// - config?
+// - properties?
+
+function buildHook({
+  contract,
+  hookName,
+  isTypeScript,
+  innerHookName,
+  innerHookConfig,
+  tsAssertConfig,
+  tsGenerics,
+  tsType,
+}: {
+  contract: Contract
+  hookName: string
+  isTypeScript: boolean
+  innerHookName: string
+  innerHookConfig?: Record<string, string>
+  tsAssertConfig?: string
+  tsGenerics?: {
+    config: string
+    hook: string
+    type: string
+  }
+  tsType: string
+}) {
+  const hasAddress = !!contract.address
+  const hasMultichainAddress = typeof contract.address === 'object'
+
+  let isConfigRequired = false
+  const wrappedHookParams: Record<string, string> = {
+    abi: contract.meta.abiName,
+    ...innerHookConfig,
+  }
+  if (contract.meta.addressName) {
+    if (hasMultichainAddress) {
+      wrappedHookParams[
+        'address'
+      ] = `config.chainId ? ${contract.meta.addressName}[config.chainId] : undefined`
+      isConfigRequired = true
+    } else if (hasAddress)
+      wrappedHookParams['address'] = contract.meta.addressName
+  }
+  const wrappedHookConfig =
+    Object.entries(wrappedHookParams).reduce((prev, curr) => {
+      return dedent`
+      ${prev}
+      ${curr[0]}: ${curr[1]},
+    `
+    }, '{') + '...config }'
+  const defaultConfig = isConfigRequired
+    ? ''
+    : `= {}${isTypeScript ? 'as any' : ''}`
+
+  if (!isTypeScript)
+    return dedent`
+      export function ${hookName}(config ${defaultConfig}) {
+        return ${innerHookName}(${wrappedHookConfig})
+      }
+    `
+
+  const typeParams: Record<string, { optional?: boolean; type: string }> = {}
+  if (hasMultichainAddress) {
+    typeParams['chainId'] = {
+      optional: true,
+      type: `keyof typeof ${contract.meta.addressName}`,
+    }
+  }
+  let typeConfig =
+    Object.entries(typeParams).reduce((prev, curr) => {
+      return dedent`
+      ${prev}
+      ${curr[0]}${curr[1].optional ? '?' : ''}: ${curr[1].type},
+    `
+    }, '& {') + '}'
+  if (typeConfig === '& {}') typeConfig = ''
+
+  const typeName = `${pascalCase(hookName)}Config`
+  const generics = Object.assign({ type: '', config: '', hook: '' }, tsGenerics)
+  const as = tsAssertConfig ? ` as ${tsAssertConfig}` : ''
+  return dedent`
+    type ${typeName}${generics.type} = ${tsType}${typeConfig}
+    export function ${hookName}${generics.hook}(config: ${typeName}${generics.config} ${defaultConfig}) {
+      return ${innerHookName}(${wrappedHookConfig}${as})
+    }
+  `
 }
 
 export function react(config: ReactConfig): Plugin {
   const hooks = {
     useContract: true,
-    useContractEvent: true,
     useContractRead: true,
+    useContractFunctionRead: true,
     useContractWrite: true,
-    usePrepareContractWrite: true,
+    useContractFunctionWrite: true,
     ...config?.hooks,
   }
   return {
     name: 'React',
-    async run({ contracts, content, isTypeScript }) {
+    async run({ contracts, isTypeScript }) {
       const imports = new Set<string>([])
+      const actionsImports = new Set<string>([])
+
+      const content: string[] = []
       for (const contract of contracts) {
-        const hasAddress = !!contract.address
-        const hasMultichainAddress = typeof contract.address === 'object'
-
-        let addressConfig, addressType
-        if (hasMultichainAddress) {
-          addressConfig = `${contract.meta.addressName}[config.chainId]`
-          addressType = `chainId: keyof typeof ${contract.meta.addressName}`
-        } else if (hasAddress) {
-          addressConfig = contract.meta.addressName
-          addressType = ''
-        } else {
-          addressType = `address?: UseContractConfig['address']`
-        }
-        const contractConfig = dedent`
-          abi: ${contract.meta.abiName},
-          ${addressConfig ? `address: ${addressConfig},` : ''}
-        `
-
         let hasReadFunction,
           hasWriteFunction,
           hasEvent = false
@@ -57,152 +163,72 @@ export function react(config: ReactConfig): Plugin {
               hasReadFunction = true
             else hasWriteFunction = true
           else if (component.type === 'event') hasEvent = true
-
           // Exit early if all flags are `true`
           if (hasReadFunction && hasWriteFunction && hasEvent) break
         }
 
-        const content = []
+        const hasAddress = !!contract.address
+        const selectAddress = hasAddress ? `| 'address'` : ''
+
         if (hooks.useContract) {
-          imports.add('useContract')
-          if (isTypeScript) imports.add('UseContractConfig')
+          const hookName = 'useContract'
+          const typeName = 'UseContractConfig'
+          imports.add(hookName)
+          if (isTypeScript) imports.add(typeName)
           content.push(
-            template.useContract({
-              addressType,
-              contractConfig,
-              isConfigRequired: hasMultichainAddress,
+            buildHook({
+              contract,
+              hookName: `use${pascalCase(contract.name)}Contract`,
+              innerHookName: hookName,
               isTypeScript,
-              name: contract.name,
+              tsType: `Omit<${typeName}, 'abi'${selectAddress}>`,
             }),
           )
         }
         if (hasReadFunction) {
           if (hooks.useContractRead) {
-            imports.add('useContractRead')
-            if (isTypeScript) imports.add('UseContractReadConfig')
-            if (hasReadFunction) {
-              content.push(
-                template.useContractRead({
-                  addressType,
-                  contractConfig,
-                  isConfigRequired: hasMultichainAddress,
-                  isTypeScript,
-                  name: contract.name,
-                }),
-              )
+            const hookName = 'useContractRead'
+            const typeName = 'UseContractReadConfig'
+            const selectDataTypeName = 'ReadContractResult'
+            imports.add(hookName)
+            if (isTypeScript) {
+              imports.add(typeName)
+              actionsImports.add(selectDataTypeName)
             }
+            const generics = {
+              functionName: 'TFunctionName',
+              selectData: 'TSelectData',
+            }
+            const tsAssertConfig = `${typeName}<typeof ${contract.meta.abiName}, ${generics.functionName}, ${generics.selectData}>`
+            const tsSelectDataSlot = `${generics.selectData} = ${selectDataTypeName}<typeof ${contract.meta.abiName}, ${generics.functionName}>`
+            content.push(
+              buildHook({
+                contract,
+                hookName: `use${pascalCase(contract.name)}Read`,
+                innerHookName: hookName,
+                isTypeScript,
+                tsAssertConfig,
+                tsGenerics: {
+                  config: `<${generics.functionName}, ${generics.selectData}>`,
+                  hook: `<${generics.functionName} extends string, ${tsSelectDataSlot}>`,
+                  type: `<${generics.functionName} = string, ${tsSelectDataSlot}>`,
+                },
+                tsType: `Omit<${tsAssertConfig}, 'abi'${selectAddress}>`,
+              }),
+            )
           }
         }
-
-        contract.content = `${contract.content}\n\n${content.join('\n\n')}`
       }
 
       return {
-        contracts,
-        content: {
-          header: [...content.header],
-          imports: [
-            ...content.imports,
-            `import { ${[...imports.values()].join(', ')} } from 'wagmi'`,
-          ],
-        },
+        imports: dedent`
+        import { ${[...imports.values()].join(', ')} } from 'wagmi'
+        import { ${[...actionsImports.values()].join(
+          ', ',
+        )} } from 'wagmi/actions'
+        `,
+        content: content.join('\n\n'),
       }
     },
   }
-}
-
-type SharedTemplateConfig = {
-  addressType: string
-  contractConfig: string
-  isConfigRequired: boolean
-  isTypeScript: boolean
-  name: string
-}
-
-const template = {
-  useContract(config: SharedTemplateConfig) {
-    const {
-      addressType,
-      contractConfig,
-      isConfigRequired,
-      isTypeScript,
-      name,
-    } = config
-    const hookName = getHookName({ name })
-
-    let typeName = ''
-    let typeContent = ''
-    if (isTypeScript) {
-      typeName = getTypeName({ hookName })
-      typeContent = dedent`
-        type ${typeName} = Pick<UseContractConfig, 'signerOrProvider'> ${
-        addressType
-          ? `& {
-          ${addressType}
-        }`
-          : ''
-      }
-      `
-    }
-
-    return dedent`
-      ${typeContent}
-      export function ${hookName}(config${typeName ? `: ${typeName}` : ''}${
-      isConfigRequired ? '' : '= {}'
-    }) {
-        return useContract({
-          ${contractConfig}
-          ...config,
-        })
-      }
-    `
-  },
-  useContractRead(config: SharedTemplateConfig) {
-    const {
-      addressType,
-      contractConfig,
-      isConfigRequired,
-      isTypeScript,
-      name,
-    } = config
-    const hookName = getHookName({ name, suffix: 'read' })
-
-    let typeName = ''
-    let typeContent = ''
-    if (isTypeScript) {
-      typeName = getTypeName({ hookName })
-      typeContent = dedent`
-        type ${typeName}<TFunctionName = string> = Omit<
-          UseContractReadConfig<typeof wagmiMintEtherscanABI, TFunctionName>,
-          ${[`'abi'`, ...(addressType ? [`'address'`] : [])].join(' | ')}
-        > ${
-          addressType
-            ? `& {
-            ${addressType}
-          }`
-            : ''
-        }
-      `
-    }
-
-    return dedent`
-      ${typeContent}
-      export function ${hookName}(config${typeName ? `: ${typeName}` : ''}${
-      isConfigRequired ? '' : '= {}'
-    }) {
-        return useContractRead({
-          ${contractConfig}
-          ...config,
-        })
-      }
-    `
-  },
-}
-
-function getHookName({ name, suffix }: { name: string; suffix?: string }) {
-  return `use${pascalCase(name)}${suffix ? pascalCase(suffix) : ''}`
-}
-
-function getTypeName({ hookName }: { hookName: string }) {
-  return `${pascalCase(hookName)}Config`
 }

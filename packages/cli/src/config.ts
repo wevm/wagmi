@@ -1,5 +1,7 @@
 import type { Abi, Address } from 'abitype'
 
+type TypeOrPromise<T> = T | Promise<T>
+
 export type ContractConfig<
   TChainId extends number = number,
   RequiredChainId extends number | undefined = undefined,
@@ -43,46 +45,40 @@ export type Contract = ContractConfig & {
     abiName: string
     addressName?: string
     configName?: string
-  } & { [key: string]: string }
+  }
 }
 
 export type Watch = {
   /** Command to run along with watch process */
-  command?: () => void | Promise<void>
+  command?: () => TypeOrPromise<void>
   /** Paths to watch for changes. */
   paths: string[]
   /** Callback that fires when file is added */
-  onAdd?: (
-    path: string,
-  ) => ContractConfig | Promise<ContractConfig | undefined> | undefined
+  onAdd?: (path: string) => TypeOrPromise<ContractConfig | undefined>
   /** Callback that fires when file changes */
-  onChange: (
-    path: string,
-  ) => ContractConfig | Promise<ContractConfig | undefined> | undefined
+  onChange: (path: string) => TypeOrPromise<ContractConfig | undefined>
   /** Callback that fires when file is removed */
-  onRemove?: (path: string) => string | Promise<string> | undefined
+  onRemove?: (path: string) => TypeOrPromise<string | undefined>
 }
 
-type Content = { header: string[]; imports: string[] }
-export type PluginRunResult = {
-  content: Content
-  contracts: Contract[]
-}
 export type Plugin = {
   /** Contracts provided by plugin */
-  contracts?(): ContractConfig[] | Promise<ContractConfig[]>
+  contracts?(): TypeOrPromise<ContractConfig[]>
   /** Plugin name */
   name: string
   /** Run plugin logic */
   run?(config: {
-    content: Content
     contracts: Contract[]
     isTypeScript: boolean
-  }): PluginRunResult | Promise<PluginRunResult>
+  }): TypeOrPromise<{
+    imports?: string
+    prepend?: string
+    content: string
+  }>
   /**
    * Validate plugin configuration or other @wagmi/cli settings require for plugin.
    */
-  validate?(): void | Promise<void>
+  validate?(): TypeOrPromise<void>
   /** File system watch config */
   watch?: Watch
 }
@@ -96,9 +92,7 @@ export type Config = {
   plugins?: Plugin[]
 }
 
-export function defineConfig(
-  config: Config | (() => Config | Promise<Config>),
-) {
+export function defineConfig(config: Config | (() => TypeOrPromise<Config>)) {
   return config
 }
 

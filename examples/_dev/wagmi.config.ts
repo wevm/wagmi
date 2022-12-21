@@ -42,6 +42,10 @@ export default defineConfig({
         rebuild: true,
       },
     }),
-    react({}),
+    react({
+      hooks: {
+        useContract: true,
+      },
+    }),
   ],
 })
