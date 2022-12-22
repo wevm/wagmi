@@ -10,6 +10,11 @@ const translations = {
     feedbackLink: 'Question? Give us feedback →',
     poweredBy: 'Powered by',
   },
+  'zh-CN': {
+    editLink: '在 GitHub 上编辑此页面 →',
+    feedbackLink: '有疑问? 点击给我们反馈 →',
+    poweredBy: 'Powered by',
+  },
 } as const
 type Language = keyof typeof translations
 
@@ -88,7 +93,10 @@ const config: DocsThemeConfig = {
       />
     </>
   ),
-  i18n: [{ locale: 'en-US', text: 'English' }],
+  i18n: [
+    { locale: 'en-US', text: 'English' },
+    { locale: 'zh-CN', text: '简体中文' },
+  ],
   logo() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { pathname } = useRouter()

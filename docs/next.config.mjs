@@ -14,7 +14,7 @@ const withNextra = nextra({
 /** @type {import('next').NextConfig} */
 const config = {
   i18n: {
-    locales: ['en-US'],
+    locales: ['en-US','zh-CN'],
     defaultLocale: 'en-US',
   },
   reactStrictMode: true,
