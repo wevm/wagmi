@@ -1,0 +1,43 @@
+---
+title: 'watchPendingTransactions'
+description: 'Action for subscribing to pending transactions.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchPendingTransactions
+
+Action for subscribing to pending transactions.
+
+```ts
+import { watchPendingTransactions } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when a new transactions enters the memory pool of the provider. Note that only certain providers offer this event.
+
+```ts
+import { watchPendingTransactions } from '@wagmi/core'
+
+const unwatch = watchPendingTransactions({}, (transaction) =>
+  console.log(transaction),
+)
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {5}
+import { watchPendingTransactions } from '@wagmi/core'
+
+const unwatch = watchPendingTransactions(
+  {
+    chainId: 1,
+  },
+  (transaction) => console.log(transaction),,
+)
+```
