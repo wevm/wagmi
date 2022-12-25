@@ -1,5 +1,6 @@
 ---
-'wagmi': minor
+'@wagmi/core': patch
+'wagmi': patch
 ---
 
-Support custom ENS registries
+All Providers (ie. Alchemy, Infura, Public) now use the ENS Registry address on the wagmi `Chain` object (`chain.contracts.ensRegistry`).

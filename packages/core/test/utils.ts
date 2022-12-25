@@ -14,7 +14,7 @@ export function getNetwork(chain: Chain) {
   }
 }
 
-const foundryMainnet: Chain = {
+export const foundryMainnet: Chain = {
   ...mainnet,
   rpcUrls: foundry.rpcUrls,
 }
