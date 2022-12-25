@@ -8,6 +8,7 @@ import {
   mainnet,
 } from 'wagmi'
 
+import { BitKeepConnector } from 'wagmi/connectors/bitKeep'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -24,6 +25,12 @@ const client = createClient({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
+      chains,
+      options: {
+        UNSTABLE_shimOnConnectSelectAccount: true,
+      },
+    }),
+    new BitKeepConnector({
       chains,
       options: {
         UNSTABLE_shimOnConnectSelectAccount: true,

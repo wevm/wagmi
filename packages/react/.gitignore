@@ -6,6 +6,7 @@ connectors/coinbaseWallet/**
 connectors/injected/**
 connectors/ledger/**
 connectors/metaMask/**
+connectors/bitKeep/**
 connectors/mock/**
 connectors/walletConnect/**
 providers/alchemy/**

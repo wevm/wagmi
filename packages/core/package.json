@@ -55,6 +55,10 @@
       "types": "./dist/connectors/metaMask.d.ts",
       "default": "./dist/connectors/metaMask.js"
     },
+    "./connectors/bitKeep": {
+      "types": "./dist/connectors/bitKeep.d.ts",
+      "default": "./dist/connectors/bitKeep.js"
+    },
     "./connectors/mock": {
       "types": "./dist/connectors/mock.d.ts",
       "default": "./dist/connectors/mock.js"
