@@ -124,9 +124,9 @@ The `etherscanBlockExplorers` export has been removed. You can extract a block e
 -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
 -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
 -const optimismEtherscanBlockExplorer = etherscanBlockExplorers.optimism
-+const mainnetEtherscanBlockExplorer = mainnet.blockExplorer
-+const polygonEtherscanBlockExplorer = polygon.blockExplorer
-+const optimismEtherscanBlockExplorer = optimism.blockExplorer
++const mainnetEtherscanBlockExplorer = mainnet.blockExplorers.default
++const polygonEtherscanBlockExplorer = polygon.blockExplorers.default
++const optimismEtherscanBlockExplorer = optimism.blockExplorers.default
 ```
 
 #### Removed `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls`
