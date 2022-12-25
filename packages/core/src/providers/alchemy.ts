@@ -27,11 +27,25 @@ export function alchemyProvider({
         },
       },
       provider: () => {
-        const provider = new providers.AlchemyProvider(chain.id, apiKey)
+        const provider = new providers.AlchemyProvider(
+          {
+            chainId: chain.id,
+            name: chain.network,
+            ensAddress: chain.contracts?.ensRegistry?.address,
+          },
+          apiKey,
+        )
         return Object.assign(provider, { priority, stallTimeout, weight })
       },
       webSocketProvider: () =>
-        new providers.AlchemyWebSocketProvider(chain.id, apiKey),
+        new providers.AlchemyWebSocketProvider(
+          {
+            chainId: chain.id,
+            name: chain.network,
+            ensAddress: chain.contracts?.ensRegistry?.address,
+          },
+          apiKey,
+        ),
     }
   }
 }
