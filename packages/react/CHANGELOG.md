@@ -1,5 +1,26 @@
 # wagmi
 
+## 0.9.5
+
+### Patch Changes
+
+- [#1542](https://github.com/wagmi-dev/wagmi/pull/1542) [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549) Thanks [@jxom](https://github.com/jxom)! - Added the following chains:
+
+  - `evmos`
+  - `evmosTestnet`
+  - `gnosis`
+
+- [#1542](https://github.com/wagmi-dev/wagmi/pull/1542) [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549) Thanks [@jxom](https://github.com/jxom)! - Updated Goerli symbol to `"ETH"`.
+
+- [#1542](https://github.com/wagmi-dev/wagmi/pull/1542) [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549) Thanks [@jxom](https://github.com/jxom)! - Updated Arbitrum Goerli RPC and Block Explorer.
+
+- [#1542](https://github.com/wagmi-dev/wagmi/pull/1542) [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549) Thanks [@jxom](https://github.com/jxom)! - Fixed issue where connecting to MetaMask may return with a stale address.
+
+- [#1542](https://github.com/wagmi-dev/wagmi/pull/1542) [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549) Thanks [@jxom](https://github.com/jxom)! - Removed ENS registry for Sepolia.
+
+- Updated dependencies [[`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549), [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549), [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549), [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549), [`731b3b73`](https://github.com/wagmi-dev/wagmi/commit/731b3b733c6a093d1693d49de601705b7c730549)]:
+  - @wagmi/core@0.8.5
+
 ## 0.9.4
 
 ### Patch Changes

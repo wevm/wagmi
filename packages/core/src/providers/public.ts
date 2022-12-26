@@ -19,6 +19,7 @@ export function publicProvider({
           {
             chainId: chain.id,
             name: chain.network,
+            ensAddress: chain.contracts?.ensRegistry?.address,
           },
         )
         return Object.assign(provider, { priority, stallTimeout, weight })
