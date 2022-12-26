@@ -35,6 +35,7 @@
   "watchReadContract": "watchReadContract",
   "watchReadContracts": "watchReadContracts",
   "watchSigner": "watchSigner",
+  "watchPendingTransactions": "watchPendingTransactions",
   "watchWebSocketProvider": "watchWebSocketProvider",
   "writeContract": "writeContract"
 }
