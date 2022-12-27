@@ -42,6 +42,7 @@ it('should expose correct exports', () => {
       "useToken",
       "useTransaction",
       "useWaitForTransaction",
+      "useWatchPendingTransactions",
       "useWebSocketProvider",
       "AddChainError",
       "ChainDoesNotSupportMulticallError",

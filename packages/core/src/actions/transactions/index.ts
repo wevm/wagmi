@@ -23,3 +23,10 @@ export {
   type WaitForTransactionArgs,
   type WaitForTransactionResult,
 } from './waitForTransaction'
+
+export {
+  watchPendingTransactions,
+  type WatchPendingTransactionsArgs,
+  type WatchPendingTransactionsCallback,
+  type WatchPendingTransactionsResult,
+} from './watchPendingTransactions'

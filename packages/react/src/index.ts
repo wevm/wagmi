@@ -38,6 +38,7 @@ export {
   useToken,
   useTransaction,
   useWaitForTransaction,
+  useWatchPendingTransactions,
   useWebSocketProvider,
 } from './hooks'
 
