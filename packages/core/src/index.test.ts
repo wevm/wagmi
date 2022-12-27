@@ -37,6 +37,7 @@ it('should expose correct exports', () => {
       "watchContractEvent",
       "watchMulticall",
       "watchNetwork",
+      "watchPendingTransactions",
       "watchProvider",
       "watchReadContract",
       "watchReadContracts",
