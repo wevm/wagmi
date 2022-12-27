@@ -26,7 +26,6 @@ export function useWatchPendingTransactions({
     if (!enabled) return
 
     const provider_ = webSocketProvider ?? provider
-    console.log('test')
     provider_.on('pending', listener)
 
     return () => {
