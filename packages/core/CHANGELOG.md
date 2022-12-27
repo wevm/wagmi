@@ -1,5 +1,18 @@
 # @wagmi/core
 
+## 0.8.6
+
+### Patch Changes
+
+- [#1539](https://github.com/wagmi-dev/wagmi/pull/1539) [`732da004`](https://github.com/wagmi-dev/wagmi/commit/732da0042c7e28091b2e36a484ea8239971306f5) Thanks [@0xFlicker](https://github.com/0xFlicker)! - All Providers (ie. Alchemy, Infura, Public) now use the ENS Registry address on the wagmi `Chain` object (`chain.contracts.ensRegistry`).
+
+- [#1574](https://github.com/wagmi-dev/wagmi/pull/1574) [`ecde3d10`](https://github.com/wagmi-dev/wagmi/commit/ecde3d1029ccdf90e2853ba0e9ae4f5f4ebb9c4c) Thanks [@jxom](https://github.com/jxom)! - Added the following chains:
+
+  - `iotex`
+  - `iotexTestnet`
+  - `zkSync`
+  - `zkSyncTestnet`
+
 ## 0.8.5
 
 ### Patch Changes
