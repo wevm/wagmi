@@ -1,15 +1,16 @@
 import type { Abi } from 'abitype'
 
 import { getClient } from '../../client'
+import type { Contract } from '../../types/contracts'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { ReadContractsConfig, ReadContractsResult } from './readContracts'
 import { readContracts } from './readContracts'
 
-export type WatchReadContractsConfig<TContracts extends unknown[]> =
+export type WatchReadContractsConfig<TContracts extends Contract[]> =
   ReadContractsConfig<TContracts> & {
     listenToBlock?: boolean
   }
-export type WatchReadContractsCallback<TContracts extends unknown[]> = (
+export type WatchReadContractsCallback<TContracts extends Contract[]> = (
   results: ReadContractsResult<TContracts>,
 ) => void
 
