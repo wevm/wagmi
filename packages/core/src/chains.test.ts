@@ -19,6 +19,8 @@ it('should expose correct exports', () => {
       "goerli",
       "gnosis",
       "hardhat",
+      "iotex",
+      "iotexTestnet",
       "localhost",
       "mainnet",
       "optimism",
@@ -28,6 +30,8 @@ it('should expose correct exports', () => {
       "sepolia",
       "taraxa",
       "taraxaTestnet",
+      "zkSync",
+      "zkSyncTestnet",
     ]
   `)
 })
