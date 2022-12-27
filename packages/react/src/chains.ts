@@ -13,6 +13,8 @@ export {
   goerli,
   gnosis,
   hardhat,
+  iotex,
+  iotexTestnet,
   localhost,
   mainnet,
   optimism,
@@ -22,6 +24,8 @@ export {
   sepolia,
   taraxa,
   taraxaTestnet,
+  zkSync,
+  zkSyncTestnet,
 } from '@wagmi/core/chains'
 
 export type { Chain } from '@wagmi/core/chains'
