@@ -1,37 +1,49 @@
-import type { WriteContractArgs, WriteContractResult } from '@wagmi/core'
+import type {
+  WriteContractArgs,
+  WriteContractMode,
+  WriteContractPreparedArgs,
+  WriteContractResult,
+  WriteContractUnpreparedArgs,
+} from '@wagmi/core'
 import { writeContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import * as React from 'react'
 
-import type { MutationConfig } from '../../types'
+import type { InferOptional, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
+type OptionalProperties =
+  | 'abi'
+  | 'address'
+  | 'args'
+  | 'functionName'
+  | 'request'
 export type UseContractWriteArgs<
+  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = WriteContractArgs<
-  TAbi,
-  TFunctionName,
-  {
-    isAbiOptional: true
-    isAddressOptional: true
-    isArgsOptional: true
-    isFunctionNameOptional: true
-    isRequestOptional: true
-  }
->
+> = { mode: TMode } & (TMode extends 'recklessUnprepared'
+  ? InferOptional<
+      WriteContractUnpreparedArgs<TAbi, TFunctionName>,
+      OptionalProperties
+    >
+  : InferOptional<
+      WriteContractPreparedArgs<TAbi, TFunctionName>,
+      OptionalProperties
+    >)
 
 export type UseContractWriteConfig<
+  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = MutationConfig<WriteContractResult, Error, UseContractWriteArgs> &
-  UseContractWriteArgs<TAbi, TFunctionName>
+> = MutationConfig<WriteContractResult, Error, UseContractWriteArgs<TMode>> &
+  UseContractWriteArgs<TMode, TAbi, TFunctionName>
 
 type UseContractWriteMutationArgs<
-  Mode extends 'prepared' | 'recklesslyUnprepared',
+  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = Mode extends 'prepared'
+> = TMode extends 'prepared'
   ? undefined
   : {
       /**
@@ -82,17 +94,7 @@ function mutationFn({
   mode,
   overrides,
   request,
-}: WriteContractArgs<
-  Abi | readonly unknown[],
-  string,
-  {
-    isAbiOptional: true
-    isAddressOptional: true
-    isArgsOptional: true
-    isFunctionNameOptional: true
-    isRequestOptional: true
-  }
->) {
+}: UseContractWriteArgs<Abi, string>) {
   if (!address) throw new Error('address is required')
   if (!abi) throw new Error('abi is required')
   if (!functionName) throw new Error('functionName is required')
@@ -141,6 +143,7 @@ function mutationFn({
  *
  */
 export function useContractWrite<
+  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >(
@@ -157,7 +160,7 @@ export function useContractWrite<
     onMutate,
     onSettled,
     onSuccess,
-  }: UseContractWriteConfig<TAbi, TFunctionName> = {} as any,
+  }: UseContractWriteConfig<TMode, TAbi, TFunctionName> = {} as any,
 ) {
   const {
     data,
@@ -193,11 +196,7 @@ export function useContractWrite<
 
   const write = React.useCallback(
     (
-      overrideConfig?: UseContractWriteMutationArgs<
-        typeof mode,
-        TAbi,
-        TFunctionName
-      >,
+      overrideConfig?: UseContractWriteMutationArgs<TMode, TAbi, TFunctionName>,
     ) => {
       return mutate({
         address,
@@ -226,11 +225,7 @@ export function useContractWrite<
 
   const writeAsync = React.useCallback(
     (
-      overrideConfig?: UseContractWriteMutationArgs<
-        typeof mode,
-        TAbi,
-        TFunctionName
-      >,
+      overrideConfig?: UseContractWriteMutationArgs<TMode, TAbi, TFunctionName>,
     ) => {
       return mutateAsync({
         address,

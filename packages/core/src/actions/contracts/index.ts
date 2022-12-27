@@ -34,7 +34,11 @@ export {
   type ReadContractsResult,
 } from './readContracts'
 
-export { watchContractEvent } from './watchContractEvent'
+export {
+  watchContractEvent,
+  type WatchContractEventConfig,
+  type WatchContractEventCallback,
+} from './watchContractEvent'
 
 export {
   watchMulticall,
@@ -57,6 +61,7 @@ export {
 export {
   writeContract,
   type WriteContractArgs,
+  type WriteContractMode,
   type WriteContractPreparedArgs,
   type WriteContractResult,
   type WriteContractUnpreparedArgs,

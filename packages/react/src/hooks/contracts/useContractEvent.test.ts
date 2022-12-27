@@ -75,6 +75,7 @@ describe('useContractEvent', () => {
       const listener = vi.fn()
       renderHook(() =>
         useContractEvent({
+          address: uniContractAddress,
           abi: erc20ABI,
           eventName: 'Transfer',
           listener(from, to, value) {

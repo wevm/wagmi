@@ -39,19 +39,21 @@ export type PrepareWriteContractConfig<
   signer?: TSigner | null
 }
 
+export type Request = PopulatedTransaction & {
+  to: Address
+  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+}
+
 export type PrepareWriteContractResult<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
 > = {
   abi: TAbi extends Abi ? [ExtractAbiFunction<TAbi, TFunctionName>] : TAbi
-  address: string
+  address: Address
   chainId?: number
   functionName: TFunctionName
   mode: 'prepared'
-  request: PopulatedTransaction & {
-    to: Address
-    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-  }
+  request: Request
 }
 
 /**
