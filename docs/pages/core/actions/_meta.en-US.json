@@ -31,11 +31,11 @@
   "watchContractEvent": "watchContractEvent",
   "watchMulticall": "watchMulticall",
   "watchNetwork": "watchNetwork",
+  "watchPendingTransactions": "watchPendingTransactions",
   "watchProvider": "watchProvider",
   "watchReadContract": "watchReadContract",
   "watchReadContracts": "watchReadContracts",
   "watchSigner": "watchSigner",
-  "watchPendingTransactions": "watchPendingTransactions",
   "watchWebSocketProvider": "watchWebSocketProvider",
   "writeContract": "writeContract"
 }

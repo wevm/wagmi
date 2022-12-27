@@ -1,5 +1,5 @@
 ---
-'@wagmi/core': minor
+'@wagmi/core': patch
 ---
 
-Add watchPendingTransactions
+Added `watchPendingTransactions`
