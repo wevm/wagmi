@@ -56,6 +56,16 @@ export type InferOptional<TType, TKeys extends keyof TType> = Partial<
 > &
   Omit<TType, TKeys>
 
+export type DeepPartial<
+  T,
+  MaxDepth extends number,
+  Depth extends ReadonlyArray<number> = [],
+> = Depth['length'] extends MaxDepth
+  ? T
+  : T extends object
+  ? { [P in keyof T]?: DeepPartial<T[P], MaxDepth, [...Depth, 1]> }
+  : T
+
 export type QueryFunctionArgs<T extends (...args: any) => any> =
   QueryFunctionContext<ReturnType<T>>
 

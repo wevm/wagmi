@@ -1,45 +1,33 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
 import { deepEqual, parseContractResult, readContracts } from '@wagmi/core'
+import type { Contract } from '@wagmi/core/internal'
 import type { Abi, Address } from 'abitype'
 import * as React from 'react'
 
-import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { DeepPartial, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useBlockNumber } from '../network-status'
 import type { UseQueryResult } from '../utils'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseContractReadsConfig<
-  TContracts extends unknown[],
+  TContracts extends Contract[],
   TSelectData = ReadContractsResult<TContracts>,
-> = ReadContractsConfig<
-  TContracts,
-  {
-    isAbiOptional: true
-    isAddressOptional: true
-    isArgsOptional: true
-    isContractsOptional: true
-    isFunctionNameOptional: true
-  }
-> &
-  QueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> & {
+  Config = ReadContractsConfig<TContracts>,
+> = {
+  [K in keyof Config]?: K extends 'contracts'
+    ? DeepPartial<Config[K], 2>
+    : Config[K]
+} & QueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
     /** Subscribe to changes */
     watch?: boolean
   }
 
-type QueryKeyArgs<TContracts extends unknown[]> = ReadContractsConfig<
-  TContracts,
-  {
-    isAbiOptional: true
-    isAddressOptional: true
-    isArgsOptional: true
-    isContractsOptional: true
-    isFunctionNameOptional: true
-  }
->
-type QueryKeyConfig<TContracts extends unknown[]> = Pick<
+type QueryKeyArgs<TContracts extends Contract[]> =
+  ReadContractsConfig<TContracts>
+type QueryKeyConfig<TContracts extends Contract[]> = Pick<
   UseContractReadsConfig<TContracts>,
   'scopeKey'
 > & {
@@ -108,11 +96,11 @@ function queryFn<
 }
 
 type ContractConfig = {
+  abi: Abi
   address: Address
+  args: unknown[]
   chainId?: number
-  abi: Abi | readonly unknown[]
   functionName: string
-  args: any[]
 }
 
 export function useContractReads<
@@ -160,7 +148,7 @@ export function useContractReads<
         allowFailure,
         blockNumber: cacheOnBlock ? blockNumber : undefined,
         chainId,
-        contracts,
+        contracts: contracts as unknown as ContractConfig[],
         overrides,
         scopeKey,
       }),
@@ -177,7 +165,10 @@ export function useContractReads<
 
   const enabled = React.useMemo(() => {
     let enabled = Boolean(
-      enabled_ && contracts?.every((x) => x.abi && x.address && x.functionName),
+      enabled_ &&
+        (contracts as unknown as ContractConfig[])?.every(
+          (x) => x.abi && x.address && x.functionName,
+        ),
     )
     if (cacheOnBlock) enabled = Boolean(enabled && blockNumber)
     return enabled

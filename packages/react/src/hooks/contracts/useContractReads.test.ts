@@ -257,7 +257,7 @@ describe('useContractRead', () => {
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
     })
 
-    it('does not run when no all contracts are complete', async () => {
+    it('does not run when not all contracts are complete', async () => {
       const config = {
         contracts: [
           {
