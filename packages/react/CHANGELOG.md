@@ -1,5 +1,26 @@
 # wagmi
 
+## 0.10.0
+
+### Minor Changes
+
+- [#1470](https://github.com/wagmi-dev/wagmi/pull/1470) [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `useSigner` hook now always returns `undefined` when no signer is present. Previously, it returned `null`.
+
+  When no signer is present, the hook will be in an `"idle"` status.
+
+### Patch Changes
+
+- [#1470](https://github.com/wagmi-dev/wagmi/pull/1470) [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useSigner` would broadcast to other `useSigner`s unnecessarily.
+
+- [#1470](https://github.com/wagmi-dev/wagmi/pull/1470) [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c) Thanks [@jxom](https://github.com/jxom)! - The `WalletConnectConnector` now supports WalletConnect v2.
+
+  It can be enabled by setting `version` to `'2'` and supplying a [WalletConnect Cloud `projectId`](https://cloud.walletconnect.com/sign-in).
+
+- [#1570](https://github.com/wagmi-dev/wagmi/pull/1570) [`216f585b`](https://github.com/wagmi-dev/wagmi/commit/216f585be8a9e3a56e3243f49ccd54d655b5a6dd) Thanks [@jxom](https://github.com/jxom)! - Added `useWatchPendingTransactions`
+
+- Updated dependencies [[`216f585b`](https://github.com/wagmi-dev/wagmi/commit/216f585be8a9e3a56e3243f49ccd54d655b5a6dd), [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c)]:
+  - @wagmi/core@0.8.7
+
 ## 0.9.6
 
 ### Patch Changes

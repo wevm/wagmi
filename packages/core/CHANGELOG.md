@@ -1,5 +1,15 @@
 # @wagmi/core
 
+## 0.8.7
+
+### Patch Changes
+
+- [#1570](https://github.com/wagmi-dev/wagmi/pull/1570) [`216f585b`](https://github.com/wagmi-dev/wagmi/commit/216f585be8a9e3a56e3243f49ccd54d655b5a6dd) Thanks [@wslyvh](https://github.com/wslyvh)! - Added `watchPendingTransactions`
+
+- [#1470](https://github.com/wagmi-dev/wagmi/pull/1470) [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c) Thanks [@jxom](https://github.com/jxom)! - The `WalletConnectConnector` now supports WalletConnect v2.
+
+  It can be enabled by setting `version` to `'2'` and supplying a [WalletConnect Cloud `projectId`](https://cloud.walletconnect.com/sign-in).
+
 ## 0.8.6
 
 ### Patch Changes
