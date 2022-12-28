@@ -1,5 +1,0 @@
----
-'wagmi': patch
----
-
-Added `useWatchPendingTransactions`
