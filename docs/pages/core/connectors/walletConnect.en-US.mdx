@@ -46,7 +46,41 @@ const connector = new WalletConnectConnector({
 
 ### options
 
-Options to pass to the [WalletConnect Ethereum Provider](https://walletconnect.com).
+#### version (optional)
+
+Version of WalletConnect to use. Defaults to `1`.
+
+```ts {6}
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+    version: '2',
+    projectId: '...',
+  },
+})
+```
+
+#### projectId (optional)
+
+WalletConnect Cloud Project ID. Required for WalletConnect v2. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
+
+```ts {7}
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    qrcode: true,
+    version: '2',
+    projectId: '...',
+  },
+})
+```
+
+#### Other options
+
+You can pass through options supported by the [WalletConnect v1 `WalletConnectProvider`](https://github.com/WalletConnect/walletconnect-monorepo/blob/v1.0/packages/helpers/types/index.d.ts#L300-L314) or the [WalletConnect v2 `UniversalProvider`](https://github.com/WalletConnect/walletconnect-monorepo/blob/3f0f22b9b85294caed60cdf74f61363ce5ce686b/providers/universal-provider/src/types/misc.ts#L8-L16):
 
 ```ts {4-9}
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
