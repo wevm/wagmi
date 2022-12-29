@@ -48,7 +48,7 @@ If type inference isn't working, it's likely you forgot to add a `const` asserti
   const](https://github.com/microsoft/TypeScript/issues/32063). If you have ABIs
   in `.json` files, you should convert the files to `.ts`, export the ABIs, and
   add const assertions to them. (We have future integrations planned for
-  Foundry/Hardhat users to make this easier.)
+  Foundry/Hardhat users to make this easier. An example of how to prepare abi in [Hardhat](https://github.com/anteqkois/tipdapp/blob/72bcd6d3e2bc55c41b13e919298fe5782c0bc495/contracts/scripts/deploy.ts#L45-L64) (when Smart Contract are deploing), in [Foundary](https://github.com/samkingco/sk-web3/blob/d7cd967383759300a9a96721aa49c592b8e4352f/packages/app/gen-abi.sh) (shell script to take the contents of a Foundry ABI JSON files)).
 </Callout>
 
 ### Contract ABIs
