@@ -1,5 +1,8 @@
 export { useContract, type UseContractConfig } from './useContract'
-export { useContractEvent } from './useContractEvent'
+export {
+  useContractEvent,
+  type UseContractEventConfig,
+} from './useContractEvent'
 export {
   useContractInfiniteReads,
   paginatedIndexesConfig,
@@ -7,5 +10,8 @@ export {
 export { useContractRead, type UseContractReadConfig } from './useContractRead'
 export { useContractReads } from './useContractReads'
 export { useContractWrite } from './useContractWrite'
-export { usePrepareContractWrite } from './usePrepareContractWrite'
+export {
+  usePrepareContractWrite,
+  type UsePrepareContractWriteConfig,
+} from './usePrepareContractWrite'
 export { useToken } from './useToken'

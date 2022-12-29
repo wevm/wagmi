@@ -62,12 +62,17 @@ type EtherscanConfig<TChainId extends number> = {
 export function etherscan<TChainId extends ChainId>({
   apiKey,
   chainId,
-  contracts,
+  contracts: contracts_,
 }: EtherscanConfig<TChainId>) {
+  const contracts = contracts_.map((x) => ({
+    ...x,
+    address:
+      typeof x.address === 'string' ? { [chainId]: x.address } : x.address,
+  })) as Omit<ContractConfig, 'abi'>[]
   return blockExplorer({
     apiKey,
     baseUrl: apiUrls[chainId as ChainId],
-    contracts: contracts as Omit<ContractConfig, 'abi'>[],
+    contracts,
     getAddress({ address }) {
       if (!address) throw new Error('address is required')
       if (typeof address === 'string') return address

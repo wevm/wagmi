@@ -41,7 +41,9 @@ export {
   useWatchPendingTransactions,
   useWebSocketProvider,
   type UseContractConfig,
+  type UseContractEventConfig,
   type UseContractReadConfig,
+  type UsePrepareContractWriteConfig,
 } from './hooks'
 
 export {

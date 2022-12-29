@@ -1,7 +1,8 @@
-import { pascalCase } from 'change-case'
+import * as allChains from '@wagmi/chains'
+import { capitalCase, pascalCase } from 'change-case'
 import dedent from 'dedent'
 
-import type { Plugin } from '../config'
+import type { Contract, Plugin } from '../config'
 
 type ReactConfig = {
   hooks?: {
@@ -11,6 +12,12 @@ type ReactConfig = {
      * @default true
      */
     useContract?: boolean
+    /**
+     * Generate `useContract` hook.
+     *
+     * @default true
+     */
+    useContractEvent?: boolean
     /**
      * Generate `useContractRead` hook.
      *
@@ -24,91 +31,27 @@ type ReactConfig = {
      */
     useContractFunctionRead?: boolean
     /**
-     * Generate `useContractWrite` hook.
+     * Generate `usePrepareContractWrite` hook.
      *
      * @default true
      */
-    useContractWrite?: boolean
-    /**
-     * Generate hook for each "write" function in contract ABI.
-     *
-     * @default true
-     */
-    useContractFunctionWrite?: boolean
+    usePrepareContractWrite?: boolean
   }
 }
 
-// shared:
-// x generated hook name
-// x default config to `{}`?
-// x underlying hook name
-// x hardcode `abi` (and `address`/`functionName` if applicable)
-// - tsdoc (@inheritDoc?)
-// typescript:
-// - generics?
-// - config?
-// - properties?
-
-// function buildHook({
-//   contract,
-//   hookName,
-//   isTypeScript,
-//   innerHookName,
-//   innerHookConfig,
-//   tsAssertConfig,
-//   tsGenerics,
-// }: {
-//   contract: Contract
-//   hookName: string
-//   isTypeScript: boolean
-//   innerHookName: string
-//   innerHookConfig?: Record<string, string>
-//   tsAssertConfig?: string
-//   tsGenerics?: {
-//     config: string
-//     hook: string
-//     type: string
-//   }
-// }) {
-//   if (!isTypeScript)
-//     return dedent`
-//       export function ${hookName}(config ${defaultConfig}) {
-//         return ${innerHookName}(${wrappedHookConfig})
-//       }
-//     `
-
-//   const typeParams: Record<string, { optional?: boolean; type: string }> = {}
-//   if (hasMultichainAddress) {
-//     typeParams['chainId'] = {
-//       optional: true,
-//       type: `keyof typeof ${contract.meta.addressName}`,
-//     }
-//   }
-//   let typeConfig =
-//     Object.entries(typeParams).reduce((prev, curr) => {
-//       return dedent`
-//       ${prev}
-//       ${curr[0]}${curr[1].optional ? '?' : ''}: ${curr[1].type},
-//     `
-//     }, '& {') + '}'
-//   if (typeConfig === '& {}') typeConfig = ''
-
-//   const generics = Object.assign({ type: '', config: '', hook: '' }, tsGenerics)
-//   const as = tsAssertConfig ? ` as ${tsAssertConfig}` : ''
-//   return dedent`
-//     export function ${hookName}${generics.hook}(config: ${generics.config} ${defaultConfig}) {
-//       return ${innerHookName}(${wrappedHookConfig}${as})
-//     }
-//   `
-// }
+const chainMap: Record<allChains.Chain['id'], allChains.Chain> = {}
+for (const chain of Object.values(allChains)) {
+  if (!('id' in chain)) continue
+  chainMap[chain.id] = chain
+}
 
 export function react(config: ReactConfig): Plugin {
   const hooks = {
     useContract: true,
+    useContractEvent: true,
     useContractRead: true,
     useContractFunctionRead: true,
-    useContractWrite: true,
-    useContractFunctionWrite: true,
+    usePrepareContractWrite: true,
     ...config?.hooks,
   }
   return {
@@ -134,28 +77,34 @@ export function react(config: ReactConfig): Plugin {
           if (hasReadFunction && hasWriteFunction && hasEvent) break
         }
 
+        const baseHookName = pascalCase(contract.name)
         const hasAddress = !!contract.address
         const hasMultichainAddress = typeof contract.address === 'object'
+        const hasMultipleDeployments =
+          typeof contract.address === 'object' &&
+          Object.keys(contract.address).length > 1
 
         let isConfigRequired = false
-        let tsDocAddress = ''
-        const wrappedHookParams: Record<string, string> = {
+        const innerHookParams: Record<string, string> = {
           abi: contract.meta.abiName,
         }
         if (contract.meta.addressName) {
           if (hasMultichainAddress) {
-            wrappedHookParams[
-              'address'
-            ] = `config.chainId ? ${contract.meta.addressName}[config.chainId] : undefined`
+            if (hasMultipleDeployments)
+              innerHookParams[
+                'address'
+              ] = `config.chainId ? ${contract.meta.addressName}[config.chainId] : undefined`
+            else
+              innerHookParams['address'] = `${contract.meta.addressName}[${
+                Object.keys(contract.address!)[0]
+              }]`
             isConfigRequired = true
-            tsDocAddress = dedent``
           } else if (hasAddress) {
-            wrappedHookParams['address'] = contract.meta.addressName
-            tsDocAddress = `address: ${contract.meta.addressName}`
+            innerHookParams['address'] = contract.meta.addressName
           }
         }
-        const wrappedHookConfig =
-          Object.entries(wrappedHookParams).reduce((prev, curr) => {
+        const innerHookConfig =
+          Object.entries(innerHookParams).reduce((prev, curr) => {
             return dedent`
             ${prev}
             ${curr[0]}: ${curr[1]},
@@ -164,7 +113,7 @@ export function react(config: ReactConfig): Plugin {
         const defaultConfig = isConfigRequired
           ? ''
           : ` = {}${isTypeScript ? 'as any' : ''}`
-        const typeParams = hasMultichainAddress
+        const typeParams = hasMultipleDeployments
           ? dedent`& {
             chainId?: keyof typeof ${contract.meta.addressName}
           }`
@@ -174,66 +123,216 @@ export function react(config: ReactConfig): Plugin {
           : '"abi"'
 
         if (hooks.useContract) {
-          const hookName = `use${pascalCase(contract.name)}Contract`
           const innerHookName = 'useContract'
-          const tsDoc = dedent`
+          const hookName = innerHookName.replace('Contract', baseHookName)
+          const docString = dedent`
             /**
-             * ${contract.name} useContract.
-             * ${tsDocAddress}
+             ${getDescriptionDocString({
+               innerHookName,
+               abiName: contract.meta.abiName,
+             })}${getAddressDocString({ address: contract.address })}
              */
           `
           imports.add(innerHookName)
+          let code
           if (isTypeScript) {
             const typeName = 'UseContractConfig'
             imports.add(typeName)
-            content.push(dedent`
-              ${tsDoc}
+            code = dedent`
+              ${docString}
               export function ${hookName}(config: Omit<${typeName}, ${omittedTypeParams}>${typeParams}${defaultConfig}) {
-                return ${innerHookName}(${wrappedHookConfig})
+                return ${innerHookName}(${innerHookConfig})
               }
-            `)
-          } else {
-            content.push(dedent`
-              ${tsDoc}
-              export function ${hookName}(config${defaultConfig}) {
-                return ${innerHookName}(${wrappedHookConfig})
-              }
-            `)
-          }
+            `
+          } else
+            code = getJSHookCode({
+              defaultConfig,
+              docString,
+              hookName,
+              innerHookName,
+              innerHookConfig,
+            })
+          content.push(code)
         }
+
         if (hasReadFunction) {
           if (hooks.useContractRead) {
-            const hookName = `use${pascalCase(contract.name)}Read`
             const innerHookName = 'useContractRead'
-            const tsDoc = dedent`
+            const hookName = innerHookName.replace('Contract', baseHookName)
+            const docString = dedent`
               /**
-               * ${contract.name} useContractRead.
-               * ${tsDocAddress}
-               */
+              ${getDescriptionDocString({
+                innerHookName,
+                abiName: contract.meta.abiName,
+              })}${getAddressDocString({ address: contract.address })}
+              */
             `
             imports.add(innerHookName)
+            let code
             if (isTypeScript) {
               const typeName = 'UseContractReadConfig'
               imports.add(typeName)
-              content.push(dedent`
-                ${tsDoc}
-                export function ${hookName}<
-                  TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                  TFunctionName extends string = string
-                >(
-                  config: Omit<${typeName}<TAbi, TFunctionName>, ${omittedTypeParams}>${typeParams}${defaultConfig},
-                ) {
-                  return ${innerHookName}(${wrappedHookConfig} as ${typeName}<TAbi, TFunctionName>)
-                }
-              `)
-            } else {
-              content.push(dedent`
-                ${tsDoc}
-                export function ${hookName}(config${defaultConfig}) {
-                  return ${innerHookName}(${wrappedHookConfig})
-                }
-              `)
+              code = getTSHookCode({
+                contract,
+                defaultConfig,
+                docString,
+                hookName,
+                innerHookName,
+                innerHookConfig,
+                omittedTypeParams,
+                typeName,
+                typeParams,
+              })
+            } else
+              code = getJSHookCode({
+                defaultConfig,
+                docString,
+                hookName,
+                innerHookName,
+                innerHookConfig,
+              })
+            content.push(code)
+          }
+          if (hooks.useContractFunctionRead) {
+            const contractNames = new Set<string>()
+            for (const item of contract.abi) {
+              if (
+                item.type === 'function' &&
+                (item.stateMutability === 'view' ||
+                  item.stateMutability === 'pure')
+              ) {
+                if (contractNames.has(item.name)) continue
+                contractNames.add(item.name)
+                const innerHookName = 'useContractRead'
+                const hookName = innerHookName
+                  .replace('Contract', baseHookName + pascalCase(item.name))
+                  .replace('Read', '')
+                const docString = dedent`
+                  /**
+                  ${getDescriptionDocString({
+                    innerHookName,
+                    abiName: contract.meta.abiName,
+                  }).replace(
+                    '.',
+                    ` and \`functionName\` set to \`"${item.name}"\`.`,
+                  )}${getAddressDocString({ address: contract.address })}
+                  */
+                `
+                imports.add(innerHookName)
+                innerHookParams['functionName'] = `"${item.name}"`
+                const wrappedHookConfig =
+                  Object.entries(innerHookParams).reduce((prev, curr) => {
+                    return dedent`
+                      ${prev}
+                      ${curr[0]}: ${curr[1]},
+                    `
+                  }, '{') + `...config}`
+                let code
+                if (isTypeScript) {
+                  const typeName = 'UseContractReadConfig'
+                  imports.add(typeName)
+                  code = dedent`
+                    ${docString}
+                    export function ${hookName}<
+                      TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
+                      TFunctionName extends string = "${item.name}"
+                    >(
+                      config: Omit<${typeName}<TAbi, TFunctionName>, ${omittedTypeParams} | "functionName">${typeParams}${defaultConfig},
+                    ) {
+                      return ${innerHookName}(${wrappedHookConfig} as ${typeName}<TAbi, TFunctionName>)
+                    }
+                  `
+                } else
+                  code = getJSHookCode({
+                    defaultConfig,
+                    docString,
+                    hookName,
+                    innerHookName,
+                    innerHookConfig: wrappedHookConfig,
+                  })
+                content.push(code)
+              }
             }
+          }
+        }
+
+        if (hasWriteFunction) {
+          if (hooks.usePrepareContractWrite) {
+            const innerHookName = 'usePrepareContractWrite'
+            const hookName = innerHookName.replace('Contract', baseHookName)
+            const docString = dedent`
+              /**
+              ${getDescriptionDocString({
+                innerHookName,
+                abiName: contract.meta.abiName,
+              })}${getAddressDocString({ address: contract.address })}
+              */
+            `
+            imports.add(innerHookName)
+            let code
+            if (isTypeScript) {
+              const typeName = 'UsePrepareContractWriteConfig'
+              imports.add(typeName)
+              code = getTSHookCode({
+                contract,
+                defaultConfig,
+                docString,
+                hookName,
+                innerHookName,
+                innerHookConfig,
+                omittedTypeParams,
+                typeName,
+                typeParams,
+              })
+            } else
+              code = getJSHookCode({
+                defaultConfig,
+                docString,
+                hookName,
+                innerHookName,
+                innerHookConfig,
+              })
+            content.push(code)
+          }
+        }
+
+        if (hasEvent) {
+          if (hooks.useContractEvent) {
+            const innerHookName = 'useContractEvent'
+            const hookName = innerHookName.replace('Contract', baseHookName)
+            const docString = dedent`
+              /**
+              ${getDescriptionDocString({
+                innerHookName,
+                abiName: contract.meta.abiName,
+              })}${getAddressDocString({ address: contract.address })}
+              */
+            `
+            imports.add(innerHookName)
+            let code
+            if (isTypeScript) {
+              const typeName = 'UseContractEventConfig'
+              imports.add(typeName)
+              code = getTSHookCode({
+                contract,
+                defaultConfig,
+                docString,
+                hookName,
+                innerHookName,
+                innerHookConfig,
+                omittedTypeParams,
+                typeName,
+                typeParams,
+              })
+            } else
+              code = getJSHookCode({
+                defaultConfig,
+                docString,
+                hookName,
+                innerHookName,
+                innerHookConfig,
+              })
+            content.push(code)
           }
         }
       }
@@ -246,4 +345,98 @@ export function react(config: ReactConfig): Plugin {
       }
     },
   }
+}
+
+function getTSHookCode({
+  contract,
+  defaultConfig,
+  docString,
+  hookName,
+  innerHookName,
+  innerHookConfig,
+  omittedTypeParams,
+  typeName,
+  typeParams,
+}: {
+  contract: Contract
+  defaultConfig: string
+  docString: string
+  hookName: string
+  innerHookName: string
+  innerHookConfig: string
+  omittedTypeParams: string
+  typeName: string
+  typeParams: string
+}) {
+  return dedent`
+    ${docString}
+    export function ${hookName}<
+      TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
+      TFunctionName extends string = string
+    >(
+      config: Omit<${typeName}<TAbi, TFunctionName>, ${omittedTypeParams}>${typeParams}${defaultConfig},
+    ) {
+      return ${innerHookName}(${innerHookConfig} as ${typeName}<TAbi, TFunctionName>)
+    }
+  `
+}
+
+function getJSHookCode({
+  defaultConfig,
+  docString,
+  hookName,
+  innerHookName,
+  innerHookConfig,
+}: {
+  defaultConfig: string
+  docString: string
+  hookName: string
+  innerHookName: string
+  innerHookConfig: string
+}) {
+  return dedent`
+    ${docString}
+    export function ${hookName}(config${defaultConfig}) {
+      return ${innerHookName}(${innerHookConfig})
+    }
+  `
+}
+
+function getDescriptionDocString({
+  abiName,
+  innerHookName,
+}: {
+  abiName: string
+  innerHookName: string
+}) {
+  return dedent`
+     * Wraps {@link ${innerHookName}} with \`abi\` set to {@link ${abiName}}.
+  `
+}
+
+function getAddressDocString({ address }: { address: Contract['address'] }) {
+  if (!address || typeof address === 'string') return ''
+  if (Object.keys(address).length === 1) {
+    const chain = chainMap[parseInt(Object.keys(address)[0]!)]!
+    const blockExplorer = chain.blockExplorers?.default
+    if (!blockExplorer) return ''
+    const address_ = Object.values(address)[0]
+    return dedent`
+      \n*
+      * [View on ${blockExplorer.name}.](${blockExplorer.url}/address/${address_})
+    `
+  }
+
+  return dedent`
+    \n*
+    ${Object.entries(address).reduce((prev, curr) => {
+      const chain = chainMap[parseInt(curr[0])]!
+      const address = curr[1]
+      const blockExplorer = chain.blockExplorers?.default
+      if (!blockExplorer) return prev
+      return `${prev}\n* - [${capitalCase(chain.name)}](${
+        blockExplorer.url
+      }/address/${address})`
+    }, '* View on Block Explorer:')}
+  `
 }

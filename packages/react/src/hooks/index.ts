@@ -21,7 +21,9 @@ export {
   usePrepareContractWrite,
   useToken,
   type UseContractConfig,
+  type UseContractEventConfig,
   type UseContractReadConfig,
+  type UsePrepareContractWriteConfig,
 } from './contracts'
 
 export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
