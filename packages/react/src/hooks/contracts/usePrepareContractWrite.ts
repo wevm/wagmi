@@ -8,7 +8,7 @@ import { prepareWriteContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import type { providers } from 'ethers'
 
-import type { InferOptional, QueryConfig, QueryFunctionArgs } from '../../types'
+import type { PartialBy, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'
 import { useQuery } from '../utils'
 
@@ -16,7 +16,7 @@ export type UsePrepareContractWriteConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TSigner extends Signer = Signer,
-> = InferOptional<
+> = PartialBy<
   PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>,
   'abi' | 'address' | 'args' | 'functionName'
 > &

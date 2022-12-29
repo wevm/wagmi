@@ -9,7 +9,7 @@ import { writeContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import * as React from 'react'
 
-import type { InferOptional, MutationConfig } from '../../types'
+import type { PartialBy, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
 export type UseContractWriteArgs<
@@ -17,11 +17,11 @@ export type UseContractWriteArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
 > = { mode: TMode } & (TMode extends 'prepared'
-  ? InferOptional<
+  ? PartialBy<
       WriteContractPreparedArgs<TAbi, TFunctionName>,
       'abi' | 'address' | 'functionName' | 'request'
     >
-  : InferOptional<
+  : PartialBy<
       WriteContractUnpreparedArgs<TAbi, TFunctionName>,
       'abi' | 'address' | 'args' | 'functionName'
     >)

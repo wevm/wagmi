@@ -7,14 +7,14 @@ import type {
 } from 'abitype'
 import * as React from 'react'
 
-import type { InferOptional } from '../../types'
+import type { PartialBy } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useContract } from './useContract'
 
 export type UseContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-> = InferOptional<
+> = PartialBy<
   WatchContractEventConfig<TAbi, TEventName> & GetListener<TAbi, TEventName>,
   'abi' | 'address' | 'eventName'
 >

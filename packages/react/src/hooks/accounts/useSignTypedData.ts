@@ -3,12 +3,12 @@ import { signTypedData } from '@wagmi/core'
 import type { TypedData } from 'abitype'
 import * as React from 'react'
 
-import type { InferOptional, MutationConfig } from '../../types'
+import type { PartialBy, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
 export type UseSignTypedDataArgs<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
-> = InferOptional<SignTypedDataArgs<TTypedData>, 'domain' | 'types' | 'value'>
+> = PartialBy<SignTypedDataArgs<TTypedData>, 'domain' | 'types' | 'value'>
 
 export type UseSignTypedDataConfig<
   TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
