@@ -12,38 +12,36 @@ import * as React from 'react'
 import type { InferOptional, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
-type OptionalProperties =
-  | 'abi'
-  | 'address'
-  | 'args'
-  | 'functionName'
-  | 'request'
 export type UseContractWriteArgs<
-  TMode extends WriteContractMode,
+  TMode extends WriteContractMode = WriteContractMode,
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = { mode: TMode } & (TMode extends 'recklessUnprepared'
+> = { mode: TMode } & (TMode extends 'prepared'
   ? InferOptional<
-      WriteContractUnpreparedArgs<TAbi, TFunctionName>,
-      OptionalProperties
+      WriteContractPreparedArgs<TAbi, TFunctionName>,
+      'abi' | 'address' | 'functionName' | 'request'
     >
   : InferOptional<
-      WriteContractPreparedArgs<TAbi, TFunctionName>,
-      OptionalProperties
+      WriteContractUnpreparedArgs<TAbi, TFunctionName>,
+      'abi' | 'address' | 'args' | 'functionName'
     >)
 
 export type UseContractWriteConfig<
-  TMode extends WriteContractMode,
+  TMode extends WriteContractMode = WriteContractMode,
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = MutationConfig<WriteContractResult, Error, UseContractWriteArgs<TMode>> &
+> = MutationConfig<
+  WriteContractResult,
+  Error,
+  UseContractWriteArgs<TMode, TAbi, TFunctionName>
+> &
   UseContractWriteArgs<TMode, TAbi, TFunctionName>
 
 type UseContractWriteMutationArgs<
-  TMode extends WriteContractMode,
+  Mode extends 'prepared' | 'recklesslyUnprepared',
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-> = TMode extends 'prepared'
+> = Mode extends 'prepared'
   ? undefined
   : {
       /**
@@ -94,7 +92,7 @@ function mutationFn({
   mode,
   overrides,
   request,
-}: UseContractWriteArgs<Abi, string>) {
+}: UseContractWriteArgs<WriteContractMode, Abi, string>) {
   if (!address) throw new Error('address is required')
   if (!abi) throw new Error('abi is required')
   if (!functionName) throw new Error('functionName is required')
@@ -187,16 +185,20 @@ export function useContractWrite<
     } as UseContractWriteArgs),
     mutationFn,
     {
-      onError,
-      onMutate,
-      onSettled,
-      onSuccess,
+      onError: onError as UseContractWriteConfig['onError'],
+      onMutate: onMutate as UseContractWriteConfig['onMutate'],
+      onSettled: onSettled as UseContractWriteConfig['onSettled'],
+      onSuccess: onSuccess as UseContractWriteConfig['onSuccess'],
     },
   )
 
   const write = React.useCallback(
     (
-      overrideConfig?: UseContractWriteMutationArgs<TMode, TAbi, TFunctionName>,
+      overrideConfig?: UseContractWriteMutationArgs<
+        typeof mode,
+        TAbi,
+        TFunctionName
+      >,
     ) => {
       return mutate({
         address,
@@ -208,7 +210,7 @@ export function useContractWrite<
         overrides:
           overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
         request,
-      } as UseContractWriteArgs)
+      } as WriteContractArgs<Abi, string>)
     },
     [
       address,
@@ -225,7 +227,11 @@ export function useContractWrite<
 
   const writeAsync = React.useCallback(
     (
-      overrideConfig?: UseContractWriteMutationArgs<TMode, TAbi, TFunctionName>,
+      overrideConfig?: UseContractWriteMutationArgs<
+        typeof mode,
+        TAbi,
+        TFunctionName
+      >,
     ) => {
       return mutateAsync({
         address,
@@ -237,7 +243,7 @@ export function useContractWrite<
         overrides:
           overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
         request,
-      } as UseContractWriteArgs)
+      } as WriteContractArgs<Abi, string>)
     },
     [
       address,
