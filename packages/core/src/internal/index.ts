@@ -1,13 +1,3 @@
-export type {
-  AbiParameter,
-  ContractConfig,
-  ContractsConfig,
-  ContractsResult,
-  Event,
-  GetArgs,
-  GetConfig,
-  GetReturnType,
-} from '../types/contracts'
-export type { IsNever, NotEqual, Optional, Or } from '../types/utils'
+export type { ContractsConfig, Contract } from '../types/contracts'
 
 export { debounce } from '../utils'

@@ -1,0 +1,71 @@
+---
+title: 'useWatchPendingTransactions'
+description: 'Action for subscribing to pending transactions.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# useWatchPendingTransactions
+
+Hook for subscribing to pending transactions in the Provider's transaction [mempool](https://www.alchemy.com/overviews/what-is-a-mempool).
+
+```ts
+import { useWatchPendingTransactions } from 'wagmi'
+```
+
+<Callout>
+  Only Providers that support the `eth_newPendingTransactionFilter` method will
+  work with this Hook.
+</Callout>
+
+## Usage
+
+The listener will be invoked when a new transactions enters the memory pool of the Provider.
+
+```ts
+import { useWatchPendingTransactions } from 'wagmi'
+
+useWatchPendingTransactions({
+  listener: (transaction) => console.log(transaction),
+})
+```
+
+## Configuration
+
+### listener
+
+The listener function to be invoked when a new transaction enters the memory pool.
+
+```ts {4}
+import { useWatchPendingTransactions } from 'wagmi'
+
+useWatchPendingTransactions({
+  listener: (transaction) => console.log(transaction),
+})
+```
+
+### chainId (optional)
+
+Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+
+```ts {4}
+import { useWatchPendingTransactions } from 'wagmi'
+
+useWatchPendingTransactions({
+  chainId: 1,
+  listener: (transaction) => console.log(transaction),
+})
+```
+
+### enabled (optional)
+
+Whether or not to enable the listener. Defaults to `true`.
+
+```ts {4}
+import { useWatchPendingTransactions } from 'wagmi'
+
+useWatchPendingTransactions({
+  enabled: false,
+  listener: (transaction) => console.log(transaction),
+})
+```

@@ -11,6 +11,7 @@ import { SendTransactionPrepared } from './SendTransactionPrepared'
 import { SignMessage } from './SignMessage'
 import { SignTypedData } from './SignTypedData'
 import { Token } from './Token'
+import { WatchPendingTransactions } from './WatchPendingTransactions'
 import { WriteContract } from './WriteContract'
 import { WriteContractPrepared } from './WriteContractPrepared'
 
@@ -47,7 +48,7 @@ export const Account = () => {
         )}
       </div>
 
-      {true && (
+      {false && (
         <>
           {false && (
             <>
@@ -73,6 +74,9 @@ export const Account = () => {
 
           <h4>Read Contracts Infinite</h4>
           <ReadContractsInfinite />
+
+          <h4>Watch Pending Transactions</h4>
+          <WatchPendingTransactions />
 
           <h4>Write Contract</h4>
           <WriteContract />

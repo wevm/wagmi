@@ -1,7 +1,7 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
 import { deepEqual, readContracts } from '@wagmi/core'
-import type { ContractsConfig } from '@wagmi/core/internal'
+import type { Contract, ContractsConfig } from '@wagmi/core/internal'
 import type { Abi } from 'abitype'
 import * as React from 'react'
 
@@ -10,7 +10,7 @@ import type { UseInfiniteQueryResult } from '../utils'
 import { useInfiniteQuery } from '../utils'
 
 export type UseContractInfiniteReadsConfig<
-  TContracts extends unknown[] = unknown[],
+  TContracts extends Contract[] = Contract[],
   TPageParam = unknown,
   TSelectData = ReadContractsResult<TContracts>,
 > = Pick<ReadContractsConfig<TContracts>, 'allowFailure' | 'overrides'> & {

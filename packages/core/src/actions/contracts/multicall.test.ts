@@ -50,7 +50,7 @@ describe('multicall', () => {
   })
 
   it('default', async () => {
-    expect(await multicall({ contracts })).toMatchInlineSnapshot(`
+    await expect(multicall({ contracts })).resolves.toMatchInlineSnapshot(`
       [
         {
           "hex": "0x02",
@@ -71,7 +71,8 @@ describe('multicall', () => {
 
   describe('args', () => {
     it('chainId', async () => {
-      expect(await multicall({ chainId: 1, contracts })).toMatchInlineSnapshot(`
+      await expect(multicall({ chainId: 1, contracts })).resolves
+        .toMatchInlineSnapshot(`
         [
           {
             "hex": "0x02",
@@ -91,8 +92,8 @@ describe('multicall', () => {
     })
 
     it('overrides', async () => {
-      expect(await multicall({ contracts, overrides: { blockTag: 'latest' } }))
-        .toMatchInlineSnapshot(`
+      await expect(multicall({ contracts, overrides: { blockTag: 'latest' } }))
+        .resolves.toMatchInlineSnapshot(`
         [
           {
             "hex": "0x02",
@@ -134,8 +135,8 @@ describe('multicall', () => {
       })
 
       it('warns when allowFailure=true & a contract method fails', async () => {
-        expect(
-          await multicall({
+        await expect(
+          multicall({
             allowFailure: true,
             contracts: [
               ...contracts,
@@ -157,7 +158,7 @@ describe('multicall', () => {
               },
             ],
           }),
-        ).toMatchInlineSnapshot(`
+        ).resolves.toMatchInlineSnapshot(`
           [
             {
               "hex": "0x02",
@@ -241,8 +242,8 @@ describe('multicall', () => {
 
       it('warns if allowFailure=true & encoding contract function data fails', async () => {
         warnMessages = []
-        expect(
-          await multicall({
+        await expect(
+          multicall({
             allowFailure: true,
             contracts: [
               ...contracts,
@@ -262,7 +263,7 @@ describe('multicall', () => {
               },
             ],
           }),
-        ).toMatchInlineSnapshot(`
+        ).resolves.toMatchInlineSnapshot(`
           [
             {
               "hex": "0x02",
@@ -353,8 +354,8 @@ describe('multicall', () => {
       })
 
       it('warns if allowFailure=true & a contract has no response', async () => {
-        expect(
-          await multicall({
+        await expect(
+          multicall({
             allowFailure: true,
             contracts: [
               ...contracts,
@@ -374,7 +375,7 @@ describe('multicall', () => {
               },
             ],
           }),
-        ).toMatchInlineSnapshot(`
+        ).resolves.toMatchInlineSnapshot(`
           [
             {
               "hex": "0x02",

@@ -8,24 +8,17 @@ import { prepareWriteContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import type { providers } from 'ethers'
 
-import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { PartialBy, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'
 import { useQuery } from '../utils'
 
 export type UsePrepareContractWriteConfig<
-  TAbi = Abi,
+  TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TSigner extends Signer = Signer,
-> = PrepareWriteContractConfig<
-  TAbi,
-  TFunctionName,
-  TSigner,
-  {
-    isAbiOptional: true
-    isAddressOptional: true
-    isArgsOptional: true
-    isFunctionNameOptional: true
-  }
+> = PartialBy<
+  PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>,
+  'abi' | 'address' | 'args' | 'functionName'
 > &
   QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName>, Error>
 

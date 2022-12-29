@@ -1,3 +1,4 @@
+import type { WriteContractMode } from '@wagmi/core'
 import type { Abi, ExtractAbiFunctionNames } from 'abitype'
 import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
@@ -20,9 +21,10 @@ import type { UsePrepareContractWriteConfig } from './usePrepareContractWrite'
 import { usePrepareContractWrite } from './usePrepareContractWrite'
 
 function useContractWriteWithConnect<
+  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->(config: UseContractWriteConfig<TAbi, TFunctionName>) {
+>(config: UseContractWriteConfig<TMode, TAbi, TFunctionName>) {
   return {
     connect: useConnect(),
     contractWrite: useContractWrite(config),
@@ -39,7 +41,7 @@ function usePrepareContractWriteWithConnect<
     prepareContractWrite,
     contractWrite: useContractWrite({
       ...prepareContractWrite.config,
-      abi: prepareContractWrite.config.abi,
+      abi: prepareContractWrite.config.abi as any,
       chainId: config?.chainId,
     }),
   }

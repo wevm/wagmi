@@ -4,10 +4,8 @@ import type { PopulatedTransaction } from 'ethers'
 import { ConnectorNotFoundError } from '../../errors'
 import type { Signer } from '../../types'
 import type {
-  DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,
-  Options as Options_,
 } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
@@ -15,14 +13,16 @@ import type { SendTransactionResult } from '../transactions'
 import { sendTransaction } from '../transactions'
 import { prepareWriteContract } from './prepareWriteContract'
 
-type Options = Options_ & { isRequestOptional?: boolean }
+export type WriteContractMode = 'prepared' | 'recklesslyUnprepared'
+
 type Request = PopulatedTransaction & {
   to: Address
   gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
 }
 
 export type WriteContractPreparedArgs<
-  TOptions extends Options = DefaultOptions,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
 > = {
   /**
    * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
@@ -34,64 +34,50 @@ export type WriteContractPreparedArgs<
    * via the {@link prepareWriteContract} function
    * */
   mode: 'prepared'
+  /** Chain id to use for provider */
+  chainId?: number
+  /** Request to submit transaction for */
+  request: Request
+  // Throwaway properties
   args?: never
   overrides?: never
-} & (TOptions['isRequestOptional'] extends true
-  ? {
-      /** The prepared request. */
-      request?: Request
-    }
-  : {
-      /** The prepared request. */
-      request: Request
-    })
+} & Omit<GetConfig<TAbi, TFunctionName, 'nonpayable' | 'payable'>, 'args'>
 
 export type WriteContractUnpreparedArgs<
-  TAbi = Abi,
-  TFunctionName = string,
-  TOptions extends Options = DefaultOptions,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
 > = {
+  /**
+   * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
+   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks),
+   * it is highly recommended to not use this and instead prepare the request upfront
+   * using the {@link prepareWriteContract} function.
+   *
+   * `prepared`: The request has been prepared with parameters required for sending a transaction
+   * via the {@link prepareWriteContract} function
+   * */
   mode: 'recklesslyUnprepared'
+  /** Chain id to use for provider */
+  chainId?: number
+  /** Call overrides */
+  overrides?: GetOverridesForAbiStateMutability<
+    [TAbi, TFunctionName] extends [
+      infer TAbi_ extends Abi,
+      infer TFunctionName_ extends string,
+    ]
+      ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
+      : 'nonpayable' | 'payable'
+  >
+  // Throwaway properties
   request?: never
-} & GetConfig<
-  {
-    abi: TAbi
-    functionName: TFunctionName
-    /** Call overrides */
-    overrides?: GetOverridesForAbiStateMutability<
-      [TAbi, TFunctionName] extends [
-        infer TAbi_ extends Abi,
-        infer TFunctionName_ extends string,
-      ]
-        ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
-        : 'nonpayable' | 'payable'
-    >
-  },
-  'nonpayable' | 'payable',
-  TOptions
->
+} & GetConfig<TAbi, TFunctionName, 'nonpayable' | 'payable'>
 
 export type WriteContractArgs<
-  TAbi = Abi,
-  TFunctionName = string,
-  TOptions extends Options = DefaultOptions,
-> = Omit<
-  GetConfig<
-    {
-      abi: TAbi
-      functionName: TFunctionName
-      /** Chain id to use for provider */
-      chainId?: number
-    },
-    'nonpayable' | 'payable',
-    TOptions
-  >,
-  'args'
-> &
-  (
-    | WriteContractUnpreparedArgs<TAbi, TFunctionName, TOptions>
-    | WriteContractPreparedArgs<TOptions>
-  )
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+> =
+  | WriteContractUnpreparedArgs<TAbi, TFunctionName>
+  | WriteContractPreparedArgs<TAbi, TFunctionName>
 export type WriteContractResult = SendTransactionResult
 
 /**
@@ -141,7 +127,7 @@ export async function writeContract<
       ? (
           await prepareWriteContract<Abi | readonly unknown[], string>({
             address,
-            args,
+            args: args as unknown[],
             chainId,
             abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
             functionName,

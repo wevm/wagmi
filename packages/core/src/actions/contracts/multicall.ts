@@ -9,16 +9,17 @@ import {
   ProviderChainsNotFound,
 } from '../../errors'
 import type {
-  ContractConfig,
+  Contract,
   ContractsConfig,
   ContractsResult,
+  GetConfig,
   GetOverridesForAbiStateMutability,
 } from '../../types/contracts'
 import { logWarn, normalizeFunctionName } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 
-export type MulticallConfig<TContracts extends unknown[]> = {
+export type MulticallConfig<TContracts extends Contract[]> = {
   /** Failures in the multicall will fail silently */
   allowFailure?: boolean
   /** Chain id to use for provider */
@@ -26,12 +27,10 @@ export type MulticallConfig<TContracts extends unknown[]> = {
   /** Contracts to query */
   contracts: readonly [...ContractsConfig<TContracts>]
   /** Call overrides */
-  overrides?:
-    | GetOverridesForAbiStateMutability<'pure'>
-    | GetOverridesForAbiStateMutability<'view'>
+  overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
 }
 
-export type MulticallResult<TContracts extends unknown[]> =
+export type MulticallResult<TContracts extends Contract[]> =
   ContractsResult<TContracts>
 
 export async function multicall<
@@ -67,7 +66,7 @@ export async function multicall<
     abi: multicallABI,
     signerOrProvider: provider,
   })
-  const calls = (contracts as unknown as ContractConfig[]).map(
+  const calls = (contracts as unknown as GetConfig[]).map(
     ({ address, abi, functionName, ...config }) => {
       const { args } = config || {}
       const contract = getContract({ address, abi })
@@ -114,12 +113,13 @@ export async function multicall<
     ...params,
   )) as AggregateResult
   return results.map(({ returnData, success }, i) => {
-    const { address, abi, args, functionName } = contracts[i]
+    const { address, abi, functionName, ...rest } = contracts[i]
 
     const contract = getContract({
       address,
       abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     })
+    const args = rest.args as unknown[]
     const normalizedFunctionName = normalizeFunctionName({
       contract,
       functionName,

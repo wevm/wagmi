@@ -33,6 +33,7 @@ export {
   usePrepareSendTransaction,
   useTransaction,
   useWaitForTransaction,
+  useWatchPendingTransactions,
 } from './transactions'
 
 export {

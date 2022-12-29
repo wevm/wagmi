@@ -1,5 +1,51 @@
 # wagmi
 
+## 0.10.1
+
+### Patch Changes
+
+- [#1573](https://github.com/wagmi-dev/wagmi/pull/1573) [`ef380d9c`](https://github.com/wagmi-dev/wagmi/commit/ef380d9c6d51ae0495b9c35925d2843c75d97fd4) Thanks [@tmm](https://github.com/tmm)! - Updated internal types.
+
+- Updated dependencies [[`ef380d9c`](https://github.com/wagmi-dev/wagmi/commit/ef380d9c6d51ae0495b9c35925d2843c75d97fd4)]:
+  - @wagmi/core@0.8.8
+
+## 0.10.0
+
+### Minor Changes
+
+- [#1470](https://github.com/wagmi-dev/wagmi/pull/1470) [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The `useSigner` hook now always returns `undefined` when no signer is present. Previously, it returned `null`.
+
+  When no signer is present, the hook will be in an `"idle"` status.
+
+### Patch Changes
+
+- [#1470](https://github.com/wagmi-dev/wagmi/pull/1470) [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useSigner` would broadcast to other `useSigner`s unnecessarily.
+
+- [#1470](https://github.com/wagmi-dev/wagmi/pull/1470) [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c) Thanks [@jxom](https://github.com/jxom)! - The `WalletConnectConnector` now supports WalletConnect v2.
+
+  It can be enabled by setting `version` to `'2'` and supplying a [WalletConnect Cloud `projectId`](https://cloud.walletconnect.com/sign-in).
+
+- [#1570](https://github.com/wagmi-dev/wagmi/pull/1570) [`216f585b`](https://github.com/wagmi-dev/wagmi/commit/216f585be8a9e3a56e3243f49ccd54d655b5a6dd) Thanks [@jxom](https://github.com/jxom)! - Added `useWatchPendingTransactions`
+
+- Updated dependencies [[`216f585b`](https://github.com/wagmi-dev/wagmi/commit/216f585be8a9e3a56e3243f49ccd54d655b5a6dd), [`3a1a6c9f`](https://github.com/wagmi-dev/wagmi/commit/3a1a6c9fe5db5c360adfd116f9a03a1238b5720c)]:
+  - @wagmi/core@0.8.7
+
+## 0.9.6
+
+### Patch Changes
+
+- [#1539](https://github.com/wagmi-dev/wagmi/pull/1539) [`732da004`](https://github.com/wagmi-dev/wagmi/commit/732da0042c7e28091b2e36a484ea8239971306f5) Thanks [@0xFlicker](https://github.com/0xFlicker)! - All Providers (ie. Alchemy, Infura, Public) now use the ENS Registry address on the wagmi `Chain` object (`chain.contracts.ensRegistry`).
+
+- [#1574](https://github.com/wagmi-dev/wagmi/pull/1574) [`ecde3d10`](https://github.com/wagmi-dev/wagmi/commit/ecde3d1029ccdf90e2853ba0e9ae4f5f4ebb9c4c) Thanks [@jxom](https://github.com/jxom)! - Added the following chains:
+
+  - `iotex`
+  - `iotexTestnet`
+  - `zkSync`
+  - `zkSyncTestnet`
+
+- Updated dependencies [[`732da004`](https://github.com/wagmi-dev/wagmi/commit/732da0042c7e28091b2e36a484ea8239971306f5), [`ecde3d10`](https://github.com/wagmi-dev/wagmi/commit/ecde3d1029ccdf90e2853ba0e9ae4f5f4ebb9c4c)]:
+  - @wagmi/core@0.8.6
+
 ## 0.9.5
 
 ### Patch Changes

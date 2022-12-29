@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18]
-        pnpm-version: [7]
+        pnpm-version: [7.19]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -62,7 +62,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18]
-        pnpm-version: [7]
+        pnpm-version: [7.19]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -98,7 +98,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18]
-        pnpm-version: [7]
+        pnpm-version: [7.19]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -136,7 +136,7 @@ jobs:
         # TODO: Switch back to Node 16 once Vitest is patched
         # https://github.com/vitest-dev/vitest/issues/1191
         node-version: [18]
-        pnpm-version: [7]
+        pnpm-version: [7.19]
         react-version: [17, 18]
     steps:
       - uses: actions/checkout@v3
