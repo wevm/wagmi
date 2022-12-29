@@ -1,9 +1,11 @@
 import type { FetchSignerArgs, FetchSignerResult, Signer } from '@wagmi/core'
-import { fetchSigner, watchSigner } from '@wagmi/core'
+import { fetchSigner } from '@wagmi/core'
 import * as React from 'react'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
+
 import { useChainId, useQuery, useQueryClient } from '../utils'
+import { useAccount } from './useAccount'
 
 export type UseSignerConfig = Omit<
   QueryConfig<FetchSignerResult, Error>,
@@ -28,6 +30,7 @@ export function useSigner<TSigner extends Signer>({
   onSettled,
   onSuccess,
 }: UseSignerConfig = {}) {
+  const { connector } = useAccount()
   const chainId = useChainId({ chainId: chainId_ })
   const signerQuery = useQuery<
     FetchSignerResult<TSigner>,
@@ -36,7 +39,9 @@ export function useSigner<TSigner extends Signer>({
     ReturnType<typeof queryKey>
   >(queryKey({ chainId }), queryFn, {
     cacheTime: 0,
+    enabled: Boolean(connector),
     staleTime: Infinity,
+
     suspense,
     onError,
     onSettled,
@@ -45,11 +50,10 @@ export function useSigner<TSigner extends Signer>({
 
   const queryClient = useQueryClient()
   React.useEffect(() => {
-    const unwatch = watchSigner({ chainId }, (signer) =>
-      queryClient.setQueryData(queryKey({ chainId }), signer),
-    )
-    return unwatch
-  }, [queryClient, chainId])
+    if (connector) signerQuery.refetch()
+    else queryClient.removeQueries(queryKey({ chainId }))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connector])
 
   return signerQuery
 }

@@ -114,6 +114,7 @@ export {
   prepareSendTransaction,
   sendTransaction,
   waitForTransaction,
+  watchPendingTransactions,
   type FetchTransactionArgs,
   type FetchTransactionResult,
   type PrepareSendTransactionArgs,
@@ -124,4 +125,7 @@ export {
   type SendTransactionUnpreparedRequest,
   type WaitForTransactionArgs,
   type WaitForTransactionResult,
+  type WatchPendingTransactionsArgs,
+  type WatchPendingTransactionsCallback,
+  type WatchPendingTransactionsResult,
 } from './transactions'
