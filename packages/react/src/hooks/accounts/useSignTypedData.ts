@@ -1,29 +1,23 @@
 import type { SignTypedDataArgs, SignTypedDataResult } from '@wagmi/core'
 import { signTypedData } from '@wagmi/core'
-import type { Optional } from '@wagmi/core/internal'
 import type { TypedData } from 'abitype'
 import * as React from 'react'
 
-import type { MutationConfig } from '../../types'
+import type { PartialBy, MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
-export type UseSignTypedDataArgs<TTypedData = unknown> = Optional<
-  SignTypedDataArgs<TTypedData>,
-  'domain' | 'types' | 'value'
->
+export type UseSignTypedDataArgs<
+  TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
+> = PartialBy<SignTypedDataArgs<TTypedData>, 'domain' | 'types' | 'value'>
 
-export type UseSignTypedDataConfig<TTypedData = unknown> = MutationConfig<
-  SignTypedDataResult,
-  Error,
-  SignTypedDataArgs<TTypedData>
-> &
+export type UseSignTypedDataConfig<
+  TTypedData extends TypedData | { [key: string]: unknown } = TypedData,
+> = MutationConfig<SignTypedDataResult, Error, SignTypedDataArgs<TTypedData>> &
   UseSignTypedDataArgs<TTypedData>
 
-function mutationKey<TTypedData = unknown>({
-  domain,
-  types,
-  value,
-}: UseSignTypedDataArgs<TTypedData>) {
+function mutationKey<
+  TTypedData extends TypedData | { [key: string]: unknown },
+>({ domain, types, value }: UseSignTypedDataArgs<TTypedData>) {
   return [{ entity: 'signTypedData', domain, types, value }] as const
 }
 

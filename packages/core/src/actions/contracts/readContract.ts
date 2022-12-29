@@ -2,48 +2,40 @@ import type { Abi } from 'abitype'
 
 import { ContractMethodDoesNotExistError } from '../../errors'
 import type {
-  DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,
   GetReturnType,
-  Options,
 } from '../../types/contracts'
 import { normalizeFunctionName } from '../../utils'
 import { getProvider } from '../providers'
 import { getContract } from './getContract'
 
+type StateMutability = 'pure' | 'view'
 export type ReadContractConfig<
-  TAbi = Abi,
-  TFunctionName = string,
-  TOptions extends Options = DefaultOptions,
-> = GetConfig<
-  {
-    abi: TAbi
-    functionName: TFunctionName
-    /** Chain id to use for provider */
-    chainId?: number
-    /** Call overrides */
-    overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
-  },
-  'pure' | 'view',
-  TOptions
->
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = GetConfig<TAbi, TFunctionName, StateMutability> & {
+  /** Chain id to use for provider */
+  chainId?: number
+  /** Call overrides */
+  overrides?: GetOverridesForAbiStateMutability<StateMutability>
+}
 
 export type ReadContractResult<
-  TAbi = Abi,
-  TFunctionName = string,
-> = GetReturnType<{ abi: TAbi; functionName: TFunctionName }>
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = GetReturnType<TAbi, TFunctionName>
 
 export async function readContract<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >({
   address,
-  args,
   chainId,
   abi,
   functionName,
   overrides,
+  ...config
 }: ReadContractConfig<TAbi, TFunctionName>): Promise<
   ReadContractResult<TAbi, TFunctionName>
 > {
@@ -54,6 +46,7 @@ export async function readContract<
     signerOrProvider: provider,
   })
 
+  const args = config.args as unknown[]
   const normalizedFunctionName = normalizeFunctionName({
     contract,
     functionName,

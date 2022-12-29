@@ -1,4 +1,4 @@
-import type { Hash } from '@wagmi/core'
+import type { Hash, WriteContractMode } from '@wagmi/core'
 import { erc20ABI } from '@wagmi/core'
 import type {
   Abi,
@@ -29,6 +29,7 @@ import { useContractWrite } from './useContractWrite'
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
 function useContractEventWithWrite<
+  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[],
   TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
   TFunctionName extends TAbi extends Abi
@@ -39,7 +40,7 @@ function useContractEventWithWrite<
     config: UseContractEventConfig<TAbi, TEventName>
   }
   contractWrite: {
-    config: UseContractWriteConfig<TAbi, TFunctionName>
+    config: UseContractWriteConfig<TMode, TAbi, TFunctionName>
   }
   waitForTransaction?: UseWaitForTransactionArgs & UseWaitForTransactionConfig
 }) {
@@ -75,6 +76,7 @@ describe('useContractEvent', () => {
       const listener = vi.fn()
       renderHook(() =>
         useContractEvent({
+          address: uniContractAddress,
           abi: erc20ABI,
           eventName: 'Transfer',
           listener(from, to, value) {

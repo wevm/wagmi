@@ -20,6 +20,7 @@ describe('watchContractEvent', () => {
     {
       address: '0x123',
       abi: [],
+      // @ts-expect-error not a valid event name
       eventName: 'Transfer',
     },
     (result) => {

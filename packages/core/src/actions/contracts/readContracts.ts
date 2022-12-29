@@ -1,4 +1,4 @@
-import type { Abi } from 'abitype'
+import type { Abi, Address } from 'abitype'
 
 import {
   ChainDoesNotSupportMulticallError,
@@ -7,48 +7,34 @@ import {
   ContractResultDecodeError,
 } from '../../errors'
 import type {
+  Contract,
   ContractsConfig,
   ContractsResult,
-  DefaultOptions,
   GetOverridesForAbiStateMutability,
-  Options as Options_,
 } from '../../types/contracts'
 import { logWarn } from '../../utils'
 import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { readContract } from './readContract'
 
-type Options = Options_ & { isContractsOptional?: boolean }
-
-export type ReadContractsConfig<
-  TContracts extends unknown[],
-  TOptions extends Options = DefaultOptions,
-  _Contracts = readonly [
+export type ReadContractsConfig<TContracts extends Contract[]> = {
+  /** Failures in the multicall will fail silently */
+  allowFailure?: boolean
+  /** Contracts to query */
+  contracts: readonly [
     ...ContractsConfig<
       TContracts,
       {
         /** Chain id to use for provider */
         chainId?: number
-      },
-      TOptions
+      }
     >,
-  ],
-> = {
-  /** Failures in the multicall will fail silently */
-  allowFailure?: boolean
+  ]
   /** Call overrides */
   overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
-} & (TOptions['isContractsOptional'] extends true
-  ? {
-      /** Contracts to query */
-      contracts?: _Contracts
-    }
-  : {
-      /** Contracts to query */
-      contracts: _Contracts
-    })
+}
 
-export type ReadContractsResult<TContracts extends unknown[]> =
+export type ReadContractsResult<TContracts extends Contract[]> =
   ContractsResult<TContracts>
 
 export async function readContracts<
@@ -62,7 +48,7 @@ export async function readContracts<
 }: ReadContractsConfig<TContracts>): Promise<ReadContractsResult<TContracts>> {
   type ContractConfig = {
     abi: Abi
-    address: string
+    address: Address
     args: unknown[]
     chainId?: number
     functionName: string
