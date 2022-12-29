@@ -11,11 +11,16 @@ it('should expose correct exports', () => {
       "avalancheFuji",
       "bsc",
       "bscTestnet",
+      "evmos",
+      "evmosTestnet",
       "fantom",
       "fantomTestnet",
       "foundry",
       "goerli",
+      "gnosis",
       "hardhat",
+      "iotex",
+      "iotexTestnet",
       "localhost",
       "mainnet",
       "optimism",
@@ -25,6 +30,8 @@ it('should expose correct exports', () => {
       "sepolia",
       "taraxa",
       "taraxaTestnet",
+      "zkSync",
+      "zkSyncTestnet",
     ]
   `)
 })

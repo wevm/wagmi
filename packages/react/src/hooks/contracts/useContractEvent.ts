@@ -1,79 +1,23 @@
-import type { Event, IsNever, NotEqual, Or } from '@wagmi/core/internal'
+import type { WatchContractEventConfig } from '@wagmi/core'
 import type {
   Abi,
   AbiEvent,
   AbiParametersToPrimitiveTypes,
   ExtractAbiEvent,
-  ExtractAbiEventNames,
-  Narrow,
 } from 'abitype'
 import * as React from 'react'
 
+import type { PartialBy } from '../../types'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useContract } from './useContract'
 
-type GetListener<
-  TAbiEvent extends AbiEvent,
-  TAbi = unknown,
-> = AbiParametersToPrimitiveTypes<
-  TAbiEvent['inputs']
-> extends infer TArgs extends readonly unknown[]
-  ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
-    Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-    ? {
-        /**
-         * Callback when event is emitted
-         *
-         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for type inference.
-         */
-        listener: (...args: any) => void
-      }
-    : // We are able to infer args, spread the types.
-      {
-        /** Callback when event is emitted */
-        listener: (...args: [...args: TArgs, event: Event<TAbiEvent>]) => void
-      }
-  : never
-
-type ContractEventConfig<
+export type UseContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-  TEvent extends AbiEvent = TAbi extends Abi
-    ? ExtractAbiEvent<TAbi, TEventName>
-    : never,
-> = {
-  /** Contract address */
-  address?: string
-  /** Contract ABI */
-  abi?: Narrow<TAbi>
-  /** Chain id to use for provider */
-  chainId?: number
-  /** Event to listen for */
-  eventName?: IsNever<TEventName> extends true ? string : TEventName
-  /** Receive only a single event */
-  once?: boolean
-} & GetListener<TEvent, TAbi>
-
-type GetConfig<T> = T extends {
-  abi: infer TAbi extends Abi
-  eventName: infer TEventName extends string
-}
-  ? ContractEventConfig<
-      TAbi,
-      ExtractAbiEventNames<TAbi>,
-      ExtractAbiEvent<TAbi, TEventName>
-    >
-  : T extends {
-      abi: infer TAbi extends readonly unknown[]
-      eventName: infer TEventName extends string
-    }
-  ? ContractEventConfig<TAbi, TEventName>
-  : ContractEventConfig
-
-export type UseContractEventConfig<
-  TAbi = Abi,
-  TEventName = string,
-> = GetConfig<{ abi: TAbi; eventName: TEventName }>
+> = PartialBy<
+  WatchContractEventConfig<TAbi, TEventName> & GetListener<TAbi, TEventName>,
+  'abi' | 'address' | 'eventName'
+>
 
 export function useContractEvent<
   TAbi extends Abi | readonly unknown[],
@@ -102,7 +46,8 @@ export function useContractEvent<
   React.useEffect(() => {
     if (!contract || !eventName) return
 
-    const handler = (...event: any[]) => callbackRef.current(...event)
+    const handler = (...event: any[]) =>
+      (callbackRef.current as (...args: readonly unknown[]) => void)(...event)
 
     if (once) contract.once(eventName, handler)
     else contract.on(eventName, handler)
@@ -113,3 +58,28 @@ export function useContractEvent<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contract, eventName])
 }
+
+type GetListener<
+  TAbi extends Abi | readonly unknown[],
+  TEventName extends string,
+  TAbiEvent extends AbiEvent = TAbi extends Abi
+    ? ExtractAbiEvent<TAbi, TEventName>
+    : AbiEvent,
+  TArgs = AbiParametersToPrimitiveTypes<TAbiEvent['inputs']>,
+  FailedToParseArgs =
+    | ([TArgs] extends [never] ? true : false)
+    | (readonly unknown[] extends TArgs ? true : false),
+> = true extends FailedToParseArgs
+  ? {
+      /**
+       * Callback when event is emitted
+       *
+       * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for type inference.
+       */
+      listener: (...args: unknown[]) => void
+    }
+  : {
+      /** Callback when event is emitted */ listener: (
+        ...args: TArgs extends readonly unknown[] ? TArgs : unknown[]
+      ) => void
+    }

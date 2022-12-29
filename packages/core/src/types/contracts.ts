@@ -2,8 +2,8 @@ import type {
   Abi,
   AbiEvent,
   AbiFunction,
+  AbiParameter,
   AbiParameterToPrimitiveType,
-  AbiParameter as AbiParameter_,
   AbiParametersToPrimitiveTypes,
   AbiStateMutability,
   Address,
@@ -14,287 +14,128 @@ import type {
 } from 'abitype'
 import type { ethers } from 'ethers'
 
-import type { IsNever, Join, NotEqual, Or } from './utils'
+import type { Join } from './utils'
 
-// TODO: Removed during build for some reason so proxying here
-// and exporting from `src/internal.ts` for now
-// https://github.com/wagmi-dev/wagmi/issues/1306
-export type AbiParameter = AbiParameter_
+export type Contract<
+  TAbi extends Abi | readonly unknown[] = Abi | readonly unknown[],
+  TFunctionName extends string = string,
+> = { abi: TAbi; functionName: TFunctionName }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Contract Configuration Types
+export type GetConfig<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+  TAbiStateMutability extends AbiStateMutability = AbiStateMutability,
+> = {
+  /** Contract ABI */
+  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
+  /** Contract address */
+  address: Address
+  /** Function to invoke on the contract */
+  functionName: GetFunctionName<TAbi, TFunctionName, TAbiStateMutability>
+} & GetArgs<TAbi, TFunctionName>
 
-/**
- * Configuration options for contract types
- */
-export type Options = {
-  /** Flag for making `abi` optional */
-  isAbiOptional?: boolean
-  /** Flag for making `address` optional */
-  isAddressOptional?: boolean
-  /** Flag for making `args` optional */
-  isArgsOptional?: boolean
-  /** Flag for making `functionName` optional */
-  isFunctionNameOptional?: boolean
-}
-/**
- * Default {@link Options}
- */
-export type DefaultOptions = {
-  isAbiOptional: false
-  isAddressOptional: false
-  isArgsOptional: false
-  isFunctionNameOptional: false
-}
+export type GetFunctionName<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+  TAbiStateMutability extends AbiStateMutability = AbiStateMutability,
+> = TAbi extends Abi
+  ? ExtractAbiFunctionNames<
+      TAbi,
+      TAbiStateMutability
+    > extends infer AbiFunctionNames
+    ?
+        | AbiFunctionNames
+        | (TFunctionName extends AbiFunctionNames ? TFunctionName : never)
+        | (Abi extends TAbi ? string : never)
+    : never
+  : TFunctionName
 
-/**
- * Gets arguments of contract function
- *
- * @param TAbi - Contract {@link Abi}
- * @param TFunctionName - Name of contract function
- * @param TOptions - Options for configuring arguments. Defaults to {@link DefaultOptions}.
- * @returns Inferred args of contract function
- *
- * @example
- * type Result = GetArgs<[…], 'tokenURI'>
- */
 export type GetArgs<
   TAbi extends Abi | readonly unknown[],
-  // It's important that we use `TFunction` to parse args so overloads still return the correct types
-  TFunction extends AbiFunction & { type: 'function' },
-  TOptions extends Options = DefaultOptions,
-> = TFunction['inputs'] extends infer TInputs extends readonly AbiParameter[]
-  ? // Check if valid ABI. If `TInputs` is `never` or `TAbi` does not have the same shape as `Abi`, then return optional `readonly unknown[]` args.
-    Or<IsNever<TInputs>, NotEqual<TAbi, Abi>> extends true
-    ? {
-        /**
-         * Arguments to pass contract method
-         *
-         * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for type inference.
-         */
-        args?: readonly unknown[]
-      }
-    : // If there are no inputs, do not include `args` in the return type.
-    TInputs['length'] extends 0
-    ? { args?: never }
-    : AbiParametersToPrimitiveTypes<TInputs> extends infer TArgs
-    ? TOptions['isArgsOptional'] extends true
-      ? {
-          /** Arguments to pass contract method */
-          args?: TArgs
-        }
-      : {
-          /** Arguments to pass contract method */
-          args: TArgs
-        }
-    : never
-  : never
-
-/**
- * Contract configuration object for inferring function name and arguments based on {@link TAbi}.
- */
-export type ContractConfig<
-  TContract = { [key: string]: unknown },
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
-  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
+  TFunctionName extends string,
+  TAbiFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
     ? ExtractAbiFunction<TAbi, TFunctionName>
-    : never,
-  TOptions extends Options = DefaultOptions,
-> = (TOptions['isAbiOptional'] extends true
+    : AbiFunction & { type: 'function' },
+  TArgs = AbiParametersToPrimitiveTypes<TAbiFunction['inputs']>,
+  FailedToParseArgs =
+    | ([TArgs] extends [never] ? true : false)
+    | (readonly unknown[] extends TArgs ? true : false),
+> = true extends FailedToParseArgs
   ? {
-      /** Contract ABI */
-      abi?: Narrow<TAbi>
+      /**
+       * Arguments to pass contract method
+       *
+       * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for type inference.
+       */
+      args?: readonly unknown[]
     }
+  : TArgs extends readonly []
+  ? { args?: never }
   : {
-      /** Contract ABI */
-      abi: Narrow<TAbi>
-    }) &
-  (TOptions['isAddressOptional'] extends true
-    ? {
-        /** Contract address */
-        address?: string
-      }
-    : {
-        /** Contract address */
-        address: string
-      }) &
-  (TOptions['isFunctionNameOptional'] extends true
-    ? {
-        /** Function to invoke on the contract */
-        // If `TFunctionName` is `never`, then ABI was not parsable. Fall back to `string`.
-        functionName?: IsNever<TFunctionName> extends true
-          ? string
-          : TFunctionName
-      }
-    : {
-        /** Function to invoke on the contract */
-        // If `TFunctionName` is `never`, then ABI was not parsable. Fall back to `string`.
-        functionName: IsNever<TFunctionName> extends true
-          ? string
-          : TFunctionName
-      }) &
-  GetArgs<TAbi, TFunction, TOptions> &
-  TContract
-
-// Properties to remove from extended config since they are added by default with `ContractConfig`
-type OmitConfigProperties = 'abi' | 'args' | 'functionName'
-/**
- * Gets configuration type of contract function
- *
- * @param TContract - Contract config in `{ abi: Abi, functionName: string }` format
- * @param TAbiStateMutibility - State mutability of contract function
- * @param TOptions - Options for configuring arguments. Defaults to {@link DefaultOptions}.
- * @returns Inferred configuration type of contract function
- *
- * @example
- * type Result = GetConfig<{ abi: […], functionName: 'tokenURI' }, 'view'>
- */
-export type GetConfig<
-  TContract = unknown,
-  TAbiStateMutibility extends AbiStateMutability = AbiStateMutability,
-  TOptions extends Options = DefaultOptions,
-> = TContract extends {
-  abi: infer TAbi extends Abi
-  functionName: infer TFunctionName extends string
-}
-  ? ContractConfig<
-      Omit<TContract, OmitConfigProperties>,
-      TAbi,
-      ExtractAbiFunctionNames<TAbi, TAbiStateMutibility>,
-      ExtractAbiFunction<TAbi, TFunctionName>,
-      TOptions
-    >
-  : TContract extends {
-      abi: infer TAbi extends readonly unknown[]
-      functionName: infer TFunctionName extends string
+      /** Arguments to pass contract method */ args: TArgs
     }
-  ? ContractConfig<
-      Omit<TContract, OmitConfigProperties>,
-      TAbi,
-      TFunctionName,
-      never,
-      TOptions
-    >
-  : ContractConfig<
-      Omit<TContract, OmitConfigProperties>,
-      Abi,
-      string,
-      never,
-      TOptions
-    >
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Contract Result Types
-
-/**
- * Unwraps return type of contract function
- *
- * @param TAbi - Contract {@link Abi}
- * @param TFunctionName - Name of contract function
- * @returns Inferred return type of contract function
- *
- * @example
- * type Result = GetResult<[…], 'tokenURI'>
- */
-type GetResult<
+export type GetReturnType<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
-  TFunction extends AbiFunction & { type: 'function' } = TAbi extends Abi
+  TAbiFunction extends AbiFunction & {
+    type: 'function'
+  } = TAbi extends Abi
     ? ExtractAbiFunction<TAbi, TFunctionName>
-    : never,
-> =
-  // Save `TOutputs` to local variable
-  TFunction['outputs'] extends infer TOutputs extends readonly AbiParameter[]
-    ? // Check if valid ABI. If `TOutputs` is `never` or `TAbi` does not have the same shape as `Abi`, then return `unknown` as result.
-      Or<IsNever<TOutputs>, NotEqual<TAbi, Abi>> extends true
-      ? unknown
-      : // Save `TLength` to local variable for comparisons
-      TOutputs['length'] extends infer TLength
-      ? TLength extends 0
-        ? void // If there are no outputs, return `void`
-        : TLength extends 1
-        ? AbiParameterToPrimitiveType<TOutputs[0]> // If there is one output, return the primitive type
-        : // If outputs are inferrable, must be a known type. Convert to TypeScript primitives.
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        TOutputs extends readonly [...infer _]
-        ? /**
-           * Return output as array assigned to an object with named keys
-           *
-           * | Outputs                                                               | Result                                                     |
-           * | --------------------------------------------------------------------- | ---------------------------------------------------------- |
-           * | `[{ name: 'foo', type: 'uint256' }, { name: 'bar', type: 'string' }]` | `readonly [bigint, string] & { foo: bigint; bar: string }` |
-           * | `[{ name: 'foo', type: 'uint256' }, { name: '', type: 'string' }]`    | `readonly [bigint, string] & { foo: bigint }`              |
-           */
-          {
-            [Output in TOutputs[number] as Output extends { name: string }
-              ? Output['name'] extends ''
-                ? never
-                : Output['name']
-              : never]: AbiParameterToPrimitiveType<Output>
-          } & AbiParametersToPrimitiveTypes<TOutputs>
-        : unknown
-      : never
-    : never
-
-/**
- * Gets return type of contract function
- *
- * @param TContract - Contract config in `{ abi: Abi, functionName: string }` format
- * @returns Inferred return type of contract function
- *
- * @example
- * type Result = GetReturnType<{ abi: […], functionName: 'tokenURI' }>
- */
-export type GetReturnType<TContract = unknown> = TContract extends {
-  abi: infer TAbi extends Abi
-  functionName: infer TFunctionName extends string
-}
-  ? GetResult<TAbi, TFunctionName, ExtractAbiFunction<TAbi, TFunctionName>>
-  : TContract extends {
-      abi: infer TAbi extends readonly unknown[]
-      functionName: infer TFunctionName extends string
+    : AbiFunction & { type: 'function' },
+  TArgs = AbiParametersToPrimitiveTypes<TAbiFunction['outputs']>,
+  FailedToParseArgs =
+    | ([TArgs] extends [never] ? true : false)
+    | (readonly unknown[] extends TArgs ? true : false),
+> = true extends FailedToParseArgs
+  ? unknown
+  : TArgs extends readonly []
+  ? void
+  : TArgs extends readonly [infer Arg]
+  ? Arg
+  : TArgs & {
+      // Construct ethers hybrid array-objects for named outputs.
+      [Output in TAbiFunction['outputs'][number] as Output extends {
+        name: infer Name extends string
+      }
+        ? Name extends ''
+          ? never
+          : Name
+        : never]: AbiParameterToPrimitiveType<Output>
     }
-  ? GetResult<TAbi, TFunctionName>
-  : GetResult
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Contract List Types
 
 // Avoid TS depth-limit error in case of large array literal
 type MAXIMUM_DEPTH = 20
 
 /**
  * ContractsConfig reducer recursively unwraps function arguments to infer/enforce type param
- *
- * @param TContracts - Array of contracts in shape of {@link ContractConfig}
- * @returns Array of inferred contract configurations
  */
 export type ContractsConfig<
-  TContracts extends unknown[],
-  TContractProperties extends { [key: string]: unknown } = {
-    [key: string]: unknown
-  },
-  TOptions extends Options = DefaultOptions,
+  TContracts extends Contract[],
+  TProperties extends Record<string, any> = object,
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
-  ? GetConfig<TContractProperties, 'pure' | 'view', TOptions>[]
+  ? (GetConfig & TProperties)[]
   : TContracts extends []
   ? []
-  : TContracts extends [infer Head]
+  : TContracts extends [infer Head extends Contract]
   ? [
       ...Result,
-      GetConfig<Head & TContractProperties, 'pure' | 'view', TOptions>,
+      GetConfig<Head['abi'], Head['functionName'], 'pure' | 'view'> &
+        TProperties,
     ]
-  : TContracts extends [infer Head, ...infer Tail]
+  : TContracts extends [
+      infer Head extends Contract,
+      ...infer Tail extends Contract[],
+    ]
   ? ContractsConfig<
       [...Tail],
-      TContractProperties,
-      TOptions,
+      TProperties,
       [
         ...Result,
-        GetConfig<Head & TContractProperties, 'pure' | 'view', TOptions>,
+        GetConfig<Head['abi'], Head['functionName'], 'pure' | 'view'> &
+          TProperties,
       ],
       [...Depth, 1]
     >
@@ -302,47 +143,34 @@ export type ContractsConfig<
   ? TContracts
   : // If `TContracts` is *some* array but we couldn't assign `unknown[]` to it, then it must hold some known/homogenous type!
   // use this to infer the param types in the case of Array.map() argument
-  TContracts extends ContractConfig<
-      infer TContract,
-      infer TAbi,
-      infer TFunctionName,
-      infer TFunction
-    >[]
-  ? ContractConfig<
-      Omit<TContract & TContractProperties, OmitConfigProperties>,
-      TAbi,
-      TFunctionName,
-      TFunction,
-      TOptions
-    >[]
-  : GetConfig<TContractProperties, 'pure' | 'view', TOptions>[]
+  TContracts extends GetConfig<infer TAbi, infer TFunctionName>[]
+  ? (GetConfig<TAbi, TFunctionName> & TProperties)[]
+  : (GetConfig & TProperties)[]
 
 /**
  * ContractsResult reducer recursively maps type param to results
- *
- * @param TContracts - Array of contracts in shape of {@link ContractConfig}
- * @returns Array of inferred contract results
  */
 export type ContractsResult<
-  TContracts extends unknown[],
+  TContracts extends Contract[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? GetReturnType[]
   : TContracts extends []
   ? []
-  : TContracts extends [infer Head]
-  ? [...Result, GetReturnType<Head>]
-  : TContracts extends [infer Head, ...infer Tail]
-  ? ContractsResult<[...Tail], [...Result, GetReturnType<Head>], [...Depth, 1]>
-  : TContracts extends ContractConfig<
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      infer _TContract,
-      infer TAbi,
-      infer TFunctionName
-    >[]
-  ? // Dynamic-size (homogenous) UseQueryOptions array: map directly to array of results
-    GetReturnType<{ abi: TAbi; functionName: TFunctionName }>[]
+  : TContracts extends [infer Head extends Contract]
+  ? [...Result, GetReturnType<Head['abi'], Head['functionName']>]
+  : TContracts extends [
+      infer Head extends Contract,
+      ...infer Tail extends Contract[],
+    ]
+  ? ContractsResult<
+      [...Tail],
+      [...Result, GetReturnType<Head['abi'], Head['functionName']>],
+      [...Depth, 1]
+    >
+  : TContracts extends GetConfig<infer TAbi, infer TFunctionName>[]
+  ? GetReturnType<TAbi, TFunctionName>[]
   : GetReturnType[]
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

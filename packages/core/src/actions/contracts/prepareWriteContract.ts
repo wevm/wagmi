@@ -7,10 +7,8 @@ import {
 } from '../../errors'
 import type { Signer } from '../../types'
 import type {
-  DefaultOptions,
   GetConfig,
   GetOverridesForAbiStateMutability,
-  Options,
 } from '../../types/contracts'
 import {
   assertActiveChain,
@@ -20,46 +18,42 @@ import {
 import { fetchSigner } from '../accounts'
 import { getContract } from './getContract'
 
+type StateMutability = 'nonpayable' | 'payable'
 export type PrepareWriteContractConfig<
-  TAbi = Abi,
-  TFunctionName = string,
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
   TSigner extends Signer = Signer,
-  TOptions extends Options = DefaultOptions,
-> = GetConfig<
-  {
-    abi: TAbi
-    functionName: TFunctionName
-    /** Chain id to use for provider */
-    chainId?: number
-    /** Overrides */
-    overrides?: GetOverridesForAbiStateMutability<
-      [TAbi, TFunctionName] extends [
-        infer TAbi_ extends Abi,
-        infer TFunctionName_ extends string,
-      ]
-        ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
-        : 'nonpayable' | 'payable'
-    >
-    /** Custom signer */
-    signer?: TSigner | null
-  },
-  'nonpayable' | 'payable',
-  TOptions
->
+> = GetConfig<TAbi, TFunctionName, StateMutability> & {
+  /** Chain id to use for provider */
+  chainId?: number
+  /** Overrides */
+  overrides?: GetOverridesForAbiStateMutability<
+    [TAbi, TFunctionName] extends [
+      infer TAbi_ extends Abi,
+      infer TFunctionName_ extends string,
+    ]
+      ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
+      : StateMutability
+  >
+  /** Custom signer */
+  signer?: TSigner | null
+}
+
+export type Request = PopulatedTransaction & {
+  to: Address
+  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
+}
 
 export type PrepareWriteContractResult<
-  TAbi = Abi,
+  TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
 > = {
   abi: TAbi extends Abi ? [ExtractAbiFunction<TAbi, TFunctionName>] : TAbi
-  address: string
+  address: Address
   chainId?: number
   functionName: TFunctionName
   mode: 'prepared'
-  request: PopulatedTransaction & {
-    to: Address
-    gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-  }
+  request: Request
 }
 
 /**
@@ -84,11 +78,11 @@ export async function prepareWriteContract<
 >({
   abi,
   address,
-  args,
   chainId,
   functionName,
   overrides,
   signer: signer_,
+  ...config
 }: PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>): Promise<
   PrepareWriteContractResult<TAbi, TFunctionName>
 > {
@@ -101,6 +95,7 @@ export async function prepareWriteContract<
     abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
     signerOrProvider: signer,
   })
+  const args = config.args as unknown[]
   const normalizedFunctionName = normalizeFunctionName({
     contract,
     functionName,

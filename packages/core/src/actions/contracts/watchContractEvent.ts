@@ -2,6 +2,7 @@ import type {
   Abi,
   AbiEvent,
   AbiParametersToPrimitiveTypes,
+  Address,
   ExtractAbiEvent,
   ExtractAbiEventNames,
   Narrow,
@@ -9,60 +10,29 @@ import type {
 import shallow from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import type { Event } from '../../types/contracts'
-import type { IsNever, NotEqual, Or } from '../../types/utils'
 import { getProvider, getWebSocketProvider } from '../providers'
 import { getContract } from './getContract'
 
-type ContractEventConfig<
+export type WatchContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
 > = {
-  /** Contract address */
-  address: string
   /** Contract ABI */
-  abi: Narrow<TAbi>
+  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
+  /** Contract address */
+  address: Address
   /** Chain id to use for provider */
   chainId?: number
-  /** Event to listen for */
-  eventName: IsNever<TEventName> extends true ? string : TEventName
+  /** Function to invoke on the contract */
+  eventName: GetEventName<TAbi, TEventName>
   /** Receive only a single event */
   once?: boolean
 }
 
-type GetConfig<T> = T extends {
-  abi: infer TAbi extends Abi
-}
-  ? ContractEventConfig<TAbi, ExtractAbiEventNames<TAbi>>
-  : T extends {
-      abi: infer TAbi extends readonly unknown[]
-      eventName: infer TEventName extends string
-    }
-  ? ContractEventConfig<TAbi, TEventName>
-  : ContractEventConfig
-
-export type WatchContractEventConfig<
-  TAbi = Abi,
-  TEventName = string,
-> = GetConfig<{ abi: TAbi; eventName: TEventName }>
-
 export type WatchContractEventCallback<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-  TAbiEvent extends AbiEvent = TAbi extends Abi
-    ? ExtractAbiEvent<TAbi, TEventName>
-    : never,
-> =
-  // Create local variable `TArgs` based on event input parameters
-  AbiParametersToPrimitiveTypes<
-    TAbiEvent['inputs']
-  > extends infer TArgs extends readonly unknown[]
-    ? // If `TArgs` is never or `TAbi` does not have the same shape as `Abi`, we were not able to infer args.
-      Or<IsNever<TArgs>, NotEqual<TAbi, Abi>> extends true
-      ? (...args: any) => void
-      : // We are able to infer args, spread the types.
-        (...args: [...args: TArgs, event: Event<TAbiEvent>]) => void
-    : never
+> = GetListener<TAbi, TEventName>
 
 export function watchContractEvent<
   TAbi extends Abi | readonly unknown[],
@@ -77,7 +47,8 @@ export function watchContractEvent<
   }: WatchContractEventConfig<TAbi, TEventName>,
   callback: WatchContractEventCallback<TAbi, TEventName>,
 ) {
-  const handler = (...event: any[]) => callback(...event)
+  const handler = (...event: readonly unknown[]) =>
+    (callback as (...args: readonly unknown[]) => void)(...event)
 
   let contract: ReturnType<typeof getContract>
   const watchEvent = async () => {
@@ -111,3 +82,31 @@ export function watchContractEvent<
     unsubscribe()
   }
 }
+
+type GetEventName<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TEventName extends string = string,
+> = TAbi extends Abi
+  ? ExtractAbiEventNames<TAbi> extends infer AbiEventNames
+    ?
+        | AbiEventNames
+        | (TEventName extends AbiEventNames ? TEventName : never)
+        | (Abi extends TAbi ? string : never)
+    : never
+  : TEventName
+
+type GetListener<
+  TAbi extends Abi | readonly unknown[],
+  TEventName extends string,
+  TAbiEvent extends AbiEvent = TAbi extends Abi
+    ? ExtractAbiEvent<TAbi, TEventName>
+    : AbiEvent,
+  TArgs = AbiParametersToPrimitiveTypes<TAbiEvent['inputs']>,
+  FailedToParseArgs =
+    | ([TArgs] extends [never] ? true : false)
+    | (readonly unknown[] extends TArgs ? true : false),
+> = true extends FailedToParseArgs
+  ? (...args: readonly unknown[]) => void
+  : (
+      ...args: TArgs extends readonly unknown[] ? TArgs : readonly unknown[]
+    ) => void

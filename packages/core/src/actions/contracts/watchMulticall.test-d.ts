@@ -60,6 +60,7 @@ describe('watchMulticall', () => {
         {
           address: '0x123',
           abi: [],
+          // @ts-expect-error not a valid function name
           functionName: 'tokenOfOwnerByIndex',
           args: [
             '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',

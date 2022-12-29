@@ -25,5 +25,6 @@
   "useToken": "useToken",
   "useTransaction": "useTransaction",
   "useWaitForTransaction": "useWaitForTransaction",
+  "useWatchPendingTransactions": "useWatchPendingTransactions",
   "useWebSocketProvider": "useWebSocketProvider"
 }

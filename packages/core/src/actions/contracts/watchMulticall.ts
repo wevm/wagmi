@@ -1,15 +1,16 @@
 import type { Abi } from 'abitype'
 
 import { getClient } from '../../client'
+import type { Contract } from '../../types/contracts'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { MulticallConfig, MulticallResult } from './multicall'
 import { multicall } from './multicall'
 
-export type WatchMulticallConfig<TContracts extends unknown[]> =
+export type WatchMulticallConfig<TContracts extends Contract[]> =
   MulticallConfig<TContracts> & {
     listenToBlock?: boolean
   }
-export type WatchMulticallCallback<TContracts extends unknown[]> = (
+export type WatchMulticallCallback<TContracts extends Contract[]> = (
   results: MulticallResult<TContracts>,
 ) => void
 

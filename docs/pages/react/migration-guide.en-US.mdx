@@ -9,6 +9,19 @@ import { Callout } from 'nextra-theme-docs'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
 
+## 0.10.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.9.x` docs
+  [here](https://0.9.x.wagmi.sh).
+</Callout>
+
+### `useSigner`
+
+The `useSigner` hook now always returns `undefined` when no signer is present. Previously, it returned `null` or `undefined`.
+
+When no signer is present, the hook will be in an `"idle"` status.
+
 ## 0.9.x Breaking changes
 
 <Callout>
@@ -124,9 +137,9 @@ The `etherscanBlockExplorers` export has been removed. You can extract a block e
 -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
 -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
 -const optimismEtherscanBlockExplorer = etherscanBlockExplorers.optimism
-+const mainnetEtherscanBlockExplorer = mainnet.blockExplorer
-+const polygonEtherscanBlockExplorer = polygon.blockExplorer
-+const optimismEtherscanBlockExplorer = optimism.blockExplorer
++const mainnetEtherscanBlockExplorer = mainnet.blockExplorers.default
++const polygonEtherscanBlockExplorer = polygon.blockExplorers.default
++const optimismEtherscanBlockExplorer = optimism.blockExplorers.default
 ```
 
 #### Removed `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls`

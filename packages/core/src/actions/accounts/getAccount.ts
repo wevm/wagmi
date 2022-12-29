@@ -22,8 +22,8 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
       status: 'reconnecting'
     }
   | {
-      address: undefined
-      connector: undefined
+      address: Data<TProvider>['account']
+      connector: Client<TProvider>['connector']
       isConnected: false
       isReconnecting: false
       isConnecting: true
@@ -67,8 +67,8 @@ export function getAccount<
       } as const
     case 'connecting':
       return {
-        address: undefined,
-        connector: undefined,
+        address: data?.account,
+        connector,
         isConnected: false,
         isConnecting: true,
         isDisconnected: false,

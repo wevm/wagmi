@@ -5,11 +5,16 @@ export {
   avalancheFuji,
   bsc,
   bscTestnet,
+  evmos,
+  evmosTestnet,
   fantom,
   fantomTestnet,
   foundry,
   goerli,
+  gnosis,
   hardhat,
+  iotex,
+  iotexTestnet,
   localhost,
   mainnet,
   optimism,
@@ -19,6 +24,8 @@ export {
   sepolia,
   taraxa,
   taraxaTestnet,
+  zkSync,
+  zkSyncTestnet,
 } from '@wagmi/core/chains'
 
 export type { Chain } from '@wagmi/core/chains'

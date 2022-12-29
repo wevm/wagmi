@@ -38,6 +38,7 @@ export {
   useToken,
   useTransaction,
   useWaitForTransaction,
+  useWatchPendingTransactions,
   useWebSocketProvider,
   type UseContractConfig,
   type UseContractReadConfig,
