@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.8.8
+
+### Patch Changes
+
+- [#1573](https://github.com/wagmi-dev/wagmi/pull/1573) [`ef380d9c`](https://github.com/wagmi-dev/wagmi/commit/ef380d9c6d51ae0495b9c35925d2843c75d97fd4) Thanks [@tmm](https://github.com/tmm)! - Updated internal types.
+
 ## 0.8.7
 
 ### Patch Changes
