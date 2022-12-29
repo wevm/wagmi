@@ -1,11 +1,10 @@
 import dedent from 'dedent'
-import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
 
 import type { Config } from '../config'
 import { defaultConfig } from '../config'
 import * as logger from '../logger'
-import { findConfig, format } from '../utils'
+import { findConfig, format, getIsUsingTypeScript } from '../utils'
 
 export type Init = {
   config?: Config
@@ -22,12 +21,12 @@ export async function init({ config = defaultConfig }: Init = {}) {
 
   const cwd = process.cwd()
   // Check if project is using TypeScript
-  const tsconfig = await findUp('tsconfig.json', { cwd })
-  const extension = tsconfig ? 'ts' : 'js'
+  const isUsingTypeScript = await getIsUsingTypeScript()
+  const extension = isUsingTypeScript ? 'ts' : 'js'
   const outPath = `${cwd}/wagmi.config.${extension}`
 
   let content: string
-  if (tsconfig)
+  if (isUsingTypeScript)
     content = dedent(`
       import { defineConfig } from '@wagmi/cli'
       

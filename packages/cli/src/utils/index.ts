@@ -1,3 +1,5 @@
 export { findConfig } from './findConfig'
-export { resolveConfig } from './resolveConfig'
 export { format } from './format'
+export { getIsUsingTypeScript } from './getIsUsingTypeScript'
+export { getPackageManager } from './getPackageManager'
+export { resolveConfig } from './resolveConfig'

@@ -34,7 +34,7 @@ void (async () => {
     cli.parse(process.argv, { run: false })
     await cli.runMatchedCommand()
   } catch (error) {
-    logger.error((error as Error).message)
+    logger.error(`\n${(error as Error).message}`)
     process.exit(1)
   }
 })()

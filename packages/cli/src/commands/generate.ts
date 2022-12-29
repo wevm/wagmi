@@ -1,17 +1,21 @@
 import { getAddress } from '@ethersproject/address'
-import { Address } from 'abitype'
+import type { Address } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
 import { default as dedent } from 'dedent'
-import { findUp } from 'find-up'
 import { default as fse } from 'fs-extra'
 import { z } from 'zod'
 
-import type { Contract, ContractConfig, Plugin, Watch } from '../config'
+import type { Config, Contract, ContractConfig, Plugin, Watch } from '../config'
 import { fromZodError } from '../errors'
 import * as logger from '../logger'
-import { findConfig, format, resolveConfig } from '../utils'
+import {
+  findConfig,
+  format,
+  getIsUsingTypeScript,
+  resolveConfig,
+} from '../utils'
 
 const Generate = z.object({
   /** Path to config file */
@@ -38,23 +42,12 @@ export async function generate(options: Generate) {
   const configPath = await findConfig(options)
   if (!configPath) throw new Error(`Config not found at "${configPath}"`)
   const resolvedConfig = await resolveConfig({ configPath })
-  const isTypeScript = await isProjectUsingTypeScript()
+  const isTypeScript = await getIsUsingTypeScript()
 
   // Collect contracts and watch configs from plugins
-  const contractConfigs = resolvedConfig.contracts ?? []
-  const watchConfigs: Watch[] = []
-  const plugins = resolvedConfig.plugins ?? []
-  for (const plugin of plugins) {
-    logger.log(`Validating plugin "${plugin.name}"`)
-    await plugin.validate?.()
-    if (plugin.watch) watchConfigs.push(plugin.watch)
-    if (plugin.contracts) {
-      logger.log(`Getting contracts for plugin "${plugin.name}"`)
-      const contracts = await plugin.contracts()
-      contractConfigs.push(...contracts)
-      logger.log(`Found ${contracts.length} contracts`)
-    }
-  }
+  const { contractConfigs, plugins, watchConfigs } = await validatePlugins({
+    resolvedConfig,
+  })
 
   // Get contracts from config
   const contractNames = new Set<string>()
@@ -179,16 +172,6 @@ export async function generate(options: Generate) {
   }
 }
 
-const Address = z
-  .string()
-  .regex(/^0x[a-fA-F0-9]{40}$/, { message: 'Invalid address' })
-  .transform((val) => getAddress(val)) as z.ZodType<Address>
-const MultiChainAddress = z.record(
-  z.string().transform((val) => parseInt(val)),
-  Address,
-)
-const AddressSchema = z.union([Address, MultiChainAddress])
-
 async function getContract({
   abi,
   address,
@@ -214,6 +197,15 @@ async function getContract({
   if (address) {
     let resolvedAddress
     try {
+      const Address = z
+        .string()
+        .regex(/^0x[a-fA-F0-9]{40}$/, { message: 'Invalid address' })
+        .transform((val) => getAddress(val)) as z.ZodType<Address>
+      const MultiChainAddress = z.record(
+        z.string().transform((val) => parseInt(val)),
+        Address,
+      )
+      const AddressSchema = z.union([Address, MultiChainAddress])
       resolvedAddress = await AddressSchema.parseAsync(address)
     } catch (error) {
       if (error instanceof z.ZodError)
@@ -313,13 +305,25 @@ async function executePlugins(config: {
   return { content, imports, prepend } as const
 }
 
-async function isProjectUsingTypeScript() {
-  try {
-    const cwd = process.cwd()
-    const tsconfig = await findUp('tsconfig.json', { cwd })
-    return !!tsconfig
-  } catch {
-    return false
+async function validatePlugins({ resolvedConfig }: { resolvedConfig: Config }) {
+  const contractConfigs = resolvedConfig.contracts ?? []
+  const watchConfigs: Watch[] = []
+  const plugins = resolvedConfig.plugins ?? []
+  for (const plugin of plugins) {
+    logger.log(`Validating plugin "${plugin.name}"`)
+    await plugin.validate?.()
+    if (plugin.watch) watchConfigs.push(plugin.watch)
+    if (plugin.contracts) {
+      logger.log(`Getting contracts for plugin "${plugin.name}"`)
+      const contracts = await plugin.contracts()
+      contractConfigs.push(...contracts)
+      logger.log(`Found ${contracts.length} contracts`)
+    }
+  }
+  return {
+    contractConfigs,
+    plugins,
+    watchConfigs,
   }
 }
 

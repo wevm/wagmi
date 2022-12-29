@@ -1,6 +1,6 @@
 import type { Abi, Address } from 'abitype'
 
-type TypeOrPromise<T> = T | Promise<T>
+import type { MaybePromise } from './types'
 
 export type ContractConfig<
   TChainId extends number = number,
@@ -50,27 +50,24 @@ export type Contract = ContractConfig & {
 
 export type Watch = {
   /** Command to run along with watch process */
-  command?: () => TypeOrPromise<void>
+  command?: () => MaybePromise<void>
   /** Paths to watch for changes. */
   paths: string[]
   /** Callback that fires when file is added */
-  onAdd?: (path: string) => TypeOrPromise<ContractConfig | undefined>
+  onAdd?: (path: string) => MaybePromise<ContractConfig | undefined>
   /** Callback that fires when file changes */
-  onChange: (path: string) => TypeOrPromise<ContractConfig | undefined>
+  onChange: (path: string) => MaybePromise<ContractConfig | undefined>
   /** Callback that fires when file is removed */
-  onRemove?: (path: string) => TypeOrPromise<string | undefined>
+  onRemove?: (path: string) => MaybePromise<string | undefined>
 }
 
 export type Plugin = {
   /** Contracts provided by plugin */
-  contracts?(): TypeOrPromise<ContractConfig[]>
+  contracts?(): MaybePromise<ContractConfig[]>
   /** Plugin name */
   name: string
   /** Run plugin logic */
-  run?(config: {
-    contracts: Contract[]
-    isTypeScript: boolean
-  }): TypeOrPromise<{
+  run?(config: { contracts: Contract[]; isTypeScript: boolean }): MaybePromise<{
     imports?: string
     prepend?: string
     content: string
@@ -78,7 +75,7 @@ export type Plugin = {
   /**
    * Validate plugin configuration or other @wagmi/cli settings require for plugin.
    */
-  validate?(): TypeOrPromise<void>
+  validate?(): MaybePromise<void>
   /** File system watch config */
   watch?: Watch
 }
@@ -92,7 +89,7 @@ export type Config = {
   plugins?: Plugin[]
 }
 
-export function defineConfig(config: Config | (() => TypeOrPromise<Config>)) {
+export function defineConfig(config: Config | (() => MaybePromise<Config>)) {
   return config
 }
 

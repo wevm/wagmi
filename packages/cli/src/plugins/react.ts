@@ -1,8 +1,10 @@
 import * as allChains from '@wagmi/chains'
 import { capitalCase, pascalCase } from 'change-case'
 import dedent from 'dedent'
+import { execa } from 'execa'
 
 import type { Contract, Plugin } from '../config'
+import { getPackageManager } from '../utils'
 
 type ReactConfig = {
   hooks?: {
@@ -343,6 +345,33 @@ export function react(config: ReactConfig): Plugin {
         `,
         content: content.join('\n\n'),
       }
+    },
+    async validate() {
+      const packageManager = await getPackageManager()
+      let command = []
+      let install = ''
+      switch (packageManager) {
+        case 'yarn':
+          command = ['list', '--pattern', 'wagmi']
+          install = 'add'
+          break
+        case 'npm':
+          command = ['ls', 'wagmi']
+          install = 'install --save'
+          break
+        case 'pnpm':
+        default:
+          command = ['ls', 'wagmi']
+          install = 'add'
+      }
+
+      const { stdout } = await execa(packageManager, command)
+      if (stdout !== '') return
+
+      throw new Error(dedent`
+        wagmi must be installed to use React plugin.
+        To install, run: ${packageManager} ${install} wagmi
+      `)
     },
   }
 }
