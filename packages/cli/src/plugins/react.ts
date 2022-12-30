@@ -14,7 +14,7 @@ type ReactConfig = {
    */
   useContract?: boolean
   /**
-   * Generate `useContract` hook.
+   * Generate `useContractEvent` hook.
    *
    * @default true
    */
