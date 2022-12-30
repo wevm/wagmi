@@ -97,7 +97,11 @@ export async function generate(options: Generate) {
     persistent: true,
   }
   for (const watchConfig of watchConfigs) {
-    const watcher = watch(watchConfig.paths, watchOptions)
+    const paths =
+      typeof watchConfig.paths === 'function'
+        ? await watchConfig.paths()
+        : watchConfig.paths
+    const watcher = watch(paths, watchOptions)
     // Watch for changes to files, new files, and deleted files
     watcher.on('all', async (event, path) => {
       if (event !== 'change' && event !== 'add' && event !== 'unlink') return

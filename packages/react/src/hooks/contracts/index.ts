@@ -6,10 +6,17 @@ export {
 export {
   useContractInfiniteReads,
   paginatedIndexesConfig,
+  type UseContractInfiniteReadsConfig,
 } from './useContractInfiniteReads'
 export { useContractRead, type UseContractReadConfig } from './useContractRead'
-export { useContractReads } from './useContractReads'
-export { useContractWrite } from './useContractWrite'
+export {
+  useContractReads,
+  type UseContractReadsConfig,
+} from './useContractReads'
+export {
+  useContractWrite,
+  type UseContractWriteConfig,
+} from './useContractWrite'
 export {
   usePrepareContractWrite,
   type UsePrepareContractWriteConfig,

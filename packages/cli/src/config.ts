@@ -52,7 +52,7 @@ export type Watch = {
   /** Command to run along with watch process */
   command?: () => MaybePromise<void>
   /** Paths to watch for changes. */
-  paths: string[]
+  paths: string[] | (() => MaybePromise<string[]>)
   /** Callback that fires when file is added */
   onAdd?: (path: string) => MaybePromise<ContractConfig | undefined>
   /** Callback that fires when file changes */

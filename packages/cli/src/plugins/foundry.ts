@@ -42,7 +42,7 @@ type FoundryConfig = {
     /**
      * Remove build artifacts and cache directories on start up.
      *
-     * @default false
+     * @default true
      */
     clean?: boolean
     /**
@@ -82,7 +82,7 @@ export function foundry({
   artifacts = 'out',
   exclude = defaultExcludes,
   forge: {
-    clean = false,
+    clean = true,
     build = true,
     path: forgeExecutable = 'forge',
     rebuild = true,
@@ -139,7 +139,7 @@ export function foundry({
           await execa(forgeExecutable, ['--version'])
         } catch (error) {
           throw new Error(dedent`
-            Forge must be installed to use Foundry plugin.
+            forge must be installed to use Foundry plugin.
             To install, follow the instructions at https://book.getfoundry.sh/getting-started/installation
           `)
         }
@@ -154,22 +154,16 @@ export function foundry({
           }
         : undefined,
       paths: [
-        artifactsDirectory,
+        ...include.map((x) => `${artifactsDirectory}/**/${x}`),
         ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
       ],
       async onAdd(path) {
-        const artifactPaths = await getArtifactPaths(artifactsDirectory)
-        if (!artifactPaths.includes(path)) return
         return getContract(path)
       },
       async onChange(path) {
-        const artifactPaths = await getArtifactPaths(artifactsDirectory)
-        if (!artifactPaths.includes(path)) return
         return getContract(path)
       },
       async onRemove(path) {
-        const artifactPaths = await getArtifactPaths(artifactsDirectory)
-        if (!artifactPaths.includes(path)) return
         return getContractName(path)
       },
     },

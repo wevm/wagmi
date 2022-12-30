@@ -1,3 +1,4 @@
+import dedent from 'dedent'
 import { execa } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
@@ -23,7 +24,11 @@ type HardhatConfig = {
   exclude?: string[]
   /** Commands to run */
   commands?: {
-    /** Remove build artifacts and cache directories on start up. */
+    /**
+     * Remove build artifacts and cache directories on start up.
+     *
+     * @default `${packageManger} hardhat clean`
+     */
     clean?: string | false
     /**
      * Build Hardhat project before fetching artifacts.
@@ -93,12 +98,16 @@ export function hardhat({
 
   return {
     async contracts() {
-      if (commands.clean) {
-        const [command, ...options] = commands.clean.split(' ')
+      const packageManager =
+        commands.clean === undefined || commands.build === undefined
+          ? await getPackageManager()
+          : undefined
+      const clean = commands.clean ?? `${packageManager} hardhat clean`
+      if (clean) {
+        const [command, ...options] = clean.split(' ')
         await execa(command!, options, { cwd: resolve(project) })
       }
-      const build =
-        commands.build ?? `${await getPackageManager()} hardhat compile`
+      const build = commands.build ?? `${packageManager} hardhat compile`
       if (build) {
         const [command, ...options] = build.split(' ')
         await execa(command!, options, { cwd: resolve(project) })
@@ -116,6 +125,26 @@ export function hardhat({
       return contracts
     },
     name: 'Hardhat',
+    async validate() {
+      if (
+        commands.clean === undefined ||
+        commands.build === undefined ||
+        commands.rebuild === undefined
+      ) {
+        const packageManager = await getPackageManager()
+        try {
+          await execa(packageManager, ['hardhat', '--version'], {
+            cwd: resolve(project),
+          })
+        } catch (error) {
+          const install = packageManager === 'npm' ? 'install --save' : 'add'
+          throw new Error(dedent`
+            hardhat must be installed to use Hardhat plugin.
+            To install, run: ${packageManager} ${install} hardhat.
+          `)
+        }
+      }
+    },
     watch: {
       command:
         commands.rebuild ?? true
@@ -151,24 +180,33 @@ export function hardhat({
           : undefined,
       paths: [
         artifactsDirectory,
+        ...include.map((x) => `${artifactsDirectory}/**/${x}`),
         ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
       ],
       async onAdd(path) {
-        const artifactPaths = await getArtifactPaths(artifactsDirectory)
-        if (!artifactPaths.includes(path)) return
+        console.log('onAdd', path)
         return getContract(path)
       },
       async onChange(path) {
-        const artifactPaths = await getArtifactPaths(artifactsDirectory)
-        if (!artifactPaths.includes(path)) return
+        console.log('onChange', path)
         return getContract(path)
       },
       async onRemove(path) {
-        const artifactPaths = await getArtifactPaths(artifactsDirectory)
-        if (!artifactPaths.includes(path)) return
+        console.log('onRemove', path)
         const filename = basename(path)
         const extension = extname(path)
-        return `${namePrefix}${filename.replace(extension, '')}`
+        // Since we can't use `getContractName`, guess from path
+        const removedContractName = `${namePrefix}${filename.replace(
+          extension,
+          '',
+        )}`
+        const artifactPaths = await getArtifactPaths(artifactsDirectory)
+        for (const artifactPath of artifactPaths) {
+          const contract = await getContract(artifactPath)
+          // If contract with same name exists, don't remove
+          if (contract.name === removedContractName) return
+        }
+        return removedContractName
       },
     },
   }

@@ -3,10 +3,9 @@ import { describe, expect, it } from 'vitest'
 import { foundry } from './foundry'
 
 describe('foundry', () => {
-  it('fails when forge is not installed', async () => {
+  it('validate', async () => {
     await expect(
       foundry({
-        namePrefix: 'HelloFoundry',
         project: '../hello_foundry',
         forge: {
           path: '/path/does/not/exist/forge',

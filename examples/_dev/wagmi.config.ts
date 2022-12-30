@@ -34,7 +34,7 @@ export default defineConfig({
     //     },
     //   ],
     // }),
-    foundry({ project: '../hello_foundry' }),
+    // foundry({ project: '../hello_foundry' }),
     hardhat({ project: '../hello_hardhat' }),
     // react({
     //   hooks: {
