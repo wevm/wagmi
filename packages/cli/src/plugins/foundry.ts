@@ -5,6 +5,7 @@ import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 
 import type { Plugin } from '../config'
+import * as logger from '../logger'
 
 const defaultExcludes = [
   'Common.sol/**',
@@ -38,9 +39,17 @@ type FoundryConfig = {
   exclude?: string[]
   /** [Forge](https://book.getfoundry.sh/forge) configuration */
   forge?: {
-    /** Remove build artifacts and cache directories on start up. */
+    /**
+     * Remove build artifacts and cache directories on start up.
+     *
+     * @default false
+     */
     clean?: boolean
-    /** Build Foundry project before fetching artifacts. */
+    /**
+     * Build Foundry project before fetching artifacts.
+     *
+     * @default true
+     */
     build?: boolean
     /**
      * Path to `forge` executable command
@@ -48,7 +57,11 @@ type FoundryConfig = {
      * @default "forge"
      */
     path?: string
-    /** Rebuild every time a watched file or directory is changed. */
+    /**
+     * Rebuild every time a watched file or directory is changed.
+     *
+     * @default true
+     */
     rebuild?: boolean
   }
   /** Artifact files to include. */
@@ -134,12 +147,16 @@ export function foundry({
     watch: {
       command: rebuild
         ? async () => {
+            logger.log(`Watching Foundry project for changes at "${project}".`)
             await execa(forgeExecutable, ['build', '--watch'], {
               cwd: resolve(project),
-            }).stdout?.pipe(process.stdout)
+            }).stdout?.pipe(process.stdout) // TODO: Add prefix for foundry to logs
           }
         : undefined,
-      paths: [artifactsDirectory],
+      paths: [
+        artifactsDirectory,
+        ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
+      ],
       async onAdd(path) {
         const artifactPaths = await getArtifactPaths(artifactsDirectory)
         if (!artifactPaths.includes(path)) return
@@ -150,7 +167,9 @@ export function foundry({
         if (!artifactPaths.includes(path)) return
         return getContract(path)
       },
-      onRemove(path) {
+      async onRemove(path) {
+        const artifactPaths = await getArtifactPaths(artifactsDirectory)
+        if (!artifactPaths.includes(path)) return
         return getContractName(path)
       },
     },

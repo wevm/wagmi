@@ -152,7 +152,7 @@ export async function generate(options: Generate) {
   }
 
   // Watch `@wagmi/cli` config file for changes
-  watch(configPath).on('change', async (path) => {
+  const watcher = watch(configPath).on('change', async (path) => {
     const { basename } = await import('pathe')
     logger.log(
       `> Found a change in ${basename(
@@ -160,6 +160,7 @@ export async function generate(options: Generate) {
       )}. Restart process for changes to take effect.`,
     )
   })
+  watchers.push(watcher)
 
   // Display message and close watchers on exit
   process.once('SIGINT', shutdown)
@@ -317,7 +318,11 @@ async function validatePlugins({ resolvedConfig }: { resolvedConfig: Config }) {
       logger.log(`Getting contracts for plugin "${plugin.name}"`)
       const contracts = await plugin.contracts()
       contractConfigs.push(...contracts)
-      logger.log(`Found ${contracts.length} contracts`)
+      logger.log(
+        `Found ${contracts.length} ${
+          contracts.length === 1 ? 'contract' : 'contracts'
+        }`,
+      )
     }
   }
   return {
