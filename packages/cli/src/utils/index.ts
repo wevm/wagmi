@@ -1,5 +1,6 @@
 export { findConfig } from './findConfig'
 export { format } from './format'
 export { getIsUsingTypeScript } from './getIsUsingTypeScript'
+export { getAddressDocString } from './getAddressDocString'
 export { getPackageManager } from './getPackageManager'
 export { resolveConfig } from './resolveConfig'

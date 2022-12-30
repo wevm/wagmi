@@ -1,9 +1,85 @@
 import fixtures from 'fixturez'
 import { describe, expect, it, vi } from 'vitest'
 
+import { format } from '../utils'
+
 import { react } from './react'
 
 const f = fixtures(__dirname)
+const abi = [
+  {
+    type: 'event',
+    name: 'Transfer',
+    inputs: [
+      {
+        indexed: true,
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'to',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+  },
+  {
+    inputs: [{ name: 'name', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: 'balance', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    type: 'function',
+    name: 'safeTransferFrom',
+    stateMutability: 'payable',
+    inputs: [
+      {
+        name: 'from',
+        type: 'address',
+      },
+      {
+        name: 'to',
+        type: 'address',
+      },
+      {
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    outputs: [],
+  },
+  {
+    type: 'function',
+    name: 'safeTransferFrom',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'from',
+        type: 'address',
+      },
+      {
+        name: 'to',
+        type: 'address',
+      },
+      {
+        name: 'id',
+        type: 'uint256',
+      },
+      {
+        name: 'data',
+        type: 'bytes',
+      },
+    ],
+    outputs: [],
+  },
+] as const
 
 describe('react', () => {
   it('validate', async () => {
@@ -22,55 +98,47 @@ describe('react', () => {
 
   describe('run', () => {
     describe('isTypeScript', () => {
-      const abi = [
-        {
-          inputs: [{ name: 'name', type: 'address' }],
-          name: 'balanceOf',
-          outputs: [{ name: 'balance', type: 'uint256' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ] as const
-
       it('true', async () => {
-        await expect(
-          react().run({
-            contracts: [
-              {
-                name: 'Wagmi',
-                address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-                abi,
-                content: '',
-                meta: {
-                  abiName: 'WagmiAbi',
-                  addressName: 'WagmiAddress',
-                  configName: 'WagmiConfig',
-                },
+        const { imports, content } = await react().run({
+          contracts: [
+            {
+              name: 'Wagmi',
+              address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+              abi,
+              content: '',
+              meta: {
+                abiName: 'WagmiAbi',
+                addressName: 'WagmiAddress',
+                configName: 'WagmiConfig',
               },
-            ],
-            isTypeScript: true,
-          }),
+            },
+          ],
+          isTypeScript: true,
+        })
+        await expect(
+          format(`${imports}\n\n${content}`),
         ).resolves.toMatchSnapshot()
       })
 
       it('false', async () => {
-        await expect(
-          react().run({
-            contracts: [
-              {
-                name: 'Wagmi',
-                address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-                abi,
-                content: '',
-                meta: {
-                  abiName: 'WagmiAbi',
-                  addressName: 'WagmiAddress',
-                  configName: 'WagmiConfig',
-                },
+        const { imports, content } = await react().run({
+          contracts: [
+            {
+              name: 'Wagmi',
+              address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+              abi,
+              content: '',
+              meta: {
+                abiName: 'WagmiAbi',
+                addressName: 'WagmiAddress',
+                configName: 'WagmiConfig',
               },
-            ],
-            isTypeScript: false,
-          }),
+            },
+          ],
+          isTypeScript: false,
+        })
+        await expect(
+          format(`${imports}\n\n${content}`),
         ).resolves.toMatchSnapshot()
       })
     })
