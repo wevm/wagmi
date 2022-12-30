@@ -169,10 +169,10 @@ export async function generate(options: Generate) {
   // Display message and close watchers on exit
   process.once('SIGINT', shutdown)
   process.once('SIGTERM', shutdown)
-  function shutdown() {
+  async function shutdown() {
     logger.log('Shutting down watch…')
     for (const watcher of watchers) {
-      watcher.close()
+      await watcher.close()
     }
   }
 }

@@ -173,8 +173,8 @@ export function hardhat({
               })
               process.once('SIGINT', shutdown)
               process.once('SIGTERM', shutdown)
-              function shutdown() {
-                watcher.close()
+              async function shutdown() {
+                await watcher.close()
               }
             }
           : undefined,

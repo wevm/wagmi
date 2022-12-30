@@ -7,38 +7,36 @@ import type { Contract, Plugin } from '../config'
 import { getPackageManager } from '../utils'
 
 type ReactConfig = {
-  hooks?: {
-    /**
-     * Generate `useContract` hook.
-     *
-     * @default true
-     */
-    useContract?: boolean
-    /**
-     * Generate `useContract` hook.
-     *
-     * @default true
-     */
-    useContractEvent?: boolean
-    /**
-     * Generate `useContractRead` hook.
-     *
-     * @default true
-     */
-    useContractRead?: boolean
-    /**
-     * Generate hook for each "read" function in contract ABI.
-     *
-     * @default true
-     */
-    useContractFunctionRead?: boolean
-    /**
-     * Generate `usePrepareContractWrite` hook.
-     *
-     * @default true
-     */
-    usePrepareContractWrite?: boolean
-  }
+  /**
+   * Generate `useContract` hook.
+   *
+   * @default true
+   */
+  useContract?: boolean
+  /**
+   * Generate `useContract` hook.
+   *
+   * @default true
+   */
+  useContractEvent?: boolean
+  /**
+   * Generate `useContractRead` hook.
+   *
+   * @default true
+   */
+  useContractRead?: boolean
+  /**
+   * Generate hook for each "read" function in contract ABI.
+   *
+   * @default true
+   */
+  useContractFunctionRead?: boolean
+  /**
+   * Generate `usePrepareContractWrite` hook.
+   *
+   * @default true
+   */
+  usePrepareContractWrite?: boolean
 }
 
 const chainMap: Record<allChains.Chain['id'], allChains.Chain> = {}
@@ -47,14 +45,14 @@ for (const chain of Object.values(allChains)) {
   chainMap[chain.id] = chain
 }
 
-export function react(config: ReactConfig): Plugin {
+export function react(config: ReactConfig = {}): Plugin {
   const hooks = {
     useContract: true,
     useContractEvent: true,
     useContractRead: true,
     useContractFunctionRead: true,
     usePrepareContractWrite: true,
-    ...config?.hooks,
+    ...config,
   }
   return {
     name: 'React',
@@ -132,7 +130,7 @@ export function react(config: ReactConfig): Plugin {
              ${getDescriptionDocString({
                innerHookName,
                abiName: contract.meta.abiName,
-             })}${getAddressDocString({ address: contract.address })}
+             })} ${getAddressDocString({ address: contract.address })}
              */
           `
           imports.add(innerHookName)
@@ -166,7 +164,7 @@ export function react(config: ReactConfig): Plugin {
               ${getDescriptionDocString({
                 innerHookName,
                 abiName: contract.meta.abiName,
-              })}${getAddressDocString({ address: contract.address })}
+              })} ${getAddressDocString({ address: contract.address })}
               */
             `
             imports.add(innerHookName)
@@ -217,7 +215,7 @@ export function react(config: ReactConfig): Plugin {
                   }).replace(
                     '.',
                     ` and \`functionName\` set to \`"${item.name}"\`.`,
-                  )}${getAddressDocString({ address: contract.address })}
+                  )} ${getAddressDocString({ address: contract.address })}
                   */
                 `
                 imports.add(innerHookName)
@@ -267,7 +265,7 @@ export function react(config: ReactConfig): Plugin {
               ${getDescriptionDocString({
                 innerHookName,
                 abiName: contract.meta.abiName,
-              })}${getAddressDocString({ address: contract.address })}
+              })} ${getAddressDocString({ address: contract.address })}
               */
             `
             imports.add(innerHookName)
@@ -307,7 +305,7 @@ export function react(config: ReactConfig): Plugin {
               ${getDescriptionDocString({
                 innerHookName,
                 abiName: contract.meta.abiName,
-              })}${getAddressDocString({ address: contract.address })}
+              })} ${getAddressDocString({ address: contract.address })}
               */
             `
             imports.add(innerHookName)
@@ -450,14 +448,10 @@ function getAddressDocString({ address }: { address: Contract['address'] }) {
     const blockExplorer = chain.blockExplorers?.default
     if (!blockExplorer) return ''
     const address_ = Object.values(address)[0]
-    return dedent`
-      \n*
-      * [View on ${blockExplorer.name}.](${blockExplorer.url}/address/${address_})
-    `
+    return `[View on ${blockExplorer.name}.](${blockExplorer.url}/address/${address_})`
   }
 
   return dedent`
-    \n*
     ${Object.entries(address).reduce((prev, curr) => {
       const chain = chainMap[parseInt(curr[0])]!
       const address = curr[1]
@@ -466,6 +460,6 @@ function getAddressDocString({ address }: { address: Contract['address'] }) {
       return `${prev}\n* - [${capitalCase(chain.name)}](${
         blockExplorer.url
       }/address/${address})`
-    }, '* View on Block Explorer:')}
+    }, 'View on Block Explorer:')}
   `
 }

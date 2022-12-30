@@ -1,4 +1,5 @@
 import type { Address } from 'abitype'
+import { camelCase } from 'change-case'
 import { z } from 'zod'
 
 import type { ContractConfig } from '../config'
@@ -60,6 +61,11 @@ export function blockExplorer({
   return fetch({
     contracts,
     name,
+    getCacheKey({ contract }) {
+      if (typeof contract.address === 'string')
+        return `${camelCase(name)}:${contract.address}`
+      return `${camelCase(name)}:${JSON.stringify(contract.address)}`
+    },
     async parse({ response }) {
       const json = await response.json()
       const parsed = await BlockExplorerResponse.safeParseAsync(json)
