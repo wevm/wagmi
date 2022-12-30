@@ -6,6 +6,7 @@ import { basename, extname, resolve } from 'pathe'
 
 import type { Plugin } from '../config'
 import * as logger from '../logger'
+import type { RequiredBy } from '../types'
 
 import { getPackageManager } from '../utils'
 
@@ -59,8 +60,7 @@ type HardhatConfig = {
   sources?: string
 }
 
-type HardhatResult = Omit<Plugin, 'contracts'> &
-  Required<Pick<Plugin, 'contracts'>>
+type HardhatResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 
 /**
  * Resolves ABIs from [Hardhat](https://github.com/NomicFoundation/hardhat) project.

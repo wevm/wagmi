@@ -57,27 +57,29 @@ describe('fetch', () => {
     return JSON.parse(data.result)
   }
 
-  it('fetches ABI', async () => {
-    expect(
-      fetch({
-        contracts: [{ name: 'WagmiMintExample', address }],
-        request,
-        parse,
-      }).contracts(),
-    ).resolves.toMatchSnapshot()
-  })
+  describe('contracts', () => {
+    it('fetches ABI', async () => {
+      await expect(
+        fetch({
+          contracts: [{ name: 'WagmiMintExample', address }],
+          request,
+          parse,
+        }).contracts(),
+      ).resolves.toMatchSnapshot()
+    })
 
-  it('fails to fetch for unverified contract', async () => {
-    await expect(
-      fetch({
-        contracts: [
-          { name: 'WagmiMintExample', address: unverifiedContractAddress },
-        ],
-        request,
-        parse,
-      }).contracts(),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Contract source code not verified"',
-    )
+    it('fails to fetch for unverified contract', async () => {
+      await expect(
+        fetch({
+          contracts: [
+            { name: 'WagmiMintExample', address: unverifiedContractAddress },
+          ],
+          request,
+          parse,
+        }).contracts(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Contract source code not verified"',
+      )
+    })
   })
 })

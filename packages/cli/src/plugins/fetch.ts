@@ -4,6 +4,7 @@ import type { RequestInfo, RequestInit, Response } from 'node-fetch'
 import { default as nodeFetch } from 'node-fetch'
 
 import type { ContractConfig, Plugin } from '../config'
+import type { RequiredBy } from '../types'
 import { homedir } from 'os'
 
 type Request = { url: RequestInfo; init?: RequestInit }
@@ -41,8 +42,7 @@ export type FetchConfig = {
   }): Promise<Request> | Request
 }
 
-type FetchResult = Omit<Plugin, 'contracts'> &
-  Required<Pick<Plugin, 'contracts'>>
+type FetchResult = RequiredBy<Plugin, 'contracts'>
 
 /**
  * Fetches and parses contract ABIs from network resource with `fetch`.
@@ -68,7 +68,11 @@ export function fetch({
           const response = await nodeFetch(url, init)
           abi = await parse({ response })
         } catch (error) {
-          abi = await fse.readJSON(`${cacheDir}/${cacheKey}.json`)
+          try {
+            // Attempt to read from cache if fetch fails.
+            abi = await fse.readJSON(`${cacheDir}/${cacheKey}.json`)
+            // eslint-disable-next-line no-empty
+          } catch {}
           if (!abi) throw error
         }
         contracts.push({ abi, address: contract.address, name: contract.name })

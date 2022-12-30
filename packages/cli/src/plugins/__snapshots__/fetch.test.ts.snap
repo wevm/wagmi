@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`fetch > fails to fetch for unverified contract 1`] = `
+exports[`fetch > contracts > fetches ABI 1`] = `
 [
   {
     "abi": [

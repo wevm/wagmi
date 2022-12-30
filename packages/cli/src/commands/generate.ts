@@ -298,11 +298,12 @@ async function executePlugins(config: {
   for (const plugin of config.plugins) {
     if (!plugin.run) continue
     logger.log(`Running plugin "${plugin.name}"`)
-    content.push(getBannerContent({ name: plugin.name }))
     const result = await plugin.run({
       contracts: config.contracts,
       isTypeScript: config.isTypeScript,
     })
+    if (!result.imports && !result.prepend && !result.content) continue
+    content.push(getBannerContent({ name: plugin.name }))
     result.imports && imports.push(result.imports)
     content.push(result.content)
     result.prepend && prepend.push(result.prepend)

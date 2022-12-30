@@ -4,6 +4,7 @@ import dedent from 'dedent'
 import { execa } from 'execa'
 
 import type { Contract, Plugin } from '../config'
+import type { RequiredBy } from '../types'
 import { getPackageManager } from '../utils'
 
 type ReactConfig = {
@@ -45,7 +46,9 @@ for (const chain of Object.values(allChains)) {
   chainMap[chain.id] = chain
 }
 
-export function react(config: ReactConfig = {}): Plugin {
+type ReactResult = RequiredBy<Plugin, 'run' | 'validate'>
+
+export function react(config: ReactConfig = {}): ReactResult {
   const hooks = {
     useContract: true,
     useContractEvent: true,
@@ -337,10 +340,13 @@ export function react(config: ReactConfig = {}): Plugin {
         }
       }
 
+      const importValues = [...imports.values()]
       return {
-        imports: dedent`
-          import { ${[...imports.values()].join(', ')} } from 'wagmi'
-        `,
+        imports: importValues.length
+          ? dedent`
+          import { ${importValues.join(', ')} } from 'wagmi'
+        `
+          : '',
         content: content.join('\n\n'),
       }
     },
@@ -363,8 +369,14 @@ export function react(config: ReactConfig = {}): Plugin {
           install = 'add'
       }
 
-      const { stdout } = await execa(packageManager, command)
-      if (stdout !== '') return
+      try {
+        const { stdout } = await execa(packageManager, command, {
+          cwd: process.cwd(),
+        })
+        console.log(stdout)
+        if (stdout !== '') return
+        // eslint-disable-next-line no-empty
+      } catch {}
 
       throw new Error(dedent`
         wagmi must be installed to use React plugin.

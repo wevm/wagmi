@@ -1,6 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`etherscan > fetches ABI 1`] = `
+exports[`etherscan > contracts > fetches ABI 1`] = `
 [
   {
     "abi": [
@@ -368,7 +368,7 @@ exports[`etherscan > fetches ABI 1`] = `
 ]
 `;
 
-exports[`etherscan > fetches ABI with multichain deployment 1`] = `
+exports[`etherscan > contracts > fetches ABI with multichain deployment 1`] = `
 [
   {
     "abi": [
@@ -730,13 +730,14 @@ exports[`etherscan > fetches ABI with multichain deployment 1`] = `
     ],
     "address": {
       "1": "0xaf0326d92b97df1221759476b072abfd8084f9be",
+      "10": "0xaf0326d92b97df1221759476b072abfd8084f9be",
     },
     "name": "WagmiMintExample",
   },
 ]
 `;
 
-exports[`fetch > fails to fetch for unverified contract 1`] = `
+exports[`fetch > contracts > fetches ABI 1`] = `
 [
   {
     "abi": [

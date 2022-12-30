@@ -1,0 +1,77 @@
+// Vitest Snapshot v1
+
+exports[`react > run > isTypeScript > false 1`] = `
+{
+  "content": "/**
+* Wraps {@link useContract} with \`abi\` set to {@link WagmiAbi}. 
+*/
+   export function useWagmi(config = {}) {
+     return useContract({
+abi: WagmiAbi,
+address: WagmiAddress,...config})
+   }
+
+/**
+* Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi}. 
+*/
+export function useWagmiRead(config = {}) {
+  return useContractRead({
+abi: WagmiAbi,
+address: WagmiAddress,...config})
+}
+
+/**
+* Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"balanceOf\\"\`. 
+*/
+export function useWagmiBalanceOf(config = {}) {
+  return useContractRead({
+abi: WagmiAbi,
+address: WagmiAddress,
+functionName: \\"balanceOf\\",...config})
+}",
+  "imports": "import { useContract, useContractRead } from 'wagmi'",
+}
+`;
+
+exports[`react > run > isTypeScript > true 1`] = `
+{
+  "content": "/**
+* Wraps {@link useContract} with \`abi\` set to {@link WagmiAbi}. 
+*/
+             export function useWagmi(config: Omit<UseContractConfig, \\"abi\\"> = {}as any) {
+               return useContract({
+abi: WagmiAbi,
+address: WagmiAddress,...config})
+             }
+
+/**
+* Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi}. 
+*/
+export function useWagmiRead<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = string
+>(
+  config: Omit<UseContractReadConfig<TAbi, TFunctionName>, \\"abi\\"> = {}as any,
+) {
+  return useContractRead({
+abi: WagmiAbi,
+address: WagmiAddress,...config} as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+* Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"balanceOf\\"\`. 
+*/
+export function useWagmiBalanceOf<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = \\"balanceOf\\"
+>(
+  config: Omit<UseContractReadConfig<TAbi, TFunctionName>, \\"abi\\" | \\"functionName\\"> = {}as any,
+) {
+  return useContractRead({
+abi: WagmiAbi,
+address: WagmiAddress,
+functionName: \\"balanceOf\\",...config} as UseContractReadConfig<TAbi, TFunctionName>)
+}",
+  "imports": "import { useContract, UseContractConfig, useContractRead, UseContractReadConfig } from 'wagmi'",
+}
+`;

@@ -6,6 +6,7 @@ import { basename, extname, resolve } from 'pathe'
 
 import type { Plugin } from '../config'
 import * as logger from '../logger'
+import type { RequiredBy } from '../types'
 
 const defaultExcludes = [
   'Common.sol/**',
@@ -72,8 +73,7 @@ type FoundryConfig = {
   project: string
 }
 
-type FoundryResult = Omit<Plugin, 'contracts'> &
-  Required<Pick<Plugin, 'contracts'>>
+type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 
 /**
  * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.

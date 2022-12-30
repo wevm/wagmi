@@ -17,37 +17,41 @@ describe('blockExplorer', () => {
   afterEach(() => server.resetHandlers())
   afterAll(() => server.close())
 
-  it('fetches ABI', async () => {
-    await expect(
-      blockExplorer({
-        apiKey,
-        baseUrl,
-        contracts: [{ name: 'WagmiMintExample', address }],
-      }).contracts!(),
-    ).resolves.toMatchSnapshot()
-  })
+  describe('contracts', () => {
+    it('fetches ABI', async () => {
+      await expect(
+        blockExplorer({
+          apiKey,
+          baseUrl,
+          contracts: [{ name: 'WagmiMintExample', address }],
+        }).contracts!(),
+      ).resolves.toMatchSnapshot()
+    })
 
-  it('fetches ABI with multichain deployment', async () => {
-    await expect(
-      blockExplorer({
-        apiKey,
-        baseUrl,
-        contracts: [{ name: 'WagmiMintExample', address: { 1: address } }],
-      }).contracts!(),
-    ).resolves.toMatchSnapshot()
-  })
+    it('fetches ABI with multichain deployment', async () => {
+      await expect(
+        blockExplorer({
+          apiKey,
+          baseUrl,
+          contracts: [
+            { name: 'WagmiMintExample', address: { 1: address, 10: address } },
+          ],
+        }).contracts(),
+      ).resolves.toMatchSnapshot()
+    })
 
-  it('fails to fetch for unverified contract', async () => {
-    await expect(
-      blockExplorer({
-        apiKey,
-        baseUrl,
-        contracts: [
-          { name: 'WagmiMintExample', address: unverifiedContractAddress },
-        ],
-      }).contracts!(),
-    ).rejects.toThrowErrorMatchingInlineSnapshot(
-      '"Contract source code not verified"',
-    )
+    it('fails to fetch for unverified contract', async () => {
+      await expect(
+        blockExplorer({
+          apiKey,
+          baseUrl,
+          contracts: [
+            { name: 'WagmiMintExample', address: unverifiedContractAddress },
+          ],
+        }).contracts(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Contract source code not verified"',
+      )
+    })
   })
 })
