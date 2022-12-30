@@ -48,6 +48,11 @@ const config = {
         permanent: true,
       },
       {
+        source: '/cli',
+        destination: '/cli/getting-started',
+        permanent: true,
+      },
+      {
         source: '/examples',
         destination: '/examples/connect-wallet',
         statusCode: 302,

@@ -1,4 +1,15 @@
 {
+  "-- @wagmi/cli --": {
+    "type": "separator",
+    "title": "@wagmi/cli"
+  },
   "getting-started": "Getting Started",
-  "create-wagmi": "create-wagmi"
+  "commands": "Commands",
+  "configuration": "Configuration",
+  "plugins": "Plugins",
+  "-- create-wagmi --": {
+    "type": "separator",
+    "title": "create-wagmi"
+  },
+  "create-wagmi": "Getting Started"
 }
