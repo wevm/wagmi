@@ -147,10 +147,15 @@ export function foundry({
     watch: {
       command: rebuild
         ? async () => {
+            let ready = false
             logger.log(`Watching Foundry project for changes at "${project}".`)
             await execa(forgeExecutable, ['build', '--watch'], {
               cwd: resolve(project),
-            }).stdout?.pipe(process.stdout) // TODO: Add prefix for foundry to logs
+            }).stdout?.on('data', (data) => {
+              if (ready) process.stdout.write(`Foundry: ${data}`)
+            })
+            // Don't show foundry logs on watch start up.
+            setTimeout(() => (ready = true), 500)
           }
         : undefined,
       paths: [

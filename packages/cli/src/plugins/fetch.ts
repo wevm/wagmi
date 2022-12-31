@@ -62,17 +62,19 @@ export function fetch({
       const contracts = []
       for (const contract of contractConfigs) {
         const cacheKey = getCacheKey({ contract })
+        const cacheFile = `${cacheDir}/${cacheKey}.json`
         const { url, init } = await request(contract)
 
         const AbortController = globalThis.AbortController
         const controller = new AbortController()
         const timeout = setTimeout(() => {
-          // TODO: Config option and message for timeout
           controller.abort()
-        }, 2_000)
+          // TODO: Make timeout configurable.
+        }, 2_500)
 
         let abi
         try {
+          // TODO: Read from cache if cached file `timestamp` is within `Date.now() + duration`.
           const response = await nodeFetch(url, {
             ...init,
             signal: controller.signal,
@@ -81,7 +83,7 @@ export function fetch({
         } catch (error) {
           try {
             // Attempt to read from cache if fetch fails.
-            abi = await fse.readJSON(`${cacheDir}/${cacheKey}.json`)
+            abi = await fse.readJSON(cacheFile)
             // eslint-disable-next-line no-empty
           } catch {}
           if (!abi) throw error
@@ -90,7 +92,7 @@ export function fetch({
         }
 
         contracts.push({ abi, address: contract.address, name: contract.name })
-        await fse.writeJSON(`${cacheDir}/${cacheKey}.json`, abi)
+        await fse.writeJSON(cacheFile, abi)
       }
       return contracts
     },

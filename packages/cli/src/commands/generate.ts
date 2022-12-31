@@ -3,6 +3,7 @@ import type { Address } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
+import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { default as fse } from 'fs-extra'
 import { z } from 'zod'
@@ -43,53 +44,9 @@ export async function generate(options: Generate) {
   // Get cli config file
   const configPath = await findConfig(options)
   if (!configPath) throw new Error(`Config not found at "${configPath}"`)
-  const resolvedConfig = await resolveConfig({ configPath })
+  const resolvedConfigs = await resolveConfig({ configPath })
   const isTypeScript = await getIsUsingTypeScript()
 
-  // Collect contracts and watch configs from plugins
-  const { contractConfigs, plugins, watchConfigs } = await validatePlugins({
-    resolvedConfig,
-  })
-
-  // Get contracts from config
-  const contractNames = new Set<string>()
-  const contractMap = new Map<string, Contract>()
-  for (const config of contractConfigs) {
-    if (contractNames.has(config.name))
-      throw new Error(`Contract name "${config.name}" is not unique.`)
-    logger.log(`Resolving contract "${config.name}"`)
-    const contract = await getContract({ ...config, isTypeScript })
-    contractMap.set(contract.name, contract)
-  }
-
-  // Run plugins
-  const contracts = [...contractMap.values()]
-  const result = await executePlugins({
-    plugins,
-    contracts,
-    isTypeScript,
-  })
-
-  // Write output to file
-  logger.log(`Saving to "${resolvedConfig.out}"`)
-  await writeContracts({
-    content: result.content,
-    contracts,
-    imports: result.imports,
-    prepend: result.prepend,
-    filename: resolvedConfig.out,
-  })
-  logger.log(`Saved to "${resolvedConfig.out}"`)
-  if (!options.watch) return
-  if (!watchConfigs.length) {
-    if (options.watch)
-      logger.log('Used --watch flag, but no plugins are watching.')
-    return
-  }
-
-  // Watch for changes
-  const { watch } = await import('chokidar')
-  let timeout: NodeJS.Timeout | null
   const delay = 100
   const watchers: FSWatcher[] = []
   const watchOptions: WatchOptions = {
@@ -98,64 +55,123 @@ export async function generate(options: Generate) {
     ignoreInitial: true,
     persistent: true,
   }
-  for (const watchConfig of watchConfigs) {
-    const paths =
-      typeof watchConfig.paths === 'function'
-        ? await watchConfig.paths()
-        : watchConfig.paths
-    const watcher = watch(paths, watchOptions)
-    // Watch for changes to files, new files, and deleted files
-    watcher.on('all', async (event, path) => {
-      if (event !== 'change' && event !== 'add' && event !== 'unlink') return
-      let needsWrite = false
-      if (event === 'change' || event === 'add') {
-        const eventFn =
-          event === 'change' ? watchConfig.onChange : watchConfig.onAdd
-        const config = await eventFn?.(path)
-        if (!config) return
-        logger.log(`Resolving contract "${config.name}"`)
-        const contract = await getContract({ ...config, isTypeScript })
-        contractMap.set(contract.name, contract)
-        needsWrite = true
-      } else if (event === 'unlink') {
-        const name = await watchConfig.onRemove?.(path)
-        if (!name) return
-        contractMap.delete(name)
-        needsWrite = true
-      }
 
-      // Debounce writes
-      if (needsWrite) {
-        if (timeout) clearTimeout(timeout)
-        timeout = setTimeout(async () => {
-          timeout = null
-          const contracts = [...contractMap.values()]
-          const result = await executePlugins({
-            plugins,
-            contracts,
-            isTypeScript,
-          })
-          await writeContracts({
-            content: result.content,
-            contracts,
-            imports: result.imports,
-            prepend: result.prepend,
-            filename: resolvedConfig.out,
-          })
-          logger.log('Saved!')
-        }, delay)
-        needsWrite = false
-      }
+  const outNames = new Set<string>()
+  const configs = Array.isArray(resolvedConfigs)
+    ? resolvedConfigs
+    : [resolvedConfigs]
+  for (const config of configs) {
+    if (outNames.has(config.out))
+      throw new Error(`out "${config.out}" is not unique.`)
+    outNames.add(config.out)
+    logger.log(`Config "${config.out}"`)
+
+    // Collect contracts and watch configs from plugins
+    const { contractConfigs, plugins, watchConfigs } = await validatePlugins({
+      config: config,
     })
 
-    // Run parallel command on ready
-    if (watchConfig.command)
-      watcher.on('ready', async () => {
-        await watchConfig?.command?.()
-      })
+    // Get contracts from config
+    const contractNames = new Set<string>()
+    const contractMap = new Map<string, Contract>()
+    for (const contractConfig of contractConfigs) {
+      if (contractNames.has(contractConfig.name))
+        throw new Error(`Contract name "${contractConfig.name}" is not unique.`)
+      logger.log(`Resolving contract "${contractConfig.name}"`)
+      const contract = await getContract({ ...contractConfig, isTypeScript })
+      contractMap.set(contract.name, contract)
+    }
 
-    watchers.push(watcher)
+    // Run plugins
+    const contracts = [...contractMap.values()]
+    const result = await executePlugins({
+      plugins,
+      contracts,
+      isTypeScript,
+    })
+
+    // Write output to file
+    logger.log(`Saving to "${config.out}"`)
+    await writeContracts({
+      content: result.content,
+      contracts,
+      imports: result.imports,
+      prepend: result.prepend,
+      filename: config.out,
+    })
+    logger.log(`Saved to "${config.out}"`)
+
+    if (options.watch) {
+      if (!watchConfigs.length) {
+        logger.log('Used --watch flag, but no plugins are watching.')
+        continue
+      }
+
+      // Watch for changes
+      let timeout: NodeJS.Timeout | null
+      for (const watchConfig of watchConfigs) {
+        const paths =
+          typeof watchConfig.paths === 'function'
+            ? await watchConfig.paths()
+            : watchConfig.paths
+        const watcher = watch(paths, watchOptions)
+        // Watch for changes to files, new files, and deleted files
+        watcher.on('all', async (event, path) => {
+          if (event !== 'change' && event !== 'add' && event !== 'unlink')
+            return
+          let needsWrite = false
+          if (event === 'change' || event === 'add') {
+            const eventFn =
+              event === 'change' ? watchConfig.onChange : watchConfig.onAdd
+            const config = await eventFn?.(path)
+            if (!config) return
+            logger.log(`Resolving contract "${config.name}"`)
+            const contract = await getContract({ ...config, isTypeScript })
+            contractMap.set(contract.name, contract)
+            needsWrite = true
+          } else if (event === 'unlink') {
+            const name = await watchConfig.onRemove?.(path)
+            if (!name) return
+            contractMap.delete(name)
+            needsWrite = true
+          }
+
+          // Debounce writes
+          if (needsWrite) {
+            if (timeout) clearTimeout(timeout)
+            timeout = setTimeout(async () => {
+              timeout = null
+              const contracts = [...contractMap.values()]
+              const result = await executePlugins({
+                plugins,
+                contracts,
+                isTypeScript,
+              })
+              await writeContracts({
+                content: result.content,
+                contracts,
+                imports: result.imports,
+                prepend: result.prepend,
+                filename: config.out,
+              })
+              logger.log('Saved!')
+            }, delay)
+            needsWrite = false
+          }
+        })
+
+        // Run parallel command on ready
+        if (watchConfig.command)
+          watcher.on('ready', async () => {
+            await watchConfig?.command?.()
+          })
+
+        watchers.push(watcher)
+      }
+    }
   }
+
+  if (!watchers.length) return
 
   // Watch `@wagmi/cli` config file for changes
   const watcher = watch(configPath).on('change', async (path) => {
@@ -323,10 +339,10 @@ async function executePlugins(config: {
   return { content, imports, prepend } as const
 }
 
-async function validatePlugins({ resolvedConfig }: { resolvedConfig: Config }) {
-  const contractConfigs = resolvedConfig.contracts ?? []
+async function validatePlugins({ config }: { config: Config }) {
+  const contractConfigs = config.contracts ?? []
   const watchConfigs: Watch[] = []
-  const plugins = resolvedConfig.plugins ?? []
+  const plugins = config.plugins ?? []
   for (const plugin of plugins) {
     logger.log(`Validating plugin "${plugin.name}"`)
     await plugin.validate?.()

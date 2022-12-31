@@ -166,10 +166,11 @@ export function hardhat({
               watcher.on('all', async (event) => {
                 if (event !== 'change' && event !== 'add' && event !== 'unlink')
                   return
-                console.log('Rebuilding Hardhat project…')
                 await execa(command!, options, {
                   cwd: resolve(project),
-                }).stdout?.pipe(process.stdout) // TODO: Add prefix for hardhat to logs
+                }).stdout?.on('data', (data) => {
+                  process.stdout.write(`Hardhat: ${data}`)
+                })
               })
               process.once('SIGINT', shutdown)
               process.once('SIGTERM', shutdown)
@@ -184,15 +185,12 @@ export function hardhat({
         ...exclude.map((x) => `!${artifactsDirectory}/**/${x}`),
       ],
       async onAdd(path) {
-        console.log('onAdd', path)
         return getContract(path)
       },
       async onChange(path) {
-        console.log('onChange', path)
         return getContract(path)
       },
       async onRemove(path) {
-        console.log('onRemove', path)
         const filename = basename(path)
         const extension = extname(path)
         // Since we can't use `getContractName`, guess from path

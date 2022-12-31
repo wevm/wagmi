@@ -1,6 +1,6 @@
 import type { Abi, Address } from 'abitype'
 
-import type { MaybePromise } from './types'
+import type { MaybeArray, MaybePromise } from './types'
 
 export type ContractConfig<
   TChainId extends number = number,
@@ -89,7 +89,9 @@ export type Config = {
   plugins?: Plugin[]
 }
 
-export function defineConfig(config: Config | (() => MaybePromise<Config>)) {
+export function defineConfig(
+  config: MaybeArray<Config> | (() => MaybePromise<MaybeArray<Config>>),
+) {
   return config
 }
 
