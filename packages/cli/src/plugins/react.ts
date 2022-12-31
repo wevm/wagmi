@@ -88,48 +88,34 @@ export function react(config: ReactConfig = {}): ReactResult {
         }
 
         const baseHookName = pascalCase(contract.name)
-        const hasAddress = !!contract.address
-        const hasMultichainAddress = typeof contract.address === 'object'
-        const hasMultipleDeployments =
-          typeof contract.address === 'object' &&
-          Object.keys(contract.address).length > 1
-
         const innerHookParams: Record<string, string> = {
           abi: contract.meta.abiName,
         }
+        let omittedTypeParams = '"abi"'
+        let typeParams = ''
         if (contract.meta.addressName) {
-          if (hasMultichainAddress) {
-            if (hasMultipleDeployments)
+          if (typeof contract.address === 'object') {
+            omittedTypeParams = '"abi" | "address"'
+            if (Object.keys(contract.address).length > 1) {
+              typeParams = dedent`& {
+                chainId?: keyof typeof ${contract.meta.addressName}
+              }`
               innerHookParams[
                 'address'
               ] = `config.chainId ? ${contract.meta.addressName}[config.chainId] : undefined`
-            else
+            } else
               innerHookParams['address'] = `${contract.meta.addressName}[${
                 Object.keys(contract.address!)[0]
               }]`
-          } else if (hasAddress)
+          } else if (contract.address)
             innerHookParams['address'] = contract.meta.addressName
         }
-        const typeParams = hasMultipleDeployments
-          ? dedent`& {
-            chainId?: keyof typeof ${contract.meta.addressName}
-          }`
-          : ''
-        const omittedTypeParams = hasMultichainAddress
-          ? '"abi" | "address"'
-          : '"abi"'
 
         if (hooks.useContract) {
           const innerHookName = 'useContract'
           const hookName = innerHookName.replace('Contract', baseHookName)
           imports.add(innerHookName)
-          const innerHookConfig =
-            Object.entries(innerHookParams).reduce((prev, curr) => {
-              return dedent`
-            ${prev}
-            ${curr[0]}: ${curr[1]},
-          `
-            }, '{') + `...config}`
+          const innerHookConfig = getInnerHookConfig({ innerHookParams })
           let code
           if (isTypeScript) {
             const typeName = 'UseContractConfig'
@@ -169,6 +155,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 hookName,
                 innerHookName,
                 innerHookParams,
+                itemType: 'functionName',
                 omittedTypeParams,
                 typeName,
                 typeParams,
@@ -193,9 +180,10 @@ export function react(config: ReactConfig = {}): ReactResult {
                 if (contractNames.has(item.name)) continue
                 contractNames.add(item.name)
                 const innerHookName = 'useContractRead'
-                const hookName = innerHookName
-                  .replace('Contract', baseHookName + pascalCase(item.name))
-                  .replace('Read', '')
+                const hookName = innerHookName.replace(
+                  'ContractRead',
+                  baseHookName + pascalCase(item.name),
+                )
                 imports.add(innerHookName)
                 let code
                 if (isTypeScript) {
@@ -241,6 +229,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 hookName,
                 innerHookName,
                 innerHookParams,
+                itemType: 'functionName',
                 omittedTypeParams,
                 typeName,
                 typeParams,
@@ -265,9 +254,10 @@ export function react(config: ReactConfig = {}): ReactResult {
                 if (contractNames.has(item.name)) continue
                 contractNames.add(item.name)
                 const innerHookName = 'usePrepareContractWrite'
-                const hookName = innerHookName
-                  .replace('Contract', baseHookName + pascalCase(item.name))
-                  .replace('Write', '')
+                const hookName = innerHookName.replace(
+                  'ContractWrite',
+                  baseHookName + pascalCase(item.name),
+                )
                 imports.add(innerHookName)
                 let code
                 if (isTypeScript) {
@@ -313,6 +303,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 hookName,
                 innerHookName,
                 innerHookParams,
+                itemType: 'eventName',
                 omittedTypeParams,
                 typeName,
                 typeParams,
@@ -414,7 +405,7 @@ function getTSHookCode({
   innerHookName: string
   innerHookParams: Record<string, string>
   itemName?: string
-  itemType?: 'functionName' | 'eventName'
+  itemType: 'functionName' | 'eventName'
   omittedTypeParams: string
   typeName: string
   typeParams: string
@@ -425,6 +416,7 @@ function getTSHookCode({
     innerHookParams,
   })
   const omitted = `${omittedTypeParams}${itemType ? ` | "${itemType}"` : ''}`
+  const itemGeneric = `T${pascalCase(itemType)}`
   return dedent`
     /**
      ${getDescriptionDocString({
@@ -436,11 +428,11 @@ function getTSHookCode({
     */
     export function ${hookName}<
       TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-      TName extends string = ${itemName ? `"${itemName}"` : 'string'}
+      ${itemGeneric} extends string = ${itemName ? `"${itemName}"` : 'string'}
     >(
-      config: Omit<${typeName}<TAbi, TName>, ${omitted}>${typeParams} = {} as any,
+      config: Omit<${typeName}<TAbi, ${itemGeneric}>, ${omitted}>${typeParams} = {} as any,
     ) {
-      return ${innerHookName}(${innerHookConfig} as ${typeName}<TAbi, TName>)
+      return ${innerHookName}(${innerHookConfig} as ${typeName}<TAbi, ${itemGeneric}>)
     }
   `
 }

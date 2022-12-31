@@ -61,11 +61,22 @@ export function fetch({
     async contracts() {
       const contracts = []
       for (const contract of contractConfigs) {
-        const { url, init } = await request(contract)
         const cacheKey = getCacheKey({ contract })
+        const { url, init } = await request(contract)
+
+        const AbortController = globalThis.AbortController
+        const controller = new AbortController()
+        const timeout = setTimeout(() => {
+          // TODO: Config option and message for timeout
+          controller.abort()
+        }, 2_000)
+
         let abi
         try {
-          const response = await nodeFetch(url, init)
+          const response = await nodeFetch(url, {
+            ...init,
+            signal: controller.signal,
+          })
           abi = await parse({ response })
         } catch (error) {
           try {
@@ -74,7 +85,10 @@ export function fetch({
             // eslint-disable-next-line no-empty
           } catch {}
           if (!abi) throw error
+        } finally {
+          clearTimeout(timeout)
         }
+
         contracts.push({ abi, address: contract.address, name: contract.name })
         await fse.writeJSON(`${cacheDir}/${cacheKey}.json`, abi)
       }
