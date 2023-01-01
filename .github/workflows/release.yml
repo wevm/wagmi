@@ -42,3 +42,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish CJS bundle to npm
+        if: steps.changesets.outputs.published == 'true'
+        run: pnpm cjs:release ${{ steps.changesets.outputs.publishedPackages }}
