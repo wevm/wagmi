@@ -6,6 +6,9 @@ import { readJsonSync, writeJsonSync } from 'fs-extra'
 import path from 'path'
 
 type PackageJson = Package['packageJson']
+type PreparedPackage = Package & {
+  oldPackageJson: PackageJson
+}
 
 const include = [path.join(__dirname, '..', 'packages')]
 
@@ -23,22 +26,24 @@ export async function main() {
   // 2. Bundle into CJS.
   await build()
 
+  // 3. Retrieve the changed packages from the output of
+  // the changesets GH Action (if used). Otherwise, just
+  // use prepared packages.
   const changedPackageJsons: PackageJson[] = process.argv[2]
     ? JSON.parse(process.argv[2])
     : preparedPackages.map(({ packageJson }) => packageJson)
-
   const changedPackages: Package[] = preparedPackages.filter(
     ({ packageJson }) =>
       changedPackageJsons.some(({ name }) => name === packageJson.name),
   )
 
-  // 3. Version packages w/ "-cjs" suffix.
+  // 4. Version packages w/ "-cjs" suffix.
   version({ changedPackages })
 
-  // 4. Publish packages under "cjs" tag.
+  // 5. Publish packages under "cjs" tag.
   await publish({ changedPackages })
 
-  // 5. Revert package.jsons to original state.
+  // 6. Revert package.jsons to original state.
   postPublish({ preparedPackages })
 }
 
@@ -46,10 +51,6 @@ main()
 
 //////////////////////////////////////////////////////////////////////////
 // Prepare
-
-type PreparedPackage = Package & {
-  oldPackageJson: PackageJson
-}
 
 function prepare({ packageDirs }: { packageDirs: string[] }) {
   const packages: PreparedPackage[] = []
