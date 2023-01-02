@@ -1,7 +1,7 @@
 import dedent from 'dedent'
 import { execa } from 'execa'
 import { default as fs } from 'fs-extra'
-import type { Options } from 'tsup'
+import type { Format, Options } from 'tsup'
 
 import path from 'path'
 
@@ -26,7 +26,7 @@ export function getConfig({ dev, noExport, ...options }: GetConfig): Options {
       clean: true,
       // Only need to generate one file with tsup for development since we will create links in `onSuccess`
       entry: [entry[0] as string],
-      format: ['esm'],
+      format: [(process.env.FORMAT as Format) ?? 'esm'],
       silent: true,
       async onSuccess() {
         // remove all files in dist
@@ -61,7 +61,7 @@ export function getConfig({ dev, noExport, ...options }: GetConfig): Options {
     bundle: true,
     clean: true,
     dts: true,
-    format: ['esm'],
+    format: [(process.env.FORMAT as Format) ?? 'esm'],
     splitting: true,
     target: 'es2021',
     async onSuccess() {
