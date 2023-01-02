@@ -22,7 +22,9 @@ export type BlockExplorerConfig = {
   /**
    * Function to get address from contract config.
    */
-  getAddress?(config: { address: ContractConfig['address'] }): Address
+  getAddress?(config: {
+    address: NonNullable<ContractConfig['address']>
+  }): Address
   /**
    * Name of source.
    */
@@ -52,7 +54,6 @@ export function blockExplorer({
   baseUrl,
   contracts,
   getAddress = ({ address }) => {
-    if (!address) throw new Error('address is required')
     if (typeof address === 'string') return address
     return Object.values(address)[0]!
   },

@@ -1,6 +1,6 @@
 {
   "name": "@wagmi/cli",
-  "description": "wagmi CLI",
+  "description": "Manage and generate code from Ethereum ABIs",
   "license": "MIT",
   "version": "0.0.1",
   "repository": {

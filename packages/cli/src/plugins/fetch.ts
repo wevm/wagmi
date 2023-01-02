@@ -49,10 +49,7 @@ type FetchResult = RequiredBy<Plugin, 'contracts'>
  */
 export function fetch({
   contracts: contractConfigs,
-  getCacheKey = ({ contract }) =>
-    typeof contract.address === 'string'
-      ? contract.address
-      : JSON.stringify(contract.address),
+  getCacheKey = ({ contract }) => JSON.stringify(contract),
   name = 'Fetch',
   parse = ({ response }) => response.json() as Promise<ContractConfig['abi']>,
   request,
