@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.10.2
+
+### Patch Changes
+
+- [#1593](https://github.com/wagmi-dev/wagmi/pull/1593) [`216d555c`](https://github.com/wagmi-dev/wagmi/commit/216d555c62bd95c3c7c8f8e20f7269f6c8504610) Thanks [@jxom](https://github.com/jxom)! - Added CJS escape hatch bundle under the "cjs" tag.
+
+- Updated dependencies [[`216d555c`](https://github.com/wagmi-dev/wagmi/commit/216d555c62bd95c3c7c8f8e20f7269f6c8504610)]:
+  - @wagmi/core@0.8.9
+
 ## 0.10.1
 
 ### Patch Changes
