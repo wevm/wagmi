@@ -103,7 +103,7 @@ function version({
     for (const { packageJson } of dependencyPackages) {
       if (newPackageJson.dependencies?.[packageJson.name]) {
         newPackageJson.dependencies[packageJson.name] =
-          '^' + packageJson.version + '-cjs'
+          packageJson.version + '-cjs'
       }
     }
 
