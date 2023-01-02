@@ -1,6 +1,6 @@
-// TODO: Remove `node-fetch` dependency when Node 18 is used more and `fetch` is stable.
 import { default as fse } from 'fs-extra'
 import type { RequestInfo, RequestInit, Response } from 'node-fetch'
+// TODO: Remove `node-fetch` dependency when Node 18 is used more and `fetch` is stable.
 import { default as nodeFetch } from 'node-fetch'
 
 import type { ContractConfig, Plugin } from '../config'
@@ -61,40 +61,43 @@ export function fetch({
     async contracts() {
       await fse.ensureDir(cacheDir)
 
+      const cacheDuration = 300_000 // 5m in ms
+      const timestamp = Date.now() + cacheDuration
       const contracts = []
       for (const contract of contractConfigs) {
         const cacheKey = getCacheKey({ contract })
-        const cacheFile = `${cacheDir}/${cacheKey}.json`
-        const { url, init } = await request(contract)
-
-        const AbortController = globalThis.AbortController
-        const controller = new AbortController()
-        const timeout = setTimeout(() => {
-          controller.abort()
-          // TODO: Make timeout configurable.
-        }, 2_500)
-
+        const cacheFilePath = `${cacheDir}/${cacheKey}.json`
+        const cachedFile = await fse.readJSON(cacheFilePath).catch(() => null)
         let abi
-        try {
-          // TODO: Read from cache if cached file `timestamp` is within `Date.now() + duration`.
-          const response = await nodeFetch(url, {
-            ...init,
-            signal: controller.signal,
-          })
-          abi = await parse({ response })
-        } catch (error) {
+        if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
+        else {
+          const { url, init } = await request(contract)
+          const AbortController = globalThis.AbortController
+          const controller = new AbortController()
+          const timeout = setTimeout(() => {
+            controller.abort()
+          }, 2_500) // Abort if request takes longer than 5s.
+
           try {
-            // Attempt to read from cache if fetch fails.
-            abi = await fse.readJSON(cacheFile)
-            // eslint-disable-next-line no-empty
-          } catch {}
-          if (!abi) throw error
-        } finally {
-          clearTimeout(timeout)
+            const response = await nodeFetch(url, {
+              ...init,
+              signal: controller.signal,
+            })
+            abi = await parse({ response })
+            await fse.writeJSON(cacheFilePath, { abi, timestamp })
+          } catch (error) {
+            try {
+              // Attempt to read from cache if fetch fails.
+              abi = (await fse.readJSON(cacheFilePath)).abi
+              // eslint-disable-next-line no-empty
+            } catch {}
+            if (!abi) throw error
+          } finally {
+            clearTimeout(timeout)
+          }
         }
 
         contracts.push({ abi, address: contract.address, name: contract.name })
-        await fse.writeJSON(cacheFile, abi)
       }
       return contracts
     },

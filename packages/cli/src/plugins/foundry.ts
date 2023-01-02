@@ -43,7 +43,7 @@ type FoundryConfig = {
     /**
      * Remove build artifacts and cache directories on start up.
      *
-     * @default true
+     * @default false
      */
     clean?: boolean
     /**
@@ -82,7 +82,7 @@ export function foundry({
   artifacts = 'out',
   exclude = defaultExcludes,
   forge: {
-    clean = true,
+    clean = false,
     build = true,
     path: forgeExecutable = 'forge',
     rebuild = true,

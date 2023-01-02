@@ -1,2 +1,2 @@
 export { generate, type Generate } from './generate'
-export { init } from './init'
+export { init, type Init } from './init'

@@ -2,7 +2,7 @@
 import { cac } from 'cac'
 
 import packageJson from '../package.json'
-import type { Generate } from './commands'
+import type { Generate, Init } from './commands'
 import * as logger from './logger'
 
 const cli = cac('wagmi')
@@ -20,9 +20,9 @@ cli
 cli
   .command('init', 'create configuration file')
   .example((name) => `${name} init`)
-  .action(async () => {
+  .action(async (options: Init) => {
     const { init } = await import('./commands')
-    await init()
+    await init(options)
   })
 
 cli.help()

@@ -34,19 +34,19 @@ type HardhatConfig = {
      *
      * @default `${packageManger} hardhat clean`
      */
-    clean?: string | false
+    clean?: string | boolean
     /**
      * Build Hardhat project before fetching artifacts.
      *
      * @default `${packageManger} hardhat compile`
      */
-    build?: string | false
+    build?: string | boolean
     /**
      * Rebuild every time a watched file or directory is changed.
      *
      * @default `${packageManger} hardhat compile`
      */
-    rebuild?: string | false
+    rebuild?: string | boolean
   }
   /** Artifact files to include. */
   include?: string[]
@@ -100,20 +100,23 @@ export function hardhat({
   const artifactsDirectory = `${project}/${artifacts}`
   const sourcesDirectory = `${project}/${sources}`
 
+  const { build = true, clean = false, rebuild = true } = commands
   return {
     async contracts() {
-      const packageManager =
-        commands.clean === undefined || commands.build === undefined
-          ? await getPackageManager()
-          : undefined
-      const clean = commands.clean ?? `${packageManager} hardhat clean`
       if (clean) {
-        const [command, ...options] = clean.split(' ')
+        const packageManager = await getPackageManager()
+        const [command, ...options] = (
+          typeof clean === 'boolean' ? `${packageManager} hardhat clean` : clean
+        ).split(' ')
         await execa(command!, options, { cwd: resolve(project) })
       }
-      const build = commands.build ?? `${packageManager} hardhat compile`
       if (build) {
-        const [command, ...options] = build.split(' ')
+        const packageManager = await getPackageManager()
+        const [command, ...options] = (
+          typeof build === 'boolean'
+            ? `${packageManager} hardhat compile`
+            : build
+        ).split(' ')
         await execa(command!, options, { cwd: resolve(project) })
       }
       if (!fse.pathExistsSync(artifactsDirectory))
@@ -143,39 +146,37 @@ export function hardhat({
       `)
     },
     watch: {
-      command:
-        commands.rebuild ?? true
-          ? async () => {
-              logger.log(
-                `Watching Hardhat project for changes at "${project}".`,
-              )
-              const { watch } = await import('chokidar')
-              const watcher = watch(sourcesDirectory, {
-                atomic: true,
-                awaitWriteFinish: true,
-                ignoreInitial: true,
-                persistent: true,
+      command: rebuild
+        ? async () => {
+            logger.log(`Watching Hardhat project for changes at "${project}".`)
+            const { watch } = await import('chokidar')
+            const watcher = watch(sourcesDirectory, {
+              atomic: true,
+              awaitWriteFinish: true,
+              ignoreInitial: true,
+              persistent: true,
+            })
+            const [command, ...options] = (
+              typeof rebuild === 'boolean'
+                ? `${await getPackageManager()} hardhat compile`
+                : rebuild
+            ).split(' ')
+            watcher.on('all', async (event) => {
+              if (event !== 'change' && event !== 'add' && event !== 'unlink')
+                return
+              await execa(command!, options, {
+                cwd: resolve(project),
+              }).stdout?.on('data', (data) => {
+                process.stdout.write(`Hardhat: ${data}`)
               })
-              const rebuild =
-                commands.rebuild ||
-                `${await getPackageManager()} hardhat compile`
-              const [command, ...options] = rebuild!.split(' ')
-              watcher.on('all', async (event) => {
-                if (event !== 'change' && event !== 'add' && event !== 'unlink')
-                  return
-                await execa(command!, options, {
-                  cwd: resolve(project),
-                }).stdout?.on('data', (data) => {
-                  process.stdout.write(`Hardhat: ${data}`)
-                })
-              })
-              process.once('SIGINT', shutdown)
-              process.once('SIGTERM', shutdown)
-              async function shutdown() {
-                await watcher.close()
-              }
+            })
+            process.once('SIGINT', shutdown)
+            process.once('SIGTERM', shutdown)
+            async function shutdown() {
+              await watcher.close()
             }
-          : undefined,
+          }
+        : undefined,
       paths: [
         artifactsDirectory,
         ...include.map((x) => `${artifactsDirectory}/**/${x}`),

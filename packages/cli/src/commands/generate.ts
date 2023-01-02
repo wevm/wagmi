@@ -51,7 +51,7 @@ export async function generate(options: Generate) {
   const watchers: FSWatcher[] = []
   const watchOptions: WatchOptions = {
     atomic: true,
-    awaitWriteFinish: true,
+    // awaitWriteFinish: true,
     ignoreInitial: true,
     persistent: true,
   }

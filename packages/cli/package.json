@@ -49,6 +49,18 @@
     "/config",
     "/dist"
   ],
+  "peerDependencies": {
+    "@wagmi/core": ">=0.8.9",
+    "wagmi": ">=0.10.2"
+  },
+  "peerDependenciesMeta": {
+    "@wagmi/core": {
+      "optional": true
+    },
+    "wagmi": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@ethersproject/address": "^5.7.0",
     "@wagmi/chains": "^0.1.7",
