@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.8.10
+
+### Patch Changes
+
+- [#1598](https://github.com/wagmi-dev/wagmi/pull/1598) [`fc10ebe6`](https://github.com/wagmi-dev/wagmi/commit/fc10ebe659dd5f3b7a8e00581f094652280a779b) Thanks [@jxom](https://github.com/jxom)! - Fixed CJS dependency version range
+
 ## 0.8.9
 
 ### Patch Changes
