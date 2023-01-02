@@ -45,4 +45,4 @@ jobs:
 
       - name: Publish CJS bundle to npm
         if: steps.changesets.outputs.published == 'true'
-        run: pnpm cjs:release ${{ steps.changesets.outputs.publishedPackages }}
+        run: pnpm cjs:release '${{ steps.changesets.outputs.publishedPackages }}'
