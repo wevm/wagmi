@@ -10,18 +10,15 @@ type PreparedPackage = Package & {
   oldPackageJson: PackageJson
 }
 
-const include = [path.join(__dirname, '..', 'packages')]
+const dependenciesDir = [path.join(__dirname, '..', 'references', 'packages')]
+const packagesDir = [path.join(__dirname, '..', 'packages')]
 
 /** @deprecated Script to generate & release a CJS escape hatch bundle. */
 export async function main() {
   const { packages } = getPackagesSync(path.join(__dirname, '..'))
 
-  const packageDirs = packages
-    .filter(({ dir }) => include.some((i) => dir.startsWith(i)))
-    .map(({ dir }) => dir)
-
   // 1. Prepare package package.jsons into CJS format.
-  const preparedPackages = prepare({ packageDirs })
+  const preparedPackages = prepare({ packages })
 
   // 2. Bundle into CJS.
   await build()
@@ -38,7 +35,7 @@ export async function main() {
   )
 
   // 4. Version packages w/ "-cjs" suffix.
-  version({ changedPackages })
+  version({ changedPackages, packages })
 
   // 5. Publish packages under "cjs" tag.
   await publish({ changedPackages })
@@ -52,8 +49,12 @@ main()
 //////////////////////////////////////////////////////////////////////////
 // Prepare
 
-function prepare({ packageDirs }: { packageDirs: string[] }) {
-  const packages: PreparedPackage[] = []
+function prepare({ packages }: { packages: Package[] }) {
+  const packageDirs = packages
+    .filter(({ dir }) => packagesDir.some((i) => dir.startsWith(i)))
+    .map(({ dir }) => dir)
+
+  const preparedPackages: PreparedPackage[] = []
   for (const packageDir of packageDirs) {
     const packageJsonPath = path.join(packageDir, 'package.json')
     const packageJson = readJsonSync(packageJsonPath)
@@ -62,9 +63,9 @@ function prepare({ packageDirs }: { packageDirs: string[] }) {
     delete packageJson.type
     writeJsonSync(packageJsonPath, packageJson, { spaces: 2 })
 
-    packages.push({ dir: packageDir, oldPackageJson, packageJson })
+    preparedPackages.push({ dir: packageDir, oldPackageJson, packageJson })
   }
-  return packages
+  return preparedPackages
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -84,12 +85,28 @@ async function build() {
 //////////////////////////////////////////////////////////////////////////
 // Version
 
-function version({ changedPackages }: { changedPackages: Package[] }) {
+function version({
+  changedPackages,
+  packages,
+}: {
+  changedPackages: Package[]
+  packages: Package[]
+}) {
+  const dependencyPackages = packages.filter(({ dir }) =>
+    dependenciesDir.some((i) => dir.startsWith(i)),
+  )
+
   for (const { dir, packageJson } of changedPackages) {
-    const newPackageJson = {
-      ...packageJson,
-      version: `${packageJson.version}-cjs`,
+    const newPackageJson = { ...packageJson }
+
+    newPackageJson.version = packageJson.version + '-cjs'
+    for (const { packageJson } of dependencyPackages) {
+      if (newPackageJson.dependencies?.[packageJson.name]) {
+        newPackageJson.dependencies[packageJson.name] =
+          '^' + packageJson.version + '-cjs'
+      }
     }
+
     writeJsonSync(path.join(dir, 'package.json'), newPackageJson, { spaces: 2 })
   }
 }
