@@ -1,10 +1,9 @@
 import { pascalCase } from 'change-case'
 import dedent from 'dedent'
-import { execa } from 'execa'
 
 import type { Contract, Plugin } from '../config'
 import type { RequiredBy } from '../types'
-import { getAddressDocString, getPackageManager } from '../utils'
+import { getAddressDocString } from '../utils'
 
 type ReactConfig = {
   /**
@@ -51,7 +50,7 @@ type ReactConfig = {
   usePrepareContractFunctionWrite?: boolean
 }
 
-type ReactResult = RequiredBy<Plugin, 'run' | 'validate'>
+type ReactResult = RequiredBy<Plugin, 'run'>
 
 export function react(config: ReactConfig = {}): ReactResult {
   const hooks = {
@@ -71,33 +70,15 @@ export function react(config: ReactConfig = {}): ReactResult {
 
       const content: string[] = []
       for (const contract of contracts) {
-        let hasReadFunction,
-          hasWriteFunction,
-          hasEvent = false
-        for (const component of contract.abi) {
-          if (component.type === 'function')
-            if (
-              component.stateMutability === 'view' ||
-              component.stateMutability === 'pure'
-            )
-              hasReadFunction = true
-            else hasWriteFunction = true
-          else if (component.type === 'event') hasEvent = true
-          // Exit early if all flags are `true`
-          if (hasReadFunction && hasWriteFunction && hasEvent) break
-        }
-
         const baseHookName = pascalCase(contract.name)
         const innerHookParams: Record<string, string> = {
           abi: contract.meta.abiName,
         }
-        let omittedTypeParams = '"abi"'
-        let typeParams = ''
+        let extraTypeParams = ''
         if (contract.meta.addressName) {
           if (typeof contract.address === 'object') {
-            omittedTypeParams = '"abi" | "address"'
             if (Object.keys(contract.address).length > 1) {
-              typeParams = dedent`& {
+              extraTypeParams = dedent`& {
                 chainId?: keyof typeof ${contract.meta.addressName}
               }`
               innerHookParams[
@@ -110,34 +91,33 @@ export function react(config: ReactConfig = {}): ReactResult {
           } else if (contract.address)
             innerHookParams['address'] = contract.meta.addressName
         }
+        const { hasReadFunction, hasWriteFunction, hasEvent } = getAbiItemTypes(
+          contract.abi,
+        )
 
         if (hooks.useContract) {
           const innerHookName = 'useContract'
           const hookName = innerHookName.replace('Contract', baseHookName)
           imports.add(innerHookName)
-          const innerHookConfig = getInnerHookConfig({ innerHookParams })
+          const options = {
+            contract,
+            hookName,
+            innerHookName,
+            innerHookParams,
+          }
           let code
           if (isTypeScript) {
             const typeName = 'UseContractConfig'
             imports.add(typeName)
-            code = dedent`
-              /**
-               ${getDescriptionDocString({
-                 innerHookName,
-                 abiName: contract.meta.abiName,
-               })} ${getAddressDocString({ address: contract.address })}
-              */
-              export function ${hookName}(config: Omit<${typeName}, ${omittedTypeParams}>${typeParams} = {} as any) {
-                return ${innerHookName}(${innerHookConfig})
-              }
-            `
-          } else
-            code = getJSHookCode({
-              contract,
-              hookName,
-              innerHookName,
-              innerHookParams,
+            code = getHookCode({
+              type: 'ts',
+              options: {
+                ...options,
+                extraTypeParams,
+                typeName,
+              },
             })
+          } else code = getHookCode({ type: 'js', options })
           content.push(code)
         }
 
@@ -146,27 +126,26 @@ export function react(config: ReactConfig = {}): ReactResult {
             const innerHookName = 'useContractRead'
             const hookName = innerHookName.replace('Contract', baseHookName)
             imports.add(innerHookName)
+            const options = {
+              contract,
+              hookName,
+              innerHookName,
+              innerHookParams,
+            }
             let code
             if (isTypeScript) {
               const typeName = 'UseContractReadConfig'
               imports.add(typeName)
-              code = getTSHookCode({
-                contract,
-                hookName,
-                innerHookName,
-                innerHookParams,
-                itemType: 'functionName',
-                omittedTypeParams,
-                typeName,
-                typeParams,
+              code = getHookCode({
+                type: 'ts',
+                options: {
+                  ...options,
+                  extraTypeParams,
+                  genericSlotType: 'functionName',
+                  typeName,
+                },
               })
-            } else
-              code = getJSHookCode({
-                contract,
-                hookName,
-                innerHookName,
-                innerHookParams,
-              })
+            } else code = getHookCode({ type: 'js', options })
             content.push(code)
           }
           if (hooks.useContractFunctionRead) {
@@ -185,29 +164,34 @@ export function react(config: ReactConfig = {}): ReactResult {
                   baseHookName + pascalCase(item.name),
                 )
                 imports.add(innerHookName)
+                const options = {
+                  contract,
+                  hookName,
+                  innerHookName,
+                  innerHookParams,
+                }
                 let code
                 if (isTypeScript) {
                   const typeName = 'UseContractReadConfig'
                   imports.add(typeName)
-                  code = getTSHookCode({
-                    contract,
-                    hookName,
-                    innerHookName,
-                    innerHookParams,
-                    itemName: item.name,
-                    itemType: 'functionName',
-                    omittedTypeParams,
-                    typeName,
-                    typeParams,
+                  code = getHookCode({
+                    type: 'ts',
+                    options: {
+                      ...options,
+                      extraTypeParams,
+                      genericSlotType: 'functionName',
+                      genericSlotValue: item.name,
+                      typeName,
+                    },
                   })
                 } else
-                  code = getJSHookCode({
-                    contract,
-                    hookName,
-                    innerHookName,
-                    innerHookParams,
-                    itemName: item.name,
-                    itemType: 'functionName',
+                  code = getHookCode({
+                    type: 'js',
+                    options: {
+                      ...options,
+                      defaultItemType: 'functionName',
+                      defaultItemValue: item.name,
+                    },
                   })
                 content.push(code)
               }
@@ -220,27 +204,26 @@ export function react(config: ReactConfig = {}): ReactResult {
             const innerHookName = 'usePrepareContractWrite'
             const hookName = innerHookName.replace('Contract', baseHookName)
             imports.add(innerHookName)
+            const options = {
+              contract,
+              hookName,
+              innerHookName,
+              innerHookParams,
+            }
             let code
             if (isTypeScript) {
               const typeName = 'UsePrepareContractWriteConfig'
               imports.add(typeName)
-              code = getTSHookCode({
-                contract,
-                hookName,
-                innerHookName,
-                innerHookParams,
-                itemType: 'functionName',
-                omittedTypeParams,
-                typeName,
-                typeParams,
+              code = getHookCode({
+                type: 'ts',
+                options: {
+                  ...options,
+                  extraTypeParams,
+                  genericSlotType: 'functionName',
+                  typeName,
+                },
               })
-            } else
-              code = getJSHookCode({
-                contract,
-                hookName,
-                innerHookName,
-                innerHookParams,
-              })
+            } else code = getHookCode({ type: 'js', options })
             content.push(code)
           }
           if (hooks.usePrepareContractFunctionWrite) {
@@ -259,29 +242,34 @@ export function react(config: ReactConfig = {}): ReactResult {
                   baseHookName + pascalCase(item.name),
                 )
                 imports.add(innerHookName)
+                const options = {
+                  contract,
+                  hookName,
+                  innerHookName,
+                  innerHookParams,
+                }
                 let code
                 if (isTypeScript) {
                   const typeName = 'UsePrepareContractWriteConfig'
                   imports.add(typeName)
-                  code = getTSHookCode({
-                    contract,
-                    hookName,
-                    innerHookName,
-                    innerHookParams,
-                    itemName: item.name,
-                    itemType: 'functionName',
-                    omittedTypeParams,
-                    typeName,
-                    typeParams,
+                  code = getHookCode({
+                    type: 'ts',
+                    options: {
+                      ...options,
+                      extraTypeParams,
+                      genericSlotType: 'functionName',
+                      genericSlotValue: item.name,
+                      typeName,
+                    },
                   })
                 } else
-                  code = getJSHookCode({
-                    contract,
-                    hookName,
-                    innerHookName,
-                    innerHookParams,
-                    itemName: item.name,
-                    itemType: 'functionName',
+                  code = getHookCode({
+                    type: 'js',
+                    options: {
+                      ...options,
+                      defaultItemType: 'functionName',
+                      defaultItemValue: item.name,
+                    },
                   })
                 content.push(code)
               }
@@ -294,27 +282,26 @@ export function react(config: ReactConfig = {}): ReactResult {
             const innerHookName = 'useContractEvent'
             const hookName = innerHookName.replace('Contract', baseHookName)
             imports.add(innerHookName)
+            const options = {
+              contract,
+              hookName,
+              innerHookName,
+              innerHookParams,
+            }
             let code
             if (isTypeScript) {
               const typeName = 'UseContractEventConfig'
               imports.add(typeName)
-              code = getTSHookCode({
-                contract,
-                hookName,
-                innerHookName,
-                innerHookParams,
-                itemType: 'eventName',
-                omittedTypeParams,
-                typeName,
-                typeParams,
+              code = getHookCode({
+                type: 'ts',
+                options: {
+                  ...options,
+                  extraTypeParams,
+                  genericSlotType: 'eventName',
+                  typeName,
+                },
               })
-            } else
-              code = getJSHookCode({
-                contract,
-                hookName,
-                innerHookName,
-                innerHookParams,
-              })
+            } else code = getHookCode({ type: 'js', options })
             content.push(code)
           }
           if (hooks.useContractItemEvent) {
@@ -329,29 +316,34 @@ export function react(config: ReactConfig = {}): ReactResult {
                   baseHookName + pascalCase(item.name),
                 )
                 imports.add(innerHookName)
+                const options = {
+                  contract,
+                  hookName,
+                  innerHookName,
+                  innerHookParams,
+                }
                 let code
                 if (isTypeScript) {
                   const typeName = 'UseContractEventConfig'
                   imports.add(typeName)
-                  code = getTSHookCode({
-                    contract,
-                    hookName,
-                    innerHookName,
-                    innerHookParams,
-                    itemName: item.name,
-                    itemType: 'eventName',
-                    omittedTypeParams,
-                    typeName,
-                    typeParams,
+                  code = getHookCode({
+                    type: 'ts',
+                    options: {
+                      ...options,
+                      extraTypeParams,
+                      genericSlotType: 'eventName',
+                      genericSlotValue: item.name,
+                      typeName,
+                    },
                   })
                 } else
-                  code = getJSHookCode({
-                    contract,
-                    hookName,
-                    innerHookName,
-                    innerHookParams,
-                    itemName: item.name,
-                    itemType: 'eventName',
+                  code = getHookCode({
+                    type: 'js',
+                    options: {
+                      ...options,
+                      defaultItemType: 'eventName',
+                      defaultItemValue: item.name,
+                    },
                   })
                 content.push(code)
               }
@@ -370,167 +362,123 @@ export function react(config: ReactConfig = {}): ReactResult {
         content: content.join('\n\n'),
       }
     },
-    async validate() {
-      const { packageManager, check, install } = await getPackageCommands()
-      try {
-        const { stdout } = await execa(packageManager, check, {
-          cwd: process.cwd(),
-        })
-        if (stdout !== '') return
-        // eslint-disable-next-line no-empty
-      } catch {}
-
-      throw new Error(dedent`
-        wagmi must be installed to use React plugin.
-        To install, run: ${packageManager} ${install.join(' ')}
-      `)
-    },
   }
 }
 
-function getTSHookCode({
-  contract,
-  hookName,
-  innerHookName,
-  innerHookParams,
-  itemName,
-  itemType,
-  omittedTypeParams,
-  typeName,
-  typeParams,
-}: {
-  contract: Contract
-  docString?: string
-  hookName: string
-  innerHookName: string
-  innerHookParams: Record<string, string>
-  itemName?: string
-  itemType: 'functionName' | 'eventName'
-  omittedTypeParams: string
-  typeName: string
-  typeParams: string
-}) {
-  const innerHookConfig = getInnerHookConfig({
-    itemName,
-    itemType,
-    innerHookParams,
-  })
-  const omitted = `${omittedTypeParams}${itemType ? ` | "${itemType}"` : ''}`
-  const itemGeneric = `T${pascalCase(itemType)}`
-  return dedent`
-    /**
-     ${getDescriptionDocString({
-       innerHookName,
-       abiName: contract.meta.abiName,
-       itemName,
-       itemType,
-     })} ${getAddressDocString({ address: contract.address })}
-    */
-    export function ${hookName}<
-      TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-      ${itemGeneric} extends string = ${itemName ? `"${itemName}"` : 'string'}
-    >(
-      config: Omit<${typeName}<TAbi, ${itemGeneric}>, ${omitted}>${typeParams} = {} as any,
-    ) {
-      return ${innerHookName}(${innerHookConfig} as ${typeName}<TAbi, ${itemGeneric}>)
-    }
-  `
-}
-
-function getJSHookCode({
-  contract,
-  hookName,
-  innerHookName,
-  innerHookParams,
-  itemName,
-  itemType,
-}: {
+type SharedOptions = {
   contract: Contract
   hookName: string
   innerHookName: string
   innerHookParams: Record<string, string>
-  itemName?: string
-  itemType?: 'functionName' | 'eventName'
-}) {
-  const innerHookConfig = getInnerHookConfig({
-    itemName,
-    itemType,
-    innerHookParams,
-  })
-  return dedent`
-    /**
-     ${getDescriptionDocString({
-       innerHookName,
-       abiName: contract.meta.abiName,
-       itemName,
-       itemType,
-     })} ${getAddressDocString({ address: contract.address })}
-    */
-    export function ${hookName}(config = {}) {
-      return ${innerHookName}(${innerHookConfig})
-    }
-  `
 }
+type GetHookCode =
+  | {
+      type: 'ts'
+      options: SharedOptions & {
+        extraTypeParams?: string
+        genericSlotType?: 'eventName' | 'functionName'
+        genericSlotValue?: string
+        typeName: string
+      }
+    }
+  | {
+      type: 'js'
+      options: SharedOptions & {
+        defaultItemType?: 'eventName' | 'functionName'
+        defaultItemValue?: string
+      }
+    }
 
-function getInnerHookConfig({
-  itemName,
-  itemType,
-  innerHookParams,
-}: {
-  itemName?: string
-  itemType?: 'functionName' | 'eventName'
-  innerHookParams: Record<string, string>
-}) {
+function getHookCode({ type, options }: GetHookCode) {
+  const { contract, hookName, innerHookName, innerHookParams } = options
   const params = { ...innerHookParams }
-  if (itemType && itemName) params[itemType] = `"${itemName}"`
-  return (
+  if (type === 'ts' && options.genericSlotType && options.genericSlotValue)
+    params[options.genericSlotType] = `'${options.genericSlotValue}'`
+  const innerHookConfig =
     Object.entries(params).reduce((prev, curr) => {
       return dedent`
-    ${prev}
-    ${curr[0]}: ${curr[1]},
-  `
-    }, '{') + `...config}`
-  )
-}
+        ${prev}
+        ${curr[0]}: ${curr[1]},
+      `
+    }, '{') + '...config}'
 
-function getDescriptionDocString({
-  abiName,
-  innerHookName,
-  itemName,
-  itemType,
-}: {
-  abiName: string
-  innerHookName: string
-  itemName?: string
-  itemType?: 'functionName' | 'eventName'
-}) {
-  return dedent`
-     * Wraps {@link ${innerHookName}} with \`abi\` set to {@link ${abiName}}${
-    itemName && itemType ? ` and \`${itemType}\` set to \`"${itemName}"\`` : ''
-  }.
-  `
-}
-
-async function getPackageCommands() {
-  const packageManager = await getPackageManager()
-  switch (packageManager) {
-    case 'yarn':
-      return {
-        packageManager,
-        check: ['list', '--pattern', 'wagmi'],
-        install: ['add', 'wagmi'],
-      }
-    case 'npm':
-      return {
-        packageManager,
-        check: ['ls', 'wagmi'],
-        install: ['install', '--save', 'wagmi'],
-      }
-    case 'pnpm':
-      return {
-        packageManager,
-        check: ['ls', 'wagmi'],
-        install: ['add', 'wagmi'],
-      }
+  let itemValue
+  let itemType
+  if (type === 'ts') {
+    itemValue = options.genericSlotValue
+    itemType = options.genericSlotType
+  } else {
+    itemValue = options.defaultItemValue
+    itemType = options.defaultItemType
   }
+  let description = `Wraps {@link ${innerHookName}} with \`abi\` set to {@link ${contract.meta.abiName}}`
+  if (itemValue && itemType)
+    description += ` and \`${itemType}\` set to \`"${itemValue}"\``
+  const addressDocString = getAddressDocString({ address: contract.address })
+
+  if (type === 'js')
+    return dedent`
+      /**
+       * ${description}. ${addressDocString}
+       */
+      export function ${hookName}(config = {}) {
+        return ${innerHookName}(${innerHookConfig})
+      }
+    `
+
+  const {
+    extraTypeParams = '',
+    genericSlotType,
+    genericSlotValue,
+    typeName,
+  } = options
+  let omitted = `'abi'`
+  if (contract.meta.addressName) omitted += ` | 'address'`
+  if (genericSlotValue) omitted += ` | '${genericSlotType}'`
+  if (!genericSlotType)
+    return dedent`
+      /**
+       * ${description}. ${addressDocString}
+       */
+      export function ${hookName}(
+        config: Omit<${typeName}, ${omitted}>${extraTypeParams} = {} as any,
+      ) {
+        return ${innerHookName}(${innerHookConfig})
+      }
+    `
+
+  const genericName = genericSlotType ? `T${pascalCase(genericSlotType)}` : ''
+  const genericValue = genericSlotValue ? `'${genericSlotValue}'` : 'string'
+  return dedent`
+    /**
+     * ${description}. ${addressDocString}
+     */
+    export function ${hookName}<
+      TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
+      ${genericName} extends string = ${genericValue}
+    >(
+      config: Omit<${typeName}<TAbi, ${genericName}>, ${omitted}>${extraTypeParams} = {} as any,
+    ) {
+      return ${innerHookName}(${innerHookConfig} as ${typeName}<TAbi, ${genericName}>)
+    }
+  `
+}
+
+function getAbiItemTypes(abi: Contract['abi']) {
+  let hasReadFunction,
+    hasWriteFunction,
+    hasEvent = false
+  for (const component of abi) {
+    if (component.type === 'function')
+      if (
+        component.stateMutability === 'view' ||
+        component.stateMutability === 'pure'
+      )
+        hasReadFunction = true
+      else hasWriteFunction = true
+    else if (component.type === 'event') hasEvent = true
+    // Exit early if all flags are `true`
+    if (hasReadFunction && hasWriteFunction && hasEvent) break
+  }
+  return { hasReadFunction, hasWriteFunction, hasEvent } as const
 }

@@ -21,7 +21,7 @@ export function getAddressDocString({
     const blockExplorer = chain.blockExplorers?.default
     if (!blockExplorer) return ''
     const address_ = Object.values(address)[0]
-    return `[View on ${blockExplorer.name}](${blockExplorer.url}/address/${address_})`
+    return `[View Contract on ${blockExplorer.name} →](${blockExplorer.url}/address/${address_})`
   }
 
   return dedent`
@@ -33,6 +33,6 @@ export function getAddressDocString({
       return `${prev}\n* - [${capitalCase(chain.name)}](${
         blockExplorer.url
       }/address/${address})`
-    }, 'View on Block Explorer:')}
+    }, 'View Contract on Block Explorer:')}
   `
 }

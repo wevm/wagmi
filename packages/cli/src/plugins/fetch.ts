@@ -59,6 +59,8 @@ export function fetch({
 }: FetchConfig): FetchResult {
   return {
     async contracts() {
+      await fse.ensureDir(cacheDir)
+
       const contracts = []
       for (const contract of contractConfigs) {
         const cacheKey = getCacheKey({ contract })
@@ -97,8 +99,5 @@ export function fetch({
       return contracts
     },
     name,
-    async validate() {
-      await fse.ensureDir(cacheDir)
-    },
   }
 }

@@ -1,3 +1,4 @@
+export { actions } from './actions'
 export { blockExplorer } from './blockExplorer'
 export { etherscan } from './etherscan'
 export { fetch } from './fetch'

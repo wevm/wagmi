@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { format } from '../utils'
 
-import { react } from './react'
+import { actions } from './actions'
 
 const abi = [
   {
@@ -79,11 +79,11 @@ const abi = [
   },
 ] as const
 
-describe('react', () => {
+describe('actions', () => {
   describe('run', () => {
     describe('isTypeScript', () => {
       it('true', async () => {
-        const { imports, content } = await react().run({
+        const { imports, content } = await actions().run({
           contracts: [
             {
               name: 'Wagmi',
@@ -105,7 +105,7 @@ describe('react', () => {
       })
 
       it('false', async () => {
-        const { imports, content } = await react().run({
+        const { imports, content } = await actions().run({
           contracts: [
             {
               name: 'Wagmi',

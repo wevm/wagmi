@@ -1,5 +1,5 @@
 import { defineConfig } from '@wagmi/cli'
-import { etherscan, foundry, hardhat, react } from '@wagmi/cli/plugins'
+import { actions, etherscan, foundry, hardhat, react } from '@wagmi/cli/plugins'
 
 export default defineConfig([
   {
@@ -38,6 +38,7 @@ export default defineConfig([
       foundry({ project: '../hello_foundry' }),
       hardhat({ project: '../hello_hardhat' }),
       react(),
+      actions(),
     ],
   },
 ])

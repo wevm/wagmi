@@ -8,7 +8,11 @@ import type { Plugin } from '../config'
 import * as logger from '../logger'
 import type { RequiredBy } from '../types'
 
-import { getPackageManager } from '../utils'
+import {
+  getInstallCommand,
+  getIsPackageInstalled,
+  getPackageManager,
+} from '../utils'
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
 
@@ -126,24 +130,17 @@ export function hardhat({
     },
     name: 'Hardhat',
     async validate() {
-      if (
-        commands.clean === undefined ||
-        commands.build === undefined ||
-        commands.rebuild === undefined
-      ) {
-        const packageManager = await getPackageManager()
-        try {
-          await execa(packageManager, ['hardhat', '--version'], {
-            cwd: resolve(project),
-          })
-        } catch (error) {
-          const install = packageManager === 'npm' ? 'install --save' : 'add'
-          throw new Error(dedent`
-            hardhat must be installed to use Hardhat plugin.
-            To install, run: ${packageManager} ${install} hardhat.
-          `)
-        }
-      }
+      const packageName = 'hardhat'
+      const isPackageInstalled = await getIsPackageInstalled({
+        packageName,
+        cwd: project,
+      })
+      if (isPackageInstalled) return
+      const [packageManager, command] = await getInstallCommand(packageName)
+      throw new Error(dedent`
+        ${packageName} must be installed to use Hardhat plugin.
+        To install, run: ${packageManager} ${command.join(' ')}
+      `)
     },
     watch: {
       command:
