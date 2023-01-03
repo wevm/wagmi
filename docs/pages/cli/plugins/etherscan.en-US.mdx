@@ -70,6 +70,30 @@ export default defineConfig({
 })
 ```
 
+### cacheDuration (optional)
+
+Duration in milliseconds to cache ABIs. Defaults to `1_800_000` (30 minutes).
+
+```ts {8}
+import { defineConfig } from '@wagmi/cli'
+import { etherscan } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      cacheDuration: 300_000,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
 ### contracts
 
 Contracts to fetch ABIs for.

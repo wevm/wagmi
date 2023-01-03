@@ -45,6 +45,12 @@ type EtherscanConfig<TChainId extends number> = {
    */
   apiKey: string
   /**
+   * Duration in milliseconds to cache ABIs.
+   *
+   * @default 1_800_000 // 30m in ms
+   */
+  cacheDuration?: number
+  /**
    * Chain id to use for fetching ABI.
    *
    * If `address` is an object, `chainId` is used to select the address.
@@ -61,6 +67,7 @@ type EtherscanConfig<TChainId extends number> = {
  */
 export function etherscan<TChainId extends ChainId>({
   apiKey,
+  cacheDuration,
   chainId,
   contracts: contracts_,
 }: EtherscanConfig<TChainId>) {
@@ -72,6 +79,7 @@ export function etherscan<TChainId extends ChainId>({
   return blockExplorer({
     apiKey,
     baseUrl: apiUrls[chainId as ChainId],
+    cacheDuration,
     contracts,
     getAddress({ address }) {
       if (!address) throw new Error('address is required')

@@ -75,15 +75,19 @@ export function react(config: ReactConfig = {}): ReactResult {
           abi: contract.meta.abiName,
         }
         let extraTypeParams = ''
+        let innerContent = ''
         if (contract.meta.addressName) {
           if (typeof contract.address === 'object') {
             if (Object.keys(contract.address).length > 1) {
-              extraTypeParams = dedent`& {
-                chainId?: keyof typeof ${contract.meta.addressName}
-              }`
+              extraTypeParams = `& { chainId?: keyof typeof ${contract.meta.addressName} }`
               innerHookParams[
                 'address'
-              ] = `config.chainId ? ${contract.meta.addressName}[config.chainId] : undefined`
+              ] = `${contract.meta.addressName}[chainId as keyof typeof ${contract.meta.addressName}]`
+              imports.add('useNetwork')
+              innerContent = dedent`
+                const { chain } = useNetwork()
+                const chainId = config.chainId ?? chain?.id
+              `
             } else
               innerHookParams['address'] = `${contract.meta.addressName}[${
                 Object.keys(contract.address!)[0]
@@ -102,6 +106,7 @@ export function react(config: ReactConfig = {}): ReactResult {
           const options = {
             contract,
             hookName,
+            innerContent,
             innerHookName,
             innerHookParams,
           }
@@ -129,6 +134,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             const options = {
               contract,
               hookName,
+              innerContent,
               innerHookName,
               innerHookParams,
             }
@@ -167,6 +173,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 const options = {
                   contract,
                   hookName,
+                  innerContent,
                   innerHookName,
                   innerHookParams,
                 }
@@ -207,6 +214,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             const options = {
               contract,
               hookName,
+              innerContent,
               innerHookName,
               innerHookParams,
             }
@@ -245,6 +253,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 const options = {
                   contract,
                   hookName,
+                  innerContent,
                   innerHookName,
                   innerHookParams,
                 }
@@ -285,6 +294,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             const options = {
               contract,
               hookName,
+              innerContent,
               innerHookName,
               innerHookParams,
             }
@@ -319,6 +329,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 const options = {
                   contract,
                   hookName,
+                  innerContent,
                   innerHookName,
                   innerHookParams,
                 }
@@ -368,6 +379,7 @@ export function react(config: ReactConfig = {}): ReactResult {
 type SharedOptions = {
   contract: Contract
   hookName: string
+  innerContent?: string
   innerHookName: string
   innerHookParams: Record<string, string>
 }
@@ -390,7 +402,8 @@ type GetHookCode =
     }
 
 function getHookCode({ type, options }: GetHookCode) {
-  const { contract, hookName, innerHookName, innerHookParams } = options
+  const { contract, hookName, innerContent, innerHookName, innerHookParams } =
+    options
   const params = { ...innerHookParams }
   if (type === 'ts' && options.genericSlotType && options.genericSlotValue)
     params[options.genericSlotType] = `'${options.genericSlotValue}'`
@@ -422,6 +435,7 @@ function getHookCode({ type, options }: GetHookCode) {
        * ${description}. ${addressDocString}
        */
       export function ${hookName}(config = {}) {
+        ${innerContent}
         return ${innerHookName}(${innerHookConfig})
       }
     `
@@ -443,6 +457,7 @@ function getHookCode({ type, options }: GetHookCode) {
       export function ${hookName}(
         config: Omit<${typeName}, ${omitted}>${extraTypeParams} = {} as any,
       ) {
+        ${innerContent}
         return ${innerHookName}(${innerHookConfig})
       }
     `
@@ -459,6 +474,7 @@ function getHookCode({ type, options }: GetHookCode) {
     >(
       config: Omit<${typeName}<TAbi, ${genericName}>, ${omitted}>${extraTypeParams} = {} as any,
     ) {
+      ${innerContent}
       return ${innerHookName}(${innerHookConfig} as ${typeName}<TAbi, ${genericName}>)
     }
   `

@@ -1,6 +1,5 @@
 import { default as fse } from 'fs-extra'
 import type { RequestInfo, RequestInit, Response } from 'node-fetch'
-// TODO: Remove `node-fetch` dependency when Node 18 is used more and `fetch` is stable.
 import { default as nodeFetch } from 'node-fetch'
 
 import type { ContractConfig, Plugin } from '../config'
@@ -12,6 +11,12 @@ type Request = { url: RequestInfo; init?: RequestInit }
 const cacheDir = `${homedir}/.wagmi-cli/plugins/fetch/cache`
 
 export type FetchConfig = {
+  /**
+   * Duration in milliseconds to cache ABIs from request.
+   *
+   * @default 1_800_000 // 30m in ms
+   */
+  cacheDuration?: number
   /**
    * Contracts to fetch ABIs for.
    */
@@ -48,6 +53,7 @@ type FetchResult = RequiredBy<Plugin, 'contracts'>
  * Fetches and parses contract ABIs from network resource with `fetch`.
  */
 export function fetch({
+  cacheDuration = 1_800_000,
   contracts: contractConfigs,
   getCacheKey = ({ contract }) => JSON.stringify(contract),
   name = 'Fetch',
@@ -58,7 +64,6 @@ export function fetch({
     async contracts() {
       await fse.ensureDir(cacheDir)
 
-      const cacheDuration = 300_000 // 5m in ms
       const timestamp = Date.now() + cacheDuration
       const contracts = []
       for (const contract of contractConfigs) {
@@ -68,17 +73,12 @@ export function fetch({
         let abi
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
         else {
-          const { url, init } = await request(contract)
-          const AbortController = globalThis.AbortController
-          const controller = new AbortController()
-          const timeout = setTimeout(() => {
-            controller.abort()
-          }, 2_500) // Abort if request takes longer than 5s.
-
           try {
+            const { url, init } = await request(contract)
+            // TODO: Replace `node-fetch` when Node 18 `fetch` is stable and more widely used.
             const response = await nodeFetch(url, {
               ...init,
-              signal: controller.signal,
+              signal: AbortSignal.timeout(2_500),
             })
             abi = await parse({ response })
             await fse.writeJSON(cacheFilePath, { abi, timestamp })
@@ -89,8 +89,6 @@ export function fetch({
               // eslint-disable-next-line no-empty
             } catch {}
             if (!abi) throw error
-          } finally {
-            clearTimeout(timeout)
           }
         }
 

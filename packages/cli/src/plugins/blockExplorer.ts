@@ -16,6 +16,12 @@ export type BlockExplorerConfig = {
    */
   baseUrl: string
   /**
+   * Duration in milliseconds to cache ABIs.
+   *
+   * @default 1_800_000 // 30m in ms
+   */
+  cacheDuration?: number
+  /**
    * Contracts to fetch ABIs for.
    */
   contracts: Omit<ContractConfig, 'abi'>[]
@@ -52,6 +58,7 @@ const BlockExplorerResponse = z.discriminatedUnion('status', [
 export function blockExplorer({
   apiKey,
   baseUrl,
+  cacheDuration,
   contracts,
   getAddress = ({ address }) => {
     if (typeof address === 'string') return address
@@ -60,6 +67,7 @@ export function blockExplorer({
   name = 'Block Explorer',
 }: BlockExplorerConfig) {
   return fetch({
+    cacheDuration,
     contracts,
     name,
     getCacheKey({ contract }) {
