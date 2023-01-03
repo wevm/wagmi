@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.10.4
+
+### Patch Changes
+
+- [#1607](https://github.com/wagmi-dev/wagmi/pull/1607) [`49a41357`](https://github.com/wagmi-dev/wagmi/commit/49a41357f9ca39479bdf759f5998bc169a91ac87) Thanks [@tmm](https://github.com/tmm)! - Exported hook types.
+
 ## 0.10.3
 
 ### Patch Changes
