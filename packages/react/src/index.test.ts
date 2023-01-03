@@ -13,6 +13,7 @@ it('should expose correct exports', () => {
       "useAccount",
       "useBalance",
       "useBlockNumber",
+      "useChainId",
       "useConnect",
       "useContract",
       "useContractEvent",
