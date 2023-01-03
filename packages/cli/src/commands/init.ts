@@ -39,7 +39,7 @@ export async function init({ config = defaultConfig }: Init = {}) {
       /**
        * @type {import('@wagmi/cli').Config}
        **/
-      export default ${JSON.stringify(config)}
+      export default ${JSON.stringify({ ...config, out: 'src/generated.js' })}
     `)
   const formatted = await format(content)
   await fse.writeFile(outPath, formatted)
