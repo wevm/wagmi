@@ -51,6 +51,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/partydao-light.svg',
     },
   },
+  {
+    id: 'dynamic',
+    name: 'Dynamic',
+    href: 'https://www.dynamic.xyz',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/dynamic-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/dynamic-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
