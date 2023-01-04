@@ -2,22 +2,20 @@ import dedent from 'dedent'
 import fixtures from 'fixturez'
 import { default as fse } from 'fs-extra'
 import { resolve } from 'pathe'
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterAll, describe, expect, it, vi } from 'vitest'
 
 import { defaultConfig } from '../config'
 import { findConfig } from './findConfig'
 import { resolveConfig } from './resolveConfig'
 
 const f = fixtures(__dirname)
-const wagmiCLIPath = resolve(process.cwd(), 'packages/cli/src/index.ts')
+const wagmiCLIPath = resolve(process.cwd(), 'packages/cli/dist/')
+console.log(wagmiCLIPath)
+vi.mock('@wagmi/cli', async () => {
+  return vi.importActual(wagmiCLIPath)
+})
 
 describe('resolveConfig', () => {
-  beforeAll(() => {
-    vi.mock('@wagmi/cli', async () => {
-      return vi.importActual(wagmiCLIPath)
-    })
-  })
-
   afterAll(() => {
     vi.resetAllMocks()
   })

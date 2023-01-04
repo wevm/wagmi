@@ -34,7 +34,7 @@ export async function getInstallCommand(packageName: string) {
   }
 }
 
-export function getPackageManager() {
+export async function getPackageManager() {
   const userAgent = process.env.npm_config_user_agent
   if (userAgent) {
     if (userAgent.includes('pnpm')) return 'pnpm'
