@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 0.8.10
+
+### Patch Changes
+
+- [#1598](https://github.com/wagmi-dev/wagmi/pull/1598) [`fc10ebe6`](https://github.com/wagmi-dev/wagmi/commit/fc10ebe659dd5f3b7a8e00581f094652280a779b) Thanks [@jxom](https://github.com/jxom)! - Fixed CJS dependency version range
+
+## 0.8.9
+
+### Patch Changes
+
+- [#1593](https://github.com/wagmi-dev/wagmi/pull/1593) [`216d555c`](https://github.com/wagmi-dev/wagmi/commit/216d555c62bd95c3c7c8f8e20f7269f6c8504610) Thanks [@jxom](https://github.com/jxom)! - Added CJS escape hatch bundle under the "cjs" tag.
+
 ## 0.8.8
 
 ### Patch Changes

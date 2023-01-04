@@ -7,5 +7,6 @@
   "providers": "Providers",
   "connectors": "Connectors",
   "actions": "Actions",
-  "constants": "Constants"
+  "constants": "Constants",
+  "module-types": "Module Types"
 }

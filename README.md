@@ -158,6 +158,12 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
     <img alt="PartyDAO logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/partydao-light.svg" width="auto" height="50">
   </picture>
 </a>
+<a href="https://dynamic.xyz">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/dynamic-dark.svg">
+    <img alt="Dynamic logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/dynamic-light.svg" width="auto" height="50">
+  </picture>
+</a>
 
 ## Contributing
 
