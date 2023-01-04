@@ -73,12 +73,15 @@ export function fetch({
         let abi
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
         else {
+          const controller = new AbortController()
+          const timeout = setTimeout(() => controller.abort(), 2_500)
           try {
             const { url, init } = await request(contract)
-            // TODO: Replace `node-fetch` when Node 18 `fetch` is stable and more widely used.
+            // TODO: Replace `node-fetch` with native `fetch` when Node 18 is more widely used.
             const response = await nodeFetch(url, {
               ...init,
-              signal: AbortSignal.timeout(2_500),
+              // TODO: Use `AbortSignal.timeout` when Node 18 is more widely used.
+              signal: controller.signal,
             })
             abi = await parse({ response })
             await fse.writeJSON(cacheFilePath, { abi, timestamp })
@@ -89,6 +92,8 @@ export function fetch({
               // eslint-disable-next-line no-empty
             } catch {}
             if (!abi) throw error
+          } finally {
+            clearTimeout(timeout)
           }
         }
 

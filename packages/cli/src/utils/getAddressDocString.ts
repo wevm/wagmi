@@ -26,7 +26,8 @@ export function getAddressDocString({
 
   return dedent`
     ${Object.entries(address).reduce((prev, curr) => {
-      const chain = chainMap[parseInt(curr[0])]!
+      const chain = chainMap[parseInt(curr[0])]
+      if (!chain) return prev
       const address = curr[1]
       const blockExplorer = chain.blockExplorers?.default
       if (!blockExplorer) return prev

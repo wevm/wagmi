@@ -31,9 +31,97 @@ export function useWagmiRead(config = {}) {
 }
 
 /**
- * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi}.
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"balanceOf\\"\`.
  */
 export function useWagmiBalanceOf(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"getApproved\\"\`.
+ */
+export function useWagmiGetApproved(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"isApprovedForAll\\"\`.
+ */
+export function useWagmiIsApprovedForAll(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"name\\"\`.
+ */
+export function useWagmiName(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"ownerOf\\"\`.
+ */
+export function useWagmiOwnerOf(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"supportsInterface\\"\`.
+ */
+export function useWagmiSupportsInterface(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"symbol\\"\`.
+ */
+export function useWagmiSymbol(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"tokenURI\\"\`.
+ */
+export function useWagmiTokenUri(config = {}) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"totalSupply\\"\`.
+ */
+export function useWagmiTotalSupply(config = {}) {
   return useContractRead({
     abi: WagmiAbi,
     address: WagmiAddress,
@@ -53,9 +141,53 @@ export function usePrepareWagmiWrite(config = {}) {
 }
 
 /**
- * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi}.
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"approve\\"\`.
+ */
+export function usePrepareWagmiApprove(config = {}) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"mint\\"\`.
+ */
+export function usePrepareWagmiMint(config = {}) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"safeTransferFrom\\"\`.
  */
 export function usePrepareWagmiSafeTransferFrom(config = {}) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"setApprovalForAll\\"\`.
+ */
+export function usePrepareWagmiSetApprovalForAll(config = {}) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"transferFrom\\"\`.
+ */
+export function usePrepareWagmiTransferFrom(config = {}) {
   return usePrepareContractWrite({
     abi: WagmiAbi,
     address: WagmiAddress,
@@ -67,6 +199,39 @@ export function usePrepareWagmiSafeTransferFrom(config = {}) {
  * Wraps {@link useContractEvent} with \`abi\` set to {@link WagmiAbi}.
  */
 export function useWagmiEvent(config = {}) {
+  return useContractEvent({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractEvent} with \`abi\` set to {@link WagmiAbi} and \`eventName\` set to \`\\"Approval\\"\`.
+ */
+export function useWagmiApproval(config = {}) {
+  return useContractEvent({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractEvent} with \`abi\` set to {@link WagmiAbi} and \`eventName\` set to \`\\"ApprovalForAll\\"\`.
+ */
+export function useWagmiApprovalForAll(config = {}) {
+  return useContractEvent({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link useContractEvent} with \`abi\` set to {@link WagmiAbi} and \`eventName\` set to \`\\"Transfer\\"\`.
+ */
+export function useWagmiTransfer(config = {}) {
   return useContractEvent({
     abi: WagmiAbi,
     address: WagmiAddress,
@@ -91,7 +256,9 @@ exports[`react > run > isTypeScript > true 1`] = `
 /**
  * Wraps {@link useContract} with \`abi\` set to {@link WagmiAbi}.
  */
-export function useWagmi(config: Omit<UseContractConfig, 'abi'> = {} as any) {
+export function useWagmi(
+  config: Omit<UseContractConfig, 'abi' | 'address'> = {} as any,
+) {
   return useContract({
     abi: WagmiAbi,
     address: WagmiAddress,
@@ -104,25 +271,30 @@ export function useWagmi(config: Omit<UseContractConfig, 'abi'> = {} as any) {
  */
 export function useWagmiRead<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
-  TName extends string = string,
->(config: Omit<UseContractReadConfig<TAbi, TName>, 'abi'> = {} as any) {
+  TFunctionName extends string = string,
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address'
+  > = {} as any,
+) {
   return useContractRead({
     abi: WagmiAbi,
     address: WagmiAddress,
     ...config,
-  } as UseContractReadConfig<TAbi, TName>)
+  } as UseContractReadConfig<TAbi, TFunctionName>)
 }
 
 /**
- * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"\\"balanceOf\\"\\"\`..
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"balanceOf\\"\`.
  */
 export function useWagmiBalanceOf<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
-  TName extends string = 'balanceOf',
+  TFunctionName extends string = 'balanceOf',
 >(
   config: Omit<
-    UseContractReadConfig<TAbi, TName>,
-    'abi' | 'functionName'
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -130,7 +302,167 @@ export function useWagmiBalanceOf<
     address: WagmiAddress,
     functionName: 'balanceOf',
     ...config,
-  } as UseContractReadConfig<TAbi, TName>)
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"getApproved\\"\`.
+ */
+export function useWagmiGetApproved<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'getApproved',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'getApproved',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"isApprovedForAll\\"\`.
+ */
+export function useWagmiIsApprovedForAll<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'isApprovedForAll',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'isApprovedForAll',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"name\\"\`.
+ */
+export function useWagmiName<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'name',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'name',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"ownerOf\\"\`.
+ */
+export function useWagmiOwnerOf<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'ownerOf',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'ownerOf',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"supportsInterface\\"\`.
+ */
+export function useWagmiSupportsInterface<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'supportsInterface',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'supportsInterface',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"symbol\\"\`.
+ */
+export function useWagmiSymbol<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'symbol',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'symbol',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"tokenURI\\"\`.
+ */
+export function useWagmiTokenUri<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'tokenURI',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'tokenURI',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link useContractRead} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"totalSupply\\"\`.
+ */
+export function useWagmiTotalSupply<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'totalSupply',
+>(
+  config: Omit<
+    UseContractReadConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return useContractRead({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'totalSupply',
+    ...config,
+  } as UseContractReadConfig<TAbi, TFunctionName>)
 }
 
 /**
@@ -138,25 +470,70 @@ export function useWagmiBalanceOf<
  */
 export function usePrepareWagmiWrite<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
-  TName extends string = string,
->(config: Omit<UsePrepareContractWriteConfig<TAbi, TName>, 'abi'> = {} as any) {
+  TFunctionName extends string = string,
+>(
+  config: Omit<
+    UsePrepareContractWriteConfig<TAbi, TFunctionName>,
+    'abi' | 'address'
+  > = {} as any,
+) {
   return usePrepareContractWrite({
     abi: WagmiAbi,
     address: WagmiAddress,
     ...config,
-  } as UsePrepareContractWriteConfig<TAbi, TName>)
+  } as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
 }
 
 /**
- * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"\\"safeTransferFrom\\"\\"\`..
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"approve\\"\`.
+ */
+export function usePrepareWagmiApprove<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'approve',
+>(
+  config: Omit<
+    UsePrepareContractWriteConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'approve',
+    ...config,
+  } as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"mint\\"\`.
+ */
+export function usePrepareWagmiMint<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'mint',
+>(
+  config: Omit<
+    UsePrepareContractWriteConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'mint',
+    ...config,
+  } as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"safeTransferFrom\\"\`.
  */
 export function usePrepareWagmiSafeTransferFrom<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
-  TName extends string = 'safeTransferFrom',
+  TFunctionName extends string = 'safeTransferFrom',
 >(
   config: Omit<
-    UsePrepareContractWriteConfig<TAbi, TName>,
-    'abi' | 'functionName'
+    UsePrepareContractWriteConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
@@ -164,7 +541,47 @@ export function usePrepareWagmiSafeTransferFrom<
     address: WagmiAddress,
     functionName: 'safeTransferFrom',
     ...config,
-  } as UsePrepareContractWriteConfig<TAbi, TName>)
+  } as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"setApprovalForAll\\"\`.
+ */
+export function usePrepareWagmiSetApprovalForAll<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'setApprovalForAll',
+>(
+  config: Omit<
+    UsePrepareContractWriteConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'setApprovalForAll',
+    ...config,
+  } as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link usePrepareContractWrite} with \`abi\` set to {@link WagmiAbi} and \`functionName\` set to \`\\"transferFrom\\"\`.
+ */
+export function usePrepareWagmiTransferFrom<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = 'transferFrom',
+>(
+  config: Omit<
+    UsePrepareContractWriteConfig<TAbi, TFunctionName>,
+    'abi' | 'address' | 'functionName'
+  > = {} as any,
+) {
+  return usePrepareContractWrite({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    functionName: 'transferFrom',
+    ...config,
+  } as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
 }
 
 /**
@@ -172,13 +589,78 @@ export function usePrepareWagmiSafeTransferFrom<
  */
 export function useWagmiEvent<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
-  TName extends string = string,
->(config: Omit<UseContractEventConfig<TAbi, TName>, 'abi'> = {} as any) {
+  TEventName extends string = string,
+>(
+  config: Omit<
+    UseContractEventConfig<TAbi, TEventName>,
+    'abi' | 'address'
+  > = {} as any,
+) {
   return useContractEvent({
     abi: WagmiAbi,
     address: WagmiAddress,
     ...config,
-  } as UseContractEventConfig<TAbi, TName>)
+  } as UseContractEventConfig<TAbi, TEventName>)
+}
+
+/**
+ * Wraps {@link useContractEvent} with \`abi\` set to {@link WagmiAbi} and \`eventName\` set to \`\\"Approval\\"\`.
+ */
+export function useWagmiApproval<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TEventName extends string = 'Approval',
+>(
+  config: Omit<
+    UseContractEventConfig<TAbi, TEventName>,
+    'abi' | 'address' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    eventName: 'Approval',
+    ...config,
+  } as UseContractEventConfig<TAbi, TEventName>)
+}
+
+/**
+ * Wraps {@link useContractEvent} with \`abi\` set to {@link WagmiAbi} and \`eventName\` set to \`\\"ApprovalForAll\\"\`.
+ */
+export function useWagmiApprovalForAll<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TEventName extends string = 'ApprovalForAll',
+>(
+  config: Omit<
+    UseContractEventConfig<TAbi, TEventName>,
+    'abi' | 'address' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    eventName: 'ApprovalForAll',
+    ...config,
+  } as UseContractEventConfig<TAbi, TEventName>)
+}
+
+/**
+ * Wraps {@link useContractEvent} with \`abi\` set to {@link WagmiAbi} and \`eventName\` set to \`\\"Transfer\\"\`.
+ */
+export function useWagmiTransfer<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TEventName extends string = 'Transfer',
+>(
+  config: Omit<
+    UseContractEventConfig<TAbi, TEventName>,
+    'abi' | 'address' | 'eventName'
+  > = {} as any,
+) {
+  return useContractEvent({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    eventName: 'Transfer',
+    ...config,
+  } as UseContractEventConfig<TAbi, TEventName>)
 }
 "
 `;

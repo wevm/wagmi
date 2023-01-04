@@ -7,7 +7,7 @@ describe('react', () => {
     await expect(hardhat({ project: '../hello_hardhat' }).validate()).rejects
       .toThrowErrorMatchingInlineSnapshot(`
       "hardhat must be installed to use Hardhat plugin.
-      To install, run: pnpm add hardhat."
+      To install, run: pnpm add hardhat"
     `)
   })
 })

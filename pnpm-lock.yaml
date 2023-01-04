@@ -196,6 +196,7 @@ importers:
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
       '@wagmi/chains': ^0.1.7
+      '@wagmi/core': ^0.8.10
       abitype: ^0.2.5
       bundle-require: ^3.1.2
       cac: ^6.7.12
@@ -219,6 +220,7 @@ importers:
     dependencies:
       '@ethersproject/address': 5.7.0
       '@wagmi/chains': 0.1.7
+      '@wagmi/core': 0.8.10_4qlegyf4jmcdeue3blpeuxzdbm
       abitype: 0.2.5_4qlegyf4jmcdeue3blpeuxzdbm
       bundle-require: 3.1.2_esbuild@0.15.13
       cac: 6.7.14
@@ -3006,6 +3008,69 @@ packages:
     resolution: {integrity: sha512-t9qm4FyzwzJhAcLtnh9HUeOmueSEOXwXlR0RCcS/vhtLSUnzaUfEkjAeu4+7AIujYWjrtdS/Zvlc+PwTjuwTUQ==}
     dev: false
 
+  /@wagmi/connectors/0.1.3_m36vtl3diec2gmpbx2o5wptrr4:
+    resolution: {integrity: sha512-rNRDJsDdgb4R7n3AP6qbIu5L+3QYJU0raRFkFZLqBpA2dlX4d5RATALiDK6XdWw69iCb/q3BEsyj3Y+uNN/ODA==}
+    peerDependencies:
+      '@wagmi/core': 0.8.x
+      ethers: ^5.0.0
+    peerDependenciesMeta:
+      '@wagmi/core':
+        optional: true
+    dependencies:
+      '@coinbase/wallet-sdk': 3.6.0
+      '@ledgerhq/connect-kit-loader': 1.0.2
+      '@wagmi/core': 0.8.10_4qlegyf4jmcdeue3blpeuxzdbm
+      '@walletconnect/ethereum-provider': 1.8.0
+      '@walletconnect/qrcode-modal': 1.8.0
+      '@walletconnect/universal-provider': 2.1.5
+      abitype: 0.1.8_typescript@4.9.3
+      eventemitter3: 4.0.7
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - lokijs
+      - react-native
+      - supports-color
+      - typescript
+      - utf-8-validate
+    dev: false
+
+  /@wagmi/core/0.8.10_4qlegyf4jmcdeue3blpeuxzdbm:
+    resolution: {integrity: sha512-TbXaKfZX0GD3LkhGoIWPWaitmwucNPxm0riRYStRncoe9JqSYJ82P3vwLn7zO9f1mwqwnf0EOnmotycH/adTwQ==}
+    peerDependencies:
+      '@coinbase/wallet-sdk': '>=3.6.0'
+      '@walletconnect/ethereum-provider': '>=1.7.5'
+      ethers: '>=5.5.1'
+    peerDependenciesMeta:
+      '@coinbase/wallet-sdk':
+        optional: true
+      '@walletconnect/ethereum-provider':
+        optional: true
+    dependencies:
+      '@wagmi/chains': 0.1.7
+      '@wagmi/connectors': 0.1.3_m36vtl3diec2gmpbx2o5wptrr4
+      abitype: 0.2.5_4qlegyf4jmcdeue3blpeuxzdbm
+      eventemitter3: 4.0.7
+      zustand: 4.1.4
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - immer
+      - lokijs
+      - react
+      - react-native
+      - supports-color
+      - typescript
+      - utf-8-validate
+      - zod
+    dev: false
+
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}
     dependencies:
@@ -3425,6 +3490,15 @@ packages:
     engines: {pnpm: '>=7'}
     peerDependencies:
       typescript: '>=4.7.4'
+    dev: false
+
+  /abitype/0.1.8_typescript@4.9.3:
+    resolution: {integrity: sha512-2pde0KepTzdfu19ZrzYTYVIWo69+6UbBCY4B1RDiwWgo2XZtFSJhF6C+XThuRXbbZ823J0Rw1Y5cP0NXYVcCdQ==}
+    engines: {pnpm: '>=7'}
+    peerDependencies:
+      typescript: '>=4.7.4'
+    dependencies:
+      typescript: 4.9.3
     dev: false
 
   /abitype/0.2.5_4qlegyf4jmcdeue3blpeuxzdbm:
@@ -6667,18 +6741,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-
-  /follow-redirects/1.15.2_debug@4.3.4:
-    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dependencies:
-      debug: 4.3.4
-    dev: true
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -11134,7 +11196,7 @@ packages:
     dependencies:
       command-exists: 1.2.9
       commander: 3.0.2
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
       fs-extra: 0.30.0
       js-sha3: 0.8.0
       memorystream: 0.3.1

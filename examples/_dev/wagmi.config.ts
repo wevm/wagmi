@@ -1,5 +1,12 @@
 import { defineConfig } from '@wagmi/cli'
-import { actions, etherscan, foundry, hardhat, react } from '@wagmi/cli/plugins'
+import {
+  actions,
+  erc,
+  etherscan,
+  foundry,
+  hardhat,
+  react,
+} from '@wagmi/cli/plugins'
 
 export default defineConfig([
   {
@@ -18,6 +25,7 @@ export default defineConfig([
       },
     ],
     plugins: [
+      erc(),
       etherscan({
         apiKey: process.env.ETHERSCAN_API_KEY!,
         chainId: 1,

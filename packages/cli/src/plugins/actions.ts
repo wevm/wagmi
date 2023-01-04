@@ -13,6 +13,10 @@ type ActionsConfig = {
    */
   getContract?: boolean
   /**
+   * Override detected import source for actions.
+   */
+  overridePackageName?: 'wagmi/actions' | '@wagmi/core'
+  /**
    * Generate `prepareWriteContract` action.
    *
    * @default true
@@ -207,11 +211,14 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
         }
       }
 
-      let packageName = '@wagmi/core'
+      let packageName
+      if (config.overridePackageName) packageName = config.overridePackageName
       if (await getIsPackageInstalled({ packageName: 'wagmi' }))
         packageName = 'wagmi/actions'
       else if (await getIsPackageInstalled({ packageName: '@wagmi/core' }))
         packageName = '@wagmi/core'
+      else packageName = '@wagmi/core'
+
       const importValues = [...imports.values()]
       return {
         imports: importValues.length

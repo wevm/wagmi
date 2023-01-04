@@ -1,3 +1,3 @@
 import { describe } from 'vitest'
 
-describe.todo('format')
+describe.todo('getIsUsingTypeScript')

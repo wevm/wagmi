@@ -51,8 +51,8 @@
     "/dist"
   ],
   "peerDependencies": {
-    "@wagmi/core": ">=0.8.9",
-    "wagmi": ">=0.10.2"
+    "@wagmi/core": ">=0.8.10",
+    "wagmi": ">=0.10.4"
   },
   "peerDependenciesMeta": {
     "@wagmi/core": {
@@ -65,6 +65,7 @@
   "dependencies": {
     "@ethersproject/address": "^5.7.0",
     "@wagmi/chains": "^0.1.7",
+    "@wagmi/core": "^0.8.10",
     "abitype": "^0.2.5",
     "bundle-require": "^3.1.2",
     "cac": "^6.7.12",
