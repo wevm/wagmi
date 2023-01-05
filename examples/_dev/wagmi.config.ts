@@ -13,13 +13,17 @@ export default defineConfig([
     out: 'src/generated.ts',
     contracts: [
       {
-        name: 'WagmiMintInline',
-        address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+        name: 'Wagmipet',
+        address: {
+          1: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
         abi: [
           {
-            inputs: [],
-            stateMutability: 'nonpayable',
-            type: 'constructor',
+            inputs: [{ type: 'address' }],
+            name: 'love',
+            outputs: [{ type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function',
           },
         ],
       },

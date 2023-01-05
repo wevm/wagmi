@@ -134,6 +134,11 @@ export function foundry({
     },
     name: 'Foundry',
     async validate() {
+      // Check that project directory exists
+      if (!(await fse.pathExists(project)))
+        throw new Error(`Project "${project}" not found.`)
+
+      // Ensure forge is installed
       if (clean || build || rebuild)
         try {
           await execa(forgeExecutable, ['--version'])
@@ -147,15 +152,12 @@ export function foundry({
     watch: {
       command: rebuild
         ? async () => {
-            let ready = false
             logger.log(`Watching Foundry project for changes at "${project}".`)
             await execa(forgeExecutable, ['build', '--watch'], {
               cwd: resolve(project),
             }).stdout?.on('data', (data) => {
-              if (ready) process.stdout.write(`Foundry: ${data}`)
+              process.stdout.write(`Foundry: ${data}`)
             })
-            // Don't show foundry logs on watch start up.
-            setTimeout(() => (ready = true), 500)
           }
         : undefined,
       paths: [
