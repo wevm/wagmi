@@ -61,6 +61,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/dynamic-light.svg',
     },
   },
+  {
+    id: 'sushi',
+    name: 'Sushi',
+    href: 'https://www.sushi.com',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/sushi-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/sushi-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
