@@ -1,9 +1,10 @@
 {
-  "paradigm-wagmi": {
-    "title": "Paradigm x wagmi",
+  "*": {
     "type": "page",
     "theme": {
       "sidebar": false
     }
-  }
+  },
+  "wagmi-turns-one": "wagmi turns one",
+  "paradigm-wagmi": "Paradigm x wagmi"
 }

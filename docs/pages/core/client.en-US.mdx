@@ -3,6 +3,8 @@ title: 'Client'
 description: 'The @wagmi/core Client is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.'
 ---
 
+import { Callout } from 'nextra-theme-docs'
+
 # Client
 
 The @wagmi/core `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.
@@ -120,6 +122,8 @@ const client = createClient({
 })
 ```
 
+You can create a "chain-aware" `provider` by using the `configureChains` API or passing a function that updates based on `chainId`.
+
 ### storage (optional)
 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
@@ -145,7 +149,7 @@ const client = createClient({
 
 ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
-```ts {10}
+```ts {11}
 import { createClient, configureChains, mainnet } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
@@ -159,3 +163,5 @@ const client = createClient({
   webSocketProvider,
 })
 ```
+
+You can create a "chain-aware" `webSocketProvider` by using the `configureChains` API or passing a function that updates based on `chainId`.

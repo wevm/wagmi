@@ -120,6 +120,8 @@ const client = createClient({
 })
 ```
 
+You can create a "chain-aware" `provider` by using the `configureChains` API or passing a function that updates based on `chainId`.
+
 ### storage (optional)
 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
@@ -154,3 +156,5 @@ const client = createClient({
   webSocketProvider,
 })
 ```
+
+You can create a "chain-aware" `webSocketProvider` by using the `configureChains` API or passing a function that updates based on `chainId`.
