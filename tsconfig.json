@@ -38,7 +38,7 @@
       "@ethersproject/providers"
     ]
   },
-  "exclude": ["**/node_modules/**", "**/dist/**"],
+  "exclude": ["**/node_modules/**", "**/dist/**", "examples/hello_hardhat/**"],
   "include": [
     "examples/**/*",
     "packages/**/*",
