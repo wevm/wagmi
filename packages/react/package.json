@@ -96,15 +96,19 @@
   ],
   "peerDependencies": {
     "ethers": ">=5.5.1",
-    "react": ">=17.0.0"
+    "react": ">=17.0.0",
+    "typescript": ">=4.9.4"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.6.0",
     "@tanstack/query-sync-storage-persister": "^4.14.5",
     "@tanstack/react-query": "^4.14.5",
     "@tanstack/react-query-persist-client": "^4.14.5",
     "@wagmi/core": "workspace:*",
-    "@walletconnect/ethereum-provider": "^1.8.0",
     "abitype": "^0.2.5",
     "use-sync-external-store": "^1.2.0"
   },
@@ -118,8 +122,7 @@
     "react": "^18.1.0",
     "react-17": "npm:react@17.0.2",
     "react-dom": "^18.1.0",
-    "react-dom-17": "npm:react-dom@17.0.2",
-    "typescript": "^4.9.3"
+    "react-dom-17": "npm:react-dom@17.0.2"
   },
   "keywords": [
     "react",
