@@ -5,7 +5,7 @@ import type { RequiredBy } from '../types'
 
 type ERCConfig = {
   /**
-   * EIP-20: Token Standard
+   * ERC-20: Token Standard
    *
    * https://eips.ethereum.org/EIPS/eip-20
    *
@@ -13,7 +13,7 @@ type ERCConfig = {
    */
   20?: boolean
   /**
-   * EIP-721: Non-Fungible Token Standard
+   * ERC-721: Non-Fungible Token Standard
    *
    * https://eips.ethereum.org/EIPS/eip-721
    *
@@ -21,7 +21,7 @@ type ERCConfig = {
    */
   721?: boolean
   /**
-   * EIP-4626: Tokenized Vaults
+   * ERC-4626: Tokenized Vaults
    *
    * https://eips.ethereum.org/EIPS/eip-4626
    *

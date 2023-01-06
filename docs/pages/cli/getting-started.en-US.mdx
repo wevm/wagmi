@@ -71,7 +71,7 @@ export default defineConfig({
 
 Once the configuration file is set up, you can add contracts and plugins to it. These contracts and plugins are used to manage ABIs (fetch from block explorers, resolve from the file system, etc.), generate code (React hooks, type-safe JS actions, etc.), and much more!
 
-For example, we can add the `ERC20` contract from `wagmi`, and the `etherscan` and `react` plugins.
+For example, we can add the `ERC20` contract from `wagmi`, and the [`etherscan`](/cli/plugins/etherscan) and [`react`](/cli/plugins/react) plugins.
 
 ```ts filename="wagmi.config.ts"
 import { defineConfig } from '@wagmi/cli'
@@ -145,7 +145,7 @@ Once `out` is created, you can start using the generated code in your project.
 import { mainnet } from 'wagmi/chains'
 import { useEnsRegistryContract, useErc20BalanceOf, useErc20Read } from './generated'
 
-// Use the generated ENS Registry ABI and address variables
+// Use the generated ENS Registry contract hook
 const contract = useEnsRegistryContract({
   chainId: mainnet.id.
 })
@@ -169,3 +169,5 @@ const { data } = useErc20BalanceOf({
   `.gitignore` and run `generate` during the build process or before you start
   your dev server in a `"predev"` script (or similar).
 </Callout>
+
+Want to learn more? Continue on reading the documentation.

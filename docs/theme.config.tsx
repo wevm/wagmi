@@ -9,6 +9,11 @@ const translations = {
     editLink: 'Edit this page on GitHub →',
     feedbackLink: 'Question? Give us feedback →',
     poweredBy: 'Powered by',
+    tagline: {
+      core: 'VanillaJS for Ethereum',
+      cli: 'CLI tools for Ethereum',
+      react: 'React Hooks for Ethereum',
+    },
   },
 } as const
 type Language = keyof typeof translations
@@ -91,7 +96,11 @@ const config: DocsThemeConfig = {
   i18n: [{ locale: 'en-US', text: 'English' }],
   logo() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { pathname } = useRouter()
+    const { pathname, locale } = useRouter()
+    let tagline: 'core' | 'cli' | 'react'
+    if (/^\/core*/.test(pathname)) tagline = 'core'
+    else if (/^\/cli*/.test(pathname)) tagline = 'cli'
+    else tagline = 'react'
     return (
       <>
         <span>
@@ -110,9 +119,7 @@ const config: DocsThemeConfig = {
           </svg>
         </span>
         <span className="text-gray-600 font-normal hidden md:inline">
-          {/^\/core*/.test(pathname)
-            ? 'VanillaJS for Ethereum'
-            : 'React Hooks for Ethereum'}
+          {translations[locale as Language].tagline[tagline]}
         </span>
       </>
     )

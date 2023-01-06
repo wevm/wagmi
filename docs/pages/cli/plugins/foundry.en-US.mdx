@@ -3,4 +3,45 @@ title: 'Commands'
 description: 'Foundry plugin'
 ---
 
+import { Callout } from 'nextra-theme-docs'
+
 # Foundry
+
+Plugin for generating ABIs for [Foundry](https://github.com/foundry-rs/foundry) projects.
+
+```ts
+import { foundry } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      project: '../hello_foundry',
+    }),
+  ],
+})
+```
+
+<Callout type="info">
+  Supports [`generate`](/cli/commands#generate) `--watch` (`-w`) mode.
+</Callout>
+
+## Configuration
+
+### artifacts (optional)
+
+### exlude (optional)
+
+### forge (optional)
+
+### include (optional)
+
+### namePrefix (optional)
+
+### project

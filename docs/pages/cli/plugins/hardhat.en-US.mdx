@@ -3,4 +3,45 @@ title: 'Commands'
 description: 'Hardhat plugin'
 ---
 
+import { Callout } from 'nextra-theme-docs'
+
 # Hardhat
+
+Plugin for generating ABIs for [Hardhat](https://hardhat.org) projects.
+
+```ts
+import { hardhat } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
+<Callout type="info">
+  Supports [`generate`](/cli/commands#generate) `--watch` (`-w`) mode.
+</Callout>
+
+## Configuration
+
+### artifacts (optional)
+
+### exlude (optional)
+
+### commands (optional)
+
+### include (optional)
+
+### namePrefix (optional)
+
+### project

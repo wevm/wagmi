@@ -45,10 +45,10 @@ If type inference isn't working, it's likely you forgot to add a `const` asserti
 
 <Callout type="info">
   Unfortunately [TypeScript doesn't support importing JSON as
-  const](https://github.com/microsoft/TypeScript/issues/32063). If you have ABIs
-  in `.json` files, you should convert the files to `.ts`, export the ABIs, and
-  add const assertions to them. (We have future integrations planned for
-  Foundry/Hardhat users to make this easier.)
+  const](https://github.com/microsoft/TypeScript/issues/32063). Check out
+  [`@wagmi/cli`](/cli) to help with this! It can automatically fetchi ABIs from
+  Etherscan, resolve ABIs from your Foundry/Hardhat projects, generate React
+  Hooks, and much more.
 </Callout>
 
 ### Contract ABIs

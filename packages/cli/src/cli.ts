@@ -12,6 +12,7 @@ cli
   .option('-c, --config <path>', '[string] path to config file')
   .option('-r, --root <path>', '[string] root path')
   .option('-w, --watch', '[boolean] watch for changes')
+  .example((name) => `${name} generate`)
   .action(async (options: Generate) => {
     const { generate } = await import('./commands')
     await generate(options)
@@ -19,6 +20,7 @@ cli
 
 cli
   .command('init', 'create configuration file')
+  .option('-c, --config <path>', '[string] path to config file')
   .example((name) => `${name} init`)
   .action(async (options: Init) => {
     const { init } = await import('./commands')
