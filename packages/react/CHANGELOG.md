@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.10.5
+
+### Patch Changes
+
+- [#1621](https://github.com/wagmi-dev/wagmi/pull/1621) [`5812b590`](https://github.com/wagmi-dev/wagmi/commit/5812b5909277bf2862cb57a31d52465b47291410) Thanks [@tmm](https://github.com/tmm)! - Bumped @wagmi/connectors
+
+- Updated dependencies [[`5812b590`](https://github.com/wagmi-dev/wagmi/commit/5812b5909277bf2862cb57a31d52465b47291410)]:
+  - @wagmi/core@0.8.11
+
 ## 0.10.4
 
 ### Patch Changes
