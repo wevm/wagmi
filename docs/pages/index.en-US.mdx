@@ -41,7 +41,7 @@ yarn add wagmi ethers
 ## Overview
 
 ```tsx
-import { WagmiConfig, createClient } from 'wagmi'
+import { WagmiConfig, createClient } from 'wagmi-react'
 import { getDefaultProvider } from 'ethers'
 
 const client = createClient({
@@ -59,7 +59,7 @@ function App() {
 ```
 
 ```tsx
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { useAccount, useConnect, useDisconnect } from 'wagmi-react'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {

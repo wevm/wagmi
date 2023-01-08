@@ -12,7 +12,7 @@ Hook for preparing a contract write to be sent via [`useContractWrite`](/react/h
 Eagerly fetches the parameters required for sending a contract write transaction such as the gas estimate.
 
 ```tsx
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ import { usePrepareContractWrite } from 'wagmi'
 `usePrepareContractWrite` gives back a "prepared config" to be sent through to `useContractWrite`.
 
 ```tsx {4-8}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
 
 function App() {
   const { config, error } = usePrepareContractWrite({
@@ -78,7 +78,7 @@ function App() {
 Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -96,7 +96,7 @@ Contract ABI. If `abi` is not defined, hook will not run.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {6}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -112,7 +112,7 @@ function App() {
 Name of function to call. If `functionName` is not defined, hook will not run.
 
 ```tsx {7}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -128,7 +128,7 @@ function App() {
 Arguments to pass to function call.
 
 ```tsx {16}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -153,7 +153,7 @@ function App() {
 Chain ID used to validate if the user is connected to the target chain.
 
 ```tsx {9}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 import { optimism } from 'wagmi/chains'
 
 function App() {
@@ -171,7 +171,7 @@ function App() {
 Overrides to pass to function call. If the function is payable, you can pass a `value` here.
 
 ```tsx {8-11}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -191,7 +191,7 @@ function App() {
 Time (in ms) which the prepared config should remain in the cache.
 
 ```tsx {8}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -208,7 +208,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {8}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -225,7 +225,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {7}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -242,7 +242,7 @@ function App() {
 Time (in ms) after prepared config is considered stale. If set to `Infinity` the data will never be considered stale.
 
 ```tsx {8}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -259,7 +259,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {8}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -276,7 +276,7 @@ function App() {
 Function to invoke when fetching is successful.
 
 ```tsx {8-10}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -295,7 +295,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {8-10}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -314,7 +314,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {8-10}
-import { usePrepareContractWrite } from 'wagmi'
+import { usePrepareContractWrite } from 'wagmi-react'
 
 function App() {
   const { config } = usePrepareContractWrite({

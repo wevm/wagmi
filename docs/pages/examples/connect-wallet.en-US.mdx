@@ -27,7 +27,12 @@ First, we create a new wagmi client set up with the Injected (i.e. MetaMask), Wa
 This example uses the Ethereum Mainnet chain (`mainnet`) from `wagmi`, however, you can also pass in any [EVM-compatible chain](/react/chains).
 
 ```tsx
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import {
+  WagmiConfig,
+  createClient,
+  configureChains,
+  mainnet,
+} from 'wagmi-react'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -88,7 +93,7 @@ function App() {
 Now that our connectors are set up, we want users to be able to choose a connector to connect their wallets using `useConnect`.
 
 ```tsx
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 
 export function Profile() {
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -127,7 +132,7 @@ import {
   useDisconnect,
   useEnsAvatar,
   useEnsName,
-} from 'wagmi'
+} from 'wagmi-react'
 
 export function Profile() {
   const { address, connector, isConnected } = useAccount()

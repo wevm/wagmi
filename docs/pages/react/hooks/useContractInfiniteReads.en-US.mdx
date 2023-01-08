@@ -10,7 +10,7 @@ import { Callout } from 'nextra-theme-docs'
 Hook for calling multiple ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) methods with "infinite scrolling" ("fetch more") support. Useful for rendering a dynamic list of contract data.
 
 ```tsx
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ The `useContractInfiniteReads` hook requires:
 
 ```tsx
 import { BigNumber } from 'ethers'
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import mlootABI from './mlootABI.json'
 
 const mlootContractConfig = {
@@ -74,7 +74,7 @@ In the example below, we are fetching 10 `tokenURI`s at a time from the [more lo
 
 ```tsx
 import { BigNumber } from 'ethers'
-import { useContractInfiniteReads, paginatedIndexesConfig } from 'wagmi'
+import { useContractInfiniteReads, paginatedIndexesConfig } from 'wagmi-react'
 import mlootABI from './mlootABI.json'
 
 const mlootContractConfig = {
@@ -136,7 +136,7 @@ function App() {
 Unique key used to store the data in the cache.
 
 ```tsx {5}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 
 function App() {
   const { data, fetchNextPage } = useContractInfiniteReads({
@@ -160,7 +160,7 @@ function App() {
 Contract address.
 
 ```tsx {11,17}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -194,7 +194,7 @@ Contract ABI.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {12,18}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -226,7 +226,7 @@ function App() {
 Name of function to call.
 
 ```tsx {13,19}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -258,7 +258,7 @@ function App() {
 Arguments to pass to function call.
 
 ```tsx {14,20}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -290,7 +290,7 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {16,23}
-import { useContractReads } from 'wagmi'
+import { useContractReads } from 'wagmi-react'
 import { optimism } from 'wagmi/chains'
 import { BigNumber } from 'ethers'
 
@@ -329,7 +329,7 @@ Derives the `param` provided to `contracts`. Provides the last page of the infin
 If there is no next page available, return `undefined`.
 
 ```tsx {24-25}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -363,7 +363,7 @@ function App() {
 If a contract read fails while fetching, it will fail silently and not throw an error.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -396,7 +396,7 @@ function App() {
 Overrides to pass to function call.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -429,7 +429,7 @@ function App() {
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -462,7 +462,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -495,7 +495,7 @@ function App() {
 Use [`structuralSharing`](#structuralsharing-optional) instead.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -528,7 +528,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -561,7 +561,7 @@ function App() {
 Transform or select a part of the data returned by the contract.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -596,7 +596,7 @@ Keep referential identity of data and prevent rerenders. Defaults to `(oldData, 
 If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -629,7 +629,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {24}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -662,7 +662,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {24-26}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -697,7 +697,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {24-26}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {
@@ -732,7 +732,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {24-26}
-import { useContractInfiniteReads } from 'wagmi'
+import { useContractInfiniteReads } from 'wagmi-react'
 import { BigNumber } from 'ethers'
 
 function App() {

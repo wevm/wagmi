@@ -8,13 +8,13 @@ description: 'The wagmi Client is a framework agnostic (Vanilla JS) client that 
 The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.
 
 ```ts
-import { createClient } from 'wagmi'
+import { createClient } from 'wagmi-react'
 ```
 
 ## Usage
 
 ```ts
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider, webSocketProvider } = configureChains(
@@ -35,7 +35,7 @@ const client = createClient({
 Enables reconnecting to last used connector on mount. Defaults to `false`.
 
 ```ts {7}
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
@@ -51,7 +51,7 @@ const client = createClient({
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
 ```ts {9-17}
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
@@ -77,7 +77,7 @@ const client = createClient({
 Adds the ability to provide a custom logger to override how logs are broadcasted in wagmi. Defaults to `console` logging.
 
 ```ts {4,9-11}
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 import { logWarn } from './logger'
@@ -110,7 +110,7 @@ const client = createClient({
 ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.
 
 ```ts {7}
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
@@ -127,7 +127,12 @@ You can create a "chain-aware" `provider` by using the `configureChains` API or 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
 ```ts {8}
-import { createClient, createStorage, configureChains, mainnet } from 'wagmi'
+import {
+  createClient,
+  createStorage,
+  configureChains,
+  mainnet,
+} from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
@@ -143,7 +148,7 @@ const client = createClient({
 ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
 ```ts {11}
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider, webSocketProvider } = configureChains(

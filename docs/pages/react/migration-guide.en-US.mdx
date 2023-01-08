@@ -51,7 +51,7 @@ The `chain` export has been removed. `wagmi` now only exports the `mainnet` & `g
 import {
 - chain
   configureChains
-} from 'wagmi'
+} from 'wagmi-react'
 + import { mainnet, polygon, optimism } from 'wagmi/chains'
 
 const { ... } = configureChains(
@@ -68,7 +68,7 @@ const { ... } = configureChains(
 The `allChains` export has been removed. If you need a list of all chains, you can utilize [`wagmi/chains` entrypoint](/react/chains#wagmichains).
 
 ```diff
-- import { allChains } from 'wagmi'
+- import { allChains } from 'wagmi-react'
 + import * as allChains from 'wagmi/chains'
 
 const { ... } = configureChains(allChains, ...)
@@ -79,7 +79,7 @@ const { ... } = configureChains(allChains, ...)
 The `defaultChains` & `defaultL2Chains` exports have been removed. If you still need the `defaultChains` or `defaultL2Chains` exports, you can build them yourself:
 
 ```diff
-- import { defaultChains } from 'wagmi'
+- import { defaultChains } from 'wagmi-react'
 + import { mainnet, goerli } from 'wagmi/chains'
 
 + const defaultChains = [mainnet, goerli]
@@ -88,7 +88,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 > The `defaultChains` export was previously populated with `mainnet` & `goerli`.
 
 ```diff
-- import { defaultL2Chains } from 'wagmi'
+- import { defaultL2Chains } from 'wagmi-react'
 + import {
 +   arbitrum,
 +   arbitrumGoerli,
@@ -115,7 +115,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 The `chainId` export has been removed. You can extract a chain ID from the chain itself.
 
 ```diff
-- import { chainId } from 'wagmi'
+- import { chainId } from 'wagmi-react'
 + import { mainnet, polygon, optimism } from 'wagmi/chains'
 
 -const mainnetChainId = chainId.mainnet
@@ -131,7 +131,7 @@ The `chainId` export has been removed. You can extract a chain ID from the chain
 The `etherscanBlockExplorers` export has been removed. You can extract a block explorer from the chain itself.
 
 ```diff
-- import { etherscanBlockExplorers } from 'wagmi'
+- import { etherscanBlockExplorers } from 'wagmi-react'
 + import { mainnet, polygon, optimism } from 'wagmi/chains'
 
 -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
@@ -147,7 +147,7 @@ The `etherscanBlockExplorers` export has been removed. You can extract a block e
 The `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls` exports have been removed. You can extract a RPC URL from the chain itself.
 
 ```diff
-- import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from 'wagmi'
+- import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from 'wagmi-react'
 + import { mainnet } from 'wagmi/chains'
 
 -const mainnetAlchemyRpcUrl = alchemyRpcUrls.mainnet
@@ -273,8 +273,8 @@ Removed the following deprecated chains:
 If you feel you still need to include one of these testnets in your application, you will have to define it manually:
 
 ```diff
--import { chain } from 'wagmi'
-+import { Chain } from 'wagmi'
+-import { chain } from 'wagmi-react'
++import { Chain } from 'wagmi-react'
 
 -export const rinkeby = chain.rinkeby
 +export const rinkeby: Chain = {
@@ -310,7 +310,7 @@ You can reference these removed chains [here](https://github.com/wagmi-dev/wagmi
 Made `apiKey` required on `alchemyProvider`.
 
 ```diff
-import { configureChains } from 'wagmi'
+import { configureChains } from 'wagmi-react'
 
 const config = configureChains(defaultChains, [
 - alchemyProvider(),
@@ -325,7 +325,7 @@ You can find your Alchemy API key from the [Alchemy Dashboard](https://dashboard
 Made `apiKey` required on `infuraProvider`.
 
 ```diff
-import { configureChains } from 'wagmi'
+import { configureChains } from 'wagmi-react'
 
 const config = configureChains(defaultChains, [
 - infuraProvider(),
@@ -415,7 +415,7 @@ See the wagmi [TypeScript docs](/react/typescript) for more information on TypeS
 `addressOrName` and `contractInterface` renamed to `address` and `abi` respectively for the following contract hooks: `useContract`, `useContractEvent`, `useContractRead`, `useContractReads`, `useContractInfiniteReads`, `useContractWrite`, and `usePrepareContractWrite`.
 
 ```diff
-import { useContractRead } from 'wagmi'
+import { useContractRead } from 'wagmi-react'
 const result = useContractRead({
 - addressOrName: '0x…',
 + address: '0x…',
@@ -429,8 +429,8 @@ const result = useContractRead({
 If you were using an ENS name instead of an address, you can resolve the name to an address before passing it to the action.
 
 ```diff
-- import { useContractRead } from 'wagmi'
-+ import { useContractRead, useEnsAddress } from 'wagmi'
+- import { useContractRead } from 'wagmi-react'
++ import { useContractRead, useEnsAddress } from 'wagmi-react'
 + const { data: address } = useEnsAddress({ name: 'example.eth' })
 const result = useContractRead({
 - addressOrName: 'example.eth',
@@ -643,7 +643,7 @@ The configuration passed to the `useSendTransaction` hook now needs to be either
 **Prepared usage**
 
 ```diff
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi-react'
 
 +const { config } = usePrepareSendTransaction({
 +  request: {
@@ -665,7 +665,7 @@ const { data } = useSendTransaction({
 If you are not ready to upgrade to `usePrepareSendTransaction`, it is possible to use `useSendTransaction` without preparing the configuration first by passing `mode: 'recklesslyUnprepared'`.
 
 ```diff
-import { useSendTransaction } from 'wagmi'
+import { useSendTransaction } from 'wagmi-react'
 
 const { data } = useSendTransaction({
 + mode: 'recklesslyUnprepared',
@@ -769,7 +769,7 @@ import {
   createClient,
 + configureChains,
 + defaultChains
-} from 'wagmi'
+} from 'wagmi-react'
 +import { publicProvider } from 'wagmi/providers/public'
 
 +const { provider, webSocketProvider } = configureChains(defaultChains, [
@@ -803,7 +803,7 @@ import {
   createClient,
 + defaultChains,
 + configureChains
-} from 'wagmi'
+} from 'wagmi-react'
 +import { publicProvider } from 'wagmi/providers/publicProvider'
 
 +const { provider } = configureChains(defaultChains, [
@@ -821,7 +821,7 @@ If you previously used an ethers.js Provider, you now need to provide your `chai
 import {
   createClient,
 + defaultChains
-} from 'wagmi'
+} from 'wagmi-react'
 import ethers from 'ethers'
 
 const client = createClient({
@@ -850,7 +850,7 @@ import {
   chain,
 +  configureChains,
   createClient
-} from 'wagmi';
+} from 'wagmi-react';
 
 +import { publicProvider } from 'wagmi/providers/public'
 
@@ -1097,8 +1097,8 @@ const account = useAccount({
 The `isConnected`, `isConnecting`, `isReconnecting` & `isDisconnected` flags have been moved to the `useAccount` hook.
 
 ```diff
--import { useConnect } from 'wagmi'
-+import { useAccount } from 'wagmi'
+-import { useConnect } from 'wagmi-react'
++import { useAccount } from 'wagmi-react'
 
 function App() {
   const {
@@ -1122,8 +1122,8 @@ These flags represent the **local** async state of `useConnect`.
 The `activeConnector` value has been removed. You can find the active connector on `useAccount`.
 
 ```diff
--import { useConnect } from 'wagmi'
-+import { useAccount } from 'wagmi'
+-import { useConnect } from 'wagmi-react'
++import { useAccount } from 'wagmi-react'
 
 function App() {
 - const { activeConnector } = useConnect()
@@ -1136,7 +1136,7 @@ function App() {
 The `connector` parameter on `connect` & `connectAsync` now has to be in the config object parameter shape.
 
 ```diff
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 
 function App() {
   const { connect, connectors } = useConnect()
@@ -1254,7 +1254,7 @@ The `useNetwork` hook now accepts no configuration and only returns `chain` (ren
 import {
   useNetwork
 + useSwitchNetwork
-} from 'wagmi'
+} from 'wagmi-react'
 
 const {
 - activeChain
@@ -1323,7 +1323,7 @@ Before:
 
 ```tsx {15-42}
 import { providers } from 'ethers'
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { Provider, chain, createClient, defaultChains } from 'wagmi-react'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -1373,7 +1373,7 @@ const client = createClient({
 After:
 
 ```tsx {20-38}
-import { Provider, chain, createClient, defaultChains } from 'wagmi'
+import { Provider, chain, createClient, defaultChains } from 'wagmi-react'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -1441,7 +1441,7 @@ The `Provider` component no longer supports configuration directly as props. You
 Before:
 
 ```tsx
-import { Provider } from 'wagmi'
+import { Provider } from 'wagmi-react'
 
 function App() {
   return (
@@ -1455,7 +1455,7 @@ function App() {
 After:
 
 ```tsx
-import { Provider, createClient } from 'wagmi'
+import { Provider, createClient } from 'wagmi-react'
 
 const client = createClient({
   autoConnect: true,
@@ -1495,7 +1495,7 @@ Getter functions such as `getBalance`, `getBlockNumber`, `read`, etc have been r
 Before:
 
 ```tsx
-import { useBalance } from 'wagmi'
+import { useBalance } from 'wagmi-react'
 
 function Example() {
   const [address, setAddress] = useState<string>('')
@@ -1519,7 +1519,7 @@ function Example() {
 After:
 
 ```tsx
-import { useContractRead } from 'wagmi'
+import { useContractRead } from 'wagmi-react'
 
 function Example() {
   const [address, setAddress] = useState<string>('')

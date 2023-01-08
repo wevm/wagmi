@@ -17,7 +17,7 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 ```ts
 import { mainnet, polygon } from 'wagmi/chains'
-import { configureChains } from 'wagmi'
+import { configureChains } from 'wagmi-react'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, provider } = configureChains(
@@ -45,7 +45,7 @@ Note: The above example is using chains from the [`wagmi/chains` entrypoint](/re
 Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/).
 
 ```ts {7}
-import { configureChains } from 'wagmi'
+import { configureChains } from 'wagmi-react'
 import { mainnet, polygon } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
@@ -60,7 +60,7 @@ const { chains, provider } = configureChains(
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
 ```ts {11,13}
-import { configureChains } from 'wagmi'
+import { configureChains } from 'wagmi-react'
 import { mainnet, polygon } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -82,7 +82,7 @@ const { chains, provider } = configureChains(
 The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {11}
-import { configureChains } from 'wagmi'
+import { configureChains } from 'wagmi-react'
 import { mainnet, polygon } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -104,7 +104,7 @@ const { chains, provider } = configureChains(
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
 ```ts {11,13}
-import { configureChains } from 'wagmi'
+import { configureChains } from 'wagmi-react'
 import { mainnet, polygon } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'

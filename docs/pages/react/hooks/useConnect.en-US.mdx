@@ -8,13 +8,13 @@ description: 'React Hook for connecting to account with connectors.'
 Hook for connecting to account with connectors.
 
 ```ts
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 ```
 
 ## Usage
 
 ```tsx
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi-react'
 
 function App() {
   const { connector: activeConnector, isConnected } = useAccount()
@@ -90,7 +90,7 @@ function App() {
 Chain ID to connect.
 
 ```tsx {6}
-import { chain, useConnect } from 'wagmi'
+import { chain, useConnect } from 'wagmi-react'
 import { optimism } from 'wagmi/chains'
 
 function App() {
@@ -107,7 +107,7 @@ Note: The above example is using the `optimism` chain from the [`wagmi/chains` e
 Connector to use for connecting wallet. Useful if you want to connect to a specific connector, instead of [displaying a list](/react/hooks/useConnect#usage).
 
 ```tsx {6}
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function App() {
@@ -122,7 +122,7 @@ function App() {
 Function to invoke when an error is thrown while connecting.
 
 ```tsx {5-7}
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 
 function App() {
   const connect = useConnect({
@@ -138,7 +138,7 @@ function App() {
 Function to invoke before connect and is passed same variables connect function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a connect failure.
 
 ```tsx {5-7}
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 
 function App() {
   const connect = useConnect({
@@ -154,7 +154,7 @@ function App() {
 Function to invoke when connect is settled (either successfully connected, or an error has thrown).
 
 ```tsx {5-7}
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 
 function App() {
   const connect = useConnect({
@@ -170,7 +170,7 @@ function App() {
 Function to invoke when connect is successful.
 
 ```tsx {5-7}
-import { useConnect } from 'wagmi'
+import { useConnect } from 'wagmi-react'
 
 function App() {
   const connect = useConnect({

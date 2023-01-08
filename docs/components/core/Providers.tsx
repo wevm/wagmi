@@ -6,7 +6,7 @@ import {
   createClient,
   goerli,
   mainnet,
-} from 'wagmi'
+} from 'wagmi-react'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'

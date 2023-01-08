@@ -8,13 +8,13 @@ description: 'The WagmiConfig component manages configuration for all hooks usin
 The `WagmiConfig` component manages configuration for all hooks using [React Context](https://reactjs.org/docs/context.html).
 
 ```ts
-import { WagmiConfig } from 'wagmi'
+import { WagmiConfig } from 'wagmi-react'
 ```
 
 ## Usage
 
 ```tsx
-import { WagmiConfig } from 'wagmi'
+import { WagmiConfig } from 'wagmi-react'
 
 function App() {
   return (
@@ -32,7 +32,7 @@ function App() {
 A wagmi [`Client`](/react/client) instance that consists of configuration options. Defaults to `createClient()`.
 
 ```tsx {8-12,16}
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider, webSocketProvider } = configureChains(

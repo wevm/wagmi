@@ -5,7 +5,7 @@ import {
   useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from 'wagmi'
+} from 'wagmi-react'
 
 import { PreviewWrapper } from '../core'
 import { Account, SwitchNetwork, WalletSelector } from '../web3'
