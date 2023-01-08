@@ -1,6 +1,6 @@
 import { Box, Button, Skeleton, Stack } from 'degen'
 import * as React from 'react'
-import { mainnet, useAccount, useNetwork } from 'wagmi'
+import { mainnet, useAccount, useNetwork } from 'wagmi-react'
 
 import { formatAddress } from '../../lib/address'
 import { PreviewWrapper } from '../core'

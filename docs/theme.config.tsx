@@ -74,7 +74,7 @@ const config: DocsThemeConfig = {
     text() {
       return (
         <div>
-          <div className="mb-6 block">
+          <div className="block mb-6">
             <a
               className="flex items-center gap-1 text-current"
               target="_blank"
@@ -130,7 +130,7 @@ const config: DocsThemeConfig = {
       <>
         <span>
           <svg
-            className="h-5 w-auto mr-4 fill-current"
+            className="w-auto h-5 mr-4 fill-current"
             viewBox="0 0 421 198"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ const config: DocsThemeConfig = {
             />
           </svg>
         </span>
-        <span className="text-gray-600 font-normal hidden md:inline">
+        <span className="hidden font-normal text-gray-600 md:inline">
           {translations[locale as Language].tagline[tagline]}
         </span>
       </>

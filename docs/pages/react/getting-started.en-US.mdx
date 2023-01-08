@@ -74,7 +74,7 @@ yarn add wagmi ethers
 First, configure your desired chains to be used by wagmi, and the providers you want to use.
 
 ```tsx
-import { configureChains, mainnet } from 'wagmi'
+import { configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
@@ -94,7 +94,7 @@ Note: In a production app, it is not recommended to only pass `publicProvider` t
 Next, create a wagmi `Client` instance using [`createClient`](/react/client), and pass the result from `configureChains` to it.
 
 ```tsx {9-13}
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi-react'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
@@ -136,7 +136,7 @@ function App() {
 Use hooks! Every component inside the `WagmiConfig` is now set up to use the wagmi hooks.
 
 ```tsx {5,6,7-9}
-import { useAccount, useConnect, useEnsName } from 'wagmi'
+import { useAccount, useConnect, useEnsName } from 'wagmi-react'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 
 function Profile() {

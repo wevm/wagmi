@@ -1,5 +1,5 @@
 import { Button } from 'degen'
-import { goerli, mainnet, useNetwork, useSwitchNetwork } from 'wagmi'
+import { goerli, mainnet, useNetwork, useSwitchNetwork } from 'wagmi-react'
 
 export function SwitchNetwork() {
   const { chain: activeChain } = useNetwork()

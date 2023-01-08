@@ -1,7 +1,7 @@
 import { Button, IconEth, Stack, Text } from 'degen'
 import * as React from 'react'
 import { SiweMessage } from 'siwe'
-import { useSignMessage } from 'wagmi'
+import { useSignMessage } from 'wagmi-react'
 
 type Props = {
   address: string
