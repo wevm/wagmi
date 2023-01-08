@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.10.6
+
+### Patch Changes
+
+- [#1623](https://github.com/wagmi-dev/wagmi/pull/1623) [`c97a4bc5`](https://github.com/wagmi-dev/wagmi/commit/c97a4bc5df422dc9a9d3d8bac0261ec6933ce15b) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useSigner` would not update on account change.
+
 ## 0.10.5
 
 ### Patch Changes
