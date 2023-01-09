@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import { WagmiConfig, configureChains, createClient } from 'wagmi-react'
+import { avalanche, goerli, mainnet, optimism } from 'wagmi-react/chains'
 import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
 
 import { InjectedConnector } from 'wagmi-react/connectors/injected'
@@ -11,7 +12,6 @@ import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
 import { alchemyProvider } from 'wagmi-react/providers/alchemy'
 import { infuraProvider } from 'wagmi-react/providers/infura'
 import { publicProvider } from 'wagmi-react/providers/public'
-import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet, goerli, optimism, avalanche],
