@@ -132,6 +132,7 @@ type InjectedProviderFlags = {
   isOpera?: true
   isPhantom?: true
   isPortal?: true
+  isRainbow?: true
   isTally?: true
   isTokenPocket?: true
   isTokenary?: true
