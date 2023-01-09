@@ -27,8 +27,12 @@ const config = {
 }
 
 let data = await readContract(config)
-watchReadContract(config, (data_) => (data = data_))
+const unwatch = watchReadContract(config, (data_) => (data = data_))
 ```
+
+## Return Value
+
+`unwatch` is a function that can be called to unsubscribe from the readContract change event.
 
 ## Configuration
 
