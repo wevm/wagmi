@@ -1,5 +1,6 @@
 ---
-'@wagmi/core': minor
+'@wagmi/core': patch
+'wagmi': patch
 ---
 
-Added `isRainbow` flag to `InjectedConnector`.
+Added `isRainbow` flag to injected `window.ethereum` types.
