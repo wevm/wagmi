@@ -2,4 +2,4 @@
 '@wagmi/core': minor
 ---
 
-feat: added support for Rainbow injected provider
+Added `isRainbow` flag to `InjectedConnector`.
