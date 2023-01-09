@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.10.7
+
+### Patch Changes
+
+- [#1636](https://github.com/wagmi-dev/wagmi/pull/1636) [`025f6771`](https://github.com/wagmi-dev/wagmi/commit/025f6771b32ff7eed22f527be81c5141ddaf9c3d) Thanks [@DanielSinclair](https://github.com/DanielSinclair)! - Added `isRainbow` flag to injected `window.ethereum` types.
+
+- Updated dependencies [[`025f6771`](https://github.com/wagmi-dev/wagmi/commit/025f6771b32ff7eed22f527be81c5141ddaf9c3d)]:
+  - @wagmi/core@0.8.12
+
 ## 0.10.6
 
 ### Patch Changes
