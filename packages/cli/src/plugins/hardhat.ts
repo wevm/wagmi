@@ -42,7 +42,7 @@ type HardhatConfig = {
      */
     build?: string | boolean
     /**
-     * Rebuild every time a watched file or directory is changed.
+     * Command to run when watched file or directory is changed.
      *
      * @default `${packageManger} hardhat compile`
      */
