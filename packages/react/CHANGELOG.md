@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.10.10
+
+### Patch Changes
+
+- [#1648](https://github.com/wagmi-dev/wagmi/pull/1648) [`a2db9170`](https://github.com/wagmi-dev/wagmi/commit/a2db91709720161cd70eeb5e84dd78433264f0a3) Thanks [@tmm](https://github.com/tmm)! - Exported internal type.
+
 ## 0.10.9
 
 ### Patch Changes
