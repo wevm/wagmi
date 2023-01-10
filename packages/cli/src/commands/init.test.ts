@@ -40,10 +40,8 @@ describe('init', () => {
     expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "// @ts-check
 
-      /**
-       * @type {import('@wagmi/cli').Config}
-       **/
-      export default { out: 'src/generated.ts', contracts: [], plugins: [] }
+      /** @type {import('@wagmi/cli').Config} */
+      export default { out: 'src/generated.js', contracts: [], plugins: [] }
       "
     `)
   })

@@ -4,6 +4,7 @@ exports[`actions > run > isTypeScript > false 1`] = `
 "import {
   getContract,
   readContract,
+  writeContract,
   prepareWriteContract,
   watchContractEvent,
 } from '@wagmi/core'
@@ -24,6 +25,17 @@ export function getWagmi(config) {
  */
 export function readWagmi(config) {
   return readContract({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps {@link writeContract} with \`abi\` set to {@link WagmiAbi}.
+ */
+export function writeWagmi(config) {
+  return writeContract({
     abi: WagmiAbi,
     address: WagmiAddress,
     ...config,
@@ -63,6 +75,8 @@ exports[`actions > run > isTypeScript > true 1`] = `
   GetContractArgs,
   readContract,
   ReadContractConfig,
+  writeContract,
+  WriteContractArgs,
   prepareWriteContract,
   PrepareWriteContractConfig,
   watchContractEvent,
@@ -93,6 +107,20 @@ export function readWagmi<
     address: WagmiAddress,
     ...config,
   } as unknown as ReadContractConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps {@link writeContract} with \`abi\` set to {@link WagmiAbi}.
+ */
+export function writeWagmi<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = string,
+>(config: Omit<WriteContractArgs<TAbi, TFunctionName>, 'abi' | 'address'>) {
+  return writeContract({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  } as unknown as WriteContractArgs<TAbi, TFunctionName>)
 }
 
 /**

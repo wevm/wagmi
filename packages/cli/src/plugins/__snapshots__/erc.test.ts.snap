@@ -60,7 +60,6 @@ exports[`erc > contracts 1`] = `
         "name": "allowance",
         "outputs": [
           {
-            "name": "",
             "type": "uint256",
           },
         ],
@@ -81,7 +80,6 @@ exports[`erc > contracts 1`] = `
         "name": "approve",
         "outputs": [
           {
-            "name": "",
             "type": "bool",
           },
         ],
@@ -98,7 +96,6 @@ exports[`erc > contracts 1`] = `
         "name": "balanceOf",
         "outputs": [
           {
-            "name": "",
             "type": "uint256",
           },
         ],
@@ -110,7 +107,6 @@ exports[`erc > contracts 1`] = `
         "name": "decimals",
         "outputs": [
           {
-            "name": "",
             "type": "uint8",
           },
         ],
@@ -122,7 +118,6 @@ exports[`erc > contracts 1`] = `
         "name": "name",
         "outputs": [
           {
-            "name": "",
             "type": "string",
           },
         ],
@@ -134,7 +129,6 @@ exports[`erc > contracts 1`] = `
         "name": "symbol",
         "outputs": [
           {
-            "name": "",
             "type": "string",
           },
         ],
@@ -146,7 +140,6 @@ exports[`erc > contracts 1`] = `
         "name": "totalSupply",
         "outputs": [
           {
-            "name": "",
             "type": "uint256",
           },
         ],
@@ -167,7 +160,6 @@ exports[`erc > contracts 1`] = `
         "name": "transfer",
         "outputs": [
           {
-            "name": "",
             "type": "bool",
           },
         ],
@@ -192,7 +184,6 @@ exports[`erc > contracts 1`] = `
         "name": "transferFrom",
         "outputs": [
           {
-            "name": "",
             "type": "bool",
           },
         ],
@@ -293,7 +284,6 @@ exports[`erc > contracts 1`] = `
         "name": "balanceOf",
         "outputs": [
           {
-            "name": "",
             "type": "uint256",
           },
         ],
@@ -310,7 +300,6 @@ exports[`erc > contracts 1`] = `
         "name": "getApproved",
         "outputs": [
           {
-            "name": "",
             "type": "address",
           },
         ],
@@ -331,7 +320,6 @@ exports[`erc > contracts 1`] = `
         "name": "isApprovedForAll",
         "outputs": [
           {
-            "name": "",
             "type": "bool",
           },
         ],
@@ -343,7 +331,6 @@ exports[`erc > contracts 1`] = `
         "name": "name",
         "outputs": [
           {
-            "name": "",
             "type": "string",
           },
         ],
@@ -432,7 +419,6 @@ exports[`erc > contracts 1`] = `
         "name": "symbol",
         "outputs": [
           {
-            "name": "",
             "type": "string",
           },
         ],
@@ -449,7 +435,6 @@ exports[`erc > contracts 1`] = `
         "name": "tokenByIndex",
         "outputs": [
           {
-            "name": "",
             "type": "uint256",
           },
         ],
@@ -487,7 +472,6 @@ exports[`erc > contracts 1`] = `
         "name": "tokenURI",
         "outputs": [
           {
-            "name": "",
             "type": "string",
           },
         ],
@@ -499,7 +483,6 @@ exports[`erc > contracts 1`] = `
         "name": "totalSupply",
         "outputs": [
           {
-            "name": "",
             "type": "uint256",
           },
         ],
@@ -517,7 +500,7 @@ exports[`erc > contracts 1`] = `
             "type": "address",
           },
           {
-            "name": "tokeId",
+            "name": "tokenId",
             "type": "uint256",
           },
         ],
