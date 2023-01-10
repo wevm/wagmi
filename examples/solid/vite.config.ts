@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import solidPlugin from 'vite-plugin-solid';
+import { defineConfig } from 'vite'
+import solidPlugin from 'vite-plugin-solid'
 
 export default defineConfig({
   plugins: [solidPlugin()],
@@ -9,4 +9,8 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
-});
+  optimizeDeps: {
+    // Required because it crashes if we optimize tanstack solid-query
+    exclude: ['@tanstack/solid-query'],
+  },
+})
