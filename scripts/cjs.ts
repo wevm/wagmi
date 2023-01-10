@@ -10,8 +10,11 @@ type PreparedPackage = Package & {
   oldPackageJson: PackageJson
 }
 
-const dependenciesDir = [path.join(__dirname, '..', 'references', 'packages')]
-const packagesDir = [path.join(__dirname, '..', 'packages')]
+const packagesDir = [
+  path.join(__dirname, '..', 'packages'),
+  path.join(__dirname, '..', 'references', 'packages'),
+]
+const referencesDir = [path.join(__dirname, '..', 'references', 'packages')]
 
 /** @deprecated Script to generate & release a CJS escape hatch bundle. */
 export async function main() {
@@ -92,15 +95,15 @@ function version({
   changedPackages: Package[]
   packages: Package[]
 }) {
-  const dependencyPackages = packages.filter(({ dir }) =>
-    dependenciesDir.some((i) => dir.startsWith(i)),
+  const referencesPackages = packages.filter(({ dir }) =>
+    referencesDir.some((i) => dir.startsWith(i)),
   )
 
   for (const { dir, packageJson } of changedPackages) {
     const newPackageJson = { ...packageJson }
 
     newPackageJson.version = packageJson.version + '-cjs'
-    for (const { packageJson } of dependencyPackages) {
+    for (const { packageJson } of referencesPackages) {
       if (newPackageJson.dependencies?.[packageJson.name]) {
         newPackageJson.dependencies[packageJson.name] =
           packageJson.version + '-cjs'
@@ -116,6 +119,7 @@ function version({
 
 async function publish({ changedPackages }: { changedPackages: Package[] }) {
   for (const { dir } of changedPackages) {
+    if (referencesDir.some((i) => dir.startsWith(i))) return
     await execa('pnpm', ['publish', '--tag', 'cjs', '--no-git-checks'], {
       cwd: dir,
       stdout: process.stdout,
