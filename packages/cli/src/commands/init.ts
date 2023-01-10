@@ -36,9 +36,7 @@ export async function init({ config = defaultConfig }: Init = {}) {
     content = dedent(`
       // @ts-check
 
-      /**
-       * @type {import('@wagmi/cli').Config}
-       **/
+      /** @type {import('@wagmi/cli').Config} */
       export default ${JSON.stringify({
         ...config,
         out: config.out.replace('.ts', '.js'),

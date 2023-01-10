@@ -196,7 +196,6 @@ importers:
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
       '@wagmi/chains': ^0.1.7
-      '@wagmi/core': ^0.8.10
       abitype: ^0.2.5
       bundle-require: ^3.1.2
       cac: ^6.7.12
@@ -204,6 +203,8 @@ importers:
       chokidar: ^3.5.3
       dedent: ^0.7.0
       detect-package-manager: ^2.0.1
+      dotenv: ^16.0.3
+      dotenv-expand: ^10.0.0
       esbuild: 0.15.13
       execa: ^6.1.0
       find-up: ^6.3.0
@@ -219,7 +220,6 @@ importers:
     dependencies:
       '@ethersproject/address': 5.7.0
       '@wagmi/chains': 0.1.7
-      '@wagmi/core': 0.8.10_zod@3.20.2
       abitype: 0.2.5_zod@3.20.2
       bundle-require: 3.1.2_esbuild@0.15.13
       cac: 6.7.14
@@ -227,6 +227,8 @@ importers:
       chokidar: 3.5.3
       dedent: 0.7.0
       detect-package-manager: 2.0.1
+      dotenv: 16.0.3
+      dotenv-expand: 10.0.0
       esbuild: 0.15.13
       execa: 6.1.0
       find-up: 6.3.0
@@ -3054,69 +3056,6 @@ packages:
     resolution: {integrity: sha512-t9qm4FyzwzJhAcLtnh9HUeOmueSEOXwXlR0RCcS/vhtLSUnzaUfEkjAeu4+7AIujYWjrtdS/Zvlc+PwTjuwTUQ==}
     dev: false
 
-  /@wagmi/connectors/0.1.3_@wagmi+core@0.8.10:
-    resolution: {integrity: sha512-rNRDJsDdgb4R7n3AP6qbIu5L+3QYJU0raRFkFZLqBpA2dlX4d5RATALiDK6XdWw69iCb/q3BEsyj3Y+uNN/ODA==}
-    peerDependencies:
-      '@wagmi/core': 0.8.x
-      ethers: ^5.0.0
-    peerDependenciesMeta:
-      '@wagmi/core':
-        optional: true
-    dependencies:
-      '@coinbase/wallet-sdk': 3.6.0
-      '@ledgerhq/connect-kit-loader': 1.0.2
-      '@wagmi/core': 0.8.10_zod@3.20.2
-      '@walletconnect/ethereum-provider': 1.8.0
-      '@walletconnect/qrcode-modal': 1.8.0
-      '@walletconnect/universal-provider': 2.2.0
-      abitype: 0.1.8
-      eventemitter3: 4.0.7
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@react-native-async-storage/async-storage'
-      - bufferutil
-      - debug
-      - encoding
-      - lokijs
-      - react-native
-      - supports-color
-      - typescript
-      - utf-8-validate
-    dev: false
-
-  /@wagmi/core/0.8.10_zod@3.20.2:
-    resolution: {integrity: sha512-TbXaKfZX0GD3LkhGoIWPWaitmwucNPxm0riRYStRncoe9JqSYJ82P3vwLn7zO9f1mwqwnf0EOnmotycH/adTwQ==}
-    peerDependencies:
-      '@coinbase/wallet-sdk': '>=3.6.0'
-      '@walletconnect/ethereum-provider': '>=1.7.5'
-      ethers: '>=5.5.1'
-    peerDependenciesMeta:
-      '@coinbase/wallet-sdk':
-        optional: true
-      '@walletconnect/ethereum-provider':
-        optional: true
-    dependencies:
-      '@wagmi/chains': 0.1.7
-      '@wagmi/connectors': 0.1.3_@wagmi+core@0.8.10
-      abitype: 0.2.5_zod@3.20.2
-      eventemitter3: 4.0.7
-      zustand: 4.1.4
-    transitivePeerDependencies:
-      - '@babel/core'
-      - '@react-native-async-storage/async-storage'
-      - bufferutil
-      - debug
-      - encoding
-      - immer
-      - lokijs
-      - react
-      - react-native
-      - supports-color
-      - typescript
-      - utf-8-validate
-      - zod
-    dev: false
-
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}
     dependencies:
@@ -5315,6 +5254,16 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /dotenv-expand/10.0.0:
+    resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
+    engines: {node: '>=12'}
+    dev: false
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
+
   /dotenv/8.6.0:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
@@ -6882,19 +6831,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: false
-
-  /follow-redirects/1.15.2_debug@4.3.4:
-    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dependencies:
-      debug: 4.3.4
-    dev: true
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -11372,7 +11308,7 @@ packages:
     dependencies:
       command-exists: 1.2.9
       commander: 3.0.2
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
       fs-extra: 0.30.0
       js-sha3: 0.8.0
       memorystream: 0.3.1

@@ -31,8 +31,6 @@ export type ContractConfig<
         : Record<TChainId, Address>)
   /**
    * Name of contract.
-   *
-   * Used for names of generated code.
    */
   name: string
 }
@@ -81,7 +79,7 @@ export type Plugin = {
 }
 
 export type Config = {
-  /** Contracts to generate code for */
+  /** Contracts to use in commands */
   contracts?: ContractConfig[]
   /** Output file path */
   out: string

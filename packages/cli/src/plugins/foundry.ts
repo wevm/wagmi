@@ -119,7 +119,9 @@ export function foundry({
       if (clean)
         await execa(forgeExecutable, ['clean'], { cwd: resolve(project) })
       if (build)
-        await execa(forgeExecutable, ['build'], { cwd: resolve(project) })
+        await execa(forgeExecutable, ['build'], {
+          cwd: resolve(project),
+        })
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
@@ -153,7 +155,7 @@ export function foundry({
       command: rebuild
         ? async () => {
             logger.log(`Watching Foundry project for changes at "${project}".`)
-            await execa(forgeExecutable, ['build', '--watch'], {
+            execa(forgeExecutable, ['build', '--watch'], {
               cwd: resolve(project),
             }).stdout?.on('data', (data) => {
               process.stdout.write(`Foundry: ${data}`)

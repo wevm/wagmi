@@ -4,8 +4,8 @@
     "title": "@wagmi/cli"
   },
   "getting-started": "Getting Started",
-  "commands": "Commands",
   "configuration": "Configuration",
+  "commands": "Commands",
   "plugins": "Plugins",
   "-- create-wagmi --": {
     "type": "separator",

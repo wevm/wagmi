@@ -9,9 +9,8 @@ import { default as fse } from 'fs-extra'
 import { z } from 'zod'
 
 import { version as packageVersion } from '../../package.json'
-import type { Config, Contract, ContractConfig, Plugin, Watch } from '../config'
+import type { Contract, ContractConfig, Watch } from '../config'
 import { fromZodError } from '../errors'
-import * as logger from '../logger'
 import {
   findConfig,
   format,
@@ -31,7 +30,6 @@ const Generate = z.object({
 export type Generate = z.infer<typeof Generate>
 
 export async function generate(options: Generate) {
-  logger.log('Generating code…')
   // Validate command line options
   try {
     await Generate.parseAsync(options)
@@ -64,12 +62,19 @@ export async function generate(options: Generate) {
     if (outNames.has(config.out))
       throw new Error(`out "${config.out}" is not unique.`)
     outNames.add(config.out)
-    logger.log(`Config "${config.out}"`)
 
     // Collect contracts and watch configs from plugins
-    const { contractConfigs, plugins, watchConfigs } = await validatePlugins({
-      config: config,
-    })
+    const contractConfigs = config.contracts ?? []
+    const watchConfigs: Watch[] = []
+    const plugins = config.plugins ?? []
+    for (const plugin of plugins) {
+      await plugin.validate?.()
+      if (plugin.watch) watchConfigs.push(plugin.watch)
+      if (plugin.contracts) {
+        const contracts = await plugin.contracts()
+        contractConfigs.push(...contracts)
+      }
+    }
 
     // Get contracts from config
     const contractNames = new Set<string>()
@@ -77,33 +82,36 @@ export async function generate(options: Generate) {
     for (const contractConfig of contractConfigs) {
       if (contractNames.has(contractConfig.name))
         throw new Error(`Contract name "${contractConfig.name}" is not unique.`)
-      logger.log(`Resolving contract "${contractConfig.name}"`)
       const contract = await getContract({ ...contractConfig, isTypeScript })
       contractMap.set(contract.name, contract)
     }
 
     // Run plugins
     const contracts = [...contractMap.values()]
-    const result = await executePlugins({
-      plugins,
-      contracts,
-      isTypeScript,
-    })
+    const imports = []
+    const prepend = []
+    const content = []
+    for (const plugin of plugins) {
+      if (!plugin.run) continue
+      const result = await plugin.run({ contracts, isTypeScript })
+      if (!result.imports && !result.prepend && !result.content) continue
+      content.push(getBannerContent({ name: plugin.name }), result.content)
+      result.imports && imports.push(result.imports)
+      result.prepend && prepend.push(result.prepend)
+    }
 
     // Write output to file
-    logger.log(`Saving to "${config.out}"`)
     await writeContracts({
-      content: result.content,
+      content,
       contracts,
-      imports: result.imports,
-      prepend: result.prepend,
+      imports,
+      prepend,
       filename: config.out,
     })
-    logger.log(`Saved to "${config.out}"`)
 
     if (options.watch) {
       if (!watchConfigs.length) {
-        logger.log('Used --watch flag, but no plugins are watching.')
+        // logger.log(pc.gray('Used --watch flag, but no plugins are watching.'))
         continue
       }
 
@@ -125,7 +133,6 @@ export async function generate(options: Generate) {
               event === 'change' ? watchConfig.onChange : watchConfig.onAdd
             const config = await eventFn?.(path)
             if (!config) return
-            logger.log(`Resolving contract "${config.name}"`)
             const contract = await getContract({ ...config, isTypeScript })
             contractMap.set(contract.name, contract)
             needsWrite = true
@@ -142,19 +149,28 @@ export async function generate(options: Generate) {
             timeout = setTimeout(async () => {
               timeout = null
               const contracts = [...contractMap.values()]
-              const result = await executePlugins({
-                plugins,
-                contracts,
-                isTypeScript,
-              })
+              const imports = []
+              const prepend = []
+              const content = []
+              for (const plugin of plugins) {
+                if (!plugin.run) continue
+                const result = await plugin.run({ contracts, isTypeScript })
+                if (!result.imports && !result.prepend && !result.content)
+                  continue
+                content.push(
+                  getBannerContent({ name: plugin.name }),
+                  result.content,
+                )
+                result.imports && imports.push(result.imports)
+                result.prepend && prepend.push(result.prepend)
+              }
               await writeContracts({
-                content: result.content,
+                content,
                 contracts,
-                imports: result.imports,
-                prepend: result.prepend,
+                imports,
+                prepend,
                 filename: config.out,
               })
-              logger.log('Saved!')
             }, delay)
             needsWrite = false
           }
@@ -174,13 +190,13 @@ export async function generate(options: Generate) {
   if (!watchers.length) return
 
   // Watch `@wagmi/cli` config file for changes
-  const watcher = watch(configPath).on('change', async (path) => {
-    const { basename } = await import('pathe')
-    logger.log(
-      `> Found a change in ${basename(
-        path,
-      )}. Restart process for changes to take effect.`,
-    )
+  const watcher = watch(configPath).on('change', async (_path) => {
+    // const { basename } = await import('pathe')
+    // logger.log(
+    //   `> Found a change in ${basename(
+    //     path,
+    //   )}. Restart process for changes to take effect.`,
+    // )
   })
   watchers.push(watcher)
 
@@ -188,7 +204,7 @@ export async function generate(options: Generate) {
   process.once('SIGINT', shutdown)
   process.once('SIGTERM', shutdown)
   async function shutdown() {
-    logger.log('Shutting down watch…')
+    // logger.log('Shutting down watch')
     for (const watcher of watchers) {
       await watcher.close()
     }
@@ -313,56 +329,6 @@ async function writeContracts({
   const outPath = `${cwd}/${filename}`
   const formatted = await format(code)
   await fse.writeFile(outPath, formatted)
-}
-
-async function executePlugins(config: {
-  contracts: Contract[]
-  isTypeScript: boolean
-  plugins: Plugin[]
-}) {
-  const imports = []
-  const prepend = []
-  const content = []
-  for (const plugin of config.plugins) {
-    if (!plugin.run) continue
-    logger.log(`Running plugin "${plugin.name}"`)
-    const result = await plugin.run({
-      contracts: config.contracts,
-      isTypeScript: config.isTypeScript,
-    })
-    if (!result.imports && !result.prepend && !result.content) continue
-    content.push(getBannerContent({ name: plugin.name }))
-    result.imports && imports.push(result.imports)
-    content.push(result.content)
-    result.prepend && prepend.push(result.prepend)
-  }
-  return { content, imports, prepend } as const
-}
-
-async function validatePlugins({ config }: { config: Config }) {
-  const contractConfigs = config.contracts ?? []
-  const watchConfigs: Watch[] = []
-  const plugins = config.plugins ?? []
-  for (const plugin of plugins) {
-    logger.log(`Validating plugin "${plugin.name}"`)
-    await plugin.validate?.()
-    if (plugin.watch) watchConfigs.push(plugin.watch)
-    if (plugin.contracts) {
-      logger.log(`Getting contracts for plugin "${plugin.name}"`)
-      const contracts = await plugin.contracts()
-      contractConfigs.push(...contracts)
-      logger.log(
-        `Found ${contracts.length} ${
-          contracts.length === 1 ? 'contract' : 'contracts'
-        }`,
-      )
-    }
-  }
-  return {
-    contractConfigs,
-    plugins,
-    watchConfigs,
-  }
 }
 
 function getBannerContent({ name }: { name: string }) {
