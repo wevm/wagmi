@@ -13,7 +13,7 @@ export const useConnect = ({
 // onSettled,
 // onSuccess,
 UseConnectArgs = {}) => {
-  const [client] = useClient()
+  const client = useClient()
 
   const connect = (args?: Partial<ConnectArgs>) =>
     _connect({

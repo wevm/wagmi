@@ -6,7 +6,7 @@ import { useClient } from '../../context'
 
 export const useSigner = ({ chainId }: FetchSignerArgs = {}) => {
   const [signer, setSigner] = createSignal()
-  const [client] = useClient()
+  const client = useClient()
 
   createEffect(() => {
     const unsubscribe = watchSigner(
