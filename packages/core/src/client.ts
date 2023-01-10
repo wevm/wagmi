@@ -1,6 +1,6 @@
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import type { Mutate, StoreApi } from 'zustand/vanilla'
-import { default as create } from 'zustand/vanilla'
+import { createStore } from 'zustand/vanilla'
 
 import type { Connector, ConnectorData } from './connectors'
 import { InjectedConnector } from './connectors'
@@ -111,7 +111,7 @@ export class Client<
     }
 
     // Create store
-    this.store = create<
+    this.store = createStore<
       State<TProvider, TWebSocketProvider>,
       [
         ['zustand/subscribeWithSelector', never],
@@ -130,13 +130,8 @@ export class Client<
               webSocketProvider: this.getWebSocketProvider({ chainId }),
             },
           {
-            // Deserialization is handled in `storage`.
-            deserialize: (state) =>
-              state as unknown as {
-                state: Partial<State<TProvider, TWebSocketProvider>>
-              },
             name: storeKey,
-            getStorage: () => storage,
+            storage,
             partialize: (state) => ({
               ...(autoConnect && {
                 data: {
@@ -146,8 +141,6 @@ export class Client<
               }),
               chains: state?.chains,
             }),
-            // Serialization is handled in `storage`.
-            serialize: (state) => state as unknown as string,
             version: 2,
           },
         ),

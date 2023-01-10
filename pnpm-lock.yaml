@@ -171,13 +171,13 @@ importers:
       abitype: ^0.2.5
       eventemitter3: ^4.0.7
       typescript: ^4.9.3
-      zustand: ^4.1.4
+      zustand: ^4.3.1
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
       '@wagmi/connectors': link:../../references/packages/connectors
       abitype: 0.2.5_typescript@4.9.3
       eventemitter3: 4.0.7
-      zustand: 4.1.4
+      zustand: 4.3.1
     devDependencies:
       '@coinbase/wallet-sdk': 3.6.0
       '@walletconnect/ethereum-provider': 1.8.0
@@ -10119,8 +10119,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zustand/4.1.4:
-    resolution: {integrity: sha512-k2jVOlWo8p4R83mQ+/uyB8ILPO2PCJOf+QVjcL+1PbMCk1w5OoPYpAIxy9zd93FSfmJqoH6lGdwzzjwqJIRU5A==}
+  /zustand/4.3.1:
+    resolution: {integrity: sha512-EVyo/eLlOTcJm/X5M00rwtbYFXwRVTaRteSvhtbTZUCQFJkNfIyHPiJ6Ke68MSWzcKHpPzvqNH4gC2ZS/sbNqw==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       immer: '>=9.0'
