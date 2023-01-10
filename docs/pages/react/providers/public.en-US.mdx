@@ -10,14 +10,14 @@ import { Callout } from 'nextra-theme-docs'
 The `publicProvider` configures the chains with a public RPC URL and also provides an [ethers.js `getpublicProvider`](https://docs.ethers.io/v5/api/providers/#providers-getpublicProvider).
 
 ```ts
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 ```
 
 ## Usage
 
 ```ts
 import { chain, configureChains } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -50,7 +50,7 @@ The priority used for the provider. Lower-value priorities are favoured over hig
 
 ```ts {7-8}
 import { chain, configureChains } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -67,7 +67,7 @@ The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {8}
 import { chain, configureChains } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -84,7 +84,7 @@ The weight a response from this provider provides. This can be used if a given p
 
 ```ts {7-8}
 import { chain, configureChains } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],

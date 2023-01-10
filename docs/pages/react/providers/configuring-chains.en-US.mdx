@@ -23,10 +23,10 @@ import { configureChains } from 'wagmi-react'
 
 ```ts
 import { configureChains, createClient } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { publicProvider } from 'wagmi-react/providers/public'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
 
 const { chains, provider } = configureChains(
   [mainnet, optimism],
@@ -53,10 +53,10 @@ The `configureChains` function accepts multiple providers. This is useful if not
 
 ```ts
 import { configureChains } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { infuraProvider } from 'wagmi-react/providers/infura'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { provider } = configureChains(
   [mainnet, avalanche],
@@ -98,8 +98,8 @@ Chains that need to be configured.
 
 ```ts {5}
 import { configureChains } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains } = configureChains([mainnet, optimism], [publicProvider()])
 ```
@@ -112,9 +112,9 @@ If a provider does not support a chain, it will fall back onto the next one in t
 
 ```ts {7}
 import { configureChains } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains } = configureChains(
   [mainnet, optimism],
@@ -130,9 +130,9 @@ The frequency in milliseconds at which the provider polls. Defaults to `4000`.
 
 ```ts {13}
 import { configureChains } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains } = configureChains(
   [mainnet, optimism],
@@ -151,9 +151,9 @@ Sets the target quorum. Defaults to `1`.
 
 ```ts {13}
 import { configureChains } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains } = configureChains(
   [mainnet, optimism],
@@ -172,9 +172,9 @@ Sets the minimum quorum that must be accepted by the providers. Defaults to `1`.
 
 ```ts {13}
 import { configureChains } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains } = configureChains(
   [mainnet, optimism],
@@ -193,9 +193,9 @@ The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {13}
 import { configureChains } from 'wagmi-react'
-import { mainnet, optimism } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains } = configureChains(
   [mainnet, optimism],

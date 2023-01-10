@@ -124,7 +124,7 @@
     "web3"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsup",
     "dev": "DEV=true npm run build"
   }
 }

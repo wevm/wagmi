@@ -15,7 +15,7 @@ import { createClient } from 'wagmi-react'
 
 ```ts
 import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { provider, webSocketProvider } = configureChains(
   [mainnet],
@@ -36,7 +36,7 @@ Enables reconnecting to last used connector on mount. Defaults to `false`.
 
 ```ts {7}
 import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
 
@@ -52,9 +52,9 @@ Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
 ```ts {9-17}
 import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { publicProvider } from 'wagmi-react/providers/public'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
+import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
 
 const { chains, provider } = configureChains([mainnet], [publicProvider()])
 
@@ -78,7 +78,7 @@ Adds the ability to provide a custom logger to override how logs are broadcasted
 
 ```ts {4,9-11}
 import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 import { logWarn } from './logger'
 
@@ -111,7 +111,7 @@ ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to th
 
 ```ts {7}
 import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
 
@@ -133,7 +133,7 @@ import {
   configureChains,
   mainnet,
 } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
 
@@ -149,7 +149,7 @@ ethers WebSocket interface for connecting to the Ethereum network. If you provid
 
 ```ts {11}
 import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { provider, webSocketProvider } = configureChains(
   [mainnet],

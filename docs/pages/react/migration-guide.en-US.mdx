@@ -52,7 +52,7 @@ import {
 - chain
   configureChains
 } from 'wagmi-react'
-+ import { mainnet, polygon, optimism } from 'wagmi/chains'
++ import { mainnet, polygon, optimism } from 'wagmi-react/chains'
 
 const { ... } = configureChains(
 - [chain.mainnet, chain.polygon, chain.optimism],
@@ -69,7 +69,7 @@ The `allChains` export has been removed. If you need a list of all chains, you c
 
 ```diff
 - import { allChains } from 'wagmi-react'
-+ import * as allChains from 'wagmi/chains'
++ import * as allChains from 'wagmi-react/chains'
 
 const { ... } = configureChains(allChains, ...)
 ```
@@ -80,7 +80,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 
 ```diff
 - import { defaultChains } from 'wagmi-react'
-+ import { mainnet, goerli } from 'wagmi/chains'
++ import { mainnet, goerli } from 'wagmi-react/chains'
 
 + const defaultChains = [mainnet, goerli]
 ```
@@ -96,7 +96,7 @@ The `defaultChains` & `defaultL2Chains` exports have been removed. If you still 
 +   polygonMumbai,
 +   optimism,
 +   optimismGoerli
-+ } from 'wagmi/chains'
++ } from 'wagmi-react/chains'
 
 + const defaultL2Chains = [
 +  arbitrum,
@@ -116,7 +116,7 @@ The `chainId` export has been removed. You can extract a chain ID from the chain
 
 ```diff
 - import { chainId } from 'wagmi-react'
-+ import { mainnet, polygon, optimism } from 'wagmi/chains'
++ import { mainnet, polygon, optimism } from 'wagmi-react/chains'
 
 -const mainnetChainId = chainId.mainnet
 -const polygonChainId = chainId.polygon
@@ -132,7 +132,7 @@ The `etherscanBlockExplorers` export has been removed. You can extract a block e
 
 ```diff
 - import { etherscanBlockExplorers } from 'wagmi-react'
-+ import { mainnet, polygon, optimism } from 'wagmi/chains'
++ import { mainnet, polygon, optimism } from 'wagmi-react/chains'
 
 -const mainnetEtherscanBlockExplorer = etherscanBlockExplorers.mainnet
 -const polygonEtherscanBlockExplorer = etherscanBlockExplorers.polygon
@@ -148,7 +148,7 @@ The `alchemyRpcUrls`, `infuraRpcUrls` & `publicRpcUrls` exports have been remove
 
 ```diff
 - import { alchemyRpcUrls, infuraRpcUrls, publicRpcUrls } from 'wagmi-react'
-+ import { mainnet } from 'wagmi/chains'
++ import { mainnet } from 'wagmi-react/chains'
 
 -const mainnetAlchemyRpcUrl = alchemyRpcUrls.mainnet
 -const mainnetInfuraRpcUrl = infuraRpcUrls.mainnet
@@ -738,8 +738,8 @@ const { sendTransaction } = useSendTransaction(config)
 `alchemyProvider` and `infuraProvider` now use a generic `apiKey` configuration option instead of `alchemyId` and `infuraId`.
 
 ```diff
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { infuraProvider } from 'wagmi/providers/infura'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { infuraProvider } from 'wagmi-react/providers/infura'
 
 alchemyProvider({
 -  alchemyId: 'yourAlchemyApiKey',
@@ -770,7 +770,7 @@ import {
 + configureChains,
 + defaultChains
 } from 'wagmi-react'
-+import { publicProvider } from 'wagmi/providers/public'
++import { publicProvider } from 'wagmi-react/providers/public'
 
 +const { provider, webSocketProvider } = configureChains(defaultChains, [
 + publicProvider(),
@@ -804,7 +804,7 @@ import {
 + defaultChains,
 + configureChains
 } from 'wagmi-react'
-+import { publicProvider } from 'wagmi/providers/publicProvider'
++import { publicProvider } from 'wagmi-react/providers/publicProvider'
 
 +const { provider } = configureChains(defaultChains, [
 + publicProvider
@@ -852,12 +852,12 @@ import {
   createClient
 } from 'wagmi-react';
 
-+import { publicProvider } from 'wagmi/providers/public'
++import { publicProvider } from 'wagmi-react/providers/public'
 
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
 
 +const { chains } = configureChains(
 +  [chain.mainnet],
@@ -1324,10 +1324,10 @@ Before:
 ```tsx {15-42}
 import { providers } from 'ethers'
 import { Provider, chain, createClient, defaultChains } from 'wagmi-react'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
 
 const alchemyId = process.env.ALCHEMY_ID
 
@@ -1375,13 +1375,13 @@ After:
 ```tsx {20-38}
 import { Provider, chain, createClient, defaultChains } from 'wagmi-react'
 
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { publicProvider } from 'wagmi-react/providers/public'
 
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
 
 const alchemyId = process.env.ALCHEMY_ID
 
@@ -1972,7 +1972,7 @@ The WalletLink connector was replaced with the Coinbase Wallet SDK.
 Before:
 
 ```tsx
-import { WalletLinkConnector } from 'wagmi/connectors/walletLink'
+import { WalletLinkConnector } from 'wagmi-react/connectors/walletLink'
 
 const connector = new WalletLinkConnector({
   options: {
@@ -1985,7 +1985,7 @@ const connector = new WalletLinkConnector({
 After:
 
 ```tsx
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
 
 const connector = new CoinbaseWalletConnector({
   options: {

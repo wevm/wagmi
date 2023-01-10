@@ -75,7 +75,7 @@ First, configure your desired chains to be used by wagmi, and the providers you 
 
 ```tsx
 import { configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet],
@@ -95,7 +95,7 @@ Next, create a wagmi `Client` instance using [`createClient`](/react/client), an
 
 ```tsx {9-13}
 import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi/providers/public'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet],
@@ -137,7 +137,7 @@ Use hooks! Every component inside the `WagmiConfig` is now set up to use the wag
 
 ```tsx {5,6,7-9}
 import { useAccount, useConnect, useEnsName } from 'wagmi-react'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
 
 function Profile() {
   const { address, isConnected } = useAccount()
