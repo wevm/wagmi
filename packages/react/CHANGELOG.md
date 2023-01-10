@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.10.8
+
+### Patch Changes
+
+- [#1639](https://github.com/wagmi-dev/wagmi/pull/1639) [`c6869f06`](https://github.com/wagmi-dev/wagmi/commit/c6869f0604fffb197752a08256f31db77f52e746) Thanks [@jxom](https://github.com/jxom)! - Added `isRainbow` flag to `InjectedConnector`.
+
+- Updated dependencies [[`c6869f06`](https://github.com/wagmi-dev/wagmi/commit/c6869f0604fffb197752a08256f31db77f52e746)]:
+  - @wagmi/core@0.8.13
+
 ## 0.10.7
 
 ### Patch Changes
