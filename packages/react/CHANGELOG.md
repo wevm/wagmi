@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.10.9
+
+### Patch Changes
+
+- [#1646](https://github.com/wagmi-dev/wagmi/pull/1646) [`fcdbe353`](https://github.com/wagmi-dev/wagmi/commit/fcdbe3531e6d05cda4a4a511bae1ad4c9e426d88) Thanks [@jxom](https://github.com/jxom)! - Upgraded `zustand` to v4.3.1.
+
+- Updated dependencies [[`fcdbe353`](https://github.com/wagmi-dev/wagmi/commit/fcdbe3531e6d05cda4a4a511bae1ad4c9e426d88)]:
+  - @wagmi/core@0.8.14
+
 ## 0.10.8
 
 ### Patch Changes
