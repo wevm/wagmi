@@ -10,13 +10,13 @@ import { Callout } from 'nextra-theme-docs'
 The `MetaMaskConnector` supports connecting with MetaMask.
 
 ```ts
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
 ```
 
 ## Usage
 
 ```ts
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
 
 const connector = new MetaMaskConnector()
 ```
@@ -28,8 +28,8 @@ const connector = new MetaMaskConnector()
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet, optimism } from 'wagmi/chains'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { mainnet, optimism } from 'wagmi-react/chains'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
 
 const connector = new MetaMaskConnector({
   chains: [mainnet, optimism],
@@ -41,7 +41,7 @@ const connector = new MetaMaskConnector({
 Options for configuring the connector.
 
 ```ts {4-6}
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
 
 const connector = new MetaMaskConnector({
   options: {
@@ -55,7 +55,7 @@ const connector = new MetaMaskConnector({
 Certain versions of MetaMask [emit the `"disconnect"` event when chain is changed](https://github.com/MetaMask/metamask-extension/issues/13375#issuecomment-1027663334). This flag prevents the `"disconnect"` event from being emitted upon switching chains. Defaults to `true`.
 
 ```ts {5}
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
 
 const connector = new MetaMaskConnector({
   options: {
@@ -69,7 +69,7 @@ const connector = new MetaMaskConnector({
 MetaMask [does not support programmatic disconnect](https://github.com/MetaMask/metamask-extension/issues/10353). This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
 
 ```ts {5}
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
 
 const connector = new MetaMaskConnector({
   options: {
@@ -89,7 +89,7 @@ const connector = new MetaMaskConnector({
 While "disconnected" with `shimDisconnect`, allows user to select a different MetaMask account (than the currently connected account) when trying to connect. Defaults to `false`.
 
 ```ts {6}
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
 
 const connector = new MetaMaskConnector({
   options: {

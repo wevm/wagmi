@@ -91,7 +91,7 @@ Chain ID to connect.
 
 ```tsx {6}
 import { chain, useConnect } from 'wagmi-react'
-import { optimism } from 'wagmi/chains'
+import { optimism } from 'wagmi-react/chains'
 
 function App() {
   const connect = useConnect({
@@ -108,7 +108,7 @@ Connector to use for connecting wallet. Useful if you want to connect to a speci
 
 ```tsx {6}
 import { useConnect } from 'wagmi-react'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
 
 function App() {
   const connect = useConnect({

@@ -191,7 +191,7 @@ Force a specific chain id for the request. The wagmi `Client`'s ethers `provider
 
 ```tsx {10,15}
 import { useContractReads } from 'wagmi-react'
-import { optimism } from 'wagmi/chains'
+import { optimism } from 'wagmi-react/chains'
 
 function App() {
   const { data, isError, isLoading } = useContractReads({

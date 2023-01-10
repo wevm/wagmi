@@ -8,14 +8,14 @@ description: 'Official wagmi Connector for Ledger.'
 The `LedgerConnector` supports connecting with a Ledger device using the [Ledger Connect Kit](https://developers.ledger.com/docs/connect/introduction/).
 
 ```ts
-import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { LedgerConnector } from 'wagmi-react/connectors/ledger'
 ```
 
 ## Usage
 
 ```ts
-import { mainnet } from 'wagmi/chains'
-import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { mainnet } from 'wagmi-react/chains'
+import { LedgerConnector } from 'wagmi-react/connectors/ledger'
 
 const connector = new LedgerConnector({
   chains: [mainnet],
@@ -31,8 +31,8 @@ Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet } from 'wagmi/chains'
-import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { mainnet } from 'wagmi-react/chains'
+import { LedgerConnector } from 'wagmi-react/connectors/ledger'
 
 const connector = new LedgerConnector({
   chains: [mainnet],
@@ -46,7 +46,7 @@ const connector = new LedgerConnector({
 The Chain ID of the connecting chain.
 
 ```ts {5}
-import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { LedgerConnector } from 'wagmi-react/connectors/ledger'
 
 const connector = new LedgerConnector({
   options: {
@@ -60,7 +60,7 @@ const connector = new LedgerConnector({
 Toggle debug logging for Ledger Connect Kit.
 
 ```ts {5}
-import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { LedgerConnector } from 'wagmi-react/connectors/ledger'
 
 const connector = new LedgerConnector({
   options: {
@@ -74,7 +74,7 @@ const connector = new LedgerConnector({
 A Chain ID (key) / RPC URL (value) map.
 
 ```ts {5-7}
-import { LedgerConnector } from 'wagmi/connectors/ledger'
+import { LedgerConnector } from 'wagmi-react/connectors/ledger'
 
 const connector = new LedgerConnector({
   options: {

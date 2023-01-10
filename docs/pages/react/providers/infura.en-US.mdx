@@ -10,15 +10,15 @@ import { Callout } from 'nextra-theme-docs'
 The `infuraProvider` configures the chains with Infura RPC URLs and also provides an [ethers.js `InfuraProvider`](https://docs.ethers.io/v5/api/providers/api-providers/#InfuraProvider).
 
 ```ts
-import { infuraProvider } from 'wagmi/providers/infura'
+import { infuraProvider } from 'wagmi-react/providers/infura'
 ```
 
 ## Usage
 
 ```ts
 import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
+import { mainnet, polygon } from 'wagmi-react/chains'
+import { infuraProvider } from 'wagmi-react/providers/infura'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -46,8 +46,8 @@ Your Infura API key from the [Infura Dashboard](https://infura.io/login).
 
 ```ts {7}
 import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
+import { mainnet, polygon } from 'wagmi-react/chains'
+import { infuraProvider } from 'wagmi-react/providers/infura'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -61,9 +61,9 @@ The priority used for the provider. Lower-value priorities are favoured over hig
 
 ```ts {11,13}
 import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, polygon } from 'wagmi-react/chains'
+import { infuraProvider } from 'wagmi-react/providers/infura'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -83,9 +83,9 @@ The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {11}
 import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, polygon } from 'wagmi-react/chains'
+import { infuraProvider } from 'wagmi-react/providers/infura'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -105,9 +105,9 @@ The weight a response from this provider provides. This can be used if a given p
 
 ```ts {11,13}
 import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
-import { publicProvider } from 'wagmi/providers/public'
+import { mainnet, polygon } from 'wagmi-react/chains'
+import { infuraProvider } from 'wagmi-react/providers/infura'
+import { publicProvider } from 'wagmi-react/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
