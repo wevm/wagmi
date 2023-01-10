@@ -34,6 +34,12 @@ type ActionsConfig = {
    * @default true
    */
   watchContractEvent?: boolean
+  /**
+   * Generate `writeContract` action.
+   *
+   * @default true
+   */
+  writeContract?: boolean
 }
 
 type ActionsResult = RequiredBy<Plugin, 'run'>
@@ -44,6 +50,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
     prepareWriteContract: true,
     readContract: true,
     watchContractEvent: true,
+    writeContract: true,
     ...config,
   }
   return {
@@ -137,6 +144,36 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
         }
 
         if (hasWriteFunction) {
+          if (actions.writeContract) {
+            const innerActionName = 'writeContract'
+            const actionName = innerActionName.replace(
+              'Contract',
+              baseActionName,
+            )
+            imports.add(innerActionName)
+            const options = {
+              contract,
+              actionName,
+              innerActionName,
+              innerActionParams,
+            }
+            let code
+            if (isTypeScript) {
+              const typeName = 'WriteContractArgs'
+              imports.add(typeName)
+              code = getActionCode({
+                type: 'ts',
+                options: {
+                  ...options,
+                  extraTypeParams,
+                  genericSlotType: 'functionName',
+                  typeName,
+                },
+              })
+            } else code = getActionCode({ type: 'js', options })
+            content.push(code)
+          }
+
           if (actions.prepareWriteContract) {
             const innerActionName = 'prepareWriteContract'
             const actionName = innerActionName.replace(

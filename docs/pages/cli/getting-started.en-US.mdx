@@ -143,7 +143,7 @@ Once `out` is created, you can start using the generated code in your project.
 
 ```ts
 import { mainnet } from 'wagmi/chains'
-import { useEnsRegistryContract, useErc20BalanceOf, useErc20Read } from './generated'
+import { useEnsRegistryContract, useErc20BalanceOfRead, useErc20Read } from './generated'
 
 // Use the generated ENS Registry contract hook
 const contract = useEnsRegistryContract({
@@ -158,7 +158,7 @@ const { data } = useErc20Read({
 })
 
 // Use the generated ERC-20 "balanceOf" hook
-const { data } = useErc20BalanceOf({
+const { data } = useErc20BalanceOfRead({
   address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
   args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'],
 })
