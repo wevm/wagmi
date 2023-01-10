@@ -1,9 +1,9 @@
 import type {
+  CreateInfiniteQueryOptions,
+  CreateMutationOptions,
+  CreateQueryOptions,
   QueryFunctionContext,
-  UseInfiniteQueryOptions,
-  UseMutationOptions,
-  UseQueryOptions,
-} from '@tanstack/react-query'
+} from '@tanstack/solid-query'
 import type {
   Address,
   ResolvedConfig,
@@ -70,7 +70,7 @@ export type QueryFunctionArgs<T extends (...args: any) => any> =
   QueryFunctionContext<ReturnType<T>>
 
 export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
-  UseQueryOptions<TData, TError, TSelectData>,
+  CreateQueryOptions<TData, TError, TSelectData>,
   | 'cacheTime'
   | 'enabled'
   | 'isDataEqual'
@@ -88,7 +88,7 @@ export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
 }
 
 export type InfiniteQueryConfig<TData, TError, TSelectData = TData> = Pick<
-  UseInfiniteQueryOptions<TData, TError, TSelectData>,
+  CreateInfiniteQueryOptions<TData, TError, TSelectData>,
   | 'cacheTime'
   | 'enabled'
   | 'getNextPageParam'
@@ -108,14 +108,14 @@ export type InfiniteQueryConfig<TData, TError, TSelectData = TData> = Pick<
 
 export type MutationConfig<Data, Error, Variables = void> = {
   /** Function fires if mutation encounters error */
-  onError?: UseMutationOptions<Data, Error, Variables>['onError']
+  onError?: CreateMutationOptions<Data, Error, Variables>['onError']
   /**
    * Function fires before mutation function and is passed same variables mutation function would receive.
    * Value returned from this function will be passed to both onError and onSettled functions in event of a mutation failure.
    */
-  onMutate?: UseMutationOptions<Data, Error, Variables>['onMutate']
+  onMutate?: CreateMutationOptions<Data, Error, Variables>['onMutate']
   /** Function fires when mutation is either successfully fetched or encounters error */
-  onSettled?: UseMutationOptions<Data, Error, Variables>['onSettled']
+  onSettled?: CreateMutationOptions<Data, Error, Variables>['onSettled']
   /** Function fires when mutation is successful and will be passed the mutation's result */
-  onSuccess?: UseMutationOptions<Data, Error, Variables>['onSuccess']
+  onSuccess?: CreateMutationOptions<Data, Error, Variables>['onSuccess']
 }
