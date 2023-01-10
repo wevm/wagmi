@@ -8,13 +8,13 @@ description: 'Official wagmi Connector for Coinbase Wallet.'
 The `CoinbaseWalletConnector` supports connecting with Coinbase Wallet using the [Coinbase Wallet SDK](https://docs.cloud.coinbase.com/wallet-sdk/docs).
 
 ```ts
-import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 ```
 
 ## Usage
 
 ```ts
-import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const connector = new CoinbaseWalletConnector({
   options: {
@@ -31,8 +31,8 @@ const connector = new CoinbaseWalletConnector({
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts {5}
-import { mainnet, optimism } from 'wagmi-react/chains'
-import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { mainnet, optimism } from 'wagmi/chains'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const connector = new CoinbaseWalletConnector({
   chains: [mainnet, optimism],
@@ -50,7 +50,7 @@ Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/
 Options to pass to the [Coinbase Wallet SDK](https://docs.cloud.coinbase.com/wallet-sdk/docs).
 
 ```ts {4-7}
-import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const connector = new CoinbaseWalletConnector({
   options: {

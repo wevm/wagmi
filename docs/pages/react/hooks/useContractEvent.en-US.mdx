@@ -8,7 +8,7 @@ description: 'React Hook for subscribing to ethers Contract events.'
 Hook for subscribing to ethers Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
 
 ```tsx
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ import { useContractEvent } from 'wagmi-react'
 The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
 
 ```tsx
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
@@ -37,7 +37,7 @@ function App() {
 Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
@@ -58,7 +58,7 @@ Contract ABI. If `abi` is not defined, hook will not run.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `eventName` and `listener`. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {6}
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
@@ -77,7 +77,7 @@ function App() {
 Name of the event to listen to. If `eventName` is not defined, hook will not run.
 
 ```tsx {7}
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
@@ -96,7 +96,7 @@ function App() {
 Callback that receives event.
 
 ```tsx {8-10}
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
@@ -115,7 +115,7 @@ function App() {
 Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/react/client#websocketprovider-optional) for this to work correctly.
 
 ```tsx {11}
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({
@@ -135,7 +135,7 @@ function App() {
 Receive only a single event, then stop listener. Defaults to `false`.
 
 ```tsx {11}
-import { useContractEvent } from 'wagmi-react'
+import { useContractEvent } from 'wagmi'
 
 function App() {
   useContractEvent({

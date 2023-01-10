@@ -8,7 +8,7 @@ description: 'React Hook for fetching ERC-20 token information.'
 Hook for fetching ERC-20 token information.
 
 ```ts
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ import { useToken } from 'wagmi-react'
 The follow examples use [$ENS](https://etherscan.io/token/0xc18360217d8f7ab5e7c516566761ea12ce7f9d72).
 
 ```tsx
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useToken({
@@ -75,7 +75,7 @@ function App() {
 Address of ERC-20 token. If `address` is not defined, hook will not run.
 
 ```tsx {5}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -89,7 +89,7 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {6}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -104,7 +104,7 @@ function App() {
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {6}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -119,7 +119,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {6}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -134,7 +134,7 @@ function App() {
 Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
 
 ```tsx {6}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -149,7 +149,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {6}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -164,7 +164,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `1000 * 60 * 60 * 24` (24 hours).
 
 ```tsx {6}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -179,7 +179,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {6}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -194,7 +194,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {6-8}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -211,7 +211,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {6-8}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({
@@ -228,7 +228,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {6-8}
-import { useToken } from 'wagmi-react'
+import { useToken } from 'wagmi'
 
 function App() {
   const token = useToken({

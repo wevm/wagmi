@@ -1,9 +1,4 @@
-import {
-  useAccount,
-  useDisconnect,
-  useEnsAvatar,
-  useEnsName,
-} from 'wagmi-react'
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
 import { useIsMounted } from '../hooks'
 import { Balance } from './Balance'

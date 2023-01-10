@@ -8,7 +8,7 @@ description: 'A list of wagmi-flavored chains.'
 wagmi exports the **Mainnet** (`mainnet`) & **Goerli** (`goerli`) chains out-of-the-box.
 
 ```ts
-import { mainnet, goerli } from 'wagmi-react'
+import { mainnet, goerli } from 'wagmi'
 ```
 
 If you wish to extend to other EVM-compatible chains (like Polygon, Optimism, BSC, Avalanche, etc), you can either import the chain directly from the `wagmi/chains` entrypoint, or build it yourself.
@@ -22,8 +22,8 @@ The `wagmi/chains` entrypoint proxies the [`@wagmi/chains` NPM package](https://
 Import your chains from the entrypoint and use them in your wagmi app:
 
 ```tsx
-import { configureChains } from 'wagmi-react'
-import { avalanche, bsc, mainnet } from 'wagmi-react/chains'
+import { configureChains } from 'wagmi'
+import { avalanche, bsc, mainnet } from 'wagmi/chains'
 
 const { chains, provider } = configureChains(
   [mainnet, avalanche, bsc],
@@ -70,7 +70,7 @@ const { chains, provider } = configureChains(
 You can also extend wagmi to support other EVM-compatible chains by building your own chain object that inherits the `Chain` type.
 
 ```ts
-import { Chain } from 'wagmi-react'
+import { Chain } from 'wagmi'
 
 export const avalanche: Chain = {
   id: 43_114,

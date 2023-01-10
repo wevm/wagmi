@@ -20,7 +20,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "siwe": "^1.1.6",
-    "wagmi-react": "workspace:*"
+    "wagmi": "workspace:*"
   },
   "devDependencies": {
     "@preconstruct/next": "^4.0.0",

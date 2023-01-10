@@ -107,7 +107,7 @@ importers:
       siwe: ^1.1.6
       tailwindcss: ^3.2.4
       typescript: ^4.9.3
-      wagmi-react: workspace:*
+      wagmi: workspace:*
     dependencies:
       degen: 0.0.49_biqbaboplfbrettd7655fr4n2y
       ethers: 5.7.2
@@ -120,7 +120,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       siwe: 1.1.6_ethers@5.7.2
-      wagmi-react: link:../packages/react
+      wagmi: link:../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
       '@types/node': 18.11.18
@@ -146,13 +146,13 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.9.3
-      wagmi-react: workspace:*
+      wagmi: workspace:*
     dependencies:
       ethers: 5.7.2
       next: 12.3.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      wagmi-react: link:../../packages/react
+      wagmi: link:../../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
       '@types/node': 17.0.45
@@ -164,14 +164,14 @@ importers:
 
   examples/solid:
     specifiers:
+      '@wagmi/solid': workspace:*
       solid-js: ^1.6.6
       typescript: ^4.9.4
       vite: ^4.0.3
       vite-plugin-solid: ^2.5.0
-      wagmi-solid: workspace:*
     dependencies:
+      '@wagmi/solid': link:../../packages/solid
       solid-js: 1.6.8
-      wagmi-solid: link:../../packages/solid
     devDependencies:
       typescript: 4.9.4
       vite: 4.0.4

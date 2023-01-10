@@ -21,7 +21,7 @@ Add the `useSignMessage` hook and set up a basic form:
 
 ```tsx
 import * as React from 'react'
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 import { verifyMessage } from 'ethers/lib/utils'
 
 export function SignMessage() {
@@ -71,7 +71,7 @@ export function SignMessage() {
 Import the `SignMessage` component and display it when the account is connected.
 
 ```tsx
-import { useAccount, useConnect, useDisconnect } from 'wagmi-react'
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 import { SignMessage } from './SignMessage'
 

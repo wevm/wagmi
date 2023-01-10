@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import type { Address } from 'wagmi-react'
-import { useToken } from 'wagmi-react'
+import type { Address } from 'wagmi'
+import { useToken } from 'wagmi'
 
 export const Token = () => {
   const [address, setAddress] = useState<Address>(

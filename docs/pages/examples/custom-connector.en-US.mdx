@@ -19,7 +19,7 @@ You can ask yourself the following questions to decide what type of connector to
 Create a new class that extends `Connector` and implement required methods. `Connector` is exported by both `wagmi` and `@wagmi/core` packages.
 
 ```ts
-import { Connector, Chain } from 'wagmi-react'
+import { Connector, Chain } from 'wagmi'
 import { CoolWalletOptions, CoolWalletProvider } from 'cool-wallet-sdk'
 
 export class CoolWalletConnector extends Connector<
@@ -53,7 +53,7 @@ export class CoolWalletConnector extends Connector<
 Once your custom Connector class is set up, you are ready to use it! You can plug it in anywhere built-in connectors work.
 
 ```ts
-import { createClient, mainnet } from 'wagmi-react'
+import { createClient, mainnet } from 'wagmi'
 
 import { CoolWalletConnector } from './CoolWalletConnector'
 

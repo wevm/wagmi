@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { paginatedIndexesConfig, useContractInfiniteReads } from 'wagmi-react'
+import { paginatedIndexesConfig, useContractInfiniteReads } from 'wagmi'
 
 export const mlootContractConfig = {
   address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',

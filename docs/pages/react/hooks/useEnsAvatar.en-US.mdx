@@ -8,13 +8,13 @@ description: 'React Hook for fetching avatar for ENS name.'
 Hook for fetching avatar for ENS name.
 
 ```ts
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useEnsAvatar({
@@ -56,7 +56,7 @@ function App() {
 Address or ENS name to fetch avatar for. If `address` is not defined, hook will not run.
 
 ```tsx {5}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -70,7 +70,7 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {6}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -85,7 +85,7 @@ function App() {
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {6}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -100,7 +100,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {6}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -115,7 +115,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {6}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -130,7 +130,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `1000 * 60 * 60 * 24` (24 hours).
 
 ```tsx {6}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -145,7 +145,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {6}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -160,7 +160,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {6-8}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -177,7 +177,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {6-8}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
@@ -194,7 +194,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {6-8}
-import { useEnsAvatar } from 'wagmi-react'
+import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({

@@ -1,4 +1,4 @@
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 export const BlockNumber = () => {
   const { data } = useBlockNumber({ watch: true })

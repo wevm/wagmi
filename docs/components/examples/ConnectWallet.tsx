@@ -1,4 +1,4 @@
-import { useAccount } from 'wagmi-react'
+import { useAccount } from 'wagmi'
 
 import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'

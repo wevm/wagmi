@@ -8,13 +8,13 @@ description: 'React Hook for disconnecting the connected account.'
 Hook for disconnecting the connected account.
 
 ```ts
-import { useDisconnect } from 'wagmi-react'
+import { useDisconnect } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useDisconnect } from 'wagmi-react'
+import { useDisconnect } from 'wagmi'
 
 function App() {
   const { disconnect } = useDisconnect()
@@ -46,7 +46,7 @@ function App() {
 Function to invoke when an error is thrown while disconnecting.
 
 ```tsx {5-7}
-import { useDisconnect } from 'wagmi-react'
+import { useDisconnect } from 'wagmi'
 
 function App() {
   const disconnect = useDisconnect({
@@ -62,7 +62,7 @@ function App() {
 Function fires before disconnect function. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a disconnect failure.
 
 ```tsx {5-7}
-import { useDisconnect } from 'wagmi-react'
+import { useDisconnect } from 'wagmi'
 
 function App() {
   const disconnect = useDisconnect({
@@ -78,7 +78,7 @@ function App() {
 Function to invoke when disconnect is settled (either successfully disconnected, or an error has thrown).
 
 ```tsx {5-7}
-import { useDisconnect } from 'wagmi-react'
+import { useDisconnect } from 'wagmi'
 
 function App() {
   const disconnect = useDisconnect({
@@ -94,7 +94,7 @@ function App() {
 Function to invoke when disconnect is successful.
 
 ```tsx {5-7}
-import { useDisconnect } from 'wagmi-react'
+import { useDisconnect } from 'wagmi'
 
 function App() {
   const disconnect = useDisconnect({

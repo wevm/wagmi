@@ -66,7 +66,7 @@ The following hooks support type inference when you add a const assertion to `ab
 For example, `useContractRead`:
 
 ```ts
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 const { data } = useContractRead({
   //    ^? const data: BigNumber | undefined
@@ -117,7 +117,7 @@ const { data } = useContractRead({
 Adding a const assertion to `types` adds type inference to `useSignTypedData`'s `value` configuration parameter:
 
 ```ts
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 const result = useSignTypedData({
   domain: {

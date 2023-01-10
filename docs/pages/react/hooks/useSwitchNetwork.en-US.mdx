@@ -8,7 +8,7 @@ description: 'React Hook for switching networks with a connector.'
 Hook for switching networks with a connector.
 
 ```tsx
-import { useSwitchNetwork } from 'wagmi-react'
+import { useSwitchNetwork } from 'wagmi'
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ import { useSwitchNetwork } from 'wagmi-react'
 Some wallet apps do not support programmatic network switching and `switchNetwork` will be `undefined`. For those situations, you can typically switch networks in the wallet app and wagmi will stay up-to-date.
 
 ```tsx
-import { useNetwork, useSwitchNetwork } from 'wagmi-react'
+import { useNetwork, useSwitchNetwork } from 'wagmi'
 
 function App() {
   const { chain } = useNetwork()
@@ -70,7 +70,7 @@ function App() {
 Chain id to switch to. Useful if you want to switch to a specific chain, instead of [displaying a list](/react/hooks/useNetwork#usage).
 
 ```tsx {5}
-import { useSwitchNetwork } from 'wagmi-react'
+import { useSwitchNetwork } from 'wagmi'
 
 function App() {
   const network = useSwitchNetwork({
@@ -84,7 +84,7 @@ function App() {
 Flag that forces `switchNetwork` to be defined, even if the connected wallet does not support programmatic network switching.
 
 ```tsx {5}
-import { useSwitchNetwork } from 'wagmi-react'
+import { useSwitchNetwork } from 'wagmi'
 
 function App() {
   const network = useSwitchNetwork({
@@ -98,7 +98,7 @@ function App() {
 Function to invoke when an error is thrown while attempting to switch network.
 
 ```tsx {5-7}
-import { useSwitchNetwork } from 'wagmi-react'
+import { useSwitchNetwork } from 'wagmi'
 
 function App() {
   const network = useSwitchNetwork({
@@ -114,7 +114,7 @@ function App() {
 Function fires before switch network function and is passed same variables switch network function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a switch network failure.
 
 ```tsx {5-7}
-import { useSwitchNetwork } from 'wagmi-react'
+import { useSwitchNetwork } from 'wagmi'
 
 function App() {
   const network = useSwitchNetwork({
@@ -130,7 +130,7 @@ function App() {
 Function to invoke when switch network is settled (either successfully switched, or an error has thrown).
 
 ```tsx {5-7}
-import { useSwitchNetwork } from 'wagmi-react'
+import { useSwitchNetwork } from 'wagmi'
 
 function App() {
   const network = useSwitchNetwork({
@@ -146,7 +146,7 @@ function App() {
 Function to invoke when switch network is successful.
 
 ```tsx {5-7}
-import { useSwitchNetwork } from 'wagmi-react'
+import { useSwitchNetwork } from 'wagmi'
 
 function App() {
   const network = useSwitchNetwork({

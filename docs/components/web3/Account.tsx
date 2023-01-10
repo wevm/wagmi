@@ -4,7 +4,7 @@ import {
   useDisconnect,
   useEnsAvatar,
   useEnsName,
-} from 'wagmi-react'
+} from 'wagmi'
 
 import { useIsMounted } from '../../hooks'
 import { formatAddress } from '../../lib/address'

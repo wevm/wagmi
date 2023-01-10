@@ -1,6 +1,4 @@
 /* @refresh reload */
-import { render } from 'solid-js/web'
-
 import {
   WagmiProvider,
   configureChains,
@@ -8,7 +6,8 @@ import {
   goerli,
   mainnet,
   publicProvider,
-} from 'wagmi-solid'
+} from '@wagmi/solid'
+import { render } from 'solid-js/web'
 
 import App from './App'
 

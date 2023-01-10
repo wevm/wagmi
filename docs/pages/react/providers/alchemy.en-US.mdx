@@ -10,15 +10,15 @@ import { Callout } from 'nextra-theme-docs'
 The `alchemyProvider` configures the chains with Alchemy RPC URLs and also provides an [ethers.js `AlchemyProvider`](https://docs.ethers.io/v5/api/providers/api-providers/#AlchemyProvider).
 
 ```ts
-import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 ```
 
 ## Usage
 
 ```ts
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { configureChains } from 'wagmi-react'
-import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { mainnet, polygon } from 'wagmi/chains'
+import { configureChains } from 'wagmi'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -45,9 +45,9 @@ Note: The above example is using chains from the [`wagmi/chains` entrypoint](/re
 Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/).
 
 ```ts {7}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { alchemyProvider } from 'wagmi-react/providers/alchemy'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -60,10 +60,10 @@ const { chains, provider } = configureChains(
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
 ```ts {11,13}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { alchemyProvider } from 'wagmi-react/providers/alchemy'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -82,10 +82,10 @@ const { chains, provider } = configureChains(
 The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {11}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { alchemyProvider } from 'wagmi-react/providers/alchemy'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -104,10 +104,10 @@ const { chains, provider } = configureChains(
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
 ```ts {11,13}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { alchemyProvider } from 'wagmi-react/providers/alchemy'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],

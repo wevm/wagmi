@@ -1,4 +1,4 @@
-import { useAccount, useConnect } from 'wagmi-react'
+import { useAccount, useConnect } from 'wagmi'
 
 import { useIsMounted } from '../hooks'
 
