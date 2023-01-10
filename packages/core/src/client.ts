@@ -1,6 +1,6 @@
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import type { Mutate, StoreApi } from 'zustand/vanilla'
-import { default as create } from 'zustand/vanilla'
+import { createStore } from 'zustand/vanilla'
 
 import type { Connector, ConnectorData } from './connectors'
 import { InjectedConnector } from './connectors'
@@ -111,7 +111,7 @@ export class Client<
     }
 
     // Create store
-    this.store = create<
+    this.store = createStore<
       State<TProvider, TWebSocketProvider>,
       [
         ['zustand/subscribeWithSelector', never],
@@ -131,7 +131,7 @@ export class Client<
             },
           {
             name: storeKey,
-            storage: storage,
+            storage,
             partialize: (state) => ({
               ...(autoConnect && {
                 data: {
