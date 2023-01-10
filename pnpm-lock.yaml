@@ -191,6 +191,21 @@ importers:
       typescript: 4.9.4
       vite: 3.2.5_@types+node@18.11.18
 
+  examples/vanilla-solid:
+    specifiers:
+      solid-js: ^1.6.6
+      typescript: ^4.9.4
+      vite: ^4.0.3
+      vite-plugin-solid: ^2.5.0
+      wagmi-solid: workspace:*
+    dependencies:
+      solid-js: 1.6.8
+      wagmi-solid: link:../../packages/solid
+    devDependencies:
+      typescript: 4.9.4
+      vite: 4.0.4
+      vite-plugin-solid: 2.5.0_solid-js@1.6.8+vite@4.0.4
+
   packages/core:
     specifiers:
       '@coinbase/wallet-sdk': ^3.6.0
@@ -11642,6 +11657,24 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /vite-plugin-solid/2.5.0_solid-js@1.6.8+vite@4.0.4:
+    resolution: {integrity: sha512-VneGd3RyFJvwaiffsqgymeMaofn0IzQLPwDzafTV2f1agoWeeJlk5VrI5WqT9BTtLe69vNNbCJWqLhHr9fOdDw==}
+    peerDependencies:
+      solid-js: ^1.3.17 || ^1.4.0 || ^1.5.0 || ^1.6.0
+      vite: ^3.0.0 || ^4.0.0
+    dependencies:
+      '@babel/core': 7.20.12
+      '@babel/preset-typescript': 7.18.6_@babel+core@7.20.12
+      babel-preset-solid: 1.6.7_@babel+core@7.20.12
+      merge-anything: 5.1.4
+      solid-js: 1.6.8
+      solid-refresh: 0.4.1_solid-js@1.6.8
+      vite: 4.0.4
+      vitefu: 0.2.4_vite@4.0.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /vite/3.2.5_@types+node@18.11.18:
     resolution: {integrity: sha512-4mVEpXpSOgrssFZAOmGIr85wPHKvaDAcXqxVxVRZhljkJOMZi1ibLibzjLHzJvcok8BMguLc7g1W6W/GqZbLdQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -11674,6 +11707,39 @@ packages:
       rollup: 2.79.1
     optionalDependencies:
       fsevents: 2.3.2
+
+  /vite/4.0.4:
+    resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': '>= 14'
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.15.13
+      postcss: 8.4.21
+      resolve: 1.22.1
+      rollup: 3.9.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
 
   /vite/4.0.4_@types+node@17.0.21:
     resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}
@@ -11718,6 +11784,17 @@ packages:
         optional: true
     dependencies:
       vite: 3.2.5_@types+node@18.11.18
+
+  /vitefu/0.2.4_vite@4.0.4:
+    resolution: {integrity: sha512-fanAXjSaf9xXtOOeno8wZXIhgia+CZury481LsDaV++lSvcU2R9Ch2bPh3PYFyoHW+w9LqAeYRISVQjUIew14g==}
+    peerDependencies:
+      vite: ^3.0.0 || ^4.0.0
+    peerDependenciesMeta:
+      vite:
+        optional: true
+    dependencies:
+      vite: 4.0.4
+    dev: true
 
   /vitest/0.25.8_eetf2xjpdhuqcs2dx4ndfgw7iq:
     resolution: {integrity: sha512-X75TApG2wZTJn299E/TIYevr4E9/nBo1sUtZzn0Ci5oK8qnpZAZyhwg0qCeMSakGIWtc6oRwcQFyFfW14aOFWg==}

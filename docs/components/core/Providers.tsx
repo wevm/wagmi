@@ -8,12 +8,12 @@ import {
   mainnet,
 } from 'wagmi-react'
 
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi-react/connectors/injected'
+import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
 
-import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { alchemyProvider } from 'wagmi-react/providers/alchemy'
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet, goerli],

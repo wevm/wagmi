@@ -1,28 +1,21 @@
 {
   "name": "example-dev-solid",
+  "version": "0.0.0",
+  "description": "",
   "scripts": {
-    "dev": "solid-start dev",
-    "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
-  "type": "module",
+  "license": "MIT",
   "devDependencies": {
-    "@types/node": "^18.11.9",
-    "esbuild": "^0.14.54",
-    "postcss": "^8.4.18",
-    "solid-start-node": "^0.2.0",
-    "typescript": "^4.8.4",
-    "vite": "^3.1.8"
+    "typescript": "^4.9.4",
+    "vite": "^4.0.3",
+    "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
-    "@solidjs/meta": "^0.28.0",
-    "@solidjs/router": "^0.6.0",
-    "solid-js": "^1.6.2",
-    "solid-start": "^0.2.0",
-    "undici": "^5.11.0",
+    "solid-js": "^1.6.6",
     "wagmi-solid": "workspace:*"
-  },
-  "engines": {
-    "node": ">=16.8"
   }
 }
