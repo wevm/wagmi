@@ -10,14 +10,14 @@ import { Callout } from 'nextra-theme-docs'
 The `jsonRpcProvider` configures the chains with the RPC URLs that you specify and also provides an [ethers.js `StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider).
 
 ```ts
-import { jsonRpcProvider } from 'wagmi-react/providers/jsonRpc'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 ```
 
 ## Usage
 
 ```ts
-import { chain, configureChains } from 'wagmi-react'
-import { jsonRpcProvider } from 'wagmi-react/providers/jsonRpc'
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -48,8 +48,8 @@ const { chains, provider } = configureChains(
 Accepts a function which provides the `chain` and expects to receive a `http` URL and optionally a `webSocket` URL.
 
 ```tsx {8-11}
-import { chain, configureChains } from 'wagmi-react'
-import { jsonRpcProvider } from 'wagmi-react/providers/jsonRpc'
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -69,8 +69,8 @@ const { chains, provider } = configureChains(
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
 ```ts {8}
-import { chain, configureChains } from 'wagmi-react'
-import { jsonRpcProvider } from 'wagmi-react/providers/jsonRpc'
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -92,8 +92,8 @@ const { chains, provider } = configureChains(
 The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {12}
-import { chain, configureChains } from 'wagmi-react'
-import { jsonRpcProvider } from 'wagmi-react/providers/jsonRpc'
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -115,8 +115,8 @@ const { chains, provider } = configureChains(
 Flag to indicate if the provider should return a [`StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider) or [`JsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#JsonRpcProvider). Defaults to `true`.
 
 ```tsx {12}
-import { chain, configureChains } from 'wagmi-react'
-import { jsonRpcProvider } from 'wagmi-react/providers/jsonRpc'
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],
@@ -137,8 +137,8 @@ const { chains, provider } = configureChains(
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
 ```ts {12}
-import { chain, configureChains } from 'wagmi-react'
-import { jsonRpcProvider } from 'wagmi-react/providers/jsonRpc'
+import { chain, configureChains } from 'wagmi'
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 const { chains, provider } = configureChains(
   [chain.mainnet, chain.polygon],

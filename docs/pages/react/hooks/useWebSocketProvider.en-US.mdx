@@ -8,13 +8,13 @@ description: "React Hook for accessing the Client's ethers WebSocket Provider."
 Hook for accessing the `Client`'s ethers WebSocket Provider.
 
 ```ts
-import { useWebSocketProvider } from 'wagmi-react'
+import { useWebSocketProvider } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useWebSocketProvider } from 'wagmi-react'
+import { useWebSocketProvider } from 'wagmi'
 
 function App() {
   const webSocketProvider = useWebSocketProvider()
@@ -34,7 +34,7 @@ WebSocketProvider
 Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/react/client#websocketprovider-optional) for this to work correctly.
 
 ```tsx {5}
-import { useWebSocketProvider } from 'wagmi-react'
+import { useWebSocketProvider } from 'wagmi'
 
 function App() {
   const webSocketProvider = useWebSocketProvider({

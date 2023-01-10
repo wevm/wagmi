@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import type { Address } from 'wagmi-react'
-import { useContractRead } from 'wagmi-react'
+import type { Address } from 'wagmi'
+import { useContractRead } from 'wagmi'
 
 import { wagmigotchiAbi } from './wagmigotchi-abi'
 

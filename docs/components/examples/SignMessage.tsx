@@ -1,7 +1,7 @@
 import { Box, Button, Text, Textarea } from 'degen'
 import { verifyMessage } from 'ethers/lib/utils'
 import * as React from 'react'
-import { useAccount, useSignMessage } from 'wagmi-react'
+import { useAccount, useSignMessage } from 'wagmi'
 
 import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'

@@ -10,15 +10,15 @@ import { Callout } from 'nextra-theme-docs'
 The `infuraProvider` configures the chains with Infura RPC URLs and also provides an [ethers.js `InfuraProvider`](https://docs.ethers.io/v5/api/providers/api-providers/#InfuraProvider).
 
 ```ts
-import { infuraProvider } from 'wagmi-react/providers/infura'
+import { infuraProvider } from 'wagmi/providers/infura'
 ```
 
 ## Usage
 
 ```ts
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { infuraProvider } from 'wagmi-react/providers/infura'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -45,9 +45,9 @@ Note: The above example is using chains from the [`wagmi/chains` entrypoint](/re
 Your Infura API key from the [Infura Dashboard](https://infura.io/login).
 
 ```ts {7}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { infuraProvider } from 'wagmi-react/providers/infura'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -60,10 +60,10 @@ const { chains, provider } = configureChains(
 The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
 
 ```ts {11,13}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { infuraProvider } from 'wagmi-react/providers/infura'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -82,10 +82,10 @@ const { chains, provider } = configureChains(
 The timeout in milliseconds after which another provider will be attempted.
 
 ```ts {11}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { infuraProvider } from 'wagmi-react/providers/infura'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],
@@ -104,10 +104,10 @@ const { chains, provider } = configureChains(
 The weight a response from this provider provides. This can be used if a given provider is more trusted.
 
 ```ts {11,13}
-import { configureChains } from 'wagmi-react'
-import { mainnet, polygon } from 'wagmi-react/chains'
-import { infuraProvider } from 'wagmi-react/providers/infura'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, provider } = configureChains(
   [mainnet, polygon],

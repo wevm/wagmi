@@ -1,4 +1,4 @@
-import { useNetwork, useSwitchNetwork } from 'wagmi-react'
+import { useNetwork, useSwitchNetwork } from 'wagmi'
 
 export const NetworkSwitcher = () => {
   const { chain } = useNetwork()

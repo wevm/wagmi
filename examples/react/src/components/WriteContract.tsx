@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers'
 import { useState } from 'react'
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 import { anvAbi } from './anv-abi'
 

@@ -20,10 +20,10 @@
       "@wagmi/connectors/*": ["references/packages/connectors/src/*"],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
-      "wagmi-react": ["packages/react/src"],
-      "wagmi-react/*": ["packages/react/src/*"],
-      "wagmi-solid": ["packages/solid/src"],
-      "wagmi-solid/*": ["packages/solid/src/*"],
+      "@wagmi/solid": ["packages/solid/src"],
+      "@wagmi/solid/*": ["packages/solid/src/*"],
+      "wagmi": ["packages/react/src"],
+      "wagmi/*": ["packages/react/src/*"],
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/48212
       "abitype": ["packages/core/node_modules/abitype/dist"]

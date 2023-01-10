@@ -15,7 +15,7 @@ import { Callout } from 'nextra-theme-docs'
 Hook for signing typed data with connected account.
 
 ```tsx
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 ```
 
 ## Usage
@@ -60,7 +60,7 @@ const value = {
 From now on, the typed data variables (above) are referenced only by name for brevity.
 
 ```tsx
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading, isSuccess, signTypedData } =
@@ -106,7 +106,7 @@ function App() {
 Typed data domain. This can be a fixed object or a reactive state variable.
 
 ```tsx {5-10}
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const signTypedData = useSignTypedData({
@@ -129,7 +129,7 @@ Typed data type definition.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {6-16}
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const signTypedData = useSignTypedData({
@@ -155,7 +155,7 @@ function App() {
 Typed data value. This can be a fixed object or a reactive state variable.
 
 ```tsx {7-17}
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const signTypedData = useSignTypedData({
@@ -181,7 +181,7 @@ function App() {
 Function to invoke when an error is thrown while attempting to sign.
 
 ```tsx {8-10}
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const signTypedData = useSignTypedData({
@@ -200,7 +200,7 @@ function App() {
 Function fires before sign message function and is passed same variables sign message function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a sign message failure.
 
 ```tsx {8-10}
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const signTypedData = useSignTypedData({
@@ -219,7 +219,7 @@ function App() {
 Function to invoke when sign message is settled (either successfully signed, or an error has thrown).
 
 ```tsx {8-10}
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const signTypedData = useSignTypedData({
@@ -238,7 +238,7 @@ function App() {
 Function to invoke when sign message is successful.
 
 ```tsx {8-10}
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 function App() {
   const signTypedData = useSignTypedData({

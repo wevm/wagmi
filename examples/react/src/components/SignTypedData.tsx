@@ -1,5 +1,5 @@
 import { verifyTypedData } from 'ethers/lib/utils'
-import { useSignTypedData } from 'wagmi-react'
+import { useSignTypedData } from 'wagmi'
 
 const domain = {
   name: 'Ether Mail',

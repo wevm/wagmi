@@ -16,6 +16,6 @@
   },
   "dependencies": {
     "solid-js": "^1.6.6",
-    "wagmi-solid": "workspace:*"
+    "@wagmi/solid": "workspace:*"
   }
 }

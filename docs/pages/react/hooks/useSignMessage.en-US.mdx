@@ -8,7 +8,7 @@ description: 'React Hook for signing messages with connected account.'
 Hook for signing messages with connected account.
 
 ```tsx
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ import { useSignMessage } from 'wagmi-react'
 The following examples use the message: `gm wagmi frens`.
 
 ```tsx
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage({
@@ -60,7 +60,7 @@ Message to sign with wallet. This can be a fixed string or a reactive state vari
 
 ```tsx {7}
 import * as React from 'react'
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 
 function App() {
   const [message, setMessage] = React.useState('gm wagmi frens')
@@ -75,7 +75,7 @@ function App() {
 Function to invoke when an error is thrown while attempting to sign.
 
 ```tsx {6-8}
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 
 function App() {
   const signMessage = useSignMessage({
@@ -92,7 +92,7 @@ function App() {
 Function fires before sign message function and is passed same variables sign message function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a sign message failure.
 
 ```tsx {6-8}
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 
 function App() {
   const signMessage = useSignMessage({
@@ -109,7 +109,7 @@ function App() {
 Function to invoke when sign message is settled (either successfully signed, or an error has thrown).
 
 ```tsx {6-8}
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 
 function App() {
   const signMessage = useSignMessage({
@@ -126,7 +126,7 @@ function App() {
 Function to invoke when sign message is successful.
 
 ```tsx {6-8}
-import { useSignMessage } from 'wagmi-react'
+import { useSignMessage } from 'wagmi'
 
 function App() {
   const signMessage = useSignMessage({

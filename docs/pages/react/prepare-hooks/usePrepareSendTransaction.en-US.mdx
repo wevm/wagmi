@@ -12,7 +12,7 @@ Hook for preparing a transaction to be sent via [`useSendTransaction`](/react/ho
 Eagerly fetches the parameters required for sending a transaction such as the gas estimate and resolving an ENS address (if required).
 
 ```tsx
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 ```
 
 ## Usage
@@ -20,7 +20,7 @@ import { usePrepareSendTransaction } from 'wagmi-react'
 `usePrepareSendTransaction` gives back a "prepared config" to be sent through to `useSendTransaction`.
 
 ```tsx {4-9}
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 function App() {
   const { config, error } = usePrepareSendTransaction({
@@ -79,7 +79,7 @@ function App() {
 Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info. If `request` and `request.to` are not defined, hook will not run.
 
 ```tsx {5-8}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -96,8 +96,8 @@ function App() {
 Chain ID used to validate if the user is connected to the target chain.
 
 ```tsx {10}
-import { usePrepareSendTransaction } from 'wagmi-react'
-import { optimism } from 'wagmi-react/chains'
+import { usePrepareSendTransaction } from 'wagmi'
+import { optimism } from 'wagmi/chains'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -115,7 +115,7 @@ function App() {
 Time (in ms) which the data should remain in the cache.
 
 ```tsx {9}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -133,7 +133,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {9}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -151,7 +151,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {9}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -169,7 +169,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale.
 
 ```tsx {9}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -187,7 +187,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {9}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -205,7 +205,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {9-11}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -225,7 +225,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {9-11}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
@@ -245,7 +245,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {9-11}
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({

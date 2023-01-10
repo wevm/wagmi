@@ -1,5 +1,5 @@
+import { useAccount, useConnect } from '@wagmi/solid'
 import type { Component } from 'solid-js'
-import { useAccount, useConnect } from 'wagmi-solid'
 
 const App: Component = () => {
   const { connect } = useConnect()

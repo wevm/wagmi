@@ -19,7 +19,7 @@ const config: DocsThemeConfig = {
   //   text: (
   //     <a
   //       target="_blank"
-  //       href="https://gitcoin.co/grants/4493/from 'wagmi-react'-hooks-library-for-ethereum"
+  //       href="https://gitcoin.co/grants/4493/from 'wagmi'-hooks-library-for-ethereum"
   //       rel="noopener noreferrer"
   //     >
   //       wagmi is in Gitcoin Grant Round 15 . Click here to support development.

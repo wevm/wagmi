@@ -79,7 +79,7 @@ You will need to:
 ```tsx {2,3,7,10,12-17}
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
-import { usePrepareSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction } from 'wagmi'
 import { utils } from 'ethers'
 
 export function SendTransaction() {
@@ -130,7 +130,7 @@ We will need to:
 ```tsx {3,18,22-25,39}
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi-react'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -198,7 +198,7 @@ import {
   usePrepareSendTransaction,
   useSendTransaction,
   useWaitForTransaction,
-} from 'wagmi-react'
+} from 'wagmi'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -259,7 +259,7 @@ export function SendTransaction() {
 Import the `SendTransaction` component and display it when the account is connected.
 
 ```tsx {3,12}
-import { useAccount, useConnect, useDisconnect } from 'wagmi-react'
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 import { SendTransaction } from './SendTransaction'
 

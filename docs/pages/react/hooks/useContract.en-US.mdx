@@ -10,7 +10,7 @@ import { Callout } from 'nextra-theme-docs'
 Hook for declaratively creating a type-safe [Contract](https://docs.ethers.io/v5/api/contract/contract) instance.
 
 ```tsx
-import { useContract } from 'wagmi-react'
+import { useContract } from 'wagmi'
 ```
 
 <Callout>
@@ -25,7 +25,7 @@ import { useContract } from 'wagmi-react'
 The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
 
 ```tsx
-import { useContract } from 'wagmi-react'
+import { useContract } from 'wagmi'
 
 function App() {
   const contract = useContract({
@@ -48,7 +48,7 @@ ethers.Contract | null
 Contract address. If `address` is not defined, response is `null`.
 
 ```tsx {5}
-import { useContract } from 'wagmi-react'
+import { useContract } from 'wagmi'
 
 function App() {
   const contract = useContract({
@@ -65,7 +65,7 @@ Contract ABI. If `abi` is not defined, response is `null`.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for properties and methods on the contract object. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {6}
-import { useContract } from 'wagmi-react'
+import { useContract } from 'wagmi'
 
 function App() {
   const contract = useContract({
@@ -80,7 +80,7 @@ function App() {
 An ethers [Provider](https://docs.ethers.io/v5/api/providers/provider/#Provider) or [Signer](https://docs.ethers.io/v5/api/signer/#Signer).
 
 ```tsx {8}
-import { useContract, useProvider } from 'wagmi-react'
+import { useContract, useProvider } from 'wagmi'
 
 function App() {
   const provider = useProvider()

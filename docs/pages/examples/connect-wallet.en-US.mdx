@@ -32,15 +32,15 @@ import {
   createClient,
   configureChains,
   mainnet,
-} from 'wagmi-react'
+} from 'wagmi'
 
-import { alchemyProvider } from 'wagmi-react/providers/alchemy'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
 
-import { CoinbaseWalletConnector } from 'wagmi-react/connectors/coinbaseWallet'
-import { InjectedConnector } from 'wagmi-react/connectors/injected'
-import { MetaMaskConnector } from 'wagmi-react/connectors/metaMask'
-import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
@@ -93,7 +93,7 @@ function App() {
 Now that our connectors are set up, we want users to be able to choose a connector to connect their wallets using `useConnect`.
 
 ```tsx
-import { useConnect } from 'wagmi-react'
+import { useConnect } from 'wagmi'
 
 export function Profile() {
   const { connect, connectors, error, isLoading, pendingConnector } =
@@ -132,7 +132,7 @@ import {
   useDisconnect,
   useEnsAvatar,
   useEnsName,
-} from 'wagmi-react'
+} from 'wagmi'
 
 export function Profile() {
   const { address, connector, isConnected } = useAccount()

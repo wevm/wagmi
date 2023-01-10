@@ -6,7 +6,7 @@ import {
   useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from 'wagmi-react'
+} from 'wagmi'
 
 import { useDebounce } from '../../hooks'
 

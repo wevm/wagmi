@@ -10,13 +10,13 @@ import { Callout } from 'nextra-theme-docs'
 Hook for declaratively waiting until transaction is processed. Pairs well with [`useContractWrite`](/react/hooks/useContractWrite) and [`useSendTransaction`](/react/hooks/useSendTransaction).
 
 ```ts
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useWaitForTransaction({
@@ -60,7 +60,7 @@ function App() {
 Force a specific chain id for waiting on transaction. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {5}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -75,7 +75,7 @@ function App() {
 Waits until confirmations number of blocks are mined on top of the block containing the transaction. Defaults to `1`. If confirmations is `0`, hook will not wait and return immediately without blocking, likely resulting in `data` being `null`.
 
 ```tsx {5}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -94,7 +94,7 @@ import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from 'wagmi-react'
+} from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -114,7 +114,7 @@ function App() {
 Maximum amount of time to wait before timing out in milliseconds. Defaults to `0` (will wait until transaction processes).
 
 ```tsx {6}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -129,7 +129,7 @@ function App() {
 Time (in ms) which the data should remain in the cache.
 
 ```tsx {6}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -144,7 +144,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {6}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -159,7 +159,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {6}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -174,7 +174,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
 ```tsx {6}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -189,7 +189,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {6}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -204,7 +204,7 @@ function App() {
 Callback to invoke when the transaction has been sped up (replaced with higher gas fee values).
 
 ```ts {5}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -221,7 +221,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {6-8}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -238,7 +238,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {6-8}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({
@@ -255,7 +255,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {6-8}
-import { useWaitForTransaction } from 'wagmi-react'
+import { useWaitForTransaction } from 'wagmi'
 
 function App() {
   const waitForTransaction = useWaitForTransaction({

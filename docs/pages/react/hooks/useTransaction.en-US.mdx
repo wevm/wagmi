@@ -8,13 +8,13 @@ description: 'React Hook for fetching transaction by hash.'
 Hook for fetching transaction by hash.
 
 ```ts
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useTransaction({
@@ -56,7 +56,7 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {5}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -71,7 +71,7 @@ function App() {
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {5}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -85,7 +85,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {5}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -99,7 +99,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {5}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -113,7 +113,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
 ```tsx {5}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -127,7 +127,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {5}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -141,7 +141,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {5-7}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -157,7 +157,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {5-7}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({
@@ -173,7 +173,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {5-7}
-import { useTransaction } from 'wagmi-react'
+import { useTransaction } from 'wagmi'
 
 function App() {
   const transaction = useTransaction({

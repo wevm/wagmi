@@ -8,13 +8,13 @@ description: 'React Hook for accessing account data and connection status.'
 Hook for accessing account data and connection status.
 
 ```ts
-import { useAccount } from 'wagmi-react'
+import { useAccount } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useAccount } from 'wagmi-react'
+import { useAccount } from 'wagmi'
 
 function App() {
   const { address, isConnecting, isDisconnected } = useAccount()
@@ -48,7 +48,7 @@ Function to invoke when account connects.
 It provides the connected address & connector, as well as a `isReconnected` flag for if the user reconnected via `autoConnect`.
 
 ```tsx {5-7}
-import { useAccount } from 'wagmi-react'
+import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({
@@ -64,7 +64,7 @@ function App() {
 Function to invoke when account disconnects.
 
 ```tsx {5-7}
-import { useAccount } from 'wagmi-react'
+import { useAccount } from 'wagmi'
 
 function App() {
   const account = useAccount({

@@ -1,5 +1,5 @@
 {
-  "name": "wagmi-react",
+  "name": "wagmi",
   "description": "React Hooks for Ethereum",
   "license": "MIT",
   "version": "0.10.5",

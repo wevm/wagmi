@@ -8,7 +8,7 @@ description: 'React Hook for calling an ethers Contract read-only method.'
 Hook for calling an ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) method.
 
 ```tsx
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ import { useContractRead } from 'wagmi-react'
 The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
 
 ```tsx
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useContractRead({
@@ -56,7 +56,7 @@ function App() {
 Contract address. If `address` is not defined, hook will not run.
 
 ```tsx {5}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -74,7 +74,7 @@ Contract ABI. If `abi` is not defined, hook will not run.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName`, `args`, and hook result. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {6}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -90,7 +90,7 @@ function App() {
 Name of function to call. If `functionName` is not defined, hook will not run.
 
 ```tsx {7}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -106,7 +106,7 @@ function App() {
 Arguments to pass to function call.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -123,7 +123,7 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -140,7 +140,7 @@ function App() {
 Overrides to pass to function call.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -157,7 +157,7 @@ function App() {
 Caches & persists the return data against the current block. Data will be considered stale when a new block arrives.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -174,7 +174,7 @@ function App() {
 Watches and refreshes data for new blocks.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -191,7 +191,7 @@ function App() {
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -208,7 +208,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -225,7 +225,7 @@ function App() {
 Use [`structuralSharing`](#structuralsharing-optional) instead.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -242,7 +242,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {7}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -259,7 +259,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -276,7 +276,7 @@ function App() {
 Transform or select a part of the data returned by the contract.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -295,7 +295,7 @@ Keep referential identity of data and prevent rerenders. Defaults to `(oldData, 
 If set to a function, the old and new data values will be passed through this function, which should combine them into resolved data for the query. This way, you can retain references from the old data to improve performance even when that data contains non-serializable values.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -312,7 +312,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {8}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -329,7 +329,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {8-10}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -348,7 +348,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {8-10}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({
@@ -367,7 +367,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {8-10}
-import { useContractRead } from 'wagmi-react'
+import { useContractRead } from 'wagmi'
 
 function App() {
   const contractRead = useContractRead({

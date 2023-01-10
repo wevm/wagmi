@@ -8,13 +8,13 @@ description: 'React Hook for fetching resolver for ENS name.'
 Hook for fetching the resolver for ENS name.
 
 ```ts
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useEnsResolver({
@@ -56,7 +56,7 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {6}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({
@@ -71,7 +71,7 @@ function App() {
 ENS name to fetch address for. If `name` is not defined, hook will not run.
 
 ```tsx {5}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({
@@ -85,7 +85,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {6}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({
@@ -100,7 +100,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {6}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({
@@ -115,7 +115,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {6}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({
@@ -130,7 +130,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {6-8}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({
@@ -147,7 +147,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {6-8}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({
@@ -164,7 +164,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {6-8}
-import { useEnsResolver } from 'wagmi-react'
+import { useEnsResolver } from 'wagmi'
 
 function App() {
   const ensResolver = useEnsResolver({

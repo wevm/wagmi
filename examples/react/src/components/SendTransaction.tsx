@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { useSendTransaction } from 'wagmi-react'
+import { useSendTransaction } from 'wagmi'
 
 export const SendTransaction = () => {
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =

@@ -8,13 +8,13 @@ description: 'React Hook for fetching the current block number.'
 Hook for fetching the current block number.
 
 ```ts
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 ```
 
 ## Usage
 
 ```tsx
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useBlockNumber()
@@ -54,7 +54,7 @@ function App() {
 Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {5}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -68,7 +68,7 @@ function App() {
 Watches and refreshes data for new blocks.
 
 ```tsx {5}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -82,7 +82,7 @@ function App() {
 Time (in ms) which the data should remain in the cache. Defaults to `0`.
 
 ```tsx {5}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -96,7 +96,7 @@ function App() {
 Set this to `false` to disable this query from automatically running. Defaults to `true`.
 
 ```tsx {5}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -110,7 +110,7 @@ function App() {
 Scopes the cache to a given context. Hooks that have identical context will share the same cache.
 
 ```tsx {5}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -124,7 +124,7 @@ function App() {
 Time (in ms) after data is considered stale. If set to `Infinity` the data will never be considered stale. Defaults to `0`.
 
 ```tsx {5}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -138,7 +138,7 @@ function App() {
 Set this to `true` to enable suspense mode.
 
 ```tsx {5}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -152,7 +152,7 @@ function App() {
 Function to invoke when a new block is created.
 
 ```tsx {5-7}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -168,7 +168,7 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {5-7}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -184,7 +184,7 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {5-7}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({
@@ -200,7 +200,7 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {5-7}
-import { useBlockNumber } from 'wagmi-react'
+import { useBlockNumber } from 'wagmi'
 
 function App() {
   const blockNumber = useBlockNumber({

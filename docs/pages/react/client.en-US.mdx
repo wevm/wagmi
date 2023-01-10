@@ -8,14 +8,14 @@ description: 'The wagmi Client is a framework agnostic (Vanilla JS) client that 
 The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.
 
 ```ts
-import { createClient } from 'wagmi-react'
+import { createClient } from 'wagmi'
 ```
 
 ## Usage
 
 ```ts
-import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { createClient, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { provider, webSocketProvider } = configureChains(
   [mainnet],
@@ -35,8 +35,8 @@ const client = createClient({
 Enables reconnecting to last used connector on mount. Defaults to `false`.
 
 ```ts {7}
-import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { createClient, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
 
@@ -51,10 +51,10 @@ const client = createClient({
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
 ```ts {9-17}
-import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi-react/providers/public'
-import { InjectedConnector } from 'wagmi-react/connectors/injected'
-import { WalletConnectConnector } from 'wagmi-react/connectors/walletConnect'
+import { createClient, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const { chains, provider } = configureChains([mainnet], [publicProvider()])
 
@@ -77,8 +77,8 @@ const client = createClient({
 Adds the ability to provide a custom logger to override how logs are broadcasted in wagmi. Defaults to `console` logging.
 
 ```ts {4,9-11}
-import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { createClient, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 import { logWarn } from './logger'
 
@@ -110,8 +110,8 @@ const client = createClient({
 ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.
 
 ```ts {7}
-import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { createClient, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
 
@@ -132,8 +132,8 @@ import {
   createStorage,
   configureChains,
   mainnet,
-} from 'wagmi-react'
-import { publicProvider } from 'wagmi-react/providers/public'
+} from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
 
@@ -148,8 +148,8 @@ const client = createClient({
 ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
 ```ts {11}
-import { createClient, configureChains, mainnet } from 'wagmi-react'
-import { publicProvider } from 'wagmi-react/providers/public'
+import { createClient, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { provider, webSocketProvider } = configureChains(
   [mainnet],

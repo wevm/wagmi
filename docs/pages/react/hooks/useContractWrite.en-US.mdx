@@ -10,7 +10,7 @@ import { Callout } from 'nextra-theme-docs'
 Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
 
 ```tsx
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import { useContractWrite } from 'wagmi-react'
 The following examples use the [wagmigotchi](https://etherscan.io/address/0xecb504d39723b0be0e3a9aa33d646642d1051ee1) contract.
 
 ```tsx
-import { useContractWrite, usePrepareContractWrite } from 'wagmi-react'
+import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -74,7 +74,7 @@ function App() {
 - `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite)
 
 ```tsx {5}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const { sendTransaction } = useContractWrite({
@@ -93,7 +93,7 @@ function App() {
 Contract address.
 
 ```tsx {6}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
@@ -114,7 +114,7 @@ function App() {
 Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
 
 ```tsx {7}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
@@ -138,7 +138,7 @@ Contract ABI.
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `abi`, TypeScript will infer the correct types for `functionName` and `args`. See the wagmi [TypeScript docs](/react/typescript) for more information.
 
 ```tsx {7}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
@@ -159,7 +159,7 @@ function App() {
 Name of function to call.
 
 ```tsx {8}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
@@ -180,7 +180,7 @@ function App() {
 Arguments to pass to function call.
 
 ```tsx {9}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
@@ -202,7 +202,7 @@ function App() {
 Overrides to pass to function call. If the function is payable, you can pass a `value` here.
 
 ```tsx {9-12}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const contractWrite = useContractWrite({
@@ -227,7 +227,7 @@ function App() {
 The request to use when sending the contract transaction.
 
 ```tsx {7}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({ ... })
@@ -243,7 +243,7 @@ function App() {
 Function to invoke when an error is thrown while attempting to write.
 
 ```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({ ... })
@@ -261,7 +261,7 @@ function App() {
 Function fires before the contract write function and is passed same variables the contract write function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a failure.
 
 ```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({ ... })
@@ -279,7 +279,7 @@ function App() {
 Function to invoke when write is settled (either successfully sent, or an error has thrown).
 
 ```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({ ... })
@@ -297,7 +297,7 @@ function App() {
 Function to invoke when write is successful.
 
 ```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({ ... })
@@ -321,7 +321,7 @@ It is possible to pass through override config. Any override config prefixed wit
 </Callout>
 
 ```tsx {17-21}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const { config } = usePrepareContractWrite({
@@ -365,7 +365,7 @@ It is possible to use `useContractWrite` without pairing it with `usePrepareCont
 </Callout>
 
 ```tsx {5-9}
-import { useContractWrite } from 'wagmi-react'
+import { useContractWrite } from 'wagmi'
 
 function App() {
   const { data, isLoading, isSuccess, write } = useContractWrite({

@@ -70,7 +70,7 @@ You will need to:
 
 ```tsx {2,7-21}
 import * as React from 'react'
-import { usePrepareContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite } from 'wagmi'
 
 export function MintNFTForm() {
   const [tokenId, setTokenId] = React.useState('')
@@ -122,7 +122,7 @@ To mitigate this, we can add a [`useDebounce` hook](https://usehooks-ts.com/reac
 
 ```tsx {3,7,21-22}
 import * as React from 'react'
-import { usePrepareContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite } from 'wagmi'
 import { useDebounce } from './useDebounce'
 
 export function MintNFTForm() {
@@ -173,7 +173,7 @@ We will need to:
 
 ```tsx {2,24,28-31,40}
 import * as React from 'react'
-import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 import { useDebounce } from './useDebounce'
 
 export function MintNFTForm() {
@@ -243,7 +243,7 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
-} from 'wagmi-react'
+} from 'wagmi'
 import { useDebounce } from './useDebounce'
 
 export function MintNFTForm() {
@@ -306,7 +306,7 @@ export function MintNFTForm() {
 Import the `MintNFTForm` component and display it when the account is connected.
 
 ```tsx {3,12}
-import { useAccount, useConnect, useDisconnect } from 'wagmi-react'
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
 
 import { MintNFTForm } from './MintNFTForm'
 
@@ -336,7 +336,7 @@ import {
   usePrepareContractWrite,
   useContractWrite,
   useWaitForTransaction,
-} from 'wagmi-react'
+} from 'wagmi'
 import { useDebounce } from './useDebounce'
 
 export function MintNFTForm() {

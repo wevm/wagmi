@@ -60,7 +60,7 @@ By using a Prepare Hook, we can perform this eager validation before the click h
 
 ```tsx {5,25}
 import * as React from 'react'
-import { usePrepareContractWrite, useContractWrite } from 'wagmi-react'
+import { usePrepareContractWrite, useContractWrite } from 'wagmi'
 
 export function MintNFT() {
   const { config, error, isError } = usePrepareContractWrite({
