@@ -1,10 +1,5 @@
 import { Avatar, Box, Button, Skeleton, Stack } from 'degen'
-import {
-  useAccount,
-  useDisconnect,
-  useEnsAvatar,
-  useEnsName,
-} from 'wagmi'
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
 
 import { useIsMounted } from '../../hooks'
 import { formatAddress } from '../../lib/address'

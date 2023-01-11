@@ -3,7 +3,7 @@ import { getProvider, watchProvider } from '@wagmi/core'
 import type { Accessor } from 'solid-js'
 import { createEffect, createMemo, createSignal, onCleanup } from 'solid-js'
 
-type GetProviderArgs = {
+export type GetProviderArgs = {
   chainId?: Accessor<number> | undefined
 }
 

@@ -14,6 +14,7 @@ export {
   useSwitchNetwork,
   useProvider,
   useWebSocketProvider,
+  useContract,
 } from './hooks'
 
 export { publicProvider } from './providers/public'
