@@ -4,22 +4,33 @@ import { expand } from 'dotenv-expand'
 import fs from 'node:fs'
 import path from 'node:path'
 
-// https://github.com/vitejs/vite/blob/3850d492b177ebce5128c774d40a43255cbc2fe1/packages/vite/src/node/env.ts#L7
-export function loadEnv(mode: string, envDir: string): Record<string, string> {
+// https://github.com/vitejs/vite/blob/main/packages/vite/src/node/env.ts#L7
+export function loadEnv(
+  config: {
+    mode?: string
+    envDir?: string
+  } = {},
+): Record<string, string> {
+  const mode = config.mode
   if (mode === 'local') {
     throw new Error(
       `"local" cannot be used as a mode name because it conflicts with ` +
         `the .local postfix for .env files.`,
     )
   }
-  const env: Record<string, string> = {}
+
   const envFiles = [
     /** default file */ `.env`,
     /** local file */ `.env.local`,
-    /** mode file */ `.env.${mode}`,
-    /** mode local file */ `.env.${mode}.local`,
+    ...(mode
+      ? [
+          /** mode file */ `.env.${mode}`,
+          /** mode local file */ `.env.${mode}.local`,
+        ]
+      : []),
   ]
 
+  const envDir = config.envDir ?? process.cwd()
   const parsed = Object.fromEntries(
     envFiles.flatMap((file) => {
       const path = lookupFile(envDir, [file], {
@@ -45,7 +56,7 @@ export function loadEnv(mode: string, envDir: string): Record<string, string> {
     throw error
   }
 
-  return env
+  return parsed
 }
 
 export function lookupFile(

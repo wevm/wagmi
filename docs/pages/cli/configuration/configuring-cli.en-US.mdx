@@ -104,8 +104,10 @@ Note that `@wagmi/cli` doesn't load `.env` files by default as the files to load
 import { defineConfig, loadEnv } from '@wagmi/cli'
 
 export default defineConfig(() => {
-  const mode = process.env.NODE_ENV
-  const env = loadEnv(mode, process.cwd(), '')
+  const env = loadEnv({
+    mode: process.env.NODE_ENV,
+    envDir: process.cwd(),
+  })
   return {
     // ...
   }

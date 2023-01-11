@@ -14,7 +14,15 @@ type ResolveConfig = {
 export async function resolveConfig({
   configPath,
 }: ResolveConfig): Promise<MaybeArray<Config>> {
-  const res = await bundleRequire({ filepath: configPath })
+  const res = await bundleRequire({
+    filepath: configPath,
+    ...(process.env.NODE_ENV === 'test'
+      ? {
+          // FIXME: Workaround https://github.com/egoist/bundle-require/issues/6
+          require: (id: string) => import(id),
+        }
+      : {}),
+  })
   const config = res.mod.default as Config | (() => MaybePromise<Config>)
   if (typeof config !== 'function') return config
   return await config()

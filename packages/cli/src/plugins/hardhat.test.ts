@@ -5,7 +5,7 @@ import { hardhat } from './hardhat'
 
 const f = fixtures(__dirname)
 
-describe('react', () => {
+describe('hardhat', () => {
   describe('validate', async () => {
     it('validate', async () => {
       const temp = f.temp()

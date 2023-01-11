@@ -1,22 +1,17 @@
-import fixtures from 'fixturez'
 import { default as fse } from 'fs-extra'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
+import { createFixture, mockCwd, mockLogger } from '../../test'
 import { defaultConfig } from '../config'
 
-import * as logger from '../logger'
 import { init } from './init'
 
-const f = fixtures(__dirname)
-
-const mockLog = vi.fn()
-
 describe('init', () => {
+  let logger: ReturnType<typeof mockLogger>
   let temp: string
   beforeEach(() => {
-    temp = f.temp()
-    const spy = vi.spyOn(process, 'cwd')
-    spy.mockImplementation(() => temp)
+    logger = mockLogger()
+    temp = mockCwd()
   })
 
   afterEach(() => {
@@ -24,16 +19,11 @@ describe('init', () => {
   })
 
   it('creates config file', async () => {
-    const spyLoggerLog = vi.spyOn(logger, 'log')
-    spyLoggerLog.mockImplementation(mockLog)
-    const spyLoggerSuccess = vi.spyOn(logger, 'success')
-    spyLoggerSuccess.mockImplementation(mockLog)
-
-    const configFile = `${temp}/wagmi.config.js`
     await init()
 
-    expect(spyLoggerLog).toHaveBeenCalledWith('Creating config…')
-    expect(spyLoggerSuccess).toHaveBeenCalledWith(
+    expect(logger.log).toHaveBeenCalledWith('Creating config…')
+    const configFile = `${temp}/wagmi.config.js`
+    expect(logger.success).toHaveBeenCalledWith(
       `Config created at "${configFile}"`,
     )
     expect(fse.existsSync(configFile)).toBeTruthy()
@@ -47,17 +37,18 @@ describe('init', () => {
   })
 
   it('creates config file in TypeScript format', async () => {
-    const spyLoggerLog = vi.spyOn(logger, 'log')
-    spyLoggerLog.mockImplementation(mockLog)
-    const spyLoggerSuccess = vi.spyOn(logger, 'success')
-    spyLoggerSuccess.mockImplementation(mockLog)
+    const { projectDir } = await createFixture({
+      dir: temp,
+      files: {
+        'tsconfig.json': '{}',
+      },
+    })
 
-    fse.writeFile(`${temp}/tsconfig.json`, '{}')
-    const configFile = `${temp}/wagmi.config.ts`
     await init()
 
-    expect(spyLoggerLog).toHaveBeenCalledWith('Creating config…')
-    expect(spyLoggerSuccess).toHaveBeenCalledWith(
+    const configFile = `${projectDir}/wagmi.config.ts`
+    expect(logger.log).toHaveBeenCalledWith('Creating config…')
+    expect(logger.success).toHaveBeenCalledWith(
       `Config created at "${configFile}"`,
     )
     expect(fse.existsSync(configFile)).toBeTruthy()
@@ -74,13 +65,13 @@ describe('init', () => {
   })
 
   it('creates config file with content', async () => {
-    const spyLoggerLog = vi.spyOn(logger, 'log')
-    spyLoggerLog.mockImplementation(mockLog)
-    const spyLoggerSuccess = vi.spyOn(logger, 'success')
-    spyLoggerSuccess.mockImplementation(mockLog)
+    const { projectDir } = await createFixture({
+      dir: temp,
+      files: {
+        'tsconfig.json': '{}',
+      },
+    })
 
-    fse.writeFile(`${temp}/tsconfig.json`, '{}')
-    const configFile = `${temp}/wagmi.config.ts`
     await init({
       config: {
         ...defaultConfig,
@@ -88,8 +79,9 @@ describe('init', () => {
       },
     })
 
-    expect(spyLoggerLog).toHaveBeenCalledWith('Creating config…')
-    expect(spyLoggerSuccess).toHaveBeenCalledWith(
+    const configFile = `${projectDir}/wagmi.config.ts`
+    expect(logger.log).toHaveBeenCalledWith('Creating config…')
+    expect(logger.success).toHaveBeenCalledWith(
       `Config created at "${configFile}"`,
     )
     expect(fse.existsSync(configFile)).toBeTruthy()
@@ -106,17 +98,18 @@ describe('init', () => {
   })
 
   it('displays config file location when config exists', async () => {
-    const spyLoggerLog = vi.spyOn(logger, 'log')
-    spyLoggerLog.mockImplementation(mockLog)
-    const spyLoggerInfo = vi.spyOn(logger, 'info')
-    spyLoggerInfo.mockImplementation(mockLog)
+    const { filePaths } = await createFixture({
+      dir: temp,
+      files: {
+        'wagmi.config.ts': '',
+      },
+    })
 
-    const configFile = `${temp}/wagmi.config.ts`
-    fse.writeFile(configFile, '')
     await init()
-    expect(spyLoggerLog).toHaveBeenCalledWith('Creating config…')
-    expect(spyLoggerInfo).toHaveBeenCalledWith(
-      `Config already exists at "${configFile}"`,
+
+    expect(logger.log).toHaveBeenCalledWith('Creating config…')
+    expect(logger.info).toHaveBeenCalledWith(
+      `Config already exists at "${filePaths['wagmi.config.ts']}"`,
     )
   })
 })
