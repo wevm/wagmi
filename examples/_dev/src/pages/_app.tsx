@@ -7,6 +7,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { TrustWalletConnector } from 'wagmi/connectors/trustWallet'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
@@ -45,6 +46,9 @@ const client = createClient({
       },
     }),
     new LedgerConnector({
+      chains,
+    }),
+    new TrustWalletConnector({
       chains,
     }),
     new InjectedConnector({
