@@ -245,7 +245,7 @@ importers:
     specifiers:
       '@coinbase/wallet-sdk': ^3.6.0
       '@tanstack/query-sync-storage-persister': ^4.14.5
-      '@tanstack/solid-query': ^4.20.9
+      '@tanstack/solid-query': ^4.22.0
       '@wagmi/core': workspace:*
       '@walletconnect/ethereum-provider': ^1.8.0
       abitype: ^0.2.5
@@ -257,7 +257,7 @@ importers:
     dependencies:
       '@coinbase/wallet-sdk': 3.6.3
       '@tanstack/query-sync-storage-persister': 4.20.9
-      '@tanstack/solid-query': 4.20.9_solid-js@1.6.8
+      '@tanstack/solid-query': 4.22.0_solid-js@1.6.8
       '@wagmi/core': link:../core
       '@walletconnect/ethereum-provider': 1.8.0
       abitype: 0.2.5_typescript@4.9.4
@@ -3209,6 +3209,10 @@ packages:
     resolution: {integrity: sha512-XTEEvOGy7wlABPTYfmg7U287WYcf2PV8lH15oKWD2I09okqMOHrB23WxyikEVRwJCjYNKcCW0BuYaAY4S2g/jg==}
     dev: false
 
+  /@tanstack/query-core/4.22.0:
+    resolution: {integrity: sha512-OeLyBKBQoT265f5G9biReijeP8mBxNFwY7ZUu1dKL+YzqpG5q5z7J/N1eT8aWyKuhyDTiUHuKm5l+oIVzbtrjw==}
+    dev: false
+
   /@tanstack/query-persist-client-core/4.20.9:
     resolution: {integrity: sha512-dwE3A7ZKeGsOcqnfqY8H/1Q6g0GrrDSarhVK0QqMKV9crRW87gz1wG37+2YHJettL8CC36S7SqLJGQCoViUCiw==}
     peerDependencies:
@@ -3252,12 +3256,12 @@ packages:
       use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
-  /@tanstack/solid-query/4.20.9_solid-js@1.6.8:
-    resolution: {integrity: sha512-A27K9myMrtcN+sUHmCTcX6SUf3TlQv+OsnC4hep4V0gVfB+44lloC1uZAIM7CT6WPkebqiyQ1toTl3P+/xs1EQ==}
+  /@tanstack/solid-query/4.22.0_solid-js@1.6.8:
+    resolution: {integrity: sha512-xNS9tS1XGAY1CD2i6+Lo31wFbizMPPO+NfT3E1E8EFq4Y6t2ewrcEI43X7Wl9mKrntWfLLD75KvnK5LWDhpCiw==}
     peerDependencies:
       solid-js: ^1.5.7
     dependencies:
-      '@tanstack/query-core': 4.20.9
+      '@tanstack/query-core': 4.22.0
       solid-js: 1.6.8
     dev: false
 

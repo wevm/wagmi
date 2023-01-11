@@ -5,7 +5,10 @@ import { createEffect, createSignal, onCleanup } from 'solid-js'
 // import { useClient } from '../../context'
 
 export const useAccount = () => {
-  // const [client] = useClient()
+  // const client = useClient()
+
+  // console.log('client -> ', client)
+
   const [accountResult, setAccountResult] = createSignal<
     GetAccountResult<Provider>
   >({

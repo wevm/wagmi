@@ -15,6 +15,7 @@ const wrapper = ({
   client = setupClient({ queryClient }),
   ...rest
 }: Props = {}) => {
+  console.log('rest', rest)
   return <WagmiProvider client={client as any} {...rest} />
 }
 
@@ -33,6 +34,7 @@ export function renderHook(
   //       }),
   //   ...options_,
   // }
+  // const utils = defaultRenderHook(hook, options as any)
 
   queryClient.clear()
 
@@ -40,8 +42,6 @@ export function renderHook(
     wrapper: wrapper_ ?? wrapper(),
     ...options_,
   } as any)
-
-  // const utils = defaultRenderHook(hook, options as any)
 
   return {
     ...utils,

@@ -10,7 +10,6 @@ export const Context = createContext<
 >(undefined)
 
 const queryClient = new QueryClient()
-const queryClientContext = createContext<QueryClient | undefined>(queryClient)
 
 export type WagmiConfigProps<
   TProvider extends Provider = Provider,
@@ -25,10 +24,7 @@ export function WagmiProvider<
   TWebSocketProvider extends WebSocketProvider,
 >(props: ParentProps<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
   return (
-    <QueryClientProvider
-      context={queryClientContext}
-      client={props.client.queryClient ?? queryClient}
-    >
+    <QueryClientProvider client={props.client.queryClient ?? queryClient}>
       <Context.Provider value={props.client as any}>
         {props.children}
       </Context.Provider>

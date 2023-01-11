@@ -101,7 +101,7 @@
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.6.0",
     "@tanstack/query-sync-storage-persister": "^4.14.5",
-    "@tanstack/solid-query": "^4.20.9",
+    "@tanstack/solid-query": "^4.22.0",
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "^1.8.0",
     "abitype": "^0.2.5",
