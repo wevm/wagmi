@@ -1,0 +1,143 @@
+---
+title: '入门指南'
+description: '开始使用 wamgi 构建!'
+---
+
+import { Callout, Tabs, Tab } from 'nextra-theme-docs'
+
+# 入门指南
+
+## 快速设置
+
+推荐使用 `create-wagmi` 命令行界面（CLI）来设置你的 wagmi 应用。这将使用 TypeScript 设置一个新的 wagmi 应用程序，并安装所需的依赖。
+
+{/* prettier-ignore-start */}
+
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+  <Tab>
+```bash
+npm init wagmi
+```
+
+当设置完成后，你可以通过运行 `npm run dev` 来启动你的应用程序，然后导航到 `http://localhost:3000`。
+
+  </Tab>
+  <Tab>
+```bash
+pnpm create wagmi
+```
+
+当设置完成后，你可以通过运行 `npm run dev` 来启动你的应用程序，然后导航到 `http://localhost:3000`。
+
+  </Tab>
+  <Tab>
+```bash
+yarn create wagmi
+```
+
+当设置完成后，你可以通过运行 `npm run dev` 来启动你的应用程序，然后导航到 `http://localhost:3000`。
+
+  </Tab>
+</Tabs>
+{/* prettier-ignore-end */}
+
+了解更多？查看 [`create-wagmi` CLI 文档](/cli/create-wagmi)。
+
+## 手动设置
+
+### 安装
+
+安装 wagmi 和 ethers
+
+{/* prettier-ignore-start */}
+
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+  <Tab>```bash npm i wagmi ethers ```</Tab>
+  <Tab>```bash pnpm i wagmi ethers ```</Tab>
+  <Tab>```bash yarn add wagmi ethers ```</Tab>
+</Tabs>
+{/* prettier-ignore-end */}
+
+### 配置链
+
+首先，配置你想要使用的链和相应的 Provider
+
+```tsx
+import { configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
+```
+
+这个例子使用了以太坊主网（Mainnet），但是，你也可以传入任何 [evm 兼容链](/react/chains)。
+
+注意:在生产应用中，不建议只将 `publicProvider` 传递给 `configureChains`，因为 Public Provider 有速率限制，建议还传递一个 `alchemyProvider` 或 `infuraProvider`。
+
+[阅读更多关于链的信息](/react/providers/configuring-chains)。
+
+### 创建 wagmi client
+
+接下来，使用 [`createClient`](/react/Client) 创建一个 wagmi `Client` 实例，并将 `configureChains` 的结果传递给它。
+
+```tsx {9-13}
+import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
+
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+})
+```
+
+[阅读更多关于 Client 配置](/react/client)。
+
+### 用 `WagmiConfig` Component
+
+最后，用 [`WagmiConfig`](/react/WagmiConfig) Component wrap app，并将 `client` 传递给它。
+
+```tsx {9-11}
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+})
+
+function App() {
+  return (
+    <WagmiConfig client={client}>
+      <YourRoutes />
+    </WagmiConfig>
+  )
+}
+```
+
+### 继续前进吧!
+
+使用 Hook 吧，`WagmiConfig` 里面的每一个 component 现在都可以使用 wagmi hooks 了!
+
+```tsx {5,6,7-9}
+import { useAccount, useConnect, useEnsName } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+function Profile() {
+  const { address, isConnected } = useAccount()
+  const { data: ensName } = useEnsName({ address })
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+
+  if (isConnected) return <div>Connected to {ensName ?? address}</div>
+  return <button onClick={() => connect()}>Connect Wallet</button>
+}
+```
+
+想了解更多吗？请查看[例子](/examples/connect-wallet)，了解如何在真实世界的场景中使用 wagmi，或者继续阅读文档。
