@@ -244,6 +244,7 @@ importers:
   packages/solid:
     specifiers:
       '@coinbase/wallet-sdk': ^3.6.0
+      '@solidjs/testing-library': ^0.5.1
       '@tanstack/query-sync-storage-persister': ^4.14.5
       '@tanstack/solid-query': ^4.20.9
       '@wagmi/core': workspace:*
@@ -251,7 +252,6 @@ importers:
       abitype: ^0.2.5
       eslint-plugin-solid: ^0.8.0
       solid-js: ^1.6.6
-      solid-testing-library: ^0.5.0
       typescript: ^4.9.3
     dependencies:
       '@coinbase/wallet-sdk': 3.6.3
@@ -262,8 +262,8 @@ importers:
       abitype: 0.2.5_typescript@4.9.4
       solid-js: 1.6.8
     devDependencies:
+      '@solidjs/testing-library': 0.5.1_solid-js@1.6.8
       eslint-plugin-solid: 0.8.0_typescript@4.9.4
-      solid-testing-library: 0.5.0_solid-js@1.6.8
       typescript: 4.9.4
 
   references/packages/chains:
@@ -3066,6 +3066,16 @@ packages:
     peerDependencies:
       solid-js: ^1.6.0
     dependencies:
+      solid-js: 1.6.8
+    dev: true
+
+  /@solidjs/testing-library/0.5.1_solid-js@1.6.8:
+    resolution: {integrity: sha512-UVwYzSTRHwxiW7jdgKFP3NERbMtA748MIOQFzF1f4tg1XYl8ACybwlrVPqaiKnPevUCcM2ED+Wsp6Yd5JA//yg==}
+    engines: {node: '>= 14'}
+    peerDependencies:
+      solid-js: '>=1.0.0'
+    dependencies:
+      '@testing-library/dom': 8.19.1
       solid-js: 1.6.8
     dev: true
 
@@ -11004,16 +11014,6 @@ packages:
       - supports-color
     dev: true
     optional: true
-
-  /solid-testing-library/0.5.0_solid-js@1.6.8:
-    resolution: {integrity: sha512-vr4Ke9Dq3bUFLaXOcN8/IVn2e9Q37w4vdmoIOmFBIPs7iCJX9IxuC0IdQqK8nzBZMQqceijkfyCE3Qc407KmaA==}
-    engines: {node: '>= 14'}
-    peerDependencies:
-      solid-js: '>=1.0.0'
-    dependencies:
-      '@testing-library/dom': 8.19.1
-      solid-js: 1.6.8
-    dev: true
 
   /sonic-boom/2.8.0:
     resolution: {integrity: sha512-kuonw1YOYYNOve5iHdSahXPOK49GqwA+LZhI6Wz/l0rP57iKyXXIHaRagOBHAPmGwJC6od2Z9zgvZ5loSgMlVg==}
