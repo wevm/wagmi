@@ -1,8 +1,18 @@
+import devtools from 'solid-devtools/vite'
 import { defineConfig } from 'vite'
 import solidPlugin from 'vite-plugin-solid'
 
 export default defineConfig({
-  plugins: [solidPlugin()],
+  plugins: [
+    solidPlugin(),
+    devtools({
+      locator: {
+        componentLocation: true,
+        jsxLocation: true,
+      },
+      autoname: true,
+    }),
+  ],
   server: {
     port: 3000,
   },

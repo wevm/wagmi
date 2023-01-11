@@ -12,6 +12,8 @@ export {
   useSignMessage,
   useSigner,
   useSwitchNetwork,
+  useProvider,
+  // useWebSocketProvider,
 } from './hooks'
 
 export { publicProvider } from './providers/public'

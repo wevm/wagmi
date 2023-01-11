@@ -10,12 +10,13 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "solid-devtools": "^0.24.7",
     "typescript": "^4.9.4",
     "vite": "^4.0.3",
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
-    "solid-js": "^1.6.6",
-    "@wagmi/solid": "workspace:*"
+    "@wagmi/solid": "workspace:*",
+    "solid-js": "^1.6.6"
   }
 }

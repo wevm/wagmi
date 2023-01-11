@@ -1,1 +1,1 @@
-export { useContract, type UseContractConfig } from './useContract'
+// export { useContract, type UseContractConfig } from './useContract'

@@ -105,11 +105,9 @@
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "^1.8.0",
     "abitype": "^0.2.5",
-    "solid-js": "^1.6.6",
-    "use-sync-external-store": "^1.2.0"
+    "solid-js": "^1.6.6"
   },
   "devDependencies": {
-    "@types/use-sync-external-store": "^0.0.3",
     "eslint-plugin-solid": "^0.8.0",
     "solid-testing-library": "^0.5.0",
     "typescript": "^4.9.3"
