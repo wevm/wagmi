@@ -8,29 +8,49 @@ const translations = {
   'en-US': {
     editLink: 'Edit this page on GitHub →',
     feedbackLink: 'Question? Give us feedback →',
+    gitcoinBanner:
+      'wagmi is in Gitcoin Grant Round 15 . Click here to support development. Thank you 🙏',
     poweredBy: 'Powered by',
+    tagline: {
+      core: 'VanillaJS for Ethereum',
+      cli: 'CLI tools for Ethereum',
+      react: 'React Hooks for Ethereum',
+    },
   },
   'zh-CN': {
     editLink: '在 GitHub 上编辑此页面 →',
     feedbackLink: '有疑问? 点击给我们反馈 →',
+    gitcoinBanner:
+      'wagmi is in Gitcoin Grant Round 15 . Click here to support development. Thank you 🙏',
     poweredBy: 'Powered by',
+    tagline: {
+      core: 'VanillaJS for Ethereum',
+      cli: 'CLI tools for Ethereum',
+      react: 'React Hooks for Ethereum',
+    },
   },
 } as const
 type Language = keyof typeof translations
 
+function useLocale() {
+  return useRouter().locale as Language
+}
+
 const config: DocsThemeConfig = {
   // banner: {
   //   key: 'gitcoin-15',
-  //   text: (
-  //     <a
-  //       target="_blank"
-  //       href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
-  //       rel="noopener noreferrer"
-  //     >
-  //       wagmi is in Gitcoin Grant Round 15 . Click here to support development.
-  //       Thank you 🙏
-  //     </a>
-  //   ),
+  //   text() {
+  //     return (
+  //       <a
+  //         target="_blank"
+  //         href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+  //         rel="noopener noreferrer"
+  //       >
+  //         {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+  //         {translations[useLocale()].gitcoinBanner}
+  //       </a>
+  //     )
+  //   },
   // },
   chat: {
     icon: null,
@@ -40,13 +60,13 @@ const config: DocsThemeConfig = {
   editLink: {
     text() {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return <>{translations[useRouter().locale as Language].editLink}</>
+      return <>{translations[useLocale()].editLink}</>
     },
   },
   feedback: {
     content() {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return <>{translations[useRouter().locale as Language].feedbackLink}</>
+      return <>{translations[useLocale()].feedbackLink}</>
     },
     labels: 'feedback',
   },
@@ -62,7 +82,8 @@ const config: DocsThemeConfig = {
               title="vercel.com homepage"
               href="https://vercel.com?utm_source=nextra.site"
             >
-              <span>Powered by</span>
+              {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+              <span>{translations[useLocale()].poweredBy}</span>
               <svg height={20} viewBox="0 0 283 64" fill="none">
                 <title>Vercel</title>
                 <path
@@ -99,7 +120,12 @@ const config: DocsThemeConfig = {
   ],
   logo() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { pathname } = useRouter()
+    const { pathname, locale } = useRouter()
+    let tagline: 'core' | 'cli' | 'react'
+    if (/^\/core*/.test(pathname)) tagline = 'core'
+    else if (/^\/cli*/.test(pathname)) tagline = 'cli'
+    else tagline = 'react'
+
     return (
       <>
         <span>
@@ -118,9 +144,7 @@ const config: DocsThemeConfig = {
           </svg>
         </span>
         <span className="text-gray-600 font-normal hidden md:inline">
-          {/^\/core*/.test(pathname)
-            ? 'VanillaJS for Ethereum'
-            : 'React Hooks for Ethereum'}
+          {translations[locale as Language].tagline[tagline]}
         </span>
       </>
     )

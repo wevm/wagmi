@@ -10,18 +10,20 @@
   },
   "core": {
     "title": "Core",
-    "type": "page"
+    "type": "page",
+    "display": "hidden"
   },
   "cli": {
     "title": "CLI",
-    "type": "page"
+    "type": "page",
+    "display": "hidden"
   },
   "examples": {
     "title": "Examples",
-    "type": "page"
+    "type": "page",
+    "display": "hidden"
   },
   "blog": {
-    "title": "Blog",
-    "type": "page"
+    "display": "hidden"
   }
 }
