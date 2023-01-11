@@ -1,5 +1,4 @@
-import type { QueryClient } from '@tanstack/solid-query'
-import { QueryClientProvider } from '@tanstack/solid-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/solid-query'
 import type { Provider, WebSocketProvider } from '@wagmi/core'
 import { createContext, useContext } from 'solid-js'
 import type { ParentProps } from 'solid-js'
@@ -10,9 +9,8 @@ export const Context = createContext<
   Client<Provider, WebSocketProvider> | undefined
 >(undefined)
 
-export const queryClientContext = createContext<QueryClient | undefined>(
-  undefined,
-)
+const queryClient = new QueryClient()
+const queryClientContext = createContext<QueryClient | undefined>(queryClient)
 
 export type WagmiConfigProps<
   TProvider extends Provider = Provider,
@@ -20,20 +18,21 @@ export type WagmiConfigProps<
 > = {
   /** React-decorated Client instance */
   client: Client<TProvider, TWebSocketProvider>
+  queryClient?: QueryClient
 }
 export function WagmiProvider<
   TProvider extends Provider,
   TWebSocketProvider extends WebSocketProvider,
 >(props: ParentProps<WagmiConfigProps<TProvider, TWebSocketProvider>>) {
   return (
-    <Context.Provider value={props.client as any}>
-      <QueryClientProvider
-        client={props.client.queryClient}
-        context={queryClientContext}
-      >
+    <QueryClientProvider
+      context={queryClientContext}
+      client={props.client.queryClient ?? queryClient}
+    >
+      <Context.Provider value={props.client as any}>
         {props.children}
-      </QueryClientProvider>
-    </Context.Provider>
+      </Context.Provider>
+    </QueryClientProvider>
   )
 }
 
@@ -49,7 +48,7 @@ export function useClient<
     throw new Error(
       [
         '`useClient` must be used within `WagmiConfig`.\n',
-        'Read more: https://wagmi.sh/react/WagmiConfig',
+        'Read more: https://wagmi.sh/solid/WagmiConfig',
       ].join('\n'),
     )
   return client

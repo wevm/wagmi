@@ -2,14 +2,24 @@ import { describe, expect, it } from 'vitest'
 
 import { renderHook } from '../../../test'
 import { useAccount } from './useAccount'
+import { useConnect } from './useConnect'
+
+const useAccountWithConnectAndDisconnect = () => {
+  return {
+    account: useAccount(),
+    connect: useConnect(),
+  }
+}
 
 describe('useAccount', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      console.log('morre aqui')
-      const { result } = renderHook(() => useAccount())
+      const { result } = renderHook(() => useAccountWithConnectAndDisconnect())
 
-      console.log('r', result)
+      // const connectData = renderHook(() => useConnect())
+
+      console.log('accountData -> ', result.account())
+      // console.log('connectData -> ', result.connect())
 
       expect(true).toBeTruthy()
     })
