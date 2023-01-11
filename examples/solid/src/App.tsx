@@ -1,4 +1,9 @@
-import { useAccount, useConnect, useProvider } from '@wagmi/solid'
+import {
+  useAccount,
+  useConnect,
+  useProvider,
+  useWebSocketProvider,
+} from '@wagmi/solid'
 import type { Component } from 'solid-js'
 import { createEffect, createSignal } from 'solid-js'
 
@@ -9,9 +14,11 @@ const App: Component = () => {
   const [chainId, setChainId] = createSignal(1)
 
   const prov = useProvider({ chainId })
+  const webSocket = useWebSocketProvider({ chainId })
 
   createEffect(() => {
     console.log('provider -> ', prov())
+    console.log('webSocket -> ', webSocket())
   })
 
   return (

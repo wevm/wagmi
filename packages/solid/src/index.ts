@@ -13,7 +13,7 @@ export {
   useSigner,
   useSwitchNetwork,
   useProvider,
-  // useWebSocketProvider,
+  useWebSocketProvider,
 } from './hooks'
 
 export { publicProvider } from './providers/public'

@@ -1,2 +1,2 @@
 export { useProvider } from './useProvider'
-// export { useWebSocketProvider } from './useWebSocketProvider'
+export { useWebSocketProvider } from './useWebSocketProvider'

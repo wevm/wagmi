@@ -1,17 +1,30 @@
-// import type { GetWebSocketProviderArgs, WebSocketProvider } from '@wagmi/core'
-// import { getWebSocketProvider, watchWebSocketProvider } from '@wagmi/core'
-// import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
+import type { WebSocketProvider } from '@wagmi/core'
+import { getWebSocketProvider, watchWebSocketProvider } from '@wagmi/core'
+import type { Accessor } from 'solid-js'
+import { createEffect, createMemo, createSignal, onCleanup } from 'solid-js'
 
-// export type UseWebSocketProviderArgs = Partial<GetWebSocketProviderArgs>
+export type GetWebSocketProviderArgs = {
+  chainId?: Accessor<number> | undefined
+}
 
-// export function useWebSocketProvider<
-//   TWebSocketProvider extends WebSocketProvider,
-// >({ chainId }: UseWebSocketProviderArgs = {}) {
-//   return useSyncExternalStoreWithSelector(
-//     (cb) => watchWebSocketProvider<TWebSocketProvider>({ chainId }, cb),
-//     () => getWebSocketProvider<TWebSocketProvider>({ chainId }),
-//     () => getWebSocketProvider<TWebSocketProvider>({ chainId }),
-//     (x) => x,
-//     (a, b) => a?.network.chainId === b?.network.chainId,
-//   )
-// }
+export type UseWebSocketProviderArgs = Partial<GetWebSocketProviderArgs>
+
+export function useWebSocketProvider(props?: UseWebSocketProviderArgs) {
+  const [webSocketProvider, setWebSocketProvider] =
+    createSignal<WebSocketProvider>()
+
+  const args = createMemo(() =>
+    props?.chainId ? { chainId: props.chainId() } : {},
+  )
+
+  setWebSocketProvider(getWebSocketProvider(args()))
+
+  createEffect(() => {
+    const unsubscribe = watchWebSocketProvider(args(), (webSocketProvider) =>
+      setWebSocketProvider(webSocketProvider),
+    )
+    onCleanup(() => unsubscribe())
+  })
+
+  return webSocketProvider
+}
