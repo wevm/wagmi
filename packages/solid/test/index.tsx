@@ -1,15 +1,9 @@
-import {
-  renderHook as defaultRenderHook,
-  waitFor,
-} from '@solidjs/testing-library'
 import { QueryClient } from '@tanstack/solid-query'
 import type { Client } from '@wagmi/core'
-
-import type { JSXElement } from 'solid-js'
+import { renderHook as defaultRenderHook, render } from 'solid-testing-library'
 
 import { WagmiProvider } from '../src'
-
-import { setupClient } from './utils'
+import { setupClient } from './'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,35 +23,40 @@ export const queryClient = new QueryClient({
 })
 
 type Props = { client?: Client } & {
-  children?: JSXElement
+  children?: any
 }
 
-export function wrapper({
+const Wrapper = ({
   client = setupClient({ queryClient }),
   ...rest
-}: Props = {}) {
-  return <WagmiProvider client={client as any} {...rest} />
+}: Props = {}) => {
+  console.log('gerou client? ', client.provider)
+  return <WagmiProvider client={client as any} />
 }
 
-export function renderHook(
-  hook: (props: any) => any,
-  { wrapper: wrapper_, ...options_ }: { wrapper: any; options: any },
-) {
-  const options: any = {
-    ...(wrapper_
-      ? { wrapper: wrapper_ }
-      : {
-          wrapper: (props: any) =>
-            wrapper({ ...props, ...options_?.initialProps }),
-        }),
-    ...options_,
-  }
-
+export function renderHook(hook: (props: any) => any) {
   queryClient.clear()
 
-  const utils = defaultRenderHook(hook, options)
+  const options = {
+    wrapper: <Wrapper />,
+  }
+
+  const utils = defaultRenderHook(hook, options as any)
+  console.log('passou do utils')
   return {
     ...utils,
-    waitFor: (utils as { waitFor?: typeof waitFor })?.waitFor ?? waitFor,
   }
 }
+
+export * from './utils'
+export {
+  getCrowdfundArgs,
+  getProvider,
+  getSigners,
+  getRandomTokenId,
+  getWebSocketProvider,
+  mirrorCrowdfundContractConfig,
+  mlootContractConfig,
+  wagmiContractConfig,
+  wagmigotchiContractConfig,
+} from '../../core/test'

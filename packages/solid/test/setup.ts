@@ -4,5 +4,5 @@ import { vi } from 'vitest'
 Date.now = vi.fn(() => new Date(Date.UTC(2022, 1, 1)).valueOf())
 
 vi.mock('@testing-library/react', async () => {
-  return vi.importActual('@solidjs/testing-library')
+  return vi.importActual('solid-testing-library')
 })
