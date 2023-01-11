@@ -1,5 +1,29 @@
 # @wagmi/core
 
+## 0.8.14
+
+### Patch Changes
+
+- [#1646](https://github.com/wagmi-dev/wagmi/pull/1646) [`fcdbe353`](https://github.com/wagmi-dev/wagmi/commit/fcdbe3531e6d05cda4a4a511bae1ad4c9e426d88) Thanks [@jxom](https://github.com/jxom)! - Upgraded `zustand` to v4.3.1.
+
+## 0.8.13
+
+### Patch Changes
+
+- [#1639](https://github.com/wagmi-dev/wagmi/pull/1639) [`c6869f06`](https://github.com/wagmi-dev/wagmi/commit/c6869f0604fffb197752a08256f31db77f52e746) Thanks [@jxom](https://github.com/jxom)! - Added `isRainbow` flag to `InjectedConnector`.
+
+## 0.8.12
+
+### Patch Changes
+
+- [#1636](https://github.com/wagmi-dev/wagmi/pull/1636) [`025f6771`](https://github.com/wagmi-dev/wagmi/commit/025f6771b32ff7eed22f527be81c5141ddaf9c3d) Thanks [@DanielSinclair](https://github.com/DanielSinclair)! - Added `isRainbow` flag to injected `window.ethereum` types.
+
+## 0.8.11
+
+### Patch Changes
+
+- [#1621](https://github.com/wagmi-dev/wagmi/pull/1621) [`5812b590`](https://github.com/wagmi-dev/wagmi/commit/5812b5909277bf2862cb57a31d52465b47291410) Thanks [@tmm](https://github.com/tmm)! - Bumped @wagmi/connectors
+
 ## 0.8.10
 
 ### Patch Changes

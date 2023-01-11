@@ -1,0 +1,51 @@
+{
+  "getting-started": "入门指南",
+  "comparison": {
+    "title": "Library Comparison",
+    "display": "hidden"
+  },
+  "migration-guide":{
+    "title":  "Migration Guide",
+    "display": "hidden"
+  },
+  "typescript":{
+    "title": "TypeScript",
+    "display": "hidden"
+  },
+  "client":{
+    "title":  "Client",
+    "display": "hidden"
+  },
+  "WagmiConfig":{
+    "title":  "WagmiConfig",
+    "display": "hidden"
+  },
+  "chains":{
+    "title":  "Chains",
+    "display": "hidden"
+  },
+  "providers": {
+    "title":  "Providers",
+    "display": "hidden"
+  },
+  "connectors": {
+    "title":  "Connectors",
+    "display": "hidden"
+  },
+  "hooks": {
+    "title":  "Hooks",
+    "display": "hidden"
+  },
+  "prepare-hooks": {
+    "title":  "Prepare Hooks",
+    "display": "hidden"
+  },
+  "constants": {
+    "title":  "Constants",
+    "display": "hidden"
+  },
+  "module-types": {
+    "title": "Module Types",
+    "display": "hidden"
+  }
+}

@@ -1,5 +1,53 @@
 # wagmi
 
+## 0.10.10
+
+### Patch Changes
+
+- [#1648](https://github.com/wagmi-dev/wagmi/pull/1648) [`a2db9170`](https://github.com/wagmi-dev/wagmi/commit/a2db91709720161cd70eeb5e84dd78433264f0a3) Thanks [@tmm](https://github.com/tmm)! - Exported internal type.
+
+## 0.10.9
+
+### Patch Changes
+
+- [#1646](https://github.com/wagmi-dev/wagmi/pull/1646) [`fcdbe353`](https://github.com/wagmi-dev/wagmi/commit/fcdbe3531e6d05cda4a4a511bae1ad4c9e426d88) Thanks [@jxom](https://github.com/jxom)! - Upgraded `zustand` to v4.3.1.
+
+- Updated dependencies [[`fcdbe353`](https://github.com/wagmi-dev/wagmi/commit/fcdbe3531e6d05cda4a4a511bae1ad4c9e426d88)]:
+  - @wagmi/core@0.8.14
+
+## 0.10.8
+
+### Patch Changes
+
+- [#1639](https://github.com/wagmi-dev/wagmi/pull/1639) [`c6869f06`](https://github.com/wagmi-dev/wagmi/commit/c6869f0604fffb197752a08256f31db77f52e746) Thanks [@jxom](https://github.com/jxom)! - Added `isRainbow` flag to `InjectedConnector`.
+
+- Updated dependencies [[`c6869f06`](https://github.com/wagmi-dev/wagmi/commit/c6869f0604fffb197752a08256f31db77f52e746)]:
+  - @wagmi/core@0.8.13
+
+## 0.10.7
+
+### Patch Changes
+
+- [#1636](https://github.com/wagmi-dev/wagmi/pull/1636) [`025f6771`](https://github.com/wagmi-dev/wagmi/commit/025f6771b32ff7eed22f527be81c5141ddaf9c3d) Thanks [@DanielSinclair](https://github.com/DanielSinclair)! - Added `isRainbow` flag to injected `window.ethereum` types.
+
+- Updated dependencies [[`025f6771`](https://github.com/wagmi-dev/wagmi/commit/025f6771b32ff7eed22f527be81c5141ddaf9c3d)]:
+  - @wagmi/core@0.8.12
+
+## 0.10.6
+
+### Patch Changes
+
+- [#1623](https://github.com/wagmi-dev/wagmi/pull/1623) [`c97a4bc5`](https://github.com/wagmi-dev/wagmi/commit/c97a4bc5df422dc9a9d3d8bac0261ec6933ce15b) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where `useSigner` would not update on account change.
+
+## 0.10.5
+
+### Patch Changes
+
+- [#1621](https://github.com/wagmi-dev/wagmi/pull/1621) [`5812b590`](https://github.com/wagmi-dev/wagmi/commit/5812b5909277bf2862cb57a31d52465b47291410) Thanks [@tmm](https://github.com/tmm)! - Bumped @wagmi/connectors
+
+- Updated dependencies [[`5812b590`](https://github.com/wagmi-dev/wagmi/commit/5812b5909277bf2862cb57a31d52465b47291410)]:
+  - @wagmi/core@0.8.11
+
 ## 0.10.4
 
 ### Patch Changes

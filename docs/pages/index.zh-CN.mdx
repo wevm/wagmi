@@ -1,0 +1,125 @@
+---
+title: 'wagmi: React Hooks for Ethereum'
+---
+
+import { Tabs, Tab } from 'nextra-theme-docs'
+
+import { Header } from '../components/docs'
+import { Sponsors } from '../components/docs'
+
+<Header
+  showGitcoinBanner={
+    new Date() >= new Date('2022-09-07') && new Date() < new Date('2022-09-23')
+  }
+/>
+
+**wagmi** 是一个 React Hook 的集合，包含了你与以太坊交互所需的一切。wagmi 使连接钱包、显示 ENS 和余额信息、签署消息、与合约交互等变得简单——所有这些都有缓存、重复请求降重和持久化。
+
+{/* prettier-ignore-start */}
+<div className="max-w-xs mx-auto mt-5 mb-8 text-center install">
+  <Tabs items={['npm', 'pnpm', 'yarn']}>
+    <Tab>
+```bash
+npm i wagmi ethers
+```
+    </Tab>
+    <Tab>
+```bash
+pnpm i wagmi ethers
+```
+    </Tab>
+    <Tab>
+```bash
+yarn add wagmi ethers
+```
+    </Tab>
+  </Tabs>
+</div>
+{/* prettier-ignore-end */}
+
+<div className="mb-20 text-center">
+  [入门指南](/core/getting-started) · [例子](/examples/connect-wallet) ·
+  [GitHub](https://github.com/wagmi-dev/wagmi)
+</div>
+
+## 总览
+
+```tsx
+import { WagmiConfig, createClient } from 'wagmi'
+import { getDefaultProvider } from 'ethers'
+
+const client = createClient({
+  autoConnect: true,
+  provider: getDefaultProvider(),
+})
+
+function App() {
+  return (
+    <WagmiConfig client={client}>
+      <Profile />
+    </WagmiConfig>
+  )
+}
+```
+
+```tsx
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+function Profile() {
+  const { address, isConnected } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
+
+  if (isConnected)
+    return (
+      <div>
+        Connected to {address}
+        <button onClick={() => disconnect()}>Disconnect</button>
+      </div>
+    )
+  return <button onClick={() => connect()}>Connect Wallet</button>
+}
+```
+
+在这个例子中，我们创建了一个 wagmi client，并将其传递给 `WagmiConfig` 这一 React context。client 使用了 ethers 的默认 Provider，并自动连接到之前连接的钱包。
+
+接下来，我们使用 `useConnect` Hook 将一个注入的钱包（例如 MetaMask）连接到应用程序。最后，我们用 `useAccount` 显示连接的帐户地址，并允许它们用 `useDisconnect` 断开连接。
+
+我们只是触及了 wagmi 的表面！
+
+## 功能
+
+wagmi 开箱即用地提供了以下功能：
+
+- 20 多个 Hook 用于处理 Wallet、ENS、Contract、Transaction、Signature 等
+- 内置 MetaMask、WalletConnect、Coinbase Wallet 和 Injected 的钱包连接器
+- 缓存、重复请求降重、multicall、批量处理和持久化
+- 基于钱包、区块和网络的变化自动刷新数据
+- 支持 TypeScript（可以从 ABI 和 EIP-712 类型数据中推断类型）
+- 支持从以太坊网络分叉运行的测试套件
+
+还有更多⋯⋯
+
+## 社区
+
+查看以下地方，了解更多 wagmi 相关内容：
+
+- 在 Twitter 上关注 [@wagmi_sh](https://twitter.com/wagmi_sh), [@awkweb](https://twitter.com/awkweb) [@jakemoxey](https://twitter.com/jakemoxey) 以获得项目更新。
+- 加入 [Github 上的 discussions](https://github.com/wagmi-dev/wagmi/discussions)。
+- 分享 [你使用 wagmi 的项目/组织](https://github.com/wagmi-dev/wagmi/discussions/201)。
+- 浏览 [awesome-wagmi](https://github.com/wagmi-dev/awesome-wagmi) 里面所陈列的超级棒的项目和资源。
+
+## 支持我们
+
+帮助支持未来的发展，使 wagmi 成为一个可持续的开源项目。谢谢 🙏
+
+- [GitHub Sponsors](https://github.com/sponsors/wagmi-dev?metadata_campaign=docs_support)
+- [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
+- [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
+
+## 赞助商
+
+<Sponsors />
