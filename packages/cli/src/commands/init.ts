@@ -11,14 +11,14 @@ export type Init = {
 }
 
 export async function init({ config = defaultConfig }: Init = {}) {
-  logger.log('Creating config…')
   // Check for exisiting config file
   const configPath = await findConfig()
   if (configPath) {
     logger.info(`Config already exists at "${configPath}"`)
-    return
+    return configPath
   }
 
+  logger.log('Creating config…')
   const cwd = process.cwd()
   // Check if project is using TypeScript
   const isUsingTypeScript = await getIsUsingTypeScript()
@@ -45,4 +45,6 @@ export async function init({ config = defaultConfig }: Init = {}) {
   const formatted = await format(content)
   await fse.writeFile(outPath, formatted)
   logger.success(`Config created at "${outPath}"`)
+
+  return outPath
 }

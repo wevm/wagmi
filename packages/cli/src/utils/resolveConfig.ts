@@ -1,7 +1,7 @@
 import { bundleRequire } from 'bundle-require'
 
 import type { Config } from '../config'
-import type { MaybeArray, MaybePromise } from '../types'
+import type { MaybeArray } from '../types'
 
 type ResolveConfig = {
   /** Path to config file */
@@ -23,7 +23,8 @@ export async function resolveConfig({
         }
       : {}),
   })
-  const config = res.mod.default as Config | (() => MaybePromise<Config>)
+  let config = res.mod.default
+  if (config.default) config = config.default
   if (typeof config !== 'function') return config
   return await config()
 }

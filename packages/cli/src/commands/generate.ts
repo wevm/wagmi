@@ -6,11 +6,13 @@ import type { FSWatcher, WatchOptions } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { default as fse } from 'fs-extra'
+import pc from 'picocolors'
 import { z } from 'zod'
 
 import { version as packageVersion } from '../../package.json'
 import type { Contract, ContractConfig, Watch } from '../config'
 import { fromZodError } from '../errors'
+import * as logger from '../logger'
 import {
   findConfig,
   format,
@@ -29,7 +31,7 @@ const Generate = z.object({
 })
 export type Generate = z.infer<typeof Generate>
 
-export async function generate(options: Generate) {
+export async function generate(options: Generate = {}) {
   // Validate command line options
   try {
     await Generate.parseAsync(options)
@@ -41,7 +43,11 @@ export async function generate(options: Generate) {
 
   // Get cli config file
   const configPath = await findConfig(options)
-  if (!configPath) throw new Error(`Config not found at "${configPath}"`)
+  if (!configPath || (configPath && !fse.existsSync(configPath))) {
+    if (options.config) throw new Error(`Config not found at "${configPath}"`)
+    throw new Error('Config not found')
+  }
+
   const resolvedConfigs = await resolveConfig({ configPath })
   const isTypeScript = await getIsUsingTypeScript()
 
@@ -84,6 +90,7 @@ export async function generate(options: Generate) {
         throw new Error(`Contract name "${contractConfig.name}" is not unique.`)
       const contract = await getContract({ ...contractConfig, isTypeScript })
       contractMap.set(contract.name, contract)
+      contractNames.add(contractConfig.name)
     }
 
     // Run plugins
@@ -100,6 +107,11 @@ export async function generate(options: Generate) {
       result.prepend && prepend.push(result.prepend)
     }
 
+    if (!contracts.length && !options.watch) {
+      logger.log('No contracts found.')
+      return
+    }
+
     // Write output to file
     await writeContracts({
       content,
@@ -111,7 +123,7 @@ export async function generate(options: Generate) {
 
     if (options.watch) {
       if (!watchConfigs.length) {
-        // logger.log(pc.gray('Used --watch flag, but no plugins are watching.'))
+        logger.log(pc.gray('Used --watch flag, but no plugins are watching.'))
         continue
       }
 

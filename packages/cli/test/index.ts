@@ -3,12 +3,18 @@ import { default as fse } from 'fs-extra'
 import * as path from 'pathe'
 import { vi } from 'vitest'
 
-import * as logger from '../src/logger'
-
 const f = fixtures(__dirname)
 
+type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [property: string]: Json }
+  | Json[]
+
 export async function createFixture<
-  TFiles extends { [filename: string]: string },
+  TFiles extends { [filename: string]: string | Json },
 >(config: { files: TFiles; dir?: string; includeNodeModules?: boolean }) {
   const projectDir = config.dir ?? f.temp()
   await fse.ensureDir(projectDir)
@@ -21,7 +27,10 @@ export async function createFixture<
         const filePath = path.join(projectDir, filename.toString())
         await fse.ensureDir(path.dirname(filePath))
         const file = config.files![filename]
-        await fse.writeFile(filePath, file)
+        await fse.writeFile(
+          filePath,
+          typeof file === 'string' ? file : JSON.stringify(file, null, 2),
+        )
         filePaths[filename] = filePath
       },
     ),
@@ -40,30 +49,44 @@ export function mockCwd(config: { dir?: string } = {}) {
   return mocked
 }
 
-export function mockLogger() {
-  const mocked = vi.fn()
+export function mockConsole() {
+  type Console = 'info' | 'log' | 'warn' | 'error'
+  const output: { [_ in Console | 'all']: string[] } = {
+    info: [],
+    log: [],
+    warn: [],
+    error: [],
+    all: [],
+  }
+  function handleOutput(method: Console) {
+    return (message: string) => {
+      output[method].push(message)
+      output.all.push(message)
+    }
+  }
+  const info = vi
+    .spyOn(console, 'info')
+    .mockImplementation(handleOutput('info'))
 
-  const success = vi.spyOn(logger, 'success')
-  success.mockImplementation(mocked)
+  const log = vi.spyOn(console, 'log').mockImplementation(handleOutput('log'))
 
-  const info = vi.spyOn(logger, 'info')
-  info.mockImplementation(mocked)
+  const warn = vi
+    .spyOn(console, 'warn')
+    .mockImplementation(handleOutput('warn'))
 
-  const log = vi.spyOn(logger, 'log')
-  log.mockImplementation(mocked)
-
-  const warn = vi.spyOn(logger, 'warn')
-  warn.mockImplementation(mocked)
-
-  const error = vi.spyOn(logger, 'error')
-  error.mockImplementation(mocked)
+  const error = vi
+    .spyOn(console, 'error')
+    .mockImplementation(handleOutput('error'))
 
   return {
-    log,
     info,
-    success,
+    log,
     warn,
     error,
+    output,
+    get formatted() {
+      return output.all.join('\n')
+    },
   }
 }
 

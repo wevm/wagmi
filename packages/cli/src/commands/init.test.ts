@@ -1,16 +1,16 @@
 import { default as fse } from 'fs-extra'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { createFixture, mockCwd, mockLogger } from '../../test'
+import { createFixture, mockConsole, mockCwd } from '../../test'
 import { defaultConfig } from '../config'
 
 import { init } from './init'
 
 describe('init', () => {
-  let logger: ReturnType<typeof mockLogger>
+  let mockedConsole: ReturnType<typeof mockConsole>
   let temp: string
   beforeEach(() => {
-    logger = mockLogger()
+    mockedConsole = mockConsole()
     temp = mockCwd()
   })
 
@@ -19,13 +19,8 @@ describe('init', () => {
   })
 
   it('creates config file', async () => {
-    await init()
+    const configFile = await init()
 
-    expect(logger.log).toHaveBeenCalledWith('Creating config…')
-    const configFile = `${temp}/wagmi.config.js`
-    expect(logger.success).toHaveBeenCalledWith(
-      `Config created at "${configFile}"`,
-    )
     expect(fse.existsSync(configFile)).toBeTruthy()
     expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "// @ts-check
@@ -34,6 +29,14 @@ describe('init', () => {
       export default { out: 'src/generated.js', contracts: [], plugins: [] }
       "
     `)
+    expect(
+      mockedConsole.formatted.replaceAll(temp, 'path/to/project'),
+    ).toMatchInlineSnapshot(
+      `
+      "[37mCreating config…[39m
+      [32mConfig created at \\"path/to/project/wagmi.config.js\\"[39m"
+    `,
+    )
   })
 
   it('creates config file in TypeScript format', async () => {
@@ -44,13 +47,8 @@ describe('init', () => {
       },
     })
 
-    await init()
+    const configFile = await init()
 
-    const configFile = `${projectDir}/wagmi.config.ts`
-    expect(logger.log).toHaveBeenCalledWith('Creating config…')
-    expect(logger.success).toHaveBeenCalledWith(
-      `Config created at "${configFile}"`,
-    )
     expect(fse.existsSync(configFile)).toBeTruthy()
     expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "import { defineConfig } from '@wagmi/cli'
@@ -62,6 +60,11 @@ describe('init', () => {
       })
       "
     `)
+    expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
+      .toMatchInlineSnapshot(`
+      "[37mCreating config…[39m
+      [32mConfig created at \\"path/to/project/wagmi.config.ts\\"[39m"
+    `)
   })
 
   it('creates config file with content', async () => {
@@ -72,18 +75,13 @@ describe('init', () => {
       },
     })
 
-    await init({
+    const configFile = await init({
       config: {
         ...defaultConfig,
         out: 'foo/bar/baz.ts',
       },
     })
 
-    const configFile = `${projectDir}/wagmi.config.ts`
-    expect(logger.log).toHaveBeenCalledWith('Creating config…')
-    expect(logger.success).toHaveBeenCalledWith(
-      `Config created at "${configFile}"`,
-    )
     expect(fse.existsSync(configFile)).toBeTruthy()
     expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "import { defineConfig } from '@wagmi/cli'
@@ -95,21 +93,30 @@ describe('init', () => {
       })
       "
     `)
+    expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
+      .toMatchInlineSnapshot(`
+      "[37mCreating config…[39m
+      [32mConfig created at \\"path/to/project/wagmi.config.ts\\"[39m"
+    `)
   })
 
   it('displays config file location when config exists', async () => {
-    const { filePaths } = await createFixture({
+    await createFixture({
       dir: temp,
       files: {
         'wagmi.config.ts': '',
       },
     })
 
-    await init()
+    const configFile = await init()
 
-    expect(logger.log).toHaveBeenCalledWith('Creating config…')
-    expect(logger.info).toHaveBeenCalledWith(
-      `Config already exists at "${filePaths['wagmi.config.ts']}"`,
+    expect(
+      mockedConsole.formatted.replaceAll(
+        configFile,
+        'path/to/project/wagmi.config.ts',
+      ),
+    ).toMatchInlineSnapshot(
+      '"[34mConfig already exists at \\"path/to/project/wagmi.config.ts\\"[39m"',
     )
   })
 })

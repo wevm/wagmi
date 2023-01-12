@@ -93,8 +93,8 @@ export function defineConfig(
   return config
 }
 
-export const defaultConfig: Config = {
+export const defaultConfig = {
   out: 'src/generated.ts',
   contracts: [],
   plugins: [],
-}
+} satisfies Config

@@ -47,7 +47,16 @@ export default defineConfig([
           },
         ],
       }),
-      foundry({ project: '../hello_foundry' }),
+      foundry({
+        project: '../hello_foundry',
+        deployments: {
+          Counter: {
+            1: '0x314159265dd8dbb310642f98f50c066173c1259b',
+            5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+          },
+          Counter2: 'tpadd',
+        },
+      }),
       hardhat({ project: '../hello_hardhat' }),
       react(),
       actions(),
