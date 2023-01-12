@@ -16,11 +16,11 @@ const { result } = renderHook(() => useAccountWithConnectAndDisconnect())
 describe('useAccount', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      // const connectData = renderHook(() => useConnect())
+      const { result: connectResult } = renderHook(() => useConnect())
 
-      console.log('accountData -> ', result.account())
+      console.log('accountData -> ', result().account())
 
-      // console.log('connectData -> ', result.connect())
+      console.log('connectData -> ', connectResult())
 
       expect(true).toBeTruthy()
     })
