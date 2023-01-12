@@ -1,17 +1,10 @@
 import { QueryClient } from '@tanstack/solid-query'
-import type { Client } from '@wagmi/core'
-import type { Owner } from 'solid-js'
-import { createRoot, createSignal, getOwner, runWithOwner } from 'solid-js'
-import { renderHook as defaultRenderHook } from 'solid-testing-library'
+import { createSignal } from 'solid-js'
 
 import { WagmiProvider } from '../src'
 import { setupClient } from './'
 
 export const queryClient = new QueryClient()
-
-type Props = { client?: Client } & {
-  children?: any
-}
 
 export function renderHook(
   hook: (props: any) => any,
@@ -52,7 +45,7 @@ export function renderHook(
   //const utils = defaultRenderHook(testHarness)
   testHarness()
 
-  return result
+  return { result: result() }
 }
 
 export * from './utils'
