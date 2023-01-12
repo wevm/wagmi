@@ -52,7 +52,7 @@ export function renderHook(
   //const utils = defaultRenderHook(testHarness)
   testHarness()
 
-  return { result }
+  return result
 }
 
 export * from './utils'
