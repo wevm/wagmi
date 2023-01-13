@@ -38,11 +38,11 @@ describe('useAccount', () => {
     })
 
     it('is not connected', async () => {
-      const { result: account } = renderHook(() => useAccount())
+      const { result } = renderHook(() => useAccount())
 
-      expect(account.isDisconnected).toBeTruthy()
+      expect(result().isDisconnected).toBeTruthy()
 
-      expect(account).toMatchInlineSnapshot(`
+      expect(result()).toMatchInlineSnapshot(`
         {
           "address": undefined,
           "connector": undefined,
