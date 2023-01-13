@@ -1,6 +1,6 @@
+import { renderHook as defaultRenderHook } from '@solidjs/testing-library'
 import { QueryClient } from '@tanstack/solid-query'
 import type { Client } from '@wagmi/core'
-import { renderHook as defaultRenderHook } from 'solid-testing-library'
 
 import { WagmiProvider } from '../src'
 import { setupClient } from './'

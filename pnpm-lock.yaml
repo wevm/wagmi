@@ -244,6 +244,7 @@ importers:
   packages/solid:
     specifiers:
       '@coinbase/wallet-sdk': ^3.6.0
+      '@solidjs/testing-library': 0.5.2
       '@tanstack/query-sync-storage-persister': ^4.14.5
       '@tanstack/solid-query': ^4.22.0
       '@wagmi/core': workspace:*
@@ -251,7 +252,6 @@ importers:
       abitype: ^0.2.5
       eslint-plugin-solid: ^0.8.0
       solid-js: ^1.6.6
-      solid-testing-library: solidjs/solid-testing-library
       typescript: ^4.9.3
       vite-plugin-solid: ^2.5.0
     dependencies:
@@ -263,8 +263,8 @@ importers:
       abitype: 0.2.5_typescript@4.9.4
       solid-js: 1.6.8
     devDependencies:
+      '@solidjs/testing-library': 0.5.2_solid-js@1.6.8
       eslint-plugin-solid: 0.8.0_typescript@4.9.4
-      solid-testing-library: github.com/solidjs/solid-testing-library/36f9b19db8207f108664058b8dd301bd6b0fb076_solid-js@1.6.8
       typescript: 4.9.4
       vite-plugin-solid: 2.5.0_solid-js@1.6.8
 
@@ -3071,6 +3071,16 @@ packages:
       solid-js: 1.6.8
     dev: true
 
+  /@solidjs/testing-library/0.5.2_solid-js@1.6.8:
+    resolution: {integrity: sha512-GXUiI0Itz/7FfTJrV0RoICS2lL0RE3D1lNSrnuNg9nLC28qKnEQhm9Gfk4gFP9rGVzmsJJJC7yf8kbHMuyR2AA==}
+    engines: {node: '>= 14'}
+    peerDependencies:
+      solid-js: '>=1.0.0'
+    dependencies:
+      '@testing-library/dom': 8.19.1
+      solid-js: 1.6.8
+    dev: true
+
   /@spruceid/siwe-parser/1.1.3:
     resolution: {integrity: sha512-oQ8PcwDqjGWJvLmvAF2yzd6iniiWxK0Qtz+Dw+gLD/W5zOQJiKIUXwslHOm8VB8OOOKW9vfR3dnPBhHaZDvRsw==}
     dependencies:
@@ -4619,14 +4629,14 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.2_debug@4.3.4
     transitivePeerDependencies:
       - debug
 
   /axios/0.25.0_debug@4.3.4:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.2_debug@4.3.4
     transitivePeerDependencies:
       - debug
     dev: true
@@ -7102,7 +7112,7 @@ packages:
     resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
     dev: false
 
-  /follow-redirects/1.15.2:
+  /follow-redirects/1.15.2_debug@4.3.4:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -7110,6 +7120,8 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dependencies:
+      debug: 4.3.4
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -12586,16 +12598,3 @@ packages:
     dependencies:
       bn.js: 4.12.0
       ethereumjs-util: 6.2.1
-
-  github.com/solidjs/solid-testing-library/36f9b19db8207f108664058b8dd301bd6b0fb076_solid-js@1.6.8:
-    resolution: {tarball: https://codeload.github.com/solidjs/solid-testing-library/tar.gz/36f9b19db8207f108664058b8dd301bd6b0fb076}
-    id: github.com/solidjs/solid-testing-library/36f9b19db8207f108664058b8dd301bd6b0fb076
-    name: '@solidjs/testing-library'
-    version: 0.5.2
-    engines: {node: '>= 14'}
-    peerDependencies:
-      solid-js: '>=1.0.0'
-    dependencies:
-      '@testing-library/dom': 8.19.1
-      solid-js: 1.6.8
-    dev: true
