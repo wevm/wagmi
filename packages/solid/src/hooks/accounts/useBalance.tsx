@@ -23,9 +23,7 @@ export type SolidFetchBalanceArgs = {
   token?: Accessor<Address>
 }
 
-export const useBalance = (
-  props?: Partial<SolidFetchBalanceArgs> & FetchBalanceResult,
-) => {
+export const useBalance = (props?: Partial<SolidFetchBalanceArgs>) => {
   const [balanceData, setBalanceData] = createSignal<FetchBalanceResult>()
   const accountData = useAccount()
   const networkData = useNetwork()
@@ -33,24 +31,28 @@ export const useBalance = (
   const propChainId = props?.chainId?.()
   const propAddress = props?.address?.()
 
+  const getBalance = async () => {
+    const address = createMemo(() => propAddress ?? accountData().address)
+    const chainId = createMemo(() => propChainId ?? networkData()?.chain?.id)
+
+    if (address()) {
+      const balanceData = await fetchBalance({
+        chainId: chainId(),
+        address: address()!,
+        formatUnits: props?.formatUnits?.(),
+        token: props?.token?.(),
+      })
+
+      setBalanceData(balanceData)
+    }
+  }
+
   createEffect(
     async () => {
-      const address = createMemo(() => propAddress ?? accountData().address)
-      const chainId = createMemo(() => propChainId ?? networkData()?.chain?.id)
-
-      if (address()) {
-        const balanceData = await fetchBalance({
-          chainId: chainId(),
-          address: address()!,
-          formatUnits: props?.formatUnits?.(),
-          token: props?.token?.(),
-        })
-
-        setBalanceData(balanceData)
-      }
+      getBalance()
     },
     { defer: true },
   )
 
-  return balanceData
+  return { balanceData, fetchBalance: getBalance }
 }
