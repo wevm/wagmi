@@ -53,4 +53,30 @@ describe('resolveConfig', () => {
       }
     `)
   })
+
+  it('resolves array config', async () => {
+    const { filePaths } = await createFixture({
+      files: {
+        'wagmi.config.ts': `
+        import { defineConfig } from '@wagmi/cli'
+
+        export default defineConfig([${JSON.stringify(defaultConfig)}])
+        `,
+      },
+    })
+
+    const configPath = await findConfig({
+      config: filePaths['wagmi.config.ts'],
+    })
+    await expect(resolveConfig({ configPath: configPath! })).resolves
+      .toMatchInlineSnapshot(`
+      [
+        {
+          "contracts": [],
+          "out": "src/generated.ts",
+          "plugins": [],
+        },
+      ]
+    `)
+  })
 })

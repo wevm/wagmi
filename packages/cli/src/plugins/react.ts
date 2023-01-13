@@ -181,7 +181,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 contractNames.add(item.name)
                 const innerHookName = 'useContractRead'
                 const hookName = innerHookName.replace(
-                  'Contract',
+                  'ContractRead',
                   baseHookName + pascalCase(item.name),
                 )
                 imports.add(innerHookName)
@@ -262,7 +262,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 contractNames.add(item.name)
                 const innerHookName = 'useContractWrite'
                 const hookName = innerHookName.replace(
-                  'Contract',
+                  'ContractWrite',
                   baseHookName + pascalCase(item.name),
                 )
                 imports.add(innerHookName)
@@ -341,7 +341,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 contractNames.add(item.name)
                 const innerHookName = 'usePrepareContractWrite'
                 const hookName = innerHookName.replace(
-                  'Contract',
+                  'ContractWrite',
                   baseHookName + pascalCase(item.name),
                 )
                 imports.add(innerHookName)

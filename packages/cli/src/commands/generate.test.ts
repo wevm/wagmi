@@ -17,6 +17,10 @@ describe('generate', () => {
     vi.restoreAllMocks()
   })
 
+  it.todo('generates output')
+  it.todo('generates typescript')
+  it.todo('generates output with plugins')
+
   describe('behavior', () => {
     it('invalid cli options', async () => {
       await expect(
@@ -83,11 +87,12 @@ describe('generate', () => {
       )
     })
 
-    it('config contract names not unique', async () => {
-      await createFixture({
-        dir: temp,
-        files: {
-          'wagmi.config.js': dedent`
+    describe('contracts', () => {
+      it('config contract names not unique', async () => {
+        await createFixture({
+          dir: temp,
+          files: {
+            'wagmi.config.js': dedent`
             export default {
               out: 'generated.ts',
               contracts: [
@@ -102,31 +107,43 @@ describe('generate', () => {
               ],
             }
           `,
-        },
+          },
+        })
+        await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
+          '"Contract name \\"Foo\\" is not unique."',
+        )
       })
-      await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Contract name \\"Foo\\" is not unique."',
-      )
+
+      it('displays message if no contracts found', async () => {
+        await createFixture({
+          dir: temp,
+          files: {
+            'wagmi.config.js': 'export default {}',
+          },
+        })
+        await generate()
+        expect(mockedConsole.formatted).toMatchInlineSnapshot(
+          '"[37mNo contracts found.[39m"',
+        )
+      })
+
+      it.todo('throws when abi is invalid')
+      it.todo('throws when address is invalid')
     })
 
-    it('displays message if no contracts found', async () => {
-      await createFixture({
-        dir: temp,
-        files: {
-          'wagmi.config.js': 'export default {}',
-        },
-      })
-      await generate()
-      expect(mockedConsole.formatted).toMatchInlineSnapshot(
-        '"[37mNo contracts found.[39m"',
-      )
-    })
+    describe.todo('watch', () => {
+      it.todo('save config file logs change')
+      it.todo('updates on add file')
+      it.todo('updates on change file')
+      it.todo('updates on unlink file')
+      it.todo('runs watch command')
+      it.todo('shuts down watch on SIGINT/SIGTERM')
 
-    it('displays message if using --watch flag without watchers configured', async () => {
-      await createFixture({
-        dir: temp,
-        files: {
-          'wagmi.config.js': dedent`
+      it('displays message if using --watch flag without watchers configured', async () => {
+        await createFixture({
+          dir: temp,
+          files: {
+            'wagmi.config.js': dedent`
             export default {
               contracts: [
                 {
@@ -136,12 +153,13 @@ describe('generate', () => {
               ],
             }
           `,
-        },
+          },
+        })
+        await generate({ watch: true })
+        expect(mockedConsole.formatted).toMatchInlineSnapshot(
+          '"[37m[90mUsed --watch flag, but no plugins are watching.[37m[39m"',
+        )
       })
-      await generate({ watch: true })
-      expect(mockedConsole.formatted).toMatchInlineSnapshot(
-        '"[37m[90mUsed --watch flag, but no plugins are watching.[37m[39m"',
-      )
     })
   })
 })

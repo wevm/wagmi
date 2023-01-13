@@ -34,6 +34,7 @@ void (async () => {
   try {
     // Parse CLI args without running command
     cli.parse(process.argv, { run: false })
+    if (cli.args.length === 0) cli.outputHelp()
     await cli.runMatchedCommand()
   } catch (error) {
     logger.error(`\n${(error as Error).message}`)
