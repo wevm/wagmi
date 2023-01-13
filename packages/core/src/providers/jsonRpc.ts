@@ -22,13 +22,7 @@ export function jsonRpcProvider({
     const rpcConfig = rpc(chain)
     if (!rpcConfig || rpcConfig.http === '') return null
     return {
-      chain: {
-        ...chain,
-        rpcUrls: {
-          ...chain.rpcUrls,
-          default: { http: [rpcConfig.http] },
-        },
-      },
+      chain,
       provider: () => {
         const RpcProvider = static_
           ? providers.StaticJsonRpcProvider

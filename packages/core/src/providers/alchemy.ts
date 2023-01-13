@@ -19,13 +19,7 @@ export function alchemyProvider({
   return function (chain) {
     if (!chain.rpcUrls.alchemy?.http[0]) return null
     return {
-      chain: {
-        ...chain,
-        rpcUrls: {
-          ...chain.rpcUrls,
-          default: { http: [`${chain.rpcUrls.alchemy?.http[0]}/${apiKey}`] },
-        },
-      },
+      chain,
       provider: () => {
         const provider = new providers.AlchemyProvider(
           {
