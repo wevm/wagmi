@@ -1,34 +1,27 @@
 import { QueryClient } from '@tanstack/solid-query'
-import { createSignal } from 'solid-js'
+import type { Client } from '@wagmi/core'
+import { renderHook as defaultRenderHook } from 'solid-testing-library'
 
 import { WagmiProvider } from '../src'
 import { setupClient } from './'
 
 export const queryClient = new QueryClient()
 
+type Props = { client?: Client } & {
+  children?: any
+}
+
+const wrapper = ({
+  client = setupClient({ queryClient }),
+  ...rest
+}: Props = {}) => {
+  return <WagmiProvider client={client as any} {...rest} />
+}
+
 export function renderHook(
   hook: (props: any) => any,
   { wrapper: wrapper_, ...options_ }: any = {},
 ) {
-  const [result, setResult] = createSignal<any>()
-
-  const TestComponent = () => {
-    setResult(hook(options_))
-    return null
-  }
-
-  const testHarness = () => {
-    const component = (
-      <WagmiProvider client={setupClient({ queryClient }) as any}>
-        <TestComponent />
-      </WagmiProvider>
-    )
-
-    return component
-  }
-
-  // TODO: make this options work
-
   // const options: any = {
   //   ...(wrapper_
   //     ? { wrapper: wrapper_ }
@@ -38,14 +31,14 @@ export function renderHook(
   //       }),
   //   ...options_,
   // }
-  // const utils = defaultRenderHook(hook, options as any)
+
+  const utils = defaultRenderHook(hook, {
+    wrapper,
+  })
 
   queryClient.clear()
 
-  //const utils = defaultRenderHook(testHarness)
-  testHarness()
-
-  return { result: result() }
+  return { ...utils }
 }
 
 export * from './utils'

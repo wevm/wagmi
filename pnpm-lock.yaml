@@ -251,7 +251,7 @@ importers:
       abitype: ^0.2.5
       eslint-plugin-solid: ^0.8.0
       solid-js: ^1.6.6
-      solid-testing-library: ^0.5.0
+      solid-testing-library: solidjs/solid-testing-library
       typescript: ^4.9.3
       vite-plugin-solid: ^2.5.0
     dependencies:
@@ -264,7 +264,7 @@ importers:
       solid-js: 1.6.8
     devDependencies:
       eslint-plugin-solid: 0.8.0_typescript@4.9.4
-      solid-testing-library: 0.5.0_solid-js@1.6.8
+      solid-testing-library: github.com/solidjs/solid-testing-library/36f9b19db8207f108664058b8dd301bd6b0fb076_solid-js@1.6.8
       typescript: 4.9.4
       vite-plugin-solid: 2.5.0_solid-js@1.6.8
 
@@ -7654,7 +7654,7 @@ packages:
     engines: {node: '>=12.0.0'}
     dependencies:
       ansi-escapes: 4.3.2
-      chalk: 4.1.1
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-width: 3.0.0
       external-editor: 3.1.0
@@ -8480,7 +8480,7 @@ packages:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
     engines: {node: '>=10'}
     dependencies:
-      chalk: 4.1.1
+      chalk: 4.1.2
       is-unicode-supported: 0.1.0
     dev: true
 
@@ -9671,7 +9671,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.1
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.7.0
       is-interactive: 1.0.0
@@ -10997,16 +10997,6 @@ packages:
       - supports-color
     dev: true
     optional: true
-
-  /solid-testing-library/0.5.0_solid-js@1.6.8:
-    resolution: {integrity: sha512-vr4Ke9Dq3bUFLaXOcN8/IVn2e9Q37w4vdmoIOmFBIPs7iCJX9IxuC0IdQqK8nzBZMQqceijkfyCE3Qc407KmaA==}
-    engines: {node: '>= 14'}
-    peerDependencies:
-      solid-js: '>=1.0.0'
-    dependencies:
-      '@testing-library/dom': 8.19.1
-      solid-js: 1.6.8
-    dev: true
 
   /sonic-boom/2.8.0:
     resolution: {integrity: sha512-kuonw1YOYYNOve5iHdSahXPOK49GqwA+LZhI6Wz/l0rP57iKyXXIHaRagOBHAPmGwJC6od2Z9zgvZ5loSgMlVg==}
@@ -12596,3 +12586,16 @@ packages:
     dependencies:
       bn.js: 4.12.0
       ethereumjs-util: 6.2.1
+
+  github.com/solidjs/solid-testing-library/36f9b19db8207f108664058b8dd301bd6b0fb076_solid-js@1.6.8:
+    resolution: {tarball: https://codeload.github.com/solidjs/solid-testing-library/tar.gz/36f9b19db8207f108664058b8dd301bd6b0fb076}
+    id: github.com/solidjs/solid-testing-library/36f9b19db8207f108664058b8dd301bd6b0fb076
+    name: '@solidjs/testing-library'
+    version: 0.5.2
+    engines: {node: '>= 14'}
+    peerDependencies:
+      solid-js: '>=1.0.0'
+    dependencies:
+      '@testing-library/dom': 8.19.1
+      solid-js: 1.6.8
+    dev: true

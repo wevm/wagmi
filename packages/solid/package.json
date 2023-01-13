@@ -109,7 +109,7 @@
   },
   "devDependencies": {
     "eslint-plugin-solid": "^0.8.0",
-    "solid-testing-library": "^0.5.0",
+    "solid-testing-library": "solidjs/solid-testing-library",
     "typescript": "^4.9.3",
     "vite-plugin-solid": "^2.5.0"
   },
