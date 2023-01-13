@@ -873,7 +873,7 @@
   - prepared with the `prepareSendTransaction` action **(new functionality)**, or
   - recklessly unprepared **(previous functionality)**
 
-  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
+  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks)
 
   ### Prepared usage
 
@@ -960,13 +960,13 @@
   +const transaction = fetchTransaction({ hash })
   ```
 
-  > Why? The old implementation of `sendTransaction` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+  > Why? The old implementation of `sendTransaction` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 - [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: If a `chainId` is passed to `writeContract` or `sendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
   > Why?
   >
-  > - Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+  > - Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks#ios-app-link-constraints) vulnerable.
   > - Not all wallets support programmatic chain switching.
 
 ### Patch Changes
@@ -976,7 +976,7 @@
   - prepared with the `prepareWriteContract` action **(new functionality)**, or
   - recklessly unprepared **(previous functionality)**
 
-  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
+  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks)
 
   ### Prepared usage
 

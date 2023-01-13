@@ -44,7 +44,7 @@ function App() {
   It is highly recommended to pair `useContractWrite` with the
   [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite)
   to [avoid UX
-  pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
 ## Return Value
@@ -70,7 +70,7 @@ function App() {
 
 > This is automatically populated when using [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
 
-- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
+- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared config. Note: This has [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the config upfront using the `usePrepareContractWrite` hook.
 - `prepared`: The config has been prepared with parameters required for performing a contract write via the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite)
 
 ```tsx {5}
@@ -316,7 +316,7 @@ It is possible to pass through override config. Any override config prefixed wit
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only
   use it as a last resort.
 </Callout>
 
@@ -360,7 +360,7 @@ It is possible to use `useContractWrite` without pairing it with `usePrepareCont
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks). Only
+  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only
   use it as a last resort.
 </Callout>
 

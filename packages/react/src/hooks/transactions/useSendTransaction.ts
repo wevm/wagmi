@@ -18,7 +18,7 @@ export type UseSendTransactionArgs = Omit<
     | {
         /**
          * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
-         * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it
+         * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it
          * is highly recommended to not use this and instead prepare the request upfront
          * using the `usePrepareSendTransaction` hook.
          *
@@ -38,7 +38,7 @@ export type UseSendTransactionArgs = Omit<
 export type UseSendTransactionMutationArgs = {
   /**
    * Recklessly pass through an unprepared `request`. Note: This has
-   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is
+   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is
    * highly recommended to not use this and instead prepare the request upfront
    * using the `usePrepareSendTransaction` hook.
    */
@@ -77,7 +77,7 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  * @description Hook for sending a transaction.
  *
  * It is recommended to pair this with the [`usePrepareSendTransaction` hook](/docs/prepare-hooks/usePrepareSendTransaction)
- * to [avoid UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+ * to [avoid UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'

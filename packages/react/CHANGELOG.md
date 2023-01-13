@@ -1122,14 +1122,14 @@
   +const { data: transaction } = useTransaction({ hash })
   ```
 
-  > Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+  > Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 * [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The configuration passed to the `useSendTransaction` hook now needs to be either:
 
   - prepared with the `usePrepareSendTransaction` hook **(new)**, or
   - recklessly unprepared **(previous functionality)**
 
-  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
+  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks)
 
   ### Prepared usage
 
@@ -1170,7 +1170,7 @@
 
 - [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: If a `chainId` is passed to `useContractWrite` or `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-  > Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+  > Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks#ios-app-link-constraints) vulnerable.
 
 * [#760](https://github.com/wagmi-dev/wagmi/pull/760) [`d8af6bf`](https://github.com/wagmi-dev/wagmi/commit/d8af6bf50885aec110ae4d64716642453aa27896) Thanks [@tmm](https://github.com/tmm)! - **Breaking:** `alchemyProvider` and `infuraProvider` now use a generic `apiKey` configuration option instead of `alchemyId` and `infuraId`.
 
@@ -1232,7 +1232,7 @@
   const { sendTransaction } = useSendTransaction(config)
   ```
 
-* [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking:** The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+* [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking:** The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 
   ```diff
   <button
@@ -1284,7 +1284,7 @@
   - prepared with the `usePrepareContractWrite` hook **(new)**, or
   - recklessly unprepared **(previous functionality)**
 
-  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
+  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks)
 
   ### Prepared usage
 

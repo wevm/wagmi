@@ -504,7 +504,7 @@ Throws an error when a `chainId` is specified and the end-user is on a different
   [here](https://0.5.x.wagmi.sh).
 </Callout>
 
-All the breaking changes in this release are related to the introduction of [Prepare Hooks](/react/prepare-hooks/intro). It is recommended to read the [Prepare Hooks](/react/prepare-hooks/intro) section before migrating to 0.6.x.
+All the breaking changes in this release are related to the introduction of [Prepare Hooks](/react/prepare-hooks). It is recommended to read the [Prepare Hooks](/react/prepare-hooks) section before migrating to 0.6.x.
 
 ### `useContractWrite`
 
@@ -518,7 +518,7 @@ All the breaking changes in this release are related to the introduction of [Pre
 
 If a `chainId` is passed to `useContractWrite`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -527,7 +527,7 @@ The configuration passed to the `useContractWrite` hook now needs to be either:
 - prepared with the [`usePrepareContractWrite` Prepare Hook](/react/prepare-hooks/usePrepareContractWrite) **(new)**, or
 - recklessly unprepared **(previous functionality)**
 
-> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks/intro).
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks).
 
 **Prepared usage**
 
@@ -580,11 +580,11 @@ const {
 +const { data: transaction } = useTransaction({ hash })
 ```
 
-> Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+> Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 **`write`/`writeAsync` arguments**
 
-The `write`/`writeAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+The `write`/`writeAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 
 ```diff
 <button
@@ -629,7 +629,7 @@ const { write } = useContractWrite(config)
 
 If a `chainId` is passed to `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -638,7 +638,7 @@ The configuration passed to the `useSendTransaction` hook now needs to be either
 - prepared with the [`usePrepareSendTransaction` Prepare Hook](/react/prepare-hooks/usePrepareSendTransaction) **(new)**, or
 - recklessly unprepared **(previous functionality)**
 
-> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks/intro).
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks).
 
 **Prepared usage**
 
@@ -695,11 +695,11 @@ const {
 +const { data: transaction } = useTransaction({ hash })
 ```
 
-> Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+> Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 **`sendTransaction`/`sendTransactionAsync` arguments**
 
-The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 
 ```diff
 <button
