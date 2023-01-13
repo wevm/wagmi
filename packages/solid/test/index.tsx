@@ -11,11 +11,10 @@ type Props = { client?: Client } & {
   children?: any
 }
 
-const wrapper = ({
-  client = setupClient({ queryClient }),
-  ...rest
-}: Props = {}) => {
-  return <WagmiProvider client={client as any} {...rest} />
+const wrapper = (props: Props) => {
+  return (
+    <WagmiProvider client={setupClient({ queryClient }) as any} {...props} />
+  )
 }
 
 export function renderHook(
