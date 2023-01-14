@@ -90,7 +90,7 @@ export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig) => {
       suspense: props?.suspense,
       onError: props?.onError,
       onSettled: props?.onSettled,
-      onSucces: props?.onSuccess,
+      onSuccess: props?.onSuccess,
     },
   })
 

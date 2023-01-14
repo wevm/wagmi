@@ -1,3 +1,4 @@
+import { waitFor } from '@solidjs/testing-library'
 import type { Address } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
@@ -32,17 +33,29 @@ describe('useBalance', () => {
             "type": "BigNumber",
           },
         },
+        "dataUpdatedAt": 1643673600000,
         "error": null,
+        "errorUpdateCount": 0,
+        "errorUpdatedAt": 0,
+        "failureCount": 0,
+        "failureReason": null,
         "fetchStatus": "idle",
         "isError": false,
         "isFetched": true,
         "isFetchedAfterMount": true,
         "isFetching": false,
-        "isStale": false,
+        "isInitialLoading": false,
         "isLoading": false,
+        "isLoadingError": false,
+        "isPaused": false,
+        "isPlaceholderData": false,
+        "isPreviousData": false,
+        "isRefetchError": false,
         "isRefetching": false,
+        "isStale": false,
         "isSuccess": true,
         "refetch": [Function],
+        "remove": [Function],
         "status": "success",
       }
     `)
@@ -60,30 +73,42 @@ describe('useBalance', () => {
       expect(result.isSuccess).toBeTruthy()
 
       expect(result).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "decimals": 18,
-              "formatted": "0.40742480512617271",
-              "symbol": "ETH",
-              "value": {
-                "hex": "0x05a776b39e3a7026",
-                "type": "BigNumber",
-              },
+        {
+          "data": {
+            "decimals": 18,
+            "formatted": "0.40742480512617271",
+            "symbol": "ETH",
+            "value": {
+              "hex": "0x05a776b39e3a7026",
+              "type": "BigNumber",
             },
-            "error": null,
-            "fetchStatus": "idle",
-            "isError": false,
-            "isFetched": true,
-            "isFetchedAfterMount": true,
-            "isFetching": false,
-            "isIdle": false,
-            "isLoading": false,
-            "isRefetching": false,
-            "isSuccess": true,
-            "refetch": [Function],
-            "status": "success",
-          }
-        `)
+          },
+          "dataUpdatedAt": 1643673600000,
+          "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": false,
+          "isFetching": false,
+          "isInitialLoading": false,
+          "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
+          "isRefetching": false,
+          "isStale": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "remove": [Function],
+          "status": "success",
+        }
+      `)
     })
 
     it('scopeKey', async () => {
@@ -91,6 +116,8 @@ describe('useBalance', () => {
         return {
           balance: useBalance({
             address,
+            onError: (error) => console.log(error, 'ah'),
+            onSuccess: (error) => console.log(error, 'ah'),
           }),
           balancewithoutScopeKey: useBalance({
             address,
@@ -104,9 +131,13 @@ describe('useBalance', () => {
         }
       })
 
-      expect(result.balance.isSuccess).toBeTruthy()
-      expect(result.balancewithoutScopeKey.isSuccess).toBeTruthy()
-      expect(result.balancewithScopeKey.isStale).toBeTruthy()
+      await waitFor(() => expect(result.balance.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.balancewithoutScopeKey.isSuccess).toBeTruthy(),
+      )
+      await waitFor(() =>
+        expect(result.balancewithScopeKey.isStale).toBeTruthy(),
+      )
     })
 
     it('chainId', async () => {
@@ -130,17 +161,29 @@ describe('useBalance', () => {
               "type": "BigNumber",
             },
           },
+          "dataUpdatedAt": 1643673600000,
           "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
+          "isFetchedAfterMount": false,
           "isFetching": false,
-          "isIdle": false,
+          "isInitialLoading": false,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
           "isRefetching": false,
+          "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
+          "remove": [Function],
           "status": "success",
         }
       `)
@@ -159,18 +202,30 @@ describe('useBalance', () => {
       expect(result).toMatchInlineSnapshot(`
         {
           "data": undefined,
+          "dataUpdatedAt": 0,
           "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
           "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
+          "isInitialLoading": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
           "isRefetching": false,
+          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "idle",
+          "remove": [Function],
+          "status": "loading",
         }
       `)
     })
@@ -263,16 +318,16 @@ describe('useBalance', () => {
       const { data } = await result.refetch()
 
       expect(data).toMatchInlineSnapshot(`
-          {
-            "decimals": 18,
-            "formatted": "0.024495190284783363",
-            "symbol": "ETH",
-            "value": {
-              "hex": "0x57063eeba14f03",
-              "type": "BigNumber",
-            },
-          }
-        `)
+        {
+          "decimals": 18,
+          "formatted": "0.40742480512617271",
+          "symbol": "ETH",
+          "value": {
+            "hex": "0x05a776b39e3a7026",
+            "type": "BigNumber",
+          },
+        }
+      `)
     })
   })
 
@@ -285,18 +340,30 @@ describe('useBalance', () => {
       expect(result).toMatchInlineSnapshot(`
         {
           "data": undefined,
+          "dataUpdatedAt": 0,
           "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": false,
           "isFetchedAfterMount": false,
           "isFetching": false,
-          "isIdle": true,
-          "isLoading": false,
+          "isInitialLoading": false,
+          "isLoading": true,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
           "isRefetching": false,
+          "isStale": true,
           "isSuccess": false,
           "refetch": [Function],
-          "status": "idle",
+          "remove": [Function],
+          "status": "loading",
         }
       `)
     })
