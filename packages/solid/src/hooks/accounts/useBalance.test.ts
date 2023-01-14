@@ -19,8 +19,6 @@ describe('useBalance', () => {
 
     await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    console.log('is success ', result)
-
     expect(result.isSuccess).toBeTruthy()
 
     expect(result).toMatchInlineSnapshot(`
