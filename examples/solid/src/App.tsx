@@ -1,10 +1,11 @@
-import { useAccount, useBalance, useConnect } from '@wagmi/solid'
+import { useAccount, useBalance, useConnect, useSigner } from '@wagmi/solid'
 import type { Component } from 'solid-js'
-import { Match, Switch, createSignal } from 'solid-js'
+import { Match, Switch, createEffect, createSignal } from 'solid-js'
 
 const App: Component = () => {
   const [chainId, setChainId] = createSignal(1)
 
+  const signer = useSigner()
   const connect = useConnect()
   const acc = useAccount()
 
@@ -12,6 +13,8 @@ const App: Component = () => {
   // if you change your chain on Metamask. Remove this
   // to make it reactive with Metamask.
   const balance = useBalance({ chainId })
+
+  createEffect(() => console.log('signer ', signer.data))
 
   return (
     <div>
