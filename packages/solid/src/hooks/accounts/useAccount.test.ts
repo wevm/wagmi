@@ -1,3 +1,4 @@
+import { waitFor } from '@solidjs/testing-library'
 import { describe, expect, it } from 'vitest'
 
 import { renderHook } from '../../../test'
@@ -20,7 +21,7 @@ describe('useAccount', () => {
         result: { account, connect },
       } = renderHook(() => useAccountWithConnectAndDisconnect())
 
-      await connect.connect()
+      await connect.connectAsync()
 
       expect(account().isConnected).toBeTruthy()
 
@@ -62,7 +63,7 @@ describe('useAccount', () => {
         result: { account, connect, disconnect },
       } = renderHook(() => useAccountWithConnectAndDisconnect())
 
-      await connect.connect()
+      await connect.connectAsync()
 
       expect(account().isConnected).toBeTruthy()
 
@@ -78,7 +79,7 @@ describe('useAccount', () => {
         }
       `)
 
-      await disconnect.disconnect()
+      await disconnect.disconnectAsync()
 
       expect(account().isDisconnected).toBeTruthy()
 
@@ -100,16 +101,14 @@ describe('useAccount', () => {
         result: { account, connect },
       } = renderHook(() => useAccountWithConnectAndDisconnect())
 
-      const connectPromise = connect.connect({
-        connector: connect.connectors[0],
-      })
+      connect.connectAsync()
 
-      expect(account().isConnecting).toBeTruthy()
+      await waitFor(() => expect(account().isConnecting).toBeTruthy())
+
       expect(account().status).toMatchInlineSnapshot(`"connecting"`)
 
-      await connectPromise
+      await waitFor(() => expect(account().isConnected).toBeTruthy())
 
-      expect(account().isConnected).toBeTruthy()
       expect(account().status).toMatchInlineSnapshot(`"connected"`)
     })
   })
