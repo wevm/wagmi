@@ -82,7 +82,7 @@ export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig) => {
       return Boolean(address() && chainId())
     },
     ...{
-      staleTime: props,
+      staleTime: props?.staleTime,
       suspense: props?.suspense,
       onError: props?.onError,
       onSettled: props?.onSettled,
