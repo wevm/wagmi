@@ -1,10 +1,11 @@
+import type { QueryFunction } from '@tanstack/solid-query'
 import { createQuery } from '@tanstack/solid-query'
 import type { Address, FetchBalanceResult } from '@wagmi/core'
 import { fetchBalance } from '@wagmi/core'
 import type { Accessor } from 'solid-js'
 import { createMemo } from 'solid-js'
 
-import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryConfig } from '../../types'
 
 import { useAccount } from './useAccount'
 import { useNetwork } from './useNetwork'
@@ -47,9 +48,10 @@ function queryKey(props: QueryKeyArgs & QueryKeyConfig) {
   ]
 }
 
-function queryFn({
-  queryKey: [{ address, chainId, formatUnits, token }],
-}: QueryFunctionArgs<typeof queryKey>) {
+const queryFn: QueryFunction<
+  Promise<FetchBalanceResult>,
+  ReturnType<typeof queryKey>
+> = ({ queryKey: [{ address, chainId, formatUnits, token }] }) => {
   if (!address) throw new Error('address is required')
   return fetchBalance({
     address,
@@ -72,9 +74,11 @@ export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig) => {
     return {
       scopeKey: props?.scopeKey,
       entity: 'balance',
+      formatUnits: props?.formatUnits?.(),
       chainId: chainId(),
       address: address(),
-    }
+      token: props?.token?.(),
+    } as const
   })
 
   const balanceQuery = createQuery(() => [queryKey()], queryFn, {
