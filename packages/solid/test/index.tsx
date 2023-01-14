@@ -18,7 +18,7 @@ const wrapper = (props: Props) => {
   )
 }
 
-export function renderHook(hook: (props: any) => any) {
+export function renderHook<TResult, TProps>(hook: (props: TProps) => TResult) {
   const utils = defaultRenderHook(hook, {
     wrapper,
   })

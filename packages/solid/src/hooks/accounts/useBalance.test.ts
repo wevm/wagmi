@@ -1,25 +1,29 @@
+import type { Address } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
 import { renderHook } from '../../../test'
 import { useBalance } from './useBalance'
 
+const chainId = () => 1
+// this address must come from Anvil.
+const address = (): Address => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
+
 describe('useBalance', () => {
   it('mounts', async () => {
-    const {
-      result: { balanceData, fetchBalance },
-    } = renderHook(() =>
+    const { result } = renderHook(() =>
       useBalance({
-        address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+        address,
+        chainId,
       }),
     )
 
-    await fetchBalance()
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
-    expect(balanceData().isSuccess).toBeTruthy()
+    console.log('is success ', result)
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { internal, ...res } = balanceData()
-    expect(res).toMatchInlineSnapshot(`
+    expect(result.isSuccess).toBeTruthy()
+
+    expect(result).toMatchInlineSnapshot(`
       {
         "data": {
           "decimals": 18,
@@ -36,7 +40,7 @@ describe('useBalance', () => {
         "isFetched": true,
         "isFetchedAfterMount": true,
         "isFetching": false,
-        "isIdle": false,
+        "isStale": false,
         "isLoading": false,
         "isRefetching": false,
         "isSuccess": true,
@@ -48,21 +52,16 @@ describe('useBalance', () => {
 
   describe('configuration', () => {
     it('address', async () => {
-      const {
-        result: { balanceData, fetchBalance },
-      } = renderHook(() =>
+      const { result } = renderHook(() =>
         useBalance({
-          address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address,
+          chainId,
         }),
       )
 
-      await fetchBalance()
+      expect(result.isSuccess).toBeTruthy()
 
-      expect(balanceData().isSuccess).toBeTruthy()
-
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = balanceData()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
           {
             "data": {
               "decimals": 18,
@@ -93,10 +92,10 @@ describe('useBalance', () => {
       const { result } = renderHook(() => {
         return {
           balance: useBalance({
-            address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            address,
           }),
           balancewithoutScopeKey: useBalance({
-            address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            address,
             enabled: false,
           }),
           balancewithScopeKey: useBalance({
@@ -107,24 +106,22 @@ describe('useBalance', () => {
         }
       })
 
-      expect(result().balance.isSuccess).toBeTruthy()
-      expect(result().balancewithoutScopeKey.isSuccess).toBeTruthy()
-      expect(result().balancewithScopeKey.isIdle).toBeTruthy()
+      expect(result.balance.isSuccess).toBeTruthy()
+      expect(result.balancewithoutScopeKey.isSuccess).toBeTruthy()
+      expect(result.balancewithScopeKey.isStale).toBeTruthy()
     })
 
     it('chainId', async () => {
       const { result } = renderHook(() =>
         useBalance({
-          chainId: () => 1,
-          address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          chainId,
+          address,
         }),
       )
 
-      expect(result().isSuccess).toBeTruthy()
+      expect(result.isSuccess).toBeTruthy()
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": {
             "decimals": 18,
@@ -154,16 +151,14 @@ describe('useBalance', () => {
     it('enabled', async () => {
       const { result } = renderHook(() =>
         useBalance({
-          address: () => '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
+          address,
           enabled: false,
         }),
       )
 
-      expect(result().isIdle).toBeTruthy()
+      expect(result.isStale).toBeTruthy()
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": undefined,
           "error": null,
@@ -185,16 +180,14 @@ describe('useBalance', () => {
     it('formatUnits', async () => {
       const { result } = renderHook(() =>
         useBalance({
-          address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address,
           formatUnits: () => 'gwei',
         }),
       )
 
-      expect(result().isSuccess).toBeTruthy()
+      expect(result.isSuccess).toBeTruthy()
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": {
             "decimals": 18,
@@ -225,16 +218,14 @@ describe('useBalance', () => {
       const ensTokenAddress = '0xc18360217d8f7ab5e7c516566761ea12ce7f9d72'
       const { result } = renderHook(() =>
         useBalance({
-          address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address,
           token: () => ensTokenAddress,
         }),
       )
 
-      expect(result().isSuccess).toBeTruthy()
+      expect(result.isSuccess).toBeTruthy()
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": {
             "decimals": 18,
@@ -267,11 +258,12 @@ describe('useBalance', () => {
       const { result } = renderHook(() =>
         useBalance({
           enabled: false,
-          address: () => '0xfb843f8c4992efdb6b42349c35f025ca55742d33',
+          address,
         }),
       )
 
-      const { data } = await result().refetch()
+      const { data } = await result.refetch()
+
       expect(data).toMatchInlineSnapshot(`
           {
             "decimals": 18,
@@ -290,11 +282,9 @@ describe('useBalance', () => {
     it('does nothing when `address` is missing', async () => {
       const { result } = renderHook(() => useBalance())
 
-      expect(result().isIdle).toBeTruthy()
+      expect(result.isStale).toBeTruthy()
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": undefined,
           "error": null,
@@ -316,16 +306,14 @@ describe('useBalance', () => {
     it('token', async () => {
       const { result } = renderHook(() =>
         useBalance({
-          address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+          address,
           token: () => '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
         }),
       )
 
-      expect(result.current.isSuccess).toBeTruthy()
+      expect(result.isSuccess).toBeTruthy()
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result()
-      expect(res).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": {
             "decimals": 6,
