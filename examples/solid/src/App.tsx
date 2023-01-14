@@ -1,24 +1,20 @@
-import {
-  useAccount,
-  useConnect,
-  useProvider,
-  useWebSocketProvider,
-} from '@wagmi/solid'
+import { useAccount, useBalance, useConnect } from '@wagmi/solid'
 import type { Component } from 'solid-js'
-import { createEffect, createSignal } from 'solid-js'
+import { Match, Switch, createEffect, createSignal } from 'solid-js'
 
 const App: Component = () => {
+  const [chainId, setChainId] = createSignal(1)
+
   const { connect } = useConnect()
   const acc = useAccount()
 
-  const [chainId, setChainId] = createSignal(1)
-
-  const prov = useProvider({ chainId })
-  const webSocket = useWebSocketProvider({ chainId })
+  // opting to set chainId manually, so it won't update
+  // if you change your chain on Metamask. Remove this
+  // to make it reactive with Metamask.
+  const balance = useBalance({ chainId })
 
   createEffect(() => {
-    console.log('provider -> ', prov())
-    console.log('webSocket -> ', webSocket())
+    console.log('balance -> ', balance)
   })
 
   return (
@@ -28,6 +24,16 @@ const App: Component = () => {
         Change chainId
       </button>
       <p>{acc().address}</p>
+
+      <Switch>
+        <Match when={balance.isLoading}>Loading...</Match>
+        <Match when={balance.isError}>Error {balance.error?.message}</Match>
+        <Match when={balance.isSuccess}>
+          <p>
+            {balance.data?.formatted} {balance.data?.symbol}
+          </p>
+        </Match>
+      </Switch>
     </div>
   )
 }

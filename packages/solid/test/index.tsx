@@ -1,6 +1,7 @@
 import { renderHook as defaultRenderHook } from '@solidjs/testing-library'
 import { QueryClient } from '@tanstack/solid-query'
 import type { Client } from '@wagmi/core'
+import type { JSX } from 'solid-js/jsx-runtime'
 
 import { WagmiProvider } from '../src'
 import { setupClient } from './'
@@ -8,7 +9,7 @@ import { setupClient } from './'
 export const queryClient = new QueryClient()
 
 type Props = { client?: Client } & {
-  children?: any
+  children?: JSX.Element
 }
 
 const wrapper = (props: Props) => {
@@ -17,20 +18,7 @@ const wrapper = (props: Props) => {
   )
 }
 
-export function renderHook(
-  hook: (props: any) => any,
-  { wrapper: wrapper_, ...options_ }: any = {},
-) {
-  // const options: any = {
-  //   ...(wrapper_
-  //     ? { wrapper: wrapper_ }
-  //     : {
-  //         wrapper: (props: any) =>
-  //           wrapper({ ...props, ...options_?.initialProps }),
-  //       }),
-  //   ...options_,
-  // }
-
+export function renderHook(hook: (props: any) => any) {
   const utils = defaultRenderHook(hook, {
     wrapper,
   })
