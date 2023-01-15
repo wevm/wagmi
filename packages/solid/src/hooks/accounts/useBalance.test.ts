@@ -6,7 +6,6 @@ import { renderHook } from '../../../test'
 import { useBalance } from './useBalance'
 
 const chainId = () => 1
-// this address must come from Anvil.
 const address = (): Address => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'
 
 describe('useBalance', () => {
@@ -18,9 +17,7 @@ describe('useBalance', () => {
       }),
     )
 
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-
-    expect(result.isSuccess).toBeTruthy()
+    await waitFor(() => expect(result.isSuccess).toBeTruthy())
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -70,6 +67,7 @@ describe('useBalance', () => {
         }),
       )
 
+      await new Promise((resolve) => setTimeout(resolve, 1000))
       expect(result.isSuccess).toBeTruthy()
 
       expect(result).toMatchInlineSnapshot(`
@@ -89,11 +87,11 @@ describe('useBalance', () => {
           "errorUpdatedAt": 0,
           "failureCount": 0,
           "failureReason": null,
-          "fetchStatus": "fetching",
+          "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": false,
-          "isFetching": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
           "isInitialLoading": false,
           "isLoading": false,
           "isLoadingError": false,
@@ -101,7 +99,7 @@ describe('useBalance', () => {
           "isPlaceholderData": false,
           "isPreviousData": false,
           "isRefetchError": false,
-          "isRefetching": true,
+          "isRefetching": false,
           "isStale": true,
           "isSuccess": true,
           "refetch": [Function],
@@ -146,7 +144,7 @@ describe('useBalance', () => {
         }),
       )
 
-      expect(result.isSuccess).toBeTruthy()
+      await waitFor(() => expect(result.isSuccess).toBeTruthy())
 
       expect(result).toMatchInlineSnapshot(`
         {
@@ -199,31 +197,39 @@ describe('useBalance', () => {
 
       expect(result).toMatchInlineSnapshot(`
         {
-          "data": undefined,
-          "dataUpdatedAt": 0,
+          "data": {
+            "decimals": 18,
+            "formatted": "0.40742480512617271",
+            "symbol": "ETH",
+            "value": {
+              "hex": "0x05a776b39e3a7026",
+              "type": "BigNumber",
+            },
+          },
+          "dataUpdatedAt": 1643673600000,
           "error": null,
           "errorUpdateCount": 0,
           "errorUpdatedAt": 0,
           "failureCount": 0,
           "failureReason": null,
-          "fetchStatus": "idle",
+          "fetchStatus": "fetching",
           "isError": false,
-          "isFetched": false,
+          "isFetched": true,
           "isFetchedAfterMount": false,
-          "isFetching": false,
+          "isFetching": true,
           "isInitialLoading": false,
-          "isLoading": true,
+          "isLoading": false,
           "isLoadingError": false,
           "isPaused": false,
           "isPlaceholderData": false,
           "isPreviousData": false,
           "isRefetchError": false,
-          "isRefetching": false,
+          "isRefetching": true,
           "isStale": true,
-          "isSuccess": false,
+          "isSuccess": true,
           "refetch": [Function],
           "remove": [Function],
-          "status": "loading",
+          "status": "success",
         }
       `)
     })
@@ -236,7 +242,7 @@ describe('useBalance', () => {
         }),
       )
 
-      expect(result.isSuccess).toBeTruthy()
+      await waitFor(() => expect(result.isSuccess).toBeTruthy())
 
       expect(result).toMatchInlineSnapshot(`
         {
@@ -249,17 +255,29 @@ describe('useBalance', () => {
               "type": "BigNumber",
             },
           },
+          "dataUpdatedAt": 1643673600000,
           "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
           "isFetchedAfterMount": true,
           "isFetching": false,
-          "isIdle": false,
+          "isInitialLoading": false,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
           "isRefetching": false,
+          "isStale": true,
           "isSuccess": true,
           "refetch": [Function],
+          "remove": [Function],
           "status": "success",
         }
       `)
@@ -274,7 +292,7 @@ describe('useBalance', () => {
         }),
       )
 
-      expect(result.isSuccess).toBeTruthy()
+      await waitFor(() => expect(result.isSuccess).toBeTruthy())
 
       expect(result).toMatchInlineSnapshot(`
         {
@@ -287,17 +305,29 @@ describe('useBalance', () => {
               "type": "BigNumber",
             },
           },
+          "dataUpdatedAt": 1643673600000,
           "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
           "isFetchedAfterMount": true,
           "isFetching": false,
-          "isIdle": false,
+          "isInitialLoading": false,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
           "isRefetching": false,
+          "isStale": true,
           "isSuccess": true,
           "refetch": [Function],
+          "remove": [Function],
           "status": "success",
         }
       `)
@@ -374,7 +404,7 @@ describe('useBalance', () => {
         }),
       )
 
-      expect(result.isSuccess).toBeTruthy()
+      await waitFor(() => expect(result.isSuccess).toBeTruthy())
 
       expect(result).toMatchInlineSnapshot(`
         {
@@ -387,17 +417,29 @@ describe('useBalance', () => {
               "type": "BigNumber",
             },
           },
+          "dataUpdatedAt": 1643673600000,
           "error": null,
+          "errorUpdateCount": 0,
+          "errorUpdatedAt": 0,
+          "failureCount": 0,
+          "failureReason": null,
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
           "isFetchedAfterMount": true,
           "isFetching": false,
-          "isIdle": false,
+          "isInitialLoading": false,
           "isLoading": false,
+          "isLoadingError": false,
+          "isPaused": false,
+          "isPlaceholderData": false,
+          "isPreviousData": false,
+          "isRefetchError": false,
           "isRefetching": false,
+          "isStale": true,
           "isSuccess": true,
           "refetch": [Function],
+          "remove": [Function],
           "status": "success",
         }
       `)
