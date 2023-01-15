@@ -4,7 +4,7 @@ import type { Accessor } from 'solid-js'
 import { createEffect, createMemo, createSignal, onCleanup } from 'solid-js'
 
 export type GetProviderArgs = {
-  chainId?: Accessor<number> | undefined
+  chainId?: Accessor<number> | undefined | number
 }
 
 export type UseProviderArgs = Partial<GetProviderArgs>
@@ -12,7 +12,12 @@ export type UseProviderArgs = Partial<GetProviderArgs>
 export function useProvider(props?: UseProviderArgs) {
   const [provider, setProvider] = createSignal<Provider>()
   const args = createMemo(() =>
-    props?.chainId ? { chainId: props.chainId() } : {},
+    props?.chainId
+      ? {
+          chainId:
+            typeof props.chainId === 'number' ? props.chainId : props.chainId(),
+        }
+      : {},
   )
 
   setProvider(getProvider(args()))

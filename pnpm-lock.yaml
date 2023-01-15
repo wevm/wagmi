@@ -32,6 +32,7 @@ importers:
       eslint-plugin-mdx: ^2.0.4
       eslint-plugin-prettier: ^4.2.1
       eslint-plugin-react-hooks: ^4.6.0
+      eslint-plugin-solid: ^0.8.0
       eslint-plugin-testing-library: ^5.9.1
       ethers: ^5.7.1
       execa: ^6.1.0
@@ -70,6 +71,7 @@ importers:
       eslint-plugin-mdx: 2.0.5_eslint@8.17.0
       eslint-plugin-prettier: 4.2.1_fpumlmklumf4mgth3yez5thzuq
       eslint-plugin-react-hooks: 4.6.0_eslint@8.17.0
+      eslint-plugin-solid: 0.8.0_nlhvlitwvxohdkmvb3doqj6nbq
       eslint-plugin-testing-library: 5.9.1_nlhvlitwvxohdkmvb3doqj6nbq
       ethers: 5.7.2
       execa: 6.1.0
@@ -247,6 +249,7 @@ importers:
       '@solidjs/testing-library': 0.5.2
       '@tanstack/query-sync-storage-persister': ^4.14.5
       '@tanstack/solid-query': ^4.22.0
+      '@typescript-eslint/parser': ^5.46.1
       '@wagmi/core': workspace:*
       '@walletconnect/ethereum-provider': ^1.8.0
       abitype: ^0.2.5
@@ -264,6 +267,7 @@ importers:
       solid-js: 1.6.8
     devDependencies:
       '@solidjs/testing-library': 0.5.2_solid-js@1.6.8
+      '@typescript-eslint/parser': 5.48.0_typescript@4.9.4
       eslint-plugin-solid: 0.8.0_typescript@4.9.4
       typescript: 4.9.4
       vite-plugin-solid: 2.5.0_solid-js@1.6.8
@@ -3688,6 +3692,25 @@ packages:
       - supports-color
     dev: true
 
+  /@typescript-eslint/parser/5.48.0_typescript@4.9.4:
+    resolution: {integrity: sha512-1mxNA8qfgxX8kBvRDIHEzrRGrKHQfQlbW6iHyfHYS0Q4X1af+S6mkLNtgCOsGVl8+/LUPrqdHMssAemkrQ01qg==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/scope-manager': 5.48.0
+      '@typescript-eslint/types': 5.48.0
+      '@typescript-eslint/typescript-estree': 5.48.0_typescript@4.9.4
+      debug: 4.3.4
+      typescript: 4.9.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@typescript-eslint/scope-manager/5.48.0:
     resolution: {integrity: sha512-0AA4LviDtVtZqlyUQnZMVHydDATpD9SAX/RC5qh6cBd3xmyWvmXYF+WT1oOmxkeMnWDlUVTwdODeucUnjz3gow==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -4629,14 +4652,14 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
     transitivePeerDependencies:
       - debug
 
   /axios/0.25.0_debug@4.3.4:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
     dependencies:
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
     transitivePeerDependencies:
       - debug
     dev: true
@@ -6470,6 +6493,24 @@ packages:
       string.prototype.matchall: 4.0.8
     dev: true
 
+  /eslint-plugin-solid/0.8.0_nlhvlitwvxohdkmvb3doqj6nbq:
+    resolution: {integrity: sha512-yzTpqZ4+qGO14aM2rii9waonMNqSlpXHID2GMREYCOWpbIrkC5gILXpLl/+ZWFHSJDvsQN+/COobBkqizn7pkw==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    dependencies:
+      '@typescript-eslint/utils': 5.48.0_nlhvlitwvxohdkmvb3doqj6nbq
+      eslint: 8.17.0
+      is-html: 2.0.0
+      jsx-ast-utils: 3.3.3
+      kebab-case: 1.0.2
+      known-css-properties: 0.24.0
+      style-to-object: 0.3.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: true
+
   /eslint-plugin-solid/0.8.0_typescript@4.9.4:
     resolution: {integrity: sha512-yzTpqZ4+qGO14aM2rii9waonMNqSlpXHID2GMREYCOWpbIrkC5gILXpLl/+ZWFHSJDvsQN+/COobBkqizn7pkw==}
     engines: {node: '>=12.0.0'}
@@ -7112,7 +7153,7 @@ packages:
     resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
     dev: false
 
-  /follow-redirects/1.15.2_debug@4.3.4:
+  /follow-redirects/1.15.2:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -7120,8 +7161,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dependencies:
-      debug: 4.3.4
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}

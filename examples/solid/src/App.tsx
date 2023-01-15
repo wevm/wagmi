@@ -2,23 +2,25 @@ import {
   useAccount,
   useBalance,
   useConnect,
+  useDisconnect,
   useSignMessage,
 } from '@wagmi/solid'
 import type { Component } from 'solid-js'
 import { Match, Switch, createEffect, createSignal } from 'solid-js'
 
 const App: Component = () => {
-  const [chainId, setChainId] = createSignal(1)
+  const [_chainId, setChainId] = createSignal(1)
 
+  const { disconnect } = useDisconnect()
   const connect = useConnect()
   const acc = useAccount()
 
   // opting to set chainId manually, so it won't update
   // if you change your chain on Metamask. Remove this
   // to make it reactive with Metamask.
-  const balance = useBalance({ chainId, enabled: false })
+  const balance = useBalance()
 
-  createEffect(() => console.log(balance))
+  createEffect(() => console.log(connect))
 
   const signData = useSignMessage()
 
@@ -37,6 +39,7 @@ const App: Component = () => {
           >
             Sign data
           </button>
+          <button onClick={() => disconnect()}>Disconnect</button>
         </Match>
         <Match when={!acc().address}>
           <button onClick={() => connect.connect()}>connect to metamask</button>

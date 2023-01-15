@@ -13,7 +13,6 @@ describe('useBalance', () => {
     const { result } = renderHook(() =>
       useBalance({
         address,
-        chainId,
       }),
     )
 

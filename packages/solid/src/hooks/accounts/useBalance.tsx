@@ -9,7 +9,7 @@ import type { QueryConfig } from '../../types'
 import { useChainId } from '../utils'
 
 import { useAccount } from './useAccount'
-// import { useNetwork } from './useNetwork'
+import { useNetwork } from './useNetwork'
 
 export type UseBalanceArgs = Partial<{
   address: Accessor<Address>
@@ -36,7 +36,7 @@ export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
 type QueryKeyArgs = Partial<UseBalanceArgs>
 type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
 
-function queryKey(props: QueryKeyArgs & QueryKeyConfig) {
+const queryKey = (props: QueryKeyArgs & QueryKeyConfig) => {
   return [
     {
       entity: 'balance',
@@ -64,13 +64,17 @@ const queryFn: QueryFunction<
 
 export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig) => {
   const accountData = useAccount()
-  // const networkData = useNetwork()
+  const networkData = useNetwork()
 
   const address = createMemo(() => props?.address?.() ?? accountData().address)
-  const chainId = useChainId({ chainId: props?.chainId })
+  const chainId = createMemo(() =>
+    useChainId({
+      chainId: props?.chainId?.() ?? networkData()?.chain?.id,
+    }),
+  )
 
   const isEnabled = createMemo(
-    () => Boolean(address() && chainId) && props?.enabled,
+    () => Boolean(address() && chainId()) && props?.enabled,
   )
   // const chainId = createMemo(
   //   () => props?.chainId?.() ?? networkData()?.chain?.id,
@@ -81,7 +85,7 @@ export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig) => {
       scopeKey: props?.scopeKey,
       entity: 'balance',
       formatUnits: props?.formatUnits?.(),
-      chainId,
+      chainId: chainId(),
       address: address(),
       token: props?.token?.(),
     } as const
