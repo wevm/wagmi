@@ -9,7 +9,7 @@ export type UseContractConfig<TAbi extends Abi | readonly unknown[] = Abi> =
   Partial<Pick<GetContractArgs<TAbi>, 'abi'>> & {
     /** Signer or provider to attach to contract */
     signerOrProvider?: GetContractArgs['signerOrProvider'] | null
-    address: Accessor<Address>
+    address: Accessor<Address> | undefined
   }
 
 export function useContract<TAbi extends Abi | readonly unknown[]>(
