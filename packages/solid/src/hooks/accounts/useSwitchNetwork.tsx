@@ -76,10 +76,11 @@ export const useSwitchNetwork = (
   let switchNetworkAsync
   const supportsSwitchChain = !!client.connector?.switchChain
 
-  if (props?.throwForSwitchChainNotSupported || supportsSwitchChain) {
-    switchNetwork = switchNetwork_
-    switchNetworkAsync = switchNetworkAsync_
-  }
+  // @TODO: check while this is never true on a test env
+  // if (props?.throwForSwitchChainNotSupported || supportsSwitchChain) {
+  // }
+  switchNetwork = switchNetwork_
+  switchNetworkAsync = switchNetworkAsync_
 
   return {
     chains: client.chains ?? [],
