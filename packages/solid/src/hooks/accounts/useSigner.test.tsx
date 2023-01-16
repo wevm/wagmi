@@ -71,7 +71,6 @@ describe('useSigner', () => {
       await result.disconnect.disconnectAsync()
       await waitFor(() => expect(result.account().isConnected).toBeFalsy())
 
-      await result.signer.refetch()
       await waitFor(() => expect(result.signer.data).toBeNull())
 
       expect(result.signer).toMatchInlineSnapshot(`
@@ -155,7 +154,6 @@ describe('useSigner', () => {
       await result.disconnect.disconnectAsync()
       await waitFor(() => expect(result.account().isConnected).toBeFalsy())
 
-      await result.signer.refetch()
       await waitFor(() => expect(result.signer.data).toBeNull())
 
       expect(result.signer).toMatchInlineSnapshot(`
