@@ -12,7 +12,7 @@
     "lint": "eslint . --cache",
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
-    "playground:react": "pnpm dev && pnpm --filter example-dev-react dev",
+    "playground": "pnpm dev && pnpm --filter example-dev dev",
     "playground:solid": "pnpm dev && pnpm --filter example-dev-solid dev",
     "preinstall": "git submodule init && git submodule update && pnpm i --filter './references/packages/**' --ignore-scripts && npx only-allow pnpm",
     "postinstall": "pnpm dev",

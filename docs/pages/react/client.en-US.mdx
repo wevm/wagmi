@@ -127,12 +127,7 @@ You can create a "chain-aware" `provider` by using the `configureChains` API or 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
 ```ts {8}
-import {
-  createClient,
-  createStorage,
-  configureChains,
-  mainnet,
-} from 'wagmi'
+import { createClient, createStorage, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { provider } = configureChains([mainnet], [publicProvider()])
