@@ -8,7 +8,7 @@ import { setupClient } from './'
 
 export const queryClient = new QueryClient()
 
-type Props = { client?: Client } & {
+export type Props = { client?: Client } & {
   children?: JSX.Element
 }
 

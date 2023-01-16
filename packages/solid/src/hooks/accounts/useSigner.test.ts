@@ -68,14 +68,17 @@ describe('useSigner', () => {
     it('is not connected', async () => {
       const { result } = renderHook(() => useSignerWithAccount())
 
-      await result.disconnect.disconnectAsync()
-      await waitFor(() => expect(result.account().isConnected).toBeFalsy())
-
-      await waitFor(() => expect(result.signer.data).toBeNull())
+      await waitFor(() => expect(result.signer.fetchStatus).toBe('idle'))
 
       expect(result.signer).toMatchInlineSnapshot(`
         {
-          "data": null,
+          "data": WalletSigner {
+            "_isSigner": true,
+            "_mnemonic": [Function],
+            "_signingKey": [Function],
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "provider": "<Provider network={1} />",
+          },
           "dataUpdatedAt": 1643673600000,
           "error": null,
           "errorUpdateCount": 0,
@@ -85,7 +88,7 @@ describe('useSigner', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isInitialLoading": false,
           "isLoading": false,
@@ -152,7 +155,7 @@ describe('useSigner', () => {
       `)
 
       await result.disconnect.disconnectAsync()
-      await waitFor(() => expect(result.account().isConnected).toBeFalsy())
+      await waitFor(() => expect(result.account().isDisconnected).toBeTruthy())
 
       await waitFor(() => expect(result.signer.data).toBeNull())
 

@@ -1,0 +1,55 @@
+import { expect, it } from 'vitest'
+
+import * as Exports from './'
+
+it('should expose correct exports', () => {
+  expect(Object.keys(Exports)).toMatchInlineSnapshot(`
+    [
+      "createClient",
+      "Context",
+      "WagmiProvider",
+      "useClient",
+      "useAccount",
+      "useBalance",
+      "useConnect",
+      "useDisconnect",
+      "useNetwork",
+      "useSignMessage",
+      "useSigner",
+      "useSwitchNetwork",
+      "useProvider",
+      "useWebSocketProvider",
+      "useContract",
+      "publicProvider",
+      "AddChainError",
+      "ChainDoesNotSupportMulticallError",
+      "ChainMismatchError",
+      "ChainNotConfiguredError",
+      "Connector",
+      "ConnectorAlreadyConnectedError",
+      "ConnectorNotFoundError",
+      "ContractMethodDoesNotExistError",
+      "ContractMethodNoResultError",
+      "ContractMethodRevertedError",
+      "ContractResultDecodeError",
+      "ProviderChainsNotFound",
+      "ProviderRpcError",
+      "ResourceUnavailableError",
+      "RpcError",
+      "SwitchChainError",
+      "SwitchChainNotSupportedError",
+      "UserRejectedRequestError",
+      "configureChains",
+      "createStorage",
+      "deepEqual",
+      "deserialize",
+      "erc20ABI",
+      "erc721ABI",
+      "erc4626ABI",
+      "goerli",
+      "mainnet",
+      "readContracts",
+      "serialize",
+    ]
+  `)
+})
