@@ -19,7 +19,14 @@ export function infuraProvider({
   return function (chain) {
     if (!chain.rpcUrls.infura?.http[0]) return null
     return {
-      chain,
+      chain: {
+        ...chain,
+        rpcUrls: {
+          ...chain.rpcUrls,
+          public: chain.rpcUrls.default,
+          default: { http: [`${chain.rpcUrls.infura?.http[0]}/${apiKey}`] },
+        },
+      },
       provider: () => {
         const provider = new providers.InfuraProvider(
           {
