@@ -55,13 +55,13 @@
       "types": "./dist/connectors/metaMask.d.ts",
       "default": "./dist/connectors/metaMask.js"
     },
-    "./connectors/trustWallet": {
-      "types": "./dist/connectors/trustWallet.d.ts",
-      "default": "./dist/connectors/trustWallet.js"
-    },
     "./connectors/mock": {
       "types": "./dist/connectors/mock.d.ts",
       "default": "./dist/connectors/mock.js"
+    },
+    "./connectors/trustWallet": {
+      "types": "./dist/connectors/trustWallet.d.ts",
+      "default": "./dist/connectors/trustWallet.js"
     },
     "./connectors/walletConnect": {
       "types": "./dist/connectors/walletConnect.d.ts",

@@ -5,8 +5,8 @@ connectors/coinbaseWallet/**
 connectors/injected/**
 connectors/ledger/**
 connectors/metaMask/**
-connectors/trustWallet/**
 connectors/mock/**
+connectors/trustWallet/**
 connectors/walletConnect/**
 internal/**
 internal/test/**
