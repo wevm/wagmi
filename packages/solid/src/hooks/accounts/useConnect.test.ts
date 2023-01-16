@@ -1,3 +1,4 @@
+import { waitFor } from '@solidjs/testing-library'
 import { describe, expect, it } from 'vitest'
 
 import { getSigners, renderHook } from '../../../test'
@@ -32,14 +33,11 @@ describe('useConnect', () => {
           result: { account, connect },
         } = renderHook(() => useConnectWithAccount({ connector }))
 
-        console.log('isConnected before ', account().isConnected)
         await connect.connectAsync()
-        console.log('isConnected after ', account().isConnected)
 
         expect(account().isConnected).toBeTruthy()
 
-        console.log('connect ', connect)
-        // await waitFor(() => expect(connect.isSuccess).toBeTruthy())
+        await waitFor(() => expect(connect.isIdle).toBeTruthy())
       })
     })
   })
