@@ -71,7 +71,7 @@ export type WebSocketProvider = providers.WebSocketProvider & {
 
 export type Signer = BaseSigner
 
-export type Unit = (typeof units)[number]
+export type Unit = typeof units[number]
 
 type AddEthereumChainParameter = {
   /** A 0x-prefixed hexadecimal string */
