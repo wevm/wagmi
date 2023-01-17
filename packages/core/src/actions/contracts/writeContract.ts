@@ -125,7 +125,7 @@ export async function writeContract<
   const request =
     mode === 'recklesslyUnprepared'
       ? (
-          await prepareWriteContract<Abi | readonly unknown[], string>({
+          await prepareWriteContract<Abi | readonly unknown[], string, number>({
             address,
             args: args as unknown[],
             chainId,

@@ -3,6 +3,7 @@ import dedent from 'dedent'
 
 import type { Plugin } from '../config'
 import type { RequiredBy } from '../types'
+import { getAddressDocString } from '../utils'
 
 type ReactConfig = {
   /**
@@ -122,13 +123,28 @@ export function react(config: ReactConfig = {}): ReactResult {
             '{',
           ) + '...config}'
 
+        type Item = { name: string; value: string }
+        const genDocString = (hookName: string, item?: Item) => {
+          let description = `Wraps {@link ${hookName}} with \`abi\` set to {@link ${contract.meta.abiName}}`
+          if (item)
+            description += ` and \`${item.name}\` set to \`"${item.value}"\``
+          const address = contract.address
+          return dedent`
+          /**
+           * ${description}. ${getAddressDocString({ address })}
+           */
+          `
+        }
+
         if (hooks.useContract) {
           imports.add('useContract')
+          const docString = genDocString('useContract')
           let code
           if (isTypeScript) {
             imports.add('UseContractConfig')
             // prettier-ignore
             code = dedent`
+            ${docString}
             export function use${baseHookName}${TChainId ? `<${TChainId}>` : ''}(
               config: Omit<UseContractConfig, 'abi'>${typeParams} = {} as any,
             ) {
@@ -138,6 +154,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             `
           } else
             code = dedent`
+            ${docString}
             export function use${baseHookName}(config = {}) {
               ${innerContent}
               return useContract(${innerHookConfig})
@@ -165,10 +182,12 @@ export function react(config: ReactConfig = {}): ReactResult {
         if (hasReadFunction) {
           if (hooks.useContractRead) {
             imports.add('useContractRead')
+            const docString = genDocString('useContractRead')
             let code
             if (isTypeScript) {
               imports.add('UseContractReadConfig')
               code = dedent`
+              ${docString}
               export function use${baseHookName}Read<
                 TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                 TFunctionName extends string = string,
@@ -182,6 +201,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               `
             } else
               code = dedent`
+              ${docString}
               export function use${baseHookName}Read(config = {}) {
                 ${innerContent}
                 return useContractRead(${innerHookConfig})
@@ -189,6 +209,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               `
             content.push(code)
           }
+
           if (hooks.useContractFunctionRead) {
             const contractNames = new Set<string>()
             for (const item of contract.abi) {
@@ -209,17 +230,22 @@ export function react(config: ReactConfig = {}): ReactResult {
                     '{',
                   ) + '...config}'
                 imports.add('useContractRead')
+                const docString = genDocString('useContractRead', {
+                  name: 'functionName',
+                  value: item.name,
+                })
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractReadConfig')
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}<
                     TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                     TFunctionName extends string = '${item.name}',
                     ${TChainId}
                   >(
-                    config: Omit<UseContractReadConfig<TAbi, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                    config: Omit<UseContractReadConfig<TAbi, TFunctionName>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
                     return useContractRead(${config} as UseContractReadConfig<TAbi, TFunctionName>)
@@ -228,6 +254,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 } else {
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}Read(config = {}) {
                     ${innerContent}
                     return useContractRead(${config})
@@ -243,18 +270,25 @@ export function react(config: ReactConfig = {}): ReactResult {
         if (hasWriteFunction) {
           if (hooks.useContractWrite) {
             imports.add('useContractWrite')
+            const docString = genDocString('useContractWrite')
             let code
             if (isTypeScript) {
               imports.add('UseContractWriteConfig')
               imports.add('WriteContractMode')
+              // TODO: `Omit<UseContractWriteConfig, 'abi' | 'address'>` expands `args` so filter out this way for now
+              const typeParams_ =
+                typeParams && typeParams.includes('chainId')
+                  ? '{ address?: never; abi?: never; chainId?: TChainId }'
+                  : '{ address?: never; abi?: never }'
               code = dedent`
+              ${docString}
               export function use${baseHookName}Write<
                 TMode extends WriteContractMode = WriteContractMode,
                 TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                 TFunctionName extends string = string,
                 ${TChainId}
               >(
-                config: Omit<UseContractWriteConfig<TMode, TAbi, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: UseContractWriteConfig<TMode, TAbi, TFunctionName> & ${typeParams_} = {} as any,
               ) {
                 ${innerContent}
                 return useContractWrite(${innerHookConfig} as UseContractWriteConfig<TMode, TAbi, TFunctionName>)
@@ -262,6 +296,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               `
             } else
               code = dedent`
+              ${docString}
               export function use${baseHookName}Write(config = {}) {
                 ${innerContent}
                 return useContractWrite(${innerHookConfig})
@@ -269,6 +304,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               `
             content.push(code)
           }
+
           if (hooks.useContractFunctionWrite) {
             const contractNames = new Set<string>()
             for (const item of contract.abi) {
@@ -289,19 +325,24 @@ export function react(config: ReactConfig = {}): ReactResult {
                     '{',
                   ) + '...config}'
                 imports.add('useContractWrite')
+                const docString = genDocString('useContractWrite', {
+                  name: 'functionName',
+                  value: item.name,
+                })
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractWriteConfig')
                   imports.add('WriteContractMode')
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}<
                     TMode extends WriteContractMode = WriteContractMode,
                     TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                     TFunctionName extends string = '${item.name}',
                     ${TChainId}
                   >(
-                    config: Omit<UseContractWriteConfig<TMode, TAbi, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                    config: Omit<UseContractWriteConfig<TMode, TAbi, TFunctionName>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
                     return useContractWrite(${config} as UseContractWriteConfig<TMode, TAbi, TFunctionName>)
@@ -310,6 +351,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 } else {
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}(config = {}) {
                     ${innerContent}
                     return useContractWrite(${config})
@@ -323,11 +365,13 @@ export function react(config: ReactConfig = {}): ReactResult {
 
           if (hooks.usePrepareContractWrite) {
             imports.add('usePrepareContractWrite')
+            const docString = genDocString('usePrepareContractWrite')
             let code
             if (isTypeScript) {
               imports.add('UsePrepareContractWriteConfig')
               // prettier-ignore
               code = dedent`
+              ${docString}
               export function usePrepare${baseHookName}Write<
                 TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                 TFunctionName extends string = string,
@@ -341,6 +385,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               `
             } else
               code = dedent`
+              ${docString}
               export function usePrepare${baseHookName}Write(config = {}) {
                 ${innerContent}
                 return usePrepareContractWrite(${innerHookConfig})
@@ -369,18 +414,22 @@ export function react(config: ReactConfig = {}): ReactResult {
                     '{',
                   ) + '...config}'
                 imports.add('usePrepareContractWrite')
+                const docString = genDocString('usePrepareContractWrite', {
+                  name: 'functionName',
+                  value: item.name,
+                })
                 let code
                 if (isTypeScript) {
                   imports.add('UsePrepareContractWriteConfig')
-                  imports.add('WriteContractMode')
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function usePrepare${baseHookName}${pascalCase(item.name)}<
                     TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                     TFunctionName extends string = '${item.name}',
                     ${TChainId}
                   >(
-                    config: Omit<UsePrepareContractWriteConfig<TAbi, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                    config: Omit<UsePrepareContractWriteConfig<TAbi, TFunctionName>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
                     return usePrepareContractWrite(${config} as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
@@ -389,6 +438,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 } else {
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function usePrepare${baseHookName}${pascalCase(item.name)}(config = {}) {
                     ${innerContent}
                     return usePrepareContractWrite(${config})
@@ -404,11 +454,13 @@ export function react(config: ReactConfig = {}): ReactResult {
         if (hasEvent) {
           if (hooks.useContractEvent) {
             imports.add('useContractEvent')
+            const docString = genDocString('useContractEvent')
             let code
             if (isTypeScript) {
               imports.add('UseContractEventConfig')
               // prettier-ignore
               code = dedent`
+              ${docString}
               export function use${baseHookName}Event<
                 TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                 TEventName extends string = string,
@@ -422,6 +474,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               `
             } else
               code = dedent`
+              ${docString}
               export function use${baseHookName}Event(config = {}) {
                 ${innerContent}
                 return useContractEvent(${innerHookConfig})
@@ -445,17 +498,22 @@ export function react(config: ReactConfig = {}): ReactResult {
                     '{',
                   ) + '...config}'
                 imports.add('useContractEvent')
+                const docString = genDocString('useContractEvent', {
+                  name: 'eventName',
+                  value: item.name,
+                })
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractEventConfig')
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}Event<
                     TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                     TEventName extends string = '${item.name}',
                     ${TChainId}
                   >(
-                    config: Omit<UseContractEventConfig<TAbi, TEventName>, 'abi'${omitted}>${typeParams} = {} as any,
+                    config: Omit<UseContractEventConfig<TAbi, TEventName>, 'abi'${omitted} | 'eventName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
                     return useContractEvent(${config} as UseContractEventConfig<TAbi, TEventName>)
@@ -464,6 +522,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 } else {
                   // prettier-ignore
                   code = dedent`
+                  ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}Event(config = {}) {
                     ${innerContent}
                     return useContractEvent(${config})

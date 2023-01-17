@@ -81,9 +81,6 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
           } else if (contract.address)
             innerActionParams['address'] = contract.meta.addressName
         }
-        const { hasReadFunction, hasWriteFunction, hasEvent } = getAbiItemTypes(
-          contract.abi,
-        )
 
         if (actions.getContract) {
           const innerActionName = 'getContract'
@@ -109,6 +106,22 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
             })
           } else code = getActionCode({ type: 'js', options })
           content.push(code)
+        }
+
+        let hasReadFunction,
+          hasWriteFunction,
+          hasEvent = false
+        for (const component of contract.abi) {
+          if (component.type === 'function')
+            if (
+              component.stateMutability === 'view' ||
+              component.stateMutability === 'pure'
+            )
+              hasReadFunction = true
+            else hasWriteFunction = true
+          else if (component.type === 'event') hasEvent = true
+          // Exit early if all flags are `true`
+          if (hasReadFunction && hasWriteFunction && hasEvent) break
         }
 
         if (hasReadFunction) {
@@ -373,23 +386,4 @@ function getActionCode({ type, options }: GetActionCode) {
       return ${innerActionName}(${innerActionConfig} as unknown as ${typeName}<TAbi, ${genericName}>${callbackArg})
     }
   `
-}
-
-function getAbiItemTypes(abi: Contract['abi']) {
-  let hasReadFunction,
-    hasWriteFunction,
-    hasEvent = false
-  for (const component of abi) {
-    if (component.type === 'function')
-      if (
-        component.stateMutability === 'view' ||
-        component.stateMutability === 'pure'
-      )
-        hasReadFunction = true
-      else hasWriteFunction = true
-    else if (component.type === 'event') hasEvent = true
-    // Exit early if all flags are `true`
-    if (hasReadFunction && hasWriteFunction && hasEvent) break
-  }
-  return { hasReadFunction, hasWriteFunction, hasEvent } as const
 }
