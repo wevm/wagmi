@@ -56,7 +56,7 @@ const config = {
       {
         source: '/gitcoin',
         destination:
-          'https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum',
+          'https://grant-explorer.gitcoin.co/#/round/1/0xe575282b376e3c9886779a841a2510f1dd8c2ce4/0x50f3dbb23d121a397941e827ce2f10a0aea7f5cf311de6e3abcfe3847c56c405-0xe575282b376e3c9886779a841a2510f1dd8c2ce4',
         permanent: false,
       },
     ]
