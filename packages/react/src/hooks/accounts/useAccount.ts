@@ -24,29 +24,32 @@ export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const previousAccountRef = React.useRef<typeof account>()
   const previousAccount = previousAccountRef.current ?? ({} as typeof account)
 
-  if (
-    !!onConnect &&
-    (previousAccount.status !== 'connected' ||
-      previousAccount.status === undefined) &&
-    account.status === 'connected'
-  )
-    onConnect({
-      address: account.address,
-      connector: account.connector,
-      isReconnected:
-        previousAccount.status === 'reconnecting' ||
-        // when `previousAccount.status` is `undefined`, it means connector connected immediately
-        previousAccount.status === undefined,
-    })
+  React.useEffect(() => {
+    if (
+      !!onConnect &&
+      previousAccount.status !== 'connected' &&
+      account.status === 'connected'
+    ) {
+      onConnect({
+        address: account.address,
+        connector: account.connector,
+        isReconnected:
+          previousAccount.status === 'reconnecting' ||
+          // when `previousAccount.status` is `undefined`, it means connector connected immediately
+          previousAccount.status === undefined,
+      })
+    }
 
-  if (
-    !!onDisconnect &&
-    previousAccount.status === 'connected' &&
-    account.status === 'disconnected'
-  )
-    onDisconnect()
+    if (
+      !!onDisconnect &&
+      previousAccount.status === 'connected' &&
+      account.status === 'disconnected'
+    ) {
+      onDisconnect()
+    }
 
-  previousAccountRef.current = account
+    previousAccountRef.current = account
+  }, [account, onConnect, onDisconnect, previousAccount.status])
 
   return account
 }
