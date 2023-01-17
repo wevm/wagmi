@@ -52,10 +52,14 @@
   ],
   "peerDependencies": {
     "@wagmi/core": ">=0.8.10",
+    "typescript": ">=4.9.4",
     "wagmi": ">=0.10.4"
   },
   "peerDependenciesMeta": {
     "@wagmi/core": {
+      "optional": true
+    },
+    "typescript": {
       "optional": true
     },
     "wagmi": {
