@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["solid"],
+  "extends": [
+    "../../.eslintrc",
+    "plugin:solid/typescript"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "off"
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  }
+}
