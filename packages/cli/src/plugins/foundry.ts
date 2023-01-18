@@ -4,7 +4,7 @@ import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 
-import type { Plugin } from '../config'
+import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
 import type { RequiredBy } from '../types'
 
@@ -36,6 +36,10 @@ type FoundryConfig = {
    * @default 'out/'
    */
   artifacts?: string
+  /**
+   * Mapping of addresses to attach to artifacts.
+   */
+  deployments?: Record<string, ContractConfig['address']>
   /** Artifact files to exclude. */
   exclude?: string[]
   /** [Forge](https://book.getfoundry.sh/forge) configuration */
@@ -80,6 +84,7 @@ type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
  */
 export function foundry({
   artifacts = 'out',
+  deployments = {},
   exclude = defaultExcludes,
   forge: {
     clean = false,
@@ -91,16 +96,17 @@ export function foundry({
   namePrefix = '',
   project,
 }: FoundryConfig): FoundryResult {
-  function getContractName(artifactPath: string) {
+  function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)
-    return `${namePrefix}${filename.replace(extension, '')}`
+    return `${usePrefix ? namePrefix : ''}${filename.replace(extension, '')}`
   }
 
   async function getContract(artifactPath: string) {
     const artifact = await fse.readJSON(artifactPath)
     return {
       abi: artifact.abi,
+      address: deployments[getContractName(artifactPath, false)],
       name: getContractName(artifactPath),
     }
   }

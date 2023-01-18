@@ -4,7 +4,7 @@ import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 
-import type { Plugin } from '../config'
+import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
 import type { RequiredBy } from '../types'
 
@@ -25,6 +25,10 @@ type HardhatConfig = {
    * @default 'artifacts/'
    */
   artifacts?: string
+  /**
+   * Mapping of addresses to attach to artifacts.
+   */
+  deployments?: Record<string, ContractConfig['address']>
   /** Artifact files to exclude. */
   exclude?: string[]
   /** Commands to run */
@@ -71,6 +75,7 @@ type HardhatResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
  */
 export function hardhat({
   artifacts = 'artifacts',
+  deployments = {},
   exclude = defaultExcludes,
   commands = {},
   include = ['*.json'],
@@ -86,6 +91,7 @@ export function hardhat({
     const artifact = await fse.readJSON(artifactPath)
     return {
       abi: artifact.abi,
+      address: deployments[artifact.contractName],
       name: getContractName(artifact),
     }
   }

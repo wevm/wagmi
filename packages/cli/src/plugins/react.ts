@@ -91,10 +91,6 @@ export function react(config: ReactConfig = {}): ReactResult {
       const content: string[] = []
       for (const contract of contracts) {
         const baseHookName = pascalCase(contract.name)
-        const hasMultichainAddress = typeof contract.address === 'object'
-        const TChainId = hasMultichainAddress
-          ? `TChainId extends number = keyof typeof ${contract.meta.addressName}`
-          : ''
 
         let typeParams = ''
         let innerContent = ''
@@ -103,9 +99,9 @@ export function react(config: ReactConfig = {}): ReactResult {
           abi: contract.meta.abiName,
         }
         if (contract.meta.addressName) {
+          omitted = `| 'address'`
           if (typeof contract.address === 'object') {
-            omitted = `| 'address'`
-            typeParams = `& { chainId?: TChainId }`
+            typeParams = `& { chainId?: keyof typeof ${contract.meta.addressName}  }`
             if (Object.keys(contract.address).length > 1) {
               innerHookParams[
                 'address'
@@ -161,7 +157,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             // prettier-ignore
             code = dedent`
             ${docString}
-            export function use${baseHookName}${TChainId ? `<${TChainId}>` : ''}(
+            export function use${baseHookName}(
               config: Omit<UseContractConfig, 'abi'${omitted}>${typeParams} = {} as any,
             ) {
               ${innerContent}
@@ -206,7 +202,6 @@ export function react(config: ReactConfig = {}): ReactResult {
               ${docString}
               export function use${baseHookName}Read<
                 TFunctionName extends string,
-                ${TChainId}
               >(
                 config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
@@ -255,7 +250,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function use${baseHookName}${pascalCase(item.name)}${TChainId ? `<${TChainId}>` : ''}(
+                  export function use${baseHookName}${pascalCase(item.name)}(
                     config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
@@ -284,13 +279,16 @@ export function react(config: ReactConfig = {}): ReactResult {
             const docString = genDocString('useContractWrite')
             let code
             if (isTypeScript) {
+              const hasMultichainAddress = typeof contract.address === 'object'
+              const TChainId = hasMultichainAddress
+                ? `TChainId extends number = keyof typeof ${contract.meta.addressName}`
+                : ''
+              let typeParams_ = ''
+              if (TChainId) typeParams_ = 'address?: never; chainId?: TChainId;'
+
               imports.add('UseContractWriteConfig')
               if (!hasWriteContractMode) actionsImports.add('WriteContractMode')
               actionsImports.add('PrepareWriteContractResult')
-              const typeParams_ =
-                typeParams && typeParams.includes('chainId')
-                  ? 'address?: never; chainId?: TChainId;'
-                  : ''
               // prettier-ignore
               code = dedent`
               ${docString}
@@ -351,14 +349,19 @@ export function react(config: ReactConfig = {}): ReactResult {
                 })
                 let code
                 if (isTypeScript) {
+                  const hasMultichainAddress =
+                    typeof contract.address === 'object'
+                  const TChainId = hasMultichainAddress
+                    ? `TChainId extends number = keyof typeof ${contract.meta.addressName}`
+                    : ''
+                  let typeParams_ = `functionName?: '${item.name}'`
+                  if (TChainId)
+                    typeParams_ = `address?: never; chainId?: TChainId; functionName?: '${item.name}'`
+
                   imports.add('UseContractWriteConfig')
                   if (!hasWriteContractMode)
                     actionsImports.add('WriteContractMode')
                   actionsImports.add('PrepareWriteContractResult')
-                  const typeParams_ =
-                    typeParams && typeParams.includes('chainId')
-                      ? `address?: never; chainId?: TChainId; functionName?: '${item.name}'`
-                      : `functionName?: '${item.name}'`
                   // prettier-ignore
                   code = dedent`
                   ${docString}
@@ -407,7 +410,6 @@ export function react(config: ReactConfig = {}): ReactResult {
               ${docString}
               export function usePrepare${baseHookName}Write<
                 TFunctionName extends string,
-                ${TChainId}
               >(
                 config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
@@ -456,7 +458,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function usePrepare${baseHookName}${pascalCase(item.name)}${TChainId ? `<${TChainId}>` : ''}(
+                  export function usePrepare${baseHookName}${pascalCase(item.name)}(
                     config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
@@ -491,7 +493,6 @@ export function react(config: ReactConfig = {}): ReactResult {
               ${docString}
               export function use${baseHookName}Event<
                 TEventName extends string,
-                ${TChainId}
               >(
                 config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, TEventName>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
@@ -536,7 +537,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function use${baseHookName}${pascalCase(item.name)}Event${TChainId ? `<${TChainId}>` : ''}(
+                  export function use${baseHookName}${pascalCase(item.name)}Event(
                     config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'eventName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}

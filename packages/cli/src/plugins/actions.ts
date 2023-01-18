@@ -72,8 +72,8 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
           abi: contract.meta.abiName,
         }
         if (contract.meta.addressName) {
+          omitted = `| 'address'`
           if (typeof contract.address === 'object') {
-            omitted = `| 'address'`
             typeParams = `& { chainId?: keyof typeof ${contract.meta.addressName} }`
             if (Object.keys(contract.address).length > 1) {
               innerActionParams[
