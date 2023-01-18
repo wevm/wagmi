@@ -79,9 +79,14 @@ export function react(config: ReactConfig = {}): ReactResult {
   }
   return {
     name: 'React',
-    async run({ contracts, isTypeScript }) {
+    async run({ contracts, isTypeScript, outputs }) {
       const imports = new Set<string>([])
       const actionsImports = new Set<string>([])
+      const hasWriteContractMode = outputs.some(
+        (x) =>
+          x.plugin.name === 'Actions' &&
+          x.imports?.includes('WriteContractMode'),
+      )
 
       const content: string[] = []
       for (const contract of contracts) {
@@ -126,13 +131,23 @@ export function react(config: ReactConfig = {}): ReactResult {
 
         type Item = { name: string; value: string }
         const genDocString = (hookName: string, item?: Item) => {
-          let description = `Wraps {@link ${hookName}} with \`abi\` set to {@link ${contract.meta.abiName}}`
+          let description = `Wraps __{@link ${hookName}}__ with \`abi\` set to __{@link ${contract.meta.abiName}}__`
           if (item)
             description += ` and \`${item.name}\` set to \`"${item.value}"\``
-          const address = contract.address
+          if (contract.address) {
+            const docString = getAddressDocString({ address: contract.address })
+            if (docString)
+              return dedent`
+              /**
+              * ${description}.
+              * 
+              ${docString}
+              */
+              `
+          }
           return dedent`
           /**
-           * ${description}. ${getAddressDocString({ address })}
+           * ${description}.
            */
           `
         }
@@ -270,7 +285,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             let code
             if (isTypeScript) {
               imports.add('UseContractWriteConfig')
-              actionsImports.add('WriteContractMode')
+              if (!hasWriteContractMode) actionsImports.add('WriteContractMode')
               actionsImports.add('PrepareWriteContractResult')
               const typeParams_ =
                 typeParams && typeParams.includes('chainId')
@@ -337,7 +352,8 @@ export function react(config: ReactConfig = {}): ReactResult {
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractWriteConfig')
-                  actionsImports.add('WriteContractMode')
+                  if (!hasWriteContractMode)
+                    actionsImports.add('WriteContractMode')
                   actionsImports.add('PrepareWriteContractResult')
                   const typeParams_ =
                     typeParams && typeParams.includes('chainId')

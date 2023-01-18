@@ -55,8 +55,12 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
   }
   return {
     name: 'Core',
-    async run({ contracts, isTypeScript }) {
+    async run({ contracts, isTypeScript, outputs }) {
       const imports = new Set<string>([])
+      const hasWriteContractMode = outputs.some(
+        (x) =>
+          x.plugin.name === 'React' && x.imports?.includes('WriteContractMode'),
+      )
 
       const content: string[] = []
       for (const contract of contracts) {
@@ -91,13 +95,23 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
 
         type Item = { name: string; value: string }
         const genDocString = (actionName: string, item?: Item) => {
-          let description = `Wraps {@link ${actionName}} with \`abi\` set to {@link ${contract.meta.abiName}}`
+          let description = `Wraps __{@link ${actionName}}__ with \`abi\` set to __{@link ${contract.meta.abiName}}__`
           if (item)
             description += ` and \`${item.name}\` set to \`"${item.value}"\``
-          const address = contract.address
+          if (contract.address) {
+            const docString = getAddressDocString({ address: contract.address })
+            if (docString)
+              return dedent`
+              /**
+              * ${description}.
+              * 
+              ${docString}
+              */
+              `
+          }
           return dedent`
           /**
-           * ${description}. ${getAddressDocString({ address })}
+           * ${description}.
            */
           `
         }
@@ -184,7 +198,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
                 : ''
               let typeParams_ = ''
               if (TChainId) {
-                imports.add('WriteContractMode')
+                if (!hasWriteContractMode) imports.add('WriteContractMode')
                 typeParams_ = `& { mode: TMode; chainId?: TMode extends 'prepared' ? TChainId : keyof typeof ${contract.meta.addressName} }`
               }
 

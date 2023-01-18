@@ -65,7 +65,19 @@ export type Plugin = {
   /** Plugin name */
   name: string
   /** Run plugin logic */
-  run?(config: { contracts: Contract[]; isTypeScript: boolean }): MaybePromise<{
+  run?(config: {
+    /** All resolved contracts from config and plugins */
+    contracts: Contract[]
+    /** Whether TypeScript is detected in project */
+    isTypeScript: boolean
+    /** Previous plugin outputs */
+    outputs: readonly {
+      plugin: Pick<Plugin, 'name'>
+      imports?: string
+      prepend?: string
+      content: string
+    }[]
+  }): MaybePromise<{
     imports?: string
     prepend?: string
     content: string

@@ -16,24 +16,38 @@ export function getAddressDocString({
   address: Contract['address']
 }) {
   if (!address || typeof address === 'string') return ''
-  if (Object.keys(address).length === 1) {
-    const chain = chainMap[parseInt(Object.keys(address)[0]!)]!
-    const blockExplorer = chain.blockExplorers?.default
-    if (!blockExplorer) return ''
-    const address_ = Object.values(address)[0]
-    return `[View Contract on ${blockExplorer.name} →](${blockExplorer.url}/address/${address_})`
-  }
+
+  if (Object.keys(address).length === 1)
+    return `* ${getLink({
+      address: address[parseInt(Object.keys(address)[0]!)]!,
+      chainId: parseInt(Object.keys(address)[0]!),
+    })}`
+
+  const addresses = Object.entries(address).filter(
+    (x) => chainMap[parseInt(x[0])],
+  )
+  if (addresses.length === 0) return ''
+  if (addresses.length === 1 && addresses[0])
+    return `* ${getLink({
+      address: addresses[0][1],
+      chainId: parseInt(addresses[0][0])!,
+    })}`
 
   return dedent`
-    ${Object.entries(address).reduce((prev, curr) => {
-      const chain = chainMap[parseInt(curr[0])]
-      if (!chain) return prev
+    ${addresses.reduce((prev, curr) => {
+      const chainId = parseInt(curr[0])
       const address = curr[1]
-      const blockExplorer = chain.blockExplorers?.default
-      if (!blockExplorer) return prev
-      return `${prev}\n* - [${capitalCase(chain.name)}](${
-        blockExplorer.url
-      }/address/${address})`
-    }, 'View Contract on Block Explorer:')}
+      return `${prev}\n* - ${getLink({ address, chainId })}`
+    }, '')}
   `
+}
+
+function getLink({ address, chainId }: { address: string; chainId: number }) {
+  const chain = chainMap[chainId]
+  if (!chain) return ''
+  const blockExplorer = chain.blockExplorers?.default
+  if (!blockExplorer) return ''
+  return `[__View Contract on ${capitalCase(chain.name)} ${capitalCase(
+    blockExplorer.name,
+  )}__](${blockExplorer.url}/address/${address})`
 }

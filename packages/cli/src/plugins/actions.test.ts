@@ -23,6 +23,7 @@ describe('actions', () => {
             },
           ],
           isTypeScript: true,
+          outputs: [],
         })
         await expect(
           format(`${imports}\n\n${content}`),
@@ -45,6 +46,7 @@ describe('actions', () => {
             },
           ],
           isTypeScript: false,
+          outputs: [],
         })
         await expect(
           format(`${imports}\n\n${content}`),

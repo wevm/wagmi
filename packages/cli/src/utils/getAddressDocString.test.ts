@@ -22,10 +22,9 @@ describe('getAddressDocString', () => {
           },
         }),
       ).toMatchInlineSnapshot(`
-        "View Contract on Block Explorer:
-        * - [Ethereum](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)
-        * - [Goerli](https://goerli.etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)
-        * - [Optimism](https://optimistic.etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)"
+        "* - [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)
+        * - [__View Contract on Goerli Etherscan__](https://goerli.etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)
+        * - [__View Contract on Optimism Etherscan__](https://optimistic.etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)"
       `)
     })
 
@@ -37,10 +36,9 @@ describe('getAddressDocString', () => {
             2: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
           },
         }),
-      ).toMatchInlineSnapshot(`
-        "View Contract on Block Explorer:
-        * - [Ethereum](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)"
-      `)
+      ).toMatchInlineSnapshot(
+        '"* [__View Contract on Ethereum Etherscan__](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e)"',
+      )
     })
   })
 })

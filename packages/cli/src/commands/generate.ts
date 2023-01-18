@@ -10,7 +10,7 @@ import pc from 'picocolors'
 import { z } from 'zod'
 
 import { version as packageVersion } from '../../package.json'
-import type { Contract, ContractConfig, Watch } from '../config'
+import type { Contract, ContractConfig, Plugin, Watch } from '../config'
 import { fromZodError } from '../errors'
 import * as logger from '../logger'
 import {
@@ -72,7 +72,10 @@ export async function generate(options: Generate = {}) {
     // Collect contracts and watch configs from plugins
     const contractConfigs = config.contracts ?? []
     const watchConfigs: Watch[] = []
-    const plugins = config.plugins ?? []
+    const plugins = (config.plugins ?? []).map((x, i) => ({
+      ...x,
+      id: `${x.name}-${i}`,
+    }))
     for (const plugin of plugins) {
       await plugin.validate?.()
       if (plugin.watch) watchConfigs.push(plugin.watch)
@@ -98,9 +101,21 @@ export async function generate(options: Generate = {}) {
     const imports = []
     const prepend = []
     const content = []
+    type Output = {
+      plugin: Pick<Plugin, 'name'>
+    } & Awaited<ReturnType<Required<Plugin>['run']>>
+    const outputs: Output[] = []
     for (const plugin of plugins) {
       if (!plugin.run) continue
-      const result = await plugin.run({ contracts, isTypeScript })
+      const result = await plugin.run({
+        contracts,
+        isTypeScript,
+        outputs,
+      })
+      outputs.push({
+        plugin: { name: plugin.name },
+        ...result,
+      })
       if (!result.imports && !result.prepend && !result.content) continue
       content.push(getBannerContent({ name: plugin.name }), result.content)
       result.imports && imports.push(result.imports)
@@ -164,9 +179,18 @@ export async function generate(options: Generate = {}) {
               const imports = []
               const prepend = []
               const content = []
+              const outputs: Output[] = []
               for (const plugin of plugins) {
                 if (!plugin.run) continue
-                const result = await plugin.run({ contracts, isTypeScript })
+                const result = await plugin.run({
+                  contracts,
+                  isTypeScript,
+                  outputs,
+                })
+                outputs.push({
+                  plugin: { name: plugin.name },
+                  ...result,
+                })
                 if (!result.imports && !result.prepend && !result.content)
                   continue
                 content.push(
@@ -241,10 +265,10 @@ async function getContract({
   const docString =
     typeof address === 'object'
       ? dedent`\n
-      /**
-       * ${getAddressDocString({ address })}
-       */
-    `
+        /**
+         ${getAddressDocString({ address })}
+        */
+      `
       : ''
   let content = dedent`
     ${getBannerContent({ name })}
@@ -345,8 +369,8 @@ async function writeContracts({
 
 function getBannerContent({ name }: { name: string }) {
   return dedent`
-  ////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // ${name}
-  ////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   `
 }
