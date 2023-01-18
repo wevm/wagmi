@@ -10,7 +10,7 @@ import { fetchSigner } from '../accounts'
 export type SendTransactionPreparedRequest = {
   /**
    * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
-   * [UX pitfalls](/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks), it is highly recommended
+   * [UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended
    * to not use this and instead prepare the request upfront using the `prepareSendTransaction` function.
    *
    * `prepared`: The request has been prepared with parameters required for sending a transaction
@@ -43,7 +43,7 @@ export type SendTransactionResult = {
  * @description Function to send a transaction.
  *
  * It is recommended to pair this with the `prepareSendTransaction` function to avoid
- * [UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+ * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
@@ -62,7 +62,7 @@ export async function sendTransaction({
   /********************************************************************/
   /** START: iOS App Link cautious code.                              */
   /** Do not perform any async operations in this block.              */
-  /** Ref: wagmi.sh/react/prepare-hooks/intro#ios-app-link-constraints */
+  /** Ref: wagmi.sh/react/prepare-hooks#ios-app-link-constraints */
   /********************************************************************/
 
   // `fetchSigner` isn't really "asynchronous" as we have already

@@ -6,10 +6,12 @@ import type {
 } from '@wagmi/core'
 import { writeContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
+
 import * as React from 'react'
 
 import type { MutationConfig, PartialBy } from '../../types'
 import { useMutation } from '../utils'
+import { config } from 'process'
 
 export type UseContractWriteArgs<
   TMode extends WriteContractMode = WriteContractMode,
@@ -37,11 +39,28 @@ export type UseContractWriteConfig<
 > &
   UseContractWriteArgs<TMode, TAbi, TFunctionName>
 
-function mutationKey(config: UseContractWriteArgs) {
+function mutationKey({
+  address,
+  chainId,
+  abi,
+  functionName,
+  ...config
+}: UseContractWriteArgs) {
+  const { request } = config as WriteContractPreparedArgs<Abi, string>
+  const { args, overrides } = config as unknown as WriteContractUnpreparedArgs<
+    Abi,
+    string
+  >
   return [
     {
       entity: 'writeContract',
-      ...config,
+      address,
+      args,
+      chainId,
+      abi,
+      functionName,
+      overrides,
+      request,
     },
   ] as const
 }
@@ -83,7 +102,7 @@ function mutationFn(
  * method.
  *
  * It is highly recommended to pair this with the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite)
- * to [avoid UX pitfalls](https://wagmi.sh/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+ * to [avoid UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
  *
  * @example
  * import { useContractWrite, usePrepareContractWrite } from 'wagmi'

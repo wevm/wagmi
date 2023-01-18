@@ -67,6 +67,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
       - uses: pnpm/action-setup@v2.2.4
         with:
           version: ${{ matrix.pnpm-version }}
@@ -86,10 +88,23 @@ jobs:
             packages/**/dist
             references/packages/**/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
-      - name: Lint code
-        run: pnpm lint
       - name: Check types
         run: pnpm typecheck
+      - name: Lint & format code
+        run: pnpm lint:fix && pnpm lint:format packages
+      - name: Commit
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+          git add .
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "no formatting changed"
+            exit 0
+          fi
+          git commit -m "chore: format"
+          git push
+          echo "pushed formatting changes https://github.com/$GITHUB_REPOSITORY/commit/$(git rev-parse HEAD)"
 
   build:
     name: Build

@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 // eslint-disable-next-line import/no-unresolved
-import { withLocales } from 'nextra/locales'
+import { locales } from 'nextra/locales'
 
 const redirects: Record<string, string> = {
   '/docs/connectors/coinbase-wallet': '/docs/connectors/coinbaseWallet',
@@ -14,7 +14,7 @@ const redirects: Record<string, string> = {
   '/react/prepare-hooks/intro': '/react/prepare-hooks',
 }
 
-export const middleware = withLocales((request: NextRequest) => {
+export function middleware(request: NextRequest) {
   // Handle redirect in `_middleware.ts` because of bug using `next.config.js`
   // https://github.com/shuding/nextra/issues/384
   if (request.nextUrl.pathname in redirects) {
@@ -26,6 +26,6 @@ export const middleware = withLocales((request: NextRequest) => {
 
   const skipMiddlewareRegex = /^\/assets|favicon\/.+/
   if (!skipMiddlewareRegex.test(request.nextUrl.pathname))
-    return NextResponse.next({ request })
-  return NextResponse.next({ request })
-})
+    return locales(request)
+  // return NextResponse.next({ request })
+}
