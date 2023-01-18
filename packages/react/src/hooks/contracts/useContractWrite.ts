@@ -11,7 +11,6 @@ import * as React from 'react'
 
 import type { MutationConfig, PartialBy } from '../../types'
 import { useMutation } from '../utils'
-import { config } from 'process'
 
 export type UseContractWriteArgs<
   TMode extends WriteContractMode = WriteContractMode,
