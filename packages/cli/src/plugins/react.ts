@@ -81,6 +81,7 @@ export function react(config: ReactConfig = {}): ReactResult {
     name: 'React',
     async run({ contracts, isTypeScript }) {
       const imports = new Set<string>([])
+      const actionsImports = new Set<string>([])
 
       const content: string[] = []
       for (const contract of contracts) {
@@ -146,7 +147,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             code = dedent`
             ${docString}
             export function use${baseHookName}${TChainId ? `<${TChainId}>` : ''}(
-              config: Omit<UseContractConfig, 'abi'>${typeParams} = {} as any,
+              config: Omit<UseContractConfig, 'abi'${omitted}>${typeParams} = {} as any,
             ) {
               ${innerContent}
               return useContract(${innerHookConfig})
@@ -189,14 +190,13 @@ export function react(config: ReactConfig = {}): ReactResult {
               code = dedent`
               ${docString}
               export function use${baseHookName}Read<
-                TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                TFunctionName extends string = string,
+                TFunctionName extends string,
                 ${TChainId}
               >(
-                config: Omit<UseContractReadConfig<TAbi, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
                 ${innerContent}
-                return useContractRead(${innerHookConfig} as UseContractReadConfig<TAbi, TFunctionName>)
+                return useContractRead(${innerHookConfig} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName>)
               }
               `
             } else
@@ -240,15 +240,11 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function use${baseHookName}${pascalCase(item.name)}<
-                    TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                    TFunctionName extends string = '${item.name}',
-                    ${TChainId}
-                  >(
-                    config: Omit<UseContractReadConfig<TAbi, TFunctionName>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                  export function use${baseHookName}${pascalCase(item.name)}${TChainId ? `<${TChainId}>` : ''}(
+                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractRead(${config} as UseContractReadConfig<TAbi, TFunctionName>)
+                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>)
                   }
                   `
                 } else {
@@ -274,24 +270,33 @@ export function react(config: ReactConfig = {}): ReactResult {
             let code
             if (isTypeScript) {
               imports.add('UseContractWriteConfig')
-              imports.add('WriteContractMode')
-              // TODO: `Omit<UseContractWriteConfig, 'abi' | 'address'>` expands `args` so filter out this way for now
+              actionsImports.add('WriteContractMode')
+              actionsImports.add('PrepareWriteContractResult')
               const typeParams_ =
                 typeParams && typeParams.includes('chainId')
-                  ? '{ address?: never; abi?: never; chainId?: TChainId }'
-                  : '{ address?: never; abi?: never }'
+                  ? 'address?: never; chainId?: TChainId;'
+                  : ''
+              // prettier-ignore
               code = dedent`
               ${docString}
               export function use${baseHookName}Write<
-                TMode extends WriteContractMode = WriteContractMode,
-                TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                TFunctionName extends string = string,
+                TMode extends WriteContractMode,
+                TFunctionName extends string,
                 ${TChainId}
               >(
-                config: UseContractWriteConfig<TMode, TAbi, TFunctionName> & ${typeParams_} = {} as any,
+                config: TMode extends 'prepared'
+                  ? UseContractWriteConfig<
+                      TMode,
+                      PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['abi'],
+                      TFunctionName
+                    >${typeParams_ ? ` & {${typeParams_}}` : ''}
+                  : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, TFunctionName> & {
+                      abi?: never
+                      ${typeParams_}
+                    } = {} as any,
               ) {
                 ${innerContent}
-                return useContractWrite(${innerHookConfig} as UseContractWriteConfig<TMode, TAbi, TFunctionName>)
+                return useContractWrite<TMode, typeof ${contract.meta.abiName}, TFunctionName>(${innerHookConfig} as any)
               }
               `
             } else
@@ -332,20 +337,32 @@ export function react(config: ReactConfig = {}): ReactResult {
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractWriteConfig')
-                  imports.add('WriteContractMode')
+                  actionsImports.add('WriteContractMode')
+                  actionsImports.add('PrepareWriteContractResult')
+                  const typeParams_ =
+                    typeParams && typeParams.includes('chainId')
+                      ? `address?: never; chainId?: TChainId; functionName?: '${item.name}'`
+                      : `functionName?: '${item.name}'`
                   // prettier-ignore
                   code = dedent`
                   ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}<
-                    TMode extends WriteContractMode = WriteContractMode,
-                    TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                    TFunctionName extends string = '${item.name}',
+                    TMode extends WriteContractMode,
                     ${TChainId}
                   >(
-                    config: Omit<UseContractWriteConfig<TMode, TAbi, TFunctionName>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                    config: TMode extends 'prepared'
+                    ? UseContractWriteConfig<
+                        TMode,
+                        PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['abi'],
+                        '${item.name}'
+                      > & {${typeParams_}}
+                    : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, '${item.name}'> & {
+                        abi?: never
+                        ${typeParams_}
+                      } = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractWrite(${config} as UseContractWriteConfig<TMode, TAbi, TFunctionName>)
+                    return useContractWrite<TMode, typeof ${contract.meta.abiName}, '${item.name}'>(${config} as any)
                   }
                   `
                 } else {
@@ -373,14 +390,13 @@ export function react(config: ReactConfig = {}): ReactResult {
               code = dedent`
               ${docString}
               export function usePrepare${baseHookName}Write<
-                TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                TFunctionName extends string = string,
+                TFunctionName extends string,
                 ${TChainId}
               >(
-                config: Omit<UsePrepareContractWriteConfig<TAbi, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
                 ${innerContent}
-                return usePrepareContractWrite(${innerHookConfig} as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
+                return usePrepareContractWrite(${innerHookConfig} as UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName>)
               }
               `
             } else
@@ -394,7 +410,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             content.push(code)
           }
 
-          if (hooks.useContractFunctionWrite) {
+          if (hooks.usePrepareContractFunctionWrite) {
             const contractNames = new Set<string>()
             for (const item of contract.abi) {
               if (
@@ -424,15 +440,11 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function usePrepare${baseHookName}${pascalCase(item.name)}<
-                    TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                    TFunctionName extends string = '${item.name}',
-                    ${TChainId}
-                  >(
-                    config: Omit<UsePrepareContractWriteConfig<TAbi, TFunctionName>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                  export function usePrepare${baseHookName}${pascalCase(item.name)}${TChainId ? `<${TChainId}>` : ''}(
+                    config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
-                    return usePrepareContractWrite(${config} as UsePrepareContractWriteConfig<TAbi, TFunctionName>)
+                    return usePrepareContractWrite(${config} as UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}'>)
                   }
                   `
                 } else {
@@ -462,14 +474,13 @@ export function react(config: ReactConfig = {}): ReactResult {
               code = dedent`
               ${docString}
               export function use${baseHookName}Event<
-                TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                TEventName extends string = string,
+                TEventName extends string,
                 ${TChainId}
               >(
-                config: Omit<UseContractEventConfig<TAbi, TEventName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, TEventName>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
                 ${innerContent}
-                return useContractEvent(${innerHookConfig} as UseContractEventConfig<TAbi, TEventName>)
+                return useContractEvent(${innerHookConfig} as UseContractEventConfig<typeof ${contract.meta.abiName}, TEventName>)
               }
               `
             } else
@@ -482,6 +493,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               `
             content.push(code)
           }
+
           if (hooks.useContractItemEvent) {
             const contractNames = new Set<string>()
             for (const item of contract.abi) {
@@ -508,15 +520,11 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function use${baseHookName}${pascalCase(item.name)}Event<
-                    TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
-                    TEventName extends string = '${item.name}',
-                    ${TChainId}
-                  >(
-                    config: Omit<UseContractEventConfig<TAbi, TEventName>, 'abi'${omitted} | 'eventName'>${typeParams} = {} as any,
+                  export function use${baseHookName}${pascalCase(item.name)}Event${TChainId ? `<${TChainId}>` : ''}(
+                    config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'eventName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractEvent(${config} as UseContractEventConfig<TAbi, TEventName>)
+                    return useContractEvent(${config} as UseContractEventConfig<typeof ${contract.meta.abiName}, '${item.name}'>)
                   }
                   `
                 } else {
@@ -537,12 +545,17 @@ export function react(config: ReactConfig = {}): ReactResult {
       }
 
       const importValues = [...imports.values()]
+      const actionsImportValues = [...actionsImports.values()]
       return {
-        imports: importValues.length
-          ? dedent`
-          import { ${importValues.join(', ')} } from 'wagmi'
-        `
-          : '',
+        imports:
+          (importValues.length
+            ? `import { ${importValues.join(', ')} } from 'wagmi'\n`
+            : '') +
+          (actionsImportValues.length
+            ? `import { ${actionsImportValues.join(
+                ', ',
+              )} } from 'wagmi/actions'`
+            : ''),
         content: content.join('\n\n'),
       }
     },
