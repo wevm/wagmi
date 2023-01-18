@@ -73,7 +73,7 @@ exports[`actions > run > isTypeScript > true 1`] = `
 /**
  * Wraps __{@link getContract}__ with \`abi\` set to __{@link WagmiAbi}__.
  */
-export function getWagmi(config: Omit<GetContractArgs, 'abi'>) {
+export function getWagmi(config: Omit<GetContractArgs, 'abi' | 'address'>) {
   return getContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
 }
 
@@ -83,7 +83,7 @@ export function getWagmi(config: Omit<GetContractArgs, 'abi'>) {
 export function readWagmi<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
   TFunctionName extends string = string,
->(config: Omit<ReadContractConfig<TAbi, TFunctionName>, 'abi'>) {
+>(config: Omit<ReadContractConfig<TAbi, TFunctionName>, 'abi' | 'address'>) {
   return readContract({
     abi: WagmiAbi,
     address: WagmiAddress,
@@ -96,8 +96,14 @@ export function readWagmi<
  */
 export function writeWagmi<TFunctionName extends string>(
   config:
-    | Omit<WriteContractPreparedArgs<typeof WagmiAbi, TFunctionName>, 'abi'>
-    | Omit<WriteContractUnpreparedArgs<typeof WagmiAbi, TFunctionName>, 'abi'>,
+    | Omit<
+        WriteContractPreparedArgs<typeof WagmiAbi, TFunctionName>,
+        'abi' | 'address'
+      >
+    | Omit<
+        WriteContractUnpreparedArgs<typeof WagmiAbi, TFunctionName>,
+        'abi' | 'address'
+      >,
 ) {
   return writeContract({
     abi: WagmiAbi,
@@ -112,7 +118,12 @@ export function writeWagmi<TFunctionName extends string>(
 export function prepareWriteWagmi<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
   TFunctionName extends string = string,
->(config: Omit<PrepareWriteContractConfig<TAbi, TFunctionName>, 'abi'>) {
+>(
+  config: Omit<
+    PrepareWriteContractConfig<TAbi, TFunctionName>,
+    'abi' | 'address'
+  >,
+) {
   return prepareWriteContract({
     abi: WagmiAbi,
     address: WagmiAddress,
@@ -127,7 +138,7 @@ export function watchWagmiEvent<
   TAbi extends readonly unknown[] = typeof WagmiAbi,
   TEventName extends string = string,
 >(
-  config: Omit<WatchContractEventConfig<TAbi, TEventName>, 'abi'>,
+  config: Omit<WatchContractEventConfig<TAbi, TEventName>, 'abi' | 'address'>,
   callback: WatchContractEventCallback<TAbi, TEventName>,
 ) {
   return watchContractEvent(

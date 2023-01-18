@@ -332,7 +332,9 @@ import { WriteContractMode, PrepareWriteContractResult } from 'wagmi/actions'
 /**
  * Wraps __{@link useContract}__ with \`abi\` set to __{@link WagmiAbi}__.
  */
-export function useWagmi(config: Omit<UseContractConfig, 'abi'> = {} as any) {
+export function useWagmi(
+  config: Omit<UseContractConfig, 'abi' | 'address'> = {} as any,
+) {
   return useContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
 }
 
@@ -342,7 +344,7 @@ export function useWagmi(config: Omit<UseContractConfig, 'abi'> = {} as any) {
 export function useWagmiRead<TFunctionName extends string>(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, TFunctionName>,
-    'abi'
+    'abi' | 'address'
   > = {} as any,
 ) {
   return useContractRead({
@@ -358,7 +360,7 @@ export function useWagmiRead<TFunctionName extends string>(
 export function useWagmiBalanceOf(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'balanceOf'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -375,7 +377,7 @@ export function useWagmiBalanceOf(
 export function useWagmiGetApproved(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'getApproved'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -392,7 +394,7 @@ export function useWagmiGetApproved(
 export function useWagmiIsApprovedForAll(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'isApprovedForAll'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -409,7 +411,7 @@ export function useWagmiIsApprovedForAll(
 export function useWagmiName(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'name'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -426,7 +428,7 @@ export function useWagmiName(
 export function useWagmiOwnerOf(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'ownerOf'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -443,7 +445,7 @@ export function useWagmiOwnerOf(
 export function useWagmiSupportsInterface(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'supportsInterface'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -460,7 +462,7 @@ export function useWagmiSupportsInterface(
 export function useWagmiSymbol(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'symbol'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -477,7 +479,7 @@ export function useWagmiSymbol(
 export function useWagmiTokenUri(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'tokenURI'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -494,7 +496,7 @@ export function useWagmiTokenUri(
 export function useWagmiTotalSupply(
   config: Omit<
     UseContractReadConfig<typeof WagmiAbi, 'totalSupply'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return useContractRead({
@@ -650,7 +652,7 @@ export function useWagmiTransferFrom<TMode extends WriteContractMode>(
 export function usePrepareWagmiWrite<TFunctionName extends string>(
   config: Omit<
     UsePrepareContractWriteConfig<typeof WagmiAbi, TFunctionName>,
-    'abi'
+    'abi' | 'address'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
@@ -666,7 +668,7 @@ export function usePrepareWagmiWrite<TFunctionName extends string>(
 export function usePrepareWagmiApprove(
   config: Omit<
     UsePrepareContractWriteConfig<typeof WagmiAbi, 'approve'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
@@ -683,7 +685,7 @@ export function usePrepareWagmiApprove(
 export function usePrepareWagmiMint(
   config: Omit<
     UsePrepareContractWriteConfig<typeof WagmiAbi, 'mint'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
@@ -700,7 +702,7 @@ export function usePrepareWagmiMint(
 export function usePrepareWagmiSafeTransferFrom(
   config: Omit<
     UsePrepareContractWriteConfig<typeof WagmiAbi, 'safeTransferFrom'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
@@ -717,7 +719,7 @@ export function usePrepareWagmiSafeTransferFrom(
 export function usePrepareWagmiSetApprovalForAll(
   config: Omit<
     UsePrepareContractWriteConfig<typeof WagmiAbi, 'setApprovalForAll'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
@@ -734,7 +736,7 @@ export function usePrepareWagmiSetApprovalForAll(
 export function usePrepareWagmiTransferFrom(
   config: Omit<
     UsePrepareContractWriteConfig<typeof WagmiAbi, 'transferFrom'>,
-    'abi' | 'functionName'
+    'abi' | 'address' | 'functionName'
   > = {} as any,
 ) {
   return usePrepareContractWrite({
@@ -751,7 +753,7 @@ export function usePrepareWagmiTransferFrom(
 export function useWagmiEvent<TEventName extends string>(
   config: Omit<
     UseContractEventConfig<typeof WagmiAbi, TEventName>,
-    'abi'
+    'abi' | 'address'
   > = {} as any,
 ) {
   return useContractEvent({
@@ -767,7 +769,7 @@ export function useWagmiEvent<TEventName extends string>(
 export function useWagmiApprovalEvent(
   config: Omit<
     UseContractEventConfig<typeof WagmiAbi, 'Approval'>,
-    'abi' | 'eventName'
+    'abi' | 'address' | 'eventName'
   > = {} as any,
 ) {
   return useContractEvent({
@@ -784,7 +786,7 @@ export function useWagmiApprovalEvent(
 export function useWagmiApprovalForAllEvent(
   config: Omit<
     UseContractEventConfig<typeof WagmiAbi, 'ApprovalForAll'>,
-    'abi' | 'eventName'
+    'abi' | 'address' | 'eventName'
   > = {} as any,
 ) {
   return useContractEvent({
@@ -801,7 +803,7 @@ export function useWagmiApprovalForAllEvent(
 export function useWagmiTransferEvent(
   config: Omit<
     UseContractEventConfig<typeof WagmiAbi, 'Transfer'>,
-    'abi' | 'eventName'
+    'abi' | 'address' | 'eventName'
   > = {} as any,
 ) {
   return useContractEvent({
