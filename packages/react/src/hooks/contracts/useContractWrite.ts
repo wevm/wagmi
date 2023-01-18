@@ -177,7 +177,7 @@ export function useContractWrite<
     args,
     overrides,
     request,
-  ]) as MutationFn<typeof mode, TAbi, TFunctionName>
+  ]) as MutationFn<typeof mode, TAbi, TFunctionName, void>
 
   const writeAsync = React.useMemo(() => {
     if (mode === 'prepared') {
@@ -216,7 +216,12 @@ export function useContractWrite<
     args,
     overrides,
     request,
-  ]) as MutationFn<typeof mode, TAbi, TFunctionName>
+  ]) as MutationFn<
+    typeof mode,
+    TAbi,
+    TFunctionName,
+    Promise<WriteContractResult>
+  >
 
   return {
     data,
@@ -255,8 +260,9 @@ type MutationFnArgs<
 
 type MutationFn<
   TMode extends WriteContractMode,
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TFunctionName extends string = string,
+  TAbi extends Abi | readonly unknown[],
+  TFunctionName extends string,
+  TReturnType,
 > = TMode extends 'prepared'
-  ? (() => void) | undefined
-  : (config: MutationFnArgs<TAbi, TFunctionName>) => void
+  ? (() => TReturnType) | undefined
+  : (config?: MutationFnArgs<TAbi, TFunctionName>) => TReturnType

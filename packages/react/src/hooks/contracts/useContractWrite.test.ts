@@ -27,7 +27,7 @@ function useContractWriteWithConnect<
 >(config: UseContractWriteConfig<TMode, TAbi, TFunctionName>) {
   return {
     connect: useConnect(),
-    contractWrite: useContractWrite(config),
+    contractWrite: useContractWrite<TMode, TAbi, TFunctionName>(config),
   }
 }
 
@@ -127,7 +127,7 @@ describe('useContractWrite', () => {
         )
 
         await act(async () => {
-          result.current.contractWrite.write?.()
+          result.current.contractWrite.write()
         })
 
         await waitFor(() =>
