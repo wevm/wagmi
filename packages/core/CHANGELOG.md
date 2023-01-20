@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.8.16
+
+### Patch Changes
+
+- [#1699](https://github.com/wagmi-dev/wagmi/pull/1699) [`2f1e7950`](https://github.com/wagmi-dev/wagmi/commit/2f1e7950e55550d9b50ef5ccb97cb609f4af39b1) Thanks [@tmm](https://github.com/tmm)! - Added public RPC URL property to Chain
+
 ## 0.8.15
 
 ### Patch Changes
