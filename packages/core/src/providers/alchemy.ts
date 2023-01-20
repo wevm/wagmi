@@ -1,5 +1,7 @@
 import { providers } from 'ethers'
 
+import type { Chain } from '../chains'
+
 import type { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type AlchemyProviderConfig = FallbackProviderConfig & {
@@ -7,12 +9,13 @@ export type AlchemyProviderConfig = FallbackProviderConfig & {
   apiKey: string
 }
 
-export function alchemyProvider({
+export function alchemyProvider<TChain extends Chain = Chain>({
   apiKey,
   priority,
   stallTimeout,
   weight,
 }: AlchemyProviderConfig): ChainProviderFn<
+  TChain,
   providers.AlchemyProvider,
   providers.AlchemyWebSocketProvider
 > {
@@ -25,7 +28,7 @@ export function alchemyProvider({
           ...chain.rpcUrls,
           default: { http: [`${chain.rpcUrls.alchemy?.http[0]}/${apiKey}`] },
         },
-      },
+      } as TChain,
       provider: () => {
         const provider = new providers.AlchemyProvider(
           {

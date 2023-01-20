@@ -46,6 +46,7 @@ const defaultChains = [
       ...mainnet.rpcUrls,
       alchemy: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
       default: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
+      public: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
     },
   },
   polygon,

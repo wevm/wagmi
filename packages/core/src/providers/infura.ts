@@ -1,5 +1,6 @@
 import { providers } from 'ethers'
 
+import type { Chain } from '../chains'
 import type { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type InfuraProviderConfig = FallbackProviderConfig & {
@@ -7,12 +8,13 @@ export type InfuraProviderConfig = FallbackProviderConfig & {
   apiKey: string
 }
 
-export function infuraProvider({
+export function infuraProvider<TChain extends Chain = Chain>({
   apiKey,
   priority,
   stallTimeout,
   weight,
 }: InfuraProviderConfig): ChainProviderFn<
+  TChain,
   providers.InfuraProvider,
   providers.InfuraWebSocketProvider
 > {
@@ -25,7 +27,7 @@ export function infuraProvider({
           ...chain.rpcUrls,
           default: { http: [`${chain.rpcUrls.infura?.http[0]}/${apiKey}`] },
         },
-      },
+      } as TChain,
       provider: () => {
         const provider = new providers.InfuraProvider(
           {

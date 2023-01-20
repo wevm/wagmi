@@ -44,6 +44,6 @@
     "examples/**/*",
     "packages/**/*",
     "scripts/**/*",
-    "vitest.config.ts"
+    "**/vitest.config.ts"
   ]
 }
