@@ -152,6 +152,7 @@ async function validateExports(exports: Exports) {
  */
 async function generateProxyPackages(exports: Exports) {
   const ignorePaths = []
+  const files = new Set<string>()
   for (const [key, value] of Object.entries(exports)) {
     if (typeof value === 'string') continue
     if (key === '.') continue
@@ -172,7 +173,19 @@ async function generateProxyPackages(exports: Exports) {
       }`,
     )
     ignorePaths.push(key.replace(/^\.\//g, ''))
+
+    const file = key.replace(/^\.\//g, '').split('/')[0]
+    if (!file || files.has(file)) continue
+    files.add(`/${file}`)
   }
+
+  files.add('/dist')
+  const packageJson = await fs.readJSON('package.json')
+  packageJson.files = [...files.values()]
+  await fs.writeFile(
+    'package.json',
+    JSON.stringify(packageJson, null, 2) + '\n',
+  )
 
   if (ignorePaths.length === 0) return
   await fs.outputFile(
