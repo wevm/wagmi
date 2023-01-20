@@ -55,6 +55,8 @@ export type Watch = {
   onAdd?: (path: string) => MaybePromise<ContractConfig | undefined>
   /** Callback that fires when file changes */
   onChange: (path: string) => MaybePromise<ContractConfig | undefined>
+  /** Callback that fires when watcher is shutdown */
+  onClose?: () => MaybePromise<void>
   /** Callback that fires when file is removed */
   onRemove?: (path: string) => MaybePromise<string | undefined>
 }

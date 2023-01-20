@@ -30,7 +30,7 @@ describe('generate', () => {
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
         "Invalid option
-        - Expected string, received number at \\"config\\""
+        - Expected string, received number at \`config\`"
       `)
     })
 
@@ -47,9 +47,7 @@ describe('generate', () => {
         } catch (error) {
           expect(
             (error as Error).message.replace(temp, 'path/to/project'),
-          ).toMatchInlineSnapshot(
-            '"Config not found at \\"path/to/project/wagmi.config.js\\""',
-          )
+          ).toMatchInlineSnapshot('"Config not found at wagmi.config.js"')
         }
       })
     })
@@ -83,7 +81,7 @@ describe('generate', () => {
         },
       })
       await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"out \\"generated.ts\\" is not unique."',
+        '"out \\"generated.ts\\" must be unique."',
       )
     })
 
@@ -110,7 +108,7 @@ describe('generate', () => {
           },
         })
         await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
-          '"Contract name \\"Foo\\" is not unique."',
+          '"Contract name \\"Foo\\" must be unique."',
         )
       })
 
@@ -123,7 +121,14 @@ describe('generate', () => {
         })
         await generate()
         expect(mockedConsole.formatted).toMatchInlineSnapshot(
-          '"[37mNo contracts found.[39m"',
+          `
+          "Using config wagmi.config.js
+          ⠏ Validating plugins
+          ✔ Validating plugins
+          ⠏ Resolving contracts
+          ✖ Resolving contracts
+          No contracts found."
+        `,
         )
       })
 

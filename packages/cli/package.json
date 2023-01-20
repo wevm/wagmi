@@ -95,6 +95,9 @@
     "@types/fs-extra": "^9.0.13",
     "fixturez": "^1.1.0"
   },
+  "engines": {
+    "node": ">=14"
+  },
   "keywords": [
     "eth",
     "ethereum",

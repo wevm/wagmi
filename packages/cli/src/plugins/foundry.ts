@@ -3,6 +3,7 @@ import { execa } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
+import pc from 'picocolors'
 
 import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
@@ -160,12 +161,23 @@ export function foundry({
     watch: {
       command: rebuild
         ? async () => {
-            logger.log(`Watching Foundry project for changes at "${project}".`)
-            execa(forgeExecutable, ['build', '--watch'], {
+            logger.log(
+              `${pc.magenta('Foundry')} Watching project at ${pc.gray(
+                project,
+              )}`,
+            )
+            const subprocess = execa(forgeExecutable, ['build', '--watch'], {
               cwd: resolve(project),
-            }).stdout?.on('data', (data) => {
-              process.stdout.write(`Foundry: ${data}`)
             })
+            subprocess.stdout?.on('data', (data) => {
+              process.stdout.write(`${pc.magenta('Foundry')} ${data}`)
+            })
+
+            process.once('SIGINT', shutdown)
+            process.once('SIGTERM', shutdown)
+            function shutdown() {
+              subprocess?.cancel()
+            }
           }
         : undefined,
       paths: [

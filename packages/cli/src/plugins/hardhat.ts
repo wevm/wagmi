@@ -3,6 +3,7 @@ import { execa } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
+import pc from 'picocolors'
 
 import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
@@ -159,7 +160,16 @@ export function hardhat({
     watch: {
       command: rebuild
         ? async () => {
-            logger.log(`Watching Hardhat project for changes at "${project}".`)
+            logger.log(
+              `${pc.blue('Hardhat')} Watching project at ${pc.gray(project)}`,
+            )
+
+            const [command, ...options] = (
+              typeof rebuild === 'boolean'
+                ? `${await getPackageManager()} hardhat compile`
+                : rebuild
+            ).split(' ')
+
             const { watch } = await import('chokidar')
             const watcher = watch(sourcesDirectory, {
               atomic: true,
@@ -167,20 +177,20 @@ export function hardhat({
               ignoreInitial: true,
               persistent: true,
             })
-            const [command, ...options] = (
-              typeof rebuild === 'boolean'
-                ? `${await getPackageManager()} hardhat compile`
-                : rebuild
-            ).split(' ')
-            watcher.on('all', async (event) => {
+            watcher.on('all', async (event, path) => {
               if (event !== 'change' && event !== 'add' && event !== 'unlink')
                 return
-              await execa(command!, options, {
+              logger.log(
+                `${pc.blue('Hardhat')} Detected ${event} at ${basename(path)}`,
+              )
+              const subprocess = execa(command!, options, {
                 cwd: resolve(project),
-              }).stdout?.on('data', (data) => {
-                process.stdout.write(`Hardhat: ${data}`)
+              })
+              subprocess.stdout?.on('data', (data) => {
+                process.stdout.write(`${pc.blue('Hardhat')} ${data}`)
               })
             })
+
             process.once('SIGINT', shutdown)
             process.once('SIGTERM', shutdown)
             async function shutdown() {

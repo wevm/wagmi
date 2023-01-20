@@ -54,10 +54,15 @@ export default defineConfig([
             1: '0x314159265dd8dbb310642f98f50c066173c1259b',
             5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
           },
-          Counter2: 'tpadd',
+          Counter2: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
         },
       }),
-      hardhat({ project: '../hello_hardhat' }),
+      hardhat({
+        project: '../hello_hardhat',
+        deployments: {
+          Lock: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+        },
+      }),
       react(),
       actions(),
     ],

@@ -1,4 +1,5 @@
 import { default as fse } from 'fs-extra'
+import { resolve } from 'pathe'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { createFixture, mockConsole, mockCwd } from '../../test'
@@ -29,28 +30,106 @@ describe('init', () => {
       export default { out: 'src/generated.js', contracts: [], plugins: [] }
       "
     `)
-    expect(
-      mockedConsole.formatted.replaceAll(temp, 'path/to/project'),
-    ).toMatchInlineSnapshot(
-      `
-      "[37mCreating config…[39m
-      [32mConfig created at \\"path/to/project/wagmi.config.js\\"[39m"
-    `,
-    )
+    expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
+      .toMatchInlineSnapshot(`
+        "⠏ Creating config
+        ✔ Creating config
+        Config created at wagmi.config.js"
+      `)
   })
 
-  it('creates config file in TypeScript format', async () => {
-    const { projectDir } = await createFixture({
-      dir: temp,
-      files: {
-        'tsconfig.json': '{}',
-      },
+  describe('options', () => {
+    it('config', async () => {
+      const configFile = await init({
+        config: 'foo.config.ts',
+      })
+
+      expect(fse.existsSync(configFile)).toBeTruthy()
+      expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+        "// @ts-check
+
+        /** @type {import('@wagmi/cli').Config} */
+        export default { out: 'src/generated.js', contracts: [], plugins: [] }
+        "
+      `)
+      expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
+        .toMatchInlineSnapshot(`
+        "⠏ Creating config
+        ✔ Creating config
+        Config created at foo.config.ts"
+      `)
     })
 
-    const configFile = await init()
+    it('content', async () => {
+      const { projectDir } = await createFixture({
+        dir: temp,
+        files: {
+          'tsconfig.json': '{}',
+        },
+      })
 
-    expect(fse.existsSync(configFile)).toBeTruthy()
-    expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+      const configFile = await init({
+        content: {
+          ...defaultConfig,
+          out: 'foo/bar/baz.ts',
+        },
+      })
+
+      expect(fse.existsSync(configFile)).toBeTruthy()
+      expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+      "import { defineConfig } from '@wagmi/cli'
+
+      export default defineConfig({
+        out: 'foo/bar/baz.ts',
+        contracts: [],
+        plugins: [],
+      })
+      "
+    `)
+      expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
+        .toMatchInlineSnapshot(`
+        "⠏ Creating config
+        ✔ Creating config
+        Config created at wagmi.config.ts"
+      `)
+    })
+
+    it('root', async () => {
+      fse.mkdir(resolve(temp, 'foo'))
+      const configFile = await init({
+        root: 'foo/',
+      })
+
+      expect(fse.existsSync(configFile)).toBeTruthy()
+      expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
+        "// @ts-check
+
+        /** @type {import('@wagmi/cli').Config} */
+        export default { out: 'src/generated.js', contracts: [], plugins: [] }
+        "
+      `)
+      expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
+        .toMatchInlineSnapshot(`
+          "⠏ Creating config
+          ✔ Creating config
+          Config created at foo/wagmi.config.js"
+        `)
+    })
+  })
+
+  describe('behavior', () => {
+    it('creates config file in TypeScript format', async () => {
+      const { projectDir } = await createFixture({
+        dir: temp,
+        files: {
+          'tsconfig.json': '{}',
+        },
+      })
+
+      const configFile = await init()
+
+      expect(fse.existsSync(configFile)).toBeTruthy()
+      expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
       "import { defineConfig } from '@wagmi/cli'
 
       export default defineConfig({
@@ -60,63 +139,30 @@ describe('init', () => {
       })
       "
     `)
-    expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
-      .toMatchInlineSnapshot(`
-      "[37mCreating config…[39m
-      [32mConfig created at \\"path/to/project/wagmi.config.ts\\"[39m"
-    `)
-  })
-
-  it('creates config file with content', async () => {
-    const { projectDir } = await createFixture({
-      dir: temp,
-      files: {
-        'tsconfig.json': '{}',
-      },
+      expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
+        .toMatchInlineSnapshot(`
+        "⠏ Creating config
+        ✔ Creating config
+        Config created at wagmi.config.ts"
+      `)
     })
 
-    const configFile = await init({
-      config: {
-        ...defaultConfig,
-        out: 'foo/bar/baz.ts',
-      },
-    })
-
-    expect(fse.existsSync(configFile)).toBeTruthy()
-    expect(await fse.readFile(configFile, 'utf-8')).toMatchInlineSnapshot(`
-      "import { defineConfig } from '@wagmi/cli'
-
-      export default defineConfig({
-        out: 'foo/bar/baz.ts',
-        contracts: [],
-        plugins: [],
+    it('displays config file location when config exists', async () => {
+      await createFixture({
+        dir: temp,
+        files: {
+          'wagmi.config.ts': '',
+        },
       })
-      "
-    `)
-    expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
-      .toMatchInlineSnapshot(`
-      "[37mCreating config…[39m
-      [32mConfig created at \\"path/to/project/wagmi.config.ts\\"[39m"
-    `)
-  })
 
-  it('displays config file location when config exists', async () => {
-    await createFixture({
-      dir: temp,
-      files: {
-        'wagmi.config.ts': '',
-      },
+      const configFile = await init()
+
+      expect(
+        mockedConsole.formatted.replaceAll(
+          configFile,
+          'path/to/project/wagmi.config.ts',
+        ),
+      ).toMatchInlineSnapshot('"Config already exists at wagmi.config.ts"')
     })
-
-    const configFile = await init()
-
-    expect(
-      mockedConsole.formatted.replaceAll(
-        configFile,
-        'path/to/project/wagmi.config.ts',
-      ),
-    ).toMatchInlineSnapshot(
-      '"[34mConfig already exists at \\"path/to/project/wagmi.config.ts\\"[39m"',
-    )
   })
 })

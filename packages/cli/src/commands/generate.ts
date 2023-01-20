@@ -6,6 +6,7 @@ import type { FSWatcher, WatchOptions } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
 import { default as fse } from 'fs-extra'
+import { basename, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
 
@@ -43,16 +44,18 @@ export async function generate(options: Generate = {}) {
 
   // Get cli config file
   const configPath = await findConfig(options)
-  if (!configPath || (configPath && !fse.existsSync(configPath))) {
-    if (options.config) throw new Error(`Config not found at "${configPath}"`)
+  if (!configPath) {
+    if (options.config)
+      throw new Error(`Config not found at ${pc.gray(options.config)}`)
     throw new Error('Config not found')
   }
 
   const resolvedConfigs = await resolveConfig({ configPath })
   const isTypeScript = await getIsUsingTypeScript()
 
-  const delay = 100
-  const watchers: FSWatcher[] = []
+  type Watcher = FSWatcher & { config?: Watch }
+  const watchers: Watcher[] = []
+  const watchWriteDelay = 100
   const watchOptions: WatchOptions = {
     atomic: true,
     // awaitWriteFinish: true,
@@ -61,12 +64,12 @@ export async function generate(options: Generate = {}) {
   }
 
   const outNames = new Set<string>()
-  const configs = Array.isArray(resolvedConfigs)
-    ? resolvedConfigs
-    : [resolvedConfigs]
+  const isArrayConfig = Array.isArray(resolvedConfigs)
+  const configs = isArrayConfig ? resolvedConfigs : [resolvedConfigs]
   for (const config of configs) {
+    logger.log(`Using config ${pc.gray(basename(configPath))}`)
     if (outNames.has(config.out))
-      throw new Error(`out "${config.out}" is not unique.`)
+      throw new Error(`out "${config.out}" must be unique.`)
     outNames.add(config.out)
 
     // Collect contracts and watch configs from plugins
@@ -76,6 +79,8 @@ export async function generate(options: Generate = {}) {
       ...x,
       id: `${x.name}-${i}`,
     }))
+    const spinner = logger.spinner()
+    spinner.start('Validating plugins')
     for (const plugin of plugins) {
       await plugin.validate?.()
       if (plugin.watch) watchConfigs.push(plugin.watch)
@@ -84,20 +89,31 @@ export async function generate(options: Generate = {}) {
         contractConfigs.push(...contracts)
       }
     }
+    spinner.succeed()
 
     // Get contracts from config
     const contractNames = new Set<string>()
     const contractMap = new Map<string, Contract>()
+    spinner.start('Resolving contracts')
     for (const contractConfig of contractConfigs) {
       if (contractNames.has(contractConfig.name))
-        throw new Error(`Contract name "${contractConfig.name}" is not unique.`)
+        throw new Error(
+          `Contract name "${contractConfig.name}" must be unique.`,
+        )
       const contract = await getContract({ ...contractConfig, isTypeScript })
       contractMap.set(contract.name, contract)
       contractNames.add(contractConfig.name)
     }
 
-    // Run plugins
     const contracts = [...contractMap.values()]
+    if (!contracts.length && !options.watch) {
+      spinner.fail()
+      logger.warn('No contracts found.')
+      return
+    }
+    spinner.succeed()
+
+    // Run plugins
     const imports = []
     const prepend = []
     const content = []
@@ -105,6 +121,7 @@ export async function generate(options: Generate = {}) {
       plugin: Pick<Plugin, 'name'>
     } & Awaited<ReturnType<Required<Plugin>['run']>>
     const outputs: Output[] = []
+    spinner.start('Running plugins')
     for (const plugin of plugins) {
       if (!plugin.run) continue
       const result = await plugin.run({
@@ -121,13 +138,10 @@ export async function generate(options: Generate = {}) {
       result.imports && imports.push(result.imports)
       result.prepend && prepend.push(result.prepend)
     }
-
-    if (!contracts.length && !options.watch) {
-      logger.log('No contracts found.')
-      return
-    }
+    spinner.succeed()
 
     // Write output to file
+    spinner.start(`Writing to ${pc.gray(config.out)}`)
     await writeContracts({
       content,
       contracts,
@@ -135,12 +149,15 @@ export async function generate(options: Generate = {}) {
       prepend,
       filename: config.out,
     })
+    spinner.succeed()
 
     if (options.watch) {
       if (!watchConfigs.length) {
         logger.log(pc.gray('Used --watch flag, but no plugins are watching.'))
         continue
       }
+      logger.log()
+      logger.log('Setting up watch process')
 
       // Watch for changes
       let timeout: NodeJS.Timeout | null
@@ -154,6 +171,7 @@ export async function generate(options: Generate = {}) {
         watcher.on('all', async (event, path) => {
           if (event !== 'change' && event !== 'add' && event !== 'unlink')
             return
+
           let needsWrite = false
           if (event === 'change' || event === 'add') {
             const eventFn =
@@ -200,6 +218,9 @@ export async function generate(options: Generate = {}) {
                 result.imports && imports.push(result.imports)
                 result.prepend && prepend.push(result.prepend)
               }
+
+              const spinner = logger.spinner()
+              spinner.start(`Writing to ${pc.gray(config.out)}`)
               await writeContracts({
                 content,
                 contracts,
@@ -207,7 +228,8 @@ export async function generate(options: Generate = {}) {
                 prepend,
                 filename: config.out,
               })
-            }, delay)
+              spinner.succeed()
+            }, watchWriteDelay)
             needsWrite = false
           }
         })
@@ -215,9 +237,9 @@ export async function generate(options: Generate = {}) {
         // Run parallel command on ready
         if (watchConfig.command)
           watcher.on('ready', async () => {
-            await watchConfig?.command?.()
+            await watchConfig.command?.()
           })
-
+        ;(watcher as Watcher).config = watchConfig
         watchers.push(watcher)
       }
     }
@@ -226,13 +248,12 @@ export async function generate(options: Generate = {}) {
   if (!watchers.length) return
 
   // Watch `@wagmi/cli` config file for changes
-  const watcher = watch(configPath).on('change', async (_path) => {
-    // const { basename } = await import('pathe')
-    // logger.log(
-    //   `> Found a change in ${basename(
-    //     path,
-    //   )}. Restart process for changes to take effect.`,
-    // )
+  const watcher = watch(configPath).on('change', async (path) => {
+    logger.log(
+      `> Found a change to config ${pc.gray(
+        basename(path),
+      )}. Restart process for changes to take effect.`,
+    )
   })
   watchers.push(watcher)
 
@@ -240,10 +261,15 @@ export async function generate(options: Generate = {}) {
   process.once('SIGINT', shutdown)
   process.once('SIGTERM', shutdown)
   async function shutdown() {
-    // logger.log('Shutting down watch')
+    logger.log()
+    logger.log('Shutting down watch process')
+    const promises = []
     for (const watcher of watchers) {
-      await watcher.close()
+      if (watcher.config?.onClose) promises.push(watcher.config?.onClose?.())
+      promises.push(watcher.close())
     }
+    await Promise.allSettled(promises)
+    process.exit(0)
   }
 }
 
@@ -259,7 +285,9 @@ async function getContract({
     abi = await AbiSchema.parseAsync(abi)
   } catch (error) {
     if (error instanceof z.ZodError)
-      throw fromZodError(error, { prefix: 'Invalid ABI' })
+      throw fromZodError(error, {
+        prefix: `Invalid ABI for contract "${name}"`,
+      })
     throw error
   }
   const docString =
@@ -293,7 +321,9 @@ async function getContract({
       resolvedAddress = await AddressSchema.parseAsync(address)
     } catch (error) {
       if (error instanceof z.ZodError)
-        throw fromZodError(error, { prefix: 'Invalid address' })
+        throw fromZodError(error, {
+          prefix: `Invalid address for contract "${name}"`,
+        })
       throw error
     }
 
@@ -362,7 +392,7 @@ async function writeContracts({
 
   // Format and write output
   const cwd = process.cwd()
-  const outPath = `${cwd}/${filename}`
+  const outPath = resolve(cwd, filename)
   const formatted = await format(code)
   await fse.writeFile(outPath, formatted)
 }

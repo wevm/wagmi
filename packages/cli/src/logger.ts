@@ -1,4 +1,5 @@
-import pico from 'picocolors'
+import ora from 'ora'
+import pc from 'picocolors'
 
 import util from 'util'
 
@@ -10,21 +11,28 @@ function format(args: any[]) {
 }
 
 export function success(...args: Array<any>) {
-  console.log(pico.green(format(args)))
+  console.log(pc.green(format(args)))
 }
 
 export function info(...args: Array<any>) {
-  console.info(pico.blue(format(args)))
+  console.info(pc.blue(format(args)))
 }
 
 export function log(...args: Array<any>) {
-  console.log(pico.white(format(args)))
+  console.log(pc.white(format(args)))
 }
 
 export function warn(...args: Array<any>) {
-  console.warn(pico.yellow(format(args)))
+  console.warn(pc.yellow(format(args)))
 }
 
 export function error(...args: Array<any>) {
-  console.error(pico.red(format(args)))
+  console.error(pc.red(format(args)))
+}
+
+export function spinner() {
+  return ora({
+    color: 'yellow',
+    spinner: 'dots',
+  })
 }
