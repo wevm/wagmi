@@ -62,6 +62,11 @@ describe('getNetwork', () => {
                   "http://127.0.0.1:8545",
                 ],
               },
+              "public": {
+                "http": [
+                  "http://127.0.0.1:8545",
+                ],
+              },
             },
             "unsupported": false,
           },
@@ -116,6 +121,11 @@ describe('getNetwork', () => {
                     "wss://mainnet.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://cloudflare-eth.com",
+                  ],
+                },
               },
             },
             {
@@ -168,6 +178,11 @@ describe('getNetwork', () => {
                     "wss://goerli.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://rpc.ankr.com/eth_goerli",
+                  ],
+                },
               },
               "testnet": true,
             },
@@ -190,8 +205,8 @@ describe('getNetwork', () => {
           "chain": {
             "blockExplorers": {
               "default": {
-                "name": "Etherscan",
-                "url": "https://optimistic.etherscan.io",
+                "name": "Optimism Explorer",
+                "url": "https://explorer.optimism.io",
               },
               "etherscan": {
                 "name": "Etherscan",
@@ -232,6 +247,11 @@ describe('getNetwork', () => {
                 ],
                 "webSocket": [
                   "wss://optimism-mainnet.infura.io/ws/v3",
+                ],
+              },
+              "public": {
+                "http": [
+                  "https://mainnet.optimism.io",
                 ],
               },
             },
@@ -288,6 +308,11 @@ describe('getNetwork', () => {
                     "wss://mainnet.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://cloudflare-eth.com",
+                  ],
+                },
               },
             },
             {
@@ -338,6 +363,11 @@ describe('getNetwork', () => {
                   ],
                   "webSocket": [
                     "wss://goerli.infura.io/ws/v3",
+                  ],
+                },
+                "public": {
+                  "http": [
+                    "https://rpc.ankr.com/eth_goerli",
                   ],
                 },
               },

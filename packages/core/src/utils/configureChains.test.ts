@@ -34,6 +34,7 @@ const avalancheChain: Chain = {
   },
   rpcUrls: {
     default: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
+    public: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
   },
   testnet: false,
 }
@@ -257,7 +258,7 @@ describe('configureChains', () => {
       it('throws an error if a chain does not have a default RPC URL', () => {
         const polygon_: Chain = {
           ...polygon,
-          rpcUrls: { default: { http: [''] } },
+          rpcUrls: { default: { http: [''] }, public: { http: [''] } },
         }
 
         expect(() =>
