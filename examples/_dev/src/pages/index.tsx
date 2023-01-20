@@ -1,4 +1,5 @@
 import { Account, Connect, NetworkSwitcher } from '../components'
+import { TestComponent } from '../components/TestComponent'
 import { useIsMounted } from '../hooks'
 
 const Page = () => {
@@ -10,6 +11,7 @@ const Page = () => {
       <Connect />
       <Account />
       <NetworkSwitcher />
+      <TestComponent />
     </>
   )
 }
