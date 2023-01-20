@@ -35,7 +35,8 @@
       "node",
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/42873
-      "@ethersproject/providers"
+      "@ethersproject/providers",
+      "@ethersproject/abstract-signer"
     ]
   },
   "exclude": ["**/node_modules/**", "**/dist/**", "examples/hello_hardhat/**"],

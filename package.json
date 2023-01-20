@@ -13,7 +13,7 @@
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
     "playground": "pnpm dev && pnpm --filter example-dev dev",
-    "preinstall": "git submodule init && git submodule update && pnpm i --filter './references/packages/**' --ignore-scripts && npx only-allow pnpm",
+    "preinstall": "pnpm i --filter './references/packages/**' --ignore-scripts && npx only-allow pnpm",
     "postinstall": "pnpm dev",
     "prepare": "npx simple-git-hooks",
     "test": "vitest",
@@ -27,7 +27,8 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.6",
     "@changesets/cli": "^2.25.2",
-    "@ethersproject/providers": "^5.7.1",
+    "@ethersproject/abstract-signer": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
     "@manypkg/get-packages": "^1.1.3",
     "@types/dedent": "^0.7.0",
     "@types/eslint": "^8.4.10",

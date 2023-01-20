@@ -10,7 +10,8 @@ importers:
     specifiers:
       '@changesets/changelog-github': ^0.4.6
       '@changesets/cli': ^2.25.2
-      '@ethersproject/providers': ^5.7.1
+      '@ethersproject/abstract-signer': ^5.7.0
+      '@ethersproject/providers': ^5.7.2
       '@manypkg/get-packages': ^1.1.3
       '@types/dedent': ^0.7.0
       '@types/eslint': ^8.4.10
@@ -48,7 +49,8 @@ importers:
     devDependencies:
       '@changesets/changelog-github': 0.4.7
       '@changesets/cli': 2.25.2
-      '@ethersproject/providers': 5.7.1
+      '@ethersproject/abstract-signer': 5.7.0
+      '@ethersproject/providers': 5.7.2
       '@manypkg/get-packages': 1.1.3
       '@types/dedent': 0.7.0
       '@types/eslint': 8.4.10
@@ -94,7 +96,7 @@ importers:
       degen: ^0.0.49
       eslint: ^8.15.0
       eslint-config-next: ^12.1.6
-      ethers: ^5.7.2
+      ethers: ^5.7.1
       fathom-client: ^3.5.0
       iron-session: ^6.1.3
       next: ^13.0.5
@@ -195,7 +197,7 @@ importers:
       '@ethersproject/address': ^5.7.0
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
-      '@wagmi/chains': ^0.1.7
+      '@wagmi/chains': workspace:../../references/packages/chains
       abitype: ^0.2.5
       bundle-require: ^3.1.2
       cac: ^6.7.12
@@ -219,7 +221,7 @@ importers:
       zod: ^3.20.2
     dependencies:
       '@ethersproject/address': 5.7.0
-      '@wagmi/chains': 0.1.9
+      '@wagmi/chains': link:../../references/packages/chains
       abitype: 0.2.5_zod@3.20.2
       bundle-require: 3.1.2_esbuild@0.15.13
       cac: 6.7.14
@@ -901,6 +903,7 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+    dev: false
 
   /@ethersproject/providers/5.7.2:
     resolution: {integrity: sha512-g34EWZ1WWAVgr4aptGlVBF8mhl3VWjv+8hoAnzStu8Ah22VHBsuGzP17eb6xDVRzw895G4W7vvx60lFFur/1Rg==}
@@ -3125,10 +3128,6 @@ packages:
     dependencies:
       sirv: 2.0.2
     dev: true
-
-  /@wagmi/chains/0.1.9:
-    resolution: {integrity: sha512-q3qAq1MIksHut95gCHefA037FPXJGNlkGc6POYlwhVd42bLq+WaVZTxKYMsdfRrJ00UfTYjMisxrXVHDl7tGKA==}
-    dev: false
 
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}
