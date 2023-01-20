@@ -22,6 +22,7 @@ export function getNetwork(): GetNetworkResult {
     nativeCurrency: { name: 'Ether', decimals: 18, symbol: 'ETH' },
     rpcUrls: {
       default: { http: [''] },
+      public: { http: [''] },
     },
   }
 
