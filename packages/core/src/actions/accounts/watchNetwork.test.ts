@@ -72,6 +72,11 @@ describe('watchNetwork', () => {
                   "wss://goerli.infura.io/ws/v3",
                 ],
               },
+              "public": {
+                "http": [
+                  "https://rpc.ankr.com/eth_goerli",
+                ],
+              },
             },
             "testnet": true,
             "unsupported": false,
@@ -127,6 +132,11 @@ describe('watchNetwork', () => {
                     "wss://mainnet.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://cloudflare-eth.com",
+                  ],
+                },
               },
             },
             {
@@ -179,6 +189,11 @@ describe('watchNetwork', () => {
                     "wss://goerli.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://rpc.ankr.com/eth_goerli",
+                  ],
+                },
               },
               "testnet": true,
             },
@@ -215,6 +230,11 @@ describe('watchNetwork', () => {
             "network": "homestead",
             "rpcUrls": {
               "default": {
+                "http": [
+                  "http://127.0.0.1:8545",
+                ],
+              },
+              "public": {
                 "http": [
                   "http://127.0.0.1:8545",
                 ],
@@ -273,6 +293,11 @@ describe('watchNetwork', () => {
                     "wss://mainnet.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://cloudflare-eth.com",
+                  ],
+                },
               },
             },
             {
@@ -323,6 +348,11 @@ describe('watchNetwork', () => {
                   ],
                   "webSocket": [
                     "wss://goerli.infura.io/ws/v3",
+                  ],
+                },
+                "public": {
+                  "http": [
+                    "https://rpc.ankr.com/eth_goerli",
                   ],
                 },
               },

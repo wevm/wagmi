@@ -243,7 +243,7 @@ importers:
       '@ledgerhq/connect-kit-loader': 1.0.1
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/universal-provider': 2.2.1
-      '@web3modal/standalone': 2.0.0-rc.3
+      '@web3modal/standalone': 2.0.0
       abitype: 0.1.8
       eventemitter3: 4.0.7
     devDependencies:
@@ -2851,28 +2851,28 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@web3modal/core/2.0.0-rc.3:
-    resolution: {integrity: sha512-5mTI8lb41P2lOvdB2eic6ckdh8DpTOvqR76up+s6W5nkRJ2nNL9ZoU2sVeJUGFdbQHUbK46yaZBm17zxXT0y2Q==}
+  /@web3modal/core/2.0.0:
+    resolution: {integrity: sha512-ZoM3U5DndBAVnnkBJ3hIkOKO81VtWfyda458D1vdN/T6q8IoWzWZR5QHZNc1qNKqm7ecXfEpsPj2YMS3bgOY2A==}
     dependencies:
       buffer: 6.0.3
-      valtio: 1.8.2
+      valtio: 1.9.0
     transitivePeerDependencies:
       - react
     dev: false
 
-  /@web3modal/standalone/2.0.0-rc.3:
-    resolution: {integrity: sha512-ZrJ9Jml2e0eXXi5ZQVyFpPonRO7WEl91pMwe9gBI7nYGC5WeAqd6qoZe3qUnPLOif/gjNaKv/zrefFH/L7knzA==}
+  /@web3modal/standalone/2.0.0:
+    resolution: {integrity: sha512-/YcAWgnVtTFeVFrHlhYemS1NU9ds9nbMuV1njjbS9+yDirOXfUenPORi6X1AGs5pUrDnR4IwDgQzdd5wqg6kZw==}
     dependencies:
-      '@web3modal/core': 2.0.0-rc.3
-      '@web3modal/ui': 2.0.0-rc.3
+      '@web3modal/core': 2.0.0
+      '@web3modal/ui': 2.0.0
     transitivePeerDependencies:
       - react
     dev: false
 
-  /@web3modal/ui/2.0.0-rc.3:
-    resolution: {integrity: sha512-AkIkOwaWzqBDVhUZGFGsQuGs0Xfnn2m5WPu+1LqTPcFmMGOr9jaUAGX30/0Vl79Ss3bSBS+Z3zB6OpOzzL7ctw==}
+  /@web3modal/ui/2.0.0:
+    resolution: {integrity: sha512-kNSXD/YI+Sl92hxMzsjkRWUj8H+CyV89WDS0Ywy2YV9HxVzC6MzntnsYZ4rti5//IzeDlxPhTKKaiBWE68Gwzw==}
     dependencies:
-      '@web3modal/core': 2.0.0-rc.3
+      '@web3modal/core': 2.0.0
       lit: 2.6.1
       motion: 10.15.5
       qrcode: 1.5.1
@@ -5928,7 +5928,7 @@ packages:
     engines: {node: '>=12.0.0'}
     dependencies:
       ansi-escapes: 4.3.2
-      chalk: 4.1.1
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-width: 3.0.0
       external-editor: 3.1.0
@@ -9772,9 +9772,9 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /valtio/1.8.2:
-    resolution: {integrity: sha512-ypFWPi3aY04tojWAFPbTYBDw5iFaCDbKAJ2XqhmY2XOSorNtaCZJNg++FSssv8gMJwmPXfrU/RjncQtsoOHbUg==}
-    engines: {node: '>=12.7.0'}
+  /valtio/1.9.0:
+    resolution: {integrity: sha512-mQLFsAlKbYascZygFQh6lXuDjU5WHLoeZ8He4HqMnWfasM96V6rDbeFkw1XeG54xycmDonr/Jb4xgviHtuySrA==}
+    engines: {node: '>=12.20.0'}
     peerDependencies:
       react: '>=16.8'
     peerDependenciesMeta:
