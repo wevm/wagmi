@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.8.15
+
+### Patch Changes
+
+- [#1685](https://github.com/wagmi-dev/wagmi/pull/1685) [`917f5bc1`](https://github.com/wagmi-dev/wagmi/commit/917f5bc1fad578e35a8c6ee787e339bfdc156bab) Thanks [@jxom](https://github.com/jxom)! - Replaced qrcodemodal with web3modal for the WalletConnect v2 Connector.
+
 ## 0.8.14
 
 ### Patch Changes
