@@ -22,7 +22,7 @@ importers:
       '@typescript-eslint/parser': ^5.48.2
       '@vitest/coverage-c8': ^0.25.8
       '@vitest/ui': ^0.25.8
-      abitype: ^0.2.5
+      abitype: ^0.3.0
       dedent: ^0.7.0
       esbuild: 0.15.13
       esbuild-register: ^3.4.2
@@ -61,7 +61,7 @@ importers:
       '@typescript-eslint/parser': 5.48.2_nlhvlitwvxohdkmvb3doqj6nbq
       '@vitest/coverage-c8': 0.25.8_eetf2xjpdhuqcs2dx4ndfgw7iq
       '@vitest/ui': 0.25.8
-      abitype: 0.2.5_typescript@4.9.4
+      abitype: 0.3.0_typescript@4.9.4
       dedent: 0.7.0
       esbuild: 0.15.13
       esbuild-register: 3.4.2_esbuild@0.15.13
@@ -172,7 +172,7 @@ importers:
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
       '@wagmi/chains': workspace:../../references/packages/chains
-      abitype: ^0.2.5
+      abitype: ^0.3.0
       bundle-require: ^3.1.2
       cac: ^6.7.12
       change-case: ^4.1.2
@@ -196,7 +196,7 @@ importers:
     dependencies:
       '@ethersproject/address': 5.7.0
       '@wagmi/chains': link:../../references/packages/chains
-      abitype: 0.2.5_zod@3.20.2
+      abitype: 0.3.0_zod@3.20.2
       bundle-require: 3.1.2_esbuild@0.15.13
       cac: 6.7.14
       change-case: 4.1.2
@@ -225,14 +225,14 @@ importers:
     specifiers:
       '@wagmi/chains': workspace:../../references/packages/chains
       '@wagmi/connectors': workspace:../../references/packages/connectors
-      abitype: ^0.2.5
+      abitype: ^0.3.0
       ethers: ^5.7.1
       eventemitter3: ^4.0.7
       zustand: ^4.3.1
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
       '@wagmi/connectors': link:../../references/packages/connectors
-      abitype: 0.2.5
+      abitype: 0.3.0
       eventemitter3: 4.0.7
       zustand: 4.3.1
     devDependencies:
@@ -249,7 +249,7 @@ importers:
       '@types/react-dom': ^18.0.3
       '@types/use-sync-external-store': ^0.0.3
       '@wagmi/core': workspace:*
-      abitype: ^0.2.5
+      abitype: ^0.3.0
       ethers: ^5.7.1
       react: ^18.1.0
       react-17: npm:react@17.0.2
@@ -261,7 +261,7 @@ importers:
       '@tanstack/react-query': 4.14.5_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.14.5_5ranp5o74eejvyb3vbwp2u74vy
       '@wagmi/core': link:../core
-      abitype: 0.2.5
+      abitype: 0.3.0
       use-sync-external-store: 1.2.0_react@18.2.0
     devDependencies:
       '@testing-library/react': 13.4.0_biqbaboplfbrettd7655fr4n2y
@@ -286,7 +286,7 @@ importers:
       '@walletconnect/ethereum-provider': ^1.8.0
       '@walletconnect/universal-provider': ^2.2.1
       '@web3modal/standalone': ^2.0.0-rc.2
-      abitype: ^0.1.8
+      abitype: ^0.3.0
       ethers: ^5.7.2
       eventemitter3: ^4.0.7
     dependencies:
@@ -295,7 +295,7 @@ importers:
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/universal-provider': 2.2.1
       '@web3modal/standalone': 2.0.0
-      abitype: 0.1.8
+      abitype: 0.3.0
       eventemitter3: 4.0.7
     devDependencies:
       '@wagmi/core': link:../../../packages/core
@@ -3002,29 +3002,22 @@ packages:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: true
 
-  /abitype/0.1.8:
-    resolution: {integrity: sha512-2pde0KepTzdfu19ZrzYTYVIWo69+6UbBCY4B1RDiwWgo2XZtFSJhF6C+XThuRXbbZ823J0Rw1Y5cP0NXYVcCdQ==}
+  /abitype/0.3.0:
+    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
     engines: {pnpm: '>=7'}
     peerDependencies:
-      typescript: '>=4.7.4'
-    dev: false
-
-  /abitype/0.2.5:
-    resolution: {integrity: sha512-t1iiokWYpkrziu4WL2Gb6YdGvaP9ZKs7WnA39TI8TsW2E99GVRgDPW/xOKhzoCdyxOYt550CNYEFluCwGaFHaA==}
-    engines: {pnpm: '>=7'}
-    peerDependencies:
-      typescript: '>=4.7.4'
+      typescript: '>=4.9.4'
       zod: '>=3.19.1'
     peerDependenciesMeta:
       zod:
         optional: true
     dev: false
 
-  /abitype/0.2.5_typescript@4.9.4:
-    resolution: {integrity: sha512-t1iiokWYpkrziu4WL2Gb6YdGvaP9ZKs7WnA39TI8TsW2E99GVRgDPW/xOKhzoCdyxOYt550CNYEFluCwGaFHaA==}
+  /abitype/0.3.0_typescript@4.9.4:
+    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
     engines: {pnpm: '>=7'}
     peerDependencies:
-      typescript: '>=4.7.4'
+      typescript: '>=4.9.4'
       zod: '>=3.19.1'
     peerDependenciesMeta:
       zod:
@@ -3033,11 +3026,11 @@ packages:
       typescript: 4.9.4
     dev: true
 
-  /abitype/0.2.5_zod@3.20.2:
-    resolution: {integrity: sha512-t1iiokWYpkrziu4WL2Gb6YdGvaP9ZKs7WnA39TI8TsW2E99GVRgDPW/xOKhzoCdyxOYt550CNYEFluCwGaFHaA==}
+  /abitype/0.3.0_zod@3.20.2:
+    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
     engines: {pnpm: '>=7'}
     peerDependencies:
-      typescript: '>=4.7.4'
+      typescript: '>=4.9.4'
       zod: '>=3.19.1'
     peerDependenciesMeta:
       zod:

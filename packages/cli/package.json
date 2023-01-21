@@ -69,7 +69,7 @@
   "dependencies": {
     "@ethersproject/address": "^5.7.0",
     "@wagmi/chains": "workspace:../../references/packages/chains",
-    "abitype": "^0.2.5",
+    "abitype": "^0.3.0",
     "bundle-require": "^3.1.2",
     "cac": "^6.7.12",
     "change-case": "^4.1.2",
