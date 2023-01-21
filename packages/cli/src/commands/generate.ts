@@ -73,8 +73,6 @@ export async function generate(options: Generate = {}) {
     outNames.add(config.out)
 
     // Collect contracts and watch configs from plugins
-    const contractConfigs = config.contracts ?? []
-    const watchConfigs: Watch[] = []
     const plugins = (config.plugins ?? []).map((x, i) => ({
       ...x,
       id: `${x.name}-${i}`,
@@ -83,18 +81,24 @@ export async function generate(options: Generate = {}) {
     spinner.start('Validating plugins')
     for (const plugin of plugins) {
       await plugin.validate?.()
+    }
+    spinner.succeed()
+
+    // Add plugin contracts to config contracts
+    const contractConfigs = config.contracts ?? []
+    const watchConfigs: Watch[] = []
+    spinner.start('Resolving contracts')
+    for (const plugin of plugins) {
       if (plugin.watch) watchConfigs.push(plugin.watch)
       if (plugin.contracts) {
         const contracts = await plugin.contracts()
         contractConfigs.push(...contracts)
       }
     }
-    spinner.succeed()
 
     // Get contracts from config
     const contractNames = new Set<string>()
     const contractMap = new Map<string, Contract>()
-    spinner.start('Resolving contracts')
     for (const contractConfig of contractConfigs) {
       if (contractNames.has(contractConfig.name))
         throw new Error(

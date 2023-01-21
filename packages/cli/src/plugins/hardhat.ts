@@ -142,7 +142,7 @@ export function hardhat({
     async validate() {
       // Check that project directory exists
       if (!(await fse.pathExists(project)))
-        throw new Error(`Project "${project}" not found.`)
+        throw new Error(`Hardhat project ${pc.gray(project)} not found.`)
 
       // Check that `hardhat` is installed
       const packageName = 'hardhat'

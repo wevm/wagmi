@@ -22,7 +22,7 @@ describe('hardhat', () => {
           project: '../path/to/project',
         }).validate(),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Project \\"../path/to/project\\" not found."',
+        '"Hardhat project ../path/to/project not found."',
       )
     })
   })

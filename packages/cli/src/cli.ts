@@ -38,7 +38,7 @@ void (async () => {
     if (!cli.matchedCommand && cli.args.length === 0) cli.outputHelp()
     await cli.runMatchedCommand()
   } catch (error) {
-    logger.error((error as Error).message)
+    logger.error(`\n${(error as Error).message}`)
     process.exit(1)
   }
 })()

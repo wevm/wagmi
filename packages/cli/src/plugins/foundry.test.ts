@@ -28,7 +28,7 @@ describe('foundry', () => {
           project: '../path/to/project',
         }).validate(),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Project \\"../path/to/project\\" not found."',
+        '"Foundry project ../path/to/project not found."',
       )
     })
   })

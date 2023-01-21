@@ -145,7 +145,7 @@ export function foundry({
     async validate() {
       // Check that project directory exists
       if (!(await fse.pathExists(project)))
-        throw new Error(`Project "${project}" not found.`)
+        throw new Error(`Foundry project ${pc.gray(project)} not found.`)
 
       // Ensure forge is installed
       if (clean || build || rebuild)
