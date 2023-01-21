@@ -39,10 +39,11 @@
       "@ethersproject/abstract-signer"
     ]
   },
-  "exclude": ["**/node_modules/**", "**/dist/**", "examples/hello_hardhat/**"],
+  "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [
     "examples/**/*",
     "packages/**/*",
+    "references/**/*",
     "scripts/**/*",
     "**/vitest.config.ts"
   ]
