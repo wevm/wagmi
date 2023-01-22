@@ -8,6 +8,7 @@ import pc from 'picocolors'
 import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
 import type { RequiredBy } from '../types'
+import type { FoundryResolved } from './_types'
 
 const defaultExcludes = [
   'Common.sol/**',
@@ -28,7 +29,7 @@ const defaultExcludes = [
   '**.t.sol/*.json',
 ]
 
-type FoundryConfig = {
+type FoundryConfig<TProject extends string> = {
   /**
    * Project's artifacts directory.
    *
@@ -40,7 +41,9 @@ type FoundryConfig = {
   /**
    * Mapping of addresses to attach to artifacts.
    */
-  deployments?: Record<string, ContractConfig['address']>
+  deployments?: {
+    [_ in FoundryResolved<TProject>['deployments']]: ContractConfig['address']
+  }
   /** Artifact files to exclude. */
   exclude?: string[]
   /** [Forge](https://book.getfoundry.sh/forge) configuration */
@@ -75,7 +78,7 @@ type FoundryConfig = {
   /** Optional prefix to prepend to artifact names. */
   namePrefix?: string
   /** Path to foundry project. */
-  project: string
+  project: TProject
 }
 
 type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
@@ -83,7 +86,7 @@ type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 /**
  * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.
  */
-export function foundry({
+export function foundry<TProject extends string>({
   artifacts = 'out',
   deployments = {},
   exclude = defaultExcludes,
@@ -96,7 +99,7 @@ export function foundry({
   include = ['*.json'],
   namePrefix = '',
   project,
-}: FoundryConfig): FoundryResult {
+}: FoundryConfig<TProject>): FoundryResult {
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)

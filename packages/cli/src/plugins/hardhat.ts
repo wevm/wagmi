@@ -14,10 +14,11 @@ import {
   getIsPackageInstalled,
   getPackageManager,
 } from '../utils'
+import type { HardhatResolved } from './_types'
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
 
-type HardhatConfig = {
+type HardhatConfig<TProject extends string> = {
   /**
    * Project's artifacts directory.
    *
@@ -29,7 +30,9 @@ type HardhatConfig = {
   /**
    * Mapping of addresses to attach to artifacts.
    */
-  deployments?: Record<string, ContractConfig['address']>
+  deployments?: {
+    [_ in HardhatResolved<TProject>['deployments']]: ContractConfig['address']
+  }
   /** Artifact files to exclude. */
   exclude?: string[]
   /** Commands to run */
@@ -74,7 +77,7 @@ type HardhatResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 /**
  * Resolves ABIs from [Hardhat](https://github.com/NomicFoundation/hardhat) project.
  */
-export function hardhat({
+export function hardhat<TProject extends string>({
   artifacts = 'artifacts',
   deployments = {},
   exclude = defaultExcludes,
@@ -83,7 +86,7 @@ export function hardhat({
   namePrefix = '',
   project,
   sources = 'contracts',
-}: HardhatConfig): HardhatResult {
+}: HardhatConfig<TProject>): HardhatResult {
   function getContractName(artifact: { contractName: string }) {
     return `${namePrefix}${artifact.contractName}`
   }
