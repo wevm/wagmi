@@ -17,7 +17,7 @@
   "funding": [
     {
       "type": "gitcoin",
-      "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+      "url": "https://wagmi.sh/gitcoin"
     },
     {
       "type": "github",
