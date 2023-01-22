@@ -34,14 +34,14 @@ type EtherscanConfig<TChainId extends number> = {
    * Etherscan API key.
    *
    * API keys are specific per network and include testnets (e.g. Ethereum Mainnet and Goerli share same API key). Create or manage keys:
-   * - [Ethereum](https://etherscan.io/myapikey)
-   * - [Arbitrum](https://arbiscan.io/myapikey)
-   * - [Avalanche](https://snowtrace.io/myapikey)
-   * - [BNB Smart Chain](https://bscscan.com/myapikey)
-   * - [Fantom](https://ftmscan.com/myapikey)
-   * - [Heco Chain](https://hecoinfo.com/myapikey)
-   * - [Optimism](https://optimistic.etherscan.io/myapikey)
-   * - [Polygon](https://polygonscan.com/myapikey)
+   * - [__Ethereum__](https://etherscan.io/myapikey)
+   * - [__Arbitrum__](https://arbiscan.io/myapikey)
+   * - [__Avalanche__](https://snowtrace.io/myapikey)
+   * - [__BNB Smart Chain__](https://bscscan.com/myapikey)
+   * - [__Fantom__](https://ftmscan.com/myapikey)
+   * - [__Heco Chain__](https://hecoinfo.com/myapikey)
+   * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
+   * - [__Polygon__](https://polygonscan.com/myapikey)
    */
   apiKey: string
   /**
