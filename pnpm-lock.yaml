@@ -2504,7 +2504,7 @@ packages:
     resolution: {integrity: sha512-+OlNtwieUqVcOpFTvLBvH+9J9pntEqH5evpINHfVxff1XIgwV55PpbdvkHu6r9Ib4WQDOFiD8OeeXs1vHw7xKQ==}
     dependencies:
       '@walletconnect/encoding': 1.0.1
-      '@walletconnect/environment': 1.0.0
+      '@walletconnect/environment': 1.0.1
       '@walletconnect/randombytes': 1.0.2
       aes-js: 3.1.2
       hash.js: 1.1.7
@@ -2515,14 +2515,10 @@ packages:
       is-typedarray: 1.0.0
       typedarray-to-buffer: 3.1.5
 
-  /@walletconnect/environment/1.0.0:
-    resolution: {integrity: sha512-4BwqyWy6KpSvkocSaV7WR3BlZfrxLbJSLkg+j7Gl6pTDE+U55lLhJvQaMuDVazXYxcjBsG09k7UlH7cGiUI5vQ==}
-
   /@walletconnect/environment/1.0.1:
     resolution: {integrity: sha512-T426LLZtHj8e8rYnKfzsw1aG6+M0BT1ZxayMdv/p8yM0MU+eJDISqNY3/bccxRr4LrF9csq02Rhqt08Ibl0VRg==}
     dependencies:
       tslib: 1.14.1
-    dev: false
 
   /@walletconnect/ethereum-provider/1.8.0:
     resolution: {integrity: sha512-Nq9m+oo5P0F+njsROHw9KMWdoc/8iGHYzQdkjJN/1C7DtsqFRg5k5a3hd9rzCLpbPsOC1q8Z5lRs6JQgDvPm6Q==}
@@ -2607,13 +2603,12 @@ packages:
     dependencies:
       keyvaluestorage-interface: 1.0.0
       tslib: 1.14.1
-    dev: false
 
   /@walletconnect/jsonrpc-utils/1.0.3:
     resolution: {integrity: sha512-3yb49bPk16MNLk6uIIHPSHQCpD6UAo1OMOx1rM8cW/MPEAYAzrSW5hkhG7NEUwX9SokRIgnZK3QuQkiyNzBMhQ==}
     dependencies:
-      '@walletconnect/environment': 1.0.0
-      '@walletconnect/jsonrpc-types': 1.0.1
+      '@walletconnect/environment': 1.0.1
+      '@walletconnect/jsonrpc-types': 1.0.2
 
   /@walletconnect/jsonrpc-utils/1.0.4:
     resolution: {integrity: sha512-y0+tDxcTZ9BHBBKBJbjZxLUXb+zQZCylf7y/jTvDPNx76J0hYYc+F9zHzyqBLeorSKepLTk6yI8hw3NXbAQB3g==}
@@ -2676,7 +2671,7 @@ packages:
     resolution: {integrity: sha512-ivgOtAyqQnN0rLQmOFPemsgYGysd/ooLfaDA/ACQ3cyqlca56t3rZc7pXfqJOIETx/wSyoF5XbwL+BqYodw27A==}
     dependencies:
       '@walletconnect/encoding': 1.0.1
-      '@walletconnect/environment': 1.0.0
+      '@walletconnect/environment': 1.0.1
       randombytes: 2.1.0
 
   /@walletconnect/relay-api/1.0.7:
@@ -2837,12 +2832,11 @@ packages:
     resolution: {integrity: sha512-vHp+HqzGxORPAN8gY03qnbTMnhqIwjeRJNOMOAzePRg4xVEEE2WvYsI9G2NMjOknA8hnuYbU3/hwLcKbjhc8+Q==}
     dependencies:
       tslib: 1.14.1
-    dev: false
 
   /@walletconnect/window-metadata/1.0.0:
     resolution: {integrity: sha512-9eFvmJxIKCC3YWOL97SgRkKhlyGXkrHwamfechmqszbypFspaSk+t2jQXAEU7YClHF6Qjw5eYOmy1//zFi9/GA==}
     dependencies:
-      '@walletconnect/window-getters': 1.0.0
+      '@walletconnect/window-getters': 1.0.1
 
   /@walletconnect/window-metadata/1.0.1:
     resolution: {integrity: sha512-9koTqyGrM2cqFRW517BPY/iEtUDx2r1+Pwwu5m7sJ7ka79wi3EyqhqcICk/yDmv6jAS1rjKgTKXlEhanYjijcA==}
