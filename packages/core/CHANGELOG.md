@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.8.18
+
+### Patch Changes
+
+- [#1708](https://github.com/wagmi-dev/wagmi/pull/1708) [`07fc3801`](https://github.com/wagmi-dev/wagmi/commit/07fc3801fa13c2cb5f7cf9b86ba8320b05a6a135) Thanks [@jxom](https://github.com/jxom)! - Updated `references/` submodule.
+
 ## 0.8.17
 
 ### Patch Changes
