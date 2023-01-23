@@ -67,7 +67,8 @@ export async function generate(options: Generate = {}) {
   const isArrayConfig = Array.isArray(resolvedConfigs)
   const configs = isArrayConfig ? resolvedConfigs : [resolvedConfigs]
   for (const config of configs) {
-    logger.log(`Using config ${pc.gray(basename(configPath))}`)
+    if (isArrayConfig)
+      logger.log(`Using config ${pc.gray(basename(configPath))}`)
     if (outNames.has(config.out))
       throw new Error(`out "${config.out}" must be unique.`)
     outNames.add(config.out)
