@@ -3163,7 +3163,7 @@ packages:
     resolution: {integrity: sha512-+OlNtwieUqVcOpFTvLBvH+9J9pntEqH5evpINHfVxff1XIgwV55PpbdvkHu6r9Ib4WQDOFiD8OeeXs1vHw7xKQ==}
     dependencies:
       '@walletconnect/encoding': 1.0.1
-      '@walletconnect/environment': 1.0.0
+      '@walletconnect/environment': 1.0.1
       '@walletconnect/randombytes': 1.0.2
       aes-js: 3.1.2
       hash.js: 1.1.7
@@ -3174,10 +3174,6 @@ packages:
     dependencies:
       is-typedarray: 1.0.0
       typedarray-to-buffer: 3.1.5
-    dev: false
-
-  /@walletconnect/environment/1.0.0:
-    resolution: {integrity: sha512-4BwqyWy6KpSvkocSaV7WR3BlZfrxLbJSLkg+j7Gl6pTDE+U55lLhJvQaMuDVazXYxcjBsG09k7UlH7cGiUI5vQ==}
     dev: false
 
   /@walletconnect/environment/1.0.1:
@@ -3279,8 +3275,8 @@ packages:
   /@walletconnect/jsonrpc-utils/1.0.3:
     resolution: {integrity: sha512-3yb49bPk16MNLk6uIIHPSHQCpD6UAo1OMOx1rM8cW/MPEAYAzrSW5hkhG7NEUwX9SokRIgnZK3QuQkiyNzBMhQ==}
     dependencies:
-      '@walletconnect/environment': 1.0.0
-      '@walletconnect/jsonrpc-types': 1.0.1
+      '@walletconnect/environment': 1.0.1
+      '@walletconnect/jsonrpc-types': 1.0.2
     dev: false
 
   /@walletconnect/jsonrpc-utils/1.0.4:
@@ -3346,7 +3342,7 @@ packages:
     resolution: {integrity: sha512-ivgOtAyqQnN0rLQmOFPemsgYGysd/ooLfaDA/ACQ3cyqlca56t3rZc7pXfqJOIETx/wSyoF5XbwL+BqYodw27A==}
     dependencies:
       '@walletconnect/encoding': 1.0.1
-      '@walletconnect/environment': 1.0.0
+      '@walletconnect/environment': 1.0.1
       randombytes: 2.1.0
     dev: false
 
@@ -3519,7 +3515,7 @@ packages:
   /@walletconnect/window-metadata/1.0.0:
     resolution: {integrity: sha512-9eFvmJxIKCC3YWOL97SgRkKhlyGXkrHwamfechmqszbypFspaSk+t2jQXAEU7YClHF6Qjw5eYOmy1//zFi9/GA==}
     dependencies:
-      '@walletconnect/window-getters': 1.0.0
+      '@walletconnect/window-getters': 1.0.1
     dev: false
 
   /@walletconnect/window-metadata/1.0.1:

@@ -1,5 +1,28 @@
 # wagmi
 
+## 0.10.14
+
+### Patch Changes
+
+- [#1708](https://github.com/wagmi-dev/wagmi/pull/1708) [`07fc3801`](https://github.com/wagmi-dev/wagmi/commit/07fc3801fa13c2cb5f7cf9b86ba8320b05a6a135) Thanks [@jxom](https://github.com/jxom)! - Updated `references/` submodule.
+
+- Updated dependencies [[`07fc3801`](https://github.com/wagmi-dev/wagmi/commit/07fc3801fa13c2cb5f7cf9b86ba8320b05a6a135)]:
+  - @wagmi/core@0.8.18
+
+## 0.10.13
+
+### Patch Changes
+
+- [#1705](https://github.com/wagmi-dev/wagmi/pull/1705) [`9ff797dc`](https://github.com/wagmi-dev/wagmi/commit/9ff797dcb979dc86b798a432b74c98598165430d) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `crossbell` (thanks @Songkeys)
+  - `filecoin` & `filecoinHyperspace` (thanks @neil0x46dc)
+  - `gnosisChiado` (thanks @theNvN)
+  - `metis` & `metisGoerli` (thanks @CookedCookee)
+
+- Updated dependencies [[`9ff797dc`](https://github.com/wagmi-dev/wagmi/commit/9ff797dcb979dc86b798a432b74c98598165430d)]:
+  - @wagmi/core@0.8.17
+
 ## 0.10.12
 
 ### Patch Changes
