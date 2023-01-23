@@ -171,7 +171,7 @@ const config: DocsThemeConfig = {
     float: true,
   },
   useNextSeoProps() {
-    const { route } = useRouter()
+    const { route, pathname } = useRouter()
     const { frontMatter } = useConfig()
 
     const defaultSeoProps = {
@@ -191,6 +191,11 @@ const config: DocsThemeConfig = {
       },
     } as const
 
+    let tagline
+    if (/^\/core*/.test(pathname)) tagline = '@wagmi/core'
+    else if (/^\/cli*/.test(pathname)) tagline = '@wagmi/cli'
+    else tagline = 'wagmi'
+
     if (!/^\/index/.test(route))
       return {
         ...defaultSeoProps,
@@ -203,7 +208,7 @@ const config: DocsThemeConfig = {
             : defaultSeoProps.openGraph.images,
           title: frontMatter.title,
         },
-        titleTemplate: `%s – wagmi`,
+        titleTemplate: `%s – ${tagline}`,
       }
     return { ...defaultSeoProps, title: 'wagmi: React Hooks for Ethereum' }
   },
