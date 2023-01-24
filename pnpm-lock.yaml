@@ -264,7 +264,7 @@ importers:
   packages/cli/plugins/types:
     specifiers: {}
 
-  packages/cli/test/fixture:
+  packages/cli/test/fixtures/vhs:
     specifiers:
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
@@ -278,11 +278,11 @@ importers:
       ethers: 5.7.2
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      wagmi: link:../../../react
+      wagmi: link:../../../../react
     devDependencies:
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
-      '@wagmi/cli': link:../..
+      '@wagmi/cli': link:../../..
       typescript: 4.9.4
 
   packages/core:
