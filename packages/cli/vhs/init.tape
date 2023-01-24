@@ -12,7 +12,7 @@ Enter
 Sleep 10s
 Type "cd packages/cli/vhs"
 Enter
-Type "mv wagmi.config.ts __wagmi.config.ts"
+Type "mv wagmi.config.ts ___wagmi.config.ts"
 Enter
 Ctrl+L
 Show
@@ -27,6 +27,6 @@ Sleep 5s
 Hide
 Type "rm wagmi.config.ts"
 Enter
-Type "mv __wagmi.config.ts wagmi.config.ts"
+Type "mv ___wagmi.config.ts wagmi.config.ts"
 Enter
 
