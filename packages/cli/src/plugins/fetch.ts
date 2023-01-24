@@ -73,8 +73,11 @@ export function fetch({
         let abi
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
         else {
+          const AbortController =
+            globalThis.AbortController ||
+            (await import('abort-controller')).default
           const controller = new AbortController()
-          const timeout = setTimeout(() => controller.abort(), 2_500)
+          const timeout = setTimeout(() => controller.abort(), 10_000)
           try {
             const { url, init } = await request(contract)
             // TODO: Replace `node-fetch` with native `fetch` when Node 18 is more widely used.

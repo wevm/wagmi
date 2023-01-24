@@ -1,0 +1,69 @@
+name: vhs
+
+on:
+  push:
+    paths:
+      - packages/**/*.tape
+
+jobs:
+  vhs:
+    name: vhs
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
+        pnpm-version: [7.19]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: ${{ matrix.pnpm-version }}
+      - name: Set up Node ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          cache: 'pnpm'
+          node-version: ${{ matrix.node-version }}
+      - name: Cache pnpm
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: |
+            node_modules
+            docs/node_modules
+            examples/**/node_modules
+            packages/**/node_modules
+            packages/**/dist
+            references/packages/**/node_modules
+          key: modules-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: pnpm i
+      - name: Link Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit == 'true'
+        run: pnpm dev
+
+      - uses: charmbracelet/vhs-action@v1
+        with:
+          path: 'packages/cli/src/commands/init.tape'
+      - uses: charmbracelet/vhs-action@v1
+        with:
+          path: 'packages/cli/src/commands/generate.tape'
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit_message: 'chore: update vhs'
+          commit_user_name: vhs-action 📼
+          commit_user_email: actions@github.com
+          commit_author: vhs-action 📼 <actions@github.com>
+          file_pattern: '*.gif *.mp4'

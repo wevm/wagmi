@@ -5,8 +5,8 @@ import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
 import { watch } from 'chokidar'
 import { default as dedent } from 'dedent'
-import { default as fse } from 'fs-extra'
-import { basename, resolve } from 'pathe'
+import { ensureDir, default as fse } from 'fs-extra'
+import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
 
@@ -398,6 +398,7 @@ async function writeContracts({
   // Format and write output
   const cwd = process.cwd()
   const outPath = resolve(cwd, filename)
+  await ensureDir(dirname(outPath))
   const formatted = await format(code)
   await fse.writeFile(outPath, formatted)
 }

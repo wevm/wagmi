@@ -70,6 +70,7 @@
     "@ethersproject/address": "^5.7.0",
     "@wagmi/chains": "^0.1.11",
     "abitype": "^0.3.0",
+    "abort-controller": "^3.0.0",
     "bundle-require": "^3.1.2",
     "cac": "^6.7.12",
     "change-case": "^4.1.2",

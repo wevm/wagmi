@@ -92,6 +92,7 @@ importers:
       '@types/node': ^18.11.9
       '@types/react': ^18.0.9
       '@types/react-dom': ^18.0.3
+      '@wagmi/cli': workspace:*
       autoprefixer: ^10.4.13
       degen: ^0.0.49
       eslint: ^8.15.0
@@ -128,6 +129,7 @@ importers:
       '@types/node': 18.11.9
       '@types/react': 18.0.21
       '@types/react-dom': 18.0.6
+      '@wagmi/cli': link:../packages/cli
       autoprefixer: 10.4.13_postcss@8.4.19
       eslint: 8.25.0
       eslint-config-next: 12.3.1_grqhnqpocakf5dew66i47isfme
@@ -199,6 +201,7 @@ importers:
       '@types/fs-extra': ^9.0.13
       '@wagmi/chains': ^0.1.11
       abitype: ^0.3.0
+      abort-controller: ^3.0.0
       bundle-require: ^3.1.2
       cac: ^6.7.12
       change-case: ^4.1.2
@@ -221,8 +224,9 @@ importers:
       zod: ^3.20.2
     dependencies:
       '@ethersproject/address': 5.7.0
-      '@wagmi/chains': 0.1.11
+      '@wagmi/chains': 0.1.13
       abitype: 0.3.0_zod@3.20.2
+      abort-controller: 3.0.0
       bundle-require: 3.1.2_esbuild@0.15.13
       cac: 6.7.14
       change-case: 4.1.2
@@ -247,6 +251,42 @@ importers:
       '@types/fs-extra': 9.0.13
       fixturez: 1.1.0
 
+  packages/cli/config:
+    specifiers: {}
+
+  packages/cli/plugins:
+    specifiers: {}
+
+  packages/cli/plugins/_types:
+    specifiers: {}
+
+  packages/cli/plugins/config:
+    specifiers: {}
+
+  packages/cli/plugins/types:
+    specifiers: {}
+
+  packages/cli/test/fixture:
+    specifiers:
+      '@types/react': ^18.0.9
+      '@types/react-dom': ^18.0.3
+      '@wagmi/cli': workspace:*
+      ethers: ^5.7.1
+      react: ^18.1.0
+      react-dom: ^18.1.0
+      typescript: ^4.9.4
+      wagmi: workspace:*
+    dependencies:
+      ethers: 5.7.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      wagmi: link:../../../react
+    devDependencies:
+      '@types/react': 18.0.21
+      '@types/react-dom': 18.0.6
+      '@wagmi/cli': link:../..
+      typescript: 4.9.4
+
   packages/core:
     specifiers:
       '@wagmi/chains': workspace:../../references/packages/chains
@@ -263,6 +303,48 @@ importers:
       zustand: 4.3.1
     devDependencies:
       ethers: 5.7.2
+
+  packages/core/chains:
+    specifiers: {}
+
+  packages/core/connectors:
+    specifiers: {}
+
+  packages/core/connectors/coinbaseWallet:
+    specifiers: {}
+
+  packages/core/connectors/injected:
+    specifiers: {}
+
+  packages/core/connectors/ledger:
+    specifiers: {}
+
+  packages/core/connectors/metaMask:
+    specifiers: {}
+
+  packages/core/connectors/mock:
+    specifiers: {}
+
+  packages/core/connectors/walletConnect:
+    specifiers: {}
+
+  packages/core/internal:
+    specifiers: {}
+
+  packages/core/internal/test:
+    specifiers: {}
+
+  packages/core/providers/alchemy:
+    specifiers: {}
+
+  packages/core/providers/infura:
+    specifiers: {}
+
+  packages/core/providers/jsonRpc:
+    specifiers: {}
+
+  packages/core/providers/public:
+    specifiers: {}
 
   packages/react:
     specifiers:
@@ -300,6 +382,45 @@ importers:
       react-17: /react/17.0.2
       react-dom: 18.2.0_react@18.2.0
       react-dom-17: /react-dom/17.0.2_react@18.2.0
+
+  packages/react/actions:
+    specifiers: {}
+
+  packages/react/chains:
+    specifiers: {}
+
+  packages/react/connectors:
+    specifiers: {}
+
+  packages/react/connectors/coinbaseWallet:
+    specifiers: {}
+
+  packages/react/connectors/injected:
+    specifiers: {}
+
+  packages/react/connectors/ledger:
+    specifiers: {}
+
+  packages/react/connectors/metaMask:
+    specifiers: {}
+
+  packages/react/connectors/mock:
+    specifiers: {}
+
+  packages/react/connectors/walletConnect:
+    specifiers: {}
+
+  packages/react/providers/alchemy:
+    specifiers: {}
+
+  packages/react/providers/infura:
+    specifiers: {}
+
+  packages/react/providers/jsonRpc:
+    specifiers: {}
+
+  packages/react/providers/public:
+    specifiers: {}
 
   references/packages/chains:
     specifiers: {}
@@ -3096,8 +3217,8 @@ packages:
       sirv: 2.0.2
     dev: true
 
-  /@wagmi/chains/0.1.11:
-    resolution: {integrity: sha512-0Pik1ndnMGMpKuIsOpGsONXshDw5Ju8QTflLehYM2+q7M3jjAwx/9yVq42O0OqNagovEQStGlQsilr1ImG1Reg==}
+  /@wagmi/chains/0.1.13:
+    resolution: {integrity: sha512-TnN6pJp5KIwi9kiSv6J5jB0Le484EuFfWkWQ5+/E+vv6yHI2qOcGuewiC4itgcMkVOxMfjGpSvqWNn8kq/+fkg==}
     dev: false
 
   /@walletconnect/browser-utils/1.8.0:
@@ -3623,7 +3744,6 @@ packages:
     engines: {node: '>=6.5'}
     dependencies:
       event-target-shim: 5.0.1
-    dev: true
 
   /abstract-level/1.0.3:
     resolution: {integrity: sha512-t6jv+xHy+VYwc4xqZMn2Pa9DjcdzvzZmQGRjTFc8spIbRGHgBrEKbPq+rYXc7CCo0lxgYvSgKVg9qZAhpVQSjA==}
@@ -6653,7 +6773,6 @@ packages:
   /event-target-shim/5.0.1:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
-    dev: true
 
   /eventemitter3/4.0.7:
     resolution: {integrity: sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==}
