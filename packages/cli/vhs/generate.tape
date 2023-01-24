@@ -7,7 +7,7 @@ Set Height 600
 
 # Setup
 Hide
-Type "cd packages/cli/test/fixtures/vhs"
+Type "cd packages/cli/vhs"
 Enter
 Ctrl+L
 Show
@@ -22,3 +22,4 @@ Sleep 5s
 Hide
 Type "rm src/generated.ts"
 Enter
+

@@ -7,7 +7,7 @@ Set Height 600
 
 # Setup
 Hide
-Type "cd packages/cli/test/fixtures/vhs"
+Type "cd packages/cli/vhs"
 Enter
 Type "mv wagmi.config.ts __wagmi.config.ts"
 Enter
@@ -24,3 +24,4 @@ Sleep 5s
 Hide
 Type "mv __wagmi.config.ts wagmi.config.ts"
 Enter
+

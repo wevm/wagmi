@@ -59,10 +59,10 @@ jobs:
       # https://github.com/charmbracelet/vhs-action/issues/50
       - uses: charmbracelet/vhs-action@v1
         with:
-          path: 'packages/cli/src/commands/init.tape'
+          path: 'packages/cli/vhs/init.tape'
       - uses: charmbracelet/vhs-action@v1
         with:
-          path: 'packages/cli/src/commands/generate.tape'
+          path: 'packages/cli/vhs/generate.tape'
         env:
           ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
 
