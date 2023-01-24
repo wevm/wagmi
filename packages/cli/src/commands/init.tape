@@ -9,7 +9,7 @@ Set Height 600
 Hide
 Type "cd packages/cli/test/fixture"
 Enter
-Type "mv wagmi.config.ts __wagmi.config.ts"
+Type "mv wagmi.config.ts ____wagmi.config.ts"
 Enter
 Ctrl+L
 Show
@@ -22,5 +22,5 @@ Sleep 5s
 
 # Cleanup
 Hide
-Type "mv __wagmi.config.ts wagmi.config.ts"
+Type "mv ____wagmi.config.ts wagmi.config.ts"
 Enter

@@ -3,23 +3,25 @@ name: vhs
 on:
   push:
     paths:
-      - ./**/*.tape
+      - packages/**/*.tape
   workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
+env:
+  VHS: true
+
 jobs:
   vhs:
     name: vhs
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [18]
         pnpm-version: [7.19]
     steps:
-      - run: echo $TERM
       - uses: actions/checkout@v3
         with:
           submodules: true

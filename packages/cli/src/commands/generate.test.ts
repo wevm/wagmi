@@ -122,10 +122,9 @@ describe('generate', () => {
         await generate()
         expect(mockedConsole.formatted).toMatchInlineSnapshot(
           `
-          "Using config wagmi.config.js
-          ⠏ Validating plugins
+          "- Validating plugins
           ✔ Validating plugins
-          ⠏ Resolving contracts
+          - Resolving contracts
           ✖ Resolving contracts
           No contracts found."
         `,

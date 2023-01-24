@@ -32,7 +32,7 @@ describe('init', () => {
     `)
     expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
       .toMatchInlineSnapshot(`
-        "⠏ Creating config
+        "- Creating config
         ✔ Creating config
         Config created at wagmi.config.js"
       `)
@@ -54,10 +54,10 @@ describe('init', () => {
       `)
       expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
         .toMatchInlineSnapshot(`
-        "⠏ Creating config
-        ✔ Creating config
-        Config created at foo.config.ts"
-      `)
+          "- Creating config
+          ✔ Creating config
+          Config created at foo.config.ts"
+        `)
     })
 
     it('content', async () => {
@@ -88,10 +88,10 @@ describe('init', () => {
     `)
       expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
         .toMatchInlineSnapshot(`
-        "⠏ Creating config
-        ✔ Creating config
-        Config created at wagmi.config.ts"
-      `)
+          "- Creating config
+          ✔ Creating config
+          Config created at wagmi.config.ts"
+        `)
     })
 
     it('root', async () => {
@@ -110,7 +110,7 @@ describe('init', () => {
       `)
       expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
         .toMatchInlineSnapshot(`
-          "⠏ Creating config
+          "- Creating config
           ✔ Creating config
           Config created at foo/wagmi.config.js"
         `)
@@ -141,10 +141,10 @@ describe('init', () => {
     `)
       expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
         .toMatchInlineSnapshot(`
-        "⠏ Creating config
-        ✔ Creating config
-        Config created at wagmi.config.ts"
-      `)
+          "- Creating config
+          ✔ Creating config
+          Config created at wagmi.config.ts"
+        `)
     })
 
     it('displays config file location when config exists', async () => {

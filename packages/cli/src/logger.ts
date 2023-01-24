@@ -34,5 +34,7 @@ export function spinner() {
   return ora({
     color: 'yellow',
     spinner: 'dots',
+    // Force spinner to spin in certain environments (e.g. CI)
+    ...(process.env.VHS ? { isEnabled: true } : {}),
   })
 }

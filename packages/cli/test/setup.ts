@@ -13,7 +13,7 @@ vi.mock('ora', async () => {
       #text: string | undefined
 
       start(text: string | undefined = 'start') {
-        console.log(`⠏ ${text}`)
+        console.log(`- ${text}`)
         this.#text = text
       }
 
