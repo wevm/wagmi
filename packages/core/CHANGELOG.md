@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 0.8.19
+
+### Patch Changes
+
+- [#1718](https://github.com/wagmi-dev/wagmi/pull/1718) [`e62b5ef8`](https://github.com/wagmi-dev/wagmi/commit/e62b5ef8aaa8063abb5264790768899ea35bbd31) Thanks [@tmm](https://github.com/tmm)! - Updated references
+
 ## 0.8.18
 
 ### Patch Changes
