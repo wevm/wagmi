@@ -1,7 +1,7 @@
 Output docs/public/assets/cli-init.gif
 Output docs/public/assets/cli-init.mp4
 
-Set FontSize 20
+Set FontSize 24
 Set Width 1200
 Set Height 600
 
