@@ -1,7 +1,7 @@
 Output docs/public/assets/cli-generate.gif
 Output docs/public/assets/cli-generate.mp4
 
-Set FontSize 36
+Set FontSize 26
 Set Width 1200
 Set Height 600
 

@@ -1,7 +1,7 @@
 Output docs/public/assets/cli-init.gif
 Output docs/public/assets/cli-init.mp4
 
-Set FontSize 36
+Set FontSize 26
 Set Width 1200
 Set Height 600
 
@@ -9,7 +9,8 @@ Set Height 600
 Hide
 Type "cd packages/cli/test/fixture"
 Enter
-Type "mv wagmi.config.ts __wagmi.config.ts"
+Type "mv wagmi.config.ts _wagmi.config.ts"
+Enter
 Ctrl+L
 Show
 
@@ -21,5 +22,5 @@ Sleep 5s
 
 # Cleanup
 Hide
-Type "mv __wagmi.config.ts wagmi.config.ts"
+Type "mv _wagmi.config.ts wagmi.config.ts"
 Enter

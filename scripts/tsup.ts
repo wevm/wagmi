@@ -69,7 +69,6 @@ export function getConfig({ dev, noExport, ...options }: GetConfig): Options {
 
       const exports = await generateExports(entry, noExport)
       await generateProxyPackages(exports)
-      // await publint({ pkgDir: process.cwd(), level: 'error' })
     },
     ...options,
   }
