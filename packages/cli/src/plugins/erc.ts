@@ -152,6 +152,38 @@ const erc20ABI = [
     ],
     outputs: [{ type: 'bool' }],
   },
+  {
+    type: 'function',
+    name: 'increaseAllowance',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'addedValue',
+        type: 'uint256',
+      },
+    ],
+    outputs: [{ type: 'bool' }],
+  },
+  {
+    type: 'function',
+    name: 'decreaseAllowance',
+    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        name: 'subtractedValue',
+        type: 'uint256',
+      },
+    ],
+    outputs: [{ type: 'bool' }],
+  },
 ] as const
 
 const erc721ABI = [

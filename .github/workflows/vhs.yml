@@ -57,6 +57,8 @@ jobs:
       - name: Install Dependencies
         run: pnpm i
 
+      # TODO: Combine these steps once supported
+      # https://github.com/charmbracelet/vhs-action/issues/50
       - uses: charmbracelet/vhs-action@v1
         with:
           path: 'packages/cli/src/commands/init.tape'

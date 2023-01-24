@@ -302,7 +302,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                       TMode,
                       PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['abi'],
                       TFunctionName
-                    >${typeParams_ ? ` & {${typeParams_}}` : ''}
+                    >${TChainId ? ` & { address?: \`0x\${string}\`; chainId?: TChainId; }` : ''}
                   : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, TFunctionName> & {
                       abi?: never
                       ${typeParams_}
@@ -354,9 +354,12 @@ export function react(config: ReactConfig = {}): ReactResult {
                   const TChainId = hasMultichainAddress
                     ? `TChainId extends number = keyof typeof ${contract.meta.addressName}`
                     : ''
-                  let typeParams_ = `functionName?: '${item.name}'`
-                  if (TChainId)
-                    typeParams_ = `address?: never; chainId?: TChainId; functionName?: '${item.name}'`
+                  let preparedTypeParams = `functionName?: '${item.name}'`
+                  let unpreparedTypeParams = `functionName?: '${item.name}'`
+                  if (TChainId) {
+                    preparedTypeParams = `address?: \`0x\${string}\`; chainId?: TChainId; functionName?: '${item.name}'`
+                    unpreparedTypeParams = `address?: never; chainId?: TChainId; functionName?: '${item.name}'`
+                  }
 
                   imports.add('UseContractWriteConfig')
                   if (!hasWriteContractMode)
@@ -374,10 +377,10 @@ export function react(config: ReactConfig = {}): ReactResult {
                         TMode,
                         PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['abi'],
                         '${item.name}'
-                      > & {${typeParams_}}
+                      > & {${preparedTypeParams}}
                     : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, '${item.name}'> & {
                         abi?: never
-                        ${typeParams_}
+                        ${unpreparedTypeParams}
                       } = {} as any,
                   ) {
                     ${innerContent}
