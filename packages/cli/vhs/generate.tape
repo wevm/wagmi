@@ -7,6 +7,9 @@ Set Height 600
 
 # Setup
 Hide
+Type "pnpm i"
+Enter
+Sleep 90s
 Type "cd packages/cli/vhs"
 Enter
 Ctrl+L

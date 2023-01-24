@@ -9,7 +9,7 @@ Set Height 600
 Hide
 Type "pnpm i"
 Enter
-Sleep 10s
+Sleep 90s
 Type "cd packages/cli/vhs"
 Enter
 Type "mv wagmi.config.ts ___wagmi.config.ts"
