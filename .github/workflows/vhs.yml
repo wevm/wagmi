@@ -50,9 +50,7 @@ jobs:
             docs/node_modules
             examples/**/node_modules
             packages/**/node_modules
-            packages/**/dist
             references/packages/**/node_modules
-            packages/cli/test/fixture/**/node_modules
           key: modules-${{ hashFiles('pnpm-lock.yaml') }}
       - name: Install Dependencies
         run: pnpm i
