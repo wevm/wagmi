@@ -28,6 +28,23 @@ export default defineConfig({
 
 ## Configuration
 
+### project
+
+Path to Hardhat project.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
 ### artifacts (optional)
 
 Project's artifacts directory. Same as your project's `artifacts` [path configuration](https://hardhat.org/hardhat-runner/docs/config#path-configuration) option. Defaults to `'artifacts/'`.
@@ -102,7 +119,7 @@ import { hardhat } from '@wagmi/cli/plugins'
 export default defineConfig({
   plugins: [
     hardhat({
-      forge: {
+      commands: {
         clean: 'pnpm hardhat clean',
         build: 'pnpm hardhat compile',
         rebuild: 'pnpm hardhat compile',
@@ -150,23 +167,6 @@ export default defineConfig({
   plugins: [
     hardhat({
       namePrefix: 'HelloHardhat',
-      project: '../hello_hardhat',
-    }),
-  ],
-})
-```
-
-### project
-
-Path to Hardhat project.
-
-```ts {7}
-import { defineConfig } from '@wagmi/cli'
-import { hardhat } from '@wagmi/cli/plugins'
-
-export default defineConfig({
-  plugins: [
-    hardhat({
       project: '../hello_hardhat',
     }),
   ],

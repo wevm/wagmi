@@ -28,6 +28,23 @@ export default defineConfig({
 
 ## Configuration
 
+### project
+
+Path to Foundry project.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      project: '../hello_foundry',
+    }),
+  ],
+})
+```
+
 ### artifacts (optional)
 
 Project's artifacts directory. Defaults to `'out/'`. Same as your `foundry.toml`/`forge`s `--out` (`-o`) option.
@@ -166,23 +183,6 @@ export default defineConfig({
   plugins: [
     foundry({
       namePrefix: 'HelloFoundry',
-      project: '../hello_foundry',
-    }),
-  ],
-})
-```
-
-### project
-
-Path to Foundry project.
-
-```ts {7}
-import { defineConfig } from '@wagmi/cli'
-import { foundry } from '@wagmi/cli/plugins'
-
-export default defineConfig({
-  plugins: [
-    foundry({
       project: '../hello_foundry',
     }),
   ],
