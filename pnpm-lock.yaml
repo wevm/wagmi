@@ -235,7 +235,6 @@ importers:
       '@walletconnect/ethereum-provider': ^1.8.0
       '@walletconnect/universal-provider': ^2.2.1
       '@web3modal/standalone': ^2.0.0-rc.2
-      abitype: ^0.1.8
       ethers: ^5.7.2
       eventemitter3: ^4.0.7
     dependencies:
@@ -244,7 +243,6 @@ importers:
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/universal-provider': 2.2.1
       '@web3modal/standalone': 2.0.0
-      abitype: 0.1.8
       eventemitter3: 4.0.7
     devDependencies:
       '@wagmi/core': link:../../../packages/core
@@ -2895,13 +2893,6 @@ packages:
   /abab/2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: true
-
-  /abitype/0.1.8:
-    resolution: {integrity: sha512-2pde0KepTzdfu19ZrzYTYVIWo69+6UbBCY4B1RDiwWgo2XZtFSJhF6C+XThuRXbbZ823J0Rw1Y5cP0NXYVcCdQ==}
-    engines: {pnpm: '>=7'}
-    peerDependencies:
-      typescript: '>=4.7.4'
-    dev: false
 
   /abitype/0.2.5_typescript@4.9.3:
     resolution: {integrity: sha512-t1iiokWYpkrziu4WL2Gb6YdGvaP9ZKs7WnA39TI8TsW2E99GVRgDPW/xOKhzoCdyxOYt550CNYEFluCwGaFHaA==}
