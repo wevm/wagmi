@@ -52,7 +52,6 @@ export function getConfig({ dev, noExport, ...options }: GetConfig): Options {
         }
         const exports = await generateExports(entry, noExport)
         await generateProxyPackages(exports)
-        await validateExports(exports)
       },
     }
   }
@@ -70,24 +69,7 @@ export function getConfig({ dev, noExport, ...options }: GetConfig): Options {
 
       const exports = await generateExports(entry, noExport)
       await generateProxyPackages(exports)
-      try {
-        await validateExports(exports)
-      } catch (error) {
-        // `onSuccess` can run before type definitions are created so check again if failure
-        // https://github.com/egoist/tsup/issues/700
-        if (
-          (error as Error).message.includes(
-            'File does not exist for export "types"',
-          )
-        ) {
-          await new Promise((resolve) =>
-            setTimeout(async () => {
-              await validateExports(exports)
-              resolve(true)
-            }, 3_500),
-          )
-        } else throw error
-      }
+      // await publint({ pkgDir: process.cwd(), level: 'error' })
     },
     ...options,
   }
@@ -133,22 +115,6 @@ async function generateExports(entry: string[], noExport?: string[]) {
   )
 
   return exports
-}
-
-/**
- * Validate exports point to actual files
- */
-async function validateExports(exports: Exports) {
-  for (const [key, value] of Object.entries(exports)) {
-    if (typeof value === 'string') continue
-    for (const [type, path] of Object.entries(value)) {
-      const fileExists = await fs.pathExists(path)
-      if (!fileExists)
-        throw new Error(
-          `File does not exist for export "${type}": "${value.default}" in "${key}."`,
-        )
-    }
-  }
 }
 
 /**
