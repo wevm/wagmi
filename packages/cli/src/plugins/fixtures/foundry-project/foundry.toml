@@ -1,0 +1,34 @@
+[profile.default]
+src = 'packages/contracts/src'
+test = 'packages/contracts/test'
+no_match_test = "FFI|LongRunning"
+out = 'packages/contracts/dist'
+optimizer = true
+optimizer_runs = 1000000
+bytecode_hash = "none"
+
+solc = "0.8.17"
+
+[rpc_endpoints]
+mainnet = "${RPC_URL_MAINNET}"
+goerli = "${RPC_URL_GOERLI}"
+optimism = "${RPC_URL_OPTIMISM}"
+arbitrum = "${RPC_URL_ARBITRUM}"
+polygon = "${RPC_URL_POLYGON}"
+
+[etherscan]
+mainnet = {key = "${ETHERSCAN_KEY}"}
+goerli = {key = "${ETHERSCAN_KEY}", url = "https://api-goerli.etherscan.io/api"}
+optimism = {key = "${OPTIMISM_ETHERSCAN_KEY}", url = "https://api-optimistic.etherscan.io/api"}
+arbitrum = {key = "${ARBISCAN_KEY}", url = "https://api.arbiscan.io/api"}
+polygon = {key = "${POLYGONSCAN_KEY}", url = "https://api.polygonscan.com/api"}
+
+[profile.intense]
+no_match_test = "FFI"
+
+[profile.intense.fuzz]
+runs = 10000
+
+[profile.ffi]
+ffi = true
+no_match_test = "LongRunning"

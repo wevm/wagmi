@@ -5,6 +5,9 @@ import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 import pc from 'picocolors'
 
+import toml from 'toml'
+import { z } from 'zod'
+
 import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
 import type { RequiredBy } from '../types'
@@ -35,7 +38,7 @@ type FoundryConfig<TProject extends string> = {
    *
    * Same as your project's `--out` (`-o`) option.
    *
-   * @default 'out/'
+   * @default profile.default.out in your foundry.toml
    */
   artifacts?: string
   /**
@@ -83,23 +86,65 @@ type FoundryConfig<TProject extends string> = {
 
 type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 
+const foundryTomlShape = z.object({
+  profile: z.object({
+    default: z.object({
+      out: z.string(),
+    }),
+  }),
+})
+
+const getFoundryConfigSync = (project: string) => {
+  const FOUNDRY_CONFIG_NAME = 'foundry.toml'
+  const path = [project, FOUNDRY_CONFIG_NAME].join('/')
+  let config: unknown
+  try {
+    config = toml.parse(fse.readFileSync(path, 'utf8'))
+  } catch (e) {
+    throw new Error(
+      dedent`
+        Unable to read ${FOUNDRY_CONFIG_NAME} in project
+      `,
+    )
+  }
+  const parsedConfig = foundryTomlShape.safeParse(config)
+  if (!parsedConfig.success) {
+    throw new Error(
+      dedent`
+        Unable to detect artifacts dir for ${FOUNDRY_CONFIG_NAME} at ${pc.gray(
+        project,
+      )}
+        Foundry plugin defaults to profile.default.out property
+        Skip automatic artifact detection by explicitly specifying \`artifacts\` in plugin config
+      `,
+    )
+  }
+  return parsedConfig.data
+}
+
 /**
  * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.
  */
-export function foundry<TProject extends string>({
-  artifacts = 'out',
-  deployments = {},
-  exclude = defaultExcludes,
-  forge: {
-    clean = false,
-    build = true,
-    path: forgeExecutable = 'forge',
-    rebuild = true,
-  } = {},
-  include = ['*.json'],
-  namePrefix = '',
-  project,
-}: FoundryConfig<TProject>): FoundryResult {
+export function foundry<TProject extends string>(
+  config: FoundryConfig<TProject>,
+): FoundryResult {
+  const {
+    deployments = {},
+    exclude = defaultExcludes,
+    forge: {
+      clean = false,
+      build = true,
+      path: forgeExecutable = 'forge',
+      rebuild = true,
+    } = {},
+    include = ['*.json'],
+    namePrefix = '',
+    project,
+  } = config
+
+  const artifacts =
+    config.artifacts ?? getFoundryConfigSync(config.project).profile.default.out
+
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)

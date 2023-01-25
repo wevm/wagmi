@@ -8,7 +8,7 @@ const f = fixtures(__dirname)
 describe('foundry', () => {
   describe('validate', async () => {
     it('forge not installed', async () => {
-      const temp = f.temp()
+      const temp = f.copy('foundry-project')
       await expect(
         foundry({
           project: temp,
@@ -26,9 +26,21 @@ describe('foundry', () => {
       await expect(
         foundry({
           project: '../path/to/project',
+          artifacts: 'out',
         }).validate(),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Foundry project ../path/to/project not found."',
+      )
+    })
+
+    it('artifacts not found', async () => {
+      const temp = f.temp()
+      expect(() =>
+        foundry({
+          project: temp,
+        }),
+      ).toThrowErrorMatchingInlineSnapshot(
+        '"Unable to read foundry.toml in project"',
       )
     })
   })
