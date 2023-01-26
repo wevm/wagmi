@@ -125,26 +125,20 @@ const getFoundryConfigSync = (project: string) => {
 /**
  * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.
  */
-export function foundry<TProject extends string>(
-  config: FoundryConfig<TProject>,
-): FoundryResult {
-  const {
-    deployments = {},
-    exclude = defaultExcludes,
-    forge: {
-      clean = false,
-      build = true,
-      path: forgeExecutable = 'forge',
-      rebuild = true,
-    } = {},
-    include = ['*.json'],
-    namePrefix = '',
-    project,
-  } = config
-
-  const artifacts =
-    config.artifacts ?? getFoundryConfigSync(config.project).profile.default.out
-
+export function foundry<TProject extends string>({
+  deployments = {},
+  exclude = defaultExcludes,
+  forge: {
+    clean = false,
+    build = true,
+    path: forgeExecutable = 'forge',
+    rebuild = true,
+  } = {},
+  include = ['*.json'],
+  namePrefix = '',
+  project,
+  artifacts = getFoundryConfigSync(project).profile.default.out,
+}: FoundryConfig<TProject>): FoundryResult {
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)
