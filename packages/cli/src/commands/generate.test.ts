@@ -312,8 +312,90 @@ describe('generate', () => {
         )
       })
 
-      it.todo('throws when abi is invalid')
-      it.todo('throws when address is invalid')
+      it('throws when abi is invalid', async () => {
+        const { dir } = await createFixture({
+          files: {
+            'wagmi.config.js': dedent`
+              export default {
+                out: 'generated.ts',
+                contracts: [
+                  {
+                    abi: [{
+                      type: 'function',
+                      name: 'balanceOf',
+                      stateMutability: 'view',
+                      inputs: [{ type: 'address' }],
+                    }],
+                    name: 'Foo',
+                  },
+                ],
+              }
+            `,
+          },
+        })
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
+        await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(`
+          "Invalid ABI for contract \\"Foo\\"
+          - Invalid input at \`[0]\`"
+        `)
+      })
+
+      it('throws when address is invalid', async () => {
+        const { dir } = await createFixture({
+          files: {
+            'wagmi.config.js': dedent`
+              export default {
+                out: 'generated.ts',
+                contracts: [
+                  {
+                    abi: [],
+                    address: '0xfoo',
+                    name: 'Foo',
+                  },
+                ],
+              }
+            `,
+          },
+        })
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
+        await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(`
+          "Invalid address for contract \\"Foo\\"
+          - Invalid address"
+        `)
+      })
+
+      it('throws when multichain address is invalid', async () => {
+        const { dir } = await createFixture({
+          files: {
+            'wagmi.config.js': dedent`
+              export default {
+                out: 'generated.ts',
+                contracts: [
+                  {
+                    abi: [],
+                    address: {
+                      1: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+                      5: '0xfoo',
+                    },
+                    name: 'Foo',
+                  },
+                ],
+              }
+            `,
+          },
+        })
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
+        await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(`
+          "Invalid address for contract \\"Foo\\"
+          - Invalid address at \`5\`"
+        `)
+      })
     })
 
     describe('watch', () => {

@@ -45,6 +45,12 @@ export type FetchConfig = {
   request(config: {
     address?: ContractConfig['address']
   }): Promise<Request> | Request
+  /**
+   * Duration in milliseconds before request times out.
+   *
+   * @default 5_000 // 5s in ms
+   */
+  timeoutDuration?: number
 }
 
 type FetchResult = RequiredBy<Plugin, 'contracts'>
@@ -59,6 +65,7 @@ export function fetch({
   name = 'Fetch',
   parse = ({ response }) => response.json() as Promise<ContractConfig['abi']>,
   request,
+  timeoutDuration = 50,
 }: FetchConfig): FetchResult {
   return {
     async contracts() {
@@ -77,7 +84,7 @@ export function fetch({
             globalThis.AbortController ||
             (await import('abort-controller')).default
           const controller = new AbortController()
-          const timeout = setTimeout(() => controller.abort(), 10_000)
+          const timeout = setTimeout(() => controller.abort(), timeoutDuration)
           try {
             const { url, init } = await request(contract)
             // TODO: Replace `node-fetch` with native `fetch` when Node 18 is more widely used.

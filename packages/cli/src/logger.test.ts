@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
+import { watchConsole } from '../test'
+
 import * as logger from './logger'
 
 const mockLog = vi.fn()
@@ -23,5 +25,19 @@ describe('logger', () => {
       loggerFn(level)
       expect(spy).toHaveBeenCalledWith(level)
     })
+  })
+
+  it('spinner', () => {
+    const console = watchConsole()
+    const spinner = logger.spinner()
+
+    spinner.start('Foo bar baz')
+    spinner.succeed('Foo bar baz')
+    spinner.fail('Foo bar baz')
+    expect(console.formatted).toMatchInlineSnapshot(`
+      "- Foo bar baz
+      ✔ Foo bar baz
+      ✖ Foo bar baz"
+    `)
   })
 })
