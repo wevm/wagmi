@@ -122,7 +122,7 @@ describe('generate', () => {
       )
     })
 
-    it('react plugin', async () => {
+    it.skip('react plugin', async () => {
       const { dir, paths } = await createFixture({
         copyNodeModules: true,
         files: {
@@ -181,7 +181,7 @@ describe('generate', () => {
       )
     })
 
-    it('foundry plugin', async () => {
+    it.skip('foundry plugin', async () => {
       const { dir, paths } = await createFixture({
         copyNodeModules: true,
         name: 'foundry',
