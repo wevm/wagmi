@@ -8,8 +8,8 @@ importers:
 
   .:
     specifiers:
-      '@changesets/changelog-github': ^0.4.8
-      '@changesets/cli': ^2.26.0
+      '@changesets/changelog-github': 0.4.6
+      '@changesets/cli': 2.25.2
       '@ethersproject/abstract-signer': ^5.7.0
       '@ethersproject/providers': ^5.7.2
       '@manypkg/get-packages': ^1.1.3
@@ -47,8 +47,8 @@ importers:
       vite: ^4.0.4
       vitest: ^0.25.8
     devDependencies:
-      '@changesets/changelog-github': 0.4.8
-      '@changesets/cli': 2.26.0
+      '@changesets/changelog-github': 0.4.6
+      '@changesets/cli': 2.25.2
       '@ethersproject/abstract-signer': 5.7.0
       '@ethersproject/providers': 5.7.2
       '@manypkg/get-packages': 1.1.3
@@ -589,8 +589,8 @@ packages:
       '@changesets/types': 5.2.1
     dev: true
 
-  /@changesets/changelog-github/0.4.8:
-    resolution: {integrity: sha512-jR1DHibkMAb5v/8ym77E4AMNWZKB5NPzw5a5Wtqm1JepAuIF+hrKp2u04NKM14oBZhHglkCfrla9uq8ORnK/dw==}
+  /@changesets/changelog-github/0.4.6:
+    resolution: {integrity: sha512-ahR/+o3OPodzfG9kucEMU/tEtBgwy6QoJiWi1sDBPme8n3WjT6pBlbhqNYpWAJKilomwfjBGY0MTUTs6r9d1RQ==}
     dependencies:
       '@changesets/get-github-info': 0.5.2
       '@changesets/types': 5.2.1
@@ -599,8 +599,8 @@ packages:
       - encoding
     dev: true
 
-  /@changesets/cli/2.26.0:
-    resolution: {integrity: sha512-0cbTiDms+ICTVtEwAFLNW0jBNex9f5+fFv3I771nBvdnV/mOjd1QJ4+f8KtVSOrwD9SJkk9xbDkWFb0oXd8d1Q==}
+  /@changesets/cli/2.25.2:
+    resolution: {integrity: sha512-ACScBJXI3kRyMd2R8n8SzfttDHi4tmKSwVwXBazJOylQItSRSF4cGmej2E4FVf/eNfGy6THkL9GzAahU9ErZrA==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.20.7
@@ -611,7 +611,7 @@ packages:
       '@changesets/errors': 0.1.4
       '@changesets/get-dependents-graph': 1.3.5
       '@changesets/get-release-plan': 3.0.16
-      '@changesets/git': 2.0.0
+      '@changesets/git': 1.5.0
       '@changesets/logger': 0.0.5
       '@changesets/pre': 1.0.14
       '@changesets/read': 0.5.9
@@ -689,6 +689,17 @@ packages:
 
   /@changesets/get-version-range-type/0.3.2:
     resolution: {integrity: sha512-SVqwYs5pULYjYT4op21F2pVbcrca4qA/bAA3FmFXKMN7Y+HcO8sbZUTx3TAy2VXulP2FACd1aC7f2nTuqSPbqg==}
+    dev: true
+
+  /@changesets/git/1.5.0:
+    resolution: {integrity: sha512-Xo8AT2G7rQJSwV87c8PwMm6BAc98BnufRMsML7m7Iw8Or18WFvFmxqG5aOL5PBvhgq9KrKvaeIBNIymracSuHg==}
+    dependencies:
+      '@babel/runtime': 7.20.7
+      '@changesets/errors': 0.1.4
+      '@changesets/types': 5.2.1
+      '@manypkg/get-packages': 1.1.3
+      is-subdir: 1.2.0
+      spawndamnit: 2.0.0
     dev: true
 
   /@changesets/git/2.0.0:
