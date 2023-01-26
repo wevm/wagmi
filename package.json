@@ -6,7 +6,7 @@
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "cjs:release": "node -r esbuild-register ./scripts/cjs.ts",
-    "dev": "pnpm -r --filter './references/packages/chains' build && pnpm -r --filter './references/packages/connectors' --filter './packages/**' dev",
+    "dev": "pnpm -r --filter '@wagmi/chains' build && pnpm -r --filter '@wagmi/connectors' --filter './packages/**' dev",
     "docs:build": "pnpm -r --filter './packages/**' --filter './references/packages/**' --filter docs build",
     "docs:dev": "pnpm dev && pnpm --filter docs dev",
     "lint": "eslint . --cache",
