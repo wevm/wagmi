@@ -196,7 +196,7 @@ jobs:
         run: anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER &
         env:
           ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
-      - name: Test `@wagmi/core` and `wagmi` (React 18)
+      - name: Test `@wagmi/cli`, `@wagmi/core`, and `wagmi` (React 18)
         if: matrix.react-version == 18
         run: pnpm test:coverage
         env:
