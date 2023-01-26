@@ -1,5 +1,4 @@
 import dedent from 'dedent'
-
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { createFixture, typecheck, watchConsole } from '../../test'
@@ -139,7 +138,7 @@ describe('generate', () => {
               ],
             }
           `,
-          'index.tsx': dedent`
+          'index.ts': dedent`
           import { BigNumber } from '@ethersproject/bignumber'
           import { usePrepareErc20Write, useErc20Write } from './generated'
 
@@ -157,6 +156,92 @@ describe('generate', () => {
           unpreparedWrite({
             recklesslySetUnpreparedArgs: ['0x123', BigNumber.from('123')],
           })
+          `,
+        },
+      })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
+      await generate()
+
+      expect(console.formatted).toMatchInlineSnapshot(
+        `
+        "- Validating plugins
+        ✔ Validating plugins
+        - Resolving contracts
+        ✔ Resolving contracts
+        - Running plugins
+        ✔ Running plugins
+        - Writing to generated.ts
+        ✔ Writing to generated.ts"
+      `,
+      )
+      await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot(
+        '""',
+      )
+    })
+
+    it('foundry plugin', async () => {
+      const { dir, paths } = await createFixture({
+        copyNodeModules: true,
+        name: 'foundry',
+        files: {
+          tsconfig: true,
+          'wagmi.config.ts': dedent`
+            import { foundry } from '@wagmi/cli/plugins'
+
+            export default {
+              out: 'generated.ts',
+              plugins: [
+                foundry({ project: './contracts' }),
+              ],
+            }
+          `,
+          'index.ts': dedent`
+          import { counterABI } from './generated'
+          `,
+        },
+      })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
+      await generate()
+
+      expect(console.formatted).toMatchInlineSnapshot(
+        `
+        "- Validating plugins
+        ✔ Validating plugins
+        - Resolving contracts
+        ✔ Resolving contracts
+        - Running plugins
+        ✔ Running plugins
+        - Writing to generated.ts
+        ✔ Writing to generated.ts"
+      `,
+      )
+      await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot(
+        '""',
+      )
+    })
+
+    it.skip('hardhat plugin', async () => {
+      const { dir, paths } = await createFixture({
+        copyNodeModules: true,
+        name: 'hardhat',
+        files: {
+          tsconfig: true,
+          'wagmi.config.ts': dedent`
+            import { hardhat } from '@wagmi/cli/plugins'
+
+            export default {
+              out: 'generated.ts',
+              plugins: [
+                hardhat({ project: './contracts' }),
+              ],
+            }
+          `,
+          'index.ts': dedent`
+          import { lockABI } from './generated'
           `,
         },
       })

@@ -98,7 +98,7 @@ export function foundry<TProject extends string>({
   } = {},
   include = ['*.json'],
   namePrefix = '',
-  project,
+  project: project_,
 }: FoundryConfig<TProject>): FoundryResult {
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
@@ -122,6 +122,7 @@ export function foundry<TProject extends string>({
     ])
   }
 
+  const project = resolve(process.cwd(), project_)
   const artifactsDirectory = `${project}/${artifacts}`
 
   return {

@@ -18,7 +18,14 @@ export async function createFixture<
   TFiles extends { [filename: string]: string | Json } & {
     tsconfig?: true
   },
->(config: { dir?: string; files?: TFiles; copyNodeModules?: boolean } = {}) {
+>(
+  config: {
+    copyNodeModules?: boolean
+    dir?: string
+    files?: TFiles
+    name?: 'foundry' | 'hardhat'
+  } = {},
+) {
   const dir = config.dir ?? f.temp()
   await fse.ensureDir(dir)
 
@@ -55,6 +62,34 @@ export async function createFixture<
       path.join(__dirname, '../package.json'),
       path.join(dir, 'package.json'),
     )
+  }
+
+  switch (config.name) {
+    case 'foundry':
+      await fse.copy(
+        path.join(__dirname, './fixtures/foundry'),
+        path.join(dir, 'contracts'),
+        { overwrite: true },
+      )
+      break
+    case 'hardhat':
+      await fse.copy(
+        path.join(__dirname, './fixtures/hardhat'),
+        path.join(dir, 'contracts'),
+        {
+          overwrite: true,
+          filter(src) {
+            if (src.includes('node_modules')) return false
+            return true
+          },
+        },
+      )
+      await fse.symlink(
+        path.join(__dirname, './fixtures/hardhat/node_modules'),
+        path.join(dir, 'contracts/node_modules'),
+        'dir',
+      )
+      break
   }
 
   return {

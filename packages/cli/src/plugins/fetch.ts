@@ -65,7 +65,7 @@ export function fetch({
   name = 'Fetch',
   parse = ({ response }) => response.json() as Promise<ContractConfig['abi']>,
   request,
-  timeoutDuration = 50,
+  timeoutDuration = 5_000,
 }: FetchConfig): FetchResult {
   return {
     async contracts() {

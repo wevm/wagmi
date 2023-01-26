@@ -17,7 +17,7 @@ export async function getIsPackageInstalled({
     const { stdout } = await execa(packageManager, command, { cwd })
     if (stdout !== '') return true
     return false
-  } catch {
+  } catch (error) {
     return false
   }
 }

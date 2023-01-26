@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "gen": "wagmi generate",
+    "gen:watch": "wagmi generate --watch"
   },
   "dependencies": {
     "ethers": "^5.7.1",

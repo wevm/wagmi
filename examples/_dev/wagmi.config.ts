@@ -1,12 +1,5 @@
 import { defineConfig } from '@wagmi/cli'
-import {
-  actions,
-  erc,
-  etherscan,
-  foundry,
-  hardhat,
-  react,
-} from '@wagmi/cli/plugins'
+import { actions, erc, etherscan, react } from '@wagmi/cli/plugins'
 
 export default defineConfig({
   out: 'src/generated.ts',
@@ -45,22 +38,6 @@ export default defineConfig({
           },
         },
       ],
-    }),
-    foundry({
-      project: '../hello_foundry',
-      deployments: {
-        Counter: {
-          1: '0x314159265dd8dbb310642f98f50c066173c1259b',
-          5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
-        },
-        Counter2: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
-      },
-    }),
-    hardhat({
-      project: '../hello_hardhat',
-      deployments: {
-        Lock: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
-      },
     }),
     react(),
     actions(),

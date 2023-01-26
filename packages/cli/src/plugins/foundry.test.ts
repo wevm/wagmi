@@ -1,17 +1,22 @@
 import fixtures from 'fixturez'
-import { describe, expect, it } from 'vitest'
+import { dirname } from 'pathe'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { foundry } from './foundry'
 
 const f = fixtures(__dirname)
 
 describe('foundry', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   describe('validate', async () => {
     it('forge not installed', async () => {
-      const temp = f.temp()
+      const dir = f.temp()
       await expect(
         foundry({
-          project: temp,
+          project: dir,
           forge: {
             path: '/path/to/forge',
           },
@@ -23,13 +28,21 @@ describe('foundry', () => {
     })
 
     it('project does not exist', async () => {
-      await expect(
-        foundry({
-          project: '../path/to/project',
-        }).validate(),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Foundry project ../path/to/project not found."',
-      )
+      const dir = f.temp()
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
+      try {
+        await foundry({ project: '../path/to/project' }).validate()
+      } catch (error) {
+        expect(
+          (error as Error).message.replace(dirname(dir), '..'),
+        ).toMatchInlineSnapshot(
+          '"Foundry project ../path/to/project not found."',
+        )
+      }
     })
   })
+
+  describe.todo('contracts')
 })

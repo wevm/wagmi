@@ -84,7 +84,7 @@ export function hardhat<TProject extends string>({
   commands = {},
   include = ['*.json'],
   namePrefix = '',
-  project,
+  project: project_,
   sources = 'contracts',
 }: HardhatConfig<TProject>): HardhatResult {
   function getContractName(artifact: { contractName: string }) {
@@ -107,6 +107,7 @@ export function hardhat<TProject extends string>({
     ])
   }
 
+  const project = resolve(process.cwd(), project_)
   const artifactsDirectory = `${project}/${artifacts}`
   const sourcesDirectory = `${project}/${sources}`
 
