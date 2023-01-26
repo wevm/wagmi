@@ -172,7 +172,7 @@ importers:
       '@ethersproject/bignumber': ^5.7.0
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
-      '@wagmi/chains': ^0.1.11
+      '@wagmi/chains': ^0.2.0
       abitype: ^0.3.0
       abort-controller: ^3.0.0
       bundle-require: ^3.1.2
@@ -197,7 +197,7 @@ importers:
       zod: ^3.20.2
     dependencies:
       '@ethersproject/address': 5.7.0
-      '@wagmi/chains': 0.1.13
+      '@wagmi/chains': 0.2.0
       abitype: 0.3.0_zod@3.20.2
       abort-controller: 3.0.0
       bundle-require: 3.1.2_esbuild@0.15.13
@@ -413,6 +413,7 @@ importers:
       '@walletconnect/ethereum-provider': ^1.8.0
       '@walletconnect/universal-provider': ^2.2.1
       '@web3modal/standalone': ^2.0.0-rc.2
+      abitype: ^0.3.0
       ethers: ^5.7.2
       eventemitter3: ^4.0.7
     dependencies:
@@ -421,6 +422,7 @@ importers:
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/universal-provider': 2.2.1
       '@web3modal/standalone': 2.0.0
+      abitype: 0.3.0
       eventemitter3: 4.0.7
     devDependencies:
       '@wagmi/core': link:../../../packages/core
@@ -3013,8 +3015,13 @@ packages:
       sirv: 2.0.2
     dev: true
 
-  /@wagmi/chains/0.1.13:
-    resolution: {integrity: sha512-TnN6pJp5KIwi9kiSv6J5jB0Le484EuFfWkWQ5+/E+vv6yHI2qOcGuewiC4itgcMkVOxMfjGpSvqWNn8kq/+fkg==}
+  /@wagmi/chains/0.2.0:
+    resolution: {integrity: sha512-ysiFMurLaBeFE+GtHUY6GZboMhp8rrEorFBG5PpPMoiwkby70zvFAnj97rH+gfaEqHBFrft0cljM2qPI50aUpw==}
+    peerDependencies:
+      typescript: '>=4.9.4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
     dev: false
 
   /@walletconnect/browser-utils/1.8.0:
@@ -6471,18 +6478,6 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
-    dev: false
-
-  /follow-redirects/1.15.2_debug@4.3.4:
-    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    dependencies:
-      debug: 4.3.4
     dev: false
 
   /for-each/0.3.3:
@@ -10496,7 +10491,7 @@ packages:
     dependencies:
       command-exists: 1.2.9
       commander: 3.0.2
-      follow-redirects: 1.15.2_debug@4.3.4
+      follow-redirects: 1.15.2
       fs-extra: 0.30.0
       js-sha3: 0.8.0
       memorystream: 0.3.1

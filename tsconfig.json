@@ -16,6 +16,8 @@
     "noUnusedParameters": true,
     "paths": {
       "@wagmi/chains": ["references/packages/chains/src"],
+      "@wagmi/cli": ["packages/cli/src"],
+      "@wagmi/cli/*": ["packages/cli/src/*"],
       "@wagmi/connectors": ["references/packages/connectors/src"],
       "@wagmi/connectors/*": ["references/packages/connectors/src/*"],
       "@wagmi/core": ["packages/core/src"],
