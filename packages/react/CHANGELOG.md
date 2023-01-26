@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.11.0
+
+### Minor Changes
+
+- [#1732](https://github.com/wagmi-dev/wagmi/pull/1732) [`01e21897`](https://github.com/wagmi-dev/wagmi/commit/01e2189747a5c22dc758c6d719b4145adc2a643c) Thanks [@tmm](https://github.com/tmm)! - Bumped minimum TypeScript version to typescript@>=4.9.4. TypeScript 5.0 is coming soon and has some great features we are excited to bring into wagmi. To prepare for this, update your TypeScript version to 4.9.4 or higher. There are likely no [breaking changes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#correctness-fixes-and-breaking-changes) if you are coming from typescript@4.7.x || typescript@4.8.x.
+
+### Patch Changes
+
+- Updated dependencies [[`01e21897`](https://github.com/wagmi-dev/wagmi/commit/01e2189747a5c22dc758c6d719b4145adc2a643c)]:
+  - @wagmi/core@0.9.0
+
 ## 0.10.15
 
 ### Patch Changes
