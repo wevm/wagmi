@@ -1,0 +1,149 @@
+---
+title: 'React'
+description: 'React plugin'
+---
+
+# React
+
+Plugin for generating type-safe React Hooks from configuration `contracts`. Requires `wagmi@>=0.11`.
+
+```ts
+import { react } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      useContractRead: true,
+      useContractFunctionRead: true,
+    }),
+  ],
+})
+```
+
+## Configuration
+
+### useContract (optional)
+
+Generate [`useContract`](/react/hooks/useContract) hook. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      useContract: true,
+    }),
+  ],
+})
+```
+
+### useContractEvent (optional)
+
+Generate [`useContractEvent`](/react/hooks/useContractEvent) hook. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      useContractEvent: true,
+    }),
+  ],
+})
+```
+
+### useContractItemEvent (optional)
+
+Generate [`useContractEvent`](/react/hooks/useContractEvent) hook for each event in ABI. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      useContractItemEvent: true,
+    }),
+  ],
+})
+```
+
+### useContractRead (optional)
+
+Generate [`useContractRead`](/react/hooks/useContractRead) hook. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      useContractRead: true,
+    }),
+  ],
+})
+```
+
+### useContractFunctionRead (optional)
+
+Generate [`useContractRead`](/react/hooks/useContractRead) hook for each "read" function in ABI. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      useContractFunctionRead: true,
+    }),
+  ],
+})
+```
+
+### usePrepareContractWrite (optional)
+
+Generate [`usePrepareContractWrite`](/react/hooks/usePrepareContractWrite) hook. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      usePrepareContractWrite: true,
+    }),
+  ],
+})
+```
+
+### usePrepareContractFunctionWrite (optional)
+
+Generate [`usePrepareContractWrite`](/react/hooks/usePrepareContractWrite) hook for each "write" function in ABI. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { react } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    react({
+      usePrepareContractFunctionWrite: true,
+    }),
+  ],
+})
+```

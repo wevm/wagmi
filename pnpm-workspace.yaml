@@ -1,6 +1,5 @@
-link-workspace-packages: true
 packages:
   - 'docs'
   - 'examples/*'
-  - 'packages/*'
+  - 'packages/**'
   - 'references/packages/*'

@@ -11,15 +11,17 @@ type GetConfig = Omit<
 > & {
   entry?: string[]
   dev?: boolean
+  noExport?: string[]
 }
 
-export function getConfig({ dev, ...options }: GetConfig): Options {
+export function getConfig({ dev, noExport, ...options }: GetConfig): Options {
   if (!options.entry?.length) throw new Error('entry is required')
   const entry: string[] = options.entry ?? []
 
   // Hacks tsup to create Preconstruct-like linked packages for development
   // https://github.com/preconstruct/preconstruct
-  if (dev)
+  if (dev) {
+    const entry: string[] = options.entry ?? []
     return {
       clean: true,
       // Only need to generate one file with tsup for development since we will create links in `onSuccess`
@@ -48,11 +50,11 @@ export function getConfig({ dev, ...options }: GetConfig): Options {
             `export * from '${srcTypesFile}'`,
           )
         }
-        const exports = await generateExports(entry)
+        const exports = await generateExports(entry, noExport)
         await generateProxyPackages(exports)
-        await validateExports(exports)
       },
     }
+  }
 
   return {
     bundle: true,
@@ -65,26 +67,8 @@ export function getConfig({ dev, ...options }: GetConfig): Options {
       if (typeof options.onSuccess === 'function') await options.onSuccess()
       else if (typeof options.onSuccess === 'string') execa(options.onSuccess)
 
-      const exports = await generateExports(entry)
+      const exports = await generateExports(entry, noExport)
       await generateProxyPackages(exports)
-      try {
-        await validateExports(exports)
-      } catch (error) {
-        // `onSuccess` can run before type definitions are created so check again if failure
-        // https://github.com/egoist/tsup/issues/700
-        if (
-          (error as Error).message.includes(
-            'File does not exist for export "types"',
-          )
-        ) {
-          await new Promise((resolve) =>
-            setTimeout(async () => {
-              await validateExports(exports)
-              resolve(true)
-            }, 3_500),
-          )
-        } else throw error
-      }
     },
     ...options,
   }
@@ -97,9 +81,10 @@ type Exports = {
 /**
  * Generate exports from entry files
  */
-async function generateExports(entry: string[]) {
+async function generateExports(entry: string[], noExport?: string[]) {
   const exports: Exports = {}
   for (const file of entry) {
+    if (noExport?.includes(file)) continue
     const extension = path.extname(file)
     const fileWithoutExtension = file.replace(extension, '')
     const name = fileWithoutExtension
@@ -129,22 +114,6 @@ async function generateExports(entry: string[]) {
   )
 
   return exports
-}
-
-/**
- * Validate exports point to actual files
- */
-async function validateExports(exports: Exports) {
-  for (const [key, value] of Object.entries(exports)) {
-    if (typeof value === 'string') continue
-    for (const [type, path] of Object.entries(value)) {
-      const fileExists = await fs.pathExists(path)
-      if (!fileExists)
-        throw new Error(
-          `File does not exist for export "${type}": "${value.default}" in "${key}."`,
-        )
-    }
-  }
 }
 
 /**

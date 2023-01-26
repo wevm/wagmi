@@ -17,7 +17,7 @@
   "funding": [
     {
       "type": "gitcoin",
-      "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+      "url": "https://wagmi.sh/gitcoin"
     },
     {
       "type": "github",
@@ -96,16 +96,20 @@
   ],
   "peerDependencies": {
     "ethers": ">=5.5.1",
-    "react": ">=17.0.0"
+    "react": ">=17.0.0",
+    "typescript": ">=4.9.4"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
   },
   "dependencies": {
-    "@coinbase/wallet-sdk": "^3.6.0",
     "@tanstack/query-sync-storage-persister": "^4.14.5",
     "@tanstack/react-query": "^4.14.5",
     "@tanstack/react-query-persist-client": "^4.14.5",
     "@wagmi/core": "workspace:*",
-    "@walletconnect/ethereum-provider": "^1.8.0",
-    "abitype": "^0.2.5",
+    "abitype": "^0.3.0",
     "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {
@@ -114,11 +118,11 @@
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "@types/use-sync-external-store": "^0.0.3",
+    "ethers": "^5.7.1",
     "react": "^18.1.0",
     "react-17": "npm:react@17.0.2",
     "react-dom": "^18.1.0",
-    "react-dom-17": "npm:react-dom@17.0.2",
-    "typescript": "^4.9.3"
+    "react-dom-17": "npm:react-dom@17.0.2"
   },
   "keywords": [
     "react",

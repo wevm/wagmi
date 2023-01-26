@@ -1,0 +1,81 @@
+---
+title: 'ERC'
+description: 'ERC plugin'
+---
+
+# ERC
+
+Plugin for adding ERC ABIs into configuration.
+
+```ts
+import { erc } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { erc } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    erc({
+      20: true,
+      721: true,
+    }),
+  ],
+})
+```
+
+## Configuration
+
+### 20 (optional)
+
+Adds [ERC-20](https://eips.ethereum.org/EIPS/eip-20) ABI into configuration. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { erc } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    erc({
+      20: true,
+    }),
+  ],
+})
+```
+
+### 721 (optional)
+
+Adds [ERC-721](https://eips.ethereum.org/EIPS/eip-721) ABI into configuration. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { erc } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    erc({
+      721: true,
+    }),
+  ],
+})
+```
+
+### 4626 (optional)
+
+Adds [ERC-4626](https://eips.ethereum.org/EIPS/eip-4626) ABI into configuration. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { erc } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    erc({
+      4626: true,
+    }),
+  ],
+})
+```

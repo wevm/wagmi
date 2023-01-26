@@ -1,0 +1,114 @@
+{
+  "name": "@wagmi/cli",
+  "description": "Manage and generate code from Ethereum ABIs",
+  "license": "MIT",
+  "version": "0.0.4",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wagmi-dev/wagmi.git",
+    "directory": "packages/cli"
+  },
+  "contributors": [
+    "awkweb.eth <t@wagmi.sh>",
+    "jxom.eth <j@wagmi.sh>"
+  ],
+  "ethereum": "wagmi-dev.eth",
+  "funding": [
+    {
+      "type": "gitcoin",
+      "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/wagmi-dev"
+    }
+  ],
+  "bin": {
+    "wagmi": "./dist/cli.js"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
+    },
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "default": "./dist/plugins/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "files": [
+    "/config",
+    "/plugins",
+    "/dist"
+  ],
+  "peerDependencies": {
+    "@wagmi/core": ">=0.8.10",
+    "typescript": ">=4.9.4",
+    "wagmi": ">=0.10.4"
+  },
+  "peerDependenciesMeta": {
+    "@wagmi/core": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    },
+    "wagmi": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@ethersproject/address": "^5.7.0",
+    "@wagmi/chains": "^0.2.0",
+    "abitype": "^0.3.0",
+    "abort-controller": "^3.0.0",
+    "bundle-require": "^3.1.2",
+    "cac": "^6.7.12",
+    "change-case": "^4.1.2",
+    "chokidar": "^3.5.3",
+    "dedent": "^0.7.0",
+    "detect-package-manager": "^2.0.1",
+    "dotenv": "^16.0.3",
+    "dotenv-expand": "^10.0.0",
+    "esbuild": "0.15.13",
+    "execa": "^6.1.0",
+    "find-up": "^6.3.0",
+    "fs-extra": "^10.1.0",
+    "globby": "^13.1.3",
+    "node-fetch": "^3.2.9",
+    "ora": "^6.1.2",
+    "pathe": "^1.0.0",
+    "picocolors": "^1.0.0",
+    "prettier": "^2.8.1",
+    "zod": "^3.20.2"
+  },
+  "devDependencies": {
+    "@ethersproject/bignumber": "^5.7.0",
+    "@types/dedent": "^0.7.0",
+    "@types/fs-extra": "^9.0.13",
+    "fixturez": "^1.1.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": [
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup"
+  }
+}

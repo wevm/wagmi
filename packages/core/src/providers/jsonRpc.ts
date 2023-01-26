@@ -8,13 +8,14 @@ export type JsonRpcProviderConfig = FallbackProviderConfig & {
   static?: boolean
 }
 
-export function jsonRpcProvider({
+export function jsonRpcProvider<TChain extends Chain = Chain>({
   priority,
   rpc,
   stallTimeout,
   static: static_ = true,
   weight,
 }: JsonRpcProviderConfig): ChainProviderFn<
+  TChain,
   providers.JsonRpcProvider,
   providers.WebSocketProvider
 > {

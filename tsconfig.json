@@ -16,6 +16,8 @@
     "noUnusedParameters": true,
     "paths": {
       "@wagmi/chains": ["references/packages/chains/src"],
+      "@wagmi/cli": ["packages/cli/src"],
+      "@wagmi/cli/*": ["packages/cli/src/*"],
       "@wagmi/connectors": ["references/packages/connectors/src"],
       "@wagmi/connectors/*": ["references/packages/connectors/src/*"],
       "@wagmi/core": ["packages/core/src"],
@@ -24,7 +26,7 @@
       "wagmi/*": ["packages/react/src/*"],
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/48212
-      "abitype": ["packages/core/node_modules/abitype/dist"]
+      "abitype": ["node_modules/abitype/dist"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -35,14 +37,16 @@
       "node",
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/42873
-      "@ethersproject/providers"
+      "@ethersproject/providers",
+      "@ethersproject/abstract-signer"
     ]
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [
     "examples/**/*",
     "packages/**/*",
+    "references/**/*",
     "scripts/**/*",
-    "vitest.config.ts"
+    "**/vitest.config.ts"
   ]
 }

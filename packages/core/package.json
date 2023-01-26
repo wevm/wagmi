@@ -16,7 +16,7 @@
   "funding": [
     {
       "type": "gitcoin",
-      "url": "https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
+      "url": "https://wagmi.sh/gitcoin"
     },
     {
       "type": "github",
@@ -98,29 +98,23 @@
     "/dist"
   ],
   "peerDependencies": {
-    "@coinbase/wallet-sdk": ">=3.6.0",
-    "@walletconnect/ethereum-provider": ">=1.7.5",
-    "ethers": ">=5.5.1"
+    "ethers": ">=5.5.1",
+    "typescript": ">=4.9.4"
   },
   "peerDependenciesMeta": {
-    "@coinbase/wallet-sdk": {
-      "optional": true
-    },
-    "@walletconnect/ethereum-provider": {
+    "typescript": {
       "optional": true
     }
   },
   "dependencies": {
     "@wagmi/chains": "workspace:../../references/packages/chains",
     "@wagmi/connectors": "workspace:../../references/packages/connectors",
-    "abitype": "^0.2.5",
+    "abitype": "^0.3.0",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.3.1"
   },
   "devDependencies": {
-    "@coinbase/wallet-sdk": "^3.6.0",
-    "@walletconnect/ethereum-provider": "^1.7.8",
-    "typescript": "^4.9.3"
+    "ethers": "^5.7.1"
   },
   "keywords": [
     "eth",

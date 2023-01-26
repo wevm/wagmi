@@ -88,7 +88,6 @@ export type {
   ConnectorEvents,
   Storage,
   Unit,
-  WriteContractMode,
 } from '@wagmi/core'
 
 export type { Address } from 'abitype'
