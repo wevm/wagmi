@@ -2,11 +2,11 @@
   "name": "root",
   "scripts": {
     "anvil": "anvil --fork-url $ANVIL_FORK_URL --fork-block-number 15578840",
-    "build": "pnpm -r --filter '@wagmi/chains' build && pnpm -r --filter '@wagmi/core' build && pnpm -r --filter './packages/**' --filter './references/packages/**' build",
+    "build": "pnpm --filter '@wagmi/chains' build && pnpm --filter '@wagmi/core' build && pnpm -r --filter './packages/**' --filter './references/**' --filter '!./packages/core' --filter '!./references/**/chains' build",
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only",
     "cjs:release": "node -r esbuild-register ./scripts/cjs.ts",
-    "dev": "pnpm -r --filter '@wagmi/chains' build && pnpm -r --filter '@wagmi/connectors' --filter './packages/**' dev",
+    "dev": "pnpm --filter '@wagmi/chains' build && pnpm -r --filter './packages/**' --filter './references/**' --filter '!./references/**/chains' dev",
     "docs:build": "pnpm -r --filter './packages/**' --filter './references/packages/**' --filter docs build",
     "docs:dev": "pnpm dev && pnpm --filter docs dev",
     "lint": "eslint . --cache",
