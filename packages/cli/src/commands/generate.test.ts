@@ -1,28 +1,194 @@
 import dedent from 'dedent'
+
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { createFixture, mockConsole, mockCwd } from '../../test'
-
+import { createFixture, typecheck, watchConsole } from '../../test'
 import { generate } from './generate'
 
 describe('generate', () => {
-  let mockedConsole: ReturnType<typeof mockConsole>
-  let temp: string
+  let console: ReturnType<typeof watchConsole>
   beforeEach(() => {
-    mockedConsole = mockConsole()
-    temp = mockCwd()
+    console = watchConsole()
   })
 
   afterEach(() => {
     vi.restoreAllMocks()
   })
 
-  it.todo('generates output')
-  it.todo('generates typescript')
-  it.todo('generates output with plugins')
+  it('generates output', async () => {
+    const { dir } = await createFixture({
+      files: {
+        tsconfig: true,
+        'wagmi.config.js': dedent`
+          export default {
+            out: 'generated.js',
+            contracts: [
+              {
+                abi: [],
+                name: 'Foo',
+              },
+            ],
+          }
+        `,
+      },
+    })
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
+    await generate()
+
+    expect(console.formatted).toMatchInlineSnapshot(`
+      "- Validating plugins
+      ✔ Validating plugins
+      - Resolving contracts
+      ✔ Resolving contracts
+      - Running plugins
+      ✔ Running plugins
+      - Writing to generated.js
+      ✔ Writing to generated.js"
+    `)
+  })
+
+  it('generates typescript output', async () => {
+    const { dir, paths } = await createFixture({
+      files: {
+        tsconfig: true,
+        'wagmi.config.ts': dedent`
+          export default {
+            out: 'generated.ts',
+            contracts: [
+              {
+                abi: [],
+                name: 'Foo',
+              },
+            ],
+          }
+        `,
+      },
+    })
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
+    await generate()
+
+    expect(console.formatted).toMatchInlineSnapshot(`
+      "- Validating plugins
+      ✔ Validating plugins
+      - Resolving contracts
+      ✔ Resolving contracts
+      - Running plugins
+      ✔ Running plugins
+      - Writing to generated.ts
+      ✔ Writing to generated.ts"
+    `)
+    await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot('""')
+  })
+
+  describe('generates output with plugins', () => {
+    it('erc plugin', async () => {
+      const { dir, paths } = await createFixture({
+        files: {
+          tsconfig: true,
+          'wagmi.config.ts': dedent`
+          import { erc } from '@wagmi/cli/plugins'
+
+          export default {
+            out: 'generated.ts',
+            plugins: [
+              erc(),
+            ],
+          }
+        `,
+        },
+      })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
+      await generate()
+
+      expect(console.formatted).toMatchInlineSnapshot(
+        `
+        "- Validating plugins
+        ✔ Validating plugins
+        - Resolving contracts
+        ✔ Resolving contracts
+        - Running plugins
+        ✔ Running plugins
+        - Writing to generated.ts
+        ✔ Writing to generated.ts"
+      `,
+      )
+      await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot(
+        '""',
+      )
+    })
+
+    it('react plugin', async () => {
+      const { dir, paths } = await createFixture({
+        copyNodeModules: true,
+        files: {
+          tsconfig: true,
+          'wagmi.config.ts': dedent`
+            import { erc, react } from '@wagmi/cli/plugins'
+
+            export default {
+              out: 'generated.ts',
+              plugins: [
+                erc(),
+                react(),
+              ],
+            }
+          `,
+          'index.tsx': dedent`
+          import { BigNumber } from '@ethersproject/bignumber'
+          import { usePrepareErc20Write, useErc20Write } from './generated'
+
+          const { config } = usePrepareErc20Write({
+            functionName: 'transfer',
+            args: ['0x123', BigNumber.from('123')],
+          })
+          const { write: preparedWrite } = useErc20Write(config)
+          preparedWrite?.()
+          
+          const { write: unpreparedWrite } = useErc20Write({
+            mode: 'recklesslyUnprepared',
+            functionName: 'transfer',
+          })
+          unpreparedWrite({
+            recklesslySetUnpreparedArgs: ['0x123', BigNumber.from('123')],
+          })
+          `,
+        },
+      })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
+      await generate()
+
+      expect(console.formatted).toMatchInlineSnapshot(
+        `
+        "- Validating plugins
+        ✔ Validating plugins
+        - Resolving contracts
+        ✔ Resolving contracts
+        - Running plugins
+        ✔ Running plugins
+        - Writing to generated.ts
+        ✔ Writing to generated.ts"
+      `,
+      )
+      await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot(
+        '""',
+      )
+    })
+  })
 
   describe('behavior', () => {
     it('invalid cli options', async () => {
+      const { dir } = await createFixture()
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
       await expect(
         generate({
           // @ts-expect-error possible to pass untyped options through from cli
@@ -36,25 +202,32 @@ describe('generate', () => {
 
     describe('config', () => {
       it('not found', async () => {
+        const { dir } = await createFixture()
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
         await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
           '"Config not found"',
         )
       })
 
       it('not found for path', async () => {
+        const { dir } = await createFixture()
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
         try {
           await generate({ config: 'wagmi.config.js' })
         } catch (error) {
           expect(
-            (error as Error).message.replace(temp, 'path/to/project'),
+            (error as Error).message.replace(dir, 'path/to/project'),
           ).toMatchInlineSnapshot('"Config not found at wagmi.config.js"')
         }
       })
     })
 
     it('config out not unique', async () => {
-      await createFixture({
-        dir: temp,
+      const { dir } = await createFixture({
         files: {
           'wagmi.config.js': dedent`
             export default [
@@ -80,6 +253,9 @@ describe('generate', () => {
           `,
         },
       })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
       await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
         '"out \\"generated.ts\\" must be unique."',
       )
@@ -87,8 +263,7 @@ describe('generate', () => {
 
     describe('contracts', () => {
       it('config contract names not unique', async () => {
-        await createFixture({
-          dir: temp,
+        const { dir } = await createFixture({
           files: {
             'wagmi.config.js': dedent`
             export default {
@@ -107,20 +282,26 @@ describe('generate', () => {
           `,
           },
         })
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
         await expect(generate()).rejects.toThrowErrorMatchingInlineSnapshot(
           '"Contract name \\"Foo\\" must be unique."',
         )
       })
 
       it('displays message if no contracts found', async () => {
-        await createFixture({
-          dir: temp,
+        const { dir } = await createFixture({
           files: {
-            'wagmi.config.js': 'export default {}',
+            'wagmi.config.js': "export default { out: 'generated.ts' }",
           },
         })
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
         await generate()
-        expect(mockedConsole.formatted).toMatchInlineSnapshot(
+
+        expect(console.formatted).toMatchInlineSnapshot(
           `
           "- Validating plugins
           ✔ Validating plugins
@@ -135,7 +316,7 @@ describe('generate', () => {
       it.todo('throws when address is invalid')
     })
 
-    describe.todo('watch', () => {
+    describe('watch', () => {
       it.todo('save config file logs change')
       it.todo('updates on add file')
       it.todo('updates on change file')
@@ -144,11 +325,11 @@ describe('generate', () => {
       it.todo('shuts down watch on SIGINT/SIGTERM')
 
       it('displays message if using --watch flag without watchers configured', async () => {
-        await createFixture({
-          dir: temp,
+        const { dir } = await createFixture({
           files: {
             'wagmi.config.js': dedent`
             export default {
+              out: 'generated.ts',
               contracts: [
                 {
                   abi: [],
@@ -159,10 +340,22 @@ describe('generate', () => {
           `,
           },
         })
+        const spy = vi.spyOn(process, 'cwd')
+        spy.mockImplementation(() => dir)
+
         await generate({ watch: true })
-        expect(mockedConsole.formatted).toMatchInlineSnapshot(
-          '"[37m[90mUsed --watch flag, but no plugins are watching.[37m[39m"',
-        )
+
+        expect(console.formatted).toMatchInlineSnapshot(`
+          "- Validating plugins
+          ✔ Validating plugins
+          - Resolving contracts
+          ✔ Resolving contracts
+          - Running plugins
+          ✔ Running plugins
+          - Writing to generated.ts
+          ✔ Writing to generated.ts
+          Used --watch flag, but no plugins are watching."
+        `)
       })
     })
   })

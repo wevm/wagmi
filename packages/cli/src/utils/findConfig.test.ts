@@ -1,49 +1,50 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { createFixture, mockCwd } from '../../test'
+import { createFixture } from '../../test'
 import { findConfig } from './findConfig'
 
 describe('findConfig', () => {
-  let dir: string
-  beforeEach(() => {
-    dir = mockCwd()
-  })
-
   afterEach(() => {
     vi.restoreAllMocks()
   })
 
   it('finds config file', async () => {
-    const { filePaths } = await createFixture({
-      dir,
+    const { dir, paths } = await createFixture({
       files: {
         'wagmi.config.ts': '',
       },
     })
-    await expect(findConfig()).resolves.toBe(filePaths['wagmi.config.ts'])
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
+    await expect(findConfig()).resolves.toBe(paths['wagmi.config.ts'])
   })
 
   it('finds config file at location', async () => {
-    const { filePaths } = await createFixture({
-      dir,
+    const { dir, paths } = await createFixture({
       files: {
         'wagmi.config.ts': '',
       },
     })
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
     await expect(
-      findConfig({ config: filePaths['wagmi.config.ts'] }),
-    ).resolves.toBe(filePaths['wagmi.config.ts'])
+      findConfig({ config: paths['wagmi.config.ts'] }),
+    ).resolves.toBe(paths['wagmi.config.ts'])
   })
 
   it('finds config file at root', async () => {
-    const { projectDir, filePaths } = await createFixture({
-      dir,
+    const { dir, paths } = await createFixture({
       files: {
         'wagmi.config.ts': '',
       },
     })
-    await expect(findConfig({ root: projectDir })).resolves.toBe(
-      filePaths['wagmi.config.ts'],
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
+    await expect(findConfig({ root: dir })).resolves.toBe(
+      paths['wagmi.config.ts'],
     )
   })
 })

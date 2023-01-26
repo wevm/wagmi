@@ -1,11 +1,13 @@
 import { resolve } from 'pathe'
 import { vi } from 'vitest'
 
-const wagmiCLIPath = resolve(process.cwd(), 'packages/cli/src/')
+const cliPath = resolve(process.cwd(), 'packages/cli/src/')
+const cliPluginsPath = resolve(process.cwd(), 'packages/cli/src/plugins')
+const chainsPath = resolve(process.cwd(), 'references/packages/chains/src')
 
-vi.mock('@wagmi/cli', async () => {
-  return vi.importActual(wagmiCLIPath)
-})
+vi.mock('@wagmi/cli', async () => vi.importActual(cliPath))
+vi.mock('@wagmi/cli/plugins', async () => vi.importActual(cliPluginsPath))
+vi.mock('@wagmi/chains', async () => vi.importActual(chainsPath))
 
 vi.mock('ora', async () => {
   function ora() {

@@ -69,6 +69,7 @@ export async function generate(options: Generate = {}) {
   for (const config of configs) {
     if (isArrayConfig)
       logger.log(`Using config ${pc.gray(basename(configPath))}`)
+    if (!config.out) throw new Error('out is required.')
     if (outNames.has(config.out))
       throw new Error(`out "${config.out}" must be unique.`)
     outNames.add(config.out)

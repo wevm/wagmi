@@ -7,7 +7,7 @@ import { resolveConfig } from './resolveConfig'
 
 describe('resolveConfig', () => {
   it('resolves config', async () => {
-    const { filePaths } = await createFixture({
+    const { paths } = await createFixture({
       files: {
         'wagmi.config.ts': `
         import { defineConfig } from '@wagmi/cli'
@@ -18,7 +18,7 @@ describe('resolveConfig', () => {
     })
 
     const configPath = await findConfig({
-      config: filePaths['wagmi.config.ts'],
+      config: paths['wagmi.config.ts'],
     })
     await expect(resolveConfig({ configPath: configPath! })).resolves
       .toMatchInlineSnapshot(`
@@ -31,7 +31,7 @@ describe('resolveConfig', () => {
   })
 
   it('resolves function config', async () => {
-    const { filePaths } = await createFixture({
+    const { paths } = await createFixture({
       files: {
         'wagmi.config.ts': `
         import { defineConfig } from '@wagmi/cli'
@@ -42,7 +42,7 @@ describe('resolveConfig', () => {
     })
 
     const configPath = await findConfig({
-      config: filePaths['wagmi.config.ts'],
+      config: paths['wagmi.config.ts'],
     })
     await expect(resolveConfig({ configPath: configPath! })).resolves
       .toMatchInlineSnapshot(`
@@ -55,7 +55,7 @@ describe('resolveConfig', () => {
   })
 
   it('resolves array config', async () => {
-    const { filePaths } = await createFixture({
+    const { paths } = await createFixture({
       files: {
         'wagmi.config.ts': `
         import { defineConfig } from '@wagmi/cli'
@@ -66,7 +66,7 @@ describe('resolveConfig', () => {
     })
 
     const configPath = await findConfig({
-      config: filePaths['wagmi.config.ts'],
+      config: paths['wagmi.config.ts'],
     })
     await expect(resolveConfig({ configPath: configPath! })).resolves
       .toMatchInlineSnapshot(`

@@ -2,17 +2,15 @@ import { default as fse } from 'fs-extra'
 import { resolve } from 'pathe'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { createFixture, mockConsole, mockCwd } from '../../test'
+import { createFixture, watchConsole } from '../../test'
 import { defaultConfig } from '../config'
 
 import { init } from './init'
 
 describe('init', () => {
-  let mockedConsole: ReturnType<typeof mockConsole>
-  let temp: string
+  let console: ReturnType<typeof watchConsole>
   beforeEach(() => {
-    mockedConsole = mockConsole()
-    temp = mockCwd()
+    console = watchConsole()
   })
 
   afterEach(() => {
@@ -20,6 +18,10 @@ describe('init', () => {
   })
 
   it('creates config file', async () => {
+    const { dir } = await createFixture()
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
     const configFile = await init()
 
     expect(fse.existsSync(configFile)).toBeTruthy()
@@ -30,7 +32,7 @@ describe('init', () => {
       export default { out: 'src/generated.js', contracts: [], plugins: [] }
       "
     `)
-    expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
+    expect(console.formatted.replaceAll(dir, 'path/to/project'))
       .toMatchInlineSnapshot(`
         "- Creating config
         ✔ Creating config
@@ -40,6 +42,10 @@ describe('init', () => {
 
   describe('options', () => {
     it('config', async () => {
+      const { dir } = await createFixture()
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+
       const configFile = await init({
         config: 'foo.config.ts',
       })
@@ -52,7 +58,7 @@ describe('init', () => {
         export default { out: 'src/generated.js', contracts: [], plugins: [] }
         "
       `)
-      expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
+      expect(console.formatted.replaceAll(dir, 'path/to/project'))
         .toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
@@ -61,12 +67,13 @@ describe('init', () => {
     })
 
     it('content', async () => {
-      const { projectDir } = await createFixture({
-        dir: temp,
+      const { dir } = await createFixture({
         files: {
           'tsconfig.json': '{}',
         },
       })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
 
       const configFile = await init({
         content: {
@@ -86,7 +93,7 @@ describe('init', () => {
       })
       "
     `)
-      expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
+      expect(console.formatted.replaceAll(dir, 'path/to/project'))
         .toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
@@ -95,7 +102,11 @@ describe('init', () => {
     })
 
     it('root', async () => {
-      fse.mkdir(resolve(temp, 'foo'))
+      const { dir } = await createFixture()
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
+      fse.mkdir(resolve(dir, 'foo'))
+
       const configFile = await init({
         root: 'foo/',
       })
@@ -108,7 +119,7 @@ describe('init', () => {
         export default { out: 'src/generated.js', contracts: [], plugins: [] }
         "
       `)
-      expect(mockedConsole.formatted.replaceAll(temp, 'path/to/project'))
+      expect(console.formatted.replaceAll(dir, 'path/to/project'))
         .toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
@@ -119,12 +130,13 @@ describe('init', () => {
 
   describe('behavior', () => {
     it('creates config file in TypeScript format', async () => {
-      const { projectDir } = await createFixture({
-        dir: temp,
+      const { dir } = await createFixture({
         files: {
           'tsconfig.json': '{}',
         },
       })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
 
       const configFile = await init()
 
@@ -139,7 +151,7 @@ describe('init', () => {
       })
       "
     `)
-      expect(mockedConsole.formatted.replaceAll(projectDir, 'path/to/project'))
+      expect(console.formatted.replaceAll(dir, 'path/to/project'))
         .toMatchInlineSnapshot(`
           "- Creating config
           ✔ Creating config
@@ -148,17 +160,18 @@ describe('init', () => {
     })
 
     it('displays config file location when config exists', async () => {
-      await createFixture({
-        dir: temp,
+      const { dir } = await createFixture({
         files: {
           'wagmi.config.ts': '',
         },
       })
+      const spy = vi.spyOn(process, 'cwd')
+      spy.mockImplementation(() => dir)
 
       const configFile = await init()
 
       expect(
-        mockedConsole.formatted.replaceAll(
+        console.formatted.replaceAll(
           configFile,
           'path/to/project/wagmi.config.ts',
         ),

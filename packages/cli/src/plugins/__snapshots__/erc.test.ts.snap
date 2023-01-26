@@ -190,6 +190,46 @@ exports[`erc > contracts 1`] = `
         "stateMutability": "nonpayable",
         "type": "function",
       },
+      {
+        "inputs": [
+          {
+            "name": "spender",
+            "type": "address",
+          },
+          {
+            "name": "addedValue",
+            "type": "uint256",
+          },
+        ],
+        "name": "increaseAllowance",
+        "outputs": [
+          {
+            "type": "bool",
+          },
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
+      {
+        "inputs": [
+          {
+            "name": "spender",
+            "type": "address",
+          },
+          {
+            "name": "subtractedValue",
+            "type": "uint256",
+          },
+        ],
+        "name": "decreaseAllowance",
+        "outputs": [
+          {
+            "type": "bool",
+          },
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function",
+      },
     ],
     "name": "ERC20",
   },

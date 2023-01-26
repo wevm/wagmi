@@ -195,6 +195,7 @@ importers:
   packages/cli:
     specifiers:
       '@ethersproject/address': ^5.7.0
+      '@ethersproject/bignumber': ^5.7.0
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
       '@wagmi/chains': ^0.1.11
@@ -245,6 +246,7 @@ importers:
       prettier: 2.8.1
       zod: 3.20.2
     devDependencies:
+      '@ethersproject/bignumber': 5.7.0
       '@types/dedent': 0.7.0
       '@types/fs-extra': 9.0.13
       fixturez: 1.1.0

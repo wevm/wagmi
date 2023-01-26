@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { createFixture, mockCwd } from '../../test'
+import { createFixture } from '../../test'
 import { loadEnv } from './loadEnv'
 
 describe('loadEnv', () => {
@@ -9,9 +9,7 @@ describe('loadEnv', () => {
   })
 
   it('loads env', async () => {
-    const dir = mockCwd()
-    await createFixture({
-      dir,
+    const { dir } = await createFixture({
       files: {
         '.env': `
         FOO=bar
@@ -19,6 +17,8 @@ describe('loadEnv', () => {
         `,
       },
     })
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
 
     expect(loadEnv()).toMatchInlineSnapshot(`
       {
@@ -29,7 +29,7 @@ describe('loadEnv', () => {
   })
 
   it('loads env from envDir', async () => {
-    const { projectDir } = await createFixture({
+    const { dir } = await createFixture({
       files: {
         '.env': `
         FOO=bar
@@ -37,8 +37,10 @@ describe('loadEnv', () => {
         `,
       },
     })
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
 
-    expect(loadEnv({ envDir: projectDir })).toMatchInlineSnapshot(`
+    expect(loadEnv({ envDir: dir })).toMatchInlineSnapshot(`
       {
         "FOO": "bar",
         "SOME_ENV_VAR": "1",
@@ -47,10 +49,8 @@ describe('loadEnv', () => {
   })
 
   it('loads env with mode', async () => {
-    const dir = mockCwd()
     const mode = 'dev'
-    await createFixture({
-      dir,
+    const { dir } = await createFixture({
       files: {
         [`.env.${mode}`]: `
         FOO=bar
@@ -58,6 +58,8 @@ describe('loadEnv', () => {
         `,
       },
     })
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
 
     expect(loadEnv({ mode })).toMatchInlineSnapshot(`
       {

@@ -1,26 +1,32 @@
-import { default as fse } from 'fs-extra'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { mockCwd } from '../../test'
+import { createFixture } from '../../test'
 import { getIsUsingTypeScript } from './getIsUsingTypeScript'
 
 describe('getIsUsingTypeScript', () => {
-  let temp: string
-  beforeEach(() => {
-    temp = mockCwd()
-  })
-
   afterEach(() => {
     vi.restoreAllMocks()
   })
 
   it('true', async () => {
-    const configPath = `${temp}/tsconfig.json`
-    fse.writeFile(configPath, '')
+    const { dir } = await createFixture({
+      files: {
+        ['tsconfig.json']: '',
+      },
+    })
+
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
     await expect(getIsUsingTypeScript()).resolves.toBe(true)
   })
 
   it('false', async () => {
+    const { dir } = await createFixture()
+
+    const spy = vi.spyOn(process, 'cwd')
+    spy.mockImplementation(() => dir)
+
     await expect(getIsUsingTypeScript()).resolves.toBe(false)
   })
 })
