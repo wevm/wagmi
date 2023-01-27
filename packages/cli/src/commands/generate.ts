@@ -319,10 +319,7 @@ async function getContract({
         .string()
         .regex(/^0x[a-fA-F0-9]{40}$/, { message: 'Invalid address' })
         .transform((val) => getAddress(val)) as z.ZodType<Address>
-      const MultiChainAddress = z.record(
-        z.string().transform((val) => parseInt(val)),
-        Address,
-      )
+      const MultiChainAddress = z.record(z.string(), Address)
       const AddressSchema = z.union([Address, MultiChainAddress])
       resolvedAddress = await AddressSchema.parseAsync(address)
     } catch (error) {
@@ -345,10 +342,7 @@ async function getContract({
       typeof resolvedAddress === 'string'
         ? JSON.stringify(resolvedAddress)
         : // Remove quotes from chain id key
-          JSON.stringify(resolvedAddress, null, 2).replace(
-            /^\s*"(\d)":/gm,
-            '$1:',
-          )
+          JSON.stringify(resolvedAddress, null, 2).replace(/"(\d*)":/gm, '$1:')
     content = dedent`
       ${content}
 

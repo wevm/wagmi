@@ -172,7 +172,7 @@ importers:
       '@ethersproject/bignumber': ^5.7.0
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
-      '@wagmi/chains': ^0.2.0
+      '@wagmi/chains': workspace:../../references/packages/chains
       abitype: ^0.3.0
       abort-controller: ^3.0.0
       bundle-require: ^3.1.2
@@ -197,7 +197,7 @@ importers:
       zod: ^3.20.2
     dependencies:
       '@ethersproject/address': 5.7.0
-      '@wagmi/chains': 0.2.0
+      '@wagmi/chains': link:../../references/packages/chains
       abitype: 0.3.0_zod@3.20.2
       abort-controller: 3.0.0
       bundle-require: 3.1.2_esbuild@0.15.13
@@ -2535,15 +2535,6 @@ packages:
     dependencies:
       sirv: 2.0.2
     dev: true
-
-  /@wagmi/chains/0.2.0:
-    resolution: {integrity: sha512-ysiFMurLaBeFE+GtHUY6GZboMhp8rrEorFBG5PpPMoiwkby70zvFAnj97rH+gfaEqHBFrft0cljM2qPI50aUpw==}
-    peerDependencies:
-      typescript: '>=4.9.4'
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dev: false
 
   /@walletconnect/browser-utils/1.8.0:
     resolution: {integrity: sha512-Wcqqx+wjxIo9fv6eBUFHPsW1y/bGWWRboni5dfD8PtOmrihrEpOCmvRJe4rfl7xgJW8Ea9UqKEaq0bIRLHlK4A==}
