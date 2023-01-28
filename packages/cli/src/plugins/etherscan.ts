@@ -26,6 +26,9 @@ const apiUrls = {
   // Avalanche
   [43114]: 'https://api.snowtrace.io/api',
   [43113]: 'https://api-testnet.snowtrace.io/api',
+  // Celo
+  [42220]: 'https://api.celoscan.io/api',
+  [44787]: 'https://api-alfajores.celoscan.io/api',
 }
 type ChainId = keyof typeof apiUrls
 
@@ -38,6 +41,7 @@ type EtherscanConfig<TChainId extends number> = {
    * - [__Arbitrum__](https://arbiscan.io/myapikey)
    * - [__Avalanche__](https://snowtrace.io/myapikey)
    * - [__BNB Smart Chain__](https://bscscan.com/myapikey)
+   * - [__Celo__](https://celoscan.io/myapikey)
    * - [__Fantom__](https://ftmscan.com/myapikey)
    * - [__Heco Chain__](https://hecoinfo.com/myapikey)
    * - [__Optimism__](https://optimistic.etherscan.io/myapikey)
