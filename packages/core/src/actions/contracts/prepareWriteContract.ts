@@ -22,10 +22,11 @@ type StateMutability = 'nonpayable' | 'payable'
 export type PrepareWriteContractConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
+  TChainId extends number = number,
   TSigner extends Signer = Signer,
 > = GetConfig<TAbi, TFunctionName, StateMutability> & {
   /** Chain id to use for provider */
-  chainId?: number
+  chainId?: TChainId | number
   /** Overrides */
   overrides?: GetOverridesForAbiStateMutability<
     [TAbi, TFunctionName] extends [
@@ -47,10 +48,11 @@ export type Request = PopulatedTransaction & {
 export type PrepareWriteContractResult<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
+  TChainId extends number = number,
 > = {
   abi: TAbi extends Abi ? [ExtractAbiFunction<TAbi, TFunctionName>] : TAbi
   address: Address
-  chainId?: number
+  chainId?: TChainId
   functionName: TFunctionName
   mode: 'prepared'
   request: Request
@@ -74,6 +76,7 @@ export type PrepareWriteContractResult<
 export async function prepareWriteContract<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
+  TChainId extends number,
   TSigner extends Signer = Signer,
 >({
   abi,
@@ -83,8 +86,8 @@ export async function prepareWriteContract<
   overrides,
   signer: signer_,
   ...config
-}: PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>): Promise<
-  PrepareWriteContractResult<TAbi, TFunctionName>
+}: PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>): Promise<
+  PrepareWriteContractResult<TAbi, TFunctionName, TChainId>
 > {
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
@@ -126,13 +129,12 @@ export async function prepareWriteContract<
   return {
     abi: minimizedAbi,
     address,
-    chainId,
-    // TODO: Remove cast
+    chainId: chainId as TChainId,
     functionName: functionName as TFunctionName,
     mode: 'prepared',
     request: {
       ...unsignedTransaction,
       gasLimit,
     },
-  }
+  } as const
 }

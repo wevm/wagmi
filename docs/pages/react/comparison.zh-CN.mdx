@@ -1,0 +1,83 @@
+---
+title: '与其他库对比'
+description: 'Wagmi 与其他类似的库相比如何?'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# 与其他库的对比
+
+<Callout type="info">
+  这种比较力求尽可能准确和公正，如果您使用这些库中的任何一个，并且觉得其中的信息可以改进，请随时提出更改建议。
+</Callout>
+
+当涉及到以太坊的 React 库时，有很多可以帮助管理钱包连接，提供有用的方法和 Hooks 等。
+
+## 总览
+
+|                      | [wagmi](https://github.com/wagmi-dev/wagmi)                                                     | [web3-react](https://github.com/NoahZinsmeister/web3-react)                                             | [useDApp](https://github.com/EthWorks/useDApp)                                                     |
+| -------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| GitHub Stars         | ![wagmi star count](https://img.shields.io/github/stars/wagmi-dev/wagmi?colorB=161b22&label=)   | ![web3-react star count](https://img.shields.io/github/stars/Uniswap/web3-react?colorB=161b22&label=)   | ![useDApp star count](https://img.shields.io/github/stars/EthWorks/useDApp?colorB=161b22&label=)   |
+| Open Issues          | ![wagmi issue count](https://img.shields.io/github/issues/wagmi-dev/wagmi?colorB=161b22&label=) | ![web3-react issue count](https://img.shields.io/github/issues/Uniswap/web3-react?colorB=161b22&label=) | ![useDApp issue count](https://img.shields.io/github/issues/EthWorks/useDApp?colorB=161b22&label=) |
+| Downloads            | ![wagmi downloads](https://img.shields.io/npm/dw/wagmi?colorB=161b22&label=)                    | ![web3-react downloads](https://img.shields.io/npm/dw/@web3-react/core?colorB=161b22&label=)            | ![useDApp downloads](https://img.shields.io/npm/dw/@usedapp/core?colorB=161b22&label=)             |
+| License              | ![wagmi license](https://img.shields.io/github/license/wagmi-dev/wagmi?colorB=161b22&label=)    | ![web3-react license](https://img.shields.io/github/license/Uniswap/web3-react?colorB=161b22&label=)    | ![useDApp license](https://img.shields.io/github/license/EthWorks/useDApp?colorB=161b22&label=)    |
+| Their Comparison     | –                                                                                               | none                                                                                                    | none                                                                                               |
+| Supported Frameworks | React, Vanilla JS                                                                               | React                                                                                                   | React                                                                                              |
+| Documentation        | ✅                                                                                              | 🛑                                                                                                      | ✅                                                                                                 |
+| TypeScript[^1]       | ✅                                                                                              | 🔶                                                                                                      | 🔶                                                                                                 |
+| Test Suite[^2]       | ✅                                                                                              | 🔶                                                                                                      | 🔶                                                                                                 |
+| Examples[^3]         | ✅                                                                                              | 🔶                                                                                                      | ✅                                                                                                 |
+
+## [wagmi](https://github.com/wagmi-dev/wagmi)
+
+### 优点
+
+- 20 多个 Hook 用于处理 Wallet、ENS、Contract、Transaction、Signature 等
+- 内置 MetaMask、WalletConnect、Coinbase Wallet 和 Injected 的钱包连接器
+- 缓存、重复请求降重、multicall、批量处理和持久化
+- 基于钱包、区块和网络的变化自动刷新数据
+- 支持 Multicall
+- 支持临时分叉以太坊网络运行的测试套件
+- 支持 TypeScript（可以从 ABI 和 EIP-712 类型数据中推断类型）
+- 大量的文档和示例
+- 被 [ENS](https://ens.domains), [Foundation](https://foundation.app), [SushiSwap](https://sushi.com), 和 [更多的组织](https://github.com/wagmi-dev/wagmi/discussions/201) 使用。
+- MIT License
+
+### 缺点
+
+- 没有 `web3-react` 那么多内置连接器
+
+## [web3-react](https://github.com/Uniswap/web3-react)
+
+### 优点
+
+- 支持许多不同的连接器（概念上类似于 wagmi 的连接器）。
+- 用于管理帐户的基本 Hooks。
+- 被 [Uniswap](https://uniswap.org) 和其他很多知名项目所使用。
+
+### 缺点
+
+- 需要自己设置连接钱包的连接器和方法。
+- 需要单独安装连接器。
+- 几乎没有测试或文档；频繁的更新。
+- GPL-3.0 License。
+
+## [useDApp](https://github.com/EthWorks/useDApp)
+
+### 优点
+
+- 根据链和钱包的变化自动刷新新数据。
+- 支持 Multicall。
+- 自带 Transaction 提醒。
+- Chrome 扩展和 Firefox 插件。
+- MIT License。
+
+### 缺点
+
+- 没有标准的 Hook API。
+
+---
+
+[^1]: 可以从 ABI, EIP-712 数据类型等中推断类型 ✅。 可以添加类型显式泛型，类型注释等 🔶。
+[^2]: 可以在临时分叉的以太坊网络上运行 ✅。 可以模拟以太坊函数调用 (例如 RPC 调用) 🔶。
+[^3]: 有很多例子 ✅. 只有一个例子 🔶。

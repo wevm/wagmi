@@ -2,4 +2,4 @@
 'wagmi': patch
 ---
 
-use useEffect to wrap logic for onConnect and onDisconnect callbacks to remove unsafe side effects
+Fixed `useAccount` `onConnect` and `onDisconnect` callbacks for React Strict Mode.

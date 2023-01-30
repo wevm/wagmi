@@ -1,5 +1,66 @@
 # wagmi
 
+## 0.11.0
+
+### Minor Changes
+
+- [#1732](https://github.com/wagmi-dev/wagmi/pull/1732) [`01e21897`](https://github.com/wagmi-dev/wagmi/commit/01e2189747a5c22dc758c6d719b4145adc2a643c) Thanks [@tmm](https://github.com/tmm)! - Bumped minimum TypeScript version to typescript@>=4.9.4. TypeScript 5.0 is coming soon and has some great features we are excited to bring into wagmi. To prepare for this, update your TypeScript version to 4.9.4 or higher. There are likely no [breaking changes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#correctness-fixes-and-breaking-changes) if you are coming from typescript@4.7.x || typescript@4.8.x.
+
+### Patch Changes
+
+- Updated dependencies [[`01e21897`](https://github.com/wagmi-dev/wagmi/commit/01e2189747a5c22dc758c6d719b4145adc2a643c)]:
+  - @wagmi/core@0.9.0
+
+## 0.10.15
+
+### Patch Changes
+
+- [#1718](https://github.com/wagmi-dev/wagmi/pull/1718) [`e62b5ef8`](https://github.com/wagmi-dev/wagmi/commit/e62b5ef8aaa8063abb5264790768899ea35bbd31) Thanks [@tmm](https://github.com/tmm)! - Updated references
+
+- Updated dependencies [[`e62b5ef8`](https://github.com/wagmi-dev/wagmi/commit/e62b5ef8aaa8063abb5264790768899ea35bbd31)]:
+  - @wagmi/core@0.8.19
+
+## 0.10.14
+
+### Patch Changes
+
+- [#1708](https://github.com/wagmi-dev/wagmi/pull/1708) [`07fc3801`](https://github.com/wagmi-dev/wagmi/commit/07fc3801fa13c2cb5f7cf9b86ba8320b05a6a135) Thanks [@jxom](https://github.com/jxom)! - Updated `references/` submodule.
+
+- Updated dependencies [[`07fc3801`](https://github.com/wagmi-dev/wagmi/commit/07fc3801fa13c2cb5f7cf9b86ba8320b05a6a135)]:
+  - @wagmi/core@0.8.18
+
+## 0.10.13
+
+### Patch Changes
+
+- [#1705](https://github.com/wagmi-dev/wagmi/pull/1705) [`9ff797dc`](https://github.com/wagmi-dev/wagmi/commit/9ff797dcb979dc86b798a432b74c98598165430d) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `crossbell` (thanks @Songkeys)
+  - `filecoin` & `filecoinHyperspace` (thanks @neil0x46dc)
+  - `gnosisChiado` (thanks @theNvN)
+  - `metis` & `metisGoerli` (thanks @CookedCookee)
+
+- Updated dependencies [[`9ff797dc`](https://github.com/wagmi-dev/wagmi/commit/9ff797dcb979dc86b798a432b74c98598165430d)]:
+  - @wagmi/core@0.8.17
+
+## 0.10.12
+
+### Patch Changes
+
+- [#1699](https://github.com/wagmi-dev/wagmi/pull/1699) [`2f1e7950`](https://github.com/wagmi-dev/wagmi/commit/2f1e7950e55550d9b50ef5ccb97cb609f4af39b1) Thanks [@tmm](https://github.com/tmm)! - Added public RPC URL property to Chain
+
+- Updated dependencies [[`2f1e7950`](https://github.com/wagmi-dev/wagmi/commit/2f1e7950e55550d9b50ef5ccb97cb609f4af39b1)]:
+  - @wagmi/core@0.8.16
+
+## 0.10.11
+
+### Patch Changes
+
+- [#1685](https://github.com/wagmi-dev/wagmi/pull/1685) [`917f5bc1`](https://github.com/wagmi-dev/wagmi/commit/917f5bc1fad578e35a8c6ee787e339bfdc156bab) Thanks [@jxom](https://github.com/jxom)! - Replaced qrcodemodal with web3modal for the WalletConnect v2 Connector.
+
+- Updated dependencies [[`917f5bc1`](https://github.com/wagmi-dev/wagmi/commit/917f5bc1fad578e35a8c6ee787e339bfdc156bab)]:
+  - @wagmi/core@0.8.15
+
 ## 0.10.10
 
 ### Patch Changes

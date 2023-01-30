@@ -1,11 +1,13 @@
 ---
 title: 'Getting Started'
-description: 'Get started building with wagmi!'
+description: 'Get started building with `@wagmi/core`.'
 ---
 
 import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 
 # Getting Started
+
+`@wagmi/core` is a VanillaJS library containing everything you need to start working with Ethereum. It makes it easy to "Connect Wallet," display ENS and balance information, sign messages, interact with contracts, and much more.
 
 ## Installation
 
@@ -31,7 +33,7 @@ yarn add @wagmi/core ethers
 </Tabs>
 {/* prettier-ignore-end */}
 
-### Configure chains
+## Configure chains
 
 First, configure your desired chains to be used by wagmi, and the providers you want to use.
 
@@ -51,7 +53,7 @@ Note: In a production app, it is not recommended to only pass `publicProvider` t
 
 [Read more about configuring chains](/core/providers/configuring-chains)
 
-### Create a wagmi client
+## Create a wagmi client
 
 Next, create a wagmi `Client` instance using [`createClient`](/core/client), and pass the result from `configureChains` to it.
 
@@ -77,7 +79,7 @@ const client = createClient({
 
 [Read more about client configuration](/core/client)
 
-### You're good to go!
+## You're good to go!
 
 Use actions! You can now import and use actions throughout your app.
 

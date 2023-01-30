@@ -1,18 +1,22 @@
 import { providers } from 'ethers'
 
+import type { Chain } from '../chains'
 import type { ChainProviderFn, FallbackProviderConfig } from '../types'
 
 export type PublicProviderConfig = FallbackProviderConfig
 
-export function publicProvider({
+export function publicProvider<TChain extends Chain = Chain>({
   priority,
   stallTimeout,
   weight,
-}: PublicProviderConfig = {}): ChainProviderFn<providers.StaticJsonRpcProvider> {
+}: PublicProviderConfig = {}): ChainProviderFn<
+  TChain,
+  providers.StaticJsonRpcProvider
+> {
   return function (chain) {
     if (!chain.rpcUrls.default.http[0]) return null
     return {
-      chain,
+      chain: chain as TChain,
       provider: () => {
         const provider = new providers.StaticJsonRpcProvider(
           chain.rpcUrls.default.http[0],

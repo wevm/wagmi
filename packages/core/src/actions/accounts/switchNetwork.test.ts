@@ -69,6 +69,11 @@ describe('switchNetwork', () => {
                 "wss://goerli.infura.io/ws/v3",
               ],
             },
+            "public": {
+              "http": [
+                "https://rpc.ankr.com/eth_goerli",
+              ],
+            },
           },
           "testnet": true,
         }
