@@ -4,7 +4,7 @@ import { getProvider } from '../providers'
 
 export type FetchEnsAvatarArgs = {
   /** Address or ENS name */
-  address: Address
+  address: Address | string;
   /** Chain id to use for provider */
   chainId?: number
 }
