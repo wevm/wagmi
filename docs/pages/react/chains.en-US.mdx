@@ -78,7 +78,7 @@ You can also extend wagmi to support other EVM-compatible chains by building you
 ```ts
 import { Chain } from 'wagmi'
 
-export const avalanche: Chain = {
+export const avalanche = {
   id: 43_114,
   name: 'Avalanche',
   network: 'avalanche',
@@ -88,6 +88,7 @@ export const avalanche: Chain = {
     symbol: 'AVAX',
   },
   rpcUrls: {
+    public: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
     default: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
   },
   blockExplorers: {
@@ -97,8 +98,8 @@ export const avalanche: Chain = {
   contracts: {
     multicall3: {
       address: '0xca11bde05977b3631167028862be2a173976ca11',
-      blockCreated: 11907934,
+      blockCreated: 11_907_934,
     },
   },
-}
+} as const satisfies Chain
 ```
