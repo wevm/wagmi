@@ -21,35 +21,31 @@ export type UseAccountConfig = {
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
-  const previousAccountRef = React.useRef<typeof account>()
-  const previousAccount = previousAccountRef.current ?? ({} as typeof account)
+  const [previousStatus, setPreviousStatus] =
+    React.useState<GetAccountResult['status']>()
 
-  React.useEffect(() => {
-    if (
-      !!onConnect &&
-      previousAccount.status !== 'connected' &&
-      account.status === 'connected'
-    ) {
-      onConnect({
-        address: account.address,
-        connector: account.connector,
-        isReconnected:
-          previousAccount.status === 'reconnecting' ||
-          // when `previousAccount.status` is `undefined`, it means connector connected immediately
-          previousAccount.status === undefined,
-      })
-    }
+  if (
+    !!onConnect &&
+    (previousStatus !== 'connected' || previousStatus === undefined) &&
+    account.status === 'connected'
+  )
+    onConnect({
+      address: account.address,
+      connector: account.connector,
+      isReconnected:
+        previousStatus === 'reconnecting' ||
+        // when `previousStatus` is `undefined`, it means connector connected immediately
+        previousStatus === undefined,
+    })
 
-    if (
-      !!onDisconnect &&
-      previousAccount.status === 'connected' &&
-      account.status === 'disconnected'
-    ) {
-      onDisconnect()
-    }
+  if (
+    !!onDisconnect &&
+    previousStatus === 'connected' &&
+    account.status === 'disconnected'
+  )
+    onDisconnect()
 
-    previousAccountRef.current = account
-  }, [account, onConnect, onDisconnect, previousAccount.status])
+  if (account.status !== previousStatus) setPreviousStatus(account.status)
 
   return account
 }
