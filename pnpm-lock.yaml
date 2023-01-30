@@ -172,7 +172,7 @@ importers:
       '@ethersproject/bignumber': ^5.7.0
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
-      '@wagmi/chains': workspace:../../references/packages/chains
+      '@wagmi/chains': workspace:*
       abitype: ^0.3.0
       abort-controller: ^3.0.0
       bundle-require: ^3.1.2
@@ -227,8 +227,8 @@ importers:
 
   packages/core:
     specifiers:
-      '@wagmi/chains': workspace:../../references/packages/chains
-      '@wagmi/connectors': workspace:../../references/packages/connectors
+      '@wagmi/chains': workspace:*
+      '@wagmi/connectors': workspace:*
       abitype: ^0.3.0
       ethers: ^5.7.1
       eventemitter3: ^4.0.7

@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@ethersproject/address": "^5.7.0",
-    "@wagmi/chains": "workspace:../../references/packages/chains",
+    "@wagmi/chains": "workspace:*",
     "abitype": "^0.3.0",
     "abort-controller": "^3.0.0",
     "bundle-require": "^3.1.2",
