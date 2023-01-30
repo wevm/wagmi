@@ -1,5 +1,21 @@
 # @wagmi/core
 
+## 0.9.1
+
+### Patch Changes
+
+- [#1752](https://github.com/wagmi-dev/wagmi/pull/1752) [`144a0e76`](https://github.com/wagmi-dev/wagmi/commit/144a0e76ef4bb9ba0650b5ffb9c63f95329819a4) Thanks [@jxom](https://github.com/jxom)! - Improved `WalletConnectConnector` (v2) initialization & updated dependencies.
+
+- [#1752](https://github.com/wagmi-dev/wagmi/pull/1752) [`144a0e76`](https://github.com/wagmi-dev/wagmi/commit/144a0e76ef4bb9ba0650b5ffb9c63f95329819a4) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - Aurora – thanks @salil-naik
+  - Bronos – thanks @chedetinaveen
+  - Canto – thanks @tster
+  - Celo – thanks @aaronmgdr
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.2.1
+
 ## 0.9.0
 
 ### Minor Changes
