@@ -89,11 +89,19 @@ function getTsConfig(baseUrl: string) {
       moduleResolution: 'node',
       noEmit: true,
       paths: {
-        '@wagmi/chains/*': [
+        '@wagmi/chains': [
           path.relative(baseUrl, 'references/packages/chains/src'),
         ],
         '@wagmi/cli': [path.relative(baseUrl, 'packages/cli/src')],
         '@wagmi/cli/*': [path.relative(baseUrl, 'packages/cli/src/*')],
+        '@wagmi/connectors': [
+          path.relative(baseUrl, 'references/packages/connectors/src'),
+        ],
+        '@wagmi/connectors/*': [
+          path.relative(baseUrl, 'references/packages/connectors/src/*'),
+        ],
+        '@wagmi/core': [path.relative(baseUrl, 'packages/core/src')],
+        '@wagmi/core/*': [path.relative(baseUrl, 'packages/core/src/*')],
         wagmi: [path.relative(baseUrl, 'packages/react/src')],
         'wagmi/*': [path.relative(baseUrl, 'packages/react/src/*')],
       },
@@ -102,7 +110,7 @@ function getTsConfig(baseUrl: string) {
       strict: true,
       target: 'es6',
     },
-    include: ['**/*.ts', '**/*.tsx'],
+    include: [`${baseUrl}/**/*.ts`, `${baseUrl}/**/*.tsx`],
     exclude: ['node_modules'],
   } as TsConfig
 }

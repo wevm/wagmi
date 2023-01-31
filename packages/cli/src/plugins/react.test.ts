@@ -1,4 +1,5 @@
 import dedent from 'dedent'
+import { default as fse } from 'fs-extra'
 import { describe, expect, it } from 'vitest'
 
 import { createFixture, typecheck, wagmiAbi } from '../../test'
@@ -62,42 +63,42 @@ describe('react', () => {
           },
         })
 
+        const tsconfig = await fse.readJSON(paths.tsconfig)
+        await fse.writeJSON(paths.tsconfig, {
+          ...tsconfig,
+          include: [paths['generated.ts'], paths['index.ts']],
+        })
+
         await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot(
           '""',
         )
       },
       {
-        timeout: 10_000,
+        timeout: 20_000,
       },
     )
 
-    it(
-      'without TypeScript',
-      async () => {
-        const { imports, content } = await react().run({
-          contracts: [
-            {
-              name: 'Wagmi',
-              address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-              abi: wagmiAbi,
-              content: '',
-              meta: {
-                abiName: 'WagmiAbi',
-                addressName: 'WagmiAddress',
-                configName: 'WagmiConfig',
-              },
+    it('without TypeScript', async () => {
+      const { imports, content } = await react().run({
+        contracts: [
+          {
+            name: 'Wagmi',
+            address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+            abi: wagmiAbi,
+            content: '',
+            meta: {
+              abiName: 'WagmiAbi',
+              addressName: 'WagmiAddress',
+              configName: 'WagmiConfig',
             },
-          ],
-          isTypeScript: false,
-          outputs: [],
-        })
-        await expect(
-          format(`${imports}\n\n${content}`),
-        ).resolves.toMatchSnapshot()
-      },
-      {
-        timeout: 10_000,
-      },
-    )
+          },
+        ],
+        isTypeScript: false,
+        outputs: [],
+      })
+      await expect(
+        format(`${imports}\n\n${content}`),
+      ).resolves.toMatchSnapshot()
+    })
   })
 })
