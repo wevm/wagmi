@@ -1,5 +1,5 @@
 ---
-'@wagmi/cli': minor
+'@wagmi/cli': patch
 ---
 
-Add automatic foundry.toml detection of artifacts folder
+Added automatic Foundry config detection for artifacts directory.

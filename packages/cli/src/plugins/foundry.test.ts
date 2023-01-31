@@ -13,7 +13,7 @@ describe('foundry', () => {
 
   describe('validate', async () => {
     it('forge not installed', async () => {
-      const dir = f.copy('foundry-project')
+      const dir = f.temp()
       await expect(
         foundry({
           project: dir,
@@ -33,10 +33,7 @@ describe('foundry', () => {
       spy.mockImplementation(() => dir)
 
       try {
-        await foundry({
-          project: '../path/to/project',
-          artifacts: 'dist/artifacts',
-        }).validate()
+        await foundry({ project: '../path/to/project' }).validate()
       } catch (error) {
         expect(
           (error as Error).message.replace(dirname(dir), '..'),
@@ -45,27 +42,14 @@ describe('foundry', () => {
         )
       }
     })
-
-    it('artifacts not found', async () => {
-      const temp = f.temp()
-      expect(() =>
-        foundry({
-          project: temp,
-        }),
-      ).toThrowErrorMatchingInlineSnapshot(
-        '"Unable to read foundry.toml in project"',
-      )
-    })
   })
 
-  it(
-    'contracts',
-    async () => {
-      await expect(
-        foundry({
-          project: resolve(__dirname, '__fixtures__/foundry/'),
-        }).contracts(),
-      ).resolves.toMatchInlineSnapshot(`
+  it('contracts', async () => {
+    await expect(
+      foundry({
+        project: resolve(__dirname, '__fixtures__/foundry/'),
+      }).contracts(),
+    ).resolves.toMatchInlineSnapshot(`
       [
         {
           "abi": [
@@ -108,9 +92,5 @@ describe('foundry', () => {
         },
       ]
     `)
-    },
-    {
-      timeout: 10_000,
-    },
-  )
+  })
 })

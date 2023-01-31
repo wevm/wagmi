@@ -1,11 +1,9 @@
 import dedent from 'dedent'
-import { execa } from 'execa'
+import { execa, execaCommandSync } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 import pc from 'picocolors'
-
-import toml from 'toml'
 import { z } from 'zod'
 
 import type { ContractConfig, Plugin } from '../config'
@@ -38,7 +36,7 @@ type FoundryConfig<TProject extends string> = {
    *
    * Same as your project's `--out` (`-o`) option.
    *
-   * @default profile.default.out in your foundry.toml
+   * @default foundry.config#out | 'out'
    */
   artifacts?: string
   /**
@@ -86,46 +84,16 @@ type FoundryConfig<TProject extends string> = {
 
 type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 
-const foundryTomlShape = z.object({
-  profile: z.object({
-    default: z.object({
-      out: z.string(),
-    }),
-  }),
+const FoundryConfigSchema = z.object({
+  out: z.string().default('out').optional(),
+  src: z.string().default('src').optional(),
 })
-
-const getFoundryConfigSync = (project: string) => {
-  const FOUNDRY_CONFIG_NAME = 'foundry.toml'
-  const path = [project, FOUNDRY_CONFIG_NAME].join('/')
-  let config: unknown
-  try {
-    config = toml.parse(fse.readFileSync(path, 'utf8'))
-  } catch (e) {
-    throw new Error(
-      dedent`
-        Unable to read ${FOUNDRY_CONFIG_NAME} in project
-      `,
-    )
-  }
-  const parsedConfig = foundryTomlShape.safeParse(config)
-  if (!parsedConfig.success) {
-    throw new Error(
-      dedent`
-        Unable to detect artifacts dir for ${FOUNDRY_CONFIG_NAME} at ${pc.gray(
-        project,
-      )}
-        Foundry plugin defaults to profile.default.out property
-        Skip automatic artifact detection by explicitly specifying \`artifacts\` in plugin config
-      `,
-    )
-  }
-  return parsedConfig.data
-}
 
 /**
  * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.
  */
 export function foundry<TProject extends string>({
+  artifacts,
   deployments = {},
   exclude = defaultExcludes,
   forge: {
@@ -137,7 +105,6 @@ export function foundry<TProject extends string>({
   include = ['*.json'],
   namePrefix = '',
   project: project_,
-  artifacts = getFoundryConfigSync(project_).profile.default.out,
 }: FoundryConfig<TProject>): FoundryResult {
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
@@ -162,7 +129,29 @@ export function foundry<TProject extends string>({
   }
 
   const project = resolve(process.cwd(), project_)
-  const artifactsDirectory = `${project}/${artifacts}`
+
+  let config: z.infer<typeof FoundryConfigSchema> = {
+    out: 'out',
+    src: 'src',
+  }
+  try {
+    config = FoundryConfigSchema.parse(
+      JSON.parse(
+        execaCommandSync(`${forgeExecutable} config --json`, {
+          cwd: project,
+        }).stdout,
+      ),
+    )
+    // eslint-disable-next-line no-empty
+  } catch {
+  } finally {
+    config = {
+      ...config,
+      out: artifacts ?? config.out,
+    }
+  }
+
+  const artifactsDirectory = `${project}/${config.out}`
 
   return {
     async contracts() {
