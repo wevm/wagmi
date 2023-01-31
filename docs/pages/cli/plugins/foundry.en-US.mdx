@@ -5,7 +5,7 @@ description: 'Foundry plugin'
 
 # Foundry
 
-Plugin for resolving ABIs from [Foundry](https://github.com/foundry-rs/foundry) projects. Supports [`generate`](/cli/commands#generate) `--watch` (`-w`) mode.
+Plugin for resolving ABIs from [Foundry](https://github.com/foundry-rs/foundry) projects.
 
 ```ts
 import { foundry } from '@wagmi/cli/plugins'
@@ -25,6 +25,9 @@ export default defineConfig({
   ],
 })
 ```
+
+- Supports [`generate`](/cli/commands#generate) `--watch` (`-w`) mode.
+- Detects Foundry configuration using `forge config --json` command.
 
 ## Configuration
 

@@ -2,6 +2,8 @@ name: vhs
 
 on:
   push:
+    branches:
+      - main
     paths:
       - packages/**/*.tape
   workflow_dispatch:
