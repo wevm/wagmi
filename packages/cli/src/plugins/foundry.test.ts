@@ -1,5 +1,5 @@
 import fixtures from 'fixturez'
-import { dirname } from 'pathe'
+import { dirname, resolve } from 'pathe'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { foundry } from './foundry'
@@ -44,5 +44,59 @@ describe('foundry', () => {
     })
   })
 
-  describe.todo('contracts')
+  it(
+    'contracts',
+    async () => {
+      await expect(
+        foundry({
+          project: resolve(__dirname, '__fixtures__/foundry/'),
+        }).contracts(),
+      ).resolves.toMatchInlineSnapshot(`
+      [
+        {
+          "abi": [
+            {
+              "inputs": [],
+              "name": "increment",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function",
+            },
+            {
+              "inputs": [],
+              "name": "number",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256",
+                },
+              ],
+              "stateMutability": "view",
+              "type": "function",
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "newNumber",
+                  "type": "uint256",
+                },
+              ],
+              "name": "setNumber",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function",
+            },
+          ],
+          "address": undefined,
+          "name": "Counter",
+        },
+      ]
+    `)
+    },
+    {
+      timeout: 10_000,
+    },
+  )
 })

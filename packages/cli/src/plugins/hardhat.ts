@@ -119,7 +119,7 @@ export function hardhat<TProject extends string>({
         const [command, ...options] = (
           typeof clean === 'boolean' ? `${packageManager} hardhat clean` : clean
         ).split(' ')
-        await execa(command!, options, { cwd: resolve(project) })
+        await execa(command!, options, { cwd: project })
       }
       if (build) {
         const packageManager = await getPackageManager()
@@ -128,7 +128,7 @@ export function hardhat<TProject extends string>({
             ? `${packageManager} hardhat compile`
             : build
         ).split(' ')
-        await execa(command!, options, { cwd: resolve(project) })
+        await execa(command!, options, { cwd: project })
       }
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
@@ -188,7 +188,7 @@ export function hardhat<TProject extends string>({
                 `${pc.blue('Hardhat')} Detected ${event} at ${basename(path)}`,
               )
               const subprocess = execa(command!, options, {
-                cwd: resolve(project),
+                cwd: project,
               })
               subprocess.stdout?.on('data', (data) => {
                 process.stdout.write(`${pc.blue('Hardhat')} ${data}`)
