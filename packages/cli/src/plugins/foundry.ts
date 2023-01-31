@@ -127,11 +127,10 @@ export function foundry<TProject extends string>({
 
   return {
     async contracts() {
-      if (clean)
-        await execa(forgeExecutable, ['clean'], { cwd: resolve(project) })
+      if (clean) await execa(forgeExecutable, ['clean'], { cwd: project })
       if (build)
         await execa(forgeExecutable, ['build'], {
-          cwd: resolve(project),
+          cwd: project,
         })
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
@@ -171,7 +170,7 @@ export function foundry<TProject extends string>({
               )}`,
             )
             const subprocess = execa(forgeExecutable, ['build', '--watch'], {
-              cwd: resolve(project),
+              cwd: project,
             })
             subprocess.stdout?.on('data', (data) => {
               process.stdout.write(`${pc.magenta('Foundry')} ${data}`)
