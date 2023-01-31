@@ -1,0 +1,122 @@
+---
+title: 'Infura'
+description: 'Infura 的官方 wagmi Provider。'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# Infura
+
+`infuraProvider`用 Infura RPC URLs 来配置 chain ，还提供一个[ethers.js `InfuraProvider`](https://docs.ethers.io/v5/api/providers/api-providers/#InfuraProvider)。
+
+```ts
+import { infuraProvider } from 'wagmi/providers/infura'
+```
+
+## 用法
+
+```ts
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+
+const { chains, provider } = configureChains(
+  [mainnet, polygon],
+  [infuraProvider({ apiKey: 'yourInfuraApiKey' })],
+)
+```
+
+注意：上面的例子是使用来自 [`wagmi/chains`入口](/react/chains#wagmichains) 的 chain 。
+
+## 返回值
+
+```ts
+{
+  chains: Chain[],
+  provider: InfuraProvider,
+  webSocketProvider: InfuraWebSocketProvider
+}
+```
+
+## 配置项
+
+### apiKey
+
+Infura API key，可以从 [Infura Dashboard](https://infura.io/login) 获取。
+
+```ts {7}
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+
+const { chains, provider } = configureChains(
+  [mainnet, polygon],
+  [infuraProvider({ apiKey: 'yourInfuraApiKey' })],
+)
+```
+
+### priority (可选)
+
+用于设置 Provider 的优先级，priority 数值小的 Provider 优先级更高。如果多个 Provider 有相同的 priority，则会随机选择它们。
+
+```ts {11,13}
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [mainnet, polygon],
+  [
+    infuraProvider({
+      apiKey: 'yourInfuraApiKey',
+      priority: 0,
+    }),
+    publicProvider({ priority: 1 }),
+  ],
+)
+```
+
+### stallTimeout (可选)
+
+请求超时时间，以毫秒为单位，超时后将尝试另一个 Provider。
+
+```ts {11}
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [mainnet, polygon],
+  [
+    infuraProvider({
+      apiKey: 'yourInfuraApiKey',
+      stallTimeout: 1_000,
+    }),
+    publicProvider(),
+  ],
+)
+```
+
+### weight (可选)
+
+设置来自该 Provider 的响应的权重。如果一个给定的 Provider 更受你信任，就可以使用这个。
+
+```ts {11,13}
+import { configureChains } from 'wagmi'
+import { mainnet, polygon } from 'wagmi/chains'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains, provider } = configureChains(
+  [mainnet, polygon],
+  [
+    infuraProvider({
+      apiKey: 'yourInfuraApiKey',
+      weight: 1,
+    }),
+    publicProvider({ weight: 2 }),
+  ],
+)
+```

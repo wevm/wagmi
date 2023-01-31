@@ -23,7 +23,6 @@ export async function createFixture<
     copyNodeModules?: boolean
     dir?: string
     files?: TFiles
-    name?: 'foundry' | 'hardhat'
   } = {},
 ) {
   const dir = config.dir ?? f.temp()
@@ -64,34 +63,6 @@ export async function createFixture<
     )
   }
 
-  switch (config.name) {
-    case 'foundry':
-      await fse.copy(
-        path.join(__dirname, './fixtures/foundry'),
-        path.join(dir, 'contracts'),
-        { overwrite: true },
-      )
-      break
-    case 'hardhat':
-      await fse.copy(
-        path.join(__dirname, './fixtures/hardhat'),
-        path.join(dir, 'contracts'),
-        {
-          overwrite: true,
-          filter(src) {
-            if (src.includes('node_modules')) return false
-            return true
-          },
-        },
-      )
-      await fse.symlink(
-        path.join(__dirname, './fixtures/hardhat/node_modules'),
-        path.join(dir, 'contracts/node_modules'),
-        'dir',
-      )
-      break
-  }
-
   return {
     dir,
     paths: paths,
@@ -118,11 +89,19 @@ function getTsConfig(baseUrl: string) {
       moduleResolution: 'node',
       noEmit: true,
       paths: {
-        '@wagmi/chains/*': [
+        '@wagmi/chains': [
           path.relative(baseUrl, 'references/packages/chains/src'),
         ],
         '@wagmi/cli': [path.relative(baseUrl, 'packages/cli/src')],
         '@wagmi/cli/*': [path.relative(baseUrl, 'packages/cli/src/*')],
+        '@wagmi/connectors': [
+          path.relative(baseUrl, 'references/packages/connectors/src'),
+        ],
+        '@wagmi/connectors/*': [
+          path.relative(baseUrl, 'references/packages/connectors/src/*'),
+        ],
+        '@wagmi/core': [path.relative(baseUrl, 'packages/core/src')],
+        '@wagmi/core/*': [path.relative(baseUrl, 'packages/core/src/*')],
         wagmi: [path.relative(baseUrl, 'packages/react/src')],
         'wagmi/*': [path.relative(baseUrl, 'packages/react/src/*')],
       },
@@ -131,7 +110,7 @@ function getTsConfig(baseUrl: string) {
       strict: true,
       target: 'es6',
     },
-    include: ['**/*.ts', '**/*.tsx'],
+    include: [`${baseUrl}/**/*.ts`, `${baseUrl}/**/*.tsx`],
     exclude: ['node_modules'],
   } as TsConfig
 }

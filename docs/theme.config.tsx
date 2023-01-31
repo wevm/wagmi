@@ -56,7 +56,7 @@ const config: DocsThemeConfig = {
     icon: null,
   },
   darkMode: true,
-  docsRepositoryBase: `${github}/tree/main/docs/pages`,
+  docsRepositoryBase: `${github}/tree/main/docs`,
   editLink: {
     text() {
       // eslint-disable-next-line react-hooks/rules-of-hooks

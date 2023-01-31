@@ -6,6 +6,8 @@ import {
   address,
   apiKey,
   handlers,
+  invalidApiKey,
+  timeoutAddress,
   unverifiedContractAddress,
 } from './fetch.test'
 
@@ -64,6 +66,16 @@ describe('etherscan', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"No address found for chainId \\"1\\". Make sure chainId \\"1\\" is set as an address."',
       )
+    })
+
+    it('invalid api key', async () => {
+      await expect(
+        etherscan({
+          apiKey: invalidApiKey,
+          chainId: 1,
+          contracts: [{ name: 'WagmiMintExample', address: timeoutAddress }],
+        }).contracts(),
+      ).rejects.toThrowErrorMatchingInlineSnapshot('"Invalid API Key"')
     })
   })
 })

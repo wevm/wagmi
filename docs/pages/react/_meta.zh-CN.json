@@ -24,8 +24,7 @@
     "display": "hidden"
   },
   "providers": {
-    "title": "Providers",
-    "display": "hidden"
+    "title": "Providers"
   },
   "connectors": {
     "title": "Connectors",

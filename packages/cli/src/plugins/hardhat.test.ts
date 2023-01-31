@@ -1,5 +1,5 @@
 import fixtures from 'fixturez'
-import { dirname } from 'pathe'
+import { dirname, resolve } from 'pathe'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { hardhat } from './hardhat'
@@ -38,5 +38,53 @@ describe('hardhat', () => {
     })
   })
 
-  describe.todo('contracts')
+  it('contracts', async () => {
+    await expect(
+      hardhat({
+        project: resolve(__dirname, '__fixtures__/hardhat/'),
+      }).contracts(),
+    ).resolves.toMatchInlineSnapshot(`
+      [
+        {
+          "abi": [
+            {
+              "inputs": [],
+              "name": "increment",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function",
+            },
+            {
+              "inputs": [],
+              "name": "number",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256",
+                },
+              ],
+              "stateMutability": "view",
+              "type": "function",
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "newNumber",
+                  "type": "uint256",
+                },
+              ],
+              "name": "setNumber",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function",
+            },
+          ],
+          "address": undefined,
+          "name": "Counter",
+        },
+      ]
+    `)
+  })
 })
