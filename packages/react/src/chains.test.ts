@@ -36,6 +36,7 @@ it('should expose correct exports', () => {
       "mainnet",
       "metis",
       "metisGoerli",
+      "okc",
       "optimism",
       "optimismGoerli",
       "polygon",

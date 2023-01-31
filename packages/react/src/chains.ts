@@ -30,6 +30,7 @@ export {
   mainnet,
   metis,
   metisGoerli,
+  okc,
   optimism,
   optimismGoerli,
   polygon,
