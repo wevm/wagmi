@@ -1,5 +1,13 @@
 # @wagmi/cli
 
+## 0.1.3
+
+### Patch Changes
+
+- [#1754](https://github.com/wagmi-dev/wagmi/pull/1754) [`298728b5`](https://github.com/wagmi-dev/wagmi/commit/298728b5918fa15b6b5b082597204a268d4b01f1) Thanks [@tmm](https://github.com/tmm)! - Updated project resolution for Foundry and Hardhat plugins.
+
+- [#1738](https://github.com/wagmi-dev/wagmi/pull/1738) [`37c221d0`](https://github.com/wagmi-dev/wagmi/commit/37c221d0f4d175084e23a6b172d72f177bfa0c81) Thanks [@roninjin10](https://github.com/roninjin10)! - Added automatic Foundry config detection for artifacts directory.
+
 ## 0.1.2
 
 ### Patch Changes
