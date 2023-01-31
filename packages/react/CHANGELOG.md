@@ -1,5 +1,16 @@
 # wagmi
 
+## 0.11.2
+
+### Patch Changes
+
+- [#1756](https://github.com/wagmi-dev/wagmi/pull/1756) [`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d) Thanks [@jxom](https://github.com/jxom)! - Added OKC Chain. Thanks @clark-cui!
+
+- [#1756](https://github.com/wagmi-dev/wagmi/pull/1756) [`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d) Thanks [@jxom](https://github.com/jxom)! - Fixed race condition between `switchNetwork` and mutation Actions that use `chainId` (e.g. `sendTransaction`). Thanks @DanInTheD4rk!
+
+- Updated dependencies [[`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d), [`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d)]:
+  - @wagmi/core@0.9.2
+
 ## 0.11.1
 
 ### Patch Changes
