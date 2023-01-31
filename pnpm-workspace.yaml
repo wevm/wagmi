@@ -2,5 +2,5 @@ packages:
   - 'docs'
   - 'examples/*'
   - 'packages/*'
-  - 'packages/**/fixtures/*'
+  - 'packages/**/__fixtures__/*'
   - 'references/packages/*'
