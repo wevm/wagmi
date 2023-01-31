@@ -7,8 +7,9 @@ import { react } from './react'
 
 describe('react', () => {
   describe('run', () => {
-    describe('isTypeScript', () => {
-      it('true', async () => {
+    it(
+      'with TypeScript',
+      async () => {
         const { imports, content } = await react().run({
           contracts: [
             {
@@ -64,9 +65,15 @@ describe('react', () => {
         await expect(typecheck(paths.tsconfig)).resolves.toMatchInlineSnapshot(
           '""',
         )
-      })
+      },
+      {
+        timeout: 10_000,
+      },
+    )
 
-      it('false', async () => {
+    it(
+      'without TypeScript',
+      async () => {
         const { imports, content } = await react().run({
           contracts: [
             {
@@ -87,7 +94,10 @@ describe('react', () => {
         await expect(
           format(`${imports}\n\n${content}`),
         ).resolves.toMatchSnapshot()
-      })
-    })
+      },
+      {
+        timeout: 10_000,
+      },
+    )
   })
 })
