@@ -1,9 +1,10 @@
 import dedent from 'dedent'
-import { execa } from 'execa'
+import { execa, execaCommandSync } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
 import { basename, extname, resolve } from 'pathe'
 import pc from 'picocolors'
+import { z } from 'zod'
 
 import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
@@ -35,7 +36,7 @@ type FoundryConfig<TProject extends string> = {
    *
    * Same as your project's `--out` (`-o`) option.
    *
-   * @default 'out/'
+   * @default foundry.config#out | 'out'
    */
   artifacts?: string
   /**
@@ -83,11 +84,16 @@ type FoundryConfig<TProject extends string> = {
 
 type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 
+const FoundryConfigSchema = z.object({
+  out: z.string().default('out').optional(),
+  src: z.string().default('src').optional(),
+})
+
 /**
  * Resolves ABIs from [Foundry](https://github.com/foundry-rs/foundry) project.
  */
 export function foundry<TProject extends string>({
-  artifacts = 'out',
+  artifacts,
   deployments = {},
   exclude = defaultExcludes,
   forge: {
@@ -123,7 +129,29 @@ export function foundry<TProject extends string>({
   }
 
   const project = resolve(process.cwd(), project_)
-  const artifactsDirectory = `${project}/${artifacts}`
+
+  let config: z.infer<typeof FoundryConfigSchema> = {
+    out: 'out',
+    src: 'src',
+  }
+  try {
+    config = FoundryConfigSchema.parse(
+      JSON.parse(
+        execaCommandSync(`${forgeExecutable} config --json`, {
+          cwd: project,
+        }).stdout,
+      ),
+    )
+    // eslint-disable-next-line no-empty
+  } catch {
+  } finally {
+    config = {
+      ...config,
+      out: artifacts ?? config.out,
+    }
+  }
+
+  const artifactsDirectory = `${project}/${config.out}`
 
   return {
     async contracts() {

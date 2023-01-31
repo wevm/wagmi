@@ -44,14 +44,12 @@ describe('foundry', () => {
     })
   })
 
-  it(
-    'contracts',
-    async () => {
-      await expect(
-        foundry({
-          project: resolve(__dirname, '__fixtures__/foundry/'),
-        }).contracts(),
-      ).resolves.toMatchInlineSnapshot(`
+  it('contracts', async () => {
+    await expect(
+      foundry({
+        project: resolve(__dirname, '__fixtures__/foundry/'),
+      }).contracts(),
+    ).resolves.toMatchInlineSnapshot(`
       [
         {
           "abi": [
@@ -94,9 +92,5 @@ describe('foundry', () => {
         },
       ]
     `)
-    },
-    {
-      timeout: 10_000,
-    },
-  )
+  })
 })
