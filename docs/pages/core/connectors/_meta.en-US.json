@@ -4,5 +4,6 @@
   "ledger": "Ledger",
   "metaMask": "MetaMask",
   "walletConnect": "WalletConnect",
-  "mock": "Mock"
+  "mock": "Mock",
+  "safe": "Safe"
 }
