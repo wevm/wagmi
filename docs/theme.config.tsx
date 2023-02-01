@@ -37,21 +37,21 @@ function useLocale() {
 }
 
 const config: DocsThemeConfig = {
-  banner: {
-    key: 'gitcoin-15',
-    text() {
-      return (
-        <a
-          target="_blank"
-          href="https://grant-explorer.gitcoin.co/#/round/1/0xe575282b376e3c9886779a841a2510f1dd8c2ce4/0x50f3dbb23d121a397941e827ce2f10a0aea7f5cf311de6e3abcfe3847c56c405-0xe575282b376e3c9886779a841a2510f1dd8c2ce4"
-          rel="noopener noreferrer"
-        >
-          {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
-          {translations[useLocale()].gitcoinBanner}
-        </a>
-      )
-    },
-  },
+  // banner: {
+  //   key: 'gitcoin-1',
+  //   text() {
+  //     return (
+  //       <a
+  //         target="_blank"
+  //         href="https://grant-explorer.gitcoin.co/#/round/1/0xe575282b376e3c9886779a841a2510f1dd8c2ce4/0x50f3dbb23d121a397941e827ce2f10a0aea7f5cf311de6e3abcfe3847c56c405-0xe575282b376e3c9886779a841a2510f1dd8c2ce4"
+  //         rel="noopener noreferrer"
+  //       >
+  //         {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+  //         {translations[useLocale()].gitcoinBanner}
+  //       </a>
+  //     )
+  //   },
+  // },
   chat: {
     icon: null,
   },
