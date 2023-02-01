@@ -59,6 +59,10 @@
       "types": "./dist/connectors/mock.d.ts",
       "default": "./dist/connectors/mock.js"
     },
+    "./connectors/safe": {
+      "types": "./dist/connectors/safe.d.ts",
+      "default": "./dist/connectors/safe.js"
+    },
     "./connectors/walletConnect": {
       "types": "./dist/connectors/walletConnect.d.ts",
       "default": "./dist/connectors/walletConnect.js"
