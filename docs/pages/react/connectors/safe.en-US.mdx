@@ -10,13 +10,13 @@ import { Callout } from 'nextra-theme-docs'
 The `SafeConnector` supports connecting with Safe Wallet using the [Safe Apps SDK](https://github.com/safe-global/safe-apps-sdk).
 
 ```ts
-import { SafeConnector } from '@wagmi/connectors/safe'
+import { SafeConnector } from 'wagmi/connectors/safe'
 ```
 
 ## Usage
 
 ```ts
-import { SafeConnector } from '@wagmi/connectors/safe'
+import { SafeConnector } from 'wagmi/connectors/safe'
 
 const connector = new SafeConnector({
   chains,
@@ -33,9 +33,8 @@ const connector = new SafeConnector({
   make sure to omit the `autoConnect` property on the wagmi client or set it to
   false. If the option is enabled, wagmi automatically connects to the last used
   provider, but instead we want to automatically connect to the Safe if the app
-  is loaded in the Safe Context. Autoconnect logic may be implemented
-  separately. If you're using react, you can find an example hook in [React
-  docs](/react/connectors/safe)
+  is loaded in the Safe Context. Autoconnect logic may be implemented via a
+  separate hook. See an example hook below.
 </Callout>
 
 ```ts
@@ -74,8 +73,8 @@ as the last used wallet if the connection to the Safe doesn't succeed.
 Chains supported by app. Defaults to `defaultChains`.
 
 ```ts
-import { SafeConnector } from '@wagmi/connectors/safe'
-import { mainnet, optimism } from '@wagmi/chains'
+import { SafeConnector } from 'wagmi/connectors/safe'
+import { mainnet, optimism } from 'wagmi/chains'
 
 const connector = new SafeConnector({
   chains: [mainnet, optimism],
@@ -94,8 +93,8 @@ Options to pass to the [Safe Apps SDK](https://github.com/safe-global/safe-apps-
 the most up-to-date information on the available options, please refer to the Safe Apps SDK documentation.
 
 ```ts
-import { SafeConnector } from '@wagmi/connectors/safe'
-import { mainnet, optimism } from '@wagmi/chains'
+import { SafeConnector } from 'wagmi/connectors/safe'
+import { mainnet, optimism } from 'wagmi/chains'
 
 const connector = new SafeConnector({
   chains: [mainnet, optimism],
