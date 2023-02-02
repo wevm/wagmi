@@ -87,7 +87,7 @@ export function fetch({
           const timeout = setTimeout(() => controller.abort(), timeoutDuration)
           try {
             const { url, init } = await request(contract)
-            // TODO: Replace `undici` with native `fetch` when Node 18 is more widely used.
+            // TODO: Replace `node-fetch` with native `fetch` when Node 18 is more widely used.
             const response = await fetch_(url, {
               ...init,
               // TODO: Use `AbortSignal.timeout` when Node 18 is more widely used.
