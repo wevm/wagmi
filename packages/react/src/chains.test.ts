@@ -44,6 +44,8 @@ it('should expose correct exports', () => {
       "sepolia",
       "taraxa",
       "taraxaTestnet",
+      "telos",
+      "telosTestnet",
       "zkSync",
       "zkSyncTestnet",
     ]
