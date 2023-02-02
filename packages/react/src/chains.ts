@@ -38,6 +38,8 @@ export {
   sepolia,
   taraxa,
   taraxaTestnet,
+  telos,
+  telosTestnet,
   zkSync,
   zkSyncTestnet,
 } from '@wagmi/core/chains'
