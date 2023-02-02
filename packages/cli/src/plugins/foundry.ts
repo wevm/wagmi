@@ -2,14 +2,15 @@ import dedent from 'dedent'
 import { execa, execaCommandSync } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
-import { basename, extname, resolve } from 'pathe'
+
+import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 import { z } from 'zod'
 
 import type { ContractConfig, Plugin } from '../config'
 import * as logger from '../logger'
 import type { RequiredBy } from '../types'
-import type { FoundryResolved } from './_types'
+import type { FoundryResolved } from './'
 
 const defaultExcludes = [
   'Common.sol/**',
@@ -41,6 +42,23 @@ type FoundryConfig<TProject extends string> = {
   artifacts?: string
   /**
    * Mapping of addresses to attach to artifacts.
+   *
+   * ---
+   *
+   * Adding the following declaration to your config file for strict deployment names:
+   *
+   * ```ts
+   * declare module '@wagmi/cli/plugins' {
+   *   export interface Foundry {
+   *     deployments: {
+   *       ['../hello_foundry']: 'Counter'
+   *       // ^? Path to project  ^? Contract names
+   *     }
+   *   }
+   * }
+   * ```
+   *
+   * TODO: `@wagmi/cli` should generate this file in the future
    */
   deployments?: {
     [_ in FoundryResolved<TProject>['deployments']]: ContractConfig['address']
@@ -79,14 +97,14 @@ type FoundryConfig<TProject extends string> = {
   /** Optional prefix to prepend to artifact names. */
   namePrefix?: string
   /** Path to foundry project. */
-  project: TProject
+  project?: TProject
 }
 
 type FoundryResult = RequiredBy<Plugin, 'contracts' | 'validate' | 'watch'>
 
 const FoundryConfigSchema = z.object({
-  out: z.string().default('out').optional(),
-  src: z.string().default('src').optional(),
+  out: z.string().default('out'),
+  src: z.string().default('src'),
 })
 
 /**
@@ -94,7 +112,7 @@ const FoundryConfigSchema = z.object({
  */
 export function foundry<TProject extends string>({
   artifacts,
-  deployments = {},
+  deployments = {} as any,
   exclude = defaultExcludes,
   forge: {
     clean = false,
@@ -105,7 +123,7 @@ export function foundry<TProject extends string>({
   include = ['*.json'],
   namePrefix = '',
   project: project_,
-}: FoundryConfig<TProject>): FoundryResult {
+}: FoundryConfig<TProject> = {}): FoundryResult {
   function getContractName(artifactPath: string, usePrefix = true) {
     const filename = basename(artifactPath)
     const extension = extname(artifactPath)
@@ -116,7 +134,9 @@ export function foundry<TProject extends string>({
     const artifact = await fse.readJSON(artifactPath)
     return {
       abi: artifact.abi,
-      address: deployments[getContractName(artifactPath, false)],
+      address: (deployments as Record<string, ContractConfig['address']>)[
+        getContractName(artifactPath, false)
+      ],
       name: getContractName(artifactPath),
     }
   }
@@ -128,7 +148,7 @@ export function foundry<TProject extends string>({
     ])
   }
 
-  const project = resolve(process.cwd(), project_)
+  const project = resolve(process.cwd(), project_ ?? '')
 
   let config: z.infer<typeof FoundryConfigSchema> = {
     out: 'out',
@@ -137,9 +157,8 @@ export function foundry<TProject extends string>({
   try {
     config = FoundryConfigSchema.parse(
       JSON.parse(
-        execaCommandSync(`${forgeExecutable} config --json`, {
-          cwd: project,
-        }).stdout,
+        execaCommandSync(`${forgeExecutable} config --json --root ${project}`)
+          .stdout,
       ),
     )
     // eslint-disable-next-line no-empty
@@ -151,15 +170,12 @@ export function foundry<TProject extends string>({
     }
   }
 
-  const artifactsDirectory = `${project}/${config.out}`
+  const artifactsDirectory = join(project, config.out)
 
   return {
     async contracts() {
-      if (clean) await execa(forgeExecutable, ['clean'], { cwd: project })
-      if (build)
-        await execa(forgeExecutable, ['build'], {
-          cwd: project,
-        })
+      if (clean) await execa(forgeExecutable, ['clean', '--root', project])
+      if (build) await execa(forgeExecutable, ['build', '--root', project])
       if (!fse.pathExistsSync(artifactsDirectory))
         throw new Error('Artifacts not found.')
 
@@ -176,7 +192,7 @@ export function foundry<TProject extends string>({
     async validate() {
       // Check that project directory exists
       if (!(await fse.pathExists(project)))
-        throw new Error(`Foundry project ${pc.gray(project)} not found.`)
+        throw new Error(`Foundry project ${pc.gray(project_)} not found.`)
 
       // Ensure forge is installed
       if (clean || build || rebuild)
@@ -197,9 +213,12 @@ export function foundry<TProject extends string>({
                 project,
               )}`,
             )
-            const subprocess = execa(forgeExecutable, ['build', '--watch'], {
-              cwd: project,
-            })
+            const subprocess = execa(forgeExecutable, [
+              'build',
+              '--watch',
+              '--root',
+              project,
+            ])
             subprocess.stdout?.on('data', (data) => {
               process.stdout.write(`${pc.magenta('Foundry')} ${data}`)
             })

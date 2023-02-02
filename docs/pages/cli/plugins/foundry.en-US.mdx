@@ -31,23 +31,6 @@ export default defineConfig({
 
 ## Configuration
 
-### project
-
-Path to Foundry project.
-
-```ts {7}
-import { defineConfig } from '@wagmi/cli'
-import { foundry } from '@wagmi/cli/plugins'
-
-export default defineConfig({
-  plugins: [
-    foundry({
-      project: '../hello_foundry',
-    }),
-  ],
-})
-```
-
 ### artifacts (optional)
 
 Project's artifacts directory. Defaults to `'out/'`. Same as your `foundry.toml`/`forge`s `--out` (`-o`) option.
@@ -60,7 +43,6 @@ export default defineConfig({
   plugins: [
     foundry({
       artifacts: 'out/',
-      project: '../hello_foundry',
     }),
   ],
 })
@@ -70,14 +52,13 @@ export default defineConfig({
 
 Mapping of addresses to attach to artifacts.
 
-```ts {8-13}
+```ts {7-12}
 import { defineConfig } from '@wagmi/cli'
 import { foundry } from '@wagmi/cli/plugins'
 
 export default defineConfig({
   plugins: [
     foundry({
-      project: '../hello_foundry',
       deployments: {
         Counter: {
           1: '0x314159265dd8dbb310642f98f50c066173c1259b',
@@ -119,7 +100,6 @@ export default defineConfig({
         '**.s.sol/*.json',
         '**.t.sol/*.json',
       ],
-      project: '../hello_foundry',
     }),
   ],
 })
@@ -142,7 +122,6 @@ export default defineConfig({
         path: 'path/to/forge',
         rebuild: true,
       },
-      project: '../hello_foundry',
     }),
   ],
 })
@@ -168,7 +147,6 @@ export default defineConfig({
         // the following patterns are included by default
         '*.json',
       ],
-      project: '../hello_foundry',
     }),
   ],
 })
@@ -186,6 +164,22 @@ export default defineConfig({
   plugins: [
     foundry({
       namePrefix: 'HelloFoundry',
+    }),
+  ],
+})
+```
+
+### project (optional)
+
+Path to Foundry project.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
       project: '../hello_foundry',
     }),
   ],
