@@ -1,5 +1,5 @@
-import type { GetAccountResult } from '@wagmi/core'
-import { getAccount, watchAccount } from '@wagmi/core'
+import type { GetAccountResult, WatchAccountCallback } from '@wagmi/core'
+import { getAccount, getClient } from '@wagmi/core'
 import * as React from 'react'
 
 import { useSyncExternalStoreWithTracked } from '../utils'
@@ -20,33 +20,60 @@ export type UseAccountConfig = {
 }
 
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
+  const watchAccount = React.useCallback(
+    (callback: WatchAccountCallback) => {
+      const client = getClient()
+      const unsubscribe = client.subscribe(
+        (state) => ({
+          address: state.data?.account,
+          connector: state.connector,
+          status: state.status,
+        }),
+        (curr, prev) => {
+          if (
+            !!onConnect &&
+            prev.status !== 'connected' &&
+            curr.status === 'connected'
+          )
+            onConnect({
+              address: curr.address,
+              connector: curr.connector,
+              isReconnected: prev.status === 'reconnecting',
+            })
+
+          if (
+            !!onDisconnect &&
+            prev.status === 'connected' &&
+            curr.status === 'disconnected'
+          )
+            onDisconnect()
+
+          return callback(getAccount())
+        },
+      )
+
+      return unsubscribe
+    },
+    [onConnect, onDisconnect],
+  )
+
   const account = useSyncExternalStoreWithTracked(watchAccount, getAccount)
-  const previousAccountRef = React.useRef<typeof account>()
-  const previousAccount = previousAccountRef.current ?? ({} as typeof account)
 
-  if (
-    !!onConnect &&
-    (previousAccount.status !== 'connected' ||
-      previousAccount.status === undefined) &&
-    account.status === 'connected'
-  )
-    onConnect({
-      address: account.address,
-      connector: account.connector,
-      isReconnected:
-        previousAccount.status === 'reconnecting' ||
-        // when `previousAccount.status` is `undefined`, it means connector connected immediately
-        previousAccount.status === undefined,
-    })
+  // Check for immediate reconnection on mount before subscribe to store
+  // e.g. `previousStatusRef.current === undefined` and `status === 'connected'`
+  const previousStatusRef = React.useRef<GetAccountResult['status']>()
+  const { address, connector, status } = account
+  React.useEffect(() => {
+    if (
+      !!onConnect &&
+      previousStatusRef.current === undefined &&
+      status === 'connected'
+    )
+      onConnect({ address, connector, isReconnected: true })
 
-  if (
-    !!onDisconnect &&
-    previousAccount.status === 'connected' &&
-    account.status === 'disconnected'
-  )
-    onDisconnect()
-
-  previousAccountRef.current = account
+    previousStatusRef.current = status
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return account
 }
