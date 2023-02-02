@@ -1,5 +1,17 @@
 # wagmi
 
+## 0.11.3
+
+### Patch Changes
+
+- [#1773](https://github.com/wagmi-dev/wagmi/pull/1773) [`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/universal-provider` on `WalletConnectConnector` v2.
+  Added more signable methods to `WalletConnectConnector` v2.
+
+- [#1773](https://github.com/wagmi-dev/wagmi/pull/1773) [`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c) Thanks [@jxom](https://github.com/jxom)! - Added Telos to the `wagmi/chains` entrypoint. Thanks @donnyquixotic!
+
+- Updated dependencies [[`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c), [`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c)]:
+  - @wagmi/core@0.9.3
+
 ## 0.11.2
 
 ### Patch Changes
