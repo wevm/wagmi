@@ -7,6 +7,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import { SafeConnector } from 'wagmi/connectors/safe'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
@@ -57,6 +58,13 @@ const client = createClient({
               : detectedName.join(', ')
           })`,
         shimDisconnect: true,
+      },
+    }),
+    new SafeConnector({
+      chains,
+      options: {
+        allowedDomains: [/https:\/\/app.safe.global$/],
+        debug: false,
       },
     }),
   ],

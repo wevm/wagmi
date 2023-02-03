@@ -1,0 +1,107 @@
+---
+title: 'Safe Wallet'
+description: 'wagmi Connector for Safe Wallet.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# Safe Wallet
+
+The `SafeConnector` supports connecting with Safe Wallet using the [Safe Apps SDK](https://github.com/safe-global/safe-apps-sdk).
+
+```ts
+import { SafeConnector } from '@wagmi/connectors/safe'
+```
+
+## Usage
+
+```ts
+import { SafeConnector } from '@wagmi/connectors/safe'
+
+const connector = new SafeConnector({
+  chains,
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+})
+```
+
+<Callout type="warning">
+  Safe Apps are loaded inside an iframe in the Safe Wallet application and it is
+  expected that the app automatically connects to the Safe wallet. Therefore
+  make sure to omit the `autoConnect` property on the wagmi client or set it to
+  false. If the option is enabled, wagmi automatically connects to the last used
+  provider, but instead we want to automatically connect to the Safe if the app
+  is loaded in the Safe Context. Autoconnect logic may be implemented
+  separately. If you're using react, you can find an example hook in [React
+  docs](/react/connectors/safe)
+</Callout>
+
+```ts
+import { useConnect } from 'wagmi'
+import { useEffect } from 'react'
+
+const AUTOCONNECTED_CONNECTOR_IDS = ['safe']
+
+function useAutoConnect() {
+  const { connect, connectors } = useConnect()
+
+  useEffect(() => {
+    AUTOCONNECTED_CONNECTOR_IDS.forEach((connector) => {
+      const connectorInstance = connectors.find(
+        (c) => c.id === connector && c.ready,
+      )
+
+      if (connectorInstance) {
+        connect({ connector: connectorInstance })
+      }
+    })
+  }, [connect, connectors])
+}
+
+export { useAutoConnect }
+```
+
+This hook attempts to connect to the Safe wallet automatically on the app load. The hook can be extended with other  
+connectors that use a similar iframe approach (e.g., Ledger Live). It can also be extended with fallback logic such  
+as the last used wallet if the connection to the Safe doesn't succeed.
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts
+import { SafeConnector } from '@wagmi/connectors/safe'
+import { mainnet, optimism } from '@wagmi/chains'
+
+const connector = new SafeConnector({
+  chains: [mainnet, optimism],
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+})
+```
+
+Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/chains#wagmichains).
+
+### options
+
+Options to pass to the [Safe Apps SDK](https://github.com/safe-global/safe-apps-sdk/tree/main/packages/safe-apps-sdk). For
+the most up-to-date information on the available options, please refer to the Safe Apps SDK documentation.
+
+```ts
+import { SafeConnector } from '@wagmi/connectors/safe'
+import { mainnet, optimism } from '@wagmi/chains'
+
+const connector = new SafeConnector({
+  chains: [mainnet, optimism],
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+})
+```
