@@ -42,6 +42,10 @@
     "title": "Constants",
     "display": "hidden"
   },
+  "actions": {
+    "title": "Actions",
+    "display": "hidden"
+  },
   "module-types": {
     "title": "Module Types",
     "display": "hidden"

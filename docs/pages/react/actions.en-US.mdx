@@ -1,0 +1,16 @@
+---
+title: 'Actions'
+description: 'Use VanillaJS Actions in wagmi.'
+---
+
+# Actions
+
+Sometimes the declarative nature of React Hooks doesn't work for parts of your app. All the `@wagmi/core` VanillaJS actions are importable using the `wagmi/actions` entrypoint:
+
+```ts
+import { fetchBlockNumber } from 'wagmi/actions'
+
+await fetchBlockNumber()
+```
+
+See the [`@wagmi/core` docs](/core) for more info on what actions are available.
