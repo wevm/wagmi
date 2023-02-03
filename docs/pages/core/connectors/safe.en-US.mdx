@@ -1,0 +1,67 @@
+---
+title: 'Safe Wallet'
+description: 'wagmi Connector for Safe Wallet.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# Safe Wallet
+
+The `SafeConnector` supports connecting with Safe Wallet using the [Safe Apps SDK](https://github.com/safe-global/safe-apps-sdk).
+
+```ts
+import { SafeConnector } from '@wagmi/connectors/safe'
+```
+
+## Usage
+
+```ts
+import { SafeConnector } from '@wagmi/connectors/safe'
+
+const connector = new SafeConnector({
+  chains,
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+})
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { SafeConnector } from '@wagmi/core/connectors/safe'
+import { mainnet, optimism } from '@wagmi/core/chains'
+
+const connector = new SafeConnector({
+  chains: [mainnet, optimism],
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+})
+```
+
+Note: The above example is using chains from [`@wagmi/core/chains` entrypoint](/react/chains#wagmicorechains).
+
+### options (optional)
+
+Options to pass to the [Safe Apps SDK](https://github.com/safe-global/safe-apps-sdk/tree/main/packages/safe-apps-sdk). For
+the most up-to-date information on the available options, please refer to the Safe Apps SDK documentation.
+
+```ts {6-9}
+import { SafeConnector } from '@wagmi/core/connectors/safe'
+import { mainnet, optimism } from '@wagmi/core/chains'
+
+const connector = new SafeConnector({
+  chains: [mainnet, optimism],
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+})
+```
