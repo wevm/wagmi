@@ -1,5 +1,18 @@
 # wagmi
 
+## 0.11.4
+
+### Patch Changes
+
+- [#1679](https://github.com/wagmi-dev/wagmi/pull/1679) [`3cef111b`](https://github.com/wagmi-dev/wagmi/commit/3cef111b1e30120233d8754b33587cdf94aedd8f) Thanks [@aj-may](https://github.com/aj-may)! - Fixed `useAccount` `onConnect` and `onDisconnect` callbacks for React Strict Mode.
+
+- [#1786](https://github.com/wagmi-dev/wagmi/pull/1786) [`b173a431`](https://github.com/wagmi-dev/wagmi/commit/b173a43165c7925a4e56ce1e0327a31917e7edc5) Thanks [@tmm](https://github.com/tmm)! - Locked ethers peer dependency version to >=5.5.1 <6
+
+- [#1787](https://github.com/wagmi-dev/wagmi/pull/1787) [`f023fd8f`](https://github.com/wagmi-dev/wagmi/commit/f023fd8f66befb78b9a4df5ca971ceaa64e37ab4) Thanks [@tmm](https://github.com/tmm)! - Added `SafeConnector`
+
+- Updated dependencies [[`b173a431`](https://github.com/wagmi-dev/wagmi/commit/b173a43165c7925a4e56ce1e0327a31917e7edc5), [`f023fd8f`](https://github.com/wagmi-dev/wagmi/commit/f023fd8f66befb78b9a4df5ca971ceaa64e37ab4)]:
+  - @wagmi/core@0.9.4
+
 ## 0.11.3
 
 ### Patch Changes

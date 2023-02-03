@@ -1,5 +1,16 @@
 # @wagmi/core
 
+## 0.9.4
+
+### Patch Changes
+
+- [#1786](https://github.com/wagmi-dev/wagmi/pull/1786) [`b173a431`](https://github.com/wagmi-dev/wagmi/commit/b173a43165c7925a4e56ce1e0327a31917e7edc5) Thanks [@tmm](https://github.com/tmm)! - Locked ethers peer dependency version to >=5.5.1 <6
+
+- [#1787](https://github.com/wagmi-dev/wagmi/pull/1787) [`f023fd8f`](https://github.com/wagmi-dev/wagmi/commit/f023fd8f66befb78b9a4df5ca971ceaa64e37ab4) Thanks [@tmm](https://github.com/tmm)! - Added `SafeConnector`
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.2.4
+
 ## 0.9.3
 
 ### Patch Changes
