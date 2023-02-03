@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.4
+
+### Patch Changes
+
+- [#1779](https://github.com/wagmi-dev/wagmi/pull/1779) [`97346750`](https://github.com/wagmi-dev/wagmi/commit/973467505dc2bb46198a3e9fe6072306170d24c0) Thanks [@tmm](https://github.com/tmm)! - Made `project` optional for Foundry plugin
+
 ## 0.1.3
 
 ### Patch Changes
