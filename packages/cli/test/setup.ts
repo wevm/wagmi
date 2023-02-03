@@ -51,3 +51,27 @@ vi.mock('picocolors', async () => {
     },
   }
 })
+
+vi.mock('picocolors', async () => {
+  function pass(input: string | number | null | undefined) {
+    return input
+  }
+  return {
+    default: {
+      blue: pass,
+      gray: pass,
+      green: pass,
+      red: pass,
+      white: pass,
+      yellow: pass,
+    },
+  }
+})
+
+vi.mock('../package.json', async () => {
+  const packageJson = vi.importActual('../package.json')
+  return {
+    ...packageJson,
+    version: 'x.y.z',
+  }
+})
