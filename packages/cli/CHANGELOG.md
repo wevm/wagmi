@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.5
+
+### Patch Changes
+
+- [#1788](https://github.com/wagmi-dev/wagmi/pull/1788) [`c3e16d82`](https://github.com/wagmi-dev/wagmi/commit/c3e16d82c9c39b8b1c2f3c51037e11d642a20cd6) Thanks [@tmm](https://github.com/tmm)! - Fixed CLI import
+
 ## 0.1.4
 
 ### Patch Changes
