@@ -26,10 +26,11 @@
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
-- 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and Injected
+- 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, Injected, and more
 - 👟 Caching, request deduplication, multicall, batching, and persistence
 - 🌀 Auto-refresh data on wallet, block, and network changes
 - 🦄 TypeScript ready (infer types from ABIs and EIP-712 Typed Data)
+- 📦 Command-line interface for managing ABIs and code generation
 - 🌳 Test suite running against forked Ethereum network
 
 ...and a lot more.
