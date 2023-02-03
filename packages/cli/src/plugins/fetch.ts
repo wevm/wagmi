@@ -1,14 +1,11 @@
 import { default as fse } from 'fs-extra'
 import type { RequestInfo, RequestInit, Response } from 'node-fetch'
-import { default as nodeFetch } from 'node-fetch'
+import { default as fetch_ } from 'node-fetch'
+import { join } from 'pathe'
 
 import type { ContractConfig, Plugin } from '../config'
 import type { RequiredBy } from '../types'
 import { homedir } from 'os'
-
-type Request = { url: RequestInfo; init?: RequestInit }
-
-const cacheDir = `${homedir}/.wagmi-cli/plugins/fetch/cache`
 
 export type FetchConfig = {
   /**
@@ -44,7 +41,9 @@ export type FetchConfig = {
    */
   request(config: {
     address?: ContractConfig['address']
-  }): Promise<Request> | Request
+  }):
+    | Promise<{ url: RequestInfo; init?: RequestInit }>
+    | { url: RequestInfo; init?: RequestInit }
   /**
    * Duration in milliseconds before request times out.
    *
@@ -69,13 +68,14 @@ export function fetch({
 }: FetchConfig): FetchResult {
   return {
     async contracts() {
+      const cacheDir = join(homedir(), '.wagmi-cli/plugins/fetch/cache')
       await fse.ensureDir(cacheDir)
 
       const timestamp = Date.now() + cacheDuration
       const contracts = []
       for (const contract of contractConfigs) {
         const cacheKey = getCacheKey({ contract })
-        const cacheFilePath = `${cacheDir}/${cacheKey}.json`
+        const cacheFilePath = join(cacheDir, `${cacheKey}.json`)
         const cachedFile = await fse.readJSON(cacheFilePath).catch(() => null)
         let abi
         if (cachedFile?.timestamp > Date.now()) abi = cachedFile.abi
@@ -88,7 +88,7 @@ export function fetch({
           try {
             const { url, init } = await request(contract)
             // TODO: Replace `node-fetch` with native `fetch` when Node 18 is more widely used.
-            const response = await nodeFetch(url, {
+            const response = await fetch_(url, {
               ...init,
               // TODO: Use `AbortSignal.timeout` when Node 18 is more widely used.
               signal: controller.signal,

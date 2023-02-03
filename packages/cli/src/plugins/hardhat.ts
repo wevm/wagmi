@@ -2,7 +2,7 @@ import dedent from 'dedent'
 import { execa } from 'execa'
 import { default as fse } from 'fs-extra'
 import { globby } from 'globby'
-import { basename, extname, resolve } from 'pathe'
+import { basename, extname, join, resolve } from 'pathe'
 import pc from 'picocolors'
 
 import type { ContractConfig, Plugin } from '../config'
@@ -14,7 +14,7 @@ import {
   getIsPackageInstalled,
   getPackageManager,
 } from '../utils'
-import type { HardhatResolved } from './_types'
+import type { HardhatResolved } from './'
 
 const defaultExcludes = ['build-info/**', '*.dbg.json']
 
@@ -29,6 +29,23 @@ type HardhatConfig<TProject extends string> = {
   artifacts?: string
   /**
    * Mapping of addresses to attach to artifacts.
+   *
+   * ---
+   *
+   * Adding the following declaration to your config file for strict deployment names:
+   *
+   * ```ts
+   * declare module '@wagmi/cli/plugins' {
+   *   export interface Hardhat {
+   *     deployments: {
+   *       ['../hello_hardhat']: 'Counter'
+   *       // ^? Path to project  ^? Contract names
+   *     }
+   *   }
+   * }
+   * ```
+   *
+   * TODO: `@wagmi/cli` should generate this file in the future
    */
   deployments?: {
     [_ in HardhatResolved<TProject>['deployments']]: ContractConfig['address']
@@ -61,7 +78,7 @@ type HardhatConfig<TProject extends string> = {
   /** Optional prefix to prepend to artifact names. */
   namePrefix?: string
   /** Path to Hardhat project. */
-  project: string
+  project: TProject
   /**
    * Project's artifacts directory.
    *
@@ -108,8 +125,8 @@ export function hardhat<TProject extends string>({
   }
 
   const project = resolve(process.cwd(), project_)
-  const artifactsDirectory = `${project}/${artifacts}`
-  const sourcesDirectory = `${project}/${sources}`
+  const artifactsDirectory = join(project, artifacts)
+  const sourcesDirectory = join(project, sources)
 
   const { build = true, clean = false, rebuild = true } = commands
   return {

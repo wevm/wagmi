@@ -23,10 +23,6 @@
 
 <br>
 
-> **Note**
->
-> wagmi is in the Gitcoin Grants Alpha Round until Jan 31. [Click here to support development.](https://grant-explorer.gitcoin.co/#/round/1/0xe575282b376e3c9886779a841a2510f1dd8c2ce4/0x50f3dbb23d121a397941e827ce2f10a0aea7f5cf311de6e3abcfe3847c56c405-0xe575282b376e3c9886779a841a2510f1dd8c2ce4) Thank you 🙏
-
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
