@@ -6,6 +6,7 @@ import type { Contract } from '../config'
 
 const chainMap: Record<allChains.Chain['id'], allChains.Chain> = {}
 for (const chain of Object.values(allChains)) {
+  if (typeof chain !== 'object') continue
   if (!('id' in chain)) continue
   chainMap[chain.id] = chain
 }
