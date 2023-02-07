@@ -76,6 +76,6 @@ export type Unit = (typeof units)[number]
 
 declare global {
   interface Window {
-    ethereum?: Ethereum
+    ethereum?: Ethereum | unknown
   }
 }
