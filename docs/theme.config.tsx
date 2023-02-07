@@ -93,7 +93,9 @@ const config: DocsThemeConfig = {
               </svg>
             </a>
           </div>
-          <p className="mt-6 text-xs">© {new Date().getFullYear()} wagmi-dev.eth</p>
+          <p className="mt-6 text-xs">
+            © {new Date().getFullYear()} wagmi-dev.eth
+          </p>
         </div>
       )
     },
