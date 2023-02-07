@@ -13,7 +13,7 @@ const apiUrls = {
   [80_001]: 'https://api-testnet.polygonscan.com/api',
   // Arbitrum
   [42_161]: 'https://api.arbiscan.io/api',
-  [421_611]: 'https://api-testnet.arbiscan.io/api',
+  [421_613]: 'https://api-goerli.arbiscan.io/api',
   // BNB Smart Chain
   [56]: 'https://api.bscscan.com/api',
   [97]: 'https://api-testnet.bscscan.com/api',
