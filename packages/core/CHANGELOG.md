@@ -1,5 +1,19 @@
 # @wagmi/core
 
+## 0.9.5
+
+### Patch Changes
+
+- [#1812](https://github.com/wagmi-dev/wagmi/pull/1812) [`c7fd7fbd`](https://github.com/wagmi-dev/wagmi/commit/c7fd7fbde6f6c69a3a9a4f89d948c4dfb1d22679) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `filecoinCalibration`
+  - `moonbaseAlpha`
+  - `moonbeam`
+  - `moonriver`
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.2.5
+
 ## 0.9.4
 
 ### Patch Changes
