@@ -132,7 +132,7 @@ importers:
       eslint: 8.25.0
       eslint-config-next: 12.3.1_grqhnqpocakf5dew66i47isfme
       postcss: 8.4.19
-      tailwindcss: 3.2.4
+      tailwindcss: 3.2.4_postcss@8.4.19
       typescript: 4.9.4
 
   examples/_dev:
@@ -296,8 +296,8 @@ importers:
       '@safe-global/safe-apps-sdk': ^7.9.0
       '@wagmi/core': workspace:*
       '@walletconnect/ethereum-provider': ^1.8.0
-      '@walletconnect/universal-provider': ^2.3.3
-      '@web3modal/standalone': ^2.0.0
+      '@walletconnect/universal-provider': 2.3.3
+      '@web3modal/standalone': ^2.1.1
       abitype: ^0.3.0
       ethers: ^5.7.2
       eventemitter3: ^4.0.7
@@ -308,7 +308,7 @@ importers:
       '@safe-global/safe-apps-sdk': 7.9.0
       '@walletconnect/ethereum-provider': 1.8.0
       '@walletconnect/universal-provider': 2.3.3
-      '@web3modal/standalone': 2.0.0
+      '@web3modal/standalone': 2.1.1
       abitype: 0.3.0
       eventemitter3: 4.0.7
     devDependencies:
@@ -3424,8 +3424,8 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@web3modal/core/2.0.0:
-    resolution: {integrity: sha512-ZoM3U5DndBAVnnkBJ3hIkOKO81VtWfyda458D1vdN/T6q8IoWzWZR5QHZNc1qNKqm7ecXfEpsPj2YMS3bgOY2A==}
+  /@web3modal/core/2.1.1:
+    resolution: {integrity: sha512-GAZAvfkPHoX2/fghQmf+y36uDspk9wBJxG7qLPUNTHzvIfRoNHWbTt3iEvRdPmUZwbTGDn1jvz9z0uU67gvZdw==}
     dependencies:
       buffer: 6.0.3
       valtio: 1.9.0
@@ -3433,19 +3433,19 @@ packages:
       - react
     dev: false
 
-  /@web3modal/standalone/2.0.0:
-    resolution: {integrity: sha512-/YcAWgnVtTFeVFrHlhYemS1NU9ds9nbMuV1njjbS9+yDirOXfUenPORi6X1AGs5pUrDnR4IwDgQzdd5wqg6kZw==}
+  /@web3modal/standalone/2.1.1:
+    resolution: {integrity: sha512-K06VkZqltLIBKpnLeM2oszRDSdLnwXJWCcItWEOkH4LDFQIiq8lSeLhcamuadRxRKF4ZyTSLHHJ5MFcMfZEHQQ==}
     dependencies:
-      '@web3modal/core': 2.0.0
-      '@web3modal/ui': 2.0.0
+      '@web3modal/core': 2.1.1
+      '@web3modal/ui': 2.1.1
     transitivePeerDependencies:
       - react
     dev: false
 
-  /@web3modal/ui/2.0.0:
-    resolution: {integrity: sha512-kNSXD/YI+Sl92hxMzsjkRWUj8H+CyV89WDS0Ywy2YV9HxVzC6MzntnsYZ4rti5//IzeDlxPhTKKaiBWE68Gwzw==}
+  /@web3modal/ui/2.1.1:
+    resolution: {integrity: sha512-0jRDxgPc/peaE5KgqnzzriXhdVu5xNyCMP5Enqdpd77VkknJIs7h16MYKidxgFexieyHpCOssWySsryWcP2sXA==}
     dependencies:
-      '@web3modal/core': 2.0.0
+      '@web3modal/core': 2.1.1
       lit: 2.6.1
       motion: 10.15.5
       qrcode: 1.5.1
@@ -7505,13 +7505,13 @@ packages:
       '@types/connect': 3.4.35
       '@types/node': 12.20.55
       '@types/ws': 7.4.7
+      JSONStream: 1.3.5
       commander: 2.20.3
       delay: 5.0.0
       es6-promisify: 5.0.0
       eyes: 0.1.8
       isomorphic-ws: 4.0.1_ws@7.5.9
       json-stringify-safe: 5.0.1
-      JSONStream: 1.3.5
       lodash: 4.17.21
       uuid: 8.3.2
       ws: 7.5.9
@@ -9550,26 +9550,26 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: false
 
-  /postcss-import/14.1.0_postcss@8.4.20:
+  /postcss-import/14.1.0_postcss@8.4.19:
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       postcss: ^8.0.0
     dependencies:
-      postcss: 8.4.20
+      postcss: 8.4.19
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.1
     dev: true
 
-  /postcss-js/4.0.0_postcss@8.4.20:
+  /postcss-js/4.0.0_postcss@8.4.19:
     resolution: {integrity: sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==}
     engines: {node: ^12 || ^14 || >= 16}
     peerDependencies:
       postcss: ^8.3.3
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.20
+      postcss: 8.4.19
     dev: true
 
   /postcss-load-config/3.1.4:
@@ -9588,7 +9588,7 @@ packages:
       yaml: 1.10.2
     dev: true
 
-  /postcss-load-config/3.1.4_postcss@8.4.20:
+  /postcss-load-config/3.1.4_postcss@8.4.19:
     resolution: {integrity: sha512-6DiM4E7v4coTE4uzA8U//WhtPwyhiim3eyjEMFCnUpzbrkK9wJHgKDT2mR+HbtSrd/NubVaYTOpSpjUl8NQeRg==}
     engines: {node: '>= 10'}
     peerDependencies:
@@ -9601,17 +9601,17 @@ packages:
         optional: true
     dependencies:
       lilconfig: 2.0.6
-      postcss: 8.4.20
+      postcss: 8.4.19
       yaml: 1.10.2
     dev: true
 
-  /postcss-nested/6.0.0_postcss@8.4.20:
+  /postcss-nested/6.0.0_postcss@8.4.19:
     resolution: {integrity: sha512-0DkamqrPcmkBDsLn+vQDIrtkSbNkv5AD/M322ySo9kqFkCIYklym2xEmWkwo+Y3/qZo34tzEPNUw4y7yMCdv5w==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.20
+      postcss: 8.4.19
       postcss-selector-parser: 6.0.10
     dev: true
 
@@ -10858,10 +10858,12 @@ packages:
       tslib: 2.4.1
     dev: true
 
-  /tailwindcss/3.2.4:
+  /tailwindcss/3.2.4_postcss@8.4.19:
     resolution: {integrity: sha512-AhwtHCKMtR71JgeYDaswmZXhPcW9iuI9Sp2LvZPo9upDZ7231ZJ7eA9RaURbhpXGVlrjX4cFNlB4ieTetEb7hQ==}
     engines: {node: '>=12.13.0'}
     hasBin: true
+    peerDependencies:
+      postcss: ^8.0.9
     dependencies:
       arg: 5.0.2
       chokidar: 3.5.3
@@ -10877,11 +10879,11 @@ packages:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.0.0
-      postcss: 8.4.20
-      postcss-import: 14.1.0_postcss@8.4.20
-      postcss-js: 4.0.0_postcss@8.4.20
-      postcss-load-config: 3.1.4_postcss@8.4.20
-      postcss-nested: 6.0.0_postcss@8.4.20
+      postcss: 8.4.19
+      postcss-import: 14.1.0_postcss@8.4.19
+      postcss-js: 4.0.0_postcss@8.4.19
+      postcss-load-config: 3.1.4_postcss@8.4.19
+      postcss-nested: 6.0.0_postcss@8.4.19
       postcss-selector-parser: 6.0.10
       postcss-value-parser: 4.2.0
       quick-lru: 5.1.1
