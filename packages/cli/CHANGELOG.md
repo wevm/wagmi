@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.6
+
+### Patch Changes
+
+- [#1803](https://github.com/wagmi-dev/wagmi/pull/1803) [`09b13538`](https://github.com/wagmi-dev/wagmi/commit/09b13538abcde879034293cae39551c30cc81445) Thanks [@shotaronowhere](https://github.com/shotaronowhere)! - Swapped deprecated Arbitrum Rinkeby for Arbitrum Goerli URL for Etherscan Plugin.
+
 ## 0.1.5
 
 ### Patch Changes
