@@ -2,4 +2,4 @@
 '@wagmi/cli': patch
 ---
 
-Arbitrum Rinkeby deprecated in favor of Arbitrum Goerli.
+Swapped deprecated Arbitrum Rinkeby for Arbitrum Goerli URL for Etherscan Plugin.
