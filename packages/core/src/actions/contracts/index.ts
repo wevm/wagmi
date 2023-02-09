@@ -4,6 +4,8 @@ export {
   type FetchTokenResult,
 } from './fetchToken'
 
+export { fetchNFT, type FetchNFTArgs, type FetchNFTResult } from './fetchNFT'
+
 export {
   prepareWriteContract,
   type PrepareWriteContractConfig,

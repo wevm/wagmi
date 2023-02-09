@@ -32,6 +32,7 @@ export {
 
 export {
   fetchToken,
+  fetchNFT,
   getContract,
   multicall,
   prepareWriteContract,
@@ -44,6 +45,8 @@ export {
   writeContract,
   type FetchTokenArgs,
   type FetchTokenResult,
+  type FetchNFTArgs,
+  type FetchNFTResult,
   type GetContractArgs,
   type GetContractResult,
   type MulticallConfig,
