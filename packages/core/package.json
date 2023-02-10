@@ -67,6 +67,10 @@
       "types": "./dist/connectors/walletConnect.d.ts",
       "default": "./dist/connectors/walletConnect.js"
     },
+    "./connectors/walletConnectV1": {
+      "types": "./dist/connectors/walletConnectV1.d.ts",
+      "default": "./dist/connectors/walletConnectV1.js"
+    },
     "./internal": {
       "types": "./dist/internal/index.d.ts",
       "default": "./dist/internal/index.js"
