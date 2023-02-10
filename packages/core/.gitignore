@@ -8,6 +8,7 @@ connectors/metaMask/**
 connectors/mock/**
 connectors/safe/**
 connectors/walletConnect/**
+connectors/walletConnectV1/**
 internal/**
 internal/test/**
 providers/alchemy/**
