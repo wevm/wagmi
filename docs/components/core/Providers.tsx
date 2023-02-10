@@ -1,12 +1,7 @@
 import * as React from 'react'
 
-import {
-  WagmiConfig,
-  configureChains,
-  createClient,
-  goerli,
-  mainnet,
-} from 'wagmi'
+import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { goerli, mainnet, polygon } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -16,7 +11,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, goerli],
+  [mainnet, goerli, polygon],
   [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! })],
 )
 
@@ -38,7 +33,7 @@ const client = createClient({
     new WalletConnectConnector({
       chains,
       options: {
-        projectId: '8e6b5ffdcbc9794bf9f4a1952578365b',
+        projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? '',
         qrcode: true,
       },
     }),
