@@ -3156,7 +3156,7 @@ packages:
       '@walletconnect/legacy-types': 2.0.0
       '@walletconnect/legacy-utils': 2.0.0
       copy-to-clipboard: 3.3.3
-      preact: 10.12.0
+      preact: 10.12.1
       qrcode: 1.5.1
     dev: false
 
@@ -9506,8 +9506,8 @@ packages:
     resolution: {integrity: sha512-1Wz5PCRm6Fg+6BTXWJHhX4wRK9MZbZBHuwBqfZlOdVm2NqPe8/rjYpufvYCwJSGb9layyzB2jTTXfpCTynLqFQ==}
     dev: false
 
-  /preact/10.12.0:
-    resolution: {integrity: sha512-+w8ix+huD8CNZemheC53IPjMUFk921i02o30u0K6h53spMX41y/QhVDnG/nU2k42/69tvqWmVsgNLIiwRAcmxg==}
+  /preact/10.12.1:
+    resolution: {integrity: sha512-l8386ixSsBdbreOAkqtrwqHwdvR35ID8c3rKPa8lCWuO86dBi32QWHV4vfsZK1utLLFMvw+Z5Ad4XLkZzchscg==}
     dev: false
 
   /preferred-pm/3.0.3:
