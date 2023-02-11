@@ -113,7 +113,7 @@
   "dependencies": {
     "@wagmi/chains": "workspace:../../references/packages/chains",
     "@wagmi/connectors": "workspace:../../references/packages/connectors",
-    "abitype": "^0.2.5",
+    "abitype": "^0.3.0",
     "eventemitter3": "^4.0.7",
     "zustand": "^4.3.1"
   },
