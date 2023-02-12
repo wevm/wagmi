@@ -6,6 +6,7 @@ export { fetch } from './fetch'
 export { foundry } from './foundry'
 export { hardhat } from './hardhat'
 export { react } from './react'
+export { sourcify } from './sourcify'
 
 export interface Foundry {
   [key: string]: unknown
