@@ -29,25 +29,25 @@ export const successJson = {
 export const handlers = [
   rest.get(
     `${baseUrl}/${chainId}/${address}/metadata.json`,
-    async (req, res, ctx) => {
+    async (_req, res, ctx) => {
       return res(ctx.status(200), ctx.json(successJson))
     },
   ),
   rest.get(
     `${baseUrl}/${multichainIdGnosis}/${address}/metadata.json`,
-    async (req, res, ctx) => {
+    async (_req, res, ctx) => {
       return res(ctx.status(404))
     },
   ),
   rest.get(
     `${baseUrl}/${multichainIdGnosis}/${multichainAddress}/metadata.json`,
-    async (req, res, ctx) => {
+    async (_req, res, ctx) => {
       return res(ctx.status(200), ctx.json(successJson))
     },
   ),
   rest.get(
     `${baseUrl}/${multichainIdPolygon}/${multichainAddress}/metadata.json`,
-    async (req, res, ctx) => {
+    async (_req, res, ctx) => {
       return res(ctx.status(200), ctx.json(successJson))
     },
   ),
@@ -97,7 +97,6 @@ describe('sourcify', () => {
       await expect(
         sourcify({
           chainId: 1,
-          // @ts-expect-error `chainId` and `keyof typeof contracts[number].address` mismatch
           contracts: [{ name: 'DepositContract', address: { 10: address } }],
         }).contracts(),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
