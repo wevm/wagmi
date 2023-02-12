@@ -1,4 +1,7 @@
+import { z } from 'zod'
+
 import type { ContractConfig } from '../config'
+import { fromZodError } from '../errors'
 import { fetch } from './fetch'
 
 type SourcifyConfig = {
@@ -20,6 +23,21 @@ type SourcifyConfig = {
   contracts: Omit<ContractConfig<number>, 'abi'>[]
 }
 
+const SourcifyResponse = z.object({
+  compiler: z.object({
+    version: z.string(),
+  }),
+  language: z.string(),
+  output: z.object({
+    abi: z.any(),
+    devdoc: z.any(),
+    userdoc: z.any(),
+  }),
+  settings: z.any(),
+  sources: z.any(),
+  version: z.number(),
+})
+
 /**
  * Fetches contract ABIs from Sourcify.
  */
@@ -38,7 +56,12 @@ export function sourcify({
     contracts,
     async parse({ response }) {
       const json = await response.json()
-      if (response.status === 200 && json.output.abi) return json.output.abi
+      const parsed = await SourcifyResponse.safeParseAsync(json)
+      if (!parsed.success)
+        throw fromZodError(parsed.error, { prefix: 'Invalid response' })
+
+      if (parsed.data.output.abi)
+        return parsed.data.output.abi as ContractConfig['abi']
       throw new Error('contract not found')
     },
     request({ address }) {
