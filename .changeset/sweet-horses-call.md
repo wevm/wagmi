@@ -1,5 +1,5 @@
 ---
-'@wagmi/cli': minor
+'@wagmi/cli': patch
 ---
 
-add sourcify cli plugin
+Added [Sourcify](https://sourcify.dev) CLI plugin.

@@ -1,10 +1,8 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
-import { depositAbi } from 'packages/cli/test/constants'
-
+import { depositAbi } from '../../test/constants'
 import { sourcify } from './sourcify'
 
 export const baseUrl = 'https://repo.sourcify.dev/contracts/full_match'
@@ -90,13 +88,16 @@ describe('sourcify', () => {
           chainId: 100,
           contracts: [{ name: 'DepositContract', address }],
         }).contracts(),
-      ).rejects.toThrow()
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Contract not found in Sourcify repository."',
+      )
     })
 
     it('missing address for chainId', async () => {
       await expect(
         sourcify({
           chainId: 1,
+          // @ts-expect-error `chainId` and `keyof typeof contracts[number].address` mismatch
           contracts: [{ name: 'DepositContract', address: { 10: address } }],
         }).contracts(),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
