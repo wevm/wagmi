@@ -295,7 +295,7 @@ importers:
       '@safe-global/safe-apps-provider': ^0.15.2
       '@safe-global/safe-apps-sdk': ^7.9.0
       '@wagmi/core': workspace:*
-      '@walletconnect/ethereum-provider': 2.4.0-canary-8c28464c
+      '@walletconnect/ethereum-provider': ^2.4.1
       '@walletconnect/legacy-provider': ^2.0.0
       abitype: ^0.3.0
       ethers: ^5.7.2
@@ -305,7 +305,7 @@ importers:
       '@ledgerhq/connect-kit-loader': 1.0.1
       '@safe-global/safe-apps-provider': 0.15.2
       '@safe-global/safe-apps-sdk': 7.9.0
-      '@walletconnect/ethereum-provider': 2.4.0-canary-8c28464c
+      '@walletconnect/ethereum-provider': 2.4.1
       '@walletconnect/legacy-provider': 2.0.0
       abitype: 0.3.0
       eventemitter3: 4.0.7
@@ -2969,8 +2969,8 @@ packages:
       sirv: 2.0.2
     dev: true
 
-  /@walletconnect/core/2.4.0-canary-8c28464c:
-    resolution: {integrity: sha512-glIclWFFZnVgFYITxzAmK0BFri6twUFgrWf+svYUJzXbAoS7FtBKkTl0hULyX05VHHsZKWK5PEnBWtUL2EqxDQ==}
+  /@walletconnect/core/2.4.1:
+    resolution: {integrity: sha512-9CXn0b4Y/VHTduPhedKeXxJ4wDusWjs8oKJPjw7/UgHTeNN5ftX/yR7mV/e86c/wSiCh+dvDxUhgVp0AVqvj/g==}
     dependencies:
       '@walletconnect/heartbeat': 1.2.0
       '@walletconnect/jsonrpc-provider': 1.0.6
@@ -2982,8 +2982,8 @@ packages:
       '@walletconnect/relay-auth': 1.0.4
       '@walletconnect/safe-json': 1.0.1
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.4.0-canary-8c28464c
-      '@walletconnect/utils': 2.4.0-canary-8c28464c
+      '@walletconnect/types': 2.4.1
+      '@walletconnect/utils': 2.4.1
       events: 3.3.0
       lodash.isequal: 4.5.0
       pino: 7.11.0
@@ -3024,17 +3024,17 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/ethereum-provider/2.4.0-canary-8c28464c:
-    resolution: {integrity: sha512-C4cL6hbxzxU0ShwrI0olM+XXEyA+eXkCwXx+oYQ+L7rHesxjiv9rYuS2V4tm6lClCL4MYPLm45AZJ4JB3wo/fA==}
+  /@walletconnect/ethereum-provider/2.4.1:
+    resolution: {integrity: sha512-F4bKFgI089m/9EsY581JMYxKAHwY7h9r77p7pVLJCHGdd9BMkLWYiIQVdWrzKGssNiU3lvKDidvJPrZG9MDLog==}
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.4
       '@walletconnect/jsonrpc-provider': 1.0.6
       '@walletconnect/jsonrpc-types': 1.0.2
       '@walletconnect/jsonrpc-utils': 1.0.4
-      '@walletconnect/sign-client': 2.4.0-canary-8c28464c
-      '@walletconnect/types': 2.4.0-canary-8c28464c
-      '@walletconnect/universal-provider': 2.4.0-canary-8c28464c
-      '@walletconnect/utils': 2.4.0-canary-8c28464c
+      '@walletconnect/sign-client': 2.4.1
+      '@walletconnect/types': 2.4.1
+      '@walletconnect/universal-provider': 2.4.1
+      '@walletconnect/utils': 2.4.1
       '@web3modal/standalone': 2.1.1
       eip1193-provider: 1.0.1
       events: 3.3.0
@@ -3232,18 +3232,18 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/sign-client/2.4.0-canary-8c28464c:
-    resolution: {integrity: sha512-DRIVSh18lUUJStLljbaxgF8Di8jK9rNEzLfkOuDAQhBpaOhL8Fjd61sPzHNhTHYv1EqrOBSJ7XI4tWjMvUji6w==}
+  /@walletconnect/sign-client/2.4.1:
+    resolution: {integrity: sha512-BRhWvoemSK1rc79cBvvdtjLtUa349u/6v79QCBwuZWlhqeR59VkhS6DX018J/fiT2GUn6JyvRL0PlStXapSSJg==}
     dependencies:
-      '@walletconnect/core': 2.4.0-canary-8c28464c
+      '@walletconnect/core': 2.4.1
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.0
       '@walletconnect/jsonrpc-provider': 1.0.6
       '@walletconnect/jsonrpc-utils': 1.0.4
       '@walletconnect/logger': 2.0.1
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.4.0-canary-8c28464c
-      '@walletconnect/utils': 2.4.0-canary-8c28464c
+      '@walletconnect/types': 2.4.1
+      '@walletconnect/utils': 2.4.1
       events: 3.3.0
       pino: 7.11.0
     transitivePeerDependencies:
@@ -3263,8 +3263,8 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/types/2.4.0-canary-8c28464c:
-    resolution: {integrity: sha512-icZn7SuZg1VCHtjV5VQP91LQQoZo69ym30nCks90JF/+aaPXcKUKHUaSclBGWprpcSrxIm2VJNxQfchBQWPqvA==}
+  /@walletconnect/types/2.4.1:
+    resolution: {integrity: sha512-T5mOhze3M8VXckGMWc5cPFBZYZVnl+jwStVI2VR5A2PEoivY2ZvaUw8n+0+LbTR5qpgQS9SYEM2/1PTPgglwnQ==}
     dependencies:
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.0
@@ -3281,17 +3281,17 @@ packages:
       - typescript
     dev: false
 
-  /@walletconnect/universal-provider/2.4.0-canary-8c28464c:
-    resolution: {integrity: sha512-pmwSBSDt231EoLF1mxU7MiyUXptWMI0OL8bx7mvd6xD3YHkcszV4ye6xuBeCgJV/GWJx3EhObVQOesA6kS5OGQ==}
+  /@walletconnect/universal-provider/2.4.1:
+    resolution: {integrity: sha512-EQo2+ObLixbCfbE6AyrQnLud8fq52sb/kJXZkiAuiakGB0zfTyp/sqmDP+lfufnKpy1KwlytNEy+854nfZflHg==}
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.4
       '@walletconnect/jsonrpc-provider': 1.0.6
       '@walletconnect/jsonrpc-types': 1.0.2
       '@walletconnect/jsonrpc-utils': 1.0.4
       '@walletconnect/logger': 2.0.1
-      '@walletconnect/sign-client': 2.4.0-canary-8c28464c
-      '@walletconnect/types': 2.4.0-canary-8c28464c
-      '@walletconnect/utils': 2.4.0-canary-8c28464c
+      '@walletconnect/sign-client': 2.4.1
+      '@walletconnect/types': 2.4.1
+      '@walletconnect/utils': 2.4.1
       eip1193-provider: 1.0.1
       events: 3.3.0
       pino: 7.11.0
@@ -3308,8 +3308,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@walletconnect/utils/2.4.0-canary-8c28464c:
-    resolution: {integrity: sha512-/+ha7YSoCO9AbckZrHNFMguHb1wjFHqEDk9oSULzFbdAgbaWRdmv9Ccxty1JDcu8KolbVmE6zMbUL4kx0VOQBw==}
+  /@walletconnect/utils/2.4.1:
+    resolution: {integrity: sha512-1qzvX6AgfptxjQCgMepitpC66OdVJ4N4Xt8H0bfAsIcjgluGUNCmxEfR20X7gdkSzsPUMRfnRo/7FdoM6N1LRA==}
     dependencies:
       '@stablelib/chacha20poly1305': 1.0.1
       '@stablelib/hkdf': 1.0.1
@@ -3320,7 +3320,7 @@ packages:
       '@walletconnect/relay-api': 1.0.7
       '@walletconnect/safe-json': 1.0.1
       '@walletconnect/time': 1.0.2
-      '@walletconnect/types': 2.4.0-canary-8c28464c
+      '@walletconnect/types': 2.4.1
       '@walletconnect/window-getters': 1.0.1
       '@walletconnect/window-metadata': 1.0.1
       detect-browser: 5.3.0
