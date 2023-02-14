@@ -13,6 +13,7 @@ it('should expose correct exports', () => {
       "foundry",
       "hardhat",
       "react",
+      "sourcify",
     ]
   `)
 })
