@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.7
+
+### Patch Changes
+
+- [#1841](https://github.com/wagmi-dev/wagmi/pull/1841) [`cb707f01`](https://github.com/wagmi-dev/wagmi/commit/cb707f01cbdcc62a70cf5c8a162d77948d6b6a56) Thanks [@tmm](https://github.com/tmm)! - Added [Sourcify](https://sourcify.dev) CLI plugin.
+
 ## 0.1.6
 
 ### Patch Changes
