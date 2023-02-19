@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.11.6
+
+### Patch Changes
+
+- [#1882](https://github.com/wagmi-dev/wagmi/pull/1882) [`282cc1b0`](https://github.com/wagmi-dev/wagmi/commit/282cc1b02003684d582cea411b11792a59c26fd0) Thanks [@tmm](https://github.com/tmm)! - Updated references.
+
+- Updated dependencies [[`282cc1b0`](https://github.com/wagmi-dev/wagmi/commit/282cc1b02003684d582cea411b11792a59c26fd0)]:
+  - @wagmi/core@0.9.6
+
 ## 0.11.5
 
 ### Patch Changes
