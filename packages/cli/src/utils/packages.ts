@@ -11,9 +11,7 @@ export async function getIsPackageInstalled({
   try {
     const packageManager = await getPackageManager()
     const command =
-      packageManager === 'yarn'
-        ? ['list', '--pattern', packageName]
-        : ['ls', packageName]
+      packageManager === 'yarn' ? ['why', packageName] : ['ls', packageName]
     const { stdout } = await execa(packageManager, command, { cwd })
     if (stdout !== '') return true
     return false
