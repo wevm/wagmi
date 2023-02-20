@@ -198,15 +198,17 @@ export function react(config: ReactConfig = {}): ReactResult {
             let code
             if (isTypeScript) {
               imports.add('UseContractReadConfig')
+              imports.add('ReadContractResult')
               code = dedent`
               ${docString}
               export function use${baseHookName}Read<
                 TFunctionName extends string,
+                TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, TFunctionName>
               >(
-                config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
                 ${innerContent}
-                return useContractRead(${innerHookConfig} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName>)
+                return useContractRead(${innerHookConfig} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>)
               }
               `
             } else
@@ -247,6 +249,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractReadConfig')
+                  imports.add('ReadContractResult')
                   // prettier-ignore
                   code = dedent`
                   ${docString}
