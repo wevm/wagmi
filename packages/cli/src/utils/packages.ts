@@ -38,8 +38,9 @@ export async function getPackageManager() {
   const userAgent = process.env.npm_config_user_agent
   if (userAgent) {
     if (userAgent.includes('pnpm')) return 'pnpm'
-    if (userAgent.includes('npm')) return 'npm'
+    // The yarn@^3 user agent includes npm, so yarn must be checked first.
     if (userAgent.includes('yarn')) return 'yarn'
+    if (userAgent.includes('npm')) return 'npm'
   }
   return detect()
 }
