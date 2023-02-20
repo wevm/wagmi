@@ -2,4 +2,4 @@
 '@wagmi/cli': patch
 ---
 
-Fix yarn detection bug for wagmi cli
+Added better compatibility for yarn@^3 in `@wagmi/cli`.
