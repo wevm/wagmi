@@ -12,7 +12,7 @@ export async function getIsPackageInstalled({
     const packageManager = await getPackageManager()
     const command =
       packageManager === 'yarn'
-        ? ['list', '--pattern', packageName]
+        ? ['why', packageName]
         : ['ls', packageName]
     const { stdout } = await execa(packageManager, command, { cwd })
     if (stdout !== '') return true
