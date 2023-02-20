@@ -250,11 +250,11 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function use${baseHookName}${pascalCase(item.name)}(
-                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                  export function use${baseHookName}${pascalCase(item.name)}<TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, '${item.name}'>>(
+                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName', TSelectData>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>)
+                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>)
                   }
                   `
                 } else {
