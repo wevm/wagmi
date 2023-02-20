@@ -2,4 +2,4 @@
 '@wagmi/cli': patch
 ---
 
-Fix package detection for yarn^3
+Fixed package detection for yarn^3
