@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.8
+
+### Patch Changes
+
+- [#1884](https://github.com/wagmi-dev/wagmi/pull/1884) [`cc03bb44`](https://github.com/wagmi-dev/wagmi/commit/cc03bb44268874f95203de67f6d32586e34c0857) Thanks [@roninjin10](https://github.com/roninjin10)! - Added better compatibility for yarn@^3 in `@wagmi/cli`.
+
 ## 0.1.7
 
 ### Patch Changes
