@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.9
+
+### Patch Changes
+
+- [#1886](https://github.com/wagmi-dev/wagmi/pull/1886) [`36e119c6`](https://github.com/wagmi-dev/wagmi/commit/36e119c6d4bc28a7ae15c9602d0c613bc9681356) Thanks [@roninjin10](https://github.com/roninjin10)! - Fixed package detection for yarn^3
+
 ## 0.1.8
 
 ### Patch Changes
