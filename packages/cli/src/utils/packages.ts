@@ -11,9 +11,7 @@ export async function getIsPackageInstalled({
   try {
     const packageManager = await getPackageManager()
     const command =
-      packageManager === 'yarn'
-        ? ['list', '--pattern', packageName]
-        : ['ls', packageName]
+      packageManager === 'yarn' ? ['why', packageName] : ['ls', packageName]
     const { stdout } = await execa(packageManager, command, { cwd })
     if (stdout !== '') return true
     return false
@@ -38,8 +36,9 @@ export async function getPackageManager() {
   const userAgent = process.env.npm_config_user_agent
   if (userAgent) {
     if (userAgent.includes('pnpm')) return 'pnpm'
-    if (userAgent.includes('npm')) return 'npm'
+    // The yarn@^3 user agent includes npm, so yarn must be checked first.
     if (userAgent.includes('yarn')) return 'yarn'
+    if (userAgent.includes('npm')) return 'npm'
   }
   return detect()
 }
