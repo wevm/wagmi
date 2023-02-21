@@ -1,1 +1,1 @@
-export { WalletConnectConnectorV1 } from '@wagmi/connectors/walletConnectV1'
+export { WalletConnectV1Connector } from '@wagmi/connectors/walletConnectV1'
