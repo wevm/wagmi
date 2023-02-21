@@ -198,15 +198,17 @@ export function react(config: ReactConfig = {}): ReactResult {
             let code
             if (isTypeScript) {
               imports.add('UseContractReadConfig')
+              actionsImports.add('ReadContractResult')
               code = dedent`
               ${docString}
               export function use${baseHookName}Read<
                 TFunctionName extends string,
+                TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, TFunctionName>
               >(
-                config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>, 'abi'${omitted}>${typeParams} = {} as any,
               ) {
                 ${innerContent}
-                return useContractRead(${innerHookConfig} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName>)
+                return useContractRead(${innerHookConfig} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>)
               }
               `
             } else
@@ -247,14 +249,15 @@ export function react(config: ReactConfig = {}): ReactResult {
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractReadConfig')
+                  actionsImports.add('ReadContractResult')
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function use${baseHookName}${pascalCase(item.name)}(
-                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                  export function use${baseHookName}${pascalCase(item.name)}<TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, '${item.name}'>>(
+                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>)
+                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>)
                   }
                   `
                 } else {

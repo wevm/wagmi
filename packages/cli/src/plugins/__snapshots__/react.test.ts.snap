@@ -13,7 +13,11 @@ exports[`react > run > with TypeScript 1`] = `
   useContractEvent,
   UseContractEventConfig,
 } from 'wagmi'
-import { WriteContractMode, PrepareWriteContractResult } from 'wagmi/actions'
+import {
+  ReadContractResult,
+  WriteContractMode,
+  PrepareWriteContractResult,
+} from 'wagmi/actions'
 
 /**
  * Wraps __{@link useContract}__ with \`abi\` set to __{@link wagmiAbi}__.
@@ -25,24 +29,30 @@ export function useWagmi(config: Omit<UseContractConfig, 'abi'> = {} as any) {
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__.
  */
-export function useWagmiRead<TFunctionName extends string>(
+export function useWagmiRead<
+  TFunctionName extends string,
+  TSelectData = ReadContractResult<typeof wagmiAbi, TFunctionName>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, TFunctionName>,
+    UseContractReadConfig<typeof wagmiAbi, TFunctionName, TSelectData>,
     'abi'
   > = {} as any,
 ) {
   return useContractRead({ abi: wagmiAbi, ...config } as UseContractReadConfig<
     typeof wagmiAbi,
-    TFunctionName
+    TFunctionName,
+    TSelectData
   >)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"balanceOf\\"\`.
  */
-export function useWagmiBalanceOf(
+export function useWagmiBalanceOf<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'balanceOf'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'balanceOf'>,
+    UseContractReadConfig<typeof wagmiAbi, 'balanceOf', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -50,15 +60,17 @@ export function useWagmiBalanceOf(
     abi: wagmiAbi,
     functionName: 'balanceOf',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'balanceOf'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'balanceOf', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"getApproved\\"\`.
  */
-export function useWagmiGetApproved(
+export function useWagmiGetApproved<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'getApproved'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'getApproved'>,
+    UseContractReadConfig<typeof wagmiAbi, 'getApproved', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -66,15 +78,17 @@ export function useWagmiGetApproved(
     abi: wagmiAbi,
     functionName: 'getApproved',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'getApproved'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'getApproved', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"isApprovedForAll\\"\`.
  */
-export function useWagmiIsApprovedForAll(
+export function useWagmiIsApprovedForAll<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'isApprovedForAll'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'isApprovedForAll'>,
+    UseContractReadConfig<typeof wagmiAbi, 'isApprovedForAll', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -82,15 +96,17 @@ export function useWagmiIsApprovedForAll(
     abi: wagmiAbi,
     functionName: 'isApprovedForAll',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'isApprovedForAll'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'isApprovedForAll', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"name\\"\`.
  */
-export function useWagmiName(
+export function useWagmiName<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'name'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'name'>,
+    UseContractReadConfig<typeof wagmiAbi, 'name', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -98,15 +114,17 @@ export function useWagmiName(
     abi: wagmiAbi,
     functionName: 'name',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'name'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'name', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"ownerOf\\"\`.
  */
-export function useWagmiOwnerOf(
+export function useWagmiOwnerOf<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'ownerOf'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'ownerOf'>,
+    UseContractReadConfig<typeof wagmiAbi, 'ownerOf', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -114,15 +132,17 @@ export function useWagmiOwnerOf(
     abi: wagmiAbi,
     functionName: 'ownerOf',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'ownerOf'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'ownerOf', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"supportsInterface\\"\`.
  */
-export function useWagmiSupportsInterface(
+export function useWagmiSupportsInterface<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'supportsInterface'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'supportsInterface'>,
+    UseContractReadConfig<typeof wagmiAbi, 'supportsInterface', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -130,15 +150,17 @@ export function useWagmiSupportsInterface(
     abi: wagmiAbi,
     functionName: 'supportsInterface',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'supportsInterface'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'supportsInterface', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"symbol\\"\`.
  */
-export function useWagmiSymbol(
+export function useWagmiSymbol<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'symbol'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'symbol'>,
+    UseContractReadConfig<typeof wagmiAbi, 'symbol', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -146,15 +168,17 @@ export function useWagmiSymbol(
     abi: wagmiAbi,
     functionName: 'symbol',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'symbol'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'symbol', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"tokenURI\\"\`.
  */
-export function useWagmiTokenUri(
+export function useWagmiTokenUri<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'tokenURI'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'tokenURI'>,
+    UseContractReadConfig<typeof wagmiAbi, 'tokenURI', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -162,15 +186,17 @@ export function useWagmiTokenUri(
     abi: wagmiAbi,
     functionName: 'tokenURI',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'tokenURI'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'tokenURI', TSelectData>)
 }
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"totalSupply\\"\`.
  */
-export function useWagmiTotalSupply(
+export function useWagmiTotalSupply<
+  TSelectData = ReadContractResult<typeof wagmiAbi, 'totalSupply'>,
+>(
   config: Omit<
-    UseContractReadConfig<typeof wagmiAbi, 'totalSupply'>,
+    UseContractReadConfig<typeof wagmiAbi, 'totalSupply', TSelectData>,
     'abi' | 'functionName'
   > = {} as any,
 ) {
@@ -178,7 +204,7 @@ export function useWagmiTotalSupply(
     abi: wagmiAbi,
     functionName: 'totalSupply',
     ...config,
-  } as UseContractReadConfig<typeof wagmiAbi, 'totalSupply'>)
+  } as UseContractReadConfig<typeof wagmiAbi, 'totalSupply', TSelectData>)
 }
 
 /**
