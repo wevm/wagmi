@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.10
+
+### Patch Changes
+
+- [#1892](https://github.com/wagmi-dev/wagmi/pull/1892) [`d3d6973b`](https://github.com/wagmi-dev/wagmi/commit/d3d6973ba9407e490140d2434eb83aad88d6e10d) Thanks [@greg-schrammel](https://github.com/greg-schrammel)! - Fixed generated read hooks `select` type.
+
 ## 0.1.9
 
 ### Patch Changes
