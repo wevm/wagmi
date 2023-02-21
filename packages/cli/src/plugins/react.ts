@@ -198,7 +198,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             let code
             if (isTypeScript) {
               imports.add('UseContractReadConfig')
-              imports.add('ReadContractResult')
+              actionsImports.add('ReadContractResult')
               code = dedent`
               ${docString}
               export function use${baseHookName}Read<
@@ -249,12 +249,12 @@ export function react(config: ReactConfig = {}): ReactResult {
                 let code
                 if (isTypeScript) {
                   imports.add('UseContractReadConfig')
-                  imports.add('ReadContractResult')
+                  actionsImports.add('ReadContractResult')
                   // prettier-ignore
                   code = dedent`
                   ${docString}
                   export function use${baseHookName}${pascalCase(item.name)}<TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, '${item.name}'>>(
-                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName', TSelectData>${typeParams} = {} as any,
+                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
                     return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>)
