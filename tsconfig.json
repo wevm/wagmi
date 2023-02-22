@@ -22,6 +22,8 @@
       "@wagmi/connectors/*": ["references/packages/connectors/src/*"],
       "@wagmi/core": ["packages/core/src"],
       "@wagmi/core/*": ["packages/core/src/*"],
+      "@wagmi/vue": ["packages/vue/src"],
+      "@wagmi/vue/*": ["packages/vue/src/*"],
       "wagmi": ["packages/react/src"],
       "wagmi/*": ["packages/react/src/*"],
       // TODO: Remove once issue is fixed
