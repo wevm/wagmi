@@ -5,5 +5,6 @@
   "metaMask": "MetaMask",
   "mock": "Mock",
   "safe": "Safe",
-  "walletConnect": "WalletConnect"
+  "walletConnect": "WalletConnect",
+  "walletConnectLegacy": "WalletConnect Legacy"
 }

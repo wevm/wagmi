@@ -72,9 +72,9 @@
       "types": "./dist/connectors/walletConnect.d.ts",
       "default": "./dist/connectors/walletConnect.js"
     },
-    "./connectors/walletConnectV1": {
-      "types": "./dist/connectors/walletConnectV1.d.ts",
-      "default": "./dist/connectors/walletConnectV1.js"
+    "./connectors/walletConnectLegacy": {
+      "types": "./dist/connectors/walletConnectLegacy.d.ts",
+      "default": "./dist/connectors/walletConnectLegacy.js"
     },
     "./providers/alchemy": {
       "types": "./dist/providers/alchemy.d.ts",
