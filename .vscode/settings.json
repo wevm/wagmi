@@ -1,8 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.organizeImports": false
+    "source.fixAll.eslint": true
   },
   "eslint.packageManager": "pnpm",
   "typescript.tsdk": "node_modules/typescript/lib",
