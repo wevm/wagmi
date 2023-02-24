@@ -1,5 +1,18 @@
 # wagmi
 
+## 0.11.7
+
+### Patch Changes
+
+- [#1907](https://github.com/wagmi-dev/wagmi/pull/1907) [`cc4e74ee`](https://github.com/wagmi-dev/wagmi/commit/cc4e74ee19665eccb3767052dab6ab956ff4e676) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `baseGoerli`
+  - `harmonyOne`
+  - `polygonZkEvmTestnet`
+
+- Updated dependencies [[`cc4e74ee`](https://github.com/wagmi-dev/wagmi/commit/cc4e74ee19665eccb3767052dab6ab956ff4e676)]:
+  - @wagmi/core@0.9.7
+
 ## 0.11.6
 
 ### Patch Changes
