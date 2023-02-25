@@ -1,10 +1,6 @@
 import type { WatchContractEventConfig } from '@wagmi/core'
-import type {
-  Abi,
-  AbiEvent,
-  AbiParametersToPrimitiveTypes,
-  ExtractAbiEvent,
-} from 'abitype'
+import type { GetListener } from '@wagmi/core/types/events'
+import type { Abi } from 'abitype'
 import * as React from 'react'
 
 import type { PartialBy } from '../../types'
@@ -29,6 +25,7 @@ export function useContractEvent<
     abi,
     listener,
     eventName,
+    args,
     once,
   }: UseContractEventConfig<TAbi, TEventName> = {} as any,
 ) {
@@ -49,37 +46,15 @@ export function useContractEvent<
     const handler = (...event: any[]) =>
       (callbackRef.current as (...args: readonly unknown[]) => void)(...event)
 
-    if (once) contract.once(eventName, handler)
-    else contract.on(eventName, handler)
+    const eventFilterFn = contract.filters[eventName]
+    const eventFilter = eventFilterFn?.(...(args ?? [])) ?? eventName
+
+    if (once) contract.once(eventFilter, handler)
+    else contract.on(eventFilter, handler)
 
     return () => {
-      contract.off(eventName, handler)
+      contract.off(eventFilter, handler)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contract, eventName])
+  }, [contract, eventName, args])
 }
-
-type GetListener<
-  TAbi extends Abi | readonly unknown[],
-  TEventName extends string,
-  TAbiEvent extends AbiEvent = TAbi extends Abi
-    ? ExtractAbiEvent<TAbi, TEventName>
-    : AbiEvent,
-  TArgs = AbiParametersToPrimitiveTypes<TAbiEvent['inputs']>,
-  FailedToParseArgs =
-    | ([TArgs] extends [never] ? true : false)
-    | (readonly unknown[] extends TArgs ? true : false),
-> = true extends FailedToParseArgs
-  ? {
-      /**
-       * Callback when event is emitted
-       *
-       * Use a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) on {@link abi} for type inference.
-       */
-      listener: (...args: unknown[]) => void
-    }
-  : {
-      /** Callback when event is emitted */ listener: (
-        ...args: TArgs extends readonly unknown[] ? TArgs : unknown[]
-      ) => void
-    }

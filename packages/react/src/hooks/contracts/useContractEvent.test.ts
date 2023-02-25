@@ -28,7 +28,7 @@ import { useContractWrite } from './useContractWrite'
 
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
-function useContractEventWithWrite<
+function useContractEventsWithWrite<
   TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[],
   TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
@@ -36,7 +36,13 @@ function useContractEventWithWrite<
     ? ExtractAbiFunctionNames<TAbi, 'payable' | 'nonpayable'>
     : string,
 >(config: {
-  contractEvent: {
+  contractEvent1: {
+    config: UseContractEventConfig<TAbi, TEventName>
+  }
+  contractEvent2: {
+    config: UseContractEventConfig<TAbi, TEventName>
+  }
+  contractEvent3: {
     config: UseContractEventConfig<TAbi, TEventName>
   }
   contractWrite: {
@@ -46,7 +52,9 @@ function useContractEventWithWrite<
 }) {
   return {
     connect: useConnect(),
-    contractEvent: useContractEvent(config.contractEvent.config),
+    contractEvent1: useContractEvent(config.contractEvent1.config),
+    contractEvent2: useContractEvent(config.contractEvent2.config),
+    contractEvent3: useContractEvent(config.contractEvent3.config),
     contractWrite: useContractWrite<TMode, TAbi, TFunctionName>(
       config.contractWrite.config,
     ),
@@ -97,19 +105,32 @@ describe('useContractEvent', () => {
         let hash: Hash | undefined = undefined
 
         const tokenId = getRandomTokenId()
-        const listener = vi.fn()
+        const listenerNoArgs = vi.fn()
+        const listenerArgs = vi.fn()
+        const listenerBadArgs = vi.fn()
         const utils = renderHook(() =>
-          useContractEventWithWrite({
-            contractEvent: {
+          useContractEventsWithWrite({
+            contractEvent1: {
               config: {
                 ...wagmiContractConfig,
                 eventName: 'Transfer',
-                listener(from, to, value) {
-                  assertType<ResolvedConfig['AddressType']>(from)
-                  assertType<ResolvedConfig['AddressType']>(to)
-                  assertType<ResolvedConfig['BigIntType']>(value)
-                  listener(from, to, value)
-                },
+                listener: listenerNoArgs,
+              },
+            },
+            contractEvent2: {
+              config: {
+                ...wagmiContractConfig,
+                eventName: 'Transfer',
+                args: [null, null, tokenId],
+                listener: listenerArgs,
+              },
+            },
+            contractEvent3: {
+              config: {
+                ...wagmiContractConfig,
+                eventName: 'Transfer',
+                args: [null, null, getRandomTokenId()],
+                listener: listenerBadArgs,
               },
             },
             contractWrite: {
@@ -135,7 +156,10 @@ describe('useContractEvent', () => {
         await waitFor(() =>
           expect(result.current.waitForTransaction.isSuccess).toBeTruthy(),
         )
-        await waitFor(() => expect(listener).toHaveBeenCalled())
+
+        await waitFor(() => expect(listenerNoArgs).toHaveBeenCalled())
+        await waitFor(() => expect(listenerArgs).toHaveBeenCalled())
+        await waitFor(() => expect(listenerBadArgs).not.toHaveBeenCalled())
       })
     })
   })

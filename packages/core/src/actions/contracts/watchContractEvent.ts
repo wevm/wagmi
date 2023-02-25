@@ -1,30 +1,16 @@
-import type {
-  Abi,
-  AbiEvent,
-  AbiParametersToPrimitiveTypes,
-  Address,
-  ExtractAbiEvent,
-  ExtractAbiEventNames,
-  Narrow,
-} from 'abitype'
+import type { Abi } from 'abitype'
 import { shallow } from 'zustand/shallow'
 
 import { getClient } from '../../client'
+import type { GetConfig, GetListener } from '../../types/events'
+
 import { getProvider, getWebSocketProvider } from '../providers'
 import { getContract } from './getContract'
 
 export type WatchContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-> = {
-  /** Contract ABI */
-  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
-  /** Contract address */
-  address: Address
-  /** Chain id to use for provider */
-  chainId?: number
-  /** Function to invoke on the contract */
-  eventName: GetEventName<TAbi, TEventName>
+> = GetConfig<TAbi, TEventName> & {
   /** Receive only a single event */
   once?: boolean
 }
@@ -32,7 +18,7 @@ export type WatchContractEventConfig<
 export type WatchContractEventCallback<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-> = GetListener<TAbi, TEventName>
+> = GetListener<TAbi, TEventName>['listener']
 
 export function watchContractEvent<
   TAbi extends Abi | readonly unknown[],
@@ -43,6 +29,7 @@ export function watchContractEvent<
     abi,
     chainId,
     eventName,
+    args,
     once,
   }: WatchContractEventConfig<TAbi, TEventName>,
   callback: WatchContractEventCallback<TAbi, TEventName>,
@@ -52,7 +39,7 @@ export function watchContractEvent<
 
   let contract: ReturnType<typeof getContract>
   const watchEvent = async () => {
-    if (contract) contract?.off(eventName, handler)
+    const off = !!contract
 
     const signerOrProvider =
       getWebSocketProvider({ chainId }) || getProvider({ chainId })
@@ -62,8 +49,13 @@ export function watchContractEvent<
       signerOrProvider,
     })
 
-    if (once) contract.once(eventName, handler)
-    else contract.on(eventName, handler)
+    const eventFilterFn = contract.filters[eventName]
+    const eventFilter = eventFilterFn?.(...(args ?? [])) ?? eventName
+
+    if (off) contract.off(eventFilter, handler)
+
+    if (once) contract.once(eventFilter, handler)
+    else contract.on(eventFilter, handler)
   }
 
   watchEvent()
@@ -78,35 +70,11 @@ export function watchContractEvent<
   )
 
   return () => {
-    contract?.off(eventName, handler)
+    if (contract) {
+      const eventFilterFn = contract.filters[eventName]
+      const eventFilter = eventFilterFn?.(...(args ?? [])) ?? eventName
+      contract.off(eventFilter, handler)
+    }
     unsubscribe()
   }
 }
-
-type GetEventName<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TEventName extends string = string,
-> = TAbi extends Abi
-  ? ExtractAbiEventNames<TAbi> extends infer AbiEventNames
-    ?
-        | AbiEventNames
-        | (TEventName extends AbiEventNames ? TEventName : never)
-        | (Abi extends TAbi ? string : never)
-    : never
-  : TEventName
-
-type GetListener<
-  TAbi extends Abi | readonly unknown[],
-  TEventName extends string,
-  TAbiEvent extends AbiEvent = TAbi extends Abi
-    ? ExtractAbiEvent<TAbi, TEventName>
-    : AbiEvent,
-  TArgs = AbiParametersToPrimitiveTypes<TAbiEvent['inputs']>,
-  FailedToParseArgs =
-    | ([TArgs] extends [never] ? true : false)
-    | (readonly unknown[] extends TArgs ? true : false),
-> = true extends FailedToParseArgs
-  ? (...args: readonly unknown[]) => void
-  : (
-      ...args: TArgs extends readonly unknown[] ? TArgs : readonly unknown[]
-    ) => void
