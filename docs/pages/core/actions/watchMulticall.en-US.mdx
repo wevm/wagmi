@@ -85,7 +85,7 @@ By defining inline or adding a [const assertion](https://www.typescriptlang.org/
 ```ts {8,13}
 import { watchMulticall } from '@wagmi/core'
 
-const data = await watchMulticall(
+const unwatch = await watchMulticall(
   {
     contracts: [
       {
@@ -111,7 +111,7 @@ Name of function to call.
 ```ts {9,14}
 import { watchMulticall } from '@wagmi/core'
 
-const data = await watchMulticall(
+const unwatch = await watchMulticall(
   {
     contracts: [
       {
@@ -137,7 +137,7 @@ Arguments to pass to function call.
 ```ts {10,16}
 import { watchMulticall } from '@wagmi/core'
 
-const data = await watchMulticall(
+const unwatch = await watchMulticall(
   {
     contracts: [
       {
@@ -165,7 +165,7 @@ Force a specific chain id for the request. The wagmi `Client`'s ethers `provider
 ```ts {9,14}
 import { watchMulticall } from '@wagmi/core'
 
-const data = await watchMulticall(
+const unwatch = await watchMulticall(
   {
     contracts: [
       {
@@ -191,7 +191,7 @@ If a contract read fails while fetching, it will fail silently and not throw an 
 ```ts {15}
 import { watchMulticall } from '@wagmi/core'
 
-const data = await watchMulticall(
+const unwatch = await watchMulticall(
   {
     contracts: [
       {
@@ -216,7 +216,7 @@ Listen for block changes & invoke `multicall`.
 ```ts {19}
 import { watchMulticall } from '@wagmi/core'
 
-const data = await watchMulticall(
+const unwatch = await watchMulticall(
   {
     contracts: [
       {
@@ -245,7 +245,7 @@ Overrides to pass to function call.
 ```ts {15}
 import { watchMulticall } from '@wagmi/core'
 
-const data = await watchMulticall(
+const unwatch = await watchMulticall(
   {
     contracts: [
       {
