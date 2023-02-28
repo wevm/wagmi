@@ -1,5 +1,5 @@
 ---
-'@wagmi/cli': minor
+'@wagmi/cli': patch
 ---
 
-Updated react plugin in wagmi/cli to use `Address` type instead of hardcoding `0x{String}`
+Updated React plugin to use `Address` type instead of hardcoding `` `0x{string}` ``.
