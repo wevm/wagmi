@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.11
+
+### Patch Changes
+
+- [#1916](https://github.com/wagmi-dev/wagmi/pull/1916) [`950490fd`](https://github.com/wagmi-dev/wagmi/commit/950490fd132b3fb5b3455e77b58d70f134b8e5c9) Thanks [@technophile-04](https://github.com/technophile-04)! - Updated React plugin to use `Address` type instead of hardcoding `` `0x{string}` ``.
+
 ## 0.1.10
 
 ### Patch Changes
