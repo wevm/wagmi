@@ -31,19 +31,7 @@ const mutationFn = (args: UseConnectArgs) => {
 export const useConnect = (props?: UseConnectArgs & UseConnectConfig) => {
   const client = useClient()
 
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    mutate,
-    mutateAsync,
-    reset,
-    status,
-    variables,
-  } = createMutation(
+  const mutationData = createMutation(
     mutationKey({
       chainId: props?.chainId,
       connector: props?.connector,
@@ -58,13 +46,13 @@ export const useConnect = (props?: UseConnectArgs & UseConnectConfig) => {
   )
 
   const connect = (args?: Partial<ConnectArgs>) =>
-    mutate({
+    mutationData.mutate({
       chainId: args?.chainId ?? props?.chainId,
       connector: args?.connector ?? props?.connector ?? client.connectors[0],
     })
 
   const connectAsync = (args?: Partial<ConnectArgs>) => {
-    return mutateAsync({
+    return mutationData.mutateAsync({
       chainId: args?.chainId ?? props?.chainId,
       connector: args?.connector ?? props?.connector ?? client.connectors[0],
     })
@@ -74,15 +62,7 @@ export const useConnect = (props?: UseConnectArgs & UseConnectConfig) => {
     connect,
     connectAsync,
     connectors: client.connectors,
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    pendingConnector: variables?.connector,
-    reset,
-    status,
-    variables,
+    pendingConnector: mutationData.variables?.connector,
+    mutationData,
   } as const
 }

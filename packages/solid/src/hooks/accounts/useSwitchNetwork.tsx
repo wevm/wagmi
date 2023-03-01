@@ -34,30 +34,26 @@ export const useSwitchNetwork = (
 ) => {
   const client = useClient()
 
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    mutate,
-    mutateAsync,
-    reset,
-    status,
-    variables,
-  } = createMutation(mutationKey({ chainId: props?.chainId }), mutationFn, {
-    onError: props?.onError,
-    onMutate: props?.onMutate,
-    onSettled: props?.onSettled,
-    onSuccess: props?.onSuccess,
-  })
+  const mutationData = createMutation(
+    mutationKey({ chainId: props?.chainId }),
+    mutationFn,
+    {
+      onError: props?.onError,
+      onMutate: props?.onMutate,
+      onSettled: props?.onSettled,
+      onSuccess: props?.onSuccess,
+    },
+  )
 
   const switchNetwork_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
-    mutate({ chainId: chainId_ ?? props?.chainId } as SwitchNetworkArgs)
+    mutationData.mutate({
+      chainId: chainId_ ?? props?.chainId,
+    } as SwitchNetworkArgs)
 
   const switchNetworkAsync_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
-    mutateAsync({ chainId: chainId_ ?? props?.chainId } as SwitchNetworkArgs)
+    mutationData.mutateAsync({
+      chainId: chainId_ ?? props?.chainId,
+    } as SwitchNetworkArgs)
 
   // TODO: implement this when forceUpdate is implemented
 
@@ -72,29 +68,21 @@ export const useSwitchNetwork = (
   //   return unwatch
   // })
 
-  let switchNetwork
-  let switchNetworkAsync
-  const supportsSwitchChain = !!client.connector?.switchChain
+  //let switchNetwork
+  //let switchNetworkAsync
+  //const supportsSwitchChain = !!client.connector?.switchChain
 
   // @TODO: check while this is never true on a test env
   // if (props?.throwForSwitchChainNotSupported || supportsSwitchChain) {
   // }
-  switchNetwork = switchNetwork_
-  switchNetworkAsync = switchNetworkAsync_
+  const switchNetwork = switchNetwork_
+  const switchNetworkAsync = switchNetworkAsync_
 
   return {
     chains: client.chains ?? [],
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    pendingChainId: variables?.chainId,
-    reset,
-    status,
+    mutationData,
+    pendingChainId: mutationData.variables?.chainId,
     switchNetwork,
     switchNetworkAsync,
-    variables,
   } as const
 }

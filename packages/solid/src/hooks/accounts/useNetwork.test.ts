@@ -44,7 +44,7 @@ describe('useNetwork', () => {
       const utils = renderHook(() => useNetworkWithConnectAndDisconnect())
       const { result } = utils
 
-      await result.disconnect.disconnectAsync()
+      await result.disconnect.mutationData.mutateAsync()
 
       expect(result.network().chains.length).toBe(0)
       expect(result.network().chain).toBeUndefined()
@@ -60,7 +60,7 @@ describe('useNetwork', () => {
       await waitFor(() => expect(result.account().isConnected).toBeTruthy())
 
       expect(result.network()?.chain?.id).toBe(1)
-      await result.disconnect.disconnectAsync()
+      await result.disconnect.mutationData.mutateAsync()
       await waitFor(() => expect(result.account().isConnected).toBeFalsy())
 
       expect(result.network()?.chain).toMatchInlineSnapshot(`undefined`)

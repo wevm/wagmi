@@ -32,12 +32,12 @@ export async function switchNetwork(config: {
   chainId: Accessor<number>
   utils: ReturnType<typeof renderHook>
 }) {
-  const chainId = config.chainId
   const getNetwork = (utils: ReturnType<typeof renderHook>) =>
     (utils.result as any)?.switchNetwork || utils.result
-  const utils = config.utils
 
-  await getNetwork(utils).switchNetworkAsync(chainId)
+  await getNetwork(config.utils).switchNetworkAsync(config.chainId)
 
-  await waitFor(() => expect(getNetwork(utils).isIdle).toBeTruthy())
+  await waitFor(() =>
+    expect(getNetwork(config.utils).mutationData.isSuccess).toBeTruthy(),
+  )
 }

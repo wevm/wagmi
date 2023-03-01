@@ -101,18 +101,19 @@
   "dependencies": {
     "@coinbase/wallet-sdk": "^3.6.0",
     "@tanstack/query-sync-storage-persister": "^4.14.5",
-    "@tanstack/solid-query": "^4.22.0",
+    "@tanstack/solid-query": "^4.24.12",
     "@wagmi/core": "workspace:*",
     "@walletconnect/ethereum-provider": "^1.8.0",
     "abitype": "^0.2.5",
     "solid-js": "^1.6.6"
   },
   "devDependencies": {
-    "eslint-plugin-solid": "^0.8.0",
     "@solidjs/testing-library": "0.5.2",
     "@typescript-eslint/parser": "^5.46.1",
+    "eslint-plugin-solid": "^0.8.0",
     "typescript": "^4.9.3",
-    "vite-plugin-solid": "^2.5.0"
+    "vite-plugin-solid": "^2.5.0",
+    "vitest": "^0.25.8"
   },
   "keywords": [
     "solid",

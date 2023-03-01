@@ -28,42 +28,30 @@ const mutationFn = (args: UseSignMessageArgs) => {
 export const useSignMessage = (
   props?: UseSignMessageArgs & UseSignMessageConfig,
 ) => {
-  const {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    mutate,
-    mutateAsync,
-    reset,
-    status,
-    variables,
-  } = createMutation(mutationKey({ message: props?.message }), mutationFn, {
-    onError: props?.onError,
-    onMutate: props?.onMutate,
-    onSettled: props?.onSettled,
-    onSuccess: props?.onSuccess,
-  })
+  const mutationData = createMutation(
+    mutationKey({ message: props?.message }),
+    mutationFn,
+    {
+      onError: props?.onError,
+      onMutate: props?.onMutate,
+      onSettled: props?.onSettled,
+      onSuccess: props?.onSuccess,
+    },
+  )
 
   const signMessage = (args?: SignMessageArgs) =>
-    mutate(args || ({ message: props?.message } as SignMessageArgs))
+    mutationData.mutate(
+      args || ({ message: props?.message } as SignMessageArgs),
+    )
 
   const signMessageAsync = (args?: SignMessageArgs) =>
-    mutateAsync(args || ({ message: props?.message } as SignMessageArgs))
+    mutationData.mutateAsync(
+      args || ({ message: props?.message } as SignMessageArgs),
+    )
 
   return {
-    data,
-    error,
-    isError,
-    isIdle,
-    isLoading,
-    isSuccess,
-    reset,
     signMessage,
     signMessageAsync,
-    status,
-    variables,
+    mutationData,
   }
 }

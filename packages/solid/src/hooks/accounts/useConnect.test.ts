@@ -37,7 +37,7 @@ describe('useConnect', () => {
 
         expect(account().isConnected).toBeTruthy()
 
-        await waitFor(() => expect(connect.isIdle).toBeTruthy())
+        await waitFor(() => expect(connect.mutationData.isSuccess).toBeTruthy())
       })
     })
   })
