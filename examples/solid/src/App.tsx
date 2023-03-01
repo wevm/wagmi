@@ -12,7 +12,7 @@ const App: Component = () => {
   const [_chainId, setChainId] = createSignal(1)
 
   const { disconnect } = useDisconnect()
-  const connect = useConnect()
+  const { mutationData: connectData, connect } = useConnect()
   const acc = useAccount()
 
   // opting to set chainId manually, so it won't update
@@ -20,15 +20,17 @@ const App: Component = () => {
   // to make it reactive with Metamask.
   const balance = useBalance()
 
-  createEffect(() => console.log(connect))
+  createEffect(() => console.log(connectData))
 
   const signData = useSignMessage()
 
   return (
     <div>
       <Switch>
-        <Match when={connect.isLoading}>Loading connect data...</Match>
-        <Match when={connect.isError}>Error {connect.error?.message}</Match>
+        <Match when={connectData.isLoading}>Loading connect data...</Match>
+        <Match when={connectData.isError}>
+          Error {connectData.error?.message}
+        </Match>
         <Match when={acc().address}>
           <p>{acc().address}</p>
           <button onClick={() => setChainId((id) => (id === 5 ? 1 : 5))}>
@@ -42,7 +44,7 @@ const App: Component = () => {
           <button onClick={() => disconnect()}>Disconnect</button>
         </Match>
         <Match when={!acc().address}>
-          <button onClick={() => connect.connect()}>connect to metamask</button>
+          <button onClick={() => connect()}>connect to metamask</button>
         </Match>
       </Switch>
 

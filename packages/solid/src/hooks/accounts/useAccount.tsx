@@ -31,7 +31,11 @@ export const useAccount = (props?: UseAccountConfig) => {
 
       setAccount(result)
 
-      if (props?.onConnect && previousStatus() !== "connected" && result.status === 'connected') {
+      if (
+        props?.onConnect &&
+        previousStatus() !== 'connected' &&
+        result.status === 'connected'
+      ) {
         props.onConnect({
           address: account()?.address,
           connector: account()?.connector,
@@ -41,7 +45,11 @@ export const useAccount = (props?: UseAccountConfig) => {
 
       setPreviousStatus(prevAccount.status)
 
-      if (props?.onDisconnect && previousStatus() === "connected" && result.status === 'disconnected') {
+      if (
+        props?.onDisconnect &&
+        previousStatus() === 'connected' &&
+        result.status === 'disconnected'
+      ) {
         props.onDisconnect()
       }
     })

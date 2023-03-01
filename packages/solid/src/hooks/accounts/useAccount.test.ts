@@ -2,7 +2,8 @@ import { waitFor } from '@solidjs/testing-library'
 import { describe, expect, it, vi } from 'vitest'
 
 import { renderHook } from '../../../test'
-import { useAccount, UseAccountConfig } from './useAccount'
+import type { UseAccountConfig } from './useAccount'
+import { useAccount } from './useAccount'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
@@ -100,7 +101,9 @@ describe('useAccount', () => {
       const onConnect = vi.fn()
       const onDisconnect = vi.fn()
 
-      const { result: { connect, disconnect, account } } = renderHook(() =>
+      const {
+        result: { connect, disconnect, account },
+      } = renderHook(() =>
         useAccountWithConnectAndDisconnect({
           onConnect,
           onDisconnect,

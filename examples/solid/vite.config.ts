@@ -1,18 +1,19 @@
 // eslint-disable-next-line import/no-unresolved
 import devtools from 'solid-devtools/vite'
 import { defineConfig } from 'vite'
-import solidPlugin from 'vite-plugin-solid'
+import solid from 'vite-plugin-solid'
 
 export default defineConfig({
   plugins: [
-    solidPlugin(),
     devtools({
       locator: {
         componentLocation: true,
         jsxLocation: true,
+        targetIDE: 'vscode',
       },
       autoname: true,
     }),
+    solid(),
   ],
   server: {
     port: 3000,
