@@ -1,0 +1,209 @@
+---
+title: 'Configuring Chains'
+description: 'configureChains 允许使用特定的 provider 来配置你的 chain，例如：Alchemy、Infura 或其他。这意味着你不需要担心在你的 connector 或 provider 中定义 RPC URLs 和 chain 的配置，这是由 wagmi 内部管理的。'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# Configuring Chains
+
+`configureChains` 方法允许使用特定的 provider 来配置你的 chain ，例如：Alchemy、Infura 或其他。这意味着你不需要担心在你的 [connector](/react/connectors/walletConnect#options) 或 [provider](/react/client#provider-optional) 中定义 RPC URLs 和 chain 的配置，这是由 wagmi 内部管理的。
+
+```ts
+import { configureChains } from 'wagmi'
+```
+
+## 用法
+
+`configureChains` 接受一个 chain 的数组和 provider 的数组，然后返回:
+
+- `chains`: 传递给你的 connector
+- `provider`: 传递给 `createClient`
+- `webSocketProvider`: 也传递给 `createClient`，不过是可选的
+
+```ts
+import { configureChains, createClient } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+
+const { chains, provider } = configureChains(
+  [mainnet, optimism],
+  [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
+)
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors: [new InjectedConnector({ chains })],
+  provider,
+})
+```
+
+可以在[这里](/core/chains)找到 wagmi 里支持的 chain 列表。
+
+### 多个 Provider
+
+`configureChains` 方法可以接受多个 Provider. 如果你的 Provider 不能支持所有的 chain 的时候，这会是很有用的。 例如，你可能想用 [Alchemy](https://alchemy.com) 作为 Etheruem 的 Provider, 用 [avax.network](https://avax.network) 作为 Avalanche 的 Provider
+
+`configureChains` 将你配置的 Provider 配置成一个 [ethers.js `FallbackProvider`](https://docs.ethers.io/v5/api/providers/other/#FallbackProvider)， 这样就直接支持了：
+
+- 如果一个 Provider 宕机了，可以自动转跳到另一个（例如，如果 Infura 宕机了，会将请求打到 Alchemy）。
+- 通过设置 targetQuorum 确保响应是合法的。
+
+```ts
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { infuraProvider } from 'wagmi/providers/infura'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { provider } = configureChains(
+  [mainnet, avalanche],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+)
+```
+
+### Quorum
+
+如果 targetQuorum 选项被设置为大于 1 值，它将向多个 Provider 进行请求，通过相互比较验证 Provider 的响应。如果结果相同并且达到设定的数量，那么结果才被返回。
+
+```tsx
+const { provider } = configureChains(
+  [mainnet, avalanche],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+  { targetQuorum: 2 },
+)
+```
+
+默认情况下，对于一个给定的 chain，它将 _尝试_ 设置`targetQuorum`，但如果 `targetQuorum` 值大于该 chain 的 Provider 数量，它将默认为提供者的数量。
+
+例如，在上面提供的例子中，`targetQuorum = 2`，然而 Avalanche 只有一个可用的 Provider （`jsonRpcProvider`），所以`targetQuorum`将被设置为 1。
+
+为了保证一个静态的 quorum，你可以提供一个`minQuorum`作为配置选项。
+
+## 参数
+
+### chains
+
+需要配置的 chain。
+
+```ts {5}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains } = configureChains([mainnet, optimism], [publicProvider()])
+```
+
+### providers
+
+该 app 支持的 Provider。
+
+如果一个 Provider 不支持一个 chain，它将退回到数组中的下一个。如果没有找到 RPC URL，`configureChains`将抛出一个错误。
+
+```ts {7}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains } = configureChains(
+  [mainnet, optimism],
+  [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
+)
+```
+
+## 配置项
+
+### pollingInterval (可选)
+
+Provider 轮询的频率，以毫秒为单位，默认为 `4000`。
+
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains } = configureChains(
+  [mainnet, optimism],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+  { pollingInterval: 10_000, targetQuorum: 3 },
+)
+```
+
+### targetQuorum (可选)
+
+设置目标 quorum，默认为 1。
+
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains } = configureChains(
+  [mainnet, optimism],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+  { targetQuorum: 3 },
+)
+```
+
+### minQuorum (可选)
+
+设置 Provider 必须接受的最小 Quorum，默认为 1。
+
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains } = configureChains(
+  [mainnet, optimism],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+  { targetQuorum: 3, minQuorum: 2 },
+)
+```
+
+### stallTimeout (可选)
+
+请求超时时间，以毫秒为单位，超时后将尝试另一个 Provider。
+
+```ts {13}
+import { configureChains } from 'wagmi'
+import { mainnet, optimism } from 'wagmi/chains'
+import { alchemyProvider } from 'wagmi/providers/alchemy'
+import { publicProvider } from 'wagmi/providers/public'
+
+const { chains } = configureChains(
+  [mainnet, optimism],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+  { stallTimeout: 5000 },
+)
+```

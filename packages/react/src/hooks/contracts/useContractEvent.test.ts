@@ -47,7 +47,9 @@ function useContractEventWithWrite<
   return {
     connect: useConnect(),
     contractEvent: useContractEvent(config.contractEvent.config),
-    contractWrite: useContractWrite(config.contractWrite.config),
+    contractWrite: useContractWrite<TMode, TAbi, TFunctionName>(
+      config.contractWrite.config,
+    ),
     waitForTransaction: useWaitForTransaction(config.waitForTransaction),
   }
 }

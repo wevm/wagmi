@@ -1,0 +1,176 @@
+---
+title: 'Hardhat'
+description: 'Hardhat plugin'
+---
+
+# Hardhat
+
+Plugin for resolving ABIs from [Hardhat](https://hardhat.org) projects.
+
+```ts
+import { hardhat } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
+- Supports [`generate`](/cli/commands#generate) `--watch` (`-w`) mode.
+
+## Configuration
+
+### project
+
+Path to Hardhat project.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
+### artifacts (optional)
+
+Project's artifacts directory. Same as your project's `artifacts` [path configuration](https://hardhat.org/hardhat-runner/docs/config#path-configuration) option. Defaults to `'artifacts/'`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      artifacts: 'out/',
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
+### deployments (optional)
+
+Mapping of addresses to attach to artifacts.
+
+```ts {8-13}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      project: '../hello_hardhat',
+      deployments: {
+        Counter: {
+          1: '0x314159265dd8dbb310642f98f50c066173c1259b',
+          5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+        },
+      },
+    }),
+  ],
+})
+```
+
+### exclude (optional)
+
+Artifact files to exclude relative to `artifacts`. Supports glob patterns.
+
+```ts {7-11}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      exclude: [
+        // the following patterns are excluded by default
+        'build-info/**',
+        '*.dbg.json',
+      ],
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
+### commands (optional)
+
+Hardhat command options.
+
+```ts {7-11}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      commands: {
+        clean: 'pnpm hardhat clean',
+        build: 'pnpm hardhat compile',
+        rebuild: 'pnpm hardhat compile',
+      },
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
+- `clean` Remove build artifacts and cache directories on start up. Defaults to `'${packageManger} hardhat clean'`.
+- `build` Build Foundry project before fetching artifacts. Defaults to `'${packageManger} hardhat compile'`.
+- `rebuild` Command to run when watched file or directory is changed. Used for setting up `--watch` mode. Defaults to `'${packageManger} hardhat compile'`.
+
+### include (optional)
+
+Artifact files to include relative to `artifacts`. Supports glob patterns.
+
+```ts {7-10}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      include: [
+        // the following patterns are included by default
+        '*.json',
+      ],
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```
+
+### namePrefix (optional)
+
+Prefix to prepend to artifact names. Useful for preventing name collisions between contracts from other sources.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { hardhat } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    hardhat({
+      namePrefix: 'HelloHardhat',
+      project: '../hello_hardhat',
+    }),
+  ],
+})
+```

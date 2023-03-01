@@ -1,10 +1,11 @@
-import type { Abi, Address, ExtractAbiFunction } from 'abitype'
+import type { Abi, Address, ExtractAbiFunction, Narrow } from 'abitype'
 import type { PopulatedTransaction } from 'ethers'
 
 import { ConnectorNotFoundError } from '../../errors'
 import type { Signer } from '../../types'
 import type {
-  GetConfig,
+  GetArgs,
+  GetFunctionName,
   GetOverridesForAbiStateMutability,
 } from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
@@ -38,10 +39,14 @@ export type WriteContractPreparedArgs<
   chainId?: number
   /** Request to submit transaction for */
   request: Request
-  // Throwaway properties
-  args?: never
-  overrides?: never
-} & Omit<GetConfig<TAbi, TFunctionName, 'nonpayable' | 'payable'>, 'args'>
+
+  /** Contract ABI */
+  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
+  /** Contract address */
+  address: Address
+  /** Function to invoke on the contract */
+  functionName: GetFunctionName<TAbi, TFunctionName, 'nonpayable' | 'payable'>
+}
 
 export type WriteContractUnpreparedArgs<
   TAbi extends Abi | readonly unknown[],
@@ -68,16 +73,22 @@ export type WriteContractUnpreparedArgs<
       ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
       : 'nonpayable' | 'payable'
   >
-  // Throwaway properties
-  request?: never
-} & GetConfig<TAbi, TFunctionName, 'nonpayable' | 'payable'>
+
+  /** Contract ABI */
+  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
+  /** Contract address */
+  address: Address
+  /** Function to invoke on the contract */
+  functionName: GetFunctionName<TAbi, TFunctionName, 'nonpayable' | 'payable'>
+} & GetArgs<TAbi, TFunctionName>
 
 export type WriteContractArgs<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 > =
-  | WriteContractUnpreparedArgs<TAbi, TFunctionName>
   | WriteContractPreparedArgs<TAbi, TFunctionName>
+  | WriteContractUnpreparedArgs<TAbi, TFunctionName>
+
 export type WriteContractResult = SendTransactionResult
 
 /**
@@ -100,16 +111,11 @@ export async function writeContract<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TSigner extends Signer = Signer,
->({
-  address,
-  args,
-  chainId,
-  abi,
-  functionName,
-  mode,
-  overrides,
-  request: request_,
-}: WriteContractArgs<TAbi, TFunctionName>): Promise<WriteContractResult> {
+>(
+  config:
+    | WriteContractUnpreparedArgs<TAbi, TFunctionName>
+    | WriteContractPreparedArgs<TAbi, TFunctionName>,
+): Promise<WriteContractResult> {
   /****************************************************************************/
   /** START: iOS App Link cautious code.                                      */
   /** Do not perform any async operations in this block.                      */
@@ -118,23 +124,23 @@ export async function writeContract<
 
   const signer = await fetchSigner<TSigner>()
   if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId, signer })
-  if (mode === 'prepared')
-    if (!request_) throw new Error('`request` is required')
+  if (config.chainId) assertActiveChain({ chainId: config.chainId, signer })
 
-  const request =
-    mode === 'recklesslyUnprepared'
-      ? (
-          await prepareWriteContract<Abi | readonly unknown[], string>({
-            address,
-            args: args as unknown[],
-            chainId,
-            abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
-            functionName,
-            overrides,
-          })
-        ).request
-      : request_
+  let request: Request
+  if (config.mode === 'prepared') {
+    request = config.request
+  } else {
+    request = (
+      await prepareWriteContract<Abi | readonly unknown[], string, number>({
+        address: config.address,
+        args: config.args as unknown[],
+        chainId: config.chainId,
+        abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
+        functionName: config.functionName,
+        overrides: config.overrides,
+      })
+    ).request
+  }
 
   const transaction = await sendTransaction({
     request,

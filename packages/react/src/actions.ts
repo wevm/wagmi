@@ -108,6 +108,7 @@ export type {
   WatchSignerCallback,
   WatchWebSocketProviderCallback,
   WriteContractArgs,
+  WriteContractMode,
   WriteContractPreparedArgs,
   WriteContractResult,
   WriteContractUnpreparedArgs,

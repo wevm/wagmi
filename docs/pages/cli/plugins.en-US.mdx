@@ -1,0 +1,40 @@
+---
+title: 'Plugins'
+description: 'wagmi CLI plugins'
+---
+
+# Plugins
+
+`@wagmi/cli` has multiple built-in plugins for managing ABIs, integrating smart contract development tools, and generating code. You can also create your own plugins to hook into the CLI commands.
+
+## Built-in
+
+| Name                                         | Description                                                                    |
+| :------------------------------------------- | :----------------------------------------------------------------------------- |
+| [Actions](/cli/plugins/actions)              | Generate type-safe VanillaJS actions from configuration `contracts`.           |
+| [Block Explorer](/cli/plugins/blockExplorer) | Fetch ABIs from Block Explorers that support `?module=contract&action=getabi`. |
+| [ERC](/cli/plugins/erc)                      | Add ERC ABIs into configuration `contracts`.                                   |
+| [Etherscan](/cli/plugins/etherscan)          | Fetch ABIs from Etherscan and add into configuration.                          |
+| [Fetch](/cli/plugins/fetch)                  | Fetch and parse ABIs from network resource with `fetch`.                       |
+| [Foundry](/cli/plugins/foundry)              | Generate ABIs and watch for Foundry project changes.                           |
+| [Hardhat](/cli/plugins/hardhat)              | Generate ABIs and watch for Hardhat projects changes.                          |
+| [React](/cli/plugins/react)                  | Generate type-safe React Hooks from configuration `contracts`.                 |
+| [Sourcify](/cli/plugins/sourcify)            | Fetch ABIs from Sourcify from configuration `contracts`.                       |
+
+## Creating plugins
+
+Creating plugins to hook into the CLI is quite simple. Plugins most commonly inject contracts into `contracts` config, e.g. [Etherscan](/cli/plugins/etherscan) and [ERC](/cli/plugins/erc) plugins, and/or generate code using the `run` option, e.g. the [React](/cli/plugins/react) plugin. All you need to do is write a function that returns the `Plugin` type (`name` is the only required property, but you likely want to at least include `contracts` or `run`).
+
+```ts filename="wagmi.config.ts"
+import type { Plugin } from '@wagmi/cli'
+
+function myPlugin(): Plugin {
+  name: 'MyPlugin',
+  // ...
+}
+
+export default {
+  out: 'src/generated.ts',
+  plugins: [myPlugin()],
+}
+```

@@ -1,0 +1,114 @@
+---
+title: 'Actions'
+description: 'Actions plugin'
+---
+
+# Actions
+
+Plugin for generating type-safe VanillaJS actions from configuration `contracts`. Requires `wagmi@>=0.11` or `@wagmi/core@>=0.9`.
+
+```ts
+import { actions } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { actions } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    actions({
+      readContract: true,
+    }),
+  ],
+})
+```
+
+## Configuration
+
+### getContract (optional)
+
+Generate [`getContract`](/core/actions/getContract) action. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { actions } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    actions({
+      getContract: true,
+    }),
+  ],
+})
+```
+
+### overridePackageName (optional)
+
+Override detected import source for actions. Defaults to either `wagmi/actions` or `@wagmi/core` depending on what is installed.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { actions } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    actions({
+      overridePackageName: true,
+    }),
+  ],
+})
+```
+
+### prepareWriteContract (optional)
+
+Generate [`prepareWriteContract`](/core/actions/prepareWriteContract) action. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { actions } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    actions({
+      prepareWriteContract: true,
+    }),
+  ],
+})
+```
+
+### readContract (optional)
+
+Generate [`readContract`](/core/actions/readContract) action. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { actions } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    actions({
+      readContract: true,
+    }),
+  ],
+})
+```
+
+### watchContractEvent (optional)
+
+Generate [`watchContractEvent`](/core/actions/watchContractEvent) action. Defaults to `true`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { actions } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    actions({
+      watchContractEvent: true,
+    }),
+  ],
+})
+```

@@ -6,6 +6,7 @@ connectors/injected/**
 connectors/ledger/**
 connectors/metaMask/**
 connectors/mock/**
+connectors/safe/**
 connectors/walletConnect/**
 internal/**
 internal/test/**

@@ -26,10 +26,11 @@
 ## Features
 
 - 🚀 20+ hooks for working with wallets, ENS, contracts, transactions, signing, etc.
-- 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, and Injected
+- 💼 Built-in wallet connectors for MetaMask, WalletConnect, Coinbase Wallet, Injected, and more
 - 👟 Caching, request deduplication, multicall, batching, and persistence
 - 🌀 Auto-refresh data on wallet, block, and network changes
 - 🦄 TypeScript ready (infer types from ABIs and EIP-712 Typed Data)
+- 📦 Command-line interface for managing ABIs and code generation
 - 🌳 Test suite running against forked Ethereum network
 
 ...and a lot more.
@@ -43,7 +44,7 @@ For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 Install wagmi and its ethers peer dependency.
 
 ```bash
-npm install wagmi ethers
+npm install wagmi ethers@^5
 ```
 
 ## Quick Start
@@ -114,7 +115,7 @@ Check out the following places for more wagmi-related content:
 If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 - [GitHub Sponsors](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support)
-- [Gitcoin Grant](https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum)
+- [Gitcoin Grant](https://wagmi.sh/gitcoin)
 - [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
 
 ## Sponsors
@@ -168,6 +169,12 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/sushi-dark.svg">
     <img alt="Sushi logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/sushi-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://stripe.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/stripe-dark.svg">
+    <img alt="Stripe logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/stripe-light.svg" width="auto" height="50">
   </picture>
 </a>
 

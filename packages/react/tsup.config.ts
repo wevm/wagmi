@@ -16,6 +16,7 @@ export default defineConfig(
       'src/connectors/ledger.ts',
       'src/connectors/metaMask.ts',
       'src/connectors/mock.ts',
+      'src/connectors/safe.ts',
       'src/connectors/walletConnect.ts',
       'src/providers/alchemy.ts',
       'src/providers/infura.ts',

@@ -1,0 +1,105 @@
+---
+title: 'Sourcify'
+description: 'Sourcify plugin'
+---
+
+# Sourcify
+
+Plugin for fetching ABIs from [Sourcify](https://sourcify.dev/). Sourcify is a decentralized, open-source, smart contract verification and metadata repository.
+
+```ts
+import { sourcify } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { sourcify } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    sourcify({
+      contracts: [
+        {
+          name: 'deposit',
+          address: '0x00000000219ab540356cbb839cbe05303d7705fa',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+## Configuration
+
+### contracts
+
+Contracts to fetch ABIs for.
+
+```ts {7-12}
+import { defineConfig } from '@wagmi/cli'
+import { sourcify } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    sourcify({
+      contracts: [
+        {
+          name: 'deposit',
+          address: '0x00000000219ab540356cbb839cbe05303d7705fa',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### chainId
+
+Chain id to use for fetching ABI. If `address` is an object, `chainId` is used to select the address.
+
+```ts {7,16}
+import { defineConfig } from '@wagmi/cli'
+import { sourcify } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    sourcify({
+      chainId: 100,
+      contracts: [
+        {
+          name: 'Community',
+          address: {
+            100: '0xC4c622862a8F548997699bE24EA4bc504e5cA865',
+            137: '0xC4c622862a8F548997699bE24EA4bc504e5cA865',
+          },
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### cacheDuration (optional)
+
+Duration in milliseconds to cache ABIs. Defaults to `1_800_000` (30 minutes).
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { sourcify } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    sourcify({
+      cacheDuration: 300_000,
+      contracts: [
+        {
+          name: 'deposit',
+          address: '0x00000000219ab540356cbb839cbe05303d7705fa',
+        },
+      ],
+    }),
+  ],
+})
+```

@@ -1,0 +1,116 @@
+---
+title: 'Config Options'
+description: 'wagmi CLI configuration options'
+---
+
+# Options
+
+Configuration options for `@wagmi/cli`.
+
+## contracts (optional)
+
+Array of contracts to use when running [commands](/cli/commands). `abi` and `name` are required, all other properties are optional.
+
+### address (optional)
+
+Contract address or addresses. Accepts an object `{ [chainId]: address }` for targeting specific chains.
+   
+```ts {6,11-14} filename="wagmi.config.ts"
+export default {
+  out: 'src/generated.ts',
+  contracts: [
+    {
+      abi: […],
+      address: '0x…',
+      name: 'MyCoolContract',
+    },
+    {
+      abi: […],
+      address: {
+        1: '0xfoo…',
+        5: '0xbar…',
+      },
+      name: 'MyCoolMultichainContract'
+    }
+  ],
+}
+```
+
+### abi
+
+ABI for contract. Used by [plugins](/cli/plugins) to generate code base on properties.
+
+```ts {5} filename="wagmi.config.ts"
+export default {
+  out: 'src/generated.ts',
+  contracts: [
+    {
+      abi: […],
+      name: 'MyCoolContract'
+    },
+  ],
+}
+```
+
+### name
+
+Name of contract. Must be unique. Used by [plugins](/cli/plugins) to name generated code.
+
+```ts {6} filename="wagmi.config.ts"
+export default {
+  out: 'src/generated.ts',
+  contracts: [
+    {
+      abi: […],
+      name: 'MyCoolContract'
+    },
+  ],
+}
+```
+
+## out
+
+Path to output generated code. Must be unique per config. Use an [Array Config](/configuration/configuring-cli#array-config) for multiple outputs.
+
+```ts {2} filename="wagmi.config.ts"
+export default {
+  out: 'src/generated.ts',
+  contracts: [
+    {
+      abi: […],
+      name: 'MyCoolContract'
+    },
+  ],
+}
+```
+
+## plugins (optional)
+
+Plugins to use and their configuration.
+
+`@wagmi/cli` has multiple [built-in plugins](/cli/plugins) that are used to manage ABIs (fetch from block explorers, resolve from the file system, etc.), generate code (React hooks, type-safe JS actions, etc.), and much more!
+
+```ts {1,5-20} filename="wagmi.config.ts"
+import { etherscan, react } from '@wagmi/cli/plugins'
+
+export default {
+  out: 'src/generated.js',
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      chainId: 5,
+      contracts: [
+        {
+          name: 'EnsRegistry',
+          address: {
+            1: '0x314159265dd8dbb310642f98f50c066173c1259b',
+            5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+          },
+        },
+      ],
+    }),
+    react(),
+  ],
+}
+```
+

@@ -23,12 +23,12 @@ export type ConfigureChainsConfig = {
 )
 
 export function configureChains<
+  TChain extends Chain = Chain,
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
-  TChain extends Chain = Chain,
 >(
   defaultChains: TChain[],
-  providers: ChainProviderFn<TProvider, TWebSocketProvider, TChain>[],
+  providers: ChainProviderFn<TChain, TProvider, TWebSocketProvider>[],
   {
     minQuorum = 1,
     pollingInterval = 4_000,
@@ -81,7 +81,7 @@ export function configureChains<
         [
           `Could not find valid provider configuration for chain "${chain.name}".\n`,
           "You may need to add `jsonRpcProvider` to `configureChains` with the chain's RPC URLs.",
-          'Read more: https://wagmi.sh/react/providers/jsonRpc',
+          'Read more: https://wagmi.sh/core/providers/jsonRpc',
         ].join('\n'),
       )
     }

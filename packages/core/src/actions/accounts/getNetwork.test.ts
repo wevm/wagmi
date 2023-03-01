@@ -43,6 +43,10 @@ describe('getNetwork', () => {
               "ensRegistry": {
                 "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
               },
+              "ensUniversalResolver": {
+                "address": "0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376",
+                "blockCreated": 16172161,
+              },
               "multicall3": {
                 "address": "0xca11bde05977b3631167028862be2a173976ca11",
                 "blockCreated": 14353601,
@@ -58,6 +62,11 @@ describe('getNetwork', () => {
             "network": "homestead",
             "rpcUrls": {
               "default": {
+                "http": [
+                  "http://127.0.0.1:8545",
+                ],
+              },
+              "public": {
                 "http": [
                   "http://127.0.0.1:8545",
                 ],
@@ -80,6 +89,10 @@ describe('getNetwork', () => {
               "contracts": {
                 "ensRegistry": {
                   "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+                },
+                "ensUniversalResolver": {
+                  "address": "0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376",
+                  "blockCreated": 16172161,
                 },
                 "multicall3": {
                   "address": "0xca11bde05977b3631167028862be2a173976ca11",
@@ -116,6 +129,11 @@ describe('getNetwork', () => {
                     "wss://mainnet.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://cloudflare-eth.com",
+                  ],
+                },
               },
             },
             {
@@ -132,6 +150,10 @@ describe('getNetwork', () => {
               "contracts": {
                 "ensRegistry": {
                   "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+                },
+                "ensUniversalResolver": {
+                  "address": "0x687c30Cc44bFA39A1449e86E172BF002E7b3f0b0",
+                  "blockCreated": 7725078,
                 },
                 "multicall3": {
                   "address": "0xca11bde05977b3631167028862be2a173976ca11",
@@ -168,6 +190,11 @@ describe('getNetwork', () => {
                     "wss://goerli.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://rpc.ankr.com/eth_goerli",
+                  ],
+                },
               },
               "testnet": true,
             },
@@ -190,8 +217,8 @@ describe('getNetwork', () => {
           "chain": {
             "blockExplorers": {
               "default": {
-                "name": "Etherscan",
-                "url": "https://optimistic.etherscan.io",
+                "name": "Optimism Explorer",
+                "url": "https://explorer.optimism.io",
               },
               "etherscan": {
                 "name": "Etherscan",
@@ -234,6 +261,11 @@ describe('getNetwork', () => {
                   "wss://optimism-mainnet.infura.io/ws/v3",
                 ],
               },
+              "public": {
+                "http": [
+                  "https://mainnet.optimism.io",
+                ],
+              },
             },
             "unsupported": true,
           },
@@ -252,6 +284,10 @@ describe('getNetwork', () => {
               "contracts": {
                 "ensRegistry": {
                   "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+                },
+                "ensUniversalResolver": {
+                  "address": "0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376",
+                  "blockCreated": 16172161,
                 },
                 "multicall3": {
                   "address": "0xca11bde05977b3631167028862be2a173976ca11",
@@ -288,6 +324,11 @@ describe('getNetwork', () => {
                     "wss://mainnet.infura.io/ws/v3",
                   ],
                 },
+                "public": {
+                  "http": [
+                    "https://cloudflare-eth.com",
+                  ],
+                },
               },
             },
             {
@@ -304,6 +345,10 @@ describe('getNetwork', () => {
               "contracts": {
                 "ensRegistry": {
                   "address": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
+                },
+                "ensUniversalResolver": {
+                  "address": "0x687c30Cc44bFA39A1449e86E172BF002E7b3f0b0",
+                  "blockCreated": 7725078,
                 },
                 "multicall3": {
                   "address": "0xca11bde05977b3631167028862be2a173976ca11",
@@ -338,6 +383,11 @@ describe('getNetwork', () => {
                   ],
                   "webSocket": [
                     "wss://goerli.infura.io/ws/v3",
+                  ],
+                },
+                "public": {
+                  "http": [
+                    "https://rpc.ankr.com/eth_goerli",
                   ],
                 },
               },
