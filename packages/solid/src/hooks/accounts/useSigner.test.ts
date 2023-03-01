@@ -66,11 +66,11 @@ describe('useSigner', () => {
     })
 
     it('is not connected', async () => {
-      const { result } = renderHook(() => useSignerWithAccount())
+      const { result } = renderHook(() => useSigner())
 
-      await waitFor(() => expect(result.signer.fetchStatus).toBe('idle'))
+      await waitFor(() => expect(result.fetchStatus).toBe('idle'))
 
-      expect(result.signer).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": WalletSigner {
             "_isSigner": true,

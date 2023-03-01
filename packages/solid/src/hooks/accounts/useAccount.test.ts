@@ -1,14 +1,14 @@
 import { waitFor } from '@solidjs/testing-library'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { renderHook } from '../../../test'
-import { useAccount } from './useAccount'
+import { useAccount, UseAccountConfig } from './useAccount'
 import { useConnect } from './useConnect'
 import { useDisconnect } from './useDisconnect'
 
-const useAccountWithConnectAndDisconnect = () => {
+function useAccountWithConnectAndDisconnect(config: UseAccountConfig = {}) {
   return {
-    account: useAccount(),
+    account: useAccount(config),
     connect: useConnect(),
     disconnect: useDisconnect(),
   }
@@ -94,6 +94,37 @@ describe('useAccount', () => {
           "status": "disconnected",
         }
       `)
+    })
+
+    it('invokes callbacks on connect and disconnect', async () => {
+      const onConnect = vi.fn()
+      const onDisconnect = vi.fn()
+
+      const { result: { connect, disconnect, account } } = renderHook(() =>
+        useAccountWithConnectAndDisconnect({
+          onConnect,
+          onDisconnect,
+        }),
+      )
+
+      await connect.connectAsync()
+
+      expect(onDisconnect).toBeCalledTimes(0)
+
+      expect(onConnect).toBeCalledTimes(1)
+      expect(onConnect).toBeCalledWith({
+        address: account().address,
+        connector: account().connector,
+        isReconnected: true,
+      })
+
+      await disconnect.mutationData.mutateAsync()
+      await disconnect.disconnect()
+
+      await waitFor(() => expect(account().isDisconnected).toBeTruthy())
+
+      expect(onDisconnect).toBeCalledTimes(1)
+      expect(onConnect).toBeCalledTimes(1)
     })
 
     it('status lifecycle', async () => {

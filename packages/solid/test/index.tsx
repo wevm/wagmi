@@ -12,22 +12,22 @@ export type Props = { client?: Client } & {
   children?: JSX.Element
 }
 
-const wrapper = (props: Props) => {
-  return (
-    <WagmiProvider client={setupClient({ queryClient }) as any} {...props} />
-  )
-}
-
 export function renderHook<TProps extends any[], TResult>(
   hook: (...args: TProps) => TResult,
 ) {
+  const wrapper = (props: Props) => {
+    return (
+      <WagmiProvider client={setupClient({ queryClient }) as any} {...props} />
+    )
+  }
+
   const utils = defaultRenderHook<TProps, TResult>(hook, {
     wrapper,
   })
 
   queryClient.clear()
 
-  return { ...utils }
+  return utils
 }
 
 export * from './utils'

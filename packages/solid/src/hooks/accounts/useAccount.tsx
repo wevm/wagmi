@@ -1,5 +1,5 @@
 import type { GetAccountResult, Provider } from '@wagmi/core'
-import { watchAccount } from '@wagmi/core'
+import { getAccount, watchAccount } from '@wagmi/core'
 import { createEffect, createSignal, onCleanup } from 'solid-js'
 
 export type UseAccountConfig = {
@@ -18,51 +18,43 @@ export type UseAccountConfig = {
 }
 
 export const useAccount = (props?: UseAccountConfig) => {
-  const [account, setAccount] = createSignal<GetAccountResult<Provider>>({
-    address: undefined,
-    connector: undefined,
-    isConnected: false,
-    isReconnecting: false,
-    isConnecting: false,
-    isDisconnected: true,
-    status: 'disconnected',
-  })
+  const [account, setAccount] = createSignal<GetAccountResult<Provider>>(
+    getAccount(),
+  )
 
-  const [previousAccount, setPreviousAccount] =
-    createSignal<GetAccountResult<Provider>>()
+  const [previousStatus, setPreviousStatus] =
+    createSignal<GetAccountResult['status']>()
 
   createEffect(() => {
     const unsubscribe = watchAccount((result) => {
       setAccount(result)
     })
-    onCleanup(() => unsubscribe())
+    onCleanup(unsubscribe)
   })
 
   createEffect(() => {
     if (
-      !!props?.onConnect &&
-      (previousAccount()?.status !== 'connected' ||
-        previousAccount()?.status === undefined) &&
-      account().status === 'connected'
-    ) {
-      props.onConnect({
-        address: account().address,
-        connector: account().connector,
-        isReconnected:
-          previousAccount()?.status === 'reconnecting' ||
-          previousAccount()?.status === undefined,
-      })
-    }
-
-    if (
       !!props?.onDisconnect &&
-      previousAccount()?.status === 'connected' &&
+      previousStatus() === 'connected' &&
       account()?.status === 'disconnected'
     )
       props.onDisconnect()
   })
 
-  setPreviousAccount(account)
+  createEffect(() => {
+    if (
+      !!props?.onConnect &&
+      previousStatus() === undefined &&
+      account()?.status === 'connected'
+    ) {
+      props.onConnect({
+        address: account()?.address,
+        connector: account()?.connector,
+        isReconnected: true,
+      })
+      setPreviousStatus(account().status)
+    }
+  })
 
   return account
 }
