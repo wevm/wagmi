@@ -115,7 +115,7 @@ describe('useAccount', () => {
       expect(onConnect).toBeCalledWith({
         address: account().address,
         connector: account().connector,
-        isReconnected: true,
+        isReconnected: false,
       })
 
       await disconnect.mutationData.mutateAsync()

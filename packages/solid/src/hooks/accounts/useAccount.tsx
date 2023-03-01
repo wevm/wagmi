@@ -27,33 +27,25 @@ export const useAccount = (props?: UseAccountConfig) => {
 
   createEffect(() => {
     const unsubscribe = watchAccount((result) => {
+      const prevAccount = account()
+
       setAccount(result)
+
+      if (props?.onConnect && previousStatus() !== "connected" && result.status === 'connected') {
+        props.onConnect({
+          address: account()?.address,
+          connector: account()?.connector,
+          isReconnected: previousStatus() === 'reconnecting',
+        })
+      }
+
+      setPreviousStatus(prevAccount.status)
+
+      if (props?.onDisconnect && previousStatus() === "connected" && result.status === 'disconnected') {
+        props.onDisconnect()
+      }
     })
     onCleanup(unsubscribe)
-  })
-
-  createEffect(() => {
-    if (
-      !!props?.onDisconnect &&
-      previousStatus() === 'connected' &&
-      account()?.status === 'disconnected'
-    )
-      props.onDisconnect()
-  })
-
-  createEffect(() => {
-    if (
-      !!props?.onConnect &&
-      previousStatus() === undefined &&
-      account()?.status === 'connected'
-    ) {
-      props.onConnect({
-        address: account()?.address,
-        connector: account()?.connector,
-        isReconnected: true,
-      })
-      setPreviousStatus(account().status)
-    }
   })
 
   return account
