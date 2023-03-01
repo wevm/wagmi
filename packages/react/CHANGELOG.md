@@ -1,5 +1,41 @@
 # wagmi
 
+## 0.11.7
+
+### Patch Changes
+
+- [#1907](https://github.com/wagmi-dev/wagmi/pull/1907) [`cc4e74ee`](https://github.com/wagmi-dev/wagmi/commit/cc4e74ee19665eccb3767052dab6ab956ff4e676) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `baseGoerli`
+  - `harmonyOne`
+  - `polygonZkEvmTestnet`
+
+- Updated dependencies [[`cc4e74ee`](https://github.com/wagmi-dev/wagmi/commit/cc4e74ee19665eccb3767052dab6ab956ff4e676)]:
+  - @wagmi/core@0.9.7
+
+## 0.11.6
+
+### Patch Changes
+
+- [#1882](https://github.com/wagmi-dev/wagmi/pull/1882) [`282cc1b0`](https://github.com/wagmi-dev/wagmi/commit/282cc1b02003684d582cea411b11792a59c26fd0) Thanks [@tmm](https://github.com/tmm)! - Updated references.
+
+- Updated dependencies [[`282cc1b0`](https://github.com/wagmi-dev/wagmi/commit/282cc1b02003684d582cea411b11792a59c26fd0)]:
+  - @wagmi/core@0.9.6
+
+## 0.11.5
+
+### Patch Changes
+
+- [#1812](https://github.com/wagmi-dev/wagmi/pull/1812) [`c7fd7fbd`](https://github.com/wagmi-dev/wagmi/commit/c7fd7fbde6f6c69a3a9a4f89d948c4dfb1d22679) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `filecoinCalibration`
+  - `moonbaseAlpha`
+  - `moonbeam`
+  - `moonriver`
+
+- Updated dependencies [[`c7fd7fbd`](https://github.com/wagmi-dev/wagmi/commit/c7fd7fbde6f6c69a3a9a4f89d948c4dfb1d22679)]:
+  - @wagmi/core@0.9.5
+
 ## 0.11.4
 
 ### Patch Changes

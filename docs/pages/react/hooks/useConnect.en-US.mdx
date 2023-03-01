@@ -54,7 +54,7 @@ function App() {
   connectAsync: (
     config: { connector?: Connector; chainId?: number },
   ) => Promise<{
-    address: `0x${string}`
+    account: `0x${string}`
     chain: {
       id: number
       unsupported?: boolean
@@ -64,7 +64,7 @@ function App() {
   }>
   connectors: Connector[]
   data?: {
-    address: `0x${string}`
+    account: `0x${string}`
     chain: {
       id: number
       unsupported?: boolean
