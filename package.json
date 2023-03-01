@@ -13,6 +13,7 @@
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
     "playground": "pnpm dev && pnpm --filter example-dev dev",
+    "playground:vue": "pnpm dev && pnpm --filter example-dev-vue dev",
     "preinstall": "pnpm i --filter './references/packages/**' --ignore-scripts && npx only-allow pnpm",
     "postinstall": "pnpm dev",
     "prepare": "npx simple-git-hooks",
