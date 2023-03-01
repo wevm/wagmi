@@ -8,6 +8,7 @@ coverage
 dist
 node_modules
 tsconfig.tsbuildinfo
+./wagmi.config.ts
 
 # local env files
 .env

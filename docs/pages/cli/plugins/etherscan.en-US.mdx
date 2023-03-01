@@ -1,0 +1,149 @@
+---
+title: 'Etherscan'
+description: 'Etherscan plugin'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# Etherscan
+
+Plugin for fetching ABIs from Etherscan and adding into `contracts` config.
+
+```ts
+import { etherscan } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { etherscan } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+The following Etherscan block explorers and their testnets are supported (e.g. Ethereum Mainnet and Goerli):
+
+- [Ethereum](https://etherscan.io)
+- [Arbiscan](https://arbiscan.io)
+- [Snowtrace](https://snowtrace.io)
+- [BscScan](https://bscscan.com)
+- [FTMScan](https://ftmscan.com)
+- [HecoScan](https://hecoinfo.com)
+- [Optimistic Etherscan](https://optimistic.etherscan.io)
+- [PolygonScan](https://polygonscan.com)
+
+## Configuration
+
+### apiKey
+
+Etherscan API key. Etherscan API keys are specific per network and include testnets (e.g. Ethereum Mainnet and Goerli share same API key).
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { etherscan } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### contracts
+
+Contracts to fetch ABIs for.
+
+```ts {8-13}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### chainId
+
+Chain id to use for fetching ABI. If `address` is an object, `chainId` is used to select the address.
+
+```ts {8,17}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      chainId: 1,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+        {
+          name: 'EnsRegistry',
+          address: {
+            1: '0x314159265dd8dbb310642f98f50c066173c1259b',
+            5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+          },
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### cacheDuration (optional)
+
+Duration in milliseconds to cache ABIs. Defaults to `1_800_000` (30 minutes).
+
+```ts {8}
+import { defineConfig } from '@wagmi/cli'
+import { etherscan } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    etherscan({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      cacheDuration: 300_000,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```

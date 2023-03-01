@@ -3,6 +3,7 @@
   "coinbaseWallet": "Coinbase Wallet",
   "ledger": "Ledger",
   "metaMask": "MetaMask",
-  "walletConnect": "WalletConnect",
-  "mock": "Mock"
+  "mock": "Mock",
+  "safe": "Safe",
+  "walletConnect": "WalletConnect"
 }

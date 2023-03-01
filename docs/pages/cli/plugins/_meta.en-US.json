@@ -1,0 +1,10 @@
+{
+  "actions": "Actions",
+  "blockExplorer": "Block Explorer",
+  "erc": "ERC",
+  "etherscan": "Etherscan",
+  "fetch": "Fetch",
+  "foundry": "Foundry",
+  "hardhat": "Hardhat",
+  "react": "React"
+}

@@ -15,6 +15,7 @@ export default defineConfig(
       'src/connectors/ledger.ts',
       'src/connectors/metaMask.ts',
       'src/connectors/mock.ts',
+      'src/connectors/safe.ts',
       'src/connectors/walletConnect.ts',
       'src/internal/index.ts',
       'src/internal/test.ts',

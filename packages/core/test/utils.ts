@@ -187,7 +187,7 @@ function getRandomNumber(from = 1, to = 100) {
 
 type GetCrowdfundArgs = AbiParametersToPrimitiveTypes<
   ExtractAbiFunction<
-    typeof mirrorCrowdfundContractConfig['abi'],
+    (typeof mirrorCrowdfundContractConfig)['abi'],
     'createCrowdfund'
   >['inputs']
 >

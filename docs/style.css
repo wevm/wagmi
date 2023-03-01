@@ -46,3 +46,8 @@ code.text-\[\.9em\] {
 .install [role='tablist'] {
   justify-content: center;
 }
+
+table {
+  @apply table-auto w-full;
+  display: table !important;
+}

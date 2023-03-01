@@ -1,0 +1,248 @@
+---
+title: 'Fetch'
+description: 'Fetch plugin'
+---
+
+# Fetch
+
+Plugin for fetching and parsing ABIs from network resource with `fetch`.
+
+```ts
+import { fetch } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { fetch } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    fetch({
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      request(contract) {
+        if (!contract.address) throw new Error('address is required')
+        const address =
+          typeof contract.address === 'string'
+            ? contract.address
+            : Object.values(contract.address)[0]
+        return {
+          url: `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}`,
+        }
+      },
+    }),
+  ],
+})
+```
+
+## Configuration
+
+### contracts
+
+Contracts to fetch ABIs for.
+
+```ts {7-12}
+import { defineConfig } from '@wagmi/cli'
+import { fetch } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    fetch({
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      request(contract) {
+        if (!contract.address) throw new Error('address is required')
+        const address =
+          typeof contract.address === 'string'
+            ? contract.address
+            : Object.values(contract.address)[0]
+        return {
+          url: `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}`,
+        }
+      },
+    }),
+  ],
+})
+```
+
+### request
+
+Function for returning a request to fetch ABI from.
+
+```ts {13-22}
+import { defineConfig } from '@wagmi/cli'
+import { fetch } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    fetch({
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      request(contract) {
+        if (!contract.address) throw new Error('address is required')
+        const address =
+          typeof contract.address === 'string'
+            ? contract.address
+            : Object.values(contract.address)[0]
+        return {
+          url: `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}`,
+        }
+      },
+    }),
+  ],
+})
+```
+
+### cacheDuration (optional)
+
+Duration in milliseconds to cache ABIs from request. Defaults to `1_800_000` (30 minutes).
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { fetch } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    fetch({
+      cacheDuration: 300_000,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      request(contract) {
+        if (!contract.address) throw new Error('address is required')
+        const address =
+          typeof contract.address === 'string'
+            ? contract.address
+            : Object.values(contract.address)[0]
+        return {
+          url: `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}`,
+        }
+      },
+    }),
+  ],
+})
+```
+
+### getCacheKey (optional)
+
+Function for creating a cache key for contract. Defaults to `({ contract }) => JSON.stringify(contract)`. Contract data is cached at `~/.wagmi-cli/plugins/cache/fetch/`.
+
+```ts {13-17}
+import { defineConfig } from '@wagmi/cli'
+import { fetch } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    fetch({
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      getCacheKey({ contract }) {
+        if (typeof contract.address === 'string')
+          return `${name}:${contract.address}`
+        return `${name}:${JSON.stringify(contract.address)}`
+      },
+      request(contract) {
+        if (!contract.address) throw new Error('address is required')
+        const address =
+          typeof contract.address === 'string'
+            ? contract.address
+            : Object.values(contract.address)[0]
+        return {
+          url: `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}`,
+        }
+      },
+    }),
+  ],
+})
+```
+
+### name (optional)
+
+Name of source. Defaults to `"Fetch"`.
+
+```ts {13}
+import { defineConfig } from '@wagmi/cli'
+import { fetch } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    fetch({
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      name: 'Etherscan',
+      request(contract) {
+        if (!contract.address) throw new Error('address is required')
+        const address =
+          typeof contract.address === 'string'
+            ? contract.address
+            : Object.values(contract.address)[0]
+        return {
+          url: `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}`,
+        }
+      },
+    }),
+  ],
+})
+```
+
+### parse (optional)
+
+Function for parsing ABI from fetch response. Defaults to `({ response }) => response.json()`
+
+```ts {13-17}
+import { defineConfig } from '@wagmi/cli'
+import { fetch } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    fetch({
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      async parse({ response }) {
+        const json = await response.json()
+        if (json.status === '0') throw new Error(json.message)
+        return json.result
+      },
+      request(contract) {
+        if (!contract.address) throw new Error('address is required')
+        const address =
+          typeof contract.address === 'string'
+            ? contract.address
+            : Object.values(contract.address)[0]
+        return {
+          url: `https://api.etherscan.io/api?module=contract&action=getabi&address=${address}`,
+        }
+      },
+    }),
+  ],
+})
+```

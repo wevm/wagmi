@@ -46,10 +46,11 @@ body:
 
   - type: input
     attributes:
-      label: Link to Minimal Reproducible Example (CodeSandbox, StackBlitz, etc.)
+      label: Link to Minimal Reproducible Example (StackBlitz, CodeSandbox, GitHub repo etc.)
       description: |
+        Please provide a link via [new.wagmi.sh](https://new.wagmi.sh/) or a link to a minimal repository that can reproduce the problem you ran into. `npm create wagmi@latest` can also be used as a starter template.
         This makes investigating issues and helping you out significantly easier! For most issues, you will likely get asked to provide one so why not add one now :)
-      placeholder: https://codesandbox.io
+      placeholder: https://new.wagmi.sh/
     validations:
       required: false
 

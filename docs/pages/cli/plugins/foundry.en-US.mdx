@@ -1,0 +1,187 @@
+---
+title: 'Foundry'
+description: 'Foundry plugin'
+---
+
+# Foundry
+
+Plugin for resolving ABIs from [Foundry](https://github.com/foundry-rs/foundry) projects.
+
+```ts
+import { foundry } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      project: '../hello_foundry',
+    }),
+  ],
+})
+```
+
+- Supports [`generate`](/cli/commands#generate) `--watch` (`-w`) mode.
+- Detects Foundry configuration using `forge config --json` command.
+
+## Configuration
+
+### artifacts (optional)
+
+Project's artifacts directory. Defaults to `'out/'`. Same as your `foundry.toml`/`forge`s `--out` (`-o`) option.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      artifacts: 'out/',
+    }),
+  ],
+})
+```
+
+### deployments (optional)
+
+Mapping of addresses to attach to artifacts.
+
+```ts {7-12}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      deployments: {
+        Counter: {
+          1: '0x314159265dd8dbb310642f98f50c066173c1259b',
+          5: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+        },
+      },
+    }),
+  ],
+})
+```
+
+### exclude (optional)
+
+Artifact files to exclude relative to `artifacts`. Supports glob patterns.
+
+```ts {7-25}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      exclude: [
+        // the following patterns are excluded by default
+        'Common.sol/**',
+        'Components.sol/**',
+        'Script.sol/**',
+        'StdAssertions.sol/**',
+        'StdError.sol/**',
+        'StdCheats.sol/**',
+        'StdMath.sol/**',
+        'StdJson.sol/**',
+        'StdStorage.sol/**',
+        'StdUtils.sol/**',
+        'Vm.sol/**',
+        'console.sol/**',
+        'console2.sol/**',
+        'test.sol/**',
+        '**.s.sol/*.json',
+        '**.t.sol/*.json',
+      ],
+    }),
+  ],
+})
+```
+
+### forge (optional)
+
+Options for `forge`.
+
+```ts {7-12}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      forge: {
+        clean: true,
+        build: true,
+        path: 'path/to/forge',
+        rebuild: true,
+      },
+    }),
+  ],
+})
+```
+
+- `clean` Remove build artifacts and cache directories on start up. Defaults to `false`.
+- `build` Build Foundry project before fetching artifacts. Defaults to `true`.
+- `path` Path to `forge` executable command. Defaults to `forge`.
+- `rebuild` Rebuild every time a watched file or directory is changed. Used for setting up `--watch` mode. Defaults to `true`.
+
+### include (optional)
+
+Artifact files to include relative to `artifacts`. Supports glob patterns.
+
+```ts {7-10}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      include: [
+        // the following patterns are included by default
+        '*.json',
+      ],
+    }),
+  ],
+})
+```
+
+### namePrefix (optional)
+
+Prefix to prepend to artifact names. Useful for preventing name collisions between contracts from other sources.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      namePrefix: 'HelloFoundry',
+    }),
+  ],
+})
+```
+
+### project (optional)
+
+Path to Foundry project.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { foundry } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    foundry({
+      project: '../hello_foundry',
+    }),
+  ],
+})
+```
