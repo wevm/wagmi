@@ -13,7 +13,10 @@ const App: Component = () => {
 
   const { disconnect } = useDisconnect()
   const { mutationData: connectData, connect } = useConnect()
-  const acc = useAccount()
+  const acc = useAccount({
+    onConnect: (data) => console.log('on connect with data ', data),
+    onDisconnect: () => console.log('calling onDisconnect'),
+  })
 
   // opting to set chainId manually, so it won't update
   // if you change your chain on Metamask. Remove this

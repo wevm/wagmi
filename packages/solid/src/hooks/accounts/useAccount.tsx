@@ -22,32 +22,27 @@ export const useAccount = (props?: UseAccountConfig) => {
     getAccount(),
   )
 
-  const [previousStatus, setPreviousStatus] =
-    createSignal<GetAccountResult['status']>()
-
   createEffect(() => {
     const unsubscribe = watchAccount((result) => {
-      const prevAccount = account()
+      const prevStatus = account().status
 
       setAccount(result)
 
       if (
         props?.onConnect &&
-        previousStatus() !== 'connected' &&
+        prevStatus !== 'connected' &&
         result.status === 'connected'
       ) {
         props.onConnect({
           address: account()?.address,
           connector: account()?.connector,
-          isReconnected: previousStatus() === 'reconnecting',
+          isReconnected: prevStatus === 'reconnecting',
         })
       }
 
-      setPreviousStatus(prevAccount.status)
-
       if (
         props?.onDisconnect &&
-        previousStatus() === 'connected' &&
+        prevStatus === 'connected' &&
         result.status === 'disconnected'
       ) {
         props.onDisconnect()

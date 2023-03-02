@@ -9,7 +9,6 @@ export default defineConfig({
       locator: {
         componentLocation: true,
         jsxLocation: true,
-        targetIDE: 'vscode',
       },
       autoname: true,
     }),
