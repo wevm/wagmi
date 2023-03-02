@@ -1,6 +1,6 @@
 /* @refresh reload */
 import {
-  WagmiProvider,
+  WagmiConfig,
   configureChains,
   createClient,
   goerli,
@@ -24,9 +24,9 @@ const client = createClient({
 
 render(
   () => (
-    <WagmiProvider client={client}>
+    <WagmiConfig client={client}>
       <App />{' '}
-    </WagmiProvider>
+    </WagmiConfig>
   ),
   document.getElementById('root') as HTMLElement,
 )

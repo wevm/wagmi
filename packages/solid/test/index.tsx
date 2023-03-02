@@ -3,7 +3,7 @@ import { QueryClient } from '@tanstack/solid-query'
 import type { Client } from '@wagmi/core'
 import type { JSX } from 'solid-js/jsx-runtime'
 
-import { WagmiProvider } from '../src'
+import { WagmiConfig } from '../src'
 import { setupClient } from './'
 
 export const queryClient = new QueryClient()
@@ -17,7 +17,7 @@ export function renderHook<TProps extends any[], TResult>(
 ) {
   const wrapper = (props: Props) => {
     return (
-      <WagmiProvider client={setupClient({ queryClient }) as any} {...props} />
+      <WagmiConfig client={setupClient({ queryClient }) as any} {...props} />
     )
   }
 

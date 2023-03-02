@@ -7,8 +7,124 @@ import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 
 # Getting Started
 
-## Quick setup
+## Overview
 
-SOOOLLLIIIIDDD
-It is recommended to set up your wagmi app using the `create-wagmi` command line interface (CLI). This will set up a new wagmi app using TypeScript and install the required dependencies:
+The setup process and the Solid hooks are very similar to the React package, the most important things to know are:
+- Import the modules from `@wagmi/solid` instead of `wagmi`.
+- The hooks props expect a signal (in order to be reactive). If you don't need it to be reactive, you can pass a function that will return your prop.
 
+## Manual setup
+
+### Installation
+
+Install wagmi and its ethers peer dependency.
+
+{/* prettier-ignore-start */}
+<Tabs items={['npm', 'pnpm', 'yarn']}>
+  <Tab>
+```bash
+npm i @wagmi/solid ethers@^5
+```
+  </Tab>
+  <Tab>
+```bash
+pnpm i @wagmi/solid ethers@^5
+```
+  </Tab>
+  <Tab>
+```bash
+yarn add @wagmi/solid ethers@^5
+```
+  </Tab>
+</Tabs>
+{/* prettier-ignore-end */}
+
+### Configure chains
+
+First, configure your desired chains to be used by wagmi, and the providers you want to use.
+
+```tsx
+import { configureChains, mainnet, publicProvider } from '@wagmi/solid'
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
+```
+
+This example uses the Ethereum Mainnet chain (`mainnet`) from `wagmi`, however, you can also pass in any [EVM-compatible chain](/solid/chains).
+
+Note: In a production app, it is not recommended to only pass `publicProvider` to `configureChains` as you will probably face rate-limiting on the public provider endpoints. It is recommended to also pass an [`alchemyProvider`](/react/providers/alchemy) or [`infuraProvider`](/react/providers/infura) as well.
+
+[Read more about configuring chains](/solid/providers/configuring-chains)
+
+### Create a wagmi client
+
+Next, create a wagmi `Client` instance using [`createClient`](/solid/client), and pass the result from `configureChains` to it.
+
+```tsx {9-13}
+import { WagmiConfig, createClient, configureChains, mainnet, publicProvider } from '@wagmi/solid'
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
+
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+})
+```
+
+[Read more about client configuration](/solid/client)
+
+### Wrap app with `WagmiConfig`
+
+Finally, wrap your app with the [`WagmiConfig`](/solid/WagmiConfig) component, passing `client` to it.
+
+```tsx {9-11}
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+})
+
+function App() {
+  return (
+    <WagmiConfig client={client}>
+      <YourRoutes />
+    </WagmiConfig>
+  )
+}
+```
+
+### You're good to go!
+
+Use hooks! Every component inside the `WagmiConfig` is now set up to use the wagmi hooks.
+
+```tsx {5,6,7-9}
+import { useAccount, useConnect, useEnsName, InjectedConnector } from '@wagmi/solid'
+import { createSignal } from 'solid-js'
+
+function Profile() {
+  const [chainId, setChainId] = createSignal(1)
+  const accData = useAccount()
+
+  const { connect } = useConnect({
+    // reactive (signal)
+    chainId
+    // not reactive
+    // chainId: () => 1
+  })
+
+  return (
+    <>
+      <button onClick={() => setChainId(5)}>Change chainId to 5</button>
+      <button onClick={() => connect()}>Connect Wallet</button>
+    </>
+  )
+}
+```
+
+Want to learn more? Check out the [examples](/examples/connect-wallet) to learn how to use wagmi in real-world scenarios or continue on reading the documentation.

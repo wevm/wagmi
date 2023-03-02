@@ -19,7 +19,7 @@ export type WagmiConfigProps<
   client: Client<TProvider, TWebSocketProvider>
   queryClient?: QueryClient
 }
-export function WagmiProvider<
+export function WagmiConfig<
   TProvider extends Provider,
   TWebSocketProvider extends WebSocketProvider,
 >(props: ParentProps<WagmiConfigProps<TProvider, TWebSocketProvider>>) {

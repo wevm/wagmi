@@ -1,7 +1,7 @@
 export { createClient } from './client'
 export type { Client, CreateClientConfig } from './client'
 
-export { Context, WagmiProvider, useClient } from './context'
+export { Context, WagmiConfig, useClient } from './context'
 
 export {
   useAccount,
