@@ -15,6 +15,7 @@ const translations = {
       core: 'VanillaJS for Ethereum',
       cli: 'CLI tools for Ethereum',
       react: 'React Hooks for Ethereum',
+      solid: 'Solid Hooks for Ethereum',
     },
   },
   'zh-CN': {
@@ -27,6 +28,7 @@ const translations = {
       core: 'VanillaJS for Ethereum',
       cli: 'CLI tools for Ethereum',
       react: 'React Hooks for Ethereum',
+      solid: 'Solid Hooks for Ethereum',
     },
   },
 } as const
@@ -74,9 +76,9 @@ const config: DocsThemeConfig = {
     text() {
       return (
         <div>
-          <div className="mb-6 block">
+          <div className="block mb-6">
             <a
-              className="flex items-center gap-1 text-current"
+              className="flex gap-1 items-center text-current"
               target="_blank"
               rel="noopener noreferrer"
               title="vercel.com homepage"
@@ -123,16 +125,17 @@ const config: DocsThemeConfig = {
   logo() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { pathname, locale } = useRouter()
-    let tagline: 'core' | 'cli' | 'react'
+    let tagline: 'core' | 'cli' | 'react' | 'solid'
     if (/^\/core*/.test(pathname)) tagline = 'core'
     else if (/^\/cli*/.test(pathname)) tagline = 'cli'
+    else if (/^\/solid*/.test(pathname)) tagline = 'solid'
     else tagline = 'react'
 
     return (
       <>
         <span>
           <svg
-            className="h-5 w-auto mr-4 fill-current"
+            className="mr-4 w-auto h-5 fill-current"
             viewBox="0 0 421 198"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +148,7 @@ const config: DocsThemeConfig = {
             />
           </svg>
         </span>
-        <span className="text-gray-600 font-normal hidden md:inline">
+        <span className="hidden font-normal text-gray-600 md:inline">
           {translations[locale as Language].tagline[tagline]}
         </span>
       </>
@@ -196,6 +199,7 @@ const config: DocsThemeConfig = {
     let tagline
     if (/^\/core*/.test(pathname)) tagline = '@wagmi/core'
     else if (/^\/cli*/.test(pathname)) tagline = '@wagmi/cli'
+    else if (/^\/solid*/.test(pathname)) tagline = '@wagmi/solid'
     else tagline = 'wagmi'
 
     if (!/^\/index/.test(route))

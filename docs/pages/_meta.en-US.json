@@ -8,6 +8,10 @@
     "title": "React",
     "type": "page"
   },
+  "solid": {
+    "title": "Solid",
+    "type": "page"
+  },
   "core": {
     "title": "Core",
     "type": "page"

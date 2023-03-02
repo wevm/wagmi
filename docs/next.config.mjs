@@ -14,7 +14,7 @@ const withNextra = nextra({
 /** @type {import('next').NextConfig} */
 const config = {
   i18n: {
-    locales: ['en-US','zh-CN'],
+    locales: ['en-US', 'zh-CN'],
     defaultLocale: 'en-US',
   },
   reactStrictMode: true,
@@ -40,6 +40,11 @@ const config = {
       {
         source: '/react',
         destination: '/react/getting-started',
+        permanent: true,
+      },
+      {
+        source: '/solid',
+        destination: '/solid/getting-started',
         permanent: true,
       },
       {
