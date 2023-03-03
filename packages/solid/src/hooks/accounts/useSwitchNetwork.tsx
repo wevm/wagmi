@@ -81,7 +81,7 @@ export const useSwitchNetwork = (
   return {
     chains: client.chains ?? [],
     switchNetworkData,
-    pendingChainId: switchNetworkData.variables?.chainId,
+    pendingChainId: switchNetworkData.variables?.chainId(),
     switchNetwork,
     switchNetworkAsync,
   } as const

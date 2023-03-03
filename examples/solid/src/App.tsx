@@ -4,7 +4,9 @@ import {
   useConnect,
   useDisconnect,
   useProvider,
+  useSigner,
   useSignMessage,
+  useSwitchNetwork,
 } from '@wagmi/solid'
 import type { Component } from 'solid-js'
 import { Match, Switch, createEffect, createSignal } from 'solid-js'
@@ -12,7 +14,6 @@ import { Match, Switch, createEffect, createSignal } from 'solid-js'
 const App: Component = () => {
   const [chainId, setChainId] = createSignal(5)
 
-  const provider = useProvider({ chainId })
   const { disconnect } = useDisconnect()
   const { connectData, connect } = useConnect({ chainId })
   const acc = useAccount({
@@ -20,12 +21,16 @@ const App: Component = () => {
     onDisconnect: () => console.log('calling onDisconnect'),
   })
 
+  const provider = useProvider({ chainId })
+  const signer = useSigner({ chainId })
   const balance = useBalance({ chainId })
+  const { switchNetwork, switchNetworkData, pendingChainId } = useSwitchNetwork()
 
   const signData = useSignMessage()
 
-  createEffect(() => console.log('provider: ', provider()))
-  createEffect(() => console.log('balance: ', balance))
+  //createEffect(() => console.log('provider: ', provider()))
+  //createEffect(() => console.log('balance: ', balance))
+  createEffect(() => console.log('switchNetworkData: ', switchNetworkData, pendingChainId, switchNetworkData.variables))
 
   return (
     <div>
@@ -48,6 +53,9 @@ const App: Component = () => {
             onClick={() => signData.signMessage({ message: () => 'asd' })}
           >
             Sign data
+          </button>
+          <button onClick={() => switchNetwork(chainId)}>
+            switch chain
           </button>
           <button onClick={() => disconnect()}>Disconnect</button>
         </Match>

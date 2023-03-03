@@ -1,8 +1,8 @@
 import { createQuery, useQueryClient } from '@tanstack/solid-query'
-import type { FetchSignerResult } from '@wagmi/core'
+import { FetchSignerResult, watchSigner } from '@wagmi/core'
 import { fetchSigner } from '@wagmi/core'
 import type { Signer } from 'ethers'
-import type { Accessor } from 'solid-js'
+import { Accessor, onCleanup } from 'solid-js'
 import { createEffect } from 'solid-js'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
@@ -55,8 +55,11 @@ export function useSigner<TSigner extends Signer>(props?: UseSignerConfig) {
   const queryClient = useQueryClient()
 
   createEffect(() => {
-    if (acc().connector) signerQuery.refetch()
-    else queryClient.removeQueries(queryKey({ chainId: props?.chainId }))
+    const unwatch = watchSigner({ chainId: props?.chainId?.() }, (signer) => {
+      if (signer) queryClient.invalidateQueries(queryKey({ chainId: props?.chainId }))
+      else queryClient.removeQueries(queryKey({ chainId: props?.chainId }))
+    })
+    onCleanup(unwatch)
   })
 
   return signerQuery
