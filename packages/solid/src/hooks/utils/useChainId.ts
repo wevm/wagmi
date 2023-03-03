@@ -3,7 +3,7 @@ import type { Accessor } from 'solid-js'
 import { useProvider } from '../providers'
 
 export type UseChainIdArgs = {
-  chainId?: Accessor<number>
+  chainId: Accessor<number>
 }
 
 export function useChainId(props?: UseChainIdArgs) {

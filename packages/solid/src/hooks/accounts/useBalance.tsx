@@ -6,10 +6,9 @@ import type { Accessor } from 'solid-js'
 import { createMemo } from 'solid-js'
 
 import type { QueryConfig } from '../../types'
-import { useChainId } from '../utils'
+import { useProvider } from '../providers'
 
 import { useAccount } from './useAccount'
-import { useNetwork } from './useNetwork'
 
 export type UseBalanceArgs = Partial<{
   address: Accessor<Address>
@@ -64,21 +63,16 @@ const queryFn: QueryFunction<
 
 export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig) => {
   const accountData = useAccount()
-  const networkData = useNetwork()
 
   const address = createMemo(() => props?.address?.() ?? accountData().address)
-  const chainId = createMemo(() =>
-    useChainId({
-      chainId: props?.chainId?.() ?? networkData()?.chain?.id,
-    }),
+  const provider = useProvider({ chainId: props?.chainId })
+  const chainId = createMemo(
+    () => props?.chainId?.() ?? (() => provider().network.chainId),
   )
 
   const isEnabled = createMemo(
     () => Boolean(address() && chainId()) && props?.enabled,
   )
-  // const chainId = createMemo(
-  //   () => props?.chainId?.() ?? networkData()?.chain?.id,
-  // )
 
   const queryKey = createMemo(() => {
     return {
