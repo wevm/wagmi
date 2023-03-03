@@ -10,7 +10,11 @@ export type UseBalanceArgs = Partial<FetchBalanceArgs> & {
   watch?: boolean
 }
 
-export type UseBalanceConfig = QueryConfig<FetchBalanceResult, Error>
+export type UseBalanceConfig<TSelectData = FetchBalanceResult> = QueryConfig<
+  FetchBalanceResult,
+  Error,
+  TSelectData
+>
 
 type QueryKeyArgs = Partial<FetchBalanceArgs>
 type QueryKeyConfig = Pick<UseBalanceConfig, 'scopeKey'>
@@ -41,7 +45,7 @@ function queryFn({
   return fetchBalance({ address, chainId, formatUnits, token })
 }
 
-export function useBalance({
+export function useBalance<TSelectData = FetchBalanceResult>({
   address,
   cacheTime,
   chainId: chainId_,
@@ -52,10 +56,12 @@ export function useBalance({
   suspense,
   token,
   watch,
+  keepPreviousData,
+  select,
   onError,
   onSettled,
   onSuccess,
-}: UseBalanceArgs & UseBalanceConfig = {}) {
+}: UseBalanceArgs & UseBalanceConfig<TSelectData> = {}) {
   const chainId = useChainId({ chainId: chainId_ })
   const queryKey_ = React.useMemo(
     () => queryKey({ address, chainId, formatUnits, scopeKey, token }),
@@ -66,6 +72,8 @@ export function useBalance({
     enabled: Boolean(enabled && address),
     staleTime,
     suspense,
+    keepPreviousData,
+    select,
     onError,
     onSettled,
     onSuccess,
