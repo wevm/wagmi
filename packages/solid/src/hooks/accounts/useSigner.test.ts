@@ -153,7 +153,7 @@ describe('useSigner', () => {
         }
       `)
 
-      await result.disconnect.mutationData.mutateAsync()
+      await result.disconnect.disconnectData.mutateAsync()
       await waitFor(() => expect(result.account().isDisconnected).toBeTruthy())
 
       await waitFor(() => expect(result.account().isDisconnected).toBeTruthy())

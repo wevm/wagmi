@@ -80,7 +80,7 @@ describe('useAccount', () => {
         }
       `)
 
-      await disconnect.mutationData.mutateAsync()
+      await disconnect.disconnectData.mutateAsync()
 
       expect(account().isDisconnected).toBeTruthy()
 
@@ -121,7 +121,7 @@ describe('useAccount', () => {
         isReconnected: false,
       })
 
-      await disconnect.mutationData.mutateAsync()
+      await disconnect.disconnectData.mutateAsync()
       await disconnect.disconnect()
 
       await waitFor(() => expect(account().isDisconnected).toBeTruthy())

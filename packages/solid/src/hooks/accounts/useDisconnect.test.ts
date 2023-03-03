@@ -21,6 +21,7 @@ describe('useDisconnect', () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "disconnect": [Function],
+        "disconnectAsync": [Function],
         "disconnectData": {
           "context": undefined,
           "data": undefined,
@@ -82,6 +83,7 @@ describe('useDisconnect', () => {
       expect(result.disconnect).toMatchInlineSnapshot(`
         {
           "disconnect": [Function],
+          "disconnectAsync": [Function],
           "disconnectData": {
             "context": undefined,
             "data": undefined,
@@ -120,6 +122,7 @@ describe('useDisconnect', () => {
       expect(result.disconnect).toMatchInlineSnapshot(`
         {
           "disconnect": [Function],
+          "disconnectAsync": [Function],
           "disconnectData": {
             "context": undefined,
             "data": undefined,
