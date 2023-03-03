@@ -12,20 +12,17 @@ const App: Component = () => {
   const [_chainId, setChainId] = createSignal(1)
 
   const { disconnect } = useDisconnect()
-  const { mutationData: connectData, connect } = useConnect()
+  const { connectData, connect } = useConnect()
   const acc = useAccount({
     onConnect: (data) => console.log('on connect with data ', data),
     onDisconnect: () => console.log('calling onDisconnect'),
   })
 
-  // opting to set chainId manually, so it won't update
-  // if you change your chain on Metamask. Remove this
-  // to make it reactive with Metamask.
   const balance = useBalance()
 
-  createEffect(() => console.log(connectData))
-
   const signData = useSignMessage()
+
+  createEffect(() => console.log(signData.signMessageData))
 
   return (
     <div>

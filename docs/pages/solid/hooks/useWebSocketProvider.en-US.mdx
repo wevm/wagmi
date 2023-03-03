@@ -1,0 +1,44 @@
+---
+title: 'useWebSocketProvider'
+description: "Solid Hook for accessing the Client's ethers WebSocket Provider."
+---
+
+# useWebSocketProvider
+
+Solid Hook for accessing the `Client`'s ethers WebSocket Provider.
+
+```ts
+import { useWebSocketProvider } from '@wagmi/solid'
+```
+
+## Usage
+
+```tsx
+import { useWebSocketProvider } from '@wagmi/solid'
+
+function App() {
+  const webSocketProvider = useWebSocketProvider()
+}
+```
+
+## Return Value
+
+```tsx
+Accessor<WebSocketProvider>
+```
+
+## Configuration
+
+### chainId (optional) (signal)
+
+Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/react/client#websocketprovider-optional) for this to work correctly.
+
+```tsx {5}
+import { useWebSocketProvider } from '@wagmi/solid'
+
+function App() {
+  const webSocketProvider = useWebSocketProvider({
+    chainId: () => 1,
+  })
+}
+```

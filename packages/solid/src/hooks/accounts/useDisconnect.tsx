@@ -20,7 +20,7 @@ export const mutationKey = [{ entity: 'disconnect' }] as const
 const mutationFn = () => disconnect()
 
 export const useDisconnect = (props?: UseDisconnectConfig) => {
-  const mutationData = createMutation<void, Error>(mutationKey, mutationFn, {
+  const disconnectData = createMutation<void, Error>(mutationKey, mutationFn, {
     ...(props?.onError
       ? {
           onError(error, _variables, context) {
@@ -53,6 +53,7 @@ export const useDisconnect = (props?: UseDisconnectConfig) => {
 
   return {
     disconnect,
-    mutationData,
+    disconnectAsync: disconnectData.mutateAsync,
+    disconnectData,
   } as const
 }

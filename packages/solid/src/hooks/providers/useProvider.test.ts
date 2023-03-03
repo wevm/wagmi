@@ -1,4 +1,5 @@
 import { waitFor } from '@solidjs/testing-library'
+import { createSignal } from 'solid-js'
 import { describe, expect, it } from 'vitest'
 
 import { renderHook, switchNetwork } from '../../../test'
@@ -23,15 +24,15 @@ describe('useProvider', () => {
 
   describe('configuration', () => {
     it('chainId', async () => {
-      const { result } = renderHook(() => useProvider({ chainId: 1 }))
+      const { result } = renderHook(() => useProvider({ chainId: () => 1 }))
       expect(result()).toMatchInlineSnapshot(`"<Provider network={1} />"`)
     })
 
     it('switches chainId', () => {
-      let chainId = 1
+      const [chainId, setChainId] = createSignal(1)
       const { result } = renderHook(() => useProvider({ chainId }))
       expect(result()).toMatchInlineSnapshot(`"<Provider network={1} />"`)
-      chainId = 5
+      setChainId(5)
       expect(result()).toMatchInlineSnapshot('"<Provider network={1} />"')
     })
   })

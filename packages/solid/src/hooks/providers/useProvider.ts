@@ -10,7 +10,7 @@ export type GetProviderArgs = {
 export type UseProviderArgs = Partial<GetProviderArgs>
 
 export function useProvider(props?: UseProviderArgs) {
-  const [provider, setProvider] = createSignal<Provider>()
+  const [provider, setProvider] = createSignal<Provider>(getProvider())
   const args = createMemo(() =>
     props?.chainId
       ? {
@@ -31,6 +31,5 @@ export function useProvider(props?: UseProviderArgs) {
     },
     { defer: true },
   )
-
   return provider
 }

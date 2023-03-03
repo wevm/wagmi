@@ -1,0 +1,49 @@
+---
+title: 'useNetwork'
+description: 'Solid hook for accessing network data, such as current connected chain and connector chains.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# useNetwork
+
+Solid hook for accessing network data, such as current connected chain and [connector chains](https://wagmi.sh/react/connectors/injected#chains-optional).
+
+```tsx
+import { useNetwork } from '@wagmi/solid'
+```
+
+## Usage
+
+```tsx
+import { useNetwork } from '@wagmi/solid'
+
+function App() {
+  const networkData = useNetwork()
+
+  return (
+    <>
+      {networkData.chain && <div>Connected to {networkData.chain.name}</div>}
+      {chains && (
+        <div>
+          Available chains: {networkData.chains.map((chain) => chain.name)}
+        </div>
+      )}
+    </>
+  )
+}
+```
+
+<Callout type="info">
+  If you want the functionality to switch networks, [check out
+  `useSwitchNetwork`](https://wagmi.sh/solid/hooks/useSwitchNetwork).
+</Callout>
+
+## Return Value
+
+```tsx
+Accessor<{
+  chain?: Chain & { unsupported?: boolean }
+  chains: Chain[]
+}>
+```

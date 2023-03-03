@@ -1,15 +1,7 @@
 {
   "getting-started": "Getting Started",
-  "comparison": "Library Comparison",
   "typescript": "TypeScript",
-  "client": "Client",
   "WagmiConfig": "WagmiConfig",
-  "chains": "Chains",
   "providers": "Providers",
-  "connectors": "Connectors",
-  "hooks": "Hooks",
-  "prepare-hooks": "Prepare Hooks",
-  "constants": "Constants",
-  "actions": "Actions",
-  "module-types": "Module Types"
+  "hooks": "Hooks"
 }

@@ -21,7 +21,7 @@ describe('useDisconnect', () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "disconnect": [Function],
-        "mutationData": {
+        "disconnectData": {
           "context": undefined,
           "data": undefined,
           "error": null,
@@ -52,9 +52,9 @@ describe('useDisconnect', () => {
       await result.connect.connectAsync()
       await waitFor(() => expect(result.account().isConnected).toBeTruthy())
 
-      await result.disconnect.mutationData.mutateAsync()
+      await result.disconnect.disconnectData.mutateAsync()
       await waitFor(() =>
-        expect(result.disconnect.mutationData.isSuccess).toBeTruthy(),
+        expect(result.disconnect.disconnectData.isSuccess).toBeTruthy(),
       )
       expect(onSuccess).toBeCalledWith(undefined)
     })
@@ -75,14 +75,14 @@ describe('useDisconnect', () => {
 
       await waitFor(() => expect(result.account().isConnected).toBeFalsy())
       await waitFor(() =>
-        expect(result.connect.mutationData.isSuccess).toBeTruthy(),
+        expect(result.connect.connectData.isSuccess).toBeTruthy(),
       )
 
       expect(result.account().connector).toMatchInlineSnapshot(`undefined`)
       expect(result.disconnect).toMatchInlineSnapshot(`
         {
           "disconnect": [Function],
-          "mutationData": {
+          "disconnectData": {
             "context": undefined,
             "data": undefined,
             "error": null,
@@ -113,14 +113,14 @@ describe('useDisconnect', () => {
         `"<MockConnector>"`,
       )
 
-      await result.disconnect.mutationData.mutateAsync()
+      await result.disconnect.disconnectData.mutateAsync()
       await waitFor(() => expect(result.account().isConnected).toBeFalsy())
 
       expect(result.account().connector).toMatchInlineSnapshot(`undefined`)
       expect(result.disconnect).toMatchInlineSnapshot(`
         {
           "disconnect": [Function],
-          "mutationData": {
+          "disconnectData": {
             "context": undefined,
             "data": undefined,
             "error": null,
