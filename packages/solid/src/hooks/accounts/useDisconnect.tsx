@@ -20,36 +20,20 @@ export const mutationKey = [{ entity: 'disconnect' }] as const
 const mutationFn = () => disconnect()
 
 export const useDisconnect = (props?: UseDisconnectConfig) => {
-  const disconnectData = createMutation<void, Error>(mutationKey, mutationFn, {
-    ...(props?.onError
-      ? {
-          onError(error, _variables, context) {
-            props?.onError?.(error, context)
-          },
-        }
-      : {}),
-    ...(props?.onMutate
-      ? {
-          onMutate() {
-            props?.onMutate?.()
-          },
-        }
-      : {}),
-    ...(props?.onSettled
-      ? {
-          onSettled(_data, error, _variables, context) {
-            props?.onSettled?.(error, context)
-          },
-        }
-      : {}),
-    ...(props?.onSuccess
-      ? {
-          onSuccess(_data, _variables, context) {
-            props?.onSuccess?.(context)
-          },
-        }
-      : {}),
-  })
+  const disconnectData = createMutation(() => ({
+    mutationKey,
+    mutationFn,
+    onError: (error, _variables, context) => {
+      props?.onError?.(error, context)
+    },
+    onMutate: () => props?.onMutate?.(),
+    onSettled: (_data, error, _variables, context) => {
+      props?.onSettled?.(error, context)
+    },
+    onSuccess: (_data, _variables, context) => {
+      props?.onSuccess?.(context)
+    },
+  }))
 
   return {
     disconnect,

@@ -24,18 +24,20 @@ const App: Component = () => {
   const provider = useProvider({ chainId })
   const signer = useSigner({ chainId })
   const balance = useBalance({ chainId })
-  const { switchNetwork, switchNetworkData, pendingChainId } = useSwitchNetwork()
+  const { switchNetwork, switchNetworkData, pendingChainId } =
+    useSwitchNetwork()
 
   const signData = useSignMessage()
 
-  //createEffect(() => console.log('provider: ', provider()))
-  //createEffect(() => console.log('balance: ', balance))
+  createEffect(() => console.log('provider: ', provider()))
+  createEffect(() => console.log('signer: ', signer))
+  createEffect(() => console.log('balance: ', balance))
   createEffect(() => console.log('switchNetworkData: ', switchNetworkData, pendingChainId, switchNetworkData.variables))
 
   return (
     <div>
       <Switch>
-        <Match when={connectData.isLoading}>Loading connect data...</Match>
+        <Match when={connectData.isPending}>Loading connect data...</Match>
         <Match when={connectData.isError}>
           Error {connectData.error?.message}
         </Match>
