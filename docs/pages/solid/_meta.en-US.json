@@ -1,7 +1,4 @@
 {
   "getting-started": "Getting Started",
-  "typescript": "TypeScript",
-  "WagmiConfig": "WagmiConfig",
-  "providers": "Providers",
   "hooks": "Hooks"
 }

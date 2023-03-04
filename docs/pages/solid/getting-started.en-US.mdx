@@ -9,10 +9,10 @@ import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 
 ## Overview
 
-The setup process and the Solid hooks are very similar to the React package, the most important things to know are:
-- Import the modules from `@wagmi/solid` instead of `wagmi`.
-- Most of the hooks props expect a signal. If you don't need it to be reactive, you can pass a function that will return your prop.
-- Most of the missing documentation here is the exact same as the React package.
+The setup and use of the Solid hooks are very similar to the React package, but there are some differences:
+- ❌ do NOT destructure proxies and signals (most of the return objects from the hooks are), you will [lose reactivity](https://dev.to/ryansolid/answering-common-questions-about-solidjs-23ea).
+- Import modules from `@wagmi/solid` instead of from `wagmi`.
+- Most of the hooks props are reactive, you can pass in a signal, or a function that return the value, if you don't need it to be reactive.
 
 ## Manual setup
 
@@ -104,7 +104,7 @@ function App() {
 
 Use hooks! Every component inside the `WagmiConfig` is now set up to use the wagmi hooks.
 
-```tsx {5,6,7-9}
+```tsx {5,6,7-11}
 import { useAccount, useConnect, useEnsName, InjectedConnector } from '@wagmi/solid'
 import { createSignal } from 'solid-js'
 
@@ -113,9 +113,7 @@ function Profile() {
   const accData = useAccount()
 
   const { connect } = useConnect({
-    // reactive (signal)
     chainId
-    // not reactive
     // chainId: () => 1
   })
 
