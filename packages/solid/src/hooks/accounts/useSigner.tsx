@@ -1,11 +1,11 @@
 import { createQuery, useQueryClient } from '@tanstack/solid-query'
+import type { QueryObserverOptions } from '@tanstack/solid-query'
 import type { FetchSignerResult } from '@wagmi/core'
-import { fetchSigner } from '@wagmi/core'
-import type { Signer } from 'ethers'
+import { fetchSigner, watchSigner } from '@wagmi/core'
 import type { Accessor } from 'solid-js'
-import { createEffect } from 'solid-js'
+import { createEffect, onCleanup } from 'solid-js'
 
-import type { QueryConfig, QueryFunctionArgs } from '../../types'
+import type { QueryFunctionArgs } from '../../types'
 import { useAccount } from './useAccount'
 
 export type FetchSignerArgs = {
@@ -13,7 +13,7 @@ export type FetchSignerArgs = {
 }
 
 export type UseSignerConfig = Omit<
-  QueryConfig<FetchSignerResult, Error>,
+  QueryObserverOptions<FetchSignerResult, Error>,
   'cacheTime' | 'staleTime' | 'enabled'
 > &
   FetchSignerArgs
@@ -24,39 +24,41 @@ export function queryKey(props: FetchSignerArgs) {
   ] as const
 }
 
-function queryFn<TSigner extends Signer>({
+export function queryFn({
   queryKey: [{ chainId }],
 }: QueryFunctionArgs<typeof queryKey>) {
-  return fetchSigner<TSigner>({ chainId })
+  return fetchSigner({ chainId })
 }
 
-export function useSigner<TSigner extends Signer>(props?: UseSignerConfig) {
+export function useSigner(props?: UseSignerConfig) {
   const acc = useAccount()
 
-  const signerQuery = createQuery<
-    FetchSignerResult<TSigner>,
-    Error,
-    FetchSignerResult<TSigner>,
-    () => ReturnType<typeof queryKey>
-  >(() => queryKey({ chainId: props?.chainId }), queryFn, {
-    get enabled() {
-      return Boolean(acc().connector)
-    },
-    ...{
-      cacheTime: 0,
-      staleTime: Infinity,
-      suspense: props?.suspense,
-      onError: props?.onError,
-      onSettled: props?.onSettled,
-      onSuccess: props?.onSuccess,
-    },
-  })
+  const signerQuery = createQuery(() => ({
+    queryKey: queryKey({ chainId: props?.chainId }),
+    queryFn,
+    enabled: Boolean(acc().connector),
+    cacheTime: 0,
+    staleTime: Infinity,
+    suspense: props?.suspense,
+    onError: props?.onError,
+    onSettled: props?.onSettled,
+    onSuccess: props?.onSuccess,
+  }))
 
   const queryClient = useQueryClient()
 
   createEffect(() => {
-    if (acc().connector) signerQuery.refetch()
-    else queryClient.removeQueries(queryKey({ chainId: props?.chainId }))
+    const unwatch = watchSigner({ chainId: props?.chainId?.() }, (signer) => {
+      if (signer)
+        queryClient.invalidateQueries({
+          queryKey: queryKey({ chainId: props?.chainId }),
+        })
+      else
+        queryClient.removeQueries({
+          queryKey: queryKey({ chainId: props?.chainId }),
+        })
+    })
+    onCleanup(unwatch)
   })
 
   return signerQuery

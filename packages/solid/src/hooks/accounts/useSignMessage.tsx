@@ -28,30 +28,28 @@ const mutationFn = (args: UseSignMessageArgs) => {
 export const useSignMessage = (
   props?: UseSignMessageArgs & UseSignMessageConfig,
 ) => {
-  const mutationData = createMutation(
-    mutationKey({ message: props?.message }),
+  const signMessageData = createMutation(() => ({
+    mutationKey: mutationKey({ message: props?.message }),
     mutationFn,
-    {
-      onError: props?.onError,
-      onMutate: props?.onMutate,
-      onSettled: props?.onSettled,
-      onSuccess: props?.onSuccess,
-    },
-  )
+    onError: props?.onError,
+    onMutate: props?.onMutate,
+    onSettled: props?.onSettled,
+    onSuccess: props?.onSuccess,
+  }))
 
   const signMessage = (args?: SignMessageArgs) =>
-    mutationData.mutate(
+    signMessageData.mutate(
       args || ({ message: props?.message } as SignMessageArgs),
     )
 
   const signMessageAsync = (args?: SignMessageArgs) =>
-    mutationData.mutateAsync(
+    signMessageData.mutateAsync(
       args || ({ message: props?.message } as SignMessageArgs),
     )
 
   return {
     signMessage,
     signMessageAsync,
-    mutationData,
+    signMessageData,
   }
 }

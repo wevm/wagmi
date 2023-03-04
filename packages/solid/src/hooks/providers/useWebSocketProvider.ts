@@ -4,7 +4,7 @@ import type { Accessor } from 'solid-js'
 import { createEffect, createMemo, createSignal, onCleanup } from 'solid-js'
 
 export type GetWebSocketProviderArgs = {
-  chainId?: Accessor<number> | undefined
+  chainId?: Accessor<number>
 }
 
 export type UseWebSocketProviderArgs = Partial<GetWebSocketProviderArgs>

@@ -38,6 +38,6 @@ export async function switchNetwork(config: {
   await getNetwork(config.utils).switchNetworkAsync(config.chainId)
 
   await waitFor(() =>
-    expect(getNetwork(config.utils).mutationData.isSuccess).toBeTruthy(),
+    expect(getNetwork(config.utils).switchNetworkData.isSuccess).toBeTruthy(),
   )
 }

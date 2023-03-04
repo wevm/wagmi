@@ -14,7 +14,7 @@ export type ConnectArgs = {
 export type UseConnectArgs = Partial<ConnectArgs>
 export type UseConnectConfig = MutationConfig<ConnectResult, Error, ConnectArgs>
 
-export const mutationKey = (args: UseConnectArgs) =>
+export const _mutationKey = (args: UseConnectArgs) =>
   [
     {
       entity: 'connect',
@@ -31,28 +31,26 @@ const mutationFn = (args: UseConnectArgs) => {
 export const useConnect = (props?: UseConnectArgs & UseConnectConfig) => {
   const client = useClient()
 
-  const mutationData = createMutation(
-    mutationKey({
+  const connectData = createMutation(() => ({
+    mutationKey: _mutationKey({
       chainId: props?.chainId,
       connector: props?.connector,
     }),
     mutationFn,
-    {
-      onError: props?.onError,
-      onMutate: props?.onMutate,
-      onSettled: props?.onSettled,
-      onSuccess: props?.onSuccess,
-    },
-  )
+    onError: props?.onError,
+    onMutate: props?.onMutate,
+    onSettled: props?.onSettled,
+    onSuccess: props?.onSuccess,
+  }))
 
   const connect = (args?: Partial<ConnectArgs>) =>
-    mutationData.mutate({
+    connectData.mutate({
       chainId: args?.chainId ?? props?.chainId,
       connector: args?.connector ?? props?.connector ?? client.connectors[0],
     })
 
   const connectAsync = (args?: Partial<ConnectArgs>) => {
-    return mutationData.mutateAsync({
+    return connectData.mutateAsync({
       chainId: args?.chainId ?? props?.chainId,
       connector: args?.connector ?? props?.connector ?? client.connectors[0],
     })
@@ -62,7 +60,7 @@ export const useConnect = (props?: UseConnectArgs & UseConnectConfig) => {
     connect,
     connectAsync,
     connectors: client.connectors,
-    pendingConnector: mutationData.variables?.connector,
-    mutationData,
+    pendingConnector: connectData.variables?.connector,
+    connectData,
   } as const
 }

@@ -21,7 +21,8 @@ describe('useDisconnect', () => {
     expect(result).toMatchInlineSnapshot(`
       {
         "disconnect": [Function],
-        "mutationData": {
+        "disconnectAsync": [Function],
+        "disconnectData": {
           "context": undefined,
           "data": undefined,
           "error": null,
@@ -29,13 +30,14 @@ describe('useDisconnect', () => {
           "failureReason": null,
           "isError": false,
           "isIdle": true,
-          "isLoading": false,
           "isPaused": false,
+          "isPending": false,
           "isSuccess": false,
           "mutate": [Function],
           "mutateAsync": [Function],
           "reset": [Function],
           "status": "idle",
+          "submittedAt": 0,
           "variables": undefined,
         },
       }
@@ -52,9 +54,9 @@ describe('useDisconnect', () => {
       await result.connect.connectAsync()
       await waitFor(() => expect(result.account().isConnected).toBeTruthy())
 
-      await result.disconnect.mutationData.mutateAsync()
+      await result.disconnect.disconnectData.mutateAsync()
       await waitFor(() =>
-        expect(result.disconnect.mutationData.isSuccess).toBeTruthy(),
+        expect(result.disconnect.disconnectData.isSuccess).toBeTruthy(),
       )
       expect(onSuccess).toBeCalledWith(undefined)
     })
@@ -75,14 +77,15 @@ describe('useDisconnect', () => {
 
       await waitFor(() => expect(result.account().isConnected).toBeFalsy())
       await waitFor(() =>
-        expect(result.connect.mutationData.isSuccess).toBeTruthy(),
+        expect(result.connect.connectData.isSuccess).toBeTruthy(),
       )
 
       expect(result.account().connector).toMatchInlineSnapshot(`undefined`)
       expect(result.disconnect).toMatchInlineSnapshot(`
         {
           "disconnect": [Function],
-          "mutationData": {
+          "disconnectAsync": [Function],
+          "disconnectData": {
             "context": undefined,
             "data": undefined,
             "error": null,
@@ -90,13 +93,14 @@ describe('useDisconnect', () => {
             "failureReason": null,
             "isError": false,
             "isIdle": true,
-            "isLoading": false,
             "isPaused": false,
+            "isPending": false,
             "isSuccess": false,
             "mutate": [Function],
             "mutateAsync": [Function],
             "reset": [Function],
             "status": "idle",
+            "submittedAt": 0,
             "variables": undefined,
           },
         }
@@ -113,14 +117,15 @@ describe('useDisconnect', () => {
         `"<MockConnector>"`,
       )
 
-      await result.disconnect.mutationData.mutateAsync()
+      await result.disconnect.disconnectData.mutateAsync()
       await waitFor(() => expect(result.account().isConnected).toBeFalsy())
 
       expect(result.account().connector).toMatchInlineSnapshot(`undefined`)
       expect(result.disconnect).toMatchInlineSnapshot(`
         {
           "disconnect": [Function],
-          "mutationData": {
+          "disconnectAsync": [Function],
+          "disconnectData": {
             "context": undefined,
             "data": undefined,
             "error": null,
@@ -128,13 +133,14 @@ describe('useDisconnect', () => {
             "failureReason": null,
             "isError": false,
             "isIdle": false,
-            "isLoading": false,
             "isPaused": false,
+            "isPending": false,
             "isSuccess": true,
             "mutate": [Function],
             "mutateAsync": [Function],
             "reset": [Function],
             "status": "success",
+            "submittedAt": 1643673600000,
             "variables": undefined,
           },
         }

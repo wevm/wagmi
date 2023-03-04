@@ -1,5 +1,5 @@
 import type { GetAccountResult, Provider } from '@wagmi/core'
-import { watchAccount } from '@wagmi/core'
+import { getAccount, watchAccount } from '@wagmi/core'
 import { createEffect, createSignal, onCleanup } from 'solid-js'
 
 export type UseAccountConfig = {
@@ -18,51 +18,38 @@ export type UseAccountConfig = {
 }
 
 export const useAccount = (props?: UseAccountConfig) => {
-  const [account, setAccount] = createSignal<GetAccountResult<Provider>>({
-    address: undefined,
-    connector: undefined,
-    isConnected: false,
-    isReconnecting: false,
-    isConnecting: false,
-    isDisconnected: true,
-    status: 'disconnected',
-  })
-
-  const [previousAccount, setPreviousAccount] =
-    createSignal<GetAccountResult<Provider>>()
+  const [account, setAccount] = createSignal<GetAccountResult<Provider>>(
+    getAccount(),
+  )
 
   createEffect(() => {
     const unsubscribe = watchAccount((result) => {
+      const prevStatus = account().status
+
       setAccount(result)
+
+      if (
+        props?.onConnect &&
+        prevStatus !== 'connected' &&
+        result.status === 'connected'
+      ) {
+        props.onConnect({
+          address: account()?.address,
+          connector: account()?.connector,
+          isReconnected: prevStatus === 'reconnecting',
+        })
+      }
+
+      if (
+        props?.onDisconnect &&
+        prevStatus === 'connected' &&
+        result.status === 'disconnected'
+      ) {
+        props.onDisconnect()
+      }
     })
-    onCleanup(() => unsubscribe())
+    onCleanup(unsubscribe)
   })
-
-  createEffect(() => {
-    if (
-      !!props?.onConnect &&
-      (previousAccount()?.status !== 'connected' ||
-        previousAccount()?.status === undefined) &&
-      account().status === 'connected'
-    ) {
-      props.onConnect({
-        address: account().address,
-        connector: account().connector,
-        isReconnected:
-          previousAccount()?.status === 'reconnecting' ||
-          previousAccount()?.status === undefined,
-      })
-    }
-
-    if (
-      !!props?.onDisconnect &&
-      previousAccount()?.status === 'connected' &&
-      account()?.status === 'disconnected'
-    )
-      props.onDisconnect()
-  })
-
-  setPreviousAccount(account)
 
   return account
 }

@@ -12,7 +12,9 @@ export function watchProvider<TProvider extends Provider = Provider>(
   callback: WatchProviderCallback<TProvider>,
 ) {
   const client = getClient()
-  const handleChange = async () => callback(getProvider<TProvider>(args))
-  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
+  const unsubscribe = client.subscribe(
+    ({ provider }) => provider,
+    callback(getProvider<TProvider>(args)) as any,
+  )
   return unsubscribe
 }

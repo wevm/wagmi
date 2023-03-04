@@ -1,0 +1,141 @@
+---
+title: 'useSignMessage'
+description: 'Solid Hook for signing messages with connected account.'
+---
+
+# useSignMessage
+
+Solid Hook for signing messages with connected account.
+
+```tsx
+import { useSignMessage } from '@wagmi/solid'
+```
+
+## Usage
+
+The following examples use the message: `gm wagmi frens`.
+
+```tsx
+import { useSignMessage } from '@wagmi/solid'
+
+function App() {
+  const { signMessageData, signMessage } = useSignMessage({
+    message: () => 'gm wagmi frens',
+  })
+
+  return (
+    <div>
+      <button disabled={isLoading} onClick={() => signMessage()}>
+        Sign message
+      </button>
+      {signMessageData.isSuccess && <div>Signature: {signMessageData.data}</div>}
+      {signMessageData.isError && <div>Error signing message</div>}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+```tsx
+{
+  signMessageData: Accessor<{
+    data?: string
+    error?: Error
+    isError: boolean
+    isIdle: boolean
+    isLoading: boolean
+    isSuccess: boolean
+    reset: () => void
+    status: 'idle' | 'error' | 'loading' | 'success'
+  }>
+  signMessage: (args?: SignMessageArgs) => void
+  signMessageAsync: (args?: SignMessageArgs) => Promise<string>
+}
+```
+
+## Configuration
+
+### message (optional) (signal)
+
+Message to sign with wallet. This can be a fixed string or a reactive state variable.
+
+```tsx {7}
+import { useSignMessage } from '@wagmi/solid'
+import { createSignal } from 'solid-js'
+
+function App() {
+  const [message, setMessage] = createSignal('gm wagmi frens')
+  const signMessage = useSignMessage({
+    message: message(),
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while attempting to sign.
+
+```tsx {6-8}
+import { useSignMessage } from '@wagmi/solid'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: () => 'gm wagmi frens',
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onMutate (optional)
+
+Function fires before sign message function and is passed same variables sign message function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a sign message failure.
+
+```tsx {6-8}
+import { useSignMessage } from '@wagmi/solid'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: () => 'gm wagmi frens',
+    onMutate(args) {
+      console.log('Mutate', args)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when sign message is settled (either successfully signed, or an error has thrown).
+
+```tsx {6-8}
+import { useSignMessage } from '@wagmi/solid'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: () => 'gm wagmi frens',
+    onSettled(data, error) {
+      console.log('Settled', { data, error })
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when sign message is successful.
+
+```tsx {6-8}
+import { useSignMessage } from '@wagmi/solid'
+
+function App() {
+  const signMessage = useSignMessage({
+    message: () => 'gm wagmi frens',
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

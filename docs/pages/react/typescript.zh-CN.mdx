@@ -1,0 +1,168 @@
+---
+title: 'TypeScript'
+description: '为合约交互、EIP-712类型化数据等提供完全的端到端类型安全！'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# TypeScript
+
+wagmi 被设计成尽可能的类型安全! 需要记住的事情:
+
+- 目前需要使用 TypeScript v4.7.4 或更高版本。
+- 在这个资源库中对类型的修改被认为是非破坏性的，通常作为补丁 semver 的修改发布（否则每一个类型的增强都将是一个主要版本！）。
+- 强烈建议你将 `wagmi` 包的版本锁定在特定的补丁版本上，以便在任何版本上都可以修复或升级类型。
+- wagmi 的非类型相关公共 API 仍然非常严格地遵循 semver 规范。
+
+为确保一切正常，请确保将 `tsconfig.json` 中的 [`strict`](https://www.typescriptlang.org/tsconfig#strict) 设置为 true：
+
+```json filename="tsconfig.json"
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+## 类型推断
+
+wagmi 可以根据 [ABI](https://docs.soliditylang.org/en/v0.8.15/abi-spec.html#json) 和 [EIP-712](https://eips.ethereum.org/EIPS/eip-712) 类型数据定义（由 [ABIType](https://github.com/wagmi-dev/abitype) 提供）来推断类型，为你提供从合约到前端完整的端到端类型安全和难以置信的开发者体验（例如，自动完成 ABI 函数名称并捕捉拼写错误、推断 ABI 函数参数类型等等）。
+
+为此，你必须将 [const 断言](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) 添加到特定的配置参数中（关于这些参数的更多信息见下文），或者在行内定义它们。例如，`useContractRead` 的 `abi` 配置参数：
+
+```ts
+const { data } = useContractRead({
+  abi: […], // <--- 内联定义
+})
+```
+
+```ts
+const abi = […] as const // <--- const 断言
+const { data } = useContractRead({ abi })
+```
+
+如果类型推断不生效，很可能是你忘记了添加 `const` 断言或内联定义配置参数。
+
+<Callout type="info">
+  不幸的是 [TypeScript 不支持将 JSON 导入为
+  const](https://github.com/microsoft/TypeScript/issues/32063)。请查看
+  [ `@wagmi/cli`](/cli) 来帮助解决这个问题! 它可以自动从 Etherscan 中获取 ABI，从你的 Foundry/Hardhat 项目中解析 ABI、生成 React
+  Hooks 等等。
+</Callout>
+
+### 合约 ABIs
+
+当你向 `abi` 添加 const 断言时，以下 hooks 支持类型推断。
+
+- [useContract](/react/hooks/useContract)
+- [useContractEvent](/react/hooks/useContractEvent)
+- [useContractRead](/react/hooks/useContractRead)
+- [useContractReads](/react/hooks/useContractReads)
+- [useContractWrite](/react/hooks/useContractWrite)
+- [usePrepareContractWrite](/react/prepare-hooks/usePrepareContractWrite)
+- [useContractInfiniteReads](/react/hooks/useContractInfiniteReads) (还必须给 `args` 添加 const 断言，因为 `abi` 是在返回类型中)
+
+例如 `useContractRead`:
+
+```ts
+import { useContractRead } from 'wagmi'
+
+const { data } = useContractRead({
+  //    ^? const data: BigNumber | undefined
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: [
+    {
+      name: 'getUncleanliness',
+      inputs: [],
+      outputs: [{ name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      name: 'love',
+      inputs: [{ name: '', type: 'address' }],
+      outputs: [{ name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      name: 'play',
+      inputs: [],
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+  ],
+
+  functionName: 'love',
+  // ^? (property) functionName?: "getUncleanliness" | "love" | undefined
+  // 需要注意 "play" 没有被包括在内，因为它不是一个 "read" 的函数
+
+  args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
+  // ^? (property) args?: readonly [`0x${string}`] | undefined
+
+  onSuccess(data) {
+    //      ^? (parameter) data: BigNumber
+  },
+  // 类型推断也将流向其他配置参数:
+  // - select?: ((data: BigNumber) => BigNumber) | undefined
+  // - onSettled?: ((data: BigNumber | undefined, error: Error | null) => void) | undefined
+  // - …
+})
+```
+
+### EIP-712 类型数据
+
+在 `types` 中添加一个 const 断言，为 `useSignTypedData` 的 `value` 配置参数添加类型推断。
+
+```ts
+import { useSignTypedData } from 'wagmi'
+
+const result = useSignTypedData({
+  domain: {
+    name: 'Ether Mail',
+    version: '1',
+    chainId: 1,
+    verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+  },
+
+  types: {
+    Person: [
+      { name: 'name', type: 'string' },
+      { name: 'wallet', type: 'address' },
+    ],
+    Mail: [
+      { name: 'from', type: 'Person' },
+      { name: 'to', type: 'Person' },
+      { name: 'contents', type: 'string' },
+    ],
+  },
+
+  value: {
+    // ^? (parameter) value?: { name: string; wallet: `0x${string}` } | {
+    //     from: {
+    //         name: string;
+    //         wallet: `0x${string}`;
+    //     };
+    //     to: {
+    //         name: string;
+    //         wallet: `0x${string}`;
+    //     };
+    //     contents: string;
+    // } | undefined
+    from: {
+      name: 'Cow',
+      wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+    },
+    to: {
+      name: 'Bob',
+      wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+    },
+    contents: 'Hello, Bob!',
+  },
+})
+```
+
+## 配置内部类型
+
+对于高级使用情况，你可能想配置 wagmi 的内部类型。大多数与 ABI 和 EIP-712 类型数据相关的 wagmi 类型是由 [ABIType](https://github.com/wagmi-dev/abitype) 提供的。关于如何配置类型的更多信息，请参阅 ABIType 的 [文档](https://github.com/wagmi-dev/abitype#configuration)。

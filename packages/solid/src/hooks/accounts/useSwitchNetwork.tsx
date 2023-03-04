@@ -34,24 +34,22 @@ export const useSwitchNetwork = (
 ) => {
   const client = useClient()
 
-  const mutationData = createMutation(
-    mutationKey({ chainId: props?.chainId }),
+  const switchNetworkData = createMutation(() => ({
+    mutationKey: mutationKey({ chainId: props?.chainId }),
     mutationFn,
-    {
-      onError: props?.onError,
-      onMutate: props?.onMutate,
-      onSettled: props?.onSettled,
-      onSuccess: props?.onSuccess,
-    },
-  )
+    onError: props?.onError,
+    onMutate: props?.onMutate,
+    onSettled: props?.onSettled,
+    onSuccess: props?.onSuccess,
+  }))
 
   const switchNetwork_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
-    mutationData.mutate({
+    switchNetworkData.mutate({
       chainId: chainId_ ?? props?.chainId,
     } as SwitchNetworkArgs)
 
   const switchNetworkAsync_ = (chainId_?: SwitchNetworkArgs['chainId']) =>
-    mutationData.mutateAsync({
+    switchNetworkData.mutateAsync({
       chainId: chainId_ ?? props?.chainId,
     } as SwitchNetworkArgs)
 
@@ -80,8 +78,8 @@ export const useSwitchNetwork = (
 
   return {
     chains: client.chains ?? [],
-    mutationData,
-    pendingChainId: mutationData.variables?.chainId,
+    switchNetworkData,
+    pendingChainId: switchNetworkData.variables?.chainId,
     switchNetwork,
     switchNetworkAsync,
   } as const

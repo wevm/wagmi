@@ -1,4 +1,5 @@
 import { waitFor } from '@solidjs/testing-library'
+import { createSignal } from 'solid-js'
 import { describe, expect, it } from 'vitest'
 
 import { renderHook, switchNetwork } from '../../../test'
@@ -23,33 +24,38 @@ describe('useProvider', () => {
 
   describe('configuration', () => {
     it('chainId', async () => {
-      const { result } = renderHook(() => useProvider({ chainId: 1 }))
+      const { result } = renderHook(() => useProvider({ chainId: () => 1 }))
       expect(result()).toMatchInlineSnapshot(`"<Provider network={1} />"`)
     })
 
     it('switches chainId', () => {
-      let chainId = 1
+      const [chainId, setChainId] = createSignal(1)
       const { result } = renderHook(() => useProvider({ chainId }))
       expect(result()).toMatchInlineSnapshot(`"<Provider network={1} />"`)
-      chainId = 5
-      expect(result()).toMatchInlineSnapshot('"<Provider network={1} />"')
+      setChainId(5)
+      expect(result()).toMatchInlineSnapshot('"<Provider network={5} />"')
     })
   })
 
   describe('behavior', () => {
     it('switches chain', async () => {
-      const utils = renderHook(() => useProviderWithConnectAndNetwork())
-      const { result } = utils
-      expect(result.provider()).toMatchInlineSnapshot(
+      const [chainId, setChainId] = createSignal(1)
+      const utils = renderHook(() =>
+        useProviderWithConnectAndNetwork({ chainId }),
+      )
+      expect(utils.result.provider()).toMatchInlineSnapshot(
         '"<Provider network={1} />"',
       )
 
-      await result.connect.connectAsync()
-      await waitFor(() => expect(result.account().isConnected).toBeTruthy())
+      await utils.result.connect.connectAsync()
+      await waitFor(() =>
+        expect(utils.result.account().isConnected).toBeTruthy(),
+      )
 
-      await switchNetwork({ utils, chainId: () => 5 })
+      setChainId(5)
+      await switchNetwork({ utils, chainId })
 
-      expect(result.provider()).toMatchInlineSnapshot(
+      expect(utils.result.provider()).toMatchInlineSnapshot(
         '"<Provider network={5} />"',
       )
     })

@@ -52,25 +52,24 @@ describe('useSigner', () => {
           "isLoading": false,
           "isLoadingError": false,
           "isPaused": false,
+          "isPending": false,
           "isPlaceholderData": false,
-          "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
           "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
     })
 
     it('is not connected', async () => {
-      const { result } = renderHook(() => useSignerWithAccount())
+      const { result } = renderHook(() => useSigner())
 
-      await waitFor(() => expect(result.signer.fetchStatus).toBe('idle'))
+      await waitFor(() => expect(result.fetchStatus).toBe('idle'))
 
-      expect(result.signer).toMatchInlineSnapshot(`
+      expect(result).toMatchInlineSnapshot(`
         {
           "data": WalletSigner {
             "_isSigner": true,
@@ -94,14 +93,13 @@ describe('useSigner', () => {
           "isLoading": false,
           "isLoadingError": false,
           "isPaused": false,
+          "isPending": false,
           "isPlaceholderData": false,
-          "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
           "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
@@ -135,25 +133,24 @@ describe('useSigner', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isInitialLoading": false,
           "isLoading": false,
           "isLoadingError": false,
           "isPaused": false,
+          "isPending": false,
           "isPlaceholderData": false,
-          "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
           "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
 
-      await result.disconnect.mutationData.mutateAsync()
+      await result.disconnect.disconnectData.mutateAsync()
       await waitFor(() => expect(result.account().isDisconnected).toBeTruthy())
 
       await waitFor(() => expect(result.account().isDisconnected).toBeTruthy())
@@ -176,20 +173,19 @@ describe('useSigner', () => {
           "fetchStatus": "idle",
           "isError": false,
           "isFetched": true,
-          "isFetchedAfterMount": true,
+          "isFetchedAfterMount": false,
           "isFetching": false,
           "isInitialLoading": false,
           "isLoading": false,
           "isLoadingError": false,
           "isPaused": false,
+          "isPending": false,
           "isPlaceholderData": false,
-          "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
           "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
@@ -228,14 +224,13 @@ describe('useSigner', () => {
           "isLoading": false,
           "isLoadingError": false,
           "isPaused": false,
+          "isPending": false,
           "isPlaceholderData": false,
-          "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
           "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
@@ -268,14 +263,13 @@ describe('useSigner', () => {
           "isLoading": false,
           "isLoadingError": false,
           "isPaused": false,
+          "isPending": false,
           "isPlaceholderData": false,
-          "isPreviousData": false,
           "isRefetchError": false,
           "isRefetching": false,
           "isStale": false,
           "isSuccess": true,
           "refetch": [Function],
-          "remove": [Function],
           "status": "success",
         }
       `)
