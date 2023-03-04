@@ -60,7 +60,9 @@ export const queryFn: QueryFunction<
   })
 }
 
-export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig & QueryKeyConfig) => {
+export const useBalance = (
+  props?: UseBalanceArgs & UseBalanceConfig & QueryKeyConfig,
+) => {
   const accountData = useAccount()
 
   const address = createMemo(() => props?.address?.() ?? accountData().address)
@@ -70,7 +72,13 @@ export const useBalance = (props?: UseBalanceArgs & UseBalanceConfig & QueryKeyC
   )
 
   const balanceQuery = createQuery(() => ({
-    queryKey: queryKey({ address, chainId, formatUnits: props?.formatUnits, scopeKey: props?.scopeKey || '', token: props?.token }),
+    queryKey: queryKey({
+      address,
+      chainId,
+      formatUnits: props?.formatUnits,
+      scopeKey: props?.scopeKey || '',
+      token: props?.token,
+    }),
     queryFn,
     enabled: Boolean(address() && chainId()) && props?.enabled,
     staleTime: props?.staleTime,

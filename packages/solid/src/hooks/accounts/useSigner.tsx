@@ -50,8 +50,13 @@ export function useSigner(props?: UseSignerConfig) {
   createEffect(() => {
     const unwatch = watchSigner({ chainId: props?.chainId?.() }, (signer) => {
       if (signer)
-        queryClient.invalidateQueries({ queryKey: queryKey({ chainId: props?.chainId }) })
-      else queryClient.removeQueries({ queryKey: queryKey({ chainId: props?.chainId }) })
+        queryClient.invalidateQueries({
+          queryKey: queryKey({ chainId: props?.chainId }),
+        })
+      else
+        queryClient.removeQueries({
+          queryKey: queryKey({ chainId: props?.chainId }),
+        })
     })
     onCleanup(unwatch)
   })

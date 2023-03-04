@@ -40,13 +40,17 @@ describe('useProvider', () => {
   describe('behavior', () => {
     it('switches chain', async () => {
       const [chainId, setChainId] = createSignal(1)
-      const utils = renderHook(() => useProviderWithConnectAndNetwork({ chainId }))
+      const utils = renderHook(() =>
+        useProviderWithConnectAndNetwork({ chainId }),
+      )
       expect(utils.result.provider()).toMatchInlineSnapshot(
         '"<Provider network={1} />"',
       )
 
       await utils.result.connect.connectAsync()
-      await waitFor(() => expect(utils.result.account().isConnected).toBeTruthy())
+      await waitFor(() =>
+        expect(utils.result.account().isConnected).toBeTruthy(),
+      )
 
       setChainId(5)
       await switchNetwork({ utils, chainId })

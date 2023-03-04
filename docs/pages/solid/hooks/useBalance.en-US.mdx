@@ -19,7 +19,6 @@ import { createSignal } from 'solid-js'
 
 function App() {
   const [reactiveAddress] = createSignal('0xA0Cf798816D4b9b9866b5330EEa46a18382f251e')
-  // reactive value, do not destructure.
   const balanceData = useBalance({
     address: () => '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e'),
     // address: reactiveAddress

@@ -4,8 +4,8 @@ import {
   useConnect,
   useDisconnect,
   useProvider,
-  useSigner,
   useSignMessage,
+  useSigner,
   useSwitchNetwork,
 } from '@wagmi/solid'
 import type { Component } from 'solid-js'
@@ -32,7 +32,14 @@ const App: Component = () => {
   createEffect(() => console.log('provider: ', provider()))
   createEffect(() => console.log('signer: ', signer))
   createEffect(() => console.log('balance: ', balance))
-  createEffect(() => console.log('switchNetworkData: ', switchNetworkData, pendingChainId, switchNetworkData.variables))
+  createEffect(() =>
+    console.log(
+      'switchNetworkData: ',
+      switchNetworkData,
+      pendingChainId,
+      switchNetworkData.variables,
+    ),
+  )
 
   return (
     <div>
@@ -56,9 +63,7 @@ const App: Component = () => {
           >
             Sign data
           </button>
-          <button onClick={() => switchNetwork(chainId)}>
-            switch chain
-          </button>
+          <button onClick={() => switchNetwork(chainId)}>switch chain</button>
           <button onClick={() => disconnect()}>Disconnect</button>
         </Match>
 
