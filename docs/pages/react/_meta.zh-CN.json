@@ -8,8 +8,7 @@
     "display": "hidden"
   },
   "typescript": {
-    "title": "TypeScript",
-    "display": "hidden"
+    "title": "TypeScript"
   },
   "client": {
     "title": "Client",
