@@ -9,6 +9,7 @@ connectors/metaMask/**
 connectors/mock/**
 connectors/safe/**
 connectors/walletConnect/**
+connectors/walletConnectLegacy/**
 providers/alchemy/**
 providers/infura/**
 providers/jsonRpc/**

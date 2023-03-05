@@ -1,12 +1,7 @@
 import * as React from 'react'
 
-import {
-  WagmiConfig,
-  configureChains,
-  createClient,
-  goerli,
-  mainnet,
-} from 'wagmi'
+import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { goerli, mainnet } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -38,7 +33,7 @@ const client = createClient({
     new WalletConnectConnector({
       chains,
       options: {
-        qrcode: true,
+        projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? '',
       },
     }),
     new InjectedConnector({

@@ -9,6 +9,55 @@ import { Callout } from 'nextra-theme-docs'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
 
+## 0.12.x Breaking changes
+
+### WalletConnectConnector
+
+WalletConnect v1 has been sunset and `WalletConnectConnector` now uses WalletConnect v2 by default.
+
+wagmi still supports WalletConnect v1 via a [`WalletConnectLegacyConnector`](/core/migration-guide#if-you-are-still-using-walletconnect-v1), however, it is recommended to migrate to WalletConnect v2. Instructions can be found [here](/core/connectors/walletConnect).
+
+##### If you are already using WalletConnect v2:
+
+The `version` flag has been omitted, and `qrcode` has been renamed to `showQrModal`.
+
+```diff
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+-   version: '2',
+    projectId: '...',
+-   qrcode: true,
++   showQrModal: true,
+  },
+})
+```
+
+[Read more on `WalletConnectConnector`](/core/connectors/walletConnect)
+
+##### If you are still using WalletConnect v1:
+
+<Callout emoji="⚠️">
+  You must migrate to the [WalletConnect v2
+  Connector](/core/connectors/walletConnect) before June 28, after which, the
+  `WalletConnectLegacyConnector` will be removed.
+</Callout>
+
+```diff
+-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
++import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy'
+
+-const connector = new WalletConnectConnector({
++const connector = new WalletConnectLegacyConnector({
+  options: {
+    qrcode: true,
+  },
+})
+```
+
+[Read more on `WalletConnectLegacyConnector`](/core/connectors/walletConnectLegacy)
+
 ## 0.11.x Breaking changes
 
 <Callout>

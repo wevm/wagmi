@@ -59,11 +59,10 @@ Note: The above example is using the `optimism` chain from [`@wagmi/core/chains`
 
 Connector to use for connecting wallet.
 
-```ts {5}
-import { connect } from '@wagmi/core'
-import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+```ts {4}
+import { connect, InjectedConnector } from '@wagmi/core'
 
 const result = await connect({
-  connector: new WalletConnectConnector(),
+  connector: new InjectedConnector(),
 })
 ```
