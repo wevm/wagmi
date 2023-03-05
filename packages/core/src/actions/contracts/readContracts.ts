@@ -89,6 +89,9 @@ export async function readContracts<
             logWarn(result.reason.message)
             throw result.reason
           }
+          if (result.reason.message) {
+            logWarn(result.reason.message)
+          }
           return null
         })
         .flat()
