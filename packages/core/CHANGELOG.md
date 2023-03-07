@@ -1,5 +1,22 @@
 # @wagmi/core
 
+## 0.10.1
+
+### Patch Changes
+
+- [#1960](https://github.com/wagmi-dev/wagmi/pull/1960) [`8f510d3f`](https://github.com/wagmi-dev/wagmi/commit/8f510d3fe6851e8afdfe6dd04c649c647906b96e) Thanks [@jxom](https://github.com/jxom)! - Added the following chains:
+
+  - `boba`
+  - `flare`
+  - `flareTestnet`
+  - `shardeumSphinx`
+  - `songbird`
+  - `songbirdTestnet`
+  - `zhejiang`
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.2
+
 ## 0.10.0
 
 ### Minor Changes
