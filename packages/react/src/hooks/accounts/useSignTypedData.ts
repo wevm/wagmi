@@ -3,7 +3,7 @@ import { signTypedData } from '@wagmi/core'
 import type { TypedData } from 'abitype'
 import * as React from 'react'
 
-import type { PartialBy, MutationConfig } from '../../types'
+import type { MutationConfig, PartialBy } from '../../types'
 import { useMutation } from '../utils'
 
 export type UseSignTypedDataArgs<

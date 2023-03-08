@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@spruceid/ssx": "^1.2.4",
+    "@spruceid/ssx-server": "^1.2.2",
     "degen": "^0.0.49",
     "ethers": "^5.7.1",
     "fathom-client": "^3.5.0",
