@@ -54,22 +54,6 @@ const connector = new WalletConnectLegacyConnector({
 
 ### options
 
-#### version (optional)
-
-Version of WalletConnect to use. Defaults to `1`.
-
-```ts {6}
-import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
-
-const connector = new WalletConnectLegacyConnector({
-  options: {
-    qrcode: true,
-    version: '2',
-    projectId: '...',
-  },
-})
-```
-
 #### projectId (optional)
 
 WalletConnect Cloud Project ID. Required for WalletConnect v2. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
@@ -80,7 +64,6 @@ import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConne
 const connector = new WalletConnectLegacyConnector({
   options: {
     qrcode: true,
-    version: '2',
     projectId: '...',
   },
 })
