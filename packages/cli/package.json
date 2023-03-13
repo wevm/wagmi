@@ -67,7 +67,6 @@
     }
   },
   "dependencies": {
-    "@ethersproject/address": "^5.7.0",
     "@wagmi/chains": "workspace:*",
     "abitype": "^0.3.0",
     "abort-controller": "^3.0.0",
@@ -89,6 +88,7 @@
     "pathe": "^1.0.0",
     "picocolors": "^1.0.0",
     "prettier": "^2.8.1",
+    "viem": "^0.1.14",
     "zod": "^3.20.2"
   },
   "devDependencies": {
