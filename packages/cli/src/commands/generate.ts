@@ -1,4 +1,3 @@
-import { getAddress } from '@ethersproject/address'
 import type { Address } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
@@ -8,6 +7,7 @@ import { default as dedent } from 'dedent'
 import { ensureDir, default as fse } from 'fs-extra'
 import { basename, dirname, resolve } from 'pathe'
 import pc from 'picocolors'
+import { getAddress } from 'viem'
 import { z } from 'zod'
 
 import { version as packageVersion } from '../../package.json'
