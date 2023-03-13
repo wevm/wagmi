@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.12
+
+### Patch Changes
+
+- [#1992](https://github.com/wagmi-dev/wagmi/pull/1992) [`efc93cad`](https://github.com/wagmi-dev/wagmi/commit/efc93cadacdb9c9960644dabe4ae837d384df52b) Thanks [@tmm](https://github.com/tmm)! - Refactored internals from ethers to viem.
+
 ## 0.1.11
 
 ### Patch Changes
