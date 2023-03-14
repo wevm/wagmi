@@ -62,6 +62,12 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
           x.plugin.name === 'React' && x.imports?.includes('WriteContractMode'),
       )
 
+      const actionNames = new Set<string>()
+      const getActionNameError = (name: string, contractName: string) =>
+        new Error(
+          `Action name "${name}" must be unique for contract "${contractName}".`,
+        )
+
       const content: string[] = []
       for (const contract of contracts) {
         const baseActionName = pascalCase(contract.name)
@@ -117,15 +123,21 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
         }
 
         if (actions.getContract) {
+          const name = `get${baseActionName}`
+          if (actionNames.has(name))
+            throw getActionNameError(name, contract.name)
+          actionNames.add(name)
+
           imports.add('getContract')
           const docString = genDocString('getContract')
+
           let code
           if (isTypeScript) {
             imports.add('GetContractArgs')
             // prettier-ignore
             code = dedent`
             ${docString}
-            export function get${baseActionName}(
+            export function ${name}(
               config: Omit<GetContractArgs, 'abi'${omitted}>${typeParams},
             ) {
               return getContract(${innerActionConfig})
@@ -134,7 +146,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
           } else
             code = dedent`
             ${docString}
-            export function use${baseActionName}(config) {
+            export function ${name}(config) {
               return getContract(${innerActionConfig})
             }
             `
@@ -159,14 +171,20 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
 
         if (hasReadFunction) {
           if (actions.readContract) {
+            const name = `read${baseActionName}`
+            if (actionNames.has(name))
+              throw getActionNameError(name, contract.name)
+            actionNames.add(name)
+
             imports.add('readContract')
             const docString = genDocString('readContract')
+
             let code
             if (isTypeScript) {
               imports.add('ReadContractConfig')
               code = dedent`
               ${docString}
-              export function read${baseActionName}<
+              export function ${name}<
                 TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                 TFunctionName extends string = string,
               >(
@@ -178,7 +196,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
             } else
               code = dedent`
               ${docString}
-              export function read${baseActionName}(config) {
+              export function ${name}(config) {
                 return readContract(${innerActionConfig})
               }
               `
@@ -188,8 +206,14 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
 
         if (hasWriteFunction) {
           if (actions.writeContract) {
+            const name = `write${baseActionName}`
+            if (actionNames.has(name))
+              throw getActionNameError(name, contract.name)
+            actionNames.add(name)
+
             imports.add('writeContract')
             const docString = genDocString('writeContract')
+
             let code
             if (isTypeScript) {
               const hasMultichainAddress = typeof contract.address === 'object'
@@ -207,7 +231,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
               imports.add('WriteContractUnpreparedArgs')
               code = dedent`
               ${docString}
-              export function write${baseActionName}<
+              export function ${name}<
                 TFunctionName extends string,
                 ${TChainId}
               >(
@@ -221,7 +245,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
             } else
               code = dedent`
               ${docString}
-              export function write${baseActionName}(config) {
+              export function ${name}(config) {
                 return writeContract(${innerActionConfig})
               }
               `
@@ -229,15 +253,21 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
           }
 
           if (actions.prepareWriteContract) {
+            const name = `prepareWrite${baseActionName}`
+            if (actionNames.has(name))
+              throw getActionNameError(name, contract.name)
+            actionNames.add(name)
+
             imports.add('prepareWriteContract')
             const docString = genDocString('prepareWriteContract')
+
             let code
             if (isTypeScript) {
               imports.add('PrepareWriteContractConfig')
               // prettier-ignore
               code = dedent`
               ${docString}
-              export function prepareWrite${baseActionName}<
+              export function ${name}<
                 TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                 TFunctionName extends string = string,
               >(
@@ -249,7 +279,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
             } else
               code = dedent`
               ${docString}
-              export function prepareWrite${baseActionName}(config) {
+              export function ${name}(config) {
                 return prepareWriteContract(${innerActionConfig})
               }
               `
@@ -259,8 +289,14 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
 
         if (hasEvent) {
           if (actions.watchContractEvent) {
+            const name = `watch${baseActionName}Event`
+            if (actionNames.has(name))
+              throw getActionNameError(name, contract.name)
+            actionNames.add(name)
+
             imports.add('watchContractEvent')
             const docString = genDocString('watchContractEvent')
+
             let code
             if (isTypeScript) {
               imports.add('WatchContractEventConfig')
@@ -268,7 +304,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
               // prettier-ignore
               code = dedent`
               ${docString}
-              export function watch${baseActionName}Event<
+              export function ${name}<
                 TAbi extends readonly unknown[] = typeof ${contract.meta.abiName},
                 TEventName extends string = string,
               >(
@@ -281,7 +317,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
             } else
               code = dedent`
               ${docString}
-              export function watch${baseActionName}Event(config, callback) {
+              export function ${name}(config, callback) {
                 return watchContractEvent(${innerActionConfig}, callback)
               }
               `

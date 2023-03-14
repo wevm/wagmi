@@ -1,59 +1,6 @@
 // Vitest Snapshot v1
 
-exports[`actions > run > isTypeScript > false 1`] = `
-"import {
-  getContract,
-  readContract,
-  writeContract,
-  prepareWriteContract,
-  watchContractEvent,
-} from '@wagmi/core'
-
-/**
- * Wraps __{@link getContract}__ with \`abi\` set to __{@link WagmiAbi}__.
- */
-export function useWagmi(config) {
-  return getContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
-}
-
-/**
- * Wraps __{@link readContract}__ with \`abi\` set to __{@link WagmiAbi}__.
- */
-export function readWagmi(config) {
-  return readContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
-}
-
-/**
- * Wraps __{@link writeContract}__ with \`abi\` set to __{@link WagmiAbi}__.
- */
-export function writeWagmi(config) {
-  return writeContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
-}
-
-/**
- * Wraps __{@link prepareWriteContract}__ with \`abi\` set to __{@link WagmiAbi}__.
- */
-export function prepareWriteWagmi(config) {
-  return prepareWriteContract({
-    abi: WagmiAbi,
-    address: WagmiAddress,
-    ...config,
-  })
-}
-
-/**
- * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link WagmiAbi}__.
- */
-export function watchWagmiEvent(config, callback) {
-  return watchContractEvent(
-    { abi: WagmiAbi, address: WagmiAddress, ...config },
-    callback,
-  )
-}
-"
-`;
-
-exports[`actions > run > isTypeScript > true 1`] = `
+exports[`actions > run > with TypeScript 1`] = `
 "import {
   getContract,
   GetContractArgs,
@@ -147,6 +94,59 @@ export function watchWagmiEvent<
       address: WagmiAddress,
       ...config,
     } as WatchContractEventConfig<TAbi, TEventName>,
+    callback,
+  )
+}
+"
+`;
+
+exports[`actions > run > without TypeScript 1`] = `
+"import {
+  getContract,
+  readContract,
+  writeContract,
+  prepareWriteContract,
+  watchContractEvent,
+} from '@wagmi/core'
+
+/**
+ * Wraps __{@link getContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function getWagmi(config) {
+  return getContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+}
+
+/**
+ * Wraps __{@link readContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function readWagmi(config) {
+  return readContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+}
+
+/**
+ * Wraps __{@link writeContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function writeWagmi(config) {
+  return writeContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+}
+
+/**
+ * Wraps __{@link prepareWriteContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function prepareWriteWagmi(config) {
+  return prepareWriteContract({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function watchWagmiEvent(config, callback) {
+  return watchContractEvent(
+    { abi: WagmiAbi, address: WagmiAddress, ...config },
     callback,
   )
 }
