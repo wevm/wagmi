@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.13
+
+### Patch Changes
+
+- [#2000](https://github.com/wagmi-dev/wagmi/pull/2000) [`01254765`](https://github.com/wagmi-dev/wagmi/commit/01254765eb37b77aca26500c00c721f08a260912) Thanks [@tmm](https://github.com/tmm)! - Fixed React plugin name conflict.
+
 ## 0.1.12
 
 ### Patch Changes
