@@ -6,9 +6,55 @@ import { actions } from './actions'
 
 describe('actions', () => {
   describe('run', () => {
-    describe('isTypeScript', () => {
-      it('true', async () => {
-        const { imports, content } = await actions().run({
+    it('with TypeScript', async () => {
+      const { imports, content } = await actions().run({
+        contracts: [
+          {
+            name: 'Wagmi',
+            address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+            abi: wagmiAbi,
+            content: '',
+            meta: {
+              abiName: 'WagmiAbi',
+              addressName: 'WagmiAddress',
+              configName: 'WagmiConfig',
+            },
+          },
+        ],
+        isTypeScript: true,
+        outputs: [],
+      })
+      await expect(
+        format(`${imports}\n\n${content}`),
+      ).resolves.toMatchSnapshot()
+    })
+
+    it('without TypeScript', async () => {
+      const { imports, content } = await actions().run({
+        contracts: [
+          {
+            name: 'Wagmi',
+            address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+            abi: wagmiAbi,
+            content: '',
+            meta: {
+              abiName: 'WagmiAbi',
+              addressName: 'WagmiAddress',
+              configName: 'WagmiConfig',
+            },
+          },
+        ],
+        isTypeScript: false,
+        outputs: [],
+      })
+      await expect(
+        format(`${imports}\n\n${content}`),
+      ).resolves.toMatchSnapshot()
+    })
+
+    it('throws for duplicate action names', async () => {
+      await expect(
+        actions().run({
           contracts: [
             {
               name: 'Wagmi',
@@ -21,18 +67,6 @@ describe('actions', () => {
                 configName: 'WagmiConfig',
               },
             },
-          ],
-          isTypeScript: true,
-          outputs: [],
-        })
-        await expect(
-          format(`${imports}\n\n${content}`),
-        ).resolves.toMatchSnapshot()
-      })
-
-      it('false', async () => {
-        const { imports, content } = await actions().run({
-          contracts: [
             {
               name: 'Wagmi',
               address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
@@ -47,11 +81,10 @@ describe('actions', () => {
           ],
           isTypeScript: false,
           outputs: [],
-        })
-        await expect(
-          format(`${imports}\n\n${content}`),
-        ).resolves.toMatchSnapshot()
-      })
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Action name \\"getWagmi\\" must be unique for contract \\"Wagmi\\"."',
+      )
     })
   })
 })
