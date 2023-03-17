@@ -1,5 +1,47 @@
 # @wagmi/core
 
+## 0.10.2
+
+### Patch Changes
+
+- [#2016](https://github.com/wagmi-dev/wagmi/pull/2016) [`06bf61de`](https://github.com/wagmi-dev/wagmi/commit/06bf61dee6d2920777bd9392491e6b7aedebe7ab) Thanks [@jxom](https://github.com/jxom)! - Added chains:
+
+  - `boba`
+  - `chronos`
+  - `crossbell`
+  - `dfk`
+  - `dogechain`
+  - `flare`
+  - `flareTestnet`
+  - `klaytn`
+  - `scrollTestnet`
+  - `shardeumSphinx`
+  - `skaleCalypso`
+  - `skaleCalypsoTestnet`
+  - `skaleChaosTestnet`
+  - `skaleCryptoBlades`
+  - `skaleCryptoColosseum`
+  - `skaleEuropa`
+  - `skaleEuropaTestnet`
+  - `skaleExorde`
+  - `skaleHumanProtocol`
+  - `skaleNebula`
+  - `skaleNebulaTestnet`
+  - `skaleRazor`
+  - `skaleTitan`
+  - `skaleTitanTestnet`
+  - `songbird`
+  - `songbirdTestnet`
+  - `titan`
+  - `titanTestnet`
+  - `wanchain`
+  - `wanchainTestnet`
+
+- [#2016](https://github.com/wagmi-dev/wagmi/pull/2016) [`06bf61de`](https://github.com/wagmi-dev/wagmi/commit/06bf61dee6d2920777bd9392491e6b7aedebe7ab) Thanks [@jxom](https://github.com/jxom)! - Updated references/ submodule.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.4
+
 ## 0.10.0
 
 ### Minor Changes
