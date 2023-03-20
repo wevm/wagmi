@@ -328,7 +328,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
 
       let packageName
       if (config.overridePackageName) packageName = config.overridePackageName
-      if (await getIsPackageInstalled({ packageName: 'wagmi' }))
+      else if (await getIsPackageInstalled({ packageName: 'wagmi' }))
         packageName = 'wagmi/actions'
       else if (await getIsPackageInstalled({ packageName: '@wagmi/core' }))
         packageName = '@wagmi/core'
