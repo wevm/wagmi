@@ -1,3 +1,9 @@
-export type { ContractsConfig, Contract } from '../types/contracts'
+export type {
+  CallOverrides,
+  Contract,
+  ContractsConfig,
+  Overrides,
+  PayableOverrides,
+} from '../types/contracts'
 
 export { debounce } from '../utils'
