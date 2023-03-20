@@ -5,7 +5,11 @@ import type { Contract } from '@wagmi/core/internal'
 import type { Abi, Address } from 'abitype'
 import * as React from 'react'
 
-import type { DeepPartial, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  DeepPartial,
+  QueryConfigWithSelect,
+  QueryFunctionArgs,
+} from '../../types'
 import { useBlockNumber } from '../network-status'
 import type { UseQueryResult } from '../utils'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
@@ -18,9 +22,15 @@ export type UseContractReadsConfig<
   [K in keyof Config]?: K extends 'contracts'
     ? DeepPartial<Config[K], 2>
     : Config[K]
-} & QueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> & {
+} & QueryConfigWithSelect<
+  ReadContractsResult<TContracts>,
+  Error,
+  TSelectData
+> & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
+    /** Set this to `true` to keep the previous data when fetching based on a new query key. Defaults to `false`. */
+    keepPreviousData?: boolean
     /** Subscribe to changes */
     watch?: boolean
   }

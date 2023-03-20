@@ -74,7 +74,22 @@ export type QueryConfig<TData, TError, TSelectData = TData> = Pick<
   | 'cacheTime'
   | 'enabled'
   | 'isDataEqual'
-  | 'keepPreviousData'
+  | 'staleTime'
+  | 'structuralSharing'
+  | 'suspense'
+  | 'onError'
+  | 'onSettled'
+  | 'onSuccess'
+> & {
+  /** Scope the cache to a given context. */
+  scopeKey?: string
+}
+
+export type QueryConfigWithSelect<TData, TError, TSelectData = TData> = Pick<
+  UseQueryOptions<TData, TError, TSelectData>,
+  | 'cacheTime'
+  | 'enabled'
+  | 'isDataEqual'
   | 'select'
   | 'staleTime'
   | 'structuralSharing'
