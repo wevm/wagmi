@@ -1,5 +1,13 @@
 # @wagmi/cli
 
+## 0.1.14
+
+### Patch Changes
+
+- [#2039](https://github.com/wagmi-dev/wagmi/pull/2039) [`bac893ab`](https://github.com/wagmi-dev/wagmi/commit/bac893ab26012d4d8741c4f80e8b8813aee26f0c) Thanks [@tmm](https://github.com/tmm)! - Updated references.
+
+- [#2039](https://github.com/wagmi-dev/wagmi/pull/2039) [`bac893ab`](https://github.com/wagmi-dev/wagmi/commit/bac893ab26012d4d8741c4f80e8b8813aee26f0c) Thanks [@tmm](https://github.com/tmm)! - Fixed Actions plugin `overridePackageName` option.
+
 ## 0.1.13
 
 ### Patch Changes

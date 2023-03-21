@@ -1,5 +1,18 @@
 # wagmi
 
+## 0.12.3
+
+### Patch Changes
+
+- [#2039](https://github.com/wagmi-dev/wagmi/pull/2039) [`bac893ab`](https://github.com/wagmi-dev/wagmi/commit/bac893ab26012d4d8741c4f80e8b8813aee26f0c) Thanks [@tmm](https://github.com/tmm)! - Updated references.
+
+- [#2043](https://github.com/wagmi-dev/wagmi/pull/2043) [`49a58320`](https://github.com/wagmi-dev/wagmi/commit/49a58320ab5f1f13bc4de25abcc028c8335e98f0) Thanks [@tmm](https://github.com/tmm)! - Removed `InjectedConnector` `shimChainChangedDisconnect` shim (no longer necessary).
+
+- [#2042](https://github.com/wagmi-dev/wagmi/pull/2042) [`e7ac7afc`](https://github.com/wagmi-dev/wagmi/commit/e7ac7afccb005e8d208c78d55b1fec979b8522a6) Thanks [@tmm](https://github.com/tmm)! - Fixed exposed types that weren't passed down.
+
+- Updated dependencies [[`bac893ab`](https://github.com/wagmi-dev/wagmi/commit/bac893ab26012d4d8741c4f80e8b8813aee26f0c), [`49a58320`](https://github.com/wagmi-dev/wagmi/commit/49a58320ab5f1f13bc4de25abcc028c8335e98f0)]:
+  - @wagmi/core@0.10.3
+
 ## 0.12.2
 
 ### Patch Changes
