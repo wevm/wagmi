@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.12.4
+
+### Patch Changes
+
+- [#2046](https://github.com/wagmi-dev/wagmi/pull/2046) [`90d8e9b8`](https://github.com/wagmi-dev/wagmi/commit/90d8e9b87962b72c54311649537e91a953660f9b) Thanks [@tmm](https://github.com/tmm)! - Exported internal type.
+
+- Updated dependencies [[`90d8e9b8`](https://github.com/wagmi-dev/wagmi/commit/90d8e9b87962b72c54311649537e91a953660f9b)]:
+  - @wagmi/core@0.10.4
+
 ## 0.12.3
 
 ### Patch Changes
