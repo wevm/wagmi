@@ -1,5 +1,14 @@
 # @wagmi/core
 
+## 0.10.5
+
+### Patch Changes
+
+- [#2053](https://github.com/wagmi-dev/wagmi/pull/2053) [`665df1bf`](https://github.com/wagmi-dev/wagmi/commit/665df1bf2afccb533102069def395e19fb7194dd) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where you add a new chain to MetaMask, but the switch after is rejected.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.7
+
 ## 0.10.4
 
 ### Patch Changes
