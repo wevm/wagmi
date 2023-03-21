@@ -27,4 +27,5 @@ export function middleware(request: NextRequest) {
   const skipMiddlewareRegex = /^\/assets|favicon\/.+/
   if (!skipMiddlewareRegex.test(request.nextUrl.pathname))
     return locales(request)
+  // return NextResponse.next({ request })
 }

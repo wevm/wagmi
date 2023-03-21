@@ -9,6 +9,66 @@ import { Callout } from 'nextra-theme-docs'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
 
+## 0.12.x Breaking changes
+
+### WalletConnectConnector
+
+WalletConnect v1 has been sunset and `WalletConnectConnector` now uses WalletConnect v2 by default.
+
+wagmi still supports WalletConnect v1 via a [`WalletConnectLegacyConnector`](/core/migration-guide#if-you-are-still-using-walletconnect-v1), however, it is recommended to migrate to WalletConnect v2. Instructions can be found [here](/core/connectors/walletConnect).
+
+##### If you are already using WalletConnect v2:
+
+The `version` flag has been omitted, and `qrcode` has been renamed to `showQrModal`.
+
+```diff
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+-   version: '2',
+    projectId: '...',
+-   qrcode: true,
++   showQrModal: true,
+  },
+})
+```
+
+[Read more on `WalletConnectConnector`](/core/connectors/walletConnect)
+
+##### If you are still using WalletConnect v1:
+
+<Callout emoji="⚠️">
+  You must migrate to the [WalletConnect v2
+  Connector](/core/connectors/walletConnect) before June 28, after which, the
+  `WalletConnectLegacyConnector` will be removed.
+</Callout>
+
+```diff
+-import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
++import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy'
+
+-const connector = new WalletConnectConnector({
++const connector = new WalletConnectLegacyConnector({
+  options: {
+    qrcode: true,
+  },
+})
+```
+
+[Read more on `WalletConnectLegacyConnector`](/core/connectors/walletConnectLegacy)
+
+## 0.11.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.10.x` docs
+  [here](https://0.10.x.wagmi.sh).
+</Callout>
+
+### Upgrade to typescript@>=4.9.4
+
+[TypeScript 5.0](https://github.com/microsoft/TypeScript/issues/51362) is coming soon and has some great features we are excited to bring into wagmi. To prepare for this, update your TypeScript version to 4.9.4 or higher. There are likely no [breaking changes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#correctness-fixes-and-breaking-changes) if you are coming from `typescript@4.7.x || typescript@4.8.x`.
+
 ## 0.10.x Breaking changes
 
 <Callout>
@@ -121,9 +181,9 @@ The `chainId` export has been removed. You can extract a chain ID from the chain
 -const mainnetChainId = chainId.mainnet
 -const polygonChainId = chainId.polygon
 -const optimismChainId = chainId.optimism
-+const mainnetChainId = mainnet.chainId
-+const polygonChainId = polygon.chainId
-+const optimismChainId = optimism.chainId
++const mainnetChainId = mainnet.id
++const polygonChainId = polygon.id
++const optimismChainId = optimism.id
 ```
 
 #### Removed `etherscanBlockExplorers`
@@ -504,7 +564,7 @@ Throws an error when a `chainId` is specified and the end-user is on a different
   [here](https://0.5.x.wagmi.sh).
 </Callout>
 
-All the breaking changes in this release are related to the introduction of [Prepare Hooks](/react/prepare-hooks/intro). It is recommended to read the [Prepare Hooks](/react/prepare-hooks/intro) section before migrating to 0.6.x.
+All the breaking changes in this release are related to the introduction of [Prepare Hooks](/react/prepare-hooks). It is recommended to read the [Prepare Hooks](/react/prepare-hooks) section before migrating to 0.6.x.
 
 ### `useContractWrite`
 
@@ -518,7 +578,7 @@ All the breaking changes in this release are related to the introduction of [Pre
 
 If a `chainId` is passed to `useContractWrite`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -527,7 +587,7 @@ The configuration passed to the `useContractWrite` hook now needs to be either:
 - prepared with the [`usePrepareContractWrite` Prepare Hook](/react/prepare-hooks/usePrepareContractWrite) **(new)**, or
 - recklessly unprepared **(previous functionality)**
 
-> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks/intro).
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks).
 
 **Prepared usage**
 
@@ -580,11 +640,11 @@ const {
 +const { data: transaction } = useTransaction({ hash })
 ```
 
-> Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+> Why? The old implementation of `useContractWrite` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 **`write`/`writeAsync` arguments**
 
-The `write`/`writeAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+The `write`/`writeAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 
 ```diff
 <button
@@ -629,7 +689,7 @@ const { write } = useContractWrite(config)
 
 If a `chainId` is passed to `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+> Why? Eagerly prompting to switch chain in these actions created a long-running async task that makes [iOS App Links](/react/prepare-hooks#ios-app-link-constraints) vulnerable.
 
 #### Configuration changes
 
@@ -638,7 +698,7 @@ The configuration passed to the `useSendTransaction` hook now needs to be either
 - prepared with the [`usePrepareSendTransaction` Prepare Hook](/react/prepare-hooks/usePrepareSendTransaction) **(new)**, or
 - recklessly unprepared **(previous functionality)**
 
-> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks/intro).
+> Why? To avoid long-running asynchronous tasks in event handlers. [Read more about Prepare Hooks](/react/prepare-hooks).
 
 **Prepared usage**
 
@@ -695,11 +755,11 @@ const {
 +const { data: transaction } = useTransaction({ hash })
 ```
 
-> Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+> Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 **`sendTransaction`/`sendTransactionAsync` arguments**
 
-The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 
 ```diff
 <button

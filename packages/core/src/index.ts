@@ -156,7 +156,6 @@ export type { ClientStorage as Storage } from './storage'
 
 export type {
   ChainProviderFn,
-  Ethereum,
   FallbackProviderConfig,
   Hash,
   ProviderWithFallbackConfig,
@@ -165,6 +164,7 @@ export type {
   Unit,
   WebSocketProvider,
 } from './types'
+export type { Ethereum } from '@wagmi/connectors'
 export type { Address } from 'abitype'
 
 export {

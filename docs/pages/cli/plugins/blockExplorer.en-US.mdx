@@ -1,0 +1,181 @@
+---
+title: 'Block Explorer'
+description: 'Block Explorer plugin'
+---
+
+# Block Explorer
+
+Plugin for fetching ABIs from Block Explorer that supports the `?module=contract&action=getabi` API format.
+
+```ts
+import { blockExplorer } from '@wagmi/cli/plugins'
+```
+
+## Usage
+
+```ts
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      baseUrl: 'https://api.etherscan.io/api',
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+## Configuration
+
+### baseUrl
+
+Base URL for block explorer.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      baseUrl: 'https://api.etherscan.io/api',
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### contracts
+
+Contracts to fetch ABIs for.
+
+```ts {8-13}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      baseUrl: 'https://api.etherscan.io/api',
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+
+### apiKey (optional)
+
+API key for block explorer. Appended to the request URL as query param `&apikey=${apiKey}`.
+
+```ts {7}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      apiKey: process.env.ETHERSCAN_API_KEY,
+      baseUrl: 'https://api.etherscan.io/api',
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### cacheDuration (optional)
+
+Duration in milliseconds to cache ABIs. Defaults to `1_800_000` (30 minutes).
+
+```ts {8}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      baseUrl: 'https://api.etherscan.io/api',
+      cacheDuration: 300_000,
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+    }),
+  ],
+})
+```
+
+### getAddress (optional)
+
+Function to get address from contract config. Defaults to `({ address }) => typeof address === 'string' ? address : Object.values(address)[0]`.
+
+```ts {14-17}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      baseUrl: 'https://api.etherscan.io/api',
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      getAddress({ address }) {
+        if (typeof address === 'string') return address
+        return Object.values(address)[0]
+      },
+    }),
+  ],
+})
+```
+
+### name (optional)
+
+Name of source. Defaults to `"Block Explorer"`.
+
+```ts {14}
+import { defineConfig } from '@wagmi/cli'
+import { blockExplorer } from '@wagmi/cli/plugins'
+
+export default defineConfig({
+  plugins: [
+    blockExplorer({
+      baseUrl: 'https://api.etherscan.io/api',
+      contracts: [
+        {
+          name: 'wagmigotchi',
+          address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+        },
+      ],
+      name: 'Etherscan',
+    }),
+  ],
+})
+```

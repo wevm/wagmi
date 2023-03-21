@@ -15,12 +15,13 @@ import { useQuery } from '../utils'
 export type UsePrepareContractWriteConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
+  TChainId extends number = number,
   TSigner extends Signer = Signer,
 > = PartialBy<
-  PrepareWriteContractConfig<TAbi, TFunctionName, TSigner>,
+  PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>,
   'abi' | 'address' | 'args' | 'functionName'
 > &
-  QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName>, Error>
+  QueryConfig<PrepareWriteContractResult<TAbi, TFunctionName, TChainId>, Error>
 
 type QueryKeyArgs = Omit<PrepareWriteContractConfig, 'abi'>
 type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
@@ -94,6 +95,7 @@ function queryFn({
 export function usePrepareContractWrite<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
+  TChainId extends number,
 >(
   {
     address,
@@ -110,7 +112,7 @@ export function usePrepareContractWrite<
     onError,
     onSettled,
     onSuccess,
-  }: UsePrepareContractWriteConfig<TAbi, TFunctionName> = {} as any,
+  }: UsePrepareContractWriteConfig<TAbi, TFunctionName, TChainId> = {} as any,
 ) {
   const { chain: activeChain } = useNetwork()
   const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
@@ -147,11 +149,12 @@ export function usePrepareContractWrite<
       abi,
       address,
       args,
+      chainId,
       functionName,
       mode: 'prepared',
       overrides,
       request: undefined,
       ...prepareContractWriteQuery.data,
-    } as unknown as PrepareWriteContractResult<TAbi, TFunctionName>,
+    } as unknown as PrepareWriteContractResult<TAbi, TFunctionName, TChainId>,
   })
 }

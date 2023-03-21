@@ -34,6 +34,7 @@ const avalancheChain: Chain = {
   },
   rpcUrls: {
     default: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
+    public: { http: ['https://api.avax.network/ext/bc/C/rpc'] },
   },
   testnet: false,
 }
@@ -45,6 +46,7 @@ const defaultChains = [
       ...mainnet.rpcUrls,
       alchemy: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
       default: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
+      public: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
     },
   },
   polygon,
@@ -171,7 +173,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/react/providers/jsonRpc"
+          Read more: https://wagmi.sh/core/providers/jsonRpc"
         `)
       })
     })
@@ -217,7 +219,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Avalanche\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/react/providers/jsonRpc"
+          Read more: https://wagmi.sh/core/providers/jsonRpc"
         `)
       })
     })
@@ -257,7 +259,7 @@ describe('configureChains', () => {
       it('throws an error if a chain does not have a default RPC URL', () => {
         const polygon_: Chain = {
           ...polygon,
-          rpcUrls: { default: { http: [''] } },
+          rpcUrls: { default: { http: [''] }, public: { http: [''] } },
         }
 
         expect(() =>
@@ -270,7 +272,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Polygon\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/react/providers/jsonRpc"
+          Read more: https://wagmi.sh/core/providers/jsonRpc"
         `)
       })
     })
@@ -346,7 +348,7 @@ describe('configureChains', () => {
           "Could not find valid provider configuration for chain \\"Ethereum\\".
 
           You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-          Read more: https://wagmi.sh/react/providers/jsonRpc"
+          Read more: https://wagmi.sh/core/providers/jsonRpc"
         `)
       })
     })
@@ -431,7 +433,7 @@ describe('configureChains', () => {
         "Could not find valid provider configuration for chain \\"Avalanche\\".
 
         You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
-        Read more: https://wagmi.sh/react/providers/jsonRpc"
+        Read more: https://wagmi.sh/core/providers/jsonRpc"
       `)
     })
   })

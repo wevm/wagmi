@@ -8,40 +8,65 @@ const translations = {
   'en-US': {
     editLink: 'Edit this page on GitHub →',
     feedbackLink: 'Question? Give us feedback →',
+    gitcoinBanner:
+      'wagmi is in the Gitcoin Grants Alpha Round. Click here to support development. Thank you 🙏',
     poweredBy: 'Powered by',
+    tagline: {
+      core: 'VanillaJS for Ethereum',
+      cli: 'CLI tools for Ethereum',
+      react: 'React Hooks for Ethereum',
+    },
+  },
+  'zh-CN': {
+    editLink: '在 GitHub 上编辑此页面 →',
+    feedbackLink: '有疑问? 点击给我们反馈 →',
+    gitcoinBanner:
+      'wagmi is in the Gitcoin Grants Alpha Round. Click here to support development. Thank you 🙏',
+    poweredBy: 'Powered by',
+    tagline: {
+      core: 'VanillaJS for Ethereum',
+      cli: 'CLI tools for Ethereum',
+      react: 'React Hooks for Ethereum',
+    },
   },
 } as const
 type Language = keyof typeof translations
 
+function useLocale() {
+  return useRouter().locale as Language
+}
+
 const config: DocsThemeConfig = {
   // banner: {
-  //   key: 'gitcoin-15',
-  //   text: (
-  //     <a
-  //       target="_blank"
-  //       href="https://gitcoin.co/grants/4493/wagmi-react-hooks-library-for-ethereum"
-  //       rel="noopener noreferrer"
-  //     >
-  //       wagmi is in Gitcoin Grant Round 15 . Click here to support development.
-  //       Thank you 🙏
-  //     </a>
-  //   ),
+  //   key: 'gitcoin-1',
+  //   text() {
+  //     return (
+  //       <a
+  //         target="_blank"
+  //         href="https://grant-explorer.gitcoin.co/#/round/1/0xe575282b376e3c9886779a841a2510f1dd8c2ce4/0x50f3dbb23d121a397941e827ce2f10a0aea7f5cf311de6e3abcfe3847c56c405-0xe575282b376e3c9886779a841a2510f1dd8c2ce4"
+  //         rel="noopener noreferrer"
+  //       >
+  //         {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+  //         {translations[useLocale()].gitcoinBanner}
+  //       </a>
+  //     )
+  //   },
   // },
   chat: {
     icon: null,
   },
   darkMode: true,
-  docsRepositoryBase: `${github}/tree/main/docs/pages`,
+  docsRepositoryBase: `${github}/tree/main/docs`,
   editLink: {
     text() {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return <>{translations[useRouter().locale as Language].editLink}</>
+      return <>{translations[useLocale()].editLink}</>
     },
   },
   feedback: {
     content() {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      return <>{translations[useRouter().locale as Language].feedbackLink}</>
+      return <>{translations[useLocale()].feedbackLink}</>
     },
     labels: 'feedback',
   },
@@ -57,7 +82,8 @@ const config: DocsThemeConfig = {
               title="vercel.com homepage"
               href="https://vercel.com?utm_source=nextra.site"
             >
-              <span>Powered by</span>
+              {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+              <span>{translations[useLocale()].poweredBy}</span>
               <svg height={20} viewBox="0 0 283 64" fill="none">
                 <title>Vercel</title>
                 <path
@@ -67,7 +93,9 @@ const config: DocsThemeConfig = {
               </svg>
             </a>
           </div>
-          <p className="mt-6 text-xs">© 2022 wagmi-dev.eth</p>
+          <p className="mt-6 text-xs">
+            © {new Date().getFullYear()} wagmi-dev.eth
+          </p>
         </div>
       )
     },
@@ -88,10 +116,18 @@ const config: DocsThemeConfig = {
       />
     </>
   ),
-  i18n: [{ locale: 'en-US', text: 'English' }],
+  i18n: [
+    { locale: 'en-US', text: 'English' },
+    { locale: 'zh-CN', text: '简体中文' },
+  ],
   logo() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { pathname } = useRouter()
+    const { pathname, locale } = useRouter()
+    let tagline: 'core' | 'cli' | 'react'
+    if (/^\/core*/.test(pathname)) tagline = 'core'
+    else if (/^\/cli*/.test(pathname)) tagline = 'cli'
+    else tagline = 'react'
+
     return (
       <>
         <span>
@@ -110,9 +146,7 @@ const config: DocsThemeConfig = {
           </svg>
         </span>
         <span className="text-gray-600 font-normal hidden md:inline">
-          {/^\/core*/.test(pathname)
-            ? 'VanillaJS for Ethereum'
-            : 'React Hooks for Ethereum'}
+          {translations[locale as Language].tagline[tagline]}
         </span>
       </>
     )
@@ -139,7 +173,7 @@ const config: DocsThemeConfig = {
     float: true,
   },
   useNextSeoProps() {
-    const { route } = useRouter()
+    const { route, pathname } = useRouter()
     const { frontMatter } = useConfig()
 
     const defaultSeoProps = {
@@ -159,6 +193,11 @@ const config: DocsThemeConfig = {
       },
     } as const
 
+    let tagline
+    if (/^\/core*/.test(pathname)) tagline = '@wagmi/core'
+    else if (/^\/cli*/.test(pathname)) tagline = '@wagmi/cli'
+    else tagline = 'wagmi'
+
     if (!/^\/index/.test(route))
       return {
         ...defaultSeoProps,
@@ -171,7 +210,7 @@ const config: DocsThemeConfig = {
             : defaultSeoProps.openGraph.images,
           title: frontMatter.title,
         },
-        titleTemplate: `%s – wagmi`,
+        titleTemplate: `%s – ${tagline}`,
       }
     return { ...defaultSeoProps, title: 'wagmi: React Hooks for Ethereum' }
   },

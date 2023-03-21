@@ -1,4 +1,4 @@
-import shallow from 'zustand/shallow'
+import { shallow } from 'zustand/shallow'
 
 import { getClient } from '../../client'
 import type { Connector } from '../../connectors'

@@ -4,7 +4,11 @@ import { deepEqual, parseContractResult, readContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import * as React from 'react'
 
-import type { PartialBy, QueryConfig, QueryFunctionArgs } from '../../types'
+import type {
+  PartialBy,
+  QueryConfigWithSelect,
+  QueryFunctionArgs,
+} from '../../types'
 import { useBlockNumber } from '../network-status'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
@@ -16,7 +20,11 @@ export type UseContractReadConfig<
   ReadContractConfig<TAbi, TFunctionName>,
   'abi' | 'address' | 'args' | 'functionName'
 > &
-  QueryConfig<ReadContractResult<TAbi, TFunctionName>, Error, TSelectData> & {
+  QueryConfigWithSelect<
+    ReadContractResult<TAbi, TFunctionName>,
+    Error,
+    TSelectData
+  > & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
     /** Subscribe to changes */

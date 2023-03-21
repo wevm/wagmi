@@ -11,5 +11,6 @@
   "hooks": "Hooks",
   "prepare-hooks": "Prepare Hooks",
   "constants": "Constants",
+  "actions": "Actions",
   "module-types": "Module Types"
 }

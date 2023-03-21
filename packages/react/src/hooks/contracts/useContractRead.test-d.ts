@@ -21,7 +21,10 @@ describe('useContractRead', () => {
         ...wagmigotchiContractConfig,
         functionName: 'love',
         args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
-        select: (result) => result.toBigInt(),
+        select(result) {
+          assertType<BigNumber>(result)
+          return result.toBigInt()
+        },
       })
 
       assertType<bigint | undefined>(data)
@@ -32,10 +35,13 @@ describe('useContractRead', () => {
         ...wagmigotchiContractConfig,
         functionName: 'love',
         args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
-        select: (result) => ({
-          address: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
-          value: result.toBigInt(),
-        }),
+        select(result) {
+          assertType<BigNumber>(result)
+          return {
+            address: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
+            value: result.toBigInt(),
+          }
+        },
       })
 
       assertType<{ address: string; value: bigint } | undefined>(data)

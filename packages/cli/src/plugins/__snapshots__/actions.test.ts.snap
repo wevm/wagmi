@@ -1,0 +1,154 @@
+// Vitest Snapshot v1
+
+exports[`actions > run > with TypeScript 1`] = `
+"import {
+  getContract,
+  GetContractArgs,
+  readContract,
+  ReadContractConfig,
+  writeContract,
+  WriteContractArgs,
+  WriteContractPreparedArgs,
+  WriteContractUnpreparedArgs,
+  prepareWriteContract,
+  PrepareWriteContractConfig,
+  watchContractEvent,
+  WatchContractEventConfig,
+  WatchContractEventCallback,
+} from '@wagmi/core'
+
+/**
+ * Wraps __{@link getContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function getWagmi(config: Omit<GetContractArgs, 'abi' | 'address'>) {
+  return getContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+}
+
+/**
+ * Wraps __{@link readContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function readWagmi<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = string,
+>(config: Omit<ReadContractConfig<TAbi, TFunctionName>, 'abi' | 'address'>) {
+  return readContract({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  } as unknown as ReadContractConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link writeContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function writeWagmi<TFunctionName extends string>(
+  config:
+    | Omit<
+        WriteContractPreparedArgs<typeof WagmiAbi, TFunctionName>,
+        'abi' | 'address'
+      >
+    | Omit<
+        WriteContractUnpreparedArgs<typeof WagmiAbi, TFunctionName>,
+        'abi' | 'address'
+      >,
+) {
+  return writeContract({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  } as WriteContractArgs<typeof WagmiAbi, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link prepareWriteContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function prepareWriteWagmi<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TFunctionName extends string = string,
+>(
+  config: Omit<
+    PrepareWriteContractConfig<TAbi, TFunctionName>,
+    'abi' | 'address'
+  >,
+) {
+  return prepareWriteContract({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  } as unknown as PrepareWriteContractConfig<TAbi, TFunctionName>)
+}
+
+/**
+ * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function watchWagmiEvent<
+  TAbi extends readonly unknown[] = typeof WagmiAbi,
+  TEventName extends string = string,
+>(
+  config: Omit<WatchContractEventConfig<TAbi, TEventName>, 'abi' | 'address'>,
+  callback: WatchContractEventCallback<TAbi, TEventName>,
+) {
+  return watchContractEvent(
+    {
+      abi: WagmiAbi,
+      address: WagmiAddress,
+      ...config,
+    } as WatchContractEventConfig<TAbi, TEventName>,
+    callback,
+  )
+}
+"
+`;
+
+exports[`actions > run > without TypeScript 1`] = `
+"import {
+  getContract,
+  readContract,
+  writeContract,
+  prepareWriteContract,
+  watchContractEvent,
+} from '@wagmi/core'
+
+/**
+ * Wraps __{@link getContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function getWagmi(config) {
+  return getContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+}
+
+/**
+ * Wraps __{@link readContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function readWagmi(config) {
+  return readContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+}
+
+/**
+ * Wraps __{@link writeContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function writeWagmi(config) {
+  return writeContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+}
+
+/**
+ * Wraps __{@link prepareWriteContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function prepareWriteWagmi(config) {
+  return prepareWriteContract({
+    abi: WagmiAbi,
+    address: WagmiAddress,
+    ...config,
+  })
+}
+
+/**
+ * Wraps __{@link watchContractEvent}__ with \`abi\` set to __{@link WagmiAbi}__.
+ */
+export function watchWagmiEvent(config, callback) {
+  return watchContractEvent(
+    { abi: WagmiAbi, address: WagmiAddress, ...config },
+    callback,
+  )
+}
+"
+`;

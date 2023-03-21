@@ -1,5 +1,273 @@
 # wagmi
 
+## 0.12.3
+
+### Patch Changes
+
+- [#2039](https://github.com/wagmi-dev/wagmi/pull/2039) [`bac893ab`](https://github.com/wagmi-dev/wagmi/commit/bac893ab26012d4d8741c4f80e8b8813aee26f0c) Thanks [@tmm](https://github.com/tmm)! - Updated references.
+
+- [#2043](https://github.com/wagmi-dev/wagmi/pull/2043) [`49a58320`](https://github.com/wagmi-dev/wagmi/commit/49a58320ab5f1f13bc4de25abcc028c8335e98f0) Thanks [@tmm](https://github.com/tmm)! - Removed `InjectedConnector` `shimChainChangedDisconnect` shim (no longer necessary).
+
+- [#2042](https://github.com/wagmi-dev/wagmi/pull/2042) [`e7ac7afc`](https://github.com/wagmi-dev/wagmi/commit/e7ac7afccb005e8d208c78d55b1fec979b8522a6) Thanks [@tmm](https://github.com/tmm)! - Fixed exposed types that weren't passed down.
+
+- Updated dependencies [[`bac893ab`](https://github.com/wagmi-dev/wagmi/commit/bac893ab26012d4d8741c4f80e8b8813aee26f0c), [`49a58320`](https://github.com/wagmi-dev/wagmi/commit/49a58320ab5f1f13bc4de25abcc028c8335e98f0)]:
+  - @wagmi/core@0.10.3
+
+## 0.12.2
+
+### Patch Changes
+
+- [#2016](https://github.com/wagmi-dev/wagmi/pull/2016) [`06bf61de`](https://github.com/wagmi-dev/wagmi/commit/06bf61dee6d2920777bd9392491e6b7aedebe7ab) Thanks [@jxom](https://github.com/jxom)! - Added chains:
+
+  - `boba`
+  - `chronos`
+  - `crossbell`
+  - `dfk`
+  - `dogechain`
+  - `flare`
+  - `flareTestnet`
+  - `klaytn`
+  - `scrollTestnet`
+  - `shardeumSphinx`
+  - `skaleCalypso`
+  - `skaleCalypsoTestnet`
+  - `skaleChaosTestnet`
+  - `skaleCryptoBlades`
+  - `skaleCryptoColosseum`
+  - `skaleEuropa`
+  - `skaleEuropaTestnet`
+  - `skaleExorde`
+  - `skaleHumanProtocol`
+  - `skaleNebula`
+  - `skaleNebulaTestnet`
+  - `skaleRazor`
+  - `skaleTitan`
+  - `skaleTitanTestnet`
+  - `songbird`
+  - `songbirdTestnet`
+  - `titan`
+  - `titanTestnet`
+  - `wanchain`
+  - `wanchainTestnet`
+
+- [#2016](https://github.com/wagmi-dev/wagmi/pull/2016) [`06bf61de`](https://github.com/wagmi-dev/wagmi/commit/06bf61dee6d2920777bd9392491e6b7aedebe7ab) Thanks [@jxom](https://github.com/jxom)! - Updated references/ submodule.
+
+- Updated dependencies [[`06bf61de`](https://github.com/wagmi-dev/wagmi/commit/06bf61dee6d2920777bd9392491e6b7aedebe7ab), [`06bf61de`](https://github.com/wagmi-dev/wagmi/commit/06bf61dee6d2920777bd9392491e6b7aedebe7ab)]:
+  - @wagmi/core@0.10.2
+
+## 0.12.0
+
+### Minor Changes
+
+- [#1902](https://github.com/wagmi-dev/wagmi/pull/1902) [`0994e896`](https://github.com/wagmi-dev/wagmi/commit/0994e8966349b8811db0a5886db3831dafc99245) Thanks [@jxom](https://github.com/jxom)! - **Breaking:** Removed the `version` config option for `WalletConnectConnector`.
+
+  `WalletConnectConnector` now uses WalletConnect v2 by default. WalletConnect v1 is now `WalletConnectLegacyConnector`.
+
+  ### WalletConnect v2
+
+  ```diff
+  import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+
+  const connector = new WalletConnectConnector({
+    options: {
+  -   version: '2',
+      projectId: 'abc',
+    },
+  })
+  ```
+
+  ### WalletConnect v1
+
+  ```diff
+  -import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+  +import { WalletConnectConnector } from 'wagmi/connectors/walletConnectLegacy'
+
+  -const connector = new WalletConnectConnector({
+  +const connector = new WalletConnectLegacyConnector({
+    options: {
+      qrcode: true,
+    },
+  })
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`0994e896`](https://github.com/wagmi-dev/wagmi/commit/0994e8966349b8811db0a5886db3831dafc99245)]:
+  - @wagmi/core@0.10.0
+
+## 0.11.7
+
+### Patch Changes
+
+- [#1907](https://github.com/wagmi-dev/wagmi/pull/1907) [`cc4e74ee`](https://github.com/wagmi-dev/wagmi/commit/cc4e74ee19665eccb3767052dab6ab956ff4e676) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `baseGoerli`
+  - `harmonyOne`
+  - `polygonZkEvmTestnet`
+
+- Updated dependencies [[`cc4e74ee`](https://github.com/wagmi-dev/wagmi/commit/cc4e74ee19665eccb3767052dab6ab956ff4e676)]:
+  - @wagmi/core@0.9.7
+
+## 0.11.6
+
+### Patch Changes
+
+- [#1882](https://github.com/wagmi-dev/wagmi/pull/1882) [`282cc1b0`](https://github.com/wagmi-dev/wagmi/commit/282cc1b02003684d582cea411b11792a59c26fd0) Thanks [@tmm](https://github.com/tmm)! - Updated references.
+
+- Updated dependencies [[`282cc1b0`](https://github.com/wagmi-dev/wagmi/commit/282cc1b02003684d582cea411b11792a59c26fd0)]:
+  - @wagmi/core@0.9.6
+
+## 0.11.5
+
+### Patch Changes
+
+- [#1812](https://github.com/wagmi-dev/wagmi/pull/1812) [`c7fd7fbd`](https://github.com/wagmi-dev/wagmi/commit/c7fd7fbde6f6c69a3a9a4f89d948c4dfb1d22679) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `filecoinCalibration`
+  - `moonbaseAlpha`
+  - `moonbeam`
+  - `moonriver`
+
+- Updated dependencies [[`c7fd7fbd`](https://github.com/wagmi-dev/wagmi/commit/c7fd7fbde6f6c69a3a9a4f89d948c4dfb1d22679)]:
+  - @wagmi/core@0.9.5
+
+## 0.11.4
+
+### Patch Changes
+
+- [#1679](https://github.com/wagmi-dev/wagmi/pull/1679) [`3cef111b`](https://github.com/wagmi-dev/wagmi/commit/3cef111b1e30120233d8754b33587cdf94aedd8f) Thanks [@aj-may](https://github.com/aj-may)! - Fixed `useAccount` `onConnect` and `onDisconnect` callbacks for React Strict Mode.
+
+- [#1786](https://github.com/wagmi-dev/wagmi/pull/1786) [`b173a431`](https://github.com/wagmi-dev/wagmi/commit/b173a43165c7925a4e56ce1e0327a31917e7edc5) Thanks [@tmm](https://github.com/tmm)! - Locked ethers peer dependency version to >=5.5.1 <6
+
+- [#1787](https://github.com/wagmi-dev/wagmi/pull/1787) [`f023fd8f`](https://github.com/wagmi-dev/wagmi/commit/f023fd8f66befb78b9a4df5ca971ceaa64e37ab4) Thanks [@tmm](https://github.com/tmm)! - Added `SafeConnector`
+
+- Updated dependencies [[`b173a431`](https://github.com/wagmi-dev/wagmi/commit/b173a43165c7925a4e56ce1e0327a31917e7edc5), [`f023fd8f`](https://github.com/wagmi-dev/wagmi/commit/f023fd8f66befb78b9a4df5ca971ceaa64e37ab4)]:
+  - @wagmi/core@0.9.4
+
+## 0.11.3
+
+### Patch Changes
+
+- [#1773](https://github.com/wagmi-dev/wagmi/pull/1773) [`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c) Thanks [@jxom](https://github.com/jxom)! - Updated `@walletconnect/universal-provider` on `WalletConnectConnector` v2.
+  Added more signable methods to `WalletConnectConnector` v2.
+
+- [#1773](https://github.com/wagmi-dev/wagmi/pull/1773) [`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c) Thanks [@jxom](https://github.com/jxom)! - Added Telos to the `wagmi/chains` entrypoint. Thanks @donnyquixotic!
+
+- Updated dependencies [[`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c), [`9aaf1955`](https://github.com/wagmi-dev/wagmi/commit/9aaf195514d3b5f4d085c797fc5021d42a9efb6c)]:
+  - @wagmi/core@0.9.3
+
+## 0.11.2
+
+### Patch Changes
+
+- [#1756](https://github.com/wagmi-dev/wagmi/pull/1756) [`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d) Thanks [@jxom](https://github.com/jxom)! - Added OKC Chain. Thanks @clark-cui!
+
+- [#1756](https://github.com/wagmi-dev/wagmi/pull/1756) [`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d) Thanks [@jxom](https://github.com/jxom)! - Fixed race condition between `switchNetwork` and mutation Actions that use `chainId` (e.g. `sendTransaction`). Thanks @DanInTheD4rk!
+
+- Updated dependencies [[`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d), [`31d06b8c`](https://github.com/wagmi-dev/wagmi/commit/31d06b8ce1e7af5e9d1a7ba57f1743b2dff7a53d)]:
+  - @wagmi/core@0.9.2
+
+## 0.11.1
+
+### Patch Changes
+
+- [#1752](https://github.com/wagmi-dev/wagmi/pull/1752) [`144a0e76`](https://github.com/wagmi-dev/wagmi/commit/144a0e76ef4bb9ba0650b5ffb9c63f95329819a4) Thanks [@jxom](https://github.com/jxom)! - Improved `WalletConnectConnector` (v2) initialization & updated dependencies.
+
+- [#1752](https://github.com/wagmi-dev/wagmi/pull/1752) [`144a0e76`](https://github.com/wagmi-dev/wagmi/commit/144a0e76ef4bb9ba0650b5ffb9c63f95329819a4) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - Aurora – thanks @salil-naik
+  - Bronos – thanks @chedetinaveen
+  - Canto – thanks @tster
+  - Celo – thanks @aaronmgdr
+
+- Updated dependencies [[`144a0e76`](https://github.com/wagmi-dev/wagmi/commit/144a0e76ef4bb9ba0650b5ffb9c63f95329819a4), [`144a0e76`](https://github.com/wagmi-dev/wagmi/commit/144a0e76ef4bb9ba0650b5ffb9c63f95329819a4)]:
+  - @wagmi/core@0.9.1
+
+## 0.11.0
+
+### Minor Changes
+
+- [#1732](https://github.com/wagmi-dev/wagmi/pull/1732) [`01e21897`](https://github.com/wagmi-dev/wagmi/commit/01e2189747a5c22dc758c6d719b4145adc2a643c) Thanks [@tmm](https://github.com/tmm)! - Bumped minimum TypeScript version to typescript@>=4.9.4. TypeScript 5.0 is coming soon and has some great features we are excited to bring into wagmi. To prepare for this, update your TypeScript version to 4.9.4 or higher. There are likely no [breaking changes](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#correctness-fixes-and-breaking-changes) if you are coming from typescript@4.7.x || typescript@4.8.x.
+
+### Patch Changes
+
+- Updated dependencies [[`01e21897`](https://github.com/wagmi-dev/wagmi/commit/01e2189747a5c22dc758c6d719b4145adc2a643c)]:
+  - @wagmi/core@0.9.0
+
+## 0.10.15
+
+### Patch Changes
+
+- [#1718](https://github.com/wagmi-dev/wagmi/pull/1718) [`e62b5ef8`](https://github.com/wagmi-dev/wagmi/commit/e62b5ef8aaa8063abb5264790768899ea35bbd31) Thanks [@tmm](https://github.com/tmm)! - Updated references
+
+- Updated dependencies [[`e62b5ef8`](https://github.com/wagmi-dev/wagmi/commit/e62b5ef8aaa8063abb5264790768899ea35bbd31)]:
+  - @wagmi/core@0.8.19
+
+## 0.10.14
+
+### Patch Changes
+
+- [#1708](https://github.com/wagmi-dev/wagmi/pull/1708) [`07fc3801`](https://github.com/wagmi-dev/wagmi/commit/07fc3801fa13c2cb5f7cf9b86ba8320b05a6a135) Thanks [@jxom](https://github.com/jxom)! - Updated `references/` submodule.
+
+- Updated dependencies [[`07fc3801`](https://github.com/wagmi-dev/wagmi/commit/07fc3801fa13c2cb5f7cf9b86ba8320b05a6a135)]:
+  - @wagmi/core@0.8.18
+
+## 0.10.13
+
+### Patch Changes
+
+- [#1705](https://github.com/wagmi-dev/wagmi/pull/1705) [`9ff797dc`](https://github.com/wagmi-dev/wagmi/commit/9ff797dcb979dc86b798a432b74c98598165430d) Thanks [@jxom](https://github.com/jxom)! - Added the following chains to the `wagmi/chains` entrypoint:
+
+  - `crossbell` (thanks @Songkeys)
+  - `filecoin` & `filecoinHyperspace` (thanks @neil0x46dc)
+  - `gnosisChiado` (thanks @theNvN)
+  - `metis` & `metisGoerli` (thanks @CookedCookee)
+
+- Updated dependencies [[`9ff797dc`](https://github.com/wagmi-dev/wagmi/commit/9ff797dcb979dc86b798a432b74c98598165430d)]:
+  - @wagmi/core@0.8.17
+
+## 0.10.12
+
+### Patch Changes
+
+- [#1699](https://github.com/wagmi-dev/wagmi/pull/1699) [`2f1e7950`](https://github.com/wagmi-dev/wagmi/commit/2f1e7950e55550d9b50ef5ccb97cb609f4af39b1) Thanks [@tmm](https://github.com/tmm)! - Added public RPC URL property to Chain
+
+- Updated dependencies [[`2f1e7950`](https://github.com/wagmi-dev/wagmi/commit/2f1e7950e55550d9b50ef5ccb97cb609f4af39b1)]:
+  - @wagmi/core@0.8.16
+
+## 0.10.11
+
+### Patch Changes
+
+- [#1685](https://github.com/wagmi-dev/wagmi/pull/1685) [`917f5bc1`](https://github.com/wagmi-dev/wagmi/commit/917f5bc1fad578e35a8c6ee787e339bfdc156bab) Thanks [@jxom](https://github.com/jxom)! - Replaced qrcodemodal with web3modal for the WalletConnect v2 Connector.
+
+- Updated dependencies [[`917f5bc1`](https://github.com/wagmi-dev/wagmi/commit/917f5bc1fad578e35a8c6ee787e339bfdc156bab)]:
+  - @wagmi/core@0.8.15
+
+## 0.10.10
+
+### Patch Changes
+
+- [#1648](https://github.com/wagmi-dev/wagmi/pull/1648) [`a2db9170`](https://github.com/wagmi-dev/wagmi/commit/a2db91709720161cd70eeb5e84dd78433264f0a3) Thanks [@tmm](https://github.com/tmm)! - Exported internal type.
+
+## 0.10.9
+
+### Patch Changes
+
+- [#1646](https://github.com/wagmi-dev/wagmi/pull/1646) [`fcdbe353`](https://github.com/wagmi-dev/wagmi/commit/fcdbe3531e6d05cda4a4a511bae1ad4c9e426d88) Thanks [@jxom](https://github.com/jxom)! - Upgraded `zustand` to v4.3.1.
+
+- Updated dependencies [[`fcdbe353`](https://github.com/wagmi-dev/wagmi/commit/fcdbe3531e6d05cda4a4a511bae1ad4c9e426d88)]:
+  - @wagmi/core@0.8.14
+
+## 0.10.8
+
+### Patch Changes
+
+- [#1639](https://github.com/wagmi-dev/wagmi/pull/1639) [`c6869f06`](https://github.com/wagmi-dev/wagmi/commit/c6869f0604fffb197752a08256f31db77f52e746) Thanks [@jxom](https://github.com/jxom)! - Added `isRainbow` flag to `InjectedConnector`.
+
+- Updated dependencies [[`c6869f06`](https://github.com/wagmi-dev/wagmi/commit/c6869f0604fffb197752a08256f31db77f52e746)]:
+  - @wagmi/core@0.8.13
+
 ## 0.10.7
 
 ### Patch Changes
@@ -1098,14 +1366,14 @@
   +const { data: transaction } = useTransaction({ hash })
   ```
 
-  > Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
+  > Why? The old implementation of `useSendTransaction` created a long-running async task, causing [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks) when invoked in a click handler.
 
 * [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: The configuration passed to the `useSendTransaction` hook now needs to be either:
 
   - prepared with the `usePrepareSendTransaction` hook **(new)**, or
   - recklessly unprepared **(previous functionality)**
 
-  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
+  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks)
 
   ### Prepared usage
 
@@ -1146,7 +1414,7 @@
 
 - [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking**: If a `chainId` is passed to `useContractWrite` or `useSendTransaction`, it will no longer attempt to switch chain before sending the transaction. Instead, it will throw an error if the user is on the wrong chain.
 
-  > Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks/intro#ios-app-link-constraints) vulnerable.
+  > Why? Eagerly prompting to switch chain in these actions created a long-running async task that that makes [iOS App Links](https://wagmi.sh/docs/prepare-hooks#ios-app-link-constraints) vulnerable.
 
 * [#760](https://github.com/wagmi-dev/wagmi/pull/760) [`d8af6bf`](https://github.com/wagmi-dev/wagmi/commit/d8af6bf50885aec110ae4d64716642453aa27896) Thanks [@tmm](https://github.com/tmm)! - **Breaking:** `alchemyProvider` and `infuraProvider` now use a generic `apiKey` configuration option instead of `alchemyId` and `infuraId`.
 
@@ -1208,7 +1476,7 @@
   const { sendTransaction } = useSendTransaction(config)
   ```
 
-* [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking:** The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](https://wagmi.sh/docs/prepare-hooks/intro#ux-pitfalls-without-prepare-hooks).
+* [#658](https://github.com/wagmi-dev/wagmi/pull/658) [`d70c115`](https://github.com/wagmi-dev/wagmi/commit/d70c115131f299fb61f87867b6ac4218e0bcf432) Thanks [@jxom](https://github.com/jxom)! - **Breaking:** The `sendTransaction`/`sendTransactionAsync` configuration object has now been altered to only accept "reckless" configuration. If one or more of these values are set, it can lead to [UX pitfalls](https://wagmi.sh/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 
   ```diff
   <button
@@ -1260,7 +1528,7 @@
   - prepared with the `usePrepareContractWrite` hook **(new)**, or
   - recklessly unprepared **(previous functionality)**
 
-  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks/intro)
+  > Why? [Read here](https://wagmi.sh/docs/prepare-hooks)
 
   ### Prepared usage
 

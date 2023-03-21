@@ -1,0 +1,29 @@
+{
+  "index": {
+    "title": "Introduction",
+    "type": "page",
+    "display": "hidden"
+  },
+  "react": {
+    "title": "React",
+    "type": "page"
+  },
+  "core": {
+    "title": "Core",
+    "type": "page",
+    "display": "hidden"
+  },
+  "cli": {
+    "title": "CLI",
+    "type": "page",
+    "display": "hidden"
+  },
+  "examples": {
+    "title": "Examples",
+    "type": "page",
+    "display": "hidden"
+  },
+  "blog": {
+    "display": "hidden"
+  }
+}

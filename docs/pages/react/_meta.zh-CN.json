@@ -1,0 +1,52 @@
+{
+  "getting-started": "入门指南",
+  "comparison": {
+    "title": "与其他库对比"
+  },
+  "migration-guide": {
+    "title": "Migration Guide",
+    "display": "hidden"
+  },
+  "typescript": {
+    "title": "TypeScript"
+  },
+  "client": {
+    "title": "Client",
+    "display": "hidden"
+  },
+  "WagmiConfig": {
+    "title": "WagmiConfig",
+    "display": "hidden"
+  },
+  "chains": {
+    "title": "Chains",
+    "display": "hidden"
+  },
+  "providers": {
+    "title": "Providers"
+  },
+  "connectors": {
+    "title": "Connectors",
+    "display": "hidden"
+  },
+  "hooks": {
+    "title": "Hooks",
+    "display": "hidden"
+  },
+  "prepare-hooks": {
+    "title": "Prepare Hooks",
+    "display": "hidden"
+  },
+  "constants": {
+    "title": "Constants",
+    "display": "hidden"
+  },
+  "actions": {
+    "title": "Actions",
+    "display": "hidden"
+  },
+  "module-types": {
+    "title": "Module Types",
+    "display": "hidden"
+  }
+}

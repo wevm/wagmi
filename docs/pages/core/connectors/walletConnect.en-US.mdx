@@ -1,11 +1,11 @@
 ---
 title: 'WalletConnect'
-description: 'Official wagmi Connector for WalletConnect.'
+description: 'Official wagmi Connector for WalletConnect v2.'
 ---
 
 # WalletConnect
 
-The `WalletConnectConnector` wraps the [WalletConnect Ethereum Provider](https://walletconnect.com) and supports its configuration options. This is a great option for adding support for many wallets to your app.
+The `WalletConnectConnector` uses WalletConnect v2 by default and wraps the [WalletConnect Ethereum Provider](https://walletconnect.com) and supports its configuration options. This is a great option for adding support for many wallets to your app.
 
 ```ts
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
@@ -13,12 +13,14 @@ import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 ## Usage
 
+To get started with Wallet Connect v2, you will need to retrieve a Project ID. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
+
 ```ts
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
   options: {
-    qrcode: true,
+    projectId: '...',
   },
 })
 ```
@@ -36,7 +38,7 @@ import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 const connector = new WalletConnectConnector({
   chains: [mainnet, optimism, polygon],
   options: {
-    qrcode: true,
+    projectId: '...',
   },
 })
 ```
@@ -46,51 +48,100 @@ const connector = new WalletConnectConnector({
 
 ### options
 
-#### version (optional)
+#### projectId
 
-Version of WalletConnect to use. Defaults to `1`.
+WalletConnect Cloud Project ID. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
+
+```ts {5}
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    projectId: '...',
+  },
+})
+```
+
+#### isNewChainsStale (optional)
+
+Determines whether or not new chains added to `chains` should be considered as stale. Defaults to `true`.
 
 ```ts {6}
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
   options: {
-    qrcode: true,
-    version: '2',
     projectId: '...',
+    isNewChainsStale: false,
   },
 })
 ```
 
-#### projectId (optional)
+<details>
+  <summary>What is a stale chain & what does this flag do?</summary>
 
-WalletConnect Cloud Project ID. Required for WalletConnect v2. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
+If a new chain is added to your previously existing `chains`, this flag
+will determine if that chain should be considered as stale. A stale chain is a chain that
+WalletConnect has yet to establish a relationship with (ie. the user has not approved or
+rejected the chain).
 
-```ts {7}
+Preface: Whereas WalletConnect v1 supported dynamic chain switching, WalletConnect v2 requires
+the user to pre-approve a set of chains up-front. This comes with consequent UX nuances (see below) when
+a user tries to switch to a chain that they have not approved.
+
+This flag mainly affects the behavior when a wallet does not support dynamic chain authorization
+with WalletConnect v2.
+
+If `true` (default), the new chain will be treated as a stale chain. If the user
+has yet to establish a relationship (approved/rejected) with this chain in their WalletConnect
+session, the connector will disconnect upon the dapp auto-connecting, and the user will have to
+reconnect to the dapp (revalidate the chain) in order to approve the newly added chain.
+This is the default behavior to avoid an unexpected error upon switching chains which may
+be a confusing user experience (ie. the user will not know they have to reconnect
+unless the dapp handles these types of errors).
+
+If `false`, the new chain will be treated as a validated chain. This means that if the user
+has yet to establish a relationship with the chain in their WalletConnect session, wagmi will successfully
+auto-connect the user. This comes with the trade-off that the connector will throw an error
+when attempting to switch to the unapproved chain. This may be useful in cases where a dapp constantly
+modifies their configured chains, and they do not want to disconnect the user upon
+auto-connecting. If the user decides to switch to the unapproved chain, it is important that the
+dapp handles this error and prompts the user to reconnect to the dapp in order to approve
+the newly added chain.
+
+</details>
+
+#### metadata (optional)
+
+Metadata for your app. [See more](https://docs.walletconnect.com/2.0/javascript/providers/ethereum#initialization)
+
+```ts {6-11}
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
 const connector = new WalletConnectConnector({
   options: {
-    qrcode: true,
-    version: '2',
     projectId: '...',
-  },
-})
-```
-
-#### Other options
-
-You can pass through options supported by the [WalletConnect v1 `WalletConnectProvider`](https://github.com/WalletConnect/walletconnect-monorepo/blob/v1.0/packages/helpers/types/index.d.ts#L300-L314) or the [WalletConnect v2 `UniversalProvider`](https://github.com/WalletConnect/walletconnect-monorepo/blob/3f0f22b9b85294caed60cdf74f61363ce5ce686b/providers/universal-provider/src/types/misc.ts#L8-L16):
-
-```ts {4-9}
-import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
-
-const connector = new WalletConnectConnector({
-  options: {
-    qrcode: true,
-    rpc: {
-      1: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+    metadata: {
+      name: 'wagmi',
+      description: 'my wagmi app',
+      url: 'https://wagmi.sh',
+      icons: ['https://wagmi.sh/icon.png'],
     },
+  },
+})
+```
+
+#### showQrModal (optional)
+
+Whether or not to show the QR Code Modal upon connection. [See more](https://docs.walletconnect.com/2.0/javascript/providers/ethereum#initialization). Defaults to `true`.
+
+```ts {6}
+import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+
+const connector = new WalletConnectConnector({
+  options: {
+    projectId: '...',
+    showQrModal: false,
   },
 })
 ```

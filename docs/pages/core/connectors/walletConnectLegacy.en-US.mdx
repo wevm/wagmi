@@ -1,0 +1,87 @@
+---
+title: 'WalletConnectLegacy'
+description: 'Official wagmi Connector for WalletConnect v1.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+<Callout type="error">
+  WalletConnect v1 has been sunset. You must migrate to the [WalletConnect v2
+  Connector](/core/connectors/walletConnect) before June 28, after which, this
+  Connector will be removed.
+</Callout>
+
+# WalletConnect Legacy
+
+The `WalletConnectLegacyConnector` uses WallectConnect v1 by default and wraps the [WalletConnect Ethereum Provider](https://walletconnect.com) and supports its configuration options. This is a great option for adding support for many wallets to your app.
+
+```ts
+import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
+```
+
+## Usage
+
+```ts
+import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
+
+const connector = new WalletConnectLegacyConnector({
+  options: {
+    qrcode: true,
+  },
+})
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
+
+const connector = new WalletConnectLegacyConnector({
+  chains: [mainnet, optimism, polygon],
+  options: {
+    qrcode: true,
+  },
+})
+```
+
+- The above example is using chains from [`@wagmi/core/chains`](/core/chains#wagmicorechains).
+- Upon connection, the connector will connect to the previously connected chain unless otherwise specified by a [`chainId` config on useConnect](/core/hooks/useConnect#chainid-optional).
+
+### options
+
+#### projectId (optional)
+
+WalletConnect Cloud Project ID. Required for WalletConnect v2. You can find your Project ID [here](https://cloud.walletconnect.com/sign-in).
+
+```ts {7}
+import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
+
+const connector = new WalletConnectLegacyConnector({
+  options: {
+    qrcode: true,
+    projectId: '...',
+  },
+})
+```
+
+#### Other options
+
+You can pass through options supported by the [WalletConnect v1 `WalletConnectProvider`](https://github.com/WalletConnect/walletconnect-monorepo/blob/v1.0/packages/helpers/types/index.d.ts#L300-L314) or the [WalletConnect v2 `UniversalProvider`](https://github.com/WalletConnect/walletconnect-monorepo/blob/3f0f22b9b85294caed60cdf74f61363ce5ce686b/providers/universal-provider/src/types/misc.ts#L8-L16):
+
+```ts {4-9}
+import { WalletConnectLegacyConnector } from '@wagmi/core/connectors/walletConnectLegacy'
+
+const connector = new WalletConnectLegacyConnector({
+  options: {
+    qrcode: true,
+    rpc: {
+      1: 'https://eth-mainnet.alchemyapi.io/v2/yourAlchemyId',
+    },
+  },
+})
+```
