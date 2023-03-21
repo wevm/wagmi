@@ -1,3 +1,5 @@
+export type { EventListener } from '../actions/contracts/getContract'
+
 export type {
   CallOverrides,
   Contract,
