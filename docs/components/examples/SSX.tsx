@@ -34,7 +34,7 @@ export function SSX() {
         size="small"
         variant="tertiary"
         onClick={async () => {
-          await fetch('/ssx-api/ssx-logout')
+          await fetch('/api/ssx-logout')
           setAddress(undefined)
         }}
       >
@@ -48,7 +48,6 @@ export function SSX() {
       <PreviewWrapper>
         <Stack space="6">
           <Account />
-
           {address ? (
             signedInContent
           ) : (

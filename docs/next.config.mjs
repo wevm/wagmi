@@ -17,6 +17,15 @@ const config = {
     locales: ['en-US','zh-CN'],
     defaultLocale: 'en-US',
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        fs: false,
+        net: false,
+      }
+    }
+    return config;
+  },
   reactStrictMode: true,
   redirects() {
     return [

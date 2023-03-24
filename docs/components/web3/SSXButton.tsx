@@ -1,6 +1,7 @@
 import { SSX } from '@spruceid/ssx'
 import { Button, IconEth, Stack, Text } from 'degen'
 import * as React from 'react'
+import { useSigner } from 'wagmi'
 
 type Props = {
   address: string
@@ -16,18 +17,23 @@ export function SSXButton({ onSuccess }: Props) {
     ssx?: SSX
   }>({})
 
+  const { data: signer } = useSigner()
+
   React.useEffect(() => {
     setState((x) => ({
       ...x,
       ssx: new SSX({
         providers: {
+          web3: {
+            driver: signer?.provider,
+          },
           server: {
-            host: '/ssx-api',
+            host: '/api',
           },
         },
       }),
     }))
-  }, [])
+  }, [signer])
 
   const handleSignIn = React.useCallback(async () => {
     try {
@@ -48,13 +54,13 @@ export function SSXButton({ onSuccess }: Props) {
     <Stack space="4">
       <Button
         center
-        disabled={!state.nonce || state.loading}
-        loading={!state.nonce || state.loading}
+        disabled={state.loading}
+        loading={state.loading}
         prefix={!state.loading && <IconEth />}
         width="full"
         onClick={handleSignIn}
       >
-        {state.loading ? 'Check Wallet' : 'Sign-In with Ethereum'}
+        {state.loading ? 'Check Wallet' : 'Sign-In with SSX'}
       </Button>
 
       {state.error && <Text color="red">{state.error.message}</Text>}
