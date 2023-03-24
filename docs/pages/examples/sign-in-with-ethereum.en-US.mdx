@@ -193,6 +193,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 export default withIronSessionApiRoute(handler, ironOptions)
 ```
 
+<Callout type="warning">
+  Before going to production, you likely want to invalidate nonces on logout to prevent replay attacks through session duplication (e.g. store expired nonce and make sure they can't be used again).
+</Callout>
+
 ## Step 3: Sign & Verify Message
 
 Now that the connect wallet logic and API routes are set up, we can sign in the user! We'll create a new `SiweMessage` and sign it using the [`useSignMessage`](/react/hooks/useSignMessage) hook. We can also add a log out button and a side effect for fetching the logged in user when the page loads or window gains focus.
