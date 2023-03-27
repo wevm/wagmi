@@ -1,5 +1,14 @@
 # @wagmi/core
 
+## 0.10.7
+
+### Patch Changes
+
+- [#2082](https://github.com/wagmi-dev/wagmi/pull/2082) [`2ccc8a25`](https://github.com/wagmi-dev/wagmi/commit/2ccc8a255e93f0a2bb7b22101656b3905ec59abd) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.10
+
 ## 0.10.6
 
 ### Patch Changes
