@@ -1,5 +1,14 @@
 # wagmi
 
+## 0.12.7
+
+### Patch Changes
+
+- [#2082](https://github.com/wagmi-dev/wagmi/pull/2082) [`2ccc8a25`](https://github.com/wagmi-dev/wagmi/commit/2ccc8a255e93f0a2bb7b22101656b3905ec59abd) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies [[`2ccc8a25`](https://github.com/wagmi-dev/wagmi/commit/2ccc8a255e93f0a2bb7b22101656b3905ec59abd)]:
+  - @wagmi/core@0.10.7
+
 ## 0.12.6
 
 ### Patch Changes
