@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { getSigners, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
+import { getAccount } from './getAccount'
 import { signMessage } from './signMessage'
 
 const connector = new MockConnector({
@@ -43,11 +44,11 @@ describe('signMessage', () => {
 
     it('can verify message', async () => {
       await connect({ connector })
-      const address = (await connector.getSigner()).account.address
+      const { address } = getAccount()
       const res = await signMessage({ message: messages.string })
       expect(
         await verifyMessage({
-          address,
+          address: address!,
           message: messages.string,
           signature: res,
         }),
