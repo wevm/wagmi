@@ -43,6 +43,7 @@ export {
   moonbaseAlpha,
   moonbeam,
   moonriver,
+  nexi,
   okc,
   optimism,
   optimismGoerli,
