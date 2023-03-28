@@ -1,10 +1,10 @@
 import type { Address, ResolvedConfig } from 'abitype'
-import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
+import { parseBytes32String } from 'ethers/lib/utils.js'
+import { formatUnits } from 'viem'
 
 import { getClient } from '../../client'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import { ContractResultDecodeError } from '../../errors'
-import type { Unit } from '../../types'
 import { readContracts } from '../contracts'
 import { getProvider } from '../providers'
 
@@ -14,7 +14,7 @@ export type FetchBalanceArgs = {
   /** Chain id to use for provider */
   chainId?: number
   /** Units for formatting output */
-  formatUnits?: Unit | number
+  unit?: number
   /** ERC-20 address */
   token?: Address
 }
@@ -29,7 +29,7 @@ export type FetchBalanceResult = {
 export async function fetchBalance({
   address,
   chainId,
-  formatUnits: unit,
+  unit,
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
   const client = getClient()
@@ -81,11 +81,11 @@ export async function fetchBalance({
   }
 
   const chains = [...(client.provider.chains || []), ...(client.chains ?? [])]
-  const value = await provider.getBalance(address)
-  const chain = chains.find((x) => x.id === provider.network.chainId)
+  const value = await provider.getBalance({ address })
+  const chain = chains.find((x) => x.id === provider.chain.id)
   return {
     decimals: chain?.nativeCurrency.decimals ?? 18,
-    formatted: formatUnits(value ?? '0', unit ?? 'ether'),
+    formatted: formatUnits(value ?? '0', unit ?? 18),
     symbol: chain?.nativeCurrency.symbol ?? 'ETH',
     value,
   }

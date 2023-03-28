@@ -107,7 +107,7 @@
   ],
   "peerDependencies": {
     "ethers": ">=5.5.1 <6",
-    "viem": "0-2-0",
+    "viem": "0.2.0-0-2-0.20230328T063845",
     "typescript": ">=4.9.4"
   },
   "peerDependenciesMeta": {
@@ -124,7 +124,7 @@
   },
   "devDependencies": {
     "ethers": "^5.7.1",
-    "viem": "0-2-0"
+    "viem": "0.2.0-0-2-0.20230328T063845"
   },
   "keywords": [
     "eth",

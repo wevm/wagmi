@@ -6,7 +6,6 @@ import type {
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import type { BigNumber } from 'ethers'
 import type {
   Account,
   FallbackTransportConfig,
@@ -18,12 +17,10 @@ import type {
 } from 'viem'
 
 import type { Chain } from '../chains'
-import type { units } from '../constants'
 
 declare module 'abitype' {
   export interface Config {
-    // TODO: Drop `BigNumber` once ethers supports `bigint` natively
-    BigIntType: BigNumber
+    BigIntType: bigint
     IntType: number
   }
 }
@@ -87,8 +84,6 @@ export type Signer<
   TChain extends Chain = Chain,
   TAccount extends Account = Account,
 > = WalletClient<TTransport, TChain, TAccount>
-
-export type Unit = (typeof units)[number]
 
 declare global {
   interface Window {
