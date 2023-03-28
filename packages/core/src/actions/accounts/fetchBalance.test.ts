@@ -57,7 +57,7 @@ describe('fetchBalance', () => {
       `)
     })
 
-    // TODO: unskip
+    // TODO(viem-migration): unskip
     describe.skip('token', () => {
       it('address', async () => {
         expect(
@@ -100,7 +100,7 @@ describe('fetchBalance', () => {
   })
 
   describe('behavior', () => {
-    // TODO: unskip
+    // TODO(viem-migration): unskip
     it.skip('token with less than 18 decimals formats units correctly', async () => {
       expect(
         await fetchBalance({

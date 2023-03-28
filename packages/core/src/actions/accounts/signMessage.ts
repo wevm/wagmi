@@ -1,15 +1,15 @@
-import type { ResolvedConfig } from 'abitype'
+import { UserRejectedRequestError as UserRejectedRequestError_ } from 'viem'
+import type { SignMessageReturnType } from 'viem'
 
-import type { EthersError, ProviderRpcError } from '../../errors'
 import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
 import { fetchSigner } from './fetchSigner'
 
 export type SignMessageArgs = {
   /** Message to sign with wallet */
-  message: string | Uint8Array
+  message: string
 }
 
-export type SignMessageResult = ResolvedConfig['BytesType']
+export type SignMessageResult = SignMessageReturnType
 
 export async function signMessage(
   args: SignMessageArgs,
@@ -17,14 +17,12 @@ export async function signMessage(
   try {
     const signer = await fetchSigner()
     if (!signer) throw new ConnectorNotFoundError()
-    return (await signer.signMessage(
-      args.message,
-    )) as ResolvedConfig['BytesType']
+    return await signer.signMessage({
+      message: args.message,
+    })
   } catch (error) {
-    if (
-      (error as ProviderRpcError).code === 4001 ||
-      (error as EthersError).code === 'ACTION_REJECTED'
-    )
+    // TODO(viem-migration): test this
+    if (error instanceof UserRejectedRequestError_)
       throw new UserRejectedRequestError(error)
     throw error
   }
