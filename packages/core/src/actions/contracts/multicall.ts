@@ -1,7 +1,5 @@
 import type { Abi } from 'abitype'
 
-import type { Chain } from '../../chains'
-
 import { multicallABI } from '../../constants'
 import {
   ChainDoesNotSupportMulticallError,
