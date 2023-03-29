@@ -25,8 +25,7 @@ export function assertActiveChain({
 
   if (signer) {
     // Check that signer's chain and target chain match
-    const signerChainId = (signer.provider as { network?: { chainId: number } })
-      ?.network?.chainId
+    const signerChainId = signer.chain.id
     if (signerChainId && chainId !== signerChainId) {
       const connector = getClient().connector
       throw new ChainNotConfiguredError({

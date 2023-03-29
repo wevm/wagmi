@@ -1,4 +1,4 @@
-import { verifyTypedData } from 'ethers/lib/utils.js'
+import { recoverTypedDataAddress } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
@@ -32,7 +32,7 @@ const types = {
 } as const
 
 // Data to sign
-const value = {
+const message = {
   from: {
     name: 'Cow',
     wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
@@ -53,7 +53,7 @@ describe('signTypedData', () => {
     it('domain, types, and value', async () => {
       await connect({ connector })
       expect(
-        await signTypedData({ domain, types, value }),
+        await signTypedData({ domain, message, primaryType: 'Mail', types }),
       ).toMatchInlineSnapshot(
         `"0x6ea8bb309a3401225701f3565e32519f94a0ea91a5910ce9229fe488e773584c0390416a2190d9560219dab757ecca2029e63fa9d1c2aebf676cc25b9f03126a1b"`,
       )
@@ -63,20 +63,42 @@ describe('signTypedData', () => {
   describe('behavior', () => {
     it('not connected', async () => {
       await expect(
-        signTypedData({ domain, types, value }),
+        signTypedData({ domain, types, primaryType: 'Mail', message }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
 
     it('can verify typed data', async () => {
       await connect({ connector })
-      const res = await signTypedData({ domain, types, value })
-      expect(verifyTypedData(domain, types, value, res)).toMatchInlineSnapshot(
-        `"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`,
-      )
+      const res = await signTypedData({
+        domain,
+        types,
+        primaryType: 'Mail',
+        message,
+      })
+      expect(
+        await recoverTypedDataAddress({
+          message,
+          primaryType: 'Mail',
+          signature: res,
+          domain,
+          types,
+        }),
+      ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
     })
 
     it('can verify typed data w/ EIP712Domain type', async () => {
       await connect({ connector })
+      const domain_ = {
+        name: 'test',
+        version: 'test',
+      } as const
+      const message_ = {
+        ...message,
+        test: {
+          name: 'test',
+          version: 'test',
+        },
+      } as const
       const types_ = {
         ...types,
         EIP712Domain: [
@@ -84,11 +106,22 @@ describe('signTypedData', () => {
           { name: 'version', type: 'string' },
         ],
         Mail: [...types.Mail, { name: 'test', type: 'EIP712Domain' }],
-      }
-      const res = await signTypedData({ domain, types: types_, value })
-      expect(verifyTypedData(domain, types, value, res)).toMatchInlineSnapshot(
-        `"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`,
-      )
+      } as const
+      const res = await signTypedData({
+        domain: domain_,
+        primaryType: 'Mail',
+        message: message_,
+        types: types_,
+      })
+      expect(
+        await recoverTypedDataAddress({
+          message: message_,
+          primaryType: 'Mail',
+          signature: res,
+          domain: domain_,
+          types: types_,
+        }),
+      ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
     })
 
     describe('when chainId is provided in domain', () => {
@@ -103,7 +136,7 @@ describe('signTypedData', () => {
           }),
         })
         await expect(
-          signTypedData({ domain, types, value }),
+          signTypedData({ domain, types, message, primaryType: 'Mail' }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
           '"Chain mismatch: Expected \\"Ethereum\\", received \\"Goerli\\"."',
         )
@@ -123,7 +156,8 @@ describe('signTypedData', () => {
           signTypedData({
             domain: { ...domain, chainId: 69_420 },
             types,
-            value,
+            primaryType: 'Mail',
+            message,
           }),
         ).rejects.toThrowErrorMatchingInlineSnapshot(
           '"Chain \\"69420\\" not configured for connector \\"mock\\"."',
