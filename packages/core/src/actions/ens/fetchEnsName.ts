@@ -17,5 +17,9 @@ export async function fetchEnsName({
   chainId,
 }: FetchEnsNameArgs): Promise<FetchEnsNameResult> {
   const provider = getProvider({ chainId })
-  return provider.lookupAddress(getAddress(address))
+  return provider.getEnsName({
+    address: getAddress(address),
+    // TODO(viem-migration): remove below once viem updates to new universal resolver contract.
+    universalResolverAddress: '0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376',
+  })
 }
