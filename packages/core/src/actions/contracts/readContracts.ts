@@ -1,3 +1,4 @@
+import type { Narrow } from 'abitype'
 import type {
   ContractConfig,
   MulticallContracts,
@@ -18,15 +19,17 @@ export type ReadContractsConfig<
   'contracts' | 'chainId'
 > & {
   /** Contracts to query */
-  contracts: readonly [
-    ...MulticallContracts<
-      TContracts,
-      {
-        /** Chain id to use for provider */
-        chainId?: number
-      }
-    >,
-  ]
+  contracts: Narrow<
+    readonly [
+      ...MulticallContracts<
+        TContracts,
+        {
+          /** Chain id to use for provider */
+          chainId?: number
+        }
+      >,
+    ]
+  >
 }
 
 export type ReadContractsResult<

@@ -57,8 +57,7 @@ describe('fetchBalance', () => {
       `)
     })
 
-    // TODO(viem-migration): unskip
-    describe.skip('token', () => {
+    describe('token', () => {
       it('address', async () => {
         expect(
           await fetchBalance({
@@ -70,10 +69,7 @@ describe('fetchBalance', () => {
             "decimals": 18,
             "formatted": "18.0553",
             "symbol": "UNI",
-            "value": {
-              "hex": "0xfa914fb05d1c4000",
-              "type": "BigNumber",
-            },
+            "value": 18055300000000000000n,
           }
         `)
       })
@@ -89,10 +85,7 @@ describe('fetchBalance', () => {
             "decimals": 18,
             "formatted": "793.706155474190508252",
             "symbol": "MKR",
-            "value": {
-              "hex": "0x2b06e2b72b1816a0dc",
-              "type": "BigNumber",
-            },
+            "value": 793706155474190508252n,
           }
         `)
       })
@@ -100,8 +93,7 @@ describe('fetchBalance', () => {
   })
 
   describe('behavior', () => {
-    // TODO(viem-migration): unskip
-    it.skip('token with less than 18 decimals formats units correctly', async () => {
+    it('token with less than 18 decimals formats units correctly', async () => {
       expect(
         await fetchBalance({
           address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
@@ -112,10 +104,7 @@ describe('fetchBalance', () => {
           "decimals": 6,
           "formatted": "500.001",
           "symbol": "USDC",
-          "value": {
-            "hex": "0x1dcd68e8",
-            "type": "BigNumber",
-          },
+          "value": 500001000n,
         }
       `)
     })

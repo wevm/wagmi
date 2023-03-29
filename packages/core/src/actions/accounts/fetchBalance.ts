@@ -1,10 +1,14 @@
 import type { Address, ResolvedConfig } from 'abitype'
-import { parseBytes32String } from 'ethers/lib/utils.js'
-import { formatUnits } from 'viem'
+import type { Hex } from 'viem'
+import {
+  ContractFunctionExecutionError,
+  formatUnits,
+  hexToString,
+  trim,
+} from 'viem'
 
 import { getClient } from '../../client'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
-import { ContractResultDecodeError } from '../../errors'
 import { readContracts } from '../contracts'
 import { getProvider } from '../providers'
 
@@ -67,12 +71,12 @@ export async function fetchBalance({
       // In the chance that there is an error upon decoding the contract result,
       // it could be likely that the contract data is represented as bytes32 instead
       // of a string.
-      if (err instanceof ContractResultDecodeError) {
+      if (err instanceof ContractFunctionExecutionError) {
         const { symbol, ...rest } = await fetchContractBalance({
           abi: erc20ABI_bytes32,
         })
         return {
-          symbol: parseBytes32String(symbol),
+          symbol: hexToString(trim(symbol as Hex, { dir: 'right' })),
           ...rest,
         }
       }
