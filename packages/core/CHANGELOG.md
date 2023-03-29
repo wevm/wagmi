@@ -1,5 +1,52 @@
 # @wagmi/core
 
+## 0.10.7
+
+### Patch Changes
+
+- [#2082](https://github.com/wagmi-dev/wagmi/pull/2082) [`2ccc8a25`](https://github.com/wagmi-dev/wagmi/commit/2ccc8a255e93f0a2bb7b22101656b3905ec59abd) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.10
+
+## 0.10.6
+
+### Patch Changes
+
+- [#2056](https://github.com/wagmi-dev/wagmi/pull/2056) [`944f6513`](https://github.com/wagmi-dev/wagmi/commit/944f6513adf09a6f0b3bd34f591d3bbd1f1ffd2e) Thanks [@tmm](https://github.com/tmm)! - Bumped references.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.8
+
+## 0.10.5
+
+### Patch Changes
+
+- [#2053](https://github.com/wagmi-dev/wagmi/pull/2053) [`665df1bf`](https://github.com/wagmi-dev/wagmi/commit/665df1bf2afccb533102069def395e19fb7194dd) Thanks [@tmm](https://github.com/tmm)! - Fixed issue where you add a new chain to MetaMask, but the switch after is rejected.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.7
+
+## 0.10.4
+
+### Patch Changes
+
+- [#2046](https://github.com/wagmi-dev/wagmi/pull/2046) [`90d8e9b8`](https://github.com/wagmi-dev/wagmi/commit/90d8e9b87962b72c54311649537e91a953660f9b) Thanks [@tmm](https://github.com/tmm)! - Exported internal type.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.6
+
+## 0.10.3
+
+### Patch Changes
+
+- [#2039](https://github.com/wagmi-dev/wagmi/pull/2039) [`bac893ab`](https://github.com/wagmi-dev/wagmi/commit/bac893ab26012d4d8741c4f80e8b8813aee26f0c) Thanks [@tmm](https://github.com/tmm)! - Updated references.
+
+- [#2043](https://github.com/wagmi-dev/wagmi/pull/2043) [`49a58320`](https://github.com/wagmi-dev/wagmi/commit/49a58320ab5f1f13bc4de25abcc028c8335e98f0) Thanks [@tmm](https://github.com/tmm)! - Removed `InjectedConnector` `shimChainChangedDisconnect` shim (no longer necessary).
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.6
+
 ## 0.10.2
 
 ### Patch Changes

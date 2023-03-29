@@ -52,6 +52,40 @@ describe('actions', () => {
       ).resolves.toMatchSnapshot()
     })
 
+    it('without TypeScript', async () => {
+      const { imports, content } = await actions({
+        overridePackageName: '@wagmi/core',
+      }).run({
+        contracts: [
+          {
+            name: 'Wagmi',
+            address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
+            abi: [],
+            content: '',
+            meta: {
+              abiName: 'WagmiAbi',
+              addressName: 'WagmiAddress',
+              configName: 'WagmiConfig',
+            },
+          },
+        ],
+        isTypeScript: false,
+        outputs: [],
+      })
+      await expect(format(`${imports}\n\n${content}`)).resolves
+        .toMatchInlineSnapshot(`
+        "import { getContract } from '@wagmi/core'
+
+        /**
+         * Wraps __{@link getContract}__ with \`abi\` set to __{@link WagmiAbi}__.
+         */
+        export function getWagmi(config) {
+          return getContract({ abi: WagmiAbi, address: WagmiAddress, ...config })
+        }
+        "
+      `)
+    })
+
     it('throws for duplicate action names', async () => {
       await expect(
         actions().run({

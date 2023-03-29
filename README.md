@@ -177,6 +177,12 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
     <img alt="Stripe logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/stripe-light.svg" width="auto" height="50">
   </picture>
 </a>
+<a href="https://bitkeep.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-dark.svg">
+    <img alt="BitKeep logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-light.svg" width="auto" height="50">
+  </picture>
+</a>
 
 ## Contributing
 

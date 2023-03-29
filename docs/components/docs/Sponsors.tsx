@@ -81,6 +81,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/stripe-light.svg',
     },
   },
+  {
+    id: 'bitkeep',
+    name: 'BitKeep',
+    href: 'https://bitkeep.com/',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
