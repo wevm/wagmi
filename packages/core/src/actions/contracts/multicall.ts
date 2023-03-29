@@ -3,6 +3,7 @@ import type { Abi } from 'abitype'
 import { multicallABI } from '../../constants'
 import {
   ChainDoesNotSupportMulticallError,
+  ChainNotConfiguredError,
   ContractMethodNoResultError,
   ContractMethodRevertedError,
   ContractResultDecodeError,
@@ -39,16 +40,20 @@ export async function multicall<
   TContracts extends { abi: TAbi; functionName: TFunctionName }[],
 >({
   allowFailure = true,
-  chainId,
+  chainId: chainIdOverride,
   contracts,
   overrides,
 }: MulticallConfig<TContracts>): Promise<MulticallResult<TContracts>> {
-  const provider = getProvider({ chainId })
-  if (!provider.chains) throw new ProviderChainsNotFound()
+  const provider = getProvider({ chainId: chainIdOverride })
+  if (!provider.chains?.[0]) throw new ProviderChainsNotFound()
 
-  const chain =
-    provider.chains.find((chain) => chain.id === chainId) || provider.chains[0]
-  if (!chain) throw new ProviderChainsNotFound()
+  const chainId = provider.network.chainId
+  if (typeof chainIdOverride !== 'undefined' && chainIdOverride !== chainId)
+    throw new ChainNotConfiguredError({ chainId: chainIdOverride })
+
+  const chain = provider.chains.find((chain) => chain.id === chainId)
+  if (!chain) throw new ChainNotConfiguredError({ chainId })
+
   if (!chain?.contracts?.multicall3)
     throw new ChainDoesNotSupportMulticallError({ chain })
 

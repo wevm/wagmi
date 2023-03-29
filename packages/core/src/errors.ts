@@ -110,9 +110,13 @@ export class ChainNotConfiguredError extends Error {
     connectorId,
   }: {
     chainId: number
-    connectorId: string
+    connectorId?: string
   }) {
-    super(`Chain "${chainId}" not configured for connector "${connectorId}".`)
+    super(
+      `Chain "${chainId}" not configured${
+        connectorId ? ` for connector "${connectorId}"` : ''
+      }.`,
+    )
   }
 }
 

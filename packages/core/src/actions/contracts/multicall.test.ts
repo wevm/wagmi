@@ -449,5 +449,13 @@ describe('multicall', () => {
         `"Chain \\"Ethereum\\" does not support multicall on block 1."`,
       )
     })
+
+    it('should throw if a chain is not configured on wagmi client', async () => {
+      await expect(
+        multicall({ contracts, chainId: 69 }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        '"Chain \\"69\\" not configured."',
+      )
+    })
   })
 })
