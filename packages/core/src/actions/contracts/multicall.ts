@@ -4,7 +4,7 @@ import type {
   MulticallReturnType,
 } from 'viem'
 
-import { ProviderChainsNotFound } from '../../errors'
+import { ChainNotConfiguredError, ProviderChainsNotFound } from '../../errors'
 import { getProvider } from '../providers'
 
 export type MulticallConfig<
@@ -34,6 +34,9 @@ export async function multicall<
 > {
   const provider = getProvider({ chainId })
   if (!provider.chains) throw new ProviderChainsNotFound()
+
+  if (chainId && provider.chain.id !== chainId)
+    throw new ChainNotConfiguredError({ chainId })
 
   return provider.multicall({
     allowFailure: args.allowFailure ?? true,
