@@ -22,26 +22,33 @@ describe('fetchToken', () => {
             "name": "Uniswap",
             "symbol": "UNI",
             "totalSupply": {
-              "formatted": "1000000000.0",
-              "value": {
-                "hex": "0x033b2e3c9fd0803ce8000000",
-                "type": "BigNumber",
-              },
+              "formatted": "1000000000",
+              "value": 1000000000000000000000000000n,
             },
           }
         `)
       })
 
       it('bogus token', async () => {
-        try {
-          await fetchToken({
+        await expect(() =>
+          fetchToken({
             address: '0xa0cf798816d4b9b9866b5330eea46a18382f251e',
-          })
-        } catch (error) {
-          expect((error as Error).message).toContain(
-            'returned an empty response',
-          )
-        }
+          }),
+        ).rejects.toMatchInlineSnapshot(`
+          [ContractFunctionExecutionError: The contract function "decimals" returned no data ("0x").
+
+          This could be due to any of the following:
+            - The contract does not have the function "decimals",
+            - The parameters passed to the contract function may be invalid, or
+            - The address is not a contract.
+           
+          Contract Call:
+            address:   0xa0cf798816d4b9b9866b5330eea46a18382f251e
+            function:  decimals()
+
+          Docs: https://viem.sh/docs/contract/multicall.html
+          Version: viem@0.1.23]
+        `)
       })
     })
 
@@ -58,10 +65,7 @@ describe('fetchToken', () => {
           "symbol": "MKR",
           "totalSupply": {
             "formatted": "977631.036950888222010062",
-            "value": {
-              "hex": "0xcf057c15cb9b4eb7aace",
-              "type": "BigNumber",
-            },
+            "value": 977631036950888222010062n,
           },
         }
       `)
@@ -80,21 +84,18 @@ describe('fetchToken', () => {
           "name": "Uniswap",
           "symbol": "UNI",
           "totalSupply": {
-            "formatted": "1000000000.0",
-            "value": {
-              "hex": "0x033b2e3c9fd0803ce8000000",
-              "type": "BigNumber",
-            },
+            "formatted": "1000000000",
+            "value": 1000000000000000000000000000n,
           },
         }
       `)
     })
 
-    it('formatUnits', async () => {
+    it('unit', async () => {
       expect(
         await fetchToken({
           address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-          formatUnits: 'gwei',
+          unit: 9,
         }),
       ).toMatchInlineSnapshot(`
         {
@@ -103,11 +104,8 @@ describe('fetchToken', () => {
           "name": "Uniswap",
           "symbol": "UNI",
           "totalSupply": {
-            "formatted": "1000000000000000000.0",
-            "value": {
-              "hex": "0x033b2e3c9fd0803ce8000000",
-              "type": "BigNumber",
-            },
+            "formatted": "1000000000000000000",
+            "value": 1000000000000000000000000000n,
           },
         }
       `)

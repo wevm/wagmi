@@ -17,6 +17,8 @@ Breaking changes:
   - Removed `overrides` in favor of `blockNumber` & `blockTag`
 - `waitForTransaction`
   - Replaced `onSpeedUp` with `onReplaced`
+- `fetchToken`
+  - Removed `formatUnits` in favor of `units` config option.
 
 TODO:
 

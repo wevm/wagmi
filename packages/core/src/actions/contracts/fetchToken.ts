@@ -1,9 +1,13 @@
 import type { Address, ResolvedConfig } from 'abitype'
-import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
+import type { Hex } from 'viem'
+import {
+  ContractFunctionExecutionError,
+  formatUnits,
+  hexToString,
+  trim,
+} from 'viem'
 
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
-import { ContractResultDecodeError } from '../../errors'
-import type { Unit } from '../../types'
 import { readContracts } from '../contracts'
 
 export type FetchTokenArgs = {
@@ -12,7 +16,7 @@ export type FetchTokenArgs = {
   /** Chain id to use for provider */
   chainId?: number
   /** Units for formatting output */
-  formatUnits?: Unit | number
+  unit?: number
 }
 export type FetchTokenResult = {
   address: Address
@@ -28,7 +32,7 @@ export type FetchTokenResult = {
 export async function fetchToken({
   address,
   chainId,
-  formatUnits: units = 'ether',
+  unit = 18,
 }: FetchTokenArgs): Promise<FetchTokenResult> {
   type FetchToken_ = {
     abi: typeof erc20ABI | typeof erc20ABI_bytes32
@@ -51,7 +55,7 @@ export async function fetchToken({
       name: name as string, // protect against `ResolvedConfig['BytesType']`
       symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
       totalSupply: {
-        formatted: formatUnits(totalSupply, units),
+        formatted: formatUnits(totalSupply, unit),
         value: totalSupply,
       },
     }
@@ -63,13 +67,13 @@ export async function fetchToken({
     // In the chance that there is an error upon decoding the contract result,
     // it could be likely that the contract data is represented as bytes32 instead
     // of a string.
-    if (err instanceof ContractResultDecodeError) {
+    if (err instanceof ContractFunctionExecutionError) {
       const { name, symbol, ...rest } = await fetchToken_({
         abi: erc20ABI_bytes32,
       })
       return {
-        name: parseBytes32String(name),
-        symbol: parseBytes32String(symbol),
+        name: hexToString(trim(name as Hex, { dir: 'right' })),
+        symbol: hexToString(trim(symbol as Hex, { dir: 'right' })),
         ...rest,
       }
     }
