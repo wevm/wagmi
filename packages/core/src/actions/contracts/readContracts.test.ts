@@ -1,5 +1,5 @@
 import type { Address, ResolvedConfig } from 'abitype'
-import { BigNumber } from 'ethers'
+import type { MulticallResult } from 'viem'
 import { assertType, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
@@ -29,21 +29,15 @@ const contracts = [
   {
     ...mlootContractConfig,
     functionName: 'tokenOfOwnerByIndex',
-    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
   },
 ]
-
-let warnMessages: string[] = []
-const warn = vi
-  .spyOn(console, 'warn')
-  .mockImplementation((message) => warnMessages.push(message))
 
 describe('readContracts', () => {
   beforeEach(() => {
     setupClient({
       chains: [mainnet, { ...polygon, contracts: { multicall3: undefined } }],
     })
-    warnMessages = []
   })
 
   it('default', async () => {
@@ -59,17 +53,20 @@ describe('readContracts', () => {
     expect(results).toMatchInlineSnapshot(`
       [
         {
-          "hex": "0x02",
-          "type": "BigNumber",
+          "result": 2n,
+          "status": "success",
         },
         {
-          "hex": "0x01",
-          "type": "BigNumber",
+          "result": 1n,
+          "status": "success",
         },
-        false,
         {
-          "hex": "0x05a6db",
-          "type": "BigNumber",
+          "result": false,
+          "status": "success",
+        },
+        {
+          "result": 370395n,
+          "status": "success",
         },
       ]
     `)
@@ -100,7 +97,7 @@ describe('readContracts', () => {
         ...mlootContractConfig,
         chainId: polygon.id,
         functionName: 'tokenOfOwnerByIndex',
-        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
+        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
       },
     ] as const
     const results = await readContracts({
@@ -109,10 +106,10 @@ describe('readContracts', () => {
     })
     assertType<
       [
-        ResolvedConfig['BigIntType'],
-        ResolvedConfig['BigIntType'],
-        boolean,
-        ResolvedConfig['BigIntType'],
+        MulticallResult<ResolvedConfig['BigIntType']>,
+        MulticallResult<ResolvedConfig['BigIntType']>,
+        MulticallResult<boolean>,
+        MulticallResult<ResolvedConfig['BigIntType']>,
       ]
     >(results)
 
@@ -122,17 +119,20 @@ describe('readContracts', () => {
     expect(results).toMatchInlineSnapshot(`
       [
         {
-          "hex": "0x02",
-          "type": "BigNumber",
+          "result": 2n,
+          "status": "success",
         },
         {
-          "hex": "0x01",
-          "type": "BigNumber",
+          "result": 1n,
+          "status": "success",
         },
-        false,
         {
-          "hex": "0x05a6db",
-          "type": "BigNumber",
+          "result": false,
+          "status": "success",
+        },
+        {
+          "result": 370395n,
+          "status": "success",
         },
       ]
     `)
@@ -175,10 +175,7 @@ describe('readContracts', () => {
           ...mlootContractConfig,
           chainId: polygon.id,
           functionName: 'tokenOfOwnerByIndex',
-          args: [
-            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            BigNumber.from(0),
-          ],
+          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
         },
       ] as const
       const goerliContracts = [
@@ -186,7 +183,7 @@ describe('readContracts', () => {
           ...wagmiContractConfig,
           chainId: goerli.id,
           functionName: 'ownerOf',
-          args: [BigNumber.from(69)],
+          args: [69n],
         },
         {
           ...wagmiContractConfig,
@@ -208,13 +205,13 @@ describe('readContracts', () => {
       })
       assertType<
         [
-          ResolvedConfig['BigIntType'],
-          Address,
-          ResolvedConfig['BigIntType'],
-          boolean,
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<Address>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<boolean>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
         ]
       >(results)
 
@@ -233,26 +230,32 @@ describe('readContracts', () => {
       expect(results).toMatchInlineSnapshot(`
         [
           {
-            "hex": "0x02",
-            "type": "BigNumber",
-          },
-          "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          {
-            "hex": "0x01",
-            "type": "BigNumber",
-          },
-          false,
-          {
-            "hex": "0x02",
-            "type": "BigNumber",
+            "result": 2n,
+            "status": "success",
           },
           {
-            "hex": "0x05a6db",
-            "type": "BigNumber",
+            "result": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            "status": "success",
           },
           {
-            "hex": "0x00",
-            "type": "BigNumber",
+            "result": 1n,
+            "status": "success",
+          },
+          {
+            "result": false,
+            "status": "success",
+          },
+          {
+            "result": 2n,
+            "status": "success",
+          },
+          {
+            "result": 370395n,
+            "status": "success",
+          },
+          {
+            "result": 0n,
+            "status": "success",
           },
         ]
       `)
@@ -284,10 +287,7 @@ describe('readContracts', () => {
           ...mlootContractConfig,
           chainId: polygon.id,
           functionName: 'tokenOfOwnerByIndex',
-          args: [
-            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            BigNumber.from(0),
-          ],
+          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
         },
       ] as const
       const results = await readContracts({
@@ -296,10 +296,10 @@ describe('readContracts', () => {
       })
       assertType<
         [
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
-          boolean,
-          ResolvedConfig['BigIntType'],
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<boolean>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
         ]
       >(results)
 
@@ -312,17 +312,20 @@ describe('readContracts', () => {
       expect(results).toMatchInlineSnapshot(`
         [
           {
-            "hex": "0x02",
-            "type": "BigNumber",
+            "result": 2n,
+            "status": "success",
           },
           {
-            "hex": "0x01",
-            "type": "BigNumber",
+            "result": 1n,
+            "status": "success",
           },
-          false,
           {
-            "hex": "0x05a6db",
-            "type": "BigNumber",
+            "result": false,
+            "status": "success",
+          },
+          {
+            "result": 370395n,
+            "status": "success",
           },
         ]
       `)
@@ -340,19 +343,27 @@ describe('readContracts', () => {
               ...mlootContractConfig,
               chainId: polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: [
-                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-                BigNumber.from(69420),
-              ],
+              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420n],
             },
           ],
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"call revert exception; VM Exception while processing transaction: reverted with reason string \\"ERC721Enumerable: owner index out of bounds\\" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"tokenOfOwnerByIndex(address,uint256)\\", data=\\"0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002b455243373231456e756d657261626c653a206f776e657220696e646578206f7574206f6620626f756e6473000000000000000000000000000000000000000000\\", errorArgs=[\\"ERC721Enumerable: owner index out of bounds\\"], errorName=\\"Error\\", errorSignature=\\"Error(string)\\", reason=\\"ERC721Enumerable: owner index out of bounds\\", code=CALL_EXCEPTION, version=abi/5.7.0)"',
+        `
+        "The contract function \\"tokenOfOwnerByIndex\\" reverted with the following reason:
+        ERC721Enumerable: owner index out of bounds
+
+        Contract Call:
+          address:   0x1dfe7ca09e99d10835bf73044a23b73fc20623df
+          function:  tokenOfOwnerByIndex(address owner, uint256 index)
+          args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69420)
+
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23"
+      `,
       )
     })
 
-    it('warns if allowFailure=true & a contract method fails', async () => {
+    it('allowFailure=true & a contract method fails', async () => {
       expect(
         await readContracts({
           allowFailure: true,
@@ -362,81 +373,62 @@ describe('readContracts', () => {
               ...mlootContractConfig,
               chainId: polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: [
-                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-                BigNumber.from(69420),
-              ],
+              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69420n],
             },
             {
               ...mlootContractConfig,
               chainId: polygon.id,
               functionName: 'tokenOfOwnerByIndex',
-              args: [
-                '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-                BigNumber.from(69421),
-              ],
+              args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 69421n],
             },
           ],
         }),
       ).toMatchInlineSnapshot(`
         [
           {
-            "hex": "0x02",
-            "type": "BigNumber",
+            "result": 2n,
+            "status": "success",
           },
           {
-            "hex": "0x01",
-            "type": "BigNumber",
+            "result": 1n,
+            "status": "success",
           },
-          false,
           {
-            "hex": "0x05a6db",
-            "type": "BigNumber",
+            "result": false,
+            "status": "success",
           },
-          null,
-          null,
-        ]
-      `)
-      expect(warn).toBeCalled()
-      expect(warnMessages).toMatchInlineSnapshot(`
-        [
-          "Chain \\"Polygon\\" does not support multicall.",
-          "Contract method reverted with an error.
+          {
+            "result": 370395n,
+            "status": "success",
+          },
+          {
+            "error": [ContractFunctionExecutionError: The contract function "tokenOfOwnerByIndex" reverted with the following reason:
+        ERC721Enumerable: owner index out of bounds
 
-        Config:
-        {
-          \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-          \\"abi\\": \\"...\\",
-          \\"functionName\\": \\"tokenOfOwnerByIndex\\",
-          \\"chainId\\": 137,
-          \\"args\\": [
-            \\"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e\\",
-            {
-              \\"type\\": \\"BigNumber\\",
-              \\"hex\\": \\"0x010f2c\\"
-            }
-          ]
-        }
+        Contract Call:
+          address:   0x1dfe7ca09e99d10835bf73044a23b73fc20623df
+          function:  tokenOfOwnerByIndex(address owner, uint256 index)
+          args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69420)
 
-        Details: Error: call revert exception; VM Exception while processing transaction: reverted with reason string \\"ERC721Enumerable: owner index out of bounds\\" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"tokenOfOwnerByIndex(address,uint256)\\", data=\\"0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002b455243373231456e756d657261626c653a206f776e657220696e646578206f7574206f6620626f756e6473000000000000000000000000000000000000000000\\", errorArgs=[\\"ERC721Enumerable: owner index out of bounds\\"], errorName=\\"Error\\", errorSignature=\\"Error(string)\\", reason=\\"ERC721Enumerable: owner index out of bounds\\", code=CALL_EXCEPTION, version=abi/5.7.0)",
-          "Contract method reverted with an error.
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23],
+            "result": undefined,
+            "status": "failure",
+          },
+          {
+            "error": [ContractFunctionExecutionError: The contract function "tokenOfOwnerByIndex" reverted with the following reason:
+        ERC721Enumerable: owner index out of bounds
 
-        Config:
-        {
-          \\"address\\": \\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",
-          \\"abi\\": \\"...\\",
-          \\"functionName\\": \\"tokenOfOwnerByIndex\\",
-          \\"chainId\\": 137,
-          \\"args\\": [
-            \\"0xA0Cf798816D4b9b9866b5330EEa46a18382f251e\\",
-            {
-              \\"type\\": \\"BigNumber\\",
-              \\"hex\\": \\"0x010f2d\\"
-            }
-          ]
-        }
+        Contract Call:
+          address:   0x1dfe7ca09e99d10835bf73044a23b73fc20623df
+          function:  tokenOfOwnerByIndex(address owner, uint256 index)
+          args:                         (0xA0Cf798816D4b9b9866b5330EEa46a18382f251e, 69421)
 
-        Details: Error: call revert exception; VM Exception while processing transaction: reverted with reason string \\"ERC721Enumerable: owner index out of bounds\\" [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"tokenOfOwnerByIndex(address,uint256)\\", data=\\"0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000002b455243373231456e756d657261626c653a206f776e657220696e646578206f7574206f6620626f756e6473000000000000000000000000000000000000000000\\", errorArgs=[\\"ERC721Enumerable: owner index out of bounds\\"], errorName=\\"Error\\", errorSignature=\\"Error(string)\\", reason=\\"ERC721Enumerable: owner index out of bounds\\", code=CALL_EXCEPTION, version=abi/5.7.0)",
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23],
+            "result": undefined,
+            "status": "failure",
+          },
         ]
       `)
     })
@@ -458,11 +450,26 @@ describe('readContracts', () => {
           ],
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"overflow [ See: https://links.ethers.org/v5-errors-NUMERIC_FAULT-overflow ] (fault=\\"overflow\\", operation=\\"BigNumber.from\\", value=1e+31, code=NUMERIC_FAULT, version=bignumber/5.7.0)"',
+        `
+        "The contract function \\"ownerOf\\" returned no data (\\"0x\\").
+
+        This could be due to any of the following:
+          - The contract does not have the function \\"ownerOf\\",
+          - The parameters passed to the contract function may be invalid, or
+          - The address is not a contract.
+         
+        Contract Call:
+          address:   0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC
+          function:  ownerOf(uint256 tokenId)
+          args:             (1e+31)
+
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23"
+      `,
       )
     })
 
-    it('warns if allowFailure=true & encoding contract function data fails', async () => {
+    it('allowFailure=true & encoding contract function data fails', async () => {
       expect(
         await readContracts({
           allowFailure: true,
@@ -489,54 +496,57 @@ describe('readContracts', () => {
       ).toMatchInlineSnapshot(`
         [
           {
-            "hex": "0x02",
-            "type": "BigNumber",
+            "result": 2n,
+            "status": "success",
           },
           {
-            "hex": "0x01",
-            "type": "BigNumber",
+            "result": 1n,
+            "status": "success",
           },
-          false,
           {
-            "hex": "0x05a6db",
-            "type": "BigNumber",
+            "result": false,
+            "status": "success",
           },
-          null,
-          null,
-        ]
-      `)
-      expect(warn).toBeCalled()
-      expect(warnMessages).toMatchInlineSnapshot(`
-        [
-          "Chain \\"Polygon\\" does not support multicall.",
-          "Contract method reverted with an error.
+          {
+            "result": 370395n,
+            "status": "success",
+          },
+          {
+            "error": [ContractFunctionExecutionError: The contract function "ownerOf" returned no data ("0x").
 
-        Config:
-        {
-          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"abi\\": \\"...\\",
-          \\"functionName\\": \\"ownerOf\\",
-          \\"chainId\\": 137,
-          \\"args\\": [
-            1e+31
-          ]
-        }
+        This could be due to any of the following:
+          - The contract does not have the function "ownerOf",
+          - The parameters passed to the contract function may be invalid, or
+          - The address is not a contract.
+         
+        Contract Call:
+          address:   0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC
+          function:  ownerOf(uint256 tokenId)
+          args:             (1e+31)
 
-        Details: Error: overflow [ See: https://links.ethers.org/v5-errors-NUMERIC_FAULT-overflow ] (fault=\\"overflow\\", operation=\\"BigNumber.from\\", value=1e+31, code=NUMERIC_FAULT, version=bignumber/5.7.0)",
-          "Contract method reverted with an error.
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23],
+            "result": undefined,
+            "status": "failure",
+          },
+          {
+            "error": [ContractFunctionExecutionError: The contract function "ownerOf" returned no data ("0x").
 
-        Config:
-        {
-          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"abi\\": \\"...\\",
-          \\"functionName\\": \\"ownerOf\\",
-          \\"chainId\\": 137,
-          \\"args\\": [
-            1e+31
-          ]
-        }
+        This could be due to any of the following:
+          - The contract does not have the function "ownerOf",
+          - The parameters passed to the contract function may be invalid, or
+          - The address is not a contract.
+         
+        Contract Call:
+          address:   0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC
+          function:  ownerOf(uint256 tokenId)
+          args:             (1e+31)
 
-        Details: Error: overflow [ See: https://links.ethers.org/v5-errors-NUMERIC_FAULT-overflow ] (fault=\\"overflow\\", operation=\\"BigNumber.from\\", value=1e+31, code=NUMERIC_FAULT, version=bignumber/5.7.0)",
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23],
+            "result": undefined,
+            "status": "failure",
+          },
         ]
       `)
     })
@@ -558,11 +568,26 @@ describe('readContracts', () => {
           ],
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"love(address)\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.7.0)"',
+        `
+        "The contract function \\"love\\" returned no data (\\"0x\\").
+
+        This could be due to any of the following:
+          - The contract does not have the function \\"love\\",
+          - The parameters passed to the contract function may be invalid, or
+          - The address is not a contract.
+         
+        Contract Call:
+          address:   0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC
+          function:  love(address)
+          args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
+
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23"
+      `,
       )
     })
 
-    it('warns if allowFailure=true & a contract has no response', async () => {
+    it('allowFailure=true & a contract has no response', async () => {
       expect(
         await readContracts({
           allowFailure: true,
@@ -581,39 +606,39 @@ describe('readContracts', () => {
       ).toMatchInlineSnapshot(`
         [
           {
-            "hex": "0x02",
-            "type": "BigNumber",
+            "result": 2n,
+            "status": "success",
           },
           {
-            "hex": "0x01",
-            "type": "BigNumber",
+            "result": 1n,
+            "status": "success",
           },
-          false,
           {
-            "hex": "0x05a6db",
-            "type": "BigNumber",
+            "result": false,
+            "status": "success",
           },
-          null,
-        ]
-      `)
-      expect(warn).toBeCalled()
-      expect(warnMessages).toMatchInlineSnapshot(`
-        [
-          "Chain \\"Polygon\\" does not support multicall.",
-          "Contract method reverted with an error.
+          {
+            "result": 370395n,
+            "status": "success",
+          },
+          {
+            "error": [ContractFunctionExecutionError: The contract function "love" returned no data ("0x").
 
-        Config:
-        {
-          \\"address\\": \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\",
-          \\"abi\\": \\"...\\",
-          \\"functionName\\": \\"love\\",
-          \\"chainId\\": 137,
-          \\"args\\": [
-            \\"0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC\\"
-          ]
-        }
+        This could be due to any of the following:
+          - The contract does not have the function "love",
+          - The parameters passed to the contract function may be invalid, or
+          - The address is not a contract.
+         
+        Contract Call:
+          address:   0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC
+          function:  love(address)
+          args:          (0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC)
 
-        Details: Error: call revert exception [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (method=\\"love(address)\\", data=\\"0x\\", errorArgs=null, errorName=null, errorSignature=null, reason=null, code=CALL_EXCEPTION, version=abi/5.7.0)",
+        Docs: https://viem.sh/docs/contract/readContract.html
+        Version: viem@0.1.23],
+            "result": undefined,
+            "status": "failure",
+          },
         ]
       `)
     })

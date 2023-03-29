@@ -237,7 +237,7 @@ importers:
       abitype: ^0.3.0
       ethers: ^5.7.1
       eventemitter3: ^4.0.7
-      viem: 0.2.0-0-2-0.20230328T231949
+      viem: 0.2.0-0-2-0.20230329T012739
       zustand: ^4.3.1
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
@@ -247,7 +247,7 @@ importers:
       zustand: 4.3.1
     devDependencies:
       ethers: 5.7.2
-      viem: 0.2.0-0-2-0.20230328T231949
+      viem: 0.2.0-0-2-0.20230329T012739
 
   packages/react:
     specifiers:
@@ -15817,10 +15817,10 @@ packages:
       - zod
     dev: false
 
-  /viem/0.2.0-0-2-0.20230328T231949:
+  /viem/0.2.0-0-2-0.20230329T012739:
     resolution:
       {
-        integrity: sha512-THJUD3lWMS610+t/SsxyiKsh6omK00yaeIWtdzvaV61RR0xCKI8b/MsxHXEo6aj3dslEMhNtTbvJq7+TcbHZAA==,
+        integrity: sha512-43iY50/r0w/R0HbDBkPz507XL2074/GHyWdK3ecXo4lY1tXkabX9uv7sLYOK2uu5XGUWHLO/9j3kG0ZXxbPdKA==,
       }
     dependencies:
       '@noble/hashes': 1.3.0

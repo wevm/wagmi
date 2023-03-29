@@ -22,7 +22,7 @@ export type MulticallResult<
 
 export async function multicall<
   TContracts extends ContractConfig[],
-  TAllowFailure extends boolean,
+  TAllowFailure extends boolean = true,
 >({
   chainId,
   contracts,

@@ -1,28 +1,25 @@
-import type { Abi, Address } from 'abitype'
-
-import {
-  ChainDoesNotSupportMulticallError,
-  ContractMethodNoResultError,
-  ContractMethodRevertedError,
-  ContractResultDecodeError,
-} from '../../errors'
 import type {
-  Contract,
-  ContractsConfig,
-  ContractsResult,
-  GetOverridesForAbiStateMutability,
-} from '../../types/contracts'
-import { logWarn } from '../../utils'
+  ContractConfig,
+  MulticallContracts,
+  MulticallParameters,
+} from 'viem'
+import { ContractFunctionExecutionError } from 'viem'
+
 import { getProvider } from '../providers'
+import type { MulticallConfig, MulticallResult } from './multicall'
 import { multicall } from './multicall'
 import { readContract } from './readContract'
 
-export type ReadContractsConfig<TContracts extends Contract[]> = {
-  /** Failures in the multicall will fail silently */
-  allowFailure?: boolean
+export type ReadContractsConfig<
+  TContracts extends ContractConfig[],
+  TAllowFailure extends boolean = true,
+> = Omit<
+  MulticallConfig<TContracts, TAllowFailure>,
+  'contracts' | 'chainId'
+> & {
   /** Contracts to query */
   contracts: readonly [
-    ...ContractsConfig<
+    ...MulticallContracts<
       TContracts,
       {
         /** Chain id to use for provider */
@@ -30,29 +27,29 @@ export type ReadContractsConfig<TContracts extends Contract[]> = {
       }
     >,
   ]
-  /** Call overrides */
-  overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
 }
 
-export type ReadContractsResult<TContracts extends Contract[]> =
-  ContractsResult<TContracts>
+export type ReadContractsResult<
+  TContracts extends ContractConfig[],
+  TAllowFailure extends boolean = true,
+> = MulticallResult<TContracts, TAllowFailure>
 
 export async function readContracts<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+  TContracts extends ContractConfig[],
+  TAllowFailure extends boolean = true,
 >({
-  allowFailure = true,
   contracts,
-  overrides,
-}: ReadContractsConfig<TContracts>): Promise<ReadContractsResult<TContracts>> {
-  type ContractConfig = {
-    abi: Abi
-    address: Address
-    args: unknown[]
+  blockNumber,
+  blockTag,
+  ...args
+}: ReadContractsConfig<TContracts, TAllowFailure>): Promise<
+  ReadContractsResult<TContracts, TAllowFailure>
+> {
+  type ContractConfig = TContracts[number] & {
     chainId?: number
-    functionName: string
   }
+
+  const { allowFailure = true } = args
 
   try {
     const provider = getProvider()
@@ -64,7 +61,7 @@ export async function readContracts<
         index: number
       }[]
     }>((contracts, contract, index) => {
-      const chainId = contract.chainId ?? provider.network.chainId
+      const chainId = contract.chainId ?? provider.chain.id
       return {
         ...contracts,
         [chainId]: [...(contracts[chainId] || []), { contract, index }],
@@ -75,63 +72,42 @@ export async function readContracts<
         multicall({
           allowFailure,
           chainId: parseInt(chainId),
-          contracts: contracts.map(({ contract }) => contract),
-          overrides,
+          contracts: contracts.map(
+            ({ contract }) => contract,
+          ) as MulticallParameters['contracts'],
+          blockNumber,
+          blockTag,
         }),
       )
 
-    let multicallResults
-    if (allowFailure) {
-      multicallResults = (await Promise.allSettled(promises()))
-        .map((result) => {
-          if (result.status === 'fulfilled') return result.value
-          if (result.reason instanceof ChainDoesNotSupportMulticallError) {
-            logWarn(result.reason.message)
-            throw result.reason
-          }
-          return null
-        })
-        .flat()
-    } else {
-      multicallResults = (await Promise.all(promises())).flat()
-    }
+    const multicallResults = (await Promise.all(promises())).flat()
 
     // Reorder the contract results back to the order they were
     // provided in.
-    const resultIndexes = Object.values(contractsByChainId)
-      .map((contracts) => contracts.map(({ index }) => index))
-      .flat()
+    const resultIndexes = Object.values(contractsByChainId).flatMap(
+      (contracts) => contracts.map(({ index }) => index),
+    )
     return multicallResults.reduce((results, result, index) => {
-      if (results)
-        (results as Record<string | number, unknown> & readonly unknown[])[
-          resultIndexes[index]!
-        ] = result
+      if (results) results[resultIndexes[index]!] = result
       return results
-    }, [] as unknown[]) as ReadContractsResult<TContracts>
+    }, [] as unknown[]) as ReadContractsResult<TContracts, TAllowFailure>
   } catch (err) {
-    if (err instanceof ContractResultDecodeError) throw err
-    if (err instanceof ContractMethodNoResultError) throw err
-    if (err instanceof ContractMethodRevertedError) throw err
+    if (err instanceof ContractFunctionExecutionError) throw err
 
     const promises = () =>
       (contracts as unknown as ContractConfig[]).map((contract) =>
-        readContract({ ...contract, overrides }),
+        readContract({ ...contract, blockNumber, blockTag }),
       )
     if (allowFailure)
-      return (await Promise.allSettled(promises())).map((result, i) => {
-        if (result.status === 'fulfilled') return result.value
-        const { address, args, chainId, functionName } = contracts[i]
-        const error = new ContractMethodRevertedError({
-          address,
-          functionName,
-          chainId: chainId ?? 1,
-          args,
-          errorMessage: result.reason,
-        })
-        logWarn(error.message)
-        return null
-      }) as ReadContractsResult<TContracts>
+      return (await Promise.allSettled(promises())).map((result) => {
+        if (result.status === 'fulfilled')
+          return { result: result.value, status: 'success' }
+        return { error: result.reason, result: undefined, status: 'failure' }
+      }) as ReadContractsResult<TContracts, TAllowFailure>
 
-    return (await Promise.all(promises())) as ReadContractsResult<TContracts>
+    return (await Promise.all(promises())) as ReadContractsResult<
+      TContracts,
+      TAllowFailure
+    >
   }
 }
