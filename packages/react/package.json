@@ -2,7 +2,7 @@
   "name": "wagmi",
   "description": "React Hooks for Ethereum",
   "license": "MIT",
-  "version": "0.12.7",
+  "version": "0.12.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/wagmi-dev/wagmi.git",

@@ -1,5 +1,21 @@
 # wagmi
 
+## 0.12.8
+
+### Patch Changes
+
+- [#2099](https://github.com/wagmi-dev/wagmi/pull/2099) [`f1fee5b3`](https://github.com/wagmi-dev/wagmi/commit/f1fee5b30a1bd13b5e66118bf9cdc44b0dc003a1) Thanks [@jxom](https://github.com/jxom)! - Added chains:
+
+  - `nexi`
+  - `polygonZkEvm`
+  - `xdc`
+  - `xdcTestnet`
+
+- [#2085](https://github.com/wagmi-dev/wagmi/pull/2085) [`7d64e3f5`](https://github.com/wagmi-dev/wagmi/commit/7d64e3f538a6149777bfa84ea9435769b2a7db58) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where multicall would not throw if the target chain was not configured on the wagmi client.
+
+- Updated dependencies [[`f1fee5b3`](https://github.com/wagmi-dev/wagmi/commit/f1fee5b30a1bd13b5e66118bf9cdc44b0dc003a1), [`7d64e3f5`](https://github.com/wagmi-dev/wagmi/commit/7d64e3f538a6149777bfa84ea9435769b2a7db58)]:
+  - @wagmi/core@0.10.8
+
 ## 0.12.7
 
 ### Patch Changes
