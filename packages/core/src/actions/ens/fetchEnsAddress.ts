@@ -1,5 +1,6 @@
 import type { Address } from 'abitype'
-import { getAddress } from 'ethers/lib/utils.js'
+import { getAddress } from 'viem'
+import { normalize } from 'viem/ens'
 
 import { getProvider } from '../providers'
 
@@ -17,9 +18,14 @@ export async function fetchEnsAddress({
   name,
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
   const provider = getProvider({ chainId })
-  const address = await provider.resolveName(name)
+  const address = await provider.getEnsAddress({
+    name: normalize(name),
+    // TODO(viem-migration): remove below once viem updates to new universal resolver contract.
+    universalResolverAddress: '0x74E20Bd2A1fE0cdbe45b9A1d89cb7e0a45b36376',
+  })
 
   try {
+    if (address === '0x0000000000000000000000000000000000000000') return null
     return address ? getAddress(address) : null
   } catch (_error) {
     return null

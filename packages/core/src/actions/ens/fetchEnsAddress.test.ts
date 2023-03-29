@@ -19,7 +19,7 @@ describe('fetchEnsAddress', () => {
       it('no result', async () => {
         expect(
           await fetchEnsAddress({ name: 'awkweb123.eth' }),
-        ).toMatchInlineSnapshot(`null`)
+        ).toMatchInlineSnapshot('null')
       })
 
       it('has address', async () => {
