@@ -1,27 +1,31 @@
-import type { Transaction } from 'ethers'
+import type { GetTransactionReturnType } from 'viem'
 import { shallow } from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import type { Provider } from '../../types'
+import type { Provider, WebSocketProvider } from '../../types'
 import { getProvider, getWebSocketProvider } from '../providers'
 
-export type WatchPendingTransactionsResult = Transaction
+export type WatchPendingTransactionsResult = GetTransactionReturnType[]
 export type WatchPendingTransactionsArgs = { chainId?: number }
 export type WatchPendingTransactionsCallback = (
-  transaction: WatchPendingTransactionsResult,
+  transactions: WatchPendingTransactionsResult,
 ) => void
 
 export function watchPendingTransactions(
   args: WatchPendingTransactionsArgs,
   callback: WatchPendingTransactionsCallback,
 ) {
-  let previousProvider: Provider
-  const createListener = (provider: Provider) => {
-    if (previousProvider) {
-      previousProvider?.off('pending', callback)
-    }
-    provider.on('pending', callback)
-    previousProvider = provider
+  let unwatch: () => void
+  const createListener = (provider: Provider | WebSocketProvider) => {
+    if (unwatch) unwatch()
+    unwatch = provider.watchPendingTransactions({
+      onTransactions: async (hashes) => {
+        const transactions = await Promise.all(
+          hashes.map((hash) => provider.getTransaction({ hash })),
+        )
+        callback(transactions)
+      },
+    })
   }
 
   const provider_ =
@@ -46,7 +50,6 @@ export function watchPendingTransactions(
 
   return () => {
     unsubscribe()
-    provider_?.off('pending', callback)
-    previousProvider?.off('pending', callback)
+    unwatch?.()
   }
 }

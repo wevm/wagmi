@@ -1,4 +1,3 @@
-import type { Transaction } from 'ethers'
 import { parseEther } from 'ethers/lib/utils.js'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -7,6 +6,7 @@ import { getSigners, setupClient } from '../../../test'
 import type { Client } from '../../client'
 import { connect } from '../accounts'
 import { getProvider } from '../providers'
+import type { WatchPendingTransactionsResult } from './watchPendingTransactions'
 import { watchPendingTransactions } from './watchPendingTransactions'
 
 describe('watchPendingTransactions', () => {
@@ -16,8 +16,10 @@ describe('watchPendingTransactions', () => {
   })
 
   it('default', async () => {
-    const results: Transaction[] = []
-    const unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
+    const results: WatchPendingTransactionsResult = []
+    const unsubscribe = watchPendingTransactions({}, (results_) =>
+      results.push(...results_),
+    )
 
     const provider = getProvider()
     await new Promise((res) =>
@@ -29,12 +31,14 @@ describe('watchPendingTransactions', () => {
   })
 
   it('new transaction', async () => {
-    const results: Transaction[] = []
-    const unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
+    const results: WatchPendingTransactionsResult = []
+    const unsubscribe = watchPendingTransactions({}, (results_) =>
+      results.push(...results_),
+    )
 
     const signers = getSigners()
     const to = signers[1]
-    const toAddress = await to?.getAddress()
+    const toAddress = to?.account.address
 
     await connect({ connector: client.connectors[0]! })
     await sendTransaction({
@@ -55,13 +59,15 @@ describe('watchPendingTransactions', () => {
   })
 
   it('unsubscribes + resubscribes', async () => {
-    const results: Transaction[] = []
-    let unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
+    const results: WatchPendingTransactionsResult = []
+    let unsubscribe = watchPendingTransactions({}, (results_) =>
+      results.push(...results_),
+    )
     unsubscribe()
 
     const signers = getSigners()
     const to = signers[1]
-    const toAddress = await to?.getAddress()
+    const toAddress = to?.account.address
 
     await connect({ connector: client.connectors[0]! })
     await sendTransaction({
@@ -79,7 +85,9 @@ describe('watchPendingTransactions', () => {
 
     expect(results.length).toEqual(0)
 
-    unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
+    unsubscribe = watchPendingTransactions({}, (results_) =>
+      results.push(...results_),
+    )
 
     await sendTransaction({
       mode: 'recklesslyUnprepared',
