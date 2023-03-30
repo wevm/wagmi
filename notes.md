@@ -20,6 +20,8 @@ Breaking changes:
   - `primaryType` is required
 - `fetchBlockNumber`
   - now bigint
+- `watchPendingTransactions`
+  - callback now returns array of transactions
 
 TODO:
 
