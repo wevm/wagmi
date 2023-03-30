@@ -182,14 +182,14 @@ type GetCrowdfundArgs = AbiParametersToPrimitiveTypes<
 export function getCrowdfundArgs([
   tributaryConfig = {
     tributary: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    feePercentage: BigNumber.from(250),
+    feePercentage: 250n,
   },
   name = `Crowdfund ${crowdfundId}`,
   symbol = `$Crowdfund${crowdfundId}-${getRandomNumber()}`,
   operatorAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
   fundingRecipientAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-  fundingGoal = BigNumber.from('100000000000000000000'),
-  operatorPercent = BigNumber.from('100'),
+  fundingGoal = 100000000000000000000n,
+  operatorPercent = 100n,
 ]: Partial<GetCrowdfundArgs> = []): GetCrowdfundArgs {
   crowdfundId += 1
   // do not change order of values below
