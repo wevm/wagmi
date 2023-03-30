@@ -13,9 +13,9 @@ describe('fetchFeeData', () => {
     expect(Object.keys(result)).toMatchInlineSnapshot(`
       [
         "lastBaseFeePerGas",
+        "gasPrice",
         "maxFeePerGas",
         "maxPriorityFeePerGas",
-        "gasPrice",
         "formatted",
       ]
     `)
@@ -27,22 +27,22 @@ describe('fetchFeeData', () => {
       expect(Object.keys(result)).toMatchInlineSnapshot(`
         [
           "lastBaseFeePerGas",
+          "gasPrice",
           "maxFeePerGas",
           "maxPriorityFeePerGas",
-          "gasPrice",
           "formatted",
         ]
       `)
     })
 
     it('formatUnits', async () => {
-      const result = await fetchFeeData({ formatUnits: 'ether' })
+      const result = await fetchFeeData({ unit: 18 })
       expect(Object.keys(result)).toMatchInlineSnapshot(`
         [
           "lastBaseFeePerGas",
+          "gasPrice",
           "maxFeePerGas",
           "maxPriorityFeePerGas",
-          "gasPrice",
           "formatted",
         ]
       `)

@@ -8,6 +8,8 @@ import {
 } from 'viem'
 
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
+import type { Unit } from '../../types'
+import { getUnit } from '../../utils'
 import { readContracts } from '../contracts'
 
 export type FetchTokenArgs = {
@@ -16,7 +18,7 @@ export type FetchTokenArgs = {
   /** Chain id to use for provider */
   chainId?: number
   /** Units for formatting output */
-  unit?: number
+  formatUnits?: Unit
 }
 export type FetchTokenResult = {
   address: Address
@@ -32,7 +34,7 @@ export type FetchTokenResult = {
 export async function fetchToken({
   address,
   chainId,
-  unit = 18,
+  formatUnits: unit = 18,
 }: FetchTokenArgs): Promise<FetchTokenResult> {
   type FetchToken_ = {
     abi: typeof erc20ABI | typeof erc20ABI_bytes32
@@ -55,7 +57,7 @@ export async function fetchToken({
       name: name as string, // protect against `ResolvedConfig['BytesType']`
       symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
       totalSupply: {
-        formatted: formatUnits(totalSupply, unit),
+        formatted: formatUnits(totalSupply, getUnit(unit)),
         value: totalSupply,
       },
     }

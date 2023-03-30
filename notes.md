@@ -1,7 +1,5 @@
 Breaking changes:
 
-- `fetchBalance`
-  - Removed `formatUnits` in favor of `units` config option.
 - `signMessage`
   - `message` no longer accepts byte array.
   - Removed `UserRejectedRequestError` in favor of viem's internal error
@@ -17,8 +15,6 @@ Breaking changes:
   - Removed `overrides` in favor of `blockNumber` & `blockTag`
 - `waitForTransaction`
   - Replaced `onSpeedUp` with `onReplaced`
-- `fetchToken`
-  - Removed `formatUnits` in favor of `units` config option.
 - `signTypedData`
   - `value` renamed to `message`
   - `primaryType` is required

@@ -171,6 +171,7 @@ export {
   configureChains,
   deepEqual,
   deserialize,
+  getUnit,
   minimizeContractInterface,
   normalizeChainId,
   parseContractResult,

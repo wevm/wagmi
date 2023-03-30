@@ -85,6 +85,8 @@ export type Signer<
   TAccount extends Account = Account,
 > = WalletClient<TTransport, TChain, TAccount>
 
+export type Unit = 'ether' | 'gwei' | 'wei' | number
+
 declare global {
   interface Window {
     ethereum?: Ethereum

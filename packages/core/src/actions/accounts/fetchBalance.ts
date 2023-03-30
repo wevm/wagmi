@@ -9,6 +9,8 @@ import {
 
 import { getClient } from '../../client'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
+import type { Unit } from '../../types'
+import { getUnit } from '../../utils'
 import { readContracts } from '../contracts'
 import { getProvider } from '../providers'
 
@@ -18,7 +20,7 @@ export type FetchBalanceArgs = {
   /** Chain id to use for provider */
   chainId?: number
   /** Units for formatting output */
-  unit?: number
+  formatUnits?: Unit
   /** ERC-20 address */
   token?: Address
 }
@@ -33,7 +35,7 @@ export type FetchBalanceResult = {
 export async function fetchBalance({
   address,
   chainId,
-  unit,
+  formatUnits: unit,
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
   const client = getClient()
@@ -59,7 +61,7 @@ export async function fetchBalance({
       })
       return {
         decimals,
-        formatted: formatUnits(value ?? '0', unit ?? decimals),
+        formatted: formatUnits(value ?? '0', getUnit(unit ?? decimals)),
         symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
         value,
       }
