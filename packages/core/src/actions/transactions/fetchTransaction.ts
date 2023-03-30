@@ -1,16 +1,14 @@
-import type { providers } from 'ethers'
+import type { GetTransactionReturnType, Hex } from 'viem'
 
-import type { Hash } from '../../types'
 import { getProvider } from '../providers'
 
 export type FetchTransactionArgs = {
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
-  /** Transaction hash */
-  hash: Hash
+  hash: Hex
 }
 
-export type FetchTransactionResult = providers.TransactionResponse
+export type FetchTransactionResult = GetTransactionReturnType
 
 /**
  * @description Fetches transaction for hash
@@ -28,5 +26,5 @@ export async function fetchTransaction({
   hash,
 }: FetchTransactionArgs): Promise<FetchTransactionResult> {
   const provider = getProvider({ chainId })
-  return provider.getTransaction(hash)
+  return provider.getTransaction({ hash })
 }

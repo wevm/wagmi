@@ -36,7 +36,7 @@ describe('fetchFeeData', () => {
     })
 
     it('formatUnits', async () => {
-      const result = await fetchFeeData({ unit: 18 })
+      const result = await fetchFeeData({ formatUnits: 'ether' })
       expect(Object.keys(result)).toMatchInlineSnapshot(`
         [
           "lastBaseFeePerGas",
