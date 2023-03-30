@@ -4,7 +4,7 @@ export type FetchBlockNumberArgs = {
   chainId?: number
 }
 
-export type FetchBlockNumberResult = number
+export type FetchBlockNumberResult = bigint
 
 export async function fetchBlockNumber({
   chainId,

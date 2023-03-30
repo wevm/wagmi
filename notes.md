@@ -19,6 +19,11 @@ Breaking changes:
   - Replaced `onSpeedUp` with `onReplaced`
 - `fetchToken`
   - Removed `formatUnits` in favor of `units` config option.
+- `signTypedData`
+  - `value` renamed to `message`
+  - `primaryType` is required
+- `fetchBlockNumber`
+  - now bigint
 
 TODO:
 
