@@ -6,6 +6,7 @@ import {
   setupClient,
   wagmiContractConfig,
 } from '../../../test'
+import { mainnet } from '../../chains'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -42,6 +43,66 @@ describe('writeContract', () => {
     })
 
     expect(hash).toBeDefined()
+  })
+
+  describe('args', () => {
+    describe('chainId', async () => {
+      it('prepared', async () => {
+        await connect({ connector })
+        const config = await prepareWriteContract({
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          args: [getRandomTokenId()],
+          chainId: mainnet.id,
+        })
+        expect(config.chainId).toBe(mainnet.id)
+        const { hash } = await writeContract(config)
+
+        expect(hash).toBeDefined()
+      })
+
+      it('unprepared', async () => {
+        await connect({ connector })
+        const { hash } = await writeContract({
+          ...wagmiContractConfig,
+          mode: 'recklesslyUnprepared',
+          functionName: 'mint',
+          args: [getRandomTokenId()],
+          chainId: mainnet.id,
+        })
+
+        expect(hash).toBeDefined()
+      })
+    })
+
+    describe('gas', async () => {
+      it('prepared', async () => {
+        await connect({ connector })
+        const config = await prepareWriteContract({
+          ...wagmiContractConfig,
+          functionName: 'mint',
+          args: [getRandomTokenId()],
+          gas: 69_420n,
+        })
+        expect(config.request.gas).toBe(69_420n)
+        const { hash } = await writeContract(config)
+
+        expect(hash).toBeDefined()
+      })
+
+      it('unprepared', async () => {
+        await connect({ connector })
+        const { hash } = await writeContract({
+          ...wagmiContractConfig,
+          mode: 'recklesslyUnprepared',
+          functionName: 'mint',
+          args: [getRandomTokenId()],
+          gas: 69_420n,
+        })
+
+        expect(hash).toBeDefined()
+      })
+    })
   })
 
   describe('errors', () => {
@@ -104,6 +165,7 @@ describe('writeContract', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
 
+    // TODO(viem-migration): refactor error message.
     it('contract function not found', async () => {
       await connect({ connector })
       await expect(() =>
@@ -114,9 +176,11 @@ describe('writeContract', () => {
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-        "Function \\"wagmi\\" on contract \\"0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2\\" does not exist.
+        "Function \\"wagmi\\" not found on ABI.
+        Make sure you are using the correct ABI and that the function exists on it.
 
-        Etherscan: https://etherscan.io/address/0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2#readContract"
+        Docs: https://viem.sh/docs/contract/encodeFunctionData.html
+        Version: viem@0.1.23"
       `)
     })
   })

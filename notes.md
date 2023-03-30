@@ -1,5 +1,7 @@
 Breaking changes:
 
+- General
+  - `gasLimit` is now `gas`
 - `signMessage`
   - `message` no longer accepts byte array.
   - Removed `UserRejectedRequestError` in favor of viem's internal error
@@ -22,6 +24,13 @@ Breaking changes:
   - now bigint
 - `watchPendingTransactions`
   - callback now returns array of transactions
+- `prepareWriteTransaction`
+  - Removed `abi`, `address`, `functionName` from return value, they are now in `request`.
+  - `request` now returns shape of viem's `WriteContractParameters` instead of ethers' `TransactionRequest`.
+- `writeTransaction`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `account`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+    - `from` is now `account`
+  - `wait` has been removed from return type, use `waitForTransaction` instead.
 
 TODO:
 

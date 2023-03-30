@@ -1,30 +1,26 @@
-import type { Abi, Address, ExtractAbiFunction, Narrow } from 'abitype'
-import type { PopulatedTransaction } from 'ethers'
+import type { Abi } from 'abitype'
+import type {
+  Chain,
+  WriteContractParameters,
+  WriteContractReturnType,
+} from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
 import type { Signer } from '../../types'
-import type {
-  GetArgs,
-  GetFunctionName,
-  GetOverridesForAbiStateMutability,
-} from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
-import type { SendTransactionResult } from '../transactions'
-import { sendTransaction } from '../transactions'
+import type { PrepareWriteContractConfig } from './prepareWriteContract'
 import { prepareWriteContract } from './prepareWriteContract'
 
 export type WriteContractMode = 'prepared' | 'recklesslyUnprepared'
 
-type Request = PopulatedTransaction & {
-  to: Address
-  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-}
-
 export type WriteContractPreparedArgs<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-> = {
+  TAbi extends Abi | readonly unknown[] = readonly unknown[],
+  TFunctionName extends string = string,
+> = Omit<
+  WriteContractParameters<TAbi, TFunctionName, Chain>,
+  'abi' | 'account' | 'address' | 'chain' | 'functionName' | 'args'
+> & {
   /**
    * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
    * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks),
@@ -35,23 +31,24 @@ export type WriteContractPreparedArgs<
    * via the {@link prepareWriteContract} function
    * */
   mode: 'prepared'
-  /** Chain id to use for provider */
+  /** Chain id to use for provider. */
   chainId?: number
-  /** Request to submit transaction for */
-  request: Request
+  /** Write contract request. */
+  request: WriteContractParameters<TAbi, TFunctionName, Chain>
 
-  /** Contract ABI */
-  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
-  /** Contract address */
-  address: Address
-  /** Function to invoke on the contract */
-  functionName: GetFunctionName<TAbi, TFunctionName, 'nonpayable' | 'payable'>
+  abi?: never
+  address?: never
+  functionName?: never
+  args?: never
 }
 
 export type WriteContractUnpreparedArgs<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-> = {
+> = Omit<
+  WriteContractParameters<TAbi, TFunctionName, Chain>,
+  'account' | 'chain'
+> & {
   /**
    * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
    * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks),
@@ -64,23 +61,7 @@ export type WriteContractUnpreparedArgs<
   mode: 'recklesslyUnprepared'
   /** Chain id to use for provider */
   chainId?: number
-  /** Call overrides */
-  overrides?: GetOverridesForAbiStateMutability<
-    [TAbi, TFunctionName] extends [
-      infer TAbi_ extends Abi,
-      infer TFunctionName_ extends string,
-    ]
-      ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
-      : 'nonpayable' | 'payable'
-  >
-
-  /** Contract ABI */
-  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
-  /** Contract address */
-  address: Address
-  /** Function to invoke on the contract */
-  functionName: GetFunctionName<TAbi, TFunctionName, 'nonpayable' | 'payable'>
-} & GetArgs<TAbi, TFunctionName>
+}
 
 export type WriteContractArgs<
   TAbi extends Abi | readonly unknown[],
@@ -89,7 +70,7 @@ export type WriteContractArgs<
   | WriteContractPreparedArgs<TAbi, TFunctionName>
   | WriteContractUnpreparedArgs<TAbi, TFunctionName>
 
-export type WriteContractResult = SendTransactionResult
+export type WriteContractResult = { hash: WriteContractReturnType }
 
 /**
  * @description Function to call a contract write method.
@@ -126,31 +107,25 @@ export async function writeContract<
   if (!signer) throw new ConnectorNotFoundError()
   if (config.chainId) assertActiveChain({ chainId: config.chainId, signer })
 
-  let request: Request
+  let request: WriteContractParameters<TAbi, TFunctionName, Chain>
   if (config.mode === 'prepared') {
     request = config.request
   } else {
-    request = (
-      await prepareWriteContract<Abi | readonly unknown[], string, number>({
-        address: config.address,
-        args: config.args as unknown[],
-        chainId: config.chainId,
-        abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
-        functionName: config.functionName,
-        overrides: config.overrides,
-      })
-    ).request
+    const { chainId, mode, ...args } = config
+    const res = await prepareWriteContract(args as PrepareWriteContractConfig)
+    request = res.request as unknown as WriteContractParameters<
+      TAbi,
+      TFunctionName,
+      Chain
+    >
   }
 
-  const transaction = await sendTransaction({
-    request,
-    mode: 'prepared',
-  })
+  const hash = await signer.writeContract(request)
 
   /********************************************************************/
   /** END: iOS App Link cautious code.                                */
   /** Go nuts!                                                        */
   /********************************************************************/
 
-  return transaction
+  return { hash }
 }
