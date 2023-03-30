@@ -6,6 +6,7 @@ import {
   setupClient,
   wagmiContractConfig,
 } from '../../../test'
+import { mainnet } from '../../chains'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
@@ -21,20 +22,169 @@ describe('prepareWriteContract', () => {
 
   it('default', async () => {
     await connect({ connector })
-    const { request } = await prepareWriteContract({
+    const { request, ...rest } = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
-    const { data, gasLimit, ...rest } = request || {}
-    expect(data).toBeDefined()
-    expect(gasLimit).toBeDefined()
-    expect(rest).toMatchInlineSnapshot(`
+    const { abi, args, ...request_ } = request || {}
+    expect(abi).toBeDefined()
+    expect(args.length).toBe(1)
+    expect(request_).toMatchInlineSnapshot(`
       {
-        "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "to": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+        "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+        "functionName": "mint",
       }
     `)
+    expect(rest).toMatchInlineSnapshot(`
+        {
+          "chainId": undefined,
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+  })
+
+  describe('args', () => {
+    it('chainId', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        chainId: mainnet.id,
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "functionName": "mint",
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "chainId": 1,
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('gas', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        gas: 1_000_000n,
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "functionName": "mint",
+          "gas": 1000000n,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "chainId": undefined,
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('blockNumber', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        blockNumber: 42069n,
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": 42069n,
+          "functionName": "mint",
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "chainId": undefined,
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('blockTag', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        blockTag: 'latest',
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockTag": "latest",
+          "functionName": "mint",
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "chainId": undefined,
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('nonce', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        nonce: 1,
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "functionName": "mint",
+          "nonce": 1,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "chainId": undefined,
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
   })
 
   describe('errors', () => {
@@ -89,6 +239,7 @@ describe('prepareWriteContract', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
 
+    // TODO(viem-migration): tweak this error message to be wagmi specific
     it('contract function not found', async () => {
       await connect({ connector })
       await expect(() =>
@@ -98,9 +249,11 @@ describe('prepareWriteContract', () => {
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-        "Function \\"wagmi\\" on contract \\"0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2\\" does not exist.
+        "Function \\"wagmi\\" not found on ABI.
+        Make sure you are using the correct ABI and that the function exists on it.
 
-        Etherscan: https://etherscan.io/address/0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2#readContract"
+        Docs: https://viem.sh/docs/contract/encodeFunctionData.html
+        Version: viem@0.1.23"
       `)
     })
   })

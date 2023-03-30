@@ -1,5 +1,4 @@
 import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
-import { BigNumber } from 'ethers'
 import type { Hex } from 'viem'
 import { createPublicClient, createWalletClient, http, webSocket } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
@@ -205,5 +204,5 @@ export function getCrowdfundArgs([
 }
 
 export function getRandomTokenId() {
-  return BigNumber.from(Math.floor(Math.random() * 1000) + 69420)
+  return BigInt(Math.floor(Math.random() * 1000) + 69420)
 }
