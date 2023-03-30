@@ -54,7 +54,6 @@ export async function waitForTransaction({
       maxPriorityFeePerGas:
         txn.type === 'eip1559' ? txn.maxPriorityFeePerGas : undefined,
     } as CallParameters)) as unknown as string
-    console.log(code)
     const reason = hexToString(`0x${code.substring(138)}`)
     throw new Error(reason)
   }
