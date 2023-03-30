@@ -20,6 +20,7 @@ export function watchBlockNumber(
     unwatch = provider.watchBlockNumber({
       onBlockNumber: callback,
       emitOnBegin: true,
+      poll: true,
     })
   }
 

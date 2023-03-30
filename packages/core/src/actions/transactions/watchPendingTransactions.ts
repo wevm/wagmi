@@ -25,6 +25,7 @@ export function watchPendingTransactions(
         )
         callback(transactions)
       },
+      poll: true,
     })
   }
 
