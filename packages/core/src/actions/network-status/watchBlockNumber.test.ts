@@ -15,7 +15,7 @@ describe('watchBlockNumber', () => {
   })
 
   it('default', async () => {
-    const results: number[] = []
+    const results: bigint[] = []
     const unsubscribe = watchBlockNumber(
       {
         listen: false,
@@ -35,7 +35,7 @@ describe('watchBlockNumber', () => {
   describe('args', () => {
     describe('listen', () => {
       it('default', async () => {
-        const results: number[] = []
+        const results: bigint[] = []
         const unsubscribe = watchBlockNumber(
           {
             listen: true,
@@ -53,7 +53,7 @@ describe('watchBlockNumber', () => {
       })
 
       it('new block', async () => {
-        const results: number[] = []
+        const results: bigint[] = []
         const unsubscribe = watchBlockNumber(
           {
             listen: true,
@@ -63,7 +63,7 @@ describe('watchBlockNumber', () => {
 
         const signers = getSigners()
         const to = signers[1]
-        const toAddress = await to?.getAddress()
+        const toAddress = to?.account.address
 
         await connect({ connector: client.connectors[0]! })
         await sendTransaction({
@@ -79,13 +79,13 @@ describe('watchBlockNumber', () => {
           setTimeout(() => res(''), provider.pollingInterval + 50),
         )
 
-        expect(results.length).toEqual(4)
+        expect(results.length).toEqual(2)
         expect(results[results.length - 1]! > results[0]!).toBeTruthy()
         unsubscribe()
       })
 
       it('unsubscribes + resubscribes', async () => {
-        const results: number[] = []
+        const results: bigint[] = []
         let unsubscribe = watchBlockNumber(
           {
             listen: true,
@@ -96,7 +96,7 @@ describe('watchBlockNumber', () => {
 
         const signers = getSigners()
         const to = signers[1]
-        const toAddress = await to?.getAddress()
+        const toAddress = to?.account.address
 
         await connect({ connector: client.connectors[0]! })
         await sendTransaction({

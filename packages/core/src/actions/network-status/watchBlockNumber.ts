@@ -1,11 +1,9 @@
 import { shallow } from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import type { Provider } from '../../types'
-import { debounce } from '../../utils'
+import type { Provider, WebSocketProvider } from '../../types'
 import { getProvider, getWebSocketProvider } from '../providers'
 import type { FetchBlockNumberResult } from './fetchBlockNumber'
-import { fetchBlockNumber } from './fetchBlockNumber'
 
 export type WatchBlockNumberArgs = { chainId?: number; listen: boolean }
 export type WatchBlockNumberCallback = (
@@ -16,20 +14,13 @@ export function watchBlockNumber(
   args: WatchBlockNumberArgs,
   callback: WatchBlockNumberCallback,
 ) {
-  // We need to debounce the listener as we want to opt-out
-  // of the behavior where ethers emits a "block" event for
-  // every block that was missed in between the `pollingInterval`.
-  // We are setting a wait time of 1 as emitting an event in
-  // ethers takes ~0.1ms.
-  const debouncedCallback = debounce(callback, 1)
-
-  let previousProvider: Provider
-  const createListener = (provider: Provider) => {
-    if (previousProvider) {
-      previousProvider?.off('block', debouncedCallback)
-    }
-    provider.on('block', debouncedCallback)
-    previousProvider = provider
+  let unwatch: () => void
+  const createListener = (provider: Provider | WebSocketProvider) => {
+    if (unwatch) unwatch()
+    unwatch = provider.watchBlockNumber({
+      onBlockNumber: callback,
+      emitOnBegin: true,
+    })
   }
 
   const provider_ =
@@ -37,7 +28,6 @@ export function watchBlockNumber(
     getProvider({ chainId: args.chainId })
   if (args.listen) createListener(provider_)
 
-  let active = true
   const client = getClient()
   const unsubscribe = client.subscribe(
     ({ provider, webSocketProvider }) => ({ provider, webSocketProvider }),
@@ -46,19 +36,13 @@ export function watchBlockNumber(
       if (args.listen && !args.chainId && provider_) {
         createListener(provider_)
       }
-
-      const blockNumber = await fetchBlockNumber({ chainId: args.chainId })
-      if (!active) return
-      callback(blockNumber)
     },
     {
       equalityFn: shallow,
     },
   )
   return () => {
-    active = false
     unsubscribe()
-    provider_?.off('block', debouncedCallback)
-    previousProvider?.off('block', debouncedCallback)
+    unwatch?.()
   }
 }

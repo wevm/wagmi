@@ -263,9 +263,12 @@ export class Client<
     return this.data
   }
 
-  getProvider({ bust, chainId }: { bust?: boolean; chainId?: number } = {}) {
-    let provider_ = this.providers.get(chainId ?? -1)
-    if (provider_ && !bust) return provider_
+  getProvider({ chainId }: { bust?: boolean; chainId?: number } = {}) {
+    let provider_ = this.providers.get(-1)
+    if (provider_ && provider_?.chain.id === chainId) return provider_
+
+    provider_ = this.providers.get(chainId ?? -1)
+    if (provider_) return provider_
 
     const { provider } = this.config
     provider_ =
@@ -275,12 +278,13 @@ export class Client<
     return provider_
   }
 
-  getWebSocketProvider({
-    bust,
-    chainId,
-  }: { bust?: boolean; chainId?: number } = {}) {
-    let webSocketProvider_ = this.webSocketProviders.get(chainId ?? -1)
-    if (webSocketProvider_ && !bust) return webSocketProvider_
+  getWebSocketProvider({ chainId }: { chainId?: number } = {}) {
+    let webSocketProvider_ = this.webSocketProviders.get(-1)
+    if (webSocketProvider_ && webSocketProvider_?.chain.id === chainId)
+      return webSocketProvider_
+
+    webSocketProvider_ = this.webSocketProviders.get(chainId ?? -1)
+    if (webSocketProvider_) return webSocketProvider_
 
     const { webSocketProvider } = this.config
     webSocketProvider_ =
@@ -335,9 +339,8 @@ export class Client<
         (chainId) => {
           this.setState((x) => ({
             ...x,
-            provider: this.getProvider({ bust: true, chainId }),
+            provider: this.getProvider({ chainId }),
             webSocketProvider: this.getWebSocketProvider({
-              bust: true,
               chainId,
             }),
           }))
