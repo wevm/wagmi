@@ -1,4 +1,3 @@
-import type { Address } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
 import { act, getSigners, renderHook } from '../../../test'
@@ -94,7 +93,7 @@ describe('useEnsName', () => {
       })
 
       it('does not have name', async () => {
-        const address = (await getSigners()[0]?.getAddress()) as Address
+        const address = getSigners()[0]?.account.address
         const { result, waitFor } = renderHook(() => useEnsName({ address }))
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())

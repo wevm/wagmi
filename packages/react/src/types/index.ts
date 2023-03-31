@@ -11,12 +11,11 @@ import type {
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import type { BigNumber } from 'ethers'
 
 declare module 'abitype' {
   export interface Config {
     // TODO: Drop `BigNumber` once ethers supports `bigint` natively
-    BigIntType: BigNumber
+    BigIntType: bigint
     IntType: number
   }
 }
