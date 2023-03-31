@@ -1,4 +1,4 @@
-import { parseEther } from 'ethers/lib/utils.js'
+import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
@@ -14,19 +14,16 @@ describe('waitForTransaction', () => {
   })
 
   describe('args', () => {
-    // TODO(viem-migration): unskip once sendTransaction implemented
-    it.skip('chainId', async () => {
+    it('chainId', async () => {
       await connect({ connector: client.connectors[0]! })
 
       const signers = getSigners()
       const to = signers[1]
       const toAddress = to?.account.address
-      const fromAddress = client.data?.account
 
       const result = await sendTransaction({
         mode: 'recklesslyUnprepared',
         request: {
-          from: fromAddress,
           to: toAddress,
           value: parseEther('1'),
         },
@@ -39,19 +36,16 @@ describe('waitForTransaction', () => {
       expect(receipt.transactionHash).toEqual(result.hash)
     })
 
-    // TODO(viem-migration): unskip once sendTransaction implemented
-    it.skip('hash', async () => {
+    it('hash', async () => {
       await connect({ connector: client.connectors[0]! })
 
       const signers = getSigners()
       const to = signers[1]
       const toAddress = to?.account.address
-      const fromAddress = client.data?.account
 
       const result = await sendTransaction({
         mode: 'recklesslyUnprepared',
         request: {
-          from: fromAddress,
           to: toAddress,
           value: parseEther('1'),
         },

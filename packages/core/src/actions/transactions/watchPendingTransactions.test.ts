@@ -1,4 +1,4 @@
-import { parseEther } from 'ethers/lib/utils.js'
+import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { sendTransaction } from '.'
