@@ -36,9 +36,9 @@ function queryKey({
 }
 
 function queryFn({
-  onSpeedUp,
+  onReplaced,
 }: {
-  onSpeedUp?: WaitForTransactionArgs['onSpeedUp']
+  onReplaced?: WaitForTransactionArgs['onReplaced']
 }) {
   return ({
     queryKey: [{ chainId, confirmations, hash, timeout }],
@@ -48,7 +48,7 @@ function queryFn({
       chainId,
       confirmations,
       hash,
-      onSpeedUp,
+      onReplaced,
       timeout,
     })
   }
@@ -65,7 +65,7 @@ export function useWaitForTransaction({
   staleTime,
   suspense,
   onError,
-  onSpeedUp,
+  onReplaced,
   onSettled,
   onSuccess,
 }: UseWaitForTransactionArgs & UseWaitForTransactionConfig = {}) {
@@ -73,7 +73,7 @@ export function useWaitForTransaction({
 
   return useQuery(
     queryKey({ chainId, confirmations, hash, scopeKey, timeout }),
-    queryFn({ onSpeedUp }),
+    queryFn({ onReplaced }),
     {
       cacheTime,
       enabled: Boolean(enabled && hash),

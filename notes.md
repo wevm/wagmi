@@ -35,6 +35,8 @@ Breaking changes:
   - No longer returns `gasLimit` – wallets will calculate this instead.
 - `watchContractEvent`
   - callback now returns array of event logs, rather than positional decoded args + log.
+- `useWaitForTransaction`
+  - `onSpeedUp` has been removed in favor of `onReplaced`
 
 TODO:
 
