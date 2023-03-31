@@ -1,26 +1,27 @@
-import type { Abi } from 'abitype'
+import type { ContractConfig } from 'viem'
 
 import { getClient } from '../../client'
-import type { Contract } from '../../types/contracts'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { MulticallConfig, MulticallResult } from './multicall'
 import { multicall } from './multicall'
 
-export type WatchMulticallConfig<TContracts extends Contract[]> =
-  MulticallConfig<TContracts> & {
-    listenToBlock?: boolean
-  }
-export type WatchMulticallCallback<TContracts extends Contract[]> = (
-  results: MulticallResult<TContracts>,
-) => void
+export type WatchMulticallConfig<
+  TContracts extends ContractConfig[] = ContractConfig[],
+  TAllowFailure extends boolean = true,
+> = MulticallConfig<TContracts, TAllowFailure> & {
+  listenToBlock?: boolean
+}
+export type WatchMulticallCallback<
+  TContracts extends ContractConfig[] = ContractConfig[],
+  TAllowFailure extends boolean = true,
+> = (results: MulticallResult<TContracts, TAllowFailure>) => void
 
 export function watchMulticall<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+  TContracts extends ContractConfig[] = ContractConfig[],
+  TAllowFailure extends boolean = true,
 >(
-  config: WatchMulticallConfig<TContracts>,
-  callback: WatchMulticallCallback<TContracts>,
+  config: WatchMulticallConfig<TContracts, TAllowFailure>,
+  callback: WatchMulticallCallback<TContracts, TAllowFailure>,
 ) {
   const client = getClient()
 
