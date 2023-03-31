@@ -1,5 +1,4 @@
 import type { ResolvedConfig } from 'abitype'
-import { BigNumber } from 'ethers'
 import { assertType, describe } from 'vitest'
 
 import { mlootContractConfig } from '../../../test'
@@ -10,7 +9,7 @@ describe('watchReadContract', () => {
     {
       ...mlootContractConfig,
       functionName: 'tokenOfOwnerByIndex',
-      args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
+      args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
     },
     (result) => {
       // ^?
@@ -34,7 +33,7 @@ describe('watchReadContract', () => {
         },
       ],
       functionName: 'tokenOfOwnerByIndex',
-      args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
+      args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
     },
     (result) => {
       // ^?

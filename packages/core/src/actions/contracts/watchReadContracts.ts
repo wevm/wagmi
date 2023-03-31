@@ -1,26 +1,27 @@
-import type { Abi } from 'abitype'
+import type { ContractConfig } from 'viem'
 
 import { getClient } from '../../client'
-import type { Contract } from '../../types/contracts'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { ReadContractsConfig, ReadContractsResult } from './readContracts'
 import { readContracts } from './readContracts'
 
-export type WatchReadContractsConfig<TContracts extends Contract[]> =
-  ReadContractsConfig<TContracts> & {
-    listenToBlock?: boolean
-  }
-export type WatchReadContractsCallback<TContracts extends Contract[]> = (
-  results: ReadContractsResult<TContracts>,
-) => void
+export type WatchReadContractsConfig<
+  TContracts extends ContractConfig[] = ContractConfig[],
+  TAllowFailure extends boolean = true,
+> = ReadContractsConfig<TContracts, TAllowFailure> & {
+  listenToBlock?: boolean
+}
+export type WatchReadContractsCallback<
+  TContracts extends ContractConfig[] = ContractConfig[],
+  TAllowFailure extends boolean = true,
+> = (results: ReadContractsResult<TContracts, TAllowFailure>) => void
 
 export function watchReadContracts<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+  TContracts extends ContractConfig[],
+  TAllowFailure extends boolean = true,
 >(
-  config: WatchReadContractsConfig<TContracts>,
-  callback: WatchReadContractsCallback<TContracts>,
+  config: WatchReadContractsConfig<TContracts, TAllowFailure>,
+  callback: WatchReadContractsCallback<TContracts, TAllowFailure>,
 ) {
   const client = getClient()
 

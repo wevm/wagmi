@@ -17,7 +17,7 @@ export type WatchMulticallCallback<
 > = (results: MulticallResult<TContracts, TAllowFailure>) => void
 
 export function watchMulticall<
-  TContracts extends ContractConfig[] = ContractConfig[],
+  TContracts extends ContractConfig[],
   TAllowFailure extends boolean = true,
 >(
   config: WatchMulticallConfig<TContracts, TAllowFailure>,
