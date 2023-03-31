@@ -114,7 +114,7 @@ describe('useFeeData', () => {
 
     it('formatUnits', async () => {
       const { result, waitFor } = renderHook(() =>
-        useFeeData({ formatUnits: 'kwei' }),
+        useFeeData({ formatUnits: 'wei' }),
       )
 
       await waitFor(() => expect(result.current.isSuccess).toBeTruthy())

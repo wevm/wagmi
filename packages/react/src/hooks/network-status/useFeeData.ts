@@ -32,7 +32,7 @@ export function useFeeData({
   cacheTime,
   chainId: chainId_,
   enabled = true,
-  formatUnits = 'wei',
+  formatUnits = 'gwei',
   scopeKey,
   staleTime,
   suspense,
