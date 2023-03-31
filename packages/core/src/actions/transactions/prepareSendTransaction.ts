@@ -1,6 +1,5 @@
-import type { Address } from 'abitype'
-import type { providers } from 'ethers'
-import { isAddress } from 'ethers/lib/utils.js'
+import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
+import { isAddress } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
 import type { Signer } from '../../types'
@@ -12,18 +11,15 @@ export type PrepareSendTransactionArgs<TSigner extends Signer = Signer> = {
   /** Chain ID used to validate if the signer is connected to the target chain */
   chainId?: number
   /** Request data to prepare the transaction */
-  request: providers.TransactionRequest & {
-    to: NonNullable<providers.TransactionRequest['to']>
+  request: Omit<SendTransactionParameters<Chain, Account>, 'to'> & {
+    to?: string
   }
   signer?: TSigner | null
 }
 
 export type PrepareSendTransactionResult = {
   chainId?: number
-  request: providers.TransactionRequest & {
-    to: Address
-    gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
-  }
+  request: SendTransactionParameters<Chain, Account>
   mode: 'prepared'
 }
 
@@ -52,20 +48,15 @@ export async function prepareSendTransaction({
   if (!signer) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId, signer })
 
-  const [to, gasLimit] = await Promise.all([
-    isAddress(request.to)
-      ? Promise.resolve(request.to)
-      : fetchEnsAddress({ name: request.to }),
-    request.gasLimit
-      ? Promise.resolve(request.gasLimit)
-      : signer.estimateGas(request),
-  ])
-
-  if (!to) throw new Error('Could not resolve ENS name')
+  const to =
+    (request.to && !isAddress(request.to)
+      ? await fetchEnsAddress({ name: request.to })
+      : request.to) || undefined
+  if (to && !isAddress(to)) throw new Error('Invalid address')
 
   return {
     ...(chainId ? { chainId } : {}),
-    request: { ...request, gasLimit, to },
+    request: { ...request, to: to as Address | undefined },
     mode: 'prepared',
   }
 }

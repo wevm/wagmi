@@ -31,6 +31,8 @@ Breaking changes:
   - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `account`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
     - `from` is now `account`
   - `wait` has been removed from return type, use `waitForTransaction` instead.
+- `prepareSendTransaction`
+  - No longer returns `gasLimit` – wallets will calculate this instead.
 
 TODO:
 
