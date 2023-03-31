@@ -12,6 +12,6 @@ export function useWebSocketProvider<
     () => getWebSocketProvider<TWebSocketProvider>({ chainId }),
     () => getWebSocketProvider<TWebSocketProvider>({ chainId }),
     (x) => x,
-    (a, b) => a?.network.chainId === b?.network.chainId,
+    (a, b) => a?.chain.id === b?.chain.id,
   )
 }
