@@ -21,7 +21,7 @@ describe('fetchSigner', () => {
 
     it('connected', async () => {
       await connect({ connector })
-      const { uid: _uid, ...signer } = await fetchSigner()
+      const { uid: _uid, ...signer } = (await fetchSigner()) || {}
       expect(signer).toMatchInlineSnapshot(`
         {
           "account": {
