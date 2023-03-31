@@ -42,9 +42,7 @@ describe('assertActiveChain', () => {
 
   it('errors when signer is on wrong chain', async () => {
     const signer = getSigners()[0]!
-    ;(
-      signer.provider as unknown as { network: { chainId: number } }
-    ).network.chainId = 1
+    signer.chain.id = 1
     await connect({
       chainId: 5,
       connector: new MockConnector({
