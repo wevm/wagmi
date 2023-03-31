@@ -1,4 +1,4 @@
-import type { ResolvedConfig } from 'abitype'
+import type { Log } from 'viem'
 import { assertType, describe } from 'vitest'
 
 import { mlootContractConfig } from '../../../test'
@@ -12,7 +12,7 @@ describe('watchContractEvent', () => {
     },
     (result) => {
       // ^?
-      assertType<ResolvedConfig['AddressType']>(result)
+      assertType<Log[]>(result)
     },
   )
 

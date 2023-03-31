@@ -33,6 +33,8 @@ Breaking changes:
   - `wait` has been removed from return type, use `waitForTransaction` instead.
 - `prepareSendTransaction`
   - No longer returns `gasLimit` – wallets will calculate this instead.
+- `watchContractEvent`
+  - callback now returns array of event logs, rather than positional decoded args + log.
 
 TODO:
 
