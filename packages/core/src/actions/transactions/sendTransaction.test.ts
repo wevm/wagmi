@@ -1,5 +1,4 @@
-import { BigNumber } from 'ethers'
-import { parseEther } from 'ethers/lib/utils.js'
+import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { getSigners, setupClient } from '../../../test'
@@ -18,39 +17,27 @@ describe('sendTransaction', () => {
     it('"prepared" request', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const signers = getSigners()
-      const to = signers[1]
-      const toAddress = await to?.getAddress()
-
       const config = await prepareSendTransaction({
         request: {
-          to: toAddress as string,
+          to: 'jxom.eth',
           value: parseEther('10'),
         },
       })
-      const { hash, wait } = await sendTransaction({
-        ...config,
-      })
+      const { hash } = await sendTransaction(config)
       expect(hash).toBeDefined()
-      expect(await wait()).toBeDefined()
     })
 
     it('"recklessly unprepared" request', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const signers = getSigners()
-      const to = signers[1]
-      const toAddress = await to?.getAddress()
-
-      const { hash, wait } = await sendTransaction({
+      const { hash } = await sendTransaction({
         mode: 'recklesslyUnprepared',
         request: {
-          to: toAddress as string,
+          to: 'jxom.eth',
           value: parseEther('10'),
         },
       })
       expect(hash).toBeDefined()
-      expect(await wait()).toBeDefined()
     })
   })
 
@@ -60,7 +47,7 @@ describe('sendTransaction', () => {
 
       const signers = getSigners()
       const to = signers[1]
-      const toAddress = (await to?.getAddress()) || ''
+      const toAddress = to?.account.address || ''
 
       const config = await prepareSendTransaction({
         request: {
@@ -84,7 +71,7 @@ describe('sendTransaction', () => {
 
       const signers = getSigners()
       const to = signers[1]
-      const toAddress = (await to?.getAddress()) || ''
+      const toAddress = to?.account.address || ''
 
       const config = await prepareSendTransaction({
         request: {
@@ -109,63 +96,31 @@ describe('sendTransaction', () => {
       const config = await prepareSendTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-          value: BigNumber.from('10000000000000000000000'), // 100,000 ETH
+          value: parseEther('100000'),
         },
       })
 
-      try {
-        await sendTransaction({
-          ...config,
-        })
-      } catch (error) {
-        expect((error as Error).message).toContain(
-          'insufficient funds for intrinsic transaction cost',
-        )
-      }
-    })
+      await expect(() => sendTransaction(config)).rejects
+        .toThrowErrorMatchingInlineSnapshot(`
+        "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
 
-    it('`to` undefined', async () => {
-      await connect({ connector: client.connectors[0]! })
+        This error could arise when the account does not have enough funds to:
+         - pay for the total gas fee,
+         - pay for the value to send.
+         
+        The cost of the transaction is calculated as \`gas * gas fee + value\`, where:
+         - \`gas\` is the amount of gas needed for transaction to execute,
+         - \`gas fee\` is the gas fee,
+         - \`value\` is the amount of ether to send to the recipient.
+         
+        Request Arguments:
+          from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+          to:     0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+          value:  100000 ETH
 
-      const config = await prepareSendTransaction({
-        request: {
-          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-          value: parseEther('10'),
-        },
-      })
-
-      expect(() =>
-        // @ts-expect-error – testing for JS consumers
-        sendTransaction({
-          ...config,
-          request: {
-            ...config.request,
-            to: undefined,
-          },
-        }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`"\`to\` is required"`)
-    })
-
-    it('`gasLimit` undefined', async () => {
-      await connect({ connector: client.connectors[0]! })
-
-      const config = await prepareSendTransaction({
-        request: {
-          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-          value: parseEther('10'),
-        },
-      })
-
-      expect(() =>
-        // @ts-expect-error - testing for JS consumers
-        sendTransaction({
-          ...config,
-          request: {
-            ...config.request,
-            gasLimit: undefined,
-          },
-        }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`"\`gasLimit\` is required"`)
+        Details: Insufficient funds for gas * price + value
+        Version: viem@0.1.23"
+      `)
     })
   })
 })

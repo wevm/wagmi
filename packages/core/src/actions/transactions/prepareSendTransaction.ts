@@ -1,3 +1,5 @@
+// TODO(viem-migration): deprecate this function.
+
 import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
 import { isAddress } from 'viem'
 

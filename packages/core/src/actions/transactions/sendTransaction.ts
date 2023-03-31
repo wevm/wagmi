@@ -1,11 +1,15 @@
-import type { Address } from 'abitype'
-import type { providers } from 'ethers'
+import type {
+  Account,
+  Chain,
+  SendTransactionParameters,
+  SendTransactionReturnType,
+} from 'viem'
 
-import type { EthersError, ProviderRpcError } from '../../errors'
-import { ConnectorNotFoundError, UserRejectedRequestError } from '../../errors'
-import type { Hash, Signer } from '../../types'
+import { ConnectorNotFoundError } from '../../errors'
+import type { Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
+import { prepareSendTransaction } from './prepareSendTransaction'
 
 export type SendTransactionPreparedRequest = {
   /**
@@ -18,15 +22,14 @@ export type SendTransactionPreparedRequest = {
    * */
   mode: 'prepared'
   /** The prepared request for sending a transaction. */
-  request: providers.TransactionRequest & {
-    to: Address
-    gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
-  }
+  request: SendTransactionParameters<Chain, Account>
 }
 export type SendTransactionUnpreparedRequest = {
   mode: 'recklesslyUnprepared'
   /** The unprepared request for sending a transaction. */
-  request: providers.TransactionRequest
+  request: Omit<SendTransactionParameters<Chain, Account>, 'to'> & {
+    to?: string
+  }
 }
 
 export type SendTransactionArgs = {
@@ -35,8 +38,7 @@ export type SendTransactionArgs = {
 } & (SendTransactionPreparedRequest | SendTransactionUnpreparedRequest)
 
 export type SendTransactionResult = {
-  hash: Hash
-  wait: providers.TransactionResponse['wait']
+  hash: SendTransactionReturnType
 }
 
 /**
@@ -71,41 +73,21 @@ export async function sendTransaction({
   const signer = await fetchSigner<Signer>()
   if (!signer) throw new ConnectorNotFoundError()
 
-  if (mode === 'prepared') {
-    if (!request.gasLimit) throw new Error('`gasLimit` is required')
-    if (!request.to) throw new Error('`to` is required')
-  }
-
   if (chainId) assertActiveChain({ chainId, signer })
 
-  try {
-    // Why don't we just use `signer.sendTransaction`?
-    // The `signer.sendTransaction` method performs async
-    // heavy operations (such as fetching block number)
-    // which is not really needed for our case.
-    // Having async heavy operations has side effects
-    // when using it in a click handler (iOS deep linking issues,
-    // delay to open wallet, etc).
-
-    const uncheckedSigner = (
-      signer as providers.JsonRpcSigner
-    ).connectUnchecked?.()
-    const { hash, wait } = await (uncheckedSigner ?? signer).sendTransaction(
-      request,
-    )
-
-    /********************************************************************/
-    /** END: iOS App Link cautious code.                                */
-    /** Go nuts!                                                        */
-    /********************************************************************/
-
-    return { hash: hash as Hash, wait }
-  } catch (error) {
-    if (
-      (error as ProviderRpcError).code === 4001 ||
-      (error as EthersError).code === 'ACTION_REJECTED'
-    )
-      throw new UserRejectedRequestError(error)
-    throw error
+  if (mode === 'recklesslyUnprepared') {
+    const res = await prepareSendTransaction({ chainId, request })
+    request = res.request
   }
+
+  const hash = await signer.sendTransaction(
+    request as SendTransactionParameters,
+  )
+
+  /********************************************************************/
+  /** END: iOS App Link cautious code.                                */
+  /** Go nuts!                                                        */
+  /********************************************************************/
+
+  return { hash }
 }
