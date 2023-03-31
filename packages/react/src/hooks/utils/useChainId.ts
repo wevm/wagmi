@@ -6,5 +6,5 @@ export type UseChainIdArgs = {
 
 export function useChainId({ chainId }: UseChainIdArgs = {}) {
   const provider = useProvider({ chainId })
-  return provider.network.chainId
+  return provider.chain.id
 }
