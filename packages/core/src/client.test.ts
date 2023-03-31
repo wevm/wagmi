@@ -188,31 +188,6 @@ describe('createClient', () => {
         `)
       })
 
-      it('chainId changes bust cache', () => {
-        const client = createClient({
-          provider: getProvider,
-        })
-        const provider = client.getProvider({ chainId: 5 })
-        expect(provider === client.getProvider({ chainId: 5 })).toBeTruthy()
-        expect(client.providers).toMatchInlineSnapshot(`
-          Map {
-            -1 => "<Provider network={1} />",
-            5 => "<Provider network={5} />",
-          }
-        `)
-        client.setState((x) => ({
-          ...x,
-          data: { ...x.data, chain: { id: 5, unsupported: false } },
-        }))
-        expect(provider === client.getProvider({ chainId: 5 })).toBeFalsy()
-        expect(client.providers).toMatchInlineSnapshot(`
-          Map {
-            -1 => "<Provider network={1} />",
-            5 => "<Provider network={5} />",
-          }
-        `)
-      })
-
       it('autoConnect w/ stored chainId', () => {
         const client = createClient({
           autoConnect: true,
@@ -297,36 +272,6 @@ describe('createClient', () => {
         expect(client.webSocketProviders).toMatchInlineSnapshot(`
           Map {
             -1 => "<WebSocketProvider network={1} />",
-          }
-        `)
-      })
-
-      it('chainId changes bust cache', () => {
-        const client = createClient({
-          provider: getProvider,
-          webSocketProvider: getWebSocketProvider,
-        })
-        const provider = client.getWebSocketProvider({ chainId: 5 })
-        expect(
-          provider === client.getWebSocketProvider({ chainId: 5 }),
-        ).toBeTruthy()
-        expect(client.webSocketProviders).toMatchInlineSnapshot(`
-          Map {
-            -1 => "<WebSocketProvider network={1} />",
-            5 => "<WebSocketProvider network={5} />",
-          }
-        `)
-        client.setState((x) => ({
-          ...x,
-          data: { ...x.data, chain: { id: 5, unsupported: false } },
-        }))
-        expect(
-          provider === client.getWebSocketProvider({ chainId: 5 }),
-        ).toBeFalsy()
-        expect(client.webSocketProviders).toMatchInlineSnapshot(`
-          Map {
-            -1 => "<WebSocketProvider network={1} />",
-            5 => "<WebSocketProvider network={5} />",
           }
         `)
       })

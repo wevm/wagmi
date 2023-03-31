@@ -1,7 +1,14 @@
 import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
 import type { Hex } from 'viem'
-import { createPublicClient, createWalletClient, http, webSocket } from 'viem'
+import {
+  createPublicClient,
+  createWalletClient,
+  custom,
+  http,
+  webSocket,
+} from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
+import { rpc } from 'viem/utils'
 
 import type { Chain } from '../src'
 import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
@@ -158,11 +165,25 @@ export const accounts = [
 
 export function getSigners() {
   const provider = getProvider()
+  provider.request = async ({ method, params }: any) => {
+    if (method === 'personal_sign') {
+      method = 'eth_sign'
+      params = [params[1], params[0]]
+    }
+
+    const { result } = await rpc.http(foundryMainnet.rpcUrls.default.http[0]!, {
+      body: {
+        method,
+        params,
+      },
+    })
+    return result
+  }
   return accounts.map((x) =>
     createWalletClient({
-      account: privateKeyToAccount(x.privateKey as Hex),
+      account: privateKeyToAccount(x.privateKey as Hex).address,
       chain: provider.chain,
-      transport: http(provider.transport.url),
+      transport: custom(provider),
     }),
   )
 }

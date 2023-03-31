@@ -267,6 +267,7 @@ importers:
       react-dom: ^18.1.0
       react-dom-17: npm:react-dom@17.0.2
       use-sync-external-store: ^1.2.0
+      viem: 0.2.0-0-2-0.20230329T025357
     dependencies:
       '@tanstack/query-sync-storage-persister': 4.27.1
       '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
@@ -285,6 +286,7 @@ importers:
       react-17: /react/17.0.2
       react-dom: 18.2.0_react@18.2.0
       react-dom-17: /react-dom/17.0.2_react@18.2.0
+      viem: 0.2.0-0-2-0.20230329T025357
 
   references/packages/chains:
     specifiers: {}
