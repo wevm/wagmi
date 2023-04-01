@@ -169,7 +169,7 @@ export function react(config: ReactConfig = {}): ReactResult {
             code = dedent`
             ${docString}
             export function ${name}(
-              config: Omit<UseContractConfig, 'abi'${omitted}>${typeParams} = {} as any,
+              config: Omit<UseContractConfig, 'abi'${omitted}>${typeParams} = {} ,
             ) {
               ${innerContent}
               return useContract(${innerHookConfig})
@@ -221,7 +221,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 TFunctionName extends string,
                 TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, TFunctionName>
               >(
-                config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>, 'abi'${omitted}>${typeParams} = {} ,
               ) {
                 ${innerContent}
                 return useContractRead(${innerHookConfig} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>)
@@ -277,7 +277,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                   code = dedent`
                   ${docString}
                   export function ${name}<TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, '${item.name}'>>(
-                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} ,
                   ) {
                     ${innerContent}
                     return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>)
@@ -340,10 +340,10 @@ export function react(config: ReactConfig = {}): ReactResult {
                   : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, TFunctionName> & {
                       abi?: never
                       ${typeParams_}
-                    } = {} as any,
+                    } = {} ,
               ) {
                 ${innerContent}
-                return useContractWrite<TMode, typeof ${contract.meta.abiName}, TFunctionName>(${innerHookConfig} as any)
+                return useContractWrite<TMode, typeof ${contract.meta.abiName}, TFunctionName>(${innerHookConfig} )
               }
               `
             } else
@@ -423,10 +423,10 @@ export function react(config: ReactConfig = {}): ReactResult {
                     : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, '${item.name}'> & {
                         abi?: never
                         ${unpreparedTypeParams}
-                      } = {} as any,
+                      } = {} ,
                   ) {
                     ${innerContent}
-                    return useContractWrite<TMode, typeof ${contract.meta.abiName}, '${item.name}'>(${config} as any)
+                    return useContractWrite<TMode, typeof ${contract.meta.abiName}, '${item.name}'>(${config} )
                   }
                   `
                 } else {
@@ -461,7 +461,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               export function ${name}<
                 TFunctionName extends string,
               >(
-                config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams} = {} ,
               ) {
                 ${innerContent}
                 return usePrepareContractWrite(${innerHookConfig} as UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName>)
@@ -516,7 +516,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                   code = dedent`
                   ${docString}
                   export function ${name}(
-                    config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                    config: Omit<UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'functionName'>${typeParams} = {} ,
                   ) {
                     ${innerContent}
                     return usePrepareContractWrite(${config} as UsePrepareContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}'>)
@@ -556,7 +556,7 @@ export function react(config: ReactConfig = {}): ReactResult {
               export function ${name}<
                 TEventName extends string,
               >(
-                config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, TEventName>, 'abi'${omitted}>${typeParams} = {} as any,
+                config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, TEventName>, 'abi'${omitted}>${typeParams} = {} ,
               ) {
                 ${innerContent}
                 return useContractEvent(${innerHookConfig} as UseContractEventConfig<typeof ${contract.meta.abiName}, TEventName>)
@@ -607,7 +607,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                   code = dedent`
                   ${docString}
                   export function ${name}(
-                    config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'eventName'>${typeParams} = {} as any,
+                    config: Omit<UseContractEventConfig<typeof ${contract.meta.abiName}, '${item.name}'>, 'abi'${omitted} | 'eventName'>${typeParams} = {} ,
                   ) {
                     ${innerContent}
                     return useContractEvent(${config} as UseContractEventConfig<typeof ${contract.meta.abiName}, '${item.name}'>)
