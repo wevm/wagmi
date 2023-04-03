@@ -7,6 +7,10 @@ Breaking changes:
   - Removed `UserRejectedRequestError` in favor of viem's internal error
 - `readContract`
   - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- `multicall`
+  - Changed structure of return type (`allowFailure: true` returns an array of `{ error, result, status }[]` instead of `Result[]`)
+  - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
 
 TODO:
 

@@ -20,7 +20,7 @@ export function getProvider({
   chains = testChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
+  const chain = chains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]
   const provider = createPublicClient({
     chain,
