@@ -16,10 +16,10 @@ const packagesDir = [
 ]
 const referencesDir = [path.join(__dirname, '..', 'references', 'packages')]
 
-/** @deprecated Script to generate & release a CJS escape hatch bundle. */
+/** Script to generate & release a CJS escape hatch bundle. */
 export async function main() {
   const { packages: packages_ } = getPackagesSync(path.join(__dirname, '..'))
-  const packages = packages_.filter((x) => x.dir.includes('cli'))
+  const packages = packages_.filter((x) => !x.dir.includes('plugins'))
 
   // 1. Prepare package package.jsons into CJS format.
   const preparedPackages = prepare({ packages })
@@ -120,6 +120,7 @@ function version({
 
 async function publish({ changedPackages }: { changedPackages: Package[] }) {
   for (const { dir } of changedPackages) {
+    if (dir.includes('cli')) continue
     if (referencesDir.some((i) => dir.startsWith(i))) return
     await execa('pnpm', ['publish', '--tag', 'cjs', '--no-git-checks'], {
       cwd: dir,
