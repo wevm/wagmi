@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.12.9
+
+### Patch Changes
+
+- [#2120](https://github.com/wagmi-dev/wagmi/pull/2120) [`664c2b16`](https://github.com/wagmi-dev/wagmi/commit/664c2b1690bdce1ad7a619ac8f673c168dec6529) Thanks [@jxom](https://github.com/jxom)! - Bumped React Query & ABIType dependencies
+
 ## 0.12.8
 
 ### Patch Changes
