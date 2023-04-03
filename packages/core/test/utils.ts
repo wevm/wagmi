@@ -1,18 +1,13 @@
 import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
-import { BigNumber, Wallet, providers } from 'ethers'
+import { BigNumber } from 'ethers'
+import type { Hex } from 'viem'
+import { createPublicClient, createWalletClient, http, webSocket } from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
 
 import type { Chain } from '../src'
 import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
 
 import type { mirrorCrowdfundContractConfig } from './constants'
-
-export function getNetwork(chain: Chain) {
-  return {
-    chainId: chain.id,
-    ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    name: chain.name,
-  }
-}
 
 export const foundryMainnet: Chain = {
   ...mainnet,
@@ -21,27 +16,23 @@ export const foundryMainnet: Chain = {
 
 export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
 
-class EthersProviderWrapper extends providers.StaticJsonRpcProvider {
-  toJSON() {
-    return `<Provider network={${this.network.chainId}} />`
-  }
-}
-
 export function getProvider({
   chains = testChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]
-  const provider = new EthersProviderWrapper(url, getNetwork(chain))
-  provider.pollingInterval = 1_000
-  return Object.assign(provider, { chains })
-}
-
-class EthersWebSocketProviderWrapper extends providers.WebSocketProvider {
-  toJSON() {
-    return `<WebSocketProvider network={${this.network.chainId}} />`
-  }
+  const provider = createPublicClient({
+    chain,
+    transport: http(url),
+    pollingInterval: 1_000,
+  })
+  return Object.assign(provider, {
+    chains,
+    toJSON() {
+      return `<Provider network={${chain.id}} />`
+    },
+  })
 }
 
 export function getWebSocketProvider({
@@ -50,16 +41,16 @@ export function getWebSocketProvider({
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]!.replace('http', 'ws')
-  const webSocketProvider = Object.assign(
-    new EthersWebSocketProviderWrapper(url, getNetwork(chain)),
-    { chains },
-  )
-  // Clean up WebSocketProvider immediately
-  // so handle doesn't stay open in test environment
-  webSocketProvider?.destroy().catch(() => {
-    return
+  const webSocketProvider = createPublicClient({
+    chain,
+    transport: webSocket(url),
   })
-  return webSocketProvider
+  return Object.assign(webSocketProvider, {
+    chains,
+    toJSON() {
+      return `<WebSocketProvider network={${chain.id}} />`
+    },
+  })
 }
 
 // Default accounts from Anvil
@@ -166,18 +157,15 @@ export const accounts = [
   },
 ]
 
-export class WalletSigner extends Wallet {
-  connectUnchecked(): providers.JsonRpcSigner {
-    const uncheckedSigner = (
-      this.provider as EthersProviderWrapper
-    ).getUncheckedSigner(this.address)
-    return uncheckedSigner
-  }
-}
-
 export function getSigners() {
   const provider = getProvider()
-  return accounts.map((x) => new WalletSigner(x.privateKey, provider))
+  return accounts.map((x) =>
+    createWalletClient({
+      account: privateKeyToAccount(x.privateKey as Hex),
+      chain: provider.chain,
+      transport: http(provider.transport.url),
+    }),
+  )
 }
 
 let crowdfundId = 0

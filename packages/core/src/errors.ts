@@ -142,8 +142,8 @@ export class ContractMethodDoesNotExistError extends Error {
     chainId?: number
     functionName: string
   }) {
-    const { chains, network } = getProvider()
-    const chain = chains?.find(({ id }) => id === (chainId || network.chainId))
+    const { chains, chain: activeChain } = getProvider()
+    const chain = chains?.find(({ id }) => id === (chainId || activeChain.id))
     const blockExplorer = chain?.blockExplorers?.default
     super(
       [

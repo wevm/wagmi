@@ -1,4 +1,4 @@
-import { getDefaultProvider } from 'ethers'
+import { createPublicClient, http } from 'viem'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -15,7 +15,9 @@ import { MockConnector } from './connectors/mock'
 import { createStorage, noopStorage } from './storage'
 
 const provider = () =>
-  Object.assign(getDefaultProvider(), { chains: testChains })
+  Object.assign(createPublicClient({ chain: mainnet, transport: http() }), {
+    chains: testChains,
+  })
 
 describe('createClient', () => {
   it('returns client', () => {
@@ -280,7 +282,6 @@ describe('createClient', () => {
           provider,
           webSocketProvider: getWebSocketProvider(),
         })
-        await client.webSocketProvider?.destroy()
         expect(client.webSocketProvider).toMatchInlineSnapshot(
           '"<WebSocketProvider network={1} />"',
         )

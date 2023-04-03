@@ -6,7 +6,16 @@ import type {
   TypedDataDomain,
   TypedDataToPrimitiveTypes,
 } from 'abitype'
-import type { Signer as BaseSigner, BigNumber, providers } from 'ethers'
+import type { BigNumber } from 'ethers'
+import type {
+  Account,
+  FallbackTransportConfig,
+  HttpTransport,
+  PublicClient,
+  Transport,
+  WalletClient,
+  WebSocketTransport,
+} from 'viem'
 
 import type { Chain } from '../chains'
 import type { units } from '../constants'
@@ -50,27 +59,34 @@ export type Hash = `0x${string}`
 
 export type ChainProviderFn<
   TChain extends Chain = Chain,
-  TProvider extends Provider = providers.BaseProvider,
-  TWebSocketProvider extends WebSocketProvider = providers.WebSocketProvider,
+  TProvider extends Provider = Provider,
+  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
 > = (chain: TChain) => {
   chain: TChain
   provider: () => ProviderWithFallbackConfig<TProvider>
   webSocketProvider?: () => TWebSocketProvider
 } | null
 
-export type FallbackProviderConfig = Omit<
-  providers.FallbackProviderConfig,
-  'provider'
->
+export type FallbackProviderConfig = FallbackTransportConfig
 export type ProviderWithFallbackConfig<TProvider extends Provider = Provider> =
   TProvider & FallbackProviderConfig
 
-export type Provider = providers.BaseProvider & { chains?: Chain[] }
-export type WebSocketProvider = providers.WebSocketProvider & {
+export type Provider<TChain extends Chain = Chain> = PublicClient<
+  HttpTransport,
+  TChain
+> & { chains?: Chain[] }
+export type WebSocketProvider<TChain extends Chain = Chain> = PublicClient<
+  WebSocketTransport,
+  TChain
+> & {
   chains?: Chain[]
 }
 
-export type Signer = BaseSigner
+export type Signer<
+  TTransport extends Transport = Transport,
+  TChain extends Chain = Chain,
+  TAccount extends Account = Account,
+> = WalletClient<TTransport, TChain, TAccount>
 
 export type Unit = (typeof units)[number]
 
