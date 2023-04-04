@@ -13,19 +13,18 @@ export function SSX() {
 
   React.useEffect(() => {
     const handler = async () => {
-      try {
-        const res = await fetch('/api/me')
-        const json = await res.json()
-        setAddress(json.address)
-      } catch (error) {
-        console.log({ error })
+      if (address) {
+        try {
+          const res = await fetch('/api/me')
+          const json = await res.json()
+          setAddress(json.address)
+        } catch (error) {
+          console.log({ error })
+        }
       }
     }
     handler()
-
-    window.addEventListener('focus', handler)
-    return () => window.removeEventListener('focus', handler)
-  }, [])
+  }, [address])
 
   const signedInContent = address ? (
     <Stack direction="horizontal" align="center" justify="center">

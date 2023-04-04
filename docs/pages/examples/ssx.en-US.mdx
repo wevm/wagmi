@@ -95,7 +95,11 @@ export default ssx
 The above is the minimal setup for SSX Server which has limited functionalities. You can specify a provider to get the full advantage of the server with the following:
 
 ```ts filename="pages/api/_ssx.ts"
-import { SSXServer } from '@spruceid/ssx-server'
+import {
+  SSXInfuraProviderNetworks,
+  SSXRPCProviders,
+  SSXServer,
+} from '@spruceid/ssx-server'
 
 const ssx = new SSXServer({
   providers: {
@@ -116,6 +120,20 @@ export default ssx
 A broad range of providers are supported, for more information check the [documentation](https://docs.ssx.id/reference/ssx-server).
 
 Second, create an API route for generating a random nonce. This is used to identify the session and prevent against [replay attacks](https://en.wikipedia.org/wiki/Replay_attack).
+
+`ironOptions` should look something like this:
+
+```ts filename="lib/iron.ts"
+import type { IronSessionOptions } from 'iron-session'
+
+export const ironOptions: IronSessionOptions = {
+  cookieName: 'siwe',
+  password: process.env.NEXT_IRON_PASSWORD as string,
+  cookieOptions: {
+    secure: process.env.NODE_ENV === 'production',
+  },
+}
+```
 
 ```ts filename="pages/api/ssx-nonce.ts" {11,12}
 import { withIronSessionApiRoute } from 'iron-session/next'
@@ -185,23 +203,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 export default withIronSessionApiRoute(handler, ironOptions)
 ```
 
-`ironOptions` should look something like this:
-
-```ts
-{
-  cookieName: 'siwe',
-  password: 'complex_password_at_least_32_characters_long',
-  cookieOptions: {
-    secure: process.env.NODE_ENV === 'production',
-  },
-}
-```
-
 Finally, add two simple API routes for retrieving the signed-in user:
 
 ```ts filename="pages/api/me.ts"
 import { withIronSessionApiRoute } from 'iron-session/next'
 import { NextApiRequest, NextApiResponse } from 'next'
+
+import { ironOptions } from '../../lib/iron'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req
@@ -247,9 +255,9 @@ export default withIronSessionApiRoute(handler, ironOptions)
 
 Now that the connect wallet logic and API routes are set up, we can sign in the user! Just setup the signIn and signOut buttons to call `ssx.signIn` and `ssx.signOut` respectively and you will be good to go.
 
-```tsx
+```tsx filename="components/SSXComponent.tsx"
 import * as React from 'react'
-import { useAccount, useNetwork, useSignMessage, useSigner } from 'wagmi'
+import { useAccount, useSigner } from 'wagmi'
 import { SSX } from '@spruceid/ssx'
 
 function SignInButton({
@@ -261,6 +269,7 @@ function SignInButton({
 }) {
   const [state, setState] = React.useState<{
     loading?: boolean
+    ssx?: SSX
   }>({})
 
   const { data: signer } = useSigner()
@@ -283,8 +292,6 @@ function SignInButton({
   }, [signer])
 
   const { address } = useAccount()
-  const { chain } = useNetwork()
-  const { signMessageAsync } = useSignMessage()
 
   const signIn = async () => {
     try {
@@ -308,7 +315,7 @@ function SignInButton({
       if (state.ssx) {
         const res = await state.ssx.signOut()
         setState((x) => ({ ...x, loading: false }))
-        onSuccess?.({ address: undefined })
+        onSuccess?.({ address: '' })
       } else {
         throw new Error('SSX is not initialized.')
       }
