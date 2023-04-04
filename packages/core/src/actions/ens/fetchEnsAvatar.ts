@@ -1,23 +1,20 @@
-import type { Address } from 'abitype'
-
+import { GetEnsAvatarReturnType, normalize } from 'viem/ens'
 import { getProvider } from '../providers'
 
 export type FetchEnsAvatarArgs = {
-  /** Address or ENS name */
-  address: Address
+  /** ENS name */
+  name: string
   /** Chain id to use for provider */
   chainId?: number
 }
 
-export type FetchEnsAvatarResult = string | null
+export type FetchEnsAvatarResult = GetEnsAvatarReturnType
 
 export async function fetchEnsAvatar({
-  address,
+  name,
   chainId,
 }: FetchEnsAvatarArgs): Promise<FetchEnsAvatarResult> {
   const provider = getProvider({ chainId })
-  // TODO: Update with more advanced logic
-  // https://github.com/ensdomains/ens-avatar
-  const avatar = await provider.getAvatar(address)
+  const avatar = await provider.getEnsAvatar({ name: normalize(name) })
   return avatar
 }

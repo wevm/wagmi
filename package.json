@@ -56,7 +56,7 @@
     "fs-extra": "^10.1.0",
     "jsdom": "^20.0.3",
     "lint-staged": "^13.1.0",
-    "msw": "^0.47.4",
+    "msw": "^1.2.1",
     "prettier": "^2.8.3",
     "simple-git-hooks": "^2.8.1",
     "tsup": "^6.5.0",
