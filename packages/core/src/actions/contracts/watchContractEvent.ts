@@ -42,7 +42,7 @@ export function watchContractEvent<
       abi,
       eventName,
       onLogs: callback,
-    } as WatchContractEventParameters)
+    })
   }
 
   watchEvent()

@@ -1,6 +1,6 @@
 import type { Narrow } from 'abitype'
 import type {
-  ContractConfig,
+  ContractFunctionConfig,
   MulticallContracts,
   MulticallParameters,
 } from 'viem'
@@ -12,7 +12,7 @@ import { multicall } from './multicall'
 import { readContract } from './readContract'
 
 export type ReadContractsConfig<
-  TContracts extends ContractConfig[],
+  TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 > = Omit<
   MulticallConfig<TContracts, TAllowFailure>,
@@ -33,12 +33,12 @@ export type ReadContractsConfig<
 }
 
 export type ReadContractsResult<
-  TContracts extends ContractConfig[],
+  TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 > = MulticallResult<TContracts, TAllowFailure>
 
 export async function readContracts<
-  TContracts extends ContractConfig[],
+  TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 >({
   contracts,

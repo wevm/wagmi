@@ -1,5 +1,5 @@
 import type {
-  ContractConfig,
+  ContractFunctionConfig,
   MulticallParameters,
   MulticallReturnType,
 } from 'viem'
@@ -8,7 +8,7 @@ import { ChainNotConfiguredError, ProviderChainsNotFound } from '../../errors'
 import { getProvider } from '../providers'
 
 export type MulticallConfig<
-  TContracts extends ContractConfig[] = ContractConfig[],
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 > = MulticallParameters<TContracts, TAllowFailure> & {
   /** Chain id to use for provider */
@@ -16,12 +16,12 @@ export type MulticallConfig<
 }
 
 export type MulticallResult<
-  TContracts extends ContractConfig[] = ContractConfig[],
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 > = MulticallReturnType<TContracts, TAllowFailure>
 
 export async function multicall<
-  TContracts extends ContractConfig[],
+  TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 >({
   chainId,
