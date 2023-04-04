@@ -41,6 +41,8 @@ Breaking changes:
   - Replaced `address` with `name`.
 - `useEnsAvatar`
   - Replaced `address` with `name`.
+- `useWatchPendingTransactions`
+  - listener now returns array of transactions
 
 TODO:
 

@@ -1,6 +1,5 @@
-import type { Transaction } from 'ethers'
-import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it, test, vi } from 'vitest'
+import { Transaction, parseEther } from 'viem'
 
 import { actConnect, renderHook } from '../../../test'
 import { sendTransaction } from '../../actions'
@@ -21,8 +20,8 @@ function useWatchPendingTransactionsWithProvider(
 
 describe('useWatchPendingTransactions', () => {
   it('default', async () => {
-    const pendingTransactions: Transaction[] = []
-    const { result } = renderHook(() =>
+    const pendingTransactions: Transaction[][] = []
+    const { result, unmount } = renderHook(() =>
       useWatchPendingTransactionsWithProvider({
         listener: pendingTransactions.push,
       }),
@@ -34,6 +33,8 @@ describe('useWatchPendingTransactions', () => {
     )
 
     expect(pendingTransactions.length).toEqual(0)
+
+    unmount()
   })
 
   it('listens to incoming transactions', async () => {
@@ -43,7 +44,7 @@ describe('useWatchPendingTransactions', () => {
         listener,
       }),
     )
-    const { result } = utils
+    const { result, unmount } = utils
 
     await actConnect({ utils })
     await sendTransaction!({
@@ -60,6 +61,8 @@ describe('useWatchPendingTransactions', () => {
     )
 
     expect(listener).toBeCalledTimes(1)
+
+    unmount()
   })
 
   describe('args', () => {
@@ -107,6 +110,8 @@ describe('useWatchPendingTransactions', () => {
       )
 
       expect(listener).toBeCalledTimes(1)
+
+      utils.unmount()
     })
   })
 })
