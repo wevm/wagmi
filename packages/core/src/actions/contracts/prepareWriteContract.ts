@@ -80,12 +80,9 @@ export async function prepareWriteContract<
     ...config,
   } as SimulateContractParameters)
 
-  const minimizedAbi = abi
-  // TODO(viem-migration): uncomment below once migrated
-  // const minimizedAbi = minimizeContractInterface({
-  //   abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
-  //   functionName,
-  // }) as TAbi extends Abi ? [ExtractAbiFunction<TAbi, TFunctionName>] : TAbi
+  const minimizedAbi = (abi as Abi).filter(
+    (abiItem) => 'name' in abiItem && abiItem.name === functionName,
+  )
 
   return {
     chainId: chainId as TChainId,

@@ -49,3 +49,4 @@ TODO:
 - Remove `types/contracts.ts` in favor of viem contract types
 - ethers workaround: Remove `normalizeFunctionName` util
 - ethers workaround: Remove `ContractMethodDoesNotExistError` error
+- ethers workaround: Remove `minimizeContractInterface` util
