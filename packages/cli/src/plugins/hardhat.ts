@@ -133,7 +133,7 @@ export function hardhat<TProject extends string>({
     async contracts() {
       if (clean) {
         const packageManager = await getPackageManager()
-        const packageManagerCommand = (packageManager === "npm") ? "npx" else packageManager
+        const packageManagerCommand = (packageManager === "npm") ? "npx" : packageManager
         const [command, ...options] = (
           typeof clean === 'boolean' ? `${packageManagerCommand} hardhat clean` : clean
         ).split(' ')
@@ -141,7 +141,7 @@ export function hardhat<TProject extends string>({
       }
       if (build) {
         const packageManager = await getPackageManager()
-        const packageManagerCommand = (packageManager === "npm") ? "npx" else packageManager
+        const packageManagerCommand = (packageManager === "npm") ? "npx" : packageManager
         const [command, ...options] = (
           typeof build === 'boolean'
             ? `${packageManagerCommand} hardhat compile`
