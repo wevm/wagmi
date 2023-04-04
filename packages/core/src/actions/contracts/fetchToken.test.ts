@@ -47,7 +47,7 @@ describe('fetchToken', () => {
             function:  decimals()
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.1.23]
+          Version: viem@0.2.1]
         `)
       })
     })

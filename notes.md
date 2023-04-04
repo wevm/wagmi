@@ -37,6 +37,8 @@ Breaking changes:
   - callback now returns array of event logs, rather than positional decoded args + log.
 - `useWaitForTransaction`
   - `onSpeedUp` has been removed in favor of `onReplaced`
+- `fetchEnsAvatar`
+  - Replaced `address` with `name`.
 
 TODO:
 
