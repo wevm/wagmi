@@ -1,9 +1,9 @@
-import type { TransactionResponse } from '@ethersproject/providers'
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { parseEther } from 'ethers/lib/utils.js'
 import { describe, expect, it } from 'vitest'
+import { parseEther } from 'viem'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
+import { SendTransactionResult } from '../../actions'
 import { useConnect } from '../accounts'
 import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
 import { usePrepareSendTransaction } from './usePrepareSendTransaction'
@@ -128,7 +128,6 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
-        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -144,15 +143,8 @@ describe('useSendTransaction', () => {
               "chainId": undefined,
               "mode": "prepared",
               "request": {
-                "gasLimit": {
-                  "hex": "0x5208",
-                  "type": "BigNumber",
-                },
                 "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
+                "value": 1000000000000000000n,
               },
             },
           }
@@ -183,7 +175,6 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
-        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -200,10 +191,7 @@ describe('useSendTransaction', () => {
               "mode": "recklesslyUnprepared",
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
+                "value": 1000000000000000000n,
               },
             },
           }
@@ -233,7 +221,6 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
-        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -250,10 +237,7 @@ describe('useSendTransaction', () => {
               "mode": "recklesslyUnprepared",
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
+                "value": 1000000000000000000n,
               },
             },
           }
@@ -282,11 +266,26 @@ describe('useSendTransaction', () => {
         )
 
         const { error, ...res } = result.current.sendTransaction
-        expect(
-          error?.message?.includes(
-            'insufficient funds for intrinsic transaction cost',
-          ),
-        ).toEqual(true)
+        expect(error?.message).toMatchInlineSnapshot(`
+          "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
+
+          This error could arise when the account does not have enough funds to:
+           - pay for the total gas fee,
+           - pay for the value to send.
+           
+          The cost of the transaction is calculated as \`gas * gas fee + value\`, where:
+           - \`gas\` is the amount of gas needed for transaction to execute,
+           - \`gas fee\` is the gas fee,
+           - \`value\` is the amount of ether to send to the recipient.
+           
+          Request Arguments:
+            from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+            to:     0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+            value:  100000 ETH
+
+          Details: Insufficient funds for gas * price + value
+          Version: viem@0.2.1"
+        `)
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
@@ -303,10 +302,7 @@ describe('useSendTransaction', () => {
               "mode": "recklesslyUnprepared",
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x152d02c7e14af6800000",
-                  "type": "BigNumber",
-                },
+                "value": 100000000000000000000000n,
               },
             },
           }
@@ -333,7 +329,7 @@ describe('useSendTransaction', () => {
 
         await act(async () => {
           const res =
-            (await result.current.sendTransaction.sendTransactionAsync?.()) as TransactionResponse
+            (await result.current.sendTransaction.sendTransactionAsync?.()) as SendTransactionResult
           expect(res.hash).toBeDefined()
         })
 
@@ -388,11 +384,26 @@ describe('useSendTransaction', () => {
           try {
             await result.current.sendTransaction.sendTransactionAsync?.()
           } catch (error) {
-            expect(
-              (error as Error)?.message?.includes(
-                'insufficient funds for intrinsic transaction cost',
-              ),
-            ).toEqual(true)
+            expect((error as Error).message).toMatchInlineSnapshot(`
+              "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
+
+              This error could arise when the account does not have enough funds to:
+               - pay for the total gas fee,
+               - pay for the value to send.
+               
+              The cost of the transaction is calculated as \`gas * gas fee + value\`, where:
+               - \`gas\` is the amount of gas needed for transaction to execute,
+               - \`gas fee\` is the gas fee,
+               - \`value\` is the amount of ether to send to the recipient.
+               
+              Request Arguments:
+                from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+                to:     0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+                value:  100000 ETH
+
+              Details: Insufficient funds for gas * price + value
+              Version: viem@0.2.1"
+            `)
           }
         })
 
