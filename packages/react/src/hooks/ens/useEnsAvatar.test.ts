@@ -1,72 +1,15 @@
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
-import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { act, renderHook } from '../../../test'
-import { foundry } from '../../chains'
 
 import { useEnsAvatar } from './useEnsAvatar'
-
-const handlers = [
-  // brantly.eth
-  // 0x983110309620d911731ac0932219af06091b6744
-  rest.get(
-    'https://wrappedpunks.com:3000/api/punks/metadata/2430',
-    (_req, res, ctx) =>
-      res(
-        ctx.status(200),
-        ctx.json({
-          title: 'W#2430',
-          name: 'W#2430',
-          description:
-            'This Punk was wrapped using Wrapped Punks contract, accessible from https://wrappedpunks.com',
-          image: 'https://api.wrappedpunks.com/images/punks/2430.png',
-          external_url: 'https://wrappedpunks.com',
-        }),
-      ),
-  ),
-  // nick.eth
-  // 0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5
-  rest.get(
-    'https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x11ef687cfeb2e353670479f2dcc76af2bc6b3935000000000002c40000000001',
-    (_req, res, ctx) =>
-      res(
-        ctx.status(200),
-        ctx.json({
-          name: 'Nick Johnson',
-          description: null,
-          external_link: null,
-          image:
-            'https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE',
-          animation_url: null,
-        }),
-      ),
-  ),
-]
-
-const server = setupServer(...handlers)
 
 const timeout = 10_000
 
 describe('useEnsAvatar', () => {
-  beforeAll(() =>
-    server.listen({
-      onUnhandledRequest(req) {
-        if (req.url.origin !== foundry.rpcUrls.default.http[0])
-          console.warn(
-            `Found an unhandled ${req.method} request to ${req.url.href}`,
-          )
-      },
-    }),
-  )
-
-  afterEach(() => server.resetHandlers())
-
-  afterAll(() => server.close())
-
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
-      useEnsAvatar({ address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5' }),
+      useEnsAvatar({ name: 'jxom.eth' }),
     )
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
@@ -77,7 +20,7 @@ describe('useEnsAvatar', () => {
     const { internal, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
-        "data": "https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE",
+        "data": "https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg",
         "error": null,
         "fetchStatus": "idle",
         "isError": false,
@@ -99,7 +42,7 @@ describe('useEnsAvatar', () => {
       it('has avatar', async () => {
         const { result, waitFor } = renderHook(() =>
           useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
           }),
         )
 
@@ -111,7 +54,7 @@ describe('useEnsAvatar', () => {
         const { internal, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": "https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE",
+            "data": "https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg",
             "error": null,
             "fetchStatus": "idle",
             "isError": false,
@@ -131,7 +74,7 @@ describe('useEnsAvatar', () => {
       it('does not have avatar', async () => {
         const { result, waitFor } = renderHook(() =>
           useEnsAvatar({
-            address: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
+            name: 'awkweb.eth',
           }),
         )
 
@@ -163,14 +106,14 @@ describe('useEnsAvatar', () => {
       const { result, waitFor } = renderHook(() => {
         return {
           ensAvatar: useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
           }),
           ensAvatarwithoutScopeKey: useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
             enabled: false,
           }),
           ensAvatarwithScopeKey: useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
             scopeKey: 'wagmi',
             enabled: false,
           }),
@@ -191,7 +134,7 @@ describe('useEnsAvatar', () => {
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+          name: 'jxom.eth',
           chainId: 1,
         }),
       )
@@ -202,7 +145,7 @@ describe('useEnsAvatar', () => {
       const { internal, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": "https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE",
+          "data": "https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg",
           "error": null,
           "fetchStatus": "idle",
           "isError": false,
@@ -222,7 +165,7 @@ describe('useEnsAvatar', () => {
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          address: '0x983110309620d911731ac0932219af06091b6744',
+          name: 'jxom.eth',
           enabled: false,
         }),
       )
@@ -255,7 +198,7 @@ describe('useEnsAvatar', () => {
     it('refetch', async () => {
       const { result } = renderHook(() =>
         useEnsAvatar({
-          address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+          name: 'jxom.eth',
           enabled: false,
         }),
       )
@@ -263,7 +206,7 @@ describe('useEnsAvatar', () => {
       await act(async () => {
         const { data } = await result.current.refetch()
         expect(data).toMatchInlineSnapshot(
-          `"https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE"`,
+          '"https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg"',
         )
       })
     })

@@ -39,6 +39,8 @@ Breaking changes:
   - `onSpeedUp` has been removed in favor of `onReplaced`
 - `fetchEnsAvatar`
   - Replaced `address` with `name`.
+- `useEnsAvatar`
+  - Replaced `address` with `name`.
 
 TODO:
 
