@@ -2,11 +2,12 @@ import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import { deserialize } from './deserialize'
+import { serialize } from './serialize'
 
 describe('deserialize', () => {
   it('deserializes', () => {
     const deserializedCache = deserialize(
-      JSON.stringify({
+      serialize({
         some: 'complex',
         object: {
           that: 'has',
@@ -33,7 +34,9 @@ describe('deserialize', () => {
           ones: {
             that: {
               have: {
+                // TODO(viem-migration): remove bignumber
                 bignumbers: BigNumber.from('0x01'),
+                bigints: 123456789012345678901234567890n,
               },
             },
           },
@@ -66,9 +69,10 @@ describe('deserialize', () => {
           "ones": {
             "that": {
               "have": {
+                "bigints": 123456789012345678901234567890n,
                 "bignumbers": {
-                  "hex": "0x01",
-                  "type": "BigNumber",
+                  "_hex": "0x01",
+                  "_isBigNumber": true,
                 },
               },
             },

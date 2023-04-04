@@ -34,10 +34,19 @@ const findAndReplace = (
 export function deserialize(cachedString: string) {
   const cache = JSON.parse(cachedString)
 
+  // TODO(viem-migration): remove
   const deserializedCacheWithBigNumbers = findAndReplace(cache, {
     find: (data) => data.type === 'BigNumber',
     replace: (data) => BigNumber.from(data.hex),
   })
 
-  return deserializedCacheWithBigNumbers
+  const deserializedCacheWithBigInts = findAndReplace(
+    deserializedCacheWithBigNumbers,
+    {
+      find: (data) => typeof data === 'string' && data.startsWith('#bigint.'),
+      replace: (data) => BigInt(data.replace('#bigint.', '')),
+    },
+  )
+
+  return deserializedCacheWithBigInts
 }

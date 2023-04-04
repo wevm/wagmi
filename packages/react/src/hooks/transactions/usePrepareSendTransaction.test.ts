@@ -1,4 +1,5 @@
 import { BigNumber } from 'ethers'
+import { parseEther } from 'viem'
 import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, renderHook } from '../../../test'
@@ -23,7 +24,7 @@ describe('usePrepareSendTransaction', () => {
       usePrepareSendTransactionWithConnect({
         request: {
           to: 'moxey.eth',
-          value: BigNumber.from('10000000000000000'),
+          value: parseEther('0.01'),
         },
       }),
     )
@@ -68,7 +69,7 @@ describe('usePrepareSendTransaction', () => {
       usePrepareSendTransactionWithConnect({
         request: {
           to: 'moxey.eth',
-          value: BigNumber.from('10000000000000000'),
+          value: parseEther('0.01'),
         },
       }),
     )
@@ -80,22 +81,23 @@ describe('usePrepareSendTransaction', () => {
       expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
     )
 
-    const { config, data: res, ...rest } = result.current.prepareSendTransaction
-    const { gasLimit, ...restRequest } = config?.request || {}
-    expect(res).toBeDefined()
-    expect(config).toBeDefined()
-    expect(gasLimit).toBeDefined()
-    expect(restRequest).toMatchInlineSnapshot(`
+    const res = result.current.prepareSendTransaction
+    expect(res).toMatchInlineSnapshot(`
       {
-        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-        "value": {
-          "hex": "0x2386f26fc10000",
-          "type": "BigNumber",
+        "config": {
+          "mode": "prepared",
+          "request": {
+            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            "value": 10000000000000000n,
+          },
         },
-      }
-    `)
-    expect(rest).toMatchInlineSnapshot(`
-      {
+        "data": {
+          "mode": "prepared",
+          "request": {
+            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+            "value": 10000000000000000n,
+          },
+        },
         "error": null,
         "fetchStatus": "idle",
         "internal": {
@@ -131,7 +133,7 @@ describe('usePrepareSendTransaction', () => {
         usePrepareSendTransactionWithConnect({
           request: {
             to: 'moxey.eth',
-            value: BigNumber.from('10000000000000000'),
+            value: parseEther('0.01'),
           },
           chainId: 1,
         }),
@@ -160,7 +162,7 @@ describe('usePrepareSendTransaction', () => {
         usePrepareSendTransactionWithConnect({
           request: {
             to: 'moxey.eth',
-            value: BigNumber.from('10000000000000000'),
+            value: parseEther('0.01'),
           },
           chainId: 69_420,
         }),

@@ -4,7 +4,6 @@ import type {
   PrepareSendTransactionResult,
 } from '@wagmi/core'
 import { prepareSendTransaction } from '@wagmi/core'
-import type { providers } from 'ethers'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'
@@ -79,7 +78,7 @@ export function usePrepareSendTransaction({
   onSuccess,
 }: UsePrepareSendTransactionConfig = {}) {
   const { chain: activeChain } = useNetwork()
-  const { data: signer } = useSigner<providers.JsonRpcSigner>({ chainId })
+  const { data: signer } = useSigner({ chainId })
 
   const prepareSendTransactionQuery = useQuery(
     queryKey({
@@ -87,7 +86,7 @@ export function usePrepareSendTransaction({
       chainId,
       request,
       scopeKey,
-      signerAddress: signer?._address,
+      signerAddress: signer?.account.address,
     }),
     queryFn({ signer }),
     {

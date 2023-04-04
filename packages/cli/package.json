@@ -88,7 +88,7 @@
     "pathe": "^1.0.0",
     "picocolors": "^1.0.0",
     "prettier": "^2.8.1",
-    "viem": "^0.1.14",
+    "viem": "0.3.0-jxom-refactor-pkgs.20230404T001109",
     "zod": "^3.20.2"
   },
   "devDependencies": {
