@@ -1,5 +1,6 @@
-import { verifyTypedData } from 'ethers/lib/utils'
-import { useSignTypedData } from 'wagmi'
+import { Address, useSignTypedData } from 'wagmi'
+import { recoverTypedDataAddress } from 'viem'
+import { useEffect, useState } from 'react'
 
 const domain = {
   name: 'Ether Mail',
@@ -21,7 +22,7 @@ const types = {
   ],
 } as const
 
-const value = {
+const message = {
   from: {
     name: 'Cow',
     wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
@@ -37,8 +38,25 @@ export const SignTypedData = () => {
   const { data, error, isLoading, signTypedData } = useSignTypedData({
     domain,
     types,
-    value,
+    message,
+    primaryType: 'Mail',
   })
+
+  const [recoveredAddress, setRecoveredAddress] = useState<Address>()
+  useEffect(() => {
+    if (!data) return
+    ;(async () => {
+      setRecoveredAddress(
+        await recoverTypedDataAddress({
+          domain,
+          types,
+          message,
+          primaryType: 'Mail',
+          signature: data,
+        }),
+      )
+    })()
+  }, [data])
 
   return (
     <div>
@@ -49,9 +67,7 @@ export const SignTypedData = () => {
       {data && (
         <div>
           <div>signature {data}</div>
-          <div>
-            recovered address {verifyTypedData(domain, types, value, data)}
-          </div>
+          <div>recovered address {recoveredAddress}</div>
         </div>
       )}
 

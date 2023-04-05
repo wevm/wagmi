@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useSendTransaction } from 'wagmi'
 
 export const SendTransaction = () => {
@@ -7,7 +6,7 @@ export const SendTransaction = () => {
       mode: 'recklesslyUnprepared',
       request: {
         to: '0xc961145a54C96E3aE9bAA048c4F4D6b04C13916b',
-        value: BigNumber.from('10000000000000000'), // 0.01 ETH
+        value: 10000000000000000n, // 0.01 ETH
       },
     })
 

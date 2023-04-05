@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useContractWrite, usePrepareContractWrite } from 'wagmi'
 
 import { anvAbi } from './anv-abi'
@@ -8,7 +7,7 @@ export const WriteContractPrepared = () => {
     address: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
     abi: anvAbi,
     functionName: 'claim',
-    args: [BigNumber.from('56')],
+    args: [56n],
   })
   const { write, data, error, isLoading, isError, isSuccess } =
     useContractWrite(config)

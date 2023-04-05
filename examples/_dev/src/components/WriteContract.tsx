@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { useState } from 'react'
 import { useContractWrite } from 'wagmi'
 
@@ -28,7 +27,7 @@ export const WriteContract = () => {
         <button
           disabled={isLoading}
           onClick={() =>
-            write?.({ recklesslySetUnpreparedArgs: [BigNumber.from(tokenId)] })
+            write?.({ recklesslySetUnpreparedArgs: [BigInt(tokenId)] })
           }
         >
           Mint

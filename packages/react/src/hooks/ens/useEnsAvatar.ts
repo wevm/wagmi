@@ -4,7 +4,9 @@ import { fetchEnsAvatar } from '@wagmi/core'
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseEnsAvatarArgs = Partial<FetchEnsAvatarArgs>
+export type UseEnsAvatarArgs = Omit<Partial<FetchEnsAvatarArgs>, 'name'> & {
+  name?: FetchEnsAvatarArgs['name'] | null
+}
 export type UseEnsLookupConfig = QueryConfig<FetchEnsAvatarResult, Error>
 
 type QueryKeyArgs = UseEnsAvatarArgs

@@ -1,5 +1,5 @@
 import type { Address } from 'abitype'
-import { getAddress } from 'ethers/lib/utils.js'
+import { getAddress } from 'viem'
 
 import { getProvider } from '../providers'
 

@@ -21,11 +21,11 @@ export const Account = () => {
     onConnect: (data) => console.log('connected', data),
     onDisconnect: () => console.log('disconnected'),
   })
+  const ensName = useEnsName({ address: account?.address, chainId: 1 })
   const ensAvatar = useEnsAvatar({
-    address: account?.address,
+    name: ensName.data,
     chainId: 1,
   })
-  const ensName = useEnsName({ address: account?.address, chainId: 1 })
   const disconnect = useDisconnect()
 
   return (
