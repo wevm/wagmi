@@ -1,6 +1,6 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
-import { deepEqual, parseContractResult, readContracts } from '@wagmi/core'
+import { deepEqual, readContracts } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import * as React from 'react'
 import type { ContractFunctionConfig } from 'viem'
@@ -203,16 +203,7 @@ export function useContractReads<
     isDataEqual,
     keepPreviousData,
     staleTime,
-    select(data) {
-      const result = data.map((data, i) => {
-        const { abi, functionName } = (contracts?.[i] ??
-          {}) as ContractFunctionConfig
-        return abi && functionName
-          ? parseContractResult({ abi, functionName, data })
-          : data
-      }) as ReadContractsResult<TContracts>
-      return (select ? select(result) : result) as TSelectData
-    },
+    select,
     structuralSharing,
     suspense,
     onError,

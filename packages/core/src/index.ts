@@ -174,7 +174,6 @@ export {
   getUnit,
   minimizeContractInterface,
   normalizeChainId,
-  parseContractResult,
   serialize,
 } from './utils'
 export type { ConfigureChainsConfig } from './utils'

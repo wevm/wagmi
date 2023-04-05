@@ -80,7 +80,6 @@ it('should expose correct exports', () => {
       "getUnit",
       "minimizeContractInterface",
       "normalizeChainId",
-      "parseContractResult",
       "serialize",
     ]
   `)

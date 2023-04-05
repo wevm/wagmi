@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { parseEther } from 'viem'
 import { describe, expect, it } from 'vitest'
 
@@ -201,7 +200,7 @@ describe('usePrepareSendTransaction', () => {
       // @ts-expect-error assigning to readonly object
       config.request = {
         to: 'moxey.eth',
-        value: BigNumber.from('10000000000000000'),
+        value: 10000000000000000n,
       }
       rerender()
 

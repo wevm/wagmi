@@ -1,6 +1,6 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractConfig, ReadContractResult } from '@wagmi/core'
-import { deepEqual, parseContractResult, readContract } from '@wagmi/core'
+import { deepEqual, readContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import * as React from 'react'
 
@@ -184,18 +184,7 @@ export function useContractRead<
       cacheTime,
       enabled,
       isDataEqual,
-      select(data) {
-        const result =
-          abi && functionName
-            ? parseContractResult({
-                // TODO: Remove cast and still support `Narrow<TAbi>`
-                abi: abi as Abi,
-                data,
-                functionName,
-              })
-            : data
-        return select ? select(result) : result
-      },
+      select,
       staleTime,
       structuralSharing,
       suspense,
