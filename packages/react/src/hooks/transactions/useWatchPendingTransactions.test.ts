@@ -1,5 +1,6 @@
+import type { Transaction } from 'viem'
+import { parseEther } from 'viem'
 import { describe, expect, it, test, vi } from 'vitest'
-import { Transaction, parseEther } from 'viem'
 
 import { actConnect, renderHook } from '../../../test'
 import { sendTransaction } from '../../actions'

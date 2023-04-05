@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { GetTransactionReturnType } from 'viem'
+import type { GetTransactionReturnType } from 'viem'
 
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId } from '../utils'

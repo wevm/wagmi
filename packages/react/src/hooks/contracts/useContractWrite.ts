@@ -7,9 +7,8 @@ import type {
 import { writeContract } from '@wagmi/core'
 import { getSendTransactionParameters } from '@wagmi/core/internal'
 import type { Abi } from 'abitype'
-import type { GetFunctionArgs, SendTransactionParameters } from 'viem'
-
 import * as React from 'react'
+import type { GetFunctionArgs, SendTransactionParameters } from 'viem'
 
 import type { MutationConfig, PartialBy } from '../../types'
 import { useMutation } from '../utils'
@@ -240,14 +239,23 @@ export function useContractWrite<
         ...overrideConfig?.recklesslySetUnpreparedOverrides,
       } as UseContractWriteArgs)
   }, [
-    address,
-    chainId,
+    accessList,
     abi,
-    functionName,
-    mode,
-    mutate,
+    address,
     args,
+    chainId,
+    config.chainId,
+    config.mode,
+    config.request,
+    functionName,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    mutate,
+    nonce,
     request,
+    value,
   ]) as MutationFn<typeof mode, TAbi, TFunctionName, void>
 
   const writeAsync = React.useMemo(() => {
@@ -281,14 +289,23 @@ export function useContractWrite<
         ...overrideConfig?.recklesslySetUnpreparedOverrides,
       } as UseContractWriteArgs)
   }, [
-    address,
-    chainId,
+    accessList,
     abi,
-    functionName,
-    mode,
-    mutateAsync,
+    address,
     args,
+    chainId,
+    config.chainId,
+    config.mode,
+    config.request,
+    functionName,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    mutateAsync,
+    nonce,
     request,
+    value,
   ]) as MutationFn<
     typeof mode,
     TAbi,

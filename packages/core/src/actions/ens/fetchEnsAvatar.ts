@@ -1,4 +1,6 @@
-import { GetEnsAvatarReturnType, normalize } from 'viem/ens'
+import type { GetEnsAvatarReturnType } from 'viem/ens'
+import { normalize } from 'viem/ens'
+
 import { getProvider } from '../providers'
 
 export type FetchEnsAvatarArgs = {

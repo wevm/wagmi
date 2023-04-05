@@ -1,5 +1,6 @@
-import { GetEnsResolverReturnType } from 'viem'
+import type { GetEnsResolverReturnType } from 'viem'
 import { normalize } from 'viem/ens'
+
 import { getProvider } from '../providers'
 
 export type FetchEnsResolverArgs = {

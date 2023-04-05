@@ -1,9 +1,9 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { describe, expect, it } from 'vitest'
 import { parseEther } from 'viem'
+import { describe, expect, it } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
-import { SendTransactionResult } from '../../actions'
+import type { SendTransactionResult } from '../../actions'
 import { useConnect } from '../accounts'
 import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
 import { usePrepareSendTransaction } from './usePrepareSendTransaction'

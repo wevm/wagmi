@@ -1,7 +1,7 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import type { TypedData } from 'abitype'
-import { describe, expect, it, vi } from 'vitest'
 import { recoverTypedDataAddress } from 'viem'
+import { describe, expect, it, vi } from 'vitest'
 
 import { act, actConnect, getSigners, renderHook } from '../../../test'
 import { useConnect } from './useConnect'

@@ -1,14 +1,16 @@
-import {
+import type { Abi } from 'abitype'
+import type {
   Account,
   Chain,
   GetContractParameters,
   GetContractReturnType,
   PublicClient,
   Transport,
-  getContract as getContract_,
 } from 'viem'
-import { Signer } from '../../types'
-import { Abi } from 'abitype'
+import { getContract as getContract_ } from 'viem'
+
+import type { Signer } from '../../types'
+
 import { getProvider } from '../providers'
 
 export type GetContractArgs<

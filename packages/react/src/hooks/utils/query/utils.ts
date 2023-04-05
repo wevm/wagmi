@@ -9,6 +9,7 @@ function isQueryKey(value: unknown): value is QueryKey {
   return Array.isArray(value)
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 function isPlainObject(o: any): o is Object {
   if (!hasObjectPrototype(o)) {
     return false

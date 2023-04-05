@@ -3,7 +3,7 @@ import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
 import { deepEqual, parseContractResult, readContracts } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import * as React from 'react'
-import { ContractFunctionConfig } from 'viem'
+import type { ContractFunctionConfig } from 'viem'
 
 import type {
   DeepPartial,

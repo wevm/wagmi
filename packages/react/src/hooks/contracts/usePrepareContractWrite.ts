@@ -7,7 +7,7 @@ import type {
 import { prepareWriteContract } from '@wagmi/core'
 import { getCallParameters } from '@wagmi/core/internal'
 import type { Abi } from 'abitype'
-import { GetFunctionArgs } from 'viem'
+import type { GetFunctionArgs } from 'viem'
 
 import type { PartialBy, QueryConfig, QueryFunctionArgs } from '../../types'
 import { useNetwork, useSigner } from '../accounts'

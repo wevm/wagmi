@@ -1,4 +1,5 @@
 import type { ResolvedConfig } from 'abitype'
+import type { MulticallResult } from 'viem'
 import { assertType, describe, expect, it } from 'vitest'
 
 import {
@@ -8,7 +9,6 @@ import {
   wagmigotchiContractConfig,
 } from '../../../test'
 import { useContractReads } from './useContractReads'
-import { MulticallResult } from 'viem'
 
 const contracts = [
   {

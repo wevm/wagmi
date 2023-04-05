@@ -1,12 +1,11 @@
-import { BigNumber } from 'ethers'
 import {
   mlootContractConfig,
   wagmigotchiContractConfig,
 } from 'packages/core/test'
+import type { MulticallResult } from 'viem'
 import { assertType, describe, it } from 'vitest'
 
 import { useContractReads } from './useContractReads'
-import { MulticallResult } from 'viem'
 
 const contracts = [
   {
