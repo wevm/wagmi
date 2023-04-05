@@ -1,9 +1,9 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
 import { deepEqual, parseContractResult, readContracts } from '@wagmi/core'
-import type { Contract } from '@wagmi/core/internal'
-import type { Abi, Address } from 'abitype'
+import type { Abi } from 'abitype'
 import * as React from 'react'
+import { ContractFunctionConfig } from 'viem'
 
 import type {
   DeepPartial,
@@ -15,7 +15,7 @@ import type { UseQueryResult } from '../utils'
 import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseContractReadsConfig<
-  TContracts extends Contract[],
+  TContracts extends ContractFunctionConfig[],
   TSelectData = ReadContractsResult<TContracts>,
   Config = ReadContractsConfig<TContracts>,
 > = {
@@ -35,29 +35,26 @@ export type UseContractReadsConfig<
     watch?: boolean
   }
 
-type QueryKeyArgs<TContracts extends Contract[]> =
-  ReadContractsConfig<TContracts>
-type QueryKeyConfig<TContracts extends Contract[]> = Pick<
+type QueryKeyArgs<TContracts extends ContractFunctionConfig[]> = Omit<
+  ReadContractsConfig<TContracts>,
+  'blockNumber' | 'blockTag'
+> & {
+  blockNumber?: bigint
+  blockTag?: string
+}
+type QueryKeyConfig<TContracts extends ContractFunctionConfig[]> = Pick<
   UseContractReadsConfig<TContracts>,
   'scopeKey'
 > & {
-  blockNumber?: number
   chainId?: number
 }
 
-function queryKey<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
->({
+function queryKey<TContracts extends ContractFunctionConfig[]>({
   allowFailure,
   blockNumber,
+  blockTag,
   chainId,
   contracts,
-  overrides,
   scopeKey,
 }: QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>) {
   return [
@@ -65,65 +62,54 @@ function queryKey<
       entity: 'readContracts',
       allowFailure,
       blockNumber,
+      blockTag,
       chainId,
       scopeKey,
-      contracts: ((contracts ?? []) as unknown as ContractConfig[]).map(
-        ({ address, args, chainId, functionName }) => ({
-          address,
-          args,
-          chainId,
-          functionName,
-        }),
-      ),
-      overrides,
+      contracts: (
+        (contracts ?? []) as unknown as (ContractFunctionConfig & {
+          chainId?: number
+        })[]
+      ).map(({ address, args, chainId, functionName }) => ({
+        address,
+        args,
+        chainId,
+        functionName,
+      })),
     },
   ] as const
 }
 
-function queryFn<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
->({ abis }: { abis: (Abi | readonly unknown[])[] }) {
+function queryFn<TContracts extends ContractFunctionConfig[]>({
+  abis,
+}: {
+  abis: (Abi | readonly unknown[])[]
+}) {
   return ({
-    queryKey: [{ allowFailure, contracts: contracts_, overrides }],
-  }: QueryFunctionArgs<typeof queryKey<TAbi, TFunctionName, TContracts>>) => {
-    const contracts = (contracts_ as unknown as ContractConfig[]).map(
-      (contract, i) => ({
-        ...contract,
-        abi: abis[i] as Abi,
-      }),
-    )
+    queryKey: [{ allowFailure, blockNumber, blockTag, contracts: contracts_ }],
+  }: QueryFunctionArgs<typeof queryKey<TContracts>>) => {
+    const contracts = contracts_.map((contract, i) => ({
+      ...contract,
+      abi: abis[i] as Abi,
+    }))
     return readContracts({
       allowFailure,
       contracts,
-      overrides,
-    }) as Promise<ReadContractsResult<TContracts>>
+      blockNumber,
+      blockTag,
+    } as ReadContractsConfig<TContracts>) as Promise<
+      ReadContractsResult<TContracts>
+    >
   }
 }
 
-type ContractConfig = {
-  abi: Abi
-  address: Address
-  args: unknown[]
-  chainId?: number
-  functionName: string
-}
-
 export function useContractReads<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
   TSelectData = ReadContractsResult<TContracts>,
 >(
   {
     allowFailure = true,
+    blockNumber: blockNumberOverride,
+    blockTag,
     cacheOnBlock = false,
     cacheTime,
     contracts,
@@ -133,7 +119,6 @@ export function useContractReads<
     onError,
     onSettled,
     onSuccess,
-    overrides,
     scopeKey,
     select,
     staleTime,
@@ -146,37 +131,39 @@ export function useContractReads<
   }: UseContractReadsConfig<TContracts, TSelectData> = {} as any,
   // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 ): UseQueryResult<TSelectData, Error> {
-  const { data: blockNumber } = useBlockNumber({
+  const { data: blockNumber_ } = useBlockNumber({
     enabled: watch || cacheOnBlock,
     watch,
   })
   const chainId = useChainId()
+
+  const blockNumber = blockNumberOverride ?? blockNumber_
 
   const queryKey_ = React.useMemo(
     () =>
       queryKey({
         allowFailure,
         blockNumber: cacheOnBlock ? blockNumber : undefined,
+        blockTag,
         chainId,
-        contracts: contracts as unknown as ContractConfig[],
-        overrides,
+        contracts,
         scopeKey,
-      }),
+      } as QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>),
     [
       allowFailure,
       blockNumber,
+      blockTag,
       cacheOnBlock,
       chainId,
       scopeKey,
       contracts,
-      overrides,
     ],
   )
 
   const enabled = React.useMemo(() => {
     let enabled = Boolean(
       enabled_ &&
-        (contracts as unknown as ContractConfig[])?.every(
+        (contracts as unknown as ContractFunctionConfig[])?.every(
           (x) => x.abi && x.address && x.functionName,
         ),
     )
@@ -189,7 +176,7 @@ export function useContractReads<
     queryKey: queryKey_,
   })
 
-  const abis = ((contracts ?? []) as unknown as ContractConfig[]).map(
+  const abis = ((contracts ?? []) as unknown as ContractFunctionConfig[]).map(
     ({ abi }) => abi,
   )
 
@@ -201,7 +188,8 @@ export function useContractReads<
     staleTime,
     select(data) {
       const result = data.map((data, i) => {
-        const { abi, functionName } = (contracts?.[i] ?? {}) as ContractConfig
+        const { abi, functionName } = (contracts?.[i] ??
+          {}) as ContractFunctionConfig
         return abi && functionName
           ? parseContractResult({ abi, functionName, data })
           : data
