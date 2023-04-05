@@ -6,4 +6,8 @@ export type {
   PayableOverrides,
 } from '../types/contracts'
 
-export { debounce } from '../utils'
+export {
+  debounce,
+  getCallParameters,
+  getSendTransactionParameters,
+} from '../utils'

@@ -1,5 +1,6 @@
 import type { Abi } from 'abitype'
 import type {
+  Account,
   Chain,
   WriteContractParameters,
   WriteContractReturnType,
@@ -18,7 +19,7 @@ export type WriteContractPreparedArgs<
   TAbi extends Abi | readonly unknown[] = readonly unknown[],
   TFunctionName extends string = string,
 > = Omit<
-  WriteContractParameters<TAbi, TFunctionName, Chain>,
+  WriteContractParameters<TAbi, TFunctionName, Chain, Account>,
   'abi' | 'account' | 'address' | 'chain' | 'functionName' | 'args'
 > & {
   /**
@@ -34,7 +35,7 @@ export type WriteContractPreparedArgs<
   /** Chain id to use for provider. */
   chainId?: number
   /** Write contract request. */
-  request: WriteContractParameters<TAbi, TFunctionName, Chain>
+  request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
 
   abi?: never
   address?: never
@@ -46,7 +47,7 @@ export type WriteContractUnpreparedArgs<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 > = Omit<
-  WriteContractParameters<TAbi, TFunctionName, Chain>,
+  WriteContractParameters<TAbi, TFunctionName, Chain, Account>,
   'account' | 'chain'
 > & {
   /**
@@ -61,6 +62,7 @@ export type WriteContractUnpreparedArgs<
   mode: 'recklesslyUnprepared'
   /** Chain id to use for provider */
   chainId?: number
+  request?: never
 }
 
 export type WriteContractArgs<
@@ -107,7 +109,7 @@ export async function writeContract<
   if (!signer) throw new ConnectorNotFoundError()
   if (config.chainId) assertActiveChain({ chainId: config.chainId, signer })
 
-  let request: WriteContractParameters<TAbi, TFunctionName, Chain>
+  let request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
   if (config.mode === 'prepared') {
     request = config.request
   } else {
@@ -116,7 +118,8 @@ export async function writeContract<
     request = res.request as unknown as WriteContractParameters<
       TAbi,
       TFunctionName,
-      Chain
+      Chain,
+      Account
     >
   }
 

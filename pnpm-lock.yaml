@@ -193,7 +193,7 @@ importers:
       pathe: ^1.0.0
       picocolors: ^1.0.0
       prettier: ^2.8.1
-      viem: 0.3.0-jxom-refactor-pkgs.20230404T001109
+      viem: 0.3.0-jxom-get-value.20230405T015215
       zod: ^3.20.2
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
@@ -217,7 +217,7 @@ importers:
       pathe: 1.1.0
       picocolors: 1.0.0
       prettier: 2.8.7
-      viem: 0.3.0-jxom-refactor-pkgs.20230404T001109_zod@3.21.4
+      viem: 0.3.0-jxom-get-value.20230405T015215_zod@3.21.4
       zod: 3.21.4
     devDependencies:
       '@ethersproject/bignumber': 5.7.0
@@ -238,7 +238,7 @@ importers:
       abitype: ^0.3.0
       ethers: ^5.7.1
       eventemitter3: ^4.0.7
-      viem: 0.3.0-jxom-refactor-pkgs.20230404T001109
+      viem: 0.3.0-jxom-get-value.20230405T015215
       zustand: ^4.3.1
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
@@ -248,7 +248,7 @@ importers:
       zustand: 4.3.7
     devDependencies:
       ethers: 5.7.2
-      viem: 0.3.0-jxom-refactor-pkgs.20230404T001109
+      viem: 0.3.0-jxom-get-value.20230405T015215
 
   packages/react:
     specifiers:
@@ -268,7 +268,7 @@ importers:
       react-dom: ^18.1.0
       react-dom-17: npm:react-dom@17.0.2
       use-sync-external-store: ^1.2.0
-      viem: 0.3.0-jxom-refactor-pkgs.20230404T001109
+      viem: 0.3.0-jxom-get-value.20230405T015215
     dependencies:
       '@tanstack/query-sync-storage-persister': 4.27.1
       '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
@@ -287,7 +287,7 @@ importers:
       react-17: /react/17.0.2
       react-dom: 18.2.0_react@18.2.0
       react-dom-17: /react-dom/17.0.2_react@18.2.0
-      viem: 0.3.0-jxom-refactor-pkgs.20230404T001109
+      viem: 0.3.0-jxom-get-value.20230405T015215
 
   references/packages/chains:
     specifiers: {}
@@ -11522,8 +11522,8 @@ packages:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  /viem/0.3.0-jxom-refactor-pkgs.20230404T001109:
-    resolution: {integrity: sha512-MpbCc9PYFfL6NgGNtmoesKJQp7/qhluYcIqExiTzh0z4uuINAQgHrJQhU+EYiETIDBUN8o0ujeup1ih0tdrl/Q==}
+  /viem/0.3.0-jxom-get-value.20230405T015215:
+    resolution: {integrity: sha512-H12i/SHm6NaE0VXvqch9Atjx+jLfXqCFq0xkLIc5VvVGPwD9GZbMto/milnq5uOiyIfbC2s4fpYdR7b8Pg3C8w==}
     dependencies:
       '@noble/curves': 0.9.0
       '@noble/hashes': 1.3.0
@@ -11541,8 +11541,8 @@ packages:
       - zod
     dev: true
 
-  /viem/0.3.0-jxom-refactor-pkgs.20230404T001109_zod@3.21.4:
-    resolution: {integrity: sha512-MpbCc9PYFfL6NgGNtmoesKJQp7/qhluYcIqExiTzh0z4uuINAQgHrJQhU+EYiETIDBUN8o0ujeup1ih0tdrl/Q==}
+  /viem/0.3.0-jxom-get-value.20230405T015215_zod@3.21.4:
+    resolution: {integrity: sha512-H12i/SHm6NaE0VXvqch9Atjx+jLfXqCFq0xkLIc5VvVGPwD9GZbMto/milnq5uOiyIfbC2s4fpYdR7b8Pg3C8w==}
     dependencies:
       '@noble/curves': 0.9.0
       '@noble/hashes': 1.3.0

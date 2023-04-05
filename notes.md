@@ -24,12 +24,12 @@ Breaking changes:
   - now bigint
 - `watchPendingTransactions`
   - callback now returns array of transactions
-- `prepareWriteTransaction`
+- `prepareWriteContract`
   - Removed `abi`, `address`, `functionName` from return value, they are now in `request`.
   - `request` now returns shape of viem's `WriteContractParameters` instead of ethers' `TransactionRequest`.
-- `writeTransaction`
-  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `account`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
-    - `from` is now `account`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+- `writeContract`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/actions/wallet/sendTransaction.html#parameters
   - `wait` has been removed from return type, use `waitForTransaction` instead.
 - `prepareSendTransaction`
   - No longer returns `gasLimit` – wallets will calculate this instead.
@@ -43,6 +43,10 @@ Breaking changes:
   - Replaced `address` with `name`.
 - `useWatchPendingTransactions`
   - listener now returns array of transactions
+- `usePrepareContractWrite`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+- `useContractWrite`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
 
 TODO:
 

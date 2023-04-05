@@ -1,30 +1,58 @@
 import type {
+  PrepareWriteContractResult,
   WriteContractMode,
-  WriteContractPreparedArgs,
   WriteContractResult,
   WriteContractUnpreparedArgs,
 } from '@wagmi/core'
 import { writeContract } from '@wagmi/core'
+import { getSendTransactionParameters } from '@wagmi/core/internal'
 import type { Abi } from 'abitype'
+import type { GetFunctionArgs, SendTransactionParameters } from 'viem'
 
 import * as React from 'react'
 
 import type { MutationConfig, PartialBy } from '../../types'
 import { useMutation } from '../utils'
 
+type UseContractWritePreparedArgs<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = Partial<
+  Pick<PrepareWriteContractResult<TAbi, TFunctionName>, 'chainId' | 'request'>
+> & {
+  abi?: never
+  accessList?: never
+  address?: never
+  args?: never
+  functionName?: never
+  gas?: never
+  gasPrice?: never
+  maxFeePerGas?: never
+  maxPriorityFeePerGas?: never
+  mode: 'prepared'
+  nonce?: never
+  value?: never
+}
+
+type UseContractWriteUnpreparedArgs<
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TFunctionName extends string = string,
+> = PartialBy<
+  Omit<WriteContractUnpreparedArgs<TAbi, TFunctionName>, 'args'>,
+  'abi' | 'address' | 'functionName'
+> &
+  Partial<GetFunctionArgs<TAbi, TFunctionName>> & {
+    mode: 'recklesslyUnprepared'
+    request?: never
+  }
+
 export type UseContractWriteArgs<
   TMode extends WriteContractMode = WriteContractMode,
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
 > = { mode: TMode } & (
-  | PartialBy<
-      WriteContractPreparedArgs<TAbi, TFunctionName>,
-      'abi' | 'address' | 'functionName' | 'request'
-    >
-  | PartialBy<
-      WriteContractUnpreparedArgs<TAbi, TFunctionName>,
-      'abi' | 'address' | 'args' | 'functionName'
-    >
+  | UseContractWritePreparedArgs<TAbi, TFunctionName>
+  | UseContractWriteUnpreparedArgs<TAbi, TFunctionName>
 )
 
 export type UseContractWriteConfig<
@@ -45,11 +73,17 @@ function mutationKey({
   functionName,
   ...config
 }: UseContractWriteArgs) {
-  const { request } = config as WriteContractPreparedArgs<Abi, string>
-  const { args, overrides } = config as unknown as WriteContractUnpreparedArgs<
-    Abi,
-    string
-  >
+  const {
+    args,
+    accessList,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    nonce,
+    request,
+    value,
+  } = config
   return [
     {
       entity: 'writeContract',
@@ -57,9 +91,15 @@ function mutationKey({
       args,
       chainId,
       abi,
+      accessList,
       functionName,
-      overrides,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
       request,
+      value,
     },
   ] as const
 }
@@ -67,33 +107,34 @@ function mutationKey({
 function mutationFn(
   config: UseContractWriteArgs<WriteContractMode, Abi, string>,
 ) {
+  if (config.mode === 'prepared') {
+    if (!config.request) throw new Error('request is required')
+    return writeContract({
+      mode: 'prepared',
+      request: config.request,
+      chainId: config.chainId,
+    })
+  }
+
   if (!config.address) throw new Error('address is required')
   if (!config.abi) throw new Error('abi is required')
   if (!config.functionName) throw new Error('functionName is required')
 
-  switch (config.mode) {
-    case 'prepared': {
-      if (!config.request) throw new Error('request is required')
-      return writeContract({
-        mode: 'prepared',
-        address: config.address,
-        chainId: config.chainId,
-        abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
-        functionName: config.functionName,
-        request: config.request,
-      })
-    }
-    case 'recklesslyUnprepared':
-      return writeContract({
-        address: config.address,
-        args: config.args as unknown[],
-        chainId: config.chainId,
-        abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
-        functionName: config.functionName,
-        mode: 'recklesslyUnprepared',
-        overrides: config.overrides,
-      })
-  }
+  return writeContract({
+    address: config.address,
+    args: config.args as unknown[],
+    chainId: config.chainId,
+    abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
+    functionName: config.functionName,
+    mode: 'recklesslyUnprepared',
+    accessList: config.accessList,
+    gas: config.gas,
+    gasPrice: config.gasPrice,
+    maxFeePerGas: config.maxFeePerGas,
+    maxPriorityFeePerGas: config.maxPriorityFeePerGas,
+    nonce: config.nonce,
+    value: config.value,
+  })
 }
 
 /**
@@ -118,13 +159,17 @@ export function useContractWrite<
   TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->(config: UseContractWriteConfig<TMode, TAbi, TFunctionName> = {} as any) {
-  const { address, abi, functionName, chainId, mode } = config
-  const { request } = config as WriteContractPreparedArgs<TAbi, TFunctionName>
-  const { args, overrides } = config as unknown as WriteContractUnpreparedArgs<
-    TAbi,
-    TFunctionName
-  >
+>(config: UseContractWriteConfig<TMode, TAbi, TFunctionName>) {
+  const { address, abi, args, chainId, functionName, mode, request } = config
+  const {
+    accessList,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    nonce,
+    value,
+  } = getSendTransactionParameters(config)
 
   const {
     data,
@@ -141,14 +186,20 @@ export function useContractWrite<
   } = useMutation(
     mutationKey({
       address,
-      abi: abi as Abi,
+      abi,
       functionName,
       chainId,
       mode,
-      args: args as unknown[],
-      overrides,
-      request,
-    }),
+      args,
+      accessList,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      request: request,
+      value,
+    } as UseContractWriteArgs),
     mutationFn,
     {
       onError: config.onError as UseContractWriteConfig['onError'],
@@ -159,17 +210,14 @@ export function useContractWrite<
   )
 
   const write = React.useMemo(() => {
-    if (mode === 'prepared') {
+    if (config.mode === 'prepared') {
       if (!request) return undefined
       return () =>
         mutate({
-          address,
-          chainId,
-          abi: abi as Abi,
-          functionName,
           mode: 'prepared',
-          request,
-        })
+          request: config.request,
+          chainId: config.chainId,
+        } as UseContractWriteArgs)
     }
 
     return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
@@ -182,9 +230,15 @@ export function useContractWrite<
         abi: abi as Abi,
         functionName,
         mode: 'recklesslyUnprepared',
-        overrides:
-          overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
-      })
+        accessList,
+        gas,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        nonce,
+        value,
+        ...overrideConfig?.recklesslySetUnpreparedOverrides,
+      } as UseContractWriteArgs)
   }, [
     address,
     chainId,
@@ -193,22 +247,18 @@ export function useContractWrite<
     mode,
     mutate,
     args,
-    overrides,
     request,
   ]) as MutationFn<typeof mode, TAbi, TFunctionName, void>
 
   const writeAsync = React.useMemo(() => {
-    if (mode === 'prepared') {
+    if (config.mode === 'prepared') {
       if (!request) return undefined
       return () =>
         mutateAsync({
-          address,
-          chainId,
-          abi: abi as Abi,
-          functionName,
           mode: 'prepared',
-          request,
-        })
+          request: config.request,
+          chainId: config.chainId,
+        } as UseContractWriteArgs)
     }
 
     return (overrideConfig?: MutationFnArgs<TAbi, TFunctionName>) =>
@@ -221,9 +271,15 @@ export function useContractWrite<
         abi: abi as Abi,
         functionName,
         mode: 'recklesslyUnprepared',
-        overrides:
-          overrideConfig?.recklesslySetUnpreparedOverrides ?? overrides,
-      })
+        accessList,
+        gas,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        nonce,
+        value,
+        ...overrideConfig?.recklesslySetUnpreparedOverrides,
+      } as UseContractWriteArgs)
   }, [
     address,
     chainId,
@@ -232,7 +288,6 @@ export function useContractWrite<
     mode,
     mutateAsync,
     args,
-    overrides,
     request,
   ]) as MutationFn<
     typeof mode,
@@ -269,11 +324,13 @@ type MutationFnArgs<
   recklesslySetUnpreparedArgs?: WriteContractUnpreparedArgs<
     TAbi,
     TFunctionName
-  >['args']
-  recklesslySetUnpreparedOverrides?: WriteContractUnpreparedArgs<
-    TAbi,
-    TFunctionName
-  >['overrides']
+  > extends { args: unknown }
+    ? WriteContractUnpreparedArgs<TAbi, TFunctionName>['args']
+    : unknown
+  recklesslySetUnpreparedOverrides?: Omit<
+    SendTransactionParameters,
+    'account' | 'chain'
+  >
 }
 
 type MutationFn<

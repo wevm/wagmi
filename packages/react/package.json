@@ -106,7 +106,7 @@
     "ethers": ">=5.5.1 <6",
     "react": ">=17.0.0",
     "typescript": ">=4.9.4",
-    "viem": "0.3.0-jxom-refactor-pkgs.20230404T001109"
+    "viem": "0.3.0-jxom-get-value.20230405T015215"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -132,7 +132,7 @@
     "react-17": "npm:react@17.0.2",
     "react-dom": "^18.1.0",
     "react-dom-17": "npm:react-dom@17.0.2",
-    "viem": "0.3.0-jxom-refactor-pkgs.20230404T001109"
+    "viem": "0.3.0-jxom-get-value.20230405T015215"
   },
   "keywords": [
     "react",

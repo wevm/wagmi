@@ -1,6 +1,5 @@
 import type { WriteContractMode } from '@wagmi/core'
 import type { Abi, ExtractAbiFunctionNames } from 'abitype'
-import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -41,7 +40,6 @@ function usePrepareContractWriteWithConnect<
     prepareContractWrite,
     contractWrite: useContractWrite({
       ...prepareContractWrite.config,
-      abi: prepareContractWrite.config.abi as any,
       chainId: config?.chainId,
     }),
   }
@@ -53,8 +51,6 @@ describe('useContractWrite', () => {
       const { result } = renderHook(() =>
         useContractWrite({
           mode: 'prepared',
-          ...wagmiContractConfig,
-          functionName: 'mint',
           request: undefined,
         }),
       )
@@ -284,7 +280,7 @@ describe('useContractWrite', () => {
             mode: 'recklesslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
-            args: [BigNumber.from(1)],
+            args: [1n],
           }),
         )
 
@@ -304,7 +300,17 @@ describe('useContractWrite', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (reason="execution reverted: Token ID invalid", method="estimateGas", transaction={"from":"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266","to":"0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF","data":"0x379607f50000000000000000000000000000000000000000000000000000000000000001","accessList":null}, error={"reason":"processing response error","code":"SERVER_ERROR","body":"{\\"jsonrpc\\":\\"2.0\\",\\"id\\":42,\\"error\\":{\\"code\\":3,\\"message\\":\\"execution reverted: Token ID invalid\\",\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"}}","error":{"code":3,"data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000"},"requestBody":"{\\"method\\":\\"eth_estimateGas\\",\\"params\\":[{\\"from\\":\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\",\\"to\\":\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\"}],\\"id\\":42,\\"jsonrpc\\":\\"2.0\\"}","requestMethod":"POST","url":"http://127.0.0.1:8545"}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.7.2)],
+            "error": [ContractFunctionExecutionError: The contract function "claim" reverted with the following reason:
+          Token ID invalid
+
+          Contract Call:
+            address:   0x1dfe7ca09e99d10835bf73044a23b73fc20623df
+            function:  claim(uint256 tokenId)
+            args:           (1)
+            sender:    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+
+          Docs: https://viem.sh/docs/contract/simulateContract.html
+          Version: viem@0.2.6],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -463,7 +469,7 @@ describe('useContractWrite', () => {
             mode: 'recklesslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
-            args: [BigNumber.from(1)],
+            args: [1n],
           }),
         )
 
@@ -473,10 +479,22 @@ describe('useContractWrite', () => {
         await act(async () => {
           await expect(
             result.current.contractWrite.writeAsync?.({
-              recklesslySetUnpreparedArgs: [BigNumber.from(1)],
+              recklesslySetUnpreparedArgs: [1n],
             }),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
-            '"cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (reason=\\"execution reverted: Token ID invalid\\", method=\\"estimateGas\\", transaction={\\"from\\":\\"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266\\",\\"to\\":\\"0x1dfe7Ca09e99d10835Bf73044a23B73Fc20623DF\\",\\"data\\":\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\",\\"accessList\\":null}, error={\\"reason\\":\\"processing response error\\",\\"code\\":\\"SERVER_ERROR\\",\\"body\\":\\"{\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\",\\\\\\"id\\\\\\":42,\\\\\\"error\\\\\\":{\\\\\\"code\\\\\\":3,\\\\\\"message\\\\\\":\\\\\\"execution reverted: Token ID invalid\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\\\\\"}}\\",\\"error\\":{\\"code\\":3,\\"data\\":\\"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010546f6b656e20494420696e76616c696400000000000000000000000000000000\\"},\\"requestBody\\":\\"{\\\\\\"method\\\\\\":\\\\\\"eth_estimateGas\\\\\\",\\\\\\"params\\\\\\":[{\\\\\\"from\\\\\\":\\\\\\"0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266\\\\\\",\\\\\\"to\\\\\\":\\\\\\"0x1dfe7ca09e99d10835bf73044a23b73fc20623df\\\\\\",\\\\\\"data\\\\\\":\\\\\\"0x379607f50000000000000000000000000000000000000000000000000000000000000001\\\\\\"}],\\\\\\"id\\\\\\":42,\\\\\\"jsonrpc\\\\\\":\\\\\\"2.0\\\\\\"}\\",\\"requestMethod\\":\\"POST\\",\\"url\\":\\"http://127.0.0.1:8545\\"}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.7.2)"',
+            `
+            "The contract function \\"claim\\" reverted with the following reason:
+            Token ID invalid
+
+            Contract Call:
+              address:   0x1dfe7ca09e99d10835bf73044a23b73fc20623df
+              function:  claim(uint256 tokenId)
+              args:           (1)
+              sender:    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+
+            Docs: https://viem.sh/docs/contract/simulateContract.html
+            Version: viem@0.2.6"
+          `,
           )
         })
         await waitFor(() =>
@@ -514,8 +532,8 @@ describe('useContractWrite', () => {
 
       expect(result.current.contractWrite.data?.hash).toBeDefined()
 
-      const from = await getSigners()[0]?.getAddress()
-      const to = await getSigners()[1]?.getAddress()
+      const from = await getSigners()[0]?.account.address
+      const to = await getSigners()[1]?.account.address
       functionName = 'transferFrom'
       args = [from, to, tokenId]
       rerender()

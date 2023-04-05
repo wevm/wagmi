@@ -7,7 +7,7 @@ import type {
 
 import { ConnectorNotFoundError } from '../../errors'
 import type { Signer } from '../../types'
-import { assertActiveChain } from '../../utils'
+import { assertActiveChain, getCallParameters } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { getProvider } from '../providers'
 
@@ -71,13 +71,33 @@ export async function prepareWriteContract<
   if (!signer) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId, signer })
 
+  const {
+    accessList,
+    blockNumber,
+    blockTag,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    nonce,
+    value,
+  } = getCallParameters(config)
+
   const { result, request } = await provider.simulateContract({
     abi,
     address,
     functionName,
     args,
     account: signer.account.address,
-    ...config,
+    accessList,
+    blockNumber,
+    blockTag,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    nonce,
+    value,
   } as SimulateContractParameters)
 
   const minimizedAbi = (abi as Abi).filter(
