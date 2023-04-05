@@ -34,11 +34,15 @@ function usePrepareContractWriteWithConnect<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
 >(config: UsePrepareContractWriteConfig<TAbi, TFunctionName>) {
-  const prepareContractWrite = usePrepareContractWrite({ ...config })
+  const prepareContractWrite = usePrepareContractWrite<
+    TAbi,
+    TFunctionName,
+    number
+  >({ ...config })
   return {
     connect: useConnect(),
     prepareContractWrite,
-    contractWrite: useContractWrite({
+    contractWrite: useContractWrite<'prepared', TAbi, TFunctionName>({
       ...prepareContractWrite.config,
       chainId: config?.chainId,
     }),

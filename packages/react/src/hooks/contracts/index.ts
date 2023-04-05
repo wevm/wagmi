@@ -1,4 +1,3 @@
-export { useContract, type UseContractConfig } from './useContract'
 export {
   useContractEvent,
   type UseContractEventConfig,

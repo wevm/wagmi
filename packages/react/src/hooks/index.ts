@@ -12,7 +12,6 @@ export {
 
 export {
   paginatedIndexesConfig,
-  useContract,
   useContractEvent,
   useContractInfiniteReads,
   useContractRead,
@@ -20,7 +19,6 @@ export {
   useContractWrite,
   usePrepareContractWrite,
   useToken,
-  type UseContractConfig,
   type UseContractEventConfig,
   type UseContractInfiniteReadsConfig,
   type UseContractReadConfig,

@@ -47,6 +47,8 @@ Breaking changes:
   - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
 - `useContractWrite`
   - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+- `useContract`
+  - Removed. Use `getContract` instead.
 
 TODO:
 

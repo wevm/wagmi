@@ -15,7 +15,6 @@ it('should expose correct exports', () => {
       "useBlockNumber",
       "useChainId",
       "useConnect",
-      "useContract",
       "useContractEvent",
       "useContractInfiniteReads",
       "useContractRead",

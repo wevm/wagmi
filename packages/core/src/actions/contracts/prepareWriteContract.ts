@@ -1,6 +1,5 @@
 import type { Abi } from 'abitype'
 import type {
-  Chain,
   SimulateContractParameters,
   SimulateContractReturnType,
 } from 'viem'
@@ -17,7 +16,7 @@ export type PrepareWriteContractConfig<
   TChainId extends number = number,
   TSigner extends Signer = Signer,
 > = Omit<
-  SimulateContractParameters<TAbi, TFunctionName, Chain>,
+  SimulateContractParameters<TAbi, TFunctionName>,
   'account' | 'chain'
 > & {
   /** Chain id to use for provider */
@@ -30,7 +29,7 @@ export type PrepareWriteContractResult<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TChainId extends number = number,
-> = SimulateContractReturnType<TAbi, TFunctionName, Chain> & {
+> = SimulateContractReturnType<TAbi, TFunctionName> & {
   chainId?: TChainId
   mode: 'prepared'
 }

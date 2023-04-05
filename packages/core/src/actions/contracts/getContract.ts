@@ -23,8 +23,8 @@ export type GetContractArgs<
 }
 
 export type GetContractResult<
-  TAbi extends Abi | readonly unknown[],
-  TSigner extends Signer | unknown,
+  TAbi extends Abi | readonly unknown[] = Abi,
+  TSigner extends Signer | unknown = unknown,
 > = GetContractReturnType<TAbi, PublicClient, TSigner>
 
 export function getContract<
