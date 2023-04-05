@@ -11,6 +11,5 @@ export {
 } from './getParameters'
 export { getUnit } from './getUnit'
 export { logWarn } from './logger'
-export { minimizeContractInterface } from './minimizeContractInterface'
 export { normalizeChainId } from './normalizeChainId'
 export { serialize } from './serialize'

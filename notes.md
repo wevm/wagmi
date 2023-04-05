@@ -64,6 +64,7 @@ Breaking changes:
   - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
   - Removed `overrides` in favor of `blockNumber` & `blockTag`
 - Removed `parseContractResult`
+- Removed `minimizeContractInterface`
 
 TODO:
 

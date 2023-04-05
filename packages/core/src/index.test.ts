@@ -78,7 +78,6 @@ it('should expose correct exports', () => {
       "deepEqual",
       "deserialize",
       "getUnit",
-      "minimizeContractInterface",
       "normalizeChainId",
       "serialize",
     ]

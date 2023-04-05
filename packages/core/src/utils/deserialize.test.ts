@@ -1,4 +1,3 @@
-import { BigNumber } from 'ethers'
 import { describe, expect, it } from 'vitest'
 
 import { deserialize } from './deserialize'
@@ -34,8 +33,6 @@ describe('deserialize', () => {
           ones: {
             that: {
               have: {
-                // TODO(viem-migration): remove bignumber
-                bignumbers: BigNumber.from('0x01'),
                 bigints: 123456789012345678901234567890n,
               },
             },
@@ -70,10 +67,6 @@ describe('deserialize', () => {
             "that": {
               "have": {
                 "bigints": 123456789012345678901234567890n,
-                "bignumbers": {
-                  "_hex": "0x01",
-                  "_isBigNumber": true,
-                },
               },
             },
           },

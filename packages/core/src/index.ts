@@ -172,7 +172,6 @@ export {
   deepEqual,
   deserialize,
   getUnit,
-  minimizeContractInterface,
   normalizeChainId,
   serialize,
 } from './utils'

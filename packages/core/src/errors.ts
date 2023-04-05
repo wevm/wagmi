@@ -277,22 +277,8 @@ export class ContractResultDecodeError extends Error {
 
 export class ProviderChainsNotFound extends Error {
   name = 'ProviderChainsNotFound'
-  message = [
-    'No chains were found on the wagmi provider. Some functions that require a chain may not work.',
-    '',
-    'It is recommended to add a list of chains to the provider in `createClient`.',
-    '',
-    'Example:',
-    '',
-    '```',
-    "import { getDefaultProvider } from 'ethers'",
-    "import { chain, createClient } from 'wagmi'",
-    '',
-    'createClient({',
-    '  provider: Object.assign(getDefaultProvider(), { chains: [chain.mainnet] })',
-    '})',
-    '```',
-  ].join('\n')
+  message =
+    'No chains were found on the wagmi provider. Some functions that require a chain may not work.'
 }
 
 export class ResourceUnavailableError extends RpcError {
