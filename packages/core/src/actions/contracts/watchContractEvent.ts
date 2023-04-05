@@ -10,7 +10,10 @@ import { getProvider, getWebSocketProvider } from '../providers'
 export type WatchContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-> = Omit<WatchContractEventParameters<TAbi, TEventName>, 'onLogs'> & {
+> = Pick<
+  WatchContractEventParameters<TAbi, TEventName>,
+  'abi' | 'address' | 'eventName'
+> & {
   chainId?: number
 }
 
