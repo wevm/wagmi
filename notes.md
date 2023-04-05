@@ -1,7 +1,9 @@
 Breaking changes:
 
 - General
+  - Migrated from Ethers.js to viem
   - `gasLimit` is now `gas`
+  - `BigNumber` has been removed in favor of browser-native `BigInt`
 - `signMessage`
   - `message` no longer accepts byte array.
   - Removed `UserRejectedRequestError` in favor of viem's internal error
@@ -73,3 +75,4 @@ TODO:
 - ethers workaround: Remove `ContractMethodDoesNotExistError` error
 - ethers workaround: Remove `minimizeContractInterface` util
 - Fix `allowFailure` on `useContractReads` & `useContractInfiniteReads`
+- Note `BigInt` serialization nuances (compatibility with `JSON.stringify` – recommend `serialize` util)
