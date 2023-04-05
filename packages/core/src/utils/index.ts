@@ -10,7 +10,6 @@ export {
   getSendTransactionParameters,
 } from './getParameters'
 export { getUnit } from './getUnit'
-export { normalizeFunctionName } from './normalizeFunctionName'
 export { logWarn } from './logger'
 export { minimizeContractInterface } from './minimizeContractInterface'
 export { normalizeChainId } from './normalizeChainId'
