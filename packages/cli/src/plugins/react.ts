@@ -7,12 +7,6 @@ import { getAddressDocString } from '../utils'
 
 type ReactConfig = {
   /**
-   * Generate `useContract` hook.
-   *
-   * @default true
-   */
-  useContract?: boolean
-  /**
    * Generate `useContractEvent` hook.
    *
    * @default true
@@ -66,7 +60,6 @@ type ReactResult = RequiredBy<Plugin, 'run'>
 
 export function react(config: ReactConfig = {}): ReactResult {
   const hooks = {
-    useContract: true,
     useContractEvent: true,
     useContractItemEvent: true,
     useContractRead: true,
@@ -152,38 +145,6 @@ export function react(config: ReactConfig = {}): ReactResult {
            * ${description}.
            */
           `
-        }
-
-        if (hooks.useContract) {
-          const name = `use${baseHookName}`
-          if (hookNames.has(name)) throw getHookNameError(name, contract.name)
-          hookNames.add(name)
-
-          imports.add('useContract')
-          const docString = genDocString('useContract')
-
-          let code
-          if (isTypeScript) {
-            imports.add('UseContractConfig')
-            // prettier-ignore
-            code = dedent`
-            ${docString}
-            export function ${name}(
-              config: Omit<UseContractConfig, 'abi'${omitted}>${typeParams} = {} as any,
-            ) {
-              ${innerContent}
-              return useContract(${innerHookConfig})
-            }
-            `
-          } else
-            code = dedent`
-            ${docString}
-            export function ${name}(config = {}) {
-              ${innerContent}
-              return useContract(${innerHookConfig})
-            }
-            `
-          content.push(code)
         }
 
         let hasReadFunction,

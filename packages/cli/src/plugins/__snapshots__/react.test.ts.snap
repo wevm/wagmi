@@ -2,8 +2,6 @@
 
 exports[`react > run > with TypeScript 1`] = `
 "import {
-  useContract,
-  UseContractConfig,
   useContractRead,
   UseContractReadConfig,
   useContractWrite,
@@ -18,13 +16,6 @@ import {
   WriteContractMode,
   PrepareWriteContractResult,
 } from 'wagmi/actions'
-
-/**
- * Wraps __{@link useContract}__ with \`abi\` set to __{@link wagmiAbi}__.
- */
-export function useWagmi(config: Omit<UseContractConfig, 'abi'> = {} as any) {
-  return useContract({ abi: wagmiAbi, ...config })
-}
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__.
@@ -502,19 +493,11 @@ export function useWagmiTransferEvent(
 
 exports[`react > run > without TypeScript 1`] = `
 "import {
-  useContract,
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
   useContractEvent,
 } from 'wagmi'
-
-/**
- * Wraps __{@link useContract}__ with \`abi\` set to __{@link wagmiAbi}__.
- */
-export function useWagmi(config = {}) {
-  return useContract({ abi: wagmiAbi, address: wagmiAddress, ...config })
-}
 
 /**
  * Wraps __{@link useContractRead}__ with \`abi\` set to __{@link wagmiAbi}__.

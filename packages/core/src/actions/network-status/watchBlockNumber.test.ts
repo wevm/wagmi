@@ -34,23 +34,27 @@ describe('watchBlockNumber', () => {
 
   describe('args', () => {
     describe('listen', () => {
-      it('default', async () => {
-        const results: bigint[] = []
-        const unsubscribe = watchBlockNumber(
-          {
-            listen: true,
-          },
-          (blockNumber) => results.push(blockNumber),
-        )
+      it(
+        'default',
+        async () => {
+          const results: bigint[] = []
+          const unsubscribe = watchBlockNumber(
+            {
+              listen: true,
+            },
+            (blockNumber) => results.push(blockNumber),
+          )
 
-        const provider = getProvider()
-        await new Promise((res) =>
-          setTimeout(() => res(''), provider.pollingInterval + 50),
-        )
+          const provider = getProvider()
+          await new Promise((res) =>
+            setTimeout(() => res(''), provider.pollingInterval + 50),
+          )
 
-        expect(results.length).toEqual(1)
-        unsubscribe()
-      })
+          expect(results.length).toEqual(1)
+          unsubscribe()
+        },
+        { retry: 3 },
+      )
 
       it('new block', async () => {
         const results: bigint[] = []

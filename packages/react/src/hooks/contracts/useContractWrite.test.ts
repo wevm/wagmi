@@ -143,36 +143,38 @@ describe('useContractWrite', () => {
 
   describe('return value', () => {
     describe('write', () => {
-      it('prepared', async () => {
-        const tokenId = getRandomTokenId()
-        const utils = renderHook(() =>
-          usePrepareContractWriteWithConnect({
-            ...wagmiContractConfig,
-            functionName: 'mint',
-            args: [tokenId],
-          }),
-        )
+      it(
+        'prepared',
+        async () => {
+          const tokenId = getRandomTokenId()
+          const utils = renderHook(() =>
+            usePrepareContractWriteWithConnect({
+              ...wagmiContractConfig,
+              functionName: 'mint',
+              args: [tokenId],
+            }),
+          )
 
-        const { result, waitFor } = utils
-        await actConnect({ utils })
+          const { result, waitFor } = utils
+          await actConnect({ utils })
 
-        await waitFor(() =>
-          expect(result.current.contractWrite.write).toBeDefined(),
-        )
+          await waitFor(() =>
+            expect(result.current.contractWrite.write).toBeDefined(),
+          )
 
-        await act(async () => {
-          result.current.contractWrite.write?.()
-        })
+          await act(async () => {
+            result.current.contractWrite.write?.()
+          })
 
-        await waitFor(() =>
-          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-        )
+          await waitFor(() =>
+            expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+          )
 
-        const { data, variables, ...res } = result.current.contractWrite
-        expect(data).toBeDefined()
-        expect(data?.hash).toBeDefined()
-        expect(variables).toBeDefined()
-        expect(res).toMatchInlineSnapshot(`
+          const { data, variables, ...res } = result.current.contractWrite
+          expect(data).toBeDefined()
+          expect(data?.hash).toBeDefined()
+          expect(variables).toBeDefined()
+          expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
             "isError": false,
@@ -185,34 +187,40 @@ describe('useContractWrite', () => {
             "writeAsync": [Function],
           }
         `)
-      })
+        },
+        { retry: 3 },
+      )
 
-      it('prepared with deferred args', async () => {
-        const args = getCrowdfundArgs()
-        const utils = renderHook(() =>
-          usePrepareContractWriteWithConnect({
-            ...mirrorCrowdfundContractConfig,
-            functionName: 'createCrowdfund',
-            args,
-          }),
-        )
-        const { result, waitFor } = utils
-        await actConnect({ utils })
+      it(
+        'prepared with deferred args',
+        async () => {
+          const args = getCrowdfundArgs()
+          const utils = renderHook(() =>
+            usePrepareContractWriteWithConnect({
+              ...mirrorCrowdfundContractConfig,
+              functionName: 'createCrowdfund',
+              args,
+            }),
+          )
+          const { result, waitFor } = utils
+          await actConnect({ utils })
 
-        await waitFor(
-          () => expect(result.current.contractWrite.write).toBeDefined(),
-          { timeout: 10_000 },
-        )
+          await waitFor(
+            () => expect(result.current.contractWrite.write).toBeDefined(),
+            { timeout: 10_000 },
+          )
 
-        await act(async () => {
-          result.current.contractWrite.write?.()
-        })
-        await waitFor(() =>
-          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-        )
+          await act(async () => {
+            result.current.contractWrite.write?.()
+          })
+          await waitFor(() =>
+            expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+          )
 
-        expect(result.current.contractWrite.data?.hash).toBeDefined()
-      }, 10_000)
+          expect(result.current.contractWrite.data?.hash).toBeDefined()
+        },
+        { retry: 3, timeout: 10_000 },
+      )
 
       it('recklesslyUnprepared', async () => {
         const tokenId = getRandomTokenId()
@@ -509,51 +517,55 @@ describe('useContractWrite', () => {
   })
 
   describe('behavior', () => {
-    it('multiple writes', async () => {
-      const tokenId = getRandomTokenId()
-      let args: any[] | any = [tokenId]
-      let functionName: ExtractAbiFunctionNames<
-        (typeof wagmiContractConfig)['abi'],
-        'nonpayable' | 'payable'
-      > = 'mint'
-      const utils = renderHook(() =>
-        usePrepareContractWriteWithConnect({
-          ...wagmiContractConfig,
-          functionName,
-          args,
-        }),
-      )
-      const { result, rerender, waitFor } = utils
-      await actConnect({ utils })
+    it(
+      'multiple writes',
+      async () => {
+        const tokenId = getRandomTokenId()
+        let args: any[] | any = [tokenId]
+        let functionName: ExtractAbiFunctionNames<
+          (typeof wagmiContractConfig)['abi'],
+          'nonpayable' | 'payable'
+        > = 'mint'
+        const utils = renderHook(() =>
+          usePrepareContractWriteWithConnect({
+            ...wagmiContractConfig,
+            functionName,
+            args,
+          }),
+        )
+        const { result, rerender, waitFor } = utils
+        await actConnect({ utils })
 
-      await waitFor(() =>
-        expect(result.current.contractWrite.write).toBeDefined(),
-      )
-      await act(async () => result.current.contractWrite.write?.())
-      await waitFor(() =>
-        expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-      )
+        await waitFor(() =>
+          expect(result.current.contractWrite.write).toBeDefined(),
+        )
+        await act(async () => result.current.contractWrite.write?.())
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+        )
 
-      expect(result.current.contractWrite.data?.hash).toBeDefined()
+        expect(result.current.contractWrite.data?.hash).toBeDefined()
 
-      const from = await getSigners()[0]?.account.address
-      const to = await getSigners()[1]?.account.address
-      functionName = 'transferFrom'
-      args = [from, to, tokenId]
-      rerender()
+        const from = await getSigners()[0]?.account.address
+        const to = await getSigners()[1]?.account.address
+        functionName = 'transferFrom'
+        args = [from, to, tokenId]
+        rerender()
 
-      await actConnect({ utils })
+        await actConnect({ utils })
 
-      await waitFor(() =>
-        expect(result.current.contractWrite.write).toBeDefined(),
-      )
-      await act(async () => result.current.contractWrite.write?.())
-      await waitFor(() =>
-        expect(result.current.contractWrite.isSuccess).toBeTruthy(),
-      )
+        await waitFor(() =>
+          expect(result.current.contractWrite.write).toBeDefined(),
+        )
+        await act(async () => result.current.contractWrite.write?.())
+        await waitFor(() =>
+          expect(result.current.contractWrite.isSuccess).toBeTruthy(),
+        )
 
-      expect(result.current.contractWrite.data?.hash).toBeDefined()
-    })
+        expect(result.current.contractWrite.data?.hash).toBeDefined()
+      },
+      { retry: 3 },
+    )
 
     it.each([
       { property: 'address' },

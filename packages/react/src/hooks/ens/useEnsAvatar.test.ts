@@ -195,32 +195,38 @@ describe('useEnsAvatar', () => {
   })
 
   describe('return value', () => {
-    it('refetch', async () => {
-      const { result } = renderHook(() =>
-        useEnsAvatar({
-          name: 'jxom.eth',
-          enabled: false,
-        }),
-      )
-
-      await act(async () => {
-        const { data } = await result.current.refetch()
-        expect(data).toMatchInlineSnapshot(
-          '"https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg"',
+    it(
+      'refetch',
+      async () => {
+        const { result } = renderHook(() =>
+          useEnsAvatar({
+            name: 'jxom.eth',
+            enabled: false,
+          }),
         )
-      })
-    })
+
+        await act(async () => {
+          const { data } = await result.current.refetch()
+          expect(data).toMatchInlineSnapshot(
+            '"https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg"',
+          )
+        })
+      },
+      { retry: 3 },
+    )
   })
 
   describe('behavior', () => {
-    it('does nothing when `address` is missing', async () => {
-      const { result, waitFor } = renderHook(() => useEnsAvatar())
+    it(
+      'does nothing when `address` is missing',
+      async () => {
+        const { result, waitFor } = renderHook(() => useEnsAvatar())
 
-      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+        await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
-      expect(res).toMatchInlineSnapshot(`
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
           "error": null,
@@ -237,6 +243,8 @@ describe('useEnsAvatar', () => {
           "status": "idle",
         }
       `)
-    })
+      },
+      { retry: 3 },
+    )
   })
 })

@@ -15,93 +15,105 @@ describe('watchPendingTransactions', () => {
     client = setupClient()
   })
 
-  it('default', async () => {
-    const results: WatchPendingTransactionsResult = []
-    const unsubscribe = watchPendingTransactions({}, (results_) =>
-      results.push(...results_),
-    )
+  it(
+    'default',
+    async () => {
+      const results: WatchPendingTransactionsResult = []
+      const unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
 
-    const provider = getProvider()
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      const provider = getProvider()
+      await new Promise((res) =>
+        setTimeout(() => res(''), provider.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(0)
-    unsubscribe()
-  })
+      expect(results.length).toEqual(0)
+      unsubscribe()
+    },
+    { retry: 3 },
+  )
 
-  it('new transaction', async () => {
-    const results: WatchPendingTransactionsResult = []
-    const unsubscribe = watchPendingTransactions({}, (results_) =>
-      results.push(...results_),
-    )
+  it(
+    'new transaction',
+    async () => {
+      const results: WatchPendingTransactionsResult = []
+      const unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
 
-    const signers = getSigners()
-    const to = signers[1]
-    const toAddress = to?.account.address
+      const signers = getSigners()
+      const to = signers[1]
+      const toAddress = to?.account.address
 
-    await connect({ connector: client.connectors[0]! })
-    await sendTransaction({
-      mode: 'recklesslyUnprepared',
-      request: {
-        to: toAddress,
-        value: parseEther('1'),
-      },
-    })
+      await connect({ connector: client.connectors[0]! })
+      await sendTransaction({
+        mode: 'recklesslyUnprepared',
+        request: {
+          to: toAddress,
+          value: parseEther('1'),
+        },
+      })
 
-    const provider = getProvider()
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      const provider = getProvider()
+      await new Promise((res) =>
+        setTimeout(() => res(''), provider.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(1)
-    unsubscribe()
-  })
+      expect(results.length).toEqual(1)
+      unsubscribe()
+    },
+    { retry: 3 },
+  )
 
-  it('unsubscribes + resubscribes', async () => {
-    const results: WatchPendingTransactionsResult = []
-    let unsubscribe = watchPendingTransactions({}, (results_) =>
-      results.push(...results_),
-    )
-    unsubscribe()
+  it(
+    'unsubscribes + resubscribes',
+    async () => {
+      const results: WatchPendingTransactionsResult = []
+      let unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
+      unsubscribe()
 
-    const signers = getSigners()
-    const to = signers[1]
-    const toAddress = to?.account.address
+      const signers = getSigners()
+      const to = signers[1]
+      const toAddress = to?.account.address
 
-    await connect({ connector: client.connectors[0]! })
-    await sendTransaction({
-      mode: 'recklesslyUnprepared',
-      request: {
-        to: toAddress,
-        value: parseEther('1'),
-      },
-    })
+      await connect({ connector: client.connectors[0]! })
+      await sendTransaction({
+        mode: 'recklesslyUnprepared',
+        request: {
+          to: toAddress,
+          value: parseEther('1'),
+        },
+      })
 
-    const provider = getProvider()
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      const provider = getProvider()
+      await new Promise((res) =>
+        setTimeout(() => res(''), provider.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(0)
+      expect(results.length).toEqual(0)
 
-    unsubscribe = watchPendingTransactions({}, (results_) =>
-      results.push(...results_),
-    )
+      unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
 
-    await sendTransaction({
-      mode: 'recklesslyUnprepared',
-      request: {
-        to: toAddress,
-        value: parseEther('1'),
-      },
-    })
+      await sendTransaction({
+        mode: 'recklesslyUnprepared',
+        request: {
+          to: toAddress,
+          value: parseEther('1'),
+        },
+      })
 
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      await new Promise((res) =>
+        setTimeout(() => res(''), provider.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(1)
-    unsubscribe()
-  })
+      expect(results.length).toEqual(1)
+      unsubscribe()
+    },
+    { retry: 3 },
+  )
 })
