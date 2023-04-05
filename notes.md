@@ -53,6 +53,8 @@ Breaking changes:
   - Removed `once`
 - `useContractEvent`
   - Removed `once`
+- `useContractRead`
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
 
 TODO:
 
