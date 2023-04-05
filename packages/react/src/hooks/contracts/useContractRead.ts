@@ -35,8 +35,8 @@ export type UseContractReadConfig<
         watch?: never
       }
     | {
-        /** Block tag to read against. */
         blockNumber?: never
+        /** Block tag to read against. */
         blockTag?: ReadContractConfig['blockTag']
         watch?: never
       }

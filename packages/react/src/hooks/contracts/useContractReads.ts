@@ -31,9 +31,26 @@ export type UseContractReadsConfig<
     cacheOnBlock?: boolean
     /** Set this to `true` to keep the previous data when fetching based on a new query key. Defaults to `false`. */
     keepPreviousData?: boolean
-    /** Subscribe to changes */
-    watch?: boolean
-  }
+  } & (
+    | {
+        /** Block number to read against. */
+        blockNumber?: ReadContractsConfig<TContracts>['blockNumber']
+        blockTag?: never
+        watch?: never
+      }
+    | {
+        blockNumber?: never
+        /** Block tag to read against. */
+        blockTag?: ReadContractsConfig<TContracts>['blockTag']
+        watch?: never
+      }
+    | {
+        blockNumber?: never
+        blockTag?: never
+        /** Refresh on incoming blocks. */
+        watch?: boolean
+      }
+  )
 
 type QueryKeyArgs<TContracts extends ContractFunctionConfig[]> = Omit<
   ReadContractsConfig<TContracts>,
