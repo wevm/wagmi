@@ -1,4 +1,5 @@
 import { useContractReads } from 'wagmi'
+import { stringify } from 'viem'
 
 export const wagmigotchiContractConfig = {
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
@@ -63,9 +64,7 @@ export function ReadContracts() {
       <div>Data:</div>
       {isLoading && <div>loading...</div>}
       {isSuccess &&
-        data?.map((data) => (
-          <div key={JSON.stringify(data)}>{JSON.stringify(data)}</div>
-        ))}
+        data?.map((data) => <div key={stringify(data)}>{stringify(data)}</div>)}
     </div>
   )
 }

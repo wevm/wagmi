@@ -1,4 +1,5 @@
 import { paginatedIndexesConfig, useContractInfiniteReads } from 'wagmi'
+import { stringify } from 'viem'
 
 export const mlootContractConfig = {
   address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
@@ -35,7 +36,7 @@ export function ReadContractsInfinite() {
       {isSuccess && (
         <>
           {data?.pages.map((data) => (
-            <div key={JSON.stringify(data)}>{JSON.stringify(data)}</div>
+            <div key={stringify(data)}>{stringify(data)}</div>
           ))}
           <button onClick={() => fetchNextPage()}>Fetch more</button>
         </>

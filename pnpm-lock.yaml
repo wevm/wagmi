@@ -149,12 +149,14 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.9.4
+      viem: ~0.2.7
       wagmi: workspace:*
     dependencies:
       ethers: 5.7.2
       next: 12.3.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      viem: 0.2.7_typescript@4.9.5
       wagmi: link:../../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
@@ -305,6 +307,7 @@ importers:
       abitype: ^0.3.0
       ethers: ^5.7.2
       eventemitter3: ^4.0.7
+      viem: ~0.2.7
     dependencies:
       '@coinbase/wallet-sdk': 3.6.5
       '@ledgerhq/connect-kit-loader': 1.0.2
@@ -318,6 +321,7 @@ importers:
     devDependencies:
       '@wagmi/core': link:../../../packages/core
       ethers: 5.7.2
+      viem: 0.2.7
 
 packages:
 
@@ -3001,6 +3005,17 @@ packages:
       typescript:
         optional: true
 
+  /@wagmi/chains/0.2.16_typescript@4.9.5:
+    resolution: {integrity: sha512-rkWaI2PxCnbD8G07ZZff5QXftnSkYL0h5f4DkHCG3fGYYr/ZDvmCL4bMae7j7A9sAif1csPPBmbCzHp3R5ogCQ==}
+    peerDependencies:
+      typescript: '>=4.9.4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      typescript: 4.9.5
+    dev: false
+
   /@walletconnect/core/2.5.2:
     resolution: {integrity: sha512-R0D9NKgHBpdun65q+1L49GOIGDLaIodnyb+Dq0tXGVzvXzy2lkXOlh2e9am61ixaVrUsHt7b96b318geqsuk4Q==}
     dependencies:
@@ -3481,6 +3496,18 @@ packages:
     peerDependenciesMeta:
       zod:
         optional: true
+
+  /abitype/0.7.1_typescript@4.9.5:
+    resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
+    peerDependencies:
+      typescript: '>=4.9.4'
+      zod: ^3 >=3.19.1
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      typescript: 4.9.5
+    dev: false
 
   /abitype/0.7.1_zod@3.21.4:
     resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
@@ -11233,7 +11260,6 @@ packages:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
-    dev: true
 
   /uint8arrays/3.1.1:
     resolution: {integrity: sha512-+QJa8QRnbdXVpHYjLoTpJIdCTiw9Ir62nocClWuXIq2JIh4Uta0cQsTSpFL678p2CN8B+XSApwcU+pQEqVpKWg==}
@@ -11540,6 +11566,25 @@ packages:
       - utf-8-validate
       - zod
     dev: true
+
+  /viem/0.2.7_typescript@4.9.5:
+    resolution: {integrity: sha512-cMUEVBSA7qCIxqZNVd/XPsV7XmG0re5uUPi1giwIJkLvoTkPLHXAWWLM/SgUAG1sz765erPfMvkqmhUWR0hodw==}
+    dependencies:
+      '@noble/curves': 0.9.0
+      '@noble/hashes': 1.3.0
+      '@scure/bip32': 1.2.0
+      '@scure/bip39': 1.2.0
+      '@wagmi/chains': 0.2.16_typescript@4.9.5
+      abitype: 0.7.1_typescript@4.9.5
+      idna-uts46-hx: 4.1.2
+      isomorphic-ws: 5.0.0_ws@8.12.0
+      ws: 8.12.0
+    transitivePeerDependencies:
+      - bufferutil
+      - typescript
+      - utf-8-validate
+      - zod
+    dev: false
 
   /viem/0.2.7_zod@3.21.4:
     resolution: {integrity: sha512-cMUEVBSA7qCIxqZNVd/XPsV7XmG0re5uUPi1giwIJkLvoTkPLHXAWWLM/SgUAG1sz765erPfMvkqmhUWR0hodw==}

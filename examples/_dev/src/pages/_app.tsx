@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
 import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { createPublicClient, http } from 'viem'
 import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -15,15 +16,22 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
-  [mainnet, goerli, optimism, avalanche],
-  [
-    alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
-    infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! }),
-    publicProvider(),
-  ],
-  { targetQuorum: 1 },
-)
+// const { chains, provider, webSocketProvider } = configureChains(
+//   [mainnet, goerli, optimism, avalanche],
+//   [
+//     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
+//     infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! }),
+//     publicProvider(),
+//   ],
+//   { targetQuorum: 1 },
+// )
+
+const chains = [mainnet]
+
+const provider = createPublicClient({
+  chain: mainnet,
+  transport: http(),
+})
 
 const client = createClient({
   autoConnect: true,
@@ -76,7 +84,6 @@ const client = createClient({
     }),
   ],
   provider,
-  webSocketProvider,
 })
 
 const App = ({ Component, pageProps }: AppProps) => {

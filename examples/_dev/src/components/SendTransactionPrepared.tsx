@@ -1,4 +1,5 @@
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
+import { stringify } from 'viem'
 
 export const SendTransactionPrepared = () => {
   const { config } = usePrepareSendTransaction({
@@ -21,7 +22,7 @@ export const SendTransactionPrepared = () => {
 
   return (
     <div>
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      {isSuccess && <div>Transaction: {stringify(data)}</div>}
       {isError && <div>Error sending transaction</div>}
     </div>
   )
