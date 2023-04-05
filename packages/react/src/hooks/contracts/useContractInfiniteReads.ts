@@ -1,62 +1,83 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
 import { deepEqual, readContracts } from '@wagmi/core'
-import type { Contract, ContractsConfig } from '@wagmi/core/internal'
-import type { Abi } from 'abitype'
+import { ContractFunctionConfig, MulticallContracts } from 'viem'
 import * as React from 'react'
 
 import type { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
 import type { UseInfiniteQueryResult } from '../utils'
 import { useInfiniteQuery } from '../utils'
+import { Narrow } from 'abitype'
 
 export type UseContractInfiniteReadsConfig<
-  TContracts extends Contract[] = Contract[],
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
   TPageParam = unknown,
   TSelectData = ReadContractsResult<TContracts>,
-> = Pick<ReadContractsConfig<TContracts>, 'allowFailure' | 'overrides'> & {
+> = Pick<ReadContractsConfig<TContracts>, 'allowFailure'> & {
   cacheKey: string
-  contracts(pageParam: TPageParam): readonly [
-    ...ContractsConfig<
-      TContracts,
-      {
-        /** Chain id to use for provider */
-        chainId?: number
+  contracts(pageParam: TPageParam): /** Contracts to query */
+  Narrow<
+    readonly [
+      ...MulticallContracts<
+        TContracts,
+        {
+          /** Chain id to use for provider */
+          chainId?: number
+        }
+      >,
+    ]
+  >
+} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> &
+  (
+    | {
+        /** Block number to read against. */
+        blockNumber?: ReadContractsConfig<TContracts>['blockNumber']
+        blockTag?: never
+        watch?: never
       }
-    >,
-  ]
-} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData>
+    | {
+        blockNumber?: never
+        /** Block tag to read against. */
+        blockTag?: ReadContractsConfig<TContracts>['blockTag']
+        watch?: never
+      }
+    | {
+        blockNumber?: never
+        blockTag?: never
+        /** Refresh on incoming blocks. */
+        watch?: boolean
+      }
+  )
 
 type QueryKeyArgs = {
   allowFailure: UseContractInfiniteReadsConfig['allowFailure']
   cacheKey: UseContractInfiniteReadsConfig['cacheKey']
-  overrides: UseContractInfiniteReadsConfig['overrides']
+  blockNumber: UseContractInfiniteReadsConfig['blockNumber']
+  blockTag: UseContractInfiniteReadsConfig['blockTag']
 }
 type QueryKeyConfig = Pick<UseContractInfiniteReadsConfig, 'scopeKey'>
 
 function queryKey({
   allowFailure,
+  blockNumber,
+  blockTag,
   cacheKey,
-  overrides,
   scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
       entity: 'readContractsInfinite',
       allowFailure,
+      blockNumber,
+      blockTag,
       cacheKey,
-      overrides,
       scopeKey,
     },
   ] as const
 }
 
 function queryFn<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
   TPageParam = unknown,
 >({
   contracts,
@@ -64,28 +85,26 @@ function queryFn<
   contracts: UseContractInfiniteReadsConfig<TContracts, TPageParam>['contracts']
 }) {
   return ({
-    queryKey: [{ allowFailure, overrides }],
+    queryKey: [{ allowFailure, blockNumber, blockTag }],
     pageParam,
   }: QueryFunctionArgs<typeof queryKey>) => {
     return readContracts({
       allowFailure,
+      blockNumber,
+      blockTag,
       contracts: contracts(pageParam || undefined),
-      overrides,
     })
   }
 }
 
 export function useContractInfiniteReads<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
   TPageParam = any,
   TSelectData = ReadContractsResult<TContracts>,
 >({
   allowFailure,
+  blockNumber,
+  blockTag,
   cacheKey,
   cacheTime,
   contracts,
@@ -96,7 +115,6 @@ export function useContractInfiniteReads<
   onError,
   onSettled,
   onSuccess,
-  overrides,
   scopeKey,
   select,
   staleTime,
@@ -112,8 +130,8 @@ export function useContractInfiniteReads<
 >): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 UseInfiniteQueryResult<TSelectData, Error> {
   const queryKey_ = React.useMemo(
-    () => queryKey({ allowFailure, cacheKey, overrides, scopeKey }),
-    [allowFailure, cacheKey, overrides, scopeKey],
+    () => queryKey({ allowFailure, blockNumber, blockTag, cacheKey, scopeKey }),
+    [allowFailure, blockNumber, blockTag, cacheKey, scopeKey],
   )
 
   const enabled = React.useMemo(() => {
@@ -139,12 +157,7 @@ UseInfiniteQueryResult<TSelectData, Error> {
 
 // TODO: Fix return type inference for `useContractInfiniteReads` when using `paginatedIndexesConfig`
 export function paginatedIndexesConfig<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends {
-    abi: TAbi
-    functionName: TFunctionName
-  }[],
+  TContracts extends ContractFunctionConfig[],
   TSelectData = ReadContractsResult<TContracts>,
 >(
   fn: UseContractInfiniteReadsConfig<TContracts>['contracts'],

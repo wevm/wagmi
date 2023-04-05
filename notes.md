@@ -59,6 +59,10 @@ Breaking changes:
   - Changed structure of return type (`allowFailure: true` returns an array of `{ error, result, status }[]` instead of `Result[]`)
   - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
   - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- `useContractInfiniteReads`
+  - Changed structure of return type (`allowFailure: true` returns an array of `{ error, result, status }[]` instead of `Result[]`)
+  - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
 
 TODO:
 
@@ -66,3 +70,4 @@ TODO:
 - ethers workaround: Remove `normalizeFunctionName` util
 - ethers workaround: Remove `ContractMethodDoesNotExistError` error
 - ethers workaround: Remove `minimizeContractInterface` util
+- Fix `allowFailure` on `useContractReads` & `useContractInfiniteReads`
