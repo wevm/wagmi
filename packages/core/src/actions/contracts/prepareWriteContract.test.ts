@@ -32,9 +32,18 @@ describe('prepareWriteContract', () => {
     expect(args.length).toBe(1)
     expect(request_).toMatchInlineSnapshot(`
       {
+        "accessList": undefined,
         "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
         "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+        "blockNumber": undefined,
+        "blockTag": undefined,
         "functionName": "mint",
+        "gas": undefined,
+        "gasPrice": undefined,
+        "maxFeePerGas": undefined,
+        "maxPriorityFeePerGas": undefined,
+        "nonce": undefined,
+        "value": undefined,
       }
     `)
     expect(rest).toMatchInlineSnapshot(`
@@ -60,9 +69,18 @@ describe('prepareWriteContract', () => {
       expect(args.length).toBe(1)
       expect(request_).toMatchInlineSnapshot(`
         {
+          "accessList": undefined,
           "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": undefined,
           "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
         }
       `)
       expect(rest).toMatchInlineSnapshot(`
@@ -87,10 +105,18 @@ describe('prepareWriteContract', () => {
       expect(args.length).toBe(1)
       expect(request_).toMatchInlineSnapshot(`
         {
+          "accessList": undefined,
           "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": undefined,
           "functionName": "mint",
           "gas": 1000000n,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
         }
       `)
       expect(rest).toMatchInlineSnapshot(`
@@ -115,10 +141,18 @@ describe('prepareWriteContract', () => {
       expect(args.length).toBe(1)
       expect(request_).toMatchInlineSnapshot(`
         {
+          "accessList": undefined,
           "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": 42069n,
+          "blockTag": undefined,
           "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
         }
       `)
       expect(rest).toMatchInlineSnapshot(`
@@ -143,10 +177,18 @@ describe('prepareWriteContract', () => {
       expect(args.length).toBe(1)
       expect(request_).toMatchInlineSnapshot(`
         {
+          "accessList": undefined,
           "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
           "blockTag": "latest",
           "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
         }
       `)
       expect(rest).toMatchInlineSnapshot(`
@@ -171,10 +213,18 @@ describe('prepareWriteContract', () => {
       expect(args.length).toBe(1)
       expect(request_).toMatchInlineSnapshot(`
         {
+          "accessList": undefined,
           "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": undefined,
           "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
           "nonce": 1,
+          "value": undefined,
         }
       `)
       expect(rest).toMatchInlineSnapshot(`
@@ -253,7 +303,7 @@ describe('prepareWriteContract', () => {
         Make sure you are using the correct ABI and that the function exists on it.
 
         Docs: https://viem.sh/docs/contract/encodeFunctionData.html
-        Version: viem@0.2.1"
+        Version: viem@0.2.7"
       `)
     })
   })

@@ -18,9 +18,9 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "0.398806329552690329",
+          "formatted": "0.283908469850273318",
           "symbol": "ETH",
-          "value": 398806329552690329n,
+          "value": 283908469850273318n,
         }
       `)
     })
@@ -34,9 +34,9 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "0.398806329552690329",
+          "formatted": "0.283908469850273318",
           "symbol": "ETH",
-          "value": 398806329552690329n,
+          "value": 283908469850273318n,
         }
       `)
     })
@@ -50,9 +50,9 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "0.398806329552690329",
+          "formatted": "283908469.850273318",
           "symbol": "ETH",
-          "value": 398806329552690329n,
+          "value": 283908469850273318n,
         }
       `)
     })
@@ -83,9 +83,9 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "795.087487194190508252",
+            "formatted": "797.13433855575639986",
             "symbol": "MKR",
-            "value": 795087487194190508252n,
+            "value": 797134338555756399860n,
           }
         `)
       })
