@@ -39,7 +39,7 @@
     "@typescript-eslint/parser": "^5.48.2",
     "@vitest/coverage-c8": "^0.25.8",
     "@vitest/ui": "^0.25.8",
-    "abitype": "^0.3.0",
+    "abitype": "^0.7.1",
     "dedent": "^0.7.0",
     "esbuild": "0.15.13",
     "esbuild-register": "^3.4.2",

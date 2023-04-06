@@ -22,7 +22,7 @@ importers:
       '@typescript-eslint/parser': ^5.48.2
       '@vitest/coverage-c8': ^0.25.8
       '@vitest/ui': ^0.25.8
-      abitype: ^0.3.0
+      abitype: ^0.7.1
       dedent: ^0.7.0
       esbuild: 0.15.13
       esbuild-register: ^3.4.2
@@ -61,7 +61,7 @@ importers:
       '@typescript-eslint/parser': 5.57.1_hlhy2p7wypjrhc62n5pejmh7ia
       '@vitest/coverage-c8': 0.25.8_eetf2xjpdhuqcs2dx4ndfgw7iq
       '@vitest/ui': 0.25.8
-      abitype: 0.3.0_typescript@4.9.5
+      abitype: 0.7.1_typescript@4.9.5
       dedent: 0.7.0
       esbuild: 0.15.13
       esbuild-register: 3.4.2_esbuild@0.15.13
@@ -174,7 +174,7 @@ importers:
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
       '@wagmi/chains': workspace:*
-      abitype: ^0.3.0
+      abitype: ^0.7.1
       abort-controller: ^3.0.0
       bundle-require: ^3.1.2
       cac: ^6.7.12
@@ -199,7 +199,7 @@ importers:
       zod: ^3.20.2
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
-      abitype: 0.3.0_zod@3.21.4
+      abitype: 0.7.1_zod@3.21.4
       abort-controller: 3.0.0
       bundle-require: 3.1.2_esbuild@0.15.13
       cac: 6.7.14
@@ -237,7 +237,7 @@ importers:
     specifiers:
       '@wagmi/chains': workspace:*
       '@wagmi/connectors': workspace:*
-      abitype: ^0.3.0
+      abitype: ^0.7.1
       ethers: ^5.7.1
       eventemitter3: ^4.0.7
       viem: ~0.2.8
@@ -245,7 +245,7 @@ importers:
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
       '@wagmi/connectors': link:../../references/packages/connectors
-      abitype: 0.3.0
+      abitype: 0.7.1
       eventemitter3: 4.0.7
       zustand: 4.3.7
     devDependencies:
@@ -298,25 +298,25 @@ importers:
     specifiers:
       '@coinbase/wallet-sdk': ^3.5.4
       '@ledgerhq/connect-kit-loader': ^1.0.1
-      '@safe-global/safe-apps-provider': ^0.15.2
-      '@safe-global/safe-apps-sdk': ^7.9.0
+      '@safe-global/safe-apps-provider': 0.16.0
+      '@safe-global/safe-apps-sdk': 7.10.0
       '@wagmi/core': workspace:*
       '@walletconnect/ethereum-provider': 2.5.2
       '@walletconnect/legacy-provider': ^2.0.0
       '@web3modal/standalone': 2.2.2
-      abitype: ^0.3.0
+      abitype: ^0.7.1
       ethers: ^5.7.2
       eventemitter3: ^4.0.7
       viem: 0.2.8
     dependencies:
       '@coinbase/wallet-sdk': 3.6.5
       '@ledgerhq/connect-kit-loader': 1.0.2
-      '@safe-global/safe-apps-provider': 0.15.2
-      '@safe-global/safe-apps-sdk': 7.10.1
+      '@safe-global/safe-apps-provider': 0.16.0
+      '@safe-global/safe-apps-sdk': 7.10.0
       '@walletconnect/ethereum-provider': 2.5.2_cvk6zjefdkzddvm6x6lhjx6oxy
       '@walletconnect/legacy-provider': 2.0.0
       '@web3modal/standalone': 2.2.2
-      abitype: 0.3.0
+      abitype: 0.7.1
       eventemitter3: 4.0.7
     devDependencies:
       '@wagmi/core': link:../../../packages/core
@@ -2037,10 +2037,10 @@ packages:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
     dev: true
 
-  /@safe-global/safe-apps-provider/0.15.2:
-    resolution: {integrity: sha512-BaoGAuY7h6jLBL7P+M6b7hd+1QfTv8uMyNF3udhiNUwA0XwfzH2ePQB13IEV3Mn7wdcIMEEUDS5kHbtAsj60qQ==}
+  /@safe-global/safe-apps-provider/0.16.0:
+    resolution: {integrity: sha512-oeRlvU+2hjFx/7EbskGq30kkwL2hyfdseZZZYf6na/xD85mZ59zKO81lBxZcWnvofJFqjqtScz84PAKth9Sq2g==}
     dependencies:
-      '@safe-global/safe-apps-sdk': 7.9.0
+      '@safe-global/safe-apps-sdk': 7.10.0
       events: 3.3.0
     transitivePeerDependencies:
       - bufferutil
@@ -2048,19 +2048,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@safe-global/safe-apps-sdk/7.10.1:
-    resolution: {integrity: sha512-2imnqAbx9XrqT3psrhe/YVpj2yW840ngJIuqv0nTiWJLKcTCzM2LJ4MH7ir7H8Sp2wdG/BqNB3SvjUAks2qNjQ==}
-    dependencies:
-      '@safe-global/safe-gateway-typescript-sdk': 3.7.0
-      ethers: 5.7.2
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - utf-8-validate
-    dev: false
-
-  /@safe-global/safe-apps-sdk/7.9.0:
-    resolution: {integrity: sha512-S2EI+JL8ocSgE3uGNaDZCzKmwfhtxXZFDUP76vN0FeaY35itFMyi8F0Vhxu0XnZm3yLzJE3tp5px6GhuQFLU6w==}
+  /@safe-global/safe-apps-sdk/7.10.0:
+    resolution: {integrity: sha512-is0QAHVoGkP06YfOPcp4X3/YUEA3wRdgFUyKZ4rT47uOEnzxA9Sm8BFJrIZqZOjjqC+aJXRMF0cE2qucS953rg==}
     dependencies:
       '@safe-global/safe-gateway-typescript-sdk': 3.7.0
       ethers: 5.7.2
@@ -3454,43 +3443,6 @@ packages:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     dev: true
 
-  /abitype/0.3.0:
-    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
-    engines: {pnpm: '>=7'}
-    peerDependencies:
-      typescript: '>=4.9.4'
-      zod: '>=3.19.1'
-    peerDependenciesMeta:
-      zod:
-        optional: true
-    dev: false
-
-  /abitype/0.3.0_typescript@4.9.5:
-    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
-    engines: {pnpm: '>=7'}
-    peerDependencies:
-      typescript: '>=4.9.4'
-      zod: '>=3.19.1'
-    peerDependenciesMeta:
-      zod:
-        optional: true
-    dependencies:
-      typescript: 4.9.5
-    dev: true
-
-  /abitype/0.3.0_zod@3.21.4:
-    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
-    engines: {pnpm: '>=7'}
-    peerDependencies:
-      typescript: '>=4.9.4'
-      zod: '>=3.19.1'
-    peerDependenciesMeta:
-      zod:
-        optional: true
-    dependencies:
-      zod: 3.21.4
-    dev: false
-
   /abitype/0.7.1:
     resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
     peerDependencies:
@@ -3510,7 +3462,6 @@ packages:
         optional: true
     dependencies:
       typescript: 4.9.5
-    dev: false
 
   /abitype/0.7.1_zod@3.21.4:
     resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
