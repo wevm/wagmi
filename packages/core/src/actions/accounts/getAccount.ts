@@ -4,7 +4,7 @@ import type { Provider } from '../../types'
 
 export type GetAccountResult<TProvider extends Provider = Provider> =
   | {
-      address: NonNullable<Data<TProvider>['account']>
+      address: NonNullable<Data['account']>
       connector: NonNullable<Client<TProvider>['connector']>
       isConnected: true
       isConnecting: false
@@ -13,7 +13,7 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
       status: 'connected'
     }
   | {
-      address: Data<TProvider>['account']
+      address: Data['account']
       connector: Client<TProvider>['connector']
       isConnected: boolean
       isConnecting: false
@@ -22,7 +22,7 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
       status: 'reconnecting'
     }
   | {
-      address: Data<TProvider>['account']
+      address: Data['account']
       connector: Client<TProvider>['connector']
       isConnected: false
       isReconnecting: false
@@ -47,7 +47,7 @@ export function getAccount<
   switch (status) {
     case 'connected':
       return {
-        address: data?.account as NonNullable<Data<TProvider>['account']>,
+        address: data?.account as NonNullable<Data['account']>,
         connector: connector as NonNullable<Client<TProvider>['connector']>,
         isConnected: true,
         isConnecting: false,

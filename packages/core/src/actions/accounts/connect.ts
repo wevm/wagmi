@@ -11,15 +11,12 @@ export type ConnectArgs = {
   connector: Connector
 }
 
-type Data<TProvider extends Provider = Provider> = Required<
-  ConnectorData<TProvider>
->
+type Data = Required<ConnectorData>
 
 export type ConnectResult<TProvider extends Provider = Provider> = {
-  account: Data<TProvider>['account']
-  chain: Data<TProvider>['chain']
+  account: Data['account']
+  chain: Data['chain']
   connector: Client<TProvider>['connector']
-  provider: Data<TProvider>['provider']
 }
 
 export async function connect<TProvider extends Provider = Provider>({

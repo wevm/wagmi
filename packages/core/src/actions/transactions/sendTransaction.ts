@@ -6,7 +6,6 @@ import type {
 } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
-import type { Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { prepareSendTransaction } from './prepareSendTransaction'
@@ -70,7 +69,7 @@ export async function sendTransaction({
   // `fetchSigner` isn't really "asynchronous" as we have already
   // initialized the provider upon user connection, so it will return
   // immediately.
-  const signer = await fetchSigner<Signer>()
+  const signer = await fetchSigner()
   if (!signer) throw new ConnectorNotFoundError()
 
   if (chainId) assertActiveChain({ chainId, signer })

@@ -36,7 +36,7 @@ export type ClientConfig<
     | TWebSocketProvider
 }
 
-export type Data<TProvider extends Provider> = ConnectorData<TProvider>
+export type Data = ConnectorData
 export type State<
   TProvider extends Provider = Provider,
   TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
@@ -44,7 +44,7 @@ export type State<
   chains?: Connector['chains']
   connector?: Connector
   connectors: Connector[]
-  data?: Data<TProvider>
+  data?: Data
   error?: Error
   provider: TProvider
   status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
@@ -102,7 +102,7 @@ export class Client<
         const rawState = storage.getItem<{
           state: State<TProvider, TWebSocketProvider>
         }>(storeKey)
-        const data: Data<TProvider> | undefined = rawState?.state?.data
+        const data: Data | undefined = rawState?.state?.data
         // If account exists in localStorage, set status to reconnecting
         status = data?.account ? 'reconnecting' : 'connecting'
         chainId = data?.chain?.id
@@ -302,7 +302,7 @@ export class Client<
   }
 
   #addEffects() {
-    const onChange = (data: Data<TProvider>) => {
+    const onChange = (data: Data) => {
       this.setState((x) => ({
         ...x,
         data: { ...x.data, ...data },

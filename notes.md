@@ -67,6 +67,14 @@ Breaking changes:
   - Removed `overrides` in favor of `blockNumber` & `blockTag`
 - Removed `parseContractResult`
 - Removed `minimizeContractInterface`
+- Connectors: Removed `provider` from `ConnectorData` type, affects:
+  - `connector.connect`
+  - `connector.on("connect")`
+- `connect`
+  - No longer returns `provider` property (use `connector.getProvider()`)
+- `useConnect`
+  - No longer returns `provider` property (use `connector.getProvider()`)
+- Connectors: Removed `Signer` generic
 
 TODO:
 

@@ -6,11 +6,11 @@ export type FetchSignerArgs = {
   chainId?: number
 }
 
-export type FetchSignerResult<TSigner extends Signer = Signer> = TSigner | null
+export type FetchSignerResult = Signer | null
 
-export async function fetchSigner<TSigner extends Signer = Signer>({
+export async function fetchSigner({
   chainId,
-}: FetchSignerArgs = {}): Promise<FetchSignerResult<TSigner>> {
+}: FetchSignerArgs = {}): Promise<FetchSignerResult> {
   const client = getClient()
   const signer = (await client.connector?.getSigner?.({ chainId })) || null
   return signer

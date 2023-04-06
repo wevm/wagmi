@@ -7,7 +7,6 @@ import type {
 } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
-import type { Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import type { PrepareWriteContractConfig } from './prepareWriteContract'
@@ -93,7 +92,6 @@ export type WriteContractResult = { hash: WriteContractReturnType }
 export async function writeContract<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-  TSigner extends Signer = Signer,
 >(
   config:
     | WriteContractUnpreparedArgs<TAbi, TFunctionName>
@@ -105,7 +103,7 @@ export async function writeContract<
   /** Ref: https://wagmi.sh/react/prepare-hooks#ios-app-link-constraints */
   /****************************************************************************/
 
-  const signer = await fetchSigner<TSigner>()
+  const signer = await fetchSigner()
   if (!signer) throw new ConnectorNotFoundError()
   if (config.chainId) assertActiveChain({ chainId: config.chainId, signer })
 
