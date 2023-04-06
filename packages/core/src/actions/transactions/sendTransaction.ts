@@ -79,9 +79,10 @@ export async function sendTransaction({
     request = res.request
   }
 
-  const hash = await signer.sendTransaction(
-    request as SendTransactionParameters,
-  )
+  const hash = await signer.sendTransaction({
+    ...request,
+    chain: null,
+  } as SendTransactionParameters)
 
   /********************************************************************/
   /** END: iOS App Link cautious code.                                */
