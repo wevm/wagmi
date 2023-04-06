@@ -322,7 +322,7 @@ describe('useContractWrite', () => {
             sender:    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
           Docs: https://viem.sh/docs/contract/simulateContract.html
-          Version: viem@0.2.7],
+          Version: viem@0.2.8],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -505,7 +505,7 @@ describe('useContractWrite', () => {
               sender:    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
             Docs: https://viem.sh/docs/contract/simulateContract.html
-            Version: viem@0.2.7"
+            Version: viem@0.2.8"
           `,
           )
         })

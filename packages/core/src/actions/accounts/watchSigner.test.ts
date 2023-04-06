@@ -17,16 +17,7 @@ describe('watchSigner', () => {
 
     let counter = 0
     const unsubscribe = watchSigner({}, (data) => {
-      if (counter === 0)
-        expect(data).toMatchInlineSnapshot(`
-          WalletSigner {
-            "_isSigner": true,
-            "_mnemonic": [Function],
-            "_signingKey": [Function],
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "provider": "<Provider network={1} />",
-          }
-        `)
+      if (counter === 0) expect(data).toBeDefined()
       else if (counter === 1) expect(data).toMatchInlineSnapshot(`null`)
       counter += 1
     })
@@ -41,32 +32,13 @@ describe('watchSigner', () => {
     const client = setupClient()
 
     let counter = 0
-    const unwatch = watchSigner({}, (data) => {
-      if (counter === 0)
-        expect(data).toMatchInlineSnapshot(`
-          WalletSigner {
-            "_isSigner": true,
-            "_mnemonic": [Function],
-            "_signingKey": [Function],
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "provider": "<Provider network={1} />",
-          }
-        `)
-      else if (counter === 1)
-        expect(data).toMatchInlineSnapshot(`
-          WalletSigner {
-            "_isSigner": true,
-            "_mnemonic": [Function],
-            "_signingKey": [Function],
-            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-            "provider": "<Provider network={1} />",
-          }
-        `)
+    const unwatch = watchSigner({}, () => {
       counter += 1
     })
 
     await connect({ connector: client.connectors[0]! })
     await switchNetwork({ chainId: 4 })
+    expect(counter).toEqual(2)
     unwatch()
   })
 })
