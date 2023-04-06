@@ -106,7 +106,6 @@
     "/dist"
   ],
   "peerDependencies": {
-    "ethers": ">=5.5.1 <6",
     "viem": "~0.2.0",
     "typescript": ">=4.9.4"
   },
@@ -123,7 +122,6 @@
     "zustand": "^4.3.1"
   },
   "devDependencies": {
-    "ethers": "^5.7.1",
     "viem": "~0.2.9"
   },
   "keywords": [
