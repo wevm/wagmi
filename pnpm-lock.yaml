@@ -121,6 +121,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       siwe: 1.1.6
+      viem: 0.2.9_typescript@4.9.5
       wagmi: link:../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
@@ -133,7 +134,6 @@ importers:
       postcss: 8.4.21
       tailwindcss: 3.3.1_postcss@8.4.21
       typescript: 4.9.5
-      viem: 0.2.9_typescript@4.9.5
 
   examples/_dev:
     specifiers:
@@ -3007,6 +3007,7 @@ packages:
         optional: true
     dependencies:
       typescript: 4.9.5
+    dev: false
 
   /@walletconnect/core/2.5.2:
     resolution: {integrity: sha512-R0D9NKgHBpdun65q+1L49GOIGDLaIodnyb+Dq0tXGVzvXzy2lkXOlh2e9am61ixaVrUsHt7b96b318geqsuk4Q==}
@@ -11535,6 +11536,7 @@ packages:
       - typescript
       - utf-8-validate
       - zod
+    dev: false
 
   /viem/0.2.9_zod@3.21.4:
     resolution: {integrity: sha512-UK6mAxDjN9ChmClBi6GNgj4E123ZbkQuboHYoWL+/QKuuM6eeJ0HGo0L3vze4LvzU8k5RXMV83Es2lSJ2dWRRg==}
