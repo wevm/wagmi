@@ -164,7 +164,6 @@ importers:
 
   packages/cli:
     specifiers:
-      '@ethersproject/bignumber': ^5.7.0
       '@types/dedent': ^0.7.0
       '@types/fs-extra': ^9.0.13
       '@wagmi/chains': workspace:*
@@ -216,7 +215,6 @@ importers:
       viem: 0.2.9_zod@3.21.4
       zod: 3.21.4
     devDependencies:
-      '@ethersproject/bignumber': 5.7.0
       '@types/dedent': 0.7.0
       '@types/fs-extra': 9.0.13
       fixturez: 1.1.0
@@ -825,11 +823,13 @@ packages:
       '@ethersproject/bytes': 5.7.0
       '@ethersproject/logger': 5.7.0
       bn.js: 5.2.1
+    dev: false
 
   /@ethersproject/bytes/5.7.0:
     resolution: {integrity: sha512-nsbxwgFXWh9NyYWo+U8atvmMsSdKJprTcICAkvbBffT75qDocbuggBU0SJiVK2MuTrp0q+xvLkTnGMPK1+uA9A==}
     dependencies:
       '@ethersproject/logger': 5.7.0
+    dev: false
 
   /@ethersproject/constants/5.7.0:
     resolution: {integrity: sha512-DHI+y5dBNvkpYUMiRQyxRBYBefZkJfo70VUkUAsRjcPs47muV9evftfZ0PJVCXYbAiCgght0DtcF9srFQmIgWA==}
@@ -910,6 +910,7 @@ packages:
 
   /@ethersproject/logger/5.7.0:
     resolution: {integrity: sha512-0odtFdXu/XHtjQXJYA3u9G0G8btm0ND5Cu8M7i5vhEcE8/HmF4Lbdqanwyv4uQTr2tx6b7fQRmgLrsnpQlmnig==}
+    dev: false
 
   /@ethersproject/networks/5.7.1:
     resolution: {integrity: sha512-n/MufjFYv3yFcUyfhnXotyDlNdFb7onmkSy8aQERi2PjNcnWQ66xXxa3XlS8nCcA8aJKJjIIMNJTC7tu80GwpQ==}
@@ -3960,6 +3961,7 @@ packages:
 
   /bn.js/5.2.1:
     resolution: {integrity: sha512-eXRvHzWyYPBuB4NBy0cmYQjGitUrtqwbvlzP3G6VFnNRbsZQIxQ10PbKKHt8gZ/HW/D/747aDl+QkDqg3KQLMQ==}
+    dev: false
 
   /borsh/0.7.0:
     resolution: {integrity: sha512-CLCsZGIBCFnPtkNnieW/a8wmreDmfUtjU2m9yHrzPXIlNbqVs0AQrSatSG6vdNYUqdc83tkQi2eHfF98ubzQLA==}
