@@ -129,7 +129,7 @@ export type { ConnectorData, ConnectorEvents } from './connectors'
 export { InjectedConnector } from './connectors/injected'
 export type { InjectedConnectorOptions } from './connectors/injected'
 
-export { erc20ABI, erc721ABI, erc4626ABI, units } from './constants'
+export { erc20ABI, erc721ABI, erc4626ABI } from './constants'
 
 export {
   AddChainError,

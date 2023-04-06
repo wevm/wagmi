@@ -1,6 +1,6 @@
 import { Box, Button, Input, Stack, Text } from 'degen'
-import { parseEther } from 'ethers/lib/utils'
 import * as React from 'react'
+import { parseEther } from 'viem'
 import {
   useAccount,
   usePrepareSendTransaction,

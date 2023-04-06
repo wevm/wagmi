@@ -137,8 +137,7 @@ function mutationFn(
 }
 
 /**
- * @description Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write)
- * method.
+ * @description Hook for calling a contract nonpayable or payable function.
  *
  * It is highly recommended to pair this with the [`usePrepareContractWrite` hook](/docs/prepare-hooks/usePrepareContractWrite)
  * to [avoid UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).

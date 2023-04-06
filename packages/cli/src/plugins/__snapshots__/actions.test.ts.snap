@@ -56,7 +56,7 @@ export function writeWagmi<TFunctionName extends string>(
     abi: WagmiAbi,
     address: WagmiAddress,
     ...config,
-  } as WriteContractArgs<typeof WagmiAbi, TFunctionName>)
+  } as unknown as WriteContractArgs<typeof WagmiAbi, TFunctionName>)
 }
 
 /**

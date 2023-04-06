@@ -237,11 +237,14 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function ${name}<TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, '${item.name}'>>(
-                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                  export function ${name}<
+                    TFunctionName extends '${item.name}',
+                    TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, TFunctionName>
+                  >(
+                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>)
+                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>)
                   }
                   `
                 } else {
@@ -295,7 +298,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                 config: TMode extends 'prepared'
                   ? UseContractWriteConfig<
                       TMode,
-                      PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['abi'],
+                      PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['request']['abi'],
                       TFunctionName
                     >${TChainId ? ` & { address?: Address; chainId?: TChainId; }` : ''}
                   : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, TFunctionName> & {
@@ -378,7 +381,7 @@ export function react(config: ReactConfig = {}): ReactResult {
                     config: TMode extends 'prepared'
                     ? UseContractWriteConfig<
                         TMode,
-                        PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['abi'],
+                        PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['request']['abi'],
                         '${item.name}'
                       > & {${preparedTypeParams}}
                     : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, '${item.name}'> & {
