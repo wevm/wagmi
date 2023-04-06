@@ -1,5 +1,5 @@
-import { useContractReads } from 'wagmi'
 import { stringify } from 'viem'
+import { useContractReads } from 'wagmi'
 
 export const wagmigotchiContractConfig = {
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',

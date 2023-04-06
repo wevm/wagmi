@@ -1,5 +1,5 @@
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 import { stringify } from 'viem'
+import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 export const SendTransactionPrepared = () => {
   const { config } = usePrepareSendTransaction({
