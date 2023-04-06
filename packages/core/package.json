@@ -124,7 +124,7 @@
   },
   "devDependencies": {
     "ethers": "^5.7.1",
-    "viem": "~0.2.8"
+    "viem": "~0.2.9"
   },
   "keywords": [
     "eth",

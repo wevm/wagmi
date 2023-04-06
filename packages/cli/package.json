@@ -88,7 +88,7 @@
     "pathe": "^1.0.0",
     "picocolors": "^1.0.0",
     "prettier": "^2.8.1",
-    "viem": "~0.2.8",
+    "viem": "~0.2.9",
     "zod": "^3.20.2"
   },
   "devDependencies": {

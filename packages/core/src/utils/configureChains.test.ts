@@ -139,7 +139,7 @@ describe('configureChains', () => {
       it('sets provider transport to alchemy', async () => {
         const provider_ = provider({ chainId: mainnet.id })
         expect(
-          provider_.transport.transports[0].value.url,
+          provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot(
           '"https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy"',
         )
@@ -190,7 +190,7 @@ describe('configureChains', () => {
       it('sets provider transport to alchemy', async () => {
         const provider_ = provider({ chainId: mainnet.id })
         expect(
-          provider_.transport.transports[0].value.url,
+          provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot('"https://mainnet.infura.io/v3/apiKey-infura"')
       })
 
@@ -240,7 +240,7 @@ describe('configureChains', () => {
       it('sets provider transport to alchemy', async () => {
         const provider_ = provider({ chainId: mainnet.id })
         expect(
-          provider_.transport.transports[0].value.url,
+          provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot('"https://cloudflare-eth.com"')
       })
 
@@ -301,7 +301,7 @@ describe('configureChains', () => {
       it('sets provider transport to alchemy', async () => {
         const provider_ = provider({ chainId: mainnet.id })
         expect(
-          provider_.transport.transports[0].value.url,
+          provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot('"https://homestead.example.com"')
       })
 
@@ -393,7 +393,7 @@ describe('configureChains', () => {
     it('sets provider transports', async () => {
       const provider_ = provider({ chainId: mainnet.id })
       expect(
-        provider_.transport.transports.map((x) => x.value.url),
+        provider_.transport.transports.map((x) => x.value?.url),
       ).toMatchInlineSnapshot(
         `
         [

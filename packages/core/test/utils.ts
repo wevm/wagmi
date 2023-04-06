@@ -10,7 +10,7 @@ import {
 import { privateKeyToAccount } from 'viem/accounts'
 import { rpc } from 'viem/utils'
 
-import type { Chain } from '../src'
+import type { Chain, WebSocketProvider } from '../src'
 import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
 
 import type { mirrorCrowdfundContractConfig } from './constants'
@@ -56,7 +56,7 @@ export function getWebSocketProvider({
     toJSON() {
       return `<WebSocketProvider network={${chain.id}} />`
     },
-  })
+  }) as WebSocketProvider
 }
 
 // Default accounts from Anvil

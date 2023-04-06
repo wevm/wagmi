@@ -149,14 +149,14 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.9.4
-      viem: ~0.2.8
+      viem: ~0.2.9
       wagmi: workspace:*
     dependencies:
       ethers: 5.7.2
       next: 12.3.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      viem: 0.2.8_typescript@4.9.5
+      viem: 0.2.9_typescript@4.9.5
       wagmi: link:../../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
@@ -195,7 +195,7 @@ importers:
       pathe: ^1.0.0
       picocolors: ^1.0.0
       prettier: ^2.8.1
-      viem: ~0.2.8
+      viem: ~0.2.9
       zod: ^3.20.2
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
@@ -219,7 +219,7 @@ importers:
       pathe: 1.1.0
       picocolors: 1.0.0
       prettier: 2.8.7
-      viem: 0.2.8_zod@3.21.4
+      viem: 0.2.9_zod@3.21.4
       zod: 3.21.4
     devDependencies:
       '@ethersproject/bignumber': 5.7.0
@@ -240,7 +240,7 @@ importers:
       abitype: ^0.7.1
       ethers: ^5.7.1
       eventemitter3: ^4.0.7
-      viem: ~0.2.8
+      viem: ~0.2.9
       zustand: ^4.3.1
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
@@ -250,7 +250,7 @@ importers:
       zustand: 4.3.7
     devDependencies:
       ethers: 5.7.2
-      viem: 0.2.8
+      viem: 0.2.9
 
   packages/react:
     specifiers:
@@ -270,7 +270,7 @@ importers:
       react-dom: ^18.1.0
       react-dom-17: npm:react-dom@17.0.2
       use-sync-external-store: ^1.2.0
-      viem: 0.2.8
+      viem: 0.2.9
     dependencies:
       '@tanstack/query-sync-storage-persister': 4.27.1
       '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
@@ -289,7 +289,7 @@ importers:
       react-17: /react/17.0.2
       react-dom: 18.2.0_react@18.2.0
       react-dom-17: /react-dom/17.0.2_react@18.2.0
-      viem: 0.2.8
+      viem: 0.2.9
 
   references/packages/chains:
     specifiers: {}
@@ -307,7 +307,7 @@ importers:
       abitype: ^0.7.1
       ethers: ^5.7.2
       eventemitter3: ^4.0.7
-      viem: 0.2.8
+      viem: 0.2.9
     dependencies:
       '@coinbase/wallet-sdk': 3.6.5
       '@ledgerhq/connect-kit-loader': 1.0.2
@@ -321,7 +321,7 @@ importers:
     devDependencies:
       '@wagmi/core': link:../../../packages/core
       ethers: 5.7.2
-      viem: 0.2.8
+      viem: 0.2.9
 
 packages:
 
@@ -11497,8 +11497,8 @@ packages:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  /viem/0.2.8:
-    resolution: {integrity: sha512-x5jFInvSwZ0DxoMT295OftD6iYxUyCSlOG/opUgrVhBRlJmqFjVnZ8Q8prtDEzj3dch1olpIwFrzjvCzVOkFkg==}
+  /viem/0.2.9:
+    resolution: {integrity: sha512-UK6mAxDjN9ChmClBi6GNgj4E123ZbkQuboHYoWL+/QKuuM6eeJ0HGo0L3vze4LvzU8k5RXMV83Es2lSJ2dWRRg==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 0.9.0
@@ -11516,8 +11516,8 @@ packages:
       - zod
     dev: true
 
-  /viem/0.2.8_typescript@4.9.5:
-    resolution: {integrity: sha512-x5jFInvSwZ0DxoMT295OftD6iYxUyCSlOG/opUgrVhBRlJmqFjVnZ8Q8prtDEzj3dch1olpIwFrzjvCzVOkFkg==}
+  /viem/0.2.9_typescript@4.9.5:
+    resolution: {integrity: sha512-UK6mAxDjN9ChmClBi6GNgj4E123ZbkQuboHYoWL+/QKuuM6eeJ0HGo0L3vze4LvzU8k5RXMV83Es2lSJ2dWRRg==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 0.9.0
@@ -11535,8 +11535,8 @@ packages:
       - zod
     dev: false
 
-  /viem/0.2.8_zod@3.21.4:
-    resolution: {integrity: sha512-x5jFInvSwZ0DxoMT295OftD6iYxUyCSlOG/opUgrVhBRlJmqFjVnZ8Q8prtDEzj3dch1olpIwFrzjvCzVOkFkg==}
+  /viem/0.2.9_zod@3.21.4:
+    resolution: {integrity: sha512-UK6mAxDjN9ChmClBi6GNgj4E123ZbkQuboHYoWL+/QKuuM6eeJ0HGo0L3vze4LvzU8k5RXMV83Es2lSJ2dWRRg==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 0.9.0
