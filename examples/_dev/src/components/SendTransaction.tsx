@@ -1,5 +1,5 @@
-import { useSendTransaction } from 'wagmi'
 import { stringify } from 'viem'
+import { useSendTransaction } from 'wagmi'
 
 export const SendTransaction = () => {
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =

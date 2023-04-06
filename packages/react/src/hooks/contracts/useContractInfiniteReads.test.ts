@@ -1,5 +1,5 @@
 import type { InfiniteData } from '@tanstack/react-query'
-import { MulticallResult } from 'viem'
+import type { MulticallResult } from 'viem'
 import { assertType, describe, expect, it } from 'vitest'
 
 import { act, mlootContractConfig, renderHook } from '../../../test'
