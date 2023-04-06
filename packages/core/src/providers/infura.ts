@@ -1,53 +1,30 @@
-import { providers } from 'ethers'
-
 import type { Chain } from '../chains'
-import type { ChainProviderFn, FallbackProviderConfig } from '../types'
+import type { ChainProviderFn } from '../types'
 
-export type InfuraProviderConfig = FallbackProviderConfig & {
+export type InfuraProviderConfig = {
   /** Your Infura API key from the [Infura Dashboard](https://infura.io/login). */
   apiKey: string
 }
 
 export function infuraProvider<TChain extends Chain = Chain>({
   apiKey,
-  priority,
-  stallTimeout,
-  weight,
-}: InfuraProviderConfig): ChainProviderFn<
-  TChain,
-  providers.InfuraProvider,
-  providers.InfuraWebSocketProvider
-> {
+}: InfuraProviderConfig): ChainProviderFn<TChain> {
   return function (chain) {
-    if (!chain.rpcUrls.infura?.http[0]) return null
+    const baseHttpUrl = chain.rpcUrls.infura?.http[0]
+    const baseWsUrl = chain.rpcUrls.infura?.webSocket?.[0]
+    if (!baseHttpUrl) return null
     return {
       chain: {
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: { http: [`${chain.rpcUrls.infura?.http[0]}/${apiKey}`] },
+          default: { http: [`${baseHttpUrl}/${apiKey}`] },
         },
       } as TChain,
-      provider: () => {
-        const provider = new providers.InfuraProvider(
-          {
-            chainId: chain.id,
-            name: chain.network,
-            ensAddress: chain.contracts?.ensRegistry?.address,
-          },
-          apiKey,
-        )
-        return Object.assign(provider, { priority, stallTimeout, weight })
+      rpcUrls: {
+        http: [`${baseHttpUrl}/${apiKey}`],
+        webSocket: [`${baseWsUrl}/${apiKey}`],
       },
-      webSocketProvider: () =>
-        new providers.InfuraWebSocketProvider(
-          {
-            chainId: chain.id,
-            name: chain.network,
-            ensAddress: chain.contracts?.ensRegistry?.address,
-          },
-          apiKey,
-        ),
     }
   }
 }

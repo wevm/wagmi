@@ -54,17 +54,15 @@ declare module 'ethers/lib/utils.js' {
 
 export type Hash = `0x${string}`
 
-export type ChainProviderFn<
-  TChain extends Chain = Chain,
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
-> = (chain: TChain) => {
+export type ChainProviderFn<TChain extends Chain = Chain> = (chain: TChain) => {
   chain: TChain
-  provider: () => ProviderWithFallbackConfig<TProvider>
-  webSocketProvider?: () => TWebSocketProvider
+  rpcUrls: RpcUrls
 } | null
 
-export type FallbackProviderConfig = FallbackTransportConfig
+export type FallbackProviderConfig = Pick<
+  FallbackTransportConfig,
+  'rank' | 'retryCount' | 'retryDelay'
+>
 export type ProviderWithFallbackConfig<TProvider extends Provider = Provider> =
   TProvider & FallbackProviderConfig
 
@@ -77,6 +75,11 @@ export type WebSocketProvider<TChain extends Chain = Chain> = PublicClient<
   TChain
 > & {
   chains?: Chain[]
+}
+
+export type RpcUrls = {
+  http: readonly string[]
+  webSocket?: readonly string[]
 }
 
 export type Signer<

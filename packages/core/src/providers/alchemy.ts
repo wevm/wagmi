@@ -1,54 +1,30 @@
-import { providers } from 'ethers'
-
 import type { Chain } from '../chains'
+import type { ChainProviderFn } from '../types'
 
-import type { ChainProviderFn, FallbackProviderConfig } from '../types'
-
-export type AlchemyProviderConfig = FallbackProviderConfig & {
+export type AlchemyProviderConfig = {
   /** Your Alchemy API key from the [Alchemy Dashboard](https://dashboard.alchemyapi.io/). */
   apiKey: string
 }
 
 export function alchemyProvider<TChain extends Chain = Chain>({
   apiKey,
-  priority,
-  stallTimeout,
-  weight,
-}: AlchemyProviderConfig): ChainProviderFn<
-  TChain,
-  providers.AlchemyProvider,
-  providers.AlchemyWebSocketProvider
-> {
+}: AlchemyProviderConfig): ChainProviderFn<TChain> {
   return function (chain) {
-    if (!chain.rpcUrls.alchemy?.http[0]) return null
+    const baseHttpUrl = chain.rpcUrls.alchemy?.http[0]
+    const baseWsUrl = chain.rpcUrls.alchemy?.webSocket?.[0]
+    if (!baseHttpUrl) return null
     return {
       chain: {
         ...chain,
         rpcUrls: {
           ...chain.rpcUrls,
-          default: { http: [`${chain.rpcUrls.alchemy?.http[0]}/${apiKey}`] },
+          default: { http: [`${baseHttpUrl}/${apiKey}`] },
         },
       } as TChain,
-      provider: () => {
-        const provider = new providers.AlchemyProvider(
-          {
-            chainId: chain.id,
-            name: chain.network,
-            ensAddress: chain.contracts?.ensRegistry?.address,
-          },
-          apiKey,
-        )
-        return Object.assign(provider, { priority, stallTimeout, weight })
+      rpcUrls: {
+        http: [`${baseHttpUrl}/${apiKey}`],
+        webSocket: [`${baseWsUrl}/${apiKey}`],
       },
-      webSocketProvider: () =>
-        new providers.AlchemyWebSocketProvider(
-          {
-            chainId: chain.id,
-            name: chain.network,
-            ensAddress: chain.contracts?.ensRegistry?.address,
-          },
-          apiKey,
-        ),
     }
   }
 }

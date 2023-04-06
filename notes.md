@@ -75,6 +75,8 @@ Breaking changes:
 - `useConnect`
   - No longer returns `provider` property (use `connector.getProvider()`)
 - Connectors: Removed `Signer` generic
+- `configureChains`
+  - Removed `minQuorum` & `targetQuorum`
 
 TODO:
 
