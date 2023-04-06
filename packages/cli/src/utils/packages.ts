@@ -21,7 +21,7 @@ export async function getIsPackageInstalled({
 }
 
 export async function getInstallCommand(packageName: string) {
-  const packageManager = await getPackageManager()
+  const packageManager = await getPackageManager(false)
   switch (packageManager) {
     case 'yarn':
       return [packageManager, ['add', packageName]] as const
@@ -29,16 +29,20 @@ export async function getInstallCommand(packageName: string) {
       return [packageManager, ['install', '--save', packageName]] as const
     case 'pnpm':
       return [packageManager, ['add', packageName]] as const
+    default:
+      throw new Error(`Unknown package manager: ${packageManager}`)
   }
 }
 
-export async function getPackageManager() {
+export async function getPackageManager(executable?: boolean) {
   const userAgent = process.env.npm_config_user_agent
   if (userAgent) {
     if (userAgent.includes('pnpm')) return 'pnpm'
     // The yarn@^3 user agent includes npm, so yarn must be checked first.
     if (userAgent.includes('yarn')) return 'yarn'
-    if (userAgent.includes('npm')) return 'npm'
+    if (userAgent.includes('npm')) return executable ? 'npx' : 'npm'
   }
-  return detect()
+  const packageManager = await detect()
+  if (packageManager === 'npm' && executable) return 'npx'
+  return packageManager
 }
