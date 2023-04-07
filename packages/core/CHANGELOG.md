@@ -1,5 +1,16 @@
 # @wagmi/core
 
+## 0.10.9
+
+### Patch Changes
+
+- [#2143](https://github.com/wagmi-dev/wagmi/pull/2143) [`26dc5326`](https://github.com/wagmi-dev/wagmi/commit/26dc53260fde1d3278018c0b20a6d48a093d9427) Thanks [@tmm](https://github.com/tmm)! - Exported Sepolia Chain.
+
+- [#2146](https://github.com/wagmi-dev/wagmi/pull/2146) [`21b6842e`](https://github.com/wagmi-dev/wagmi/commit/21b6842e8c296a0bbe71ebe0780d898abc4cf4a8) Thanks [@tmm](https://github.com/tmm)! - Bumped references
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.12
+
 ## 0.10.8
 
 ### Patch Changes
