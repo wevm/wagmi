@@ -41,10 +41,10 @@ For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
 ## Installation
 
-Install wagmi and its ethers peer dependency.
+Install wagmi and its [viem](https://viem.sh) peer dependency.
 
 ```bash
-npm install wagmi ethers@^5
+npm install wagmi viem
 ```
 
 ## Quick Start
