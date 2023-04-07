@@ -1,13 +1,13 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractsConfig, ReadContractsResult } from '@wagmi/core'
 import { deepEqual, readContracts } from '@wagmi/core'
-import { ContractFunctionConfig, MulticallContracts } from 'viem'
+import type { Narrow } from 'abitype'
 import * as React from 'react'
+import type { ContractFunctionConfig, MulticallContracts } from 'viem'
 
 import type { InfiniteQueryConfig, QueryFunctionArgs } from '../../types'
 import type { UseInfiniteQueryResult } from '../utils'
 import { useInfiniteQuery } from '../utils'
-import { Narrow } from 'abitype'
 
 export type UseContractInfiniteReadsConfig<
   TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],

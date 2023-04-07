@@ -77,6 +77,8 @@ Breaking changes:
 - Connectors: Removed `Signer` generic
 - `configureChains`
   - Removed `minQuorum` & `targetQuorum`
+- Constants
+  - Remove `units`
 
 TODO:
 

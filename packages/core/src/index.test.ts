@@ -54,7 +54,6 @@ it('should expose correct exports', () => {
       "erc20ABI",
       "erc721ABI",
       "erc4626ABI",
-      "units",
       "AddChainError",
       "ChainDoesNotSupportMulticallError",
       "ChainMismatchError",

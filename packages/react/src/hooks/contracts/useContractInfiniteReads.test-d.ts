@@ -1,9 +1,9 @@
 import type { InfiniteData } from '@tanstack/react-query'
 import { mlootContractConfig } from 'packages/core/test'
+import type { MulticallResult } from 'viem'
 import { assertType, describe, it } from 'vitest'
 
 import { useContractInfiniteReads } from './useContractInfiniteReads'
-import { MulticallResult } from 'viem'
 
 describe('useContractReads', () => {
   it('default', () => {

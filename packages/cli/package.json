@@ -92,7 +92,6 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
-    "@ethersproject/bignumber": "^5.7.0",
     "@types/dedent": "^0.7.0",
     "@types/fs-extra": "^9.0.13",
     "fixturez": "^1.1.0"

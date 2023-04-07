@@ -1,6 +1,7 @@
-import { Address, useSignTypedData } from 'wagmi'
-import { recoverTypedDataAddress } from 'viem'
 import { useEffect, useState } from 'react'
+import { recoverTypedDataAddress } from 'viem'
+import type { Address } from 'wagmi'
+import { useSignTypedData } from 'wagmi'
 
 const domain = {
   name: 'Ether Mail',

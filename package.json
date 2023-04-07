@@ -27,8 +27,6 @@
   "devDependencies": {
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "2.25.2",
-    "@ethersproject/abstract-signer": "^5.7.0",
-    "@ethersproject/providers": "^5.7.2",
     "@manypkg/get-packages": "^1.1.3",
     "@types/dedent": "^0.7.0",
     "@types/eslint": "^8.4.10",
