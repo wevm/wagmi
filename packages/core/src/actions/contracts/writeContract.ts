@@ -121,7 +121,7 @@ export async function writeContract<
     >
   }
 
-  const hash = await signer.writeContract(request)
+  const hash = await signer.writeContract({ ...request, chain: null })
 
   /********************************************************************/
   /** END: iOS App Link cautious code.                                */
