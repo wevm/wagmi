@@ -107,7 +107,10 @@ describe('useConnect', () => {
               "<MockConnector>",
             ],
             "data": undefined,
-            "error": [UserRejectedRequestError: User rejected request],
+            "error": [UserRejectedRequestError: User rejected the request.
+
+          Details: Failed to connect.
+          Version: viem@0.2.13],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -410,7 +413,10 @@ describe('useConnect', () => {
               "<MockConnector>",
             ],
             "data": undefined,
-            "error": [UserRejectedRequestError: User rejected request],
+            "error": [UserRejectedRequestError: User rejected the request.
+
+          Details: Failed to connect.
+          Version: viem@0.2.13],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -540,7 +546,12 @@ describe('useConnect', () => {
           await expect(
             result.current.connectAsync(),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
-            `"User rejected request"`,
+            `
+            "User rejected the request.
+
+            Details: Failed to connect.
+            Version: viem@0.2.13"
+          `,
           )
         })
 

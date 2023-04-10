@@ -95,9 +95,13 @@ describe('switchNetwork', () => {
           },
         }),
       })
-      await expect(
-        switchNetwork({ chainId: 69 }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+      await expect(switchNetwork({ chainId: 69 })).rejects
+        .toThrowErrorMatchingInlineSnapshot(`
+        "User rejected the request.
+
+        Details: Failed to switch chain.
+        Version: viem@0.2.13"
+      `)
     })
 
     it('not connected', async () => {

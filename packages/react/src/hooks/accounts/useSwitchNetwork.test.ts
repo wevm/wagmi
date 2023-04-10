@@ -242,7 +242,10 @@ describe('useSwitchNetwork', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [UserRejectedRequestError: User rejected request],
+            "error": [UserRejectedRequestError: User rejected the request.
+
+          Details: Failed to switch chain.
+          Version: viem@0.2.13],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -404,7 +407,12 @@ describe('useSwitchNetwork', () => {
           await expect(
             result.current.network.switchNetworkAsync?.(4),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
-            `"User rejected request"`,
+            `
+            "User rejected the request.
+
+            Details: Failed to switch chain.
+            Version: viem@0.2.13"
+          `,
           )
         })
 

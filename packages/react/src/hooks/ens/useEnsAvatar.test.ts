@@ -1,12 +1,47 @@
-import { describe, expect, it } from 'vitest'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 import { act, renderHook } from '../../../test'
 
+import { foundry } from '../../chains'
 import { useEnsAvatar } from './useEnsAvatar'
+
+const handlers = [
+  // jxom.eth
+  rest.get(
+    'https://ipfs.io/ipfs/QmVDNzQNuD5jBKHmJ2nmVP35HsXUqhGRX9V2KVHvRznLg8/2257',
+    (_req, res, ctx) =>
+      res(
+        ctx.status(200),
+        ctx.json({
+          image:
+            'https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg',
+        }),
+      ),
+  ),
+]
+
+const server = setupServer(...handlers)
 
 const timeout = 10_000
 
 describe('useEnsAvatar', () => {
+  beforeAll(() =>
+    server.listen({
+      onUnhandledRequest(req) {
+        if (req.url.origin !== foundry.rpcUrls.default.http[0])
+          console.warn(
+            `Found an unhandled ${req.method} request to ${req.url.href}`,
+          )
+      },
+    }),
+  )
+
+  afterEach(() => server.resetHandlers())
+
+  afterAll(() => server.close())
+
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useEnsAvatar({ name: 'jxom.eth' }),
@@ -20,7 +55,7 @@ describe('useEnsAvatar', () => {
     const { internal, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
-        "data": "https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg",
+        "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
         "error": null,
         "fetchStatus": "idle",
         "isError": false,
@@ -54,7 +89,7 @@ describe('useEnsAvatar', () => {
         const { internal, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": "https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg",
+            "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
             "error": null,
             "fetchStatus": "idle",
             "isError": false,
@@ -145,7 +180,7 @@ describe('useEnsAvatar', () => {
       const { internal, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": "https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg",
+          "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
           "error": null,
           "fetchStatus": "idle",
           "isError": false,
@@ -208,7 +243,7 @@ describe('useEnsAvatar', () => {
         await act(async () => {
           const { data } = await result.current.refetch()
           expect(data).toMatchInlineSnapshot(
-            '"https://ipfs.io/ipfs/QmeZGc1CL3eb9QJatKXTGT7ekgLMq9FyZUWckQ4oWdc53a/2257.jpg"',
+            '"https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg"',
           )
         })
       },

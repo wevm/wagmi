@@ -77,7 +77,12 @@ describe('connect', () => {
             },
           }),
         }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+      ).rejects.toThrowErrorMatchingInlineSnapshot(`
+        "User rejected the request.
+
+        Details: Failed to connect.
+        Version: viem@0.2.13"
+      `)
       expect(getClient().status).toEqual('disconnected')
     })
 
