@@ -1,15 +1,17 @@
-import type { GetTransactionReturnType } from 'viem'
+import type {
+  OnTransactionsParameter,
+  WatchPendingTransactionsParameters,
+} from 'viem'
 import { shallow } from 'zustand/shallow'
 
 import { getClient } from '../../client'
 import type { Provider, WebSocketProvider } from '../../types'
 import { getProvider, getWebSocketProvider } from '../providers'
 
-export type WatchPendingTransactionsResult = GetTransactionReturnType[]
 export type WatchPendingTransactionsArgs = { chainId?: number }
-export type WatchPendingTransactionsCallback = (
-  transactions: WatchPendingTransactionsResult,
-) => void
+export type WatchPendingTransactionsCallback =
+  WatchPendingTransactionsParameters['onTransactions']
+export type WatchPendingTransactionsResult = OnTransactionsParameter
 
 export function watchPendingTransactions(
   args: WatchPendingTransactionsArgs,
@@ -19,12 +21,7 @@ export function watchPendingTransactions(
   const createListener = (provider: Provider | WebSocketProvider) => {
     if (unwatch) unwatch()
     unwatch = provider.watchPendingTransactions({
-      onTransactions: async (hashes) => {
-        const transactions = await Promise.all(
-          hashes.map((hash) => provider.getTransaction({ hash })),
-        )
-        callback(transactions)
-      },
+      onTransactions: callback,
       poll: true,
     })
   }

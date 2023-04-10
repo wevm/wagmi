@@ -1,4 +1,4 @@
-import type { Transaction } from 'viem'
+import type { Hex } from 'viem'
 import { parseEther } from 'viem'
 import { describe, expect, it, test, vi } from 'vitest'
 
@@ -21,7 +21,7 @@ function useWatchPendingTransactionsWithProvider(
 
 describe('useWatchPendingTransactions', () => {
   it('default', async () => {
-    const pendingTransactions: Transaction[][] = []
+    const pendingTransactions: Hex[][] = []
     const { result, unmount } = renderHook(() =>
       useWatchPendingTransactionsWithProvider({
         listener: pendingTransactions.push,

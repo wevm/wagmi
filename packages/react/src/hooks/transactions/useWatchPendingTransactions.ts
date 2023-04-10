@@ -1,6 +1,6 @@
 import * as React from 'react'
-import type { GetTransactionReturnType } from 'viem'
 
+import type { WatchPendingTransactionsCallback } from '../../actions'
 import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId } from '../utils'
 
@@ -10,7 +10,7 @@ export type UseWatchPendingTransactionsConfig = {
   /** Subscribe to changes */
   enabled?: boolean
   /** Function fires when a pending transaction enters the mempool. */
-  listener: (transactions: GetTransactionReturnType[]) => void
+  listener: WatchPendingTransactionsCallback
 }
 
 export function useWatchPendingTransactions({
@@ -28,12 +28,7 @@ export function useWatchPendingTransactions({
     const provider_ = webSocketProvider ?? provider
 
     return provider_.watchPendingTransactions({
-      onTransactions: async (hashes) => {
-        const transactions = await Promise.all(
-          hashes.map((hash) => provider.getTransaction({ hash })),
-        )
-        listener(transactions)
-      },
+      onTransactions: listener,
     })
   }, [enabled, listener, provider, webSocketProvider])
 }
