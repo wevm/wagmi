@@ -82,6 +82,7 @@ Breaking changes:
 - Errors
   - Removed `ChainDoesNotSupportMulticallError`, `ContractMethodDoesNotExistError`, `ContractMethodNoResultError`, `ContractMethodRevertedError`, `ContractResultDecodeError`, `ProviderRpcError`, `ResourceUnavailableError`
   - Include guide to migrate to viem errors.
+- Removed global type declaration for `window.ethereum`.
 
 TODO:
 
