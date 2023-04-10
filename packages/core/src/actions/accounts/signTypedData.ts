@@ -6,7 +6,7 @@ import type {
 } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
-import { assertActiveChain, normalizeChainId } from '../../utils'
+import { assertActiveChain } from '../../utils'
 import { fetchSigner } from './fetchSigner'
 
 export type SignTypedDataArgs<
@@ -36,8 +36,7 @@ export async function signTypedData<
   const signer = await fetchSigner()
   if (!signer) throw new ConnectorNotFoundError()
 
-  const { chainId: chainId_ } = domain as TypedDataDomain
-  const chainId = chainId_ ? normalizeChainId(chainId_) : undefined
+  const { chainId } = domain as TypedDataDomain
   if (chainId) assertActiveChain({ chainId, signer })
 
   return signer.signTypedData({

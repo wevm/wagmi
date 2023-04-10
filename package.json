@@ -43,7 +43,7 @@
     "esbuild-register": "^3.4.2",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-mdx": "^2.0.4",
@@ -79,8 +79,7 @@
   },
   "pnpm": {
     "overrides": {
-      "esbuild": "0.15.13",
-      "@wagmi/connectors>@wagmi/core": "workspace:*"
+      "esbuild": "0.15.13"
     }
   }
 }

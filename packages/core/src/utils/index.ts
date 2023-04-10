@@ -11,5 +11,4 @@ export {
 } from './getParameters'
 export { getUnit } from './getUnit'
 export { logWarn } from './logger'
-export { normalizeChainId } from './normalizeChainId'
 export { serialize } from './serialize'

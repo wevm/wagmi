@@ -79,9 +79,14 @@ Breaking changes:
   - Removed `minQuorum` & `targetQuorum`
 - Constants
   - Remove `units`
+- Errors
+  - Removed `ChainDoesNotSupportMulticallError`, `ContractMethodDoesNotExistError`, `ContractMethodNoResultError`, `ContractMethodRevertedError`, `ContractResultDecodeError`, `ProviderRpcError`, `ResourceUnavailableError`
+  - Include guide to migrate to viem errors.
 
 TODO:
 
 - ethers workaround: Remove `ContractMethodDoesNotExistError` error
 - Fix `allowFailure` on `useContractReads` & `useContractInfiniteReads`
 - Note `BigInt` serialization nuances (compatibility with `JSON.stringify` – recommend `serialize` util)
+- Fix `lastUsedChainId` behavior on WalletConnect connectors
+- Call `setStorage` for connectors in client

@@ -132,23 +132,12 @@ export type { InjectedConnectorOptions } from './connectors/injected'
 export { erc20ABI, erc721ABI, erc4626ABI } from './constants'
 
 export {
-  AddChainError,
-  ChainDoesNotSupportMulticallError,
   ChainMismatchError,
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
-  ContractMethodDoesNotExistError,
-  ContractMethodNoResultError,
-  ContractMethodRevertedError,
-  ContractResultDecodeError,
   ProviderChainsNotFound,
-  ProviderRpcError,
-  ResourceUnavailableError,
-  RpcError,
-  SwitchChainError,
   SwitchChainNotSupportedError,
-  UserRejectedRequestError,
 } from './errors'
 
 export { createStorage, noopStorage } from './storage'
@@ -172,7 +161,6 @@ export {
   deepEqual,
   deserialize,
   getUnit,
-  normalizeChainId,
   serialize,
 } from './utils'
 export type { ConfigureChainsConfig } from './utils'

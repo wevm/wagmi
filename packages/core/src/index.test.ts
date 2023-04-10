@@ -54,7 +54,6 @@ it('should expose correct exports', () => {
       "erc20ABI",
       "erc721ABI",
       "erc4626ABI",
-      "AddChainError",
       "ChainDoesNotSupportMulticallError",
       "ChainMismatchError",
       "ChainNotConfiguredError",
@@ -77,7 +76,6 @@ it('should expose correct exports', () => {
       "deepEqual",
       "deserialize",
       "getUnit",
-      "normalizeChainId",
       "serialize",
     ]
   `)
