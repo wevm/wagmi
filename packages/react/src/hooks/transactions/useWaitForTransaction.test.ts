@@ -210,7 +210,7 @@ describe('useWaitForTransaction', () => {
           nonce:     3
 
         Details: Fork Error: JsonRpcClientError(JsonRpcError(JsonRpcError { code: -32000, message: "execution reverted", data: None }))
-        Version: viem@0.2.13],
+        Version: viem@0.3.0],
           "fetchStatus": "idle",
           "isError": true,
           "isFetched": true,

@@ -205,7 +205,7 @@ describe('usePrepareContractWrite', () => {
           sender:    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
         Docs: https://viem.sh/docs/contract/simulateContract.html
-        Version: viem@0.2.13],
+        Version: viem@0.3.0],
           "fetchStatus": "idle",
           "internal": {
             "dataUpdatedAt": 0,
@@ -259,7 +259,7 @@ describe('usePrepareContractWrite', () => {
         Make sure you are using the correct ABI and that the function exists on it.
 
         Docs: https://viem.sh/docs/contract/encodeFunctionData.html
-        Version: viem@0.2.13],
+        Version: viem@0.3.0],
           "fetchStatus": "idle",
           "internal": {
             "dataUpdatedAt": 0,
