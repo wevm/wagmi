@@ -1,4 +1,4 @@
 export { Account } from './Account'
-export { SSXButton } from './SSXButton'
+export { SiweButton } from './SiweButton'
 export { SwitchNetwork } from './SwitchNetwork'
 export { WalletSelector } from './WalletSelector'
