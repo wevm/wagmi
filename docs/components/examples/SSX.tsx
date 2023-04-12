@@ -4,9 +4,9 @@ import { mainnet, useAccount, useNetwork } from 'wagmi'
 
 import { formatAddress } from '../../lib/address'
 import { PreviewWrapper } from '../core'
-import { Account, SSXButton, WalletSelector } from '../web3'
+import { Account, SiweButton, WalletSelector } from '../web3'
 
-export function SSX() {
+export function Siwe() {
   const [address, setAddress] = React.useState<string>()
   const accountData = useAccount()
   const { chain: activeChain } = useNetwork()
@@ -51,7 +51,7 @@ export function SSX() {
             signedInContent
           ) : (
             <Skeleton width="full" radius="2xLarge">
-              <SSXButton
+              <SiweButton
                 address={accountData.address as string}
                 chainId={activeChain?.id ?? mainnet.id}
                 onSuccess={({ address }) => setAddress(address)}
