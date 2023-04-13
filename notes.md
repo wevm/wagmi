@@ -87,4 +87,3 @@ Breaking changes:
 TODO:
 
 - Note `BigInt` serialization nuances (compatibility with `JSON.stringify` – recommend `serialize` util)
-- Fix `lastUsedChainId` behavior on WalletConnect connectors
