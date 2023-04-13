@@ -9,7 +9,7 @@ import { SignInWithEthereum } from '../../components/examples'
 
 # Sign-In with Ethereum
 
-[Sign-In with Ethereum](https://login.xyz) is an authentication standard ([EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361)) that enables secure communication between a frontend and backend. SIWE is a powerful method for creating user sessions based on a wallet connection, and much more! It's simple to add SIWE to both your frontend client app and your backend server with minimal configuration with [SSX](https://docs.ssx.id) library.
+[Sign-In with Ethereum](https://login.xyz) is an authentication standard ([EIP-4361](https://docs.login.xyz/general-information/siwe-overview/eip-4361)) that enables secure communication between a frontend and backend. SIWE is a powerful method for creating user sessions based on a wallet connection, and much more! It's simple to add SIWE to both your frontend client app and your backend server with minimal configuration with the [SSX](https://docs.ssx.id) library.
 
 <SignInWithEthereum />
 
@@ -83,7 +83,7 @@ Follow the [Connect Wallet](/examples/connect-wallet#step-1-configuring-connecto
   example](https://www.github.com/spruceid/ssx/tree/main/examples/ssx-quickstart-express).
 </Callout>
 
-First let's start by adding a helper file so that we don't have to directly instantiate a new SSX Server object everytime.
+First let's start by adding a helper file so that we don't have to directly instantiate a new SSX Server object every time.
 
 ```ts filename="pages/api/_ssx.ts"
 import { SSXServer } from '@spruceid/ssx-server'
@@ -95,7 +95,7 @@ export default ssx
 
 For more information check the [documentation](https://docs.ssx.id/reference/ssx-server).
 
-Second, create an API route for generating a random nonce. This is used to identify the session and prevent against [replay attacks](https://en.wikipedia.org/wiki/Replay_attack).
+Second, create an API route for generating a random nonce. This is used to identify the session and prevent [replay attacks](https://en.wikipedia.org/wiki/Replay_attack).
 
 `ironOptions` should look something like this:
 
@@ -361,4 +361,4 @@ export default SSXComponent
 
 ## Wrap Up
 
-That's it! You now have a way for users to securely sign in to an app using Ethereum wallets. You can start building rich web apps that use persistent user sessions while still letting users control their login identity (and so much more). Check out the [Sign-In with Ethereum](https://login.xyz) website for more info, and check out the [SSX](https://docs.ssx.id) for more on what else you can do with SIWE.
+That's it! You now have a way for users to securely sign in to an app using Ethereum wallets. You can start building rich web apps that use persistent user sessions while still letting users control their login identity (and so much more). Check out the [Sign-In with Ethereum](https://login.xyz) website for more info, and check out the [SSX](https://docs.ssx.id) documentation for more on what else you can do with SIWE.

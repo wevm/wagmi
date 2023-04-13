@@ -60,7 +60,7 @@ export function SiweButton({ onSuccess }: Props) {
         width="full"
         onClick={handleSignIn}
       >
-        {state.loading ? 'Check Wallet' : 'Sign-In with SSX'}
+        {state.loading ? 'Check Wallet' : 'Sign-In with Ethereum'}
       </Button>
 
       {state.error && <Text color="red">{state.error.message}</Text>}
