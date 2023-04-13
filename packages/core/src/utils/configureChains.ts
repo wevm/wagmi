@@ -100,8 +100,7 @@ export function configureChains<TChain extends Chain = Chain>(
         defaultChains[0]) as TChain
       const chainWsUrls = wsUrls[activeChain.id]
 
-      if (!chainWsUrls || !chainWsUrls[0])
-        throw new Error(`No providers configured for chain "${activeChain.id}"`)
+      if (!chainWsUrls || !chainWsUrls[0]) return undefined
 
       const provider = createPublicClient({
         chain: activeChain,

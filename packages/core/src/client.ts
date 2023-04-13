@@ -110,6 +110,14 @@ export class Client<
       } catch (_error) {}
     }
 
+    const connectors_ =
+      typeof connectors === 'function' ? connectors() : connectors
+
+    // Setup storage for connectors.
+    // REFACTOR: wagmi v1 (w/ functional connectors) should just curry
+    // the storage into the connectors.
+    connectors_.forEach((connector) => connector.setStorage(storage))
+
     // Create store
     this.store = createStore<
       State<TProvider, TWebSocketProvider>,
@@ -123,8 +131,7 @@ export class Client<
           () =>
             // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             <State<TProvider, TWebSocketProvider>>{
-              connectors:
-                typeof connectors === 'function' ? connectors() : connectors,
+              connectors: connectors_,
               provider: this.getProvider({ chainId }),
               status,
               webSocketProvider: this.getWebSocketProvider({ chainId }),
