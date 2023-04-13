@@ -75,6 +75,7 @@ Breaking changes:
 - `useConnect`
   - No longer returns `provider` property (use `connector.getProvider()`)
 - Connectors: Removed `Signer` generic
+- Connectors: `getSigner` now returns a viem WalletClient instead of ethers Signer
 - `configureChains`
   - Removed `minQuorum` & `targetQuorum`
 - Constants
