@@ -9,7 +9,7 @@ type Props = {
   onSuccess?(data: { address: string }): void
 }
 
-export function SSXButton({ onSuccess }: Props) {
+export function SiweButton({ onSuccess }: Props) {
   const [state, setState] = React.useState<{
     error?: Error
     loading?: boolean

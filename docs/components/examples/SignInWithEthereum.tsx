@@ -13,19 +13,18 @@ export function SignInWithEthereum() {
 
   React.useEffect(() => {
     const handler = async () => {
-      try {
-        const res = await fetch('/api/me')
-        const json = await res.json()
-        setAddress(json.address)
-      } catch (error) {
-        console.log({ error })
+      if (address) {
+        try {
+          const res = await fetch('/api/me')
+          const json = await res.json()
+          setAddress(json.address)
+        } catch (error) {
+          console.log({ error })
+        }
       }
     }
     handler()
-
-    window.addEventListener('focus', handler)
-    return () => window.removeEventListener('focus', handler)
-  }, [])
+  }, [address])
 
   const signedInContent = address ? (
     <Stack direction="horizontal" align="center" justify="center">
@@ -34,7 +33,7 @@ export function SignInWithEthereum() {
         size="small"
         variant="tertiary"
         onClick={async () => {
-          await fetch('/api/logout')
+          await fetch('/api/ssx-logout')
           setAddress(undefined)
         }}
       >
@@ -48,7 +47,6 @@ export function SignInWithEthereum() {
       <PreviewWrapper>
         <Stack space="6">
           <Account />
-
           {address ? (
             signedInContent
           ) : (
