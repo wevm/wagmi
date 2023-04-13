@@ -382,9 +382,9 @@ function App() {
 }
 ```
 
-### overrides (optional)
+### blockNumber (optional)
 
-Overrides to pass to function call.
+The block number to perform the read against.
 
 ```tsx {24}
 import { useContractInfiniteReads } from 'wagmi'
@@ -409,7 +409,39 @@ function App() {
         },
       ]
     },
-    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+    blockNumber: 15121123n,
+  })
+}
+```
+
+### blockTag (optional)
+
+The block tag to perform the read against. Accepts: `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized'`
+
+```tsx {24}
+import { useContractInfiniteReads } from 'wagmi'
+
+function App() {
+  const { data, isError, isLoading } = useContractInfiniteReads({
+    cacheKey: 'mlootAttributes',
+    contracts(param = 0) {
+      const args = [param] as const
+      return [
+        {
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
+          functionName: 'getChest',
+          args,
+        },
+        {
+          address: '0x1dfe7ca09e99d10835bf73044a23b73fc20623df',
+          abi: mlootABI,
+          functionName: 'getWaist',
+          args,
+        },
+      ]
+    },
+    blockTag: 'safe',
   })
 }
 ```

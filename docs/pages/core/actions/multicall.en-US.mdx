@@ -209,9 +209,9 @@ const data = await multicall({
 })
 ```
 
-### overrides (optional)
+### blockNumber (optional)
 
-Overrides to pass to function call.
+The block number to perform the read against.
 
 ```ts {14}
 import { multicall } from '@wagmi/core'
@@ -227,6 +227,28 @@ const data = await multicall({
       functionName: 'getBoredom',
     },
   ],
-  overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  blockNumber: 15121123n,
+})
+```
+
+### blockTag (optional)
+
+The block tag to perform the read against. Accepts: `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized'`
+
+```ts {14}
+import { multicall } from '@wagmi/core'
+
+const data = await multicall({
+  contracts: [
+    {
+      ...wagmigotchiContract,
+      functionName: 'getAlive',
+    },
+    {
+      ...wagmigotchiContract,
+      functionName: 'getBoredom',
+    },
+  ],
+  blockTag: 'safe',
 })
 ```

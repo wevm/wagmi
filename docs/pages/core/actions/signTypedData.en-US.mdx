@@ -44,7 +44,7 @@ const types = {
   ],
 } as const
 
-const value = {
+const message = {
   from: {
     name: 'Cow',
     wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
@@ -64,8 +64,9 @@ import { signTypedData } from '@wagmi/core'
 
 const signature = await signTypedData({
   domain,
+  message,
+  primaryType: 'Mail',
   types,
-  value,
 })
 ```
 
@@ -91,8 +92,49 @@ const signature = await signTypedData({
     chainId: 1,
     verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
   },
+  message,
+  primaryType: 'Mail',
   types,
-  value,
+})
+```
+
+### message
+
+Typed data message.
+
+```ts {5-15}
+import { signTypedData } from '@wagmi/core'
+
+const signature = signTypedData({
+  domain,
+  message: {
+    from: {
+      name: 'Cow',
+      wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+    },
+    to: {
+      name: 'Bob',
+      wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+    },
+    contents: 'Hello, Bob!',
+  },
+  primaryType: 'Mail',
+  types,
+})
+```
+
+### primaryType
+
+The primary type to extract from `types` and use in `message`.
+
+```ts {6}
+import { signTypedData } from '@wagmi/core'
+
+const signature = signTypedData({
+  domain,
+  message,
+  primaryType: 'Mail',
+  types,
 })
 ```
 
@@ -102,11 +144,13 @@ Typed data type definition.
 
 By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/core/typescript) for more information.
 
-```ts {5-15}
+```ts {7-17}
 import { signTypedData } from '@wagmi/core'
 
 const signature = signTypedData({
   domain,
+  message,
+  primaryType: 'Mail',
   types: {
     Person: [
       { name: 'name', type: 'string' },
@@ -117,31 +161,6 @@ const signature = signTypedData({
       { name: 'to', type: 'Person' },
       { name: 'contents', type: 'string' },
     ],
-  },
-  value,
-})
-```
-
-### value
-
-Typed data value.
-
-```ts {6-16}
-import { signTypedData } from '@wagmi/core'
-
-const signature = signTypedData({
-  domain,
-  types,
-  value: {
-    from: {
-      name: 'Cow',
-      wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
-    },
-    to: {
-      name: 'Bob',
-      wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-    },
-    contents: 'Hello, Bob!',
   },
 })
 ```

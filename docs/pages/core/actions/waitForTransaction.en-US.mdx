@@ -79,7 +79,7 @@ const waitForTransaction = await waitForTransaction({
 })
 ```
 
-### onSpeedUp (optional)
+### onReplaced (optional)
 
 Callback to invoke when the transaction has been sped up (replaced with higher gas fee values).
 
@@ -88,7 +88,7 @@ import { waitForTransaction } from '@wagmi/core'
 
 const waitForTransaction = await waitForTransaction({
   hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
-  onSpeedUp: (transaction) => console.log(transaction),
+  onReplaced: (transaction) => console.log(transaction),
 })
 ```
 
