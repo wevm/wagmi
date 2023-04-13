@@ -24,7 +24,7 @@ export const Connect = () => {
         ))}
       </div>
 
-      <div>{error && error.shortMessage}</div>
+      <div>{error && error.message}</div>
     </div>
   )
 }
