@@ -86,8 +86,6 @@ Breaking changes:
 
 TODO:
 
-- ethers workaround: Remove `ContractMethodDoesNotExistError` error
 - Fix `allowFailure` on `useContractReads` & `useContractInfiniteReads`
 - Note `BigInt` serialization nuances (compatibility with `JSON.stringify` – recommend `serialize` util)
 - Fix `lastUsedChainId` behavior on WalletConnect connectors
-- Call `setStorage` for connectors in client
