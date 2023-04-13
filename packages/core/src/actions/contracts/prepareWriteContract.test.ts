@@ -289,7 +289,6 @@ describe('prepareWriteContract', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
 
-    // TODO(viem-migration): tweak this error message to be wagmi specific
     it('contract function not found', async () => {
       await connect({ connector })
       await expect(() =>

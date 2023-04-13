@@ -1,5 +1,3 @@
-// TODO(viem-migration): write tests
-
 import type { Abi } from 'abitype'
 import type { WatchContractEventParameters } from 'viem'
 import { shallow } from 'zustand/shallow'

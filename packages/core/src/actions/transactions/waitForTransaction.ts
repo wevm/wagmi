@@ -45,7 +45,6 @@ export async function waitForTransaction({
     timeout,
   })
   if (receipt.status === 'reverted') {
-    // TODO(viem-migration): test below.
     const txn = await provider.getTransaction({ hash: receipt.transactionHash })
     const code = (await provider.call({
       ...txn,

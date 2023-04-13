@@ -165,7 +165,6 @@ describe('writeContract', () => {
       ).rejects.toThrowErrorMatchingInlineSnapshot(`"Connector not found"`)
     })
 
-    // TODO(viem-migration): refactor error message.
     it('contract function not found', async () => {
       await connect({ connector })
       await expect(() =>

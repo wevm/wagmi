@@ -71,7 +71,7 @@ export function usePrepareSendTransaction({
   cacheTime,
   enabled = true,
   scopeKey,
-  staleTime = 1_000 * 60 * 60 * 24, // 24 hours
+  staleTime,
   suspense,
   onError,
   onSettled,

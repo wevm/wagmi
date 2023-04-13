@@ -1,5 +1,3 @@
-// TODO(viem-migration): deprecate this function.
-
 import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
 import { isAddress } from 'viem'
 
@@ -8,6 +6,7 @@ import type { Signer } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchSigner } from '../accounts'
 import { fetchEnsAddress } from '../ens'
+import { getProvider } from '../providers'
 
 export type PrepareSendTransactionArgs<TSigner extends Signer = Signer> = {
   /** Chain ID used to validate if the signer is connected to the target chain */
@@ -46,6 +45,7 @@ export async function prepareSendTransaction({
   request,
   signer: signer_,
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
+  const provider = getProvider({ chainId })
   const signer = signer_ ?? (await fetchSigner({ chainId }))
   if (!signer) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId, signer })
@@ -53,12 +53,16 @@ export async function prepareSendTransaction({
   const to =
     (request.to && !isAddress(request.to)
       ? await fetchEnsAddress({ name: request.to })
-      : request.to) || undefined
+      : (request.to as Address)) || undefined
   if (to && !isAddress(to)) throw new Error('Invalid address')
+
+  const gas =
+    request.gas ??
+    (await provider.estimateGas({ ...request, account: signer.account, to }))
 
   return {
     ...(chainId ? { chainId } : {}),
-    request: { ...request, to: to as Address | undefined },
+    request: { ...request, gas, to },
     mode: 'prepared',
   }
 }

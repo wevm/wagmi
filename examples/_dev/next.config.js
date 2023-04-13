@@ -6,8 +6,7 @@ const withPreconstruct = require('@preconstruct/next')
 /** @type {import('next').NextConfig} */
 module.exports = withPreconstruct({
   reactStrictMode: true,
-  // TODO(viem-migration): remove
-  webpack: config => {
+  webpack: (config) => {
     config.resolve.fallback = { fs: false, net: false, tls: false }
     return config
   },
