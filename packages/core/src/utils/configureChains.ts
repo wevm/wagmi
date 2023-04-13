@@ -1,4 +1,8 @@
-import type { FallbackTransportConfig, PublicClientConfig } from 'viem'
+import type {
+  FallbackTransport,
+  FallbackTransportConfig,
+  PublicClientConfig,
+} from 'viem'
 import { createPublicClient, fallback, http, webSocket } from 'viem'
 
 import type { Chain } from '../chains'
@@ -98,7 +102,7 @@ export function configureChains<TChain extends Chain = Chain>(
 
       return Object.assign(provider, {
         chains,
-      }) as Provider
+      }) as Provider<FallbackTransport>
     },
     webSocketProvider: ({ chainId }: { chainId?: number }) => {
       const activeChain = (chains.find((x) => x.id === chainId) ??
@@ -118,7 +122,7 @@ export function configureChains<TChain extends Chain = Chain>(
 
       return Object.assign(provider, {
         chains,
-      }) as WebSocketProvider
+      }) as WebSocketProvider<FallbackTransport>
     },
   } as const
 }

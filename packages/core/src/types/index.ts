@@ -9,14 +9,14 @@ export type ChainProviderFn<TChain extends Chain = Chain> = (chain: TChain) => {
   rpcUrls: RpcUrls
 } | null
 
-export type Provider<TChain extends Chain = Chain> = PublicClient<
-  Transport,
-  TChain
-> & { chains?: Chain[] }
-export type WebSocketProvider<TChain extends Chain = Chain> = PublicClient<
-  Transport,
-  TChain
-> & {
+export type Provider<
+  TTransport extends Transport = Transport,
+  TChain extends Chain = Chain,
+> = PublicClient<TTransport, TChain> & { chains?: Chain[] }
+export type WebSocketProvider<
+  TTransport extends Transport = Transport,
+  TChain extends Chain = Chain,
+> = PublicClient<TTransport, TChain> & {
   chains?: Chain[]
 }
 
