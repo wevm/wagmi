@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 0.1.15
+
+### Patch Changes
+
+- [#2145](https://github.com/wagmi-dev/wagmi/pull/2145) [`2520743c`](https://github.com/wagmi-dev/wagmi/commit/2520743c417a158a00d5edca13a9aa92cefb0cfd) Thanks [@tmm](https://github.com/tmm)! - Fixed issue using Hardhat Plugin with npm.
+
 ## 0.1.14
 
 ### Patch Changes

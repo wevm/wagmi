@@ -66,6 +66,7 @@ export {
   goerli,
   mainnet,
   readContracts,
+  sepolia,
   serialize,
 } from '@wagmi/core'
 export type {

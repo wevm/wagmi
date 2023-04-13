@@ -117,7 +117,7 @@ export type {
   WriteContractUnpreparedArgs,
 } from './actions'
 
-export { mainnet, goerli } from './chains'
+export { goerli, mainnet, sepolia } from './chains'
 export type { Chain } from './chains'
 
 export { createClient, getClient, Client } from './client'
