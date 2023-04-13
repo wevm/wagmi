@@ -11,9 +11,10 @@ import { useInfiniteQuery } from '../utils'
 
 export type UseContractInfiniteReadsConfig<
   TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
   TPageParam = unknown,
-  TSelectData = ReadContractsResult<TContracts>,
-> = Pick<ReadContractsConfig<TContracts>, 'allowFailure'> & {
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
+> = Pick<ReadContractsConfig<TContracts, TAllowFailure>, 'allowFailure'> & {
   cacheKey: string
   contracts(pageParam: TPageParam): /** Contracts to query */
   Narrow<
@@ -27,7 +28,11 @@ export type UseContractInfiniteReadsConfig<
       >,
     ]
   >
-} & InfiniteQueryConfig<ReadContractsResult<TContracts>, Error, TSelectData> &
+} & InfiniteQueryConfig<
+    ReadContractsResult<TContracts, TAllowFailure>,
+    Error,
+    TSelectData
+  > &
   (
     | {
         /** Block number to read against. */
@@ -49,21 +54,24 @@ export type UseContractInfiniteReadsConfig<
       }
   )
 
-type QueryKeyArgs = {
-  allowFailure: UseContractInfiniteReadsConfig['allowFailure']
+type QueryKeyArgs<TAllowFailure extends boolean = true> = {
+  allowFailure: UseContractInfiniteReadsConfig<
+    ContractFunctionConfig[],
+    TAllowFailure
+  >['allowFailure']
   cacheKey: UseContractInfiniteReadsConfig['cacheKey']
   blockNumber: UseContractInfiniteReadsConfig['blockNumber']
   blockTag: UseContractInfiniteReadsConfig['blockTag']
 }
 type QueryKeyConfig = Pick<UseContractInfiniteReadsConfig, 'scopeKey'>
 
-function queryKey({
+function queryKey<TAllowFailure extends boolean = true>({
   allowFailure,
   blockNumber,
   blockTag,
   cacheKey,
   scopeKey,
-}: QueryKeyArgs & QueryKeyConfig) {
+}: QueryKeyArgs<TAllowFailure> & QueryKeyConfig) {
   return [
     {
       entity: 'readContractsInfinite',
@@ -78,11 +86,16 @@ function queryKey({
 
 function queryFn<
   TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
   TPageParam = unknown,
 >({
   contracts,
 }: {
-  contracts: UseContractInfiniteReadsConfig<TContracts, TPageParam>['contracts']
+  contracts: UseContractInfiniteReadsConfig<
+    TContracts,
+    TAllowFailure,
+    TPageParam
+  >['contracts']
 }) {
   return ({
     queryKey: [{ allowFailure, blockNumber, blockTag }],
@@ -99,8 +112,9 @@ function queryFn<
 
 export function useContractInfiniteReads<
   TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
   TPageParam = any,
-  TSelectData = ReadContractsResult<TContracts>,
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
 >({
   allowFailure,
   blockNumber,
@@ -125,6 +139,7 @@ export function useContractInfiniteReads<
   suspense,
 }: UseContractInfiniteReadsConfig<
   TContracts,
+  TAllowFailure,
   TPageParam,
   TSelectData
 >): // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
@@ -139,7 +154,7 @@ UseInfiniteQueryResult<TSelectData, Error> {
     return enabled
   }, [contracts, enabled_])
 
-  return useInfiniteQuery(queryKey_, queryFn({ contracts }), {
+  return useInfiniteQuery(queryKey_, queryFn({ contracts }) as any, {
     cacheTime,
     enabled,
     getNextPageParam,

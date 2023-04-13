@@ -85,6 +85,34 @@ describe('useContractRead', () => {
   })
 
   describe('configuration', () => {
+    it('allowFailure=false', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useContractReads({ allowFailure: false, contracts }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      assertType<
+        | [
+            ResolvedConfig['BigIntType'],
+            ResolvedConfig['BigIntType'],
+            boolean,
+            ResolvedConfig['BigIntType'],
+          ]
+        | undefined
+      >(res.data)
+      expect(res.data).toMatchInlineSnapshot(`
+        [
+          2n,
+          1n,
+          false,
+          370395n,
+        ]
+      `)
+    })
+
     it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {

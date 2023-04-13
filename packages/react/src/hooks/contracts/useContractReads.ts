@@ -16,14 +16,15 @@ import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 
 export type UseContractReadsConfig<
   TContracts extends ContractFunctionConfig[],
-  TSelectData = ReadContractsResult<TContracts>,
-  Config = ReadContractsConfig<TContracts>,
+  TAllowFailure extends boolean = true,
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
+  Config = ReadContractsConfig<TContracts, TAllowFailure>,
 > = {
   [K in keyof Config]?: K extends 'contracts'
     ? DeepPartial<Config[K], 2>
     : Config[K]
 } & QueryConfigWithSelect<
-  ReadContractsResult<TContracts>,
+  ReadContractsResult<TContracts, TAllowFailure>,
   Error,
   TSelectData
 > & {
@@ -52,8 +53,11 @@ export type UseContractReadsConfig<
       }
   )
 
-type QueryKeyArgs<TContracts extends ContractFunctionConfig[]> = Omit<
-  ReadContractsConfig<TContracts>,
+type QueryKeyArgs<
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+> = Omit<
+  ReadContractsConfig<TContracts, TAllowFailure>,
   'blockNumber' | 'blockTag'
 > & {
   blockNumber?: bigint
@@ -66,14 +70,17 @@ type QueryKeyConfig<TContracts extends ContractFunctionConfig[]> = Pick<
   chainId?: number
 }
 
-function queryKey<TContracts extends ContractFunctionConfig[]>({
+function queryKey<
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+>({
   allowFailure,
   blockNumber,
   blockTag,
   chainId,
   contracts,
   scopeKey,
-}: QueryKeyArgs<TContracts> & QueryKeyConfig<TContracts>) {
+}: QueryKeyArgs<TContracts, TAllowFailure> & QueryKeyConfig<TContracts>) {
   return [
     {
       entity: 'readContracts',
@@ -96,11 +103,10 @@ function queryKey<TContracts extends ContractFunctionConfig[]>({
   ] as const
 }
 
-function queryFn<TContracts extends ContractFunctionConfig[]>({
-  abis,
-}: {
-  abis: (Abi | readonly unknown[])[]
-}) {
+function queryFn<
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+>({ abis }: { abis: (Abi | readonly unknown[])[] }) {
   return ({
     queryKey: [{ allowFailure, blockNumber, blockTag, contracts: contracts_ }],
   }: QueryFunctionArgs<typeof queryKey<TContracts>>) => {
@@ -113,18 +119,19 @@ function queryFn<TContracts extends ContractFunctionConfig[]>({
       contracts,
       blockNumber,
       blockTag,
-    } as ReadContractsConfig<TContracts>) as Promise<
-      ReadContractsResult<TContracts>
+    } as ReadContractsConfig<TContracts, TAllowFailure>) as Promise<
+      ReadContractsResult<TContracts, TAllowFailure>
     >
   }
 }
 
 export function useContractReads<
   TContracts extends ContractFunctionConfig[],
-  TSelectData = ReadContractsResult<TContracts>,
+  TAllowFailure extends boolean = true,
+  TSelectData = ReadContractsResult<TContracts, TAllowFailure>,
 >(
   {
-    allowFailure = true,
+    allowFailure: allowFailure_,
     blockNumber: blockNumberOverride,
     blockTag,
     cacheOnBlock = false,
@@ -145,9 +152,11 @@ export function useContractReads<
         : (replaceEqualDeep(oldData, newData) as any),
     suspense,
     watch,
-  }: UseContractReadsConfig<TContracts, TSelectData> = {} as any,
+  }: UseContractReadsConfig<TContracts, TAllowFailure, TSelectData> = {} as any,
   // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 ): UseQueryResult<TSelectData, Error> {
+  const allowFailure = allowFailure_ ?? true
+
   const { data: blockNumber_ } = useBlockNumber({
     enabled: watch || cacheOnBlock,
     watch,

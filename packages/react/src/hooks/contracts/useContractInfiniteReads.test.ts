@@ -84,6 +84,46 @@ describe('useContractInfiniteReads', () => {
   }, 15_000)
 
   describe('configuration', () => {
+    it('allowFailure=false', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useContractInfiniteReads({
+          allowFailure: false,
+          cacheKey: 'contracts',
+          contracts(index = 0) {
+            const args = [BigInt(index)] as const
+            return [
+              { ...mlootContractConfig, functionName: 'getChest', args },
+              { ...mlootContractConfig, functionName: 'getFoot', args },
+              { ...mlootContractConfig, functionName: 'getHand', args },
+            ]
+          },
+          getNextPageParam: (_, pages) => pages.length + 1,
+        }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
+        timeout: 15_000,
+      })
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      assertType<InfiniteData<[string, string, string]> | undefined>(res.data)
+      expect(res.data).toMatchInlineSnapshot(`
+        {
+          "pageParams": [
+            undefined,
+          ],
+          "pages": [
+            [
+              "Silk Robe",
+              "Holy Greaves",
+              "Leather Gloves",
+            ],
+          ],
+        }
+      `)
+    }, 15_000)
+
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useContractInfiniteReads({
