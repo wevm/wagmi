@@ -25,8 +25,8 @@ The callback will be invoked when a new transactions enters the memory pool of t
 ```ts
 import { watchPendingTransactions } from '@wagmi/core'
 
-const unwatch = watchPendingTransactions({}, (transaction) =>
-  console.log(transaction),
+const unwatch = watchPendingTransactions({}, (transactions) =>
+  console.log(transactions),
 )
 ```
 
