@@ -86,6 +86,7 @@ describe('usePrepareSendTransaction', () => {
         "config": {
           "mode": "prepared",
           "request": {
+            "gas": 21000n,
             "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
             "value": 10000000000000000n,
           },
@@ -93,6 +94,7 @@ describe('usePrepareSendTransaction', () => {
         "data": {
           "mode": "prepared",
           "request": {
+            "gas": 21000n,
             "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
             "value": 10000000000000000n,
           },
@@ -109,7 +111,7 @@ describe('usePrepareSendTransaction', () => {
           "isPlaceholderData": false,
           "isPreviousData": false,
           "isRefetchError": false,
-          "isStale": false,
+          "isStale": true,
           "remove": [Function],
         },
         "isError": false,
