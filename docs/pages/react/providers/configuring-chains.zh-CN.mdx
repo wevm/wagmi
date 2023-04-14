@@ -46,8 +46,6 @@ const wagmiClient = createClient({
 
 `configureChains` 方法可以接受多个 Provider. 如果你的 Provider 不能支持所有的 chain 的时候，这会是很有用的。 例如，你可能想用 [Alchemy](https://alchemy.com) 作为 Etheruem 的 Provider, 用 [avax.network](https://avax.network) 作为 Avalanche 的 Provider
 
-`configureChains` 将你配置的 Provider 配置成一个 [ethers.js `FallbackProvider`](https://docs.ethers.io/v5/api/providers/other/#FallbackProvider)， 这样就直接支持了：
-
 - 如果一个 Provider 宕机了，可以自动转跳到另一个（例如，如果 Infura 宕机了，会将请求打到 Alchemy）。
 - 通过设置 targetQuorum 确保响应是合法的。
 

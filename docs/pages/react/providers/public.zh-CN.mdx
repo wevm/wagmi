@@ -7,7 +7,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Public
 
-`publicProvider`用公共 RPC URL 配置 chain ，同时提供 [ethers.js `getpublicProvider`](https://docs.ethers.io/v5/api/providers/#providers-getpublicProvider)。
+`publicProvider`用公共 RPC URL 配置 chain。
 
 ```ts
 import { publicProvider } from 'wagmi/providers/public'
@@ -43,23 +43,6 @@ const { chains, provider } = configureChains(
 
 ## 配置项
 
-### priority (可选)
-
-用于设置 Provider 的优先级，priority 数值小的 Provider 优先级更高。如果多个 Provider 有相同的 priority，则会随机选择它们。
-
-```ts {7-8}
-import { chain, configureChains } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey', priority: 0 }),
-    publicProvider({ priority: 1 }),
-  ],
-)
-```
-
 ### stallTimeout (可选)
 
 请求超时时间，以毫秒为单位，超时后将尝试另一个 Provider。
@@ -73,23 +56,6 @@ const { chains, provider } = configureChains(
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     publicProvider({ stallTimeout: 1_000 }),
-  ],
-)
-```
-
-### weight (可选)
-
-设置来自该 Provider 的响应的权重。如果一个给定的 Provider 更受你信任，就可以使用这个。
-
-```ts {7-8}
-import { chain, configureChains } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey', weight: 1 }),
-    publicProvider({ weight: 2 }),
   ],
 )
 ```

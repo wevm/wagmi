@@ -1,11 +1,11 @@
 ---
 title: 'watchContractEvent'
-description: 'Action for subscribing to ethers Contract events.'
+description: 'Action for subscribing to Contract events.'
 ---
 
 # watchContractEvent
 
-Action for subscribing to ethers Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
+Action for subscribing to Contract events.
 
 ```ts
 import { watchContractEvent } from '@wagmi/core'
@@ -116,7 +116,7 @@ const unwatch = watchContractEvent(
 
 ### chainId (optional)
 
-Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/core/client#websocketprovider-optional) for this to work correctly.
+Force a specific chain id. The wagmi `Client`'s `webSocketProvider` must be set up as a [chain-aware function](/core/client#websocketprovider-optional) for this to work correctly.
 
 ```ts {10}
 import { watchContractEvent } from '@wagmi/core'

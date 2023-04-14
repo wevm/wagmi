@@ -46,7 +46,7 @@ Find a list of supported chains in wagmi [here](/core/chains).
 
 The `configureChains` function accepts multiple providers. This is useful if not all your chains support a single provider. For example, you may want to use [Alchemy](https://alchemy.com) for Ethereum, and [avax.network](https://avax.network) for Avalanche.
 
-`configureChains` wraps the providers that you provide into an [ethers.js `FallbackProvider`](https://docs.ethers.io/v5/api/providers/other/#FallbackProvider), that comes with support for:
+`configureChains` wraps the RPC Provider that you provide into viem's [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback.html), that comes with support for falling back to another RPC Provider if the RPC Provider goes down (e.g. If Infura goes down, we can fall back to Alchemy)
 
 - Falling back to another provider if a provider goes down (e.g. If Infura goes down, we can fall back to Alchemy)
 - Ensuring the responses are legitimate by setting a `targetQuorum`.

@@ -7,7 +7,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Public
 
-The `publicProvider` configures the chains with a public RPC URL and also provides an [ethers.js `getpublicProvider`](https://docs.ethers.io/v5/api/providers/#providers-getpublicProvider).
+The `publicProvider` configures the chains with a public RPC URL.
 
 ```ts
 import { publicProvider } from 'wagmi/providers/public'
@@ -43,23 +43,6 @@ const { chains, provider } = configureChains(
 ```
 
 ## Configuration
-
-### priority (optional)
-
-The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
-
-```ts {7-8}
-import { chain, configureChains } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey', priority: 0 }),
-    publicProvider({ priority: 1 }),
-  ],
-)
-```
 
 ### stallTimeout (optional)
 

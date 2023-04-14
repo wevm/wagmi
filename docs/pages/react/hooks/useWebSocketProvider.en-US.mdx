@@ -1,11 +1,11 @@
 ---
 title: 'useWebSocketProvider'
-description: "React Hook for accessing the Client's ethers WebSocket Provider."
+description: "React Hook for accessing viem's WebSocket Public Client."
 ---
 
 # useWebSocketProvider
 
-Hook for accessing the `Client`'s ethers WebSocket Provider.
+Hook for accessing viem's WebSocket [Public Client](https://viem.sh/docs/clients/public.html).
 
 ```ts
 import { useWebSocketProvider } from 'wagmi'
@@ -31,7 +31,7 @@ WebSocketProvider
 
 ### chainId (optional)
 
-Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/react/client#websocketprovider-optional) for this to work correctly.
+Force a specific chain id. The wagmi `Client`'s `webSocketProvider` must be set up as a [chain-aware function](/react/client#websocketprovider-optional) for this to work correctly.
 
 ```tsx {5}
 import { useWebSocketProvider } from 'wagmi'

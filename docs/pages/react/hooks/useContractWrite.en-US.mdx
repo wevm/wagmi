@@ -1,13 +1,13 @@
 ---
 title: 'useContractWrite'
-description: 'React Hook for calling a ethers Contract write method.'
+description: 'React Hook for calling a write method on a Contract.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
 # useContractWrite
 
-Hook for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`usePrepareContractWrite` hook](/react/prepare-hooks/usePrepareContractWrite).
+Hook for calling a write method on a Contract.
 
 ```tsx
 import { useContractWrite } from 'wagmi'
@@ -212,7 +212,7 @@ function App() {
     functionName: 'feed',
     overrides: {
       from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-      value: ethers.utils.parseEther('0.01'),
+      value: parseEther('0.01'),
     },
   })
 
@@ -316,8 +316,8 @@ It is possible to pass through override config. Any override config prefixed wit
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only
-  use it as a last resort.
+  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
+  as a last resort.
 </Callout>
 
 ```tsx {17-21}
@@ -340,7 +340,7 @@ function App() {
             recklesslySetUnpreparedArgs: 69,
             recklesslySetUnpreparedOverrides: {
               from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-              value: ethers.utils.parseEther('0.01'),
+              value: parseEther('0.01'),
             },
           })
         }
@@ -360,8 +360,8 @@ It is possible to use `useContractWrite` without pairing it with `usePrepareCont
 
 <Callout>
   This usage is not recommended. It comes with [UX
-  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only
-  use it as a last resort.
+  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
+  as a last resort.
 </Callout>
 
 ```tsx {5-9}

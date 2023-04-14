@@ -39,7 +39,7 @@ function App() {
     decimals: number
     formatted: string
     symbol: string
-    value: BigNumber
+    value: bigint
   }
   error?: Error
   isIdle: boolean
@@ -57,7 +57,7 @@ function App() {
     decimals: number
     formatted: string
     symbol: string
-    value: BigNumber
+    value: bigint
   }>
   status: 'idle' | 'error' | 'loading' | 'success'
 }
@@ -81,7 +81,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'
@@ -96,7 +96,7 @@ function App() {
 
 ### formatUnits (optional)
 
-Formats balance using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether` or `token`'s decimal value.
+Formats balance. Defaults to `ether` or `token`'s decimal value.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'

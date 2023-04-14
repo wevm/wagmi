@@ -7,7 +7,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Public
 
-The `publicProvider` configures the chains with a public RPC URL and also provides an [ethers.js `getpublicProvider`](https://docs.ethers.io/v5/api/providers/#providers-getpublicProvider).
+The `publicProvider` configures the chains with a public RPC URL.
 
 ```ts
 import { publicProvider } from '@wagmi/core/providers/public'
@@ -47,24 +47,6 @@ Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains
 
 ## Configuration
 
-### priority (optional)
-
-The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
-
-```ts {8-9}
-import { configureChains } from '@wagmi/core'
-import { mainnet, polygon } from '@wagmi/core/chains'
-import { publicProvider } from '@wagmi/core/providers/public'
-
-const { chains, provider } = configureChains(
-  [mainnet, polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey', priority: 0 }),
-    publicProvider({ priority: 1 }),
-  ],
-)
-```
-
 ### stallTimeout (optional)
 
 The timeout in milliseconds after which another provider will be attempted.
@@ -79,24 +61,6 @@ const { chains, provider } = configureChains(
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
     publicProvider({ stallTimeout: 1_000 }),
-  ],
-)
-```
-
-### weight (optional)
-
-The weight a response from this provider provides. This can be used if a given provider is more trusted.
-
-```ts {8-9}
-import { configureChains } from '@wagmi/core'
-import { mainnet, polygon } from '@wagmi/core/chains'
-import { publicProvider } from '@wagmi/core/providers/public'
-
-const { chains, provider } = configureChains(
-  [mainnet, polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey', weight: 1 }),
-    publicProvider({ weight: 2 }),
   ],
 )
 ```

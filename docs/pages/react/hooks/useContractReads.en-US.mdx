@@ -1,13 +1,13 @@
 ---
 title: 'useContractReads'
-description: 'React Hook for calling multiple ethers Contract read-only methods.'
+description: 'React Hook for calling multiple read methods on a Contract.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
 # useContractReads
 
-Hook for calling multiple ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) methods.
+Hook for calling multiple read methods on a Contract.
 
 ```tsx
 import { useContractReads } from 'wagmi'
@@ -187,7 +187,7 @@ function App() {
 
 #### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {10,15}
 import { useContractReads } from 'wagmi'

@@ -1,11 +1,11 @@
 ---
 title: 'useContractRead'
-description: 'React Hook for calling an ethers Contract read-only method.'
+description: 'React Hook for calling a read method on a Contract.'
 ---
 
 # useContractRead
 
-Hook for calling an ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) method.
+Hook for calling a read method on a Contract.
 
 ```tsx
 import { useContractRead } from 'wagmi'
@@ -120,7 +120,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
 
 ```tsx {8}
 import { useContractRead } from 'wagmi'

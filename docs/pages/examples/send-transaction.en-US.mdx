@@ -80,7 +80,7 @@ You will need to:
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
 import { usePrepareSendTransaction } from 'wagmi'
-import { utils } from 'ethers'
+import { parseEther } from 'viem'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -92,7 +92,7 @@ export function SendTransaction() {
   const { config } = usePrepareSendTransaction({
     request: {
       to: debouncedTo,
-      value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
+      value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
     },
   })
 

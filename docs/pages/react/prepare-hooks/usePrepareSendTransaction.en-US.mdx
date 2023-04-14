@@ -76,7 +76,7 @@ function App() {
 
 ### request (optional)
 
-Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info. If `request` and `request.to` are not defined, hook will not run.
+Request data to prepare the transaction. See viem's [`sendTransaction` Parameters](https://viem.sh/docs/actions/wallet/sendTransaction.html#parameters) for more info.
 
 ```tsx {5-8}
 import { usePrepareSendTransaction } from 'wagmi'

@@ -1,11 +1,11 @@
 ---
 title: 'getWebSocketProvider'
-description: "Action for accessing the Client's ethers WebSocket Provider."
+description: "Action for accessing viem's WebSocket Public Client."
 ---
 
 # getWebSocketProvider
 
-Action for accessing the `Client`'s ethers WebSocket Provider.
+Action for accessing viem's WebSocket [Public Client](https://viem.sh/docs/clients/public.html).
 
 ```ts
 import { getWebSocketProvider } from '@wagmi/core'
@@ -29,7 +29,7 @@ WebSocketProvider
 
 ### chainId (optional)
 
-Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/core/client#websocketprovider-optional) for this to work correctly.
+Force a specific chain id. The wagmi `Client`'s `webSocketProvider` must be set up as a [chain-aware function](/core/client#websocketprovider-optional) for this to work correctly.
 
 ```ts {5}
 import { getWebSocketProvider } from '@wagmi/core'

@@ -1,11 +1,11 @@
 ---
 title: 'Client'
-description: 'The wagmi Client is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.'
+description: 'The wagmi Client is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and viem clients.'
 ---
 
 # Client
 
-The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and ethers providers.
+The wagmi `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and viem clients.
 
 ```ts
 import { createClient } from 'wagmi'
@@ -107,7 +107,7 @@ const client = createClient({
 
 ### provider
 
-ethers [interface](https://docs.ethers.io/v5/api/providers) for connecting to the Ethereum network.
+viem [Public Client](https://viem.sh/docs/clients/public.html) for reading from the Ethereum network.
 
 ```ts {7}
 import { createClient, configureChains, mainnet } from 'wagmi'
@@ -140,7 +140,7 @@ const client = createClient({
 
 ### webSocketProvider (optional)
 
-ethers WebSocket interface for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+viem WebSocket Public Client for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
 ```ts {11}
 import { createClient, configureChains, mainnet } from 'wagmi'

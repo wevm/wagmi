@@ -1,13 +1,13 @@
 ---
 title: 'writeContract'
-description: 'Action for calling a ethers Contract write method.'
+description: 'Action for calling a Contract write method.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
 # writeContract
 
-Action for calling an ethers Contract [write](https://docs.ethers.io/v5/api/contract/contract/#Contract--write) method. Pairs with the [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+Action for calling a Contract write method. Pairs with the [`prepareWriteContract` action](/core/actions/prepareWriteContract).
 
 ```ts
 import { writeContract } from '@wagmi/core'
@@ -144,7 +144,7 @@ const { hash } = await writeContract({
   functionName: 'feed',
   overrides: {
     from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    value: ethers.utils.parseEther('0.01'),
+    value: parseEther('0.01'),
   },
 })
 ```
