@@ -127,10 +127,11 @@ We will need to:
 3. Hook it up to our form element via an `onSubmit` prop.
 4. Disable the "Send" button when the `sendTransaction` function is not ready (still preparing).
 
-```tsx {3,18,22-25,39}
+```tsx {3,19,23-26,40}
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
+import { utils } from 'ethers'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -142,7 +143,7 @@ export function SendTransaction() {
   const { config } = usePrepareSendTransaction({
     request: {
       to: debouncedTo,
-      value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
+      value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
     },
   })
   const { sendTransaction } = useSendTransaction(config)
@@ -191,7 +192,7 @@ We will need to:
 2. Add loading state to the button when the transaction is pending.
 3. Add a success state for when the transaction is successful.
 
-```tsx {6,24-26,47-57}
+```tsx {6,25-27,48-58}
 import * as React from 'react'
 import { useDebounce } from 'use-debounce'
 import {
@@ -199,6 +200,7 @@ import {
   useSendTransaction,
   useWaitForTransaction,
 } from 'wagmi'
+import { utils } from 'ethers'
 
 export function SendTransaction() {
   const [to, setTo] = React.useState('')
@@ -210,7 +212,7 @@ export function SendTransaction() {
   const { config } = usePrepareSendTransaction({
     request: {
       to: debouncedTo,
-      value: debouncedAmount ? parseEther(debouncedAmount) : undefined,
+      value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
     },
   })
   const { data, sendTransaction } = useSendTransaction(config)
