@@ -229,8 +229,10 @@ import { useSendTransaction } from 'wagmi'
 function App() {
   const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
     mode: 'recklesslyUnprepared',
-    to: 'moxey.eth',
-    value: BigNumber.from('10000000000000000'),
+    request: {
+      to: 'moxey.eth',
+      value: BigNumber.from('10000000000000000'),
+    }
   })
 
   return (
