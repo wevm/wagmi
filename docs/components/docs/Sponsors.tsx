@@ -84,11 +84,21 @@ const sponsors = [
   {
     id: 'bitkeep',
     name: 'BitKeep',
-    href: 'https://bitkeep.com/',
+    href: 'https://bitkeep.com',
     logo: {
       dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-dark.svg',
       light:
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-light.svg',
+    },
+  },
+  {
+    id: 'privy',
+    name: 'Privy',
+    href: 'https://privy.io',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/privy-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/privy-light.svg',
     },
   },
 ] as const
