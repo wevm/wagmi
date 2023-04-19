@@ -3495,7 +3495,6 @@ packages:
     peerDependenciesMeta:
       zod:
         optional: true
-    dev: false
 
   /abitype/0.3.0_typescript@4.9.4:
     resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
@@ -3521,7 +3520,6 @@ packages:
         optional: true
     dependencies:
       zod: 3.20.2
-    dev: false
 
   /abitype/0.7.1:
     resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
