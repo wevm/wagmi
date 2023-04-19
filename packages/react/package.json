@@ -117,7 +117,7 @@
     "@tanstack/react-query": "^4.28.0",
     "@tanstack/react-query-persist-client": "^4.28.0",
     "@wagmi/core": "workspace:*",
-    "abitype": "^0.7.1",
+    "abitype": "^0.3.0",
     "use-sync-external-store": "^1.2.0"
   },
   "devDependencies": {
