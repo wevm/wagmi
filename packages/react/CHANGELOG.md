@@ -1,5 +1,11 @@
 # wagmi
 
+## 0.12.11
+
+### Patch Changes
+
+- [#2203](https://github.com/wagmi-dev/wagmi/pull/2203) [`a4ca4b05`](https://github.com/wagmi-dev/wagmi/commit/a4ca4b05c5bd20c20c5d0741bfb18f2c798b9529) Thanks [@tmm](https://github.com/tmm)! - Downgraded abitype.
+
 ## 0.12.10
 
 ### Patch Changes
