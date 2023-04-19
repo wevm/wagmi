@@ -2,16 +2,19 @@ import { Box, Button, Skeleton, Stack } from 'degen'
 import * as React from 'react'
 import { mainnet, useAccount, useNetwork } from 'wagmi'
 
+import { useIsMounted } from '../../hooks'
 import { formatAddress } from '../../lib/address'
 import { PreviewWrapper } from '../core'
 import { Account, SiweButton, WalletSelector } from '../web3'
 
 export function SignInWithEthereum() {
   const [address, setAddress] = React.useState<string>()
+  const isMounted = useIsMounted()
   const accountData = useAccount()
   const { chain: activeChain } = useNetwork()
 
   React.useEffect(() => {
+    console.log({ accountData: accountData.isConnected })
     const handler = async () => {
       try {
         const res = await fetch('/api/me')
@@ -43,7 +46,7 @@ export function SignInWithEthereum() {
     </Stack>
   ) : null
 
-  if (accountData.isConnected)
+  if (isMounted && accountData.isConnected)
     return (
       <PreviewWrapper>
         <Stack space="6">

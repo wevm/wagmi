@@ -117,12 +117,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const { message, signature } = req.body
         const siweMessage = new SiweMessage(message)
-        const fields = await siweMessage.validate(signature)
+        const result = await siweMessage.verify({ signature })
 
-        if (fields.nonce !== req.session.nonce)
+        if (!result.success || result.data.nonce !== req.session.nonce)
           return res.status(422).json({ message: 'Invalid nonce.' })
 
-        req.session.siwe = fields
+        req.session.siwe = result?.data
         await req.session.save()
         res.json({ ok: true })
       } catch (_error) {
@@ -194,17 +194,38 @@ export default withIronSessionApiRoute(handler, ironOptions)
 ```
 
 <Callout type="warning">
-  Before going to production, you likely want to invalidate nonces on logout to prevent replay attacks through session duplication (e.g. store expired nonce and make sure they can't be used again).
+  Before going to production, you likely want to invalidate nonces on logout to
+  prevent replay attacks through session duplication (e.g. store expired nonce
+  and make sure they can't be used again).
 </Callout>
 
 ## Step 3: Sign & Verify Message
 
 Now that the connect wallet logic and API routes are set up, we can sign in the user! We'll create a new `SiweMessage` and sign it using the [`useSignMessage`](/react/hooks/useSignMessage) hook. We can also add a log out button and a side effect for fetching the logged in user when the page loads or window gains focus.
 
-```tsx {19,43-53,58-65,97,120}
+<details>
+  <summary>`useIsMounted` Hook to handle hydration errors with NextJS</summary>
+Commonly associated with **NextJS**. In order to handle hydration issues that **NextJS** encounters where the rendered DOM from server-side doesn't match what gets rendered client-side, this is the fix which waits until the page has been fulled mounted to proceed with client-side changes.
+
+```ts filename="hooks/index.tsx"
+import * as React from 'react'
+
+export function useIsMounted() {
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => setMounted(true), [])
+
+  return mounted
+}
+```
+
+</details>
+
+```tsx {4,20,44-54,59-66,98,121}
 import * as React from 'react'
 import { useAccount, useNetwork, useSignMessage } from 'wagmi'
 import { SiweMessage } from 'siwe'
+import { useIsMounted } from './hooks'
 
 function SignInButton({
   onSuccess,
@@ -311,7 +332,7 @@ export function Profile() {
     return () => window.removeEventListener('focus', handler)
   }, [])
 
-  if (isConnected) {
+  if (useIsMounted && isConnected) {
     return (
       <div>
         {/* Account content goes here */}
