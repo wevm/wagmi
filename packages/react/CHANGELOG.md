@@ -11,6 +11,7 @@
 - Updated dependencies []:
   - @wagmi/core@1.0.0-next.1
 
+
 ## 1.0.0-next.0
 
 ### Major Changes
@@ -21,6 +22,13 @@
 
 - Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
   - @wagmi/core@1.0.0-next.0
+=======
+## 0.12.11
+
+### Patch Changes
+
+- [#2203](https://github.com/wagmi-dev/wagmi/pull/2203) [`a4ca4b05`](https://github.com/wagmi-dev/wagmi/commit/a4ca4b05c5bd20c20c5d0741bfb18f2c798b9529) Thanks [@tmm](https://github.com/tmm)! - Downgraded abitype.
+>>>>>>> 5d78d5c6 (chore: version packages (#2204))
 
 ## 0.12.10
 
