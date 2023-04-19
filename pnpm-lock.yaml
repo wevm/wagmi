@@ -354,6 +354,7 @@ importers:
         version: 0.3.16(typescript@4.9.5)(zod@3.21.4)
 
   packages/react:
+<<<<<<< HEAD
     dependencies:
       '@tanstack/query-sync-storage-persister':
         specifier: ^4.27.1
@@ -376,6 +377,32 @@ importers:
       use-sync-external-store:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
+=======
+    specifiers:
+      '@tanstack/query-sync-storage-persister': ^4.27.1
+      '@tanstack/react-query': ^4.28.0
+      '@tanstack/react-query-persist-client': ^4.28.0
+      '@testing-library/react': ^13.3.0
+      '@testing-library/react-hooks': ^8.0.1
+      '@types/react': ^18.0.9
+      '@types/react-dom': ^18.0.3
+      '@types/use-sync-external-store': ^0.0.3
+      '@wagmi/core': workspace:*
+      abitype: ^0.3.0
+      ethers: ^5.7.1
+      react: ^18.1.0
+      react-17: npm:react@17.0.2
+      react-dom: ^18.1.0
+      react-dom-17: npm:react-dom@17.0.2
+      use-sync-external-store: ^1.2.0
+    dependencies:
+      '@tanstack/query-sync-storage-persister': 4.27.1
+      '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
+      '@tanstack/react-query-persist-client': 4.28.0_qfusmmwykmcbgdy37sd3cqxiry
+      '@wagmi/core': link:../core
+      abitype: 0.3.0
+      use-sync-external-store: 1.2.0_react@18.2.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
     devDependencies:
       '@testing-library/react':
         specifier: ^13.3.0
@@ -415,6 +442,7 @@ importers:
         version: 4.9.5
 
   references/packages/connectors:
+<<<<<<< HEAD
     dependencies:
       '@coinbase/wallet-sdk':
         specifier: ^3.6.4
@@ -446,6 +474,30 @@ importers:
       typescript:
         specifier: '>=4.9.4'
         version: 4.9.5
+=======
+    specifiers:
+      '@coinbase/wallet-sdk': ^3.6.4
+      '@ledgerhq/connect-kit-loader': ^1.0.1
+      '@safe-global/safe-apps-provider': ^0.15.2
+      '@safe-global/safe-apps-sdk': ^7.9.0
+      '@wagmi/core': workspace:*
+      '@walletconnect/ethereum-provider': 2.7.0
+      '@walletconnect/legacy-provider': ^2.0.0
+      '@web3modal/standalone': ^2.3.0
+      abitype: ^0.3.0
+      ethers: ^5.7.2
+      eventemitter3: ^4.0.7
+    dependencies:
+      '@coinbase/wallet-sdk': 3.6.5
+      '@ledgerhq/connect-kit-loader': 1.0.1
+      '@safe-global/safe-apps-provider': 0.15.2
+      '@safe-global/safe-apps-sdk': 7.9.0
+      '@walletconnect/ethereum-provider': 2.7.0_rc3irm3dcddd4opmcaizllcogq
+      '@walletconnect/legacy-provider': 2.0.0
+      '@web3modal/standalone': 2.3.3
+      abitype: 0.3.0
+      eventemitter3: 4.0.7
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
     devDependencies:
       '@wagmi/chains':
         specifier: workspace:*
@@ -781,6 +833,7 @@ packages:
       prettier: 2.8.7
     dev: true
 
+<<<<<<< HEAD
   /@coinbase/wallet-sdk@3.6.6:
     resolution:
       {
@@ -790,10 +843,19 @@ packages:
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
       '@solana/web3.js': 1.74.0
+=======
+  /@coinbase/wallet-sdk/3.6.5:
+    resolution: {integrity: sha512-8F91dvvC/+CTpaNTr+FgpLMa2YxjpXpE9pdnGewMoYi41ISbiXZado5VjYo9QSZlS+myzfKvDGpTzLFFUXPfDg==}
+    engines: {node: '>= 10.0.0'}
+    dependencies:
+      '@metamask/safe-event-emitter': 2.0.0
+      '@solana/web3.js': 1.75.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       bind-decorator: 1.0.11
       bn.js: 5.2.1
       buffer: 6.0.3
       clsx: 1.2.1
+<<<<<<< HEAD
       eth-block-tracker: 6.1.0
       eth-json-rpc-filters: 5.1.0
       eth-rpc-errors: 4.0.2
@@ -801,6 +863,15 @@ packages:
       keccak: 3.0.3
       preact: 10.13.2
       qs: 6.11.1
+=======
+      eth-block-tracker: 4.4.3
+      eth-json-rpc-filters: 5.1.0
+      eth-rpc-errors: 4.0.2
+      json-rpc-engine: 6.1.0
+      keccak: 3.0.2
+      preact: 10.13.0
+      qs: 6.11.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       rxjs: 6.6.7
       sha.js: 2.4.11
       stream-browserify: 3.0.0
@@ -812,6 +883,7 @@ packages:
       - utf-8-validate
     dev: false
 
+<<<<<<< HEAD
   /@cspotcode/source-map-support@0.8.1:
     resolution:
       {
@@ -823,10 +895,18 @@ packages:
     dev: false
 
   /@emotion/hash@0.9.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-14FtKiHhy2QoPIzdTcvh//8OyBlknNs2nXRwIhG904opCby3l+9Xaf/wuPvICBF0rc1ZCNBd3nKe9cd2mecVkQ==,
       }
+=======
+    resolution: {integrity: sha512-14FtKiHhy2QoPIzdTcvh//8OyBlknNs2nXRwIhG904opCby3l+9Xaf/wuPvICBF0rc1ZCNBd3nKe9cd2mecVkQ==}
+=======
+  /@emotion/hash/0.8.0:
+    resolution: {integrity: sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: false
 
   /@esbuild/android-arm@0.15.13:
@@ -1808,6 +1888,7 @@ packages:
     dev: true
 
   /@jridgewell/resolve-uri@3.1.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==,
@@ -1819,6 +1900,15 @@ packages:
       {
         integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==,
       }
+=======
+    resolution: {integrity: sha512-F2msla3tad+Mfht5cJq7LSXcdudKTWCVYUgw6pLFOOHSTtZlj6SWNYAp+AhuqLmWdBO2X5hPrLcu8cVP8fy28w==}
+    engines: {node: '>=6.0.0'}
+    dev: true
+
+  /@jridgewell/sourcemap-codec@1.4.14:
+    resolution: {integrity: sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==}
+    dev: true
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /@jridgewell/trace-mapping@0.3.17:
     resolution:
@@ -1830,6 +1920,7 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
+<<<<<<< HEAD
   /@jridgewell/trace-mapping@0.3.9:
     resolution:
       {
@@ -1841,10 +1932,17 @@ packages:
     dev: false
 
   /@json-rpc-tools/provider@1.7.6:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-z7D3xvJ33UfCGv77n40lbzOYjZKVM3k2+5cV7xS8G6SCvKTzMkhkUYuD/qzQUNT4cG/lv0e9mRToweEEVLVVmA==,
       }
+=======
+=======
+  /@json-rpc-tools/provider/1.7.6:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-z7D3xvJ33UfCGv77n40lbzOYjZKVM3k2+5cV7xS8G6SCvKTzMkhkUYuD/qzQUNT4cG/lv0e9mRToweEEVLVVmA==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     dependencies:
       '@json-rpc-tools/utils': 1.7.6
@@ -1892,11 +1990,23 @@ packages:
       }
     dev: false
 
+<<<<<<< HEAD
   /@lit/reactive-element@1.6.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-va15kYZr7KZNNPZdxONGQzpUr+4sxVu7V/VG7a8mRfPPXUyhEYj5RzXCQmGrlP3tAh0L3HHm5AjBMFYRqlM9SA==,
       }
+=======
+=======
+  /@lit-labs/ssr-dom-shim/1.1.0:
+    resolution: {integrity: sha512-92uQ5ARf7UXYrzaFcAX3T2rTvaS9Z1//ukV+DqjACM4c8s0ZBQd7ayJU5Dh2AFLD/Ayuyz4uMmxQec8q3U4Ong==}
+    dev: false
+
+  /@lit/reactive-element/1.6.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-va15kYZr7KZNNPZdxONGQzpUr+4sxVu7V/VG7a8mRfPPXUyhEYj5RzXCQmGrlP3tAh0L3HHm5AjBMFYRqlM9SA==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.1.0
     dev: false
@@ -2605,6 +2715,7 @@ packages:
     dev: false
     optional: true
 
+<<<<<<< HEAD
   /@noble/curves@0.8.3:
     resolution:
       {
@@ -2622,10 +2733,22 @@ packages:
       '@noble/hashes': 1.3.0
 
   /@noble/ed25519@1.7.3:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-iR8GBkDt0Q3GyaVcIu7mSsVIqnFbkbRzGLWlvhwunacoLwt4J3swfKhfaM6rN6WY+TBGoYT1GtT1mIh2/jGbRQ==,
       }
+=======
+    resolution: {integrity: sha512-iR8GBkDt0Q3GyaVcIu7mSsVIqnFbkbRzGLWlvhwunacoLwt4J3swfKhfaM6rN6WY+TBGoYT1GtT1mIh2/jGbRQ==}
+=======
+  /@noble/ed25519/1.7.3:
+    resolution: {integrity: sha512-iR8GBkDt0Q3GyaVcIu7mSsVIqnFbkbRzGLWlvhwunacoLwt4J3swfKhfaM6rN6WY+TBGoYT1GtT1mIh2/jGbRQ==}
+    dev: false
+
+  /@noble/hashes/1.1.2:
+    resolution: {integrity: sha512-KYRCASVTv6aeUi1tsF8/vpyR7zpfs3FUzy2Jqm+MU+LmUKhQ0y2FpfwqkCcxSg2ua4GALJd8k2R76WxwZGbQpA==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: false
 
   /@noble/hashes@1.2.0:
@@ -3294,6 +3417,7 @@ packages:
       buffer: 6.0.3
     dev: false
 
+<<<<<<< HEAD
   /@solana/web3.js@1.74.0:
     resolution:
       {
@@ -3305,15 +3429,29 @@ packages:
       '@noble/hashes': 1.3.0
       '@noble/secp256k1': 1.7.1
       '@solana/buffer-layout': 4.0.1
+=======
+  /@solana/web3.js/1.75.0:
+    resolution: {integrity: sha512-rHQgdo1EWfb+nPUpHe4O7i8qJPELHKNR5PAZRK+a7XxiykqOfbaAlPt5boDWAGPnYbSv0ziWZv5mq9DlFaQCxg==}
+    dependencies:
+      '@babel/runtime': 7.20.7
+      '@noble/ed25519': 1.7.3
+      '@noble/hashes': 1.1.2
+      '@noble/secp256k1': 1.6.3
+      '@solana/buffer-layout': 4.0.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       agentkeepalive: 4.3.0
       bigint-buffer: 1.1.5
       bn.js: 5.2.1
       borsh: 0.7.0
       bs58: 4.0.1
-      buffer: 6.0.1
+      buffer: 6.0.3
       fast-stable-stringify: 1.0.0
       jayson: 3.7.0
+<<<<<<< HEAD
       node-fetch: 2.6.9
+=======
+      node-fetch: 2.6.8
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       rpc-websockets: 7.5.1
       superstruct: 0.14.2
     transitivePeerDependencies:
@@ -3646,6 +3784,7 @@ packages:
     engines: { node: '>= 10' }
     dev: true
 
+<<<<<<< HEAD
   /@tsconfig/node10@1.0.9:
     resolution:
       {
@@ -3684,10 +3823,17 @@ packages:
     dev: false
 
   /@types/acorn@4.0.6:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==,
       }
+=======
+=======
+  /@types/acorn/4.0.6:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@types/estree': 1.0.0
 
@@ -4465,11 +4611,17 @@ packages:
       typescript: 4.9.5
     dev: false
 
+<<<<<<< HEAD
   /@wagmi/connectors@1.0.0-next.1(@types/node@18.15.11)(@wagmi/chains@0.2.18)(react@18.2.0)(typescript@4.9.5)(viem@0.3.16)(zod@3.21.4):
     resolution:
       {
         integrity: sha512-D4tURl+AXtiAG1KTiHvZglVbVuiHVWCHedivlc8435MSbGGAkerbaIrydUGbgmFVyXQiP7PfSlKfbD0Nc7u2Bw==,
       }
+=======
+<<<<<<< HEAD
+  /@wagmi/connectors@1.0.0-next.1(@types/node@18.15.11)(@wagmi/chains@0.2.18)(react@18.2.0)(typescript@4.9.5)(viem@0.3.12)(zod@3.21.4):
+    resolution: {integrity: sha512-D4tURl+AXtiAG1KTiHvZglVbVuiHVWCHedivlc8435MSbGGAkerbaIrydUGbgmFVyXQiP7PfSlKfbD0Nc7u2Bw==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     peerDependencies:
       '@wagmi/chains': '>=0.2.0'
       typescript: '>=4.9.4'
@@ -4549,6 +4701,12 @@ packages:
       }
     dependencies:
       '@walletconnect/heartbeat': 1.2.0(@types/node@18.15.11)(typescript@4.9.5)
+=======
+  /@walletconnect/core/2.7.0:
+    resolution: {integrity: sha512-xUeFPpElybgn1a+lknqtHleei4VyuV/4qWgB1nP8qQUAO6a5pNsioODrnB2VAPdUHJYBdx2dCt2maRk6g53IPQ==}
+    dependencies:
+      '@walletconnect/heartbeat': 1.2.1
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       '@walletconnect/jsonrpc-provider': 1.0.12
       '@walletconnect/jsonrpc-utils': 1.0.7
       '@walletconnect/jsonrpc-ws-connection': 1.0.11
@@ -4558,20 +4716,24 @@ packages:
       '@walletconnect/relay-auth': 1.0.4
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
+<<<<<<< HEAD
       '@walletconnect/types': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@walletconnect/utils': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       events: 3.3.0
       lodash.isequal: 4.5.0
       pino: 7.11.0
       uint8arrays: 3.1.1
+=======
+      '@walletconnect/types': 2.7.0
+      '@walletconnect/utils': 2.7.0
+      events: 3.3.0
+      lodash.isequal: 4.5.0
+      uint8arrays: 3.1.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
       - bufferutil
       - lokijs
-      - typescript
       - utf-8-validate
     dev: false
 
@@ -4609,11 +4771,20 @@ packages:
       tslib: 1.14.1
     dev: false
 
+<<<<<<< HEAD
   /@walletconnect/ethereum-provider@2.6.2(@types/node@18.15.11)(@web3modal/standalone@2.3.7)(typescript@4.9.5):
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-IFYxvl+cHDPR+bJiocEF/EfqEB5eNxeQOxb8mKtA4vzFGck2H7ft+k1ObMwrBlC387NjzsD3Uyr0dT7qYaSWCg==,
       }
+=======
+    resolution: {integrity: sha512-IFYxvl+cHDPR+bJiocEF/EfqEB5eNxeQOxb8mKtA4vzFGck2H7ft+k1ObMwrBlC387NjzsD3Uyr0dT7qYaSWCg==}
+=======
+  /@walletconnect/ethereum-provider/2.7.0_rc3irm3dcddd4opmcaizllcogq:
+    resolution: {integrity: sha512-6TwQ05zi6DP1TP1XNgSvLbmCmLf/sz7kLTfMaVk45YYHNgYTTBlXqkyjUpQZI9lpq+uXLBbHn/jx2OGhOPUP0Q==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
     peerDependencies:
       '@web3modal/standalone': '>=2'
     peerDependenciesMeta:
@@ -4624,22 +4795,26 @@ packages:
       '@walletconnect/jsonrpc-provider': 1.0.12
       '@walletconnect/jsonrpc-types': 1.0.2
       '@walletconnect/jsonrpc-utils': 1.0.7
+<<<<<<< HEAD
       '@walletconnect/sign-client': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@walletconnect/types': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@walletconnect/universal-provider': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@walletconnect/utils': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@web3modal/standalone': 2.3.7(react@18.2.0)
+=======
+      '@walletconnect/sign-client': 2.7.0
+      '@walletconnect/types': 2.7.0
+      '@walletconnect/universal-provider': 2.7.0
+      '@walletconnect/utils': 2.7.0
+      '@web3modal/standalone': 2.3.3
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       events: 3.3.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
       - bufferutil
       - debug
       - encoding
       - lokijs
-      - typescript
       - utf-8-validate
     dev: false
 
@@ -4653,6 +4828,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
+<<<<<<< HEAD
   /@walletconnect/heartbeat@1.2.0(@types/node@18.15.11)(typescript@4.9.5):
     resolution:
       {
@@ -4664,12 +4840,14 @@ packages:
       chai: 4.3.7
       mocha: 10.2.0
       ts-node: 10.9.1(@types/node@18.15.11)(typescript@4.9.5)
+=======
+  /@walletconnect/heartbeat/1.2.1:
+    resolution: {integrity: sha512-yVzws616xsDLJxuG/28FqtZ5rzrTA4gUjdEMTbWB5Y8V1XHRmqq4efAxCw5ie7WjbXFSUyBHaWlMR+2/CpQC5Q==}
+    dependencies:
+      '@walletconnect/events': 1.0.1
+      '@walletconnect/time': 1.0.2
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       tslib: 1.14.1
-    transitivePeerDependencies:
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
-      - typescript
     dev: false
 
   /@walletconnect/heartbeat@1.2.1:
@@ -4921,6 +5099,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
+<<<<<<< HEAD
   /@walletconnect/sign-client@2.6.2(@types/node@18.15.11)(typescript@4.9.5):
     resolution:
       {
@@ -4928,23 +5107,29 @@ packages:
       }
     dependencies:
       '@walletconnect/core': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
+=======
+  /@walletconnect/sign-client/2.7.0:
+    resolution: {integrity: sha512-K99xa6GSFS04U+140yrIEi/VJJJ0Q1ov4jCaiqa9euILDKxlBsM7m5GR+9sq6oYyj18SluJY4CJTdeOXUJlarA==}
+    dependencies:
+      '@walletconnect/core': 2.7.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.1
       '@walletconnect/jsonrpc-utils': 1.0.7
       '@walletconnect/logger': 2.0.1
       '@walletconnect/time': 1.0.2
+<<<<<<< HEAD
       '@walletconnect/types': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@walletconnect/utils': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
+=======
+      '@walletconnect/types': 2.7.0
+      '@walletconnect/utils': 2.7.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       events: 3.3.0
-      pino: 7.11.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
       - bufferutil
       - lokijs
-      - typescript
       - utf-8-validate
     dev: false
 
@@ -4957,6 +5142,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
+<<<<<<< HEAD
   /@walletconnect/types@2.6.2(@types/node@18.15.11)(typescript@4.9.5):
     resolution:
       {
@@ -4965,54 +5151,76 @@ packages:
     dependencies:
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.0(@types/node@18.15.11)(typescript@4.9.5)
+=======
+  /@walletconnect/types/2.7.0:
+    resolution: {integrity: sha512-aMUDUtO79WSBtC/bDetE6aFwdgwJr0tJ8nC8gnAl5ELsrjygEKCn6M8Q+v6nP9svG9yf5Rds4cImxCT6BWwTyw==}
+    dependencies:
+      '@walletconnect/events': 1.0.1
+      '@walletconnect/heartbeat': 1.2.1
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       '@walletconnect/jsonrpc-types': 1.0.2
       '@walletconnect/keyvaluestorage': 1.0.2
       '@walletconnect/logger': 2.0.1
       events: 3.3.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
       - lokijs
-      - typescript
     dev: false
 
+<<<<<<< HEAD
   /@walletconnect/universal-provider@2.6.2(@types/node@18.15.11)(typescript@4.9.5):
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-CT7xFYGhGYYdo1rMCGnCuAueUYSVirqs6Tk9/ZoK/wf3vBNefTBxStW0Twgr+Fr5mgeOh4k4NWjPJIwfGTc/Fg==,
       }
+=======
+    resolution: {integrity: sha512-CT7xFYGhGYYdo1rMCGnCuAueUYSVirqs6Tk9/ZoK/wf3vBNefTBxStW0Twgr+Fr5mgeOh4k4NWjPJIwfGTc/Fg==}
+=======
+  /@walletconnect/universal-provider/2.7.0:
+    resolution: {integrity: sha512-aAIudO3ZlKD16X36VnXChpxBB6/JLK1SCJBfidk7E0GE2S4xr1xW5jXGSGS4Z+wIkNZXK0n7ULSK3PZ7mPBdog==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@walletconnect/jsonrpc-http-connection': 1.0.6
       '@walletconnect/jsonrpc-provider': 1.0.12
       '@walletconnect/jsonrpc-types': 1.0.2
       '@walletconnect/jsonrpc-utils': 1.0.7
       '@walletconnect/logger': 2.0.1
+<<<<<<< HEAD
       '@walletconnect/sign-client': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@walletconnect/types': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
       '@walletconnect/utils': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
+=======
+      '@walletconnect/sign-client': 2.7.0
+      '@walletconnect/types': 2.7.0
+      '@walletconnect/utils': 2.7.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       eip1193-provider: 1.0.1
       events: 3.3.0
-      pino: 7.11.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
       - bufferutil
       - debug
       - encoding
       - lokijs
-      - typescript
       - utf-8-validate
     dev: false
 
+<<<<<<< HEAD
   /@walletconnect/utils@2.6.2(@types/node@18.15.11)(typescript@4.9.5):
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-G0gtWQd5PhT7Z3h9zy5H6bG8t9likb5+hP2ZuBbt/vTu8ONPEsTcH1Ior2lUjuYLQ9ufK3LMZM85pO+wWLRVaw==,
       }
+=======
+    resolution: {integrity: sha512-G0gtWQd5PhT7Z3h9zy5H6bG8t9likb5+hP2ZuBbt/vTu8ONPEsTcH1Ior2lUjuYLQ9ufK3LMZM85pO+wWLRVaw==}
+=======
+  /@walletconnect/utils/2.7.0:
+    resolution: {integrity: sha512-k32jrQeyJsNZPdmtmg85Y3QgaS5YfzYSPrAxRC2uUD1ts7rrI6P5GG2iXNs3AvWKOuCgsp/PqU8s7AC7CRUscw==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@stablelib/chacha20poly1305': 1.0.1
       '@stablelib/hkdf': 1.0.1
@@ -5023,7 +5231,11 @@ packages:
       '@walletconnect/relay-api': 1.0.9
       '@walletconnect/safe-json': 1.0.2
       '@walletconnect/time': 1.0.2
+<<<<<<< HEAD
       '@walletconnect/types': 2.6.2(@types/node@18.15.11)(typescript@4.9.5)
+=======
+      '@walletconnect/types': 2.7.0
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       '@walletconnect/window-getters': 1.0.1
       '@walletconnect/window-metadata': 1.0.1
       detect-browser: 5.3.0
@@ -5031,11 +5243,7 @@ packages:
       uint8arrays: 3.1.1
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
-      - '@swc/core'
-      - '@swc/wasm'
-      - '@types/node'
       - lokijs
-      - typescript
     dev: false
 
   /@walletconnect/window-getters@1.0.1:
@@ -5057,6 +5265,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
+<<<<<<< HEAD
   /@web3modal/core@2.3.7(react@18.2.0):
     resolution:
       {
@@ -5065,10 +5274,18 @@ packages:
     dependencies:
       buffer: 6.0.3
       valtio: 1.10.4(react@18.2.0)
+=======
+  /@web3modal/core/2.3.3:
+    resolution: {integrity: sha512-RYZoUy7cAXZvQuZUA1Gw1lAfXA9zNc16URwB1QYF0KZmXQRIVUncnE4j6ZGVGDDIeTuRMqRADRk2SwR7dU6ILQ==}
+    dependencies:
+      buffer: 6.0.3
+      valtio: 1.10.4
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
     transitivePeerDependencies:
       - react
     dev: false
 
+<<<<<<< HEAD
   /@web3modal/standalone@2.3.7(react@18.2.0):
     resolution:
       {
@@ -5077,10 +5294,18 @@ packages:
     dependencies:
       '@web3modal/core': 2.3.7(react@18.2.0)
       '@web3modal/ui': 2.3.7(react@18.2.0)
+=======
+  /@web3modal/standalone/2.3.3:
+    resolution: {integrity: sha512-t5WvZmXrDPrFoFQUsHMldM3gLm406ar13D4RCdlFwGDW3aQ41SyK7+JgOi3Vz8my/3mDqtpFx08ZNj6cBGM0ew==}
+    dependencies:
+      '@web3modal/core': 2.3.3
+      '@web3modal/ui': 2.3.3
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
     transitivePeerDependencies:
       - react
     dev: false
 
+<<<<<<< HEAD
   /@web3modal/ui@2.3.7(react@18.2.0):
     resolution:
       {
@@ -5089,6 +5314,13 @@ packages:
     dependencies:
       '@web3modal/core': 2.3.7(react@18.2.0)
       lit: 2.7.3
+=======
+  /@web3modal/ui/2.3.3:
+    resolution: {integrity: sha512-tb/zT8qNw3jYUrClN2H20XfxXoOKjnXuVzuWd3kyDXzEN+jdQoaYtj0/KBI8fRYoEYb6FaZeEkI9mdGEcRfeYA==}
+    dependencies:
+      '@web3modal/core': 2.3.3
+      lit: 2.7.2
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       motion: 10.15.5
       qrcode: 1.5.3
     transitivePeerDependencies:
@@ -5130,11 +5362,56 @@ packages:
       }
     dev: true
 
+<<<<<<< HEAD
   /abitype@0.7.1(typescript@4.9.5)(zod@3.21.4):
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==,
       }
+=======
+=======
+  /abitype/0.3.0:
+    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
+    engines: {pnpm: '>=7'}
+    peerDependencies:
+      typescript: '>=4.9.4'
+      zod: '>=3.19.1'
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dev: false
+
+  /abitype/0.3.0_typescript@4.9.4:
+    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
+    engines: {pnpm: '>=7'}
+    peerDependencies:
+      typescript: '>=4.9.4'
+      zod: '>=3.19.1'
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      typescript: 4.9.4
+    dev: true
+
+  /abitype/0.3.0_zod@3.20.2:
+    resolution: {integrity: sha512-0YokyAV4hKMcy97Pl+6QgZBlBdZJN2llslOs7kiFY+cu7kMlVXDBpxMExfv0krzBCQt2t7hNovpQ3y/zvEm18A==}
+    engines: {pnpm: '>=7'}
+    peerDependencies:
+      typescript: '>=4.9.4'
+      zod: '>=3.19.1'
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      zod: 3.20.2
+    dev: false
+
+  /abitype/0.7.1_zod@3.20.2:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-VBkRHTDZf9Myaek/dO3yMmOzB/y2s3Zo6nVU7yaw1G+TvCHAjwaJzNGN9yo4K5D8bU/VZXKP1EJpRhFr862PlQ==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     peerDependencies:
       typescript: '>=4.9.4'
       zod: ^3 >=3.19.1
@@ -5192,11 +5469,17 @@ packages:
       acorn: 8.8.2
 
   /acorn-walk@8.2.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==,
       }
     engines: { node: '>=0.4.0' }
+=======
+    resolution: {integrity: sha512-k+iyHEuPgSw6SbuDpGQM+06HQUa04DZ3o+F6CSzXMvvI5KMvnaEqXe+YVe555R9nn6GPt404fos4wcgpw12SDA==}
+    engines: {node: '>=0.4.0'}
+    dev: true
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /acorn@8.8.2:
     resolution:
@@ -5239,6 +5522,7 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+<<<<<<< HEAD
   /agentkeepalive@4.3.0:
     resolution:
       {
@@ -5247,18 +5531,34 @@ packages:
     engines: { node: '>= 8.0.0' }
     dependencies:
       debug: 4.3.4(supports-color@8.1.1)
+=======
+  /agentkeepalive/4.3.0:
+    resolution: {integrity: sha512-7Epl1Blf4Sy37j4v9f9FjICCh4+KAQOyXgHEwlyBiAQLbhKdq/i2QQU3amQalS/wPhdPzDXPL5DMR5bkn+YeWg==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      debug: 4.3.4
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       depd: 2.0.0
       humanize-ms: 1.2.1
     transitivePeerDependencies:
       - supports-color
     dev: false
 
+<<<<<<< HEAD
   /aggregate-error@3.1.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==,
       }
     engines: { node: '>=8' }
+=======
+=======
+  /aggregate-error/3.1.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-4I7Td01quW/RpocfNayFdFVk1qSuoh0E7JrbRJ16nH01HhKFQ88INq9Sd+nd72zqRySlr9BmDA8xlEJ6vJMrYA==}
+    engines: {node: '>=8'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       clean-stack: 2.2.0
       indent-string: 4.0.0
@@ -5392,6 +5692,7 @@ packages:
       }
     dev: false
 
+<<<<<<< HEAD
   /arg@4.1.3:
     resolution:
       {
@@ -5400,10 +5701,17 @@ packages:
     dev: false
 
   /arg@5.0.2:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==,
       }
+=======
+=======
+  /arg/5.0.2:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-PYjyFOLKQ9y57JvQ6QLo8dAgNqswh8M1RMJYdQduT6xbWSgK36P/Z/v+p888pM69jMMfS8Xd8F6I1kQ/I9HUGg==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: true
 
   /argparse@1.0.10:
@@ -5539,10 +5847,15 @@ packages:
     dev: false
 
   /assertion-error@1.1.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==,
       }
+=======
+    resolution: {integrity: sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==}
+    dev: true
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /ast-types-flow@0.0.7:
     resolution:
@@ -5923,11 +6236,19 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+<<<<<<< HEAD
   /buffer-from@1.1.2:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==,
       }
+=======
+=======
+  /buffer-from/1.1.2:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: false
 
   /buffer-xor@1.0.3:
@@ -5946,6 +6267,7 @@ packages:
       base64-js: 1.5.1
       ieee754: 1.2.1
     dev: true
+<<<<<<< HEAD
 
   /buffer@6.0.1:
     resolution:
@@ -5956,6 +6278,8 @@ packages:
       base64-js: 1.5.1
       ieee754: 1.2.1
     dev: false
+=======
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
 
   /buffer@6.0.3:
     resolution:
@@ -6157,6 +6481,7 @@ packages:
       loupe: 2.3.6
       pathval: 1.1.1
       type-detect: 4.0.8
+    dev: true
 
   /chalk@2.3.0:
     resolution:
@@ -6282,10 +6607,15 @@ packages:
     dev: true
 
   /check-error@1.0.2:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-BrgHpW9NURQgzoNyjfq0Wu6VFO6D7IZEmJNdtgNqpzGG8RuNFHt2jQxWlAs4HMe119chBnv+34syEZtc6IhLtA==,
       }
+=======
+    resolution: {integrity: sha512-BrgHpW9NURQgzoNyjfq0Wu6VFO6D7IZEmJNdtgNqpzGG8RuNFHt2jQxWlAs4HMe119chBnv+34syEZtc6IhLtA==}
+    dev: true
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /chokidar@3.5.3:
     resolution:
@@ -6465,12 +6795,21 @@ packages:
       }
     engines: { node: '>=0.8' }
 
+<<<<<<< HEAD
   /clsx@1.2.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==,
       }
     engines: { node: '>=6' }
+=======
+=======
+  /clsx/1.2.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: false
 
   /color-convert@1.9.3:
@@ -6665,6 +7004,7 @@ packages:
       sha.js: 2.4.11
     dev: false
 
+<<<<<<< HEAD
   /create-require@1.1.1:
     resolution:
       {
@@ -6673,10 +7013,17 @@ packages:
     dev: false
 
   /cross-fetch@3.1.5:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==,
       }
+=======
+=======
+  /cross-fetch/3.1.5:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       node-fetch: 2.6.7
     transitivePeerDependencies:
@@ -6932,6 +7279,7 @@ packages:
     engines: { node: '>=6' }
     dependencies:
       type-detect: 4.0.8
+    dev: true
 
   /deep-equal@2.2.0:
     resolution:
@@ -7090,6 +7438,7 @@ packages:
       }
     dev: true
 
+<<<<<<< HEAD
   /diff@4.0.2:
     resolution:
       {
@@ -7099,11 +7448,19 @@ packages:
     dev: false
 
   /diff@5.0.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==,
       }
     engines: { node: '>=0.3.1' }
+=======
+=======
+  /diff/5.0.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
+    engines: {node: '>=0.3.1'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: false
 
   /diff@5.1.0:
@@ -8489,20 +8846,35 @@ packages:
       }
     engines: { node: '>=14.0.0' }
     dependencies:
+<<<<<<< HEAD
       '@metamask/safe-event-emitter': 2.0.0
       '@metamask/utils': 3.6.0
+=======
+      '@babel/plugin-transform-runtime': 7.19.1
+      '@babel/runtime': 7.20.7
+      eth-query: 2.1.2
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       json-rpc-random-id: 1.0.1
       pify: 3.0.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
+<<<<<<< HEAD
   /eth-json-rpc-filters@5.1.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-fos+9xmoa1A2Ytsc9eYof17r81BjdJOUcGcgZn4K/tKdCCTb+a8ytEtwlu1op5qsXFDlgGmstTELFrDEc89qEQ==,
       }
     engines: { node: '>=14.0.0' }
+=======
+=======
+  /eth-json-rpc-filters/5.1.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-fos+9xmoa1A2Ytsc9eYof17r81BjdJOUcGcgZn4K/tKdCCTb+a8ytEtwlu1op5qsXFDlgGmstTELFrDEc89qEQ==}
+    engines: {node: '>=14.0.0'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
       async-mutex: 0.2.6
@@ -8511,30 +8883,54 @@ packages:
       pify: 5.0.0
     dev: false
 
+<<<<<<< HEAD
   /eth-query@2.1.2:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-srES0ZcvwkR/wd5OQBRA1bIJMww1skfGS0s8wlwK3/oNP4+wnds60krvu5R1QbpRQjMmpG5OMIWro5s7gvDPsA==,
       }
+=======
+=======
+  /eth-query/2.1.2:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-srES0ZcvwkR/wd5OQBRA1bIJMww1skfGS0s8wlwK3/oNP4+wnds60krvu5R1QbpRQjMmpG5OMIWro5s7gvDPsA==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       json-rpc-random-id: 1.0.1
       xtend: 4.0.2
     dev: false
 
+<<<<<<< HEAD
   /eth-rpc-errors@4.0.2:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-n+Re6Gu8XGyfFy1it0AwbD1x0MUzspQs0D5UiPs1fFPCr6WAwZM+vbIhXheBFrpgosqN9bs5PqlB4Q61U/QytQ==,
       }
+=======
+=======
+  /eth-rpc-errors/4.0.2:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-n+Re6Gu8XGyfFy1it0AwbD1x0MUzspQs0D5UiPs1fFPCr6WAwZM+vbIhXheBFrpgosqN9bs5PqlB4Q61U/QytQ==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       fast-safe-stringify: 2.1.1
     dev: false
 
+<<<<<<< HEAD
   /ethereum-cryptography@0.1.3:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-w8/4x1SGGzc+tO97TASLja6SLd3fRIK2tLVcV2Gx4IB21hE19atll5Cq9o3d0ZmAYC/8aw0ipieTSiekAea4SQ==,
       }
+=======
+=======
+  /ethereum-cryptography/0.1.3:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-w8/4x1SGGzc+tO97TASLja6SLd3fRIK2tLVcV2Gx4IB21hE19atll5Cq9o3d0ZmAYC/8aw0ipieTSiekAea4SQ==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@types/pbkdf2': 3.1.0
       '@types/secp256k1': 4.0.3
@@ -8575,11 +8971,19 @@ packages:
       ethereumjs-util: 6.2.1
     dev: false
 
+<<<<<<< HEAD
   /ethereumjs-util@6.2.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-W2Ktez4L01Vexijrm5EB6w7dg4n/TgpoYU4avuT5T3Vmnw/eCRtiBrJfQYS/DCSvDIOLn2k57GcHdeBcgVxAqw==,
       }
+=======
+=======
+  /ethereumjs-util/6.2.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-W2Ktez4L01Vexijrm5EB6w7dg4n/TgpoYU4avuT5T3Vmnw/eCRtiBrJfQYS/DCSvDIOLn2k57GcHdeBcgVxAqw==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@types/bn.js': 4.11.6
       bn.js: 4.12.0
@@ -9246,10 +9650,15 @@ packages:
     engines: { node: 6.* || 8.* || >= 10.* }
 
   /get-func-name@2.0.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-Hm0ixYtaSZ/V7C8FJrtZIuBBI+iSgL+1Aq82zSu8VQNB4S3Gk8e7Qs3VwBDJAhmRZcFqkl3tQu36g/Foh5I5ig==,
       }
+=======
+    resolution: {integrity: sha512-Hm0ixYtaSZ/V7C8FJrtZIuBBI+iSgL+1Aq82zSu8VQNB4S3Gk8e7Qs3VwBDJAhmRZcFqkl3tQu36g/Foh5I5ig==}
+    dev: true
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /get-intrinsic@1.2.0:
     resolution:
@@ -9854,6 +10263,7 @@ packages:
       }
     engines: { node: '>=12.20.0' }
 
+<<<<<<< HEAD
   /human-signals@4.3.1:
     resolution:
       {
@@ -9863,20 +10273,36 @@ packages:
     dev: true
 
   /humanize-ms@1.2.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==,
       }
+=======
+=======
+  /humanize-ms/1.2.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       ms: 2.1.3
     dev: false
 
+<<<<<<< HEAD
   /iconv-lite@0.4.24:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==,
       }
     engines: { node: '>=0.10.0' }
+=======
+=======
+  /iconv-lite/0.4.24:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
+    engines: {node: '>=0.10.0'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       safer-buffer: 2.1.2
 
@@ -10756,12 +11182,21 @@ packages:
       }
     dev: true
 
+<<<<<<< HEAD
   /json-rpc-engine@6.1.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-NEdLrtrq1jUZyfjkr9OCz9EzCNhnRyWtt1PAnvnhwy6e8XETS0Dtc+ZNCO2gvuAoKsIn2+vCSowXTYE4CkgnAQ==,
       }
     engines: { node: '>=10.0.0' }
+=======
+=======
+  /json-rpc-engine/6.1.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-NEdLrtrq1jUZyfjkr9OCz9EzCNhnRyWtt1PAnvnhwy6e8XETS0Dtc+ZNCO2gvuAoKsIn2+vCSowXTYE4CkgnAQ==}
+    engines: {node: '>=10.0.0'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@metamask/safe-event-emitter': 2.0.0
       eth-rpc-errors: 4.0.2
@@ -10788,11 +11223,19 @@ packages:
       }
     dev: true
 
+<<<<<<< HEAD
   /json-stringify-safe@5.0.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==,
       }
+=======
+=======
+  /json-stringify-safe/5.0.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: false
 
   /json5@1.0.2:
@@ -10839,12 +11282,21 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.11
 
+<<<<<<< HEAD
   /jsonparse@1.3.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==,
       }
     engines: { '0': node >= 0.2.0 }
+=======
+=======
+  /jsonparse/1.3.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-POQXvpdL69+CluYsillJ7SUhKvytYjW9vG/GKpnf+xP8UWgYEM/RaMzHHofbALDiKbbP1W8UEYmgGl39WkPZsg==}
+    engines: {'0': node >= 0.2.0}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: false
 
   /jsx-ast-utils@3.3.3:
@@ -11032,26 +11484,47 @@ packages:
       wrap-ansi: 7.0.0
     dev: true
 
+<<<<<<< HEAD
   /lit-element@3.3.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-Gl+2409uXWbf7n6cCl7Kzasm7zjT9xmdwi2BhLNi70sRKAgRkqueDu5mSIH3hPYMM0/vqBCdPXod3NbGkRA2ww==,
       }
+=======
+=======
+  /lit-element/3.3.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-Gl+2409uXWbf7n6cCl7Kzasm7zjT9xmdwi2BhLNi70sRKAgRkqueDu5mSIH3hPYMM0/vqBCdPXod3NbGkRA2ww==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.1.0
       '@lit/reactive-element': 1.6.1
+<<<<<<< HEAD
       lit-html: 2.7.1
     dev: false
 
   /lit-html@2.7.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-san46v7VXK6+2RXS4yveQYFUf9CoO/1bcNb0NibxLoTqlP48vs+l28tRPFDYcXGKWm0XoqcDuCC6mxIs8Jj3Zw==,
       }
+=======
+    resolution: {integrity: sha512-san46v7VXK6+2RXS4yveQYFUf9CoO/1bcNb0NibxLoTqlP48vs+l28tRPFDYcXGKWm0XoqcDuCC6mxIs8Jj3Zw==}
+=======
+      lit-html: 2.7.2
+    dev: false
+
+  /lit-html/2.7.2:
+    resolution: {integrity: sha512-ZJCfKlA2XELu5tn7XuzOziGFGvf1SeQm+ngLWoJ8bXtSkRrrR3ms6SWy+gsdxeYwySLij5xAhdd2C3EX0ftxdQ==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@types/trusted-types': 2.0.3
     dev: false
 
+<<<<<<< HEAD
   /lit@2.7.3:
     resolution:
       {
@@ -11061,6 +11534,14 @@ packages:
       '@lit/reactive-element': 1.6.1
       lit-element: 3.3.1
       lit-html: 2.7.1
+=======
+  /lit/2.7.2:
+    resolution: {integrity: sha512-9QnZmG5mIKPRja96cpndMclLSi0Qrz2BXD6EbqNqCKMMjOWVm/BwAeXufFk2jqFsNmY07HOzU8X+8aTSVt3yrA==}
+    dependencies:
+      '@lit/reactive-element': 1.6.1
+      lit-element: 3.3.1
+      lit-html: 2.7.2
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
     dev: false
 
   /load-tsconfig@0.2.5:
@@ -11220,6 +11701,7 @@ packages:
       }
     dependencies:
       get-func-name: 2.0.0
+    dev: true
 
   /lower-case@2.0.2:
     resolution:
@@ -11282,6 +11764,7 @@ packages:
       semver: 6.3.0
     dev: true
 
+<<<<<<< HEAD
   /make-error@1.3.6:
     resolution:
       {
@@ -11290,11 +11773,19 @@ packages:
     dev: false
 
   /map-obj@1.0.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-7N/q3lyZ+LVCp7PzuxrJr4KMbBE2hW7BT7YNia330OFxIf4d3r5zVpicP2650l7CPN6RM9zOJRl3NGpqSiw3Eg==,
       }
     engines: { node: '>=0.10.0' }
+=======
+=======
+  /map-obj/1.0.1:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-7N/q3lyZ+LVCp7PzuxrJr4KMbBE2hW7BT7YNia330OFxIf4d3r5zVpicP2650l7CPN6RM9zOJRl3NGpqSiw3Eg==}
+    engines: {node: '>=0.10.0'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: true
 
   /map-obj@4.3.0:
@@ -13297,10 +13788,15 @@ packages:
     dev: false
 
   /pathval@1.1.1:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==,
       }
+=======
+    resolution: {integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==}
+    dev: true
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /pbkdf2@3.1.2:
     resolution:
@@ -13546,6 +14042,7 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+<<<<<<< HEAD
   /preact@10.13.2:
     resolution:
       {
@@ -13554,11 +14051,32 @@ packages:
     dev: false
 
   /preferred-pm@3.0.3:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-+wZgbxNES/KlJs9q40F/1sfOd/j7f1O9JaHcW5Dsn3aUUOZg3L2bjpVUcKV2jvtElYfoTuQiNeMfQJ4kwUAhCQ==,
       }
     engines: { node: '>=10' }
+=======
+=======
+  /postcss/8.4.20:
+    resolution: {integrity: sha512-6Q04AXR1212bXr5fh03u8aAwbLxAQNGQ/Q1LNa0VfOI06ZAlhPHtQvE4OIdpj4kLThXilalPnmDSOD65DcHt+g==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.4
+      picocolors: 1.0.0
+      source-map-js: 1.0.2
+    dev: true
+
+  /preact/10.13.0:
+    resolution: {integrity: sha512-ERdIdUpR6doqdaSIh80hvzebHB7O6JxycOhyzAeLEchqOq/4yueslQbfnPwXaNhAYacFTyCclhwkEbOumT0tHw==}
+    dev: false
+
+  /preferred-pm/3.0.3:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-+wZgbxNES/KlJs9q40F/1sfOd/j7f1O9JaHcW5Dsn3aUUOZg3L2bjpVUcKV2jvtElYfoTuQiNeMfQJ4kwUAhCQ==}
+    engines: {node: '>=10'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       find-up: 5.0.0
       find-yarn-workspace-root2: 1.2.16
@@ -13864,12 +14382,21 @@ packages:
       }
     dev: true
 
+<<<<<<< HEAD
   /react@17.0.2:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==,
       }
     engines: { node: '>=0.10.0' }
+=======
+=======
+  /react/17.0.2:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
+    engines: {node: '>=0.10.0'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       loose-envify: 1.4.0
       object-assign: 4.1.1
@@ -14268,6 +14795,7 @@ packages:
       fsevents: 2.3.2
     dev: true
 
+<<<<<<< HEAD
   /rpc-websockets@7.5.1:
     resolution:
       {
@@ -14275,6 +14803,12 @@ packages:
       }
     dependencies:
       '@babel/runtime': 7.21.0
+=======
+  /rpc-websockets/7.5.1:
+    resolution: {integrity: sha512-kGFkeTsmd37pHPMaHIgN1LVKXMi0JD782v4Ds9ZKtLlwdTKjn+CxM9A9/gLT2LaOuEcEFGL98h1QWQtlOIdW0w==}
+    dependencies:
+      '@babel/runtime': 7.20.7
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
       eventemitter3: 4.0.7
       uuid: 8.3.2
       ws: 8.13.0(bufferutil@4.0.7)(utf-8-validate@5.0.10)
@@ -15588,6 +16122,7 @@ packages:
       }
     dev: true
 
+<<<<<<< HEAD
   /ts-node@10.9.1(@types/node@18.15.11)(typescript@4.9.5):
     resolution:
       {
@@ -15623,10 +16158,18 @@ packages:
     dev: false
 
   /tsconfig-paths@3.14.2:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==,
       }
+=======
+    resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
+=======
+  /tsconfig-paths/3.14.1:
+    resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       '@types/json5': 0.0.29
       json5: 1.0.2
@@ -15754,11 +16297,17 @@ packages:
     dev: true
 
   /type-detect@4.0.8:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==,
       }
     engines: { node: '>=4' }
+=======
+    resolution: {integrity: sha512-0fr/mIH1dlO+x7TlcMy+bIDqKPsw/70tVyeHW787goQjhmqaZe10uwLujubK9q9Lg6Fiho1KUKDYz0Z7k7g5/g==}
+    engines: {node: '>=4'}
+    dev: true
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /type-fest@0.13.1:
     resolution:
@@ -16165,6 +16714,7 @@ packages:
       kleur: 4.1.5
       sade: 1.8.1
 
+<<<<<<< HEAD
   /v8-compile-cache-lib@3.0.1:
     resolution:
       {
@@ -16173,10 +16723,17 @@ packages:
     dev: false
 
   /v8-compile-cache@2.3.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==,
       }
+=======
+=======
+  /v8-compile-cache/2.3.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: true
 
   /v8-to-istanbul@9.1.0:
@@ -16201,12 +16758,21 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
+<<<<<<< HEAD
   /valtio@1.10.4(react@18.2.0):
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-gqGWh0DjtDMAy8Jaui8ufFoxlQB1k1NiA/QHrpKoTUk9EeY331WKeYhvtGn1u703RcefrDCez7PT+qeCu9lWEw==,
       }
     engines: { node: '>=12.20.0' }
+=======
+=======
+  /valtio/1.10.4:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-gqGWh0DjtDMAy8Jaui8ufFoxlQB1k1NiA/QHrpKoTUk9EeY331WKeYhvtGn1u703RcefrDCez7PT+qeCu9lWEw==}
+    engines: {node: '>=12.20.0'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     peerDependencies:
       react: '>=16.8'
     peerDependenciesMeta:
@@ -16471,12 +17037,21 @@ packages:
       }
     dev: true
 
+<<<<<<< HEAD
   /webidl-conversions@7.0.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==,
       }
     engines: { node: '>=12' }
+=======
+=======
+  /webidl-conversions/7.0.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==}
+    engines: {node: '>=12'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dev: true
 
   /whatwg-encoding@2.0.0:
@@ -16497,12 +17072,21 @@ packages:
     engines: { node: '>=12' }
     dev: true
 
+<<<<<<< HEAD
   /whatwg-url@11.0.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-RKT8HExMpoYx4igMiVMY83lN6UeITKJlBQ+vR/8ZJ8OCdSiN3RwCq+9gH0+Xzj0+5IrM6i4j/6LuvzbZIQgEcQ==,
       }
     engines: { node: '>=12' }
+=======
+=======
+  /whatwg-url/11.0.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-RKT8HExMpoYx4igMiVMY83lN6UeITKJlBQ+vR/8ZJ8OCdSiN3RwCq+9gH0+Xzj0+5IrM6i4j/6LuvzbZIQgEcQ==}
+    engines: {node: '>=12'}
+>>>>>>> 6175859e (chore: bump references (#2203))
     dependencies:
       tr46: 3.0.0
       webidl-conversions: 7.0.0
@@ -16878,6 +17462,7 @@ packages:
       yargs-parser: 21.1.1
     dev: true
 
+<<<<<<< HEAD
   /yn@3.1.1:
     resolution:
       {
@@ -16887,11 +17472,19 @@ packages:
     dev: false
 
   /yocto-queue@0.1.0:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==,
       }
     engines: { node: '>=10' }
+=======
+=======
+  /yocto-queue/0.1.0:
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+    resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
+    engines: {node: '>=10'}
+>>>>>>> 6175859e (chore: bump references (#2203))
 
   /yocto-queue@1.0.0:
     resolution:
@@ -16926,8 +17519,17 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
+<<<<<<< HEAD
   /zwitch@2.0.4:
+<<<<<<< HEAD
     resolution:
       {
         integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==,
       }
+=======
+    resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
+=======
+  /zwitch/2.0.2:
+    resolution: {integrity: sha512-JZxotl7SxAJH0j7dN4pxsTV6ZLXoLdGME+PsjkL/DaBrVryK9kTGq06GfKrwcSOqypP+fdXGoCHE36b99fWVoA==}
+>>>>>>> a4ca4b05 (chore: bump references (#2203))
+>>>>>>> 6175859e (chore: bump references (#2203))
