@@ -1,5 +1,32 @@
 # @wagmi/core
 
+## 0.10.9
+
+### Patch Changes
+
+- [#2143](https://github.com/wagmi-dev/wagmi/pull/2143) [`26dc5326`](https://github.com/wagmi-dev/wagmi/commit/26dc53260fde1d3278018c0b20a6d48a093d9427) Thanks [@tmm](https://github.com/tmm)! - Exported Sepolia Chain.
+
+- [#2146](https://github.com/wagmi-dev/wagmi/pull/2146) [`21b6842e`](https://github.com/wagmi-dev/wagmi/commit/21b6842e8c296a0bbe71ebe0780d898abc4cf4a8) Thanks [@tmm](https://github.com/tmm)! - Bumped references
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.12
+
+## 0.10.8
+
+### Patch Changes
+
+- [#2099](https://github.com/wagmi-dev/wagmi/pull/2099) [`f1fee5b3`](https://github.com/wagmi-dev/wagmi/commit/f1fee5b30a1bd13b5e66118bf9cdc44b0dc003a1) Thanks [@jxom](https://github.com/jxom)! - Added chains:
+
+  - `nexi`
+  - `polygonZkEvm`
+  - `xdc`
+  - `xdcTestnet`
+
+- [#2085](https://github.com/wagmi-dev/wagmi/pull/2085) [`7d64e3f5`](https://github.com/wagmi-dev/wagmi/commit/7d64e3f538a6149777bfa84ea9435769b2a7db58) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where multicall would not throw if the target chain was not configured on the wagmi client.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.10
+
 ## 0.10.7
 
 ### Patch Changes

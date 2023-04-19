@@ -23,7 +23,7 @@ export type WatchContractEventConfig<
   address: Address
   /** Chain id to use for provider */
   chainId?: number
-  /** Function to invoke on the contract */
+  /** Name of the event to listen to on the contract */
   eventName: GetEventName<TAbi, TEventName>
   /** Receive only a single event */
   once?: boolean

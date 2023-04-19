@@ -249,10 +249,16 @@ describe('watchNetwork', () => {
                 "http": [
                   "http://127.0.0.1:8545",
                 ],
+                "webSocket": [
+                  "ws://127.0.0.1:8545",
+                ],
               },
               "public": {
                 "http": [
                   "http://127.0.0.1:8545",
+                ],
+                "webSocket": [
+                  "ws://127.0.0.1:8545",
                 ],
               },
             },
