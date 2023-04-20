@@ -11,7 +11,6 @@
 - Updated dependencies []:
   - @wagmi/core@1.0.0-next.1
 
-
 ## 1.0.0-next.0
 
 ### Major Changes
@@ -22,7 +21,17 @@
 
 - Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
   - @wagmi/core@1.0.0-next.0
-=======
+
+## 0.12.12
+
+### Patch Changes
+
+- [#2208](https://github.com/wagmi-dev/wagmi/pull/2208) [`cfc696d8`](https://github.com/wagmi-dev/wagmi/commit/cfc696d83c6f768a2e1a29c5197efeed7f1d40a1) Thanks [@bangtoven](https://github.com/bangtoven)! - Bumped references to apply coinbase wallet sdk updates
+
+- Updated dependencies [[`cfc696d8`](https://github.com/wagmi-dev/wagmi/commit/cfc696d83c6f768a2e1a29c5197efeed7f1d40a1)]:
+  - @wagmi/core@0.10.10
+
+>>>>>>> b81979a5 (chore: version packages (#2209))
 ## 0.12.11
 
 ### Patch Changes
