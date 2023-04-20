@@ -101,6 +101,16 @@ const sponsors = [
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/privy-light.svg',
     },
   },
+  {
+    id: 'spruce',
+    name: 'Spruce',
+    href: 'https://spruce.io',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-light.svg',
+    },
+  },
 ] as const
 
 export function Sponsors() {
