@@ -41,7 +41,7 @@ importers:
       simple-git-hooks: ^2.8.1
       tsup: ^6.5.0
       typescript: ^4.9.4
-      viem: ~0.3.0
+      viem: ~0.3.4
       vite: ^4.0.4
       vitest: ^0.25.8
     devDependencies:
@@ -79,7 +79,7 @@ importers:
       simple-git-hooks: 2.8.1
       tsup: 6.7.0_typescript@4.9.5
       typescript: 4.9.5
-      viem: 0.3.0_typescript@4.9.5
+      viem: 0.3.4_typescript@4.9.5
       vite: 4.2.1_@types+node@17.0.21
       vitest: 0.25.8_eetf2xjpdhuqcs2dx4ndfgw7iq
 
@@ -105,7 +105,7 @@ importers:
       siwe: ^1.1.6
       tailwindcss: ^3.2.4
       typescript: ^4.9.4
-      viem: ~0.3.0
+      viem: ~0.3.4
       wagmi: workspace:*
     dependencies:
       degen: 0.0.49_biqbaboplfbrettd7655fr4n2y
@@ -118,7 +118,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       siwe: 1.1.6
-      viem: 0.3.0_typescript@4.9.5
+      viem: 0.3.4_typescript@4.9.5
       wagmi: link:../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
@@ -145,13 +145,13 @@ importers:
       react: ^18.1.0
       react-dom: ^18.1.0
       typescript: ^4.9.4
-      viem: ~0.3.0
+      viem: ~0.3.4
       wagmi: workspace:*
     dependencies:
       next: 12.3.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-      viem: 0.3.0_typescript@4.9.5
+      viem: 0.3.4_typescript@4.9.5
       wagmi: link:../../packages/react
     devDependencies:
       '@preconstruct/next': 4.0.0
@@ -189,7 +189,7 @@ importers:
       pathe: ^1.0.0
       picocolors: ^1.0.0
       prettier: ^2.8.1
-      viem: ~0.3.0
+      viem: ~0.3.4
       zod: ^3.21.4
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
@@ -213,7 +213,7 @@ importers:
       pathe: 1.1.0
       picocolors: 1.0.0
       prettier: 2.8.7
-      viem: 0.3.0_zod@3.21.4
+      viem: 0.3.4_zod@3.21.4
       zod: 3.21.4
     devDependencies:
       '@types/dedent': 0.7.0
@@ -232,7 +232,7 @@ importers:
       '@wagmi/connectors': workspace:*
       abitype: ^0.7.1
       eventemitter3: ^4.0.7
-      viem: ~0.3.0
+      viem: ~0.3.4
       zustand: ^4.3.1
     dependencies:
       '@wagmi/chains': link:../../references/packages/chains
@@ -241,7 +241,7 @@ importers:
       eventemitter3: 4.0.7
       zustand: 4.3.7
     devDependencies:
-      viem: 0.3.0
+      viem: 0.3.4
 
   packages/react:
     specifiers:
@@ -260,7 +260,7 @@ importers:
       react-dom: ^18.1.0
       react-dom-17: npm:react-dom@17.0.2
       use-sync-external-store: ^1.2.0
-      viem: 0.3.0
+      viem: 0.3.4
     dependencies:
       '@tanstack/query-sync-storage-persister': 4.27.1
       '@tanstack/react-query': 4.28.0_biqbaboplfbrettd7655fr4n2y
@@ -278,7 +278,7 @@ importers:
       react-17: /react/17.0.2
       react-dom: 18.2.0_react@18.2.0
       react-dom-17: /react-dom/17.0.2_react@18.2.0
-      viem: 0.3.0
+      viem: 0.3.4
 
   references/packages/chains:
     specifiers: {}
@@ -295,7 +295,7 @@ importers:
       '@web3modal/standalone': ^2.2.2
       abitype: ^0.7.1
       eventemitter3: ^4.0.7
-      viem: 0.3.0
+      viem: 0.3.4
     dependencies:
       '@coinbase/wallet-sdk': 3.6.5
       '@ledgerhq/connect-kit-loader': 1.0.2
@@ -308,7 +308,7 @@ importers:
       eventemitter3: 4.0.7
     devDependencies:
       '@wagmi/chains': link:../chains
-      viem: 0.3.0
+      viem: 0.3.4
 
 packages:
 
@@ -11446,8 +11446,8 @@ packages:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  /viem/0.3.0:
-    resolution: {integrity: sha512-BDNVZ4pIBD/RUT4ztgz/L76Rzof3yhhG24FDplASLGUiOEHaLQIEGQ3ebV8OMdssQLtHhaYVTIUINMd0yEiaQg==}
+  /viem/0.3.4:
+    resolution: {integrity: sha512-Atj/Z8ZhPrqfhZXB83gXARL1/rxGOiOYpFDcjsxHMUo6I5gXAQXFvyc5SXf5qHtGJ6PNxqvtEdyIZiHcnSuSnQ==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 0.9.0
@@ -11465,8 +11465,8 @@ packages:
       - zod
     dev: true
 
-  /viem/0.3.0_typescript@4.9.5:
-    resolution: {integrity: sha512-BDNVZ4pIBD/RUT4ztgz/L76Rzof3yhhG24FDplASLGUiOEHaLQIEGQ3ebV8OMdssQLtHhaYVTIUINMd0yEiaQg==}
+  /viem/0.3.4_typescript@4.9.5:
+    resolution: {integrity: sha512-Atj/Z8ZhPrqfhZXB83gXARL1/rxGOiOYpFDcjsxHMUo6I5gXAQXFvyc5SXf5qHtGJ6PNxqvtEdyIZiHcnSuSnQ==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 0.9.0
@@ -11483,8 +11483,8 @@ packages:
       - utf-8-validate
       - zod
 
-  /viem/0.3.0_zod@3.21.4:
-    resolution: {integrity: sha512-BDNVZ4pIBD/RUT4ztgz/L76Rzof3yhhG24FDplASLGUiOEHaLQIEGQ3ebV8OMdssQLtHhaYVTIUINMd0yEiaQg==}
+  /viem/0.3.4_zod@3.21.4:
+    resolution: {integrity: sha512-Atj/Z8ZhPrqfhZXB83gXARL1/rxGOiOYpFDcjsxHMUo6I5gXAQXFvyc5SXf5qHtGJ6PNxqvtEdyIZiHcnSuSnQ==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 0.9.0

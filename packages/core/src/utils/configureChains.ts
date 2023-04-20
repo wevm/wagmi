@@ -17,7 +17,7 @@ export type ConfigureChainsConfig = Pick<
   FallbackTransportConfig,
   'rank' | 'retryCount' | 'retryDelay'
 > &
-  Pick<PublicClientConfig, 'pollingInterval'> & {
+  Pick<PublicClientConfig, 'batch' | 'pollingInterval'> & {
     stallTimeout?: number
   }
 
@@ -25,6 +25,7 @@ export function configureChains<TChain extends Chain = Chain>(
   defaultChains: TChain[],
   providers: ChainProviderFn<TChain>[],
   {
+    batch = { multicall: { wait: 32 } },
     pollingInterval = 4_000,
     rank,
     retryCount,
@@ -92,6 +93,7 @@ export function configureChains<TChain extends Chain = Chain>(
         throw new Error(`No providers configured for chain "${activeChain.id}"`)
 
       const provider = createPublicClient({
+        batch,
         chain: activeChain,
         transport: fallback(
           chainHttpUrls.map((url) => http(url, { timeout: stallTimeout })),
@@ -112,6 +114,7 @@ export function configureChains<TChain extends Chain = Chain>(
       if (!chainWsUrls || !chainWsUrls[0]) return undefined
 
       const provider = createPublicClient({
+        batch,
         chain: activeChain,
         transport: fallback(
           chainWsUrls.map((url) => webSocket(url, { timeout: stallTimeout })),
