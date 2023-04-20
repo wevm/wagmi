@@ -1,6 +1,6 @@
 ---
 'wagmi': patch
-'@wagmi/connectors': patch
+'@wagmi/core': patch
 ---
 
-Bump references to apply coinbase wallet sdk updates
+Bumped references to apply coinbase wallet sdk updates
