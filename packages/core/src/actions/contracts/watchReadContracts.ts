@@ -30,7 +30,10 @@ export function watchReadContracts<
   const unwatch = config.listenToBlock
     ? watchBlockNumber({ listen: true }, handleChange)
     : undefined
-  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
+  const unsubscribe = client.subscribe(
+    ({ publicClient }) => publicClient,
+    handleChange,
+  )
 
   return () => {
     unsubscribe()

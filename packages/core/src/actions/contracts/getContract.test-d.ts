@@ -1,7 +1,7 @@
 import { describe, expectTypeOf } from 'vitest'
 
 import { wagmiContractConfig } from '../../../test'
-import { fetchSigner } from '../accounts'
+import { getWalletClient } from '../viem'
 import { getContract } from './getContract'
 
 describe('getContract', () => {
@@ -19,12 +19,12 @@ describe('getContract', () => {
     expectTypeOf(contract).not.toHaveProperty('write')
   })
 
-  describe('args: signer', async () => {
-    const signer = await fetchSigner()
+  describe('args: walletClient', async () => {
+    const walletClient = await getWalletClient()
     const contract = getContract({
       address: wagmiContractConfig.address,
       abi: wagmiContractConfig.abi,
-      signer: signer!,
+      walletClient: walletClient!,
     })
 
     expectTypeOf(contract).toHaveProperty('read')

@@ -5,16 +5,16 @@ import { describe, expect, it, test, vi } from 'vitest'
 import { actConnect, renderHook } from '../../../test'
 import { sendTransaction } from '../../actions'
 import { useConnect } from '../accounts'
-import { useProvider } from '../providers'
+import { usePublicClient } from '../viem'
 import type { UseWatchPendingTransactionsConfig } from './useWatchPendingTransactions'
 import { useWatchPendingTransactions } from './useWatchPendingTransactions'
 
-function useWatchPendingTransactionsWithProvider(
+function useWatchPendingTransactionsWithPublicClient(
   config: UseWatchPendingTransactionsConfig,
 ) {
   return {
     connect: useConnect(),
-    provider: useProvider(),
+    publicClient: usePublicClient(),
     watchPendingTransactions: useWatchPendingTransactions(config),
   }
 }
@@ -23,14 +23,14 @@ describe('useWatchPendingTransactions', () => {
   it('default', async () => {
     const pendingTransactions: Hex[][] = []
     const { result, unmount } = renderHook(() =>
-      useWatchPendingTransactionsWithProvider({
+      useWatchPendingTransactionsWithPublicClient({
         listener: pendingTransactions.push,
       }),
     )
 
-    const provider = result.current.provider
+    const publicClient = result.current.publicClient
     await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
+      setTimeout(() => res(''), publicClient.pollingInterval + 50),
     )
 
     expect(pendingTransactions.length).toEqual(0)
@@ -41,7 +41,7 @@ describe('useWatchPendingTransactions', () => {
   it('listens to incoming transactions', async () => {
     const listener = vi.fn()
     const utils = renderHook(() =>
-      useWatchPendingTransactionsWithProvider({
+      useWatchPendingTransactionsWithPublicClient({
         listener,
       }),
     )
@@ -56,9 +56,9 @@ describe('useWatchPendingTransactions', () => {
       },
     })
 
-    const provider = result.current.provider
+    const publicClient = result.current.publicClient
     await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
+      setTimeout(() => res(''), publicClient.pollingInterval + 50),
     )
 
     expect(listener).toBeCalledTimes(1)
@@ -71,7 +71,7 @@ describe('useWatchPendingTransactions', () => {
       let enabled = true
       const listener = vi.fn()
       const utils = renderHook(() =>
-        useWatchPendingTransactionsWithProvider({
+        useWatchPendingTransactionsWithPublicClient({
           enabled,
           listener,
         }),
@@ -87,9 +87,9 @@ describe('useWatchPendingTransactions', () => {
         },
       })
 
-      const provider = result.current.provider
+      const publicClient = result.current.publicClient
       await new Promise((res) =>
-        setTimeout(() => res(''), provider.pollingInterval + 50),
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
       )
 
       expect(listener).toBeCalledTimes(1)
@@ -107,7 +107,7 @@ describe('useWatchPendingTransactions', () => {
       })
 
       await new Promise((res) =>
-        setTimeout(() => res(''), provider.pollingInterval + 50),
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
       )
 
       expect(listener).toBeCalledTimes(1)

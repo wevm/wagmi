@@ -6,7 +6,7 @@ import type {
 } from 'viem'
 import { ContractFunctionExecutionError } from 'viem'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 import type { MulticallConfig, MulticallResult } from './multicall'
 import { multicall } from './multicall'
 import { readContract } from './readContract'
@@ -24,7 +24,7 @@ export type ReadContractsConfig<
       ...MulticallContracts<
         TContracts,
         {
-          /** Chain id to use for provider */
+          /** Chain id to use for Public Client. */
           chainId?: number
         }
       >,
@@ -55,7 +55,7 @@ export async function readContracts<
   const { allowFailure = true } = args
 
   try {
-    const provider = getProvider()
+    const publicClient = getPublicClient()
     const contractsByChainId = (
       contracts as unknown as ContractConfig[]
     ).reduce<{
@@ -64,7 +64,7 @@ export async function readContracts<
         index: number
       }[]
     }>((contracts, contract, index) => {
-      const chainId = contract.chainId ?? provider.chain.id
+      const chainId = contract.chainId ?? publicClient.chain.id
       return {
         ...contracts,
         [chainId]: [...(contracts[chainId] || []), { contract, index }],

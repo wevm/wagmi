@@ -4,14 +4,14 @@ import type {
   MulticallReturnType,
 } from 'viem'
 
-import { ChainNotConfiguredError, ProviderChainsNotFound } from '../../errors'
-import { getProvider } from '../providers'
+import { ChainNotConfiguredError, ClientChainsNotFound } from '../../errors'
+import { getPublicClient } from '../viem'
 
 export type MulticallConfig<
   TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 > = MulticallParameters<TContracts, TAllowFailure> & {
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
 }
 
@@ -32,13 +32,13 @@ export async function multicall<
 }: MulticallConfig<TContracts, TAllowFailure>): Promise<
   MulticallResult<TContracts, TAllowFailure>
 > {
-  const provider = getProvider({ chainId })
-  if (!provider.chains) throw new ProviderChainsNotFound()
+  const publicClient = getPublicClient({ chainId })
+  if (!publicClient.chains) throw new ClientChainsNotFound()
 
-  if (chainId && provider.chain.id !== chainId)
+  if (chainId && publicClient.chain.id !== chainId)
     throw new ChainNotConfiguredError({ chainId })
 
-  return provider.multicall({
+  return publicClient.multicall({
     allowFailure: args.allowFailure ?? true,
     blockNumber,
     blockTag,

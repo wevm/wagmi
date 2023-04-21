@@ -3,7 +3,7 @@ import type { WatchContractEventParameters } from 'viem'
 import { shallow } from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import { getProvider, getWebSocketProvider } from '../providers'
+import { getPublicClient, getWebSocketPublicClient } from '../viem'
 
 export type WatchContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
@@ -36,9 +36,9 @@ export function watchContractEvent<
   const watchEvent = async () => {
     if (unwatch) unwatch()
 
-    const provider =
-      getWebSocketProvider({ chainId }) || getProvider({ chainId })
-    unwatch = provider.watchContractEvent({
+    const publicClient =
+      getWebSocketPublicClient({ chainId }) || getPublicClient({ chainId })
+    unwatch = publicClient.watchContractEvent({
       address,
       abi,
       eventName,
@@ -49,9 +49,9 @@ export function watchContractEvent<
   watchEvent()
   const client = getClient()
   const unsubscribe = client.subscribe(
-    ({ provider, webSocketProvider }) => ({
-      provider,
-      webSocketProvider,
+    ({ publicClient, webSocketPublicClient }) => ({
+      publicClient,
+      webSocketPublicClient,
     }),
     watchEvent,
     { equalityFn: shallow },

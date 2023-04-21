@@ -1,14 +1,15 @@
 import { parseEther } from 'viem'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
-import { connect, fetchSigner } from '../accounts'
+import { connect } from '../accounts'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'
+import { getWalletClient } from '../viem'
 import { prepareSendTransaction } from './prepareSendTransaction'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('prepareSendTransaction', () => {
@@ -23,8 +24,8 @@ describe('prepareSendTransaction', () => {
   it('derives the ens address', async () => {
     await connect({ connector })
 
-    const signer = await fetchSigner()
-    if (!signer) throw new Error('signer is required')
+    const walletClient = await getWalletClient()
+    if (!walletClient) throw new Error('walletClient is required')
 
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
 
@@ -52,8 +53,8 @@ describe('prepareSendTransaction', () => {
   it('derives the request only if address is passed', async () => {
     await connect({ connector })
 
-    const signer = await fetchSigner()
-    if (!signer) throw new Error('signer is required')
+    const walletClient = await getWalletClient()
+    if (!walletClient) throw new Error('walletClient is required')
 
     const fetchEnsAddressSpy = vi.spyOn(fetchEnsAddress, 'fetchEnsAddress')
 
@@ -79,7 +80,7 @@ describe('prepareSendTransaction', () => {
   })
 
   describe('errors', () => {
-    it('signer is on different chain', async () => {
+    it('account is on different chain', async () => {
       await connect({ connector })
 
       const request = {

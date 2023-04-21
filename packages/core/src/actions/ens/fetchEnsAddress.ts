@@ -2,10 +2,10 @@ import type { Address } from 'abitype'
 import { getAddress } from 'viem'
 import { normalize } from 'viem/ens'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type FetchEnsAddressArgs = {
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
   /** ENS name to resolve */
   name: string
@@ -17,8 +17,8 @@ export async function fetchEnsAddress({
   chainId,
   name,
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
-  const provider = getProvider({ chainId })
-  const address = await provider.getEnsAddress({
+  const publicClient = getPublicClient({ chainId })
+  const address = await publicClient.getEnsAddress({
     name: normalize(name),
   })
 

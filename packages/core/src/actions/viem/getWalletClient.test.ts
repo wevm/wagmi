@@ -1,28 +1,28 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
-import { connect } from './connect'
-import { fetchSigner } from './fetchSigner'
+import { connect } from '../accounts/connect'
+import { getWalletClient } from './getWalletClient'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
-describe('fetchSigner', () => {
+describe('getWalletClient', () => {
   beforeEach(() => {
     setupClient()
   })
 
   describe('behavior', () => {
     it('not connected', async () => {
-      expect(await fetchSigner()).toMatchInlineSnapshot(`null`)
+      expect(await getWalletClient()).toMatchInlineSnapshot(`null`)
     })
 
     it('connected', async () => {
       await connect({ connector })
-      const { uid: _uid, ...signer } = (await fetchSigner()) || {}
-      expect(signer).toMatchInlineSnapshot(`
+      const { uid: _uid, ...walletClient } = (await getWalletClient()) || {}
+      expect(walletClient).toMatchInlineSnapshot(`
         {
           "account": {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",

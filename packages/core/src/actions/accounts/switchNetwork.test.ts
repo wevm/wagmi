@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient, testChains } from '../../../test'
+import { getWalletClients, setupClient, testChains } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
 
 const connector = new MockConnector({
   chains: testChains,
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('switchNetwork', () => {
@@ -91,7 +91,7 @@ describe('switchNetwork', () => {
         connector: new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         }),
       })
@@ -100,7 +100,7 @@ describe('switchNetwork', () => {
         "User rejected the request.
 
         Details: Failed to switch chain.
-        Version: viem@0.3.0"
+        Version: viem@0.3.6"
       `)
     })
 
@@ -115,7 +115,7 @@ describe('switchNetwork', () => {
         connector: new MockConnector({
           options: {
             flags: { noSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         }),
       })

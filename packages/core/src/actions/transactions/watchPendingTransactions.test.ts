@@ -2,10 +2,10 @@ import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { sendTransaction } from '.'
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import type { Client } from '../../client'
 import { connect } from '../accounts'
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 import type { WatchPendingTransactionsResult } from './watchPendingTransactions'
 import { watchPendingTransactions } from './watchPendingTransactions'
 
@@ -23,9 +23,9 @@ describe('watchPendingTransactions', () => {
         results.push(...results_),
       )
 
-      const provider = getProvider()
+      const publicClient = getPublicClient()
       await new Promise((res) =>
-        setTimeout(() => res(''), provider.pollingInterval + 50),
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
       )
 
       expect(results.length).toEqual(0)
@@ -42,8 +42,8 @@ describe('watchPendingTransactions', () => {
         results.push(...results_),
       )
 
-      const signers = getSigners()
-      const to = signers[1]
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
       const toAddress = to?.account.address
 
       await connect({ connector: client.connectors[0]! })
@@ -55,9 +55,9 @@ describe('watchPendingTransactions', () => {
         },
       })
 
-      const provider = getProvider()
+      const publicClient = getPublicClient()
       await new Promise((res) =>
-        setTimeout(() => res(''), provider.pollingInterval + 50),
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
       )
 
       expect(results.length).toEqual(1)
@@ -75,8 +75,8 @@ describe('watchPendingTransactions', () => {
       )
       unsubscribe()
 
-      const signers = getSigners()
-      const to = signers[1]
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
       const toAddress = to?.account.address
 
       await connect({ connector: client.connectors[0]! })
@@ -88,9 +88,9 @@ describe('watchPendingTransactions', () => {
         },
       })
 
-      const provider = getProvider()
+      const publicClient = getPublicClient()
       await new Promise((res) =>
-        setTimeout(() => res(''), provider.pollingInterval + 50),
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
       )
 
       expect(results.length).toEqual(0)
@@ -108,7 +108,7 @@ describe('watchPendingTransactions', () => {
       })
 
       await new Promise((res) =>
-        setTimeout(() => res(''), provider.pollingInterval + 50),
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
       )
 
       expect(results.length).toEqual(1)

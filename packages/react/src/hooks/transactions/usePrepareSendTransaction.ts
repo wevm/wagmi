@@ -1,13 +1,14 @@
 import type {
-  FetchSignerResult,
+  GetWalletClientResult,
   PrepareSendTransactionArgs,
   PrepareSendTransactionResult,
 } from '@wagmi/core'
 import { prepareSendTransaction } from '@wagmi/core'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useNetwork, useSigner } from '../accounts'
+import { useNetwork } from '../accounts'
 import { useQuery } from '../utils'
+import { useWalletClient } from '../viem'
 
 export type UsePrepareSendTransactionConfig =
   Partial<PrepareSendTransactionArgs> &
@@ -16,7 +17,7 @@ export type UsePrepareSendTransactionConfig =
 type QueryKeyArgs = Partial<PrepareSendTransactionArgs>
 type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> & {
   activeChainId?: number
-  signerAddress?: string
+  walletClientAddress?: string
 }
 
 function queryKey({
@@ -24,7 +25,7 @@ function queryKey({
   chainId,
   request,
   scopeKey,
-  signerAddress,
+  walletClientAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
     {
@@ -33,12 +34,12 @@ function queryKey({
       chainId,
       request,
       scopeKey,
-      signerAddress,
+      walletClientAddress,
     },
   ] as const
 }
 
-function queryFn({ signer }: { signer?: FetchSignerResult }) {
+function queryFn({ walletClient }: { walletClient?: GetWalletClientResult }) {
   return ({
     queryKey: [{ chainId, request }],
   }: QueryFunctionArgs<typeof queryKey>) => {
@@ -46,7 +47,7 @@ function queryFn({ signer }: { signer?: FetchSignerResult }) {
     return prepareSendTransaction({
       chainId,
       request: { ...request, to: request.to },
-      signer,
+      walletClient,
     })
   }
 }
@@ -78,7 +79,7 @@ export function usePrepareSendTransaction({
   onSuccess,
 }: UsePrepareSendTransactionConfig = {}) {
   const { chain: activeChain } = useNetwork()
-  const { data: signer } = useSigner({ chainId })
+  const { data: walletClient } = useWalletClient({ chainId })
 
   const prepareSendTransactionQuery = useQuery(
     queryKey({
@@ -86,12 +87,12 @@ export function usePrepareSendTransaction({
       chainId,
       request,
       scopeKey,
-      signerAddress: signer?.account.address,
+      walletClientAddress: walletClient?.account.address,
     }),
-    queryFn({ signer }),
+    queryFn({ walletClient }),
     {
       cacheTime,
-      enabled: Boolean(enabled && signer && request && request.to),
+      enabled: Boolean(enabled && walletClient && request && request.to),
       staleTime,
       suspense,
       onError,

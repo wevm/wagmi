@@ -13,9 +13,10 @@ export function getNetwork(): GetNetworkResult {
 
   const chainId = client.data?.chain?.id
   const activeChains = client.chains ?? []
-  const activeChain = [...(client.provider.chains || []), ...activeChains].find(
-    (x) => x.id === chainId,
-  ) ?? {
+  const activeChain = [
+    ...(client.publicClient.chains || []),
+    ...activeChains,
+  ].find((x) => x.id === chainId) ?? {
     id: chainId,
     name: `Chain ${chainId}`,
     network: `${chainId}`,

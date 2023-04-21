@@ -22,7 +22,7 @@ export type UseContractInfiniteReadsConfig<
       ...MulticallContracts<
         TContracts,
         {
-          /** Chain id to use for provider */
+          /** Chain id to use for Public Client. */
           chainId?: number
         }
       >,

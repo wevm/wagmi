@@ -1,7 +1,7 @@
 import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import type { Client } from '../../client'
 import { connect } from '../accounts'
 import { sendTransaction } from './sendTransaction'
@@ -17,8 +17,8 @@ describe('waitForTransaction', () => {
     it('chainId', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const signers = getSigners()
-      const to = signers[1]
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
       const toAddress = to?.account.address
 
       const result = await sendTransaction({
@@ -39,8 +39,8 @@ describe('waitForTransaction', () => {
     it('hash', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const signers = getSigners()
-      const to = signers[1]
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
       const toAddress = to?.account.address
 
       const result = await sendTransaction({
@@ -80,7 +80,7 @@ describe('waitForTransaction', () => {
           nonce:     3
 
         Details: Fork Error: JsonRpcClientError(JsonRpcError(JsonRpcError { code: -32000, message: \\"execution reverted\\", data: None }))
-        Version: viem@0.3.0"
+        Version: viem@0.3.6"
       `,
       )
     })

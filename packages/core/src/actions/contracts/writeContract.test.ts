@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
   getRandomTokenId,
-  getSigners,
+  getWalletClients,
   setupClient,
   wagmiContractConfig,
 } from '../../../test'
@@ -13,7 +13,7 @@ import { prepareWriteContract } from './prepareWriteContract'
 import { writeContract } from './writeContract'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('writeContract', () => {
@@ -106,7 +106,7 @@ describe('writeContract', () => {
   })
 
   describe('errors', () => {
-    it('signer is on different chain', async () => {
+    it('wallet is on different chain', async () => {
       await connect({ connector })
       const config = await prepareWriteContract({
         ...wagmiContractConfig,
@@ -179,7 +179,7 @@ describe('writeContract', () => {
         Make sure you are using the correct ABI and that the function exists on it.
 
         Docs: https://viem.sh/docs/contract/encodeFunctionData.html
-        Version: viem@0.3.0"
+        Version: viem@0.3.6"
       `)
     })
   })

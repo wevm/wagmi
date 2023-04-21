@@ -17,7 +17,7 @@ describe('logger', () => {
 
   describe('logWarn', () => {
     it('logs warnings', () => {
-      createClient({ provider: () => null as any })
+      createClient({ publicClient: () => null as any })
       logWarn('foo')
       logWarn('bar')
       logWarn('baz')
@@ -28,7 +28,7 @@ describe('logger', () => {
     it('custom logger', () => {
       const warnMessages: string[] = []
       createClient({
-        provider: () => null as any,
+        publicClient: () => null as any,
         logger: {
           warn: (message) => warnMessages.push(message),
         },
@@ -43,7 +43,7 @@ describe('logger', () => {
 
     it('custom logger - nullish warn', () => {
       createClient({
-        provider: () => null as any,
+        publicClient: () => null as any,
         logger: {
           warn: null,
         },

@@ -9,40 +9,50 @@ import type {
 } from 'viem'
 import { getContract as getContract_ } from 'viem'
 
-import type { Signer } from '../../types'
+import type { WalletClient } from '../../types'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type GetContractArgs<
   TAbi extends Abi | readonly unknown[] = Abi,
-  TSigner extends Signer | unknown = unknown,
+  TWalletClient extends WalletClient | unknown = unknown,
 > = Omit<
-  GetContractParameters<Transport, Chain, Account, TAbi, PublicClient, TSigner>,
+  GetContractParameters<
+    Transport,
+    Chain,
+    Account,
+    TAbi,
+    PublicClient,
+    TWalletClient
+  >,
   'publicClient' | 'walletClient'
 > & {
   chainId?: number
-  signer?: NonNullable<TSigner>
+  walletClient?: NonNullable<TWalletClient>
 }
 
 export type GetContractResult<
   TAbi extends Abi | readonly unknown[] = Abi,
-  TSigner extends Signer | unknown = unknown,
-> = GetContractReturnType<TAbi, PublicClient, TSigner>
+  TWalletClient extends WalletClient | unknown = unknown,
+> = GetContractReturnType<TAbi, PublicClient, TWalletClient>
 
 export function getContract<
   TAbi extends Abi | readonly unknown[],
-  TSigner extends Signer | unknown,
+  TWalletClient extends WalletClient | unknown,
 >({
   address,
   abi,
   chainId,
-  signer,
-}: GetContractArgs<TAbi, TSigner>): GetContractResult<TAbi, TSigner> {
-  const provider = getProvider({ chainId })
+  walletClient,
+}: GetContractArgs<TAbi, TWalletClient>): GetContractResult<
+  TAbi,
+  TWalletClient
+> {
+  const publicClient = getPublicClient({ chainId })
   return getContract_({
     address,
     abi,
-    publicClient: provider,
-    walletClient: signer,
-  } as any) as GetContractResult<TAbi, TSigner>
+    publicClient,
+    walletClient,
+  } as any) as GetContractResult<TAbi, TWalletClient>
 }

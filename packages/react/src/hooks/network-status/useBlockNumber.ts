@@ -3,8 +3,8 @@ import { fetchBlockNumber } from '@wagmi/core'
 import * as React from 'react'
 
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
-import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId, useQuery, useQueryClient } from '../utils'
+import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
 export type UseBlockNumberArgs = Partial<FetchBlockNumberArgs> & {
   /** Function fires when a new block is created */
@@ -41,16 +41,16 @@ export function useBlockNumber({
   onSuccess,
 }: UseBlockNumberArgs & UseBlockNumberConfig = {}) {
   const chainId = useChainId({ chainId: chainId_ })
-  const provider = useProvider({ chainId })
-  const webSocketProvider = useWebSocketProvider({ chainId })
+  const publicClient = usePublicClient({ chainId })
+  const webSocketPublicClient = useWebSocketPublicClient({ chainId })
   const queryClient = useQueryClient()
 
   React.useEffect(() => {
     if (!enabled) return
     if (!watch && !onBlock) return
 
-    const provider_ = webSocketProvider ?? provider
-    const unwatch = provider_.watchBlockNumber({
+    const publicClient_ = webSocketPublicClient ?? publicClient
+    const unwatch = publicClient_.watchBlockNumber({
       onBlockNumber: (blockNumber) => {
         if (watch)
           queryClient.setQueryData(queryKey({ chainId, scopeKey }), blockNumber)
@@ -63,10 +63,10 @@ export function useBlockNumber({
     chainId,
     scopeKey,
     onBlock,
-    provider,
+    publicClient,
     queryClient,
     watch,
-    webSocketProvider,
+    webSocketPublicClient,
     enabled,
   ])
 

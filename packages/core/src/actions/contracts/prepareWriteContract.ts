@@ -5,24 +5,23 @@ import type {
 } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
-import type { Signer } from '../../types'
+import type { WalletClient } from '../../types'
 import { assertActiveChain, getCallParameters } from '../../utils'
-import { fetchSigner } from '../accounts'
-import { getProvider } from '../providers'
+import { getPublicClient, getWalletClient } from '../viem'
 
 export type PrepareWriteContractConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TChainId extends number = number,
-  TSigner extends Signer = Signer,
+  TWalletClient extends WalletClient = WalletClient,
 > = Omit<
   SimulateContractParameters<TAbi, TFunctionName>,
   'account' | 'chain'
 > & {
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: TChainId | number
-  /** Custom signer */
-  signer?: TSigner | null
+  /** Custom Wallet Client. */
+  walletClient?: TWalletClient | null
 }
 
 export type PrepareWriteContractResult<
@@ -53,22 +52,25 @@ export async function prepareWriteContract<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TChainId extends number,
-  TSigner extends Signer = Signer,
+  TWalletClient extends WalletClient = WalletClient,
 >({
   abi,
   address,
   args,
   chainId,
   functionName,
-  signer: signer_,
+  walletClient: walletClient_,
   ...config
-}: PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>): Promise<
-  PrepareWriteContractResult<TAbi, TFunctionName, TChainId>
-> {
-  const provider = getProvider({ chainId })
-  const signer = signer_ ?? (await fetchSigner({ chainId }))
-  if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId, signer })
+}: PrepareWriteContractConfig<
+  TAbi,
+  TFunctionName,
+  TChainId,
+  TWalletClient
+>): Promise<PrepareWriteContractResult<TAbi, TFunctionName, TChainId>> {
+  const publicClient = getPublicClient({ chainId })
+  const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
+  if (!walletClient) throw new ConnectorNotFoundError()
+  if (chainId) assertActiveChain({ chainId, walletClient })
 
   const {
     accessList,
@@ -82,12 +84,12 @@ export async function prepareWriteContract<
     value,
   } = getCallParameters(config)
 
-  const { result, request } = await provider.simulateContract({
+  const { result, request } = await publicClient.simulateContract({
     abi,
     address,
     functionName,
     args,
-    account: signer.account.address,
+    account: walletClient.account,
     accessList,
     blockNumber,
     blockTag,

@@ -1,13 +1,13 @@
 import { recoverTypedDataAddress } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { signTypedData } from './signTypedData'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 // All properties on a domain are optional
@@ -125,13 +125,13 @@ describe('signTypedData', () => {
     })
 
     describe('when chainId is provided in domain', () => {
-      it("throws mismatch if chainId doesn't match signer", async () => {
+      it("throws mismatch if chainId doesn't match walletClient", async () => {
         await connect({
           chainId: 5,
           connector: new MockConnector({
             options: {
               flags: { noSwitchChain: true },
-              signer: getSigners()[0]!,
+              walletClient: getWalletClients()[0]!,
             },
           }),
         })
@@ -148,7 +148,7 @@ describe('signTypedData', () => {
           connector: new MockConnector({
             options: {
               flags: { noSwitchChain: true },
-              signer: getSigners()[0]!,
+              walletClient: getWalletClients()[0]!,
             },
           }),
         })

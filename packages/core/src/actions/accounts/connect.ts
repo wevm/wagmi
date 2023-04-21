@@ -2,7 +2,7 @@ import type { Client } from '../../client'
 import { getClient } from '../../client'
 import type { Connector, ConnectorData } from '../../connectors'
 import { ConnectorAlreadyConnectedError } from '../../errors'
-import type { Provider } from '../../types'
+import type { PublicClient } from '../../types'
 
 export type ConnectArgs = {
   /** Chain ID to connect to */
@@ -13,16 +13,15 @@ export type ConnectArgs = {
 
 type Data = Required<ConnectorData>
 
-export type ConnectResult<TProvider extends Provider = Provider> = {
+export type ConnectResult<TPublicClient extends PublicClient = PublicClient> = {
   account: Data['account']
   chain: Data['chain']
-  connector: Client<TProvider>['connector']
+  connector: Client<TPublicClient>['connector']
 }
 
-export async function connect<TProvider extends Provider = Provider>({
-  chainId,
-  connector,
-}: ConnectArgs): Promise<ConnectResult<TProvider>> {
+export async function connect<
+  TPublicClient extends PublicClient = PublicClient,
+>({ chainId, connector }: ConnectArgs): Promise<ConnectResult<TPublicClient>> {
   const client = getClient()
   const activeConnector = client.connector
   if (activeConnector && connector.id === activeConnector.id)

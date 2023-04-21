@@ -12,12 +12,12 @@ import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import type { Unit } from '../../types'
 import { getUnit } from '../../utils'
 import { readContracts } from '../contracts'
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type FetchBalanceArgs = {
   /** Address of balance to check */
   address: Address
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
   /** Units for formatting output */
   formatUnits?: Unit
@@ -39,7 +39,7 @@ export async function fetchBalance({
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
   const client = getClient()
-  const provider = getProvider({ chainId })
+  const publicClient = getPublicClient({ chainId })
 
   if (token) {
     type FetchContractBalance = {
@@ -86,9 +86,12 @@ export async function fetchBalance({
     }
   }
 
-  const chains = [...(client.provider.chains || []), ...(client.chains ?? [])]
-  const value = await provider.getBalance({ address })
-  const chain = chains.find((x) => x.id === provider.chain.id)
+  const chains = [
+    ...(client.publicClient.chains || []),
+    ...(client.chains ?? []),
+  ]
+  const value = await publicClient.getBalance({ address })
+  const chain = chains.find((x) => x.id === publicClient.chain.id)
   return {
     decimals: chain?.nativeCurrency.decimals ?? 18,
     formatted: formatUnits(value ?? '0', getUnit(unit ?? 18)),

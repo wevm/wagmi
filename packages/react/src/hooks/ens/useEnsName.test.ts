@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { act, getSigners, renderHook } from '../../../test'
+import { act, getWalletClients, renderHook } from '../../../test'
 import { useEnsName } from './useEnsName'
 
 describe('useEnsName', () => {
@@ -78,7 +78,7 @@ describe('useEnsName', () => {
             "data": undefined,
             "error": [InvalidAddressError: Address "3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj" is invalid.
 
-          Version: viem@0.3.0],
+          Version: viem@0.3.6],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
@@ -95,7 +95,7 @@ describe('useEnsName', () => {
       })
 
       it('does not have name', async () => {
-        const address = getSigners()[0]?.account.address
+        const address = getWalletClients()[0]?.account.address
         const { result, waitFor } = renderHook(() => useEnsName({ address }))
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())

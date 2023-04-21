@@ -4,7 +4,6 @@ export {
   useConnect,
   useDisconnect,
   useNetwork,
-  useSigner,
   useSignMessage,
   useSignTypedData,
   useSwitchNetwork,
@@ -31,7 +30,11 @@ export { useEnsAddress, useEnsAvatar, useEnsName, useEnsResolver } from './ens'
 
 export { useBlockNumber, useFeeData } from './network-status'
 
-export { useProvider, useWebSocketProvider } from './providers'
+export {
+  usePublicClient,
+  useWalletClient,
+  useWebSocketPublicClient,
+} from './viem'
 
 export {
   useSendTransaction,

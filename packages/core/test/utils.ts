@@ -10,7 +10,7 @@ import {
 import { privateKeyToAccount } from 'viem/accounts'
 import { rpc } from 'viem/utils'
 
-import type { Chain, WebSocketProvider } from '../src'
+import type { Chain, WebSocketPublicClient } from '../src'
 import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
 
 import type { mirrorCrowdfundContractConfig } from './constants'
@@ -22,41 +22,41 @@ export const foundryMainnet: Chain = {
 
 export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
 
-export function getProvider({
+export function getPublicClient({
   chains = testChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = chains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]
-  const provider = createPublicClient({
+  const publicClient = createPublicClient({
     chain,
     transport: http(url),
     pollingInterval: 1_000,
   })
-  return Object.assign(provider, {
+  return Object.assign(publicClient, {
     chains,
     toJSON() {
-      return `<Provider network={${chain.id}} />`
+      return `<PublicClient network={${chain.id}} />`
     },
   })
 }
 
-export function getWebSocketProvider({
+export function getWebSocketPublicClient({
   chains = testChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]!.replace('http', 'ws')
-  const webSocketProvider = createPublicClient({
+  const webSocketPublicClient = createPublicClient({
     chain,
     transport: webSocket(url),
   })
-  return Object.assign(webSocketProvider, {
+  return Object.assign(webSocketPublicClient, {
     chains,
     toJSON() {
-      return `<WebSocketProvider network={${chain.id}} />`
+      return `<WebSocketPublicClient network={${chain.id}} />`
     },
-  }) as WebSocketProvider
+  }) as WebSocketPublicClient
 }
 
 // Default accounts from Anvil
@@ -163,9 +163,9 @@ export const accounts = [
   },
 ]
 
-export function getSigners() {
-  const provider = getProvider()
-  provider.request = async ({ method, params }: any) => {
+export function getWalletClients() {
+  const publicClient = getPublicClient()
+  publicClient.request = async ({ method, params }: any) => {
     if (method === 'personal_sign') {
       method = 'eth_sign'
       params = [params[1], params[0]]
@@ -182,8 +182,8 @@ export function getSigners() {
   return accounts.map((x) =>
     createWalletClient({
       account: privateKeyToAccount(x.privateKey as Hex).address,
-      chain: provider.chain,
-      transport: custom(provider),
+      chain: publicClient.chain,
+      transport: custom(publicClient),
     }),
   )
 }

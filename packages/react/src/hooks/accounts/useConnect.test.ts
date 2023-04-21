@@ -1,18 +1,18 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, getSigners, renderHook, useAccount } from '../../../test'
+import { act, getWalletClients, renderHook, useAccount } from '../../../test'
 import type { UseConnectArgs, UseConnectConfig } from './useConnect'
 import { useConnect } from './useConnect'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 const connectorFail = new MockConnector({
   options: {
     flags: { failConnect: true },
-    signer: getSigners()[0]!,
+    walletClient: getWalletClients()[0]!,
   },
 })
 
@@ -110,7 +110,7 @@ describe('useConnect', () => {
             "error": [UserRejectedRequestError: User rejected the request.
 
           Details: Failed to connect.
-          Version: viem@0.3.0],
+          Version: viem@0.3.6],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -416,7 +416,7 @@ describe('useConnect', () => {
             "error": [UserRejectedRequestError: User rejected the request.
 
           Details: Failed to connect.
-          Version: viem@0.3.0],
+          Version: viem@0.3.6],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -550,7 +550,7 @@ describe('useConnect', () => {
             "User rejected the request.
 
             Details: Failed to connect.
-            Version: viem@0.3.0"
+            Version: viem@0.3.6"
           `,
           )
         })
@@ -567,7 +567,7 @@ describe('useConnect', () => {
           chainId: 69,
           connector: new MockConnector({
             options: {
-              signer: getSigners()[0]!,
+              walletClient: getWalletClients()[0]!,
             },
           }),
         }),
@@ -589,7 +589,7 @@ describe('useConnect', () => {
           chainId: 5,
           connector: new MockConnector({
             options: {
-              signer: getSigners()[0]!,
+              walletClient: getWalletClients()[0]!,
             },
           }),
         }),

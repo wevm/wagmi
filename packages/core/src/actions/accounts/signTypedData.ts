@@ -7,7 +7,7 @@ import type {
 
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain } from '../../utils'
-import { fetchSigner } from './fetchSigner'
+import { getWalletClient } from '../viem'
 
 export type SignTypedDataArgs<
   TTypedData extends
@@ -33,13 +33,13 @@ export async function signTypedData<
   primaryType,
   types,
 }: SignTypedDataArgs<TTypedData, TPrimaryType>): Promise<SignTypedDataResult> {
-  const signer = await fetchSigner()
-  if (!signer) throw new ConnectorNotFoundError()
+  const walletClient = await getWalletClient()
+  if (!walletClient) throw new ConnectorNotFoundError()
 
   const { chainId } = domain as TypedDataDomain
-  if (chainId) assertActiveChain({ chainId, signer })
+  if (chainId) assertActiveChain({ chainId, walletClient })
 
-  return signer.signTypedData({
+  return walletClient.signTypedData({
     message,
     primaryType,
     types,

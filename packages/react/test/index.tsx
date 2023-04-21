@@ -75,10 +75,10 @@ export {
 } from './utils'
 export {
   getCrowdfundArgs,
-  getProvider,
-  getSigners,
+  getPublicClient,
+  getWalletClients,
   getRandomTokenId,
-  getWebSocketProvider,
+  getWebSocketPublicClient,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
   wagmiContractConfig,

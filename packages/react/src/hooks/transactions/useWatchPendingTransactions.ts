@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 import type { WatchPendingTransactionsCallback } from '../../actions'
-import { useProvider, useWebSocketProvider } from '../providers'
 import { useChainId } from '../utils'
+import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
 export type UseWatchPendingTransactionsConfig = {
   /** The chain ID to listen on. */
@@ -19,16 +19,16 @@ export function useWatchPendingTransactions({
   listener,
 }: UseWatchPendingTransactionsConfig) {
   const chainId = useChainId({ chainId: chainId_ })
-  const provider = useProvider({ chainId })
-  const webSocketProvider = useWebSocketProvider({ chainId })
+  const publicClient = usePublicClient({ chainId })
+  const webSocketPublicClient = useWebSocketPublicClient({ chainId })
 
   React.useEffect(() => {
     if (!enabled) return
 
-    const provider_ = webSocketProvider ?? provider
+    const publicClient_ = webSocketPublicClient ?? publicClient
 
-    return provider_.watchPendingTransactions({
+    return publicClient_.watchPendingTransactions({
       onTransactions: listener,
     })
-  }, [enabled, listener, provider, webSocketProvider])
+  }, [enabled, listener, publicClient, webSocketPublicClient])
 }

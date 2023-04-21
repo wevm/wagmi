@@ -1,18 +1,20 @@
 import { describe, expect, it } from 'vitest'
 
-import { getWebSocketProvider, setupClient } from '../../../test'
+import { getWebSocketPublicClient, setupClient } from '../../../test'
 import { mainnet, optimism } from '../../chains'
 import { connect } from '../accounts/connect'
 import { disconnect } from '../accounts/disconnect'
-import type { GetWebSocketProviderResult } from './getWebSocketProvider'
-import { watchWebSocketProvider } from './watchWebSocketProvider'
+import type { GetWebSocketPublicClientResult } from './getWebSocketPublicClient'
+import { watchWebSocketPublicClient } from './watchWebSocketPublicClient'
 
-describe('watchWebSocketProvider', () => {
+describe('watchWebSocketPublicClient', () => {
   it('callback receives data', async () => {
-    const client = setupClient({ webSocketProvider: getWebSocketProvider })
+    const client = setupClient({
+      webSocketPublicClient: getWebSocketPublicClient,
+    })
 
-    const providers: GetWebSocketProviderResult[] = []
-    const unwatch = watchWebSocketProvider({}, (provider) =>
+    const providers: GetWebSocketPublicClientResult[] = []
+    const unwatch = watchWebSocketPublicClient({}, (provider) =>
       providers.push(provider),
     )
 
@@ -25,8 +27,8 @@ describe('watchWebSocketProvider', () => {
 
     expect(providers).toMatchInlineSnapshot(`
       [
-        "<WebSocketProvider network={10} />",
-        "<WebSocketProvider network={1} />",
+        "<WebSocketPublicClient network={10} />",
+        "<WebSocketPublicClient network={1} />",
       ]
     `)
   })

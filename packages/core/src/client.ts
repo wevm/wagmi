@@ -6,11 +6,11 @@ import type { Connector, ConnectorData } from './connectors'
 import { InjectedConnector } from './connectors'
 import type { ClientStorage } from './storage'
 import { createStorage, noopStorage } from './storage'
-import type { Provider, WebSocketProvider } from './types'
+import type { PublicClient, WebSocketPublicClient } from './types'
 
 export type ClientConfig<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TPublicClient extends PublicClient = PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 > = {
   /** Enables reconnecting to last used connector on init */
   autoConnect?: boolean
@@ -24,50 +24,55 @@ export type ClientConfig<
     warn: typeof console.warn | null
   }
   /** Interface for connecting to network */
-  provider: ((config: { chainId?: number }) => TProvider) | TProvider
+  publicClient:
+    | ((config: { chainId?: number }) => TPublicClient)
+    | TPublicClient
   /**
    * Custom storage for data persistance
    * @default window.localStorage
    */
   storage?: ClientStorage
   /** WebSocket interface for connecting to network */
-  webSocketProvider?:
-    | ((config: { chainId?: number }) => TWebSocketProvider | undefined)
-    | TWebSocketProvider
+  webSocketPublicClient?:
+    | ((config: { chainId?: number }) => TWebSocketPublicClient | undefined)
+    | TWebSocketPublicClient
 }
 
 export type Data = ConnectorData
 export type State<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TPublicClient extends PublicClient = PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 > = {
   chains?: Connector['chains']
   connector?: Connector
   connectors: Connector[]
   data?: Data
   error?: Error
-  provider: TProvider
+  publicClient: TPublicClient
   status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
-  webSocketProvider?: TWebSocketProvider
+  webSocketPublicClient?: TWebSocketPublicClient
 }
 
 const storeKey = 'store'
 
 export class Client<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TPublicClient extends PublicClient = PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 > {
-  config: ClientConfig<TProvider, TWebSocketProvider>
-  providers = new Map<number, TProvider | undefined>()
+  config: ClientConfig<TPublicClient, TWebSocketPublicClient>
+  publicClients = new Map<number, TPublicClient | undefined>()
   storage: ClientStorage
   store: Mutate<
-    StoreApi<State<TProvider, TWebSocketProvider>>,
+    StoreApi<State<TPublicClient, TWebSocketPublicClient>>,
     [
       ['zustand/subscribeWithSelector', never],
-      ['zustand/persist', Partial<State<TProvider, TWebSocketProvider>>],
+      [
+        'zustand/persist',
+        Partial<State<TPublicClient, TWebSocketPublicClient>>,
+      ],
     ]
   >
-  webSocketProviders = new Map<number, TWebSocketProvider | undefined>()
+  webSocketPublicClients = new Map<number, TWebSocketPublicClient | undefined>()
 
   #isAutoConnecting?: boolean
   #lastUsedConnector?: string | null
@@ -75,7 +80,7 @@ export class Client<
   constructor({
     autoConnect = false,
     connectors = [new InjectedConnector()],
-    provider,
+    publicClient,
     storage = createStorage({
       storage:
         typeof window !== 'undefined' ? window.localStorage : noopStorage,
@@ -83,15 +88,15 @@ export class Client<
     logger = {
       warn: console.warn,
     },
-    webSocketProvider,
-  }: ClientConfig<TProvider, TWebSocketProvider>) {
+    webSocketPublicClient,
+  }: ClientConfig<TPublicClient, TWebSocketPublicClient>) {
     this.config = {
       autoConnect,
       connectors,
       logger,
-      provider,
+      publicClient,
       storage,
-      webSocketProvider,
+      webSocketPublicClient,
     }
 
     // Check status for autoConnect flag
@@ -100,7 +105,7 @@ export class Client<
     if (autoConnect) {
       try {
         const rawState = storage.getItem<{
-          state: State<TProvider, TWebSocketProvider>
+          state: State<TPublicClient, TWebSocketPublicClient>
         }>(storeKey)
         const data: Data | undefined = rawState?.state?.data
         // If account exists in localStorage, set status to reconnecting
@@ -120,21 +125,24 @@ export class Client<
 
     // Create store
     this.store = createStore<
-      State<TProvider, TWebSocketProvider>,
+      State<TPublicClient, TWebSocketPublicClient>,
       [
         ['zustand/subscribeWithSelector', never],
-        ['zustand/persist', Partial<State<TProvider, TWebSocketProvider>>],
+        [
+          'zustand/persist',
+          Partial<State<TPublicClient, TWebSocketPublicClient>>,
+        ],
       ]
     >(
       subscribeWithSelector(
         persist(
           () =>
             // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-            <State<TProvider, TWebSocketProvider>>{
+            <State<TPublicClient, TWebSocketPublicClient>>{
               connectors: connectors_,
-              provider: this.getProvider({ chainId }),
+              publicClient: this.getPublicClient({ chainId }),
               status,
-              webSocketProvider: this.getWebSocketProvider({ chainId }),
+              webSocketPublicClient: this.getWebSocketPublicClient({ chainId }),
             },
           {
             name: storeKey,
@@ -180,8 +188,8 @@ export class Client<
   get lastUsedChainId() {
     return this.data?.chain?.id
   }
-  get provider() {
-    return this.store.getState().provider
+  get publicClient() {
+    return this.store.getState().publicClient
   }
   get status() {
     return this.store.getState().status
@@ -189,16 +197,16 @@ export class Client<
   get subscribe() {
     return this.store.subscribe
   }
-  get webSocketProvider() {
-    return this.store.getState().webSocketProvider
+  get webSocketPublicClient() {
+    return this.store.getState().webSocketPublicClient
   }
 
   setState(
     updater:
-      | State<TProvider, TWebSocketProvider>
+      | State<TPublicClient, TWebSocketPublicClient>
       | ((
-          state: State<TProvider, TWebSocketProvider>,
-        ) => State<TProvider, TWebSocketProvider>),
+          state: State<TPublicClient, TWebSocketPublicClient>,
+        ) => State<TPublicClient, TWebSocketPublicClient>),
   ) {
     const newState =
       typeof updater === 'function' ? updater(this.store.getState()) : updater
@@ -270,38 +278,41 @@ export class Client<
     return this.data
   }
 
-  getProvider({ chainId }: { bust?: boolean; chainId?: number } = {}) {
-    let provider_ = this.providers.get(-1)
-    if (provider_ && provider_?.chain.id === chainId) return provider_
+  getPublicClient({ chainId }: { bust?: boolean; chainId?: number } = {}) {
+    let publicClient_ = this.publicClients.get(-1)
+    if (publicClient_ && publicClient_?.chain.id === chainId)
+      return publicClient_
 
-    provider_ = this.providers.get(chainId ?? -1)
-    if (provider_) return provider_
+    publicClient_ = this.publicClients.get(chainId ?? -1)
+    if (publicClient_) return publicClient_
 
-    const { provider } = this.config
-    provider_ =
-      typeof provider === 'function' ? provider({ chainId }) : provider
-    this.providers.set(chainId ?? -1, provider_)
+    const { publicClient } = this.config
+    publicClient_ =
+      typeof publicClient === 'function'
+        ? publicClient({ chainId })
+        : publicClient
+    this.publicClients.set(chainId ?? -1, publicClient_)
 
-    return provider_
+    return publicClient_
   }
 
-  getWebSocketProvider({ chainId }: { chainId?: number } = {}) {
-    let webSocketProvider_ = this.webSocketProviders.get(-1)
-    if (webSocketProvider_ && webSocketProvider_?.chain.id === chainId)
-      return webSocketProvider_
+  getWebSocketPublicClient({ chainId }: { chainId?: number } = {}) {
+    let webSocketPublicClient_ = this.webSocketPublicClients.get(-1)
+    if (webSocketPublicClient_ && webSocketPublicClient_?.chain.id === chainId)
+      return webSocketPublicClient_
 
-    webSocketProvider_ = this.webSocketProviders.get(chainId ?? -1)
-    if (webSocketProvider_) return webSocketProvider_
+    webSocketPublicClient_ = this.webSocketPublicClients.get(chainId ?? -1)
+    if (webSocketPublicClient_) return webSocketPublicClient_
 
-    const { webSocketProvider } = this.config
-    webSocketProvider_ =
-      typeof webSocketProvider === 'function'
-        ? webSocketProvider({ chainId })
-        : webSocketProvider
-    if (webSocketProvider_)
-      this.webSocketProviders.set(chainId ?? -1, webSocketProvider_)
+    const { webSocketPublicClient } = this.config
+    webSocketPublicClient_ =
+      typeof webSocketPublicClient === 'function'
+        ? webSocketPublicClient({ chainId })
+        : webSocketPublicClient
+    if (webSocketPublicClient_)
+      this.webSocketPublicClients.set(chainId ?? -1, webSocketPublicClient_)
 
-    return webSocketProvider_
+    return webSocketPublicClient_
   }
 
   setLastUsedConnector(lastUsedConnector: string | null = null) {
@@ -336,18 +347,19 @@ export class Client<
       },
     )
 
-    const { provider, webSocketProvider } = this.config
-    const subscribeProvider = typeof provider === 'function'
-    const subscribeWebSocketProvider = typeof webSocketProvider === 'function'
+    const { publicClient, webSocketPublicClient } = this.config
+    const subscribePublicClient = typeof publicClient === 'function'
+    const subscribeWebSocketPublicClient =
+      typeof webSocketPublicClient === 'function'
 
-    if (subscribeProvider || subscribeWebSocketProvider)
+    if (subscribePublicClient || subscribeWebSocketPublicClient)
       this.store.subscribe(
         ({ data }) => data?.chain?.id,
         (chainId) => {
           this.setState((x) => ({
             ...x,
-            provider: this.getProvider({ chainId }),
-            webSocketProvider: this.getWebSocketProvider({
+            publicClient: this.getPublicClient({ chainId }),
+            webSocketPublicClient: this.getWebSocketPublicClient({
               chainId,
             }),
           }))
@@ -356,25 +368,25 @@ export class Client<
   }
 }
 
-export let client: Client<Provider, WebSocketProvider>
+export let client: Client<PublicClient, WebSocketPublicClient>
 
 export function createClient<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
->(config: ClientConfig<TProvider, TWebSocketProvider>) {
-  const client_ = new Client<TProvider, TWebSocketProvider>(config)
-  client = client_ as unknown as Client<Provider, WebSocketProvider>
+  TPublicClient extends PublicClient = PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
+>(config: ClientConfig<TPublicClient, TWebSocketPublicClient>) {
+  const client_ = new Client<TPublicClient, TWebSocketPublicClient>(config)
+  client = client_ as unknown as Client<PublicClient, WebSocketPublicClient>
   return client_
 }
 
 export function getClient<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
+  TPublicClient extends PublicClient = PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 >() {
   if (!client) {
     throw new Error(
       'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client',
     )
   }
-  return client as unknown as Client<TProvider, TWebSocketProvider>
+  return client as unknown as Client<TPublicClient, TWebSocketPublicClient>
 }

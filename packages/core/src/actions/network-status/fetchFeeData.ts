@@ -4,12 +4,12 @@ import type { Unit } from '../../types'
 
 import { getUnit } from '../../utils'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type FetchFeeDataArgs = {
   /** Units for formatting output */
   formatUnits?: Unit
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
 }
 
@@ -29,12 +29,12 @@ export async function fetchFeeData({
   chainId,
   formatUnits: units = 'gwei',
 }: FetchFeeDataArgs = {}): Promise<FetchFeeDataResult> {
-  const provider = getProvider({ chainId })
+  const publicClient = getPublicClient({ chainId })
 
-  const block = await provider.getBlock()
+  const block = await publicClient.getBlock()
   let gasPrice: bigint | null = null
   try {
-    gasPrice = await provider.getGasPrice()
+    gasPrice = await publicClient.getGasPrice()
   } catch {
     //
   }

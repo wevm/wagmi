@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest'
 import {
   act,
   actConnect,
-  getSigners,
+  getWalletClients,
   renderHook,
   setupClient,
 } from '../../../test'
@@ -119,7 +119,7 @@ describe('useSwitchNetwork', () => {
       const connector = new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer: getSigners()[0]!,
+          walletClient: getWalletClients()[0]!,
         },
       })
       const utils = renderHook(() =>
@@ -223,7 +223,7 @@ describe('useSwitchNetwork', () => {
         const connector = new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>
@@ -245,7 +245,7 @@ describe('useSwitchNetwork', () => {
             "error": [UserRejectedRequestError: User rejected the request.
 
           Details: Failed to switch chain.
-          Version: viem@0.3.0],
+          Version: viem@0.3.6],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -391,7 +391,7 @@ describe('useSwitchNetwork', () => {
         const connector = new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>
@@ -411,7 +411,7 @@ describe('useSwitchNetwork', () => {
             "User rejected the request.
 
             Details: Failed to switch chain.
-            Version: viem@0.3.0"
+            Version: viem@0.3.6"
           `,
           )
         })
@@ -426,7 +426,7 @@ describe('useSwitchNetwork', () => {
       const connector = new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer: getSigners()[0]!,
+          walletClient: getWalletClients()[0]!,
         },
       })
       const utils = renderHook(() =>

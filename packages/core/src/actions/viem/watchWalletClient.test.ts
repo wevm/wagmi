@@ -2,12 +2,10 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import { setupClient } from '../../../test'
 
-import { connect } from './connect'
-import { disconnect } from './disconnect'
-import { switchNetwork } from './switchNetwork'
-import { watchSigner } from './watchSigner'
+import { connect, disconnect, switchNetwork } from '../accounts'
+import { watchWalletClient } from './watchWalletClient'
 
-describe('watchSigner', () => {
+describe('watchWalletClient', () => {
   beforeEach(() => {
     setupClient()
   })
@@ -16,7 +14,7 @@ describe('watchSigner', () => {
     const client = setupClient()
 
     let counter = 0
-    const unsubscribe = watchSigner({}, (data) => {
+    const unsubscribe = watchWalletClient({}, (data) => {
       if (counter === 0) expect(data).toBeDefined()
       else if (counter === 1) expect(data).toMatchInlineSnapshot(`null`)
       counter += 1
@@ -32,7 +30,7 @@ describe('watchSigner', () => {
     const client = setupClient()
 
     let counter = 0
-    const unwatch = watchSigner({}, () => {
+    const unwatch = watchWalletClient({}, () => {
       counter += 1
     })
 

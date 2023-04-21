@@ -8,12 +8,6 @@ export {
   type FetchBalanceResult,
 } from './fetchBalance'
 
-export {
-  fetchSigner,
-  type FetchSignerArgs,
-  type FetchSignerResult,
-} from './fetchSigner'
-
 export { getAccount, type GetAccountResult } from './getAccount'
 
 export { getNetwork, type GetNetworkResult } from './getNetwork'
@@ -39,5 +33,3 @@ export {
 export { watchAccount, type WatchAccountCallback } from './watchAccount'
 
 export { watchNetwork, type WatchNetworkCallback } from './watchNetwork'
-
-export { watchSigner, type WatchSignerCallback } from './watchSigner'

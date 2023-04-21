@@ -1,8 +1,8 @@
 import { shallow } from 'zustand/shallow'
 
 import { getClient } from '../../client'
-import type { Provider, WebSocketProvider } from '../../types'
-import { getProvider, getWebSocketProvider } from '../providers'
+import type { PublicClient, WebSocketPublicClient } from '../../types'
+import { getPublicClient, getWebSocketPublicClient } from '../viem'
 import type { FetchBlockNumberResult } from './fetchBlockNumber'
 
 export type WatchBlockNumberArgs = { chainId?: number; listen: boolean }
@@ -15,27 +15,32 @@ export function watchBlockNumber(
   callback: WatchBlockNumberCallback,
 ) {
   let unwatch: () => void
-  const createListener = (provider: Provider | WebSocketProvider) => {
+  const createListener = (
+    publicClient: PublicClient | WebSocketPublicClient,
+  ) => {
     if (unwatch) unwatch()
-    unwatch = provider.watchBlockNumber({
+    unwatch = publicClient.watchBlockNumber({
       onBlockNumber: callback,
       emitOnBegin: true,
       poll: true,
     })
   }
 
-  const provider_ =
-    getWebSocketProvider({ chainId: args.chainId }) ??
-    getProvider({ chainId: args.chainId })
-  if (args.listen) createListener(provider_)
+  const publicClient_ =
+    getWebSocketPublicClient({ chainId: args.chainId }) ??
+    getPublicClient({ chainId: args.chainId })
+  if (args.listen) createListener(publicClient_)
 
   const client = getClient()
   const unsubscribe = client.subscribe(
-    ({ provider, webSocketProvider }) => ({ provider, webSocketProvider }),
-    async ({ provider, webSocketProvider }) => {
-      const provider_ = webSocketProvider ?? provider
-      if (args.listen && !args.chainId && provider_) {
-        createListener(provider_)
+    ({ publicClient, webSocketPublicClient }) => ({
+      publicClient,
+      webSocketPublicClient,
+    }),
+    async ({ publicClient, webSocketPublicClient }) => {
+      const publicClient_ = webSocketPublicClient ?? publicClient
+      if (args.listen && !args.chainId && publicClient_) {
+        createListener(publicClient_)
       }
     },
     {

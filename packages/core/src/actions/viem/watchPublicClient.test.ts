@@ -4,15 +4,17 @@ import { setupClient } from '../../../test'
 import { mainnet, optimism } from '../../chains'
 import { connect } from '../accounts/connect'
 import { disconnect } from '../accounts/disconnect'
-import type { GetProviderResult } from './getProvider'
-import { watchProvider } from './watchProvider'
+import type { GetPublicClientResult } from './getPublicClient'
+import { watchPublicClient } from './watchPublicClient'
 
-describe('watchProvider', () => {
+describe('watchPublicClient', () => {
   it('callback receives data', async () => {
     const client = setupClient()
 
-    const providers: GetProviderResult[] = []
-    const unwatch = watchProvider({}, (provider) => providers.push(provider))
+    const publicClients: GetPublicClientResult[] = []
+    const unwatch = watchPublicClient({}, (publicClient) =>
+      publicClients.push(publicClient),
+    )
 
     await connect({ connector: client.connectors[0]!, chainId: mainnet.id })
     await disconnect()
@@ -21,10 +23,10 @@ describe('watchProvider', () => {
     await connect({ connector: client.connectors[0]!, chainId: mainnet.id })
     unwatch()
 
-    expect(providers).toMatchInlineSnapshot(`
+    expect(publicClients).toMatchInlineSnapshot(`
       [
-        "<Provider network={10} />",
-        "<Provider network={1} />",
+        "<PublicClient network={10} />",
+        "<PublicClient network={1} />",
       ]
     `)
   })

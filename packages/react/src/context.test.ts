@@ -18,16 +18,16 @@ describe('useClient', () => {
             "logger": {
               "warn": [Function],
             },
-            "provider": [Function],
+            "publicClient": [Function],
             "storage": {
               "getItem": [Function],
               "removeItem": [Function],
               "setItem": [Function],
             },
-            "webSocketProvider": undefined,
+            "webSocketPublicClient": undefined,
           },
-          "providers": Map {
-            -1 => "<Provider network={1} />",
+          "publicClients": Map {
+            -1 => "<PublicClient network={1} />",
           },
           "queryClient": QueryClient {
             "defaultOptions": {
@@ -81,7 +81,7 @@ describe('useClient', () => {
             "setState": [Function],
             "subscribe": [Function],
           },
-          "webSocketProviders": Map {},
+          "webSocketPublicClients": Map {},
         }
       `)
     })

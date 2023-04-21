@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
   getRandomTokenId,
-  getSigners,
+  getWalletClients,
   setupClient,
   wagmiContractConfig,
 } from '../../../test'
@@ -12,7 +12,7 @@ import { connect } from '../accounts'
 import { prepareWriteContract } from './prepareWriteContract'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('prepareWriteContract', () => {
@@ -33,7 +33,10 @@ describe('prepareWriteContract', () => {
     expect(request_).toMatchInlineSnapshot(`
       {
         "accessList": undefined,
-        "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "account": {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "type": "json-rpc",
+        },
         "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
         "blockNumber": undefined,
         "blockTag": undefined,
@@ -70,7 +73,10 @@ describe('prepareWriteContract', () => {
       expect(request_).toMatchInlineSnapshot(`
         {
           "accessList": undefined,
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": undefined,
@@ -106,7 +112,10 @@ describe('prepareWriteContract', () => {
       expect(request_).toMatchInlineSnapshot(`
         {
           "accessList": undefined,
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": undefined,
@@ -142,7 +151,10 @@ describe('prepareWriteContract', () => {
       expect(request_).toMatchInlineSnapshot(`
         {
           "accessList": undefined,
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": 42069n,
           "blockTag": undefined,
@@ -178,7 +190,10 @@ describe('prepareWriteContract', () => {
       expect(request_).toMatchInlineSnapshot(`
         {
           "accessList": undefined,
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": "latest",
@@ -214,7 +229,10 @@ describe('prepareWriteContract', () => {
       expect(request_).toMatchInlineSnapshot(`
         {
           "accessList": undefined,
-          "account": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": undefined,
@@ -238,7 +256,7 @@ describe('prepareWriteContract', () => {
   })
 
   describe('errors', () => {
-    it('signer is on different chain', async () => {
+    it('wallet is on different chain', async () => {
       await connect({ connector })
 
       await expect(() =>
@@ -302,7 +320,7 @@ describe('prepareWriteContract', () => {
         Make sure you are using the correct ABI and that the function exists on it.
 
         Docs: https://viem.sh/docs/contract/encodeFunctionData.html
-        Version: viem@0.3.0"
+        Version: viem@0.3.6"
       `)
     })
   })

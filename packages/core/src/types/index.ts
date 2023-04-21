@@ -1,4 +1,9 @@
-import type { Account, PublicClient, Transport, WalletClient } from 'viem'
+import type {
+  Account,
+  PublicClient as PublicClient_,
+  Transport,
+  WalletClient as WalletClient_,
+} from 'viem'
 
 import type { Chain } from '../chains'
 
@@ -9,14 +14,14 @@ export type ChainProviderFn<TChain extends Chain = Chain> = (chain: TChain) => {
   rpcUrls: RpcUrls
 } | null
 
-export type Provider<
+export type PublicClient<
   TTransport extends Transport = Transport,
   TChain extends Chain = Chain,
-> = PublicClient<TTransport, TChain> & { chains?: Chain[] }
-export type WebSocketProvider<
+> = PublicClient_<TTransport, TChain> & { chains?: Chain[] }
+export type WebSocketPublicClient<
   TTransport extends Transport = Transport,
   TChain extends Chain = Chain,
-> = PublicClient<TTransport, TChain> & {
+> = PublicClient_<TTransport, TChain> & {
   chains?: Chain[]
 }
 
@@ -25,10 +30,10 @@ export type RpcUrls = {
   webSocket?: readonly string[]
 }
 
-export type Signer<
+export type WalletClient<
   TTransport extends Transport = Transport,
   TChain extends Chain = Chain,
   TAccount extends Account = Account,
-> = WalletClient<TTransport, TChain, TAccount>
+> = WalletClient_<TTransport, TChain, TAccount>
 
 export type Unit = 'ether' | 'gwei' | 'wei' | number

@@ -6,10 +6,10 @@ import type {
 import { hexToString } from 'viem'
 
 import type { Hash } from '../../types'
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type WaitForTransactionArgs = {
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
   /**
    * Number of blocks to wait for after transaction is mined
@@ -36,17 +36,19 @@ export async function waitForTransaction({
   onReplaced,
   timeout = 0,
 }: WaitForTransactionArgs): Promise<WaitForTransactionResult> {
-  const provider = getProvider({ chainId })
+  const publicClient = getPublicClient({ chainId })
 
-  const receipt = await provider.waitForTransactionReceipt({
+  const receipt = await publicClient.waitForTransactionReceipt({
     hash,
     confirmations,
     onReplaced,
     timeout,
   })
   if (receipt.status === 'reverted') {
-    const txn = await provider.getTransaction({ hash: receipt.transactionHash })
-    const code = (await provider.call({
+    const txn = await publicClient.getTransaction({
+      hash: receipt.transactionHash,
+    })
+    const code = (await publicClient.call({
       ...txn,
       gasPrice: txn.type !== 'eip1559' ? txn.gasPrice : undefined,
       maxFeePerGas: txn.type === 'eip1559' ? txn.maxFeePerGas : undefined,

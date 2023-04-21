@@ -1,7 +1,7 @@
 import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import type { Client } from '../../client'
 import { connect } from '../accounts'
 import { prepareSendTransaction } from './prepareSendTransaction'
@@ -42,11 +42,11 @@ describe('sendTransaction', () => {
   })
 
   describe('errors', () => {
-    it('signer is on different chain', async () => {
+    it('wallet is on different chain', async () => {
       await connect({ connector: client.connectors[0]! })
 
-      const signers = getSigners()
-      const to = signers[1]
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
       const toAddress = to?.account.address || ''
 
       const config = await prepareSendTransaction({
@@ -69,8 +69,8 @@ describe('sendTransaction', () => {
     it('chain not configured for connector', async () => {
       await connect({ connector: client.connectors[0]!, chainId: 420 })
 
-      const signers = getSigners()
-      const to = signers[1]
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
       const toAddress = to?.account.address || ''
 
       const config = await prepareSendTransaction({
@@ -120,7 +120,7 @@ describe('sendTransaction', () => {
           gas:    21000
 
         Details: Insufficient funds for gas * price + value
-        Version: viem@0.3.0"
+        Version: viem@0.3.6"
       `)
     })
   })

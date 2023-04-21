@@ -3,7 +3,7 @@ import type { TypedData } from 'abitype'
 import { recoverTypedDataAddress } from 'viem'
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, actConnect, getSigners, renderHook } from '../../../test'
+import { act, actConnect, getWalletClients, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 import type { UseSignTypedDataConfig } from './useSignTypedData'
 import { useSignTypedData } from './useSignTypedData'
@@ -331,11 +331,11 @@ describe('useSignTypedData', () => {
     })
 
     describe('when chainId is provided in domain', () => {
-      it("throws mismatch if chainId doesn't match signer", async () => {
+      it("throws mismatch if chainId doesn't match wallet", async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>

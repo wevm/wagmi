@@ -5,33 +5,35 @@ import {
   actConnect,
   actDisconnect,
   actSwitchNetwork,
-  getSigners,
+  getWalletClients,
   renderHook,
   setupClient,
 } from '../../../test'
-import { useAccount } from './useAccount'
-import { useConnect } from './useConnect'
-import { useDisconnect } from './useDisconnect'
-import { useSigner } from './useSigner'
-import { useSwitchNetwork } from './useSwitchNetwork'
+import {
+  useAccount,
+  useConnect,
+  useDisconnect,
+  useSwitchNetwork,
+} from '../accounts'
+import { useWalletClient } from './useWalletClient'
 
-function useSignerWithAccount() {
+function useWalletClientWithAccount() {
   return {
     account: useAccount(),
     connect: useConnect(),
     disconnect: useDisconnect(),
     switchNetwork: useSwitchNetwork(),
-    signer: useSigner(),
+    walletClient: useWalletClient(),
   }
 }
 
-describe('useSigner', () => {
+describe('useWalletClient', () => {
   describe('mounts', () => {
     it('is connected', async () => {
       const client = setupClient()
       await connect({ connector: client.connectors[0]! })
 
-      const { result, waitFor } = renderHook(() => useSigner(), {
+      const { result, waitFor } = renderHook(() => useWalletClient(), {
         initialProps: { client },
       })
 
@@ -39,7 +41,7 @@ describe('useSigner', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, data, ...res } = result.current
-      const { uid, ...signer } = data || {}
+      const { uid, ...walletClient } = data || {}
       expect(uid).toBeDefined()
       expect(res).toMatchInlineSnapshot(`
         {
@@ -57,7 +59,7 @@ describe('useSigner', () => {
           "status": "success",
         }
       `)
-      expect(signer).toMatchInlineSnapshot(`
+      expect(walletClient).toMatchInlineSnapshot(`
         {
           "account": {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
@@ -146,7 +148,7 @@ describe('useSigner', () => {
     })
 
     it('is not connected', async () => {
-      const { result, waitFor } = renderHook(() => useSigner())
+      const { result, waitFor } = renderHook(() => useWalletClient())
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
@@ -174,15 +176,17 @@ describe('useSigner', () => {
 
   describe('behavior', () => {
     it('updates on connect and disconnect', async () => {
-      const utils = renderHook(() => useSignerWithAccount())
+      const utils = renderHook(() => useWalletClientWithAccount())
       const { result, waitFor } = utils
 
       await actConnect({ utils })
 
-      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.walletClient.isSuccess).toBeTruthy(),
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, data, ...res } = result.current.signer
+      const { internal, data, ...res } = result.current.walletClient
       const { uid, ...rest } = data || {}
       expect(res).toMatchInlineSnapshot(`
         {
@@ -289,10 +293,12 @@ describe('useSigner', () => {
 
       await actDisconnect({ utils })
 
-      await waitFor(() => expect(result.current.signer.isIdle).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.walletClient.isIdle).toBeTruthy(),
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal: _, ...res2 } = result.current.signer
+      const { internal: _, ...res2 } = result.current.walletClient
       expect(res2).toMatchInlineSnapshot(`
         {
           "data": undefined,
@@ -313,15 +319,17 @@ describe('useSigner', () => {
     })
 
     it('updates on account change', async () => {
-      const utils = renderHook(() => useSignerWithAccount())
+      const utils = renderHook(() => useWalletClientWithAccount())
       const { result, waitFor } = utils
 
       await actConnect({ utils })
 
-      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.walletClient.isSuccess).toBeTruthy(),
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, data, ...res } = result.current.signer
+      const { internal, data, ...res } = result.current.walletClient
       const { uid, ...rest } = data || {}
       expect(res).toMatchInlineSnapshot(`
         {
@@ -426,19 +434,19 @@ describe('useSigner', () => {
         }
       `)
 
-      const nextSigner = getSigners()[1]!
+      const nextWalletClient = getWalletClients()[1]!
       const provider = await result.current.account.connector?.getProvider()
-      await provider.switchSigner(nextSigner)
+      await provider.switchWalletClient(nextWalletClient)
 
       await waitFor(() =>
         expect(
-          (result.current.signer.data as any).account.address ===
-            nextSigner.account.address,
+          (result.current.walletClient.data as any).account.address ===
+            nextWalletClient.account.address,
         ).toBeTruthy(),
       )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal: _, data: data2, ...res2 } = result.current.signer
+      const { internal: _, data: data2, ...res2 } = result.current.walletClient
       const { uid: uid2, ...rest2 } = data2 || {}
       expect(res2).toMatchInlineSnapshot(`
         {
@@ -545,15 +553,17 @@ describe('useSigner', () => {
     })
 
     it('updates on network', async () => {
-      const utils = renderHook(() => useSignerWithAccount())
+      const utils = renderHook(() => useWalletClientWithAccount())
       const { result, waitFor } = utils
 
       await actConnect({ utils })
 
-      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.walletClient.isSuccess).toBeTruthy(),
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, data, ...res } = result.current.signer
+      const { internal, data, ...res } = result.current.walletClient
       const { uid, ...rest } = data || {}
       expect(res).toMatchInlineSnapshot(`
         {
@@ -660,10 +670,12 @@ describe('useSigner', () => {
 
       await actSwitchNetwork({ utils, chainId: 1 })
 
-      await waitFor(() => expect(result.current.signer.isSuccess).toBeTruthy())
+      await waitFor(() =>
+        expect(result.current.walletClient.isSuccess).toBeTruthy(),
+      )
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal: _, data: data2, ...res2 } = result.current.signer
+      const { internal: _, data: data2, ...res2 } = result.current.walletClient
       const { uid: uid2, ...rest2 } = data2 || {}
       expect(res2).toMatchInlineSnapshot(`
         {

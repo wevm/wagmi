@@ -1,13 +1,13 @@
 import type { Abi } from 'abitype'
 import type { ReadContractParameters, ReadContractReturnType } from 'viem'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type ReadContractConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
 > = ReadContractParameters<TAbi, TFunctionName> & {
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
 }
 
@@ -30,8 +30,8 @@ export async function readContract<
 }: ReadContractConfig<TAbi, TFunctionName>): Promise<
   ReadContractResult<TAbi, TFunctionName>
 > {
-  const provider = getProvider({ chainId })
-  return provider.readContract({
+  const publicClient = getPublicClient({ chainId })
+  return publicClient.readContract({
     abi,
     address,
     functionName,

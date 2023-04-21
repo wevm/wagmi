@@ -1,8 +1,8 @@
 import type {
-  FetchSignerResult,
+  GetWalletClientResult,
   PrepareWriteContractConfig,
   PrepareWriteContractResult,
-  Signer,
+  WalletClient,
 } from '@wagmi/core'
 import { prepareWriteContract } from '@wagmi/core'
 import { getCallParameters } from '@wagmi/core/internal'
@@ -10,17 +10,18 @@ import type { Abi } from 'abitype'
 import type { GetFunctionArgs } from 'viem'
 
 import type { PartialBy, QueryConfig, QueryFunctionArgs } from '../../types'
-import { useNetwork, useSigner } from '../accounts'
+import { useNetwork } from '../accounts'
 import { useQuery } from '../utils'
+import { useWalletClient } from '../viem'
 
 export type UsePrepareContractWriteConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TChainId extends number = number,
-  TSigner extends Signer = Signer,
+  TWalletClient extends WalletClient = WalletClient,
 > = PartialBy<
   Omit<
-    PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TSigner>,
+    PrepareWriteContractConfig<TAbi, TFunctionName, TChainId, TWalletClient>,
     'args'
   >,
   'abi' | 'address' | 'functionName'
@@ -31,7 +32,7 @@ export type UsePrepareContractWriteConfig<
 type QueryKeyArgs = Partial<Omit<PrepareWriteContractConfig, 'abi'>>
 type QueryKeyConfig = Pick<UsePrepareContractWriteConfig, 'scopeKey'> & {
   activeChainId?: number
-  signerAddress?: string
+  walletClientAddress?: string
 }
 
 function queryKey({
@@ -49,7 +50,7 @@ function queryKey({
   maxPriorityFeePerGas,
   nonce,
   scopeKey,
-  signerAddress,
+  walletClientAddress,
   value,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
@@ -69,7 +70,7 @@ function queryKey({
       maxPriorityFeePerGas,
       nonce,
       scopeKey,
-      signerAddress,
+      walletClientAddress,
       value,
     },
   ] as const
@@ -77,10 +78,10 @@ function queryKey({
 
 function queryFn({
   abi,
-  signer,
+  walletClient,
 }: {
   abi?: Abi | readonly unknown[]
-  signer?: FetchSignerResult
+  walletClient?: GetWalletClientResult
 }) {
   return ({
     queryKey: [
@@ -119,7 +120,7 @@ function queryFn({
       maxFeePerGas,
       maxPriorityFeePerGas,
       nonce,
-      signer,
+      walletClient,
       value,
     })
   }
@@ -164,7 +165,7 @@ export function usePrepareContractWrite<
   }: UsePrepareContractWriteConfig<TAbi, TFunctionName, TChainId> = {} as any,
 ) {
   const { chain: activeChain } = useNetwork()
-  const { data: signer } = useSigner({ chainId })
+  const { data: walletClient } = useWalletClient({ chainId })
 
   const {
     accessList,
@@ -194,17 +195,19 @@ export function usePrepareContractWrite<
       maxPriorityFeePerGas,
       nonce,
       scopeKey,
-      signerAddress: signer?.account.address,
+      walletClientAddress: walletClient?.account.address,
       value,
     } as QueryKeyArgs & QueryKeyConfig),
     queryFn({
       // TODO: Remove cast and still support `Narrow<TAbi>`
       abi: abi as Abi,
-      signer,
+      walletClient,
     }),
     {
       cacheTime,
-      enabled: Boolean(enabled && abi && address && functionName && signer),
+      enabled: Boolean(
+        enabled && abi && address && functionName && walletClient,
+      ),
       staleTime,
       suspense,
       onError,

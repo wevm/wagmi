@@ -8,8 +8,8 @@ import { persistQueryClient } from '@tanstack/react-query-persist-client'
 import type {
   ClientConfig,
   Client as CoreClient,
-  Provider,
-  WebSocketProvider,
+  PublicClient,
+  WebSocketPublicClient,
 } from '@wagmi/core'
 import {
   createClient as createCoreClient,
@@ -18,15 +18,15 @@ import {
 } from '@wagmi/core'
 
 export type CreateClientConfig<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
-> = ClientConfig<TProvider, TWebSocketProvider> & {
+  TPublicClient extends PublicClient = PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
+> = ClientConfig<TPublicClient, TWebSocketPublicClient> & {
   queryClient?: QueryClient
   persister?: Persister | null
 }
 export function createClient<
-  TProvider extends Provider,
-  TWebSocketProvider extends WebSocketProvider,
+  TPublicClient extends PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient,
 >({
   queryClient = new QueryClient({
     defaultOptions: {
@@ -58,8 +58,8 @@ export function createClient<
       })
     : undefined,
   ...config
-}: CreateClientConfig<TProvider, TWebSocketProvider>) {
-  const client = createCoreClient<TProvider, TWebSocketProvider>({
+}: CreateClientConfig<TPublicClient, TWebSocketPublicClient>) {
+  const client = createCoreClient<TPublicClient, TWebSocketPublicClient>({
     ...config,
     storage,
   })
@@ -79,6 +79,8 @@ export function createClient<
 }
 
 export type Client<
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
-> = CoreClient<TProvider, TWebSocketProvider> & { queryClient: QueryClient }
+  TPublicClient extends PublicClient = PublicClient,
+  TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
+> = CoreClient<TPublicClient, TWebSocketPublicClient> & {
+  queryClient: QueryClient
+}

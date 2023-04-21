@@ -7,7 +7,7 @@ import type {
 
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain } from '../../utils'
-import { fetchSigner } from '../accounts'
+import { getWalletClient } from '../viem'
 import { prepareSendTransaction } from './prepareSendTransaction'
 
 export type SendTransactionPreparedRequest = {
@@ -32,7 +32,7 @@ export type SendTransactionUnpreparedRequest = {
 }
 
 export type SendTransactionArgs = {
-  /** Chain ID used to validate if the signer is connected to the target chain */
+  /** Chain ID used to validate if the walletClient is connected to the target chain */
   chainId?: number
 } & (SendTransactionPreparedRequest | SendTransactionUnpreparedRequest)
 
@@ -66,20 +66,20 @@ export async function sendTransaction({
   /** Ref: wagmi.sh/react/prepare-hooks#ios-app-link-constraints */
   /********************************************************************/
 
-  // `fetchSigner` isn't really "asynchronous" as we have already
-  // initialized the provider upon user connection, so it will return
+  // `getWalletClient` isn't really "asynchronous" as we have already
+  // initialized the Wallet Client upon user connection, so it will return
   // immediately.
-  const signer = await fetchSigner()
-  if (!signer) throw new ConnectorNotFoundError()
+  const walletClient = await getWalletClient()
+  if (!walletClient) throw new ConnectorNotFoundError()
 
-  if (chainId) assertActiveChain({ chainId, signer })
+  if (chainId) assertActiveChain({ chainId, walletClient })
 
   if (mode === 'recklesslyUnprepared') {
     const res = await prepareSendTransaction({ chainId, request })
     request = res.request
   }
 
-  const hash = await signer.sendTransaction({
+  const hash = await walletClient.sendTransaction({
     ...request,
     chain: null,
   } as SendTransactionParameters)

@@ -41,10 +41,10 @@ export class ConnectorAlreadyConnectedError extends Error {
   message = 'Connector already connected'
 }
 
-export class ProviderChainsNotFound extends Error {
-  name = 'ProviderChainsNotFound'
+export class ClientChainsNotFound extends Error {
+  name = 'ClientChainsNotFound'
   message =
-    'No chains were found on the wagmi provider. Some functions that require a chain may not work.'
+    'No chains were found on the wagmi Client. Some functions that require a chain may not work.'
 }
 
 export class SwitchChainNotSupportedError extends Error {

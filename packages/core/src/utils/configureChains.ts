@@ -8,9 +8,9 @@ import { createPublicClient, fallback, http, webSocket } from 'viem'
 import type { Chain } from '../chains'
 import type {
   ChainProviderFn,
-  Provider,
+  PublicClient,
   RpcUrls,
-  WebSocketProvider,
+  WebSocketPublicClient,
 } from '../types'
 
 export type ConfigureChainsConfig = Pick<
@@ -84,7 +84,7 @@ export function configureChains<TChain extends Chain = Chain>(
 
   return {
     chains,
-    provider: ({ chainId }: { chainId?: number }) => {
+    publicClient: ({ chainId }: { chainId?: number }) => {
       const activeChain = (chains.find((x) => x.id === chainId) ??
         defaultChains[0]) as TChain
       const chainHttpUrls = httpUrls[activeChain.id]
@@ -92,7 +92,7 @@ export function configureChains<TChain extends Chain = Chain>(
       if (!chainHttpUrls || !chainHttpUrls[0])
         throw new Error(`No providers configured for chain "${activeChain.id}"`)
 
-      const provider = createPublicClient({
+      const publicClient = createPublicClient({
         batch,
         chain: activeChain,
         transport: fallback(
@@ -102,18 +102,18 @@ export function configureChains<TChain extends Chain = Chain>(
         pollingInterval,
       })
 
-      return Object.assign(provider, {
+      return Object.assign(publicClient, {
         chains,
-      }) as Provider<FallbackTransport>
+      }) as PublicClient<FallbackTransport>
     },
-    webSocketProvider: ({ chainId }: { chainId?: number }) => {
+    webSocketPublicClient: ({ chainId }: { chainId?: number }) => {
       const activeChain = (chains.find((x) => x.id === chainId) ??
         defaultChains[0]) as TChain
       const chainWsUrls = wsUrls[activeChain.id]
 
       if (!chainWsUrls || !chainWsUrls[0]) return undefined
 
-      const provider = createPublicClient({
+      const publicClient = createPublicClient({
         batch,
         chain: activeChain,
         transport: fallback(
@@ -123,9 +123,9 @@ export function configureChains<TChain extends Chain = Chain>(
         pollingInterval,
       })
 
-      return Object.assign(provider, {
+      return Object.assign(publicClient, {
         chains,
-      }) as WebSocketProvider<FallbackTransport>
+      }) as WebSocketPublicClient<FallbackTransport>
     },
   } as const
 }

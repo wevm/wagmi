@@ -7,7 +7,7 @@ import {
   actConnect,
   getCrowdfundArgs,
   getRandomTokenId,
-  getSigners,
+  getWalletClients,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
   renderHook,
@@ -322,7 +322,7 @@ describe('useContractWrite', () => {
             sender:    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
           Docs: https://viem.sh/docs/contract/simulateContract.html
-          Version: viem@0.3.0],
+          Version: viem@0.3.6],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -505,7 +505,7 @@ describe('useContractWrite', () => {
               sender:    0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
 
             Docs: https://viem.sh/docs/contract/simulateContract.html
-            Version: viem@0.3.0"
+            Version: viem@0.3.6"
           `,
           )
         })
@@ -546,8 +546,8 @@ describe('useContractWrite', () => {
 
         expect(result.current.contractWrite.data?.hash).toBeDefined()
 
-        const from = await getSigners()[0]?.account.address
-        const to = await getSigners()[1]?.account.address
+        const from = await getWalletClients()[0]?.account.address
+        const to = await getWalletClients()[1]?.account.address
         functionName = 'transferFrom'
         args = [from, to, tokenId]
         rerender()

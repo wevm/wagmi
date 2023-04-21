@@ -1,11 +1,11 @@
 import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import type { Client } from '../../client'
 import { connect } from '../accounts'
-import { getProvider } from '../providers'
 import { sendTransaction } from '../transactions'
+import { getPublicClient } from '../viem'
 import { watchBlockNumber } from './watchBlockNumber'
 
 describe('watchBlockNumber', () => {
@@ -23,9 +23,9 @@ describe('watchBlockNumber', () => {
       (blockNumber) => results.push(blockNumber),
     )
 
-    const provider = getProvider()
+    const publicClient = getPublicClient()
     await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
+      setTimeout(() => res(''), publicClient.pollingInterval + 50),
     )
 
     expect(results.length).toEqual(0)
@@ -45,9 +45,9 @@ describe('watchBlockNumber', () => {
             (blockNumber) => results.push(blockNumber),
           )
 
-          const provider = getProvider()
+          const publicClient = getPublicClient()
           await new Promise((res) =>
-            setTimeout(() => res(''), provider.pollingInterval + 50),
+            setTimeout(() => res(''), publicClient.pollingInterval + 50),
           )
 
           expect(results.length).toEqual(1)
@@ -65,8 +65,8 @@ describe('watchBlockNumber', () => {
           (blockNumber) => results.push(blockNumber),
         )
 
-        const signers = getSigners()
-        const to = signers[1]
+        const walletClients = getWalletClients()
+        const to = walletClients[1]
         const toAddress = to?.account.address
 
         await connect({ connector: client.connectors[0]! })
@@ -78,9 +78,9 @@ describe('watchBlockNumber', () => {
           },
         })
 
-        const provider = getProvider()
+        const publicClient = getPublicClient()
         await new Promise((res) =>
-          setTimeout(() => res(''), provider.pollingInterval + 50),
+          setTimeout(() => res(''), publicClient.pollingInterval + 50),
         )
 
         expect(results.length).toEqual(2)
@@ -98,8 +98,8 @@ describe('watchBlockNumber', () => {
         )
         unsubscribe()
 
-        const signers = getSigners()
-        const to = signers[1]
+        const walletClients = getWalletClients()
+        const to = walletClients[1]
         const toAddress = to?.account.address
 
         await connect({ connector: client.connectors[0]! })
@@ -111,9 +111,9 @@ describe('watchBlockNumber', () => {
           },
         })
 
-        const provider = getProvider()
+        const publicClient = getPublicClient()
         await new Promise((res) =>
-          setTimeout(() => res(''), provider.pollingInterval + 50),
+          setTimeout(() => res(''), publicClient.pollingInterval + 50),
         )
 
         expect(results.length).toEqual(0)

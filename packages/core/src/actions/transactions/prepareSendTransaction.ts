@@ -2,20 +2,21 @@ import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
 import { isAddress } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
-import type { Signer } from '../../types'
+import type { WalletClient } from '../../types'
 import { assertActiveChain } from '../../utils'
-import { fetchSigner } from '../accounts'
 import { fetchEnsAddress } from '../ens'
-import { getProvider } from '../providers'
+import { getPublicClient, getWalletClient } from '../viem'
 
-export type PrepareSendTransactionArgs<TSigner extends Signer = Signer> = {
-  /** Chain ID used to validate if the signer is connected to the target chain */
+export type PrepareSendTransactionArgs<
+  TWalletClient extends WalletClient = WalletClient,
+> = {
+  /** Chain ID used to validate if the walletClient is connected to the target chain */
   chainId?: number
   /** Request data to prepare the transaction */
   request: Omit<SendTransactionParameters<Chain, Account>, 'to'> & {
     to?: string
   }
-  signer?: TSigner | null
+  walletClient?: TWalletClient | null
 }
 
 export type PrepareSendTransactionResult = {
@@ -43,12 +44,12 @@ export type PrepareSendTransactionResult = {
 export async function prepareSendTransaction({
   chainId,
   request,
-  signer: signer_,
+  walletClient: walletClient_,
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
-  const provider = getProvider({ chainId })
-  const signer = signer_ ?? (await fetchSigner({ chainId }))
-  if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId, signer })
+  const publicClient = getPublicClient({ chainId })
+  const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
+  if (!walletClient) throw new ConnectorNotFoundError()
+  if (chainId) assertActiveChain({ chainId, walletClient })
 
   const to =
     (request.to && !isAddress(request.to)
@@ -58,7 +59,11 @@ export async function prepareSendTransaction({
 
   const gas =
     request.gas ??
-    (await provider.estimateGas({ ...request, account: signer.account, to }))
+    (await publicClient.estimateGas({
+      ...request,
+      account: walletClient.account,
+      to,
+    }))
 
   return {
     ...(chainId ? { chainId } : {}),

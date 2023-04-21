@@ -2,7 +2,7 @@ import { MockConnector } from '@wagmi/core/connectors/mock'
 import { parseEther } from 'viem'
 import { describe, expect, it } from 'vitest'
 
-import { act, actConnect, getSigners, renderHook } from '../../../test'
+import { act, actConnect, getWalletClients, renderHook } from '../../../test'
 import type { SendTransactionResult } from '../../actions'
 import { useConnect } from '../accounts'
 import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
@@ -64,7 +64,7 @@ describe('useSendTransaction', () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>
@@ -286,7 +286,7 @@ describe('useSendTransaction', () => {
             gas:    21000
 
           Details: Insufficient funds for gas * price + value
-          Version: viem@0.3.0"
+          Version: viem@0.3.6"
         `)
         expect(res).toMatchInlineSnapshot(`
           {
@@ -405,7 +405,7 @@ describe('useSendTransaction', () => {
                 gas:    21000
 
               Details: Insufficient funds for gas * price + value
-              Version: viem@0.3.0"
+              Version: viem@0.3.6"
             `)
           }
         })

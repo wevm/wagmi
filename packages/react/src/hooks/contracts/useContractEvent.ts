@@ -6,7 +6,7 @@ import type { Abi } from 'abitype'
 import * as React from 'react'
 
 import type { PartialBy } from '../../types'
-import { useProvider, useWebSocketProvider } from '../providers'
+import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
 export type UseContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
@@ -30,15 +30,15 @@ export function useContractEvent<
     eventName,
   }: UseContractEventConfig<TAbi, TEventName> = {} as any,
 ) {
-  const provider = useProvider({ chainId })
-  const webSocketProvider = useWebSocketProvider({ chainId })
+  const publicClient = usePublicClient({ chainId })
+  const webSocketPublicClient = useWebSocketPublicClient({ chainId })
 
   React.useEffect(() => {
     if (!abi || !address || !eventName) return
 
-    const provider_ = webSocketProvider || provider
+    const publicClient_ = webSocketPublicClient || publicClient
 
-    const unwatch = provider_.watchContractEvent({
+    const unwatch = publicClient_.watchContractEvent({
       abi,
       address,
       eventName,

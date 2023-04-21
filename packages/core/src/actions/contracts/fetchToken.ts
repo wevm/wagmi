@@ -15,7 +15,7 @@ import { readContracts } from '../contracts'
 export type FetchTokenArgs = {
   /** Address of ERC-20 token */
   address: Address
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
   /** Units for formatting output */
   formatUnits?: Unit

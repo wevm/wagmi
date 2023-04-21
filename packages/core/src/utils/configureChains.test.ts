@@ -118,7 +118,7 @@ describe('configureChains', () => {
 
   describe('single provider', () => {
     describe('alchemy', () => {
-      const { chains, provider } = configureChains(
+      const { chains, publicClient } = configureChains(
         defaultChains,
         [alchemyProvider({ apiKey: alchemyApiKey })],
         { rank: false },
@@ -137,7 +137,7 @@ describe('configureChains', () => {
       })
 
       it('sets provider transport to alchemy', async () => {
-        const provider_ = provider({ chainId: mainnet.id })
+        const provider_ = publicClient({ chainId: mainnet.id })
         expect(
           provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot(
@@ -147,7 +147,7 @@ describe('configureChains', () => {
 
       defaultChains.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          await provider({ chainId: chain.id }).getBlockNumber()
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(alchemyListener).toBeCalledTimes(1)
         })
       })
@@ -169,7 +169,7 @@ describe('configureChains', () => {
     })
 
     describe('infura', () => {
-      const { chains, provider } = configureChains(
+      const { chains, publicClient } = configureChains(
         defaultChains,
         [infuraProvider({ apiKey: infuraApiKey })],
         { rank: false },
@@ -188,7 +188,7 @@ describe('configureChains', () => {
       })
 
       it('sets provider transport to alchemy', async () => {
-        const provider_ = provider({ chainId: mainnet.id })
+        const provider_ = publicClient({ chainId: mainnet.id })
         expect(
           provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot('"https://mainnet.infura.io/v3/apiKey-infura"')
@@ -196,7 +196,7 @@ describe('configureChains', () => {
 
       defaultChains.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          await provider({ chainId: chain.id }).getBlockNumber()
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(infuraListener).toBeCalledTimes(1)
         })
       })
@@ -218,7 +218,7 @@ describe('configureChains', () => {
     })
 
     describe('public', () => {
-      const { chains, provider } = configureChains(
+      const { chains, publicClient } = configureChains(
         defaultChainsWithAvalanche,
         [publicProvider()],
         { rank: false },
@@ -238,7 +238,7 @@ describe('configureChains', () => {
       })
 
       it('sets provider transport to alchemy', async () => {
-        const provider_ = provider({ chainId: mainnet.id })
+        const provider_ = publicClient({ chainId: mainnet.id })
         expect(
           provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot('"https://cloudflare-eth.com"')
@@ -246,7 +246,7 @@ describe('configureChains', () => {
 
       defaultChainsWithAvalanche.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          await provider({ chainId: chain.id }).getBlockNumber()
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(publicListener).toBeCalledTimes(1)
         })
       })
@@ -273,7 +273,7 @@ describe('configureChains', () => {
     })
 
     describe('jsonRpc', () => {
-      const { chains, provider } = configureChains(
+      const { chains, publicClient } = configureChains(
         defaultChainsWithAvalanche,
         [
           jsonRpcProvider({
@@ -299,7 +299,7 @@ describe('configureChains', () => {
       })
 
       it('sets provider transport to alchemy', async () => {
-        const provider_ = provider({ chainId: mainnet.id })
+        const provider_ = publicClient({ chainId: mainnet.id })
         expect(
           provider_.transport.transports[0]?.value?.url,
         ).toMatchInlineSnapshot('"https://homestead.example.com"')
@@ -307,7 +307,7 @@ describe('configureChains', () => {
 
       defaultChainsWithAvalanche.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          const { provider } = configureChains(
+          const { publicClient } = configureChains(
             defaultChainsWithAvalanche,
             [
               jsonRpcProvider({
@@ -318,7 +318,7 @@ describe('configureChains', () => {
             ],
             { rank: false },
           )
-          await provider({ chainId: chain.id }).getBlockNumber()
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(jsonRpcListener).toBeCalledTimes(1)
         })
       })
@@ -362,7 +362,7 @@ describe('configureChains', () => {
       avalancheChain,
     ]
 
-    const { chains, provider } = configureChains(
+    const { chains, publicClient } = configureChains(
       defaultChains,
       [
         alchemyProvider({ apiKey: alchemyApiKey }),
@@ -391,7 +391,7 @@ describe('configureChains', () => {
     })
 
     it('sets provider transports', async () => {
-      const provider_ = provider({ chainId: mainnet.id })
+      const provider_ = publicClient({ chainId: mainnet.id })
       expect(
         provider_.transport.transports.map((x) => x.value?.url),
       ).toMatchInlineSnapshot(
@@ -406,7 +406,7 @@ describe('configureChains', () => {
 
     it('configures provider with correct fallback', async () => {
       for (const chain of defaultChains) {
-        await provider({ chainId: chain.id }).getBlockNumber()
+        await publicClient({ chainId: chain.id }).getBlockNumber()
       }
       expect(alchemyListener).toBeCalledTimes(2)
       expect(infuraListener).toBeCalledTimes(2)

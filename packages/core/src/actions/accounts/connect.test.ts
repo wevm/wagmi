@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupClient } from '../../../test'
 import { getClient } from '../../client'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('connect', () => {
@@ -73,7 +73,7 @@ describe('connect', () => {
           connector: new MockConnector({
             options: {
               flags: { failConnect: true },
-              signer: getSigners()[0]!,
+              walletClient: getWalletClients()[0]!,
             },
           }),
         }),
@@ -81,7 +81,7 @@ describe('connect', () => {
         "User rejected the request.
 
         Details: Failed to connect.
-        Version: viem@0.3.0"
+        Version: viem@0.3.6"
       `)
       expect(getClient().status).toEqual('disconnected')
     })
@@ -93,7 +93,7 @@ describe('connect', () => {
           connector: new MockConnector({
             options: {
               flags: { failConnect: true },
-              signer: getSigners()[0]!,
+              walletClient: getWalletClients()[0]!,
             },
           }),
         }),

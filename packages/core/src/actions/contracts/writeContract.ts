@@ -8,7 +8,7 @@ import type {
 
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain } from '../../utils'
-import { fetchSigner } from '../accounts'
+import { getWalletClient } from '../viem'
 import type { PrepareWriteContractConfig } from './prepareWriteContract'
 import { prepareWriteContract } from './prepareWriteContract'
 
@@ -31,7 +31,7 @@ export type WriteContractPreparedArgs<
    * via the {@link prepareWriteContract} function
    * */
   mode: 'prepared'
-  /** Chain id to use for provider. */
+  /** Chain id. */
   chainId?: number
   /** Write contract request. */
   request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
@@ -59,7 +59,7 @@ export type WriteContractUnpreparedArgs<
    * via the {@link prepareWriteContract} function
    * */
   mode: 'recklesslyUnprepared'
-  /** Chain id to use for provider */
+  /** Chain id. */
   chainId?: number
   request?: never
 }
@@ -103,9 +103,10 @@ export async function writeContract<
   /** Ref: https://wagmi.sh/react/prepare-hooks#ios-app-link-constraints */
   /****************************************************************************/
 
-  const signer = await fetchSigner()
-  if (!signer) throw new ConnectorNotFoundError()
-  if (config.chainId) assertActiveChain({ chainId: config.chainId, signer })
+  const walletClient = await getWalletClient()
+  if (!walletClient) throw new ConnectorNotFoundError()
+  if (config.chainId)
+    assertActiveChain({ chainId: config.chainId, walletClient })
 
   let request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
   if (config.mode === 'prepared') {
@@ -121,7 +122,7 @@ export async function writeContract<
     >
   }
 
-  const hash = await signer.writeContract({ ...request, chain: null })
+  const hash = await walletClient.writeContract({ ...request, chain: null })
 
   /********************************************************************/
   /** END: iOS App Link cautious code.                                */
