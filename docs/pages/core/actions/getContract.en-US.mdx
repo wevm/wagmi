@@ -60,17 +60,17 @@ const contract = getContract({
 })
 ```
 
-### signer (optional)
+### walletClient (optional)
 
 A viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) with a connected account.
 
 ```ts {7}
-import { getContract, fetchSigner } from '@wagmi/core'
+import { getContract, getWalletClient } from '@wagmi/core'
 
-const signer = fetchSigner()
+const walletClient = await getWalletClient()
 const contract = getContract({
   address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   abi: ensRegistryABI,
-  signer,
+  walletClient,
 })
 ```

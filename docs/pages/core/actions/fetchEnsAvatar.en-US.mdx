@@ -17,7 +17,7 @@ import { fetchEnsAvatar } from '@wagmi/core'
 import { fetchEnsAvatar } from '@wagmi/core'
 
 const avatarUrl = await fetchEnsAvatar({
-  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  name: 'jxom.eth',
 })
 ```
 
@@ -29,15 +29,15 @@ string
 
 ## Configuration
 
-### address
+### name
 
-Address or ENS name to fetch avatar for.
+ENS name to fetch avatar for.
 
 ```ts {4}
 import { fetchEnsAvatar } from '@wagmi/core'
 
 const ensAvatar = await fetchEnsAvatar({
-  address: '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
+  name: 'jxom.eth',
 })
 ```
 
@@ -49,7 +49,7 @@ Force a specific chain id for the request. The wagmi `Client`'s `provider` must 
 import { fetchEnsAvatar } from '@wagmi/core'
 
 const ensAvatar = await fetchEnsAvatar({
-  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+  name: 'jxom.eth',
   chainId: 1,
 })
 ```

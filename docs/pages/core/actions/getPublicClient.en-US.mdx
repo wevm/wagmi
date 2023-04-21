@@ -1,0 +1,40 @@
+---
+title: 'getPublicClient'
+description: "Action for accessing viem's Public Client."
+---
+
+# getPublicClient
+
+Action for accessing viem's [Public Client](https://viem.sh/docs/clients/public.html).
+
+```ts
+import { getPublicClient } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { getPublicClient } from '@wagmi/core'
+
+const publicClient = getPublicClient()
+```
+
+## Return Value
+
+```ts
+PublicClient
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/client#publicclient-optional) for this to work correctly.
+
+```ts {5}
+import { getPublicClient } from '@wagmi/core'
+
+const publicClient = getPublicClient({
+  chainId: 1,
+})
+```

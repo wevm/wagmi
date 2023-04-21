@@ -1,14 +1,14 @@
 ---
-title: 'fetchSigner'
+title: 'getWalletClient'
 description: "Action for accessing viem's Wallet Client for connected account."
 ---
 
-# fetchSigner
+# getWalletClient
 
 Action for accessing viem's [Wallet Client](https://viem.sh/docs/clients/wallet.html) for connected account.
 
 ```ts
-import { fetchSigner } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 ```
 
 ## Usage
@@ -16,28 +16,28 @@ import { fetchSigner } from '@wagmi/core'
 The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
 
 ```ts
-import { fetchSigner } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 
-const signer = await fetchSigner()
+const walletClient = await getWalletClient()
 ```
 
 ## Return Value
 
 ```ts
-Signer
+WalletClient
 ```
 
 ## Configuration
 
 ### chainId (optional)
 
-Chain ID to use for signer.
+Chain ID to use for the Wallet Client.
 
 ```ts {5}
-import { fetchSigner } from '@wagmi/core'
+import { getWalletClient } from '@wagmi/core'
 import { optimism } from '@wagmi/core/chains'
 
-const signer = await fetchSigner({
+const walletClient = await getWalletClient({
   chainId: optimism.id,
 })
 ```

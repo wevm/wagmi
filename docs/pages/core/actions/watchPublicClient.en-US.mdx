@@ -1,0 +1,50 @@
+---
+title: 'watchPublicClient'
+description: 'Action for subscribing to Public Client changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchPublicClient
+
+Action for subscribing to [PublicClient](/core/actions/getPublicClient) changes.
+
+```ts
+import { watchPublicClient } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when Public Client changes.
+
+```ts
+import { watchPublicClient } from '@wagmi/core'
+
+const unwatch = watchPublicClient(
+  {
+    chainId: 1,
+  },
+  (publicClient) => console.log(publicClient),
+)
+```
+
+## Return Value
+
+`unwatch` is a function that can be called to unsubscribe from the Public Client change event.
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the Public Client. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/client#publicclient-optional) for this to work correctly.
+
+```ts {5}
+import { watchPublicClient } from '@wagmi/core'
+
+const unwatch = watchPublicClient(
+  {
+    chainId: 1,
+  },
+  (publicClient) => console.log(publicClient),
+)
+```

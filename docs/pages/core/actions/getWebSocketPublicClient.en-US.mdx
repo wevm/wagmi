@@ -1,0 +1,40 @@
+---
+title: 'getWebSocketPublicClient'
+description: "Action for accessing viem's WebSocket Public Client."
+---
+
+# getWebSocketPublicClient
+
+Action for accessing viem's WebSocket [Public Client](https://viem.sh/docs/clients/public.html).
+
+```ts
+import { getWebSocketPublicClient } from '@wagmi/core'
+```
+
+## Usage
+
+```ts
+import { getWebSocketPublicClient } from '@wagmi/core'
+
+const publicClient = getWebSocketPublicClient()
+```
+
+## Return Value
+
+```ts
+PublicClient
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s `webSocketPublicClient` must be set up as a [chain-aware function](/core/client#websocketpublicclient-optional) for this to work correctly.
+
+```ts {5}
+import { getWebSocketPublicClient } from '@wagmi/core'
+
+const publicClient = getWebSocketPublicClient({
+  chainId: 1,
+})
+```

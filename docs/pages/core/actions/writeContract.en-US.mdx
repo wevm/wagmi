@@ -128,27 +128,6 @@ const { hash } = await writeContract({
 })
 ```
 
-### overrides (optional)
-
-> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
-
-Overrides to pass to function call. If the function is payable, you can pass a `value` here.
-
-```ts {8-11}
-import { writeContract } from '@wagmi/core'
-
-const { hash } = await writeContract({
-  mode: 'recklesslyUnprepared',
-  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  abi: wagmigotchiABI,
-  functionName: 'feed',
-  overrides: {
-    from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    value: parseEther('0.01'),
-  },
-})
-```
-
 ### chainId (optional)
 
 > This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
@@ -167,19 +146,111 @@ const { sendTransaction } = await writeContract({
 })
 ```
 
-### request (optional)
+### account
 
 > This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
 
-The request to use when sending the contract transaction.
+The Account to write to the contract from.
 
-```ts {6}
-import { prepareWriteContract, writeContract } from '@wagmi/core'
+```ts {8}
+import { writeContract } from '@wagmi/core'
 
-const { config } = await prepareWriteContract({ ... })
-const { hash } = await writeContract({
-  ...config,
-  request: config.request
+const { config } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+})
+```
+
+### gasPrice (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
+
+```ts {8}
+import { writeContract } from '@wagmi/core'
+
+const { config } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  gasPrice: parseGwei('20'),
+})
+```
+
+### maxFeePerGas (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {8}
+import { writeContract } from '@wagmi/core'
+
+const { config } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  maxFeePerGas: parseGwei('20'),
+})
+```
+
+### maxPriorityFeePerGas (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {8}
+import { writeContract } from '@wagmi/core'
+
+const { config } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  maxPriorityFeePerGas: parseGwei('2'),
+})
+```
+
+### nonce (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Unique number identifying this transaction.
+
+```ts {8}
+import { writeContract } from '@wagmi/core'
+
+const { config } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  nonce: 69,
+})
+```
+
+### value (optional)
+
+> This is automatically populated when using [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+
+Value in wei sent with this transaction.
+
+```ts {8}
+import { writeContract } from '@wagmi/core'
+
+const { config } = await writeContract({
+  mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  value: parseGwei('2'),
 })
 ```
 
