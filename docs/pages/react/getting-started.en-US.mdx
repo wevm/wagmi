@@ -77,7 +77,7 @@ First, configure your desired chains to be used by wagmi, and the providers you 
 import { configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
@@ -97,15 +97,15 @@ Next, create a wagmi `Client` instance using [`createClient`](/react/client), an
 import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
 const client = createClient({
   autoConnect: true,
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 ```
 
@@ -118,8 +118,8 @@ Finally, wrap your app with the [`WagmiConfig`](/react/WagmiConfig) component, p
 ```tsx {9-11}
 const client = createClient({
   autoConnect: true,
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 
 function App() {
