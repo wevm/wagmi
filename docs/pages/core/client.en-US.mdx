@@ -19,14 +19,15 @@ import { createClient } from '@wagmi/core'
 import { createClient, configureChains, mainnet } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
 const client = createClient({
-  provider,
-  webSocketProvider,
+  chains,
+  publicClient,
+  webSocketPublicClient,
 })
 ```
 
@@ -40,11 +41,11 @@ Enables reconnecting to last used connector on mount. Defaults to `false`.
 import { createClient, configureChains, mainnet } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { provider } = configureChains([mainnet], [publicProvider()])
+const { publicClient } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   autoConnect: true,
-  provider,
+  publicClient,
 })
 ```
 
@@ -58,7 +59,7 @@ import { publicProvider } from '@wagmi/core/providers/public'
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
 import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
 
-const { chains, provider } = configureChains([mainnet], [publicProvider()])
+const { chains, publicClient } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   connectors: [
@@ -70,7 +71,7 @@ const client = createClient({
       },
     }),
   ],
-  provider,
+  publicClient,
 })
 ```
 
@@ -107,7 +108,7 @@ const client = createClient({
 })
 ```
 
-### provider
+### publicClient
 
 viem [Public Client](https://viem.sh/docs/clients/public.html) for reading from the Ethereum network.
 
@@ -115,10 +116,10 @@ viem [Public Client](https://viem.sh/docs/clients/public.html) for reading from 
 import { createClient, configureChains, mainnet } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { provider } = configureChains([mainnet], [publicProvider()])
+const { publicClient } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
-  provider,
+  publicClient,
 })
 ```
 
@@ -137,30 +138,30 @@ import {
 } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { provider } = configureChains([mainnet], [publicProvider()])
+const { publicClient } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
-  provider,
+  publicClient,
   storage: createStorage({ storage: window.localStorage }),
 })
 ```
 
-### webSocketProvider (optional)
+### webSocketPublicClient (optional)
 
-viem WebSocket Public Client for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+viem [Public Client](https://viem.sh/docs/clients/public.html) with a [WebSocket Transport](https://viem.sh/docs/clients/transports/websocket.html) for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
 
 ```ts {11}
 import { createClient, configureChains, mainnet } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { provider, webSocketProvider } = configureChains(
+const { publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
 const client = createClient({
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 ```
 
