@@ -16,51 +16,24 @@ export type UseSendTransactionArgs = Omit<
 > &
   (
     | {
-        /**
-         * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
-         * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it
-         * is highly recommended to not use this and instead prepare the request upfront
-         * using the `usePrepareSendTransaction` hook.
-         *
-         * `prepared`: The request has been prepared with parameters required for sending a transaction
-         * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/react/prepare-hooks/usePrepareSendTransaction)
-         * */
         mode: 'prepared'
         /** The prepared request to send the transaction. */
         request: SendTransactionPreparedRequest['request'] | undefined
       }
     | {
-        mode: 'recklesslyUnprepared'
+        mode?: never
         /** The unprepared request to send the transaction. */
         request?: SendTransactionUnpreparedRequest['request']
       }
   )
 export type UseSendTransactionMutationArgs = {
-  /**
-   * Recklessly pass through an unprepared `request`. Note: This has
-   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is
-   * highly recommended to not use this and instead prepare the request upfront
-   * using the `usePrepareSendTransaction` hook.
-   */
-  recklesslySetUnpreparedRequest: SendTransactionUnpreparedRequest['request']
+  request: SendTransactionUnpreparedRequest['request']
 }
 export type UseSendTransactionConfig = MutationConfig<
   SendTransactionResult,
   Error,
   SendTransactionArgs
 >
-
-type SendTransactionFn = (
-  overrideConfig?: UseSendTransactionMutationArgs,
-) => void
-type SendTransactionAsyncFn = (
-  overrideConfig?: UseSendTransactionMutationArgs,
-) => Promise<SendTransactionResult>
-type MutateFnReturnValue<Args, Fn> = Args extends {
-  mode: 'recklesslyUnprepared'
-}
-  ? Fn
-  : Fn | undefined
 
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
@@ -90,9 +63,7 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  * })
  * const result = useSendTransaction(config)
  */
-export function useSendTransaction<
-  Args extends UseSendTransactionArgs = UseSendTransactionArgs,
->({
+export function useSendTransaction({
   chainId,
   mode,
   request,
@@ -100,7 +71,7 @@ export function useSendTransaction<
   onMutate,
   onSettled,
   onSuccess,
-}: Args & UseSendTransactionConfig) {
+}: UseSendTransactionArgs & UseSendTransactionConfig = {}) {
   const {
     data,
     error,
@@ -133,7 +104,7 @@ export function useSendTransaction<
       mutate({
         chainId,
         mode,
-        request: args?.recklesslySetUnpreparedRequest ?? request,
+        request: args?.request ?? request,
       } as SendTransactionArgs),
     [chainId, mode, mutate, request],
   )
@@ -143,7 +114,7 @@ export function useSendTransaction<
       mutateAsync({
         chainId,
         mode,
-        request: args?.recklesslySetUnpreparedRequest ?? request,
+        request: args?.request ?? request,
       } as SendTransactionArgs),
     [chainId, mode, mutateAsync, request],
   )
@@ -156,15 +127,8 @@ export function useSendTransaction<
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: (mode === 'prepared' && !request
-      ? undefined
-      : sendTransaction) as MutateFnReturnValue<Args, SendTransactionFn>,
-    sendTransactionAsync: (mode === 'prepared' && !request
-      ? undefined
-      : sendTransactionAsync) as MutateFnReturnValue<
-      Args,
-      SendTransactionAsyncFn
-    >,
+    sendTransaction,
+    sendTransactionAsync,
     status,
     variables,
   }

@@ -11,20 +11,12 @@ import { getWalletClient } from '../viem'
 import { prepareSendTransaction } from './prepareSendTransaction'
 
 export type SendTransactionPreparedRequest = {
-  /**
-   * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
-   * [UX pitfalls](/docs/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended
-   * to not use this and instead prepare the request upfront using the `prepareSendTransaction` function.
-   *
-   * `prepared`: The request has been prepared with parameters required for sending a transaction
-   * via the `prepareSendTransaction` function
-   * */
   mode: 'prepared'
   /** The prepared request for sending a transaction. */
   request: SendTransactionParameters<Chain, Account>
 }
 export type SendTransactionUnpreparedRequest = {
-  mode: 'recklesslyUnprepared'
+  mode?: never
   /** The unprepared request for sending a transaction. */
   request: Omit<SendTransactionParameters<Chain, Account>, 'to'> & {
     to?: string
@@ -74,7 +66,7 @@ export async function sendTransaction({
 
   if (chainId) assertActiveChain({ chainId, walletClient })
 
-  if (mode === 'recklesslyUnprepared') {
+  if (mode !== 'prepared') {
     const res = await prepareSendTransaction({ chainId, request })
     request = res.request
   }

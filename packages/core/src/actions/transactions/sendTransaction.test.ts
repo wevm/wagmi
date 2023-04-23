@@ -27,11 +27,10 @@ describe('sendTransaction', () => {
       expect(hash).toBeDefined()
     })
 
-    it('"recklessly unprepared" request', async () => {
+    it('"unprepared" request', async () => {
       await connect({ connector: client.connectors[0]! })
 
       const { hash } = await sendTransaction({
-        mode: 'recklesslyUnprepared',
         request: {
           to: 'jxom.eth',
           value: parseEther('10'),

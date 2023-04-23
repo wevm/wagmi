@@ -14,7 +14,7 @@ import type {
 import { useSendTransaction } from './useSendTransaction'
 
 function useSendTransactionWithConnect(
-  config: UseSendTransactionArgs & UseSendTransactionConfig,
+  config: UseSendTransactionArgs & UseSendTransactionConfig = {},
 ) {
   return {
     connect: useConnect(),
@@ -38,9 +38,7 @@ function useSendTransactionPreparedWithConnect(
 
 describe('useSendTransaction', () => {
   it('mounts', () => {
-    const { result } = renderHook(() =>
-      useSendTransaction({ mode: 'recklesslyUnprepared' }),
-    )
+    const { result } = renderHook(() => useSendTransaction())
     expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -60,7 +58,7 @@ describe('useSendTransaction', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('recklesslyUnprepared - unable to switch', async () => {
+      it('unable to switch', async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
@@ -70,7 +68,6 @@ describe('useSendTransaction', () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
             chainId: 1,
-            mode: 'recklesslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -114,7 +111,7 @@ describe('useSendTransaction', () => {
         await actConnect({ utils })
 
         await waitFor(() =>
-          expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
+          expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
         )
 
         await act(async () => {
@@ -152,10 +149,9 @@ describe('useSendTransaction', () => {
         `)
       })
 
-      it('recklesslyUnprepared', async () => {
+      it('unprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -189,7 +185,7 @@ describe('useSendTransaction', () => {
             "status": "success",
             "variables": {
               "chainId": undefined,
-              "mode": "recklesslyUnprepared",
+              "mode": undefined,
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": 1000000000000000000n,
@@ -200,15 +196,13 @@ describe('useSendTransaction', () => {
       })
 
       it('uses deferred args', async () => {
-        const utils = renderHook(() =>
-          useSendTransactionWithConnect({ mode: 'recklesslyUnprepared' }),
-        )
+        const utils = renderHook(() => useSendTransactionWithConnect())
         const { result, waitFor } = utils
         await actConnect({ utils })
 
         await act(async () => {
           result.current.sendTransaction.sendTransaction?.({
-            recklesslySetUnpreparedRequest: {
+            request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
             },
@@ -235,7 +229,7 @@ describe('useSendTransaction', () => {
             "status": "success",
             "variables": {
               "chainId": undefined,
-              "mode": "recklesslyUnprepared",
+              "mode": undefined,
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": 1000000000000000000n,
@@ -248,7 +242,6 @@ describe('useSendTransaction', () => {
       it('fails on insufficient balance', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('100000'),
@@ -301,7 +294,7 @@ describe('useSendTransaction', () => {
             "status": "error",
             "variables": {
               "chainId": undefined,
-              "mode": "recklesslyUnprepared",
+              "mode": undefined,
               "request": {
                 "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
                 "value": 100000000000000000000000n,
@@ -340,10 +333,9 @@ describe('useSendTransaction', () => {
         )
       })
 
-      it('recklesslyUnprepared', async () => {
+      it('unprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('1'),
@@ -367,7 +359,6 @@ describe('useSendTransaction', () => {
       it('throws on error', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
             request: {
               to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
               value: parseEther('100000'),
