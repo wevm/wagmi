@@ -27,14 +27,17 @@ Breaking changes:
 - `watchPendingTransactions`
   - callback now returns array of transactions
 - `prepareWriteContract`
-  - Removed `abi`, `address`, `functionName` from return value, they are now in `request`.
+  - Removed `abi`, `address`, `chainId`, `functionName` from return value, they are now in `request`.
   - `request` now returns shape of viem's `WriteContractParameters` instead of ethers' `TransactionRequest`.
   - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
 - `writeContract`
   - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/actions/wallet/sendTransaction.html#parameters
   - `wait` has been removed from return type, use `waitForTransaction` instead.
+  - Removed requirement for "prepare" mode. Prepare Hooks are no longer required.
 - `prepareSendTransaction`
   - No longer returns `gasLimit` – wallets will calculate this instead.
+- `sendTransaction`
+  - Removed requirement for "prepare" mode. Prepare Hooks are no longer required.
 - `watchContractEvent`
   - callback now returns array of event logs, rather than positional decoded args + log.
 - `useWaitForTransaction`
@@ -49,6 +52,9 @@ Breaking changes:
   - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
 - `useContractWrite`
   - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+  - Removed requirement for "prepare" mode. Prepare Hooks are no longer required.
+  - Renamed `recklesslySetUnpreparedArgs` to `args`.
+  - Removed `recklesslySetUnpreparedOverrides`. They are now on the root level of the function.
 - `useContract`
   - Removed. Use `getContract` instead.
 - `watchContractEvent`

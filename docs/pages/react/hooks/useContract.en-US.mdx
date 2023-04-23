@@ -75,19 +75,19 @@ function App() {
 }
 ```
 
-### signer (optional)
+### walletClient (optional)
 
 A viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) with a connected account.
 
 ```tsx {8}
-import { useContract, useSigner } from 'wagmi'
+import { useContract, useWalletClient } from 'wagmi'
 
 function App() {
-  const { data: signer } = useSigner()
+  const { data: walletClient } = useWalletClient()
   const contract = useContract({
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
-    signer,
+    walletClient,
   })
 }
 ```

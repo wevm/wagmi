@@ -1,0 +1,44 @@
+---
+title: 'useWebSocketPublicClient'
+description: "React Hook for accessing viem's WebSocket Public Client."
+---
+
+# useWebSocketPublicClient
+
+Hook for accessing viem's WebSocket [Public Client](https://viem.sh/docs/clients/public.html).
+
+```ts
+import { useWebSocketPublicClient } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { useWebSocketPublicClient } from 'wagmi'
+
+function App() {
+  const webSocketPublicClient = useWebSocketPublicClient()
+}
+```
+
+## Return Value
+
+```tsx
+WebSocketPublicClient
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s `webSocketPublicClient` must be set up as a [chain-aware function](/react/client#websocketpublicclient-optional) for this to work correctly.
+
+```tsx {5}
+import { useWebSocketPublicClient } from 'wagmi'
+
+function App() {
+  const webSocketPublicClient = useWebSocketPublicClient({
+    chainId: 1,
+  })
+}
+```

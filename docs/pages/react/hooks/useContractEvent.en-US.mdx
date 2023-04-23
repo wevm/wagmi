@@ -23,8 +23,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -44,8 +44,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -65,8 +65,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -84,8 +84,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewResolver',
-    listener(node, resolver) {
-      console.log(node, resolver)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -103,8 +103,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -112,7 +112,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id. The wagmi `Client`'s `webSocketProvider` must be set up as a [chain-aware function](/react/client#websocketprovider-optional) for this to work correctly.
+Force a specific chain id. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/client#publicclient-optional) for this to work correctly.
 
 ```tsx {11}
 import { useContractEvent } from 'wagmi'
@@ -122,30 +122,10 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
     chainId: 1,
-  })
-}
-```
-
-### once (optional)
-
-Receive only a single event, then stop listener. Defaults to `false`.
-
-```tsx {11}
-import { useContractEvent } from 'wagmi'
-
-function App() {
-  useContractEvent({
-    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    abi: ensRegistryABI,
-    eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
-    },
-    once: true,
   })
 }
 ```

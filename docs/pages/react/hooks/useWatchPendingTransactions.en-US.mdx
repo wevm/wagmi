@@ -26,7 +26,7 @@ The listener will be invoked when a new transactions enters the memory pool of t
 import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```
 
@@ -40,7 +40,7 @@ The listener function to be invoked when a new transaction enters the memory poo
 import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```
 
@@ -53,7 +53,7 @@ import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
   chainId: 1,
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```
 
@@ -66,6 +66,6 @@ import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
   enabled: false,
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```
