@@ -21,23 +21,22 @@ describe('writeContract', () => {
     setupClient()
   })
 
-  it('prepared config', async () => {
+  it('prepared', async () => {
     await connect({ connector })
-    const config = await prepareWriteContract({
+    const { request } = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
-    const { hash } = await writeContract(config)
+    const { hash } = await writeContract(request)
 
     expect(hash).toBeDefined()
   })
 
-  it('unprepared config', async () => {
+  it('unprepared', async () => {
     await connect({ connector })
     const { hash } = await writeContract({
       ...wagmiContractConfig,
-      mode: 'recklesslyUnprepared',
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
@@ -49,14 +48,14 @@ describe('writeContract', () => {
     describe('chainId', async () => {
       it('prepared', async () => {
         await connect({ connector })
-        const config = await prepareWriteContract({
+        const { request } = await prepareWriteContract({
           ...wagmiContractConfig,
           functionName: 'mint',
           args: [getRandomTokenId()],
           chainId: mainnet.id,
         })
-        expect(config.chainId).toBe(mainnet.id)
-        const { hash } = await writeContract(config)
+        expect(request.chainId).toBe(mainnet.id)
+        const { hash } = await writeContract(request)
 
         expect(hash).toBeDefined()
       })
@@ -65,7 +64,6 @@ describe('writeContract', () => {
         await connect({ connector })
         const { hash } = await writeContract({
           ...wagmiContractConfig,
-          mode: 'recklesslyUnprepared',
           functionName: 'mint',
           args: [getRandomTokenId()],
           chainId: mainnet.id,
@@ -78,14 +76,14 @@ describe('writeContract', () => {
     describe('gas', async () => {
       it('prepared', async () => {
         await connect({ connector })
-        const config = await prepareWriteContract({
+        const { request } = await prepareWriteContract({
           ...wagmiContractConfig,
           functionName: 'mint',
           args: [getRandomTokenId()],
           gas: 69_420n,
         })
-        expect(config.request.gas).toBe(69_420n)
-        const { hash } = await writeContract(config)
+        expect(request.gas).toBe(69_420n)
+        const { hash } = await writeContract(request)
 
         expect(hash).toBeDefined()
       })
@@ -94,7 +92,6 @@ describe('writeContract', () => {
         await connect({ connector })
         const { hash } = await writeContract({
           ...wagmiContractConfig,
-          mode: 'recklesslyUnprepared',
           functionName: 'mint',
           args: [getRandomTokenId()],
           gas: 69_420n,
@@ -108,7 +105,7 @@ describe('writeContract', () => {
   describe('errors', () => {
     it('wallet is on different chain', async () => {
       await connect({ connector })
-      const config = await prepareWriteContract({
+      const { request } = await prepareWriteContract({
         ...wagmiContractConfig,
         functionName: 'mint',
         args: [getRandomTokenId()],
@@ -116,7 +113,7 @@ describe('writeContract', () => {
 
       await expect(() =>
         writeContract({
-          ...config,
+          ...request,
           chainId: 69,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -126,7 +123,7 @@ describe('writeContract', () => {
 
     it('chain not configured for connector', async () => {
       await connect({ connector, chainId: 69_420 })
-      const config = await prepareWriteContract({
+      const { request } = await prepareWriteContract({
         ...wagmiContractConfig,
         functionName: 'mint',
         args: [getRandomTokenId()],
@@ -134,7 +131,7 @@ describe('writeContract', () => {
 
       await expect(() =>
         writeContract({
-          ...config,
+          ...request,
           chainId: 69_420,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -147,7 +144,6 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...wagmiContractConfig,
-          mode: 'recklesslyUnprepared',
           // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
@@ -158,7 +154,6 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...wagmiContractConfig,
-          mode: 'recklesslyUnprepared',
           // @ts-expect-error function does not exist
           functionName: 'claim',
         }),
@@ -170,7 +165,6 @@ describe('writeContract', () => {
       await expect(() =>
         writeContract({
           ...wagmiContractConfig,
-          mode: 'recklesslyUnprepared',
           // @ts-expect-error function does not exist
           functionName: 'wagmi',
         }),

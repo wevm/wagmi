@@ -22,7 +22,6 @@ describe('waitForTransaction', () => {
       const toAddress = to?.account.address
 
       const result = await sendTransaction({
-        mode: 'recklesslyUnprepared',
         request: {
           to: toAddress,
           value: parseEther('1'),
@@ -44,7 +43,6 @@ describe('waitForTransaction', () => {
       const toAddress = to?.account.address
 
       const result = await sendTransaction({
-        mode: 'recklesslyUnprepared',
         request: {
           to: toAddress,
           value: parseEther('1'),

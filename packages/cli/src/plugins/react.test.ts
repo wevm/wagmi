@@ -52,11 +52,10 @@ describe('react', () => {
               preparedWrite?.()
               
               const { write: unpreparedWrite } = useWagmiWrite({
-                mode: 'recklesslyUnprepared',
                 functionName: 'approve',
               })
               unpreparedWrite({
-                recklesslySetUnpreparedArgs: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 123n],
+                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 123n],
               })
             `,
           },

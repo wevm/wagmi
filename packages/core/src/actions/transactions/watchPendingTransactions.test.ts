@@ -48,7 +48,6 @@ describe('watchPendingTransactions', () => {
 
       await connect({ connector: client.connectors[0]! })
       await sendTransaction({
-        mode: 'recklesslyUnprepared',
         request: {
           to: toAddress,
           value: parseEther('1'),
@@ -81,7 +80,6 @@ describe('watchPendingTransactions', () => {
 
       await connect({ connector: client.connectors[0]! })
       await sendTransaction({
-        mode: 'recklesslyUnprepared',
         request: {
           to: toAddress,
           value: parseEther('1'),
@@ -100,7 +98,6 @@ describe('watchPendingTransactions', () => {
       )
 
       await sendTransaction({
-        mode: 'recklesslyUnprepared',
         request: {
           to: toAddress,
           value: parseEther('1'),

@@ -1,4 +1,4 @@
-import type { Hash, WriteContractMode } from '@wagmi/core'
+import type { Hash } from '@wagmi/core'
 import { erc20ABI } from '@wagmi/core'
 import type {
   Abi,
@@ -29,7 +29,6 @@ import { useContractWrite } from './useContractWrite'
 const uniContractAddress = '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984'
 
 function useContractEventWithWrite<
-  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[],
   TEventName extends TAbi extends Abi ? ExtractAbiEventNames<TAbi> : string,
   TFunctionName extends TAbi extends Abi
@@ -40,14 +39,14 @@ function useContractEventWithWrite<
     config: UseContractEventConfig<TAbi, TEventName>
   }
   contractWrite: {
-    config: UseContractWriteConfig<TMode, TAbi, TFunctionName>
+    config: UseContractWriteConfig<TAbi, TFunctionName>
   }
   waitForTransaction?: UseWaitForTransactionArgs & UseWaitForTransactionConfig
 }) {
   return {
     connect: useConnect(),
     contractEvent: useContractEvent(config.contractEvent.config),
-    contractWrite: useContractWrite<TMode, TAbi, TFunctionName>(
+    contractWrite: useContractWrite<TAbi, TFunctionName>(
       config.contractWrite.config,
     ),
     waitForTransaction: useWaitForTransaction(config.waitForTransaction),
@@ -104,7 +103,6 @@ describe('useContractEvent', () => {
         },
         contractWrite: {
           config: {
-            mode: 'recklesslyUnprepared',
             ...wagmiContractConfig,
             functionName: 'mint',
             args: [tokenId],

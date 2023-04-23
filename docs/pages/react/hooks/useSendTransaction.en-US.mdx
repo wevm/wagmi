@@ -33,6 +33,12 @@ function App() {
 }
 ```
 
+<Callout>
+  It is highly recommended to pair `useSendTransaction` with the
+  [`usePrepareSendTransaction` hook](#prepared-usage) to [avoid UX
+  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
+</Callout>
+
 ## Prepared Usage
 
 ```tsx
@@ -57,25 +63,18 @@ function App() {
 }
 ```
 
-<Callout>
-  It is highly recommended to pair `useSendTransaction` with the
-  [`usePrepareSendTransaction`
-  hook](/react/prepare-hooks/usePrepareSendTransaction) to [avoid UX
-  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
-</Callout>
-
 ## Return Value
 
 ```tsx
 {
-  data?: TransactionResponse
+  data?: { hash: Hex }
   error?: Error
   isError: boolean
   isIdle: boolean
   isLoading: boolean
   isSuccess: boolean
   sendTransaction: ((args?: SendTransactionArgs) => void)
-  sendTransactionAsync: ((args?: SendTransactionArgs) => Promise<TransactionResponse>)
+  sendTransactionAsync: ((args?: SendTransactionArgs) => Promise<{ hash: Hex }>)
   reset: () => void
   status: 'idle' | 'error' | 'loading' | 'success'
 }

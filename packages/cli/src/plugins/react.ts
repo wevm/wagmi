@@ -291,23 +291,23 @@ export function react(config: ReactConfig = {}): ReactResult {
               code = dedent`
               ${docString}
               export function ${name}<
-                TMode extends WriteContractMode,
                 TFunctionName extends string,
                 ${TChainId}
+                TMode extends WriteContractMode = undefined,
               >(
                 config: TMode extends 'prepared'
                   ? UseContractWriteConfig<
-                      TMode,
                       PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['request']['abi'],
-                      TFunctionName
+                      TFunctionName,
+                      TMode
                     >${TChainId ? ` & { address?: Address; chainId?: TChainId; }` : ''}
-                  : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, TFunctionName> & {
+                  : UseContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName, TMode> & {
                       abi?: never
                       ${typeParams_}
                     } = {} as any,
               ) {
                 ${innerContent}
-                return useContractWrite<TMode, typeof ${contract.meta.abiName}, TFunctionName>(${innerHookConfig} as any)
+                return useContractWrite<typeof ${contract.meta.abiName}, TFunctionName, TMode>(${innerHookConfig} as any)
               }
               `
             } else
@@ -375,22 +375,22 @@ export function react(config: ReactConfig = {}): ReactResult {
                   code = dedent`
                   ${docString}
                   export function ${name}<
-                    TMode extends WriteContractMode,
                     ${TChainId}
+                    TMode extends WriteContractMode = undefined,
                   >(
                     config: TMode extends 'prepared'
                     ? UseContractWriteConfig<
-                        TMode,
-                        PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['request']['abi'],
-                        '${item.name}'
+                      PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['request']['abi'],
+                      '${item.name}',
+                      TMode
                       > & {${preparedTypeParams}}
-                    : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, '${item.name}'> & {
+                    : UseContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}', TMode> & {
                         abi?: never
                         ${unpreparedTypeParams}
                       } = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractWrite<TMode, typeof ${contract.meta.abiName}, '${item.name}'>(${config} as any)
+                    return useContractWrite<typeof ${contract.meta.abiName}, '${item.name}', TMode>(${config} as any)
                   }
                   `
                 } else {

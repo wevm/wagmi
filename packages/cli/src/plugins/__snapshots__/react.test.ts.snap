@@ -211,20 +211,20 @@ export function useWagmiTotalSupply<
  * Wraps __{@link useContractWrite}__ with \`abi\` set to __{@link wagmiAbi}__.
  */
 export function useWagmiWrite<
-  TMode extends WriteContractMode,
   TFunctionName extends string,
+  TMode extends WriteContractMode = undefined,
 >(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        TMode,
         PrepareWriteContractResult<typeof wagmiAbi, string>['request']['abi'],
-        TFunctionName
+        TFunctionName,
+        TMode
       >
-    : UseContractWriteConfig<TMode, typeof wagmiAbi, TFunctionName> & {
+    : UseContractWriteConfig<typeof wagmiAbi, TFunctionName, TMode> & {
         abi?: never
       } = {} as any,
 ) {
-  return useContractWrite<TMode, typeof wagmiAbi, TFunctionName>({
+  return useContractWrite<typeof wagmiAbi, TFunctionName, TMode>({
     abi: wagmiAbi,
     ...config,
   } as any)
@@ -233,22 +233,22 @@ export function useWagmiWrite<
 /**
  * Wraps __{@link useContractWrite}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"approve\\"\`.
  */
-export function useWagmiApprove<TMode extends WriteContractMode>(
+export function useWagmiApprove<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        TMode,
         PrepareWriteContractResult<
           typeof wagmiAbi,
           'approve'
         >['request']['abi'],
-        'approve'
+        'approve',
+        TMode
       > & { functionName?: 'approve' }
-    : UseContractWriteConfig<TMode, typeof wagmiAbi, 'approve'> & {
+    : UseContractWriteConfig<typeof wagmiAbi, 'approve', TMode> & {
         abi?: never
         functionName?: 'approve'
       } = {} as any,
 ) {
-  return useContractWrite<TMode, typeof wagmiAbi, 'approve'>({
+  return useContractWrite<typeof wagmiAbi, 'approve', TMode>({
     abi: wagmiAbi,
     functionName: 'approve',
     ...config,
@@ -258,19 +258,19 @@ export function useWagmiApprove<TMode extends WriteContractMode>(
 /**
  * Wraps __{@link useContractWrite}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"mint\\"\`.
  */
-export function useWagmiMint<TMode extends WriteContractMode>(
+export function useWagmiMint<TMode extends WriteContractMode = undefined>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        TMode,
         PrepareWriteContractResult<typeof wagmiAbi, 'mint'>['request']['abi'],
-        'mint'
+        'mint',
+        TMode
       > & { functionName?: 'mint' }
-    : UseContractWriteConfig<TMode, typeof wagmiAbi, 'mint'> & {
+    : UseContractWriteConfig<typeof wagmiAbi, 'mint', TMode> & {
         abi?: never
         functionName?: 'mint'
       } = {} as any,
 ) {
-  return useContractWrite<TMode, typeof wagmiAbi, 'mint'>({
+  return useContractWrite<typeof wagmiAbi, 'mint', TMode>({
     abi: wagmiAbi,
     functionName: 'mint',
     ...config,
@@ -280,22 +280,24 @@ export function useWagmiMint<TMode extends WriteContractMode>(
 /**
  * Wraps __{@link useContractWrite}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"safeTransferFrom\\"\`.
  */
-export function useWagmiSafeTransferFrom<TMode extends WriteContractMode>(
+export function useWagmiSafeTransferFrom<
+  TMode extends WriteContractMode = undefined,
+>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        TMode,
         PrepareWriteContractResult<
           typeof wagmiAbi,
           'safeTransferFrom'
         >['request']['abi'],
-        'safeTransferFrom'
+        'safeTransferFrom',
+        TMode
       > & { functionName?: 'safeTransferFrom' }
-    : UseContractWriteConfig<TMode, typeof wagmiAbi, 'safeTransferFrom'> & {
+    : UseContractWriteConfig<typeof wagmiAbi, 'safeTransferFrom', TMode> & {
         abi?: never
         functionName?: 'safeTransferFrom'
       } = {} as any,
 ) {
-  return useContractWrite<TMode, typeof wagmiAbi, 'safeTransferFrom'>({
+  return useContractWrite<typeof wagmiAbi, 'safeTransferFrom', TMode>({
     abi: wagmiAbi,
     functionName: 'safeTransferFrom',
     ...config,
@@ -305,22 +307,24 @@ export function useWagmiSafeTransferFrom<TMode extends WriteContractMode>(
 /**
  * Wraps __{@link useContractWrite}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"setApprovalForAll\\"\`.
  */
-export function useWagmiSetApprovalForAll<TMode extends WriteContractMode>(
+export function useWagmiSetApprovalForAll<
+  TMode extends WriteContractMode = undefined,
+>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        TMode,
         PrepareWriteContractResult<
           typeof wagmiAbi,
           'setApprovalForAll'
         >['request']['abi'],
-        'setApprovalForAll'
+        'setApprovalForAll',
+        TMode
       > & { functionName?: 'setApprovalForAll' }
-    : UseContractWriteConfig<TMode, typeof wagmiAbi, 'setApprovalForAll'> & {
+    : UseContractWriteConfig<typeof wagmiAbi, 'setApprovalForAll', TMode> & {
         abi?: never
         functionName?: 'setApprovalForAll'
       } = {} as any,
 ) {
-  return useContractWrite<TMode, typeof wagmiAbi, 'setApprovalForAll'>({
+  return useContractWrite<typeof wagmiAbi, 'setApprovalForAll', TMode>({
     abi: wagmiAbi,
     functionName: 'setApprovalForAll',
     ...config,
@@ -330,22 +334,24 @@ export function useWagmiSetApprovalForAll<TMode extends WriteContractMode>(
 /**
  * Wraps __{@link useContractWrite}__ with \`abi\` set to __{@link wagmiAbi}__ and \`functionName\` set to \`\\"transferFrom\\"\`.
  */
-export function useWagmiTransferFrom<TMode extends WriteContractMode>(
+export function useWagmiTransferFrom<
+  TMode extends WriteContractMode = undefined,
+>(
   config: TMode extends 'prepared'
     ? UseContractWriteConfig<
-        TMode,
         PrepareWriteContractResult<
           typeof wagmiAbi,
           'transferFrom'
         >['request']['abi'],
-        'transferFrom'
+        'transferFrom',
+        TMode
       > & { functionName?: 'transferFrom' }
-    : UseContractWriteConfig<TMode, typeof wagmiAbi, 'transferFrom'> & {
+    : UseContractWriteConfig<typeof wagmiAbi, 'transferFrom', TMode> & {
         abi?: never
         functionName?: 'transferFrom'
       } = {} as any,
 ) {
-  return useContractWrite<TMode, typeof wagmiAbi, 'transferFrom'>({
+  return useContractWrite<typeof wagmiAbi, 'transferFrom', TMode>({
     abi: wagmiAbi,
     functionName: 'transferFrom',
     ...config,

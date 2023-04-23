@@ -1,4 +1,3 @@
-import type { WriteContractMode } from '@wagmi/core'
 import type { Abi, ExtractAbiFunctionNames } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
@@ -20,13 +19,12 @@ import type { UsePrepareContractWriteConfig } from './usePrepareContractWrite'
 import { usePrepareContractWrite } from './usePrepareContractWrite'
 
 function useContractWriteWithConnect<
-  TMode extends WriteContractMode,
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
->(config: UseContractWriteConfig<TMode, TAbi, TFunctionName>) {
+>(config: UseContractWriteConfig<TAbi, TFunctionName>) {
   return {
     connect: useConnect(),
-    contractWrite: useContractWrite<TMode, TAbi, TFunctionName>(config),
+    contractWrite: useContractWrite<TAbi, TFunctionName>(config),
   }
 }
 
@@ -38,14 +36,13 @@ function usePrepareContractWriteWithConnect<
     TAbi,
     TFunctionName,
     number
-  >({ ...config })
+  >(config)
   return {
     connect: useConnect(),
     prepareContractWrite,
-    contractWrite: useContractWrite<'prepared', TAbi, TFunctionName>({
-      ...prepareContractWrite.config,
-      chainId: config?.chainId,
-    }),
+    contractWrite: useContractWrite<TAbi, TFunctionName, 'prepared'>(
+      prepareContractWrite.config,
+    ),
   }
 }
 
@@ -76,11 +73,10 @@ describe('useContractWrite', () => {
       `)
     })
 
-    it('recklesslyUnprepared', async () => {
+    it('unprepared', async () => {
       const tokenId = getRandomTokenId()
       const { result } = renderHook(() =>
         useContractWrite({
-          mode: 'recklesslyUnprepared',
           ...wagmiContractConfig,
           functionName: 'mint',
           args: [tokenId],
@@ -107,12 +103,11 @@ describe('useContractWrite', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('recklesslyUnprepared - unable to switch', async () => {
+      it('unprepared - unable to switch', async () => {
         const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
             ...wagmiContractConfig,
-            mode: 'recklesslyUnprepared',
             chainId: 69,
             functionName: 'mint',
             args: [tokenId],
@@ -222,11 +217,10 @@ describe('useContractWrite', () => {
         { retry: 3, timeout: 10_000 },
       )
 
-      it('recklesslyUnprepared', async () => {
+      it('unprepared', async () => {
         const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            mode: 'recklesslyUnprepared',
             ...wagmiContractConfig,
             functionName: 'mint',
             args: [tokenId],
@@ -263,10 +257,9 @@ describe('useContractWrite', () => {
         `)
       })
 
-      it('recklesslyUnprepared with deferred args', async () => {
+      it('unprepared with deferred args', async () => {
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            mode: 'recklesslyUnprepared',
             ...mirrorCrowdfundContractConfig,
             functionName: 'createCrowdfund',
           }),
@@ -276,7 +269,7 @@ describe('useContractWrite', () => {
 
         await act(async () =>
           result.current.contractWrite.write?.({
-            recklesslySetUnpreparedArgs: getCrowdfundArgs(),
+            args: getCrowdfundArgs(),
           }),
         )
         await waitFor(() =>
@@ -289,7 +282,6 @@ describe('useContractWrite', () => {
       it('throws error', async () => {
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            mode: 'recklesslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
             args: [1n],
@@ -409,11 +401,10 @@ describe('useContractWrite', () => {
         expect(result.current.contractWrite.data?.hash).toBeDefined()
       })
 
-      it('recklesslyUnprepared', async () => {
+      it('unprepared', async () => {
         const tokenId = getRandomTokenId()
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            mode: 'recklesslyUnprepared',
             ...wagmiContractConfig,
             functionName: 'mint',
             args: [tokenId],
@@ -451,10 +442,9 @@ describe('useContractWrite', () => {
           `)
       })
 
-      it('recklesslyUnprepared with deferred args', async () => {
+      it('unprepared with deferred args', async () => {
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            mode: 'recklesslyUnprepared',
             ...mirrorCrowdfundContractConfig,
             functionName: 'createCrowdfund',
           }),
@@ -464,7 +454,7 @@ describe('useContractWrite', () => {
 
         await act(async () => {
           const res = await result.current.contractWrite.writeAsync?.({
-            recklesslySetUnpreparedArgs: getCrowdfundArgs(),
+            args: getCrowdfundArgs(),
           })
           expect(res?.hash).toBeDefined()
         })
@@ -478,7 +468,6 @@ describe('useContractWrite', () => {
       it('throws error', async () => {
         const utils = renderHook(() =>
           useContractWriteWithConnect({
-            mode: 'recklesslyUnprepared',
             ...mlootContractConfig,
             functionName: 'claim',
             args: [1n],
@@ -491,7 +480,7 @@ describe('useContractWrite', () => {
         await act(async () => {
           await expect(
             result.current.contractWrite.writeAsync?.({
-              recklesslySetUnpreparedArgs: [1n],
+              args: [1n],
             }),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
             `
@@ -576,7 +565,6 @@ describe('useContractWrite', () => {
       const baseConfig = {
         address: wagmiContractConfig.address,
         abi: wagmiContractConfig.abi,
-        mode: 'recklesslyUnprepared',
         functionName: 'mint',
         args: [tokenId],
       } as const

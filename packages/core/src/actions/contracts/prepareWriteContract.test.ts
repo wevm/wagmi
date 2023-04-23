@@ -40,6 +40,7 @@ describe('prepareWriteContract', () => {
         "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
         "blockNumber": undefined,
         "blockTag": undefined,
+        "chainId": undefined,
         "functionName": "mint",
         "gas": undefined,
         "gasPrice": undefined,
@@ -50,12 +51,11 @@ describe('prepareWriteContract', () => {
       }
     `)
     expect(rest).toMatchInlineSnapshot(`
-        {
-          "chainId": undefined,
-          "mode": "prepared",
-          "result": undefined,
-        }
-      `)
+      {
+        "mode": "prepared",
+        "result": undefined,
+      }
+    `)
   })
 
   describe('args', () => {
@@ -80,6 +80,7 @@ describe('prepareWriteContract', () => {
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": undefined,
+          "chainId": 1,
           "functionName": "mint",
           "gas": undefined,
           "gasPrice": undefined,
@@ -91,7 +92,6 @@ describe('prepareWriteContract', () => {
       `)
       expect(rest).toMatchInlineSnapshot(`
         {
-          "chainId": 1,
           "mode": "prepared",
           "result": undefined,
         }
@@ -119,6 +119,7 @@ describe('prepareWriteContract', () => {
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": undefined,
+          "chainId": undefined,
           "functionName": "mint",
           "gas": 1000000n,
           "gasPrice": undefined,
@@ -130,7 +131,6 @@ describe('prepareWriteContract', () => {
       `)
       expect(rest).toMatchInlineSnapshot(`
         {
-          "chainId": undefined,
           "mode": "prepared",
           "result": undefined,
         }
@@ -158,6 +158,7 @@ describe('prepareWriteContract', () => {
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": 42069n,
           "blockTag": undefined,
+          "chainId": undefined,
           "functionName": "mint",
           "gas": undefined,
           "gasPrice": undefined,
@@ -169,7 +170,6 @@ describe('prepareWriteContract', () => {
       `)
       expect(rest).toMatchInlineSnapshot(`
         {
-          "chainId": undefined,
           "mode": "prepared",
           "result": undefined,
         }
@@ -197,6 +197,7 @@ describe('prepareWriteContract', () => {
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": "latest",
+          "chainId": undefined,
           "functionName": "mint",
           "gas": undefined,
           "gasPrice": undefined,
@@ -208,7 +209,6 @@ describe('prepareWriteContract', () => {
       `)
       expect(rest).toMatchInlineSnapshot(`
         {
-          "chainId": undefined,
           "mode": "prepared",
           "result": undefined,
         }
@@ -236,6 +236,7 @@ describe('prepareWriteContract', () => {
           "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
           "blockNumber": undefined,
           "blockTag": undefined,
+          "chainId": undefined,
           "functionName": "mint",
           "gas": undefined,
           "gasPrice": undefined,
@@ -247,7 +248,6 @@ describe('prepareWriteContract', () => {
       `)
       expect(rest).toMatchInlineSnapshot(`
         {
-          "chainId": undefined,
           "mode": "prepared",
           "result": undefined,
         }

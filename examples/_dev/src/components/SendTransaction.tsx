@@ -4,7 +4,6 @@ import { useSendTransaction } from 'wagmi'
 export const SendTransaction = () => {
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =
     useSendTransaction({
-      mode: 'recklesslyUnprepared',
       request: {
         to: '0xc961145a54C96E3aE9bAA048c4F4D6b04C13916b',
         value: 10000000000000000n, // 0.01 ETH

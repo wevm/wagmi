@@ -28,8 +28,10 @@ export type PrepareWriteContractResult<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
   TChainId extends number = number,
-> = SimulateContractReturnType<TAbi, TFunctionName> & {
-  chainId?: TChainId
+> = Omit<SimulateContractReturnType<TAbi, TFunctionName>, 'request'> & {
+  request: SimulateContractReturnType<TAbi, TFunctionName>['request'] & {
+    chainId?: TChainId
+  }
   mode: 'prepared'
 }
 
@@ -106,11 +108,11 @@ export async function prepareWriteContract<
   )
 
   return {
-    chainId: chainId as TChainId,
     mode: 'prepared',
     request: {
       ...request,
       abi: minimizedAbi,
+      chainId: chainId as TChainId,
     },
     result,
   } as unknown as PrepareWriteContractResult<TAbi, TFunctionName, TChainId>
