@@ -19,7 +19,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [publicProvider()],
 )
@@ -36,8 +36,8 @@ const { chains, provider } = configureChains(
 ```ts
 {
   chains: Chain[],
-  provider: BaseProvider,
-  webSocketProvider: WebSocketProvider
+  publicClient: PublicClient,
+  webSocketPublicClient: PublicClient
 }
 ```
 
@@ -51,7 +51,7 @@ const { chains, provider } = configureChains(
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),

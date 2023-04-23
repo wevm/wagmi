@@ -44,7 +44,7 @@ import { createWalletClient } from 'viem'
 
 const connector = new MockConnector({
   options: {
-    signer: createWalletClient(…),
+    walletClient: createWalletClient(…),
   },
 })
 ```
@@ -61,7 +61,7 @@ import { createWalletClient } from 'viem'
 const connector = new MockConnector({
   options: {
     chainId: mainnet.id,
-    signer: createWalletClient(…),
+    walletClient: createWalletClient(…),
   },
 })
 ```
@@ -80,7 +80,7 @@ const connector = new MockConnector({
     flags: {
       failConnect: true,
     },
-    signer: createWalletClient(…),
+    walletClient: createWalletClient(…),
   },
 })
 ```
@@ -92,9 +92,9 @@ const connector = new MockConnector({
 | `failSwitchChain` | `boolean` | Throws an error when attempting to switch chains.                              |
 | `noSwitchChain`   | `boolean` | Disables the ability to switch chains.                                         |
 
-#### signer
+#### walletClient
 
-Signer to initialize connector with.
+[Wallet Client](https://viem.sh/docs/clients/wallet.html) to initialize connector with.
 
 ```ts {7}
 import { MockConnector } from 'wagmi/connectors/mock'
@@ -103,7 +103,7 @@ import { createWalletClient } from 'viem'
 
 const connector = new MockConnector({
   options: {
-    signer: createWalletClient(…),
+    walletClient: createWalletClient(…),
   },
 })
 ```

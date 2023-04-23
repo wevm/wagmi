@@ -16,8 +16,9 @@ The example below uses [`useConnect`](/react/hooks/useConnect), [`useAccount`](/
 
 <Callout type="info">
   Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev)
-  , [Web3Modal](https://web3modal.com/), or [Dynamic](https://dynamic.xyz/) to get started with pre-built interface
-  on top of wagmi for managing wallet connections.
+  , [Web3Modal](https://web3modal.com/), or [Dynamic](https://dynamic.xyz/) to
+  get started with pre-built interface on top of wagmi for managing wallet
+  connections.
 </Callout>
 
 ## Step 1: Configuring Connectors
@@ -39,7 +40,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
@@ -69,8 +70,8 @@ const client = createClient({
       },
     }),
   ],
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 
 // Pass client to React Context Provider

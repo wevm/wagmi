@@ -19,7 +19,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
@@ -36,8 +36,8 @@ const { chains, provider } = configureChains(
 ```ts
 {
   chains: Chain[],
-  provider: JsonRpcProvider,
-  webSocketProvider: WebSocketProvider
+  publicClient: PublicClient,
+  webSocketPublicClient: PublicClient
 }
 ```
 
@@ -51,7 +51,7 @@ Accepts a function which provides the `chain` and expects to receive a `http` UR
 import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
@@ -72,7 +72,7 @@ The timeout in milliseconds after which another provider will be attempted.
 import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({

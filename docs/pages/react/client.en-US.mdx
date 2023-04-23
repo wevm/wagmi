@@ -83,13 +83,13 @@ import { publicProvider } from 'wagmi/providers/public'
 
 import { logWarn } from './logger'
 
-const { provider } = configureChains([mainnet], [publicProvider()])
+const { publicClient } = configureChains([mainnet], [publicProvider()])
 
 const client = createClient({
   logger: {
     warn: (message) => logWarn(message),
   },
-  provider,
+  publicClient,
 })
 ```
 
@@ -102,7 +102,7 @@ const client = createClient({
   logger: {
     warn: null,
   },
-  provider,
+  publicClient,
 })
 ```
 
@@ -141,7 +141,7 @@ const client = createClient({
 
 ### webSocketPublicClient (optional)
 
-viem [Public Client](https://viem.sh/docs/clients/public.html) with a [WebSocket Transport](https://viem.sh/docs/clients/transports/websocket.html) for connecting to the Ethereum network. If you provide a WebSocket provider, it will be used instead of polling in certain instances.
+viem [Public Client](https://viem.sh/docs/clients/public.html) with a [WebSocket Transport](https://viem.sh/docs/clients/transports/websocket.html) for connecting to the Ethereum network. If you provide a WebSocket Public Client, it will be used instead of polling in certain instances.
 
 ```ts {11}
 import { createClient, configureChains, mainnet } from 'wagmi'

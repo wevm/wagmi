@@ -20,7 +20,7 @@ import { configureChains } from '@wagmi/core'
 import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [mainnet, polygon],
   [
     jsonRpcProvider({
@@ -39,8 +39,8 @@ Note: The above example is using chains from [`@wagmi/core/chains`](/core/chains
 ```ts
 {
   chains: Chain[],
-  provider: JsonRpcProvider,
-  webSocketProvider: WebSocketProvider
+  publicClient: PublicClient,
+  webSocketPublicClient: PublicClient
 }
 ```
 
@@ -55,7 +55,7 @@ import { configureChains } from '@wagmi/core'
 import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [mainnet, polygon],
   [
     jsonRpcProvider({
@@ -77,7 +77,7 @@ import { configureChains } from '@wagmi/core'
 import { mainnet, polygon } from '@wagmi/core/chains'
 import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [mainnet, polygon],
   [
     jsonRpcProvider({

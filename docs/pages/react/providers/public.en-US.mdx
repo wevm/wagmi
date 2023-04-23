@@ -19,7 +19,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [publicProvider()],
 )
@@ -37,8 +37,8 @@ const { chains, provider } = configureChains(
 ```ts
 {
   chains: Chain[],
-  provider: BaseProvider,
-  webSocketProvider: WebSocketProvider
+  publicClient: PublicClient,
+  webSocketPublicClient: PublicClient
 }
 ```
 
@@ -52,7 +52,7 @@ The timeout in milliseconds after which another provider will be attempted.
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
@@ -69,7 +69,7 @@ The weight a response from this provider provides. This can be used if a given p
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey', weight: 1 }),

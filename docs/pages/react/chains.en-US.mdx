@@ -25,7 +25,7 @@ Import your chains from the entrypoint and use them in your wagmi app:
 import { configureChains } from 'wagmi'
 import { avalanche, bsc, mainnet } from 'wagmi/chains'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [mainnet, avalanche, bsc],
   ...
 )
