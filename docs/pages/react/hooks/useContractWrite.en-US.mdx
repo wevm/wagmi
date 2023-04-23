@@ -43,6 +43,41 @@ function App() {
   pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
+## Dynamic Arguments
+
+It is possible to pass through dynamic arguments through to `write` or `writeAsync`.
+
+```tsx {16-18}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'claim',
+  })
+
+  return (
+    <div>
+      <button
+        disabled={!write}
+        onClick={() =>
+          write({
+            args: [69],
+            from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+            value: parseEther('0.01'),
+          })
+        }
+      >
+        Claim
+      </button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
 ### Prepared Usage
 
 ```tsx
@@ -272,46 +307,5 @@ function App() {
       console.log('Success', data)
     },
   })
-}
-```
-
-## Dynamic Arguments
-
-It is possible to pass through dynamic arguments through to `write` or `writeAsync`.
-
-<Callout>
-  This usage is not recommended. It comes with [UX
-  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
-</Callout>
-
-```tsx {16-18}
-import { useContractWrite } from 'wagmi'
-
-function App() {
-  const { data, isLoading, isSuccess, write } = useContractWrite({
-    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    abi: wagmigotchiABI,
-    functionName: 'claim',
-  })
-
-  return (
-    <div>
-      <button
-        disabled={!write}
-        onClick={() =>
-          write({
-            args: [69],
-            from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            value: parseEther('0.01'),
-          })
-        }
-      >
-        Claim
-      </button>
-      {isLoading && <div>Check Wallet</div>}
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
-    </div>
-  )
 }
 ```
