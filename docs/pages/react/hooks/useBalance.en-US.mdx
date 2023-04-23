@@ -7,6 +7,8 @@ description: 'React Hook for fetching balance information for Ethereum or ERC-20
 
 Hook for fetching balance information for Ethereum or ERC-20 tokens.
 
+This is a wrapper around viem's [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html).
+
 ```ts
 import { useBalance } from 'wagmi'
 ```
@@ -81,7 +83,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/publicclient#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/client#publicclient-optional) for this to work correctly.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'

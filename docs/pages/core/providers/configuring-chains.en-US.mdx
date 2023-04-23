@@ -18,8 +18,8 @@ import { configureChains } from '@wagmi/core'
 `configureChains` accepts an array of [chains](/core/chains) and an array of RPC Providers. It returns:
 
 - `chains`: to pass to your connector(s)
-- `provider`: to pass to `createClient`
-- `webSocketProvider`: to optionally pass to `createClient`
+- `publicClient`: to pass to `createClient`
+- `webSocketPublicClient`: to optionally pass to `createClient`
 
 ```ts
 import { configureChains, createClient } from '@wagmi/core'

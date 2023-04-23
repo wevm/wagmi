@@ -7,6 +7,8 @@ description: 'Action for calling a read method on a Contract.'
 
 Action for calling a read method on a Contract.
 
+This is a wrapper around viem's [`readContract`](https://viem.sh/docs/contract/readContract.html).
+
 ```ts
 import { readContract } from '@wagmi/core'
 ```
@@ -94,7 +96,7 @@ const data = await readContract({
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/client#publicclient-optional) for this to work correctly.
 
 ```ts {7}
 import { readContract } from '@wagmi/core'

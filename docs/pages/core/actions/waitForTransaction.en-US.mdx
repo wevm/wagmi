@@ -9,6 +9,8 @@ import { Callout } from 'nextra-theme-docs'
 
 Action for declaratively waiting until transaction is processed. Pairs well with [`writeContract`](/core/actions/writeContract) and [`sendTransaction`](/core/actions/sendTransaction).
 
+This is a wrapper around viem's [`waitForTransactionReceipt`](https://viem.sh/docs/actions/public/waitForTransactionReceipt.html).
+
 ```ts
 import { waitForTransaction } from '@wagmi/core'
 ```
@@ -55,7 +57,7 @@ const data = await waitForTransaction({
 
 ### chainId (optional)
 
-Force a specific chain id for waiting on transaction. The wagmi `Client`'s `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for waiting on transaction. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/client#publicclient-optional) for this to work correctly.
 
 ```ts {4}
 import { waitForTransaction } from '@wagmi/core'

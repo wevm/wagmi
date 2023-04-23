@@ -18,8 +18,8 @@ import { configureChains } from 'wagmi'
 `configureChains` 接受一个 chain 的数组和 provider 的数组，然后返回:
 
 - `chains`: 传递给你的 connector
-- `provider`: 传递给 `createClient`
-- `webSocketProvider`: 也传递给 `createClient`，不过是可选的
+- `publicClient`: 传递给 `createClient`
+- `webSocketPublicClient`: 也传递给 `createClient`，不过是可选的
 
 ```ts
 import { configureChains, createClient } from 'wagmi'

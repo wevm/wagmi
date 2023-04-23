@@ -7,6 +7,8 @@ description: 'Action for fetching the current block number.'
 
 Action for fetching the current block number.
 
+This is a wrapper around viem's [`getBlockNumber`](https://viem.sh/docs/actions/public/getBlockNumber.html).
+
 ```ts
 import { fetchBlockNumber } from '@wagmi/core'
 ```
@@ -29,7 +31,7 @@ bigint
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/client#publicclient-optional) for this to work correctly.
 
 ```ts {4}
 import { fetchBlockNumber } from '@wagmi/core'

@@ -1,14 +1,14 @@
 ---
-title: 'useSigner'
+title: 'useWalletClient'
 description: "React Hook for accessing viem's Wallet Client for a connected account."
 ---
 
-# useSigner
+# useWalletClient
 
 Hook for accessing viem's [Wallet Client](https://viem.sh/docs/clients/wallet.html) for a connected account.
 
 ```ts
-import { useSigner } from 'wagmi'
+import { useWalletClient } from 'wagmi'
 ```
 
 ## Usage
@@ -16,15 +16,15 @@ import { useSigner } from 'wagmi'
 The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
 
 ```tsx {4, 9}
-import { useContract, useSigner } from 'wagmi'
+import { useContract, useWalletClient } from 'wagmi'
 
 function App() {
-  const { data: signer, isError, isLoading } = useSigner()
+  const { data: walletClient, isError, isLoading } = useWalletClient()
 
   const contract = useContract({
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
-    signerOrProvider: signer,
+    walletClient,
   })
 }
 ```
@@ -33,7 +33,7 @@ function App() {
 
 ```tsx
 {
-  data?: Signer
+  data?: WalletClient
   error?: Error
   isIdle: boolean
   isLoading: boolean
@@ -51,14 +51,14 @@ function App() {
 
 ### chainId (optional)
 
-Chain ID to use for signer.
+Chain ID to use for Wallet Client.
 
 ```tsx {5-7}
-import { useContract, useSigner } from 'wagmi'
+import { useContract, useWalletClient } from 'wagmi'
 import { optimism } from 'wagmi/chains'
 
 function App() {
-  const { data: signer } = useSigner({
+  const { data: walletClient } = useWalletClient({
     chainId: optimism.id,
   })
 }
@@ -69,10 +69,10 @@ function App() {
 Function to invoke when an error is thrown while fetching new data.
 
 ```tsx {5-7}
-import { useContract, useSigner } from 'wagmi'
+import { useContract, useWalletClient } from 'wagmi'
 
 function App() {
-  const { data: signer } = useSigner({
+  const { data: walletClient } = useWalletClient({
     onError(error) {
       console.log('Error', error)
     },
@@ -85,10 +85,10 @@ function App() {
 Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
 
 ```tsx {5-7}
-import { useContract, useSigner } from 'wagmi'
+import { useContract, useWalletClient } from 'wagmi'
 
 function App() {
-  const { data: signer } = useSigner({
+  const { data: walletClient } = useWalletClient({
     onSettled(data, error) {
       console.log('Settled', data, error)
     },
@@ -101,10 +101,10 @@ function App() {
 Function to invoke when fetching new data is successful.
 
 ```tsx {5-7}
-import { useContract, useSigner } from 'wagmi'
+import { useContract, useWalletClient } from 'wagmi'
 
 function App() {
-  const { data: signer } = useSigner({
+  const { data: walletClient } = useWalletClient({
     onSuccess(data) {
       console.log('Success', data)
     },

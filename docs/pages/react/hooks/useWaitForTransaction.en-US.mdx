@@ -9,6 +9,8 @@ import { Callout } from 'nextra-theme-docs'
 
 Hook for declaratively waiting until transaction is processed. Pairs well with [`useContractWrite`](/react/hooks/useContractWrite) and [`useSendTransaction`](/react/hooks/useSendTransaction).
 
+This is a wrapper around viem's [`waitForTransactionReceipt`](https://viem.sh/docs/actions/public/waitForTransactionReceipt.html).
+
 ```ts
 import { useWaitForTransaction } from 'wagmi'
 ```
@@ -57,7 +59,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for waiting on transaction. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/publicclient#provider-optional) for this to work correctly.
+Force a specific chain id for waiting on transaction. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/client#publicclient-optional) for this to work correctly.
 
 ```tsx {5}
 import { useWaitForTransaction } from 'wagmi'

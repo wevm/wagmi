@@ -7,7 +7,9 @@ import { Callout } from 'nextra-theme-docs'
 
 # writeContract
 
-Action for calling a Contract write method. Pairs with the [`prepareWriteContract` action](/core/actions/prepareWriteContract).
+Action for calling a Contract write method.
+
+This is a wrapper around viem's [`writeContract`](https://viem.sh/docs/contract/writeContract.html).
 
 ```ts
 import { writeContract } from '@wagmi/core'

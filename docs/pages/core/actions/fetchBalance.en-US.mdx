@@ -7,6 +7,8 @@ description: 'Action for fetching balance information for Ethereum or ERC-20 tok
 
 Action for fetching balance information for Ethereum or ERC-20 tokens.
 
+This is a wrapper around viem's [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html).
+
 ```ts
 import { fetchBalance } from '@wagmi/core'
 ```
@@ -48,7 +50,7 @@ const balance = await fetchBalance({
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The @wagmi/core `Client`'s `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The @wagmi/core `Client`'s `publicClient` must be set up as a [chain-aware function](/core/client#publicclient-optional) for this to work correctly.
 
 ```ts {5}
 import { fetchBalance } from '@wagmi/core'

@@ -7,6 +7,8 @@ description: 'Action for fetching avatar for ENS name.'
 
 Action for fetching avatar for ENS name.
 
+This is a wrapper around viem's [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar.html).
+
 ```ts
 import { fetchEnsAvatar } from '@wagmi/core'
 ```
@@ -43,7 +45,7 @@ const ensAvatar = await fetchEnsAvatar({
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/client#publicclient-optional) for this to work correctly.
 
 ```ts {5}
 import { fetchEnsAvatar } from '@wagmi/core'

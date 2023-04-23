@@ -16,6 +16,7 @@ const redirects: Record<string, string> = {
   '/docs/migrating-to-03': '/docs/migration-guide',
   '/docs/provider': '/docs/WagmiConfig',
   '/react/hooks/useProvider': '/react/hooks/usePublicClient',
+  '/react/hooks/useSigner': '/react/hooks/useWalletClient',
   '/react/hooks/useWebSocketProvider': '/react/hooks/useWebSocketPublicClient',
   '/react/prepare-hooks/intro': '/react/prepare-hooks',
 }

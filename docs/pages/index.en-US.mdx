@@ -46,7 +46,7 @@ import { createPublicClient, http } from 'viem'
 
 const client = createClient({
   autoConnect: true,
-  provider: createPublicClient({
+  publicClient: createPublicClient({
     chain: mainnet,
     transport: http()
   }),
