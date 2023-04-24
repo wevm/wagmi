@@ -152,7 +152,7 @@ export type {
   WalletClient,
   WebSocketPublicClient,
 } from './types'
-export type { Ethereum } from '@wagmi/connectors'
+export type { WindowProvider } from '@wagmi/connectors'
 export type { Address } from 'abitype'
 
 export {

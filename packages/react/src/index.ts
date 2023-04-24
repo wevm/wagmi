@@ -76,6 +76,7 @@ export type {
   ConnectorEvents,
   Storage,
   Unit,
+  WindowProvider,
 } from '@wagmi/core'
 
 export type { Address } from 'abitype'
