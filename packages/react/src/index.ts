@@ -74,8 +74,11 @@ export type {
   ChainProviderFn,
   ConnectorData,
   ConnectorEvents,
+  PublicClient,
   Storage,
   Unit,
+  WalletClient,
+  WebSocketPublicClient,
   WindowProvider,
 } from '@wagmi/core'
 
