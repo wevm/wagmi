@@ -137,6 +137,18 @@ All `BigNumber` instances are now [platform native `BigInt`](https://developer.m
 + const value3 = value + value2
 ```
 
+#### `from` has been renamed to `account`
+
+The `from` attribute has been renamed to `account`. Directly affects Actions that consist of a `from` parameter.
+
+```diff
+const config = prepareWriteContract({
+  ...,
+- from: '0x...'
++ account: '0x...'
+})
+```
+
 #### `gasLimit` has been renamed to `gas`
 
 The `gasLimit` attribute has been renamed to `gas`, and still implies the same meaning. It was renamed to align closer to [EIP-1474](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1474.md) and enforce consistency. Aligning closer to EIP-1474 means that you will not need to re-map from `gas` to `gasLimit` if you are deriving from an external source.
@@ -212,6 +224,32 @@ const data = await multicall({
 + blockTag: 'safe'
 })
 ```
+
+#### `prepareWriteContract`
+
+##### Removed `overrides`
+
+The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `simulateContract` parameters](https://viem.sh/docs/contract/simulateContract.html#account).
+
+```diff
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+- overrides: {
+-   from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+-   value: BigNumber.from('69420'),
+- },
++ account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ value: 69420n
+})
+```
+
+#### Return type structure changed
+
+The returned `request` now returns the shape of [viem's `WriteContractParameters`](https://viem.sh/docs/contract/writeContract.html#parameters), instead of Ethers' `TransactionRequest`.
+
+Removed `abi`, `address`, `functionName` from the return value, they now belong in `request`.
 
 #### `readContracts`
 
