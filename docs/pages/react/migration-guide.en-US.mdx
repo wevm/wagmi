@@ -182,7 +182,7 @@ The `Ethereum` type has been renamed to `WindowProvider`.
 
 #### `useContractReads`
 
-##### Return type structure changed
+**Return type structure changed**
 
 When `allowFailure` is truthy (default), the return structure is now in the form of `{ error, result, status }[]` instead of an array of contract function results (`Result[]`).
 
@@ -296,7 +296,7 @@ const { config } = usePrepareContractWrite({
 })
 ```
 
-#### Return type structure changed
+**Return type structure changed**
 
 The returned `config.request` now returns the shape of [viem's `WriteContractParameters`](https://viem.sh/docs/contract/writeContract.html#parameters), instead of Ethers' `TransactionRequest`.
 
