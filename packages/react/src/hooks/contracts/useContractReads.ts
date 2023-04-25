@@ -24,7 +24,7 @@ export type UseContractReadsConfig<
     ? DeepPartial<Config[K], 2>
     : Config[K]
 } & QueryConfigWithSelect<
-  ReadContractsResult<TContracts>,
+  ReadContractsResult<TContracts, TAllowedFailure>,
   Error,
   TSelectData
 > & {
