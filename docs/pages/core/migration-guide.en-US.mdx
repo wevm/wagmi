@@ -345,6 +345,22 @@ const signature = await signTypedData({
 })
 ```
 
+#### `waitForTransaction`
+
+##### Renamed `onSpeedUp` to `onReplaced`
+
+```diff
+const waitForTransaction = await waitForTransaction({
+  hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+- onSpeedUp: (transaction) => console.log(transaction),
++ onReplaced: (transaction) => console.log(transaction)
+})
+```
+
+##### Return type changed
+
+Now returns a viem [TransactionReceipt](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L12) instead of an Ethers `TransactionReceipt`.
+
 ## 0.10.x Breaking changes
 
 ### WalletConnectConnector
