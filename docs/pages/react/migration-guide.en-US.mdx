@@ -302,6 +302,22 @@ The returned `config.request` now returns the shape of [viem's `WriteContractPar
 
 Removed `abi`, `address`, `functionName` from the return value, they now belong in `config.request`.
 
+#### `useContractRead`
+
+##### Removed `overrides`
+
+The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
+
+```diff
+const { data } = useContractRead({
+  ...
+- overrides: {
+-   blockTag: 'safe'
+- }
++ blockTag: 'safe'
+})
+```
+
 ### WIP...
 
 ## 0.12.x Breaking changes

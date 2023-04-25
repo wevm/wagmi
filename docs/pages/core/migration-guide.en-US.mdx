@@ -296,6 +296,22 @@ const data = await readContracts({
 })
 ```
 
+#### `readContract`
+
+##### Removed `overrides`
+
+The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
+
+```diff
+const data = await readContract({
+  ...
+- overrides: {
+-   blockTag: 'safe'
+- }
++ blockTag: 'safe'
+})
+```
+
 ## 0.10.x Breaking changes
 
 ### WalletConnectConnector
