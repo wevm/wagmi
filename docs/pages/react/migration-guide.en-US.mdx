@@ -318,6 +318,52 @@ const { data } = useContractRead({
 })
 ```
 
+#### `useSendTransaction`
+
+##### Removed requirement for "prepare" mode
+
+Removed the requirement for "prepare" mode. You can now use `useContractWrite` without calling `usePrepareContractWrite` first.
+
+```diff
+const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+- mode: 'recklesslyUnprepared',
+  request: {
+    to: 'moxey.eth',
+    value: BigNumber.from('10000000000000000'),
+  }
+})
+```
+
+##### Renamed `recklesslySetUnpreparedRequest` to `request`
+
+```diff
+const { sendTransaction } = useSendTransaction({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedRequest: { ... },
++ request: { ... },
+})
+```
+
+##### `wait` has been removed from the return type
+
+`wait` has been removed from the return type, favor `waitForTransaction` instead.
+
+```diff
++ import { waitForTransaction } from 'wagmi/actions'
+
+const { data } = useSendTransaction(...)
+const {
+- wait,
++ hash,
+} = data || {}
+
+- const receipt = await wait()
++ const receipt = await waitForTransaction({ hash })
+```
+
 #### `useSignMessage`
 
 ##### `message` no longer accepts a byte array
@@ -360,6 +406,87 @@ const waitForTransaction = useWaitForTransaction({
   hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
 - onSpeedUp: (transaction) => console.log(transaction),
 + onReplaced: (transaction) => console.log(transaction)
+})
+```
+
+#### `useContractWrite`
+
+##### Removed requirement for "prepare" mode
+
+Removed the requirement for "prepare" mode. You can now use `useContractWrite` without calling `usePrepareContractWrite` first.
+
+```diff
+const { data, isLoading, isSuccess, write } = useContractWrite({
+- mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'claim',
+  tokenId: 69,
+})
+```
+
+##### `wait` has been removed from the return type
+
+`wait` has been removed from the return type, favor `waitForTransaction` instead.
+
+```diff
++ import { waitForTransaction } from 'wagmi/actions'
+
+const { data } = useContractWrite(...)
+const {
+- wait,
++ hash,
+} = data || {}
+
+- const receipt = await wait()
++ const receipt = await waitForTransaction({ hash })
+```
+
+##### Removed `overrides`
+
+The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `writeContract` parameters](https://viem.sh/docs/contract/writeContract.html#account).
+
+```diff
+const { config } = await writeContract({
+  ...
+- overrides: {
+-   gasLimit: BigNumber.from('42069'),
+-   value: BigNumber.from('69420'),
+- },
++ gasLimit: 42069n,
++ value: 69420n
+})
+```
+
+##### Renamed `recklesslySetUnpreparedArgs` to `args`
+
+```diff
+const { data, write } = useContractWrite({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedArgs: [69],
++ args: [69],
+})
+```
+
+##### Removed `recklesslySetUnpreparedOverrides`
+
+Removed `recklesslySetUnpreparedOverrides`. They now exist at the top-level of the function.
+
+```diff
+const { data, write } = useContractWrite({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedOverrides: {
+-   gasLimit: BigNumber.from('42069'),
+-   value: BigNumber.from('69420'),
+- },
++ gas: 42069n,
++ value: 69420n
 })
 ```
 
