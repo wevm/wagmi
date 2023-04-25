@@ -367,6 +367,19 @@ const waitForTransaction = useWaitForTransaction({
 
 Now returns a viem [TransactionReceipt](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L12) instead of an Ethers `TransactionReceipt`.
 
+#### `useWatchPendingTransactions`
+
+##### Callback now returns batched transaction hashes
+
+The callback now returns a batched array of transaction hashes, instead of callback being emitted several times with singular hashes.
+
+```diff
+useWatchPendingTransactions(
+- listener: (hash) => console.log(hash),
++ listener: (hashes) => console.log(hashes[0]),
+)
+```
+
 ### WIP...
 
 ## 0.12.x Breaking changes
