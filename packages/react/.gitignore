@@ -14,3 +14,4 @@ providers/alchemy/**
 providers/infura/**
 providers/jsonRpc/**
 providers/public/**
+window/**

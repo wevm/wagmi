@@ -95,6 +95,10 @@
       "types": "./dist/providers/public.d.ts",
       "default": "./dist/providers/public.js"
     },
+    "./window": {
+      "types": "./dist/window.d.ts",
+      "default": "./dist/window.js"
+    },
     "./package.json": "./package.json"
   },
   "sideEffects": false,
@@ -103,6 +107,7 @@
     "/connectors",
     "/internal",
     "/providers",
+    "/window",
     "/dist"
   ],
   "peerDependencies": {
