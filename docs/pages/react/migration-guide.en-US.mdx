@@ -152,6 +152,20 @@ useSendTransaction({
 })
 ```
 
+#### Removed `window.ethereum` global type
+
+The `window.ethereum` global type has been removed in favor of an explicit `wagmi/window` import.
+
+```diff
++import 'wagmi/window';
+
+const isMetaMask = window.ethereum.isMetaMask
+```
+
+#### Renamed the `Ethereum` type to `WindowProvider`
+
+The `Ethereum` type has been renamed to `WindowProvider`.
+
 ### WIP...
 
 ## 0.12.x Breaking changes
