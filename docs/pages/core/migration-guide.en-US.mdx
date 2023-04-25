@@ -182,7 +182,7 @@ The `Ethereum` type has been renamed to `WindowProvider`.
 
 #### `multicall`
 
-##### Return type structure changed
+**Return type structure changed**
 
 When `allowFailure` is truthy (default), the return structure is now in the form of `{ error, result, status }[]` instead of an array of contract function results (`Result[]`).
 
@@ -197,7 +197,7 @@ const data = await multicall({
 
 The return type when `allowFailure` is falsy has not changed.
 
-##### Removed `console.warn` logs for failing contract methods
+**Removed `console.warn` logs for failing contract methods**
 
 The `console.warn` logs for failing contract methods has been removed. Failing methods can now be extracted from the `error` property of the return type.
 
@@ -211,7 +211,7 @@ const data = await multicall({
 + })
 ```
 
-##### Removed `overrides`
+**Removed `overrides`**
 
 The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
 
@@ -227,7 +227,7 @@ const data = await multicall({
 
 #### `prepareWriteContract`
 
-##### Removed `overrides`
+**Removed `overrides`**
 
 The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `simulateContract` parameters](https://viem.sh/docs/contract/simulateContract.html#account).
 
@@ -253,7 +253,7 @@ Removed `abi`, `address`, `functionName` from the return value, they now belong 
 
 #### `readContracts`
 
-##### Return type structure changed
+**Return type structure changed**
 
 When `allowFailure` is truthy (default), the return structure is now in the form of `{ error, result, status }[]` instead of an array of contract function results (`Result[]`).
 
@@ -268,7 +268,7 @@ const data = await readContracts({
 
 The return type when `allowFailure` is falsy has not changed.
 
-##### Removed `console.warn` logs for failing contract methods
+**Removed `console.warn` logs for failing contract methods**
 
 The `console.warn` logs for failing contract methods has been removed. Failing methods can now be extracted from the `error` property of the return type.
 
@@ -282,7 +282,7 @@ const data = await readContracts({
 + })
 ```
 
-##### Removed `overrides`
+**Removed `overrides`**
 
 The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
 
@@ -298,7 +298,7 @@ const data = await readContracts({
 
 #### `readContract`
 
-##### Removed `overrides`
+**Removed `overrides`**
 
 The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
 
@@ -314,7 +314,7 @@ const data = await readContract({
 
 #### `sendTransaction`
 
-##### `wait` has been removed from the return type
+**`wait` has been removed from the return type**
 
 `wait` has been removed from the return type, favor `waitForTransaction` instead.
 
@@ -332,13 +332,13 @@ const {
 
 #### `signMessage`
 
-##### `message` no longer accepts a byte array
+**`message` no longer accepts a byte array**
 
 `message` no longer accepts a byte array, only a string value
 
 #### `signTypedData`
 
-##### `value` has been renamed to `message`
+**`value` has been renamed to `message`**
 
 ```diff
 const signature = await signTypedData({
@@ -350,7 +350,7 @@ const signature = await signTypedData({
 })
 ```
 
-##### `primaryType` is now required
+**`primaryType` is now required**
 
 The `primaryType` attribute is now required. Aligns closer to EIP-712, and allows consumers to specify an alternative primary type. Previously, Ethers.js did some internal stuff to figure out the primary type. But it's not hard for a consumer to just provide that – and we believe it is more clear.
 
@@ -365,7 +365,7 @@ const signature = await signTypedData({
 
 #### `waitForTransaction`
 
-##### Renamed `onSpeedUp` to `onReplaced`
+**Renamed `onSpeedUp` to `onReplaced`**
 
 ```diff
 const waitForTransaction = await waitForTransaction({
@@ -375,13 +375,13 @@ const waitForTransaction = await waitForTransaction({
 })
 ```
 
-##### Return type changed
+**Return type changed**
 
 Now returns a viem [TransactionReceipt](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L12) instead of an Ethers `TransactionReceipt`.
 
 #### `watchPendingTransactions`
 
-##### Callback now returns batched transaction hashes
+**Callback now returns batched transaction hashes**
 
 The callback now returns a batched array of transaction hashes, instead of callback being emitted several times with singular hashes.
 
@@ -395,7 +395,7 @@ const unwatch = watchPendingTransactions(
 
 #### `writeContract`
 
-##### `wait` has been removed from the return type
+**`wait` has been removed from the return type**
 
 `wait` has been removed from the return type, favor `waitForTransaction` instead.
 
@@ -411,7 +411,7 @@ const {
 + const receipt = await waitForTransaction({ hash })
 ```
 
-##### Removed `overrides`
+**Removed `overrides`**
 
 The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `writeContract` parameters](https://viem.sh/docs/contract/writeContract.html#account).
 
@@ -429,7 +429,7 @@ const { config } = await writeContract({
 
 #### `watchContractEvent`
 
-##### Callback now returns array of logs
+**Callback now returns array of logs**
 
 Callback now returns an array of Event Logs (with included decoded args), instead of positional decoded args with the log.
 
@@ -449,7 +449,7 @@ const unwatch = watchContractEvent(
 )
 ```
 
-##### Removed `once`
+**Removed `once`**
 
 The `once` parameter has been removed. Use `unwatch` to cleanup the listener instead.
 
