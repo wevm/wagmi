@@ -32,6 +32,24 @@ function App() {
 }
 ```
 
+The `useContractEvent` Hook also returns an `unwatch` function that can be used to unsubscribe from the event. Can be used to clean up the listener after an event is seen.
+
+```tsx {4,11}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  const unwatch = useContractEvent({
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: erc20ABI,
+    eventName: 'Transfer',
+    listener(log) {
+      console.log(log)
+      if (log.args.from === '0x...') unwatch()
+    },
+  })
+}
+```
+
 ## Configuration
 
 ### address (optional)

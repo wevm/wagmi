@@ -33,18 +33,21 @@ export function useContractEvent<
   const publicClient = usePublicClient({ chainId })
   const webSocketPublicClient = useWebSocketPublicClient({ chainId })
 
+  const unwatch = React.useRef<() => void>()
   React.useEffect(() => {
     if (!abi || !address || !eventName) return
 
     const publicClient_ = webSocketPublicClient || publicClient
 
-    const unwatch = publicClient_.watchContractEvent({
+    unwatch.current = publicClient_.watchContractEvent({
       abi,
       address,
       eventName,
       onLogs: listener,
     })
-    return unwatch
+    return unwatch.current
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [abi, address, eventName])
+
+  return unwatch.current
 }
