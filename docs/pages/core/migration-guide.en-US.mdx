@@ -312,6 +312,39 @@ const data = await readContract({
 })
 ```
 
+#### `signMessage`
+
+##### `message` no longer accepts a byte array
+
+`message` no longer accepts a byte array, only a string value
+
+#### `signTypedData`
+
+##### `value` has been renamed to `message`
+
+```diff
+const signature = await signTypedData({
+  domain,
+  types,
+  primaryType: 'Mail',
+- value,
++ message
+})
+```
+
+##### `primaryType` is now required
+
+The `primaryType` attribute is now required. Aligns closer to EIP-712, and allows consumers to specify an alternative primary type. Previously, Ethers.js did some internal stuff to figure out the primary type. But it's not hard for a consumer to just provide that – and we believe it is more clear.
+
+```diff
+const signature = await signTypedData({
+  domain,
+  types,
++ primaryType: 'Mail',
+  message
+})
+```
+
 ## 0.10.x Breaking changes
 
 ### WalletConnectConnector
