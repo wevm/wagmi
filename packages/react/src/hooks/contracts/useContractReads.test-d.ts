@@ -26,19 +26,79 @@ const contracts = [
   },
 ] as const
 
-describe('useContractInfiniteReads', () => {
+describe('useContractReads', () => {
   it('default', () => {
     const { data } = useContractReads({
       contracts,
     })
 
-    assertType<[BigNumber, BigNumber, boolean, BigNumber] | undefined>(data)
+    assertType<
+      | [BigNumber | null, BigNumber | null, boolean | null, BigNumber | null]
+      | undefined
+    >(data)
   })
 
   describe('select', () => {
     it('to primitive', () => {
       const { data } = useContractReads({
         contracts,
+        select: (data) =>
+          [
+            data[0]?.toBigInt(),
+            data[1]?.toBigInt(),
+            data[2],
+            data[3]?.toBigInt(),
+          ] as const,
+      })
+
+      assertType<
+        | readonly [
+            bigint | undefined,
+            bigint | undefined,
+            boolean | null,
+            bigint | undefined,
+          ]
+        | undefined
+      >(data)
+    })
+
+    it('to object', () => {
+      const { data } = useContractReads({
+        contracts,
+        select: (data) => ({
+          loveByTom: data[0]?.toBigInt(),
+          loveByJake: data[1]?.toBigInt(),
+          isAlive: data[2],
+          tokenId: data[3]?.toBigInt(),
+        }),
+      })
+
+      assertType<
+        | {
+            loveByTom: bigint | undefined
+            loveByJake: bigint | undefined
+            isAlive: boolean | null
+            tokenId: bigint | undefined
+          }
+        | undefined
+      >(data)
+    })
+  })
+
+  it('default - no allow failure', () => {
+    const { data } = useContractReads({
+      contracts,
+      allowFailure: false,
+    })
+
+    assertType<[BigNumber, BigNumber, boolean, BigNumber] | undefined>(data)
+  })
+
+  describe('select - no allow failure', () => {
+    it('to primitive', () => {
+      const { data } = useContractReads({
+        contracts,
+        allowFailure: false,
         select: (data) =>
           [
             data[0].toBigInt(),
@@ -51,9 +111,10 @@ describe('useContractInfiniteReads', () => {
       assertType<readonly [bigint, bigint, boolean, bigint] | undefined>(data)
     })
 
-    it('to object', () => {
+    it('to object - no allow failure', () => {
       const { data } = useContractReads({
         contracts,
+        allowFailure: false,
         select: (data) => ({
           loveByTom: data[0].toBigInt(),
           loveByJake: data[1].toBigInt(),
