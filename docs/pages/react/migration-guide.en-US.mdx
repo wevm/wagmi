@@ -302,6 +302,44 @@ The returned `config.request` now returns the shape of [viem's `WriteContractPar
 
 Removed `abi`, `address`, `functionName` from the return value, they now belong in `config.request`.
 
+#### `useContractEvent`
+
+##### Callback now returns array of logs
+
+Callback now returns an array of Event Logs (with included decoded args), instead of positional decoded args with the log.
+
+```diff
+const unwatch = useContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+- listener: (node, label, owner) => {
++ listener: (logs) => {
+-   console.log(node, label, owner)
++   const { args } = logs[0]
++   console.log(args.node, args.label, args.owner)
+  },
+})
+```
+
+##### Removed `once`
+
+The `once` parameter has been removed. Use `unwatch` to cleanup the listener instead.
+
+```diff
+const unwatch = useContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+- once: true,
+  listener: (logs) => {
+    const { args } = logs[0]
+    console.log(args.node, args.label, args.owner)
++   unwatch()
+  }
+})
+```
+
 #### `useContractRead`
 
 ##### Removed `overrides`
@@ -317,6 +355,91 @@ const { data } = useContractRead({
 + blockTag: 'safe'
 })
 ```
+
+#### `useContractWrite`
+
+##### Removed requirement for "prepare" mode
+
+Removed the requirement for "prepare" mode. You can now use `useContractWrite` without calling `usePrepareContractWrite` first.
+
+```diff
+const { data, isLoading, isSuccess, write } = useContractWrite({
+- mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'claim',
+  tokenId: 69,
+})
+```
+
+##### `wait` has been removed from the return type
+
+`wait` has been removed from the return type, favor `waitForTransaction` instead.
+
+```diff
++ import { waitForTransaction } from 'wagmi/actions'
+
+const { data } = useContractWrite(...)
+const {
+- wait,
++ hash,
+} = data || {}
+
+- const receipt = await wait()
++ const receipt = await waitForTransaction({ hash })
+```
+
+##### Removed `overrides`
+
+The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `writeContract` parameters](https://viem.sh/docs/contract/writeContract.html#account).
+
+```diff
+const { config } = useContractWrite({
+  ...
+- overrides: {
+-   gasLimit: BigNumber.from('42069'),
+-   value: BigNumber.from('69420'),
+- },
++ gasLimit: 42069n,
++ value: 69420n
+})
+```
+
+##### Renamed `recklesslySetUnpreparedArgs` to `args`
+
+```diff
+const { data, write } = useContractWrite({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedArgs: [69],
++ args: [69],
+})
+```
+
+##### Removed `recklesslySetUnpreparedOverrides`
+
+Removed `recklesslySetUnpreparedOverrides`. They now exist at the top-level of the function.
+
+```diff
+const { data, write } = useContractWrite({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedOverrides: {
+-   gasLimit: BigNumber.from('42069'),
+-   value: BigNumber.from('69420'),
+- },
++ gas: 42069n,
++ value: 69420n
+})
+```
+
+##### Return type changed
+
+Now returns a viem [TransactionReceipt](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L12) instead of an Ethers `TransactionReceipt`.
 
 #### `useSendTransaction`
 
@@ -408,91 +531,6 @@ const waitForTransaction = useWaitForTransaction({
 + onReplaced: (transaction) => console.log(transaction)
 })
 ```
-
-#### `useContractWrite`
-
-##### Removed requirement for "prepare" mode
-
-Removed the requirement for "prepare" mode. You can now use `useContractWrite` without calling `usePrepareContractWrite` first.
-
-```diff
-const { data, isLoading, isSuccess, write } = useContractWrite({
-- mode: 'recklesslyUnprepared',
-  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-  abi: wagmigotchiABI,
-  functionName: 'claim',
-  tokenId: 69,
-})
-```
-
-##### `wait` has been removed from the return type
-
-`wait` has been removed from the return type, favor `waitForTransaction` instead.
-
-```diff
-+ import { waitForTransaction } from 'wagmi/actions'
-
-const { data } = useContractWrite(...)
-const {
-- wait,
-+ hash,
-} = data || {}
-
-- const receipt = await wait()
-+ const receipt = await waitForTransaction({ hash })
-```
-
-##### Removed `overrides`
-
-The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `writeContract` parameters](https://viem.sh/docs/contract/writeContract.html#account).
-
-```diff
-const { config } = await writeContract({
-  ...
-- overrides: {
--   gasLimit: BigNumber.from('42069'),
--   value: BigNumber.from('69420'),
-- },
-+ gasLimit: 42069n,
-+ value: 69420n
-})
-```
-
-##### Renamed `recklesslySetUnpreparedArgs` to `args`
-
-```diff
-const { data, write } = useContractWrite({
-  ...
-})
-
-write({
-- recklesslySetUnpreparedArgs: [69],
-+ args: [69],
-})
-```
-
-##### Removed `recklesslySetUnpreparedOverrides`
-
-Removed `recklesslySetUnpreparedOverrides`. They now exist at the top-level of the function.
-
-```diff
-const { data, write } = useContractWrite({
-  ...
-})
-
-write({
-- recklesslySetUnpreparedOverrides: {
--   gasLimit: BigNumber.from('42069'),
--   value: BigNumber.from('69420'),
-- },
-+ gas: 42069n,
-+ value: 69420n
-})
-```
-
-##### Return type changed
-
-Now returns a viem [TransactionReceipt](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L12) instead of an Ethers `TransactionReceipt`.
 
 #### `useWatchPendingTransactions`
 

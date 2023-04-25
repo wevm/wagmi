@@ -427,6 +427,48 @@ const { config } = await writeContract({
 })
 ```
 
+#### `watchContractEvent`
+
+##### Callback now returns array of logs
+
+Callback now returns an array of Event Logs (with included decoded args), instead of positional decoded args with the log.
+
+```diff
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+  },
+- (node, label, owner) => {
++ (logs) => {
+-   console.log(node, label, owner)
++   const { args } = logs[0]
++   console.log(args.node, args.label, args.owner)
+  },
+)
+```
+
+##### Removed `once`
+
+The `once` parameter has been removed. Use `unwatch` to cleanup the listener instead.
+
+```diff
+const unwatch = watchContractEvent(
+  {
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    eventName: 'NewOwner',
+-   once: true
+  },
+  (logs) => {
+    const { args } = logs[0]
+    console.log(args.node, args.label, args.owner)
++   unwatch()
+  },
+)
+```
+
 ## 0.10.x Breaking changes
 
 ### WalletConnectConnector
