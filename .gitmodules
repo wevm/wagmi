@@ -1,3 +1,4 @@
 [submodule "references"]
 	path = references
 	url = https://github.com/goosewobbler/wagmi-references.git
+	branch = main
