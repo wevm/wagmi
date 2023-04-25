@@ -9,6 +9,43 @@ import { Callout } from 'nextra-theme-docs'
 
 If you are coming from an earlier version of `@wagmi/core`, you will need to make sure to update the following APIs listed below.
 
+## 1.x.x Breaking changes
+
+### General
+
+#### Removed `ethers` peer dependency
+
+The `ethers` peer dependency has been removed in favour of [`viem`](https://viem.sh).
+
+```bash
+npm uninstall ethers
+npm i @wagmi/core@latest viem@latest
+```
+
+If your project is using modules from `ethers` directly, that are dependant on wagmi (e.g. `BigNumber`, etc), you will need to migrate to the `viem`-equivalent module. Check out the [Ethers.js → viem migration guide](https://viem.sh/docs/ethers-migration.html).
+
+If you have usages of `ethers` that are independent of wagmi, it is highly recommended to migrate to `viem` to take advantage of the smaller bundle size.
+
+#### `BigNumber` → native `BigInt`
+
+All `BigNumber` instances are now [platform native `BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) instances. This means you can no longer use arithmatic methods such as `.add`, `.subtract`, etc because `BigInt` is just a primitive type like `number`.
+
+```diff
+- const value = BigNumber.from('69420')
++ const value = 69420n
+```
+
+```diff
+- const value = BigNumber.from('69420')
++ const value = 69420n
+
+- const value2 = BigNumber.from('42069')
++ const value2 = 42069n
+
+- const value3 = value.add(value2)
++ const value3 = value + value2
+```
+
 ## 0.10.x Breaking changes
 
 ### WalletConnectConnector
