@@ -213,6 +213,51 @@ const data = await multicall({
 })
 ```
 
+#### `readContracts`
+
+##### Return type structure changed
+
+When `allowFailure` is truthy (default), the return structure is now in the form of `{ error, result, status }[]` instead of an array of contract function results (`Result[]`).
+
+```diff
+const data = await readContracts({
+  ...
+})
+
+- const result = data[0]
++ const { result } = data[0]
+```
+
+The return type when `allowFailure` is falsy has not changed.
+
+##### Removed `console.warn` logs for failing contract methods
+
+The `console.warn` logs for failing contract methods has been removed. Failing methods can now be extracted from the `error` property of the return type.
+
+```diff
+const data = await readContracts({
+  ...
+})
+
++ data.forEach(({ error, status }) => {
++   if (status === 'failure') console.warn(error.message)
++ })
+```
+
+##### Removed `overrides`
+
+The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
+
+```diff
+const data = await readContracts({
+  ...
+- overrides: {
+-   blockTag: 'safe'
+- }
++ blockTag: 'safe'
+})
+```
+
 ## 0.10.x Breaking changes
 
 ### WalletConnectConnector
