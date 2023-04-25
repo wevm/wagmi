@@ -9,17 +9,32 @@
   React Hooks for Ethereum
 <p>
 
-<div align="center">
+<p align="center">
   <a href="https://www.npmjs.com/package/wagmi">
-    <img src="https://img.shields.io/npm/v/wagmi?colorA=21262d&colorB=161b22&style=flat" alt="Version">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/wagmi?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/v/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Version">
+    </picture>
+  </a>
+  <a href="https://github.com/wagmi-dev/wagmi/blob/main/LICENSE">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/wagmi?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/l/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="MIT License">
+    </picture>
   </a>
   <a href="https://www.npmjs.com/package/wagmi">
-    <img src="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=161b22&style=flat" alt="Downloads per month">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/dm/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Downloads per month">
+    </picture>
   </a>
   <a href="https://bestofjs.org/projects/wagmi">
-    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily" alt="Best of JS">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/endpoint?colorA=21262d&colorB=21262d&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily">
+      <img src="https://img.shields.io/endpoint?colorA=f6f8fa&colorB=f6f8fa&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily" alt="Best of JS">
+    </picture>
   </a>
-</div>
+</p>
 
 <br>
 
