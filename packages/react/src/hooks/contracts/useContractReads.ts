@@ -17,7 +17,8 @@ import { useChainId, useInvalidateOnBlock, useQuery } from '../utils'
 export type UseContractReadsConfig<
   TContracts extends Contract[],
   TSelectData = ReadContractsResult<TContracts>,
-  Config = ReadContractsConfig<TContracts>,
+  TAllowedFailure extends boolean | undefined = boolean | undefined,
+  Config = ReadContractsConfig<TContracts, TAllowedFailure>,
 > = {
   [K in keyof Config]?: K extends 'contracts'
     ? DeepPartial<Config[K], 2>
@@ -120,7 +121,8 @@ export function useContractReads<
     abi: TAbi
     functionName: TFunctionName
   }[],
-  TSelectData = ReadContractsResult<TContracts>,
+  TAllowedFailure extends boolean | undefined = boolean | undefined,
+  TSelectData = ReadContractsResult<TContracts, TAllowedFailure>,
 >(
   {
     allowFailure = true,
@@ -143,7 +145,11 @@ export function useContractReads<
         : (replaceEqualDeep(oldData, newData) as any),
     suspense,
     watch,
-  }: UseContractReadsConfig<TContracts, TSelectData> = {} as any,
+  }: UseContractReadsConfig<
+    TContracts,
+    TSelectData,
+    TAllowedFailure
+  > = {} as any,
   // Need explicit type annotation so TypeScript doesn't expand return type into recursive conditional
 ): UseQueryResult<TSelectData, Error> {
   const { data: blockNumber } = useBlockNumber({

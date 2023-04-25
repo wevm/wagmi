@@ -17,9 +17,12 @@ import { getProvider } from '../providers'
 import { multicall } from './multicall'
 import { readContract } from './readContract'
 
-export type ReadContractsConfig<TContracts extends Contract[]> = {
+export type ReadContractsConfig<
+  TContracts extends Contract[],
+  TAllowFailure extends boolean | undefined = boolean | undefined,
+> = {
   /** Failures in the multicall will fail silently */
-  allowFailure?: boolean
+  allowFailure?: TAllowFailure
   /** Contracts to query */
   contracts: readonly [
     ...ContractsConfig<
@@ -34,18 +37,23 @@ export type ReadContractsConfig<TContracts extends Contract[]> = {
   overrides?: GetOverridesForAbiStateMutability<'pure' | 'view'>
 }
 
-export type ReadContractsResult<TContracts extends Contract[]> =
-  ContractsResult<TContracts>
+export type ReadContractsResult<
+  TContracts extends Contract[],
+  TAllowFailure extends boolean | undefined = boolean | undefined,
+> = ContractsResult<TContracts, [], [], TAllowFailure>
 
 export async function readContracts<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
   TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+  TAllowFailure extends boolean | undefined = boolean | undefined,
 >({
   allowFailure = true,
   contracts,
   overrides,
-}: ReadContractsConfig<TContracts>): Promise<ReadContractsResult<TContracts>> {
+}: ReadContractsConfig<TContracts, TAllowFailure>): Promise<
+  ReadContractsResult<TContracts, TAllowFailure>
+> {
   type ContractConfig = {
     abi: Abi
     address: Address

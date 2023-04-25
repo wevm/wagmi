@@ -78,6 +78,7 @@ export type GetArgs<
 export type GetReturnType<
   TAbi extends Abi | readonly unknown[] = Abi,
   TFunctionName extends string = string,
+  TAllowFailure extends boolean | undefined = true,
   TAbiFunction extends AbiFunction & {
     type: 'function'
   } = TAbi extends Abi
@@ -92,7 +93,7 @@ export type GetReturnType<
   : TArgs extends readonly []
   ? void
   : TArgs extends readonly [infer Arg]
-  ? Arg
+  ? Arg | (TAllowFailure extends true ? null : never)
   : TArgs & {
       // Construct ethers hybrid array-objects for named outputs.
       [Output in TAbiFunction['outputs'][number] as Output extends {
@@ -154,23 +155,28 @@ export type ContractsResult<
   TContracts extends Contract[],
   Result extends any[] = [],
   Depth extends ReadonlyArray<number> = [],
+  TAllowFailure extends boolean | undefined = boolean | undefined,
 > = Depth['length'] extends MAXIMUM_DEPTH
   ? GetReturnType[]
   : TContracts extends []
   ? []
   : TContracts extends [infer Head extends Contract]
-  ? [...Result, GetReturnType<Head['abi'], Head['functionName']>]
+  ? [...Result, GetReturnType<Head['abi'], Head['functionName'], TAllowFailure>]
   : TContracts extends [
       infer Head extends Contract,
       ...infer Tail extends Contract[],
     ]
   ? ContractsResult<
       [...Tail],
-      [...Result, GetReturnType<Head['abi'], Head['functionName']>],
-      [...Depth, 1]
+      [
+        ...Result,
+        GetReturnType<Head['abi'], Head['functionName'], TAllowFailure>,
+      ],
+      [...Depth, 1],
+      TAllowFailure
     >
   : TContracts extends GetConfig<infer TAbi, infer TFunctionName>[]
-  ? GetReturnType<TAbi, TFunctionName>[]
+  ? GetReturnType<TAbi, TFunctionName, TAllowFailure>[]
   : GetReturnType[]
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
