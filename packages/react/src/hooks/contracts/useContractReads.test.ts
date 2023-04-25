@@ -29,7 +29,7 @@ const contracts = [
   },
 ] as const
 
-describe('useContractRead', () => {
+describe('useContractReads', () => {
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
       useContractReads({ contracts }),
