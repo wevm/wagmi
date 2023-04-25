@@ -26,6 +26,97 @@ If your project is using modules from `ethers` directly, that are dependant on w
 
 If you have usages of `ethers` that are independent of wagmi, it is highly recommended to migrate to `viem` to take advantage of the smaller bundle size.
 
+#### "Provider" & "Signer" terminology
+
+Ethers [Provider](https://docs.ethers.org/v5/api/providers/) & [Signer](https://docs.ethers.org/v5/api/signer/) terminology is now known as viem's [Public Client](https://viem.sh/docs/clients/public.html) & [Wallet Client](https://viem.sh/docs/clients/wallet.html) terminology.
+
+This directly affects:
+
+- `createClient`
+- `configureChains`
+- `getProvider` (now `getPublicClient`)
+- `fetchSigner` (now `getWalletClient`)
+- `getWebSocketProvider` (now `getWebSocketPublicClient`)
+
+**`createClient`**
+
+```diff
+import { WagmiConfig, createClient } from 'wagmi'
+- import { getDefaultProvider } from 'ethers'
++ import { createPublicClient, http } from 'viem'
+
+const client = createClient({
+  autoConnect: true,
+- provider: getDefaultProvider(),
++ publicClient: createPublicClient({
++  chain: mainnet,
++  transport: http()
++ })
+})
+```
+
+**`configureChains`**
+
+```diff
+import { WagmiConfig, createClient, configureChains, mainnet } from '@wagmi/core'
+import { publicProvider } from '@wagmi/core/providers/public'
+
+const {
+  chains,
+- provider,
++ publicClient,
+- webSocketProvider,
++ webSocketPublicClient
+} = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
+
+const client = createClient({
+  autoConnect: true,
+- provider,
++ publicClient,
+- webSocketProvider,
++ webSocketPublicClient
+})
+```
+
+**`getProvider`**
+
+```diff
+- import { getProvider } from '@wagmi/core'
++ import { getPublicClient } from '@wagmi/core'
+
+- const provider = getProvider()
++ const publicClient = getPublicClient()
+```
+
+**`fetchSigner`**
+
+```diff
+- import { fetchSigner } from 'wagmi'
++ import { getWalletClient } from 'wagmi'
+
+- const signer = await fetchSigner()
++ const walletClient = await getWalletClient()
+```
+
+**`getWebSocketProvider`**
+
+```diff
+- import { getWebSocketProvider } from 'wagmi'
++ import { getWebSocketPublicClient } from 'wagmi'
+
+- const webSocketProvider = getWebSocketProvider()
++ const webSocketPublicClient = getWebSocketPublicClient()
+```
+
+**Types**
+
+- `Provider` → `PublicClient`
+- `Signer` → `WalletClient`
+- `WebSocketProvider` → `WebSocketPublicClient`
+
 #### `BigNumber` → native `BigInt`
 
 All `BigNumber` instances are now [platform native `BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) instances. This means you can no longer use arithmatic methods such as `.add`, `.subtract`, etc because `BigInt` is just a primitive type like `number`.
@@ -45,6 +136,23 @@ All `BigNumber` instances are now [platform native `BigInt`](https://developer.m
 - const value3 = value.add(value2)
 + const value3 = value + value2
 ```
+
+#### `gasLimit` has been renamed to `gas`
+
+The `gasLimit` attribute has been renamed to `gas`, and still implies the same meaning. It was renamed to align closer to [EIP-1474](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1474.md) and enforce consistency. Aligning closer to EIP-1474 means that you will not need to re-map from `gas` to `gasLimit` if you are deriving from an external source.
+
+```diff
+sendTransaction({
+  request: {
+    to: 'jxom.eth',
+-   gasLimit: 69420n,
++   gas: 69420n,
+    value: 1n
+  }
+})
+```
+
+### WIP...
 
 ## 0.10.x Breaking changes
 
