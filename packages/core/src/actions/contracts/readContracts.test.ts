@@ -109,10 +109,10 @@ describe('readContracts', () => {
     })
     assertType<
       [
-        ResolvedConfig['BigIntType'],
-        ResolvedConfig['BigIntType'],
-        boolean,
-        ResolvedConfig['BigIntType'],
+        ResolvedConfig['BigIntType'] | null,
+        ResolvedConfig['BigIntType'] | null,
+        boolean | null,
+        ResolvedConfig['BigIntType'] | null,
       ]
     >(results)
 
@@ -208,13 +208,13 @@ describe('readContracts', () => {
       })
       assertType<
         [
-          ResolvedConfig['BigIntType'],
-          Address,
-          ResolvedConfig['BigIntType'],
-          boolean,
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'] | null,
+          Address | null,
+          ResolvedConfig['BigIntType'] | null,
+          boolean | null,
+          ResolvedConfig['BigIntType'] | null,
+          ResolvedConfig['BigIntType'] | null,
+          ResolvedConfig['BigIntType'] | null,
         ]
       >(results)
 
@@ -296,10 +296,10 @@ describe('readContracts', () => {
       })
       assertType<
         [
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
-          boolean,
-          ResolvedConfig['BigIntType'],
+          ResolvedConfig['BigIntType'] | null,
+          ResolvedConfig['BigIntType'] | null,
+          boolean | null,
+          ResolvedConfig['BigIntType'] | null,
         ]
       >(results)
 
