@@ -545,6 +545,40 @@ useWatchPendingTransactions(
 )
 ```
 
+### `configureChains`
+
+#### Removed quorum support
+
+Removed quorum support: `priority`, `minQuorum` and `targetQuorum` (for now). viem does not support quorum in the [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback.html) yet, but will in the future!
+
+### Connectors
+
+The breaking changes below only applies if you are building a Connector on top of wagmi.
+
+#### Renamed `getSigner` to `getWalletClient`
+
+The `getSigner` method has been renamed to `getWalletClient`, and also returns [viem's `WalletClient`](https://viem.sh/docs/clients/wallet.html) instead of an Ethers.js `Signer`
+
+```diff
+- async getSigner({ chainId }: { chainId?: number } = {}) {
++ async getWalletClient({ chainId }: { chainId?: number } = {}) {
+  const [provider, account] = await Promise.all([
+    this.getProvider(),
+    this.getAccount(),
+  ])
++ const chain = this.chains.find((x) => x.id === chainId) || this.chains[0]
+- return new providers.Web3Provider(
+-   provider,
+-   chainId,
+- ).getSigner(account)
++ return createWalletClient({
++   account,
++   chain,
++   transport: custom(provider),
++ })
+}
+```
+
 ### WIP...
 
 ## 0.12.x Breaking changes
