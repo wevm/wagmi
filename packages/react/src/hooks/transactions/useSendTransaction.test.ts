@@ -279,7 +279,7 @@ describe('useSendTransaction', () => {
             gas:    21000
 
           Details: Insufficient funds for gas * price + value
-          Version: viem@0.3.10"
+          Version: viem@0.3.12"
         `)
         expect(res).toMatchInlineSnapshot(`
           {
@@ -396,7 +396,7 @@ describe('useSendTransaction', () => {
                 gas:    21000
 
               Details: Insufficient funds for gas * price + value
-              Version: viem@0.3.10"
+              Version: viem@0.3.12"
             `)
           }
         })

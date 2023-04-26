@@ -110,8 +110,8 @@ importers:
         specifier: ^4.9.4
         version: 4.9.5
       viem:
-        specifier: ~0.3.10
-        version: 0.3.10(typescript@4.9.5)(zod@3.21.4)
+        specifier: ~0.3.12
+        version: 0.3.12(typescript@4.9.5)(zod@3.21.4)
       vite:
         specifier: ^4.0.4
         version: 4.2.1(@types/node@17.0.21)
@@ -152,8 +152,8 @@ importers:
         specifier: ^1.1.6
         version: 1.1.6(ethers@5.5.1)
       viem:
-        specifier: ~0.3.10
-        version: 0.3.10(typescript@4.9.5)(zod@3.21.4)
+        specifier: ~0.3.12
+        version: 0.3.12(typescript@4.9.5)(zod@3.21.4)
       wagmi:
         specifier: workspace:*
         version: link:../packages/react
@@ -201,8 +201,8 @@ importers:
         specifier: ^18.1.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: ~0.3.10
-        version: 0.3.10(typescript@4.9.5)(zod@3.21.4)
+        specifier: ~0.3.12
+        version: 0.3.12(typescript@4.9.5)(zod@3.21.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -304,8 +304,8 @@ importers:
         specifier: '>=4.9.4'
         version: 4.9.5
       viem:
-        specifier: ~0.3.10
-        version: 0.3.10(typescript@4.9.5)(zod@3.21.4)
+        specifier: ~0.3.12
+        version: 0.3.12(typescript@4.9.5)(zod@3.21.4)
       wagmi:
         specifier: '>=0.11'
         version: 0.11.0(@babel/core@7.21.4)(@types/node@18.15.11)(ethers@5.7.2)(react@18.2.0)(typescript@4.9.5)(zod@3.21.4)
@@ -351,8 +351,8 @@ importers:
         version: 4.3.7(react@18.2.0)
     devDependencies:
       viem:
-        specifier: ~0.3.10
-        version: 0.3.10(typescript@4.9.5)(zod@3.21.4)
+        specifier: ~0.3.12
+        version: 0.3.12(typescript@4.9.5)(zod@3.21.4)
 
   packages/react:
     dependencies:
@@ -406,8 +406,8 @@ importers:
         specifier: npm:react-dom@17.0.2
         version: /react-dom@17.0.2(react@18.2.0)
       viem:
-        specifier: 0.3.10
-        version: 0.3.10(typescript@4.9.5)(zod@3.21.4)
+        specifier: 0.3.12
+        version: 0.3.12(typescript@4.9.5)(zod@3.21.4)
 
   references/packages/chains:
     dependencies:
@@ -452,8 +452,8 @@ importers:
         specifier: workspace:*
         version: link:../chains
       viem:
-        specifier: 0.3.10
-        version: 0.3.10(typescript@4.9.5)(zod@3.21.4)
+        specifier: 0.3.12
+        version: 0.3.12(typescript@4.9.5)(zod@3.21.4)
 
 packages:
 
@@ -12372,8 +12372,8 @@ packages:
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
 
-  /viem@0.3.10(typescript@4.9.5)(zod@3.21.4):
-    resolution: {integrity: sha512-2+yTevGjgLpxcaT4U0lQrhGY9wJYe4GKLrSjfFwsfeFPBGpEHZGHkE8HSAjBrIiYQ8f1b/dMdBQIY91O4S7zSA==}
+  /viem@0.3.12(typescript@4.9.5)(zod@3.21.4):
+    resolution: {integrity: sha512-8w1XaU9ZKECmZ7/71reA3chgBG6eyrBoT24JdVl2CB9SVuJ+5Rpop2r0LjYyeMTmmWT8ZwLYvinKhASNfsaNiw==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 0.9.0

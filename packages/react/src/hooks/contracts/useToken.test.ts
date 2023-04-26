@@ -113,7 +113,7 @@ describe('useToken', () => {
             function:  decimals()
 
           Docs: https://viem.sh/docs/contract/multicall.html
-          Version: viem@0.3.10],
+          Version: viem@0.3.12],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
