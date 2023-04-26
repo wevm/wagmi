@@ -100,11 +100,14 @@ export function usePrepareSendTransaction({
       onSuccess,
     },
   )
+
   return Object.assign(prepareSendTransactionQuery, {
     config: {
       request: undefined,
       mode: 'prepared',
-      ...prepareSendTransactionQuery.data,
+      ...(prepareSendTransactionQuery.isSuccess
+        ? prepareSendTransactionQuery.data
+        : undefined),
     } as PrepareSendTransactionResult,
   })
 }

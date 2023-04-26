@@ -10,11 +10,9 @@ import * as React from 'react'
 import type { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
-export type UseSendTransactionArgs = Omit<
-  SendTransactionArgs,
-  'request' | 'type'
-> &
-  (
+export type UseSendTransactionArgs<
+  TMode extends 'prepared' | undefined = 'prepared' | undefined,
+> = Omit<SendTransactionArgs, 'request' | 'type'> & { mode?: TMode } & (
     | {
         mode: 'prepared'
         /** The prepared request to send the transaction. */
@@ -34,6 +32,16 @@ export type UseSendTransactionConfig = MutationConfig<
   Error,
   SendTransactionArgs
 >
+
+type SendTransactionFn = (
+  overrideConfig?: UseSendTransactionMutationArgs,
+) => void
+type SendTransactionAsyncFn = (
+  overrideConfig?: UseSendTransactionMutationArgs,
+) => Promise<SendTransactionResult>
+type MutateFnReturnValue<TMode, TFn> = TMode extends 'prepared'
+  ? TFn | undefined
+  : TFn
 
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
@@ -63,7 +71,9 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  * })
  * const result = useSendTransaction(config)
  */
-export function useSendTransaction({
+export function useSendTransaction<
+  TMode extends 'prepared' | undefined = undefined,
+>({
   chainId,
   mode,
   request,
@@ -71,7 +81,7 @@ export function useSendTransaction({
   onMutate,
   onSettled,
   onSuccess,
-}: UseSendTransactionArgs & UseSendTransactionConfig = {}) {
+}: UseSendTransactionArgs<TMode> & UseSendTransactionConfig = {}) {
   const {
     data,
     error,
@@ -127,8 +137,15 @@ export function useSendTransaction({
     isLoading,
     isSuccess,
     reset,
-    sendTransaction,
-    sendTransactionAsync,
+    sendTransaction: (mode === 'prepared' && !request
+      ? undefined
+      : sendTransaction) as MutateFnReturnValue<TMode, SendTransactionFn>,
+    sendTransactionAsync: (mode === 'prepared' && !request
+      ? undefined
+      : sendTransactionAsync) as MutateFnReturnValue<
+      TMode,
+      SendTransactionAsyncFn
+    >,
     status,
     variables,
   }
