@@ -287,6 +287,19 @@ Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead o
 + const publicClient = usePublicClient(...)
 ```
 
+#### `useSigner`
+
+**Renamed to `getWalletClient`**
+
+Returns viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) instead of ethers `Signer`.
+
+```diff
+- const { data } = useSigner(...)
+//        ^? const data: Signer
++ const { data } = useWalletClient(...)
+//        ^? const data: WalletClient
+```
+
 #### `useToken`
 
 **Returns a `bigint`**

@@ -298,6 +298,17 @@ Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead o
 + const publicClient = getPublicClient(...)
 ```
 
+#### `getSigner`
+
+**Renamed to `getWalletClient`**
+
+Returns viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) instead of ethers `Signer`.
+
+```diff
+- const signer = await getSigner(...)
++ const walletClient = await getWalletClient(...)
+```
+
 #### `getWebSocketProvider`
 
 **Renamed to `getWebSocketPublicClient`**
@@ -531,6 +542,17 @@ Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead o
 ```diff
 - const unwatch = watchProvider({}, (provider) => { ... })
 + const unwatch = watchPublicClient({}, (publicClient) => { ... })
+```
+
+#### `watchSigner`
+
+**Renamed to `watchWalletClient`**
+
+Returns viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) instead of ethers `Signer`.
+
+```diff
+- const unwatch = watchSigner({}, (signer) => { ... })
++ const unwatch = watchWalletClient({}, (walletClient) => { ... })
 ```
 
 #### `watchWebSocketProvider`
