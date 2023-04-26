@@ -253,6 +253,21 @@ feeData.maxPriorityFeePerGas
 //      ^? const maxPriorityFeePerGas: bigint
 ```
 
+#### `fetchToken`
+
+**Returns a `bigint`**
+
+Returns `bigint` instead of a `BigNumber` for `totalSupply.value`.
+
+```ts
+const token = await fetchToken({
+  ...
+})
+
+const value = token.totalSupply.value
+//    ^? const value: bigint
+```
+
 #### `multicall`
 
 **Return type structure changed**

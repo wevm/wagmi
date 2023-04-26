@@ -265,6 +265,21 @@ data.maxPriorityFeePerGas
 //      ^? const maxPriorityFeePerGas: bigint
 ```
 
+#### `useToken`
+
+**Returns a `bigint`**
+
+Returns `bigint` instead of a `BigNumber` for `totalSupply.value`.
+
+```ts
+const { data } = useToken({
+  ...
+})
+
+const value = data.totalSupply.value
+//    ^? const value: bigint
+```
+
 #### `useContractReads`
 
 **Return type structure changed**
