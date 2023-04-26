@@ -43,7 +43,7 @@ export async function fetchFeeData({
   let maxFeePerGas = null
   let maxPriorityFeePerGas = null
 
-  if (block && block.baseFeePerGas) {
+  if (block?.baseFeePerGas) {
     lastBaseFeePerGas = block.baseFeePerGas
     maxPriorityFeePerGas = parseGwei('1')
     maxFeePerGas = block.baseFeePerGas * 2n + maxPriorityFeePerGas

@@ -237,6 +237,22 @@ const avatar = await fetchEnsAvatar({
 })
 ```
 
+#### `fetchFeeData`
+
+**Return type changes**
+
+Returns `bigint` instead of a `BigNumber` for `gasPrice` , `maxFeePerGas` , and `maxPriorityFeePerGas`.
+
+```ts
+const feeData = await fetchFeeData()
+feeData.gasPrice
+//      ^? const gasPrice: bigint
+feeData.maxFeePerGas
+//      ^? const maxFeePerGas: bigint
+feeData.maxPriorityFeePerGas
+//      ^? const maxPriorityFeePerGas: bigint
+```
+
 #### `multicall`
 
 **Return type structure changed**

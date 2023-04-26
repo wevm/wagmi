@@ -227,7 +227,7 @@ const value = data.value
 Returns a `bigint` instead of `number` for `data`. Maps to viem's [`getBlockNumber`](https://viem.sh/docs/actions/public/getBlockNumber.html).
 
 ```ts
-const { data } = await useBlockNumber({
+const { data } = useBlockNumber({
   //    ^? const data: bigint
   ...
 })
@@ -240,13 +240,29 @@ const { data } = await useBlockNumber({
 Replaced `address` with `name` in order to remove internal async call to resolve `address` to `name`. Maps to viem's [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar.html).
 
 ```diff
-+ const { data: ensName } = await useEnsName({
++ const { data: ensName } = useEnsName({
 +  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
 + })
-const { data: avatar } = await useEnsAvatar({
+const { data: avatar } = useEnsAvatar({
 - address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
 + name: ensName,
 })
+```
+
+#### `useFeeData`
+
+**Return type changes**
+
+Returns `bigint` instead of a `BigNumber` for `gasPrice` , `maxFeePerGas` , and `maxPriorityFeePerGas`.
+
+```ts
+const { data } = useFeeData()
+data.gasPrice
+//      ^? const gasPrice: bigint
+data.maxFeePerGas
+//      ^? const maxFeePerGas: bigint
+data.maxPriorityFeePerGas
+//      ^? const maxPriorityFeePerGas: bigint
 ```
 
 #### `useContractReads`
