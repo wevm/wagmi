@@ -180,6 +180,31 @@ The `Ethereum` type has been renamed to `WindowProvider`.
 
 ### Hooks
 
+#### `useConnect`
+
+**No longer returns the `provider` property in `data`. Use `connector.getProvider()` instead.**
+
+```diff
+const { data } = useConnect({
+  ...
+})
+
+- const provider = data.provider
++ const provider = await data.connector.getProvider()
+```
+
+**No longer returns the `provider` property in `connectAsync` return type. Use `connector.getProvider()` instead.**
+
+```diff
+const { connectAsync } = useConnect({
+  ...
+})
+
+const result = await connectAsync(...)
+- const provider = result.provider
++ const provider = await result.connector.getProvider()
+```
+
 #### `useContractReads`
 
 **Return type structure changed**

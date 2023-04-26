@@ -180,6 +180,19 @@ The `Ethereum` type has been renamed to `WindowProvider`.
 
 ### Actions
 
+#### `connect`
+
+**No longer returns the `provider` property. Use `connector.getProvider()` instead.**
+
+```diff
+const result = await connect({
+  ...
+})
+
+- const provider = result.provider
++ const provider = await result.connector.getProvider()
+```
+
 #### `multicall`
 
 **Return type structure changed**
