@@ -78,7 +78,7 @@ describe('useEnsName', () => {
             "data": undefined,
             "error": [InvalidAddressError: Address "3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj" is invalid.
 
-          Version: viem@0.3.6],
+          Version: viem@0.3.10],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,

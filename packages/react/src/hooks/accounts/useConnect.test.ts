@@ -110,7 +110,7 @@ describe('useConnect', () => {
             "error": [UserRejectedRequestError: User rejected the request.
 
           Details: Failed to connect.
-          Version: viem@0.3.6],
+          Version: viem@0.3.10],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -416,7 +416,7 @@ describe('useConnect', () => {
             "error": [UserRejectedRequestError: User rejected the request.
 
           Details: Failed to connect.
-          Version: viem@0.3.6],
+          Version: viem@0.3.10],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -550,7 +550,7 @@ describe('useConnect', () => {
             "User rejected the request.
 
             Details: Failed to connect.
-            Version: viem@0.3.6"
+            Version: viem@0.3.10"
           `,
           )
         })
