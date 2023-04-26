@@ -8,7 +8,6 @@ import type {
 import { ConnectorNotFoundError } from '../../errors'
 import { assertActiveChain } from '../../utils'
 import { getWalletClient } from '../viem'
-import { prepareSendTransaction } from './prepareSendTransaction'
 
 export type SendTransactionPreparedRequest = {
   mode: 'prepared'
@@ -49,7 +48,6 @@ export type SendTransactionResult = {
  */
 export async function sendTransaction({
   chainId,
-  mode,
   request,
 }: SendTransactionArgs): Promise<SendTransactionResult> {
   /********************************************************************/
@@ -65,11 +63,6 @@ export async function sendTransaction({
   if (!walletClient) throw new ConnectorNotFoundError()
 
   if (chainId) assertActiveChain({ chainId, walletClient })
-
-  if (mode !== 'prepared') {
-    const res = await prepareSendTransaction({ chainId, request })
-    request = res.request
-  }
 
   const hash = await walletClient.sendTransaction({
     ...request,

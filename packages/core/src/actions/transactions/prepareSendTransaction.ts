@@ -5,7 +5,7 @@ import { ConnectorNotFoundError } from '../../errors'
 import type { WalletClient } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchEnsAddress } from '../ens'
-import { getPublicClient, getWalletClient } from '../viem'
+import { getWalletClient } from '../viem'
 
 export type PrepareSendTransactionArgs<
   TWalletClient extends WalletClient = WalletClient,
@@ -46,7 +46,6 @@ export async function prepareSendTransaction({
   request,
   walletClient: walletClient_,
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
-  const publicClient = getPublicClient({ chainId })
   const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
   if (!walletClient) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId, walletClient })
@@ -57,17 +56,9 @@ export async function prepareSendTransaction({
       : (request.to as Address)) || undefined
   if (to && !isAddress(to)) throw new Error('Invalid address')
 
-  const gas =
-    request.gas ??
-    (await publicClient.estimateGas({
-      ...request,
-      account: walletClient.account,
-      to,
-    }))
-
   return {
     ...(chainId ? { chainId } : {}),
-    request: { ...request, gas, to },
+    request: { ...request, to },
     mode: 'prepared',
   }
 }
