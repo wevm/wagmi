@@ -268,6 +268,19 @@ const value = token.totalSupply.value
 //    ^? const value: bigint
 ```
 
+#### `fetchTransaction`
+
+**Returns viem `Transaction`**
+
+Returns viem [`Transaction`](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L105) instead of an ethers `Transaction`. Maps to viem's [`getTransaction`](https://viem.sh/docs/actions/public/getTransaction.html).
+
+```ts
+const transaction = await fetchTransaction({
+  //  ^? const transaction: Transaction
+  ...
+})
+```
+
 #### `multicall`
 
 **Return type structure changed**
