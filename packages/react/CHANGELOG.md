@@ -1,5 +1,16 @@
 # wagmi
 
+## 1.0.0-next.0
+
+### Major Changes
+
+- [`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb) Thanks [@jxom](https://github.com/jxom)! - Released v1.
+
+### Patch Changes
+
+- Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
+  - @wagmi/core@1.0.0-next.0
+
 ## 0.12.10
 
 ### Patch Changes

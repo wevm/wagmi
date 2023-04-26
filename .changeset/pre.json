@@ -10,5 +10,7 @@
     "@wagmi/chains": "0.2.18",
     "@wagmi/connectors": "1.0.0-next.0"
   },
-  "changesets": []
+  "changesets": [
+    "popular-onions-sip"
+  ]
 }
