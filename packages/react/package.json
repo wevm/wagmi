@@ -48,6 +48,10 @@
       "types": "./dist/connectors/coinbaseWallet.d.ts",
       "default": "./dist/connectors/coinbaseWallet.js"
     },
+    "./connectors/frame": {
+      "types": "./dist/connectors/frame.d.ts",
+      "default": "./dist/connectors/frame.js"
+    },
     "./connectors/injected": {
       "types": "./dist/connectors/injected.d.ts",
       "default": "./dist/connectors/injected.js"

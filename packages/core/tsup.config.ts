@@ -11,6 +11,7 @@ export default defineConfig(
       'src/chains.ts',
       'src/connectors/index.ts',
       'src/connectors/coinbaseWallet.ts',
+      'src/connectors/frame.ts',
       'src/connectors/injected.ts',
       'src/connectors/ledger.ts',
       'src/connectors/metaMask.ts',
