@@ -207,7 +207,9 @@ const result = await connectAsync(...)
 
 #### `useBalance`
 
-**Returns a `bigint` instead of `BigNumber` for `data.value`**
+**Returns a `bigint` instead of `BigNumber`**
+
+Returns a `bigint` instead of `BigNumber` for `data.value`. Maps to viem's [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html).
 
 ```ts
 const { data } = useBalance({
@@ -220,12 +222,30 @@ const value = data.value
 
 #### `useBlockNumber`
 
-**Returns a `bigint` instead of `number` for `data`**
+**Returns a `bigint` instead of `number`**
+
+Returns a `bigint` instead of `number` for `data`. Maps to viem's [`getBlockNumber`](https://viem.sh/docs/actions/public/getBlockNumber.html).
 
 ```ts
 const { data } = await useBlockNumber({
   //    ^? const data: bigint
   ...
+})
+```
+
+#### `useEnsAvatar`
+
+**Replaced `address` with `name`**
+
+Replaced `address` with `name` in order to remove internal async call to resolve `address` to `name`. Maps to viem's [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar.html).
+
+```diff
++ const { data: ensName } = await useEnsName({
++  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ })
+const { data: avatar } = await useEnsAvatar({
+- address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ name: ensName,
 })
 ```
 

@@ -195,7 +195,9 @@ const result = await connect({
 
 #### `fetchBalance`
 
-**Returns a `bigint` instead of `BigNumber` for `value`**
+**Returns a `bigint`**
+
+Returns a `bigint` instead of `BigNumber` for `value`. Maps to viem's [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html).
 
 ```ts
 const balance = await fetchBalance({
@@ -208,12 +210,30 @@ const value = balance.value
 
 #### `fetchBlockNumber`
 
-**Returns a `bigint` instead of `number`**
+**Returns a `bigint`**
+
+Returns a `bigint` instead of `number`. Maps to viem's [`getBlockNumber`](https://viem.sh/docs/actions/public/getBlockNumber.html).
 
 ```ts
 const blockNumber = await fetchBlockNumber({
   //  ^? const blockNumber: bigint
   ...
+})
+```
+
+#### `fetchEnsAvatar`
+
+**Replaced `address` with `name`**
+
+Replaced `address` with `name` in order to remove internal async call to resolve `address` to `name`. Maps to viem's [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar.html).
+
+```diff
++ const ensName = await fetchEnsName({
++  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ })
+const avatar = await fetchEnsAvatar({
+- address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ name: ensName,
 })
 ```
 
