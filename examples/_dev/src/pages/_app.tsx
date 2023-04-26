@@ -4,6 +4,7 @@ import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
+import { FrameConnector } from 'wagmi/connectors/frame'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
@@ -27,6 +28,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 const config = createConfig({
   autoConnect: true,
   connectors: [
+    new FrameConnector({ chains }),
     new MetaMaskConnector({
       chains,
       options: {

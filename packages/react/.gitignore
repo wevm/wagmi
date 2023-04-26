@@ -3,6 +3,7 @@ actions/**
 chains/**
 connectors/**
 connectors/coinbaseWallet/**
+connectors/frame/**
 connectors/injected/**
 connectors/ledger/**
 connectors/metaMask/**
