@@ -276,6 +276,17 @@ data.maxPriorityFeePerGas
 //      ^? const maxPriorityFeePerGas: bigint
 ```
 
+#### `useProvider`
+
+**Renamed to `usePublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const provider = useProvider(...)
++ const publicClient = usePublicClient(...)
+```
+
 #### `useToken`
 
 **Returns a `bigint`**
@@ -667,6 +678,17 @@ useWatchPendingTransactions(
 - listener: (hash) => console.log(hash),
 + listener: (hashes) => console.log(hashes[0]),
 )
+```
+
+#### `useWebSocketProvider`
+
+**Renamed to `useWebSocketPublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const webSocketProvider = useWebSocketProvider(...)
++ const webSocketPublicClient = useWebSocketPublicClient(...)
 ```
 
 ### `configureChains`

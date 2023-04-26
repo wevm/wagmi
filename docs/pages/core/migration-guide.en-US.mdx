@@ -287,6 +287,28 @@ const transaction = await fetchTransaction({
 
 Returns viem [Contract Instance](https://viem.sh/docs/contract/getContract.html) instead of ethers `Contract`.
 
+#### `getProvider`
+
+**Renamed to `getPublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const provider = getProvider(...)
++ const publicClient = getPublicClient(...)
+```
+
+#### `getWebSocketProvider`
+
+**Renamed to `getWebSocketPublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const webSocketProvider = getWebSocketProvider(...)
++ const webSocketPublicClient = getWebSocketPublicClient(...)
+```
+
 #### `multicall`
 
 **Return type structure changed**
@@ -498,6 +520,28 @@ const unwatch = watchPendingTransactions(
 - (hash) => console.log(hash),
 + (hashes) => console.log(hashes[0]),
 )
+```
+
+#### `watchProvider`
+
+**Renamed to `watchPublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const unwatch = watchProvider({}, (provider) => { ... })
++ const unwatch = watchPublicClient({}, (publicClient) => { ... })
+```
+
+#### `watchWebSocketProvider`
+
+**Renamed to `watchWebSocketPublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const unwatch = watchWebSocketProvider({}, (webSocketProvider) => { ... })
++ const unwatch = watchWebSocketPublicClient({}, (webSocketPublicClient) => { ... })
 ```
 
 #### `writeContract`
