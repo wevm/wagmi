@@ -193,6 +193,30 @@ const result = await connect({
 + const provider = await result.connector.getProvider()
 ```
 
+#### `fetchBalance`
+
+**Returns a `bigint` instead of `BigNumber` for `value`**
+
+```ts
+const balance = await fetchBalance({
+  ...
+})
+
+const value = balance.value
+//    ^? const value: bigint
+```
+
+#### `fetchBlockNumber`
+
+**Returns a `bigint` instead of `number`**
+
+```ts
+const blockNumber = await fetchBlockNumber({
+  //  ^? const blockNumber: bigint
+  ...
+})
+```
+
 #### `multicall`
 
 **Return type structure changed**

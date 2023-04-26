@@ -205,6 +205,30 @@ const result = await connectAsync(...)
 + const provider = await result.connector.getProvider()
 ```
 
+#### `useBalance`
+
+**Returns a `bigint` instead of `BigNumber` for `data.value`**
+
+```ts
+const { data } = useBalance({
+  ...
+})
+
+const value = data.value
+//    ^? const value: bigint
+```
+
+#### `useBlockNumber`
+
+**Returns a `bigint` instead of `number` for `data`**
+
+```ts
+const { data } = await useBlockNumber({
+  //    ^? const data: bigint
+  ...
+})
+```
+
 #### `useContractReads`
 
 **Return type structure changed**
