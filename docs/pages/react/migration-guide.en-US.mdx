@@ -233,6 +233,17 @@ const { data } = useBlockNumber({
 })
 ```
 
+#### `useContract`
+
+**Hook Removed.**
+
+Use the `getContract` Action instead or declarative Hook (e.g. `useContractRead`, `useContractWrite`, etc.).
+
+```diff
+- import { useContract } from 'wagmi'
++ import { getContract } from 'wagmi/actions'
+```
+
 #### `useEnsAvatar`
 
 **Replaced `address` with `name`**
