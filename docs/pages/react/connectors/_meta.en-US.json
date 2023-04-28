@@ -1,6 +1,7 @@
 {
   "injected": "Injected",
   "coinbaseWallet": "Coinbase Wallet",
+  "frame": "Frame",
   "ledger": "Ledger",
   "metaMask": "MetaMask",
   "mock": "Mock",
