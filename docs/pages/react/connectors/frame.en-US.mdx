@@ -1,0 +1,65 @@
+---
+title: 'Frame'
+description: 'Official wagmi Connector for Frame.'
+---
+
+# Frame
+
+The `FrameConnector` supports the Frame Companion extension which injects an Ethereum provider into the browser or window. When an injected provider is not found, the connector connects to Frame natively via [`eth-provider`](https://github.com/frame-labs/eth-provider)
+
+```ts
+import { FrameConnector } from 'wagmi/connectors/frame'
+```
+
+## Usage
+
+```ts
+import { FrameConnector } from 'wagmi/connectors/frame'
+
+const connector = new FrameConnector()
+```
+
+## Configuration
+
+### chains (optional)
+
+Chains supported by app. Defaults to `defaultChains`.
+
+```ts {5}
+import { mainnet, optimism } from 'wagmi/chains'
+import { FrameConnector } from 'wagmi/connectors/frame'
+
+const connector = new FrameConnector({
+  chains: [mainnet, optimism],
+})
+```
+
+Note: The above example is using chains from [`wagmi/chains` entrypoint](/react/chains#wagmichains).
+
+### options (optional)
+
+Options for configuring the connector.
+
+```ts {4-6}
+import { FrameConnector } from 'wagmi/connectors/frame'
+
+const connector = new FrameConnector({
+  options: {
+    shimDisconnect: true,
+  },
+})
+```
+
+#### shimDisconnect
+
+Both `eth-provider` and the Frame Companion injected provider do not support programmatic disconnect. This flag simulates the disconnect behavior by keeping track of connection status in storage. Defaults to `true`.
+
+```ts {5}
+import { FrameConnector } from 'wagmi/connectors/frame'
+
+const connector = new FrameConnector({
+  options: {
+    shimDisconnect: false,
+  },
+})
+```
