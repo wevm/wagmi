@@ -1,5 +1,16 @@
 # wagmi
 
+## 1.0.0-next.1
+
+### Major Changes
+
+- updated viem
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@1.0.0-next.1
+
 ## 1.0.0-next.0
 
 ### Major Changes
