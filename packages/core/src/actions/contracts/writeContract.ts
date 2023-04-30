@@ -87,7 +87,10 @@ export async function writeContract<
     >
   }
 
-  const hash = await walletClient.writeContract({ ...request, chain: null })
+  const hash = await walletClient.writeContract({
+    ...request,
+    chain: null,
+  } as WriteContractParameters<TAbi, TFunctionName, Chain, Account>)
 
   return { hash }
 }

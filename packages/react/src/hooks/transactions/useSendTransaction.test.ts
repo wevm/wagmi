@@ -140,7 +140,6 @@ describe('useSendTransaction', () => {
               "chainId": undefined,
               "mode": "prepared",
               "request": {
-                "gas": 21000n,
                 "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
                 "value": 1000000000000000000n,
               },
@@ -276,10 +275,9 @@ describe('useSendTransaction', () => {
             from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
             to:     0x70997970C51812dc3A010C7d01b50e0d17dc79C8
             value:  100000 ETH
-            gas:    21000
 
           Details: Insufficient funds for gas * price + value
-          Version: viem@0.3.12"
+          Version: viem@0.3.16"
         `)
         expect(res).toMatchInlineSnapshot(`
           {
@@ -393,10 +391,9 @@ describe('useSendTransaction', () => {
                 from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
                 to:     0x70997970C51812dc3A010C7d01b50e0d17dc79C8
                 value:  100000 ETH
-                gas:    21000
 
               Details: Insufficient funds for gas * price + value
-              Version: viem@0.3.12"
+              Version: viem@0.3.16"
             `)
           }
         })
