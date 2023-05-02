@@ -1,5 +1,18 @@
 # wagmi
 
+## 1.0.0-next.2
+
+### Major Changes
+
+- **Breaking:** Renamed `createClient` to `createConfig`
+- **Breaking:** Renamed `useClient` to `useConfig`
+- **Breaking:** Removed `request` as an argument to `usePrepareSendTransaction` & `useSendTransaction`. Arguments now belong on the root level of the Hook.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/core@1.0.0-next.2
+
 ## 1.0.0-next.1
 
 ### Major Changes

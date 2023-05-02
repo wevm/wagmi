@@ -1,5 +1,16 @@
 # @wagmi/cli
 
+## 1.0.0-next.2
+
+### Major Changes
+
+- Updated dependencies
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/chains@1.0.0-next.0
+
 ## 1.0.0-next.1
 
 ### Major Changes

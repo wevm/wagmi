@@ -1,5 +1,19 @@
 # @wagmi/core
 
+## 1.0.0-next.2
+
+### Major Changes
+
+- **Breaking:** Renamed `createClient` to `createConfig`
+- **Breaking:** Renamed `getClient` to `getConfig`
+- **Breaking:** Removed `request` as an argument to `prepareSendTransaction` & `sendTransation`. Arguments now belong on the root level of the Action.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/chains@1.0.0-next.0
+  - @wagmi/connectors@1.0.0-next.3
+
 ## 1.0.0-next.1
 
 ### Major Changes

@@ -1,6 +1,7 @@
 {
   "name": "fixture-hardhat",
-  "private": "true",
+  "private": true,
+  "version": "0.0.0",
   "dependencies": {
     "hardhat": "^2.12.6"
   }
