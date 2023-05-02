@@ -393,6 +393,23 @@ const data = await multicall({
 })
 ```
 
+#### `prepareSendTransaction`
+
+**Removed `request`**
+
+The `request` parameter has been removed in favor of top-level parameters. Maps to [viem's `sendTransaction` parameters](https://viem.sh/docs/actions/public/sendTransaction.html#account).
+
+```diff
+const request = await prepareSendTransaction({
+- request: {
+-   to: 'jxom.eth',
+-   value: BigNumber.from('69420'),
+- },
++ to: 'jxom.eth',
++ value: 69420n
+})
+```
+
 #### `prepareWriteContract`
 
 **Removed `overrides`**
@@ -481,6 +498,22 @@ const data = await readContract({
 ```
 
 #### `sendTransaction`
+
+**Removed `request`**
+
+The `request` parameter has been removed in favor of top-level parameters. Maps to [viem's `sendTransaction` parameters](https://viem.sh/docs/actions/public/sendTransaction.html#account).
+
+```diff
+const { hash } = await sendTransaction({
+  ...
+- request: {
+-   to: 'jxom.eth',
+-   value: BigNumber.from('69420'),
+- },
++ to: 'jxom.eth',
++ value: 69420n
+})
+```
 
 **`wait` has been removed from the return type**
 

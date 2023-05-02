@@ -68,10 +68,8 @@ describe('useSendTransaction', () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
             chainId: 1,
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
@@ -101,10 +99,8 @@ describe('useSendTransaction', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionPreparedWithConnect({
-            request: {
-              to: 'moxey.eth',
-              value: parseEther('1'),
-            },
+            to: 'moxey.eth',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
@@ -137,12 +133,18 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "success",
             "variables": {
+              "accessList": undefined,
+              "account": undefined,
               "chainId": undefined,
+              "data": undefined,
+              "gas": undefined,
+              "gasPrice": undefined,
+              "maxFeePerGas": undefined,
+              "maxPriorityFeePerGas": undefined,
               "mode": "prepared",
-              "request": {
-                "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-                "value": 1000000000000000000n,
-              },
+              "nonce": undefined,
+              "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+              "value": 1000000000000000000n,
             },
           }
         `)
@@ -151,10 +153,8 @@ describe('useSendTransaction', () => {
       it('unprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
@@ -183,12 +183,18 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "success",
             "variables": {
+              "accessList": undefined,
+              "account": undefined,
               "chainId": undefined,
+              "data": undefined,
+              "gas": undefined,
+              "gasPrice": undefined,
+              "maxFeePerGas": undefined,
+              "maxPriorityFeePerGas": undefined,
               "mode": undefined,
-              "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": 1000000000000000000n,
-              },
+              "nonce": undefined,
+              "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+              "value": 1000000000000000000n,
             },
           }
         `)
@@ -201,10 +207,8 @@ describe('useSendTransaction', () => {
 
         await act(async () => {
           result.current.sendTransaction.sendTransaction?.({
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           })
         })
 
@@ -229,10 +233,8 @@ describe('useSendTransaction', () => {
             "variables": {
               "chainId": undefined,
               "mode": undefined,
-              "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": 1000000000000000000n,
-              },
+              "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+              "value": 1000000000000000000n,
             },
           }
         `)
@@ -241,10 +243,8 @@ describe('useSendTransaction', () => {
       it('fails on insufficient balance', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('100000'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('100000'),
           }),
         )
         const { result, waitFor } = utils
@@ -291,12 +291,18 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "error",
             "variables": {
+              "accessList": undefined,
+              "account": undefined,
               "chainId": undefined,
+              "data": undefined,
+              "gas": undefined,
+              "gasPrice": undefined,
+              "maxFeePerGas": undefined,
+              "maxPriorityFeePerGas": undefined,
               "mode": undefined,
-              "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": 100000000000000000000000n,
-              },
+              "nonce": undefined,
+              "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+              "value": 100000000000000000000000n,
             },
           }
         `)
@@ -307,17 +313,17 @@ describe('useSendTransaction', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionPreparedWithConnect({
-            request: {
-              to: 'moxey.eth',
-              value: parseEther('1'),
-            },
+            to: 'moxey.eth',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
         await actConnect({ utils })
 
         await waitFor(() =>
-          expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
+          expect(
+            result.current.sendTransaction.sendTransactionAsync,
+          ).toBeDefined(),
         )
 
         await act(async () => {
@@ -334,10 +340,8 @@ describe('useSendTransaction', () => {
       it('unprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
@@ -357,10 +361,8 @@ describe('useSendTransaction', () => {
       it('throws on error', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('100000'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('100000'),
           }),
         )
         const { result, waitFor } = utils

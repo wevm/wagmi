@@ -452,6 +452,23 @@ const { data } = useContractInfiniteReads({
 })
 ```
 
+#### `usePrepareSendTransaction`
+
+**Removed `request`**
+
+The `request` parameter has been removed in favor of top-level parameters. Maps to [viem's `sendTransaction` parameters](https://viem.sh/docs/actions/public/sendTransaction.html#account).
+
+```diff
+const { config } = usePrepareSendTransaction({
+- request: {
+-   to: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+-   value: BigNumber.from('69420'),
+- },
++ to: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ value: 69420n
+})
+```
+
 #### `usePrepareContractWrite`
 
 **Removed `overrides`**
@@ -630,6 +647,22 @@ const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
     to: 'moxey.eth',
     value: BigNumber.from('10000000000000000'),
   }
+})
+```
+
+**Removed `request`**
+
+The `request` parameter has been removed in favor of top-level parameters. Maps to [viem's `sendTransaction` parameters](https://viem.sh/docs/actions/public/sendTransaction.html#account).
+
+```diff
+const { hash } = useSendTransaction({
+  ...
+- request: {
+-   to: 'jxom.eth',
+-   value: BigNumber.from('69420'),
+- },
++ to: 'jxom.eth',
++ value: 69420n
 })
 ```
 

@@ -33,18 +33,22 @@ describe('prepareSendTransaction', () => {
       to: 'moxey.eth',
       value: parseEther('0.01'), // 0.01 ETH
     }
-    const preparedRequest = await prepareSendTransaction({
-      request,
-    })
+    const preparedRequest = await prepareSendTransaction(request)
 
     expect(fetchEnsAddressSpy).toBeCalledWith({ name: 'moxey.eth' })
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
+        "accessList": undefined,
+        "account": undefined,
+        "data": undefined,
+        "gas": undefined,
+        "gasPrice": undefined,
+        "maxFeePerGas": undefined,
+        "maxPriorityFeePerGas": undefined,
         "mode": "prepared",
-        "request": {
-          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          "value": 10000000000000000n,
-        },
+        "nonce": undefined,
+        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+        "value": 10000000000000000n,
       }
     `)
   })
@@ -61,18 +65,22 @@ describe('prepareSendTransaction', () => {
       to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
       value: parseEther('0.01'),
     }
-    const preparedRequest = await prepareSendTransaction({
-      request,
-    })
+    const preparedRequest = await prepareSendTransaction(request)
 
     expect(fetchEnsAddressSpy).toBeCalledTimes(0)
     expect(preparedRequest).toMatchInlineSnapshot(`
       {
+        "accessList": undefined,
+        "account": undefined,
+        "data": undefined,
+        "gas": undefined,
+        "gasPrice": undefined,
+        "maxFeePerGas": undefined,
+        "maxPriorityFeePerGas": undefined,
         "mode": "prepared",
-        "request": {
-          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          "value": 10000000000000000n,
-        },
+        "nonce": undefined,
+        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+        "value": 10000000000000000n,
       }
     `)
   })
@@ -87,7 +95,7 @@ describe('prepareSendTransaction', () => {
       }
       await expect(() =>
         prepareSendTransaction({
-          request,
+          ...request,
           chainId: 69,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -104,7 +112,7 @@ describe('prepareSendTransaction', () => {
       }
       await expect(() =>
         prepareSendTransaction({
-          request,
+          ...request,
           chainId: 69_420,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
@@ -124,9 +132,7 @@ describe('prepareSendTransaction', () => {
         value: parseEther('0.01'),
       }
       expect(() =>
-        prepareSendTransaction({
-          request,
-        }),
+        prepareSendTransaction(request),
       ).rejects.toThrowErrorMatchingInlineSnapshot('"error"')
     })
   })

@@ -22,7 +22,8 @@ import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
-    request: { to: 'moxey.eth', value: parseEther('0.01') },
+    to: 'moxey.eth',
+    value: parseEther('0.01'),
   })
 
   return (
@@ -48,14 +49,15 @@ import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
 
 function App() {
   const { config } = usePrepareSendTransaction({
-    request: { to: 'moxey.eth', value: parseEther('0.01') },
+    to: 'moxey.eth',
+    value: parseEther('0.01'),
   })
   const { data, isLoading, isSuccess, sendTransaction } =
     useSendTransaction(config)
 
   return (
     <div>
-      <button disabled={!config.request} onClick={() => sendTransaction()}>
+      <button disabled={!sendTransaction} onClick={() => sendTransaction?.()}>
         Send Transaction
       </button>
       {isLoading && <div>Check Wallet</div>}
@@ -84,99 +86,141 @@ function App() {
 
 ## Configuration
 
-### request (optional)
+### chainId (optional)
 
-The request to use when sending the transaction.
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the Action will throw an error.
 
-```tsx {5-8}
-import { useSendTransaction } from 'wagmi'
+```ts {2}
+const { sendTransaction } = useSendTransaction({
+  chainId: 1,
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
+```
 
-function App() {
-  const { sendTransaction } = useSendTransaction({
-    request: {
-      to: 'moxey.eth',
-      value: parseEther('0.01'),
-    },
-  })
-}
+### account (optional)
+
+The Account to send the transaction from.
+
+```ts {2}
+const { sendTransaction } = useSendTransaction({
+  account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
+```
+
+### gasPrice (optional)
+
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  gasPrice: parseGwei('20'),
+})
+```
+
+### maxFeePerGas (optional)
+
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxFeePerGas: parseGwei('20'),
+})
+```
+
+### maxPriorityFeePerGas (optional)
+
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxPriorityFeePerGas: parseGwei('20'),
+})
+```
+
+### nonce (optional)
+
+Unique number identifying this transaction.
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  nonce: 69,
+})
+```
+
+### value (optional)
+
+Value in wei sent with this transaction.
+
+```ts {3}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
 ```
 
 ### onError (optional)
 
 Function to invoke when an error is thrown while attempting to send.
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
-
-function App() {
-  const { sendTransaction } = useSendTransaction({
-    request: {
-      to: 'moxey.eth',
-      value: parseEther('0.01'),
-    },
-    onError(error) {
-      console.log('Error', error)
-    },
-  })
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onError(error) {
+    console.log('Error', error)
+  },
+})
 ```
 
 ### onMutate (optional)
 
 Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
-
-function App() {
-  const { sendTransaction } = useSendTransaction({
-    request: {
-      to: 'moxey.eth',
-      value: parseEther('0.01'),
-    },
-    onMutate({ args, overrides }) {
-      console.log('Mutate', { args, overrides })
-    },
-  })
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onMutate({ args, overrides }) {
+    console.log('Mutate', { args, overrides })
+  },
+})
 ```
 
 ### onSettled (optional)
 
 Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
-
-function App() {
-  const { sendTransaction } = useSendTransaction({
-    request: {
-      to: 'moxey.eth',
-      value: parseEther('0.01'),
-    },
-    onSettled(data, error) {
-      console.log('Settled', { data, error })
-    },
-  })
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onSettled(data, error) {
+    console.log('Settled', { data, error })
+  },
+})
 ```
 
 ### onSuccess (optional)
 
 Function to invoke when send transaction is successful.
 
-```tsx {9-11}
-import { useSendTransaction } from 'wagmi'
-
-function App() {
-  const { sendTransaction } = useSendTransaction({
-    request: {
-      to: 'moxey.eth',
-      value: parseEther('0.01'),
-    },
-    onSuccess(data) {
-      console.log('Success', data)
-    },
-  })
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onSuccess(data) {
+    console.log('Success', data)
+  },
+})
 ```

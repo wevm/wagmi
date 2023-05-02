@@ -1,9 +1,4 @@
-import type {
-  SendTransactionArgs,
-  SendTransactionPreparedRequest,
-  SendTransactionResult,
-  SendTransactionUnpreparedRequest,
-} from '@wagmi/core'
+import type { SendTransactionArgs, SendTransactionResult } from '@wagmi/core'
 import { sendTransaction } from '@wagmi/core'
 import * as React from 'react'
 
@@ -12,25 +7,12 @@ import { useMutation } from '../utils'
 
 export type UseSendTransactionArgs<
   TMode extends 'prepared' | undefined = 'prepared' | undefined,
-> = Omit<SendTransactionArgs, 'request' | 'type'> & { mode?: TMode } & (
-    | {
-        mode: 'prepared'
-        /** The prepared request to send the transaction. */
-        request: SendTransactionPreparedRequest['request'] | undefined
-      }
-    | {
-        mode?: never
-        /** The unprepared request to send the transaction. */
-        request?: SendTransactionUnpreparedRequest['request']
-      }
-  )
-export type UseSendTransactionMutationArgs = {
-  request: SendTransactionUnpreparedRequest['request']
-}
+> = Omit<SendTransactionArgs, 'to'> & { mode?: TMode; to?: string }
+export type UseSendTransactionMutationArgs = SendTransactionArgs
 export type UseSendTransactionConfig = MutationConfig<
   SendTransactionResult,
   Error,
-  SendTransactionArgs
+  UseSendTransactionArgs
 >
 
 type SendTransactionFn = (
@@ -46,12 +28,35 @@ type MutateFnReturnValue<TMode, TFn> = TMode extends 'prepared'
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
 
-const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
+const mutationFn = ({
+  accessList,
+  account,
+  chainId,
+  data,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
+  mode,
+  nonce,
+  to,
+  value,
+}: UseSendTransactionArgs) => {
+  if (!to) throw new Error('to is required.')
   return sendTransaction({
+    accessList,
+    account,
     chainId,
+    data,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
     mode,
-    request,
-  } as SendTransactionArgs)
+    nonce,
+    to,
+    value,
+  })
 }
 
 /**
@@ -74,9 +79,18 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
 export function useSendTransaction<
   TMode extends 'prepared' | undefined = undefined,
 >({
+  accessList,
+  account,
   chainId,
+  data: data_,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
   mode,
-  request,
+  nonce,
+  to,
+  value,
   onError,
   onMutate,
   onSettled,
@@ -96,10 +110,19 @@ export function useSendTransaction<
     variables,
   } = useMutation(
     mutationKey({
+      accessList,
+      account,
       chainId,
+      data: data_,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
       mode,
-      request,
-    } as SendTransactionArgs),
+      nonce,
+      to,
+      value,
+    }),
     mutationFn,
     {
       onError,
@@ -114,9 +137,36 @@ export function useSendTransaction<
       mutate({
         chainId,
         mode,
-        request: args?.request ?? request,
-      } as SendTransactionArgs),
-    [chainId, mode, mutate, request],
+        ...(args || {
+          accessList,
+          account,
+          chainId,
+          data: data_,
+          gas,
+          gasPrice,
+          maxFeePerGas,
+          maxPriorityFeePerGas,
+          mode,
+          nonce,
+          value,
+          to,
+        }),
+      }),
+    [
+      accessList,
+      account,
+      chainId,
+      data_,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      mode,
+      mutate,
+      nonce,
+      to,
+      value,
+    ],
   )
 
   const sendTransactionAsync = React.useCallback(
@@ -124,9 +174,36 @@ export function useSendTransaction<
       mutateAsync({
         chainId,
         mode,
-        request: args?.request ?? request,
-      } as SendTransactionArgs),
-    [chainId, mode, mutateAsync, request],
+        ...(args || {
+          accessList,
+          account,
+          chainId,
+          data: data_,
+          gas,
+          gasPrice,
+          maxFeePerGas,
+          maxPriorityFeePerGas,
+          mode,
+          nonce,
+          value,
+          to,
+        }),
+      }),
+    [
+      accessList,
+      account,
+      chainId,
+      data_,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      mode,
+      mutateAsync,
+      nonce,
+      to,
+      value,
+    ],
   )
 
   return {
@@ -137,10 +214,10 @@ export function useSendTransaction<
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: (mode === 'prepared' && !request
+    sendTransaction: (mode === 'prepared' && !to
       ? undefined
       : sendTransaction) as MutateFnReturnValue<TMode, SendTransactionFn>,
-    sendTransactionAsync: (mode === 'prepared' && !request
+    sendTransactionAsync: (mode === 'prepared' && !to
       ? undefined
       : sendTransactionAsync) as MutateFnReturnValue<
       TMode,

@@ -48,10 +48,8 @@ describe('watchPendingTransactions', () => {
 
       await connect({ connector: config.connectors[0]! })
       await sendTransaction({
-        request: {
-          to: toAddress,
-          value: parseEther('1'),
-        },
+        to: toAddress!,
+        value: parseEther('1'),
       })
 
       const publicClient = getPublicClient()
@@ -80,10 +78,8 @@ describe('watchPendingTransactions', () => {
 
       await connect({ connector: config.connectors[0]! })
       await sendTransaction({
-        request: {
-          to: toAddress,
-          value: parseEther('1'),
-        },
+        to: toAddress!,
+        value: parseEther('1'),
       })
 
       const publicClient = getPublicClient()
@@ -98,10 +94,8 @@ describe('watchPendingTransactions', () => {
       )
 
       await sendTransaction({
-        request: {
-          to: toAddress,
-          value: parseEther('1'),
-        },
+        to: toAddress!,
+        value: parseEther('1'),
       })
 
       await new Promise((res) =>

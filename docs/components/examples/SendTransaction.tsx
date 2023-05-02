@@ -40,10 +40,8 @@ export function SendTransaction() {
     isError: isPrepareError,
     isLoading: isPreparing,
   } = usePrepareSendTransaction({
-    request: {
-      to: debouncedTo,
-      value: debouncedValue ? parseEther(debouncedValue) : undefined,
-    },
+    to: debouncedTo,
+    value: debouncedValue ? parseEther(debouncedValue) : undefined,
   })
   const { data, error, isLoading, isError, sendTransaction } =
     useSendTransaction(config)

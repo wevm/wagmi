@@ -49,10 +49,8 @@ describe('useWatchPendingTransactions', () => {
 
     await actConnect({ utils })
     await sendTransaction!({
-      request: {
-        to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-        value: parseEther('1'),
-      },
+      to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+      value: parseEther('1'),
     })
 
     const publicClient = result.current.publicClient
@@ -79,10 +77,8 @@ describe('useWatchPendingTransactions', () => {
 
       await actConnect({ utils })
       await sendTransaction!({
-        request: {
-          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-          value: parseEther('1'),
-        },
+        to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+        value: parseEther('1'),
       })
 
       const publicClient = result.current.publicClient
@@ -97,10 +93,8 @@ describe('useWatchPendingTransactions', () => {
 
       await actConnect({ utils })
       await sendTransaction!({
-        request: {
-          to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-          value: parseEther('1'),
-        },
+        to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+        value: parseEther('1'),
       })
 
       await new Promise((res) =>

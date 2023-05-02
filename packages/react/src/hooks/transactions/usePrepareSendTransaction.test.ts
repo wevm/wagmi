@@ -21,16 +21,16 @@ describe('usePrepareSendTransaction', () => {
   it('mounts', async () => {
     const { result } = renderHook(() =>
       usePrepareSendTransactionWithConnect({
-        request: {
-          to: 'moxey.eth',
-          value: parseEther('0.01'),
-        },
+        to: 'moxey.eth',
+        value: parseEther('0.01'),
       }),
     )
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { config, ...rest } = result.current.prepareSendTransaction
-    expect(config).toBeDefined()
+    expect(config).toEqual({
+      mode: 'prepared',
+    })
     expect(rest).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -66,10 +66,8 @@ describe('usePrepareSendTransaction', () => {
   it('connect', async () => {
     const utils = renderHook(() =>
       usePrepareSendTransactionWithConnect({
-        request: {
-          to: 'moxey.eth',
-          value: parseEther('0.01'),
-        },
+        to: 'moxey.eth',
+        value: parseEther('0.01'),
       }),
     )
     const { result, waitFor } = utils
@@ -83,19 +81,18 @@ describe('usePrepareSendTransaction', () => {
     const res = result.current.prepareSendTransaction
     expect(res).toMatchInlineSnapshot(`
       {
-        "config": {
-          "mode": "prepared",
-          "request": {
-            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-            "value": 10000000000000000n,
-          },
-        },
         "data": {
+          "accessList": undefined,
+          "account": undefined,
+          "data": undefined,
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
           "mode": "prepared",
-          "request": {
-            "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-            "value": 10000000000000000n,
-          },
+          "nonce": undefined,
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": 10000000000000000n,
         },
         "error": null,
         "fetchStatus": "idle",
@@ -121,6 +118,19 @@ describe('usePrepareSendTransaction', () => {
         "isRefetching": false,
         "isSuccess": true,
         "refetch": [Function],
+        "request": {
+          "accessList": undefined,
+          "account": undefined,
+          "data": undefined,
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "mode": "prepared",
+          "nonce": undefined,
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": 10000000000000000n,
+        },
         "status": "success",
       }
     `)
@@ -130,11 +140,9 @@ describe('usePrepareSendTransaction', () => {
     it('should throw an error on the wrong chain', async () => {
       const utils = renderHook(() =>
         usePrepareSendTransactionWithConnect({
-          request: {
-            to: 'moxey.eth',
-            value: parseEther('0.01'),
-          },
           chainId: 1,
+          to: 'moxey.eth',
+          value: parseEther('0.01'),
         }),
       )
 
@@ -159,11 +167,9 @@ describe('usePrepareSendTransaction', () => {
     it('should throw an error if chainId is not configured', async () => {
       const utils = renderHook(() =>
         usePrepareSendTransactionWithConnect({
-          request: {
-            to: 'moxey.eth',
-            value: parseEther('0.01'),
-          },
           chainId: 69_420,
+          to: 'moxey.eth',
+          value: parseEther('0.01'),
         }),
       )
 
@@ -181,9 +187,9 @@ describe('usePrepareSendTransaction', () => {
 
   describe('behaviors', () => {
     it('does not run when request is undefined', async () => {
-      const config = {
-        request: undefined,
-      } as const
+      let config: UsePrepareSendTransactionConfig = {
+        to: undefined,
+      }
       const utils = renderHook(() =>
         usePrepareSendTransactionWithConnect(config),
       )
@@ -193,12 +199,11 @@ describe('usePrepareSendTransaction', () => {
       await waitFor(() =>
         expect(result.current.prepareSendTransaction.isIdle).toBeTruthy(),
       )
-      expect(result.current.prepareSendTransaction.config.request).toBe(
-        undefined,
-      )
+      expect(result.current.prepareSendTransaction.config).toEqual({
+        mode: 'prepared',
+      })
 
-      // @ts-expect-error assigning to readonly object
-      config.request = {
+      config = {
         to: 'moxey.eth',
         value: 10000000000000000n,
       }

@@ -21,9 +21,18 @@ type QueryKeyConfig = Pick<UsePrepareSendTransactionConfig, 'scopeKey'> & {
 }
 
 function queryKey({
+  accessList,
+  account,
   activeChainId,
   chainId,
-  request,
+  data,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
+  nonce,
+  to,
+  value,
   scopeKey,
   walletClientAddress,
 }: QueryKeyArgs & QueryKeyConfig) {
@@ -31,8 +40,17 @@ function queryKey({
     {
       entity: 'prepareSendTransaction',
       activeChainId,
+      accessList,
+      account,
       chainId,
-      request,
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      to,
+      value,
       scopeKey,
       walletClientAddress,
     },
@@ -41,12 +59,35 @@ function queryKey({
 
 function queryFn({ walletClient }: { walletClient?: GetWalletClientResult }) {
   return ({
-    queryKey: [{ chainId, request }],
+    queryKey: [
+      {
+        accessList,
+        account,
+        chainId,
+        data,
+        gas,
+        gasPrice,
+        maxFeePerGas,
+        maxPriorityFeePerGas,
+        nonce,
+        to,
+        value,
+      },
+    ],
   }: QueryFunctionArgs<typeof queryKey>) => {
-    if (!request?.to) throw new Error('request.to is required')
+    if (!to) throw new Error('to is required')
     return prepareSendTransaction({
+      accessList,
+      account,
       chainId,
-      request: { ...request, to: request.to },
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      to,
+      value,
       walletClient,
     })
   }
@@ -60,20 +101,29 @@ function queryFn({ walletClient }: { walletClient?: GetWalletClientResult }) {
  * @example
  * import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
  *
- * const config = usePrepareSendTransaction({
+ * const { request } = usePrepareSendTransaction({
  *   to: 'moxey.eth',
  *   value: parseEther('1'),
  * })
- * const result = useSendTransaction(config)
+ * const result = useSendTransaction(request)
  */
 export function usePrepareSendTransaction({
+  accessList,
+  account,
   chainId,
-  request,
   cacheTime,
+  data,
   enabled = true,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
+  nonce,
   scopeKey,
   staleTime,
   suspense,
+  to,
+  value,
   onError,
   onSettled,
   onSuccess,
@@ -83,16 +133,25 @@ export function usePrepareSendTransaction({
 
   const prepareSendTransactionQuery = useQuery(
     queryKey({
+      accessList,
       activeChainId: activeChain?.id,
+      account,
       chainId,
-      request,
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
       scopeKey,
+      to,
+      value,
       walletClientAddress: walletClient?.account.address,
     }),
     queryFn({ walletClient }),
     {
       cacheTime,
-      enabled: Boolean(enabled && walletClient && request && request.to),
+      enabled: Boolean(enabled && walletClient && to),
       staleTime,
       suspense,
       onError,
@@ -103,7 +162,6 @@ export function usePrepareSendTransaction({
 
   return Object.assign(prepareSendTransactionQuery, {
     config: {
-      request: undefined,
       mode: 'prepared',
       ...(prepareSendTransactionQuery.isSuccess
         ? prepareSendTransactionQuery.data

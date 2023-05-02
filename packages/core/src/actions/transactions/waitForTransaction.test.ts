@@ -22,10 +22,8 @@ describe('waitForTransaction', () => {
       const toAddress = to?.account.address
 
       const result = await sendTransaction({
-        request: {
-          to: toAddress,
-          value: parseEther('1'),
-        },
+        to: toAddress!,
+        value: parseEther('1'),
       })
       expect(result.hash).toBeDefined()
       const receipt = await waitForTransaction({
@@ -43,10 +41,8 @@ describe('waitForTransaction', () => {
       const toAddress = to?.account.address
 
       const result = await sendTransaction({
-        request: {
-          to: toAddress,
-          value: parseEther('1'),
-        },
+        to: toAddress!,
+        value: parseEther('1'),
       })
       expect(result.hash).toBeDefined()
       const receipt = await waitForTransaction({

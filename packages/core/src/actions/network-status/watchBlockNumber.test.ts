@@ -71,10 +71,8 @@ describe('watchBlockNumber', () => {
 
         await connect({ connector: config.connectors[0]! })
         await sendTransaction({
-          request: {
-            to: toAddress,
-            value: parseEther('1'),
-          },
+          to: toAddress!,
+          value: parseEther('1'),
         })
 
         const publicClient = getPublicClient()
@@ -103,10 +101,8 @@ describe('watchBlockNumber', () => {
 
         await connect({ connector: config.connectors[0]! })
         await sendTransaction({
-          request: {
-            to: toAddress,
-            value: parseEther('1'),
-          },
+          to: toAddress!,
+          value: parseEther('1'),
         })
 
         const publicClient = getPublicClient()
@@ -124,10 +120,8 @@ describe('watchBlockNumber', () => {
         )
 
         await sendTransaction({
-          request: {
-            to: toAddress,
-            value: parseEther('1'),
-          },
+          to: toAddress!,
+          value: parseEther('1'),
         })
 
         await new Promise((res) => setTimeout(() => res(''), 100))

@@ -1,3 +1,4 @@
+import type { Address } from 'abitype'
 import type {
   Account,
   Chain,
@@ -10,23 +11,12 @@ import { assertActiveChain } from '../../utils'
 import { getWalletClient } from '../viem'
 import { prepareSendTransaction } from './prepareSendTransaction'
 
-export type SendTransactionPreparedRequest = {
-  mode: 'prepared'
-  /** The prepared request for sending a transaction. */
-  request: SendTransactionParameters<Chain, Account>
-}
-export type SendTransactionUnpreparedRequest = {
-  mode?: never
-  /** The unprepared request for sending a transaction. */
-  request: Omit<SendTransactionParameters<Chain, Account>, 'to'> & {
-    to?: string
-  }
-}
-
 export type SendTransactionArgs = {
   /** Chain ID used to validate if the walletClient is connected to the target chain */
   chainId?: number
-} & (SendTransactionPreparedRequest | SendTransactionUnpreparedRequest)
+  mode?: 'prepared'
+  to: string
+} & Omit<SendTransactionParameters<Chain, Account>, 'chain' | 'to'>
 
 export type SendTransactionResult = {
   hash: SendTransactionReturnType
@@ -48,9 +38,18 @@ export type SendTransactionResult = {
  * const result = await sendTransaction(config)
  */
 export async function sendTransaction({
+  accessList,
+  account,
   chainId,
+  data,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
   mode,
-  request,
+  nonce,
+  to,
+  value,
 }: SendTransactionArgs): Promise<SendTransactionResult> {
   /********************************************************************/
   /** START: iOS App Link cautious code.                              */
@@ -66,15 +65,38 @@ export async function sendTransaction({
 
   if (chainId) assertActiveChain({ chainId, walletClient })
 
-  if (mode !== 'prepared') {
-    const res = await prepareSendTransaction({ chainId, request })
-    request = res.request
+  let args: SendTransactionParameters<Chain, Account>
+  if (mode === 'prepared') {
+    args = {
+      account,
+      accessList,
+      chain: null,
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      to: to as Address,
+      value,
+    }
+  } else {
+    args = await prepareSendTransaction({
+      accessList,
+      account,
+      chainId,
+      data,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      nonce,
+      to,
+      value,
+    })
   }
 
-  const hash = await walletClient.sendTransaction({
-    ...request,
-    chain: null,
-  } as SendTransactionParameters)
+  const hash = await walletClient.sendTransaction(args)
 
   /********************************************************************/
   /** END: iOS App Link cautious code.                                */
