@@ -13,7 +13,7 @@
     "lint:fix": "pnpm lint --fix",
     "lint:format": "prettier --write",
     "playground": "pnpm dev && pnpm --filter example-dev dev",
-    "preinstall": "pnpm i --filter './references/packages/**' --ignore-scripts && npx only-allow pnpm",
+    "preinstall": "pnpm i --no-frozen-lockfile --filter './references/packages/**' --ignore-scripts && npx only-allow pnpm",
     "postinstall": "pnpm dev",
     "prepare": "npx simple-git-hooks",
     "test": "vitest",
