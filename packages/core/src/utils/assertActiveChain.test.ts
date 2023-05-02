@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../test'
+import { getWalletClients, setupConfig } from '../../test'
 import { connect } from '../actions'
 import { MockConnector } from '../connectors/mock'
 import { assertActiveChain } from './assertActiveChain'
 
 describe('assertActiveChain', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   it('errors when on wrong chain', async () => {

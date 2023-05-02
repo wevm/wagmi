@@ -5,7 +5,7 @@ import {
   actConnect,
   actDisconnect,
   renderHook,
-  setupClient,
+  setupConfig,
   useAccount,
 } from '../../../test'
 import type { UseAccountConfig } from './useAccount'
@@ -46,9 +46,9 @@ describe('useAccount', () => {
     })
 
     it('is not connected', async () => {
-      const client = setupClient()
+      const config = setupConfig()
       const { result, waitFor } = renderHook(() => useAccount(), {
-        initialProps: { client },
+        initialProps: { config },
       })
 
       await waitFor(() => expect(result.current.isDisconnected).toBeTruthy())
@@ -136,12 +136,12 @@ describe('useAccount', () => {
     })
 
     it('status lifecycle', async () => {
-      const client = setupClient({ autoConnect: true })
+      const config = setupConfig({ autoConnect: true })
 
       const { result, waitFor } = renderHook(
         () => useAccountWithConnectAndDisconnect(),
         {
-          initialProps: { client },
+          initialProps: { config },
         },
       )
 

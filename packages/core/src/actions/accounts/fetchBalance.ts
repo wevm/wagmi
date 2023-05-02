@@ -7,7 +7,7 @@ import {
   trim,
 } from 'viem'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
 import type { Unit } from '../../types'
 import { getUnit } from '../../utils'
@@ -38,7 +38,7 @@ export async function fetchBalance({
   formatUnits: unit,
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
-  const client = getClient()
+  const config = getConfig()
   const publicClient = getPublicClient({ chainId })
 
   if (token) {
@@ -87,8 +87,8 @@ export async function fetchBalance({
   }
 
   const chains = [
-    ...(client.publicClient.chains || []),
-    ...(client.chains ?? []),
+    ...(config.publicClient.chains || []),
+    ...(config.chains ?? []),
   ]
   const value = await publicClient.getBalance({ address })
   const chain = chains.find((x) => x.id === publicClient.chain.id)

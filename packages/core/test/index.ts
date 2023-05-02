@@ -1,12 +1,12 @@
-import type { Chain, ClientConfig } from '../src'
-import { createClient } from '../src'
+import type { Chain, CreateConfigParameters } from '../src'
+import { createConfig } from '../src'
 import { MockConnector } from '../src/connectors/mock'
 import { getPublicClient, getWalletClients } from './utils'
 
-type Config = Partial<ClientConfig> & { chains?: Chain[] }
+type Config = Partial<CreateConfigParameters> & { chains?: Chain[] }
 
-export function setupClient(config: Config = {}) {
-  return createClient({
+export function setupConfig(config: Config = {}) {
+  return createConfig({
     connectors: [
       new MockConnector({
         options: {

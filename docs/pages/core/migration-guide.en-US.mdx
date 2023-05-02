@@ -41,11 +41,11 @@ This directly affects:
 **`createClient`**
 
 ```diff
-import { WagmiConfig, createClient } from 'wagmi'
+import { WagmiConfig, createConfig } from 'wagmi'
 - import { getDefaultProvider } from 'ethers'
 + import { createPublicClient, http } from 'viem'
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
 - provider: getDefaultProvider(),
 + publicClient: createPublicClient({
@@ -55,10 +55,12 @@ const client = createClient({
 })
 ```
 
+> Note: You may notice that `createClient` is now `createConfig`. Don't worry – the migration for that is below.
+
 **`configureChains`**
 
 ```diff
-import { WagmiConfig, createClient, configureChains, mainnet } from '@wagmi/core'
+import { WagmiConfig, createConfig, configureChains, mainnet } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
 const {
@@ -72,7 +74,7 @@ const {
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
 - provider,
 + publicClient,
@@ -116,6 +118,32 @@ const client = createClient({
 - `Provider` → `PublicClient`
 - `Signer` → `WalletClient`
 - `WebSocketProvider` → `WebSocketPublicClient`
+
+#### `createClient` → `createConfig`
+
+The `createClient` function has been renamed to `createConfig`.
+
+```diff
+- import { createClient } from '@wagmi/core'
++ import { createConfig } from '@wagmi/core'
+
+- const client = createClient({
++ const config = createConfig({
+  ...
+})
+```
+
+#### `getClient` → `getConfig`
+
+If you are using `getClient`, that has been renamed to `getConfig`:
+
+```diff
+- import { getClient } from '@wagmi/core'
++ import { getConfig } from '@wagmi/core'
+
+- const client = getClient()
++ const config = getConfig()
+```
 
 #### `BigNumber` → native `BigInt`
 

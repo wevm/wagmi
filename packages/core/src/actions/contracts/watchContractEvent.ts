@@ -2,7 +2,7 @@ import type { Abi } from 'abitype'
 import type { WatchContractEventParameters } from 'viem'
 import { shallow } from 'zustand/shallow'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import { getPublicClient, getWebSocketPublicClient } from '../viem'
 
 export type WatchContractEventConfig<
@@ -47,8 +47,8 @@ export function watchContractEvent<
   }
 
   watchEvent()
-  const client = getClient()
-  const unsubscribe = client.subscribe(
+  const config = getConfig()
+  const unsubscribe = config.subscribe(
     ({ publicClient, webSocketPublicClient }) => ({
       publicClient,
       webSocketPublicClient,

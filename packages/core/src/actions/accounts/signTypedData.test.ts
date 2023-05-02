@@ -1,7 +1,7 @@
 import { recoverTypedDataAddress } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../../test'
+import { getWalletClients, setupConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { signTypedData } from './signTypedData'
@@ -46,7 +46,7 @@ const message = {
 
 describe('signTypedData', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('args', () => {

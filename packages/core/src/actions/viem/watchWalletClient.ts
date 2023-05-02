@@ -1,6 +1,6 @@
 import { shallow } from 'zustand/shallow'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { GetWalletClientArgs, GetWalletClientResult } from '../viem'
 import { getWalletClient } from '../viem'
 
@@ -12,13 +12,13 @@ export function watchWalletClient(
   { chainId }: WatchWalletClientArgs,
   callback: WatchWalletClientCallback,
 ) {
-  const client = getClient()
+  const config = getConfig()
   const handleChange = async () => {
     const walletClient = await getWalletClient({ chainId })
-    if (!getClient().connector) return callback(null)
+    if (!getConfig().connector) return callback(null)
     return callback(walletClient)
   }
-  const unsubscribe = client.subscribe(
+  const unsubscribe = config.subscribe(
     ({ data, connector }) => ({
       account: data?.account,
       chainId: data?.chain?.id,

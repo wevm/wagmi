@@ -1,4 +1,4 @@
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { PublicClient } from '../../types'
 
 export type GetPublicClientArgs = {
@@ -13,7 +13,7 @@ export type GetPublicClientResult<
 export function getPublicClient<
   TPublicClient extends PublicClient = PublicClient,
 >({ chainId }: GetPublicClientArgs = {}): GetPublicClientResult<TPublicClient> {
-  const client = getClient<TPublicClient>()
-  if (chainId) return client.getPublicClient({ chainId }) || client.publicClient
-  return client.publicClient
+  const config = getConfig<TPublicClient>()
+  if (chainId) return config.getPublicClient({ chainId }) || config.publicClient
+  return config.publicClient
 }

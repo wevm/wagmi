@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../../test'
+import { getWalletClients, setupConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { getAccount } from './getAccount'
@@ -11,7 +11,7 @@ const connector = new MockConnector({
 
 describe('getAccount', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('behavior', () => {

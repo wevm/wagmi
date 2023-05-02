@@ -78,12 +78,12 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 
 [阅读更多关于链的信息](/react/providers/configuring-chains)。
 
-### 创建 wagmi client
+### 创建 wagmi config
 
-接下来，使用 [`createClient`](/react/Client) 创建一个 wagmi `Client` 实例，并将 `configureChains` 的结果传递给它。
+接下来，使用 [`createConfig`](/react/config) 创建一个 wagmi `config` 实例，并将 `configureChains` 的结果传递给它。
 
 ```tsx {9-13}
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -91,21 +91,21 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   publicClient,
   webSocketPublicClient,
 })
 ```
 
-[阅读更多关于 Client 配置](/react/client)。
+[阅读更多关于 Client 配置](/react/config)。
 
 ### 用 `WagmiConfig` Component
 
-最后，用 [`WagmiConfig`](/react/WagmiConfig) Component wrap app，并将 `client` 传递给它。
+最后，用 [`WagmiConfig`](/react/WagmiConfig) Component wrap app，并将 `config` 传递给它。
 
 ```tsx {9-11}
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   publicClient,
   webSocketPublicClient,
@@ -113,7 +113,7 @@ const client = createClient({
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <YourRoutes />
     </WagmiConfig>
   )

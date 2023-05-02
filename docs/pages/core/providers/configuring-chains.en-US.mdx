@@ -7,7 +7,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Configuring Chains
 
-The `configureChains` function allows you to configure your chains with RPC Providers such as: Alchemy, Infura, or something else. This means you don't need to worry about defining RPC URLs and chain configuration in your [Connector](/react/connectors/injected#chains-optional) or [Public Client](/core/client#publicclient-optional). This is managed internally by wagmi.
+The `configureChains` function allows you to configure your chains with RPC Providers such as: Alchemy, Infura, or something else. This means you don't need to worry about defining RPC URLs and chain configuration in your [Connector](/react/connectors/injected#chains-optional) or [Public Client](/core/config#publicclient-optional). This is managed internally by wagmi.
 
 ```ts
 import { configureChains } from '@wagmi/core'
@@ -18,11 +18,11 @@ import { configureChains } from '@wagmi/core'
 `configureChains` accepts an array of [chains](/core/chains) and an array of RPC Providers. It returns:
 
 - `chains`: to pass to your connector(s)
-- `publicClient`: to pass to `createClient`
-- `webSocketPublicClient`: to optionally pass to `createClient`
+- `publicClient`: to pass to `createConfig`
+- `webSocketPublicClient`: to optionally pass to `createConfig`
 
 ```ts
-import { configureChains, createClient } from '@wagmi/core'
+import { configureChains, createConfig } from '@wagmi/core'
 import { mainnet, polygon, optimism } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
@@ -33,7 +33,7 @@ const { chains, publicClient } = configureChains(
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 
-const wagmiClient = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors: [new InjectedConnector({ chains })],
   publicClient,

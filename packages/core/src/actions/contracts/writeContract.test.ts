@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import {
   getRandomTokenId,
   getWalletClients,
-  setupClient,
+  setupConfig,
   wagmiContractConfig,
 } from '../../../test'
 import { mainnet } from '../../chains'
@@ -18,7 +18,7 @@ const connector = new MockConnector({
 
 describe('writeContract', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   it('prepared', async () => {

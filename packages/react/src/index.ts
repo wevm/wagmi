@@ -1,7 +1,7 @@
-export { createClient } from './client'
-export type { Client, CreateClientConfig } from './client'
+export { createConfig } from './config'
+export type { Config, CreateConfigParameters } from './config'
 
-export { Context, WagmiConfig, useClient } from './context'
+export { Context, WagmiConfig, useConfig } from './context'
 export type { WagmiConfigProps } from './context'
 
 export {
@@ -54,7 +54,7 @@ export {
   Connector,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
-  ClientChainsNotFound,
+  ConfigChainsNotFound,
   SwitchChainNotSupportedError,
   configureChains,
   createStorage,

@@ -1,7 +1,7 @@
 import { parseEther } from 'viem'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../../test'
+import { getWalletClients, setupConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
 import * as fetchEnsAddress from '../ens/fetchEnsAddress'
@@ -14,7 +14,7 @@ const connector = new MockConnector({
 
 describe('prepareSendTransaction', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   afterEach(() => {

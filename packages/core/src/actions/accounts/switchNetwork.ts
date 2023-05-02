@@ -1,5 +1,5 @@
 import type { Chain } from '../../chains'
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import {
   ConnectorNotFoundError,
   SwitchChainNotSupportedError,
@@ -14,7 +14,7 @@ export type SwitchNetworkResult = Chain
 export async function switchNetwork({
   chainId,
 }: SwitchNetworkArgs): Promise<SwitchNetworkResult> {
-  const { connector } = getClient()
+  const { connector } = getConfig()
   if (!connector) throw new ConnectorNotFoundError()
   if (!connector.switchChain)
     throw new SwitchChainNotSupportedError({

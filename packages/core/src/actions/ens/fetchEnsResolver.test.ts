@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { fetchEnsResolver } from './fetchEnsResolver'
 
 describe('fetchEnsResolver', () => {
   describe('args', () => {
     beforeEach(() => {
-      setupClient()
+      setupConfig()
     })
 
     it('chainId', async () => {

@@ -23,12 +23,12 @@ The example below uses [`useConnect`](/react/hooks/useConnect), [`useAccount`](/
 
 ## Step 1: Configuring Connectors
 
-First, we create a new wagmi client set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors.
+First, we create a new wagmi config set up with the Injected (i.e. MetaMask), WalletConnect, and Coinbase Wallet connectors.
 
 This example uses the Ethereum Mainnet chain (`mainnet`) from `wagmi`, however, you can also pass in any [EVM-compatible chain](/react/chains).
 
 ```tsx
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -45,8 +45,8 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 
-// Set up client
-const client = createClient({
+// Set up wagmi config
+const config = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({ chains }),
@@ -74,10 +74,10 @@ const client = createClient({
   webSocketPublicClient,
 })
 
-// Pass client to React Context Provider
+// Pass config to React Context Provider
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <Profile />
     </WagmiConfig>
   )

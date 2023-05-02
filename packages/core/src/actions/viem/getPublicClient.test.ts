@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { getPublicClient } from './getPublicClient'
 
 describe('getPublicClient', () => {
   it('default', async () => {
-    setupClient()
+    setupConfig()
     expect(getPublicClient()).toMatchInlineSnapshot(
       '"<PublicClient network={1} />"',
     )
@@ -13,7 +13,7 @@ describe('getPublicClient', () => {
 
   describe('args', () => {
     it('chainId', async () => {
-      setupClient()
+      setupConfig()
       expect(getPublicClient({ chainId: 1 })).toMatchInlineSnapshot(
         '"<PublicClient network={1} />"',
       )
@@ -22,7 +22,7 @@ describe('getPublicClient', () => {
 
   describe('behavior', () => {
     it('referentially equal', async () => {
-      setupClient()
+      setupConfig()
       expect(
         getPublicClient({ chainId: 1 }) === getPublicClient({ chainId: 1 }),
       ).toBeTruthy()

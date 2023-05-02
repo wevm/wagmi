@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient, wagmiContractConfig } from '../../../test'
+import { setupConfig, wagmiContractConfig } from '../../../test'
 import { getContract } from './getContract'
 
 describe('getContract', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   it('default', () => {

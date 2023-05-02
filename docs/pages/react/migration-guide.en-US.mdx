@@ -41,11 +41,11 @@ This directly affects:
 **`createClient`**
 
 ```diff
-import { WagmiConfig, createClient } from 'wagmi'
+import { WagmiConfig, createConfig } from 'wagmi'
 - import { getDefaultProvider } from 'ethers'
 + import { createPublicClient, http } from 'viem'
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
 - provider: getDefaultProvider(),
 + publicClient: createPublicClient({
@@ -55,10 +55,12 @@ const client = createClient({
 })
 ```
 
+> Note: You may notice that `createClient` is now `createConfig`. Don't worry – the migration for that is below.
+
 **`configureChains`**
 
 ```diff
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const {
@@ -72,7 +74,7 @@ const {
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
 - provider,
 + publicClient,
@@ -116,6 +118,32 @@ const client = createClient({
 - `Provider` → `PublicClient`
 - `Signer` → `WalletClient`
 - `WebSocketProvider` → `WebSocketPublicClient`
+
+#### `createClient` → `createConfig`
+
+The `createClient` function has been renamed to `createConfig`.
+
+```diff
+- import { createClient } from 'wagmi'
++ import { createConfig } from 'wagmi'
+
+- const client = createClient({
++ const config = createConfig({
+  ...
+})
+```
+
+#### `useClient` → `useConfig`
+
+If you are using `useClient`, that has been renamed to `useConfig`:
+
+```diff
+- import { useClient } from 'wagmi'
++ import { useConfig } from 'wagmi'
+
+- const client = useClient()
++ const config = useConfig()
+```
 
 #### `BigNumber` → native `BigInt`
 
@@ -2255,7 +2283,7 @@ Duplicate exports with different names and the same functionality were removed t
 
 ### `Provider`
 
-The `Provider` component no longer supports configuration directly as props. You will now need to create a wagmi [`Client`](/react/client) via `createClient`, and then pass the client to `Provider`:
+The `Provider` component no longer supports configuration directly as props. You will now need to create a wagmi [`Client`](/react/config) via `createClient`, and then pass the client to `Provider`:
 
 Before:
 

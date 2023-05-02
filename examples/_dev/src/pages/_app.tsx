@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
-import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -24,7 +24,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   ],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
@@ -85,7 +85,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>wagmi</title>
       </NextHead>
 
-      <WagmiConfig client={client}>
+      <WagmiConfig config={config}>
         <Component {...pageProps} />
       </WagmiConfig>
     </>

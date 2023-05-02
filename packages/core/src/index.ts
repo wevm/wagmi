@@ -121,8 +121,8 @@ export type {
 export { goerli, mainnet, sepolia } from './chains'
 export type { Chain } from './chains'
 
-export { createClient, getClient, Client } from './client'
-export type { ClientConfig } from './client'
+export { createConfig, getConfig, Config } from './config'
+export type { CreateConfigParameters } from './config'
 
 export { Connector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
@@ -135,7 +135,7 @@ export { erc20ABI, erc721ABI, erc4626ABI } from './constants'
 export {
   ChainMismatchError,
   ChainNotConfiguredError,
-  ClientChainsNotFound,
+  ConfigChainsNotFound,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
   SwitchChainNotSupportedError,

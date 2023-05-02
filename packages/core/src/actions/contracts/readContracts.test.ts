@@ -4,7 +4,7 @@ import { assertType, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import {
   mlootContractConfig,
-  setupClient,
+  setupConfig,
   wagmiContractConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
@@ -35,7 +35,7 @@ const contracts = [
 
 describe('readContracts', () => {
   beforeEach(() => {
-    setupClient({
+    setupConfig({
       chains: [mainnet, { ...polygon, contracts: { multicall3: undefined } }],
     })
   })
@@ -140,7 +140,7 @@ describe('readContracts', () => {
 
   describe('multi-chain', () => {
     it('default', async () => {
-      setupClient({
+      setupConfig({
         chains: [mainnet, polygon, goerli],
       })
 

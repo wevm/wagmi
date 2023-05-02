@@ -1,7 +1,7 @@
 import { shallow } from 'zustand/shallow'
 
 import type { Chain } from '../../chains'
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { GetNetworkResult } from './getNetwork'
 import { getNetwork } from './getNetwork'
 
@@ -15,9 +15,9 @@ export function watchNetwork(
   callback: WatchNetworkCallback,
   { selector = (x) => x }: WatchNetworkConfig = {},
 ) {
-  const client = getClient()
+  const config = getConfig()
   const handleChange = () => callback(getNetwork())
-  const unsubscribe = client.subscribe(
+  const unsubscribe = config.subscribe(
     ({ data, chains }) => selector({ chainId: data?.chain?.id, chains }),
     handleChange,
     {

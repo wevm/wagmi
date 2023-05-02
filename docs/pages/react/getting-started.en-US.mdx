@@ -89,12 +89,12 @@ Note: In a production app, it is not recommended to only pass `publicProvider` t
 
 [Read more about configuring chains](/react/providers/configuring-chains)
 
-### Create a wagmi client
+### Create a wagmi config
 
-Next, create a wagmi `Client` instance using [`createClient`](/react/client), and pass the result from `configureChains` to it.
+Next, create a wagmi `config` instance using [`createConfig`](/react/config), and pass the result from `configureChains` to it.
 
 ```tsx {9-13}
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
@@ -102,21 +102,21 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   publicClient,
   webSocketPublicClient,
 })
 ```
 
-[Read more about client configuration](/react/client)
+[Read more about config configuration](/react/config)
 
 ### Wrap app with `WagmiConfig`
 
-Finally, wrap your app with the [`WagmiConfig`](/react/WagmiConfig) component, passing `client` to it.
+Finally, wrap your app with the [`WagmiConfig`](/react/WagmiConfig) component, passing `config` to it.
 
 ```tsx {9-11}
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   publicClient,
   webSocketPublicClient,
@@ -124,7 +124,7 @@ const client = createClient({
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <YourRoutes />
     </WagmiConfig>
   )

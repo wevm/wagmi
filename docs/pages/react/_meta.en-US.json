@@ -3,7 +3,7 @@
   "comparison": "Library Comparison",
   "migration-guide": "Migration Guide",
   "typescript": "TypeScript",
-  "client": "Client",
+  "config": "Config",
   "WagmiConfig": "WagmiConfig",
   "chains": "Chains",
   "providers": "Providers",

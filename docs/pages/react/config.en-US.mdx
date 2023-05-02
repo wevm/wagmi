@@ -1,30 +1,28 @@
 ---
-title: 'Client'
-description: 'The @wagmi/core Client is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and viem clients.'
+title: 'Config'
+description: 'A framework agnostic (Vanilla JS) config that manages wallet connection state and configuration, such as: auto-connection, connectors, and viem clients.'
 ---
 
-import { Callout } from 'nextra-theme-docs'
+# Config
 
-# Client
-
-The @wagmi/core `Client` is a framework agnostic (Vanilla JS) client that manages wallet connection state and configuration, such as: auto-connection, connectors, and viem clients.
+The wagmi `config` is a framework agnostic (Vanilla JS) config that manages wallet connection state and configuration, such as: auto-connection, connectors, and viem clients.
 
 ```ts
-import { createClient } from '@wagmi/core'
+import { createConfig } from 'wagmi'
 ```
 
 ## Usage
 
 ```ts
-import { createClient, configureChains, mainnet } from '@wagmi/core'
-import { publicProvider } from '@wagmi/core/providers/public'
+import { createConfig, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   chains,
   publicClient,
   webSocketPublicClient,
@@ -38,12 +36,12 @@ const client = createClient({
 Enables reconnecting to last used connector on mount. Defaults to `false`.
 
 ```ts {7}
-import { createClient, configureChains, mainnet } from '@wagmi/core'
-import { publicProvider } from '@wagmi/core/providers/public'
+import { createConfig, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { publicClient } = configureChains([mainnet], [publicProvider()])
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   publicClient,
 })
@@ -54,14 +52,14 @@ const client = createClient({
 Connectors used for linking accounts. Defaults to `[new InjectedConnector()]`.
 
 ```ts {9-17}
-import { createClient, configureChains, mainnet } from '@wagmi/core'
-import { publicProvider } from '@wagmi/core/providers/public'
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
-import { WalletConnectConnector } from '@wagmi/core/connectors/walletConnect'
+import { createConfig, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 const { chains, publicClient } = configureChains([mainnet], [publicProvider()])
 
-const client = createClient({
+const config = createConfig({
   connectors: [
     new InjectedConnector({ chains }),
     new WalletConnectConnector({
@@ -77,17 +75,17 @@ const client = createClient({
 
 ### logger (optional)
 
-Adds the ability to provide a custom logger to override how logs are broadcasted in @wagmi/core. Defaults to `console` logging.
+Adds the ability to provide a custom logger to override how logs are broadcasted in wagmi. Defaults to `console` logging.
 
 ```ts {4,9-11}
-import { createClient, configureChains, mainnet } from '@wagmi/core'
-import { publicProvider } from '@wagmi/core/providers/public'
+import { createConfig, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 import { logWarn } from './logger'
 
 const { publicClient } = configureChains([mainnet], [publicProvider()])
 
-const client = createClient({
+const config = createConfig({
   logger: {
     warn: (message) => logWarn(message),
   },
@@ -100,7 +98,7 @@ You can also disable a logger by passing `null` as the value.
 ```ts {5}
 // ...
 
-const client = createClient({
+const config = createConfig({
   logger: {
     warn: null,
   },
@@ -113,12 +111,12 @@ const client = createClient({
 viem [Public Client](https://viem.sh/docs/clients/public.html) for reading from the Ethereum network.
 
 ```ts {7}
-import { createClient, configureChains, mainnet } from '@wagmi/core'
-import { publicProvider } from '@wagmi/core/providers/public'
+import { createConfig, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { publicClient } = configureChains([mainnet], [publicProvider()])
 
-const client = createClient({
+const config = createConfig({
   publicClient,
 })
 ```
@@ -130,17 +128,12 @@ You can create a "chain-aware" `provider` by using the `configureChains` API or 
 The default strategy to persist and cache data. Defaults to `window.localStorage`.
 
 ```ts {13}
-import {
-  createClient,
-  createStorage,
-  configureChains,
-  mainnet,
-} from '@wagmi/core'
-import { publicProvider } from '@wagmi/core/providers/public'
+import { createConfig, createStorage, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { publicClient } = configureChains([mainnet], [publicProvider()])
 
-const client = createClient({
+const config = createConfig({
   publicClient,
   storage: createStorage({ storage: window.localStorage }),
 })
@@ -151,15 +144,15 @@ const client = createClient({
 viem [Public Client](https://viem.sh/docs/clients/public.html) with a [WebSocket Transport](https://viem.sh/docs/clients/transports/websocket.html) for connecting to the Ethereum network. If you provide a WebSocket Public Client, it will be used instead of polling in certain instances.
 
 ```ts {11}
-import { createClient, configureChains, mainnet } from '@wagmi/core'
-import { publicProvider } from '@wagmi/core/providers/public'
+import { createConfig, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
 
 const { publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   publicClient,
   webSocketPublicClient,
 })

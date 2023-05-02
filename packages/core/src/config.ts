@@ -8,7 +8,7 @@ import type { ClientStorage } from './storage'
 import { createStorage, noopStorage } from './storage'
 import type { PublicClient, WebSocketPublicClient } from './types'
 
-export type ClientConfig<
+export type CreateConfigParameters<
   TPublicClient extends PublicClient = PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 > = {
@@ -55,11 +55,11 @@ export type State<
 
 const storeKey = 'store'
 
-export class Client<
+export class Config<
   TPublicClient extends PublicClient = PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 > {
-  config: ClientConfig<TPublicClient, TWebSocketPublicClient>
+  constructorArgs: CreateConfigParameters<TPublicClient, TWebSocketPublicClient>
   publicClients = new Map<number, TPublicClient | undefined>()
   storage: ClientStorage
   store: Mutate<
@@ -89,8 +89,8 @@ export class Client<
       warn: console.warn,
     },
     webSocketPublicClient,
-  }: ClientConfig<TPublicClient, TWebSocketPublicClient>) {
-    this.config = {
+  }: CreateConfigParameters<TPublicClient, TWebSocketPublicClient>) {
+    this.constructorArgs = {
       autoConnect,
       connectors,
       logger,
@@ -286,7 +286,7 @@ export class Client<
     publicClient_ = this.publicClients.get(chainId ?? -1)
     if (publicClient_) return publicClient_
 
-    const { publicClient } = this.config
+    const { publicClient } = this.constructorArgs
     publicClient_ =
       typeof publicClient === 'function'
         ? publicClient({ chainId })
@@ -304,7 +304,7 @@ export class Client<
     webSocketPublicClient_ = this.webSocketPublicClients.get(chainId ?? -1)
     if (webSocketPublicClient_) return webSocketPublicClient_
 
-    const { webSocketPublicClient } = this.config
+    const { webSocketPublicClient } = this.constructorArgs
     webSocketPublicClient_ =
       typeof webSocketPublicClient === 'function'
         ? webSocketPublicClient({ chainId })
@@ -347,7 +347,7 @@ export class Client<
       },
     )
 
-    const { publicClient, webSocketPublicClient } = this.config
+    const { publicClient, webSocketPublicClient } = this.constructorArgs
     const subscribePublicClient = typeof publicClient === 'function'
     const subscribeWebSocketPublicClient =
       typeof webSocketPublicClient === 'function'
@@ -368,25 +368,25 @@ export class Client<
   }
 }
 
-export let client: Client<PublicClient, WebSocketPublicClient>
+export let config: Config<PublicClient, WebSocketPublicClient>
 
-export function createClient<
+export function createConfig<
   TPublicClient extends PublicClient = PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
->(config: ClientConfig<TPublicClient, TWebSocketPublicClient>) {
-  const client_ = new Client<TPublicClient, TWebSocketPublicClient>(config)
-  client = client_ as unknown as Client<PublicClient, WebSocketPublicClient>
-  return client_
+>(args: CreateConfigParameters<TPublicClient, TWebSocketPublicClient>) {
+  const config_ = new Config<TPublicClient, TWebSocketPublicClient>(args)
+  config = config_ as unknown as Config<PublicClient, WebSocketPublicClient>
+  return config_
 }
 
-export function getClient<
+export function getConfig<
   TPublicClient extends PublicClient = PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 >() {
-  if (!client) {
+  if (!config) {
     throw new Error(
-      'No wagmi client found. Ensure you have set up a client: https://wagmi.sh/react/client',
+      'No wagmi config found. Ensure you have set up a config: https://wagmi.sh/react/config',
     )
   }
-  return client as unknown as Client<TPublicClient, TWebSocketPublicClient>
+  return config as unknown as Config<TPublicClient, TWebSocketPublicClient>
 }

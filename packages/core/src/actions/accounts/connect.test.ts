@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../../test'
-import { getClient } from '../../client'
+import { getWalletClients, setupConfig } from '../../../test'
+import { getConfig } from '../../config'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 
@@ -11,7 +11,7 @@ const connector = new MockConnector({
 
 describe('connect', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('args', () => {
@@ -52,10 +52,10 @@ describe('connect', () => {
     })
 
     it('status changes on connection', async () => {
-      expect(getClient().status).toEqual('disconnected')
-      setTimeout(() => expect(getClient().status).toEqual('connecting'), 0)
+      expect(getConfig().status).toEqual('disconnected')
+      setTimeout(() => expect(getConfig().status).toEqual('connecting'), 0)
       await connect({ connector })
-      expect(getClient().status).toEqual('connected')
+      expect(getConfig().status).toEqual('connected')
     })
 
     it('is already connected', async () => {
@@ -83,11 +83,11 @@ describe('connect', () => {
         Details: Failed to connect.
         Version: viem@0.3.16"
       `)
-      expect(getClient().status).toEqual('disconnected')
+      expect(getConfig().status).toEqual('disconnected')
     })
 
     it('status changes on user rejection', async () => {
-      expect(getClient().status).toEqual('disconnected')
+      expect(getConfig().status).toEqual('disconnected')
       await expect(
         connect({
           connector: new MockConnector({
@@ -98,7 +98,7 @@ describe('connect', () => {
           }),
         }),
       ).rejects.toThrowError()
-      expect(getClient().status).toEqual('disconnected')
+      expect(getConfig().status).toEqual('disconnected')
     })
   })
 })

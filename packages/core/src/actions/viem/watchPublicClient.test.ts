@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { mainnet, optimism } from '../../chains'
 import { connect } from '../accounts/connect'
 import { disconnect } from '../accounts/disconnect'
@@ -9,18 +9,18 @@ import { watchPublicClient } from './watchPublicClient'
 
 describe('watchPublicClient', () => {
   it('callback receives data', async () => {
-    const client = setupClient()
+    const config = setupConfig()
 
     const publicClients: GetPublicClientResult[] = []
     const unwatch = watchPublicClient({}, (publicClient) =>
       publicClients.push(publicClient),
     )
 
-    await connect({ connector: client.connectors[0]!, chainId: mainnet.id })
+    await connect({ connector: config.connectors[0]!, chainId: mainnet.id })
     await disconnect()
-    await connect({ connector: client.connectors[0]!, chainId: optimism.id })
+    await connect({ connector: config.connectors[0]!, chainId: optimism.id })
     await disconnect()
-    await connect({ connector: client.connectors[0]!, chainId: mainnet.id })
+    await connect({ connector: config.connectors[0]!, chainId: mainnet.id })
     unwatch()
 
     expect(publicClients).toMatchInlineSnapshot(`

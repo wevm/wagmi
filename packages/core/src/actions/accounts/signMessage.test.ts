@@ -1,7 +1,7 @@
 import { verifyMessage } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../../test'
+import { getWalletClients, setupConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { getAccount } from './getAccount'
@@ -17,7 +17,7 @@ const messages = {
 
 describe('signMessage', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('args', () => {

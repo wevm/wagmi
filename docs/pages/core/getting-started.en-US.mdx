@@ -53,13 +53,13 @@ Note: In a production app, it is not recommended to only pass `publicProvider` t
 
 [Read more about configuring chains](/core/providers/configuring-chains)
 
-## Create a wagmi client
+## Create a wagmi config
 
-Next, create a wagmi `Client` instance using [`createClient`](/core/client), and pass the result from `configureChains` to it.
+Next, create a wagmi `config` instance using [`createConfig`](/core/config), and pass the result from `configureChains` to it.
 
 ```ts {14-18}
 import {
-  createClient,
+  createConfig,
   configureChains,
   mainnet,
 } from '@wagmi/core'
@@ -70,14 +70,14 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   publicClient,
   webSocketPublicClient,
 })
 ```
 
-[Read more about client configuration](/core/client)
+[Read more about client configuration](/core/config)
 
 ## You're good to go!
 

@@ -1,5 +1,5 @@
-import type { Client, Data } from '../../client'
-import { getClient } from '../../client'
+import type { Config, Data } from '../../config'
+import { getConfig } from '../../config'
 import type { PublicClient } from '../../types'
 
 export type GetAccountResult<
@@ -7,7 +7,7 @@ export type GetAccountResult<
 > =
   | {
       address: NonNullable<Data['account']>
-      connector: NonNullable<Client<TPublicClient>['connector']>
+      connector: NonNullable<Config<TPublicClient>['connector']>
       isConnected: true
       isConnecting: false
       isDisconnected: false
@@ -16,7 +16,7 @@ export type GetAccountResult<
     }
   | {
       address: Data['account']
-      connector: Client<TPublicClient>['connector']
+      connector: Config<TPublicClient>['connector']
       isConnected: boolean
       isConnecting: false
       isDisconnected: false
@@ -25,7 +25,7 @@ export type GetAccountResult<
     }
   | {
       address: Data['account']
-      connector: Client<TPublicClient>['connector']
+      connector: Config<TPublicClient>['connector']
       isConnected: false
       isReconnecting: false
       isConnecting: true
@@ -45,12 +45,12 @@ export type GetAccountResult<
 export function getAccount<
   TPublicClient extends PublicClient,
 >(): GetAccountResult<TPublicClient> {
-  const { data, connector, status } = getClient()
+  const { data, connector, status } = getConfig()
   switch (status) {
     case 'connected':
       return {
         address: data?.account as NonNullable<Data['account']>,
-        connector: connector as NonNullable<Client<TPublicClient>['connector']>,
+        connector: connector as NonNullable<Config<TPublicClient>['connector']>,
         isConnected: true,
         isConnecting: false,
         isDisconnected: false,

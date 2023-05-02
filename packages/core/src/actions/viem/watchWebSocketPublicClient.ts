@@ -1,4 +1,4 @@
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { WebSocketPublicClient } from '../../types'
 import type {
   GetWebSocketPublicClientArgs,
@@ -18,10 +18,10 @@ export function watchWebSocketPublicClient<
   args: GetWebSocketPublicClientArgs,
   callback: WatchWebSocketPublicClientCallback<TWebSocketPublicClient>,
 ) {
-  const client = getClient()
+  const config = getConfig()
   const handleChange = async () =>
     callback(getWebSocketPublicClient<TWebSocketPublicClient>(args))
-  const unsubscribe = client.subscribe(
+  const unsubscribe = config.subscribe(
     ({ webSocketPublicClient }) => webSocketPublicClient,
     handleChange,
   )

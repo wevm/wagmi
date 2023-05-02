@@ -3,22 +3,22 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import {
   getWebSocketPublicClient,
   renderHook,
-  setupClient,
+  setupConfig,
 } from '../../../test'
-import type { Client } from '../../client'
+import type { Config } from '../../config'
 import { useWebSocketPublicClient } from './useWebSocketPublicClient'
 
 describe('useWebSocketPublicClient', () => {
-  let client: Client
+  let config: Config
   beforeEach(() => {
-    client = setupClient({
+    config = setupConfig({
       webSocketPublicClient: getWebSocketPublicClient,
     })
   })
 
   it('mounts', async () => {
     const { result } = renderHook(() => useWebSocketPublicClient(), {
-      initialProps: { client },
+      initialProps: { config },
     })
     expect(result.current).toMatchInlineSnapshot(
       '"<WebSocketPublicClient network={1} />"',
@@ -29,7 +29,7 @@ describe('useWebSocketPublicClient', () => {
     it('chainId', async () => {
       const { result } = renderHook(
         () => useWebSocketPublicClient({ chainId: 1 }),
-        { initialProps: { client } },
+        { initialProps: { config } },
       )
       expect(result.current).toMatchInlineSnapshot(
         `"<WebSocketPublicClient network={1} />"`,
@@ -41,7 +41,7 @@ describe('useWebSocketPublicClient', () => {
       const { result } = renderHook(
         () => useWebSocketPublicClient({ chainId }),
         {
-          initialProps: { client },
+          initialProps: { config },
         },
       )
       expect(result.current).toMatchInlineSnapshot(

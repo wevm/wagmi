@@ -1,4 +1,4 @@
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { WebSocketPublicClient } from '../../types'
 
 export type GetWebSocketPublicClientArgs = {
@@ -15,11 +15,11 @@ export function getWebSocketPublicClient<
 >({
   chainId,
 }: GetWebSocketPublicClientArgs = {}): GetWebSocketPublicClientResult<TWebSocketPublicClient> {
-  const client = getClient<any, TWebSocketPublicClient>()
+  const config = getConfig<any, TWebSocketPublicClient>()
   if (chainId)
     return (
-      client.getWebSocketPublicClient({ chainId }) ||
-      client.webSocketPublicClient
+      config.getWebSocketPublicClient({ chainId }) ||
+      config.webSocketPublicClient
     )
-  return client.webSocketPublicClient
+  return config.webSocketPublicClient
 }

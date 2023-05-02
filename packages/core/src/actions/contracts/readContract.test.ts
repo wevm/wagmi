@@ -3,7 +3,7 @@ import { assertType, beforeEach, describe, expect, it } from 'vitest'
 
 import {
   mlootContractConfig,
-  setupClient,
+  setupConfig,
   wagmiContractConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
@@ -12,7 +12,7 @@ import { readContract } from './readContract'
 describe('readContract', () => {
   describe('args', () => {
     beforeEach(() => {
-      setupClient()
+      setupConfig()
     })
 
     it('chainId', async () => {

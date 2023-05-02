@@ -2,7 +2,7 @@ import type { ConnectArgs, ConnectResult } from '@wagmi/core'
 import { connect } from '@wagmi/core'
 import * as React from 'react'
 
-import { useClient } from '../../context'
+import { useConfig } from '../../context'
 import type { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
@@ -27,7 +27,7 @@ export function useConnect({
   onSettled,
   onSuccess,
 }: UseConnectArgs & UseConnectConfig = {}) {
-  const client = useClient()
+  const config = useConfig()
 
   const {
     data,
@@ -71,7 +71,7 @@ export function useConnect({
   return {
     connect,
     connectAsync,
-    connectors: client.connectors,
+    connectors: config.connectors,
     data,
     error,
     isError,

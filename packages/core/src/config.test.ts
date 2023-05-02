@@ -5,12 +5,12 @@ import {
   getPublicClient,
   getWalletClients,
   getWebSocketPublicClient,
-  setupClient,
+  setupConfig,
   testChains,
 } from '../test'
 import { connect, disconnect } from './actions'
 import { goerli, mainnet } from './chains'
-import { Client, createClient, getClient } from './client'
+import { Config, createConfig, getConfig } from './config'
 import { MockConnector } from './connectors/mock'
 import { createStorage, noopStorage } from './storage'
 
@@ -19,29 +19,29 @@ const publicClient = () =>
     chains: testChains,
   })
 
-describe('createClient', () => {
-  it('returns client', () => {
-    const client = createClient({
+describe('createConfig', () => {
+  it('returns config', () => {
+    const config = createConfig({
       publicClient,
     })
-    expect(client).toBeInstanceOf(Client)
+    expect(config).toBeInstanceOf(Config)
   })
 
   describe('config', () => {
     describe('autoConnect', () => {
       describe('true', () => {
         it('disconnected', async () => {
-          const client = createClient({
+          const config = createConfig({
             autoConnect: true,
             publicClient,
           })
-          expect(client.status).toMatchInlineSnapshot(`"connecting"`)
-          await client.autoConnect()
-          expect(client.status).toMatchInlineSnapshot(`"disconnected"`)
+          expect(config.status).toMatchInlineSnapshot(`"connecting"`)
+          await config.autoConnect()
+          expect(config.status).toMatchInlineSnapshot(`"disconnected"`)
         })
 
         it('connected', async () => {
-          const client = createClient({
+          const config = createConfig({
             autoConnect: true,
             connectors: [
               new MockConnector({
@@ -53,9 +53,9 @@ describe('createClient', () => {
             ],
             publicClient,
           })
-          expect(client.status).toMatchInlineSnapshot(`"connecting"`)
-          await client.autoConnect()
-          expect(client.status).toMatchInlineSnapshot(`"connected"`)
+          expect(config.status).toMatchInlineSnapshot(`"connecting"`)
+          await config.autoConnect()
+          expect(config.status).toMatchInlineSnapshot(`"connected"`)
         })
 
         it('reconnected', async () => {
@@ -74,7 +74,7 @@ describe('createClient', () => {
               },
             },
           })
-          const client = createClient({
+          const config = createConfig({
             autoConnect: true,
             connectors: [
               new MockConnector({
@@ -87,52 +87,52 @@ describe('createClient', () => {
             publicClient,
             storage,
           })
-          expect(client.status).toMatchInlineSnapshot(`"reconnecting"`)
-          await client.autoConnect()
-          expect(client.status).toMatchInlineSnapshot(`"connected"`)
+          expect(config.status).toMatchInlineSnapshot(`"reconnecting"`)
+          await config.autoConnect()
+          expect(config.status).toMatchInlineSnapshot(`"connected"`)
         })
       })
 
       it('false', () => {
-        const client = createClient({
+        const config = createConfig({
           autoConnect: false,
           publicClient,
         })
-        expect(client.status).toMatchInlineSnapshot(`"disconnected"`)
+        expect(config.status).toMatchInlineSnapshot(`"disconnected"`)
       })
     })
 
     describe('chains', () => {
       it('default', async () => {
-        const client = setupClient({ chains: [mainnet, goerli] })
-        expect(client.chains).toBeUndefined()
+        const config = setupConfig({ chains: [mainnet, goerli] })
+        expect(config.chains).toBeUndefined()
       })
 
       it('autoConnect', async () => {
-        const client = setupClient({ chains: [mainnet, goerli] })
-        expect(client.chains).toBeUndefined()
-        await client.autoConnect()
-        expect(client.chains?.length).toEqual(2)
+        const config = setupConfig({ chains: [mainnet, goerli] })
+        expect(config.chains).toBeUndefined()
+        await config.autoConnect()
+        expect(config.chains?.length).toEqual(2)
         await disconnect()
-        expect(client.chains).toBeUndefined()
+        expect(config.chains).toBeUndefined()
       })
 
       it('connect', async () => {
-        const client = setupClient({ chains: [mainnet, goerli] })
-        expect(client.chains).toBeUndefined()
-        await connect({ connector: client.connectors[0]! })
-        expect(client.chains?.length).toEqual(2)
+        const config = setupConfig({ chains: [mainnet, goerli] })
+        expect(config.chains).toBeUndefined()
+        await connect({ connector: config.connectors[0]! })
+        expect(config.chains?.length).toEqual(2)
         await disconnect()
-        expect(client.chains).toBeUndefined()
+        expect(config.chains).toBeUndefined()
       })
     })
 
     describe('connectors', () => {
       it('default', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient,
         })
-        expect(client.connectors.map((x) => x.name)).toMatchInlineSnapshot(`
+        expect(config.connectors.map((x) => x.name)).toMatchInlineSnapshot(`
           [
             "Injected",
           ]
@@ -140,7 +140,7 @@ describe('createClient', () => {
       })
 
       it('custom', () => {
-        const client = createClient({
+        const config = createConfig({
           connectors: [
             new MockConnector({
               options: {
@@ -150,7 +150,7 @@ describe('createClient', () => {
           ],
           publicClient,
         })
-        expect(client.connectors.map((x) => x.name)).toMatchInlineSnapshot(`
+        expect(config.connectors.map((x) => x.name)).toMatchInlineSnapshot(`
           [
             "Mock",
           ]
@@ -160,17 +160,17 @@ describe('createClient', () => {
 
     describe('publicClient', () => {
       it('default', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient,
         })
-        expect(client.publicClient).toBeDefined()
+        expect(config.publicClient).toBeDefined()
       })
 
       it('custom', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient: getPublicClient(),
         })
-        expect(client.publicClient).toMatchInlineSnapshot(
+        expect(config.publicClient).toMatchInlineSnapshot(
           '"<PublicClient network={1} />"',
         )
       })
@@ -178,10 +178,10 @@ describe('createClient', () => {
 
     describe('publicClients', () => {
       it('default', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient: getPublicClient,
         })
-        expect(client.publicClients).toMatchInlineSnapshot(`
+        expect(config.publicClients).toMatchInlineSnapshot(`
           Map {
             -1 => "<PublicClient network={1} />",
           }
@@ -189,7 +189,7 @@ describe('createClient', () => {
       })
 
       it('autoConnect w/ stored chainId', () => {
-        const client = createClient({
+        const config = createConfig({
           autoConnect: true,
           storage: createStorage({
             storage: {
@@ -205,7 +205,7 @@ describe('createClient', () => {
           }),
           publicClient: getPublicClient,
         })
-        expect(client.publicClients).toMatchInlineSnapshot(`
+        expect(config.publicClients).toMatchInlineSnapshot(`
           Map {
             5 => "<PublicClient network={5} />",
           }
@@ -215,10 +215,10 @@ describe('createClient', () => {
 
     describe('storage', () => {
       it('default', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient,
         })
-        expect(client.storage).toMatchInlineSnapshot(`
+        expect(config.storage).toMatchInlineSnapshot(`
           {
             "getItem": [Function],
             "removeItem": [Function],
@@ -228,13 +228,13 @@ describe('createClient', () => {
       })
 
       it('custom', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient,
           storage: createStorage({
             storage: window.localStorage,
           }),
         })
-        expect(client.storage).toMatchInlineSnapshot(`
+        expect(config.storage).toMatchInlineSnapshot(`
           {
             "getItem": [Function],
             "removeItem": [Function],
@@ -246,18 +246,18 @@ describe('createClient', () => {
 
     describe('webSocketPublicClient', () => {
       it('default', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient,
         })
-        expect(client.webSocketPublicClient).toBeUndefined()
+        expect(config.webSocketPublicClient).toBeUndefined()
       })
 
       it('custom', async () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient,
           webSocketPublicClient: getWebSocketPublicClient(),
         })
-        expect(client.webSocketPublicClient).toMatchInlineSnapshot(
+        expect(config.webSocketPublicClient).toMatchInlineSnapshot(
           '"<WebSocketPublicClient network={1} />"',
         )
       })
@@ -265,11 +265,11 @@ describe('createClient', () => {
 
     describe('webSocketPublicClients', () => {
       it('default', () => {
-        const client = createClient({
+        const config = createConfig({
           publicClient,
           webSocketPublicClient: getWebSocketPublicClient,
         })
-        expect(client.webSocketPublicClients).toMatchInlineSnapshot(`
+        expect(config.webSocketPublicClients).toMatchInlineSnapshot(`
           Map {
             -1 => "<WebSocketPublicClient network={1} />",
           }
@@ -277,7 +277,7 @@ describe('createClient', () => {
       })
 
       it('autoConnect w/ stored chainId', () => {
-        const client = createClient({
+        const config = createConfig({
           autoConnect: true,
           storage: createStorage({
             storage: {
@@ -294,7 +294,7 @@ describe('createClient', () => {
           publicClient: getPublicClient,
           webSocketPublicClient: getWebSocketPublicClient,
         })
-        expect(client.webSocketPublicClients).toMatchInlineSnapshot(`
+        expect(config.webSocketPublicClients).toMatchInlineSnapshot(`
           Map {
             5 => "<WebSocketPublicClient network={5} />",
           }
@@ -304,15 +304,15 @@ describe('createClient', () => {
   })
 })
 
-describe('getClient', () => {
-  it('returns default client', () => {
-    expect(getClient()).toBeDefined()
+describe('getConfig', () => {
+  it('returns default config', () => {
+    expect(getConfig()).toBeDefined()
   })
 
-  it('returns created client', () => {
-    const client = createClient({
+  it('returns created config', () => {
+    const config = createConfig({
       publicClient,
     })
-    expect(getClient()).toEqual(client)
+    expect(getConfig()).toEqual(config)
   })
 })

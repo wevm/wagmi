@@ -1,34 +1,34 @@
 import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../../test'
-import type { Client } from '../../client'
+import { getWalletClients, setupConfig } from '../../../test'
+import type { Config } from '../../config'
 import { connect } from '../accounts'
 import { prepareSendTransaction } from './prepareSendTransaction'
 import { sendTransaction } from './sendTransaction'
 
 describe('sendTransaction', () => {
-  let client: Client
+  let config: Config
   beforeEach(() => {
-    client = setupClient()
+    config = setupConfig()
   })
 
   describe('args', () => {
     it('"prepared" request', async () => {
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
 
-      const config = await prepareSendTransaction({
+      const { request } = await prepareSendTransaction({
         request: {
           to: 'jxom.eth',
           value: parseEther('10'),
         },
       })
-      const { hash } = await sendTransaction(config)
+      const { hash } = await sendTransaction({ request })
       expect(hash).toBeDefined()
     })
 
     it('"unprepared" request', async () => {
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
 
       const { hash } = await sendTransaction({
         request: {
@@ -42,13 +42,13 @@ describe('sendTransaction', () => {
 
   describe('errors', () => {
     it('wallet is on different chain', async () => {
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
 
       const walletClients = getWalletClients()
       const to = walletClients[1]
       const toAddress = to?.account.address || ''
 
-      const config = await prepareSendTransaction({
+      const { request } = await prepareSendTransaction({
         request: {
           to: toAddress,
           value: parseEther('10'),
@@ -58,7 +58,7 @@ describe('sendTransaction', () => {
       expect(() =>
         sendTransaction({
           chainId: 420,
-          ...config,
+          request,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         `"Chain mismatch: Expected \\"Chain 420\\", received \\"Ethereum\\"."`,
@@ -66,13 +66,13 @@ describe('sendTransaction', () => {
     })
 
     it('chain not configured for connector', async () => {
-      await connect({ connector: client.connectors[0]!, chainId: 420 })
+      await connect({ connector: config.connectors[0]!, chainId: 420 })
 
       const walletClients = getWalletClients()
       const to = walletClients[1]
       const toAddress = to?.account.address || ''
 
-      const config = await prepareSendTransaction({
+      const { request } = await prepareSendTransaction({
         request: {
           to: toAddress,
           value: parseEther('10'),
@@ -82,7 +82,7 @@ describe('sendTransaction', () => {
       expect(() =>
         sendTransaction({
           chainId: 420,
-          ...config,
+          request,
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(
         '"Chain \\"420\\" not configured for connector \\"mock\\"."',
@@ -90,16 +90,16 @@ describe('sendTransaction', () => {
     })
 
     it('insufficient balance', async () => {
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
 
-      const config = await prepareSendTransaction({
+      const { request } = await prepareSendTransaction({
         request: {
           to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
           value: parseEther('100000'),
         },
       })
 
-      await expect(() => sendTransaction(config)).rejects
+      await expect(() => sendTransaction({ request })).rejects
         .toThrowErrorMatchingInlineSnapshot(`
         "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
 

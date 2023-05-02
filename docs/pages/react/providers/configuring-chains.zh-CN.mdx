@@ -7,7 +7,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Configuring Chains
 
-`configureChains` 方法允许使用特定的 provider 来配置你的 chain ，例如：Alchemy、Infura 或其他。这意味着你不需要担心在你的 [connector](/react/connectors/walletConnect#options) 或 [provider](/react/client#provider-optional) 中定义 RPC URLs 和 chain 的配置，这是由 wagmi 内部管理的。
+`configureChains` 方法允许使用特定的 provider 来配置你的 chain ，例如：Alchemy、Infura 或其他。这意味着你不需要担心在你的 [connector](/react/connectors/walletConnect#options) 或 [provider](/react/config#provider-optional) 中定义 RPC URLs 和 chain 的配置，这是由 wagmi 内部管理的。
 
 ```ts
 import { configureChains } from 'wagmi'
@@ -18,11 +18,11 @@ import { configureChains } from 'wagmi'
 `configureChains` 接受一个 chain 的数组和 provider 的数组，然后返回:
 
 - `chains`: 传递给你的 connector
-- `publicClient`: 传递给 `createClient`
-- `webSocketPublicClient`: 也传递给 `createClient`，不过是可选的
+- `publicClient`: 传递给 `createConfig`
+- `webSocketPublicClient`: 也传递给 `createConfig`，不过是可选的
 
 ```ts
-import { configureChains, createClient } from 'wagmi'
+import { configureChains, createConfig } from 'wagmi'
 import { mainnet, optimism } from 'wagmi/chains'
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
@@ -33,7 +33,7 @@ const { chains, publicClient } = configureChains(
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 
-const wagmiClient = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors: [new InjectedConnector({ chains })],
   publicClient,

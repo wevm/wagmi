@@ -3,10 +3,10 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import type { PublicClient, WebSocketPublicClient } from '@wagmi/core'
 import * as React from 'react'
 
-import type { Client } from './client'
+import type { Config } from './config'
 
 export const Context = React.createContext<
-  Client<PublicClient, WebSocketPublicClient> | undefined
+  Config<PublicClient, WebSocketPublicClient> | undefined
 >(undefined)
 
 export const queryClientContext = React.createContext<QueryClient | undefined>(
@@ -18,14 +18,14 @@ export type WagmiConfigProps<
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 > = {
   /** React-decorated Client instance */
-  client: Client<TPublicClient, TWebSocketPublicClient>
+  config: Config<TPublicClient, TWebSocketPublicClient>
 }
 export function WagmiConfig<
   TPublicClient extends PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient,
 >({
   children,
-  client,
+  config,
 }: React.PropsWithChildren<
   WagmiConfigProps<TPublicClient, TWebSocketPublicClient>
 >) {
@@ -34,27 +34,27 @@ export function WagmiConfig<
   return React.createElement(Context.Provider, {
     children: React.createElement(QueryClientProvider, {
       children,
-      client: client.queryClient,
+      client: config.queryClient,
       context: queryClientContext,
     }),
-    value: client as unknown as Client,
+    value: config as unknown as Config,
   })
 }
 
-export function useClient<
+export function useConfig<
   TPublicClient extends PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 >() {
-  const client = React.useContext(Context) as unknown as Client<
+  const config = React.useContext(Context) as unknown as Config<
     TPublicClient,
     TWebSocketPublicClient
   >
-  if (!client)
+  if (!config)
     throw new Error(
       [
-        '`useClient` must be used within `WagmiConfig`.\n',
+        '`useConfig` must be used within `WagmiConfig`.\n',
         'Read more: https://wagmi.sh/react/WagmiConfig',
       ].join('\n'),
     )
-  return client
+  return config
 }

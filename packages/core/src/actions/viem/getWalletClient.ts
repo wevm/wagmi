@@ -1,4 +1,4 @@
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { WalletClient } from '../../types'
 
 export type GetWalletClientArgs = {
@@ -11,8 +11,8 @@ export type GetWalletClientResult = WalletClient | null
 export async function getWalletClient({
   chainId,
 }: GetWalletClientArgs = {}): Promise<GetWalletClientResult> {
-  const client = getClient()
+  const config = getConfig()
   const walletClient =
-    (await client.connector?.getWalletClient?.({ chainId })) || null
+    (await config.connector?.getWalletClient?.({ chainId })) || null
   return walletClient
 }

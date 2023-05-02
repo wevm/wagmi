@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient, testChains } from '../../../test'
+import { getWalletClients, setupConfig, testChains } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
@@ -12,7 +12,7 @@ const connector = new MockConnector({
 
 describe('switchNetwork', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('args', () => {

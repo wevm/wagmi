@@ -1,21 +1,21 @@
 import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getWalletClients, setupClient } from '../../../test'
-import type { Client } from '../../client'
+import { getWalletClients, setupConfig } from '../../../test'
+import type { Config } from '../../config'
 import { connect } from '../accounts'
 import { sendTransaction } from './sendTransaction'
 import { waitForTransaction } from './waitForTransaction'
 
 describe('waitForTransaction', () => {
-  let client: Client
+  let config: Config
   beforeEach(() => {
-    client = setupClient()
+    config = setupConfig()
   })
 
   describe('args', () => {
     it('chainId', async () => {
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
 
       const walletClients = getWalletClients()
       const to = walletClients[1]
@@ -36,7 +36,7 @@ describe('waitForTransaction', () => {
     })
 
     it('hash', async () => {
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
 
       const walletClients = getWalletClients()
       const to = walletClients[1]

@@ -1,6 +1,6 @@
 import type { ContractFunctionConfig } from 'viem'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { MulticallConfig, MulticallResult } from './multicall'
 import { multicall } from './multicall'
@@ -20,17 +20,17 @@ export function watchMulticall<
   TContracts extends ContractFunctionConfig[],
   TAllowFailure extends boolean = true,
 >(
-  config: WatchMulticallConfig<TContracts, TAllowFailure>,
+  args: WatchMulticallConfig<TContracts, TAllowFailure>,
   callback: WatchMulticallCallback<TContracts, TAllowFailure>,
 ) {
-  const client = getClient()
+  const config = getConfig()
 
-  const handleChange = async () => callback(await multicall(config))
+  const handleChange = async () => callback(await multicall(args))
 
-  const unwatch = config.listenToBlock
+  const unwatch = args.listenToBlock
     ? watchBlockNumber({ listen: true }, handleChange)
     : undefined
-  const unsubscribe = client.subscribe(
+  const unsubscribe = config.subscribe(
     ({ publicClient }) => publicClient,
     handleChange,
   )

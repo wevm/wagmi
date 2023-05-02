@@ -5,10 +5,10 @@ import * as Exports from './'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "createClient",
+      "createConfig",
       "Context",
       "WagmiConfig",
-      "useClient",
+      "useConfig",
       "paginatedIndexesConfig",
       "useAccount",
       "useBalance",
@@ -49,7 +49,7 @@ it('should expose correct exports', () => {
       "Connector",
       "ConnectorAlreadyConnectedError",
       "ConnectorNotFoundError",
-      "ClientChainsNotFound",
+      "ConfigChainsNotFound",
       "SwitchChainNotSupportedError",
       "configureChains",
       "createStorage",

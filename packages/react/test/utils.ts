@@ -10,17 +10,17 @@ import { expect } from 'vitest'
 
 import type { renderHook } from '.'
 import { getPublicClient, getWalletClients } from '../../core/test/utils'
-import type { CreateClientConfig } from '../src'
-import { createClient } from '../src'
+import type { CreateConfigParameters } from '../src'
+import { createConfig } from '../src'
 import { goerli, mainnet } from '../src/chains'
 import type { UseAccountConfig } from '../src/hooks/accounts/useAccount'
 import { useAccount as useAccount_ } from '../src/hooks/accounts/useAccount'
 import { useNetwork as useNetwork_ } from '../src/hooks/accounts/useNetwork'
 
-type Config = Partial<CreateClientConfig>
+type Config = Partial<CreateConfigParameters>
 
-export function setupClient(config: Config = {}) {
-  return createClient<PublicClient, WebSocketPublicClient>({
+export function setupConfig(config: Config = {}) {
+  return createConfig<PublicClient, WebSocketPublicClient>({
     connectors: [
       new MockConnector({
         options: {

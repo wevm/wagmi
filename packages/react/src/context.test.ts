@@ -2,15 +2,15 @@ import * as React from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { renderHook } from '../test'
-import { useClient } from './context'
+import { useConfig } from './context'
 
-describe('useClient', () => {
+describe('useConfig', () => {
   describe('mounts', () => {
     it('default', () => {
-      const { result } = renderHook(() => useClient())
+      const { result } = renderHook(() => useConfig())
       expect(result.current).toMatchInlineSnapshot(`
-        Client {
-          "config": {
+        Config {
+          "constructorArgs": {
             "autoConnect": false,
             "connectors": [
               "<MockConnector>",
@@ -93,11 +93,11 @@ describe('useClient', () => {
       try {
         const wrapper = ({ children }: { children?: React.ReactNode }) =>
           React.createElement('div', { children })
-        renderHook(() => useClient(), { wrapper })
+        renderHook(() => useConfig(), { wrapper })
       } catch (error) {
         expect(error).toMatchInlineSnapshot(
           `
-          [Error: \`useClient\` must be used within \`WagmiConfig\`.
+          [Error: \`useConfig\` must be used within \`WagmiConfig\`.
 
           Read more: https://wagmi.sh/react/WagmiConfig]
         `,

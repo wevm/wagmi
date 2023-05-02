@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
   mlootContractConfig,
-  setupClient,
+  setupConfig,
   wagmigotchiContractConfig,
 } from '../../../test'
 import { mainnet, polygon } from '../../chains'
@@ -33,7 +33,7 @@ const contracts = [
 
 describe('multicall', () => {
   beforeEach(() => {
-    setupClient({
+    setupConfig({
       chains: [mainnet, { ...polygon, contracts: { multicall3: undefined } }],
     })
   })
@@ -469,7 +469,7 @@ describe('multicall', () => {
       )
     })
 
-    it('should throw if a chain is not configured on wagmi client', async () => {
+    it('should throw if a chain is not configured on wagmi config', async () => {
       await expect(
         multicall({ contracts, chainId: 69 }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(

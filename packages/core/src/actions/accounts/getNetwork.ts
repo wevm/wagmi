@@ -1,5 +1,5 @@
 import type { Chain } from '../../chains'
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 
 export type GetNetworkResult = {
   chain?: Chain & {
@@ -9,12 +9,12 @@ export type GetNetworkResult = {
 }
 
 export function getNetwork(): GetNetworkResult {
-  const client = getClient()
+  const config = getConfig()
 
-  const chainId = client.data?.chain?.id
-  const activeChains = client.chains ?? []
+  const chainId = config.data?.chain?.id
+  const activeChains = config.chains ?? []
   const activeChain = [
-    ...(client.publicClient?.chains || []),
+    ...(config.publicClient?.chains || []),
     ...activeChains,
   ].find((x) => x.id === chainId) ?? {
     id: chainId,
@@ -31,7 +31,7 @@ export function getNetwork(): GetNetworkResult {
     chain: chainId
       ? {
           ...activeChain,
-          ...client.data?.chain,
+          ...config.data?.chain,
           id: chainId,
         }
       : undefined,

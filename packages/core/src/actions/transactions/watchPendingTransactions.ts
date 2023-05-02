@@ -4,7 +4,7 @@ import type {
 } from 'viem'
 import { shallow } from 'zustand/shallow'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { PublicClient, WebSocketPublicClient } from '../../types'
 import { getPublicClient, getWebSocketPublicClient } from '../viem'
 
@@ -34,8 +34,8 @@ export function watchPendingTransactions(
 
   createListener(publicClient_)
 
-  const client = getClient()
-  const unsubscribe = client.subscribe(
+  const config = getConfig()
+  const unsubscribe = config.subscribe(
     ({ publicClient, webSocketPublicClient }) => ({
       publicClient,
       webSocketPublicClient,

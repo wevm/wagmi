@@ -4,7 +4,7 @@ import type {
   MulticallReturnType,
 } from 'viem'
 
-import { ChainNotConfiguredError, ClientChainsNotFound } from '../../errors'
+import { ChainNotConfiguredError, ConfigChainsNotFound } from '../../errors'
 import { getPublicClient } from '../viem'
 
 export type MulticallConfig<
@@ -33,7 +33,7 @@ export async function multicall<
   MulticallResult<TContracts, TAllowFailure>
 > {
   const publicClient = getPublicClient({ chainId })
-  if (!publicClient.chains) throw new ClientChainsNotFound()
+  if (!publicClient.chains) throw new ConfigChainsNotFound()
 
   if (chainId && publicClient.chain.id !== chainId)
     throw new ChainNotConfiguredError({ chainId })

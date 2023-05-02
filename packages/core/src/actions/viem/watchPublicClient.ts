@@ -1,4 +1,4 @@
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { PublicClient } from '../../types'
 import type {
   GetPublicClientArgs,
@@ -16,10 +16,10 @@ export function watchPublicClient<
   args: GetPublicClientArgs,
   callback: WatchPublicClientCallback<TPublicClient>,
 ) {
-  const client = getClient()
+  const config = getConfig()
   const handleChange = async () =>
     callback(getPublicClient<TPublicClient>(args))
-  const unsubscribe = client.subscribe(
+  const unsubscribe = config.subscribe(
     ({ publicClient }) => publicClient,
     handleChange,
   )

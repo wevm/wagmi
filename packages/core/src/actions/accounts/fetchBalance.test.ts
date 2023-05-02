@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { fetchBalance } from './fetchBalance'
 
 describe('fetchBalance', () => {
   describe('args', () => {
     beforeEach(() => {
       console.warn = vi.fn()
-      setupClient()
+      setupConfig()
     })
 
     it('address', async () => {

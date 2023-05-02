@@ -1,6 +1,6 @@
 import { shallow } from 'zustand/shallow'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import type { Connector } from '../../connectors'
 import type { PublicClient } from '../../types'
 import type { GetAccountResult } from './getAccount'
@@ -26,9 +26,9 @@ export function watchAccount<TPublicClient extends PublicClient>(
   callback: WatchAccountCallback<TPublicClient>,
   { selector = (x) => x }: WatchAccountConfig = {},
 ) {
-  const client = getClient()
+  const config = getConfig()
   const handleChange = () => callback(getAccount())
-  const unsubscribe = client.subscribe(
+  const unsubscribe = config.subscribe(
     ({ data, connector, status }) =>
       selector({
         address: data?.account,

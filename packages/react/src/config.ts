@@ -6,25 +6,26 @@ import type {
 } from '@tanstack/react-query-persist-client'
 import { persistQueryClient } from '@tanstack/react-query-persist-client'
 import type {
-  ClientConfig,
-  Client as CoreClient,
+  Config as CoreConfig,
+  CreateConfigParameters as CreateCoreConfigParameters,
   PublicClient,
   WebSocketPublicClient,
 } from '@wagmi/core'
 import {
-  createClient as createCoreClient,
+  createConfig as createCoreConfig,
   createStorage,
   noopStorage,
 } from '@wagmi/core'
 
-export type CreateClientConfig<
+export type CreateConfigParameters<
   TPublicClient extends PublicClient = PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
-> = ClientConfig<TPublicClient, TWebSocketPublicClient> & {
+> = CreateCoreConfigParameters<TPublicClient, TWebSocketPublicClient> & {
   queryClient?: QueryClient
   persister?: Persister | null
 }
-export function createClient<
+
+export function createConfig<
   TPublicClient extends PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient,
 >({
@@ -57,10 +58,10 @@ export function createClient<
         deserialize: (x) => x as unknown as PersistedClient,
       })
     : undefined,
-  ...config
-}: CreateClientConfig<TPublicClient, TWebSocketPublicClient>) {
-  const client = createCoreClient<TPublicClient, TWebSocketPublicClient>({
-    ...config,
+  ...args
+}: CreateConfigParameters<TPublicClient, TWebSocketPublicClient>) {
+  const config = createCoreConfig<TPublicClient, TWebSocketPublicClient>({
+    ...args,
     storage,
   })
   if (persister)
@@ -75,12 +76,12 @@ export function createClient<
           (query.queryKey[0] as { persist?: boolean }).persist !== false,
       },
     })
-  return Object.assign(client, { queryClient })
+  return Object.assign(config, { queryClient })
 }
 
-export type Client<
+export type Config<
   TPublicClient extends PublicClient = PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
-> = CoreClient<TPublicClient, TWebSocketPublicClient> & {
+> = CoreConfig<TPublicClient, TWebSocketPublicClient> & {
   queryClient: QueryClient
 }

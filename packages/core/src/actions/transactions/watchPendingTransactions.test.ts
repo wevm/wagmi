@@ -2,17 +2,17 @@ import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { sendTransaction } from '.'
-import { getWalletClients, setupClient } from '../../../test'
-import type { Client } from '../../client'
+import { getWalletClients, setupConfig } from '../../../test'
+import type { Config } from '../../config'
 import { connect } from '../accounts'
 import { getPublicClient } from '../viem'
 import type { WatchPendingTransactionsResult } from './watchPendingTransactions'
 import { watchPendingTransactions } from './watchPendingTransactions'
 
 describe('watchPendingTransactions', () => {
-  let client: Client
+  let config: Config
   beforeEach(() => {
-    client = setupClient()
+    config = setupConfig()
   })
 
   it(
@@ -46,7 +46,7 @@ describe('watchPendingTransactions', () => {
       const to = walletClients[1]
       const toAddress = to?.account.address
 
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
       await sendTransaction({
         request: {
           to: toAddress,
@@ -78,7 +78,7 @@ describe('watchPendingTransactions', () => {
       const to = walletClients[1]
       const toAddress = to?.account.address
 
-      await connect({ connector: client.connectors[0]! })
+      await connect({ connector: config.connectors[0]! })
       await sendTransaction({
         request: {
           to: toAddress,

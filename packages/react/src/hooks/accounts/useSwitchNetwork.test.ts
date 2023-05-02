@@ -7,7 +7,7 @@ import {
   actConnect,
   getWalletClients,
   renderHook,
-  setupClient,
+  setupConfig,
 } from '../../../test'
 import type { UseConnectArgs, UseConnectConfig } from './useConnect'
 import { useConnect } from './useConnect'
@@ -32,11 +32,11 @@ function useSwitchNetworkWithConnect(
 describe('useSwitchNetwork', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      const client = setupClient()
-      await connect({ connector: client.connectors[0]! })
+      const config = setupConfig()
+      await connect({ connector: config.connectors[0]! })
 
       const { result, waitFor } = renderHook(() => useSwitchNetwork(), {
-        initialProps: { client },
+        initialProps: { config },
       })
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())

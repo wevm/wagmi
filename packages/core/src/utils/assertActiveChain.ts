@@ -1,5 +1,5 @@
 import { getNetwork } from '../actions'
-import { getClient } from '../client'
+import { getConfig } from '../config'
 import { ChainMismatchError, ChainNotConfiguredError } from '../errors'
 import type { WalletClient } from '../types'
 
@@ -27,7 +27,7 @@ export function assertActiveChain({
     // Check that Wallet Client's chain and target chain match
     const walletClientChainId = walletClient.chain.id
     if (walletClientChainId && chainId !== walletClientChainId) {
-      const connector = getClient().connector
+      const connector = getConfig().connector
       throw new ChainNotConfiguredError({
         chainId,
         connectorId: connector?.id ?? 'unknown',
