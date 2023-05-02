@@ -1,5 +1,16 @@
 # @wagmi/core
 
+## 1.0.0-next.3
+
+### Major Changes
+
+- Updated references.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.4
+
 ## 1.0.0-next.2
 
 ### Major Changes
