@@ -81,6 +81,19 @@ describe('usePrepareSendTransaction', () => {
     const res = result.current.prepareSendTransaction
     expect(res).toMatchInlineSnapshot(`
       {
+        "config": {
+          "accessList": undefined,
+          "account": undefined,
+          "data": undefined,
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "mode": "prepared",
+          "nonce": undefined,
+          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+          "value": 10000000000000000n,
+        },
         "data": {
           "accessList": undefined,
           "account": undefined,
@@ -118,19 +131,6 @@ describe('usePrepareSendTransaction', () => {
         "isRefetching": false,
         "isSuccess": true,
         "refetch": [Function],
-        "request": {
-          "accessList": undefined,
-          "account": undefined,
-          "data": undefined,
-          "gas": undefined,
-          "gasPrice": undefined,
-          "maxFeePerGas": undefined,
-          "maxPriorityFeePerGas": undefined,
-          "mode": "prepared",
-          "nonce": undefined,
-          "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-          "value": 10000000000000000n,
-        },
         "status": "success",
       }
     `)
