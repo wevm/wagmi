@@ -165,6 +165,12 @@ All `BigNumber` instances are now [platform native `BigInt`](https://developer.m
 + const value3 = value + value2
 ```
 
+<Callout type="warning">
+  Using native `BigInt` with `JSON.stringify` will raise a `TypeError` as
+  `BigInt` values are not serializable. [Read here for instructions to
+  mitigate](/react/faq).
+</Callout>
+
 #### `from` has been renamed to `account`
 
 The `from` attribute has been renamed to `account`. Directly affects Actions that consist of a `from` parameter.

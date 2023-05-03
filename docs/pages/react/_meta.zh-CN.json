@@ -48,5 +48,9 @@
   "module-types": {
     "title": "Module Types",
     "display": "hidden"
+  },
+  "faq": {
+    "title": "FAQ",
+    "display": "hidden"
   }
 }
