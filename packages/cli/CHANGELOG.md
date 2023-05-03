@@ -1,5 +1,12 @@
 # @wagmi/cli
 
+## 1.0.0-next.4
+
+### Major Changes
+
+- Updated viem.
+  Removed `goerli` export from main entrypoint.
+
 ## 1.0.0-next.3
 
 ### Major Changes

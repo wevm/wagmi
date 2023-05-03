@@ -1,5 +1,17 @@
 # @wagmi/core
 
+## 1.0.0-next.4
+
+### Major Changes
+
+- Updated viem.
+  Removed `goerli` export from main entrypoint.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.5
+
 ## 1.0.0-next.3
 
 ### Major Changes
@@ -46,6 +58,7 @@
 
 - Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
   - @wagmi/connectors@1.0.0-next.1
+
 ## 0.10.10
 
 ### Patch Changes
