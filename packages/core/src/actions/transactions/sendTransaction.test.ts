@@ -108,7 +108,7 @@ describe('sendTransaction', () => {
           value:  100000 ETH
 
         Details: Insufficient funds for gas * price + value
-        Version: viem@0.3.16"
+        Version: viem@0.3.17"
       `)
     })
   })

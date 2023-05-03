@@ -245,7 +245,7 @@ describe('useSwitchNetwork', () => {
             "error": [UserRejectedRequestError: User rejected the request.
 
           Details: Failed to switch chain.
-          Version: viem@0.3.16],
+          Version: viem@0.3.17],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -411,7 +411,7 @@ describe('useSwitchNetwork', () => {
             "User rejected the request.
 
             Details: Failed to switch chain.
-            Version: viem@0.3.16"
+            Version: viem@0.3.17"
           `,
           )
         })
