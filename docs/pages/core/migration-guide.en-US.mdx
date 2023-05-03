@@ -192,6 +192,15 @@ sendTransaction({
 })
 ```
 
+#### Removed `goerli` export
+
+Removed the `goerli` export from `@wagmi/core`. Goerli is now a deprecated testnet. You will now have to import it from `wagmi/chains`.
+
+```diff
+-import { goerli } from '@wagmi/core'
++import { goerli } from 'wagmi/chains'
+```
+
 #### Removed `window.ethereum` global type
 
 The `window.ethereum` global type has been removed in favor of an explicit `@wagmi/core/window` import.
