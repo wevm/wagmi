@@ -18,6 +18,6 @@ export function useWebSocketPublicClient<
     () => getWebSocketPublicClient<TWebSocketPublicClient>({ chainId }),
     () => getWebSocketPublicClient<TWebSocketPublicClient>({ chainId }),
     (x) => x,
-    (a, b) => a?.chain.id === b?.chain.id,
+    (a, b) => a?.uid === b?.uid,
   )
 }

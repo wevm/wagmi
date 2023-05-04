@@ -59,7 +59,7 @@ export class Config<
   TPublicClient extends PublicClient = PublicClient,
   TWebSocketPublicClient extends WebSocketPublicClient = WebSocketPublicClient,
 > {
-  constructorArgs: CreateConfigParameters<TPublicClient, TWebSocketPublicClient>
+  args: CreateConfigParameters<TPublicClient, TWebSocketPublicClient>
   publicClients = new Map<number, TPublicClient | undefined>()
   storage: ClientStorage
   store: Mutate<
@@ -90,7 +90,7 @@ export class Config<
     },
     webSocketPublicClient,
   }: CreateConfigParameters<TPublicClient, TWebSocketPublicClient>) {
-    this.constructorArgs = {
+    this.args = {
       autoConnect,
       connectors,
       logger,
@@ -278,7 +278,7 @@ export class Config<
     return this.data
   }
 
-  getPublicClient({ chainId }: { bust?: boolean; chainId?: number } = {}) {
+  getPublicClient({ chainId }: { chainId?: number } = {}) {
     let publicClient_ = this.publicClients.get(-1)
     if (publicClient_ && publicClient_?.chain.id === chainId)
       return publicClient_
@@ -286,7 +286,7 @@ export class Config<
     publicClient_ = this.publicClients.get(chainId ?? -1)
     if (publicClient_) return publicClient_
 
-    const { publicClient } = this.constructorArgs
+    const { publicClient } = this.args
     publicClient_ =
       typeof publicClient === 'function'
         ? publicClient({ chainId })
@@ -294,6 +294,21 @@ export class Config<
     this.publicClients.set(chainId ?? -1, publicClient_)
 
     return publicClient_
+  }
+
+  setPublicClient(
+    publicClient: CreateConfigParameters<TPublicClient>['publicClient'],
+  ) {
+    const chainId = this.data?.chain?.id
+    this.args = {
+      ...this.args,
+      publicClient,
+    }
+    this.publicClients.clear()
+    this.setState((x) => ({
+      ...x,
+      publicClient: this.getPublicClient({ chainId }),
+    }))
   }
 
   getWebSocketPublicClient({ chainId }: { chainId?: number } = {}) {
@@ -304,7 +319,7 @@ export class Config<
     webSocketPublicClient_ = this.webSocketPublicClients.get(chainId ?? -1)
     if (webSocketPublicClient_) return webSocketPublicClient_
 
-    const { webSocketPublicClient } = this.constructorArgs
+    const { webSocketPublicClient } = this.args
     webSocketPublicClient_ =
       typeof webSocketPublicClient === 'function'
         ? webSocketPublicClient({ chainId })
@@ -313,6 +328,25 @@ export class Config<
       this.webSocketPublicClients.set(chainId ?? -1, webSocketPublicClient_)
 
     return webSocketPublicClient_
+  }
+
+  setWebSocketPublicClient(
+    webSocketPublicClient: NonNullable<
+      CreateConfigParameters<TPublicClient>['webSocketPublicClient']
+    >,
+  ) {
+    const chainId = this.data?.chain?.id
+    this.args = {
+      ...this.args,
+      webSocketPublicClient: webSocketPublicClient as TWebSocketPublicClient,
+    }
+    this.webSocketPublicClients.clear()
+    this.setState((x) => ({
+      ...x,
+      webSocketPublicClient: this.getWebSocketPublicClient({
+        chainId,
+      }),
+    }))
   }
 
   setLastUsedConnector(lastUsedConnector: string | null = null) {
@@ -347,7 +381,7 @@ export class Config<
       },
     )
 
-    const { publicClient, webSocketPublicClient } = this.constructorArgs
+    const { publicClient, webSocketPublicClient } = this.args
     const subscribePublicClient = typeof publicClient === 'function'
     const subscribeWebSocketPublicClient =
       typeof webSocketPublicClient === 'function'

@@ -10,7 +10,7 @@ describe('useConfig', () => {
       const { result } = renderHook(() => useConfig())
       expect(result.current).toMatchInlineSnapshot(`
         Config {
-          "constructorArgs": {
+          "args": {
             "autoConnect": false,
             "connectors": [
               "<MockConnector>",

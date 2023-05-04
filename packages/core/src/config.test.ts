@@ -188,6 +188,35 @@ describe('createConfig', () => {
         `)
       })
 
+      it('publicClient changes bust cache', async () => {
+        const config = createConfig({
+          publicClient: getPublicClient,
+        })
+        const client = config.getPublicClient({ chainId: goerli.id })
+
+        expect(
+          client === config.getPublicClient({ chainId: goerli.id }),
+        ).toBeTruthy()
+        expect(config.publicClients).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<PublicClient network={1} />",
+            5 => "<PublicClient network={5} />",
+          }
+        `)
+
+        config.setPublicClient(getPublicClient)
+
+        expect(
+          client === config.getPublicClient({ chainId: goerli.id }),
+        ).toBeFalsy()
+        expect(config.publicClients).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<PublicClient network={1} />",
+            5 => "<PublicClient network={5} />",
+          }
+        `)
+      })
+
       it('autoConnect w/ stored chainId', () => {
         const config = createConfig({
           autoConnect: true,
@@ -272,6 +301,36 @@ describe('createConfig', () => {
         expect(config.webSocketPublicClients).toMatchInlineSnapshot(`
           Map {
             -1 => "<WebSocketPublicClient network={1} />",
+          }
+        `)
+      })
+
+      it('webSocketPublicClient changes bust cache', async () => {
+        const config = createConfig({
+          publicClient,
+          webSocketPublicClient: getWebSocketPublicClient,
+        })
+        const client = config.getWebSocketPublicClient({ chainId: goerli.id })
+
+        expect(
+          client === config.getWebSocketPublicClient({ chainId: goerli.id }),
+        ).toBeTruthy()
+        expect(config.webSocketPublicClients).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<WebSocketPublicClient network={1} />",
+            5 => "<WebSocketPublicClient network={5} />",
+          }
+        `)
+
+        config.setWebSocketPublicClient(getWebSocketPublicClient)
+
+        expect(
+          client === config.getWebSocketPublicClient({ chainId: goerli.id }),
+        ).toBeFalsy()
+        expect(config.webSocketPublicClients).toMatchInlineSnapshot(`
+          Map {
+            -1 => "<WebSocketPublicClient network={1} />",
+            5 => "<WebSocketPublicClient network={5} />",
           }
         `)
       })

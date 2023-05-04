@@ -12,6 +12,6 @@ export function usePublicClient<TPublicClient extends PublicClient>({
     () => getPublicClient<TPublicClient>({ chainId }),
     () => getPublicClient<TPublicClient>({ chainId }),
     (x) => x,
-    (a, b) => a.chain.id === b.chain.id,
+    (a, b) => a.uid === b.uid,
   )
 }
