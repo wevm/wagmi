@@ -1,5 +1,16 @@
 # wagmi
 
+## 1.0.0-next.5
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de) Thanks [@jxom](https://github.com/jxom)! - Added `config.setPublicClient` & `config.setWebSocketPublicClient`
+
+### Patch Changes
+
+- Updated dependencies [[`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de)]:
+  - @wagmi/core@1.0.0-next.5
+
 ## 1.0.0-next.4
 
 ### Major Changes
