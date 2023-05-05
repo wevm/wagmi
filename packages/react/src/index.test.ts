@@ -58,7 +58,6 @@ it('should expose correct exports', () => {
       "erc20ABI",
       "erc721ABI",
       "erc4626ABI",
-      "goerli",
       "mainnet",
       "readContracts",
       "sepolia",

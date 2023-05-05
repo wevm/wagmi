@@ -44,7 +44,6 @@ it('should expose correct exports', () => {
       "watchWalletClient",
       "watchWebSocketPublicClient",
       "writeContract",
-      "goerli",
       "mainnet",
       "sepolia",
       "createConfig",
