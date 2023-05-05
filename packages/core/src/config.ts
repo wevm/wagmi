@@ -278,6 +278,24 @@ export class Config<
     return this.data
   }
 
+  setConnectors(connectors: NonNullable<CreateConfigParameters['connectors']>) {
+    this.args = {
+      ...this.args,
+      connectors,
+    }
+    const connectors_ =
+      typeof connectors === 'function' ? connectors() : connectors
+
+    // REFACTOR: wagmi v1 (w/ functional connectors) should just curry
+    // the storage into the connectors.
+    connectors_.forEach((connector) => connector.setStorage(this.args.storage!))
+
+    this.setState((x) => ({
+      ...x,
+      connectors: connectors_,
+    }))
+  }
+
   getPublicClient({ chainId }: { chainId?: number } = {}) {
     let publicClient_ = this.publicClients.get(-1)
     if (publicClient_ && publicClient_?.chain.id === chainId)
