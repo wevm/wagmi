@@ -77,6 +77,14 @@
 
 - Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
   - @wagmi/connectors@1.0.0-next.1
+## 0.10.11
+
+### Patch Changes
+
+- [#2270](https://github.com/wagmi-dev/wagmi/pull/2270) [`6d1fa9df`](https://github.com/wagmi-dev/wagmi/commit/6d1fa9df790287729c3b33d4f01fd23c2f8153f1) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.19
 
 ## 0.10.10
 
