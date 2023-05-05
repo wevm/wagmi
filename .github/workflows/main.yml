@@ -148,8 +148,6 @@ jobs:
       ANVIL_BLOCK_NUMBER: 15578840
     strategy:
       matrix:
-        # TODO: Switch back to Node 16 once Vitest is patched
-        # https://github.com/vitest-dev/vitest/issues/1191
         node-version: [19]
         pnpm-version: [8]
         react-version: [17, 18]
