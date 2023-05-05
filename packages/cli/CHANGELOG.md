@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.0.0-next.6
+
+### Major Changes
+
+- Updated references.
+
 ## 1.0.0-next.5
 
 ### Major Changes
