@@ -292,8 +292,8 @@ export function react(config: ReactConfig = {}): ReactResult {
               ${docString}
               export function ${name}<
                 TFunctionName extends string,
-                ${TChainId}
                 TMode extends WriteContractMode = undefined,
+                ${TChainId}
               >(
                 config: TMode extends 'prepared'
                   ? UseContractWriteConfig<
@@ -375,8 +375,8 @@ export function react(config: ReactConfig = {}): ReactResult {
                   code = dedent`
                   ${docString}
                   export function ${name}<
-                    ${TChainId}
                     TMode extends WriteContractMode = undefined,
+                    ${TChainId}
                   >(
                     config: TMode extends 'prepared'
                     ? UseContractWriteConfig<
