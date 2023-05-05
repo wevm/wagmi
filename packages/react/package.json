@@ -128,9 +128,7 @@
     "@types/use-sync-external-store": "^0.0.3",
     "ethers": "^5.7.1",
     "react": "^18.1.0",
-    "react-17": "npm:react@17.0.2",
-    "react-dom": "^18.1.0",
-    "react-dom-17": "npm:react-dom@17.0.2"
+    "react-dom": "^18.1.0"
   },
   "keywords": [
     "react",

@@ -29,7 +29,6 @@ This guide is intended to help you get started with contributing. By following t
 This guide covers more advanced topics. Pick the topics based on your needs.
 
 8. [Versioning](#versioning)
-9. [Testing against React 17](#testing-against-react-17)
 
 <br>
 
@@ -186,23 +185,6 @@ The first time a PR with a changeset is merged after a release, a new PR will au
 ### Creating a snapshot release
 
 If a PR has changesets, you can create a [snapshot release](https://github.com/changesets/changesets/blob/main/docs/snapshot-releases.md) by [manually dispatching](https://github.com/wagmi-dev/wagmi/actions/workflows/snapshot.yml) the Snapshot workflow. This publishes a tagged version to npm with the PR branch name and timestamp.
-
-<div align="right">
-  <a href="#advanced-guide">&uarr; back to top</a></b>
-</div>
-
-## Testing against React 17
-
-wagmi supports both React 17 and React 18. If you want to run tests against React 17, you can run the following commands.
-
-```bash
-cd packages/react
-pnpm add -D react@17.0.2 react-dom@17.0.2
-cd ../..
-pnpm test:run react
-```
-
-Unfortunately `pnpm` [doesn't support](https://github.com/pnpm/pnpm/issues/2020) a `--no-save` flag so you will need to restore the package.json and lockfile before committing your changes.
 
 <div align="right">
   <a href="#advanced-guide">&uarr; back to top</a></b>
