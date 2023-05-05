@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18]
-        pnpm-version: [7.19]
+        node-version: [19]
+        pnpm-version: [8]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -61,8 +61,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18]
-        pnpm-version: [7.19]
+        node-version: [19]
+        pnpm-version: [8]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -112,8 +112,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18]
-        pnpm-version: [7.19]
+        node-version: [19]
+        pnpm-version: [8]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -148,11 +148,8 @@ jobs:
       ANVIL_BLOCK_NUMBER: 15578840
     strategy:
       matrix:
-        # TODO: Switch back to Node 16 once Vitest is patched
-        # https://github.com/vitest-dev/vitest/issues/1191
-        node-version: [18]
-        pnpm-version: [7.19]
-        react-version: [17, 18]
+        node-version: [19]
+        pnpm-version: [8]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -196,25 +193,10 @@ jobs:
         run: anvil --fork-url $ANVIL_FORK_URL --fork-block-number $ANVIL_BLOCK_NUMBER &
         env:
           ANVIL_FORK_URL: ${{ secrets.ANVIL_FORK_URL }}
-      - name: Test `@wagmi/cli`, `@wagmi/core`, and `wagmi` (React 18)
-        if: matrix.react-version == 18
+      - name: Test `@wagmi/cli`, `@wagmi/core`, and `wagmi`
         run: pnpm test:coverage
-        env:
-          REACT_VERSION: ${{ matrix.react-version }}
       - name: Test types
-        if: matrix.react-version == 18
         run: pnpm test:typecheck
-        env:
-          REACT_VERSION: ${{ matrix.react-version }}
-      - name: Test `wagmi` (React 17)
-        if: matrix.react-version == 17
-        run: |
-          cd packages/react
-          pnpm add -D react@17.0.2 react-dom@17.0.2
-          cd ../..
-          pnpm test:run react
-        env:
-          REACT_VERSION: ${{ matrix.react-version }}
       # Need to shutdown Anvil so cache gets created
       - name: Shutdown Anvil
         run: pkill -2 anvil
