@@ -1,5 +1,11 @@
 # wagmi
 
+## 1.0.0-next.8
+
+### Patch Changes
+
+- Added "use client" banner
+
 ## 1.0.0-next.7
 
 ### Major Changes
