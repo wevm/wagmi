@@ -5,6 +5,9 @@ import { dependencies, peerDependencies } from './package.json'
 
 export default defineConfig(
   getConfig({
+    banner: {
+      js: '"use client";',
+    },
     dev: process.env.DEV === 'true',
     entry: [
       'src/index.ts',
