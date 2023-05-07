@@ -47,7 +47,7 @@ export function useContractEvent<
     })
     return unwatch.current
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [abi, address, eventName])
+  }, [abi, address, eventName, publicClient.uid, webSocketPublicClient?.uid])
 
   return unwatch.current
 }
