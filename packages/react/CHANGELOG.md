@@ -1,5 +1,11 @@
 # wagmi
 
+## 1.0.0-next.9
+
+### Patch Changes
+
+- Fixed `useContractEvent` effect dependencies.
+
 ## 1.0.0-next.8
 
 ### Patch Changes
