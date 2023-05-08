@@ -81,7 +81,7 @@ describe('connect', () => {
         "User rejected the request.
 
         Details: Failed to connect.
-        Version: viem@0.3.17"
+        Version: viem@0.3.18"
       `)
       expect(getConfig().status).toEqual('disconnected')
     })

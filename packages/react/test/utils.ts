@@ -37,7 +37,7 @@ export function setupConfig(config: Config = {}) {
 export async function actConnect(config: {
   chainId?: number
   connector?: Connector
-  utils: ReturnType<typeof renderHook>
+  utils: ReturnType<typeof renderHook<any, any>>
 }) {
   const connector = config.connector
   const getConnect = (utils: ReturnType<typeof renderHook>) =>

@@ -13,6 +13,7 @@ import {
   actConnect,
   getRandomTokenId,
   renderHook,
+  setupConfig,
   wagmiContractConfig,
 } from '../../../test'
 import { useConnect } from '../accounts'
@@ -78,38 +79,46 @@ describe('useContractEvent', () => {
   })
 
   it('listens', async () => {
+    const config = setupConfig()
+
     let hash: Hash | undefined = undefined
 
     const tokenId = getRandomTokenId()
     const listener = vi.fn()
-    const utils = renderHook(() =>
-      useContractEventWithWrite({
-        contractEvent: {
-          config: {
-            ...wagmiContractConfig,
-            eventName: 'Transfer',
-            listener(logs) {
-              assertType<
-                | {
-                    from: ResolvedConfig['AddressType']
-                    to: ResolvedConfig['AddressType']
-                    tokenId: ResolvedConfig['BigIntType']
-                  }
-                | undefined
-              >(logs[0]?.args)
-              listener(logs)
+    const utils = renderHook(
+      () =>
+        useContractEventWithWrite({
+          contractEvent: {
+            config: {
+              ...wagmiContractConfig,
+              eventName: 'Transfer',
+              listener(logs) {
+                assertType<
+                  | {
+                      from: ResolvedConfig['AddressType']
+                      to: ResolvedConfig['AddressType']
+                      tokenId: ResolvedConfig['BigIntType']
+                    }
+                  | undefined
+                >(logs[0]?.args)
+                listener(logs)
+              },
             },
           },
-        },
-        contractWrite: {
-          config: {
-            ...wagmiContractConfig,
-            functionName: 'mint',
-            args: [tokenId],
+          contractWrite: {
+            config: {
+              ...wagmiContractConfig,
+              functionName: 'mint',
+              args: [tokenId],
+            },
           },
+          waitForTransaction: { hash },
+        }),
+      {
+        initialProps: {
+          config,
         },
-        waitForTransaction: { hash },
-      }),
+      },
     )
     const { result, rerender, waitFor } = utils
     await actConnect({ utils })

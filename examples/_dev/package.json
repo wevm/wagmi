@@ -15,7 +15,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "wagmi": "workspace:*",
-    "viem": "~0.3.17"
+    "viem": "~0.3.18"
   },
   "devDependencies": {
     "@preconstruct/next": "^4.0.0",
