@@ -104,11 +104,21 @@ const sponsors = [
   {
     id: 'spruce',
     name: 'Spruce',
-    href: 'https://spruce.io',
+    href: 'https://www.spruceid.com',
     logo: {
       dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-dark.svg',
       light:
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-light.svg',
+    },
+  },
+  {
+    id: 'rollup.id',
+    name: 'rollup.id',
+    href: 'https://rollup.id',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-light.svg',
     },
   },
 ] as const
