@@ -9,6 +9,7 @@ import {
 import { mainnet } from '../../chains'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
+import { getPublicClient, getWalletClient } from '../viem'
 import { prepareWriteContract } from './prepareWriteContract'
 
 const connector = new MockConnector({
@@ -217,15 +218,21 @@ describe('prepareWriteContract', () => {
 
     it('nonce', async () => {
       await connect({ connector })
+      const publicClient = getPublicClient()
+      const walletClient = await getWalletClient()
+      const count = await publicClient.getTransactionCount({
+        address: walletClient!.account.address!,
+      })
       const { request, ...rest } = await prepareWriteContract({
         ...wagmiContractConfig,
         functionName: 'mint',
         args: [getRandomTokenId()],
-        nonce: 1,
+        nonce: count,
       })
-      const { abi, args, ...request_ } = request || {}
+      const { abi, args, nonce, ...request_ } = request || {}
       expect(abi).toBeDefined()
       expect(args.length).toBe(1)
+      expect(nonce).toBeDefined()
       expect(request_).toMatchInlineSnapshot(`
         {
           "accessList": undefined,
@@ -242,7 +249,6 @@ describe('prepareWriteContract', () => {
           "gasPrice": undefined,
           "maxFeePerGas": undefined,
           "maxPriorityFeePerGas": undefined,
-          "nonce": 1,
           "value": undefined,
         }
       `)
