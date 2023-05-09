@@ -7,6 +7,8 @@ description: 'React Hook for fetching balance information for Ethereum or ERC-20
 
 Hook for fetching balance information for Ethereum or ERC-20 tokens.
 
+This is a wrapper around viem's [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html).
+
 ```ts
 import { useBalance } from 'wagmi'
 ```
@@ -39,7 +41,7 @@ function App() {
     decimals: number
     formatted: string
     symbol: string
-    value: BigNumber
+    value: bigint
   }
   error?: Error
   isIdle: boolean
@@ -57,7 +59,7 @@ function App() {
     decimals: number
     formatted: string
     symbol: string
-    value: BigNumber
+    value: bigint
   }>
   status: 'idle' | 'error' | 'loading' | 'success'
 }
@@ -81,7 +83,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'
@@ -96,7 +98,7 @@ function App() {
 
 ### formatUnits (optional)
 
-Formats balance using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether` or `token`'s decimal value.
+Formats balance. Defaults to `ether` or `token`'s decimal value.
 
 ```tsx {6}
 import { useBalance } from 'wagmi'

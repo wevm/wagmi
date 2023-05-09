@@ -15,7 +15,7 @@ import { watchBlockNumber } from '@wagmi/core'
 
 ## Usage
 
-By default, the callback will be invoked when Provider/WebSocketProvider changes.
+By default, the callback will be invoked when the Public Client changes.
 
 ```ts
 import { watchBlockNumber } from '@wagmi/core'
@@ -36,7 +36,7 @@ const unwatch = watchBlockNumber(
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {5}
 import { watchBlockNumber } from '@wagmi/core'

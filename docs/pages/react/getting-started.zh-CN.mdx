@@ -47,14 +47,14 @@ yarn create wagmi
 
 ### 安装
 
-安装 wagmi 和 ethers
+安装 wagmi 和 viem
 
 {/* prettier-ignore-start */}
 
 <Tabs items={['npm', 'pnpm', 'yarn']}>
-  <Tab>```bash npm i wagmi ethers@^5 ```</Tab>
-  <Tab>```bash pnpm i wagmi ethers@^5 ```</Tab>
-  <Tab>```bash yarn add wagmi ethers@^5 ```</Tab>
+  <Tab>```bash npm i wagmi@next viem ```</Tab>
+  <Tab>```bash pnpm i wagmi@next viem ```</Tab>
+  <Tab>```bash yarn add wagmi@next viem ```</Tab>
 </Tabs>
 {/* prettier-ignore-end */}
 
@@ -66,7 +66,7 @@ yarn create wagmi
 import { configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
@@ -78,42 +78,42 @@ const { chains, provider, webSocketProvider } = configureChains(
 
 [阅读更多关于链的信息](/react/providers/configuring-chains)。
 
-### 创建 wagmi client
+### 创建 wagmi config
 
-接下来，使用 [`createClient`](/react/Client) 创建一个 wagmi `Client` 实例，并将 `configureChains` 的结果传递给它。
+接下来，使用 [`createConfig`](/react/config) 创建一个 wagmi `config` 实例，并将 `configureChains` 的结果传递给它。
 
 ```tsx {9-13}
-import { WagmiConfig, createClient, configureChains, mainnet } from 'wagmi'
+import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 ```
 
-[阅读更多关于 Client 配置](/react/client)。
+[阅读更多关于 Client 配置](/react/config)。
 
 ### 用 `WagmiConfig` Component
 
-最后，用 [`WagmiConfig`](/react/WagmiConfig) Component wrap app，并将 `client` 传递给它。
+最后，用 [`WagmiConfig`](/react/WagmiConfig) Component wrap app，并将 `config` 传递给它。
 
 ```tsx {9-11}
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <YourRoutes />
     </WagmiConfig>
   )

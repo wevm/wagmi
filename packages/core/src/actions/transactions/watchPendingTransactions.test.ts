@@ -1,99 +1,110 @@
-import type { Transaction } from 'ethers'
-import { parseEther } from 'ethers/lib/utils.js'
+import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
 import { sendTransaction } from '.'
-import { getSigners, setupClient } from '../../../test'
-import type { Client } from '../../client'
+import { getWalletClients, setupConfig } from '../../../test'
+import type { Config } from '../../config'
 import { connect } from '../accounts'
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
+import type { WatchPendingTransactionsResult } from './watchPendingTransactions'
 import { watchPendingTransactions } from './watchPendingTransactions'
 
 describe('watchPendingTransactions', () => {
-  let client: Client
+  let config: Config
   beforeEach(() => {
-    client = setupClient()
+    config = setupConfig()
   })
 
-  it('default', async () => {
-    const results: Transaction[] = []
-    const unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
+  it(
+    'default',
+    async () => {
+      const results: WatchPendingTransactionsResult = []
+      const unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
 
-    const provider = getProvider()
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      const publicClient = getPublicClient()
+      await new Promise((res) =>
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(0)
-    unsubscribe()
-  })
+      expect(results.length).toEqual(0)
+      unsubscribe()
+    },
+    { retry: 3 },
+  )
 
-  it('new transaction', async () => {
-    const results: Transaction[] = []
-    const unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
+  it(
+    'new transaction',
+    async () => {
+      const results: WatchPendingTransactionsResult = []
+      const unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
 
-    const signers = getSigners()
-    const to = signers[1]
-    const toAddress = await to?.getAddress()
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
+      const toAddress = to?.account.address
 
-    await connect({ connector: client.connectors[0]! })
-    await sendTransaction({
-      mode: 'recklesslyUnprepared',
-      request: {
-        to: toAddress,
+      await connect({ connector: config.connectors[0]! })
+      await sendTransaction({
+        to: toAddress!,
         value: parseEther('1'),
-      },
-    })
+      })
 
-    const provider = getProvider()
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      const publicClient = getPublicClient()
+      await new Promise((res) =>
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(1)
-    unsubscribe()
-  })
+      expect(results.length).toEqual(1)
+      unsubscribe()
+    },
+    { retry: 3 },
+  )
 
-  it('unsubscribes + resubscribes', async () => {
-    const results: Transaction[] = []
-    let unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
-    unsubscribe()
+  it(
+    'unsubscribes + resubscribes',
+    async () => {
+      const results: WatchPendingTransactionsResult = []
+      let unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
+      unsubscribe()
 
-    const signers = getSigners()
-    const to = signers[1]
-    const toAddress = await to?.getAddress()
+      const walletClients = getWalletClients()
+      const to = walletClients[1]
+      const toAddress = to?.account.address
 
-    await connect({ connector: client.connectors[0]! })
-    await sendTransaction({
-      mode: 'recklesslyUnprepared',
-      request: {
-        to: toAddress,
+      await connect({ connector: config.connectors[0]! })
+      await sendTransaction({
+        to: toAddress!,
         value: parseEther('1'),
-      },
-    })
+      })
 
-    const provider = getProvider()
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      const publicClient = getPublicClient()
+      await new Promise((res) =>
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(0)
+      expect(results.length).toEqual(0)
 
-    unsubscribe = watchPendingTransactions({}, (tx) => results.push(tx))
+      unsubscribe = watchPendingTransactions({}, (results_) =>
+        results.push(...results_),
+      )
 
-    await sendTransaction({
-      mode: 'recklesslyUnprepared',
-      request: {
-        to: toAddress,
+      await sendTransaction({
+        to: toAddress!,
         value: parseEther('1'),
-      },
-    })
+      })
 
-    await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
-    )
+      await new Promise((res) =>
+        setTimeout(() => res(''), publicClient.pollingInterval + 50),
+      )
 
-    expect(results.length).toEqual(1)
-    unsubscribe()
-  })
+      expect(results.length).toEqual(1)
+      unsubscribe()
+    },
+    { retry: 3 },
+  )
 })

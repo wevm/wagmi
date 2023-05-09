@@ -1,0 +1,113 @@
+---
+title: 'useWalletClient'
+description: "React Hook for accessing viem's Wallet Client for a connected account."
+---
+
+# useWalletClient
+
+Hook for accessing viem's [Wallet Client](https://viem.sh/docs/clients/wallet.html) for a connected account.
+
+```ts
+import { useWalletClient } from 'wagmi'
+```
+
+## Usage
+
+The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
+
+```tsx {4, 9}
+import { useContract, useWalletClient } from 'wagmi'
+
+function App() {
+  const { data: walletClient, isError, isLoading } = useWalletClient()
+
+  const contract = useContract({
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: ensRegistryABI,
+    walletClient,
+  })
+}
+```
+
+## Return Value
+
+```tsx
+{
+  data?: WalletClient
+  error?: Error
+  isIdle: boolean
+  isLoading: boolean
+  isFetching: boolean
+  isSuccess: boolean
+  isError: boolean
+  isFetched: boolean
+  isFetchedAfterMount: boolean
+  isRefetching: boolean
+  status: 'idle' | 'error' | 'loading' | 'success'
+}
+```
+
+## Configuration
+
+### chainId (optional)
+
+Chain ID to use for Wallet Client.
+
+```tsx {5-7}
+import { useContract, useWalletClient } from 'wagmi'
+import { optimism } from 'wagmi/chains'
+
+function App() {
+  const { data: walletClient } = useWalletClient({
+    chainId: optimism.id,
+  })
+}
+```
+
+### onError (optional)
+
+Function to invoke when an error is thrown while fetching new data.
+
+```tsx {5-7}
+import { useContract, useWalletClient } from 'wagmi'
+
+function App() {
+  const { data: walletClient } = useWalletClient({
+    onError(error) {
+      console.log('Error', error)
+    },
+  })
+}
+```
+
+### onSettled (optional)
+
+Function to invoke when fetching is settled (either successfully fetched, or an error has thrown).
+
+```tsx {5-7}
+import { useContract, useWalletClient } from 'wagmi'
+
+function App() {
+  const { data: walletClient } = useWalletClient({
+    onSettled(data, error) {
+      console.log('Settled', data, error)
+    },
+  })
+}
+```
+
+### onSuccess (optional)
+
+Function to invoke when fetching new data is successful.
+
+```tsx {5-7}
+import { useContract, useWalletClient } from 'wagmi'
+
+function App() {
+  const { data: walletClient } = useWalletClient({
+    onSuccess(data) {
+      console.log('Success', data)
+    },
+  })
+}
+```

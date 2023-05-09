@@ -1,53 +1,18 @@
-import type {
-  SendTransactionArgs,
-  SendTransactionPreparedRequest,
-  SendTransactionResult,
-  SendTransactionUnpreparedRequest,
-} from '@wagmi/core'
+import type { SendTransactionArgs, SendTransactionResult } from '@wagmi/core'
 import { sendTransaction } from '@wagmi/core'
 import * as React from 'react'
 
 import type { MutationConfig } from '../../types'
 import { useMutation } from '../utils'
 
-export type UseSendTransactionArgs = Omit<
-  SendTransactionArgs,
-  'request' | 'type'
-> &
-  (
-    | {
-        /**
-         * `recklesslyUnprepared`: Allow to pass through an unprepared `request`. Note: This has
-         * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it
-         * is highly recommended to not use this and instead prepare the request upfront
-         * using the `usePrepareSendTransaction` hook.
-         *
-         * `prepared`: The request has been prepared with parameters required for sending a transaction
-         * via the [`usePrepareSendTransaction` hook](https://wagmi.sh/react/prepare-hooks/usePrepareSendTransaction)
-         * */
-        mode: 'prepared'
-        /** The prepared request to send the transaction. */
-        request: SendTransactionPreparedRequest['request'] | undefined
-      }
-    | {
-        mode: 'recklesslyUnprepared'
-        /** The unprepared request to send the transaction. */
-        request?: SendTransactionUnpreparedRequest['request']
-      }
-  )
-export type UseSendTransactionMutationArgs = {
-  /**
-   * Recklessly pass through an unprepared `request`. Note: This has
-   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is
-   * highly recommended to not use this and instead prepare the request upfront
-   * using the `usePrepareSendTransaction` hook.
-   */
-  recklesslySetUnpreparedRequest: SendTransactionUnpreparedRequest['request']
-}
+export type UseSendTransactionArgs<
+  TMode extends 'prepared' | undefined = 'prepared' | undefined,
+> = Omit<SendTransactionArgs, 'to'> & { mode?: TMode; to?: string }
+export type UseSendTransactionMutationArgs = SendTransactionArgs
 export type UseSendTransactionConfig = MutationConfig<
   SendTransactionResult,
   Error,
-  SendTransactionArgs
+  UseSendTransactionArgs
 >
 
 type SendTransactionFn = (
@@ -56,21 +21,42 @@ type SendTransactionFn = (
 type SendTransactionAsyncFn = (
   overrideConfig?: UseSendTransactionMutationArgs,
 ) => Promise<SendTransactionResult>
-type MutateFnReturnValue<Args, Fn> = Args extends {
-  mode: 'recklesslyUnprepared'
-}
-  ? Fn
-  : Fn | undefined
+type MutateFnReturnValue<TMode, TFn> = TMode extends 'prepared'
+  ? TFn | undefined
+  : TFn
 
 export const mutationKey = (args: UseSendTransactionArgs) =>
   [{ entity: 'sendTransaction', ...args }] as const
 
-const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
+const mutationFn = ({
+  accessList,
+  account,
+  chainId,
+  data,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
+  mode,
+  nonce,
+  to,
+  value,
+}: UseSendTransactionArgs) => {
+  if (!to) throw new Error('to is required.')
   return sendTransaction({
+    accessList,
+    account,
     chainId,
+    data,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
     mode,
-    request,
-  } as SendTransactionArgs)
+    nonce,
+    to,
+    value,
+  })
 }
 
 /**
@@ -91,16 +77,25 @@ const mutationFn = ({ chainId, mode, request }: SendTransactionArgs) => {
  * const result = useSendTransaction(config)
  */
 export function useSendTransaction<
-  Args extends UseSendTransactionArgs = UseSendTransactionArgs,
+  TMode extends 'prepared' | undefined = undefined,
 >({
+  accessList,
+  account,
   chainId,
+  data: data_,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
   mode,
-  request,
+  nonce,
+  to,
+  value,
   onError,
   onMutate,
   onSettled,
   onSuccess,
-}: Args & UseSendTransactionConfig) {
+}: UseSendTransactionArgs<TMode> & UseSendTransactionConfig = {}) {
   const {
     data,
     error,
@@ -115,10 +110,19 @@ export function useSendTransaction<
     variables,
   } = useMutation(
     mutationKey({
+      accessList,
+      account,
       chainId,
+      data: data_,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
       mode,
-      request,
-    } as SendTransactionArgs),
+      nonce,
+      to,
+      value,
+    }),
     mutationFn,
     {
       onError,
@@ -133,9 +137,36 @@ export function useSendTransaction<
       mutate({
         chainId,
         mode,
-        request: args?.recklesslySetUnpreparedRequest ?? request,
-      } as SendTransactionArgs),
-    [chainId, mode, mutate, request],
+        ...(args || {
+          accessList,
+          account,
+          chainId,
+          data: data_,
+          gas,
+          gasPrice,
+          maxFeePerGas,
+          maxPriorityFeePerGas,
+          mode,
+          nonce,
+          value,
+          to,
+        }),
+      }),
+    [
+      accessList,
+      account,
+      chainId,
+      data_,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      mode,
+      mutate,
+      nonce,
+      to,
+      value,
+    ],
   )
 
   const sendTransactionAsync = React.useCallback(
@@ -143,9 +174,36 @@ export function useSendTransaction<
       mutateAsync({
         chainId,
         mode,
-        request: args?.recklesslySetUnpreparedRequest ?? request,
-      } as SendTransactionArgs),
-    [chainId, mode, mutateAsync, request],
+        ...(args || {
+          accessList,
+          account,
+          chainId,
+          data: data_,
+          gas,
+          gasPrice,
+          maxFeePerGas,
+          maxPriorityFeePerGas,
+          mode,
+          nonce,
+          value,
+          to,
+        }),
+      }),
+    [
+      accessList,
+      account,
+      chainId,
+      data_,
+      gas,
+      gasPrice,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+      mode,
+      mutateAsync,
+      nonce,
+      to,
+      value,
+    ],
   )
 
   return {
@@ -156,13 +214,13 @@ export function useSendTransaction<
     isLoading,
     isSuccess,
     reset,
-    sendTransaction: (mode === 'prepared' && !request
+    sendTransaction: (mode === 'prepared' && !to
       ? undefined
-      : sendTransaction) as MutateFnReturnValue<Args, SendTransactionFn>,
-    sendTransactionAsync: (mode === 'prepared' && !request
+      : sendTransaction) as MutateFnReturnValue<TMode, SendTransactionFn>,
+    sendTransactionAsync: (mode === 'prepared' && !to
       ? undefined
       : sendTransactionAsync) as MutateFnReturnValue<
-      Args,
+      TMode,
       SendTransactionAsyncFn
     >,
     status,

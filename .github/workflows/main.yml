@@ -145,7 +145,7 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     env:
-      ANVIL_BLOCK_NUMBER: 15578840
+      ANVIL_BLOCK_NUMBER: 16773780
     strategy:
       matrix:
         node-version: [19]

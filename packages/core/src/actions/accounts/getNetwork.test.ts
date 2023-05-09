@@ -1,17 +1,17 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
+import { getWalletClients, setupConfig } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { getNetwork } from './getNetwork'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('getNetwork', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('behavior', () => {
@@ -214,7 +214,7 @@ describe('getNetwork', () => {
         chainId: 10,
         connector: new MockConnector({
           options: {
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         }),
       })

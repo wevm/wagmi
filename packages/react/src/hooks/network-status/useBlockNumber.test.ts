@@ -11,7 +11,7 @@ describe('useBlockNumber', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, internal, ...res } = result.current
-    expect(typeof data === 'number').toBeTruthy()
+    expect(typeof data === 'bigint').toBeTruthy()
     expect(res).toMatchInlineSnapshot(`
       {
         "error": null,
@@ -67,7 +67,7 @@ describe('useBlockNumber', () => {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, internal, ...res } = result.current
-      expect(typeof data === 'number').toBeTruthy()
+      expect(typeof data === 'bigint').toBeTruthy()
       expect(res).toMatchInlineSnapshot(`
         {
           "error": null,
@@ -123,7 +123,7 @@ describe('useBlockNumber', () => {
 
       await act(async () => {
         const { data } = await result.current.refetch()
-        expect(typeof data === 'number').toBeTruthy()
+        expect(typeof data === 'bigint').toBeTruthy()
       })
     })
   })

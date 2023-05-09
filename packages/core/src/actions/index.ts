@@ -2,7 +2,6 @@ export {
   connect,
   disconnect,
   fetchBalance,
-  fetchSigner,
   getAccount,
   getNetwork,
   signMessage,
@@ -10,13 +9,10 @@ export {
   switchNetwork,
   watchAccount,
   watchNetwork,
-  watchSigner,
   type ConnectArgs,
   type ConnectResult,
   type FetchBalanceArgs,
   type FetchBalanceResult,
-  type FetchSignerArgs,
-  type FetchSignerResult,
   type GetAccountResult,
   type GetNetworkResult,
   type SignMessageArgs,
@@ -27,7 +23,6 @@ export {
   type SwitchNetworkResult,
   type WatchAccountCallback,
   type WatchNetworkCallback,
-  type WatchSignerCallback,
 } from './accounts'
 
 export {
@@ -97,17 +92,23 @@ export {
 } from './network-status'
 
 export {
-  getProvider,
-  getWebSocketProvider,
-  watchProvider,
-  watchWebSocketProvider,
-  type GetProviderArgs,
-  type GetProviderResult,
-  type GetWebSocketProviderArgs,
-  type GetWebSocketProviderResult,
-  type WatchProviderCallback,
-  type WatchWebSocketProviderCallback,
-} from './providers'
+  getPublicClient,
+  getWalletClient,
+  getWebSocketPublicClient,
+  watchPublicClient,
+  watchWalletClient,
+  watchWebSocketPublicClient,
+  type GetPublicClientArgs,
+  type GetPublicClientResult,
+  type GetWalletClientArgs,
+  type GetWalletClientResult,
+  type GetWebSocketPublicClientArgs,
+  type GetWebSocketPublicClientResult,
+  type WatchWalletClientArgs,
+  type WatchWalletClientCallback,
+  type WatchPublicClientCallback,
+  type WatchWebSocketPublicClientCallback,
+} from './viem'
 
 export {
   fetchTransaction,
@@ -120,9 +121,7 @@ export {
   type PrepareSendTransactionArgs,
   type PrepareSendTransactionResult,
   type SendTransactionArgs,
-  type SendTransactionPreparedRequest,
   type SendTransactionResult,
-  type SendTransactionUnpreparedRequest,
   type WaitForTransactionArgs,
   type WaitForTransactionResult,
   type WatchPendingTransactionsArgs,

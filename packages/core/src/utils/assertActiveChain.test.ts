@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../test'
+import { getWalletClients, setupConfig } from '../../test'
 import { connect } from '../actions'
 import { MockConnector } from '../connectors/mock'
 import { assertActiveChain } from './assertActiveChain'
 
 describe('assertActiveChain', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   it('errors when on wrong chain', async () => {
@@ -16,7 +16,7 @@ describe('assertActiveChain', () => {
       connector: new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer: getSigners()[0]!,
+          walletClient: getWalletClients()[0]!,
         },
       }),
     })
@@ -33,29 +33,27 @@ describe('assertActiveChain', () => {
       connector: new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer: getSigners()[0]!,
+          walletClient: getWalletClients()[0]!,
         },
       }),
     })
     assertActiveChain({ chainId: 1 })
   })
 
-  it('errors when signer is on wrong chain', async () => {
-    const signer = getSigners()[0]!
-    ;(
-      signer.provider as unknown as { network: { chainId: number } }
-    ).network.chainId = 1
+  it('errors when wallet is on wrong chain', async () => {
+    const walletClient = getWalletClients()[0]!
+    walletClient.chain.id = 1
     await connect({
       chainId: 5,
       connector: new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer,
+          walletClient: walletClient,
         },
       }),
     })
     expect(() =>
-      assertActiveChain({ chainId: 5, signer }),
+      assertActiveChain({ chainId: 5, walletClient }),
     ).toThrowErrorMatchingInlineSnapshot(
       '"Chain \\"5\\" not configured for connector \\"mock\\"."',
     )

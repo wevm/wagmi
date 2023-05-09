@@ -26,11 +26,8 @@ describe('useToken', () => {
           "name": "Ethereum Name Service",
           "symbol": "ENS",
           "totalSupply": {
-            "formatted": "100000000.0",
-            "value": {
-              "hex": "0x52b7d2dcc80cd2e4000000",
-              "type": "BigNumber",
-            },
+            "formatted": "100000000",
+            "value": 100000000000000000000000000n,
           },
         },
         "error": null,
@@ -70,11 +67,8 @@ describe('useToken', () => {
               "name": "Uniswap",
               "symbol": "UNI",
               "totalSupply": {
-                "formatted": "1000000000.0",
-                "value": {
-                  "hex": "0x033b2e3c9fd0803ce8000000",
-                  "type": "BigNumber",
-                },
+                "formatted": "1000000000",
+                "value": 1000000000000000000000000000n,
               },
             },
             "error": null,
@@ -107,18 +101,19 @@ describe('useToken', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [ContractMethodNoResultError: Contract read returned an empty response. This could be due to any of the following:
-          - The contract does not have the function "decimals",
-          - The parameters passed to the contract function may be invalid, or
-          - The address is not a contract.
+            "error": [ContractFunctionExecutionError: The contract function "decimals" returned no data ("0x").
 
-          Config:
-          {
-            "address": "0xa0cf798816d4b9b9866b5330eea46a18382f251e",
-            "abi": "...",
-            "functionName": "decimals",
-            "chainId": 1
-          }],
+          This could be due to any of the following:
+            - The contract does not have the function "decimals",
+            - The parameters passed to the contract function may be invalid, or
+            - The address is not a contract.
+           
+          Contract Call:
+            address:   0xa0cf798816d4b9b9866b5330eea46a18382f251e
+            function:  decimals()
+
+          Docs: https://viem.sh/docs/contract/multicall.html
+          Version: viem@0.3.18],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
@@ -179,11 +174,8 @@ describe('useToken', () => {
             "name": "Ethereum Name Service",
             "symbol": "ENS",
             "totalSupply": {
-              "formatted": "100000000.0",
-              "value": {
-                "hex": "0x52b7d2dcc80cd2e4000000",
-                "type": "BigNumber",
-              },
+              "formatted": "100000000",
+              "value": 100000000000000000000000000n,
             },
           },
           "error": null,
@@ -246,10 +238,7 @@ describe('useToken', () => {
             "symbol": "ENS",
             "totalSupply": {
               "formatted": "100000000000000000000000000",
-              "value": {
-                "hex": "0x52b7d2dcc80cd2e4000000",
-                "type": "BigNumber",
-              },
+              "value": 100000000000000000000000000n,
             },
           },
           "error": null,
@@ -284,11 +273,8 @@ describe('useToken', () => {
             "name": "Uniswap",
             "symbol": "UNI",
             "totalSupply": {
-              "formatted": "1000000000.0",
-              "value": {
-                "hex": "0x033b2e3c9fd0803ce8000000",
-                "type": "BigNumber",
-              },
+              "formatted": "1000000000",
+              "value": 1000000000000000000000000000n,
             },
           }
         `)

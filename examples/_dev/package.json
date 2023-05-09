@@ -11,11 +11,11 @@
     "gen:watch": "wagmi generate --watch"
   },
   "dependencies": {
-    "ethers": "^5.7.1",
     "next": "^12.2.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "wagmi": "workspace:*"
+    "wagmi": "workspace:*",
+    "viem": "~0.3.18"
   },
   "devDependencies": {
     "@preconstruct/next": "^4.0.0",

@@ -1,11 +1,13 @@
 ---
 title: 'useContractEvent'
-description: 'React Hook for subscribing to ethers Contract events.'
+description: 'React Hook for subscribing to Contract events.'
 ---
 
 # useContractEvent
 
-Hook for subscribing to ethers Contract [events](https://docs.ethers.io/v5/api/contract/contract/#Contract--events).
+Hook for subscribing to Contract events.
+
+This is a wrapper around viem's [`watchContractEvent`](https://viem.sh/docs/contract/watchContractEvent.html).
 
 ```tsx
 import { useContractEvent } from 'wagmi'
@@ -23,8 +25,26 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
+    },
+  })
+}
+```
+
+The `useContractEvent` Hook also returns an `unwatch` function that can be used to unsubscribe from the event. Can be used to clean up the listener after an event is seen.
+
+```tsx {4,11}
+import { useContractEvent } from 'wagmi'
+
+function App() {
+  const unwatch = useContractEvent({
+    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+    abi: erc20ABI,
+    eventName: 'Transfer',
+    listener(log) {
+      console.log(log)
+      if (log.args.from === '0x...') unwatch()
     },
   })
 }
@@ -44,8 +64,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -65,8 +85,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -84,8 +104,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewResolver',
-    listener(node, resolver) {
-      console.log(node, resolver)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -103,8 +123,8 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
   })
 }
@@ -112,7 +132,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id. The wagmi `Client`'s ethers `webSocketProvider` must be set up as a [chain-aware function](/react/client#websocketprovider-optional) for this to work correctly.
+Force a specific chain id. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {11}
 import { useContractEvent } from 'wagmi'
@@ -122,30 +142,10 @@ function App() {
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
     eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
+    listener(log) {
+      console.log(log)
     },
     chainId: 1,
-  })
-}
-```
-
-### once (optional)
-
-Receive only a single event, then stop listener. Defaults to `false`.
-
-```tsx {11}
-import { useContractEvent } from 'wagmi'
-
-function App() {
-  useContractEvent({
-    address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    abi: ensRegistryABI,
-    eventName: 'NewOwner',
-    listener(node, label, owner) {
-      console.log(node, label, owner)
-    },
-    once: true,
   })
 }
 ```

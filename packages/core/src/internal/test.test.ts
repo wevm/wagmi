@@ -5,7 +5,7 @@ import * as Exports from './test'
 it('should expose correct exports', () => {
   expect(Object.keys(Exports)).toMatchInlineSnapshot(`
     [
-      "getSigners",
+      "getWalletClients",
       "testChains",
     ]
   `)

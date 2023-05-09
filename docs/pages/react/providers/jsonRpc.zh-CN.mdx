@@ -7,7 +7,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # JSON RPC
 
-`jsonRpcProvider`用你指定的 RPC URL 配置 chain ，也提供一个 [ethers.js `StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider)。
+`jsonRpcProvider`用你指定的 RPC URL 配置 chain。
 
 ```ts
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
@@ -19,7 +19,7 @@ import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
@@ -36,8 +36,8 @@ const { chains, provider } = configureChains(
 ```ts
 {
   chains: Chain[],
-  provider: JsonRpcProvider,
-  webSocketProvider: WebSocketProvider
+  publicClient: PublicClient,
+  webSocketPublicClient: PublicClient
 }
 ```
 
@@ -51,7 +51,7 @@ const { chains, provider } = configureChains(
 import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
@@ -60,29 +60,6 @@ const { chains, provider } = configureChains(
         webSocket: `wss://${chain.id}.example.com`,
       }),
     }),
-  ],
-)
-```
-
-### priority (可选)
-
-用于设置 Provider 的优先级，priority 数值小的 Provider 优先级更高。如果多个 Provider 有相同的 priority，则会随机选择它们。
-
-```ts {8}
-import { chain, configureChains } from 'wagmi'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    jsonRpcProvider({
-      priority: 0,
-      rpc: (chain) => ({
-        http: `https://${chain.id}.example.com`,
-        webSocket: `wss://${chain.id}.example.com`,
-      }),
-    }),
-    alchemyProvider({ priority: 1 }),
   ],
 )
 ```
@@ -95,7 +72,7 @@ const { chains, provider } = configureChains(
 import { chain, configureChains } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     jsonRpcProvider({
@@ -105,52 +82,7 @@ const { chains, provider } = configureChains(
       }),
       stallTimeout: 1000,
     }),
-    alchemyProvider({ priority: 1, stallTimeout: 1000 }),
-  ],
-)
-```
-
-### static (可选)
-
-设置表示 Provider 返回一个[`StaticJsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#StaticJsonRpcProvider) 还是 [`JsonRpcProvider`](https://docs.ethers.io/v5/api/providers/jsonrpc-provider/#JsonRpcProvider)。默认为`true`，返回 `StaticJsonRpcProvider` 。
-
-```tsx {12}
-import { chain, configureChains } from 'wagmi'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    jsonRpcProvider({
-      rpc: (chain) => ({
-        http: `https://${chain.id}.example.com`,
-        webSocket: `wss://${chain.id}.example.com`,
-      }),
-      static: false,
-    }),
-  ],
-)
-```
-
-### weight (可选)
-
-设置来自该 Provider 的响应的权重。如果一个给定的 Provider 更受你信任，就可以使用这个。
-
-```ts {12}
-import { chain, configureChains } from 'wagmi'
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    jsonRpcProvider({
-      rpc: (chain) => ({
-        http: `https://${chain.id}.example.com`,
-        webSocket: `wss://${chain.id}.example.com`,
-      }),
-      weight: 1,
-    }),
-    alchemyProvider({ priority: 1, weight: 2 }),
+    alchemyProvider({ stallTimeout: 1000 }),
   ],
 )
 ```

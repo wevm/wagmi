@@ -1,13 +1,13 @@
 ---
 title: 'useContract'
-description: 'React Hook for declaratively creating an ethers Contract instance.'
+description: 'React Hook for declaratively creating an viem Contract Instance.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
 # useContract
 
-Hook for declaratively creating a type-safe [Contract](https://docs.ethers.io/v5/api/contract/contract) instance.
+Hook for declaratively creating a type-safe viem [Contract Instance](https://viem.sh/docs/contract/getContract.html).
 
 ```tsx
 import { useContract } from 'wagmi'
@@ -38,7 +38,7 @@ function App() {
 ## Return Value
 
 ```tsx
-ethers.Contract | null
+GetContractReturnType | null
 ```
 
 ## Configuration
@@ -75,19 +75,19 @@ function App() {
 }
 ```
 
-### signerOrProvider (optional)
+### walletClient (optional)
 
-An ethers [Provider](https://docs.ethers.io/v5/api/providers/provider/#Provider) or [Signer](https://docs.ethers.io/v5/api/signer/#Signer).
+A viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) with a connected account.
 
 ```tsx {8}
-import { useContract, useProvider } from 'wagmi'
+import { useContract, useWalletClient } from 'wagmi'
 
 function App() {
-  const provider = useProvider()
+  const { data: walletClient } = useWalletClient()
   const contract = useContract({
     address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
     abi: ensRegistryABI,
-    signerOrProvider: provider,
+    walletClient,
   })
 }
 ```

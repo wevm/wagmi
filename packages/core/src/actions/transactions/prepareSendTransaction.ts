@@ -1,30 +1,28 @@
-import type { Address } from 'abitype'
-import type { providers } from 'ethers'
-import { isAddress } from 'ethers/lib/utils.js'
+import type { Account, Address, Chain, SendTransactionParameters } from 'viem'
+import { isAddress } from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
-import type { Signer } from '../../types'
+import type { WalletClient } from '../../types'
 import { assertActiveChain } from '../../utils'
-import { fetchSigner } from '../accounts'
 import { fetchEnsAddress } from '../ens'
+import { getWalletClient } from '../viem'
+import type { SendTransactionArgs } from './sendTransaction'
 
-export type PrepareSendTransactionArgs<TSigner extends Signer = Signer> = {
-  /** Chain ID used to validate if the signer is connected to the target chain */
+export type PrepareSendTransactionArgs<
+  TWalletClient extends WalletClient = WalletClient,
+> = Omit<SendTransactionParameters<Chain, Account>, 'chain' | 'to'> & {
+  /** Chain ID used to validate if the walletClient is connected to the target chain */
   chainId?: number
-  /** Request data to prepare the transaction */
-  request: providers.TransactionRequest & {
-    to: NonNullable<providers.TransactionRequest['to']>
-  }
-  signer?: TSigner | null
+  to?: string
+  walletClient?: TWalletClient | null
 }
 
-export type PrepareSendTransactionResult = {
-  chainId?: number
-  request: providers.TransactionRequest & {
-    to: Address
-    gasLimit: NonNullable<providers.TransactionRequest['gasLimit']>
-  }
+export type PrepareSendTransactionResult = Omit<
+  SendTransactionArgs,
+  'mode' | 'to'
+> & {
   mode: 'prepared'
+  to: Address
 }
 
 /**
@@ -44,28 +42,41 @@ export type PrepareSendTransactionResult = {
  * const result = await sendTransaction(config)
  */
 export async function prepareSendTransaction({
+  accessList,
+  account,
   chainId,
-  request,
-  signer: signer_,
+  data,
+  gas,
+  gasPrice,
+  maxFeePerGas,
+  maxPriorityFeePerGas,
+  nonce,
+  to: to_,
+  value,
+  walletClient: walletClient_,
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
-  const signer = signer_ ?? (await fetchSigner({ chainId }))
-  if (!signer) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId, signer })
+  const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
+  if (!walletClient) throw new ConnectorNotFoundError()
+  if (chainId) assertActiveChain({ chainId, walletClient })
 
-  const [to, gasLimit] = await Promise.all([
-    isAddress(request.to)
-      ? Promise.resolve(request.to)
-      : fetchEnsAddress({ name: request.to }),
-    request.gasLimit
-      ? Promise.resolve(request.gasLimit)
-      : signer.estimateGas(request),
-  ])
-
-  if (!to) throw new Error('Could not resolve ENS name')
+  const to =
+    (to_ && !isAddress(to_)
+      ? await fetchEnsAddress({ name: to_ })
+      : (to_ as Address)) || undefined
+  if (to && !isAddress(to)) throw new Error('Invalid address')
 
   return {
-    ...(chainId ? { chainId } : {}),
-    request: { ...request, gasLimit, to },
+    accessList,
+    account,
+    data,
+    gas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
     mode: 'prepared',
+    nonce,
+    to: to!,
+    value,
+    ...(chainId ? { chainId } : {}),
   }
 }

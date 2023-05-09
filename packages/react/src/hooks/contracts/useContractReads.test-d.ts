@@ -1,8 +1,8 @@
-import { BigNumber } from 'ethers'
 import {
   mlootContractConfig,
   wagmigotchiContractConfig,
 } from 'packages/core/test'
+import type { MulticallResult } from 'viem'
 import { assertType, describe, it } from 'vitest'
 
 import { useContractReads } from './useContractReads'
@@ -22,7 +22,7 @@ const contracts = [
   {
     ...mlootContractConfig,
     functionName: 'tokenOfOwnerByIndex',
-    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
   },
 ] as const
 
@@ -32,7 +32,15 @@ describe('useContractInfiniteReads', () => {
       contracts,
     })
 
-    assertType<[BigNumber, BigNumber, boolean, BigNumber] | undefined>(data)
+    assertType<
+      | [
+          MulticallResult<bigint>,
+          MulticallResult<bigint>,
+          MulticallResult<boolean>,
+          MulticallResult<bigint>,
+        ]
+      | undefined
+    >(data)
   })
 
   describe('select', () => {
@@ -41,33 +49,41 @@ describe('useContractInfiniteReads', () => {
         contracts,
         select: (data) =>
           [
-            data[0].toBigInt(),
-            data[1].toBigInt(),
-            data[2],
-            data[3].toBigInt(),
+            data[0].result,
+            data[1].result,
+            data[2].result,
+            data[3].result,
           ] as const,
       })
 
-      assertType<readonly [bigint, bigint, boolean, bigint] | undefined>(data)
+      assertType<
+        | readonly [
+            bigint | undefined,
+            bigint | undefined,
+            boolean | undefined,
+            bigint | undefined,
+          ]
+        | undefined
+      >(data)
     })
 
     it('to object', () => {
       const { data } = useContractReads({
         contracts,
         select: (data) => ({
-          loveByTom: data[0].toBigInt(),
-          loveByJake: data[1].toBigInt(),
-          isAlive: data[2],
-          tokenId: data[3].toBigInt(),
+          loveByTom: data[0].result,
+          loveByJake: data[1].result,
+          isAlive: data[2].result,
+          tokenId: data[3].result,
         }),
       })
 
       assertType<
         | {
-            loveByTom: bigint
-            loveByJake: bigint
-            isAlive: boolean
-            tokenId: bigint
+            loveByTom: bigint | undefined
+            loveByJake: bigint | undefined
+            isAlive: boolean | undefined
+            tokenId: bigint | undefined
           }
         | undefined
       >(data)

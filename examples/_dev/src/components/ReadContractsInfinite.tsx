@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { stringify } from 'viem'
 import { paginatedIndexesConfig, useContractInfiniteReads } from 'wagmi'
 
 export const mlootContractConfig = {
@@ -19,11 +19,11 @@ export function ReadContractsInfinite() {
     useContractInfiniteReads({
       cacheKey: 'lootTokenURIs',
       ...paginatedIndexesConfig(
-        (index) => [
+        (index: number) => [
           {
             ...mlootContractConfig,
             functionName: 'tokenURI',
-            args: [BigNumber.from(index)] as const,
+            args: [BigInt(index)] as const,
           },
         ],
         { start: 0, perPage: 10, direction: 'increment' },
@@ -36,7 +36,7 @@ export function ReadContractsInfinite() {
       {isSuccess && (
         <>
           {data?.pages.map((data) => (
-            <div key={JSON.stringify(data)}>{JSON.stringify(data)}</div>
+            <div key={stringify(data)}>{stringify(data)}</div>
           ))}
           <button onClick={() => fetchNextPage()}>Fetch more</button>
         </>

@@ -1,0 +1,43 @@
+---
+title: 'getWalletClient'
+description: "Action for accessing viem's Wallet Client for connected account."
+---
+
+# getWalletClient
+
+Action for accessing viem's [Wallet Client](https://viem.sh/docs/clients/wallet.html) for connected account.
+
+```ts
+import { getWalletClient } from '@wagmi/core'
+```
+
+## Usage
+
+The following examples use the [ENS Registry](https://etherscan.io/address/0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e#code) contract.
+
+```ts
+import { getWalletClient } from '@wagmi/core'
+
+const walletClient = await getWalletClient()
+```
+
+## Return Value
+
+```ts
+WalletClient
+```
+
+## Configuration
+
+### chainId (optional)
+
+Chain ID to use for the Wallet Client.
+
+```ts {5}
+import { getWalletClient } from '@wagmi/core'
+import { optimism } from '@wagmi/core/chains'
+
+const walletClient = await getWalletClient({
+  chainId: optimism.id,
+})
+```

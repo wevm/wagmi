@@ -1,0 +1,97 @@
+Breaking changes:
+
+- General
+  - Migrated from Ethers.js to viem
+  - `gasLimit` is now `gas`
+  - `BigNumber` has been removed in favor of browser-native `BigInt`
+- `signMessage`
+  - `message` no longer accepts byte array.
+  - Removed `UserRejectedRequestError` in favor of viem's internal error
+- `readContract`
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- `readContracts`
+  - Changed structure of return type (`allowFailure: true` returns an array of `{ error, result, status }[]` instead of `Result[]`)
+  - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- `multicall`
+  - Changed structure of return type (`allowFailure: true` returns an array of `{ error, result, status }[]` instead of `Result[]`)
+  - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- `waitForTransaction`
+  - Replaced `onSpeedUp` with `onReplaced`
+- `signTypedData`
+  - `value` renamed to `message`
+  - `primaryType` is required
+- `fetchBlockNumber`
+  - now bigint
+- `watchPendingTransactions`
+  - callback now returns array of transactions
+- `prepareWriteContract`
+  - Removed `abi`, `address`, `chainId`, `functionName` from return value, they are now in `request`.
+  - `request` now returns shape of viem's `WriteContractParameters` instead of ethers' `TransactionRequest`.
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+- `writeContract`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/actions/wallet/sendTransaction.html#parameters
+  - `wait` has been removed from return type, use `waitForTransaction` instead.
+  - Removed requirement for "prepare" mode. Prepare Hooks are no longer required.
+- `prepareSendTransaction`
+  - No longer returns `gasLimit` – wallets will calculate this instead.
+- `sendTransaction`
+  - Removed requirement for "prepare" mode. Prepare Hooks are no longer required.
+- `watchContractEvent`
+  - callback now returns array of event logs, rather than positional decoded args + log.
+- `useWaitForTransaction`
+  - `onSpeedUp` has been removed in favor of `onReplaced`
+- `fetchEnsAvatar`
+  - Replaced `address` with `name`.
+- `useEnsAvatar`
+  - Replaced `address` with `name`.
+- `useWatchPendingTransactions`
+  - listener now returns array of transactions
+- `usePrepareContractWrite`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+- `useContractWrite`
+  - Removed `overrides` in favor of `eth_sendTransaction` args (`gas`, `maxFeePerGas`, `value`, etc): https://viem.sh/docs/contract/writeContract.html#parameters
+  - Removed requirement for "prepare" mode. Prepare Hooks are no longer required.
+  - Renamed `recklesslySetUnpreparedArgs` to `args`.
+  - Removed `recklesslySetUnpreparedOverrides`. They are now on the root level of the function.
+- `useContract`
+  - Removed. Use `getContract` instead.
+- `watchContractEvent`
+  - Removed `once`
+- `useContractEvent`
+  - Removed `once`
+- `useContractRead`
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- `useContractReads`
+  - Changed structure of return type (`allowFailure: true` returns an array of `{ error, result, status }[]` instead of `Result[]`)
+  - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- `useContractInfiniteReads`
+  - Changed structure of return type (`allowFailure: true` returns an array of `{ error, result, status }[]` instead of `Result[]`)
+  - Removed console.warn logs (these can be extracted from the `status` & `error` field now)
+  - Removed `overrides` in favor of `blockNumber` & `blockTag`
+- Removed `parseContractResult`
+- Removed `minimizeContractInterface`
+- Connectors: Removed `provider` from `ConnectorData` type, affects:
+  - `connector.connect`
+  - `connector.on("connect")`
+- `connect`
+  - No longer returns `provider` property (use `connector.getProvider()`)
+- `useConnect`
+  - No longer returns `provider` property (use `connector.getProvider()`)
+- Connectors: Removed `Signer` generic
+- Connectors: `getSigner` now returns a viem WalletClient instead of ethers Signer
+- `configureChains`
+  - Removed `minQuorum` & `targetQuorum`
+- Constants
+  - Remove `units`
+- Errors
+  - Removed `ChainDoesNotSupportMulticallError`, `ContractMethodDoesNotExistError`, `ContractMethodNoResultError`, `ContractMethodRevertedError`, `ContractResultDecodeError`, `ProviderRpcError`, `ResourceUnavailableError`
+  - Include guide to migrate to viem errors.
+- Removed global type declaration for `window.ethereum`.
+- Renamed `Ethereum` type to `WindowProvider`.
+
+TODO:
+
+- Note `BigInt` serialization nuances (compatibility with `JSON.stringify` – recommend `serialize` util)

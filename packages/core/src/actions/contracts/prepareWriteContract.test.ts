@@ -2,43 +2,267 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import {
   getRandomTokenId,
-  getSigners,
-  setupClient,
+  getWalletClients,
+  setupConfig,
   wagmiContractConfig,
 } from '../../../test'
+import { mainnet } from '../../chains'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from '../accounts'
+import { getPublicClient, getWalletClient } from '../viem'
 import { prepareWriteContract } from './prepareWriteContract'
 
 const connector = new MockConnector({
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('prepareWriteContract', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   it('default', async () => {
     await connect({ connector })
-    const { request } = await prepareWriteContract({
+    const { request, ...rest } = await prepareWriteContract({
       ...wagmiContractConfig,
       functionName: 'mint',
       args: [getRandomTokenId()],
     })
-    const { data, gasLimit, ...rest } = request || {}
-    expect(data).toBeDefined()
-    expect(gasLimit).toBeDefined()
+    const { abi, args, ...request_ } = request || {}
+    expect(abi).toBeDefined()
+    expect(args.length).toBe(1)
+    expect(request_).toMatchInlineSnapshot(`
+      {
+        "accessList": undefined,
+        "account": {
+          "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+          "type": "json-rpc",
+        },
+        "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+        "blockNumber": undefined,
+        "blockTag": undefined,
+        "chainId": undefined,
+        "functionName": "mint",
+        "gas": undefined,
+        "gasPrice": undefined,
+        "maxFeePerGas": undefined,
+        "maxPriorityFeePerGas": undefined,
+        "nonce": undefined,
+        "value": undefined,
+      }
+    `)
     expect(rest).toMatchInlineSnapshot(`
       {
-        "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "to": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+        "mode": "prepared",
+        "result": undefined,
       }
     `)
   })
 
+  describe('args', () => {
+    it('chainId', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        chainId: mainnet.id,
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "accessList": undefined,
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": undefined,
+          "chainId": 1,
+          "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('gas', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        gas: 1_000_000n,
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "accessList": undefined,
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": undefined,
+          "chainId": undefined,
+          "functionName": "mint",
+          "gas": 1000000n,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('blockNumber', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        blockNumber: 42069n,
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "accessList": undefined,
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": 42069n,
+          "blockTag": undefined,
+          "chainId": undefined,
+          "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('blockTag', async () => {
+      await connect({ connector })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        blockTag: 'latest',
+      })
+      const { abi, args, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "accessList": undefined,
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": "latest",
+          "chainId": undefined,
+          "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "nonce": undefined,
+          "value": undefined,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+
+    it('nonce', async () => {
+      await connect({ connector })
+      const publicClient = getPublicClient()
+      const walletClient = await getWalletClient()
+      const count = await publicClient.getTransactionCount({
+        address: walletClient!.account.address!,
+      })
+      const { request, ...rest } = await prepareWriteContract({
+        ...wagmiContractConfig,
+        functionName: 'mint',
+        args: [getRandomTokenId()],
+        nonce: count,
+      })
+      const { abi, args, nonce, ...request_ } = request || {}
+      expect(abi).toBeDefined()
+      expect(args.length).toBe(1)
+      expect(nonce).toBeDefined()
+      expect(request_).toMatchInlineSnapshot(`
+        {
+          "accessList": undefined,
+          "account": {
+            "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+            "type": "json-rpc",
+          },
+          "address": "0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2",
+          "blockNumber": undefined,
+          "blockTag": undefined,
+          "chainId": undefined,
+          "functionName": "mint",
+          "gas": undefined,
+          "gasPrice": undefined,
+          "maxFeePerGas": undefined,
+          "maxPriorityFeePerGas": undefined,
+          "value": undefined,
+        }
+      `)
+      expect(rest).toMatchInlineSnapshot(`
+        {
+          "mode": "prepared",
+          "result": undefined,
+        }
+      `)
+    })
+  })
+
   describe('errors', () => {
-    it('signer is on different chain', async () => {
+    it('wallet is on different chain', async () => {
       await connect({ connector })
 
       await expect(() =>
@@ -98,9 +322,11 @@ describe('prepareWriteContract', () => {
           functionName: 'wagmi',
         }),
       ).rejects.toThrowErrorMatchingInlineSnapshot(`
-        "Function \\"wagmi\\" on contract \\"0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2\\" does not exist.
+        "Function \\"wagmi\\" not found on ABI.
+        Make sure you are using the correct ABI and that the function exists on it.
 
-        Etherscan: https://etherscan.io/address/0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2#readContract"
+        Docs: https://viem.sh/docs/contract/encodeFunctionData.html
+        Version: viem@0.3.18"
       `)
     })
   })

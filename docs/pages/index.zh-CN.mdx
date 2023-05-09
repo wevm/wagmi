@@ -20,17 +20,17 @@ import { Sponsors } from '../components/docs'
   <Tabs items={['npm', 'pnpm', 'yarn']}>
     <Tab>
 ```bash
-npm i wagmi ethers@^5
+npm i wagmi@next viem
 ```
     </Tab>
     <Tab>
 ```bash
-pnpm i wagmi ethers@^5
+pnpm i wagmi@next viem
 ```
     </Tab>
     <Tab>
 ```bash
-yarn add wagmi ethers@^5
+yarn add wagmi@next viem
 ```
     </Tab>
   </Tabs>
@@ -45,17 +45,20 @@ yarn add wagmi ethers@^5
 ## 总览
 
 ```tsx
-import { WagmiConfig, createClient } from 'wagmi'
-import { getDefaultProvider } from 'ethers'
+import { WagmiConfig, createConfig, mainnet } from 'wagmi'
+import { createPublicClient, http } from 'viem'
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
-  provider: getDefaultProvider(),
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http()
+  }),
 })
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <Profile />
     </WagmiConfig>
   )
@@ -84,7 +87,7 @@ function Profile() {
 }
 ```
 
-在这个例子中，我们创建了一个 wagmi client，并将其传递给 `WagmiConfig` 这一 React context。client 使用了 ethers 的默认 Provider，并自动连接到之前连接的钱包。
+在这个例子中，我们创建了一个 wagmi config `WagmiConfig` 这一 React context。config 使用了 viem 的默认 Public Client，并自动连接到之前连接的钱包。
 
 接下来，我们使用 `useConnect` Hook 将一个注入的钱包（例如 MetaMask）连接到应用程序。最后，我们用 `useAccount` 显示连接的帐户地址，并允许它们用 `useDisconnect` 断开连接。
 

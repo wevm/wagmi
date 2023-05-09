@@ -69,7 +69,7 @@ For example, `useContractRead`:
 import { useContractRead } from 'wagmi'
 
 const { data } = useContractRead({
-  //    ^? const data: BigNumber | undefined
+  //    ^? const data: bigint | undefined
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: [
     {
@@ -103,11 +103,11 @@ const { data } = useContractRead({
   // ^? (property) args?: readonly [`0x${string}`] | undefined
 
   onSuccess(data) {
-    //      ^? (parameter) data: BigNumber
+    //      ^? (parameter) data: bigint
   },
   // Type inference flows to other configuration parameters as well:
-  // - select?: ((data: BigNumber) => BigNumber) | undefined
-  // - onSettled?: ((data: BigNumber | undefined, error: Error | null) => void) | undefined
+  // - select?: ((data: bigint) => bigint) | undefined
+  // - onSettled?: ((data: bigint | undefined, error: Error | null) => void) | undefined
   // - …
 })
 ```

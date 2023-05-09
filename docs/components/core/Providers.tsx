@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { goerli, mainnet } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -10,12 +10,12 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, goerli],
   [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID! })],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
@@ -44,8 +44,8 @@ const client = createClient({
       },
     }),
   ],
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 
 type Props = {
@@ -53,5 +53,5 @@ type Props = {
 }
 
 export function Providers({ children }: Props) {
-  return <WagmiConfig client={client}>{children}</WagmiConfig>
+  return <WagmiConfig config={config}>{children}</WagmiConfig>
 }

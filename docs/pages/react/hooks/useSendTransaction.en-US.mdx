@@ -9,6 +9,8 @@ import { Callout } from 'nextra-theme-docs'
 
 Hook for sending a transaction.
 
+This is a wrapper around viem's [`sendTransaction`](https://viem.sh/docs/actions/wallet/sendTransaction.html).
+
 ```tsx
 import { useSendTransaction } from 'wagmi'
 ```
@@ -19,8 +21,36 @@ import { useSendTransaction } from 'wagmi'
 import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
 
 function App() {
+  const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+    to: 'moxey.eth',
+    value: parseEther('0.01'),
+  })
+
+  return (
+    <div>
+      <button onClick={() => sendTransaction()}>Send Transaction</button>
+      {isLoading && <div>Check Wallet</div>}
+      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+    </div>
+  )
+}
+```
+
+<Callout>
+  It is highly recommended to pair `useSendTransaction` with the
+  [`usePrepareSendTransaction` hook](#prepared-usage) to [avoid UX
+  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
+</Callout>
+
+## Prepared Usage
+
+```tsx
+import { useSendTransaction, usePrepareSendTransaction } from 'wagmi'
+
+function App() {
   const { config } = usePrepareSendTransaction({
-    request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+    to: 'moxey.eth',
+    value: parseEther('0.01'),
   })
   const { data, isLoading, isSuccess, sendTransaction } =
     useSendTransaction(config)
@@ -37,25 +67,18 @@ function App() {
 }
 ```
 
-<Callout>
-  It is highly recommended to pair `useSendTransaction` with the
-  [`usePrepareSendTransaction`
-  hook](/react/prepare-hooks/usePrepareSendTransaction) to [avoid UX
-  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
-</Callout>
-
 ## Return Value
 
 ```tsx
 {
-  data?: TransactionResponse
+  data?: { hash: Hex }
   error?: Error
   isError: boolean
   isIdle: boolean
   isLoading: boolean
   isSuccess: boolean
-  sendTransaction: ((args?: SendTransactionArgs) => void) | undefined
-  sendTransactionAsync: ((args?: SendTransactionArgs) => Promise<TransactionResponse>) | undefined
+  sendTransaction: ((args?: SendTransactionArgs) => void)
+  sendTransactionAsync: ((args?: SendTransactionArgs) => Promise<{ hash: Hex }>)
   reset: () => void
   status: 'idle' | 'error' | 'loading' | 'success'
 }
@@ -63,184 +86,141 @@ function App() {
 
 ## Configuration
 
-### mode
+### chainId (optional)
 
-> This is automatically populated when using [`usePrepareSendTransaction` hook](/react/prepare-hooks/usePrepareSendTransaction).
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the Action will throw an error.
 
-- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `usePrepareSendTransaction` hook.
-- `prepared`: The request has been prepared with parameters required for sending a transaction via the `usePrepareSendTransaction` hook
-
-```tsx {5}
-import { useSendTransaction } from 'wagmi'
-
-function App() {
-  const { sendTransaction } = useSendTransaction({
-    mode: 'recklesslyUnprepared',
-    request: {
-      to: 'moxey.eth',
-      value: BigNumber.from('10000000000000000'),
-    },
-  })
-}
+```ts {2}
+const { sendTransaction } = useSendTransaction({
+  chainId: 1,
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
 ```
 
-### request (optional)
+### account (optional)
 
-> This is automatically populated when using [`usePrepareSendTransaction` hook](/react/prepare-hooks/usePrepareSendTransaction).
+The Account to send the transaction from.
 
-The request to use when sending the transaction.
+```ts {2}
+const { sendTransaction } = useSendTransaction({
+  account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
+```
 
-```tsx {7}
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
+### gasPrice (optional)
 
-function App() {
-  const { config } = usePrepareSendTransaction({ ... })
-  const { sendTransaction } = useSendTransaction({
-    ...config,
-    request: config.request
-  })
-}
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  gasPrice: parseGwei('20'),
+})
+```
+
+### maxFeePerGas (optional)
+
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxFeePerGas: parseGwei('20'),
+})
+```
+
+### maxPriorityFeePerGas (optional)
+
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxPriorityFeePerGas: parseGwei('20'),
+})
+```
+
+### nonce (optional)
+
+Unique number identifying this transaction.
+
+```ts {4}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  nonce: 69,
+})
+```
+
+### value (optional)
+
+Value in wei sent with this transaction.
+
+```ts {3}
+const { sendTransaction } = useSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
 ```
 
 ### onError (optional)
 
 Function to invoke when an error is thrown while attempting to send.
 
-```tsx {7-9}
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
-
-function App() {
-  const { config } = usePrepareSendTransaction({ ... })
-  const { sendTransaction } = useSendTransaction({
-    ...config,
-    onError(error) {
-      console.log('Error', error)
-    },
-  })
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onError(error) {
+    console.log('Error', error)
+  },
+})
 ```
 
 ### onMutate (optional)
 
 Function fires before send transaction function and is passed same variables send transaction function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a send transaction failure.
 
-```tsx {7-9}
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
-
-function App() {
-  const { config } = usePrepareSendTransaction({ ... })
-  const { sendTransaction } = useSendTransaction({
-    ...config,
-    onMutate({ args, overrides }) {
-      console.log('Mutate', { args, overrides })
-    },
-  })
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onMutate({ args, overrides }) {
+    console.log('Mutate', { args, overrides })
+  },
+})
 ```
 
 ### onSettled (optional)
 
 Function to invoke when send transaction is settled (either successfully sent, or an error has thrown).
 
-```tsx {7-9}
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
-
-function App() {
-  const { config } = usePrepareSendTransaction({ ... })
-  const { sendTransaction } = useSendTransaction({
-    ...config,
-    onSettled(data, error) {
-      console.log('Settled', { data, error })
-    },
-  })
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onSettled(data, error) {
+    console.log('Settled', { data, error })
+  },
+})
 ```
 
 ### onSuccess (optional)
 
 Function to invoke when send transaction is successful.
 
-```tsx {7-9}
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
-
-function App() {
-  const { config } = usePrepareSendTransaction({ ... })
-  const { sendTransaction } = useSendTransaction({
-    ...config,
-    onSuccess(data) {
-      console.log('Success', data)
-    },
-  })
-}
-```
-
-## Override Config
-
-It is possible to pass through override config. Any override config prefixed with `recklesslySetUnprepared` means that it will break the previously prepared config. It will need to prepare the request again at the time of invoking `sendTransaction`/`sendTransactionAsync`.
-
-<Callout>
-  This usage is not recommended. It comes with [UX
-  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
-</Callout>
-
-```tsx {15-18}
-import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
-
-function App() {
-  const { config } = usePrepareSendTransaction({
-    request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
-  })
-  const { data, isLoading, isSuccess, sendTransaction } =
-    useSendTransaction(config)
-
-  return (
-    <div>
-      <button
-        disabled={!sendTransaction}
-        onClick={() => sendTransaction({
-          recklesslySetUnpreparedRequest: {
-            to: 'awkweb.eth',
-            value: BigNumber.from('10000000000000000'),
-          }}
-        })}>
-        Send Transaction
-      </button>
-      {isLoading && <div>Check Wallet</div>}
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
-    </div>
-  )
-}
-```
-
-## Reckless Usage
-
-It is possible to use `useSendTransaction` without pairing it with `usePrepareSendTransaction` by using "recklessly unprepared" mode.
-
-<Callout>
-  This usage is not recommended. It comes with [UX
-  pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
-</Callout>
-
-```tsx {5-7}
-import { useSendTransaction } from 'wagmi'
-
-function App() {
-  const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
-    mode: 'recklesslyUnprepared',
-    request: {
-      to: 'moxey.eth',
-      value: BigNumber.from('10000000000000000'),
-    }
-  })
-
-  return (
-    <div>
-      <button onClick={() => sendTransaction()}>Send Transaction</button>
-      {isLoading && <div>Check Wallet</div>}
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
-    </div>
-  )
-}
+```tsx {4-6}
+const { sendTransaction } = useSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+  onSuccess(data) {
+    console.log('Success', data)
+  },
+})
 ```

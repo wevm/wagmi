@@ -42,22 +42,20 @@ describe('react', () => {
               ${content}
             `,
             'index.ts': dedent`
-              import { BigNumber } from '@ethersproject/bignumber'
               import { usePrepareWagmiWrite, useWagmiWrite } from './generated'
     
               const { config } = usePrepareWagmiWrite({
                 functionName: 'approve',
-                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from('123')],
+                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 123n],
               })
               const { write: preparedWrite } = useWagmiWrite(config)
               preparedWrite?.()
               
               const { write: unpreparedWrite } = useWagmiWrite({
-                mode: 'recklesslyUnprepared',
                 functionName: 'approve',
               })
               unpreparedWrite({
-                recklesslySetUnpreparedArgs: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from('123')],
+                args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 123n],
               })
             `,
           },
@@ -99,57 +97,6 @@ describe('react', () => {
       await expect(
         format(`${imports}\n\n${content}`),
       ).resolves.toMatchSnapshot()
-    })
-
-    it('throws for duplicate hook names', async () => {
-      await expect(
-        react().run({
-          contracts: [
-            {
-              name: 'Inventory',
-              address: '0xaf0326d92b97df1221759476b072abfd8084f9be',
-              abi: [
-                {
-                  name: 'cardsCollection',
-                  type: 'function',
-                  stateMutability: 'view',
-                  outputs: [{ type: 'string' }],
-                  inputs: [],
-                },
-              ],
-              content: '',
-              meta: {
-                abiName: 'inventoryAbi',
-                addressName: 'inventoryAddress',
-                configName: 'inventoryConfig',
-              },
-            },
-            {
-              name: 'InventoryCardsCollection',
-              address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-              abi: [
-                {
-                  name: 'foo',
-                  type: 'function',
-                  stateMutability: 'view',
-                  outputs: [{ type: 'address' }],
-                  inputs: [],
-                },
-              ],
-              content: '',
-              meta: {
-                abiName: 'inventoryCardsCollectionAbi',
-                addressName: 'inventoryCardsCollectionAddress',
-                configName: 'inventoryCardsCollectionConfig',
-              },
-            },
-          ],
-          isTypeScript: false,
-          outputs: [],
-        }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(
-        '"Hook name \\"useInventoryCardsCollection\\" must be unique for contract \\"InventoryCardsCollection\\"."',
-      )
     })
   })
 })

@@ -1,20 +1,21 @@
-import type { Chain, ClientConfig } from '../src'
-import { createClient } from '../src'
+import type { Chain, CreateConfigParameters } from '../src'
+import { createConfig } from '../src'
 import { MockConnector } from '../src/connectors/mock'
-import { getProvider, getSigners } from './utils'
+import { getPublicClient, getWalletClients } from './utils'
 
-type Config = Partial<ClientConfig> & { chains?: Chain[] }
+type Config = Partial<CreateConfigParameters> & { chains?: Chain[] }
 
-export function setupClient(config: Config = {}) {
-  return createClient({
+export function setupConfig(config: Config = {}) {
+  return createConfig({
     connectors: [
       new MockConnector({
         options: {
-          signer: getSigners()[0]!,
+          walletClient: getWalletClients()[0]!,
         },
       }),
     ],
-    provider: ({ chainId }) => getProvider({ chainId, chains: config.chains }),
+    publicClient: ({ chainId }) =>
+      getPublicClient({ chainId, chains: config.chains }),
     ...config,
   })
 }
@@ -27,9 +28,9 @@ export {
 } from './constants'
 export {
   getCrowdfundArgs,
-  getProvider,
+  getPublicClient,
   getRandomTokenId,
-  getWebSocketProvider,
-  getSigners,
+  getWalletClients,
+  getWebSocketPublicClient,
   testChains,
 } from './utils'

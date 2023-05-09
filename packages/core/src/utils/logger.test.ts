@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { createClient } from '../client'
+import { createConfig } from '../config'
 
 import { logWarn } from './logger'
 
@@ -17,7 +17,7 @@ describe('logger', () => {
 
   describe('logWarn', () => {
     it('logs warnings', () => {
-      createClient({ provider: () => null as any })
+      createConfig({ publicClient: () => null as any })
       logWarn('foo')
       logWarn('bar')
       logWarn('baz')
@@ -27,8 +27,8 @@ describe('logger', () => {
 
     it('custom logger', () => {
       const warnMessages: string[] = []
-      createClient({
-        provider: () => null as any,
+      createConfig({
+        publicClient: () => null as any,
         logger: {
           warn: (message) => warnMessages.push(message),
         },
@@ -42,8 +42,8 @@ describe('logger', () => {
     })
 
     it('custom logger - nullish warn', () => {
-      createClient({
-        provider: () => null as any,
+      createConfig({
+        publicClient: () => null as any,
         logger: {
           warn: null,
         },

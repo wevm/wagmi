@@ -1,8 +1,8 @@
-import type { Transaction } from 'ethers'
 import * as React from 'react'
 
-import { useProvider, useWebSocketProvider } from '../providers'
+import type { WatchPendingTransactionsCallback } from '../../actions'
 import { useChainId } from '../utils'
+import { usePublicClient, useWebSocketPublicClient } from '../viem'
 
 export type UseWatchPendingTransactionsConfig = {
   /** The chain ID to listen on. */
@@ -10,7 +10,7 @@ export type UseWatchPendingTransactionsConfig = {
   /** Subscribe to changes */
   enabled?: boolean
   /** Function fires when a pending transaction enters the mempool. */
-  listener: (transaction: Transaction) => void
+  listener: WatchPendingTransactionsCallback
 }
 
 export function useWatchPendingTransactions({
@@ -19,17 +19,16 @@ export function useWatchPendingTransactions({
   listener,
 }: UseWatchPendingTransactionsConfig) {
   const chainId = useChainId({ chainId: chainId_ })
-  const provider = useProvider({ chainId })
-  const webSocketProvider = useWebSocketProvider({ chainId })
+  const publicClient = usePublicClient({ chainId })
+  const webSocketPublicClient = useWebSocketPublicClient({ chainId })
 
   React.useEffect(() => {
     if (!enabled) return
 
-    const provider_ = webSocketProvider ?? provider
-    provider_.on('pending', listener)
+    const publicClient_ = webSocketPublicClient ?? publicClient
 
-    return () => {
-      provider_.off('pending', listener)
-    }
-  }, [enabled, listener, provider, webSocketProvider])
+    return publicClient_.watchPendingTransactions({
+      onTransactions: listener,
+    })
+  }, [enabled, listener, publicClient, webSocketPublicClient])
 }

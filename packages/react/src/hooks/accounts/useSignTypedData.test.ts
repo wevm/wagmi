@@ -1,9 +1,9 @@
 import { MockConnector } from '@wagmi/core/connectors/mock'
 import type { TypedData } from 'abitype'
-import { verifyTypedData } from 'ethers/lib/utils.js'
+import { recoverTypedDataAddress } from 'viem'
 import { describe, expect, it, vi } from 'vitest'
 
-import { act, actConnect, getSigners, renderHook } from '../../../test'
+import { act, actConnect, getWalletClients, renderHook } from '../../../test'
 import { useConnect } from './useConnect'
 import type { UseSignTypedDataConfig } from './useSignTypedData'
 import { useSignTypedData } from './useSignTypedData'
@@ -14,7 +14,7 @@ const domain = {
   version: '1',
   chainId: 1,
   verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC' as const,
-}
+} as const
 
 // Named list of all type definitions
 const types = {
@@ -30,7 +30,7 @@ const types = {
 } as const
 
 // Data to sign
-const value = {
+const message = {
   from: {
     name: 'Cow',
     wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
@@ -42,10 +42,14 @@ const value = {
   contents: 'Hello, Bob!',
 } as const
 
-function useSignTypedDataWithConnect<TTypedData extends TypedData>(
-  config: UseSignTypedDataConfig<TTypedData> = {} as any,
-) {
-  return { connect: useConnect(), signTypedData: useSignTypedData(config) }
+function useSignTypedDataWithConnect<
+  TTypedData extends TypedData,
+  TPrimaryType extends string,
+>(config: UseSignTypedDataConfig<TTypedData, TPrimaryType> = {} as any) {
+  return {
+    connect: useConnect(),
+    signTypedData: useSignTypedData(config as UseSignTypedDataConfig),
+  }
 }
 
 describe('useSignTypedData', () => {
@@ -75,7 +79,8 @@ describe('useSignTypedData', () => {
         useSignTypedDataWithConnect({
           domain,
           types,
-          value,
+          primaryType: 'Mail',
+          message,
           onSuccess,
         }),
       )
@@ -89,7 +94,7 @@ describe('useSignTypedData', () => {
       )
       expect(onSuccess).toBeCalledWith(
         result.current.signTypedData.data,
-        { domain, types, value },
+        { domain, types, primaryType: 'Mail', message },
         undefined,
       )
     })
@@ -101,8 +106,9 @@ describe('useSignTypedData', () => {
         const utils = renderHook(() =>
           useSignTypedDataWithConnect({
             domain,
+            primaryType: 'Mail',
             types,
-            value,
+            message,
           }),
         )
         const { result, waitFor } = utils
@@ -131,6 +137,18 @@ describe('useSignTypedData', () => {
                 "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",
                 "version": "1",
               },
+              "message": {
+                "contents": "Hello, Bob!",
+                "from": {
+                  "name": "Cow",
+                  "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826",
+                },
+                "to": {
+                  "name": "Bob",
+                  "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+                },
+              },
+              "primaryType": "Mail",
               "types": {
                 "Mail": [
                   {
@@ -157,17 +175,6 @@ describe('useSignTypedData', () => {
                   },
                 ],
               },
-              "value": {
-                "contents": "Hello, Bob!",
-                "from": {
-                  "name": "Cow",
-                  "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826",
-                },
-                "to": {
-                  "name": "Bob",
-                  "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
-                },
-              },
             },
           }
         `)
@@ -179,7 +186,12 @@ describe('useSignTypedData', () => {
         await actConnect({ utils })
 
         await act(async () =>
-          result.current.signTypedData.signTypedData({ domain, types, value }),
+          result.current.signTypedData.signTypedData({
+            domain,
+            types,
+            message,
+            primaryType: 'Mail',
+          }),
         )
         await waitFor(() =>
           expect(result.current.signTypedData.isSuccess).toBeTruthy(),
@@ -203,6 +215,18 @@ describe('useSignTypedData', () => {
                 "verifyingContract": "0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC",
                 "version": "1",
               },
+              "message": {
+                "contents": "Hello, Bob!",
+                "from": {
+                  "name": "Cow",
+                  "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826",
+                },
+                "to": {
+                  "name": "Bob",
+                  "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
+                },
+              },
+              "primaryType": "Mail",
               "types": {
                 "Mail": [
                   {
@@ -229,17 +253,6 @@ describe('useSignTypedData', () => {
                   },
                 ],
               },
-              "value": {
-                "contents": "Hello, Bob!",
-                "from": {
-                  "name": "Cow",
-                  "wallet": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826",
-                },
-                "to": {
-                  "name": "Bob",
-                  "wallet": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB",
-                },
-              },
             },
           }
         `)
@@ -251,8 +264,9 @@ describe('useSignTypedData', () => {
         const utils = renderHook(() =>
           useSignTypedDataWithConnect({
             domain,
+            primaryType: 'Mail',
             types,
-            value,
+            message,
           }),
         )
         const { result, waitFor } = utils
@@ -291,8 +305,9 @@ describe('useSignTypedData', () => {
       const utils = renderHook(() =>
         useSignTypedDataWithConnect({
           domain,
+          primaryType: 'Mail',
           types,
-          value,
+          message,
         }),
       )
       const { result, waitFor } = utils
@@ -305,28 +320,30 @@ describe('useSignTypedData', () => {
 
       if (result.current.signTypedData.data)
         expect(
-          verifyTypedData(
+          recoverTypedDataAddress({
             domain,
+            message,
+            primaryType: 'Mail',
+            signature: result.current.signTypedData.data,
             types,
-            value,
-            result.current.signTypedData.data,
-          ),
-        ).toMatchInlineSnapshot(`"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"`)
+          }),
+        ).toMatchInlineSnapshot('Promise {}')
     })
 
     describe('when chainId is provided in domain', () => {
-      it("throws mismatch if chainId doesn't match signer", async () => {
+      it("throws mismatch if chainId doesn't match wallet", async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>
           useSignTypedDataWithConnect({
             domain,
+            primaryType: 'Mail',
             types,
-            value,
+            message,
           }),
         )
         const { result, waitFor } = utils
@@ -346,20 +363,26 @@ describe('useSignTypedData', () => {
     it.each([
       { property: 'domain' },
       { property: 'types' },
-      { property: 'value' },
+      { property: 'primaryType' },
+      { property: 'message' },
     ])('throws error when $property is undefined', async ({ property }) => {
       const baseConfig = {
         domain,
+        primaryType: 'Mail',
         types,
-        value,
+        message,
       } as const
       const config = {
         ...baseConfig,
         domain: property === 'domain' ? undefined : baseConfig.domain,
         types: property === 'types' ? undefined : baseConfig.types,
-        value: property === 'value' ? undefined : baseConfig.value,
+        primaryType:
+          property === 'primaryType' ? undefined : baseConfig.primaryType,
+        message: property === 'message' ? undefined : baseConfig.message,
       } as const
-      const utils = renderHook(() => useSignTypedData(config))
+      const utils = renderHook(() =>
+        useSignTypedData(config as UseSignTypedDataConfig),
+      )
       const { result, waitFor } = utils
 
       await act(async () => {

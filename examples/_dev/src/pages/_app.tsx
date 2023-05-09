@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import NextHead from 'next/head'
-import { WagmiConfig, configureChains, createClient } from 'wagmi'
+import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import { avalanche, goerli, mainnet, optimism } from 'wagmi/chains'
 
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -15,17 +15,16 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, goerli, optimism, avalanche],
   [
     alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! }),
     infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! }),
     publicProvider(),
   ],
-  { targetQuorum: 1 },
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors: [
     new MetaMaskConnector({
@@ -75,8 +74,8 @@ const client = createClient({
       },
     }),
   ],
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -86,7 +85,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>wagmi</title>
       </NextHead>
 
-      <WagmiConfig client={client}>
+      <WagmiConfig config={config}>
         <Component {...pageProps} />
       </WagmiConfig>
     </>

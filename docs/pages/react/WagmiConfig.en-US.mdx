@@ -27,27 +27,27 @@ function App() {
 
 ## Configuration
 
-### client
+### config
 
-A wagmi [`Client`](/react/client) instance that consists of configuration options. Defaults to `createClient()`.
+A wagmi [`config`](/react/config) instance that consists of configuration options. Defaults to `createConfig()`.
 
 ```tsx {8-12,16}
-import { createClient, configureChains, mainnet } from 'wagmi'
+import { createConfig, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { provider, webSocketProvider } = configureChains(
+const { publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
-const client = createClient({
-  provider,
-  webSocketProvider,
+const config = createConfig({
+  publicClient,
+  webSocketPublicClient,
 })
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <YourRoutes />
     </WagmiConfig>
   )

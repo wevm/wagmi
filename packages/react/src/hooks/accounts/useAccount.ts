@@ -1,5 +1,5 @@
 import type { GetAccountResult, WatchAccountCallback } from '@wagmi/core'
-import { getAccount, getClient } from '@wagmi/core'
+import { getAccount, getConfig } from '@wagmi/core'
 import * as React from 'react'
 
 import { useSyncExternalStoreWithTracked } from '../utils'
@@ -22,8 +22,8 @@ export type UseAccountConfig = {
 export function useAccount({ onConnect, onDisconnect }: UseAccountConfig = {}) {
   const watchAccount = React.useCallback(
     (callback: WatchAccountCallback) => {
-      const client = getClient()
-      const unsubscribe = client.subscribe(
+      const config = getConfig()
+      const unsubscribe = config.subscribe(
         (state) => ({
           address: state.data?.account,
           connector: state.connector,

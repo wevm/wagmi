@@ -1,35 +1,39 @@
-import type { Abi } from 'abitype'
+import type { ContractFunctionConfig } from 'viem'
 
-import { getClient } from '../../client'
-import type { Contract } from '../../types/contracts'
+import { getConfig } from '../../config'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { MulticallConfig, MulticallResult } from './multicall'
 import { multicall } from './multicall'
 
-export type WatchMulticallConfig<TContracts extends Contract[]> =
-  MulticallConfig<TContracts> & {
-    listenToBlock?: boolean
-  }
-export type WatchMulticallCallback<TContracts extends Contract[]> = (
-  results: MulticallResult<TContracts>,
-) => void
+export type WatchMulticallConfig<
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+> = MulticallConfig<TContracts, TAllowFailure> & {
+  listenToBlock?: boolean
+}
+export type WatchMulticallCallback<
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+> = (results: MulticallResult<TContracts, TAllowFailure>) => void
 
 export function watchMulticall<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
 >(
-  config: WatchMulticallConfig<TContracts>,
-  callback: WatchMulticallCallback<TContracts>,
+  args: WatchMulticallConfig<TContracts, TAllowFailure>,
+  callback: WatchMulticallCallback<TContracts, TAllowFailure>,
 ) {
-  const client = getClient()
+  const config = getConfig()
 
-  const handleChange = async () => callback(await multicall(config))
+  const handleChange = async () => callback(await multicall(args))
 
-  const unwatch = config.listenToBlock
+  const unwatch = args.listenToBlock
     ? watchBlockNumber({ listen: true }, handleChange)
     : undefined
-  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
+  const unsubscribe = config.subscribe(
+    ({ publicClient }) => publicClient,
+    handleChange,
+  )
 
   return () => {
     unsubscribe()

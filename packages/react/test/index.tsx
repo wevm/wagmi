@@ -7,8 +7,8 @@ import {
 import * as React from 'react'
 
 import { WagmiConfig } from '../src'
-import type { Client } from '../src/client'
-import { setupClient } from './utils'
+import type { Config } from '../src/config'
+import { setupConfig } from './utils'
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,16 +27,16 @@ export const queryClient = new QueryClient({
   },
 })
 
-type Props = { client?: Client } & {
+type Props = { config?: Config } & {
   children?:
     | React.ReactElement<any, string | React.JSXElementConstructor<any>>
     | React.ReactNode
 }
 export function wrapper({
-  client = setupClient({ queryClient }),
+  config = setupConfig({ queryClient }),
   ...rest
 }: Props = {}) {
-  return <WagmiConfig client={client} {...rest} />
+  return <WagmiConfig config={config} {...rest} />
 }
 
 export function renderHook<TResult, TProps>(
@@ -44,9 +44,9 @@ export function renderHook<TResult, TProps>(
   {
     wrapper: wrapper_,
     ...options_
-  }: RenderHookOptions<TProps & { client?: Client }> | undefined = {},
+  }: RenderHookOptions<TProps & { config?: Config }> | undefined = {},
 ) {
-  const options: RenderHookOptions<TProps & { client?: Client }> = {
+  const options: RenderHookOptions<TProps & { config?: Config }> = {
     ...(wrapper_
       ? { wrapper: wrapper_ }
       : {
@@ -66,7 +66,7 @@ export function renderHook<TResult, TProps>(
 
 export { act, cleanup } from '@testing-library/react'
 export {
-  setupClient,
+  setupConfig,
   actConnect,
   actDisconnect,
   actSwitchNetwork,
@@ -75,10 +75,10 @@ export {
 } from './utils'
 export {
   getCrowdfundArgs,
-  getProvider,
-  getSigners,
+  getPublicClient,
+  getWalletClients,
   getRandomTokenId,
-  getWebSocketProvider,
+  getWebSocketPublicClient,
   mirrorCrowdfundContractConfig,
   mlootContractConfig,
   wagmiContractConfig,

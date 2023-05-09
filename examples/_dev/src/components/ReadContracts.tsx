@@ -1,4 +1,4 @@
-import { BigNumber } from 'ethers'
+import { stringify } from 'viem'
 import { useContractReads } from 'wagmi'
 
 export const wagmigotchiContractConfig = {
@@ -54,9 +54,9 @@ export function ReadContracts() {
       {
         ...mlootContractConfig,
         functionName: 'tokenOfOwnerByIndex',
-        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
+        args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
       },
-    ] as const,
+    ],
   })
 
   return (
@@ -64,9 +64,7 @@ export function ReadContracts() {
       <div>Data:</div>
       {isLoading && <div>loading...</div>}
       {isSuccess &&
-        data?.map((data) => (
-          <div key={JSON.stringify(data)}>{JSON.stringify(data)}</div>
-        ))}
+        data?.map((data) => <div key={stringify(data)}>{stringify(data)}</div>)}
     </div>
   )
 }

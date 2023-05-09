@@ -1,21 +1,22 @@
-import type { providers } from 'ethers'
+import type { GetEnsResolverReturnType } from 'viem'
+import { normalize } from 'viem/ens'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type FetchEnsResolverArgs = {
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client */
   chainId?: number
   /** ENS name to resolve */
   name: string
 }
 
-export type FetchEnsResolverResult = providers.Resolver | null
+export type FetchEnsResolverResult = GetEnsResolverReturnType
 
 export async function fetchEnsResolver({
   chainId,
   name,
 }: FetchEnsResolverArgs): Promise<FetchEnsResolverResult> {
-  const provider = getProvider({ chainId })
-  const resolver = await provider.getResolver(name)
+  const publicClient = getPublicClient({ chainId })
+  const resolver = await publicClient.getEnsResolver({ name: normalize(name) })
   return resolver
 }

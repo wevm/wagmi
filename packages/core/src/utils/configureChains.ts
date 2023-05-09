@@ -1,51 +1,46 @@
-import { providers } from 'ethers'
+import type {
+  FallbackTransport,
+  FallbackTransportConfig,
+  PublicClientConfig,
+} from 'viem'
+import { createPublicClient, fallback, http, webSocket } from 'viem'
 
 import type { Chain } from '../chains'
 import type {
   ChainProviderFn,
-  Provider,
-  ProviderWithFallbackConfig,
-  WebSocketProvider,
+  PublicClient,
+  RpcUrls,
+  WebSocketPublicClient,
 } from '../types'
 
-export type ConfigureChainsConfig = {
-  pollingInterval?: number
-  stallTimeout?: number
-} & (
-  | {
-      targetQuorum?: number
-      minQuorum?: never
-    }
-  | {
-      targetQuorum: number
-      minQuorum?: number
-    }
-)
+export type ConfigureChainsConfig = Pick<
+  FallbackTransportConfig,
+  'rank' | 'retryCount' | 'retryDelay'
+> &
+  Pick<PublicClientConfig, 'batch' | 'pollingInterval'> & {
+    stallTimeout?: number
+  }
 
-export function configureChains<
-  TChain extends Chain = Chain,
-  TProvider extends Provider = Provider,
-  TWebSocketProvider extends WebSocketProvider = WebSocketProvider,
->(
+export function configureChains<TChain extends Chain = Chain>(
   defaultChains: TChain[],
-  providers: ChainProviderFn<TChain, TProvider, TWebSocketProvider>[],
+  providers: ChainProviderFn<TChain>[],
   {
-    minQuorum = 1,
+    batch = { multicall: { wait: 32 } },
     pollingInterval = 4_000,
-    targetQuorum = 1,
+    rank,
+    retryCount,
+    retryDelay,
     stallTimeout,
   }: ConfigureChainsConfig = {},
 ) {
   if (!defaultChains.length) throw new Error('must have at least one chain')
-  if (targetQuorum < minQuorum)
-    throw new Error('quorum cannot be lower than minQuorum')
 
   let chains: TChain[] = []
-  const providers_: {
-    [chainId: number]: (() => ProviderWithFallbackConfig<TProvider>)[]
+  const httpUrls: {
+    [chainId: number]: RpcUrls['http']
   } = {}
-  const webSocketProviders_: {
-    [chainId: number]: (() => TWebSocketProvider)[]
+  const wsUrls: {
+    [chainId: number]: RpcUrls['webSocket']
   } = {}
 
   for (const chain of defaultChains) {
@@ -62,14 +57,14 @@ export function configureChains<
       if (!chains.some(({ id }) => id === chain.id)) {
         chains = [...chains, apiConfig.chain]
       }
-      providers_[chain.id] = [
-        ...(providers_[chain.id] || []),
-        apiConfig.provider,
+      httpUrls[chain.id] = [
+        ...(httpUrls[chain.id] || []),
+        ...apiConfig.rpcUrls.http,
       ]
-      if (apiConfig.webSocketProvider) {
-        webSocketProviders_[chain.id] = [
-          ...(webSocketProviders_[chain.id] || []),
-          apiConfig.webSocketProvider,
+      if (apiConfig.rpcUrls.webSocket) {
+        wsUrls[chain.id] = [
+          ...(wsUrls[chain.id] || []),
+          ...apiConfig.rpcUrls.webSocket,
         ]
       }
     }
@@ -89,94 +84,48 @@ export function configureChains<
 
   return {
     chains,
-    provider: ({ chainId }: { chainId?: number }) => {
+    publicClient: ({ chainId }: { chainId?: number }) => {
       const activeChain = (chains.find((x) => x.id === chainId) ??
         defaultChains[0]) as TChain
-      const chainProviders = providers_[activeChain.id]
+      const chainHttpUrls = httpUrls[activeChain.id]
 
-      if (!chainProviders || !chainProviders[0])
+      if (!chainHttpUrls || !chainHttpUrls[0])
         throw new Error(`No providers configured for chain "${activeChain.id}"`)
 
-      let provider
-      if (chainProviders.length === 1) {
-        provider = chainProviders[0]()
-      } else {
-        provider = fallbackProvider(targetQuorum, minQuorum, chainProviders, {
-          stallTimeout,
-        })
-      }
-
-      // Formatter workaround as Celo does not provide `gasLimit` or `difficulty` on eth_getBlockByNumber.
-      if (activeChain.id === 42220) {
-        provider.formatter.formats.block = {
-          ...provider.formatter.formats.block,
-          difficulty: () => 0,
-          gasLimit: () => 0,
-        }
-      }
-
-      return Object.assign(provider, {
-        chains,
+      const publicClient = createPublicClient({
+        batch,
+        chain: activeChain,
+        transport: fallback(
+          chainHttpUrls.map((url) => http(url, { timeout: stallTimeout })),
+          { rank, retryCount, retryDelay },
+        ),
         pollingInterval,
       })
+
+      return Object.assign(publicClient, {
+        chains,
+      }) as PublicClient<FallbackTransport>
     },
-    webSocketProvider: ({ chainId }: { chainId?: number }) => {
+    webSocketPublicClient: ({ chainId }: { chainId?: number }) => {
       const activeChain = (chains.find((x) => x.id === chainId) ??
         defaultChains[0]) as TChain
-      const chainWebSocketProviders = webSocketProviders_[activeChain.id]
+      const chainWsUrls = wsUrls[activeChain.id]
 
-      if (!chainWebSocketProviders) return undefined
+      if (!chainWsUrls || !chainWsUrls[0]) return undefined
 
-      const provider = chainWebSocketProviders[0]?.()
+      const publicClient = createPublicClient({
+        batch,
+        chain: activeChain,
+        transport: fallback(
+          chainWsUrls.map((url) => webSocket(url, { timeout: stallTimeout })),
+          { rank, retryCount, retryDelay },
+        ),
+        pollingInterval,
+      })
 
-      // Formatter workaround as Celo does not provide `gasLimit` or `difficulty` on eth_getBlockByNumber.
-      if (provider && activeChain.id === 42220) {
-        provider.formatter.formats.block = {
-          ...provider.formatter.formats.block,
-          difficulty: () => 0,
-          gasLimit: () => 0,
-        }
-      }
-
-      // WebSockets do not work with `fallbackProvider`
-      // Default to first available
-      return Object.assign(provider || {}, {
+      return Object.assign(publicClient, {
         chains,
-      }) as TWebSocketProvider & { chains: TChain[] }
+      }) as WebSocketPublicClient<FallbackTransport>
     },
   } as const
-}
-
-function fallbackProvider(
-  targetQuorum: number,
-  minQuorum: number,
-  providers_: (() => ProviderWithFallbackConfig<Provider>)[],
-  { stallTimeout }: { stallTimeout?: number },
-): providers.FallbackProvider {
-  try {
-    return new providers.FallbackProvider(
-      providers_.map((chainProvider, index) => {
-        const provider = chainProvider()
-        return {
-          provider,
-          priority: provider.priority ?? index,
-          stallTimeout: provider.stallTimeout ?? stallTimeout,
-          weight: provider.weight,
-        }
-      }),
-      targetQuorum,
-    )
-  } catch (error: any) {
-    if (
-      error?.message?.includes(
-        'quorum will always fail; larger than total weight',
-      )
-    ) {
-      if (targetQuorum === minQuorum) throw error
-      return fallbackProvider(targetQuorum - 1, minQuorum, providers_, {
-        stallTimeout,
-      })
-    }
-    throw error
-  }
 }

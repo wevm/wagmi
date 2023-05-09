@@ -7,6 +7,8 @@ description: 'React Hook for fetching avatar for ENS name.'
 
 Hook for fetching avatar for ENS name.
 
+This is a wrapper around viem's [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar.html).
+
 ```ts
 import { useEnsAvatar } from 'wagmi'
 ```
@@ -18,7 +20,7 @@ import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const { data, isError, isLoading } = useEnsAvatar({
-    address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+    name: 'jxom.eth',
   })
 
   if (isLoading) return <div>Fetching avatar…</div>
@@ -51,23 +53,23 @@ function App() {
 
 ## Configuration
 
-### address (optional)
+### name (optional)
 
-Address or ENS name to fetch avatar for. If `address` is not defined, hook will not run.
+ENS name to fetch avatar for. If `name` is not defined, hook will not run.
 
 ```tsx {5}
 import { useEnsAvatar } from 'wagmi'
 
 function App() {
   const ensAvatar = useEnsAvatar({
-    address: '0xa5cc3c03994db5b0d9a5eedd10cabab0813678ac',
+    name: 'jxom.eth',
   })
 }
 ```
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {6}
 import { useEnsAvatar } from 'wagmi'

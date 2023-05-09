@@ -7,12 +7,6 @@ import { getAddressDocString } from '../utils'
 
 type ReactConfig = {
   /**
-   * Generate `useContract` hook.
-   *
-   * @default true
-   */
-  useContract?: boolean
-  /**
    * Generate `useContractEvent` hook.
    *
    * @default true
@@ -66,7 +60,6 @@ type ReactResult = RequiredBy<Plugin, 'run'>
 
 export function react(config: ReactConfig = {}): ReactResult {
   const hooks = {
-    useContract: true,
     useContractEvent: true,
     useContractItemEvent: true,
     useContractRead: true,
@@ -152,38 +145,6 @@ export function react(config: ReactConfig = {}): ReactResult {
            * ${description}.
            */
           `
-        }
-
-        if (hooks.useContract) {
-          const name = `use${baseHookName}`
-          if (hookNames.has(name)) throw getHookNameError(name, contract.name)
-          hookNames.add(name)
-
-          imports.add('useContract')
-          const docString = genDocString('useContract')
-
-          let code
-          if (isTypeScript) {
-            imports.add('UseContractConfig')
-            // prettier-ignore
-            code = dedent`
-            ${docString}
-            export function ${name}(
-              config: Omit<UseContractConfig, 'abi'${omitted}>${typeParams} = {} as any,
-            ) {
-              ${innerContent}
-              return useContract(${innerHookConfig})
-            }
-            `
-          } else
-            code = dedent`
-            ${docString}
-            export function ${name}(config = {}) {
-              ${innerContent}
-              return useContract(${innerHookConfig})
-            }
-            `
-          content.push(code)
         }
 
         let hasReadFunction,
@@ -276,11 +237,14 @@ export function react(config: ReactConfig = {}): ReactResult {
                   // prettier-ignore
                   code = dedent`
                   ${docString}
-                  export function ${name}<TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, '${item.name}'>>(
-                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
+                  export function ${name}<
+                    TFunctionName extends '${item.name}',
+                    TSelectData = ReadContractResult<typeof ${contract.meta.abiName}, TFunctionName>
+                  >(
+                    config: Omit<UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>, 'abi'${omitted} | 'functionName'>${typeParams} = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, '${item.name}', TSelectData>)
+                    return useContractRead(${config} as UseContractReadConfig<typeof ${contract.meta.abiName}, TFunctionName, TSelectData>)
                   }
                   `
                 } else {
@@ -327,23 +291,23 @@ export function react(config: ReactConfig = {}): ReactResult {
               code = dedent`
               ${docString}
               export function ${name}<
-                TMode extends WriteContractMode,
                 TFunctionName extends string,
+                TMode extends WriteContractMode = undefined,
                 ${TChainId}
               >(
                 config: TMode extends 'prepared'
                   ? UseContractWriteConfig<
-                      TMode,
-                      PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['abi'],
-                      TFunctionName
+                      PrepareWriteContractResult<typeof ${contract.meta.abiName}, string>['request']['abi'],
+                      TFunctionName,
+                      TMode
                     >${TChainId ? ` & { address?: Address; chainId?: TChainId; }` : ''}
-                  : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, TFunctionName> & {
+                  : UseContractWriteConfig<typeof ${contract.meta.abiName}, TFunctionName, TMode> & {
                       abi?: never
                       ${typeParams_}
                     } = {} as any,
               ) {
                 ${innerContent}
-                return useContractWrite<TMode, typeof ${contract.meta.abiName}, TFunctionName>(${innerHookConfig} as any)
+                return useContractWrite<typeof ${contract.meta.abiName}, TFunctionName, TMode>(${innerHookConfig} as any)
               }
               `
             } else
@@ -411,22 +375,22 @@ export function react(config: ReactConfig = {}): ReactResult {
                   code = dedent`
                   ${docString}
                   export function ${name}<
-                    TMode extends WriteContractMode,
+                    TMode extends WriteContractMode = undefined,
                     ${TChainId}
                   >(
                     config: TMode extends 'prepared'
                     ? UseContractWriteConfig<
-                        TMode,
-                        PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['abi'],
-                        '${item.name}'
+                      PrepareWriteContractResult<typeof ${contract.meta.abiName}, '${item.name}'>['request']['abi'],
+                      '${item.name}',
+                      TMode
                       > & {${preparedTypeParams}}
-                    : UseContractWriteConfig<TMode, typeof ${contract.meta.abiName}, '${item.name}'> & {
+                    : UseContractWriteConfig<typeof ${contract.meta.abiName}, '${item.name}', TMode> & {
                         abi?: never
                         ${unpreparedTypeParams}
                       } = {} as any,
                   ) {
                     ${innerContent}
-                    return useContractWrite<TMode, typeof ${contract.meta.abiName}, '${item.name}'>(${config} as any)
+                    return useContractWrite<typeof ${contract.meta.abiName}, '${item.name}', TMode>(${config} as any)
                   }
                   `
                 } else {

@@ -1,10 +1,11 @@
 import type { Address } from 'abitype'
-import { getAddress } from 'ethers/lib/utils.js'
+import { getAddress } from 'viem'
+import { normalize } from 'viem/ens'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type FetchEnsAddressArgs = {
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
   /** ENS name to resolve */
   name: string
@@ -16,10 +17,13 @@ export async function fetchEnsAddress({
   chainId,
   name,
 }: FetchEnsAddressArgs): Promise<FetchEnsAddressResult> {
-  const provider = getProvider({ chainId })
-  const address = await provider.resolveName(name)
+  const publicClient = getPublicClient({ chainId })
+  const address = await publicClient.getEnsAddress({
+    name: normalize(name),
+  })
 
   try {
+    if (address === '0x0000000000000000000000000000000000000000') return null
     return address ? getAddress(address) : null
   } catch (_error) {
     return null

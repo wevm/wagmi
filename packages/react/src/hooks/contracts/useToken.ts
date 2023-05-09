@@ -12,7 +12,6 @@ type QueryKeyArgs = Partial<FetchTokenArgs> & {
 }
 type QueryKeyConfig = Pick<UseTokenConfig, 'scopeKey'> & {
   activeChainId?: number
-  signerAddress?: string
 }
 
 function queryKey({

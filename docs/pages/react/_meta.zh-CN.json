@@ -10,8 +10,8 @@
   "typescript": {
     "title": "TypeScript"
   },
-  "client": {
-    "title": "Client",
+  "config": {
+    "title": "Config",
     "display": "hidden"
   },
   "WagmiConfig": {
@@ -47,6 +47,10 @@
   },
   "module-types": {
     "title": "Module Types",
+    "display": "hidden"
+  },
+  "faq": {
+    "title": "FAQ",
     "display": "hidden"
   }
 }

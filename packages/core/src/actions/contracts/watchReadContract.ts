@@ -1,6 +1,6 @@
 import type { Abi, ExtractAbiFunctionNames } from 'abitype'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { ReadContractConfig, ReadContractResult } from './readContract'
 import { readContract } from './readContract'
@@ -22,17 +22,20 @@ export function watchReadContract<
     ? ExtractAbiFunctionNames<TAbi, 'view' | 'pure'>
     : string,
 >(
-  config: WatchReadContractConfig<TAbi, TFunctionName>,
+  args: WatchReadContractConfig<TAbi, TFunctionName>,
   callback: WatchReadContractCallback<TAbi, TFunctionName>,
 ) {
-  const client = getClient()
+  const config = getConfig()
 
-  const handleChange = async () => callback(await readContract(config))
+  const handleChange = async () => callback(await readContract(args))
 
-  const unwatch = config.listenToBlock
+  const unwatch = args.listenToBlock
     ? watchBlockNumber({ listen: true }, handleChange)
     : undefined
-  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
+  const unsubscribe = config.subscribe(
+    ({ publicClient }) => publicClient,
+    handleChange,
+  )
 
   return () => {
     unsubscribe()

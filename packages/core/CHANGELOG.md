@@ -1,5 +1,96 @@
 # @wagmi/core
 
+## 1.0.0-next.7
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de) Thanks [@jxom](https://github.com/jxom)! - Added `config.setPublicClient` & `config.setWebSocketPublicClient`
+
+- Updated references.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.5
+
+## 1.0.0-next.6
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de) Thanks [@jxom](https://github.com/jxom)! - Added `config.setPublicClient` & `config.setWebSocketPublicClient`
+
+- Added `config.setConnectors`
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.6
+
+## 1.0.0-next.5
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de) Thanks [@jxom](https://github.com/jxom)! - Added `config.setPublicClient` & `config.setWebSocketPublicClient`
+
+## 1.0.0-next.4
+
+### Major Changes
+
+- Updated viem.
+  Removed `goerli` export from main entrypoint.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.5
+
+## 1.0.0-next.3
+
+### Major Changes
+
+- Updated references.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.4
+
+## 1.0.0-next.2
+
+### Major Changes
+
+- **Breaking:** Renamed `createClient` to `createConfig`
+- **Breaking:** Renamed `getClient` to `getConfig`
+- **Breaking:** Removed `request` as an argument to `prepareSendTransaction` & `sendTransation`. Arguments now belong on the root level of the Action.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/chains@1.0.0-next.0
+  - @wagmi/connectors@1.0.0-next.3
+
+## 1.0.0-next.1
+
+### Major Changes
+
+- updated viem
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.2
+
+## 1.0.0-next.0
+
+### Major Changes
+
+- [`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb) Thanks [@jxom](https://github.com/jxom)! - Released v1.
+
+### Patch Changes
+
+- Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
+  - @wagmi/connectors@1.0.0-next.1
+
 ## 0.10.11
 
 ### Patch Changes

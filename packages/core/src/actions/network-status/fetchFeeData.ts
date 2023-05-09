@@ -1,17 +1,23 @@
-import type { providers } from 'ethers'
-import { formatUnits } from 'ethers/lib/utils.js'
+import { formatUnits, parseGwei } from 'viem'
 
 import type { Unit } from '../../types'
-import { getProvider } from '../providers'
+
+import { getUnit } from '../../utils'
+
+import { getPublicClient } from '../viem'
 
 export type FetchFeeDataArgs = {
   /** Units for formatting output */
-  formatUnits?: Unit | number
-  /** Chain id to use for provider */
+  formatUnits?: Unit
+  /** Chain id to use for Public Client. */
   chainId?: number
 }
 
-export type FetchFeeDataResult = providers.FeeData & {
+export type FetchFeeDataResult = {
+  lastBaseFeePerGas: bigint | null
+  gasPrice: bigint | null
+  maxFeePerGas: bigint | null
+  maxPriorityFeePerGas: bigint | null
   formatted: {
     gasPrice: string | null
     maxFeePerGas: string | null
@@ -21,18 +27,41 @@ export type FetchFeeDataResult = providers.FeeData & {
 
 export async function fetchFeeData({
   chainId,
-  formatUnits: units = 'wei',
+  formatUnits: units = 'gwei',
 }: FetchFeeDataArgs = {}): Promise<FetchFeeDataResult> {
-  const provider = getProvider({ chainId })
-  const feeData = await provider.getFeeData()
+  const publicClient = getPublicClient({ chainId })
+
+  const block = await publicClient.getBlock()
+  let gasPrice: bigint | null = null
+  try {
+    gasPrice = await publicClient.getGasPrice()
+  } catch {
+    //
+  }
+
+  let lastBaseFeePerGas: bigint | null = null
+  let maxFeePerGas = null
+  let maxPriorityFeePerGas = null
+
+  if (block?.baseFeePerGas) {
+    lastBaseFeePerGas = block.baseFeePerGas
+    maxPriorityFeePerGas = parseGwei('1')
+    maxFeePerGas = block.baseFeePerGas * 2n + maxPriorityFeePerGas
+  }
+
+  const unit = getUnit(units)
   const formatted = {
-    gasPrice: feeData.gasPrice ? formatUnits(feeData.gasPrice, units) : null,
-    maxFeePerGas: feeData.maxFeePerGas
-      ? formatUnits(feeData.maxFeePerGas, units)
-      : null,
-    maxPriorityFeePerGas: feeData.maxPriorityFeePerGas
-      ? formatUnits(feeData.maxPriorityFeePerGas, units)
+    gasPrice: gasPrice ? formatUnits(gasPrice, unit) : null,
+    maxFeePerGas: maxFeePerGas ? formatUnits(maxFeePerGas, unit) : null,
+    maxPriorityFeePerGas: maxPriorityFeePerGas
+      ? formatUnits(maxPriorityFeePerGas, unit)
       : null,
   }
-  return { ...feeData, formatted }
+  return {
+    lastBaseFeePerGas,
+    gasPrice,
+    maxFeePerGas,
+    maxPriorityFeePerGas,
+    formatted,
+  }
 }

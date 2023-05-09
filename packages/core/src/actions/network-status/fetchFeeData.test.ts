@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { fetchFeeData } from './fetchFeeData'
 
 describe('fetchFeeData', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   it('default', async () => {
@@ -13,9 +13,9 @@ describe('fetchFeeData', () => {
     expect(Object.keys(result)).toMatchInlineSnapshot(`
       [
         "lastBaseFeePerGas",
+        "gasPrice",
         "maxFeePerGas",
         "maxPriorityFeePerGas",
-        "gasPrice",
         "formatted",
       ]
     `)
@@ -27,9 +27,9 @@ describe('fetchFeeData', () => {
       expect(Object.keys(result)).toMatchInlineSnapshot(`
         [
           "lastBaseFeePerGas",
+          "gasPrice",
           "maxFeePerGas",
           "maxPriorityFeePerGas",
-          "gasPrice",
           "formatted",
         ]
       `)
@@ -40,9 +40,9 @@ describe('fetchFeeData', () => {
       expect(Object.keys(result)).toMatchInlineSnapshot(`
         [
           "lastBaseFeePerGas",
+          "gasPrice",
           "maxFeePerGas",
           "maxPriorityFeePerGas",
-          "gasPrice",
           "formatted",
         ]
       `)

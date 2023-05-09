@@ -1,6 +1,6 @@
 import type { InfiniteData } from '@tanstack/react-query'
-import { BigNumber } from 'ethers'
 import { mlootContractConfig } from 'packages/core/test'
+import type { MulticallResult } from 'viem'
 import { assertType, describe, it } from 'vitest'
 
 import { useContractInfiniteReads } from './useContractInfiniteReads'
@@ -10,7 +10,7 @@ describe('useContractReads', () => {
     const { data } = useContractInfiniteReads({
       cacheKey: 'contracts',
       contracts(index = 0) {
-        const args = [BigNumber.from(index)] as const
+        const args = [BigInt(index)] as const
         return [
           { ...mlootContractConfig, functionName: 'getChest', args },
           { ...mlootContractConfig, functionName: 'getFoot', args },
@@ -23,7 +23,16 @@ describe('useContractReads', () => {
       },
     })
 
-    assertType<InfiniteData<[string, string, BigNumber]> | undefined>(data)
+    assertType<
+      | InfiniteData<
+          [
+            MulticallResult<string>,
+            MulticallResult<string>,
+            MulticallResult<bigint>,
+          ]
+        >
+      | undefined
+    >(data)
   })
 
   describe('select', () => {
@@ -31,7 +40,7 @@ describe('useContractReads', () => {
       const { data } = useContractInfiniteReads({
         cacheKey: 'contracts',
         contracts(index = 0) {
-          const args = [BigNumber.from(index)] as const
+          const args = [BigInt(index)] as const
           return [
             { ...mlootContractConfig, functionName: 'getChest', args },
             { ...mlootContractConfig, functionName: 'getFoot', args },
@@ -46,13 +55,19 @@ describe('useContractReads', () => {
           ...data,
           pages: data.pages.map(
             ([chest, foot, balance]) =>
-              [`handsome ${chest}`, `big ${foot}`, balance.toBigInt()] as const,
+              [
+                `handsome ${chest.result}`,
+                `big ${foot.result}`,
+                balance.result,
+              ] as const,
           ),
         }),
       })
 
       assertType<
-        | InfiniteData<readonly [`handsome ${string}`, `big ${string}`, bigint]>
+        | InfiniteData<
+            readonly [`handsome ${string}`, `big ${string}`, bigint | undefined]
+          >
         | undefined
       >(data)
     })
@@ -61,7 +76,7 @@ describe('useContractReads', () => {
       const { data } = useContractInfiniteReads({
         cacheKey: 'contracts',
         contracts(index = 0) {
-          const args = [BigNumber.from(index)] as const
+          const args = [BigInt(index)] as const
           return [
             { ...mlootContractConfig, functionName: 'getChest', args },
             { ...mlootContractConfig, functionName: 'getFoot', args },
@@ -75,15 +90,19 @@ describe('useContractReads', () => {
         select: (data) => ({
           ...data,
           pages: data.pages.map(([chest, foot, balance]) => ({
-            chest,
-            foot,
-            balance: balance.toBigInt(),
+            chest: chest.result,
+            foot: foot.result,
+            balance: balance.result,
           })),
         }),
       })
 
       assertType<
-        | InfiniteData<{ chest: string; foot: string; balance: bigint }>
+        | InfiniteData<{
+            chest: string | undefined
+            foot: string | undefined
+            balance: bigint | undefined
+          }>
         | undefined
       >(data)
     })

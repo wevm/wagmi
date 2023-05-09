@@ -1,0 +1,50 @@
+---
+title: 'watchWalletClient'
+description: 'Action for subscribing to Wallet Client changes.'
+---
+
+import { Callout } from 'nextra-theme-docs'
+
+# watchWalletClient
+
+Action for subscribing to [Wallet Client](/core/actions/getWalletClient) changes.
+
+```ts
+import { watchWalletClient } from '@wagmi/core'
+```
+
+## Usage
+
+By default, the callback will be invoked when Wallet Client changes.
+
+```ts
+import { watchWalletClient } from '@wagmi/core'
+
+const unwatch = watchWalletClient(
+  {
+    chainId: 1,
+  },
+  (walletClient) => console.log(walletClient),
+)
+```
+
+## Return Value
+
+`unwatch` is a function that can be called to unsubscribe from the Wallet Client change event.
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id for the Wallet Client.
+
+```ts {5}
+import { watchWalletClient } from '@wagmi/core'
+
+const unwatch = watchWalletClient(
+  {
+    chainId: 1,
+  },
+  (walletClient) => console.log(walletClient),
+)
+```

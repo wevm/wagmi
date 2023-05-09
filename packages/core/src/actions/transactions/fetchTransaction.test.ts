@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { fetchTransaction } from './fetchTransaction'
 
 describe('fetchTransaction', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   it('default', async () => {

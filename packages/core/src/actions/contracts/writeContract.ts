@@ -1,86 +1,39 @@
-import type { Abi, Address, ExtractAbiFunction, Narrow } from 'abitype'
-import type { PopulatedTransaction } from 'ethers'
+import type { Abi } from 'abitype'
+import type {
+  Account,
+  Chain,
+  WriteContractParameters,
+  WriteContractReturnType,
+} from 'viem'
 
 import { ConnectorNotFoundError } from '../../errors'
-import type { Signer } from '../../types'
-import type {
-  GetArgs,
-  GetFunctionName,
-  GetOverridesForAbiStateMutability,
-} from '../../types/contracts'
 import { assertActiveChain } from '../../utils'
-import { fetchSigner } from '../accounts'
-import type { SendTransactionResult } from '../transactions'
-import { sendTransaction } from '../transactions'
+import { getWalletClient } from '../viem'
+import type { PrepareWriteContractConfig } from './prepareWriteContract'
 import { prepareWriteContract } from './prepareWriteContract'
 
-export type WriteContractMode = 'prepared' | 'recklesslyUnprepared'
-
-type Request = PopulatedTransaction & {
-  to: Address
-  gasLimit: NonNullable<PopulatedTransaction['gasLimit']>
-}
+export type WriteContractMode = 'prepared' | undefined
 
 export type WriteContractPreparedArgs<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-> = {
-  /**
-   * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
-   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks),
-   * it is highly recommended to not use this and instead prepare the request upfront
-   * using the {@link prepareWriteContract} function.
-   *
-   * `prepared`: The request has been prepared with parameters required for sending a transaction
-   * via the {@link prepareWriteContract} function
-   * */
+  TAbi extends Abi | readonly unknown[] = readonly unknown[],
+  TFunctionName extends string = string,
+> = WriteContractParameters<TAbi, TFunctionName, Chain, Account> & {
   mode: 'prepared'
-  /** Chain id to use for provider */
+  /** Chain id. */
   chainId?: number
-  /** Request to submit transaction for */
-  request: Request
-
-  /** Contract ABI */
-  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
-  /** Contract address */
-  address: Address
-  /** Function to invoke on the contract */
-  functionName: GetFunctionName<TAbi, TFunctionName, 'nonpayable' | 'payable'>
 }
 
 export type WriteContractUnpreparedArgs<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-> = {
-  /**
-   * `recklesslyUnprepared`: Allow to pass through unprepared config. Note: This has
-   * [UX pitfalls](https://wagmi.sh/react/prepare-hooks#ux-pitfalls-without-prepare-hooks),
-   * it is highly recommended to not use this and instead prepare the request upfront
-   * using the {@link prepareWriteContract} function.
-   *
-   * `prepared`: The request has been prepared with parameters required for sending a transaction
-   * via the {@link prepareWriteContract} function
-   * */
-  mode: 'recklesslyUnprepared'
-  /** Chain id to use for provider */
+> = Omit<
+  WriteContractParameters<TAbi, TFunctionName, Chain, Account>,
+  'account' | 'chain'
+> & {
+  mode?: never
+  /** Chain id. */
   chainId?: number
-  /** Call overrides */
-  overrides?: GetOverridesForAbiStateMutability<
-    [TAbi, TFunctionName] extends [
-      infer TAbi_ extends Abi,
-      infer TFunctionName_ extends string,
-    ]
-      ? ExtractAbiFunction<TAbi_, TFunctionName_>['stateMutability']
-      : 'nonpayable' | 'payable'
-  >
-
-  /** Contract ABI */
-  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
-  /** Contract address */
-  address: Address
-  /** Function to invoke on the contract */
-  functionName: GetFunctionName<TAbi, TFunctionName, 'nonpayable' | 'payable'>
-} & GetArgs<TAbi, TFunctionName>
+}
 
 export type WriteContractArgs<
   TAbi extends Abi | readonly unknown[],
@@ -89,7 +42,7 @@ export type WriteContractArgs<
   | WriteContractPreparedArgs<TAbi, TFunctionName>
   | WriteContractUnpreparedArgs<TAbi, TFunctionName>
 
-export type WriteContractResult = SendTransactionResult
+export type WriteContractResult = { hash: WriteContractReturnType }
 
 /**
  * @description Function to call a contract write method.
@@ -110,47 +63,34 @@ export type WriteContractResult = SendTransactionResult
 export async function writeContract<
   TAbi extends Abi | readonly unknown[],
   TFunctionName extends string,
-  TSigner extends Signer = Signer,
 >(
   config:
     | WriteContractUnpreparedArgs<TAbi, TFunctionName>
     | WriteContractPreparedArgs<TAbi, TFunctionName>,
 ): Promise<WriteContractResult> {
-  /****************************************************************************/
-  /** START: iOS App Link cautious code.                                      */
-  /** Do not perform any async operations in this block.                      */
-  /** Ref: https://wagmi.sh/react/prepare-hooks#ios-app-link-constraints */
-  /****************************************************************************/
+  const walletClient = await getWalletClient()
+  if (!walletClient) throw new ConnectorNotFoundError()
+  if (config.chainId)
+    assertActiveChain({ chainId: config.chainId, walletClient })
 
-  const signer = await fetchSigner<TSigner>()
-  if (!signer) throw new ConnectorNotFoundError()
-  if (config.chainId) assertActiveChain({ chainId: config.chainId, signer })
-
-  let request: Request
+  let request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
   if (config.mode === 'prepared') {
-    request = config.request
+    request = config
   } else {
-    request = (
-      await prepareWriteContract<Abi | readonly unknown[], string, number>({
-        address: config.address,
-        args: config.args as unknown[],
-        chainId: config.chainId,
-        abi: config.abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
-        functionName: config.functionName,
-        overrides: config.overrides,
-      })
-    ).request
+    const { chainId, mode, ...args } = config
+    const res = await prepareWriteContract(args as PrepareWriteContractConfig)
+    request = res.request as unknown as WriteContractParameters<
+      TAbi,
+      TFunctionName,
+      Chain,
+      Account
+    >
   }
 
-  const transaction = await sendTransaction({
-    request,
-    mode: 'prepared',
-  })
+  const hash = await walletClient.writeContract({
+    ...request,
+    chain: null,
+  } as WriteContractParameters<TAbi, TFunctionName, Chain, Account>)
 
-  /********************************************************************/
-  /** END: iOS App Link cautious code.                                */
-  /** Go nuts!                                                        */
-  /********************************************************************/
-
-  return transaction
+  return { hash }
 }

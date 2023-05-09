@@ -1,38 +1,24 @@
-import type {
-  Abi,
-  AbiEvent,
-  AbiParametersToPrimitiveTypes,
-  Address,
-  ExtractAbiEvent,
-  ExtractAbiEventNames,
-  Narrow,
-} from 'abitype'
+import type { Abi } from 'abitype'
+import type { WatchContractEventParameters } from 'viem'
 import { shallow } from 'zustand/shallow'
 
-import { getClient } from '../../client'
-import { getProvider, getWebSocketProvider } from '../providers'
-import { getContract } from './getContract'
+import { getConfig } from '../../config'
+import { getPublicClient, getWebSocketPublicClient } from '../viem'
 
 export type WatchContractEventConfig<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-> = {
-  /** Contract ABI */
-  abi: Narrow<TAbi> // infer `TAbi` type for inline usage
-  /** Contract address */
-  address: Address
-  /** Chain id to use for provider */
+> = Pick<
+  WatchContractEventParameters<TAbi, TEventName>,
+  'abi' | 'address' | 'eventName'
+> & {
   chainId?: number
-  /** Name of the event to listen to on the contract */
-  eventName: GetEventName<TAbi, TEventName>
-  /** Receive only a single event */
-  once?: boolean
 }
 
 export type WatchContractEventCallback<
   TAbi extends Abi | readonly unknown[] = Abi,
   TEventName extends string = string,
-> = GetListener<TAbi, TEventName>
+> = WatchContractEventParameters<TAbi, TEventName>['onLogs']
 
 export function watchContractEvent<
   TAbi extends Abi | readonly unknown[],
@@ -43,70 +29,36 @@ export function watchContractEvent<
     abi,
     chainId,
     eventName,
-    once,
   }: WatchContractEventConfig<TAbi, TEventName>,
   callback: WatchContractEventCallback<TAbi, TEventName>,
 ) {
-  const handler = (...event: readonly unknown[]) =>
-    (callback as (...args: readonly unknown[]) => void)(...event)
-
-  let contract: ReturnType<typeof getContract>
+  let unwatch: () => void
   const watchEvent = async () => {
-    if (contract) contract?.off(eventName, handler)
+    if (unwatch) unwatch()
 
-    const signerOrProvider =
-      getWebSocketProvider({ chainId }) || getProvider({ chainId })
-    contract = getContract({
+    const publicClient =
+      getWebSocketPublicClient({ chainId }) || getPublicClient({ chainId })
+    unwatch = publicClient.watchContractEvent({
       address,
-      abi: abi as Abi, // TODO: Remove cast and still support `Narrow<TAbi>`
-      signerOrProvider,
+      abi,
+      eventName,
+      onLogs: callback,
     })
-
-    if (once) contract.once(eventName, handler)
-    else contract.on(eventName, handler)
   }
 
   watchEvent()
-  const client = getClient()
-  const unsubscribe = client.subscribe(
-    ({ provider, webSocketProvider }) => ({
-      provider,
-      webSocketProvider,
+  const config = getConfig()
+  const unsubscribe = config.subscribe(
+    ({ publicClient, webSocketPublicClient }) => ({
+      publicClient,
+      webSocketPublicClient,
     }),
     watchEvent,
     { equalityFn: shallow },
   )
 
   return () => {
-    contract?.off(eventName, handler)
+    unwatch?.()
     unsubscribe()
   }
 }
-
-type GetEventName<
-  TAbi extends Abi | readonly unknown[] = Abi,
-  TEventName extends string = string,
-> = TAbi extends Abi
-  ? ExtractAbiEventNames<TAbi> extends infer AbiEventNames
-    ?
-        | AbiEventNames
-        | (TEventName extends AbiEventNames ? TEventName : never)
-        | (Abi extends TAbi ? string : never)
-    : never
-  : TEventName
-
-type GetListener<
-  TAbi extends Abi | readonly unknown[],
-  TEventName extends string,
-  TAbiEvent extends AbiEvent = TAbi extends Abi
-    ? ExtractAbiEvent<TAbi, TEventName>
-    : AbiEvent,
-  TArgs = AbiParametersToPrimitiveTypes<TAbiEvent['inputs']>,
-  FailedToParseArgs =
-    | ([TArgs] extends [never] ? true : false)
-    | (readonly unknown[] extends TArgs ? true : false),
-> = true extends FailedToParseArgs
-  ? (...args: readonly unknown[]) => void
-  : (
-      ...args: TArgs extends readonly unknown[] ? TArgs : readonly unknown[]
-    ) => void

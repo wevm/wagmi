@@ -1,5 +1,5 @@
-import { getClient } from '../client'
+import { getConfig } from '../config'
 
 export function logWarn(message: string) {
-  getClient()?.config.logger?.warn?.(message)
+  getConfig()?.args.logger?.warn?.(message)
 }

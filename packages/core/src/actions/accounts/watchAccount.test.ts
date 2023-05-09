@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { connect } from './connect'
 import { disconnect } from './disconnect'
 import type { GetAccountResult } from './getAccount'
@@ -8,14 +8,14 @@ import { watchAccount } from './watchAccount'
 
 describe('watchAccount', () => {
   it('callback receives data', async () => {
-    const client = setupClient()
+    const config = setupConfig()
 
     const accounts: GetAccountResult[] = []
     const unwatch = watchAccount((data) => accounts.push(data))
 
-    await connect({ connector: client.connectors[0]! })
+    await connect({ connector: config.connectors[0]! })
     await disconnect()
-    await connect({ connector: client.connectors[0]! })
+    await connect({ connector: config.connectors[0]! })
     unwatch()
 
     expect(accounts).toMatchInlineSnapshot(`

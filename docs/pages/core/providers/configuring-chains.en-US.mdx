@@ -1,13 +1,13 @@
 ---
 title: 'Configuring Chains'
-description: "The configureChains function allows you to configure your chains with providers such as: Alchemy, Infura, or something else. This means you don't need to worry about defining RPC URLs and chain configuration in your connector or provider. This is managed internally by wagmi."
+description: 'The configureChains function allows you to configure your chains with RPC Providers such as: Alchemy, Infura, or something else.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
 # Configuring Chains
 
-The `configureChains` function allows you to configure your chains with providers such as: Alchemy, Infura, or something else. This means you don't need to worry about defining RPC URLs and chain configuration in your [connector](/core/connectors/walletConnect#options) or [provider](/core/client#provider-optional). This is managed internally by wagmi.
+The `configureChains` function allows you to configure your chains with RPC Providers such as: Alchemy, Infura, or something else. This means you don't need to worry about defining RPC URLs and chain configuration in your [Connector](/react/connectors/injected#chains-optional) or [Public Client](/core/config#publicclient-optional). This is managed internally by wagmi.
 
 ```ts
 import { configureChains } from '@wagmi/core'
@@ -15,41 +15,38 @@ import { configureChains } from '@wagmi/core'
 
 ## Usage
 
-`configureChains` accepts an array of [chains](/core/chains) and an array of providers. It returns:
+`configureChains` accepts an array of [chains](/core/chains) and an array of RPC Providers. It returns:
 
 - `chains`: to pass to your connector(s)
-- `provider`: to pass to `createClient`
-- `webSocketProvider`: to optionally pass to `createClient`
+- `publicClient`: to pass to `createConfig`
+- `webSocketPublicClient`: to optionally pass to `createConfig`
 
 ```ts
-import { configureChains, createClient } from '@wagmi/core'
+import { configureChains, createConfig } from '@wagmi/core'
 import { mainnet, polygon, optimism } from '@wagmi/core/chains'
 import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { publicProvider } from '@wagmi/core/providers/public'
 import { InjectedConnector } from '@wagmi/core/connectors/injected'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [mainnet, polygon, optimism],
   [alchemyProvider({ apiKey: 'yourAlchemyApiKey' }), publicProvider()],
 )
 
-const wagmiClient = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors: [new InjectedConnector({ chains })],
-  provider,
+  publicClient,
 })
 ```
 
 Find a list of supported chains in wagmi [here](/core/chains).
 
-### Multiple providers
+### Multiple RPC Providers
 
-The `configureChains` function accepts multiple providers. This is useful if not all your chains support a single provider. For example, you may want to use [Alchemy](https://alchemy.com) for Ethereum, and [avax.network](https://avax.network) for Avalanche.
+The `configureChains` function accepts multiple RPC Provider. This is useful if not all your chains support a single RPC Provider. For example, you may want to use [Alchemy](https://alchemy.com) for Ethereum, and [avax.network](https://avax.network) for Avalanche.
 
-`configureChains` wraps the providers that you provide into an [ethers.js `FallbackProvider`](https://docs.ethers.io/v5/api/providers/other/#FallbackProvider), that comes with support for:
-
-- Falling back to another provider if a provider goes down (e.g. If Infura goes down, we can fall back to Alchemy)
-- Ensuring the responses are legitimate by setting a `targetQuorum`.
+`configureChains` wraps the RPC Provider that you provide into viem's [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback.html), that comes with support for falling back to another RPC Provider if the RPC Provider goes down (e.g. If Infura goes down, we can fall back to Alchemy)
 
 ```ts
 import { configureChains } from '@wagmi/core'
@@ -58,7 +55,7 @@ import { alchemyProvider } from '@wagmi/core/providers/alchemy'
 import { infuraProvider } from '@wagmi/core/providers/infura'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { provider } = configureChains(
+const { publicClient } = configureChains(
   [mainnet, polygon, avalanche],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
@@ -67,28 +64,6 @@ const { provider } = configureChains(
   ],
 )
 ```
-
-#### Quorum
-
-If the `targetQuorum` option is set to a value greater than `1`, it will dispatch interactions to multiple providers, in which the responses are verified by comparing them to each other. If the quorum is reached, then the result will be returned to the consumer.
-
-```ts
-const { provider } = configureChains(
-  [mainnet, avalanche],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
-    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
-    publicProvider(),
-  ],
-  { targetQuorum: 2 },
-)
-```
-
-By default, for a given chain, it will _attempt_ to set the quorum value, but if the `targetQuorum` value is greater than the number of providers for the chain, it will default to the number of providers.
-
-For instance, in the example provided above `targetQuorum = 2`, however there is only 1 available provider for Avalanche (`jsonRpcProvider`), so the quorum will get set to `1`.
-
-To guarantee a static quorum, you can provide a `minQuorum` as an config option.
 
 ## Arguments
 
@@ -127,6 +102,29 @@ const { chains } = configureChains(
 
 ### Configuration
 
+### batch.multicall (optional)
+
+Toggle to enable `eth_call` multicall aggregation. Default: `true`.
+
+```ts {13}
+import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { alchemyProvider } from '@wagmi/core/providers/alchemy'
+import { publicProvider } from '@wagmi/core/providers/public'
+
+const { chains } = configureChains(
+  [mainnet, optimism, polygon],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+  { batch: { multicall: true } },
+)
+```
+
+> You can also pass [custom `multicall` options](https://viem.sh/docs/clients/public.html#batch-multicall-batchsize-optional).
+
 ### pollingInterval (optional)
 
 The frequency in milliseconds at which the provider polls. Defaults to `4000`.
@@ -144,13 +142,13 @@ const { chains } = configureChains(
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
-  { pollingInterval: 10_000, targetQuorum: 3 },
+  { pollingInterval: 10_000 },
 )
 ```
 
-#### targetQuorum (optional)
+#### rank (optional)
 
-Sets the target quorum. Defaults to `1`.
+Whether or not to automatically rank the RPC Providers based on their latency & stability. Default: `false`.
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
@@ -165,13 +163,17 @@ const { chains } = configureChains(
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
-  { targetQuorum: 3 },
+  { rank: true },
 )
 ```
 
-#### minQuorum (optional)
+> You can also pass [custom `rank` options](https://viem.sh/docs/clients/transports/fallback.html#rank-interval-optional).
 
-Sets the minimum quorum that must be accepted by the providers. Defaults to `1`.
+#### retryCount (optional)
+
+The max number of times to retry when a request fails. Default: `3`.
+
+> Note: wagmi will first try all the RPC Providers before retrying.
 
 ```ts {13}
 import { configureChains } from '@wagmi/core'
@@ -186,7 +188,28 @@ const { chains } = configureChains(
     infuraProvider({ apiKey: 'yourInfuraApiKey' }),
     publicProvider(),
   ],
-  { targetQuorum: 3, minQuorum: 2 },
+  { retryCount: 5 },
+)
+```
+
+#### retryDelay (optional)
+
+The base delay (in ms) between retries. By default, the RPC Provider will use [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) (`~~(1 << count) \* retryDelay`), which means the time between retries is not constant.
+
+```ts {13}
+import { configureChains } from '@wagmi/core'
+import { mainnet, optimism, polygon } from '@wagmi/core/chains'
+import { alchemyProvider } from '@wagmi/core/providers/alchemy'
+import { publicProvider } from '@wagmi/core/providers/public'
+
+const { chains } = configureChains(
+  [mainnet, optimism, polygon],
+  [
+    alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
+    infuraProvider({ apiKey: 'yourInfuraApiKey' }),
+    publicProvider(),
+  ],
+  { retryCount: 5 },
 )
 ```
 

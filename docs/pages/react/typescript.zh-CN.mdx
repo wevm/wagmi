@@ -45,9 +45,9 @@ const { data } = useContractRead({ abi })
 
 <Callout type="info">
   不幸的是 [TypeScript 不支持将 JSON 导入为
-  const](https://github.com/microsoft/TypeScript/issues/32063)。请查看
-  [ `@wagmi/cli`](/cli) 来帮助解决这个问题! 它可以自动从 Etherscan 中获取 ABI，从你的 Foundry/Hardhat 项目中解析 ABI、生成 React
-  Hooks 等等。
+  const](https://github.com/microsoft/TypeScript/issues/32063)。请查看 [
+  `@wagmi/cli`](/cli) 来帮助解决这个问题! 它可以自动从 Etherscan 中获取
+  ABI，从你的 Foundry/Hardhat 项目中解析 ABI、生成 React Hooks 等等。
 </Callout>
 
 ### 合约 ABIs
@@ -68,7 +68,7 @@ const { data } = useContractRead({ abi })
 import { useContractRead } from 'wagmi'
 
 const { data } = useContractRead({
-  //    ^? const data: BigNumber | undefined
+  //    ^? const data: bigint | undefined
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: [
     {
@@ -102,11 +102,11 @@ const { data } = useContractRead({
   // ^? (property) args?: readonly [`0x${string}`] | undefined
 
   onSuccess(data) {
-    //      ^? (parameter) data: BigNumber
+    //      ^? (parameter) data: bigint
   },
   // 类型推断也将流向其他配置参数:
-  // - select?: ((data: BigNumber) => BigNumber) | undefined
-  // - onSettled?: ((data: BigNumber | undefined, error: Error | null) => void) | undefined
+  // - select?: ((data: bigint) => bigint) | undefined
+  // - onSettled?: ((data: bigint | undefined, error: Error | null) => void) | undefined
   // - …
 })
 ```

@@ -19,12 +19,9 @@ describe('useBalance', () => {
       {
         "data": {
           "decimals": 18,
-          "formatted": "0.40742480512617271",
+          "formatted": "0.283908469850273318",
           "symbol": "ETH",
-          "value": {
-            "hex": "0x05a776b39e3a7026",
-            "type": "BigNumber",
-          },
+          "value": 283908469850273318n,
         },
         "error": null,
         "fetchStatus": "idle",
@@ -55,30 +52,27 @@ describe('useBalance', () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { internal, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
-          {
-            "data": {
-              "decimals": 18,
-              "formatted": "0.40742480512617271",
-              "symbol": "ETH",
-              "value": {
-                "hex": "0x05a776b39e3a7026",
-                "type": "BigNumber",
-              },
-            },
-            "error": null,
-            "fetchStatus": "idle",
-            "isError": false,
-            "isFetched": true,
-            "isFetchedAfterMount": true,
-            "isFetching": false,
-            "isIdle": false,
-            "isLoading": false,
-            "isRefetching": false,
-            "isSuccess": true,
-            "refetch": [Function],
-            "status": "success",
-          }
-        `)
+        {
+          "data": {
+            "decimals": 18,
+            "formatted": "0.283908469850273318",
+            "symbol": "ETH",
+            "value": 283908469850273318n,
+          },
+          "error": null,
+          "fetchStatus": "idle",
+          "isError": false,
+          "isFetched": true,
+          "isFetchedAfterMount": true,
+          "isFetching": false,
+          "isIdle": false,
+          "isLoading": false,
+          "isRefetching": false,
+          "isSuccess": true,
+          "refetch": [Function],
+          "status": "success",
+        }
+      `)
     })
 
     it('scopeKey', async () => {
@@ -124,12 +118,9 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "0.40742480512617271",
+            "formatted": "0.283908469850273318",
             "symbol": "ETH",
-            "value": {
-              "hex": "0x05a776b39e3a7026",
-              "type": "BigNumber",
-            },
+            "value": 283908469850273318n,
           },
           "error": null,
           "fetchStatus": "idle",
@@ -194,12 +185,9 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "407424805.12617271",
+            "formatted": "283908469.850273318",
             "symbol": "ETH",
-            "value": {
-              "hex": "0x05a776b39e3a7026",
-              "type": "BigNumber",
-            },
+            "value": 283908469850273318n,
           },
           "error": null,
           "fetchStatus": "idle",
@@ -234,12 +222,9 @@ describe('useBalance', () => {
         {
           "data": {
             "decimals": 18,
-            "formatted": "445.85124391824564224",
+            "formatted": "0",
             "symbol": "ENS",
-            "value": {
-              "hex": "0x182b6dd01f5d124000",
-              "type": "BigNumber",
-            },
+            "value": 0n,
           },
           "error": null,
           "fetchStatus": "idle",
@@ -272,12 +257,9 @@ describe('useBalance', () => {
         expect(data).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "0.024495190284783363",
+            "formatted": "0.00138692340824271",
             "symbol": "ETH",
-            "value": {
-              "hex": "0x57063eeba14f03",
-              "type": "BigNumber",
-            },
+            "value": 1386923408242710n,
           }
         `)
       })
@@ -329,10 +311,7 @@ describe('useBalance', () => {
             "decimals": 6,
             "formatted": "500.001",
             "symbol": "USDC",
-            "value": {
-              "hex": "0x1dcd68e8",
-              "type": "BigNumber",
-            },
+            "value": 500001000n,
           },
           "error": null,
           "fetchStatus": "idle",

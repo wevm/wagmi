@@ -9,6 +9,8 @@ import { Callout } from 'nextra-theme-docs'
 
 Hook for declaratively waiting until transaction is processed. Pairs well with [`useContractWrite`](/react/hooks/useContractWrite) and [`useSendTransaction`](/react/hooks/useSendTransaction).
 
+This is a wrapper around viem's [`waitForTransactionReceipt`](https://viem.sh/docs/actions/public/waitForTransactionReceipt.html).
+
 ```ts
 import { useWaitForTransaction } from 'wagmi'
 ```
@@ -57,7 +59,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for waiting on transaction. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for waiting on transaction. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {5}
 import { useWaitForTransaction } from 'wagmi'
@@ -199,7 +201,7 @@ function App() {
 }
 ```
 
-### onSpeedUp (optional)
+### onReplaced (optional)
 
 Callback to invoke when the transaction has been sped up (replaced with higher gas fee values).
 
@@ -209,7 +211,7 @@ import { useWaitForTransaction } from 'wagmi'
 function App() {
   const waitForTransaction = useWaitForTransaction({
     hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
-    onSpeedUp(data) {
+    onReplaced(data) {
       console.log('Transaction has been sped up', data)
     },
   })

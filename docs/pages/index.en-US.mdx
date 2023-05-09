@@ -16,17 +16,17 @@ import { Sponsors } from '../components/docs'
   <Tabs items={['npm', 'pnpm', 'yarn']}>
     <Tab>
 ```bash
-npm i wagmi ethers@^5
+npm i wagmi@next viem
 ```
     </Tab>
     <Tab>
 ```bash
-pnpm i wagmi ethers@^5
+pnpm i wagmi@next viem
 ```
     </Tab>
     <Tab>
 ```bash
-yarn add wagmi ethers@^5
+yarn add wagmi@next viem
 ```
     </Tab>
   </Tabs>
@@ -41,17 +41,20 @@ yarn add wagmi ethers@^5
 ## Overview
 
 ```tsx
-import { WagmiConfig, createClient } from 'wagmi'
-import { getDefaultProvider } from 'ethers'
+import { WagmiConfig, createConfig, mainnet } from 'wagmi'
+import { createPublicClient, http } from 'viem'
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
-  provider: getDefaultProvider(),
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http()
+  }),
 })
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <Profile />
     </WagmiConfig>
   )
@@ -80,7 +83,7 @@ function Profile() {
 }
 ```
 
-In this example, we create a wagmi `Client` and pass it to the `WagmiConfig` React Context. The client is set up to use the ethers Default Provider and automatically connect to previously connected wallets.
+In this example, we create a wagmi `config` and pass it to the `WagmiConfig` React Context. The config is set up to use viem's Public Client and automatically connect to previously connected wallets.
 
 Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
 

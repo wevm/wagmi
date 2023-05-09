@@ -11,6 +11,7 @@ import { SendTransactionPrepared } from './SendTransactionPrepared'
 import { SignMessage } from './SignMessage'
 import { SignTypedData } from './SignTypedData'
 import { Token } from './Token'
+import { WatchContractEvents } from './WatchContractEvents'
 import { WatchPendingTransactions } from './WatchPendingTransactions'
 import { WriteContract } from './WriteContract'
 import { WriteContractPrepared } from './WriteContractPrepared'
@@ -21,23 +22,24 @@ export const Account = () => {
     onConnect: (data) => console.log('connected', data),
     onDisconnect: () => console.log('disconnected'),
   })
-  const ensAvatar = useEnsAvatar({
+  const { data: ensName } = useEnsName({
     address: account?.address,
     chainId: 1,
   })
-  const ensName = useEnsName({ address: account?.address, chainId: 1 })
+  const { data: ensAvatar } = useEnsAvatar({
+    name: ensName,
+    chainId: 1,
+  })
   const disconnect = useDisconnect()
 
   return (
     <div>
       <div>
-        {ensName.data ?? account?.address}
-        {ensName.data ? ` (${account?.address})` : null}
+        {ensName ?? account?.address}
+        {ensName ? ` (${account?.address})` : null}
       </div>
 
-      {ensAvatar.data && (
-        <img src={ensAvatar.data} style={{ height: 40, width: 40 }} />
-      )}
+      {ensAvatar && <img src={ensAvatar} style={{ height: 40, width: 40 }} />}
 
       <div>
         {account?.address && (
@@ -48,9 +50,9 @@ export const Account = () => {
         )}
       </div>
 
-      {false && (
+      {true && (
         <>
-          {false && (
+          {true && (
             <>
               <h4>Balance</h4>
               <Balance />
@@ -84,7 +86,10 @@ export const Account = () => {
           <h4>Write Contract Prepared</h4>
           <WriteContractPrepared />
 
-          {false && (
+          <h4>Contract Events</h4>
+          <WatchContractEvents />
+
+          {true && (
             <>
               <h4>Sign Message</h4>
               <SignMessage />

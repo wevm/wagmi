@@ -1,35 +1,39 @@
-import type { Abi } from 'abitype'
+import type { ContractFunctionConfig } from 'viem'
 
-import { getClient } from '../../client'
-import type { Contract } from '../../types/contracts'
+import { getConfig } from '../../config'
 import { watchBlockNumber } from '../network-status/watchBlockNumber'
 import type { ReadContractsConfig, ReadContractsResult } from './readContracts'
 import { readContracts } from './readContracts'
 
-export type WatchReadContractsConfig<TContracts extends Contract[]> =
-  ReadContractsConfig<TContracts> & {
-    listenToBlock?: boolean
-  }
-export type WatchReadContractsCallback<TContracts extends Contract[]> = (
-  results: ReadContractsResult<TContracts>,
-) => void
+export type WatchReadContractsConfig<
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+> = ReadContractsConfig<TContracts, TAllowFailure> & {
+  listenToBlock?: boolean
+}
+export type WatchReadContractsCallback<
+  TContracts extends ContractFunctionConfig[] = ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
+> = (results: ReadContractsResult<TContracts, TAllowFailure>) => void
 
 export function watchReadContracts<
-  TAbi extends Abi | readonly unknown[],
-  TFunctionName extends string,
-  TContracts extends { abi: TAbi; functionName: TFunctionName }[],
+  TContracts extends ContractFunctionConfig[],
+  TAllowFailure extends boolean = true,
 >(
-  config: WatchReadContractsConfig<TContracts>,
-  callback: WatchReadContractsCallback<TContracts>,
+  args: WatchReadContractsConfig<TContracts, TAllowFailure>,
+  callback: WatchReadContractsCallback<TContracts, TAllowFailure>,
 ) {
-  const client = getClient()
+  const config = getConfig()
 
-  const handleChange = async () => callback(await readContracts(config))
+  const handleChange = async () => callback(await readContracts(args))
 
-  const unwatch = config.listenToBlock
+  const unwatch = args.listenToBlock
     ? watchBlockNumber({ listen: true }, handleChange)
     : undefined
-  const unsubscribe = client.subscribe(({ provider }) => provider, handleChange)
+  const unsubscribe = config.subscribe(
+    ({ publicClient }) => publicClient,
+    handleChange,
+  )
 
   return () => {
     unsubscribe()

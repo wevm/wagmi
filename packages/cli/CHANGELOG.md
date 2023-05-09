@@ -1,5 +1,65 @@
 # @wagmi/cli
 
+## 1.0.0-next.7
+
+### Patch Changes
+
+- Fixed react plugin generic.
+
+## 1.0.0-next.6
+
+### Major Changes
+
+- Updated references.
+
+## 1.0.0-next.5
+
+### Major Changes
+
+- Added `config.setConnectors`
+
+## 1.0.0-next.4
+
+### Major Changes
+
+- Updated viem.
+  Removed `goerli` export from main entrypoint.
+
+## 1.0.0-next.3
+
+### Major Changes
+
+- Updated references.
+
+## 1.0.0-next.2
+
+### Major Changes
+
+- Updated dependencies
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/chains@1.0.0-next.0
+
+## 1.0.0-next.1
+
+### Major Changes
+
+- updated viem
+
+## 1.0.0-next.0
+
+### Major Changes
+
+- [`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb) Thanks [@jxom](https://github.com/jxom)! - Released v1.
+
+### Patch Changes
+
+- Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
+  - @wagmi/core@1.0.0-next.0
+  - wagmi@1.0.0-next.0
+
 ## 0.1.15
 
 ### Patch Changes

@@ -160,7 +160,7 @@ const data = await watchReadContracts(
 
 #### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {9,14}
 import { watchReadContracts } from '@wagmi/core'
@@ -238,9 +238,9 @@ const data = await watchReadContracts(
 )
 ```
 
-### overrides (optional)
+### blockNumber (optional)
 
-Overrides to pass to function call.
+The block number to perform the read against.
 
 ```ts {15}
 import { watchReadContracts } from '@wagmi/core'
@@ -257,7 +257,32 @@ const data = await watchReadContracts(
         functionName: 'getBoredom',
       },
     ],
-    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+    blockNumber: 15121123n,
+  },
+  (data) => console.log(data),
+)
+```
+
+### blockTag (optional)
+
+The block tag to perform the read against. Accepts: `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized'`
+
+```ts {15}
+import { watchReadContracts } from '@wagmi/core'
+
+const data = await watchReadContracts(
+  {
+    contracts: [
+      {
+        ...wagmigotchiContract,
+        functionName: 'getAlive',
+      },
+      {
+        ...wagmigotchiContract,
+        functionName: 'getBoredom',
+      },
+    ],
+    blockNumber: 'safe',
   },
   (data) => console.log(data),
 )

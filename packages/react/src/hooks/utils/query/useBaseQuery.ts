@@ -12,7 +12,7 @@ import {
 import * as React from 'react'
 
 import { useSyncExternalStore } from '../useSyncExternalStore'
-import { shouldThrowError } from './utils'
+import { queryKeyHashFn, shouldThrowError } from './utils'
 
 export function useBaseQuery<
   TQueryFnData,
@@ -33,7 +33,10 @@ export function useBaseQuery<
   const queryClient = useQueryClient({ context: options.context })
   const isRestoring = useIsRestoring()
   const errorResetBoundary = useQueryErrorResetBoundary()
-  const defaultedOptions = queryClient.defaultQueryOptions(options)
+  const defaultedOptions = queryClient.defaultQueryOptions({
+    ...options,
+    queryKeyHashFn,
+  })
 
   // Make sure results are optimistically set in fetching state before subscribing or updating options
   defaultedOptions._optimisticResults = isRestoring

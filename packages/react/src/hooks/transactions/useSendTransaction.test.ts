@@ -1,9 +1,9 @@
-import type { TransactionResponse } from '@ethersproject/providers'
 import { MockConnector } from '@wagmi/core/connectors/mock'
-import { parseEther } from 'ethers/lib/utils.js'
+import { parseEther } from 'viem'
 import { describe, expect, it } from 'vitest'
 
-import { act, actConnect, getSigners, renderHook } from '../../../test'
+import { act, actConnect, getWalletClients, renderHook } from '../../../test'
+import type { SendTransactionResult } from '../../actions'
 import { useConnect } from '../accounts'
 import type { UsePrepareSendTransactionConfig } from './usePrepareSendTransaction'
 import { usePrepareSendTransaction } from './usePrepareSendTransaction'
@@ -14,7 +14,7 @@ import type {
 import { useSendTransaction } from './useSendTransaction'
 
 function useSendTransactionWithConnect(
-  config: UseSendTransactionArgs & UseSendTransactionConfig,
+  config: UseSendTransactionArgs & UseSendTransactionConfig = {},
 ) {
   return {
     connect: useConnect(),
@@ -38,9 +38,7 @@ function useSendTransactionPreparedWithConnect(
 
 describe('useSendTransaction', () => {
   it('mounts', () => {
-    const { result } = renderHook(() =>
-      useSendTransaction({ mode: 'recklesslyUnprepared' }),
-    )
+    const { result } = renderHook(() => useSendTransaction())
     expect(result.current).toMatchInlineSnapshot(`
       {
         "data": undefined,
@@ -60,21 +58,18 @@ describe('useSendTransaction', () => {
 
   describe('configuration', () => {
     describe('chainId', () => {
-      it('recklesslyUnprepared - unable to switch', async () => {
+      it('unable to switch', async () => {
         const connector = new MockConnector({
           options: {
             flags: { noSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
             chainId: 1,
-            mode: 'recklesslyUnprepared',
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
@@ -104,17 +99,15 @@ describe('useSendTransaction', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionPreparedWithConnect({
-            request: {
-              to: 'moxey.eth',
-              value: parseEther('1'),
-            },
+            to: 'moxey.eth',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
         await actConnect({ utils })
 
         await waitFor(() =>
-          expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
+          expect(result.current.prepareSendTransaction.isSuccess).toBeTruthy(),
         )
 
         await act(async () => {
@@ -128,7 +121,6 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
-        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -141,32 +133,28 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "success",
             "variables": {
+              "accessList": undefined,
+              "account": undefined,
               "chainId": undefined,
+              "data": undefined,
+              "gas": undefined,
+              "gasPrice": undefined,
+              "maxFeePerGas": undefined,
+              "maxPriorityFeePerGas": undefined,
               "mode": "prepared",
-              "request": {
-                "gasLimit": {
-                  "hex": "0x5208",
-                  "type": "BigNumber",
-                },
-                "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
-              },
+              "nonce": undefined,
+              "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+              "value": 1000000000000000000n,
             },
           }
         `)
       })
 
-      it('recklesslyUnprepared', async () => {
+      it('unprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
@@ -183,7 +171,6 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
-        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -196,33 +183,32 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "success",
             "variables": {
+              "accessList": undefined,
+              "account": undefined,
               "chainId": undefined,
-              "mode": "recklesslyUnprepared",
-              "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
-              },
+              "data": undefined,
+              "gas": undefined,
+              "gasPrice": undefined,
+              "maxFeePerGas": undefined,
+              "maxPriorityFeePerGas": undefined,
+              "mode": undefined,
+              "nonce": undefined,
+              "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+              "value": 1000000000000000000n,
             },
           }
         `)
       })
 
       it('uses deferred args', async () => {
-        const utils = renderHook(() =>
-          useSendTransactionWithConnect({ mode: 'recklesslyUnprepared' }),
-        )
+        const utils = renderHook(() => useSendTransactionWithConnect())
         const { result, waitFor } = utils
         await actConnect({ utils })
 
         await act(async () => {
           result.current.sendTransaction.sendTransaction?.({
-            recklesslySetUnpreparedRequest: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           })
         })
 
@@ -233,7 +219,6 @@ describe('useSendTransaction', () => {
         const { data, ...res } = result.current.sendTransaction
         expect(data).toBeDefined()
         expect(data?.hash).toBeDefined()
-        expect(data?.wait).toBeDefined()
         expect(res).toMatchInlineSnapshot(`
           {
             "error": null,
@@ -247,14 +232,9 @@ describe('useSendTransaction', () => {
             "status": "success",
             "variables": {
               "chainId": undefined,
-              "mode": "recklesslyUnprepared",
-              "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x0de0b6b3a7640000",
-                  "type": "BigNumber",
-                },
-              },
+              "mode": undefined,
+              "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+              "value": 1000000000000000000n,
             },
           }
         `)
@@ -263,11 +243,8 @@ describe('useSendTransaction', () => {
       it('fails on insufficient balance', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('100000'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('100000'),
           }),
         )
         const { result, waitFor } = utils
@@ -282,11 +259,26 @@ describe('useSendTransaction', () => {
         )
 
         const { error, ...res } = result.current.sendTransaction
-        expect(
-          error?.message?.includes(
-            'insufficient funds for intrinsic transaction cost',
-          ),
-        ).toEqual(true)
+        expect(error?.message).toMatchInlineSnapshot(`
+          "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
+
+          This error could arise when the account does not have enough funds to:
+           - pay for the total gas fee,
+           - pay for the value to send.
+           
+          The cost of the transaction is calculated as \`gas * gas fee + value\`, where:
+           - \`gas\` is the amount of gas needed for transaction to execute,
+           - \`gas fee\` is the gas fee,
+           - \`value\` is the amount of ether to send to the recipient.
+           
+          Request Arguments:
+            from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+            to:     0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+            value:  100000 ETH
+
+          Details: Insufficient funds for gas * price + value
+          Version: viem@0.3.18"
+        `)
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
@@ -299,15 +291,18 @@ describe('useSendTransaction', () => {
             "sendTransactionAsync": [Function],
             "status": "error",
             "variables": {
+              "accessList": undefined,
+              "account": undefined,
               "chainId": undefined,
-              "mode": "recklesslyUnprepared",
-              "request": {
-                "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
-                "value": {
-                  "hex": "0x152d02c7e14af6800000",
-                  "type": "BigNumber",
-                },
-              },
+              "data": undefined,
+              "gas": undefined,
+              "gasPrice": undefined,
+              "maxFeePerGas": undefined,
+              "maxPriorityFeePerGas": undefined,
+              "mode": undefined,
+              "nonce": undefined,
+              "to": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+              "value": 100000000000000000000000n,
             },
           }
         `)
@@ -318,22 +313,22 @@ describe('useSendTransaction', () => {
       it('prepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionPreparedWithConnect({
-            request: {
-              to: 'moxey.eth',
-              value: parseEther('1'),
-            },
+            to: 'moxey.eth',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
         await actConnect({ utils })
 
         await waitFor(() =>
-          expect(result.current.sendTransaction.sendTransaction).toBeDefined(),
+          expect(
+            result.current.sendTransaction.sendTransactionAsync,
+          ).toBeDefined(),
         )
 
         await act(async () => {
           const res =
-            (await result.current.sendTransaction.sendTransactionAsync?.()) as TransactionResponse
+            (await result.current.sendTransaction.sendTransactionAsync?.()) as SendTransactionResult
           expect(res.hash).toBeDefined()
         })
 
@@ -342,14 +337,11 @@ describe('useSendTransaction', () => {
         )
       })
 
-      it('recklesslyUnprepared', async () => {
+      it('unprepared', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('1'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('1'),
           }),
         )
         const { result, waitFor } = utils
@@ -369,11 +361,8 @@ describe('useSendTransaction', () => {
       it('throws on error', async () => {
         const utils = renderHook(() =>
           useSendTransactionWithConnect({
-            mode: 'recklesslyUnprepared',
-            request: {
-              to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
-              value: parseEther('100000'),
-            },
+            to: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8',
+            value: parseEther('100000'),
           }),
         )
         const { result, waitFor } = utils
@@ -388,11 +377,26 @@ describe('useSendTransaction', () => {
           try {
             await result.current.sendTransaction.sendTransactionAsync?.()
           } catch (error) {
-            expect(
-              (error as Error)?.message?.includes(
-                'insufficient funds for intrinsic transaction cost',
-              ),
-            ).toEqual(true)
+            expect((error as Error).message).toMatchInlineSnapshot(`
+              "The total cost (gas * gas fee + value) of executing this transaction exceeds the balance of the account.
+
+              This error could arise when the account does not have enough funds to:
+               - pay for the total gas fee,
+               - pay for the value to send.
+               
+              The cost of the transaction is calculated as \`gas * gas fee + value\`, where:
+               - \`gas\` is the amount of gas needed for transaction to execute,
+               - \`gas fee\` is the gas fee,
+               - \`value\` is the amount of ether to send to the recipient.
+               
+              Request Arguments:
+                from:   0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
+                to:     0x70997970C51812dc3A010C7d01b50e0d17dc79C8
+                value:  100000 ETH
+
+              Details: Insufficient funds for gas * price + value
+              Version: viem@0.3.18"
+            `)
           }
         })
 

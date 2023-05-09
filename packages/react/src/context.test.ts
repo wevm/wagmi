@@ -2,15 +2,15 @@ import * as React from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { renderHook } from '../test'
-import { useClient } from './context'
+import { useConfig } from './context'
 
-describe('useClient', () => {
+describe('useConfig', () => {
   describe('mounts', () => {
     it('default', () => {
-      const { result } = renderHook(() => useClient())
+      const { result } = renderHook(() => useConfig())
       expect(result.current).toMatchInlineSnapshot(`
-        Client {
-          "config": {
+        Config {
+          "args": {
             "autoConnect": false,
             "connectors": [
               "<MockConnector>",
@@ -18,16 +18,16 @@ describe('useClient', () => {
             "logger": {
               "warn": [Function],
             },
-            "provider": [Function],
+            "publicClient": [Function],
             "storage": {
               "getItem": [Function],
               "removeItem": [Function],
               "setItem": [Function],
             },
-            "webSocketProvider": undefined,
+            "webSocketPublicClient": undefined,
           },
-          "providers": Map {
-            -1 => "<Provider network={1} />",
+          "publicClients": Map {
+            -1 => "<PublicClient network={1} />",
           },
           "queryClient": QueryClient {
             "defaultOptions": {
@@ -81,7 +81,7 @@ describe('useClient', () => {
             "setState": [Function],
             "subscribe": [Function],
           },
-          "webSocketProviders": Map {},
+          "webSocketPublicClients": Map {},
         }
       `)
     })
@@ -93,11 +93,11 @@ describe('useClient', () => {
       try {
         const wrapper = ({ children }: { children?: React.ReactNode }) =>
           React.createElement('div', { children })
-        renderHook(() => useClient(), { wrapper })
+        renderHook(() => useConfig(), { wrapper })
       } catch (error) {
         expect(error).toMatchInlineSnapshot(
           `
-          [Error: \`useClient\` must be used within \`WagmiConfig\`.
+          [Error: \`useConfig\` must be used within \`WagmiConfig\`.
 
           Read more: https://wagmi.sh/react/WagmiConfig]
         `,

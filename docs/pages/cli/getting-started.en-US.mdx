@@ -79,7 +79,7 @@ For example, we can add the `ERC20` contract from `wagmi`, and the [`etherscan`]
 import { defineConfig } from '@wagmi/cli'
 import { etherscan, react } from '@wagmi/cli/plugins'
 import { erc20ABI } from 'wagmi'
-import { mainnet, goerli } from 'wagmi/chains'
+import { mainnet, sepolia } from 'wagmi/chains'
 
 export default defineConfig({
   out: 'src/generated.ts',
@@ -98,7 +98,7 @@ export default defineConfig({
           name: 'EnsRegistry',
           address: {
             [mainnet.id]: '0x314159265dd8dbb310642f98f50c066173c1259b',
-            [goerli.id]: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
+            [sepolia.id]: '0x112234455c3a32fd11230c42e7bccd4a84e02010',
           },
         },
       ],

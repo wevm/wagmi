@@ -8,14 +8,14 @@ export {
   fetchEnsName,
   fetchEnsResolver,
   fetchFeeData,
-  fetchSigner,
   fetchToken,
   fetchTransaction,
   getAccount,
   getContract,
   getNetwork,
-  getProvider,
-  getWebSocketProvider,
+  getPublicClient,
+  getWalletClient,
+  getWebSocketPublicClient,
   multicall,
   prepareWriteContract,
   prepareSendTransaction,
@@ -32,11 +32,11 @@ export {
   watchMulticall,
   watchNetwork,
   watchPendingTransactions,
-  watchProvider,
+  watchPublicClient,
   watchReadContract,
   watchReadContracts,
-  watchSigner,
-  watchWebSocketProvider,
+  watchWalletClient,
+  watchWebSocketPublicClient,
   writeContract,
 } from './actions'
 export type {
@@ -56,8 +56,7 @@ export type {
   FetchEnsResolverResult,
   FetchFeeDataArgs,
   FetchFeeDataResult,
-  FetchSignerArgs,
-  FetchSignerResult,
+  GetWalletClientResult,
   FetchTokenArgs,
   FetchTokenResult,
   FetchTransactionArgs,
@@ -66,10 +65,11 @@ export type {
   GetContractArgs,
   GetContractResult,
   GetNetworkResult,
-  GetProviderArgs,
-  GetProviderResult,
-  GetWebSocketProviderArgs,
-  GetWebSocketProviderResult,
+  GetPublicClientArgs,
+  GetPublicClientResult,
+  GetWalletClientArgs,
+  GetWebSocketPublicClientArgs,
+  GetWebSocketPublicClientResult,
   MulticallConfig,
   MulticallResult,
   PrepareWriteContractConfig,
@@ -81,9 +81,7 @@ export type {
   ReadContractsConfig,
   ReadContractsResult,
   SendTransactionArgs,
-  SendTransactionPreparedRequest,
   SendTransactionResult,
-  SendTransactionUnpreparedRequest,
   SignMessageArgs,
   SignMessageResult,
   SignTypedDataArgs,
@@ -107,9 +105,10 @@ export type {
   WatchReadContractCallback,
   WatchReadContractsConfig,
   WatchReadContractsCallback,
-  WatchProviderCallback,
-  WatchSignerCallback,
-  WatchWebSocketProviderCallback,
+  WatchPublicClientCallback,
+  WatchWalletClientArgs,
+  WatchWalletClientCallback,
+  WatchWebSocketPublicClientCallback,
   WriteContractArgs,
   WriteContractMode,
   WriteContractPreparedArgs,
@@ -117,11 +116,11 @@ export type {
   WriteContractUnpreparedArgs,
 } from './actions'
 
-export { goerli, mainnet, sepolia } from './chains'
+export { mainnet, sepolia } from './chains'
 export type { Chain } from './chains'
 
-export { createClient, getClient, Client } from './client'
-export type { ClientConfig } from './client'
+export { createConfig, getConfig, Config } from './config'
+export type { CreateConfigParameters } from './config'
 
 export { Connector } from './connectors'
 export type { ConnectorData, ConnectorEvents } from './connectors'
@@ -129,26 +128,15 @@ export type { ConnectorData, ConnectorEvents } from './connectors'
 export { InjectedConnector } from './connectors/injected'
 export type { InjectedConnectorOptions } from './connectors/injected'
 
-export { erc20ABI, erc721ABI, erc4626ABI, units } from './constants'
+export { erc20ABI, erc721ABI, erc4626ABI } from './constants'
 
 export {
-  AddChainError,
-  ChainDoesNotSupportMulticallError,
   ChainMismatchError,
   ChainNotConfiguredError,
+  ConfigChainsNotFound,
   ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
-  ContractMethodDoesNotExistError,
-  ContractMethodNoResultError,
-  ContractMethodRevertedError,
-  ContractResultDecodeError,
-  ProviderChainsNotFound,
-  ProviderRpcError,
-  ResourceUnavailableError,
-  RpcError,
-  SwitchChainError,
   SwitchChainNotSupportedError,
-  UserRejectedRequestError,
 } from './errors'
 
 export { createStorage, noopStorage } from './storage'
@@ -156,24 +144,20 @@ export type { ClientStorage as Storage } from './storage'
 
 export type {
   ChainProviderFn,
-  FallbackProviderConfig,
   Hash,
-  ProviderWithFallbackConfig,
-  Provider,
-  Signer,
+  PublicClient,
   Unit,
-  WebSocketProvider,
+  WalletClient,
+  WebSocketPublicClient,
 } from './types'
-export type { Ethereum } from '@wagmi/connectors'
+export type { WindowProvider } from '@wagmi/connectors'
 export type { Address } from 'abitype'
 
 export {
   configureChains,
   deepEqual,
   deserialize,
-  minimizeContractInterface,
-  normalizeChainId,
-  parseContractResult,
+  getUnit,
   serialize,
 } from './utils'
 export type { ConfigureChainsConfig } from './utils'

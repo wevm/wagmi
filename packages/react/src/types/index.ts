@@ -4,48 +4,6 @@ import type {
   UseMutationOptions,
   UseQueryOptions,
 } from '@tanstack/react-query'
-import type {
-  Address,
-  ResolvedConfig,
-  TypedData,
-  TypedDataDomain,
-  TypedDataToPrimitiveTypes,
-} from 'abitype'
-import type { BigNumber } from 'ethers'
-
-declare module 'abitype' {
-  export interface Config {
-    // TODO: Drop `BigNumber` once ethers supports `bigint` natively
-    BigIntType: BigNumber
-    IntType: number
-  }
-}
-
-declare module 'ethers/lib/utils.js' {
-  export function getAddress(address: string): Address
-  export function verifyTypedData<
-    TTypedData extends TypedData,
-    TSchema extends TypedDataToPrimitiveTypes<TTypedData>,
-  >(
-    domain: TypedDataDomain,
-    types: TTypedData,
-    value: TSchema[keyof TSchema] extends infer TValue
-      ? { [x: string]: any } extends TValue
-        ? Record<string, any>
-        : TValue
-      : never,
-    signature:
-      | {
-          r: string
-          s?: string
-          _vs?: string
-          recoveryParam?: number
-          v?: number
-        }
-      | ResolvedConfig['BytesType']
-      | string,
-  ): string
-}
 
 /**
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.

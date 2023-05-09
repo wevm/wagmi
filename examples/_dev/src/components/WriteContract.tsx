@@ -1,16 +1,13 @@
-import { BigNumber } from 'ethers'
 import { useState } from 'react'
 import { useContractWrite } from 'wagmi'
 
-import { anvAbi } from './anv-abi'
+import { wagmiContractConfig } from './contracts'
 
 export const WriteContract = () => {
   const { write, data, error, isLoading, isError, isSuccess } =
     useContractWrite({
-      mode: 'recklesslyUnprepared',
-      address: '0xe614fbd03d58a60fd9418d4ab5eb5ec6c001415f',
-      abi: anvAbi,
-      functionName: 'claim',
+      ...wagmiContractConfig,
+      functionName: 'mint',
       chainId: 1,
     })
 
@@ -18,7 +15,7 @@ export const WriteContract = () => {
 
   return (
     <div>
-      <div>Mint an Adjective Noun Verb:</div>
+      <div>Mint a wagmi:</div>
       <div>
         <input
           onChange={(e) => setTokenId(e.target.value)}
@@ -27,9 +24,7 @@ export const WriteContract = () => {
         />
         <button
           disabled={isLoading}
-          onClick={() =>
-            write?.({ recklesslySetUnpreparedArgs: [BigNumber.from(tokenId)] })
-          }
+          onClick={() => write({ args: [BigInt(tokenId)] })}
         >
           Mint
         </button>

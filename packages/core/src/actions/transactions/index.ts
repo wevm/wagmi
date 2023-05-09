@@ -13,9 +13,7 @@ export {
 export {
   sendTransaction,
   type SendTransactionArgs,
-  type SendTransactionPreparedRequest,
   type SendTransactionResult,
-  type SendTransactionUnpreparedRequest,
 } from './sendTransaction'
 
 export {

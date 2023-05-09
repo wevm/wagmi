@@ -1,11 +1,11 @@
 ---
 title: 'getContract'
-description: 'Action for declaratively creating an ethers Contract instance.'
+description: 'Action for declaratively creating an viem Contract instance.'
 ---
 
 # getContract
 
-Action for creating a type-safe [Contract](https://docs.ethers.io/v5/api/contract/contract) instance.
+Action for retrieving a type-safe viem [Contract Instance](https://viem.sh/docs/contract/getContract.html).
 
 ```ts
 import { getContract } from '@wagmi/core'
@@ -27,7 +27,7 @@ const contract = getContract({
 ## Return Value
 
 ```ts
-ethers.Contract | null
+GetContractReturnType | null
 ```
 
 ## Configuration
@@ -60,17 +60,17 @@ const contract = getContract({
 })
 ```
 
-### signerOrProvider (optional)
+### walletClient (optional)
 
-An ethers [Provider](https://docs.ethers.io/v5/api/providers/provider/#Provider) or [Signer](https://docs.ethers.io/v5/api/signer/#Signer).
+A viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) with a connected account.
 
 ```ts {7}
-import { getContract, getProvider } from '@wagmi/core'
+import { getContract, getWalletClient } from '@wagmi/core'
 
-const provider = getProvider()
+const walletClient = await getWalletClient()
 const contract = getContract({
   address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   abi: ensRegistryABI,
-  signerOrProvider: provider,
+  walletClient,
 })
 ```

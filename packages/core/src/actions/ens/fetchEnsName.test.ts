@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { fetchEnsName } from './fetchEnsName'
 
 describe('fetchEnsName', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('args', () => {

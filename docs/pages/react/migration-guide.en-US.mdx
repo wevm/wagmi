@@ -9,6 +9,846 @@ import { Callout } from 'nextra-theme-docs'
 
 If you are coming from an earlier version of `wagmi`, you will need to make sure to update the following APIs listed below.
 
+## 1.x.x Breaking changes
+
+<Callout>
+  Not ready to migrate yet? You can find the `0.12.x` docs
+  [here](https://0.12.x.wagmi.sh).
+</Callout>
+
+### General
+
+#### Removed `ethers` peer dependency
+
+The `ethers` peer dependency has been removed in favour of [`viem`](https://viem.sh).
+
+```bash
+npm uninstall ethers
+npm i wagmi@next viem@latest
+```
+
+If your project is using modules from `ethers` directly, that are dependant on wagmi (e.g. `BigNumber`, etc), you will need to migrate to the `viem`-equivalent module. Check out the [Ethers.js → viem migration guide](https://viem.sh/docs/ethers-migration.html).
+
+If you have usages of `ethers` that are independent of wagmi, it is highly recommended to migrate to `viem` to take advantage of the smaller bundle size.
+
+#### "Provider" & "Signer" terminology
+
+Ethers [Provider](https://docs.ethers.org/v5/api/providers/) & [Signer](https://docs.ethers.org/v5/api/signer/) terminology is now known as viem's [Public Client](https://viem.sh/docs/clients/public.html) & [Wallet Client](https://viem.sh/docs/clients/wallet.html) terminology.
+
+This directly affects:
+
+- `createClient`
+- `configureChains`
+- `useProvider` (now `usePublicClient`)
+- `useSigner` (now `useWalletClient`)
+- `useWebSocketProvider` (now `useWebSocketPublicClient`)
+
+**`createClient`**
+
+```diff
+import { WagmiConfig, createConfig } from 'wagmi'
+- import { getDefaultProvider } from 'ethers'
++ import { createPublicClient, http } from 'viem'
+
+const config = createConfig({
+  autoConnect: true,
+- provider: getDefaultProvider(),
++ publicClient: createPublicClient({
++  chain: mainnet,
++  transport: http()
++ })
+})
+```
+
+> Note: You may notice that `createClient` is now `createConfig`. Don't worry – the migration for that is below.
+
+**`configureChains`**
+
+```diff
+import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi'
+import { publicProvider } from 'wagmi/providers/public'
+
+const {
+  chains,
+- provider,
++ publicClient,
+- webSocketProvider,
++ webSocketPublicClient
+} = configureChains(
+  [mainnet],
+  [publicProvider()],
+)
+
+const config = createConfig({
+  autoConnect: true,
+- provider,
++ publicClient,
+- webSocketProvider,
++ webSocketPublicClient
+})
+```
+
+**`useProvider`**
+
+```diff
+- import { useProvider } from 'wagmi'
++ import { usePublicClient } from 'wagmi'
+
+- const provider = useProvider()
++ const publicClient = usePublicClient()
+```
+
+**`useSigner`**
+
+```diff
+- import { useSigner } from 'wagmi'
++ import { useWalletClient } from 'wagmi'
+
+- const { data: signer } = useSigner()
++ const { data: walletClient } = useWalletClient()
+```
+
+**`useWebSocketProvider`**
+
+```diff
+- import { useWebSocketProvider } from 'wagmi'
++ import { useWebSocketPublicClient } from 'wagmi'
+
+- const webSocketProvider = useWebSocketProvider()
++ const webSocketPublicClient = useWebSocketPublicClient()
+```
+
+**Types**
+
+- `Provider` → `PublicClient`
+- `Signer` → `WalletClient`
+- `WebSocketProvider` → `WebSocketPublicClient`
+
+#### `createClient` → `createConfig`
+
+The `createClient` function has been renamed to `createConfig`.
+
+```diff
+- import { createClient } from 'wagmi'
++ import { createConfig } from 'wagmi'
+
+- const client = createClient({
++ const config = createConfig({
+  ...
+})
+```
+
+#### `useClient` → `useConfig`
+
+If you are using `useClient`, that has been renamed to `useConfig`:
+
+```diff
+- import { useClient } from 'wagmi'
++ import { useConfig } from 'wagmi'
+
+- const client = useClient()
++ const config = useConfig()
+```
+
+#### `BigNumber` → native `BigInt`
+
+All `BigNumber` instances are now [platform native `BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) instances. This means you can no longer use arithmatic methods such as `.add`, `.subtract`, etc because `BigInt` is just a primitive type like `number`.
+
+```diff
+- const value = BigNumber.from('69420')
++ const value = 69420n
+```
+
+```diff
+- const value = BigNumber.from('69420')
++ const value = 69420n
+
+- const value2 = BigNumber.from('42069')
++ const value2 = 42069n
+
+- const value3 = value.add(value2)
++ const value3 = value + value2
+```
+
+<Callout type="warning">
+  Using native `BigInt` with `JSON.stringify` will raise a `TypeError` as
+  `BigInt` values are not serializable. [Read here for instructions to
+  mitigate](/react/faq).
+</Callout>
+
+#### `from` has been renamed to `account`
+
+The `from` attribute has been renamed to `account`. Directly affects Actions that consist of a `from` parameter.
+
+```diff
+const { config } = usePrepareContractWrite({
+  ...,
+- from: '0x...'
++ account: '0x...'
+})
+```
+
+#### `gasLimit` has been renamed to `gas`
+
+The `gasLimit` attribute has been renamed to `gas`, and still implies the same meaning. It was renamed to align closer to [EIP-1474](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1474.md) and enforce consistency. Aligning closer to EIP-1474 means that you will not need to re-map from `gas` to `gasLimit` if you are deriving from an external source.
+
+```diff
+useSendTransaction({
+  request: {
+    to: 'jxom.eth',
+-   gasLimit: 69420n,
++   gas: 69420n,
+    value: 1n
+  }
+})
+```
+
+#### Removed `goerli` export
+
+Removed the `goerli` export from `wagmi`. Goerli is now a deprecated testnet. You will now have to import it from `wagmi/chains`.
+
+```diff
+-import { goerli } from 'wagmi'
++import { goerli } from 'wagmi/chains'
+```
+
+#### Removed `window.ethereum` global type
+
+The `window.ethereum` global type has been removed in favor of an explicit `wagmi/window` import.
+
+```diff
++import 'wagmi/window';
+
+const isMetaMask = window.ethereum.isMetaMask
+```
+
+#### Renamed the `Ethereum` type to `WindowProvider`
+
+The `Ethereum` type has been renamed to `WindowProvider`.
+
+### Hooks
+
+#### `useConnect`
+
+**No longer returns the `provider` property in `data`. Use `connector.getProvider()` instead.**
+
+```diff
+const { data } = useConnect({
+  ...
+})
+
+- const provider = data.provider
++ const provider = await data.connector.getProvider()
+```
+
+**No longer returns the `provider` property in `connectAsync` return type. Use `connector.getProvider()` instead.**
+
+```diff
+const { connectAsync } = useConnect({
+  ...
+})
+
+const result = await connectAsync(...)
+- const provider = result.provider
++ const provider = await result.connector.getProvider()
+```
+
+#### `useBalance`
+
+**Returns a `bigint` instead of `BigNumber`**
+
+Returns a `bigint` instead of `BigNumber` for `data.value`. Maps to viem's [`getBalance`](https://viem.sh/docs/actions/public/getBalance.html).
+
+```ts
+const { data } = useBalance({
+  ...
+})
+
+const value = data.value
+//    ^? const value: bigint
+```
+
+#### `useBlockNumber`
+
+**Returns a `bigint` instead of `number`**
+
+Returns a `bigint` instead of `number` for `data`. Maps to viem's [`getBlockNumber`](https://viem.sh/docs/actions/public/getBlockNumber.html).
+
+```ts
+const { data } = useBlockNumber({
+  //    ^? const data: bigint
+  ...
+})
+```
+
+#### `useContract`
+
+**Hook Removed.**
+
+Use the `getContract` Action instead or declarative Hook (e.g. `useContractRead`, `useContractWrite`, etc.).
+
+```diff
+- import { useContract } from 'wagmi'
++ import { getContract } from 'wagmi/actions'
+```
+
+#### `useEnsAvatar`
+
+**Replaced `address` with `name`**
+
+Replaced `address` with `name` in order to remove internal async call to resolve `address` to `name`. Maps to viem's [`getEnsAvatar`](https://viem.sh/docs/ens/actions/getEnsAvatar.html).
+
+```diff
++ const { data: ensName } = useEnsName({
++  address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ })
+const { data: avatar } = useEnsAvatar({
+- address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ name: ensName,
+})
+```
+
+#### `useFeeData`
+
+**Return type changes**
+
+Returns `bigint` instead of a `BigNumber` for `gasPrice` , `maxFeePerGas` , and `maxPriorityFeePerGas`.
+
+```ts
+const { data } = useFeeData()
+data.gasPrice
+//      ^? const gasPrice: bigint
+data.maxFeePerGas
+//      ^? const maxFeePerGas: bigint
+data.maxPriorityFeePerGas
+//      ^? const maxPriorityFeePerGas: bigint
+```
+
+#### `useProvider`
+
+**Renamed to `usePublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const provider = useProvider(...)
++ const publicClient = usePublicClient(...)
+```
+
+#### `useSigner`
+
+**Renamed to `getWalletClient`**
+
+Returns viem [Wallet Client](https://viem.sh/docs/clients/wallet.html) instead of ethers `Signer`.
+
+```diff
+- const { data } = useSigner(...)
+//        ^? const data: Signer
++ const { data } = useWalletClient(...)
+//        ^? const data: WalletClient
+```
+
+#### `useToken`
+
+**Returns a `bigint`**
+
+Returns `bigint` instead of a `BigNumber` for `totalSupply.value`.
+
+```ts
+const { data } = useToken({
+  ...
+})
+
+const value = data.totalSupply.value
+//    ^? const value: bigint
+```
+
+#### `useTransaction`
+
+**Returns viem `Transaction`**
+
+Returns viem [`Transaction`](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L105) instead of an ethers `Transaction`. Maps to viem's [`getTransaction`](https://viem.sh/docs/actions/public/getTransaction.html).
+
+```ts
+const { data } = useTransaction({
+  //    ^? const data: Transaction
+  ...
+})
+```
+
+#### `useContractReads`
+
+**Return type structure changed**
+
+When `allowFailure` is truthy (default), the return structure is now in the form of `{ error, result, status }[]` instead of an array of contract function results (`Result[]`).
+
+```diff
+const { data } = useContractReads({
+  ...
+})
+
+- const result = data[0]
++ const { result } = data[0]
+```
+
+The return type when `allowFailure` is falsy has not changed.
+
+**Removed `console.warn` logs for failing contract methods**
+
+The `console.warn` logs for failing contract methods has been removed. Failing methods can now be extracted from the `error` property of the return type.
+
+```diff
+const { data } = useContractReads({
+  ...
+})
+
++ useEffect(() => {
++   if (data)
++     data.forEach(({ error, status }) => {
++       if (status === 'failure') console.warn(error.message)
++     })
++ }, [data])
+```
+
+**Removed `overrides`**
+
+The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
+
+```diff
+const { data } = useContractReads({
+  ...
+- overrides: {
+-   blockTag: 'safe'
+- }
++ blockTag: 'safe'
+})
+```
+
+#### `useContractInfiniteReads`
+
+**Return type structure changed**
+
+When `allowFailure` is truthy (default), the return structure is now in the form of `{ error, result, status }[]` instead of an array of contract function results (`Result[]`).
+
+```diff
+const { data } = useContractInfiniteReads({
+  ...
+})
+
+- const result = data.pages[0][0]
++ const { result } = data.pages[0][0]
+```
+
+The return type when `allowFailure` is falsy has not changed.
+
+**Removed `console.warn` logs for failing contract methods**
+
+The `console.warn` logs for failing contract methods has been removed. Failing methods can now be extracted from the `error` property of the return type.
+
+```diff
+const { data } = useContractInfiniteReads({
+  ...
+})
+
++ useEffect(() => {
++   if (data)
++     data.pages.flat().forEach(({ error, status }) => {
++       if (status === 'failure') console.warn(error.message)
++     })
++ }, [data])
+```
+
+**Removed `overrides`**
+
+The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
+
+```diff
+const { data } = useContractInfiniteReads({
+  ...
+- overrides: {
+-   blockTag: 'safe'
+- }
++ blockTag: 'safe'
+})
+```
+
+#### `usePrepareSendTransaction`
+
+**Removed `request`**
+
+The `request` parameter has been removed in favor of top-level parameters. Maps to [viem's `sendTransaction` parameters](https://viem.sh/docs/actions/public/sendTransaction.html#account).
+
+```diff
+const { config } = usePrepareSendTransaction({
+- request: {
+-   to: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+-   value: BigNumber.from('69420'),
+- },
++ to: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ value: 69420n
+})
+```
+
+#### `usePrepareContractWrite`
+
+**Removed `overrides`**
+
+The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `simulateContract` parameters](https://viem.sh/docs/contract/simulateContract.html#account).
+
+```diff
+const { config } = usePrepareContractWrite({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+- overrides: {
+-   from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
+-   value: BigNumber.from('69420'),
+- },
++ account: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
++ value: 69420n
+})
+```
+
+**Return type structure changed**
+
+The returned `config.request` now returns the shape of [viem's `WriteContractParameters`](https://viem.sh/docs/contract/writeContract.html#parameters), instead of Ethers' `TransactionRequest`.
+
+Removed `abi`, `address`, `functionName` from the return value, they now belong in `config.request`.
+
+#### `useContractEvent`
+
+**Callback now returns array of logs**
+
+Callback now returns an array of Event Logs (with included decoded args), instead of positional decoded args with the log.
+
+```diff
+const unwatch = useContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+- listener: (node, label, owner) => {
++ listener: (logs) => {
+-   console.log(node, label, owner)
++   const { args } = logs[0]
++   console.log(args.node, args.label, args.owner)
+  },
+})
+```
+
+**Removed `once`**
+
+The `once` parameter has been removed. Use `unwatch` to cleanup the listener instead.
+
+```diff
+const unwatch = useContractEvent({
+  address: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+  abi: ensRegistryABI,
+  eventName: 'NewOwner',
+- once: true,
+  listener: (logs) => {
+    const { args } = logs[0]
+    console.log(args.node, args.label, args.owner)
++   unwatch()
+  }
+})
+```
+
+#### `useContractRead`
+
+**Removed `overrides`**
+
+The `overrides` parameter has been removed in favor of top-level `blockNumber` & `blockTag` parameters.
+
+```diff
+const { data } = useContractRead({
+  ...
+- overrides: {
+-   blockTag: 'safe'
+- }
++ blockTag: 'safe'
+})
+```
+
+#### `useContractWrite`
+
+**Removed requirement for "prepare" mode**
+
+Removed the requirement for "prepare" mode. You can now use `useContractWrite` without calling `usePrepareContractWrite` first.
+
+```diff
+const { data, isLoading, isSuccess, write } = useContractWrite({
+- mode: 'recklesslyUnprepared',
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'claim',
+  tokenId: 69,
+})
+```
+
+**`wait` has been removed from the return type**
+
+`wait` has been removed from the return type, favor `waitForTransaction` instead.
+
+```diff
++ import { waitForTransaction } from 'wagmi/actions'
+
+const { data } = useContractWrite(...)
+const {
+- wait,
++ hash,
+} = data || {}
+
+- const receipt = await wait()
++ const receipt = await waitForTransaction({ hash })
+```
+
+**Removed `overrides`**
+
+The `overrides` parameter has been removed in favor of top-level parameters. Maps to [viem's `writeContract` parameters](https://viem.sh/docs/contract/writeContract.html#account).
+
+```diff
+const { config } = useContractWrite({
+  ...
+- overrides: {
+-   gasLimit: BigNumber.from('42069'),
+-   value: BigNumber.from('69420'),
+- },
++ gasLimit: 42069n,
++ value: 69420n
+})
+```
+
+**Renamed `recklesslySetUnpreparedArgs` to `args`**
+
+```diff
+const { data, write } = useContractWrite({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedArgs: [69],
++ args: [69],
+})
+```
+
+**Removed `recklesslySetUnpreparedOverrides`**
+
+Removed `recklesslySetUnpreparedOverrides`. They now exist at the top-level of the function.
+
+```diff
+const { data, write } = useContractWrite({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedOverrides: {
+-   gasLimit: BigNumber.from('42069'),
+-   value: BigNumber.from('69420'),
+- },
++ gas: 42069n,
++ value: 69420n
+})
+```
+
+**Return type changed**
+
+Now returns a viem [TransactionReceipt](https://github.com/wagmi-dev/viem/blob/136c4022c3ab4020f37333876bed788a111bff47/src/types/transaction.ts#L12) instead of an Ethers `TransactionReceipt`.
+
+#### `useSendTransaction`
+
+**Removed requirement for "prepare" mode**
+
+Removed the requirement for "prepare" mode. You can now use `useContractWrite` without calling `usePrepareContractWrite` first.
+
+```diff
+const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+- mode: 'recklesslyUnprepared',
+  request: {
+    to: 'moxey.eth',
+    value: BigNumber.from('10000000000000000'),
+  }
+})
+```
+
+**Removed `request`**
+
+The `request` parameter has been removed in favor of top-level parameters. Maps to [viem's `sendTransaction` parameters](https://viem.sh/docs/actions/public/sendTransaction.html#account).
+
+```diff
+const { hash } = useSendTransaction({
+  ...
+- request: {
+-   to: 'jxom.eth',
+-   value: BigNumber.from('69420'),
+- },
++ to: 'jxom.eth',
++ value: 69420n
+})
+```
+
+**Renamed `recklesslySetUnpreparedRequest` to `request`**
+
+```diff
+const { sendTransaction } = useSendTransaction({
+  ...
+})
+
+write({
+- recklesslySetUnpreparedRequest: { ... },
++ request: { ... },
+})
+```
+
+**`wait` has been removed from the return type**
+
+`wait` has been removed from the return type, favor `waitForTransaction` instead.
+
+```diff
++ import { waitForTransaction } from 'wagmi/actions'
+
+const { data } = useSendTransaction(...)
+const {
+- wait,
++ hash,
+} = data || {}
+
+- const receipt = await wait()
++ const receipt = await waitForTransaction({ hash })
+```
+
+#### `useSignMessage`
+
+**`message` no longer accepts a byte array**
+
+`message` no longer accepts a byte array, only a string value
+
+#### `useSignTypedData`
+
+**`value` has been renamed to `message`**
+
+```diff
+const signature = useSignTypedData({
+  domain,
+  types,
+  primaryType: 'Mail',
+- value,
++ message
+})
+```
+
+**`primaryType` is now required**
+
+The `primaryType` attribute is now required. Aligns closer to EIP-712, and allows consumers to specify an alternative primary type. Previously, Ethers.js did some internal stuff to figure out the primary type. But it's not hard for a consumer to just provide that – and we believe it is more clear.
+
+```diff
+const signature = useSignTypedData({
+  domain,
+  types,
++ primaryType: 'Mail',
+  message
+})
+```
+
+#### `useWaitForTransaction`
+
+**Renamed `onSpeedUp` to `onReplaced`**
+
+```diff
+const waitForTransaction = useWaitForTransaction({
+  hash: '0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060',
+- onSpeedUp: (transaction) => console.log(transaction),
++ onReplaced: (transaction) => console.log(transaction)
+})
+```
+
+#### `useWatchPendingTransactions`
+
+**Callback now returns batched transaction hashes**
+
+The callback now returns a batched array of transaction hashes, instead of callback being emitted several times with singular hashes.
+
+```diff
+useWatchPendingTransactions(
+- listener: (hash) => console.log(hash),
++ listener: (hashes) => console.log(hashes[0]),
+)
+```
+
+#### `useWebSocketProvider`
+
+**Renamed to `useWebSocketPublicClient`**
+
+Returns viem [Public Client](https://viem.sh/docs/clients/public.html) instead of ethers `Provider`.
+
+```diff
+- const webSocketProvider = useWebSocketProvider(...)
++ const webSocketPublicClient = useWebSocketPublicClient(...)
+```
+
+### `configureChains`
+
+#### Removed quorum support
+
+Removed quorum support: `priority`, `minQuorum` and `targetQuorum` (for now). viem does not support quorum in the [`fallback` Transport](https://viem.sh/docs/clients/transports/fallback.html) yet, but will in the future!
+
+### Connectors
+
+The breaking changes below only applies if you are building a Connector on top of wagmi.
+
+#### Renamed `getSigner` to `getWalletClient`
+
+The `getSigner` method has been renamed to `getWalletClient`, and also returns [viem's `WalletClient`](https://viem.sh/docs/clients/wallet.html) instead of an Ethers.js `Signer`
+
+```diff
+- async getSigner({ chainId }: { chainId?: number } = {}) {
++ async getWalletClient({ chainId }: { chainId?: number } = {}) {
+  const [provider, account] = await Promise.all([
+    this.getProvider(),
+    this.getAccount(),
+  ])
++ const chain = this.chains.find((x) => x.id === chainId) || this.chains[0]
+- return new providers.Web3Provider(
+-   provider,
+-   chainId,
+- ).getSigner(account)
++ return createWalletClient({
++   account,
++   chain,
++   transport: custom(provider),
++ })
+}
+```
+
+### Errors
+
+#### `ChainDoesNotSupportMulticallError`
+
+Use [`ChainDoesNotSupportContract` from viem](https://viem.sh/docs/glossary/errors.html#chaindoesnotsupportcontract) instead.
+
+#### `ContractMethodDoesNotExistError`
+
+Use [`ContractFunctionExecutionError` from viem](https://viem.sh/docs/glossary/errors.html#contractfunctionexecutionerror) instead.
+
+#### `ContractMethodNoResultError`
+
+Use [`ContractFunctionZeroDataError` from viem](https://viem.sh/docs/glossary/errors.html#contractfunctionzerodataerror) instead.
+
+#### `ContractMethodRevertedError`
+
+Use [`ContractFunctionRevertedError` from viem](https://viem.sh/docs/glossary/errors.html#contractfunctionrevertederror) instead.
+
+#### `ContractResultDecodeError`
+
+Use [`ContractFunctionExecutionError` from viem](https://viem.sh/docs/glossary/errors.html#contractfunctionexecutionerror) instead.
+
+#### `ProviderRpcError`
+
+Use [`ProviderRpcError` from viem](https://viem.sh/docs/glossary/errors.html#providerrpcerror) instead.
+
+#### `ResourceUnavailableError`
+
+Use [`ResourceUnavailableRpcError` from viem](https://viem.sh/docs/glossary/errors.html#resourceunavailablerpcerror) instead.
+
 ## 0.12.x Breaking changes
 
 ### WalletConnectConnector
@@ -1496,7 +2336,7 @@ Duplicate exports with different names and the same functionality were removed t
 
 ### `Provider`
 
-The `Provider` component no longer supports configuration directly as props. You will now need to create a wagmi [`Client`](/react/client) via `createClient`, and then pass the client to `Provider`:
+The `Provider` component no longer supports configuration directly as props. You will now need to create a wagmi [`Client`](/react/config) via `createClient`, and then pass the client to `Provider`:
 
 Before:
 

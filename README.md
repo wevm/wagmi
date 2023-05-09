@@ -60,10 +60,10 @@ For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
 ## Installation
 
-Install wagmi and its ethers peer dependency.
+Install wagmi and its [viem](https://viem.sh) peer dependency.
 
 ```bash
-npm install wagmi ethers@^5
+npm install wagmi viem
 ```
 
 ## Quick Start
@@ -71,17 +71,20 @@ npm install wagmi ethers@^5
 Connect a wallet in under 60 seconds. LFG.
 
 ```tsx
-import { WagmiConfig, createClient } from 'wagmi'
-import { getDefaultProvider } from 'ethers'
+import { WagmiConfig, createConfig, mainnet } from 'wagmi'
+import { createPublicClient, http } from 'viem'
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
-  provider: getDefaultProvider(),
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http(),
+  }),
 })
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <Profile />
     </WagmiConfig>
   )
@@ -110,7 +113,7 @@ function Profile() {
 }
 ```
 
-In this example, we create a wagmi `Client` and pass it to the `WagmiConfig` React Context. The client is set up to use the ethers Default Provider and automatically connect to previously connected wallets.
+In this example, we create a wagmi `config` and pass it to the `WagmiConfig` React Context. The config is set up to use viem's Public Client and automatically connect to previously connected wallets.
 
 Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
 

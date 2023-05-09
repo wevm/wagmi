@@ -1,9 +1,9 @@
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 
 export async function disconnect(): Promise<void> {
-  const client = getClient()
-  if (client.connector) await client.connector.disconnect()
+  const config = getConfig()
+  if (config.connector) await config.connector.disconnect()
 
-  client.clearState()
-  client.storage.removeItem('connected')
+  config.clearState()
+  config.storage.removeItem('connected')
 }

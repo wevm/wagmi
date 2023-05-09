@@ -5,10 +5,10 @@ description: 'A list of wagmi-flavored chains.'
 
 # Chains
 
-`@wagmi/core` exports the **Mainnet** (`mainnet`) & **Goerli** (`goerli`) chains out-of-the-box.
+`@wagmi/core` exports the **Mainnet** (`mainnet`) & **Sepolia** (`sepolia`) chains out-of-the-box.
 
 ```ts
-import { mainnet, goerli } from '@wagmi/core'
+import { mainnet, sepolia } from '@wagmi/core'
 ```
 
 If you wish to extend to other EVM-compatible chains (like Polygon, Optimism, BSC, Avalanche, etc), you can either import the chain directly from the `@wagmi/core/chains` entrypoint, or build it yourself.
@@ -25,7 +25,7 @@ Import your chains from the entrypoint and use them in your wagmi app:
 import { configureChains } from '@wagmi/core'
 import { avalanche, bsc, mainnet } from '@wagmi/core/chains'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [mainnet, avalanche, bsc],
   ...
 )

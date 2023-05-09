@@ -1,20 +1,26 @@
 import type { Address, ResolvedConfig } from 'abitype'
-import { formatUnits, parseBytes32String } from 'ethers/lib/utils.js'
+import type { Hex } from 'viem'
+import {
+  ContractFunctionExecutionError,
+  formatUnits,
+  hexToString,
+  trim,
+} from 'viem'
 
-import { getClient } from '../../client'
+import { getConfig } from '../../config'
 import { erc20ABI, erc20ABI_bytes32 } from '../../constants'
-import { ContractResultDecodeError } from '../../errors'
 import type { Unit } from '../../types'
+import { getUnit } from '../../utils'
 import { readContracts } from '../contracts'
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type FetchBalanceArgs = {
   /** Address of balance to check */
   address: Address
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client. */
   chainId?: number
   /** Units for formatting output */
-  formatUnits?: Unit | number
+  formatUnits?: Unit
   /** ERC-20 address */
   token?: Address
 }
@@ -32,8 +38,8 @@ export async function fetchBalance({
   formatUnits: unit,
   token,
 }: FetchBalanceArgs): Promise<FetchBalanceResult> {
-  const client = getClient()
-  const provider = getProvider({ chainId })
+  const config = getConfig()
+  const publicClient = getPublicClient({ chainId })
 
   if (token) {
     type FetchContractBalance = {
@@ -55,7 +61,7 @@ export async function fetchBalance({
       })
       return {
         decimals,
-        formatted: formatUnits(value ?? '0', unit ?? decimals),
+        formatted: formatUnits(value ?? '0', getUnit(unit ?? decimals)),
         symbol: symbol as string, // protect against `ResolvedConfig['BytesType']`
         value,
       }
@@ -67,12 +73,12 @@ export async function fetchBalance({
       // In the chance that there is an error upon decoding the contract result,
       // it could be likely that the contract data is represented as bytes32 instead
       // of a string.
-      if (err instanceof ContractResultDecodeError) {
+      if (err instanceof ContractFunctionExecutionError) {
         const { symbol, ...rest } = await fetchContractBalance({
           abi: erc20ABI_bytes32,
         })
         return {
-          symbol: parseBytes32String(symbol),
+          symbol: hexToString(trim(symbol as Hex, { dir: 'right' })),
           ...rest,
         }
       }
@@ -80,12 +86,15 @@ export async function fetchBalance({
     }
   }
 
-  const chains = [...(client.provider.chains || []), ...(client.chains ?? [])]
-  const value = await provider.getBalance(address)
-  const chain = chains.find((x) => x.id === provider.network.chainId)
+  const chains = [
+    ...(config.publicClient.chains || []),
+    ...(config.chains ?? []),
+  ]
+  const value = await publicClient.getBalance({ address })
+  const chain = chains.find((x) => x.id === publicClient.chain.id)
   return {
     decimals: chain?.nativeCurrency.decimals ?? 18,
-    formatted: formatUnits(value ?? '0', unit ?? 'ether'),
+    formatted: formatUnits(value ?? '0', getUnit(unit ?? 18)),
     symbol: chain?.nativeCurrency.symbol ?? 'ETH',
     value,
   }

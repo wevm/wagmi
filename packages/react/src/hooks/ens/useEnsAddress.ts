@@ -4,7 +4,9 @@ import { fetchEnsAddress } from '@wagmi/core'
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseEnsAddressArgs = Partial<FetchEnsAddressArgs>
+export type UseEnsAddressArgs = Omit<Partial<FetchEnsAddressArgs>, 'name'> & {
+  name?: FetchEnsAddressArgs['name'] | null
+}
 export type UseEnsAddressConfig = QueryConfig<FetchEnsAddressResult, Error>
 
 type QueryKeyArgs = UseEnsAddressArgs

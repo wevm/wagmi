@@ -1,18 +1,19 @@
 import type { AbiParametersToPrimitiveTypes, ExtractAbiFunction } from 'abitype'
-import { BigNumber, Wallet, providers } from 'ethers'
+import type { Hex } from 'viem'
+import {
+  createPublicClient,
+  createWalletClient,
+  custom,
+  http,
+  webSocket,
+} from 'viem'
+import { privateKeyToAccount } from 'viem/accounts'
+import { rpc } from 'viem/utils'
 
-import type { Chain } from '../src'
+import type { Chain, WebSocketPublicClient } from '../src'
 import { foundry, goerli, mainnet, optimism, polygon } from '../src/chains'
 
 import type { mirrorCrowdfundContractConfig } from './constants'
-
-export function getNetwork(chain: Chain) {
-  return {
-    chainId: chain.id,
-    ensAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
-    name: chain.name,
-  }
-}
 
 export const foundryMainnet: Chain = {
   ...mainnet,
@@ -21,45 +22,41 @@ export const foundryMainnet: Chain = {
 
 export const testChains = [foundryMainnet, mainnet, goerli, optimism, polygon]
 
-class EthersProviderWrapper extends providers.StaticJsonRpcProvider {
-  toJSON() {
-    return `<Provider network={${this.network.chainId}} />`
-  }
-}
-
-export function getProvider({
+export function getPublicClient({
   chains = testChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
-  const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
+  const chain = chains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]
-  const provider = new EthersProviderWrapper(url, getNetwork(chain))
-  provider.pollingInterval = 1_000
-  return Object.assign(provider, { chains })
+  const publicClient = createPublicClient({
+    chain,
+    transport: http(url),
+    pollingInterval: 1_000,
+  })
+  return Object.assign(publicClient, {
+    chains,
+    toJSON() {
+      return `<PublicClient network={${chain.id}} />`
+    },
+  })
 }
 
-class EthersWebSocketProviderWrapper extends providers.WebSocketProvider {
-  toJSON() {
-    return `<WebSocketProvider network={${this.network.chainId}} />`
-  }
-}
-
-export function getWebSocketProvider({
+export function getWebSocketPublicClient({
   chains = testChains,
   chainId,
 }: { chains?: Chain[]; chainId?: number } = {}) {
   const chain = testChains.find((x) => x.id === chainId) ?? foundryMainnet
   const url = foundryMainnet.rpcUrls.default.http[0]!.replace('http', 'ws')
-  const webSocketProvider = Object.assign(
-    new EthersWebSocketProviderWrapper(url, getNetwork(chain)),
-    { chains },
-  )
-  // Clean up WebSocketProvider immediately
-  // so handle doesn't stay open in test environment
-  webSocketProvider?.destroy().catch(() => {
-    return
+  const webSocketPublicClient = createPublicClient({
+    chain,
+    transport: webSocket(url),
   })
-  return webSocketProvider
+  return Object.assign(webSocketPublicClient, {
+    chains,
+    toJSON() {
+      return `<WebSocketPublicClient network={${chain.id}} />`
+    },
+  }) as WebSocketPublicClient
 }
 
 // Default accounts from Anvil
@@ -166,18 +163,29 @@ export const accounts = [
   },
 ]
 
-export class WalletSigner extends Wallet {
-  connectUnchecked(): providers.JsonRpcSigner {
-    const uncheckedSigner = (
-      this.provider as EthersProviderWrapper
-    ).getUncheckedSigner(this.address)
-    return uncheckedSigner
-  }
-}
+export function getWalletClients() {
+  const publicClient = getPublicClient()
+  publicClient.request = async ({ method, params }: any) => {
+    if (method === 'personal_sign') {
+      method = 'eth_sign'
+      params = [params[1], params[0]]
+    }
 
-export function getSigners() {
-  const provider = getProvider()
-  return accounts.map((x) => new WalletSigner(x.privateKey, provider))
+    const { result } = await rpc.http(foundryMainnet.rpcUrls.default.http[0]!, {
+      body: {
+        method,
+        params,
+      },
+    })
+    return result
+  }
+  return accounts.map((x) =>
+    createWalletClient({
+      account: privateKeyToAccount(x.privateKey as Hex).address,
+      chain: publicClient.chain,
+      transport: custom(publicClient),
+    }),
+  )
 }
 
 let crowdfundId = 0
@@ -194,14 +202,14 @@ type GetCrowdfundArgs = AbiParametersToPrimitiveTypes<
 export function getCrowdfundArgs([
   tributaryConfig = {
     tributary: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    feePercentage: BigNumber.from(250),
+    feePercentage: 250n,
   },
   name = `Crowdfund ${crowdfundId}`,
   symbol = `$Crowdfund${crowdfundId}-${getRandomNumber()}`,
   operatorAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
   fundingRecipientAddress = '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-  fundingGoal = BigNumber.from('100000000000000000000'),
-  operatorPercent = BigNumber.from('100'),
+  fundingGoal = 100000000000000000000n,
+  operatorPercent = 100n,
 ]: Partial<GetCrowdfundArgs> = []): GetCrowdfundArgs {
   crowdfundId += 1
   // do not change order of values below
@@ -217,5 +225,5 @@ export function getCrowdfundArgs([
 }
 
 export function getRandomTokenId() {
-  return BigNumber.from(Math.floor(Math.random() * 1000) + 69420)
+  return BigInt(Math.floor(Math.random() * 1000) + 69420)
 }

@@ -1,5 +1,5 @@
 import { defineConfig } from '@wagmi/cli'
-import { actions, erc, etherscan, foundry, react } from '@wagmi/cli/plugins'
+import { actions, erc, etherscan, react } from '@wagmi/cli/plugins'
 
 export default defineConfig({
   out: 'src/generated.ts',
@@ -41,6 +41,5 @@ export default defineConfig({
     }),
     react(),
     actions(),
-    foundry(),
   ],
 })

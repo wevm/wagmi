@@ -1,26 +1,35 @@
 import { Box, Button, Text, Textarea } from 'degen'
-import { verifyMessage } from 'ethers/lib/utils'
 import * as React from 'react'
+import { recoverMessageAddress } from 'viem'
+import type { Address } from 'wagmi'
 import { useAccount, useSignMessage } from 'wagmi'
 
 import { PreviewWrapper } from '../core'
 import { Account, WalletSelector } from '../web3'
 
 export function SignMessage() {
-  const recoveredAddress = React.useRef<string>()
+  const [recoveredAddress, setRecoveredAddress] = React.useState<Address>()
 
   const { isConnected } = useAccount()
   const {
     data: signMessageData,
+    variables,
     error,
     isLoading,
     signMessage,
-  } = useSignMessage({
-    onSuccess(data, variables) {
-      const address = verifyMessage(variables.message, data)
-      recoveredAddress.current = address
-    },
-  })
+  } = useSignMessage()
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (variables?.message && signMessageData) {
+        const recoveredAddress = await recoverMessageAddress({
+          message: variables?.message,
+          signature: signMessageData,
+        })
+        setRecoveredAddress(recoveredAddress)
+      }
+    })()
+  }, [signMessageData, variables?.message])
 
   if (isConnected)
     return (
@@ -52,7 +61,7 @@ export function SignMessage() {
 
           {signMessageData && (
             <Box color="textSecondary">
-              <Box>Recovered Address: {recoveredAddress.current}</Box>
+              <Box>Recovered Address: {recoveredAddress}</Box>
               <Box style={{ wordBreak: 'break-all' }}>
                 Signature: {signMessageData}
               </Box>

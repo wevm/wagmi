@@ -1,0 +1,44 @@
+---
+title: 'usePublicClient'
+description: "React Hook for accessing viem's Public Client."
+---
+
+# usePublicClient
+
+Hook for accessing viem's [Public Client](https://viem.sh/docs/clients/public.html).
+
+```ts
+import { usePublicClient } from 'wagmi'
+```
+
+## Usage
+
+```tsx
+import { usePublicClient } from 'wagmi'
+
+function App() {
+  const publicClient = usePublicClient()
+}
+```
+
+## Return Value
+
+```tsx
+PublicClient
+```
+
+## Configuration
+
+### chainId (optional)
+
+Force a specific chain id. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
+
+```tsx {5}
+import { usePublicClient } from 'wagmi'
+
+function App() {
+  const publicClient = usePublicClient({
+    chainId: 1,
+  })
+}
+```

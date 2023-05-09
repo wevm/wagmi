@@ -2,7 +2,7 @@ import type { SwitchNetworkArgs, SwitchNetworkResult } from '@wagmi/core'
 import { switchNetwork } from '@wagmi/core'
 import * as React from 'react'
 
-import { useClient } from '../../context'
+import { useConfig } from '../../context'
 import type { MutationConfig } from '../../types'
 import { useForceUpdate, useMutation } from '../utils'
 
@@ -33,7 +33,7 @@ export function useSwitchNetwork({
   onSettled,
   onSuccess,
 }: UseSwitchNetworkArgs & UseSwitchNetworkConfig = {}) {
-  const client = useClient()
+  const config = useConfig()
   const forceUpdate = useForceUpdate()
 
   const {
@@ -69,7 +69,7 @@ export function useSwitchNetwork({
 
   // Trigger update when connector changes since not all connectors support chain switching
   React.useEffect(() => {
-    const unwatch = client.subscribe(
+    const unwatch = config.subscribe(
       ({ chains, connector }) => ({
         chains,
         connector,
@@ -77,18 +77,18 @@ export function useSwitchNetwork({
       forceUpdate,
     )
     return unwatch
-  }, [client, forceUpdate])
+  }, [config, forceUpdate])
 
   let switchNetwork
   let switchNetworkAsync
-  const supportsSwitchChain = !!client.connector?.switchChain
+  const supportsSwitchChain = !!config.connector?.switchChain
   if (throwForSwitchChainNotSupported || supportsSwitchChain) {
     switchNetwork = switchNetwork_
     switchNetworkAsync = switchNetworkAsync_
   }
 
   return {
-    chains: client.chains ?? [],
+    chains: config.chains ?? [],
     data,
     error,
     isError,
