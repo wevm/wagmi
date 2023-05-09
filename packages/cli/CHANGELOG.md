@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.0.1
+
+### Patch Changes
+
+- [`ea651cd7`](https://github.com/wagmi-dev/wagmi/commit/ea651cd7fc75b7866272605467db11fd6e1d81af) Thanks [@jxom](https://github.com/jxom)! - Downgraded abitype.
+
 ## 1.0.0
 
 ### Major Changes
