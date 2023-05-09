@@ -1,4 +1,4 @@
-import { pascalCase } from 'change-case'
+import { pascalCase as originalPascalCase } from 'change-case'
 import dedent from 'dedent'
 
 import type { Plugin } from '../config'
@@ -59,6 +59,9 @@ type ReactConfig = {
 type ReactResult = RequiredBy<Plugin, 'run'>
 
 export function react(config: ReactConfig = {}): ReactResult {
+  const pascalCase = (input: string) =>
+    originalPascalCase(input, { stripRegexp: /[^A-Z0-9_]/gi })
+
   const hooks = {
     useContractEvent: true,
     useContractItemEvent: true,

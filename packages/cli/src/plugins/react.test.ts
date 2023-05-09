@@ -98,5 +98,41 @@ describe('react', () => {
         format(`${imports}\n\n${content}`),
       ).resolves.toMatchSnapshot()
     })
+
+    it('throws when function names in a contract are non unique', async () => {
+      await expect(
+        react().run({
+          contracts: [
+            {
+              name: 'foo',
+              abi: [
+                {
+                  type: 'function',
+                  name: 'totalSupply',
+                  stateMutability: 'view',
+                  inputs: [],
+                  outputs: [{ type: 'uint256' }],
+                },
+                {
+                  type: 'function',
+                  name: '-totalSupply',
+                  stateMutability: 'view',
+                  inputs: [],
+                  outputs: [{ type: 'uint256' }],
+                },
+              ],
+              content: '',
+              meta: {
+                abiName: 'fooAbi',
+              },
+            },
+          ],
+          isTypeScript: true,
+          outputs: [],
+        }),
+      ).rejects.toThrowErrorMatchingInlineSnapshot(
+        `"Hook name \\"useFooTotalSupply\\" must be unique for contract \\"foo\\"."`,
+      )
+    })
   })
 })
