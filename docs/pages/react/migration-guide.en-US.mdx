@@ -24,7 +24,7 @@ The `ethers` peer dependency has been removed in favour of [`viem`](https://viem
 
 ```bash
 npm uninstall ethers
-npm i wagmi@next viem@latest
+npm i wagmi viem@latest
 ```
 
 If your project is using modules from `ethers` directly, that are dependant on wagmi (e.g. `BigNumber`, etc), you will need to migrate to the `viem`-equivalent module. Check out the [Ethers.js → viem migration guide](https://viem.sh/docs/ethers-migration.html).
