@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "@wagmi/chains": "workspace:*",
-    "abitype": "^0.8.2",
+    "abitype": "0.8.1",
     "abort-controller": "^3.0.0",
     "bundle-require": "^3.1.2",
     "cac": "^6.7.12",
