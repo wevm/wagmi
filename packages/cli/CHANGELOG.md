@@ -1,5 +1,11 @@
 # @wagmi/cli
 
+## 1.0.0
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`5be0655c`](https://github.com/wagmi-dev/wagmi/commit/5be0655c8e48b25d38009022461fbf611af54349) Thanks [@jxom](https://github.com/jxom)! - Released v1. Read [Migration Guide](https://next.wagmi.sh/react/migration-guide#1xx-breaking-changes).
+
 ## 1.0.0-next.7
 
 ### Patch Changes
