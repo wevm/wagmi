@@ -72,7 +72,7 @@ export async function prepareWriteContract<
   const publicClient = getPublicClient({ chainId })
   const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
   if (!walletClient) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId, walletClient })
+  if (chainId) assertActiveChain({ chainId })
 
   const {
     accessList,

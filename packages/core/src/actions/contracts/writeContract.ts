@@ -68,10 +68,9 @@ export async function writeContract<
     | WriteContractUnpreparedArgs<TAbi, TFunctionName>
     | WriteContractPreparedArgs<TAbi, TFunctionName>,
 ): Promise<WriteContractResult> {
-  const walletClient = await getWalletClient()
+  const walletClient = await getWalletClient({ chainId: config.chainId })
   if (!walletClient) throw new ConnectorNotFoundError()
-  if (config.chainId)
-    assertActiveChain({ chainId: config.chainId, walletClient })
+  if (config.chainId) assertActiveChain({ chainId: config.chainId })
 
   let request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
   if (config.mode === 'prepared') {
