@@ -22,7 +22,7 @@ describe('assertActiveChain', () => {
     })
     expect(() =>
       assertActiveChain({ chainId: 1 }),
-    ).toThrowErrorMatchingInlineSnapshot(
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Chain mismatch: Expected \\"Ethereum\\", received \\"Goerli\\"."',
     )
   })
@@ -37,7 +37,7 @@ describe('assertActiveChain', () => {
         },
       }),
     })
-    assertActiveChain({ chainId: 1 })
+    await assertActiveChain({ chainId: 1 })
   })
 
   it('errors when wallet is on wrong chain', async () => {
@@ -53,8 +53,8 @@ describe('assertActiveChain', () => {
       }),
     })
     expect(() =>
-      assertActiveChain({ chainId: 5, walletClient }),
-    ).toThrowErrorMatchingInlineSnapshot(
+      assertActiveChain({ chainId: 5 }),
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
       '"Chain \\"5\\" not configured for connector \\"mock\\"."',
     )
   })

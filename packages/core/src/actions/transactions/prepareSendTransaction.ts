@@ -57,7 +57,7 @@ export async function prepareSendTransaction({
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
   const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
   if (!walletClient) throw new ConnectorNotFoundError()
-  if (chainId) assertActiveChain({ chainId, walletClient })
+  if (chainId) assertActiveChain({ chainId })
 
   const to =
     (to_ && !isAddress(to_)

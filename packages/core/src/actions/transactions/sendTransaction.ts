@@ -60,10 +60,10 @@ export async function sendTransaction({
   // `getWalletClient` isn't really "asynchronous" as we have already
   // initialized the Wallet Client upon user connection, so it will return
   // immediately.
-  const walletClient = await getWalletClient()
+  const walletClient = await getWalletClient({ chainId })
   if (!walletClient) throw new ConnectorNotFoundError()
 
-  if (chainId) assertActiveChain({ chainId, walletClient })
+  if (chainId) assertActiveChain({ chainId })
 
   let args: SendTransactionParameters<Chain, Account>
   if (mode === 'prepared') {
@@ -96,7 +96,7 @@ export async function sendTransaction({
     })
   }
 
-  const hash = await walletClient.sendTransaction(args)
+  const hash = await walletClient.sendTransaction({ ...args, chain: null })
 
   /********************************************************************/
   /** END: iOS App Link cautious code.                                */

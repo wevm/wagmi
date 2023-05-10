@@ -37,7 +37,7 @@ export async function signTypedData<
   if (!walletClient) throw new ConnectorNotFoundError()
 
   const { chainId } = domain as TypedDataDomain
-  if (chainId) assertActiveChain({ chainId, walletClient })
+  if (chainId) assertActiveChain({ chainId })
 
   return walletClient.signTypedData({
     message,
