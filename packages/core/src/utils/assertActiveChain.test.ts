@@ -37,7 +37,7 @@ describe('assertActiveChain', () => {
         },
       }),
     })
-    await assertActiveChain({ chainId: 1 })
+    assertActiveChain({ chainId: 1 })
   })
 
   it('errors when wallet is on wrong chain', async () => {
