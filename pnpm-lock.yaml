@@ -5311,7 +5311,7 @@ packages:
     dependencies:
       typescript: 4.9.5
       zod: 3.21.4
-      
+
   /abitype@0.8.2(typescript@4.9.5)(zod@3.21.4):
     resolution:
       {
