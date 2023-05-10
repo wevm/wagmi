@@ -32,7 +32,7 @@ function App() {
 A wagmi [`config`](/react/config) instance that consists of configuration options. Defaults to `createConfig()`.
 
 ```tsx {8-12,16}
-import { createConfig, configureChains, mainnet } from 'wagmi'
+import { WagmiConfig, createConfig, configureChains, mainnet } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { publicClient, webSocketPublicClient } = configureChains(
