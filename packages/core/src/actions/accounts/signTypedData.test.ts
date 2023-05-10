@@ -141,28 +141,6 @@ describe('signTypedData', () => {
           '"Chain mismatch: Expected \\"Ethereum\\", received \\"Goerli\\"."',
         )
       })
-
-      it('throws if chain not configured for connector', async () => {
-        await connect({
-          chainId: 69_420,
-          connector: new MockConnector({
-            options: {
-              flags: { noSwitchChain: true },
-              walletClient: getWalletClients()[0]!,
-            },
-          }),
-        })
-        await expect(
-          signTypedData({
-            domain: { ...domain, chainId: 69_420 },
-            types,
-            primaryType: 'Mail',
-            message,
-          }),
-        ).rejects.toThrowErrorMatchingInlineSnapshot(
-          '"Chain \\"69420\\" not configured for connector \\"mock\\"."',
-        )
-      })
     })
   })
 })

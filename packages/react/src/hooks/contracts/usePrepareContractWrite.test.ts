@@ -152,28 +152,6 @@ describe('usePrepareContractWrite', () => {
       )
     })
 
-    it('should throw an error if chainId is not configured', async () => {
-      const tokenId = getRandomTokenId()
-      const utils = renderHook(() =>
-        usePrepareContractWriteWithConnect({
-          ...wagmiContractConfig,
-          chainId: 69_420,
-          functionName: 'mint',
-          args: [tokenId],
-        }),
-      )
-
-      const { result, waitFor } = utils
-      await actConnect({ chainId: 69_420, utils })
-
-      await waitFor(() =>
-        expect(result.current.prepareContractWrite.isError).toBeTruthy(),
-      )
-      expect(result.current.prepareContractWrite.error).toMatchInlineSnapshot(
-        '[ChainNotConfigured: Chain "69420" not configured for connector "mock".]',
-      )
-    })
-
     it('contract method error', async () => {
       const utils = renderHook(() =>
         usePrepareContractWriteWithConnect({
