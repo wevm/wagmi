@@ -5311,6 +5311,21 @@ packages:
     dependencies:
       typescript: 4.9.5
       zod: 3.21.4
+      
+  /abitype@0.8.2(typescript@4.9.5)(zod@3.21.4):
+    resolution:
+      {
+        integrity: sha512-B1ViNMGpfx/qjVQi0RTc2HEFHuR9uoCoTEkwELT5Y7pBPtBbctYijz9BK6+Kd0hQ3S70FhYTO2dWWk0QNUEXMA==,
+      }
+    peerDependencies:
+      typescript: '>=5.0.4'
+      zod: ^3 >=3.19.1
+    peerDependenciesMeta:
+      zod:
+        optional: true
+    dependencies:
+      typescript: 4.9.5
+      zod: 3.21.4
 
   /abort-controller@3.0.0:
     resolution:
