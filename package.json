@@ -39,7 +39,7 @@
     "@vitest/coverage-c8": "^0.25.8",
     "@vitest/ui": "^0.25.8",
     "dedent": "^0.7.0",
-    "esbuild": "0.15.13",
+    "esbuild": "0.17.17",
     "esbuild-register": "^3.4.2",
     "eslint": "8.17.0",
     "eslint-config-prettier": "^8.5.0",
