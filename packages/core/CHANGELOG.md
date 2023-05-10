@@ -1,5 +1,11 @@
 # @wagmi/core
 
+## 1.0.2
+
+### Patch Changes
+
+- [#2304](https://github.com/wagmi-dev/wagmi/pull/2304) [`09a4fd38`](https://github.com/wagmi-dev/wagmi/commit/09a4fd38f44eb176797925fd85314be17b610cd4) Thanks [@jxom](https://github.com/jxom)! - Removed assert chain workaround.
+
 ## 1.0.1
 
 ### Patch Changes

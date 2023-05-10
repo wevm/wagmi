@@ -1,5 +1,12 @@
 # wagmi
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`09a4fd38`](https://github.com/wagmi-dev/wagmi/commit/09a4fd38f44eb176797925fd85314be17b610cd4)]:
+  - @wagmi/core@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
