@@ -49,6 +49,7 @@ This directly affects:
 import { WagmiConfig, createConfig } from 'wagmi'
 - import { getDefaultProvider } from 'ethers'
 + import { createPublicClient, http } from 'viem'
++ import { mainnet } from 'viem/chains'
 
 const config = createConfig({
   autoConnect: true,

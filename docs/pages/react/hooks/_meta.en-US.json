@@ -3,7 +3,6 @@
   "useBalance": "useBalance",
   "useBlockNumber": "useBlockNumber",
   "useConnect": "useConnect",
-  "useContract": "useContract",
   "useContractEvent": "useContractEvent",
   "useContractInfiniteReads": "useContractInfiniteReads",
   "useContractRead": "useContractRead",
