@@ -37,21 +37,21 @@ function useLocale() {
 }
 
 const config: DocsThemeConfig = {
-  banner: {
-    key: 'gitcoin-2',
-    text() {
-      return (
-        <a
-          target="_blank"
-          href="https://explorer.gitcoin.co/#/round/1/0xdf22a2c8f6ba9376ff17ee13e6154b784ee92094/0xdf22a2c8f6ba9376ff17ee13e6154b784ee92094-4"
-          rel="noopener noreferrer"
-        >
-          {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
-          {translations[useLocale()].gitcoinBanner}
-        </a>
-      )
-    },
-  },
+  // banner: {
+  //   key: 'gitcoin-2',
+  //   text() {
+  //     return (
+  //       <a
+  //         target="_blank"
+  //         href="https://explorer.gitcoin.co/#/round/1/0xdf22a2c8f6ba9376ff17ee13e6154b784ee92094/0xdf22a2c8f6ba9376ff17ee13e6154b784ee92094-4"
+  //         rel="noopener noreferrer"
+  //       >
+  //         {/* eslint-disable-next-line react-hooks/rules-of-hooks */}
+  //         {translations[useLocale()].gitcoinBanner}
+  //       </a>
+  //     )
+  //   },
+  // },
   chat: {
     icon: null,
   },
