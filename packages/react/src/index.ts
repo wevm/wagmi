@@ -1,4 +1,21 @@
 ////////////////////////////////////////////////////////////////////////////////
+// @wagmi/core
+
+export {
+  // Config
+  type Connection,
+  type Connector,
+  type Config,
+  type CreateConfigParameters,
+  createConfig,
+  // Connectors
+  type InjectedParameters,
+  injected,
+  type WalletConnectParameters,
+  walletConnect,
+} from '@wagmi/core'
+
+////////////////////////////////////////////////////////////////////////////////
 // Context
 
 export {
