@@ -1,118 +1,46 @@
 {
   "name": "@wagmi/core",
-  "description": "Vanilla JS library for Ethereum",
-  "license": "MIT",
+  "description": "VanillaJS library for Ethereum",
   "version": "1.0.2",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/wagmi-dev/wagmi.git",
     "directory": "packages/core"
   },
-  "contributors": [
-    "awkweb.eth <t@wagmi.sh>",
-    "jxom.eth <j@wagmi.sh>"
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && pnpm run build:cjs && pnpm run build:esm+types",
+    "build:cjs": "tsc --project tsconfig.build.json --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && echo > ./dist/cjs/package.json '{\"type\":\"commonjs\"}'",
+    "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types && echo > ./dist/esm/package.json '{\"type\":\"module\"}'",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": [
+    "dist/**",
+    "!dist/**/*.tsbuildinfo",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/**/*.test-d.ts"
   ],
-  "ethereum": "wagmi-dev.eth",
-  "funding": [
-    {
-      "type": "gitcoin",
-      "url": "https://wagmi.sh/gitcoin"
-    },
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wagmi-dev"
-    }
-  ],
+  "sideEffects": false,
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "typings": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./chains": {
-      "types": "./dist/chains.d.ts",
-      "default": "./dist/chains.js"
-    },
-    "./connectors": {
-      "types": "./dist/connectors/index.d.ts",
-      "default": "./dist/connectors/index.js"
-    },
-    "./connectors/coinbaseWallet": {
-      "types": "./dist/connectors/coinbaseWallet.d.ts",
-      "default": "./dist/connectors/coinbaseWallet.js"
-    },
-    "./connectors/injected": {
-      "types": "./dist/connectors/injected.d.ts",
-      "default": "./dist/connectors/injected.js"
-    },
-    "./connectors/ledger": {
-      "types": "./dist/connectors/ledger.d.ts",
-      "default": "./dist/connectors/ledger.js"
-    },
-    "./connectors/metaMask": {
-      "types": "./dist/connectors/metaMask.d.ts",
-      "default": "./dist/connectors/metaMask.js"
-    },
-    "./connectors/mock": {
-      "types": "./dist/connectors/mock.d.ts",
-      "default": "./dist/connectors/mock.js"
-    },
-    "./connectors/safe": {
-      "types": "./dist/connectors/safe.d.ts",
-      "default": "./dist/connectors/safe.js"
-    },
-    "./connectors/walletConnect": {
-      "types": "./dist/connectors/walletConnect.d.ts",
-      "default": "./dist/connectors/walletConnect.js"
-    },
-    "./connectors/walletConnectLegacy": {
-      "types": "./dist/connectors/walletConnectLegacy.d.ts",
-      "default": "./dist/connectors/walletConnectLegacy.js"
-    },
-    "./internal": {
-      "types": "./dist/internal/index.d.ts",
-      "default": "./dist/internal/index.js"
-    },
-    "./internal/test": {
-      "types": "./dist/internal/test.d.ts",
-      "default": "./dist/internal/test.js"
-    },
-    "./providers/alchemy": {
-      "types": "./dist/providers/alchemy.d.ts",
-      "default": "./dist/providers/alchemy.js"
-    },
-    "./providers/infura": {
-      "types": "./dist/providers/infura.d.ts",
-      "default": "./dist/providers/infura.js"
-    },
-    "./providers/jsonRpc": {
-      "types": "./dist/providers/jsonRpc.d.ts",
-      "default": "./dist/providers/jsonRpc.js"
-    },
-    "./providers/public": {
-      "types": "./dist/providers/public.d.ts",
-      "default": "./dist/providers/public.js"
-    },
-    "./window": {
-      "types": "./dist/window.d.ts",
-      "default": "./dist/window.js"
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "default": "./dist/cjs/index.js"
     },
     "./package.json": "./package.json"
   },
-  "sideEffects": false,
-  "files": [
-    "/chains",
-    "/connectors",
-    "/internal",
-    "/providers",
-    "/window",
-    "/dist"
-  ],
   "peerDependencies": {
-    "viem": "~0.3.18",
-    "typescript": ">=4.9.4"
+    "viem": "portable-types",
+    "typescript": ">=5.0.4"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -120,24 +48,20 @@
     }
   },
   "dependencies": {
-    "@wagmi/chains": "workspace:*",
-    "@wagmi/connectors": "workspace:*",
-    "abitype": "0.8.1",
-    "eventemitter3": "^4.0.7",
-    "zustand": "^4.3.1"
+    "@tanstack/query-core": "5.0.0-alpha.26",
+    "@tanstack/query-persist-client-core": "5.0.0-alpha.26",
+    "@tanstack/query-sync-storage-persister": "5.0.0-alpha.26",
+    "@walletconnect/ethereum-provider": "^2.7.2",
+    "@web3modal/standalone": "^2.4.1",
+    "eventemitter3": "^5.0.1",
+    "zustand": "^4.3.7"
   },
-  "devDependencies": {
-    "viem": "~0.3.18"
-  },
-  "keywords": [
-    "eth",
-    "ethereum",
-    "dapps",
-    "wallet",
-    "web3"
+  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/wagmi-dev"
+    }
   ],
-  "scripts": {
-    "build": "tsup",
-    "dev": "DEV=true tsup"
-  }
+  "keywords": ["eth", "ethereum", "dapps", "wallet", "web3"]
 }

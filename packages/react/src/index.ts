@@ -1,84 +1,31 @@
-export { createConfig } from './config'
-export type { Config, CreateConfigParameters } from './config'
-
-export { Context, WagmiConfig, useConfig } from './context'
-export type { WagmiConfigProps } from './context'
+////////////////////////////////////////////////////////////////////////////////
+// Context
 
 export {
-  paginatedIndexesConfig,
-  useAccount,
-  useBalance,
+  type WagmiConfigProps,
+  WagmiConfig,
+  useConfig,
+  WagmiContext,
+} from './context.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Hooks
+
+export { useAccount } from './hooks/useAccount.js'
+
+export {
+  type UseBlockNumberParameters,
   useBlockNumber,
-  useChainId,
-  useConnect,
-  useContractEvent,
-  useContractInfiniteReads,
-  useContractRead,
-  useContractReads,
-  useContractWrite,
-  useDisconnect,
-  useEnsAddress,
-  useEnsAvatar,
-  useEnsName,
-  useEnsResolver,
-  useFeeData,
-  useInfiniteQuery,
-  useMutation,
-  useNetwork,
-  usePublicClient,
-  useQuery,
-  useQueryClient,
-  useSendTransaction,
-  usePrepareContractWrite,
-  usePrepareSendTransaction,
-  useSignMessage,
-  useSignTypedData,
-  useSwitchNetwork,
-  useToken,
-  useTransaction,
-  useWaitForTransaction,
-  useWalletClient,
-  useWatchPendingTransactions,
-  useWebSocketPublicClient,
-  type UseContractEventConfig,
-  type UseContractInfiniteReadsConfig,
-  type UseContractReadConfig,
-  type UseContractReadsConfig,
-  type UseContractWriteConfig,
-  type UsePrepareContractWriteConfig,
-} from './hooks'
+} from './hooks/useBlockNumber.js'
 
 export {
-  ChainMismatchError,
-  ChainNotConfiguredError,
-  Connector,
-  ConnectorAlreadyConnectedError,
-  ConnectorNotFoundError,
-  ConfigChainsNotFound,
-  SwitchChainNotSupportedError,
-  configureChains,
-  createStorage,
-  deepEqual,
-  deserialize,
-  erc20ABI,
-  erc721ABI,
-  erc4626ABI,
-  mainnet,
-  readContracts,
-  sepolia,
-  serialize,
-} from '@wagmi/core'
-export type {
-  Chain,
-  ChainProviderFn,
-  ConnectorData,
-  ConnectorEvents,
-  PublicClient,
-  Storage,
-  Unit,
-  WalletClient,
-  WebSocketPublicClient,
-  WindowProvider,
-} from '@wagmi/core'
+  type UseConnectParameters,
+  useConnect,
+} from './hooks/useConnect.js'
 
-export type { Address } from 'abitype'
+export {
+  type UseDisconnectParameters,
+  useDisconnect,
+} from './hooks/useDisconnect.js'
+
+export { useSyncExternalStoreWithTracked } from './hooks/useSyncExternalStoreWithTracked.js'

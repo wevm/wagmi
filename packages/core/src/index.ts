@@ -1,163 +1,98 @@
+export { mainnet, sepolia } from 'viem/chains'
+export { http } from 'viem'
+
+////////////////////////////////////////////////////////////////////////////////
+// Actions
+
 export {
+  type ConnectParameters,
+  type ConnectReturnType,
   connect,
+  type ConnectMutationOptions,
+  connectMutationOptions,
+} from './actions/connect.js'
+
+export {
+  type DisconnectParameters,
   disconnect,
-  fetchBalance,
-  fetchBlockNumber,
-  fetchEnsAddress,
-  fetchEnsAvatar,
-  fetchEnsName,
-  fetchEnsResolver,
-  fetchFeeData,
-  fetchToken,
-  fetchTransaction,
+  type DisconnectMutationOptions,
+  disconnectMutationOptions,
+} from './actions/disconnect.js'
+
+export {
+  type GetAccountReturnType,
   getAccount,
-  getContract,
-  getNetwork,
-  getPublicClient,
-  getWalletClient,
-  getWebSocketPublicClient,
-  multicall,
-  prepareWriteContract,
-  prepareSendTransaction,
-  readContract,
-  readContracts,
-  sendTransaction,
-  signMessage,
-  signTypedData,
-  switchNetwork,
-  waitForTransaction,
+  type WatchAccountParameters,
+  type WatchAccountReturnType,
   watchAccount,
+} from './actions/getAccount.js'
+
+export {
+  type GetBlockNumberParameters,
+  type GetBlockNumberReturnType,
+  getBlockNumber,
+  type WatchBlockNumberParameters,
+  type WatchBlockNumberReturnType,
   watchBlockNumber,
-  watchContractEvent,
-  watchMulticall,
-  watchNetwork,
-  watchPendingTransactions,
-  watchPublicClient,
-  watchReadContract,
-  watchReadContracts,
-  watchWalletClient,
-  watchWebSocketPublicClient,
-  writeContract,
-} from './actions'
-export type {
-  ConnectArgs,
-  ConnectResult,
-  FetchBalanceArgs,
-  FetchBalanceResult,
-  FetchBlockNumberArgs,
-  FetchBlockNumberResult,
-  FetchEnsAddressArgs,
-  FetchEnsAddressResult,
-  FetchEnsAvatarArgs,
-  FetchEnsAvatarResult,
-  FetchEnsNameArgs,
-  FetchEnsNameResult,
-  FetchEnsResolverArgs,
-  FetchEnsResolverResult,
-  FetchFeeDataArgs,
-  FetchFeeDataResult,
-  GetWalletClientResult,
-  FetchTokenArgs,
-  FetchTokenResult,
-  FetchTransactionArgs,
-  FetchTransactionResult,
-  GetAccountResult,
-  GetContractArgs,
-  GetContractResult,
-  GetNetworkResult,
-  GetPublicClientArgs,
-  GetPublicClientResult,
-  GetWalletClientArgs,
-  GetWebSocketPublicClientArgs,
-  GetWebSocketPublicClientResult,
-  MulticallConfig,
-  MulticallResult,
-  PrepareWriteContractConfig,
-  PrepareWriteContractResult,
-  PrepareSendTransactionArgs,
-  PrepareSendTransactionResult,
-  ReadContractConfig,
-  ReadContractResult,
-  ReadContractsConfig,
-  ReadContractsResult,
-  SendTransactionArgs,
-  SendTransactionResult,
-  SignMessageArgs,
-  SignMessageResult,
-  SignTypedDataArgs,
-  SignTypedDataResult,
-  SwitchNetworkArgs,
-  SwitchNetworkResult,
-  WaitForTransactionArgs,
-  WaitForTransactionResult,
-  WatchAccountCallback,
-  WatchBlockNumberArgs,
-  WatchBlockNumberCallback,
-  WatchContractEventConfig,
-  WatchContractEventCallback,
-  WatchMulticallConfig,
-  WatchMulticallCallback,
-  WatchNetworkCallback,
-  WatchPendingTransactionsArgs,
-  WatchPendingTransactionsCallback,
-  WatchPendingTransactionsResult,
-  WatchReadContractConfig,
-  WatchReadContractCallback,
-  WatchReadContractsConfig,
-  WatchReadContractsCallback,
-  WatchPublicClientCallback,
-  WatchWalletClientArgs,
-  WatchWalletClientCallback,
-  WatchWebSocketPublicClientCallback,
-  WriteContractArgs,
-  WriteContractMode,
-  WriteContractPreparedArgs,
-  WriteContractResult,
-  WriteContractUnpreparedArgs,
-} from './actions'
+  type GetBlockNumberQueryOptions,
+  getBlockNumberQueryOptions,
+} from './actions/getBlockNumber.js'
 
-export { mainnet, sepolia } from './chains'
-export type { Chain } from './chains'
-
-export { createConfig, getConfig, Config } from './config'
-export type { CreateConfigParameters } from './config'
-
-export { Connector } from './connectors'
-export type { ConnectorData, ConnectorEvents } from './connectors'
-
-export { InjectedConnector } from './connectors/injected'
-export type { InjectedConnectorOptions } from './connectors/injected'
-
-export { erc20ABI, erc721ABI, erc4626ABI } from './constants'
+////////////////////////////////////////////////////////////////////////////////
+// Config
 
 export {
-  ChainMismatchError,
+  type Connection,
+  type Connector,
+  type Config,
+  type CreateConfigParameters,
+  createConfig,
+} from './config.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Connectors
+
+export {
+  type ConnectorEventMap,
+  type CreateConnectorFn,
+  createConnector,
+} from './connectors/connector.js'
+
+export { type InjectedParameters, injected } from './connectors/injected.js'
+
+export {
+  type WalletConnectParameters,
+  walletConnect,
+} from './connectors/walletConnect.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Emitter
+
+export {
+  type EventData,
+  Emitter,
+  createEmitter,
+} from './emitter.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Errors
+
+export {
   ChainNotConfiguredError,
-  ConfigChainsNotFound,
-  ConnectorAlreadyConnectedError,
   ConnectorNotFoundError,
-  SwitchChainNotSupportedError,
-} from './errors'
+  ConnectorAlreadyConnectedError,
+} from './errors.js'
 
-export { createStorage, noopStorage } from './storage'
-export type { ClientStorage as Storage } from './storage'
-
-export type {
-  ChainProviderFn,
-  Hash,
-  PublicClient,
-  Unit,
-  WalletClient,
-  WebSocketPublicClient,
-} from './types'
-export type { WindowProvider } from '@wagmi/connectors'
-export type { Address } from 'abitype'
+////////////////////////////////////////////////////////////////////////////////
+// Storage
 
 export {
-  configureChains,
-  deepEqual,
-  deserialize,
-  getUnit,
-  serialize,
-} from './utils'
-export type { ConfigureChainsConfig } from './utils'
+  type Storage,
+  createStorage,
+  noopStorage,
+} from './storage.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Utilities
+
+export { deepEqual } from './utils/deepEqual.js'

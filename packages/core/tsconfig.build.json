@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.test-d.ts"],
+  "compilerOptions": {
+    "types": ["node"],
+    "lib": ["DOM"]
+  }
+}

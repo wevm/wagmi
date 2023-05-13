@@ -1,6 +1,11 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@1.6.3/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "wagmi-dev/wagmi" }],
+  "$schema": "https://unpkg.com/@changesets/config@2.1.0/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "wagmi-dev/wagmi"
+    }
+  ],
   "commit": false,
   "access": "public",
   "baseBranch": "main",
@@ -8,5 +13,5 @@
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
-  "ignore": ["docs", "example-dev"]
+  "ignore": ["@wagmi/site", "example-*", "playground-*"]
 }

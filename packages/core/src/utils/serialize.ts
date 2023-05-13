@@ -34,7 +34,7 @@ function getCutoff(array: any[], value: any) {
   return 0
 }
 
-type StandardReplacer = (key: string, value: any) => any
+export type StandardReplacer = (key: string, value: any) => any
 type CircularReplacer = (key: string, value: any, referenceKey: string) => any
 
 /**
@@ -115,9 +115,12 @@ export function serialize(
   return JSON.stringify(
     value,
     createReplacer((key, value_) => {
-      const value =
-        typeof value_ === 'bigint' ? `#bigint.${value_.toString()}` : value_
-      return replacer?.(key, value) || value
+      let value = value_
+      if (typeof value === 'bigint')
+        value = { __type: 'bigint', value: value_.toString() }
+      if (value instanceof Map)
+        value = { __type: 'Map', value: Array.from(value_.entries()) }
+      return replacer?.(key, value) ?? value
     }, circularReplacer),
     indent ?? undefined,
   )

@@ -1,6 +1,5 @@
 *.local
 .DS_Store
-.eslintcache
 .next
 .pnpm-debug.log*
 cache
