@@ -167,8 +167,7 @@ export function createConfig<const TChain extends readonly Chain[]>({
     publicClient = publicClients.get(chainId ?? -1)
     if (publicClient) return publicClient
 
-    const chain = chains.find((x) => x.id === chainId)
-    if (!chain) throw new Error('chain not configured.')
+    const chain = chains.find((x) => x.id === chainId) ?? chains[0]!
 
     if ('publicClient' in rest)
       publicClient =

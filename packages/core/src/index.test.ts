@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest'
 
-import * as exports from './index.js'
+import * as core from './index.js'
 
 test('exports', () => {
-  expect(exports).toMatchInlineSnapshot(`
+  expect(core).toMatchInlineSnapshot(`
     {
       "ChainNotConfiguredError": [Function],
       "ConnectorAlreadyConnectedError": [Function],

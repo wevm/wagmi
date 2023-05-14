@@ -17,7 +17,7 @@ export default defineProject({
   },
   test: {
     name: '@wagmi/core',
-    // globalSetup: ['./test/globalSetup.ts'],
-    // setupFiles: ['./test/setup.ts'],
+    globalSetup: ['./packages/core/test/globalSetup.ts'],
+    setupFiles: ['./test/setup.ts'],
   },
 })

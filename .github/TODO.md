@@ -1,14 +1,8 @@
 # TODO
 
-- Chain-aware hooks
-
-Tom
-- Comments on connectors, etc.
-- Switch connectors
-- Declaration merging for react context type
-
 ## General
 
+- Deps set up
 - CI
 - Tests
 

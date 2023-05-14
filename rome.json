@@ -1,15 +1,10 @@
 {
   "files": {
     "ignore": [
-      "**/node_modules",
       "CHANGELOG.md",
-      "cache",
-      "coverage",
-      "dist",
-      "tsconfig.json",
-      "tsconfig.*.json",
       "pnpm-lock.yaml",
-      "references/rome.json"
+      "tsconfig.json",
+      "tsconfig.*.json"
     ]
   },
   "formatter": {
@@ -48,5 +43,10 @@
   },
   "organizeImports": {
     "enabled": true
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
   }
 }

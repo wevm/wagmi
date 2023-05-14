@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest'
 
-import * as exports from './index.js'
+import * as react from './index.js'
 
 test('exports', () => {
-  expect(exports).toMatchInlineSnapshot(`
+  expect(react).toMatchInlineSnapshot(`
     {
       "WagmiConfig": [Function],
       "WagmiContext": {

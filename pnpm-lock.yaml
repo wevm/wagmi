@@ -1,8 +1,5 @@
 lockfileVersion: '6.0'
 
-overrides:
-  '@wagmi/core': workspace:*
-
 patchedDependencies:
   '@tanstack/query-core@5.0.0-alpha.26':
     hash: eeh6ipltmljhxdmr2zvloj7oli
@@ -18,9 +15,6 @@ importers:
       '@changesets/cli':
         specifier: ^2.26.0
         version: 2.26.0
-      '@types/fs-extra':
-        specifier: ^9.0.13
-        version: 9.0.13
       '@types/node':
         specifier: 17.0.21
         version: 17.0.21
@@ -33,12 +27,6 @@ importers:
       '@vitest/ui':
         specifier: ^0.31.0
         version: 0.31.0(vitest@0.31.0)
-      bun:
-        specifier: ^0.5.5
-        version: 0.5.5
-      fs-extra:
-        specifier: ^10.1.0
-        version: 10.1.0
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
@@ -81,15 +69,9 @@ importers:
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
-      typescript:
-        specifier: '>=5.0.4'
-        version: 5.0.4
-      viem:
-        specifier: 0.0.0-portable-types-20230513210020
-        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
       zustand:
         specifier: ^4.3.7
-        version: 4.3.7(react@18.2.0)
+        version: 4.3.7
 
   packages/react:
     dependencies:
@@ -114,15 +96,9 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      typescript:
-        specifier: '>=5.0.4'
-        version: 5.0.4
       use-sync-external-store:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
-      viem:
-        specifier: 0.0.0-portable-types-20230513210020
-        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
     devDependencies:
       '@types/react':
         specifier: ^18.2.0
@@ -191,31 +167,23 @@ importers:
         version: 4.0.0(vite@4.3.2)
 
   references/packages/chains:
-    dependencies:
+    devDependencies:
       '@wagmi/core':
         specifier: ~1.0.2
         version: link:../../../packages/core
-      typescript:
-        specifier: '>=5.0.4'
-        version: 5.0.4
 
   references/packages/connectors:
     dependencies:
-      '@wagmi/core':
-        specifier: ~1.0.2
-        version: link:../../../packages/core
       '@walletconnect/ethereum-provider':
         specifier: ^2.7.2
         version: 2.7.2(@web3modal/standalone@2.4.1)
       '@web3modal/standalone':
         specifier: ^2.4.1
-        version: 2.4.1(react@18.2.0)
-      typescript:
-        specifier: '>=5.0.4'
-        version: 5.0.4
-      viem:
-        specifier: 0.0.0-portable-types-20230513210020
-        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
+        version: 2.4.1
+    devDependencies:
+      '@wagmi/core':
+        specifier: ~1.0.2
+        version: link:../../../packages/core
 
 packages:
 
@@ -1074,54 +1042,6 @@ packages:
     resolution: {integrity: sha512-Aq58f5HiWdyDlFffbbSjAlv596h/cOnt2DO1w3DOC7OJ5EHs0hd/nycJfiu9RJbT6Yk6F1knnRRXNSpxoIVZ9Q==}
     dev: true
 
-  /@oven/bun-darwin-aarch64@0.5.5:
-    resolution: {integrity: sha512-4kf+8xACp7xJ2EGW/GjBWlqUHKfpD6+WHUxElk/x+VTl/jyjtlc4fCm3PjxtVe9VXmi1MEiO+Sl4S2W+5xiLVw==}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@oven/bun-darwin-x64-baseline@0.5.5:
-    resolution: {integrity: sha512-Cxi5let4XMMTqJqu6Xnb6A1SedeuCLMUmbOIOESDVhN14tiAkpsjJqjHa8rzwzy8qT0El9bhB/tsDnL4ivUsUw==}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@oven/bun-darwin-x64@0.5.5:
-    resolution: {integrity: sha512-3ogD9yWqR1dpLiZrzwv4o+xlqxZ2tlxsVtb1erbUS3RZNKfbawx2dNSAsB/Jltx6vPAgWKbDKAzYjcHwhHoWBg==}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@oven/bun-linux-aarch64@0.5.5:
-    resolution: {integrity: sha512-Wcz4GJSq1NiSqpFKCPdRhdKHwu7CS6PmkxxIv0VbdD332RJ4ODKoIctXYDW0sL7XkMt8bkaCylvoetwkFCAWJg==}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@oven/bun-linux-x64-baseline@0.5.5:
-    resolution: {integrity: sha512-KSNNy+OaiK27V3PQvPWQks0yJv+8k7fVm4YnZKGxsTaYTsosnkLb/51ehgnEyMGFbzXofUruq2qfPyew8OD/HA==}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@oven/bun-linux-x64@0.5.5:
-    resolution: {integrity: sha512-M7qOmBtiqjzZPI8y4If0qFZMZyxoro5TIjqhZNQYnWreafn/Ua5s+drb+004KesIqGAZ+jG5lDPHdB2fBXADZw==}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@pedrouid/environment@1.0.1:
     resolution: {integrity: sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==}
     dev: false
@@ -1378,12 +1298,6 @@ packages:
       '@types/ms': 0.7.31
     dev: true
 
-  /@types/fs-extra@9.0.13:
-    resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
-    dependencies:
-      '@types/node': 18.15.11
-    dev: true
-
   /@types/is-ci@3.0.0:
     resolution: {integrity: sha512-Q0Op0hdWbYd1iahB+IFNQcWXFq4O0Q5MwQP7uN0souuQ4rPg1vEYcnIOfr1gY+M+6rc8FGoRaBO1mOOvL29sEQ==}
     dependencies:
@@ -1614,7 +1528,7 @@ packages:
       '@walletconnect/types': 2.7.2
       '@walletconnect/universal-provider': 2.7.2
       '@walletconnect/utils': 2.7.2
-      '@web3modal/standalone': 2.4.1(react@18.2.0)
+      '@web3modal/standalone': 2.4.1
       events: 3.3.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
@@ -1830,28 +1744,28 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@web3modal/core@2.4.1(react@18.2.0):
+  /@web3modal/core@2.4.1:
     resolution: {integrity: sha512-v6Y/eQJSI2YfUTv8rGqjFabqdk3ZPjx6Fe7j5Q8fw0ZWF1YRGM3mySG457qtKQ7D7E1kNKA3BHbaOZ3pgQoG6A==}
     dependencies:
       buffer: 6.0.3
-      valtio: 1.10.5(react@18.2.0)
+      valtio: 1.10.5
     transitivePeerDependencies:
       - react
     dev: false
 
-  /@web3modal/standalone@2.4.1(react@18.2.0):
+  /@web3modal/standalone@2.4.1:
     resolution: {integrity: sha512-ZrI5LwWeT9sd8A3FdIX/gBp3ZrzrX882Ln1vJN0LTCmeP2OUsYcW5bPxjv1PcJ1YUBY7Tg4aTgMUnAVTTuqb+w==}
     dependencies:
-      '@web3modal/core': 2.4.1(react@18.2.0)
-      '@web3modal/ui': 2.4.1(react@18.2.0)
+      '@web3modal/core': 2.4.1
+      '@web3modal/ui': 2.4.1
     transitivePeerDependencies:
       - react
     dev: false
 
-  /@web3modal/ui@2.4.1(react@18.2.0):
+  /@web3modal/ui@2.4.1:
     resolution: {integrity: sha512-x1ceyd3mMJsIHs5UUTLvE+6qyCjhyjL6gB/wVmTDbwASHSQIVyshQJ+s7BwIEMP/pbAsYDg+/M8EiUuE+/E/kg==}
     dependencies:
-      '@web3modal/core': 2.4.1(react@18.2.0)
+      '@web3modal/core': 2.4.1
       lit: 2.7.4
       motion: 10.15.5
       qrcode: 1.5.3
@@ -2088,21 +2002,6 @@ packages:
       base64-js: 1.5.1
       ieee754: 1.2.1
     dev: false
-
-  /bun@0.5.5:
-    resolution: {integrity: sha512-kXMYP8bm3MF4xI0J02jt8/bX8DZ8299ODjxZNW8bJ/nedKhbaezSbgmUCwbBcBRzW7kpPGgs6Oz2lF6Pqpz5Ww==}
-    cpu: [arm64, x64]
-    os: [darwin, linux]
-    hasBin: true
-    requiresBuild: true
-    optionalDependencies:
-      '@oven/bun-darwin-aarch64': 0.5.5
-      '@oven/bun-darwin-x64': 0.5.5
-      '@oven/bun-darwin-x64-baseline': 0.5.5
-      '@oven/bun-linux-aarch64': 0.5.5
-      '@oven/bun-linux-x64': 0.5.5
-      '@oven/bun-linux-x64-baseline': 0.5.5
-    dev: true
 
   /c8@7.13.0:
     resolution: {integrity: sha512-/NL4hQTv1gBL6J6ei80zu3IiTrmePDKXKXOTLpHvcIWZTVYQlDhVWjjWvkhICylE8EwwnMVzDZugCvdx0/DIIA==}
@@ -2836,15 +2735,6 @@ packages:
       mime-types: 2.1.35
     dev: true
 
-  /fs-extra@10.1.0:
-    resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      graceful-fs: 4.2.11
-      jsonfile: 6.1.0
-      universalify: 2.0.0
-    dev: true
-
   /fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
     engines: {node: '>=6 <7 || >=8'}
@@ -3481,14 +3371,6 @@ packages:
 
   /jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
-    optionalDependencies:
-      graceful-fs: 4.2.11
-    dev: true
-
-  /jsonfile@6.1.0:
-    resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
-    dependencies:
-      universalify: 2.0.0
     optionalDependencies:
       graceful-fs: 4.2.11
     dev: true
@@ -4911,11 +4793,6 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
-  /universalify@2.0.0:
-    resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
-    engines: {node: '>= 10.0.0'}
-    dev: true
-
   /update-browserslist-db@1.0.11(browserslist@4.21.5):
     resolution: {integrity: sha512-dCwEFf0/oT85M1fHBg4F0jtLwJrutGoHSQXCh7u4o2t1drG+c0a9Flnqww6XUKSfQMPpJBRjU8d4RXB09qtvaA==}
     hasBin: true
@@ -4971,7 +4848,7 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /valtio@1.10.5(react@18.2.0):
+  /valtio@1.10.5:
     resolution: {integrity: sha512-jTp0k63VXf4r5hPoaC6a6LCG4POkVSh629WLi1+d5PlajLsbynTMd7qAgEiOSPxzoX5iNvbN7iZ/k/g29wrNiQ==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
@@ -4981,7 +4858,6 @@ packages:
         optional: true
     dependencies:
       proxy-compare: 2.5.1
-      react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
@@ -5402,7 +5278,7 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zustand@4.3.7(react@18.2.0):
+  /zustand@4.3.7:
     resolution: {integrity: sha512-dY8ERwB9Nd21ellgkBZFhudER8KVlelZm8388B5nDAXhO/+FZDhYMuRnqDgu5SYyRgz/iaf8RKnbUs/cHfOGlQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -5414,6 +5290,5 @@ packages:
       react:
         optional: true
     dependencies:
-      react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false

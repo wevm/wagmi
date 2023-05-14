@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "build": "pnpm run --recursive --filter \"./packages/*\" --filter \"./references/packages/*\" build",
-    "clean": "pnpm run --recursive --parallel clean",
+    "build": "pnpm run --r link && pnpm run --r --filter wagmi... build",
+    "clean": "pnpm run --r --parallel clean",
     "dev": "pnpm --filter vite-react dev",
     "dev:core": "pnpm --filter vite-core dev",
     "format": "rome format . --write",
@@ -11,19 +11,19 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "npx simple-git-hooks",
     "test": "vitest",
-    "test:coverage": "vitest --coverage",
-    "typecheck": "pnpm run --recursive --parallel typecheck"
+    "test:cov": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "test:ui:cov": "vite preview --outDir ./coverage",
+    "test:update": "vitest --update",
+    "typecheck": "pnpm run --r --parallel typecheck"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.4.6",
     "@changesets/cli": "^2.26.0",
-    "@types/fs-extra": "^9.0.13",
     "@types/node": "17.0.21",
     "@viem/anvil": "0.0.5",
     "@vitest/coverage-c8": "^0.31.0",
     "@vitest/ui": "^0.31.0",
-    "bun": "^0.5.5",
-    "fs-extra": "^10.1.0",
     "jsdom": "^20.0.3",
     "msw": "^1.2.1",
     "rimraf": "^4.1.2",
@@ -39,9 +39,6 @@
   },
   "packageManager": "pnpm@8.3.1",
   "pnpm": {
-    "overrides": {
-      "@wagmi/core": "workspace:*"
-    },
     "patchedDependencies": {
       "@tanstack/query-core@5.0.0-alpha.26": "patches/@tanstack__query-core@5.0.0-alpha.26.patch"
     }

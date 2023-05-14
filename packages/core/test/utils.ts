@@ -1,6 +1,8 @@
 import { type Chain, createTestClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
 
+import { createConfig } from '../src/config.js'
+
 /**
  * The id of the current test worker.
  *
@@ -29,4 +31,14 @@ export const testClient = createTestClient({
   chain: anvil,
   mode: 'anvil',
   transport: http(),
+})
+
+export const config = createConfig({
+  chains: [anvil], // TODO: Figure out how to get chains
+  connectors: [],
+  reconnectOnMount: false,
+  storage: null,
+  transports: {
+    [anvil.id]: http(),
+  },
 })

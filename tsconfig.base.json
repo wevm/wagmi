@@ -36,13 +36,6 @@
     ],
 
     // Skip type checking for node modules
-    "skipLibCheck": true,
-
-    "paths": {
-      "@wagmi/chains": ["./references/packages/chains/src/index.ts"],
-      "@wagmi/connectors": ["./references/packages/connectors/src/index.ts"],
-      "@wagmi/core": ["./packages/core/src/index.ts"],
-      "wagmi": ["./packages/react/src/index.ts"]
-    }
+    "skipLibCheck": true
   }
 }
