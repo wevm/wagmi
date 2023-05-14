@@ -29,7 +29,7 @@ export const testClient = createTestClient({
 })
 
 export const config = createConfig({
-  chains: [anvil], // TODO: Figure out how to get chains
+  chains: [anvil],
   connectors: [],
   reconnectOnMount: false,
   storage: null,

@@ -27,6 +27,12 @@ importers:
       '@vitest/ui':
         specifier: ^0.31.0
         version: 0.31.0(vitest@0.31.0)
+      '@wagmi/chains':
+        specifier: workspace:*
+        version: link:references/packages/chains
+      '@wagmi/connectors':
+        specifier: workspace:*
+        version: link:references/packages/connectors
       jsdom:
         specifier: ^20.0.3
         version: 20.0.3
@@ -72,13 +78,6 @@ importers:
       zustand:
         specifier: ^4.3.7
         version: 4.3.7
-    devDependencies:
-      '@wagmi/chains':
-        specifier: workspace:*
-        version: link:../../references/packages/chains
-      '@wagmi/connectors':
-        specifier: workspace:*
-        version: link:../../references/packages/connectors
 
   packages/react:
     dependencies:
