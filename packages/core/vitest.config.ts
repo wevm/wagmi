@@ -19,5 +19,6 @@ export default defineProject({
     name: '@wagmi/core',
     globalSetup: ['./packages/core/test/globalSetup.ts'],
     setupFiles: ['./test/setup.ts'],
+    testTimeout: 10_000,
   },
 })

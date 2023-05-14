@@ -7,7 +7,7 @@ coverage
 dist
 node_modules
 tsconfig.tsbuildinfo
-./wagmi.config.ts
+*.vitest-temp.json
 
 # local env files
 .env
