@@ -34,6 +34,11 @@
       "import": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
     },
+    "./actions": {
+      "types": "./dist/types/actions.d.ts",
+      "import": "./dist/esm/actions.js",
+      "default": "./dist/cjs/actions.js"
+    },
     "./chains": {
       "types": "./dist/types/chains.d.ts",
       "import": "./dist/esm/chains.js",
