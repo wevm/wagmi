@@ -75,12 +75,6 @@ importers:
       '@tanstack/query-sync-storage-persister':
         specifier: 5.0.0-alpha.26
         version: 5.0.0-alpha.26
-      '@wagmi/chains':
-        specifier: workspace:*
-        version: link:../../references/packages/chains
-      '@wagmi/connectors':
-        specifier: workspace:*
-        version: link:../../references/packages/connectors
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
@@ -102,6 +96,12 @@ importers:
       '@tanstack/react-query-persist-client':
         specifier: 5.0.0-alpha.26
         version: 5.0.0-alpha.26(@tanstack/react-query@5.0.0-alpha.26)
+      '@wagmi/chains':
+        specifier: workspace:*
+        version: link:../../references/packages/chains
+      '@wagmi/connectors':
+        specifier: workspace:*
+        version: link:../../references/packages/connectors
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
@@ -133,6 +133,12 @@ importers:
 
   playgrounds/vite-core:
     dependencies:
+      '@wagmi/chains':
+        specifier: workspace:*
+        version: link:../../references/packages/chains
+      '@wagmi/connectors':
+        specifier: workspace:*
+        version: link:../../references/packages/connectors
       '@wagmi/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -198,6 +204,10 @@ importers:
       typescript:
         specifier: '>=5.0.4'
         version: 5.0.4
+    devDependencies:
+      '@wagmi/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
 
   references/packages/connectors:
     dependencies:

@@ -1,10 +1,10 @@
-import type { Chain } from '@wagmi/chains'
 import {
   type Address,
   type ProviderConnectInfo,
   type ProviderMessage,
 } from 'viem'
 
+import type { Chain } from './chain.js'
 import { Emitter } from './emitter.js'
 import { type Storage } from './storage.js'
 import { type Prettify } from './types.js'

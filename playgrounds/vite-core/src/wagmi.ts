@@ -1,6 +1,7 @@
-import { createConfig, injected, walletConnect } from '@wagmi/core'
+import { mainnet, optimism, sepolia } from '@wagmi/chains'
+import { injected, walletConnect } from '@wagmi/connectors'
+import { createConfig } from '@wagmi/core'
 import { http } from 'viem'
-import { mainnet, optimism, sepolia } from 'viem/chains'
 
 export const config = createConfig({
   chains: [mainnet, sepolia, optimism],

@@ -51,8 +51,6 @@
     "@tanstack/query-core": "5.0.0-alpha.26",
     "@tanstack/query-persist-client-core": "5.0.0-alpha.26",
     "@tanstack/query-sync-storage-persister": "5.0.0-alpha.26",
-    "@wagmi/chains": "workspace:*",
-    "@wagmi/connectors": "workspace:*",
     "eventemitter3": "^5.0.1",
     "zustand": "^4.3.7"
   },

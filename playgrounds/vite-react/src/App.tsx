@@ -1,5 +1,5 @@
-import { optimism } from 'viem/chains'
 import { useAccount, useBlockNumber, useConnect, useDisconnect } from 'wagmi'
+import { optimism } from 'wagmi/chains'
 
 function App() {
   return (

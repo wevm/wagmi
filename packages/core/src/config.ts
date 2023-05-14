@@ -4,7 +4,6 @@ import {
   type Persister,
 } from '@tanstack/query-persist-client-core'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
-import type { Chain } from '@wagmi/chains'
 import {
   type Address,
   type PublicClient,
@@ -14,6 +13,7 @@ import {
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
+import type { Chain } from './chain.js'
 import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'

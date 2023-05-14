@@ -36,6 +36,16 @@
       "import": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
     },
+    "./chains": {
+      "types": "./dist/types/chains.d.ts",
+      "import": "./dist/esm/chains.js",
+      "default": "./dist/cjs/chains.js"
+    },
+    "./connectors": {
+      "types": "./dist/types/connectors.d.ts",
+      "import": "./dist/esm/connectors.js",
+      "default": "./dist/cjs/connectors.js"
+    },
     "./package.json": "./package.json"
   },
   "peerDependencies": {
@@ -50,6 +60,8 @@
   "dependencies": {
     "@tanstack/react-query": "5.0.0-alpha.26",
     "@tanstack/react-query-persist-client": "5.0.0-alpha.26",
+    "@wagmi/chains": "workspace:*",
+    "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
