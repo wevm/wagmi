@@ -59,65 +59,16 @@ For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 Install wagmi and its [viem](https://viem.sh) peer dependency.
 
 ```bash
+pnpm add wagmi viem
+```
+
+```bash
 npm install wagmi viem
 ```
 
-## Quick Start
-
-Connect a wallet in under 60 seconds. LFG.
-
-```tsx
-import { WagmiConfig, createConfig, mainnet } from 'wagmi'
-import { createPublicClient, http } from 'viem'
-
-const config = createConfig({
-  autoConnect: true,
-  publicClient: createPublicClient({
-    chain: mainnet,
-    transport: http(),
-  }),
-})
-
-function App() {
-  return (
-    <WagmiConfig config={config}>
-      <Profile />
-    </WagmiConfig>
-  )
-}
+```bash
+yarn add wagmi viem
 ```
-
-```tsx
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-
-function Profile() {
-  const { address } = useAccount()
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  })
-  const { disconnect } = useDisconnect()
-
-  if (address)
-    return (
-      <div>
-        Connected to {address}
-        <button onClick={() => disconnect()}>Disconnect</button>
-      </div>
-    )
-  return <button onClick={() => connect()}>Connect Wallet</button>
-}
-```
-
-In this example, we create a wagmi `config` and pass it to the `WagmiConfig` React Context. The config is set up to use viem's Public Client and automatically connect to previously connected wallets.
-
-Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
-
-We've only scratched the surface for what you can do with wagmi!
-
-—
-
-Check out [ConnectKit](https://docs.family.co/connectkit?utm_source=wagmi-dev) or [Web3Modal](https://web3modal.com) to get started with pre-built interface on top of wagmi for managing wallet connections.
 
 ## Community
 
@@ -133,7 +84,6 @@ Check out the following places for more wagmi-related content:
 If you find wagmi useful, please consider supporting development. Thank you 🙏
 
 - [GitHub Sponsors](https://github.com/sponsors/wagmi-dev?metadata_campaign=gh_readme_support)
-- [Gitcoin Grant](https://wagmi.sh/gitcoin)
 - [wagmi-dev.eth](https://etherscan.io/enslookup-search?search=wagmi-dev.eth)
 
 ## Sponsors

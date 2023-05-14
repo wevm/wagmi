@@ -12,13 +12,11 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "wagmi": "workspace:*",
-    "viem": "portable-types"
+    "viem": "0.0.0-portable-types-20230513210020"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
-    "@vitejs/plugin-react": "^4.0.0",
-    "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "@vitejs/plugin-react": "^4.0.0"
   }
 }

@@ -9,6 +9,7 @@ export default defineProject({
         __dirname,
         '../../references/packages/chains/src',
       ),
+      '@wagmi/core': path.resolve(__dirname, '../core/src'),
       '@wagmi/connectors': path.resolve(
         __dirname,
         '../../references/packages/connectors/src',
@@ -16,7 +17,7 @@ export default defineProject({
     },
   },
   test: {
-    name: '@wagmi/core',
+    name: 'wagmi',
     // globalSetup: ['./test/globalSetup.ts'],
     // setupFiles: ['./test/setup.ts'],
   },

@@ -20,7 +20,9 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      "wagmi": ["../../packages/react/src"]
+      "wagmi": ["../../packages/react/src"],
+      "wagmi/chains": ["../../packages/react/src/chains.ts"],
+      "wagmi/connectors": ["../../packages/react/src/connectors.ts"]
     }
   },
   "include": ["src"],

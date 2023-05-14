@@ -10,18 +10,18 @@
     "lint:fix": "pnpm lint --apply",
     "preinstall": "npx only-allow pnpm",
     "prepare": "npx simple-git-hooks",
-    "test": "pnpm run --recursive --filter \"./packages/*\" --filter \"./references/packages/*\" test",
-    "test:coverage": "pnpm run --recursive --filter \"./packages/*\" --filter \"./references/packages/*\" test:coverage",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "typecheck": "pnpm run --recursive --parallel typecheck"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.4.6",
-    "@changesets/cli": "2.25.2",
+    "@changesets/cli": "^2.26.0",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "17.0.21",
     "@viem/anvil": "0.0.5",
-    "@vitest/coverage-c8": "^0.25.8",
-    "@vitest/ui": "^0.25.8",
+    "@vitest/coverage-c8": "^0.31.0",
+    "@vitest/ui": "^0.31.0",
     "bun": "^0.5.5",
     "fs-extra": "^10.1.0",
     "jsdom": "^20.0.3",
@@ -30,15 +30,18 @@
     "rome": "^12.1.0",
     "simple-git-hooks": "^2.8.1",
     "typescript": "^5.0.4",
-    "viem": "portable-types",
-    "vite": "^4.0.4",
-    "vitest": "^0.25.8"
+    "viem": "0.0.0-portable-types-20230513210020",
+    "vite": "^4.3.2",
+    "vitest": "^0.31.0"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm format && pnpm lint:fix"
   },
   "packageManager": "pnpm@8.3.1",
   "pnpm": {
+    "overrides": {
+      "@wagmi/core": "workspace:*"
+    },
     "patchedDependencies": {
       "@tanstack/query-core@5.0.0-alpha.26": "patches/@tanstack__query-core@5.0.0-alpha.26.patch"
     }

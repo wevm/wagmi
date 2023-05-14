@@ -13,8 +13,6 @@
     "build": "pnpm run clean && pnpm run build:cjs && pnpm run build:esm+types",
     "build:cjs": "tsc --project tsconfig.build.json --module commonjs --verbatimModuleSyntax false --outDir ./dist/cjs && echo > ./dist/cjs/package.json '{\"type\":\"commonjs\"}'",
     "build:esm+types": "tsc --project tsconfig.build.json --module es2020 --outDir ./dist/esm --declaration --declarationMap --declarationDir ./dist/types && echo > ./dist/esm/package.json '{\"type\":\"module\"}'",
-    "test": "vitest",
-    "test:coverage": "vitest --coverage",
     "typecheck": "tsc --noEmit"
   },
   "files": [
@@ -39,7 +37,7 @@
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "viem": "portable-types",
+    "viem": "0.0.0-portable-types-20230513210020",
     "typescript": ">=5.0.4"
   },
   "peerDependenciesMeta": {
