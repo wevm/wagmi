@@ -11,11 +11,9 @@ Tom
 
 - CI
 - Tests
-- Set up package.json#exports
 
 ## Playgrounds
 
-- Namespace playground storage keys
 - Deploy playgrounds during CI
 
 ## Docs

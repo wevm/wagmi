@@ -1,5 +1,5 @@
 import { http } from 'viem'
-import { createConfig } from 'wagmi'
+import { createConfig, createStorage } from 'wagmi'
 import { mainnet, optimism, sepolia } from 'wagmi/chains'
 import { injected, walletConnect } from 'wagmi/connectors'
 
@@ -13,7 +13,7 @@ export const config = createConfig({
     walletConnect({ projectId: '3fbb6bba6f1de962d911bb5b5c9dba88' }),
   ],
   // reconnectOnMount: false,
-  // storage: null,
+  storage: createStorage({ storage: localStorage, key: 'vite-react' }),
   transports: {
     [mainnet.id]: http(
       'https://eth-mainnet.g.alchemy.com/v2/StF61Ht3J9nXAojZX-b21LVt9l0qDL38',

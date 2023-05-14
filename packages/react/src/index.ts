@@ -40,4 +40,6 @@ export {
   type Config,
   type CreateConfigParameters,
   createConfig,
+  type Storage,
+  createStorage,
 } from '@wagmi/core'
