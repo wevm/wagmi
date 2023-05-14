@@ -4,51 +4,55 @@ import { useAccount, useBlockNumber, useConnect, useDisconnect } from 'wagmi'
 function App() {
   return (
     <>
-      <MyComponent />
+      <Account />
+      <Connect />
       <BlockNumber />
     </>
   )
 }
 
-function MyComponent() {
+function Account() {
   const account = useAccount()
-  const { connectors, connect, status } = useConnect()
   const { disconnect } = useDisconnect()
 
   return (
-    <>
-      {
-        <>
-          <div>
-            account: {account.address}
-            <br />
-            chainId: {account.chainId}
-            <br />
-            status: {account.status}
-          </div>
-
-          <button type='button' onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        </>
-      }
+    <div>
+      <h2>Account</h2>
 
       <div>
-        <div>Connect</div>
-        {connectors.map((connector) => (
-          <button
-            disabled={account.connector?.uid === connector.uid}
-            id={connector.uid}
-            key={connector.uid}
-            onClick={async () => await connect({ connector })}
-            type='button'
-          >
-            {connector.name}
-          </button>
-        ))}
-        {status}
+        account: {account.address}
+        <br />
+        chainId: {account.chainId}
+        <br />
+        status: {account.status}
       </div>
-    </>
+
+      <button type='button' onClick={() => disconnect()}>
+        Disconnect
+      </button>
+    </div>
+  )
+}
+
+function Connect() {
+  const { connectors, connect, status, error } = useConnect()
+
+  return (
+    <div>
+      <h2>Connect</h2>
+      {connectors.map((connector) => (
+        <button
+          id={connector.uid}
+          key={connector.uid}
+          onClick={async () => await connect({ connector })}
+          type='button'
+        >
+          {connector.name}
+        </button>
+      ))}
+      <div>{status}</div>
+      <div>{error?.message}</div>
+    </div>
   )
 }
 
@@ -64,12 +68,16 @@ function BlockNumber() {
     chainId: optimism.id,
     watch: true,
   })
+
   return (
-    <>
+    <div>
+      <h2>Block Number</h2>
+
       <div>Block Number (Default Chain): {default_?.toString()}</div>
       <div>Block Number (Current Chain): {current_?.toString()}</div>
       <div>Block Number (Optimism): {optimism_?.toString()}</div>
-    </>
+    </div>
   )
 }
+
 export default App

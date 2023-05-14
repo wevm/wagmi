@@ -4,6 +4,7 @@
     "build": "pnpm run --recursive --filter \"./packages/*\" --filter \"./references/packages/*\" build",
     "clean": "pnpm run --recursive --parallel clean",
     "dev": "pnpm --filter vite-react dev",
+    "dev:core": "pnpm --filter vite-core dev",
     "format": "rome format . --write",
     "lint": "rome check .",
     "lint:fix": "pnpm lint --apply",

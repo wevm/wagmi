@@ -17,7 +17,7 @@ Tom
 
 ## Playgrounds
 
-- Auto import from aliases (e.g. `wagmi` instead of `../../packages/wagmi/src`)
+- Namespace playground storage keys
 - Deploy playgrounds during CI
 
 ## Docs
