@@ -4,9 +4,9 @@ import {
   type Persister,
 } from '@tanstack/query-persist-client-core'
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister'
+import type { Chain } from '@wagmi/chains'
 import {
   type Address,
-  type Chain,
   type PublicClient,
   type Transport,
   createPublicClient,

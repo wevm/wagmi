@@ -75,6 +75,9 @@ importers:
       '@tanstack/query-sync-storage-persister':
         specifier: 5.0.0-alpha.26
         version: 5.0.0-alpha.26
+      '@wagmi/chains':
+        specifier: workspace:*
+        version: link:../../references/packages/chains
       '@wagmi/connectors':
         specifier: workspace:*
         version: link:../../references/packages/connectors

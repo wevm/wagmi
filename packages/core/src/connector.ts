@@ -1,6 +1,6 @@
+import type { Chain } from '@wagmi/chains'
 import {
   type Address,
-  type Chain,
   type ProviderConnectInfo,
   type ProviderMessage,
 } from 'viem'

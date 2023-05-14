@@ -11,8 +11,6 @@ Tom
 
 - CI
 - Tests
-- Move connectors from `@wagmi/core` to `@wagmi/connectors`
-- Export `@wagmi/chains` through `@wagmi/core` and `wagmi`
 - Set up package.json#exports
 
 ## Playgrounds
