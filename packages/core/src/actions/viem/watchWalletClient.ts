@@ -13,7 +13,8 @@ export function watchWalletClient(
   callback: WatchWalletClientCallback,
 ) {
   const config = getConfig()
-  const handleChange = async () => {
+  const handleChange = async ({ chainId: chainId_ }: { chainId?: number }) => {
+    if (chainId && chainId_ && chainId !== chainId_) return
     const walletClient = await getWalletClient({ chainId })
     if (!getConfig().connector) return callback(null)
     return callback(walletClient)
