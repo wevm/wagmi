@@ -34,9 +34,3 @@ export function WagmiConfig({
         }),
   )
 }
-
-export function useConfig() {
-  const config = React.useContext(WagmiContext)
-  if (!config) throw new Error('`useConfig` must be used within `WagmiConfig`.')
-  return config
-}

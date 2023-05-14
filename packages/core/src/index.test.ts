@@ -7,8 +7,8 @@ test('exports', () => {
     {
       "ChainNotConfiguredError": [Function],
       "ConnectorAlreadyConnectedError": [Function],
-      "ConnectorNotFoundError": [Function],
       "Emitter": [Function],
+      "ProviderNotFoundError": [Function],
       "connect": [Function],
       "connectMutationOptions": [Function],
       "createConfig": [Function],

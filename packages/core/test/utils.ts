@@ -1,28 +1,23 @@
+import { mainnet } from '@wagmi/chains'
 import { type Chain, createTestClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
 
-import { createConfig } from '../src/config.js'
+import { createConfig } from '../src/index.js'
+import { chainId, pool, port } from './constants.js'
 
-/**
- * The id of the current test worker.
- *
- * This is used by the anvil proxy to route requests to the correct anvil instance.
- */
-export const pool = Number(process.env.VITEST_POOL_ID ?? 1)
 export const anvil = {
   ...mainnet, // We are using a mainnet fork for testing.
-  id: 123, // We configured our anvil instance to use `123` as the chain id (see `globalSetup.ts`);
+  id: chainId,
   rpcUrls: {
     // These rpc urls are automatically used in the transports.
     default: {
       // Note how we append the worker id to the local rpc urls.
-      http: [`http://127.0.0.1:8545/${pool}`],
-      webSocket: [`ws://127.0.0.1:8545/${pool}`],
+      http: [`http://127.0.0.1:${port}/${pool}`],
+      webSocket: [`ws://127.0.0.1:${port}/${pool}`],
     },
     public: {
       // Note how we append the worker id to the local rpc urls.
-      http: [`http://127.0.0.1:8545/${pool}`],
-      webSocket: [`ws://127.0.0.1:8545/${pool}`],
+      http: [`http://127.0.0.1:${port}/${pool}`],
+      webSocket: [`ws://127.0.0.1:${port}/${pool}`],
     },
   },
 } as const satisfies Chain

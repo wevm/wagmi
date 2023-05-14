@@ -6,7 +6,7 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
-import { useConfig } from '../context.js'
+import { useConfig } from './useConfig.js'
 
 export type UseBlockNumberParameters = GetBlockNumberQueryOptions & {
   watch?: boolean

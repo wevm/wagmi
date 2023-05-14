@@ -4,7 +4,6 @@
 export {
   type WagmiConfigProps,
   WagmiConfig,
-  useConfig,
   WagmiContext,
 } from './context.js'
 
@@ -17,6 +16,8 @@ export {
   type UseBlockNumberParameters,
   useBlockNumber,
 } from './hooks/useBlockNumber.js'
+
+export { useConfig } from './hooks/useConfig.js'
 
 export {
   type UseConnectParameters,
@@ -34,12 +35,33 @@ export { useSyncExternalStoreWithTracked } from './hooks/useSyncExternalStoreWit
 // @wagmi/core
 
 export {
+  // Chain
   type Chain,
+  // Config
   type Connection,
   type Connector,
   type Config,
   type CreateConfigParameters,
   createConfig,
+  // Connector
+  type ConnectorEventMap,
+  type CreateConnectorFn,
+  createConnector,
+  // Emitter
+  type EventData,
+  Emitter,
+  createEmitter,
+  // Errors
+  ChainNotConfiguredError,
+  ProviderNotFoundError,
+  ConnectorAlreadyConnectedError,
+  // Storage
   type Storage,
   createStorage,
+  noopStorage,
+  // Utilities
+  deepEqual,
+  normalizeChainId,
+  // Types
+  type Prettify,
 } from '@wagmi/core'

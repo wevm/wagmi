@@ -1,5 +1,5 @@
 import { fetchLogs } from '@viem/anvil'
-import { afterAll, afterEach } from 'vitest'
+import { afterAll, afterEach, vi } from 'vitest'
 
 import { forkBlockNumber, forkUrl, pool, port } from './constants.js'
 import { testClient } from './utils.js'
@@ -20,3 +20,6 @@ afterEach(async (context) => {
     console.log(...logs.slice(-20))
   })
 })
+
+// Make dates stable across runs
+Date.now = vi.fn(() => new Date(Date.UTC(2023, 1, 1)).valueOf())

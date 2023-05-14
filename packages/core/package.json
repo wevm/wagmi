@@ -52,6 +52,10 @@
     "eventemitter3": "^5.0.1",
     "zustand": "^4.3.7"
   },
+  "devDependencies": {
+    "@wagmi/chains": "workspace:*",
+    "@wagmi/connectors": "workspace:*"
+  },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [
     {

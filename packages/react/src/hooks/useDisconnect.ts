@@ -4,7 +4,7 @@ import {
   disconnectMutationOptions,
 } from '@wagmi/core'
 
-import { useConfig } from '../context.js'
+import { useConfig } from './useConfig.js'
 
 export type UseDisconnectParameters = DisconnectMutationOptions
 

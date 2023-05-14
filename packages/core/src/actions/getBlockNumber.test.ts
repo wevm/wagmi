@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 
-import { config } from '../../test/utils.js'
+import { config } from '../../test/index.js'
 import { getBlockNumber } from './getBlockNumber.js'
 
 test('default', async () => {

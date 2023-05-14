@@ -5,6 +5,10 @@ import * as react from './index.js'
 test('exports', () => {
   expect(react).toMatchInlineSnapshot(`
     {
+      "ChainNotConfiguredError": [Function],
+      "ConnectorAlreadyConnectedError": [Function],
+      "Emitter": [Function],
+      "ProviderNotFoundError": [Function],
       "WagmiConfig": [Function],
       "WagmiContext": {
         "$$typeof": Symbol(react.context),
@@ -25,7 +29,16 @@ test('exports', () => {
         "_threadCount": 0,
       },
       "createConfig": [Function],
+      "createConnector": [Function],
+      "createEmitter": [Function],
       "createStorage": [Function],
+      "deepEqual": [Function],
+      "noopStorage": {
+        "getItem": [Function],
+        "removeItem": [Function],
+        "setItem": [Function],
+      },
+      "normalizeChainId": [Function],
       "useAccount": [Function],
       "useBlockNumber": [Function],
       "useConfig": [Function],

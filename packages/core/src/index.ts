@@ -74,7 +74,7 @@ export {
 
 export {
   ChainNotConfiguredError,
-  ConnectorNotFoundError,
+  ProviderNotFoundError,
   ConnectorAlreadyConnectedError,
 } from './errors.js'
 

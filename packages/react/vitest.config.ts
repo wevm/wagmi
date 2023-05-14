@@ -18,7 +18,9 @@ export default defineProject({
   },
   test: {
     name: 'wagmi',
-    // globalSetup: ['./test/globalSetup.ts'],
-    // setupFiles: ['./test/setup.ts'],
+    environment: 'jsdom',
+    globalSetup: ['./packages/react/test/globalSetup.ts'],
+    setupFiles: ['./test/setup.ts'],
+    testTimeout: 10_000,
   },
 })

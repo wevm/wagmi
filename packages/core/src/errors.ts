@@ -3,9 +3,9 @@ export class ChainNotConfiguredError {
   message = 'Chain not configured'
 }
 
-export class ConnectorNotFoundError {
-  name = 'ConnectorNotFoundError'
-  message = 'Connector not found'
+export class ProviderNotFoundError {
+  name = 'ProviderNotFoundError'
+  message = 'Provider not found'
 }
 
 export class ConnectorAlreadyConnectedError {

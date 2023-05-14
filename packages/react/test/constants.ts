@@ -1,5 +1,5 @@
 export const chainId = 123
-export const port = 8545
+export const port = 8546
 
 /**
  * The id of the current test worker.

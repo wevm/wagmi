@@ -1,7 +1,7 @@
 import { useSyncExternalStoreWithTracked } from './useSyncExternalStoreWithTracked.js'
 import { getAccount, watchAccount } from '@wagmi/core'
 
-import { useConfig } from '../context.js'
+import { useConfig } from './useConfig.js'
 
 export function useAccount() {
   const config = useConfig()
