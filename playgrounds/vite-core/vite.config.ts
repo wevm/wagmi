@@ -7,7 +7,15 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      wagmi: path.resolve(__dirname, '../../packages/react/src'),
+      '@wagmi/chains': path.resolve(
+        __dirname,
+        '../../references/packages/chains/src',
+      ),
+      '@wagmi/core': path.resolve(__dirname, '../../packages/core/src'),
+      '@wagmi/connectors': path.resolve(
+        __dirname,
+        '../../references/packages/connectors/src',
+      ),
     },
   },
 })

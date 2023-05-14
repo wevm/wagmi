@@ -14,10 +14,7 @@ import {
 import { persist, subscribeWithSelector } from 'zustand/middleware'
 import { createStore } from 'zustand/vanilla'
 
-import {
-  type ConnectorEventMap,
-  type CreateConnectorFn,
-} from './connectors/connector.js'
+import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
 import { uid } from './utils/uid.js'

@@ -1,21 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-// @wagmi/core
-
-export {
-  // Config
-  type Connection,
-  type Connector,
-  type Config,
-  type CreateConfigParameters,
-  createConfig,
-  // Connectors
-  type InjectedParameters,
-  injected,
-  type WalletConnectParameters,
-  walletConnect,
-} from '@wagmi/core'
-
-////////////////////////////////////////////////////////////////////////////////
 // Context
 
 export {
@@ -46,3 +29,20 @@ export {
 } from './hooks/useDisconnect.js'
 
 export { useSyncExternalStoreWithTracked } from './hooks/useSyncExternalStoreWithTracked.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// @wagmi/core
+
+export {
+  type Connection,
+  type Connector,
+  type Config,
+  type CreateConfigParameters,
+  createConfig,
+  //////////////////////////////////////////////////////////////////////////////
+  // @wagmi/connectors
+  type InjectedParameters,
+  injected,
+  type WalletConnectParameters,
+  walletConnect,
+} from '@wagmi/core'

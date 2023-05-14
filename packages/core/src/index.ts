@@ -53,14 +53,7 @@ export {
   type ConnectorEventMap,
   type CreateConnectorFn,
   createConnector,
-} from './connectors/connector.js'
-
-export { type InjectedParameters, injected } from './connectors/injected.js'
-
-export {
-  type WalletConnectParameters,
-  walletConnect,
-} from './connectors/walletConnect.js'
+} from './connector.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Emitter
@@ -93,3 +86,19 @@ export {
 // Utilities
 
 export { deepEqual } from './utils/deepEqual.js'
+export { normalizeChainId } from './utils/normalizeChainId.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Types
+
+export { type Prettify } from './types.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// @wagmi/connectors
+
+export {
+  type InjectedParameters,
+  injected,
+  type WalletConnectParameters,
+  walletConnect,
+} from '@wagmi/connectors'

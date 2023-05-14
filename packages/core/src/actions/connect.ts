@@ -6,7 +6,7 @@ import {
 } from 'viem'
 
 import { type Config, type Connector } from '../config.js'
-import { type CreateConnectorFn } from '../connectors/connector.js'
+import { type CreateConnectorFn } from '../connector.js'
 import { ConnectorAlreadyConnectedError } from '../errors.js'
 import { type Prettify } from '../types.js'
 

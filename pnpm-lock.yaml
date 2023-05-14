@@ -75,12 +75,9 @@ importers:
       '@tanstack/query-sync-storage-persister':
         specifier: 5.0.0-alpha.26
         version: 5.0.0-alpha.26
-      '@walletconnect/ethereum-provider':
-        specifier: ^2.7.2
-        version: 2.7.2(@web3modal/standalone@2.4.1)
-      '@web3modal/standalone':
-        specifier: ^2.4.1
-        version: 2.4.1(react@18.2.0)
+      '@wagmi/connectors':
+        specifier: workspace:*
+        version: link:../../references/packages/connectors
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
@@ -198,6 +195,25 @@ importers:
       typescript:
         specifier: '>=5.0.4'
         version: 5.0.4
+
+  references/packages/connectors:
+    dependencies:
+      '@walletconnect/ethereum-provider':
+        specifier: ^2.7.2
+        version: 2.7.2(@web3modal/standalone@2.4.1)
+      '@web3modal/standalone':
+        specifier: ^2.4.1
+        version: 2.4.1(react@18.2.0)
+      typescript:
+        specifier: '>=5.0.4'
+        version: 5.0.4
+      viem:
+        specifier: portable-types
+        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
+    devDependencies:
+      '@wagmi/core':
+        specifier: workspace:*
+        version: link:../../../packages/core
 
 packages:
 

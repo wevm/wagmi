@@ -5,9 +5,9 @@ import {
   type ProviderMessage,
 } from 'viem'
 
-import { Emitter } from '../emitter.js'
-import { type Storage } from '../storage.js'
-import { type Prettify } from '../types.js'
+import { Emitter } from './emitter.js'
+import { type Storage } from './storage.js'
+import { type Prettify } from './types.js'
 
 export type ConnectorEventMap = {
   change: { accounts?: readonly Address[]; chainId?: number }
