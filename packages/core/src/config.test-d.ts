@@ -28,19 +28,6 @@ test('low-level config', () => {
         transport: http(),
       }),
   })
-})
-
-test('low-level config', () => {
-  // Create a "multi chain" config using viem modules.
-  createConfig({
-    chains: [mainnet, sepolia],
-    connectors: [injected()],
-    publicClient: ({ chain }) =>
-      createPublicClient({
-        chain,
-        transport: http(),
-      }),
-  })
 
   // Create a simple "single chain" config using viem modules.
   // Note that we do not accept `chains` here, it is inferred from Client.

@@ -145,12 +145,16 @@ export function createConfig<const TChain extends readonly Chain[]>({
 
   const connectors = rest.connectors.map(setup)
   function setup(connectorFn: CreateConnectorFn) {
+    // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
-    const connector = Object.assign(connectorFn({ emitter, chains, storage }), {
+    const connector = {
+      ...connectorFn({ emitter, chains, storage }),
       emitter,
       uid: emitter.uid,
-    })
+    }
 
+    // Start listening for `connect` events if `reconnectOnMount` is switched on.
+    // This allows connectors to "connect" themselves without user interaction (e.g. MetaMask's "Manually connect to current site")
     if (reconnectOnMount) emitter.on('connect', connect)
     connector.setup?.()
 
