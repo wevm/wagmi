@@ -1,5 +1,14 @@
 # wagmi
 
+## 1.0.4
+
+### Patch Changes
+
+- [#2344](https://github.com/wagmi-dev/wagmi/pull/2344) [`8a725458`](https://github.com/wagmi-dev/wagmi/commit/8a72545853ae1024acd9efd18c06142e8c6c5750) Thanks [@jxom](https://github.com/jxom)! - Added gas estimation back into `prepareSendTransaction`.
+
+- Updated dependencies [[`8a725458`](https://github.com/wagmi-dev/wagmi/commit/8a72545853ae1024acd9efd18c06142e8c6c5750)]:
+  - @wagmi/core@1.0.4
+
 ## 1.0.3
 
 ### Patch Changes
