@@ -5,14 +5,15 @@ import { ConnectorNotFoundError } from '../../errors'
 import type { WalletClient } from '../../types'
 import { assertActiveChain } from '../../utils'
 import { fetchEnsAddress } from '../ens'
-import { getWalletClient } from '../viem'
+import { getPublicClient, getWalletClient } from '../viem'
 import type { SendTransactionArgs } from './sendTransaction'
 
 export type PrepareSendTransactionArgs<
   TWalletClient extends WalletClient = WalletClient,
-> = Omit<SendTransactionParameters<Chain, Account>, 'chain' | 'to'> & {
+> = Omit<SendTransactionParameters<Chain, Account>, 'chain' | 'gas' | 'to'> & {
   /** Chain ID used to validate if the walletClient is connected to the target chain */
   chainId?: number
+  gas?: bigint | null
   to?: string
   walletClient?: TWalletClient | null
 }
@@ -46,7 +47,7 @@ export async function prepareSendTransaction({
   account,
   chainId,
   data,
-  gas,
+  gas: gas_,
   gasPrice,
   maxFeePerGas,
   maxPriorityFeePerGas,
@@ -55,6 +56,7 @@ export async function prepareSendTransaction({
   value,
   walletClient: walletClient_,
 }: PrepareSendTransactionArgs): Promise<PrepareSendTransactionResult> {
+  const publicClient = getPublicClient({ chainId })
   const walletClient = walletClient_ ?? (await getWalletClient({ chainId }))
   if (!walletClient) throw new ConnectorNotFoundError()
   if (chainId) assertActiveChain({ chainId })
@@ -64,6 +66,22 @@ export async function prepareSendTransaction({
       ? await fetchEnsAddress({ name: to_ })
       : (to_ as Address)) || undefined
   if (to && !isAddress(to)) throw new Error('Invalid address')
+
+  const gas =
+    typeof gas_ === 'undefined'
+      ? await publicClient.estimateGas({
+          accessList,
+          account: walletClient.account,
+          data,
+          gas: gas_ ?? undefined,
+          gasPrice,
+          maxFeePerGas,
+          maxPriorityFeePerGas,
+          nonce,
+          to,
+          value,
+        })
+      : gas_ || undefined
 
   return {
     accessList,

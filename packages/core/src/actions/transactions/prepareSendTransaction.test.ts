@@ -41,7 +41,7 @@ describe('prepareSendTransaction', () => {
         "accessList": undefined,
         "account": undefined,
         "data": undefined,
-        "gas": undefined,
+        "gas": 21000n,
         "gasPrice": undefined,
         "maxFeePerGas": undefined,
         "maxPriorityFeePerGas": undefined,
@@ -73,7 +73,67 @@ describe('prepareSendTransaction', () => {
         "accessList": undefined,
         "account": undefined,
         "data": undefined,
+        "gas": 21000n,
+        "gasPrice": undefined,
+        "maxFeePerGas": undefined,
+        "maxPriorityFeePerGas": undefined,
+        "mode": "prepared",
+        "nonce": undefined,
+        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+        "value": 10000000000000000n,
+      }
+    `)
+  })
+
+  it('skips gas estimate when `gas` is nullish', async () => {
+    await connect({ connector })
+
+    const walletClient = await getWalletClient()
+    if (!walletClient) throw new Error('walletClient is required')
+
+    const request = {
+      to: 'moxey.eth',
+      value: parseEther('0.01'), // 0.01 ETH
+      gas: null,
+    }
+    const preparedRequest = await prepareSendTransaction(request)
+
+    expect(preparedRequest).toMatchInlineSnapshot(`
+      {
+        "accessList": undefined,
+        "account": undefined,
+        "data": undefined,
         "gas": undefined,
+        "gasPrice": undefined,
+        "maxFeePerGas": undefined,
+        "maxPriorityFeePerGas": undefined,
+        "mode": "prepared",
+        "nonce": undefined,
+        "to": "0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC",
+        "value": 10000000000000000n,
+      }
+    `)
+  })
+
+  it('skips gas estimate when `gas` is populated', async () => {
+    await connect({ connector })
+
+    const walletClient = await getWalletClient()
+    if (!walletClient) throw new Error('walletClient is required')
+
+    const request = {
+      to: 'moxey.eth',
+      value: parseEther('0.01'), // 0.01 ETH
+      gas: 69420n,
+    }
+    const preparedRequest = await prepareSendTransaction(request)
+
+    expect(preparedRequest).toMatchInlineSnapshot(`
+      {
+        "accessList": undefined,
+        "account": undefined,
+        "data": undefined,
+        "gas": 69420n,
         "gasPrice": undefined,
         "maxFeePerGas": undefined,
         "maxPriorityFeePerGas": undefined,
