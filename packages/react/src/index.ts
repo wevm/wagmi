@@ -61,7 +61,9 @@ export {
   noopStorage,
   // Utilities
   deepEqual,
+  deserialize,
   normalizeChainId,
+  serialize,
   // Types
   type Prettify,
 } from '@wagmi/core'

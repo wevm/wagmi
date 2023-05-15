@@ -16,6 +16,7 @@ test('exports', () => {
       "createEmitter": [Function],
       "createStorage": [Function],
       "deepEqual": [Function],
+      "deserialize": [Function],
       "disconnect": [Function],
       "disconnectMutationOptions": [Function],
       "getAccount": [Function],
@@ -27,6 +28,7 @@ test('exports', () => {
         "setItem": [Function],
       },
       "normalizeChainId": [Function],
+      "serialize": [Function],
       "watchAccount": [Function],
       "watchBlockNumber": [Function],
     }

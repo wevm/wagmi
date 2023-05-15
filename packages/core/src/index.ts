@@ -91,7 +91,12 @@ export {
 // Utilities
 
 export { deepEqual } from './utils/deepEqual.js'
+
+export { deserialize } from './utils/deserialize.js'
+
 export { normalizeChainId } from './utils/normalizeChainId.js'
+
+export { serialize } from './utils/serialize.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // Types
