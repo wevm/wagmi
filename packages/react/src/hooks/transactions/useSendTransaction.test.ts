@@ -137,7 +137,7 @@ describe('useSendTransaction', () => {
               "account": undefined,
               "chainId": undefined,
               "data": undefined,
-              "gas": undefined,
+              "gas": 21000n,
               "gasPrice": undefined,
               "maxFeePerGas": undefined,
               "maxPriorityFeePerGas": undefined,
