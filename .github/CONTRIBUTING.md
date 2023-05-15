@@ -109,7 +109,7 @@ wagmi uses [Vitest](https://vitest.dev) to run tests and [anvil.js](https://gith
 
 Next, copy over the environment variables from `.env.example` to `.env`, and fill them out. Now you are ready to run the tests! You have the following options for running tests:
 
-- `pnpm test` — runs tests in watch mode
+- `pnpm test [package?]` — runs tests in watch mode
 - `pnpm test:cov` — runs tests and reports coverage
 - `pnpm test:ui` — runs tests in the [Vitest UI](https://vitest.dev/guide/ui.html)
 

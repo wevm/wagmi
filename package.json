@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "pnpm run --r link && pnpm run --r --filter wagmi... build",
+    "build": "pnpm run --r --filter wagmi... build",
     "clean": "pnpm run --r --parallel clean",
     "dev": "pnpm --filter vite-react dev",
     "dev:core": "pnpm --filter vite-core dev",
