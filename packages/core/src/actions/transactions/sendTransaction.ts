@@ -86,7 +86,7 @@ export async function sendTransaction({
       account,
       chainId,
       data,
-      gas,
+      gas: gas || null,
       gasPrice,
       maxFeePerGas,
       maxPriorityFeePerGas,
