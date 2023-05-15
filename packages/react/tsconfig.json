@@ -2,10 +2,5 @@
   "extends": "./tsconfig.build.json",
   "include": ["src/**/*.ts"],
   "exclude": [],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "compilerOptions": {
-    "paths": {
-      "@wagmi/core": ["../core/src/index.ts"],
-    }
-  }
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
