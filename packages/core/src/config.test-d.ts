@@ -39,3 +39,24 @@ test('low-level config', () => {
     }),
   })
 })
+
+test('`chains` must have at least one chain`', () => {
+  createConfig({
+    // @ts-expect-error
+    chains: [],
+    connectors: [injected()],
+    transports: {
+      [mainnet.id]: http(),
+    },
+  })
+  createConfig({
+    // @ts-expect-error
+    chains: [],
+    connectors: [injected()],
+    publicClient: ({ chain }) =>
+      createPublicClient({
+        chain,
+        transport: http(),
+      }),
+  })
+})

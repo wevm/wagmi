@@ -16,11 +16,13 @@ import { createStore } from 'zustand/vanilla'
 import type { Chain } from './chain.js'
 import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
-import { ChainNotConfiguredError, ChainNotFoundError } from './errors.js'
+import { ChainNotConfiguredError } from './errors.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
 import { uid } from './utils/uid.js'
 
-export type CreateConfigParameters<TChain extends readonly Chain[]> = {
+export type CreateConfigParameters<
+  TChain extends readonly [Chain, ...(readonly Chain[])],
+> = {
   connectors: CreateConnectorFn[]
   persister?: Persister | null
   queryClient?: QueryClient
@@ -34,7 +36,7 @@ export type CreateConfigParameters<TChain extends readonly Chain[]> = {
       transports: Record<TChain[number]['id'], Transport>
     }
   | {
-      publicClient: PublicClient // TODO: Infer `TChain` from `publicClient`
+      publicClient: PublicClient
     }
   | {
       chains: TChain
@@ -44,7 +46,12 @@ export type CreateConfigParameters<TChain extends readonly Chain[]> = {
     }
 )
 
-export type Config<TChain extends readonly Chain[] = readonly Chain[]> = {
+export type Config<
+  TChain extends readonly [Chain, ...(readonly Chain[])] = readonly [
+    Chain,
+    ...(readonly Chain[]),
+  ],
+> = {
   readonly chains: TChain
   readonly connectors: readonly Connector[]
   readonly persister: Persister | null
@@ -97,7 +104,9 @@ export type Connector = ReturnType<CreateConnectorFn> & {
   uid: string
 }
 
-export function createConfig<const TChain extends readonly Chain[]>({
+export function createConfig<
+  const TChain extends readonly [Chain, ...(readonly Chain[])],
+>({
   queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -135,12 +144,14 @@ export function createConfig<const TChain extends readonly Chain[]>({
   // Set up chains, connectors, clients, etc.
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  let chains: readonly Chain[]
+  let chains: readonly [Chain, ...(readonly Chain[])]
   const isMultichain = 'chains' in rest
   if (isMultichain) chains = rest.chains
-  else chains = rest.publicClient.chain ? [rest.publicClient.chain] : []
-
-  if (!chains[0]) throw new ChainNotFoundError()
+  else {
+    // TODO: Infer `TChain` from `publicClient`
+    if (!rest.publicClient.chain) throw new ChainNotConfiguredError()
+    chains = [rest.publicClient.chain]
+  }
 
   const connectors = rest.connectors.map(setup)
   function setup(connectorFn: CreateConnectorFn) {
