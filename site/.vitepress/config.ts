@@ -11,6 +11,7 @@ const description =
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  cleanUrls: true,
   lang: 'en-US',
 
   title,

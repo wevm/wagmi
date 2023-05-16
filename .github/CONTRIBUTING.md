@@ -124,7 +124,7 @@ When adding new features or fixing bugs, it's important to add test cases to cov
 Documentation is crucial to helping developers of all experience levels use wagmi. wagmi uses [VitePress](https://vitepress.dev) for the documentation site (located at [`site`](../site)). To start the site in dev mode, run:
 
 ```bash
-pnpm docs:dev
+pnpm site
 ```
 
 Try to keep documentation brief and use plain language so folks of all experience levels can understand. If you think something is unclear or could be explained better, you are welcome to open a pull request.
