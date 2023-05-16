@@ -60,7 +60,7 @@ function BlockNumber() {
   const { chainId } = useAccount()
 
   const { data: default_ } = useBlockNumber({ watch: true })
-  const { data: current_ } = useBlockNumber({
+  const { data: account_ } = useBlockNumber({
     chainId,
     watch: true,
   })
@@ -74,7 +74,7 @@ function BlockNumber() {
       <h2>Block Number</h2>
 
       <div>Block Number (Default Chain): {default_?.toString()}</div>
-      <div>Block Number (Current Chain): {current_?.toString()}</div>
+      <div>Block Number (Account Chain): {account_?.toString()}</div>
       <div>Block Number (Optimism): {optimism_?.toString()}</div>
     </div>
   )

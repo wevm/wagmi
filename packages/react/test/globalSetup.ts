@@ -1,15 +1,19 @@
 import { startProxy } from '@viem/anvil'
 
-import { chainId, forkBlockNumber, forkUrl, port } from './constants.js'
+import { forkBlockNumber, forkUrl, testChains } from './constants.js'
 
 export default async function () {
-  return await startProxy({
-    port,
-    host: '::',
-    options: {
-      chainId,
-      forkUrl,
-      forkBlockNumber,
-    },
-  })
+  await Promise.all(
+    Object.values(testChains).map(async (chain) => {
+      await startProxy({
+        port: chain.port,
+        host: '::',
+        options: {
+          chainId: chain.id,
+          forkUrl,
+          forkBlockNumber,
+        },
+      })
+    }),
+  )
 }

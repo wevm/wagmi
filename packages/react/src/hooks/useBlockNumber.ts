@@ -6,6 +6,7 @@ import {
 } from '@wagmi/core'
 import * as React from 'react'
 
+import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseBlockNumberParameters = GetBlockNumberQueryOptions & {
@@ -18,7 +19,8 @@ export function useBlockNumber({
   ...rest
 }: UseBlockNumberParameters = {}) {
   const config = useConfig()
-  const chainId = chainId_ ?? config.chains[0]?.id
+  const defaultChainId = useChainId()
+  const chainId = chainId_ ?? defaultChainId
   const queryOptions = getBlockNumberQueryOptions(config, { ...rest, chainId })
 
   React.useEffect(() => {
@@ -32,7 +34,7 @@ export function useBlockNumber({
       })
       return unwatch
     } catch {}
-  }, [])
+  }, [chainId, watch])
 
   // TODO: `@tanstack/react-query` `exactOptionalPropertyTypes`
   // @ts-ignore

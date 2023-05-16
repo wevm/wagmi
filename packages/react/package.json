@@ -72,15 +72,28 @@
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
     "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.0.11",
     "@types/use-sync-external-store": "^0.0.3",
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
-  "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
+  "contributors": [
+    "jxom.eth <j@wagmi.sh>",
+    "awkweb.eth <t@wagmi.sh>"
+  ],
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/wagmi-dev"
     }
   ],
-  "keywords": ["react", "hooks", "eth", "ethereum", "dapps", "wallet", "web3"]
+  "keywords": [
+    "react",
+    "hooks",
+    "eth",
+    "ethereum",
+    "dapps",
+    "wallet",
+    "web3"
+  ]
 }

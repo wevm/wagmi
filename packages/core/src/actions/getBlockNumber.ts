@@ -70,7 +70,7 @@ export type GetBlockNumberQueryOptions = Prettify<
 
 export const getBlockNumberQueryOptions = (
   config: Config,
-  { chainId, gcTime = 0, ...rest }: GetBlockNumberQueryOptions,
+  { chainId, gcTime = 0, ...rest }: GetBlockNumberQueryOptions = {},
 ) =>
   ({
     ...rest,

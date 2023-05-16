@@ -1,7 +1,7 @@
 import { fetchLogs } from '@viem/anvil'
 import { afterAll, afterEach } from 'vitest'
 
-import { forkBlockNumber, forkUrl, pool, port } from './constants.js'
+import { forkBlockNumber, forkUrl, pool, testChains } from './constants.js'
 import { testClient } from './utils.js'
 
 afterAll(async () => {
@@ -15,7 +15,10 @@ afterAll(async () => {
 afterEach(async (context) => {
   context.onTestFailed(async () => {
     // If a test fails, you can fetch and print the logs of your anvil instance.
-    const logs = await fetchLogs(`http://localhost:${port}`, pool)
+    const logs = await fetchLogs(
+      `http://localhost:${testChains.anvil.port}`,
+      pool,
+    )
     // Only print the 20 most recent log messages.
     console.log(...logs.slice(-20))
   })

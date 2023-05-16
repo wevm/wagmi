@@ -95,7 +95,7 @@ importers:
     dependencies:
       '@tanstack/react-query':
         specifier: 5.0.0-alpha.26
-        version: 5.0.0-alpha.26(react@18.2.0)
+        version: 5.0.0-alpha.26(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query-persist-client':
         specifier: 5.0.0-alpha.26
         version: 5.0.0-alpha.26(@tanstack/react-query@5.0.0-alpha.26)
@@ -114,16 +114,22 @@ importers:
     devDependencies:
       '@testing-library/react':
         specifier: ^14.0.0
-        version: 14.0.0(react@18.2.0)
+        version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
       '@types/react':
         specifier: ^18.2.0
         version: 18.2.0
+      '@types/react-dom':
+        specifier: ^18.0.11
+        version: 18.2.1
       '@types/use-sync-external-store':
         specifier: ^0.0.3
         version: 0.0.3
       react:
         specifier: ^18.2.0
         version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
 
   playgrounds/vite-core:
     dependencies:
@@ -1341,10 +1347,10 @@ packages:
       '@tanstack/react-query': 5.0.0-alpha.26
     dependencies:
       '@tanstack/query-persist-client-core': 5.0.0-alpha.26
-      '@tanstack/react-query': 5.0.0-alpha.26(react@18.2.0)
+      '@tanstack/react-query': 5.0.0-alpha.26(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
-  /@tanstack/react-query@5.0.0-alpha.26(react@18.2.0):
+  /@tanstack/react-query@5.0.0-alpha.26(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-/3gRyMMGkTjo060Jx97VKiYZzMZGZwMEqPZ+CFr502jfQzgoYf2qtmFlp7hoFD8fkj4E1SEBjvMJZPfshRU5cw==}
     peerDependencies:
       react: ^18.0.0
@@ -1358,6 +1364,7 @@ packages:
     dependencies:
       '@tanstack/query-core': 5.0.0-alpha.26(patch_hash=eeh6ipltmljhxdmr2zvloj7oli)
       react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@testing-library/dom@9.3.0:
@@ -1374,7 +1381,7 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/react@14.0.0(react@18.2.0):
+  /@testing-library/react@14.0.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-S04gSNJbYE30TlIMLTzv6QCTzt9AqIF5y6s6SzVFILNcNvbV/jU96GeiTPillGQo+Ny64M/5PV7klNYYgv5Dfg==}
     engines: {node: '>=14'}
     peerDependencies:
@@ -1385,6 +1392,7 @@ packages:
       '@testing-library/dom': 9.3.0
       '@types/react-dom': 18.2.1
       react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: true
 
   /@tootallnate/once@2.0.0:
@@ -4456,7 +4464,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
 
   /react-is@17.0.2:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
@@ -4679,7 +4686,6 @@ packages:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /semver@5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}

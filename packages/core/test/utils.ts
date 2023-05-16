@@ -1,26 +1,9 @@
-import { mainnet } from '@wagmi/chains'
-import { type Chain, createTestClient, http } from 'viem'
+import { createTestClient, http } from 'viem'
 
 import { createConfig } from '../src/index.js'
-import { chainId, pool, port } from './constants.js'
+import { testChains } from './constants.js'
 
-export const anvil = {
-  ...mainnet, // We are using a mainnet fork for testing.
-  id: chainId,
-  rpcUrls: {
-    // These rpc urls are automatically used in the transports.
-    default: {
-      // Note how we append the worker id to the local rpc urls.
-      http: [`http://127.0.0.1:${port}/${pool}`],
-      webSocket: [`ws://127.0.0.1:${port}/${pool}`],
-    },
-    public: {
-      // Note how we append the worker id to the local rpc urls.
-      http: [`http://127.0.0.1:${port}/${pool}`],
-      webSocket: [`ws://127.0.0.1:${port}/${pool}`],
-    },
-  },
-} as const satisfies Chain
+const { anvil, anvilTwo } = testChains
 
 export const testClient = createTestClient({
   chain: anvil,
@@ -29,11 +12,13 @@ export const testClient = createTestClient({
 })
 
 export const config = createConfig({
-  chains: [anvil],
+  chains: [anvil, anvilTwo],
   connectors: [],
+  pollingInterval: 100,
   reconnectOnMount: false,
   storage: null,
   transports: {
     [anvil.id]: http(),
+    [anvilTwo.id]: http(),
   },
 })

@@ -22,6 +22,7 @@ test('exports', () => {
       "getAccount": [Function],
       "getBlockNumber": [Function],
       "getBlockNumberQueryOptions": [Function],
+      "getChainId": [Function],
       "noopStorage": {
         "getItem": [Function],
         "removeItem": [Function],
@@ -31,6 +32,7 @@ test('exports', () => {
       "serialize": [Function],
       "watchAccount": [Function],
       "watchBlockNumber": [Function],
+      "watchChainId": [Function],
     }
   `)
 })

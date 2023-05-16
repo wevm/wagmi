@@ -35,6 +35,11 @@ export {
   getBlockNumberQueryOptions,
 } from './actions/getBlockNumber.js'
 
+export {
+  getChainId,
+  watchChainId,
+} from './actions/getChainId.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Chain
 

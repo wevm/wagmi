@@ -16,6 +16,7 @@ import { createStore } from 'zustand/vanilla'
 import type { Chain } from './chain.js'
 import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
+import { ChainNotConfiguredError, ChainNotFoundError } from './errors.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
 import { uid } from './utils/uid.js'
 
@@ -25,9 +26,11 @@ export type CreateConfigParameters<TChain extends readonly Chain[]> = {
   queryClient?: QueryClient
   reconnectOnMount?: boolean
   storage?: Storage | null
+  syncConnectedChain?: boolean
 } & (
   | {
       chains: TChain
+      pollingInterval?: number
       transports: Record<TChain[number]['id'], Transport>
     }
   | {
@@ -66,7 +69,6 @@ export type Config<TChain extends readonly Chain[] = readonly Chain[]> = {
       },
     ): () => void
   }
-  watchPublicClient(onChange: (publicClient: PublicClient) => void): () => void
 
   _internal: {
     change(data: EventData<ConnectorEventMap, 'change'>): void
@@ -79,11 +81,11 @@ export type Config<TChain extends readonly Chain[] = readonly Chain[]> = {
 export type State = {
   connections: Map<string, Connection>
   current: string | undefined
-  publicClient: PublicClient | undefined
+  chainId: number
   status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
 }
 export type PartializedState = Partial<
-  Pick<State, 'connections' | 'current' | 'status'>
+  Pick<State, 'chainId' | 'connections' | 'current' | 'status'>
 >
 export type Connection = {
   accounts: readonly Address[]
@@ -93,12 +95,6 @@ export type Connection = {
 export type Connector = ReturnType<CreateConnectorFn> & {
   emitter: Emitter<ConnectorEventMap>
   uid: string
-}
-export const initialState: State = {
-  connections: new Map(),
-  current: undefined,
-  publicClient: undefined,
-  status: 'disconnected',
 }
 
 export function createConfig<const TChain extends readonly Chain[]>({
@@ -132,6 +128,7 @@ export function createConfig<const TChain extends readonly Chain[]>({
         deserialize: (x) => x as unknown as PersistedClient,
       })
     : null,
+  syncConnectedChain = true,
   ...rest
 }: CreateConfigParameters<TChain>): Config<TChain> {
   /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,6 +139,8 @@ export function createConfig<const TChain extends readonly Chain[]>({
   const isMultichain = 'chains' in rest
   if (isMultichain) chains = rest.chains
   else chains = rest.publicClient.chain ? [rest.publicClient.chain] : []
+
+  if (!chains[0]) throw new ChainNotFoundError()
 
   const connectors = rest.connectors.map(setup)
   function setup(connectorFn: CreateConnectorFn) {
@@ -162,16 +161,23 @@ export function createConfig<const TChain extends readonly Chain[]>({
   }
 
   const publicClients = new Map<number, PublicClient | undefined>()
-  function getPublicClient({ chainId }: { chainId?: number | undefined } = {}) {
+  function getPublicClient({
+    chainId: chainId_,
+  }: { chainId?: number | undefined } = {}) {
     if (!isMultichain) return rest.publicClient
 
-    let publicClient = publicClients.get(-1)
-    if (publicClient && publicClient.chain?.id === chainId) return publicClient
+    const chainId = chainId_ ?? store.getState().chainId
+    const chain = chains.find((x) => x.id === chainId)
 
-    publicClient = publicClients.get(chainId ?? -1)
+    // If the target chain is not configured, use the public client of the current chain.
+    // TODO: should we error instead? idk. figure out later.
+    let publicClient = publicClients.get(store.getState().chainId)
+    if (publicClient && !chain) return publicClient
+    else if (!chain) throw new ChainNotConfiguredError()
+
+    // If a memoized public client exists for a chain id, use that.
+    publicClient = publicClients.get(chainId)
     if (publicClient) return publicClient
-
-    const chain = chains.find((x) => x.id === chainId) ?? chains[0]!
 
     if ('publicClient' in rest)
       publicClient =
@@ -180,25 +186,26 @@ export function createConfig<const TChain extends readonly Chain[]>({
           : rest.publicClient
     else
       publicClient = createPublicClient({
+        batch: { multicall: true },
         chain,
+        pollingInterval: rest.pollingInterval as number,
         transport: rest.transports[chain.id as TChain[number]['id']],
       })
 
-    publicClients.set(chainId ?? -1, publicClient)
+    publicClients.set(chainId, publicClient)
     return publicClient
-  }
-  function watchPublicClient(onChange: (publicClient: PublicClient) => void) {
-    const handleChange = async () => onChange(getPublicClient())
-    const unsubscribe = store.subscribe(
-      ({ publicClient }) => publicClient,
-      handleChange,
-    )
-    return unsubscribe
   }
 
   /////////////////////////////////////////////////////////////////////////////////////////////////
   // Create store
   /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  const initialState: State = {
+    chainId: chains[0].id,
+    connections: new Map(),
+    current: undefined,
+    status: 'disconnected',
+  }
 
   const store = createStore(
     subscribeWithSelector(
@@ -207,6 +214,7 @@ export function createConfig<const TChain extends readonly Chain[]>({
             name: 'store',
             partialize(state): PartializedState {
               return {
+                chainId: state.chainId,
                 connections: state.connections,
                 current: state.current,
                 status: state.status,
@@ -224,19 +232,21 @@ export function createConfig<const TChain extends readonly Chain[]>({
   // Subscribe to changes
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  // Update public client when chain changes
+  // Update default chain when connector chain changes
   if (isMultichain)
     store.subscribe(
       ({ connections, current }) =>
         current ? connections.get(current)?.chainId : undefined,
       (chainId) => {
-        let publicClient: PublicClient | undefined
-        try {
-          publicClient = getPublicClient({ chainId })
-        } catch (error) {
-          console.warn(error)
-        }
-        return store.setState((x) => ({ ...x, publicClient }))
+        if (!syncConnectedChain) return
+
+        const isChainConfigured = chains.some((x) => x.id === chainId)
+        if (!isChainConfigured) return
+
+        return store.setState((x) => ({
+          ...x,
+          chainId: chainId ?? x.chainId,
+        }))
       },
     )
 
@@ -284,7 +294,14 @@ export function createConfig<const TChain extends readonly Chain[]>({
 
       x.connections.delete(data.uid)
 
-      if (x.connections.size === 0) return initialState
+      if (x.connections.size === 0)
+        return {
+          ...x,
+          connections: new Map(),
+          current: undefined,
+          status: 'disconnected',
+        }
+
       const nextConnection = x.connections.values().next().value as Connection
       return {
         ...x,
@@ -317,6 +334,8 @@ export function createConfig<const TChain extends readonly Chain[]>({
 
     getPublicClient,
     async reconnect() {
+      if (store.getState().status === 'disconnected') return
+
       if (reconnecting) return
       reconnecting = true
 
@@ -369,7 +388,8 @@ export function createConfig<const TChain extends readonly Chain[]>({
       if (!connected)
         store.setState((x) => ({
           ...x,
-          ...initialState,
+          connections: new Map(),
+          current: undefined,
           status: 'disconnected',
         }))
 
@@ -381,7 +401,6 @@ export function createConfig<const TChain extends readonly Chain[]>({
       store.setState(newState, true)
     },
     subscribe: store.subscribe,
-    watchPublicClient,
 
     _internal: {
       change,

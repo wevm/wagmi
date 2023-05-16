@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 
-import { renderHook, waitFor } from '../../test/index.js'
+import { renderHook, testClient, waitFor } from '../../test/index.js'
 import { useBlockNumber } from './useBlockNumber.js'
 
 test('mounts', async () => {
@@ -36,4 +36,17 @@ test('mounts', async () => {
       "status": "success",
     }
   `)
+})
+
+test('watch', async () => {
+  const { result } = renderHook(() => useBlockNumber({ watch: true }))
+
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  expect(result.current.data).toEqual(16280770n)
+
+  await testClient.mine({ blocks: 1 })
+  await waitFor(() => expect(result.current.data).toEqual(16280771n))
+
+  await testClient.mine({ blocks: 1 })
+  await waitFor(() => expect(result.current.data).toEqual(16280772n))
 })

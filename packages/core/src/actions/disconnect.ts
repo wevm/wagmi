@@ -1,11 +1,6 @@
 import { type MutationOptions } from '@tanstack/query-core'
 
-import {
-  type Config,
-  type Connection,
-  type Connector,
-  initialState,
-} from '../config.js'
+import { type Config, type Connection, type Connector } from '../config.js'
 import { type Prettify } from '../types.js'
 
 export type DisconnectParameters = {
@@ -35,7 +30,14 @@ export async function disconnect(
   connections.delete(connector.uid)
 
   config.setState((x) => {
-    if (connections.size === 0) return initialState
+    if (connections.size === 0)
+      return {
+        ...x,
+        connections: new Map(),
+        current: undefined,
+        status: 'disconnected',
+      }
+
     const nextConnection = connections.values().next().value as Connection
     return {
       ...x,
