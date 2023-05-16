@@ -79,9 +79,9 @@ export type Config<TChain extends readonly Chain[] = readonly Chain[]> = {
 }
 
 export type State = {
+  chainId: number
   connections: Map<string, Connection>
   current: string | undefined
-  chainId: number
   status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
 }
 export type PartializedState = Partial<
@@ -233,13 +233,12 @@ export function createConfig<const TChain extends readonly Chain[]>({
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Update default chain when connector chain changes
-  if (isMultichain)
+  if (isMultichain && syncConnectedChain)
     store.subscribe(
       ({ connections, current }) =>
         current ? connections.get(current)?.chainId : undefined,
       (chainId) => {
-        if (!syncConnectedChain) return
-
+        // If chain is not configured, then don't switch over to it.
         const isChainConfigured = chains.some((x) => x.id === chainId)
         if (!isChainConfigured) return
 
@@ -336,6 +335,7 @@ export function createConfig<const TChain extends readonly Chain[]>({
     async reconnect() {
       if (store.getState().status === 'disconnected') return
 
+      // Guard against running `reconnect` multiple times.
       if (reconnecting) return
       reconnecting = true
 
@@ -352,11 +352,13 @@ export function createConfig<const TChain extends readonly Chain[]>({
       for (const [, connection] of store.getState().connections) {
         scores[connection.connector.id] = 2
       }
+      // TODO: Might want to filter `sorted` to only include `scores`
       const sorted =
         Object.keys(scores).length > 0
           ? [...connectors].sort((x) => scores[x.id] ?? -1)
           : connectors
 
+      // Iterate through each connector and try to connect
       const connections = new Map()
       let connected = false
       for (const connector of sorted) {

@@ -7,6 +7,7 @@ import {
 import { useConfig } from './useConfig.js'
 
 export type UseConnectParameters = ConnectMutationOptions
+export type UseConnectReturnType = any // TODO(@tmm): return types
 
 export function useConnect(parameters: UseConnectParameters = {}) {
   const config = useConfig()
