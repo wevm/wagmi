@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vp-c-blue100: #dbeafe;
+  --vp-c-blue200: #bfdbfe;
+  --vp-c-blue300: #93c5fd;
+  --vp-c-blue400: #60a5fa;
+  --vp-c-blue500: #3b82f6;
+  --vp-c-blue600: #2563eb;
+  --vp-c-blue700: #1d4ed8;
+  --vp-c-blue800: #1e40af;
+  --vp-c-blue900: #1e3a8a;
+
+  --vp-c-brand: var(--vp-c-blue600);
+  --vp-c-brand-light: var(--vp-c-blue-light);
+  --vp-c-brand-lighter: var(--vp-c-blue-lighter);
+  --vp-c-brand-dark: var(--vp-c-blue-dark);
+  --vp-c-brand-darker: var(--vp-c-blue-darker);
+  --vp-c-text-light-1: var(--vp-c-black-soft);
+
+  --vp-button-brand-bg: var(--vp-c-blue600);
+  --vp-button-brand-border: var(--vp-c-blue700);
+  --vp-button-brand-text: var(--vp-c-white);
+  --vp-button-brand-hover-text: var(--vp-c-black);
+  --vp-button-sponsor-hover-border: var(--vp-c-brand);
+  --vp-button-sponsor-hover-text: var(--vp-c-brand);
+  --vp-code-line-highlight-color: rgb(255 197 22 / 8%);
+  --vp-code-font-size: 15px;
+  --vp-code-tab-divider: var(--vp-c-mute-dark);
+}
+
+.dark {
+  --vp-c-brand: var(--vp-c-blue500);
+  --vp-button-brand-bg: var(--vp-c-blue600);
+  --vp-button-brand-border: var(--vp-c-blue500);
+  --vp-button-brand-hover-bg: var(--vp-c-blue700);
+  --vp-button-brand-hover-border: var(--vp-c-blue400);
+  --vp-button-brand-hover-text: var(--vp-c-white);
+  --vp-button-brand-active-bg: var(--vp-c-blue800);
+  --vp-button-brand-active-border: var(--vp-c-blue500);
+}
+
+.dark .DocSearch {
+  --docsearch-highlight-color: #ffc51738;
+}
+
+.dark .DocSearch-Hit-source,
+.dark .DocSearch-Hit-title mark,
+.dark .DocSearch-Hit-path mark {
+  color: var(--docsearch-primary-color);
+}
+
+.VPNavBarTitle .VPImage {
+  margin-right: 4px;
+}
+
+.shiki .highlighted {
+  border-left: 2px solid var(--vp-c-brand);
+}
+
+.VPSidebarItem p {
+  line-height: 20px !important;
+}
+
+.VPSidebarItem .level-2 p {
+  font-size: 13px;
+  line-height: 18px !important;
+  font-weight: 400 !important;
+}
+
+.VPDoc iframe {
+  margin-left: -32px;
+  height: 500px;
+  width: calc(100% + 64px);
+}
+
+.main h4 {
+  margin-top: 32px;
+}

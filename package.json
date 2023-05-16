@@ -12,6 +12,7 @@
     "preinstall": "npx only-allow pnpm",
     "postinstall": "pnpm preconstruct",
     "prepare": "npx simple-git-hooks",
+    "site": "pnpm --filter site dev",
     "test": "vitest",
     "test:cov": "vitest --coverage",
     "test:ui": "vitest --ui",
@@ -48,7 +49,8 @@
   "packageManager": "pnpm@8.3.1",
   "pnpm": {
     "patchedDependencies": {
-      "@tanstack/query-core@5.0.0-alpha.26": "patches/@tanstack__query-core@5.0.0-alpha.26.patch"
+      "@tanstack/query-core@5.0.0-alpha.26": "patches/@tanstack__query-core@5.0.0-alpha.26.patch",
+      "vitepress@1.0.0-alpha.75": "patches/vitepress@1.0.0-alpha.75.patch"
     }
   }
 }
