@@ -1,5 +1,14 @@
 # wagmi
 
+## 1.0.5
+
+### Patch Changes
+
+- [`90e2b3b3`](https://github.com/wagmi-dev/wagmi/commit/90e2b3b39efe0585fe28645ac2264109be17362a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies [[`90e2b3b3`](https://github.com/wagmi-dev/wagmi/commit/90e2b3b39efe0585fe28645ac2264109be17362a)]:
+  - @wagmi/core@1.0.5
+
 ## 1.0.4
 
 ### Patch Changes
