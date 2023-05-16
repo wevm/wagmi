@@ -11,6 +11,15 @@
 export type IsUnknown<T> = unknown extends T ? true : false
 
 /**
+ * Makes {@link TKeys} optional in {@link TType} while preserving type inference.
+ */
+// s/o trpc (https://github.com/trpc/trpc/blob/main/packages/server/src/types.ts#L6)
+export type PartialBy<TType, TKeys extends keyof TType> = Partial<
+  Pick<TType, TKeys>
+> &
+  Omit<TType, TKeys>
+
+/**
  * Combines members of an intersection into a readable type.
  *
  * @link https://twitter.com/mattpocockuk/status/1622730173446557697?s=20&t=NdpAcmEFXY01xkqU3KO0Mg
@@ -21,3 +30,5 @@ export type IsUnknown<T> = unknown extends T ? true : false
 export type Prettify<T> = {
   [K in keyof T]: T[K]
 } & {}
+
+export type Unit = 'ether' | 'gwei' | 'wei' | number

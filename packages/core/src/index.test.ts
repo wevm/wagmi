@@ -20,6 +20,8 @@ test('exports', () => {
       "disconnect": [Function],
       "disconnectMutationOptions": [Function],
       "getAccount": [Function],
+      "getBalance": [Function],
+      "getBalanceQueryOptions": [Function],
       "getBlockNumber": [Function],
       "getBlockNumberQueryOptions": [Function],
       "getChainId": [Function],

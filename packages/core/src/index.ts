@@ -25,6 +25,14 @@ export {
 } from './actions/getAccount.js'
 
 export {
+  type GetBalanceParameters,
+  type GetBalanceReturnType,
+  getBalance,
+  type GetBalanceQueryOptions,
+  getBalanceQueryOptions,
+} from './actions/getBalance.js'
+
+export {
   type GetBlockNumberParameters,
   type GetBlockNumberReturnType,
   getBlockNumber,

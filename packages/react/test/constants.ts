@@ -1,5 +1,7 @@
 import { mainnet } from '@wagmi/chains'
-import type { Chain } from '@wagmi/core'
+import { type Chain } from '@wagmi/core'
+
+import { type PartialBy } from '../src/types.js'
 
 /**
  * The id of the current test worker.
@@ -28,11 +30,14 @@ export const [ALICE, BOB] = accounts
 type ForkChain = Chain & { port: number }
 
 const getForkChain = ({
-  chainId,
   port,
-}: { chainId: number; port: number }): ForkChain => ({
+  ...rest
+}: PartialBy<
+  Omit<ForkChain, 'rpcUrls'>,
+  'name' | 'network' | 'nativeCurrency'
+>): ForkChain => ({
   ...mainnet, // We are using a mainnet fork for testing.
-  id: chainId,
+  ...rest,
   port,
   rpcUrls: {
     // These rpc urls are automatically used in the transports.
@@ -50,8 +55,12 @@ const getForkChain = ({
 })
 
 export const testChains = {
-  anvil: getForkChain({ chainId: 123, port: 8547 }),
-  anvilTwo: getForkChain({ chainId: 456, port: 8548 }),
+  anvil: getForkChain({ id: 123, port: 8547 }),
+  anvilTwo: getForkChain({
+    id: 456,
+    port: 8548,
+    nativeCurrency: { decimals: 18, name: 'wagmi', symbol: 'WAG' },
+  }),
 } as const satisfies Record<string, ForkChain>
 
 export let forkUrl: string
