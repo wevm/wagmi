@@ -18,33 +18,36 @@ import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
 import { ChainNotConfiguredError } from './errors.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
+import type { OneOf, Prettify } from './types.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
   TChain extends readonly [Chain, ...(readonly Chain[])],
-> = {
-  connectors: CreateConnectorFn[]
-  persister?: Persister | null
-  queryClient?: QueryClient
-  reconnectOnMount?: boolean
-  storage?: Storage | null
-  syncConnectedChain?: boolean
-} & (
-  | {
-      chains: TChain
-      pollingInterval?: number
-      transports: Record<TChain[number]['id'], Transport>
-    }
-  | {
-      publicClient: PublicClient
-    }
-  | {
-      chains: TChain
-      publicClient: (parameters: {
-        chain: TChain[number]
-      }) => PublicClient<Transport>
-    }
-)
+> = Prettify<
+  {
+    connectors: CreateConnectorFn[]
+    persister?: Persister | null
+    queryClient?: QueryClient
+    reconnectOnMount?: boolean
+    storage?: Storage | null
+    syncConnectedChain?: boolean
+  } & OneOf<
+    | {
+        chains: TChain
+        pollingInterval?: number
+        transports: Record<TChain[number]['id'], Transport>
+      }
+    | {
+        publicClient: PublicClient
+      }
+    | {
+        chains: TChain
+        publicClient: (parameters: {
+          chain: TChain[number]
+        }) => PublicClient<Transport>
+      }
+  >
+>
 
 export type Config<
   TChain extends readonly [Chain, ...(readonly Chain[])] = readonly [
@@ -145,8 +148,7 @@ export function createConfig<
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
   let chains: readonly [Chain, ...(readonly Chain[])]
-  const isMultichain = 'chains' in rest
-  if (isMultichain) chains = rest.chains
+  if ('chains' in rest) chains = rest.chains
   else {
     // TODO: Infer `TChain` from `publicClient`
     if (!rest.publicClient.chain) throw new ChainNotConfiguredError()
@@ -171,6 +173,7 @@ export function createConfig<
     return connector
   }
 
+  const isMultichain = 'chains' in rest
   const publicClients = new Map<number, PublicClient | undefined>()
   function getPublicClient({
     chainId: chainId_,

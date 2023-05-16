@@ -1,14 +1,19 @@
 /**
- * Checks if {@link T} is `unknown`
+ * Makes objects destructurable.
  *
- * @param T - Type to check
- * @returns `true` if {@link T} is `unknown`, otherwise `false`
+ * @param Union - Union to distribute.
  *
  * @example
- * type Result = IsUnknown<unknown>
- * //   ^? type Result = true
+ * type Result = OneOf<{ foo: boolean } | { bar: boolean }>
+ * //   ^? type Result = { foo: boolean; bar?: undefined; } | { bar: boolean; foo?: undefined; }
  */
-export type IsUnknown<T> = unknown extends T ? true : false
+export type OneOf<
+  Union extends object,
+  AllKeys extends KeyofUnion<Union> = KeyofUnion<Union>,
+> = Union extends infer Item
+  ? Prettify<Item & { [K in Exclude<AllKeys, keyof Item>]?: never }>
+  : never
+type KeyofUnion<T> = T extends T ? keyof T : never
 
 /**
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.
