@@ -1,0 +1,104 @@
+name: Verify
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Lint code
+        run: pnpm format && pnpm lint:fix
+      
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commit_message: 'chore: format'
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: 'github-actions[bot]@users.noreply.github.com'
+
+  build:
+    name: Build
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Build
+        run: pnpm build
+
+  types:
+    name: Types
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Link packages
+        run: pnpm preconstruct
+
+      - name: Check types
+        run: pnpm typecheck
+
+      - name: Test types
+        run: pnpm test:typecheck
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shard: [1, 2, 3]
+        total-shards: [3]
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Run tests
+        uses: nick-fields/retry@v2
+        with:
+          command: CI=true pnpm test:cov --shard=${{ matrix.shard }}/${{ matrix.total-shards }}
+          max_attempts: 3
+          timeout_minutes: 20
+        env:
+          VITE_ANVIL_BLOCK_NUMBER: ${{ vars.VITE_ANVIL_BLOCK_NUMBER }}
+          VITE_ANVIL_FORK_URL: ${{ secrets.VITE_ANVIL_FORK_URL }}
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

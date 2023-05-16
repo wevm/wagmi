@@ -15,6 +15,7 @@
     "site": "pnpm --filter site dev",
     "test": "vitest",
     "test:cov": "vitest --coverage",
+    "test:typecheck": "vitest typecheck",
     "test:ui": "vitest --ui",
     "test:ui:cov": "vite preview --outDir ./coverage",
     "test:update": "vitest --update",
