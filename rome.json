@@ -18,6 +18,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "complexity": {
+        "noExtraSemicolon": "off"
+      },
       "correctness": {
         "noUnusedVariables": "error"
       },

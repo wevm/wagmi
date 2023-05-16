@@ -11,7 +11,7 @@ export const sidebar: DefaultTheme.Sidebar = {
         { text: 'TypeScript', link: '/react/typescript' },
         { text: 'Platform Compatibility', link: '/react/compatibility' },
       ],
-    }
+    },
   ],
   '/core/': [
     {
@@ -23,6 +23,6 @@ export const sidebar: DefaultTheme.Sidebar = {
         { text: 'TypeScript', link: '/core/typescript' },
         { text: 'Platform Compatibility', link: '/core/compatibility' },
       ],
-    }
+    },
   ],
 }

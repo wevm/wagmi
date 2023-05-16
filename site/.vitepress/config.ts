@@ -1,6 +1,6 @@
+import { sidebar } from './sidebar'
 import { createRequire } from 'module'
 import { defineConfig } from 'vitepress'
-import { sidebar } from './sidebar'
 
 const require = createRequire(import.meta.url)
 const pkg = require('../../packages/react/package.json')
@@ -36,7 +36,10 @@ export default defineConfig({
         content: `${title} · React Hooks for Ethereum`,
       },
     ],
-    ['meta', { property: 'og:image', content: 'https://wagmi.sh/og-image.png' }],
+    [
+      'meta',
+      { property: 'og:image', content: 'https://wagmi.sh/og-image.png' },
+    ],
     ['meta', { property: 'og:url', content: 'https://wagmi.sh' }],
     ['meta', { property: 'og:description', content: description }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],

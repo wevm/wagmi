@@ -1,4 +1,12 @@
-import { connect, disconnect, getAccount, watchAccount } from '@wagmi/core'
+import {
+  type GetBlockNumberReturnType,
+  connect,
+  disconnect,
+  getAccount,
+  getBlockNumber,
+  watchAccount,
+  watchBlockNumber,
+} from '@wagmi/core'
 import * as React from 'react'
 
 import { config } from './wagmi'
@@ -8,6 +16,7 @@ function App() {
     <>
       <Account />
       <Connect />
+      <BlockNumber />
     </>
   )
 }
@@ -57,6 +66,28 @@ function Connect() {
           {connector.name}
         </button>
       ))}
+    </div>
+  )
+}
+
+function BlockNumber() {
+  const [blockNumber, setBlockNumber] = React.useState<
+    GetBlockNumberReturnType | undefined
+  >()
+
+  React.useEffect(() => {
+    ;(async () => {
+      setBlockNumber(await getBlockNumber(config))
+
+      watchBlockNumber(config, { onBlockNumber: setBlockNumber })
+    })()
+  }, [])
+
+  return (
+    <div>
+      <h2>Block Number</h2>
+
+      <div>Block Number (Default Chain): {blockNumber?.toString()}</div>
     </div>
   )
 }
