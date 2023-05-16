@@ -10,7 +10,7 @@ export const config = createConfig({
     injected({ wallet: 'coinbaseWallet' }),
     injected({ wallet: 'phantom' }),
     injected(),
-    walletConnect({ projectId: process.env.VITE_WC_PROJECT_ID }),
+    walletConnect({ projectId: import.meta.env.VITE_WC_PROJECT_ID }),
   ],
   // reconnectOnMount: false,
   storage: createStorage({ storage: localStorage, key: 'vite-react' }),

@@ -20,6 +20,15 @@ export type ConnectReturnType = {
   chainId: number
 }
 
+/**
+ * Connects to `connector`.
+ *
+ * - Docs: https://wagmi.sh
+ *
+ * @param config {@link Config}
+ * @param parameters {@link ConnectParameters}
+ * @returns Connected account info. {@link ConnectReturnType}
+ */
 export async function connect(
   config: Config,
   { chainId, connector: connector_ }: ConnectParameters,

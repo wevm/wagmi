@@ -1,0 +1,27 @@
+diff --git a/dist/types/index.d.ts b/dist/types/index.d.ts
+index dff27436a8d55cc06f7cc02a90702b5e30fb53ed..0346be18dc213db9b5ebe722d1bfeb1ce0fb3875 100644
+--- a/dist/types/index.d.ts
++++ b/dist/types/index.d.ts
+@@ -1,6 +1,6 @@
+-import { EthereumProvider as Provider } from "./EthereumProvider";
+-export declare const EthereumProvider: typeof Provider;
++import { EthereumProvider } from "./EthereumProvider";
+ export type { RpcEvent, RpcMethod } from "./EthereumProvider";
+ export * from "./constants/rpc";
+-export default Provider;
++export { EthereumProvider };
++export default EthereumProvider;
+ //# sourceMappingURL=index.d.ts.map
+\ No newline at end of file
+diff --git a/package.json b/package.json
+index b47e5c340f8e3ac58e6c0fafa2fe5aaf18d42f96..63d12f78d4dbf7563e898aad1a62a0831b0ce528 100644
+--- a/package.json
++++ b/package.json
+@@ -21,6 +21,7 @@
+       "default": "./dist/index.cjs.js"
+     }
+   },
++  "sideEffects": false,
+   "files": [
+     "dist"
+   ],

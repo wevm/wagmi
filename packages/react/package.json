@@ -51,6 +51,13 @@
     },
     "./package.json": "./package.json"
   },
+  "typesVersions": {
+    "*": {
+      "actions": ["./dist/types/actions.d.ts"],
+      "chains": ["./dist/types/chains.d.ts"],
+      "connectors": ["./dist/types/connectors.d.ts"]
+    }
+  },
   "peerDependencies": {
     "react": ">=18",
     "typescript": ">=5",

@@ -4,6 +4,12 @@ patchedDependencies:
   '@tanstack/query-core@5.0.0-alpha.26':
     hash: eeh6ipltmljhxdmr2zvloj7oli
     path: patches/@tanstack__query-core@5.0.0-alpha.26.patch
+  '@walletconnect/ethereum-provider@2.7.2':
+    hash: d2e6fs45gcpivejxywrl54asvy
+    path: patches/@walletconnect__ethereum-provider@2.7.2.patch
+  '@web3modal/standalone@2.4.1':
+    hash: 3feurzjirxgilbrws7ud4fzboy
+    path: patches/@web3modal__standalone@2.4.1.patch
   vitepress@1.0.0-alpha.75:
     hash: bwgf4tbd2mw4gh6hee525znk3q
     path: patches/vitepress@1.0.0-alpha.75.patch
@@ -200,10 +206,10 @@ importers:
     dependencies:
       '@walletconnect/ethereum-provider':
         specifier: ^2.7.2
-        version: 2.7.2(@web3modal/standalone@2.4.1)(lokijs@1.5.12)
+        version: 2.7.2(patch_hash=d2e6fs45gcpivejxywrl54asvy)(@web3modal/standalone@2.4.1)(lokijs@1.5.12)
       '@web3modal/standalone':
         specifier: ^2.4.1
-        version: 2.4.1
+        version: 2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy)
     devDependencies:
       '@wagmi/chains':
         specifier: workspace:*
@@ -2010,7 +2016,7 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@walletconnect/ethereum-provider@2.7.2(@web3modal/standalone@2.4.1)(lokijs@1.5.12):
+  /@walletconnect/ethereum-provider@2.7.2(patch_hash=d2e6fs45gcpivejxywrl54asvy)(@web3modal/standalone@2.4.1)(lokijs@1.5.12):
     resolution: {integrity: sha512-bvmutLrKKLlQ1WxKCvvX5p5YVox1D1f3Enp6hzAiZf4taN+n/M5rmwfAcLgLhp4cTAUDhl3zgtZErzDyJnvGvQ==}
     peerDependencies:
       '@web3modal/standalone': '>=2'
@@ -2026,7 +2032,7 @@ packages:
       '@walletconnect/types': 2.7.2(lokijs@1.5.12)
       '@walletconnect/universal-provider': 2.7.2(lokijs@1.5.12)
       '@walletconnect/utils': 2.7.2(lokijs@1.5.12)
-      '@web3modal/standalone': 2.4.1
+      '@web3modal/standalone': 2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy)
       events: 3.3.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
@@ -2036,6 +2042,7 @@ packages:
       - lokijs
       - utf-8-validate
     dev: false
+    patched: true
 
   /@walletconnect/events@1.0.1:
     resolution: {integrity: sha512-NPTqaoi0oPBVNuLv7qPaJazmGHs5JGyO8eEAk5VGKmJzDR7AHzD4k6ilox5kxk1iwiOnFopBOOMLs86Oa76HpQ==}
@@ -2252,7 +2259,7 @@ packages:
       - react
     dev: false
 
-  /@web3modal/standalone@2.4.1:
+  /@web3modal/standalone@2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy):
     resolution: {integrity: sha512-ZrI5LwWeT9sd8A3FdIX/gBp3ZrzrX882Ln1vJN0LTCmeP2OUsYcW5bPxjv1PcJ1YUBY7Tg4aTgMUnAVTTuqb+w==}
     dependencies:
       '@web3modal/core': 2.4.1
@@ -2260,6 +2267,7 @@ packages:
     transitivePeerDependencies:
       - react
     dev: false
+    patched: true
 
   /@web3modal/ui@2.4.1:
     resolution: {integrity: sha512-x1ceyd3mMJsIHs5UUTLvE+6qyCjhyjL6gB/wVmTDbwASHSQIVyshQJ+s7BwIEMP/pbAsYDg+/M8EiUuE+/E/kg==}

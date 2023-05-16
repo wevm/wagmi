@@ -25,7 +25,7 @@ export type CreateConfigParameters<
   TChain extends readonly [Chain, ...(readonly Chain[])],
 > = Prettify<
   {
-    connectors: CreateConnectorFn[]
+    connectors?: CreateConnectorFn[]
     persister?: Persister | null
     queryClient?: QueryClient
     reconnectOnMount?: boolean
@@ -155,7 +155,7 @@ export function createConfig<
     chains = [rest.publicClient.chain]
   }
 
-  const connectors = rest.connectors.map(setup)
+  const connectors = (rest.connectors ?? []).map(setup)
   function setup(connectorFn: CreateConnectorFn) {
     // Set up emitter with uid and add to connector so they are "linked" together.
     const emitter = createEmitter<ConnectorEventMap>(uid())
