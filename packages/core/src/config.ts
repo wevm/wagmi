@@ -94,8 +94,8 @@ export type State = {
   current: string | undefined
   status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
 }
-export type PartializedState = Partial<
-  Pick<State, 'chainId' | 'connections' | 'current' | 'status'>
+export type PartializedState = Prettify<
+  Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
 >
 export type Connection = {
   accounts: readonly Address[]
@@ -133,7 +133,7 @@ export function createConfig<
   persister = typeof window !== 'undefined' && storage
     ? createSyncStoragePersister({
         key: 'cache',
-        storage,
+        storage: storage as Storage<Record<string, unknown>>,
         // Serialization is handled in `storage`.
         serialize: (x) => x as unknown as string,
         // Deserialization is handled in `storage`.
@@ -235,7 +235,7 @@ export function createConfig<
               }
             },
             skipHydration: !reconnectOnMount,
-            storage,
+            storage: storage as Storage<Record<string, unknown>>,
             version: 1,
           })
         : () => initialState,

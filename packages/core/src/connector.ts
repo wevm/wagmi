@@ -20,10 +20,11 @@ export type ConnectorEventMap = {
 export type CreateConnectorFn<
   TProvider = unknown,
   TProperties = unknown,
+  TStorageItem extends Record<string, unknown> = {},
 > = (config: {
   chains: readonly Chain[]
   emitter: Emitter<ConnectorEventMap>
-  storage?: Storage | null
+  storage?: Storage<TStorageItem> | null
 }) => Prettify<
   {
     readonly id: string
@@ -49,8 +50,10 @@ export type CreateConnectorFn<
   } & TProperties
 >
 
-export function createConnector<TProvider, TProperties>(
-  fn: CreateConnectorFn<TProvider, TProperties>,
-) {
+export function createConnector<
+  TProvider,
+  TProperties,
+  TStorageItem extends Record<string, unknown> = {},
+>(fn: CreateConnectorFn<TProvider, TProperties, TStorageItem>) {
   return fn
 }

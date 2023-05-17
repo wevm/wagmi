@@ -2,7 +2,10 @@ blank_issues_enabled: false
 contact_links:
   - name: Question
     url: https://github.com/wagmi-dev/wagmi/discussions/new?category=q-a
-    about: Ask questions and discuss with other community members.
+    about: Ask a question and discuss with other community members.
   - name: Feature Request
     url: https://github.com/wagmi-dev/wagmi/discussions/new?category=ideas
-    about: Requests features or brainstorm ideas for new functionality.
+    about: Request a feature or brainstorm ideas for new functionality.
+  - name: Connector or Chain Issue
+    url: https://github.com/wagmi-dev/references/issues/new?assignees=&labels=&projects=&template=bug_report.yml&title=bug%3A+%3Ctitle%3E
+    about: Report an issue related to a Connector or Chain.

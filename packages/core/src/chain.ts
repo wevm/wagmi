@@ -24,6 +24,10 @@ export type Chain = {
   contracts?: {
     ensRegistry?: Contract
     ensUniversalResolver?: Contract
+    /**
+     * Multicall3
+     * @link https://github.com/mds1/multicall
+     */
     multicall3?: Contract
   }
   /** Flag for test networks */
