@@ -1,4 +1,13 @@
 /**
+ * Removes `readonly` from all properties of an object.
+ *
+ * @param T - Object to remove `readonly` properties from.
+ */
+export type Mutable<T extends object> = {
+  -readonly [key in keyof T]: T[key]
+}
+
+/**
  * Makes objects destructurable.
  *
  * @param Union - Union to distribute.

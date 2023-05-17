@@ -114,4 +114,4 @@ export { serialize } from './utils/serialize.js'
 ////////////////////////////////////////////////////////////////////////////////
 // Types
 
-export { type Prettify } from './types.js'
+export { type Mutable, type OneOf, type Prettify } from './types.js'

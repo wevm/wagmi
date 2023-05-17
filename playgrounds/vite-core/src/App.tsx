@@ -44,9 +44,11 @@ function Account() {
         status: {account.status}
       </div>
 
-      <button type='button' onClick={() => disconnect(config)}>
-        Disconnect
-      </button>
+      {account.status === 'connected' && (
+        <button type='button' onClick={() => disconnect(config)}>
+          Disconnect
+        </button>
+      )}
     </div>
   )
 }

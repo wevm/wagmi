@@ -4,6 +4,11 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    // `@coinbase-wallet/sdk` hardcodes `process.env`
+    // https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/src/CoinbaseWalletSDK.ts#L15-L17
+    'process.env': {},
+  },
   plugins: [react()],
   resolve: {
     alias: {

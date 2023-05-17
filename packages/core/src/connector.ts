@@ -44,7 +44,7 @@ export type CreateConnectorFn<
 
     onAccountsChanged(accounts: string[]): void
     onChainChanged(chainId: string): void
-    onConnect(connectInfo: ProviderConnectInfo): void
+    onConnect?(connectInfo: ProviderConnectInfo): void
     onDisconnect(error?: Error): void
     onMessage?(message: ProviderMessage): void
   } & TProperties
