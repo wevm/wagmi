@@ -1,3 +1,4 @@
+import { execaSync } from 'execa'
 import fs from 'fs-extra'
 import { glob } from 'glob'
 import path from 'path'
@@ -6,8 +7,27 @@ preconstruct()
 
 // Symlinks package sources to dist for local development
 async function preconstruct() {
-  console.log('Linking packages for development.')
-  // Get all packages files
+  // Check to see if references submodule is installed separately from root monorepo
+  if (!process.env.SUBMODULE) {
+    const referencesNodeModulesPaths = await glob(
+      'references/**/node_modules/',
+      { ignore: ['**/node_modules/**/node_modules/**'] },
+    )
+    const needsInstall = referencesNodeModulesPaths.includes(
+      'references/node_modules',
+    )
+    if (needsInstall) {
+      console.log('Reinstalling references modules.')
+      // TODO: `rimraf` not working with `bun` for some reason
+      execaSync('rm', ['-rf', ...referencesNodeModulesPaths])
+      execaSync('pnpm', ['install', '--ignore-scripts'])
+      console.log('Done. Reinstalled references modules.\n')
+    }
+  }
+
+  // Link packages
+  console.log('Setting up packages for development.')
+  // Get all package.json files
   const packagePaths = await glob('**/package.json', {
     ignore: ['**/dist/**', '**/node_modules/**'],
   })
@@ -56,7 +76,7 @@ async function preconstruct() {
     }
   }
 
-  console.log(`Done. Linked ${count} packages.`)
+  console.log(`Done. Set up ${count} packages.`)
 }
 
 type Package = {
