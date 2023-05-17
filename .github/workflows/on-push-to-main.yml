@@ -15,6 +15,7 @@ jobs:
 
   changesets:
     name: Changesets
+    needs: verify
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -24,39 +25,17 @@ jobs:
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
-          submodules: true
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
 
-      - name: Create Version Pull Request
+      - name: Create version pull request or publish to npm
         uses: changesets/action@v1
         with:
-          version: pnpm changeset:version
-          commit: 'chore: version package'
-          title: 'chore: version package'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  release:
-    name: Release
-    needs: verify
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v3
-        with:
-          submodules: true
-
-      - name: Install dependencies
-        uses: ./.github/actions/install-dependencies
-
-      - name: Publish to NPM
-        uses: changesets/action@v1
-        with:
+          title: 'chore: version packages'
+          commit: 'chore: version packages'
           publish: pnpm changeset:release
+          version: pnpm changeset:version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
