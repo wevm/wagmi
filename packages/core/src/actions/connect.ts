@@ -11,12 +11,16 @@ import { ConnectorAlreadyConnectedError } from '../errors.js'
 import { type Prettify } from '../types.js'
 
 export type ConnectParameters = {
+  /** Chain ID to connect to */
   chainId?: number | undefined
+  /** Connector to connect with */
   connector: CreateConnectorFn | Connector
 }
 
 export type ConnectReturnType = {
+  /** Connected accounts from connector */
   accounts: readonly Address[]
+  /** Connected chain ID from connector */
   chainId: number
 }
 
@@ -84,8 +88,8 @@ export async function connect(
 ///////////////////////////////////////////////////////////////////////////
 // Mutation
 
-type ConnectMutationData = ConnectReturnType
-type ConnectMutationError =
+export type ConnectMutationData = ConnectReturnType
+export type ConnectMutationError =
   // from `connect()`
   | ConnectorAlreadyConnectedError
   // from `connector.connect()`
@@ -93,18 +97,20 @@ type ConnectMutationError =
   | ResourceUnavailableRpcError
   // base
   | Error
-type ConnectMutationVariables = {
+export type ConnectMutationVariables = {
+  /** Chain ID to connect to */
   chainId?: number | undefined
+  /** Connector to connect with */
   connector?: CreateConnectorFn | Connector | undefined
 }
+
+export type ConnectMutationOptions = Prettify<
+  Omit<Options, 'mutationFn' | 'mutationKey'> & ConnectMutationVariables
+>
 type Options = MutationOptions<
   ConnectMutationData,
   ConnectMutationError,
   ConnectMutationVariables
->
-
-export type ConnectMutationOptions = Prettify<
-  Omit<Options, 'mutationFn' | 'mutationKey'> & ConnectMutationVariables
 >
 
 export const connectMutationOptions = (

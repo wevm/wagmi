@@ -1,7 +1,5 @@
 import { mainnet } from '@wagmi/chains'
-import { type Chain } from '@wagmi/core'
-
-import { type PartialBy } from '../src/types.js'
+import { type Chain, type PartialBy } from '@wagmi/core'
 
 /**
  * The id of the current test worker.

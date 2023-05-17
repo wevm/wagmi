@@ -5,6 +5,10 @@ export {
   type ConnectParameters,
   type ConnectReturnType,
   connect,
+  // Mutation
+  type ConnectMutationData,
+  type ConnectMutationError,
+  type ConnectMutationVariables,
   type ConnectMutationOptions,
   connectMutationOptions,
 } from './actions/connect.js'
@@ -114,4 +118,9 @@ export { serialize } from './utils/serialize.js'
 ////////////////////////////////////////////////////////////////////////////////
 // Types
 
-export { type Mutable, type OneOf, type Prettify } from './types.js'
+export {
+  type Mutable,
+  type OneOf,
+  type PartialBy,
+  type Prettify,
+} from './types.js'
