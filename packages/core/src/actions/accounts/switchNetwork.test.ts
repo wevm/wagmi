@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient, testChains } from '../../../test'
+import { getWalletClients, setupConfig, testChains } from '../../../test'
 import { MockConnector } from '../../connectors/mock'
 import { connect } from './connect'
 import { switchNetwork } from './switchNetwork'
 
 const connector = new MockConnector({
   chains: testChains,
-  options: { signer: getSigners()[0]! },
+  options: { walletClient: getWalletClients()[0]! },
 })
 
 describe('switchNetwork', () => {
   beforeEach(() => {
-    setupClient()
+    setupConfig()
   })
 
   describe('args', () => {
@@ -91,13 +91,17 @@ describe('switchNetwork', () => {
         connector: new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         }),
       })
-      await expect(
-        switchNetwork({ chainId: 69 }),
-      ).rejects.toThrowErrorMatchingInlineSnapshot(`"User rejected request"`)
+      await expect(switchNetwork({ chainId: 69 })).rejects
+        .toThrowErrorMatchingInlineSnapshot(`
+        "User rejected the request.
+
+        Details: Failed to switch chain.
+        Version: viem@0.3.18"
+      `)
     })
 
     it('not connected', async () => {
@@ -111,7 +115,7 @@ describe('switchNetwork', () => {
         connector: new MockConnector({
           options: {
             flags: { noSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         }),
       })

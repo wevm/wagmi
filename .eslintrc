@@ -77,7 +77,14 @@
       }
     }
   ],
-  "ignorePatterns": ["CHANGELOG.md", "build", "dist", "node_modules", "**/*.config.js", "**/*.config.mjs"],
+  "ignorePatterns": [
+    "CHANGELOG.md",
+    "build",
+    "dist",
+    "node_modules",
+    "**/*.config.js",
+    "**/*.config.mjs"
+  ],
   "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx", ".d.ts"]

@@ -1,7 +1,6 @@
-import type { Address } from 'abitype'
 import { describe, expect, it } from 'vitest'
 
-import { act, getSigners, renderHook } from '../../../test'
+import { act, getWalletClients, renderHook } from '../../../test'
 import { useEnsName } from './useEnsName'
 
 describe('useEnsName', () => {
@@ -77,7 +76,9 @@ describe('useEnsName', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [Error: invalid address (argument="address", value="3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj", code=INVALID_ARGUMENT, version=address/5.7.0)],
+            "error": [InvalidAddressError: Address "3QtUb3MfgJR7syviUzLgQiCrJFGmZ5bYJj" is invalid.
+
+          Version: viem@0.3.18],
             "fetchStatus": "idle",
             "isError": true,
             "isFetched": true,
@@ -94,7 +95,7 @@ describe('useEnsName', () => {
       })
 
       it('does not have name', async () => {
-        const address = (await getSigners()[0]?.getAddress()) as Address
+        const address = getWalletClients()[0]?.account.address
         const { result, waitFor } = renderHook(() => useEnsName({ address }))
 
         await waitFor(() => expect(result.current.isSuccess).toBeTruthy())

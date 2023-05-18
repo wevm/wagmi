@@ -239,7 +239,7 @@ export function actions(config: ActionsConfig = {}): ActionsResult {
                   | (Omit<WriteContractPreparedArgs<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams_})
                   | (Omit<WriteContractUnpreparedArgs<typeof ${contract.meta.abiName}, TFunctionName>, 'abi'${omitted}>${typeParams_}),
               ) {
-                return writeContract(${innerActionConfig} as WriteContractArgs<typeof ${contract.meta.abiName}, TFunctionName>)
+                return writeContract(${innerActionConfig} as unknown as WriteContractArgs<typeof ${contract.meta.abiName}, TFunctionName>)
               }
               `
             } else

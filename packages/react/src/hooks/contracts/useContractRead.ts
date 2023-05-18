@@ -1,6 +1,6 @@
 import { replaceEqualDeep } from '@tanstack/react-query'
 import type { ReadContractConfig, ReadContractResult } from '@wagmi/core'
-import { deepEqual, parseContractResult, readContract } from '@wagmi/core'
+import { deepEqual, readContract } from '@wagmi/core'
 import type { Abi } from 'abitype'
 import * as React from 'react'
 
@@ -18,7 +18,7 @@ export type UseContractReadConfig<
   TSelectData = ReadContractResult<TAbi, TFunctionName>,
 > = PartialBy<
   ReadContractConfig<TAbi, TFunctionName>,
-  'abi' | 'address' | 'args' | 'functionName'
+  'abi' | 'address' | 'args' | 'blockNumber' | 'blockTag' | 'functionName'
 > &
   QueryConfigWithSelect<
     ReadContractResult<TAbi, TFunctionName>,
@@ -27,22 +27,39 @@ export type UseContractReadConfig<
   > & {
     /** If set to `true`, the cache will depend on the block number */
     cacheOnBlock?: boolean
-    /** Subscribe to changes */
-    watch?: boolean
-  }
+  } & (
+    | {
+        /** Block number to read against. */
+        blockNumber?: ReadContractConfig['blockNumber']
+        blockTag?: never
+        watch?: never
+      }
+    | {
+        blockNumber?: never
+        /** Block tag to read against. */
+        blockTag?: ReadContractConfig['blockTag']
+        watch?: never
+      }
+    | {
+        blockNumber?: never
+        blockTag?: never
+        /** Refresh on incoming blocks. */
+        watch?: boolean
+      }
+  )
 
 type QueryKeyArgs = Omit<ReadContractConfig, 'abi'>
 type QueryKeyConfig = Pick<UseContractReadConfig, 'scopeKey'> & {
-  blockNumber?: number
+  blockNumber?: bigint
 }
 
 function queryKey({
   address,
   args,
   blockNumber,
+  blockTag,
   chainId,
   functionName,
-  overrides,
   scopeKey,
 }: QueryKeyArgs & QueryKeyConfig) {
   return [
@@ -51,9 +68,9 @@ function queryKey({
       address,
       args,
       blockNumber,
+      blockTag,
       chainId,
       functionName,
-      overrides,
       scopeKey,
     },
   ] as const
@@ -64,18 +81,19 @@ function queryFn<
   TFunctionName extends string,
 >({ abi }: { abi?: Abi | readonly unknown[] }) {
   return async ({
-    queryKey: [{ address, args, chainId, functionName, overrides }],
+    queryKey: [{ address, args, blockNumber, blockTag, chainId, functionName }],
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!abi) throw new Error('abi is required')
     if (!address) throw new Error('address is required')
     return ((await readContract({
       address,
       args,
+      blockNumber,
+      blockTag,
       chainId,
       // TODO: Remove cast and still support `Narrow<TAbi>`
       abi: abi as Abi,
       functionName,
-      overrides,
     })) ?? null) as ReadContractResult<TAbi, TFunctionName>
   }
 }
@@ -89,6 +107,8 @@ export function useContractRead<
     abi,
     address,
     args,
+    blockNumber: blockNumberOverride,
+    blockTag,
     cacheOnBlock = false,
     cacheTime,
     chainId: chainId_,
@@ -98,7 +118,6 @@ export function useContractRead<
     onError,
     onSettled,
     onSuccess,
-    overrides,
     scopeKey,
     select,
     staleTime,
@@ -111,12 +130,14 @@ export function useContractRead<
   }: UseContractReadConfig<TAbi, TFunctionName, TSelectData> = {} as any,
 ) {
   const chainId = useChainId({ chainId: chainId_ })
-  const { data: blockNumber } = useBlockNumber({
+  const { data: blockNumber_ } = useBlockNumber({
     chainId,
     enabled: watch || cacheOnBlock,
     scopeKey: watch || cacheOnBlock ? undefined : 'idle',
     watch,
   })
+
+  const blockNumber = blockNumberOverride ?? blockNumber_
 
   const queryKey_ = React.useMemo(
     () =>
@@ -124,19 +145,19 @@ export function useContractRead<
         address,
         args,
         blockNumber: cacheOnBlock ? blockNumber : undefined,
+        blockTag,
         chainId,
         functionName,
-        overrides,
         scopeKey,
       } as Omit<ReadContractConfig, 'abi'>),
     [
       address,
       args,
       blockNumber,
+      blockTag,
       cacheOnBlock,
       chainId,
       functionName,
-      overrides,
       scopeKey,
     ],
   )
@@ -163,18 +184,7 @@ export function useContractRead<
       cacheTime,
       enabled,
       isDataEqual,
-      select(data) {
-        const result =
-          abi && functionName
-            ? parseContractResult({
-                // TODO: Remove cast and still support `Narrow<TAbi>`
-                abi: abi as Abi,
-                data,
-                functionName,
-              })
-            : data
-        return select ? select(result) : result
-      },
+      select,
       staleTime,
       structuralSharing,
       suspense,

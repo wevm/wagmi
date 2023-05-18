@@ -23,9 +23,9 @@ const feeData = await fetchFeeData()
 
 ```ts
 {
-  gasPrice: BigNumber
-  maxFeePerGas: BigNumber
-  maxPriorityFeePerGas: BigNumber
+  gasPrice: bigint
+  maxFeePerGas: bigint
+  maxPriorityFeePerGas: bigint
   formatted: {
     gasPrice: string
     maxFeePerGas: string
@@ -38,7 +38,7 @@ const feeData = await fetchFeeData()
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {4}
 import { fetchFeeData } from '@wagmi/core'
@@ -50,7 +50,7 @@ const feeData = await fetchFeeData({
 
 ### formatUnits (optional)
 
-Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `wei`.
+Formats fee data. Defaults to `wei`.
 
 ```ts {4}
 import { fetchFeeData } from '@wagmi/core'

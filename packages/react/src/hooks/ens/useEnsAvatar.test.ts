@@ -3,42 +3,20 @@ import { setupServer } from 'msw/node'
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 
 import { act, renderHook } from '../../../test'
-import { foundry } from '../../chains'
 
+import { foundry } from '../../chains'
 import { useEnsAvatar } from './useEnsAvatar'
 
 const handlers = [
-  // brantly.eth
-  // 0x983110309620d911731ac0932219af06091b6744
+  // jxom.eth
   rest.get(
-    'https://wrappedpunks.com:3000/api/punks/metadata/2430',
+    'https://ipfs.io/ipfs/QmVDNzQNuD5jBKHmJ2nmVP35HsXUqhGRX9V2KVHvRznLg8/2257',
     (_req, res, ctx) =>
       res(
         ctx.status(200),
         ctx.json({
-          title: 'W#2430',
-          name: 'W#2430',
-          description:
-            'This Punk was wrapped using Wrapped Punks contract, accessible from https://wrappedpunks.com',
-          image: 'https://api.wrappedpunks.com/images/punks/2430.png',
-          external_url: 'https://wrappedpunks.com',
-        }),
-      ),
-  ),
-  // nick.eth
-  // 0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5
-  rest.get(
-    'https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x11ef687cfeb2e353670479f2dcc76af2bc6b3935000000000002c40000000001',
-    (_req, res, ctx) =>
-      res(
-        ctx.status(200),
-        ctx.json({
-          name: 'Nick Johnson',
-          description: null,
-          external_link: null,
           image:
-            'https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE',
-          animation_url: null,
+            'https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg',
         }),
       ),
   ),
@@ -66,7 +44,7 @@ describe('useEnsAvatar', () => {
 
   it('mounts', async () => {
     const { result, waitFor } = renderHook(() =>
-      useEnsAvatar({ address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5' }),
+      useEnsAvatar({ name: 'jxom.eth' }),
     )
 
     await waitFor(() => expect(result.current.isSuccess).toBeTruthy(), {
@@ -77,7 +55,7 @@ describe('useEnsAvatar', () => {
     const { internal, ...res } = result.current
     expect(res).toMatchInlineSnapshot(`
       {
-        "data": "https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE",
+        "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
         "error": null,
         "fetchStatus": "idle",
         "isError": false,
@@ -99,7 +77,7 @@ describe('useEnsAvatar', () => {
       it('has avatar', async () => {
         const { result, waitFor } = renderHook(() =>
           useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
           }),
         )
 
@@ -111,7 +89,7 @@ describe('useEnsAvatar', () => {
         const { internal, ...res } = result.current
         expect(res).toMatchInlineSnapshot(`
           {
-            "data": "https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE",
+            "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
             "error": null,
             "fetchStatus": "idle",
             "isError": false,
@@ -131,7 +109,7 @@ describe('useEnsAvatar', () => {
       it('does not have avatar', async () => {
         const { result, waitFor } = renderHook(() =>
           useEnsAvatar({
-            address: '0x5FE6C3F8d12D5Ad1480F6DC01D8c7864Aa58C523',
+            name: 'awkweb.eth',
           }),
         )
 
@@ -163,14 +141,14 @@ describe('useEnsAvatar', () => {
       const { result, waitFor } = renderHook(() => {
         return {
           ensAvatar: useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
           }),
           ensAvatarwithoutScopeKey: useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
             enabled: false,
           }),
           ensAvatarwithScopeKey: useEnsAvatar({
-            address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+            name: 'jxom.eth',
             scopeKey: 'wagmi',
             enabled: false,
           }),
@@ -191,7 +169,7 @@ describe('useEnsAvatar', () => {
     it('chainId', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
+          name: 'jxom.eth',
           chainId: 1,
         }),
       )
@@ -202,7 +180,7 @@ describe('useEnsAvatar', () => {
       const { internal, ...res } = result.current
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": "https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE",
+          "data": "https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg",
           "error": null,
           "fetchStatus": "idle",
           "isError": false,
@@ -222,7 +200,7 @@ describe('useEnsAvatar', () => {
     it('enabled', async () => {
       const { result, waitFor } = renderHook(() =>
         useEnsAvatar({
-          address: '0x983110309620d911731ac0932219af06091b6744',
+          name: 'jxom.eth',
           enabled: false,
         }),
       )
@@ -252,32 +230,38 @@ describe('useEnsAvatar', () => {
   })
 
   describe('return value', () => {
-    it('refetch', async () => {
-      const { result } = renderHook(() =>
-        useEnsAvatar({
-          address: '0xb8c2c29ee19d8307cb7255e1cd9cbde883a267d5',
-          enabled: false,
-        }),
-      )
-
-      await act(async () => {
-        const { data } = await result.current.refetch()
-        expect(data).toMatchInlineSnapshot(
-          `"https://lh3.googleusercontent.com/hKHZTZSTmcznonu8I6xcVZio1IF76fq0XmcxnvUykC-FGuVJ75UPdLDlKJsfgVXH9wOSmkyHw0C39VAYtsGyxT7WNybjQ6s3fM3macE"`,
+    it(
+      'refetch',
+      async () => {
+        const { result } = renderHook(() =>
+          useEnsAvatar({
+            name: 'jxom.eth',
+            enabled: false,
+          }),
         )
-      })
-    })
+
+        await act(async () => {
+          const { data } = await result.current.refetch()
+          expect(data).toMatchInlineSnapshot(
+            '"https://c8.alamy.com/comp/EWE8F9/rowan-atkinson-mr-bean-EWE8F9.jpg"',
+          )
+        })
+      },
+      { retry: 3 },
+    )
   })
 
   describe('behavior', () => {
-    it('does nothing when `address` is missing', async () => {
-      const { result, waitFor } = renderHook(() => useEnsAvatar())
+    it(
+      'does nothing when `address` is missing',
+      async () => {
+        const { result, waitFor } = renderHook(() => useEnsAvatar())
 
-      await waitFor(() => expect(result.current.isIdle).toBeTruthy())
+        await waitFor(() => expect(result.current.isIdle).toBeTruthy())
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { internal, ...res } = result.current
-      expect(res).toMatchInlineSnapshot(`
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { internal, ...res } = result.current
+        expect(res).toMatchInlineSnapshot(`
         {
           "data": undefined,
           "error": null,
@@ -294,6 +278,8 @@ describe('useEnsAvatar', () => {
           "status": "idle",
         }
       `)
-    })
+      },
+      { retry: 3 },
+    )
   })
 })

@@ -3,7 +3,7 @@
   "comparison": "Library Comparison",
   "migration-guide": "Migration Guide",
   "typescript": "TypeScript",
-  "client": "Client",
+  "config": "Config",
   "WagmiConfig": "WagmiConfig",
   "chains": "Chains",
   "providers": "Providers",
@@ -12,5 +12,6 @@
   "prepare-hooks": "Prepare Hooks",
   "constants": "Constants",
   "actions": "Actions",
-  "module-types": "Module Types"
+  "module-types": "Module Types",
+  "faq": "FAQ"
 }

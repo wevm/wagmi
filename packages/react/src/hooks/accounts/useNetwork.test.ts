@@ -6,7 +6,7 @@ import {
   actDisconnect,
   actSwitchNetwork,
   renderHook,
-  setupClient,
+  setupConfig,
   useNetwork,
 } from '../../../test'
 import type { UseConnectArgs, UseConnectConfig } from './useConnect'
@@ -35,11 +35,11 @@ function useNetworkWithConnectAndDisconnect(
 describe('useNetwork', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      const client = setupClient()
-      await connect({ connector: client.connectors[0]! })
+      const config = setupConfig()
+      await connect({ connector: config.connectors[0]! })
 
       const { result } = renderHook(() => useNetwork(), {
-        initialProps: { client },
+        initialProps: { config },
       })
 
       const { chain, chains } = result.current

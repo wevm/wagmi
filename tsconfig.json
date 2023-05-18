@@ -26,20 +26,19 @@
       "wagmi/*": ["packages/react/src/*"],
       // TODO: Remove once issue is fixed
       // https://github.com/microsoft/TypeScript/issues/48212
-      "abitype": ["node_modules/abitype/dist"]
+      "@safe-global/safe-apps-sdk": [
+        "references/packages/connectors/node_modules/@safe-global/safe-apps-sdk/dist/src"
+      ],
+      "abitype": ["node_modules/abitype/dist"],
+      "viem": ["./node_modules/viem/dist/types"],
+      "viem/*": ["./node_modules/viem/dist/types/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "strictNullChecks": true,
     "target": "es2021",
-    "types": [
-      "node",
-      // TODO: Remove once issue is fixed
-      // https://github.com/microsoft/TypeScript/issues/42873
-      "@ethersproject/providers",
-      "@ethersproject/abstract-signer"
-    ]
+    "types": ["node"]
   },
   "exclude": ["**/node_modules/**", "**/dist/**"],
   "include": [

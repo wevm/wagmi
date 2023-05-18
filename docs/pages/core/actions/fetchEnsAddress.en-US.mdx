@@ -7,6 +7,8 @@ description: 'Action for fetching address for ENS name.'
 
 Action for fetching address for ENS name.
 
+This is a wrapper around viem's [`getEnsAddress`](https://viem.sh/docs/ens/actions/getEnsAddress.html).
+
 ```ts
 import { fetchEnsAddress } from '@wagmi/core'
 ```
@@ -43,7 +45,7 @@ const address = await fetchEnsAddress({
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {5}
 import { fetchEnsAddress } from '@wagmi/core'

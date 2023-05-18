@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { fetchBalance } from './fetchBalance'
 
 describe('fetchBalance', () => {
   describe('args', () => {
     beforeEach(() => {
       console.warn = vi.fn()
-      setupClient()
+      setupConfig()
     })
 
     it('address', async () => {
@@ -16,16 +16,13 @@ describe('fetchBalance', () => {
           address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
         }),
       ).toMatchInlineSnapshot(`
-          {
-            "decimals": 18,
-            "formatted": "0.40742480512617271",
-            "symbol": "ETH",
-            "value": {
-              "hex": "0x05a776b39e3a7026",
-              "type": "BigNumber",
-            },
-          }
-        `)
+        {
+          "decimals": 18,
+          "formatted": "0.283908469850273318",
+          "symbol": "ETH",
+          "value": 283908469850273318n,
+        }
+      `)
     })
 
     it('chainId', async () => {
@@ -37,17 +34,14 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "0.40742480512617271",
+          "formatted": "0.283908469850273318",
           "symbol": "ETH",
-          "value": {
-            "hex": "0x05a776b39e3a7026",
-            "type": "BigNumber",
-          },
+          "value": 283908469850273318n,
         }
       `)
     })
 
-    it('formatUnits', async () => {
+    it('unit', async () => {
       expect(
         await fetchBalance({
           address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
@@ -56,12 +50,9 @@ describe('fetchBalance', () => {
       ).toMatchInlineSnapshot(`
         {
           "decimals": 18,
-          "formatted": "407424805.12617271",
+          "formatted": "283908469.850273318",
           "symbol": "ETH",
-          "value": {
-            "hex": "0x05a776b39e3a7026",
-            "type": "BigNumber",
-          },
+          "value": 283908469850273318n,
         }
       `)
     })
@@ -78,10 +69,7 @@ describe('fetchBalance', () => {
             "decimals": 18,
             "formatted": "18.0553",
             "symbol": "UNI",
-            "value": {
-              "hex": "0xfa914fb05d1c4000",
-              "type": "BigNumber",
-            },
+            "value": 18055300000000000000n,
           }
         `)
       })
@@ -95,12 +83,9 @@ describe('fetchBalance', () => {
         ).toMatchInlineSnapshot(`
           {
             "decimals": 18,
-            "formatted": "793.706155474190508252",
+            "formatted": "797.13433855575639986",
             "symbol": "MKR",
-            "value": {
-              "hex": "0x2b06e2b72b1816a0dc",
-              "type": "BigNumber",
-            },
+            "value": 797134338555756399860n,
           }
         `)
       })
@@ -119,10 +104,7 @@ describe('fetchBalance', () => {
           "decimals": 6,
           "formatted": "500.001",
           "symbol": "USDC",
-          "value": {
-            "hex": "0x1dcd68e8",
-            "type": "BigNumber",
-          },
+          "value": 500001000n,
         }
       `)
     })

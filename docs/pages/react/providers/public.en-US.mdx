@@ -7,7 +7,7 @@ import { Callout } from 'nextra-theme-docs'
 
 # Public
 
-The `publicProvider` configures the chains with a public RPC URL and also provides an [ethers.js `getpublicProvider`](https://docs.ethers.io/v5/api/providers/#providers-getpublicProvider).
+The `publicProvider` configures the chains with a public RPC URL.
 
 ```ts
 import { publicProvider } from 'wagmi/providers/public'
@@ -19,7 +19,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [publicProvider()],
 )
@@ -37,29 +37,12 @@ const { chains, provider } = configureChains(
 ```ts
 {
   chains: Chain[],
-  provider: BaseProvider,
-  webSocketProvider: WebSocketProvider
+  publicClient: PublicClient,
+  webSocketPublicClient: PublicClient
 }
 ```
 
 ## Configuration
-
-### priority (optional)
-
-The priority used for the provider. Lower-value priorities are favoured over higher-value priorities. If multiple providers share the same priority, they are chosen at random.
-
-```ts {7-8}
-import { chain, configureChains } from 'wagmi'
-import { publicProvider } from 'wagmi/providers/public'
-
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.polygon],
-  [
-    alchemyProvider({ apiKey: 'yourAlchemyApiKey', priority: 0 }),
-    publicProvider({ priority: 1 }),
-  ],
-)
-```
 
 ### stallTimeout (optional)
 
@@ -69,7 +52,7 @@ The timeout in milliseconds after which another provider will be attempted.
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey' }),
@@ -86,7 +69,7 @@ The weight a response from this provider provides. This can be used if a given p
 import { chain, configureChains } from 'wagmi'
 import { publicProvider } from 'wagmi/providers/public'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [chain.mainnet, chain.polygon],
   [
     alchemyProvider({ apiKey: 'yourAlchemyApiKey', weight: 1 }),

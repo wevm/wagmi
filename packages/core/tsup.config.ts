@@ -24,6 +24,7 @@ export default defineConfig(
       'src/providers/infura.ts',
       'src/providers/jsonRpc.ts',
       'src/providers/public.ts',
+      'src/window.ts',
     ],
     external: [...Object.keys(dependencies), ...Object.keys(peerDependencies)],
   }),

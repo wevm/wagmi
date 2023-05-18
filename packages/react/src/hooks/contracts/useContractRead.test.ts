@@ -1,5 +1,4 @@
 import type { ResolvedConfig } from 'abitype'
-import { BigNumber } from 'ethers'
 import { assertType, describe, expect, it } from 'vitest'
 
 import {
@@ -27,10 +26,7 @@ describe('useContractRead', () => {
     assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
     expect(res).toMatchInlineSnapshot(`
       {
-        "data": {
-          "hex": "0x02",
-          "type": "BigNumber",
-        },
+        "data": 2n,
         "error": null,
         "fetchStatus": "idle",
         "isError": false,
@@ -65,10 +61,7 @@ describe('useContractRead', () => {
       assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": {
-            "hex": "0x02",
-            "type": "BigNumber",
-          },
+          "data": 2n,
           "error": null,
           "fetchStatus": "idle",
           "isError": false,
@@ -174,12 +167,7 @@ describe('useContractRead', () => {
       await act(async () => {
         const { data } = await result.current.refetch()
         assertType<ResolvedConfig['BigIntType'] | undefined>(data)
-        expect(data).toMatchInlineSnapshot(`
-          {
-            "hex": "0x02",
-            "type": "BigNumber",
-          }
-        `)
+        expect(data).toMatchInlineSnapshot('2n')
       })
     })
   })
@@ -190,10 +178,7 @@ describe('useContractRead', () => {
         useContractRead({
           ...mlootContractConfig,
           functionName: 'tokenOfOwnerByIndex',
-          args: [
-            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            BigNumber.from('0'),
-          ],
+          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
         }),
       )
 
@@ -204,10 +189,7 @@ describe('useContractRead', () => {
       assertType<ResolvedConfig['BigIntType'] | undefined>(res.data)
       expect(res).toMatchInlineSnapshot(`
         {
-          "data": {
-            "hex": "0x05a6db",
-            "type": "BigNumber",
-          },
+          "data": 370395n,
           "error": null,
           "fetchStatus": "idle",
           "isError": false,

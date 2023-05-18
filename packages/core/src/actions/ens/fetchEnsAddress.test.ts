@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { fetchEnsAddress } from './fetchEnsAddress'
 
 describe('fetchEnsAddress', () => {
   describe('args', () => {
     beforeEach(() => {
-      setupClient()
+      setupConfig()
     })
 
     it('chainId', async () => {
@@ -19,7 +19,7 @@ describe('fetchEnsAddress', () => {
       it('no result', async () => {
         expect(
           await fetchEnsAddress({ name: 'awkweb123.eth' }),
-        ).toMatchInlineSnapshot(`null`)
+        ).toMatchInlineSnapshot('null')
       })
 
       it('has address', async () => {

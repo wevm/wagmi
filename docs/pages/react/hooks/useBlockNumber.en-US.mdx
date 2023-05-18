@@ -7,6 +7,8 @@ description: 'React Hook for fetching the current block number.'
 
 Hook for fetching the current block number.
 
+This is a wrapper around viem's [`getBlockNumber`](https://viem.sh/docs/actions/public/getBlockNumber.html).
+
 ```ts
 import { useBlockNumber } from 'wagmi'
 ```
@@ -29,7 +31,7 @@ function App() {
 
 ```tsx
 {
-  data?: number
+  data?: bigint
   error?: Error
   isIdle: boolean
   isLoading: boolean
@@ -51,7 +53,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {5}
 import { useBlockNumber } from 'wagmi'

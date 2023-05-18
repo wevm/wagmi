@@ -1,5 +1,5 @@
 import type { ResolvedConfig } from 'abitype'
-import { BigNumber } from 'ethers'
+import type { MulticallResult } from 'viem'
 import { assertType, describe } from 'vitest'
 
 import { mlootContractConfig, wagmigotchiContractConfig } from '../../../test'
@@ -23,10 +23,7 @@ describe('watchMulticall', () => {
         {
           ...mlootContractConfig,
           functionName: 'tokenOfOwnerByIndex',
-          args: [
-            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            BigNumber.from(0),
-          ],
+          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
         },
       ],
     },
@@ -34,10 +31,10 @@ describe('watchMulticall', () => {
       // ^?
       assertType<
         [
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
-          boolean,
-          ResolvedConfig['BigIntType'],
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<boolean>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
         ]
       >(results)
     },
@@ -62,10 +59,7 @@ describe('watchMulticall', () => {
           abi: [],
           // @ts-expect-error not a valid function name
           functionName: 'tokenOfOwnerByIndex',
-          args: [
-            '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-            BigNumber.from(0),
-          ],
+          args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
         },
       ],
     },
@@ -73,10 +67,10 @@ describe('watchMulticall', () => {
       // ^?
       assertType<
         [
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
-          boolean,
-          unknown,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<boolean>,
+          MulticallResult<unknown>,
         ]
       >(results)
     },

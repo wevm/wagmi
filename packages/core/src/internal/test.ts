@@ -1,1 +1,1 @@
-export { getSigners, testChains } from '../../test'
+export { getWalletClients, testChains } from '../../test'

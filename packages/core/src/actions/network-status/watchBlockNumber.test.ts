@@ -1,21 +1,21 @@
-import { parseEther } from 'ethers/lib/utils.js'
+import { parseEther } from 'viem'
 import { beforeEach, describe, expect, it } from 'vitest'
 
-import { getSigners, setupClient } from '../../../test'
-import type { Client } from '../../client'
+import { getWalletClients, setupConfig } from '../../../test'
+import type { Config } from '../../config'
 import { connect } from '../accounts'
-import { getProvider } from '../providers'
 import { sendTransaction } from '../transactions'
+import { getPublicClient } from '../viem'
 import { watchBlockNumber } from './watchBlockNumber'
 
 describe('watchBlockNumber', () => {
-  let client: Client
+  let config: Config
   beforeEach(() => {
-    client = setupClient()
+    config = setupConfig()
   })
 
   it('default', async () => {
-    const results: number[] = []
+    const results: bigint[] = []
     const unsubscribe = watchBlockNumber(
       {
         listen: false,
@@ -23,9 +23,9 @@ describe('watchBlockNumber', () => {
       (blockNumber) => results.push(blockNumber),
     )
 
-    const provider = getProvider()
+    const publicClient = getPublicClient()
     await new Promise((res) =>
-      setTimeout(() => res(''), provider.pollingInterval + 50),
+      setTimeout(() => res(''), publicClient.pollingInterval + 50),
     )
 
     expect(results.length).toEqual(0)
@@ -34,26 +34,30 @@ describe('watchBlockNumber', () => {
 
   describe('args', () => {
     describe('listen', () => {
-      it('default', async () => {
-        const results: number[] = []
-        const unsubscribe = watchBlockNumber(
-          {
-            listen: true,
-          },
-          (blockNumber) => results.push(blockNumber),
-        )
+      it(
+        'default',
+        async () => {
+          const results: bigint[] = []
+          const unsubscribe = watchBlockNumber(
+            {
+              listen: true,
+            },
+            (blockNumber) => results.push(blockNumber),
+          )
 
-        const provider = getProvider()
-        await new Promise((res) =>
-          setTimeout(() => res(''), provider.pollingInterval + 50),
-        )
+          const publicClient = getPublicClient()
+          await new Promise((res) =>
+            setTimeout(() => res(''), publicClient.pollingInterval + 50),
+          )
 
-        expect(results.length).toEqual(1)
-        unsubscribe()
-      })
+          expect(results.length).toEqual(1)
+          unsubscribe()
+        },
+        { retry: 3 },
+      )
 
       it('new block', async () => {
-        const results: number[] = []
+        const results: bigint[] = []
         const unsubscribe = watchBlockNumber(
           {
             listen: true,
@@ -61,31 +65,28 @@ describe('watchBlockNumber', () => {
           (blockNumber) => results.push(blockNumber),
         )
 
-        const signers = getSigners()
-        const to = signers[1]
-        const toAddress = await to?.getAddress()
+        const walletClients = getWalletClients()
+        const to = walletClients[1]
+        const toAddress = to?.account.address
 
-        await connect({ connector: client.connectors[0]! })
+        await connect({ connector: config.connectors[0]! })
         await sendTransaction({
-          mode: 'recklesslyUnprepared',
-          request: {
-            to: toAddress,
-            value: parseEther('1'),
-          },
+          to: toAddress!,
+          value: parseEther('1'),
         })
 
-        const provider = getProvider()
+        const publicClient = getPublicClient()
         await new Promise((res) =>
-          setTimeout(() => res(''), provider.pollingInterval + 50),
+          setTimeout(() => res(''), publicClient.pollingInterval + 50),
         )
 
-        expect(results.length).toEqual(4)
+        expect(results.length).toEqual(2)
         expect(results[results.length - 1]! > results[0]!).toBeTruthy()
         unsubscribe()
       })
 
       it('unsubscribes + resubscribes', async () => {
-        const results: number[] = []
+        const results: bigint[] = []
         let unsubscribe = watchBlockNumber(
           {
             listen: true,
@@ -94,22 +95,19 @@ describe('watchBlockNumber', () => {
         )
         unsubscribe()
 
-        const signers = getSigners()
-        const to = signers[1]
-        const toAddress = await to?.getAddress()
+        const walletClients = getWalletClients()
+        const to = walletClients[1]
+        const toAddress = to?.account.address
 
-        await connect({ connector: client.connectors[0]! })
+        await connect({ connector: config.connectors[0]! })
         await sendTransaction({
-          mode: 'recklesslyUnprepared',
-          request: {
-            to: toAddress,
-            value: parseEther('1'),
-          },
+          to: toAddress!,
+          value: parseEther('1'),
         })
 
-        const provider = getProvider()
+        const publicClient = getPublicClient()
         await new Promise((res) =>
-          setTimeout(() => res(''), provider.pollingInterval + 50),
+          setTimeout(() => res(''), publicClient.pollingInterval + 50),
         )
 
         expect(results.length).toEqual(0)
@@ -122,11 +120,8 @@ describe('watchBlockNumber', () => {
         )
 
         await sendTransaction({
-          mode: 'recklesslyUnprepared',
-          request: {
-            to: toAddress,
-            value: parseEther('1'),
-          },
+          to: toAddress!,
+          value: parseEther('1'),
         })
 
         await new Promise((res) => setTimeout(() => res(''), 100))

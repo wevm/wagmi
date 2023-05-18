@@ -9,17 +9,32 @@
   React Hooks for Ethereum
 <p>
 
-<div align="center">
+<p align="center">
   <a href="https://www.npmjs.com/package/wagmi">
-    <img src="https://img.shields.io/npm/v/wagmi?colorA=21262d&colorB=161b22&style=flat" alt="Version">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/wagmi?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/v/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Version">
+    </picture>
+  </a>
+  <a href="https://github.com/wagmi-dev/wagmi/blob/main/LICENSE">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/wagmi?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/l/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="MIT License">
+    </picture>
   </a>
   <a href="https://www.npmjs.com/package/wagmi">
-    <img src="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=161b22&style=flat" alt="Downloads per month">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/dm/wagmi?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/dm/wagmi?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Downloads per month">
+    </picture>
   </a>
   <a href="https://bestofjs.org/projects/wagmi">
-    <img src="https://img.shields.io/endpoint?colorA=21262d&colorB=161b22&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fwagmi%26since=daily" alt="Best of JS">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/endpoint?colorA=21262d&colorB=21262d&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily">
+      <img src="https://img.shields.io/endpoint?colorA=f6f8fa&colorB=f6f8fa&style=flat&url=https://bestofjs-serverless.now.sh/api/project-badge?fullName=wagmi-dev%2Fviem%26since=daily" alt="Best of JS">
+    </picture>
   </a>
-</div>
+</p>
 
 <br>
 
@@ -41,10 +56,10 @@ For full documentation and examples, visit [wagmi.sh](https://wagmi.sh).
 
 ## Installation
 
-Install wagmi and its ethers peer dependency.
+Install wagmi and its [viem](https://viem.sh) peer dependency.
 
 ```bash
-npm install wagmi ethers@^5
+npm install wagmi viem
 ```
 
 ## Quick Start
@@ -52,17 +67,20 @@ npm install wagmi ethers@^5
 Connect a wallet in under 60 seconds. LFG.
 
 ```tsx
-import { WagmiConfig, createClient } from 'wagmi'
-import { getDefaultProvider } from 'ethers'
+import { WagmiConfig, createConfig, mainnet } from 'wagmi'
+import { createPublicClient, http } from 'viem'
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
-  provider: getDefaultProvider(),
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http(),
+  }),
 })
 
 function App() {
   return (
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <Profile />
     </WagmiConfig>
   )
@@ -91,7 +109,7 @@ function Profile() {
 }
 ```
 
-In this example, we create a wagmi `Client` and pass it to the `WagmiConfig` React Context. The client is set up to use the ethers Default Provider and automatically connect to previously connected wallets.
+In this example, we create a wagmi `config` and pass it to the `WagmiConfig` React Context. The config is set up to use viem's Public Client and automatically connect to previously connected wallets.
 
 Next, we use the `useConnect` hook to connect an injected wallet (e.g. MetaMask) to the app. Finally, we show the connected account's address with `useAccount` and allow them to disconnect with `useDisconnect`.
 
@@ -181,6 +199,24 @@ If you find wagmi useful, please consider supporting development. Thank you 🙏
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-dark.svg">
     <img alt="BitKeep logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://www.privy.io">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/privy-dark.svg">
+    <img alt="Privy logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/privy-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://www.spruceid.com">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-dark.svg">
+    <img alt="Spruce logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-light.svg" width="auto" height="50">
+  </picture>
+</a>
+<a href="https://rollup.id">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-dark.svg">
+    <img alt="rollup.id logo" src="https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-light.svg" width="auto" height="50">
   </picture>
 </a>
 

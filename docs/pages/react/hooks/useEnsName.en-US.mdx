@@ -7,6 +7,8 @@ description: 'React Hook for fetching ENS name for address.'
 
 Hook for fetching ENS name for address.
 
+This is a wrapper around viem's [`getEnsName`](https://viem.sh/docs/ens/actions/getEnsName.html).
+
 ```ts
 import { useEnsName } from 'wagmi'
 ```
@@ -67,7 +69,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {6}
 import { useEnsName } from 'wagmi'

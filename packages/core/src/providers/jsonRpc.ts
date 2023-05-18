@@ -1,24 +1,13 @@
-import { providers } from 'ethers'
-
 import type { Chain } from '../chains'
-import type { ChainProviderFn, FallbackProviderConfig } from '../types'
+import type { ChainProviderFn } from '../types'
 
-export type JsonRpcProviderConfig = FallbackProviderConfig & {
+export type JsonRpcProviderConfig = {
   rpc: (chain: Chain) => { http: string; webSocket?: string } | null
-  static?: boolean
 }
 
 export function jsonRpcProvider<TChain extends Chain = Chain>({
-  priority,
   rpc,
-  stallTimeout,
-  static: static_ = true,
-  weight,
-}: JsonRpcProviderConfig): ChainProviderFn<
-  TChain,
-  providers.JsonRpcProvider,
-  providers.WebSocketProvider
-> {
+}: JsonRpcProviderConfig): ChainProviderFn<TChain> {
   return function (chain) {
     const rpcConfig = rpc(chain)
     if (!rpcConfig || rpcConfig.http === '') return null
@@ -30,24 +19,10 @@ export function jsonRpcProvider<TChain extends Chain = Chain>({
           default: { http: [rpcConfig.http] },
         },
       },
-      provider: () => {
-        const RpcProvider = static_
-          ? providers.StaticJsonRpcProvider
-          : providers.JsonRpcProvider
-        const provider = new RpcProvider(rpcConfig.http, {
-          ensAddress: chain.contracts?.ensRegistry?.address,
-          chainId: chain.id,
-          name: chain.network,
-        })
-        return Object.assign(provider, { priority, stallTimeout, weight })
+      rpcUrls: {
+        http: [rpcConfig.http],
+        webSocket: rpcConfig.webSocket ? [rpcConfig.webSocket] : undefined,
       },
-      ...(rpcConfig.webSocket && {
-        webSocketProvider: () =>
-          new providers.WebSocketProvider(
-            rpcConfig.webSocket as string,
-            chain.id,
-          ),
-      }),
     }
   }
 }

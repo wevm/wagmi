@@ -1,42 +1,49 @@
-import type { Transaction } from 'ethers'
+import type {
+  OnTransactionsParameter,
+  WatchPendingTransactionsParameters,
+} from 'viem'
 import { shallow } from 'zustand/shallow'
 
-import { getClient } from '../../client'
-import type { Provider } from '../../types'
-import { getProvider, getWebSocketProvider } from '../providers'
+import { getConfig } from '../../config'
+import type { PublicClient, WebSocketPublicClient } from '../../types'
+import { getPublicClient, getWebSocketPublicClient } from '../viem'
 
-export type WatchPendingTransactionsResult = Transaction
 export type WatchPendingTransactionsArgs = { chainId?: number }
-export type WatchPendingTransactionsCallback = (
-  transaction: WatchPendingTransactionsResult,
-) => void
+export type WatchPendingTransactionsCallback =
+  WatchPendingTransactionsParameters['onTransactions']
+export type WatchPendingTransactionsResult = OnTransactionsParameter
 
 export function watchPendingTransactions(
   args: WatchPendingTransactionsArgs,
   callback: WatchPendingTransactionsCallback,
 ) {
-  let previousProvider: Provider
-  const createListener = (provider: Provider) => {
-    if (previousProvider) {
-      previousProvider?.off('pending', callback)
-    }
-    provider.on('pending', callback)
-    previousProvider = provider
+  let unwatch: () => void
+  const createListener = (
+    publicClient: PublicClient | WebSocketPublicClient,
+  ) => {
+    if (unwatch) unwatch()
+    unwatch = publicClient.watchPendingTransactions({
+      onTransactions: callback,
+      poll: true,
+    })
   }
 
-  const provider_ =
-    getWebSocketProvider({ chainId: args.chainId }) ??
-    getProvider({ chainId: args.chainId })
+  const publicClient_ =
+    getWebSocketPublicClient({ chainId: args.chainId }) ??
+    getPublicClient({ chainId: args.chainId })
 
-  createListener(provider_)
+  createListener(publicClient_)
 
-  const client = getClient()
-  const unsubscribe = client.subscribe(
-    ({ provider, webSocketProvider }) => ({ provider, webSocketProvider }),
-    async ({ provider, webSocketProvider }) => {
-      const provider_ = webSocketProvider ?? provider
-      if (!args.chainId && provider_) {
-        createListener(provider_)
+  const config = getConfig()
+  const unsubscribe = config.subscribe(
+    ({ publicClient, webSocketPublicClient }) => ({
+      publicClient,
+      webSocketPublicClient,
+    }),
+    async ({ publicClient, webSocketPublicClient }) => {
+      const publicClient_ = webSocketPublicClient ?? publicClient
+      if (!args.chainId && publicClient_) {
+        createListener(publicClient_)
       }
     },
     {
@@ -46,7 +53,6 @@ export function watchPendingTransactions(
 
   return () => {
     unsubscribe()
-    provider_?.off('pending', callback)
-    previousProvider?.off('pending', callback)
+    unwatch?.()
   }
 }

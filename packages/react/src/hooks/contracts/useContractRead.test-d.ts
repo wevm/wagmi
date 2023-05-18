@@ -1,4 +1,3 @@
-import type { BigNumber } from 'ethers'
 import { wagmigotchiContractConfig } from 'packages/core/test'
 import { assertType, describe, it } from 'vitest'
 
@@ -12,7 +11,7 @@ describe('useContractRead', () => {
       args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
     })
 
-    assertType<BigNumber | undefined>(data)
+    assertType<bigint | undefined>(data)
   })
 
   describe('select', () => {
@@ -22,8 +21,8 @@ describe('useContractRead', () => {
         functionName: 'love',
         args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
         select(result) {
-          assertType<BigNumber>(result)
-          return result.toBigInt()
+          assertType<bigint>(result)
+          return result
         },
       })
 
@@ -36,10 +35,10 @@ describe('useContractRead', () => {
         functionName: 'love',
         args: ['0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c'],
         select(result) {
-          assertType<BigNumber>(result)
+          assertType<bigint>(result)
           return {
             address: '0x27a69ffba1e939ddcfecc8c7e0f967b872bac65c',
-            value: result.toBigInt(),
+            value: result,
           }
         },
       })

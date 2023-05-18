@@ -5,10 +5,10 @@ description: 'A list of wagmi-flavored chains.'
 
 # Chains
 
-wagmi exports the **Mainnet** (`mainnet`) & **Goerli** (`goerli`) chains out-of-the-box.
+wagmi exports the **Mainnet** (`mainnet`) & **Sepolia** (`sepolia`) chains out-of-the-box.
 
 ```ts
-import { mainnet, goerli } from 'wagmi'
+import { mainnet, sepolia } from 'wagmi'
 ```
 
 If you wish to extend to other EVM-compatible chains (like Polygon, Optimism, BSC, Avalanche, etc), you can either import the chain directly from the `wagmi/chains` entrypoint, or build it yourself.
@@ -25,7 +25,7 @@ Import your chains from the entrypoint and use them in your wagmi app:
 import { configureChains } from 'wagmi'
 import { avalanche, bsc, mainnet } from 'wagmi/chains'
 
-const { chains, provider } = configureChains(
+const { chains, publicClient } = configureChains(
   [mainnet, avalanche, bsc],
   ...
 )
@@ -52,6 +52,7 @@ const { chains, provider } = configureChains(
 - `canto`
 - `celo`
 - `celoAlfajores`
+- `celoCannoli`
 - `chronos`
 - `crossbell`
 - `dfk`
@@ -67,21 +68,28 @@ const { chains, provider } = configureChains(
 - `flareTestnet`
 - `gnosis`
 - `gnosisChiado`
+- `haqqMainnet`
+- `haqqTestedge2`
 - `harmonyOne`
 - `iotex`
 - `iotexTestnet`
 - `klaytn`
+- `lineaTestnet`
 - `metis`
 - `metisGoerli`
 - `moonbaseAlpha`
 - `moonbeam`
 - `moonriver`
+- `nexi`
 - `okc`
 - `optimism`
 - `optimismGoerli`
 - `polygon`
 - `polygonMumbai`
+- `polygonZkEvm`
 - `polygonZkEvmTestnet`
+- `pulsechain`
+- `pulsechainV4`
 - `scrollTestnet`
 - `sepolia`
 - `shardeumSphinx`
@@ -99,16 +107,20 @@ const { chains, provider } = configureChains(
 - `skaleRazor`
 - `skaleTitan`
 - `skaleTitanTestnet`
+- `syscoin`
 - `songbird`
 - `songbirdTestnet`
 - `taraxa`
 - `taraxaTestnet`
 - `telos`
 - `telosTestnet`
+- `thunderTestnet`
 - `titan`
 - `titanTestnet`
 - `wanchain`
 - `wanchainTestnet`
+- `xdc`
+- `xdcTestnet`
 - `zkSync`
 - `zkSyncTestnet`
 - `foundry`

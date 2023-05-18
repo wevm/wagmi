@@ -147,6 +147,8 @@ export async function typecheck(project: string) {
   try {
     const res = await execa('tsc', [
       '--noEmit',
+      '--target',
+      'es2021',
       '--pretty',
       'false',
       '-p',

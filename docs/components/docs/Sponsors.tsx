@@ -84,11 +84,41 @@ const sponsors = [
   {
     id: 'bitkeep',
     name: 'BitKeep',
-    href: 'https://bitkeep.com/',
+    href: 'https://bitkeep.com',
     logo: {
       dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-dark.svg',
       light:
         'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/bitkeep-light.svg',
+    },
+  },
+  {
+    id: 'privy',
+    name: 'Privy',
+    href: 'https://privy.io',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/privy-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/privy-light.svg',
+    },
+  },
+  {
+    id: 'spruce',
+    name: 'Spruce',
+    href: 'https://www.spruceid.com',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/spruce-light.svg',
+    },
+  },
+  {
+    id: 'rollup.id',
+    name: 'rollup.id',
+    href: 'https://rollup.id',
+    logo: {
+      dark: 'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-dark.svg',
+      light:
+        'https://raw.githubusercontent.com/wagmi-dev/.github/main/content/sponsors/rollup.id-light.svg',
     },
   },
 ] as const

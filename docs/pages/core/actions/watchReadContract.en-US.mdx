@@ -107,7 +107,7 @@ watchReadContract(
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {8}
 import { watchReadContract } from '@wagmi/core'
@@ -141,9 +141,9 @@ watchReadContract(
 )
 ```
 
-### overrides (optional)
+### blockNumber (optional)
 
-Overrides to pass to function call.
+The block number to perform the read against.
 
 ```ts {8}
 import { watchReadContract } from '@wagmi/core'
@@ -152,8 +152,26 @@ watchReadContract(
   {
     address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
-    functionName: 'love',
-    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+    functionName: 'getHunger',
+    blockNumber: 15121123n,
+  },
+  (data) => console.log(data),
+)
+```
+
+### blockTag (optional)
+
+The block tag to perform the read against. Accepts: `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized'`
+
+```ts {8}
+import { watchReadContract } from '@wagmi/core'
+
+watchReadContract(
+  {
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'getHunger',
+    blockTag: 'safe',
   },
   (data) => console.log(data),
 )

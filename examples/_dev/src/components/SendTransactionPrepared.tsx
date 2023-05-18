@@ -1,9 +1,10 @@
-import { BigNumber } from 'ethers'
+import { stringify } from 'viem'
 import { usePrepareSendTransaction, useSendTransaction } from 'wagmi'
 
 export const SendTransactionPrepared = () => {
   const { config } = usePrepareSendTransaction({
-    request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+    to: 'moxey.eth',
+    value: 10000000000000000n,
   })
   const { data, isIdle, isLoading, isSuccess, isError, sendTransaction } =
     useSendTransaction(config)
@@ -22,7 +23,7 @@ export const SendTransactionPrepared = () => {
 
   return (
     <div>
-      {isSuccess && <div>Transaction: {JSON.stringify(data)}</div>}
+      {isSuccess && <div>Transaction: {stringify(data)}</div>}
       {isError && <div>Error sending transaction</div>}
     </div>
   )

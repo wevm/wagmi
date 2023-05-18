@@ -1,11 +1,13 @@
 ---
 title: 'readContract'
-description: 'Action for calling an ethers Contract read-only method.'
+description: 'Action for calling a read method on a Contract.'
 ---
 
 # readContract
 
-Action for calling an ethers Contract read-only method.
+Action for calling a read method on a Contract.
+
+This is a wrapper around viem's [`readContract`](https://viem.sh/docs/contract/readContract.html).
 
 ```ts
 import { readContract } from '@wagmi/core'
@@ -94,7 +96,7 @@ const data = await readContract({
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {7}
 import { readContract } from '@wagmi/core'
@@ -107,9 +109,9 @@ const data = await readContract({
 })
 ```
 
-### overrides (optional)
+### blockNumber (optional)
 
-Overrides to pass to function call.
+The block number to perform the read against.
 
 ```ts {7}
 import { readContract } from '@wagmi/core'
@@ -117,7 +119,22 @@ import { readContract } from '@wagmi/core'
 const data = await readContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
-  functionName: 'love',
-  overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  functionName: 'getHunger',
+  blockNumber: 15121123n,
+})
+```
+
+### blockTag (optional)
+
+The block tag to perform the read against. Accepts: `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized'`
+
+```ts {7}
+import { readContract } from '@wagmi/core'
+
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'getHunger',
+  blockTag: 'safe',
 })
 ```

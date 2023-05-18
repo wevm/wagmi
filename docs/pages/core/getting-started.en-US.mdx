@@ -11,23 +11,23 @@ import { Callout, Tabs, Tab } from 'nextra-theme-docs'
 
 ## Installation
 
-Install `@wagmi/core` and its ethers peer dependency.
+Install `@wagmi/core` and its [viem](https://viem.sh) peer dependency.
 
 {/* prettier-ignore-start */}
 <Tabs items={['npm', 'pnpm', 'yarn']}>
   <Tab>
 ```bash
-npm i @wagmi/core ethers
+npm i @wagmi/core viem
 ```
   </Tab>
   <Tab>
 ```bash
-pnpm i @wagmi/core ethers
+pnpm i @wagmi/core viem
 ```
   </Tab>
   <Tab>
 ```bash
-yarn add @wagmi/core ethers
+yarn add @wagmi/core viem
 ```
   </Tab>
 </Tabs>
@@ -41,7 +41,7 @@ First, configure your desired chains to be used by wagmi, and the providers you 
 import { configureChains, mainnet } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
@@ -53,31 +53,31 @@ Note: In a production app, it is not recommended to only pass `publicProvider` t
 
 [Read more about configuring chains](/core/providers/configuring-chains)
 
-## Create a wagmi client
+## Create a wagmi config
 
-Next, create a wagmi `Client` instance using [`createClient`](/core/client), and pass the result from `configureChains` to it.
+Next, create a wagmi `config` instance using [`createConfig`](/core/config), and pass the result from `configureChains` to it.
 
 ```ts {14-18}
 import {
-  createClient,
+  createConfig,
   configureChains,
   mainnet,
 } from '@wagmi/core'
 import { publicProvider } from '@wagmi/core/providers/public'
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet],
   [publicProvider()],
 )
 
-const client = createClient({
+const config = createConfig({
   autoConnect: true,
-  provider,
-  webSocketProvider,
+  publicClient,
+  webSocketPublicClient,
 })
 ```
 
-[Read more about client configuration](/core/client)
+[Read more about client configuration](/core/config)
 
 ## You're good to go!
 

@@ -1,13 +1,15 @@
 ---
 title: 'multicall'
-description: 'Action for calling multiple ethers Contract read-only methods.'
+description: 'Action for calling multiple read methods on a Contract.'
 ---
 
 import { Callout } from 'nextra-theme-docs'
 
 # multicall
 
-Action for calling multiple ethers Contract [read-only](https://docs.ethers.io/v5/api/contract/contract/#Contract--readonly) methods via [multicall3](https://github.com/mds1/multicall).
+Action for calling multiple read methods on a Contract.
+
+This is a wrapper around viem's [`multicall`](https://viem.sh/docs/contract/multicall.html).
 
 ```ts
 import { multicall } from '@wagmi/core'
@@ -163,7 +165,7 @@ const data = await multicall({
 
 #### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {9,14}
 import { multicall } from '@wagmi/core'
@@ -209,9 +211,9 @@ const data = await multicall({
 })
 ```
 
-### overrides (optional)
+### blockNumber (optional)
 
-Overrides to pass to function call.
+The block number to perform the read against.
 
 ```ts {14}
 import { multicall } from '@wagmi/core'
@@ -227,6 +229,28 @@ const data = await multicall({
       functionName: 'getBoredom',
     },
   ],
-  overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
+  blockNumber: 15121123n,
+})
+```
+
+### blockTag (optional)
+
+The block tag to perform the read against. Accepts: `'latest' | 'earliest' | 'pending' | 'safe' | 'finalized'`
+
+```ts {14}
+import { multicall } from '@wagmi/core'
+
+const data = await multicall({
+  contracts: [
+    {
+      ...wagmigotchiContract,
+      functionName: 'getAlive',
+    },
+    {
+      ...wagmigotchiContract,
+      functionName: 'getBoredom',
+    },
+  ],
+  blockTag: 'safe',
 })
 ```

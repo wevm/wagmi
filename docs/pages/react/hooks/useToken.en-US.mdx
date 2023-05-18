@@ -40,7 +40,7 @@ function App() {
     symbol: string
     totalSupply: {
       formatted: string
-      value: BigNumber
+      value: bigint
     }
   }
   error?: Error
@@ -61,7 +61,7 @@ function App() {
     symbol: string
     totalSupply: {
       formatted: string
-      value: BigNumber
+      value: bigint
     }
   }>
   status: 'idle' | 'error' | 'loading' | 'success'
@@ -86,7 +86,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {6}
 import { useToken } from 'wagmi'
@@ -131,7 +131,7 @@ function App() {
 
 ### formatUnits (optional)
 
-Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+Formats fee data. Defaults to `ether`.
 
 ```tsx {6}
 import { useToken } from 'wagmi'

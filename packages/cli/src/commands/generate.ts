@@ -1,4 +1,4 @@
-import type { Address } from 'abitype'
+import type { Abi, Address } from 'abitype'
 import { Abi as AbiSchema } from 'abitype/zod'
 import { camelCase } from 'change-case'
 import type { FSWatcher, WatchOptions } from 'chokidar'
@@ -288,7 +288,7 @@ async function getContract({
   const constAssertion = isTypeScript ? ' as const' : ''
   const abiName = `${camelCase(name)}ABI`
   try {
-    abi = await AbiSchema.parseAsync(abi)
+    abi = (await AbiSchema.parseAsync(abi)) as Abi
   } catch (error) {
     if (error instanceof z.ZodError)
       throw fromZodError(error, {

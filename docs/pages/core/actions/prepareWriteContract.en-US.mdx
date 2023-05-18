@@ -34,12 +34,9 @@ const { hash } = await writeContract(config)
 
 ```ts
 {
-  abi: Abi
-  address: Address
   chainId: number
-  functionName: string
   mode: 'prepared'
-  request: PopulatedTransaction
+  request: WriteContractParameters
 }
 ```
 
@@ -127,20 +124,98 @@ const { config } = await prepareWriteContract({
 })
 ```
 
-### overrides (optional)
+### account
 
-Overrides to pass to function call. If the function is payable, you can pass a `value` here.
+The Account to write to the contract from.
 
-```ts {7-10}
+```ts {8}
 import { prepareWriteContract } from '@wagmi/core'
 
 const { config } = await prepareWriteContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',
-  overrides: {
-    from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-    value: ethers.utils.parseEther('0.01'),
-  },
+  chainId: 1,
+  account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+})
+```
+
+### gasPrice (optional)
+
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
+
+```ts {8}
+import { prepareWriteContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  chainId: 1,
+  gasPrice: parseGwei('20'),
+})
+```
+
+### maxFeePerGas (optional)
+
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {8}
+import { prepareWriteContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  chainId: 1,
+  maxFeePerGas: parseGwei('20'),
+})
+```
+
+### maxPriorityFeePerGas (optional)
+
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {8}
+import { prepareWriteContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  chainId: 1,
+  maxPriorityFeePerGas: parseGwei('2'),
+})
+```
+
+### nonce (optional)
+
+Unique number identifying this transaction.
+
+```ts
+import { prepareWriteContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  chainId: 1,
+  nonce: 69,
+})
+```
+
+### value (optional)
+
+Value in wei sent with this transaction.
+
+```ts
+import { prepareWriteContract } from '@wagmi/core'
+
+const { config } = await prepareWriteContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  chainId: 1,
+  value: parseGwei('2'),
 })
 ```

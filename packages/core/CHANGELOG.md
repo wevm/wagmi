@@ -1,5 +1,189 @@
 # @wagmi/core
 
+## 1.0.5
+
+### Patch Changes
+
+- [`90e2b3b3`](https://github.com/wagmi-dev/wagmi/commit/90e2b3b39efe0585fe28645ac2264109be17362a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+## 1.0.4
+
+### Patch Changes
+
+- [#2344](https://github.com/wagmi-dev/wagmi/pull/2344) [`8a725458`](https://github.com/wagmi-dev/wagmi/commit/8a72545853ae1024acd9efd18c06142e8c6c5750) Thanks [@jxom](https://github.com/jxom)! - Added gas estimation back into `prepareSendTransaction`.
+
+## 1.0.3
+
+### Patch Changes
+
+- [#2338](https://github.com/wagmi-dev/wagmi/pull/2338) [`92bfdc2c`](https://github.com/wagmi-dev/wagmi/commit/92bfdc2c744539558ba93c95f140b46ad331cee4) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where synchronous switch chain behavior (WalletConnect v2) would encounter chain id race conditions in `watchWalletClient`.
+
+## 1.0.2
+
+### Patch Changes
+
+- [#2304](https://github.com/wagmi-dev/wagmi/pull/2304) [`09a4fd38`](https://github.com/wagmi-dev/wagmi/commit/09a4fd38f44eb176797925fd85314be17b610cd4) Thanks [@jxom](https://github.com/jxom)! - Removed assert chain workaround.
+
+## 1.0.1
+
+### Patch Changes
+
+- [`ea651cd7`](https://github.com/wagmi-dev/wagmi/commit/ea651cd7fc75b7866272605467db11fd6e1d81af) Thanks [@jxom](https://github.com/jxom)! - Downgraded abitype.
+
+- Updated dependencies [[`ea651cd7`](https://github.com/wagmi-dev/wagmi/commit/ea651cd7fc75b7866272605467db11fd6e1d81af)]:
+  - @wagmi/connectors@1.0.1
+
+## 1.0.0
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`5be0655c`](https://github.com/wagmi-dev/wagmi/commit/5be0655c8e48b25d38009022461fbf611af54349) Thanks [@jxom](https://github.com/jxom)! - Released v1. Read [Migration Guide](https://next.wagmi.sh/react/migration-guide#1xx-breaking-changes).
+
+## 1.0.0-next.7
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de) Thanks [@jxom](https://github.com/jxom)! - Added `config.setPublicClient` & `config.setWebSocketPublicClient`
+
+- Updated references.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.5
+
+## 1.0.0-next.6
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de) Thanks [@jxom](https://github.com/jxom)! - Added `config.setPublicClient` & `config.setWebSocketPublicClient`
+
+- Added `config.setConnectors`
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.6
+
+## 1.0.0-next.5
+
+### Major Changes
+
+- [#2235](https://github.com/wagmi-dev/wagmi/pull/2235) [`708b2ce2`](https://github.com/wagmi-dev/wagmi/commit/708b2ce26efa8d3d910806a97cea5171dabc65de) Thanks [@jxom](https://github.com/jxom)! - Added `config.setPublicClient` & `config.setWebSocketPublicClient`
+
+## 1.0.0-next.4
+
+### Major Changes
+
+- Updated viem.
+  Removed `goerli` export from main entrypoint.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.5
+
+## 1.0.0-next.3
+
+### Major Changes
+
+- Updated references.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.4
+
+## 1.0.0-next.2
+
+### Major Changes
+
+- **Breaking:** Renamed `createClient` to `createConfig`
+- **Breaking:** Renamed `getClient` to `getConfig`
+- **Breaking:** Removed `request` as an argument to `prepareSendTransaction` & `sendTransation`. Arguments now belong on the root level of the Action.
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/chains@1.0.0-next.0
+  - @wagmi/connectors@1.0.0-next.3
+
+## 1.0.0-next.1
+
+### Major Changes
+
+- updated viem
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @wagmi/connectors@1.0.0-next.2
+
+## 1.0.0-next.0
+
+### Major Changes
+
+- [`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb) Thanks [@jxom](https://github.com/jxom)! - Released v1.
+
+### Patch Changes
+
+- Updated dependencies [[`a7dda00c`](https://github.com/wagmi-dev/wagmi/commit/a7dda00c5b546f8b2c42b527e4d9ac1b9e9ab1fb)]:
+  - @wagmi/connectors@1.0.0-next.1
+
+## 0.10.11
+
+### Patch Changes
+
+- [#2270](https://github.com/wagmi-dev/wagmi/pull/2270) [`6d1fa9df`](https://github.com/wagmi-dev/wagmi/commit/6d1fa9df790287729c3b33d4f01fd23c2f8153f1) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.19
+
+## 0.10.10
+
+### Patch Changes
+
+- [#2208](https://github.com/wagmi-dev/wagmi/pull/2208) [`cfc696d8`](https://github.com/wagmi-dev/wagmi/commit/cfc696d83c6f768a2e1a29c5197efeed7f1d40a1) Thanks [@bangtoven](https://github.com/bangtoven)! - Bumped references to apply coinbase wallet sdk updates
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.16
+
+## 0.10.9
+
+### Patch Changes
+
+- [#2143](https://github.com/wagmi-dev/wagmi/pull/2143) [`26dc5326`](https://github.com/wagmi-dev/wagmi/commit/26dc53260fde1d3278018c0b20a6d48a093d9427) Thanks [@tmm](https://github.com/tmm)! - Exported Sepolia Chain.
+
+- [#2146](https://github.com/wagmi-dev/wagmi/pull/2146) [`21b6842e`](https://github.com/wagmi-dev/wagmi/commit/21b6842e8c296a0bbe71ebe0780d898abc4cf4a8) Thanks [@tmm](https://github.com/tmm)! - Bumped references
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.12
+
+## 0.10.8
+
+### Patch Changes
+
+- [#2099](https://github.com/wagmi-dev/wagmi/pull/2099) [`f1fee5b3`](https://github.com/wagmi-dev/wagmi/commit/f1fee5b30a1bd13b5e66118bf9cdc44b0dc003a1) Thanks [@jxom](https://github.com/jxom)! - Added chains:
+
+  - `nexi`
+  - `polygonZkEvm`
+  - `xdc`
+  - `xdcTestnet`
+
+- [#2085](https://github.com/wagmi-dev/wagmi/pull/2085) [`7d64e3f5`](https://github.com/wagmi-dev/wagmi/commit/7d64e3f538a6149777bfa84ea9435769b2a7db58) Thanks [@jxom](https://github.com/jxom)! - Fixed an issue where multicall would not throw if the target chain was not configured on the wagmi client.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.10
+
+## 0.10.7
+
+### Patch Changes
+
+- [#2082](https://github.com/wagmi-dev/wagmi/pull/2082) [`2ccc8a25`](https://github.com/wagmi-dev/wagmi/commit/2ccc8a255e93f0a2bb7b22101656b3905ec59abd) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- Updated dependencies []:
+  - @wagmi/connectors@0.3.10
+
 ## 0.10.6
 
 ### Patch Changes

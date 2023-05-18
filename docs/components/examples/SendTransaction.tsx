@@ -1,6 +1,6 @@
 import { Box, Button, Input, Stack, Text } from 'degen'
-import { parseEther } from 'ethers/lib/utils'
 import * as React from 'react'
+import { parseEther } from 'viem'
 import {
   useAccount,
   usePrepareSendTransaction,
@@ -40,10 +40,8 @@ export function SendTransaction() {
     isError: isPrepareError,
     isLoading: isPreparing,
   } = usePrepareSendTransaction({
-    request: {
-      to: debouncedTo,
-      value: debouncedValue ? parseEther(debouncedValue) : undefined,
-    },
+    to: debouncedTo,
+    value: debouncedValue ? parseEther(debouncedValue) : undefined,
   })
   const { data, error, isLoading, isError, sendTransaction } =
     useSendTransaction(config)

@@ -7,12 +7,9 @@ import { Callout } from 'nextra-theme-docs'
 
 # useSignTypedData
 
-<Callout type="warning">
-  This hook uses an experimental ethers feature. If using it, please specify the
-  exact version of ethers you are using (e.g. specify "5.6.0", not "^5.6.0").
-</Callout>
-
 Hook for signing typed data with connected account.
+
+This is a wrapper around viem's [`signTypedData`](https://viem.sh/docs/actions/wallet/signTypedData.html).
 
 ```tsx
 import { useSignTypedData } from 'wagmi'
@@ -44,7 +41,7 @@ const types = {
   ],
 } as const
 
-const value = {
+const message = {
   from: {
     name: 'Cow',
     wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
@@ -66,8 +63,9 @@ function App() {
   const { data, isError, isLoading, isSuccess, signTypedData } =
     useSignTypedData({
       domain,
+      message,
+      primaryType: 'Mail',
       types,
-      value,
     })
 
   return (
@@ -122,11 +120,9 @@ function App() {
 }
 ```
 
-### types (optional)
+### message (optional)
 
-Typed data type definition.
-
-By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/react/typescript) for more information.
+Typed data message. This can be a fixed object or a reactive state variable.
 
 ```tsx {6-16}
 import { useSignTypedData } from 'wagmi'
@@ -134,6 +130,54 @@ import { useSignTypedData } from 'wagmi'
 function App() {
   const signTypedData = useSignTypedData({
     domain,
+    message: {
+      from: {
+        name: 'Cow',
+        wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+      },
+      to: {
+        name: 'Bob',
+        wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+      },
+      contents: 'Hello, Bob!',
+    },
+    primaryType: 'Mail',
+    types,
+  })
+}
+```
+
+### primaryType
+
+The primary type to extract from `types` and use in `message`.
+
+```tsx {7}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    types,
+    primaryType: 'Mail',
+    value,
+  })
+}
+```
+
+### types (optional)
+
+Typed data type definition.
+
+By defining inline or adding a [const assertion](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions) to `types`, TypeScript will infer the correct types `value`. See the wagmi [TypeScript docs](/react/typescript) for more information.
+
+```tsx {8-18}
+import { useSignTypedData } from 'wagmi'
+
+function App() {
+  const signTypedData = useSignTypedData({
+    domain,
+    message,
+    primaryType: 'Mail',
     types: {
       Person: [
         { name: 'name', type: 'string' },
@@ -144,33 +188,6 @@ function App() {
         { name: 'to', type: 'Person' },
         { name: 'contents', type: 'string' },
       ],
-    },
-    value,
-  })
-}
-```
-
-### value (optional)
-
-Typed data value. This can be a fixed object or a reactive state variable.
-
-```tsx {7-17}
-import { useSignTypedData } from 'wagmi'
-
-function App() {
-  const signTypedData = useSignTypedData({
-    domain,
-    types,
-    value: {
-      from: {
-        name: 'Cow',
-        wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
-      },
-      to: {
-        name: 'Bob',
-        wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
-      },
-      contents: 'Hello, Bob!',
     },
   })
 }

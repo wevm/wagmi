@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { setupClient } from '../../../test'
+import { setupConfig } from '../../../test'
 import { connect } from './connect'
 import type { GetNetworkResult } from './getNetwork'
 import { switchNetwork } from './switchNetwork'
@@ -8,9 +8,9 @@ import { watchNetwork } from './watchNetwork'
 
 describe('watchNetwork', () => {
   it('callback receives data', async () => {
-    const client = setupClient()
+    const config = setupConfig()
 
-    await connect({ connector: client.connectors[0]! })
+    await connect({ connector: config.connectors[0]! })
 
     const networks: GetNetworkResult[] = []
     const unwatch = watchNetwork((data) => networks.push(data))
@@ -249,10 +249,16 @@ describe('watchNetwork', () => {
                 "http": [
                   "http://127.0.0.1:8545",
                 ],
+                "webSocket": [
+                  "ws://127.0.0.1:8545",
+                ],
               },
               "public": {
                 "http": [
                   "http://127.0.0.1:8545",
+                ],
+                "webSocket": [
+                  "ws://127.0.0.1:8545",
                 ],
               },
             },

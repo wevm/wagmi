@@ -17,58 +17,118 @@ import { prepareSendTransaction } from '@wagmi/core'
 
 ## Usage
 
-`prepareSendTransaction` gives back a "prepared config" to be sent through to `sendTransaction`.
+`prepareSendTransaction` gives back a "prepared request" to be sent through to `sendTransaction`.
 
 ```ts
 import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
 
-const config = await prepareSendTransaction({
-  request: {
-    to: 'moxey.eth',
-    value: parseEther('1'),
-  },
+const request = await prepareSendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('1'),
 })
-const { hash } = await sendTransaction(config)
+const { hash } = await sendTransaction(request)
 ```
 
 ## Return value
 
 ```ts
 {
-  mode: 'prepared'
-  request: PopulatedTransaction
+  accessList?: AccessList,
+  account?: Account,
+  chainId?: number,
+  data?: Hex,
+  gas?: bigint,
+  gasPrice?: bigint,
+  maxFeePerGas?: bigint,
+  maxPriorityFeePerGas?: bigint,
+  mode: 'prepared',
+  nonce?: number,
+  to: string,
+  value?: bigint,
 }
 ```
 
 ## Configuration
 
-### request
+### chainId (optional)
 
-Request data to prepare the transaction. See [TransactionRequest](https://docs.ethers.io/v5/api/providers/types/#providers-TransactionRequest) for more info.
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the Action will throw an error.
 
-```ts {4-7}
-import { prepareSendTransaction } from '@wagmi/core'
-
-const { config } = await prepareSendTransaction({
-  request: {
-    to: 'awkweb.eth',
-    value: parseEther('1'), // 1 ETH
-  },
+```ts {2}
+const request = await prepareSendTransaction({
+  chainId: 1,
+  to: 'jxom.eth',
+  value: parseEther('1'),
 })
 ```
 
-### chainId (optional)
+### account (optional)
 
-Chain ID used to validate if the user is connected to the target chain.
+The Account to send the transaction from.
 
-```ts {8}
-import { prepareSendTransaction } from '@wagmi/core'
+```ts {2}
+const request = await prepareSendTransaction({
+  account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
+```
 
-const { config } = await prepareSendTransaction({
-  request: {
-    to: 'awkweb.eth',
-    value: parseEther('1'), // 1 ETH
-  },
-  chainId: 1,
+### gasPrice (optional)
+
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
+
+```ts {4}
+const request = await prepareSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  gasPrice: parseGwei('20'),
+})
+```
+
+### maxFeePerGas (optional)
+
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const request = await prepareSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxFeePerGas: parseGwei('20'),
+})
+```
+
+### maxPriorityFeePerGas (optional)
+
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const request = await prepareSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxPriorityFeePerGas: parseGwei('20'),
+})
+```
+
+### nonce (optional)
+
+Unique number identifying this transaction.
+
+```ts {4}
+const request = await prepareSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  nonce: 69,
+})
+```
+
+### value (optional)
+
+Value in wei sent with this transaction.
+
+```ts {3}
+const request = await prepareSendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
 })
 ```

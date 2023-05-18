@@ -7,6 +7,8 @@ description: 'React Hook for fetching transaction by hash.'
 
 Hook for fetching transaction by hash.
 
+This is a wrapper around viem's [`getTransaction`](https://viem.sh/docs/actions/public/getTransaction.html).
+
 ```ts
 import { useTransaction } from 'wagmi'
 ```
@@ -31,7 +33,7 @@ function App() {
 
 ```tsx
 {
-  data?: TransactionResponse
+  data?: Transaction
   error?: Error
   isIdle: boolean
   isLoading: boolean
@@ -44,7 +46,7 @@ function App() {
   refetch: (options: {
     throwOnError: boolean
     cancelRefetch: boolean
-  }) => Promise<TransactionResponse>
+  }) => Promise<Transaction>
   status: 'idle' | 'error' | 'loading' | 'success'
 }
 ```
@@ -53,7 +55,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {5}
 import { useTransaction } from 'wagmi'

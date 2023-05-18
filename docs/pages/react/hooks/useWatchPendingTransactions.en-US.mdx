@@ -9,6 +9,8 @@ import { Callout } from 'nextra-theme-docs'
 
 Hook for subscribing to pending transactions in the Provider's transaction [mempool](https://www.alchemy.com/overviews/what-is-a-mempool).
 
+This is a wrapper around viem's [`watchPendingTransactions`](https://viem.sh/docs/actions/public/watchPendingTransactions.html).
+
 ```ts
 import { useWatchPendingTransactions } from 'wagmi'
 ```
@@ -26,7 +28,7 @@ The listener will be invoked when a new transactions enters the memory pool of t
 import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```
 
@@ -40,20 +42,20 @@ The listener function to be invoked when a new transaction enters the memory poo
 import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {4}
 import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
   chainId: 1,
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```
 
@@ -66,6 +68,6 @@ import { useWatchPendingTransactions } from 'wagmi'
 
 useWatchPendingTransactions({
   enabled: false,
-  listener: (transaction) => console.log(transaction),
+  listener: (hashes) => console.log(hashes),
 })
 ```

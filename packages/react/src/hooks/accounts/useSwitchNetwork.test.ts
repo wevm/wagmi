@@ -5,9 +5,9 @@ import { describe, expect, it } from 'vitest'
 import {
   act,
   actConnect,
-  getSigners,
+  getWalletClients,
   renderHook,
-  setupClient,
+  setupConfig,
 } from '../../../test'
 import type { UseConnectArgs, UseConnectConfig } from './useConnect'
 import { useConnect } from './useConnect'
@@ -32,11 +32,11 @@ function useSwitchNetworkWithConnect(
 describe('useSwitchNetwork', () => {
   describe('mounts', () => {
     it('is connected', async () => {
-      const client = setupClient()
-      await connect({ connector: client.connectors[0]! })
+      const config = setupConfig()
+      await connect({ connector: config.connectors[0]! })
 
       const { result, waitFor } = renderHook(() => useSwitchNetwork(), {
-        initialProps: { client },
+        initialProps: { config },
       })
 
       await waitFor(() => expect(result.current.isIdle).toBeTruthy())
@@ -119,7 +119,7 @@ describe('useSwitchNetwork', () => {
       const connector = new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer: getSigners()[0]!,
+          walletClient: getWalletClients()[0]!,
         },
       })
       const utils = renderHook(() =>
@@ -223,7 +223,7 @@ describe('useSwitchNetwork', () => {
         const connector = new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>
@@ -242,7 +242,10 @@ describe('useSwitchNetwork', () => {
         expect(res).toMatchInlineSnapshot(`
           {
             "data": undefined,
-            "error": [UserRejectedRequestError: User rejected request],
+            "error": [UserRejectedRequestError: User rejected the request.
+
+          Details: Failed to switch chain.
+          Version: viem@0.3.18],
             "isError": true,
             "isIdle": false,
             "isLoading": false,
@@ -388,7 +391,7 @@ describe('useSwitchNetwork', () => {
         const connector = new MockConnector({
           options: {
             flags: { failSwitchChain: true },
-            signer: getSigners()[0]!,
+            walletClient: getWalletClients()[0]!,
           },
         })
         const utils = renderHook(() =>
@@ -404,7 +407,12 @@ describe('useSwitchNetwork', () => {
           await expect(
             result.current.network.switchNetworkAsync?.(4),
           ).rejects.toThrowErrorMatchingInlineSnapshot(
-            `"User rejected request"`,
+            `
+            "User rejected the request.
+
+            Details: Failed to switch chain.
+            Version: viem@0.3.18"
+          `,
           )
         })
 
@@ -418,7 +426,7 @@ describe('useSwitchNetwork', () => {
       const connector = new MockConnector({
         options: {
           flags: { noSwitchChain: true },
-          signer: getSigners()[0]!,
+          walletClient: getWalletClients()[0]!,
         },
       })
       const utils = renderHook(() =>

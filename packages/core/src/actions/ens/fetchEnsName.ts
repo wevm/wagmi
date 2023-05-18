@@ -1,12 +1,12 @@
 import type { Address } from 'abitype'
-import { getAddress } from 'ethers/lib/utils.js'
+import { getAddress } from 'viem'
 
-import { getProvider } from '../providers'
+import { getPublicClient } from '../viem'
 
 export type FetchEnsNameArgs = {
   /** Address to lookup */
   address: Address
-  /** Chain id to use for provider */
+  /** Chain id to use for Public Client */
   chainId?: number
 }
 
@@ -16,6 +16,8 @@ export async function fetchEnsName({
   address,
   chainId,
 }: FetchEnsNameArgs): Promise<FetchEnsNameResult> {
-  const provider = getProvider({ chainId })
-  return provider.lookupAddress(getAddress(address))
+  const publicClient = getPublicClient({ chainId })
+  return publicClient.getEnsName({
+    address: getAddress(address),
+  })
 }

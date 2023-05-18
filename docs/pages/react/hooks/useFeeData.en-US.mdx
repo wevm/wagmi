@@ -30,9 +30,9 @@ function App() {
 ```tsx
 {
   data?: {
-    gasPrice: BigNumber
-    maxFeePerGas: BigNumber
-    maxPriorityFeePerGas: BigNumber
+    gasPrice: bigint
+    maxFeePerGas: bigint
+    maxPriorityFeePerGas: bigint
     formatted: {
       gasPrice: string
       maxFeePerGas: string
@@ -52,9 +52,9 @@ function App() {
     throwOnError: boolean
     cancelRefetch: boolean
   }) => Promise<{
-    gasPrice: BigNumber
-    maxFeePerGas: BigNumber
-    maxPriorityFeePerGas: BigNumber
+    gasPrice: bigint
+    maxFeePerGas: bigint
+    maxPriorityFeePerGas: bigint
     formatted: {
       gasPrice: string
       maxFeePerGas: string
@@ -69,7 +69,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {5}
 import { useFeeData } from 'wagmi'
@@ -83,7 +83,7 @@ function App() {
 
 ### formatUnits (optional)
 
-Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `wei`.
+Formats fee data. Defaults to `wei`.
 
 ```tsx {5}
 import { useFeeData } from 'wagmi'

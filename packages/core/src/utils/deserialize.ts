@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers'
-
 const findAndReplace = (
   cacheRef: any,
   {
@@ -34,10 +32,10 @@ const findAndReplace = (
 export function deserialize(cachedString: string) {
   const cache = JSON.parse(cachedString)
 
-  const deserializedCacheWithBigNumbers = findAndReplace(cache, {
-    find: (data) => data.type === 'BigNumber',
-    replace: (data) => BigNumber.from(data.hex),
+  const deserializedCacheWithBigInts = findAndReplace(cache, {
+    find: (data) => typeof data === 'string' && data.startsWith('#bigint.'),
+    replace: (data) => BigInt(data.replace('#bigint.', '')),
   })
 
-  return deserializedCacheWithBigNumbers
+  return deserializedCacheWithBigInts
 }

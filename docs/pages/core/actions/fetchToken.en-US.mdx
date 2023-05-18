@@ -33,7 +33,7 @@ const token = await fetchToken({
   symbol: string
   totalSupply: {
     formatted: string
-    value: BigNumber
+    value: bigint
   }
 }
 ```
@@ -54,7 +54,7 @@ const token = await fetchToken({
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/core/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/core/config#publicclient-optional) for this to work correctly.
 
 ```ts {5}
 import { fetchToken } from '@wagmi/core'
@@ -67,7 +67,7 @@ const token = await fetchToken({
 
 ### formatUnits (optional)
 
-Formats fee data using ethers [units](https://docs.ethers.io/v5/api/utils/display-logic/#display-logic--units). Defaults to `ether`.
+Formats fee data. Defaults to `ether`.
 
 ```ts {5}
 import { fetchToken } from '@wagmi/core'

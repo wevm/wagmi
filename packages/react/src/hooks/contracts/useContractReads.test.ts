@@ -1,5 +1,5 @@
 import type { ResolvedConfig } from 'abitype'
-import { BigNumber } from 'ethers'
+import type { MulticallResult } from 'viem'
 import { assertType, describe, expect, it } from 'vitest'
 
 import {
@@ -25,7 +25,7 @@ const contracts = [
   {
     ...mlootContractConfig,
     functionName: 'tokenOfOwnerByIndex',
-    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', BigNumber.from(0)],
+    args: ['0xA0Cf798816D4b9b9866b5330EEa46a18382f251e', 0n],
   },
 ] as const
 
@@ -41,10 +41,10 @@ describe('useContractRead', () => {
     const { internal, ...res } = result.current
     assertType<
       | [
-          ResolvedConfig['BigIntType'],
-          ResolvedConfig['BigIntType'],
-          boolean,
-          ResolvedConfig['BigIntType'],
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
+          MulticallResult<boolean>,
+          MulticallResult<ResolvedConfig['BigIntType']>,
         ]
       | undefined
     >(res.data)
@@ -52,17 +52,20 @@ describe('useContractRead', () => {
       {
         "data": [
           {
-            "hex": "0x02",
-            "type": "BigNumber",
+            "result": 2n,
+            "status": "success",
           },
           {
-            "hex": "0x01",
-            "type": "BigNumber",
+            "result": 1n,
+            "status": "success",
           },
-          false,
           {
-            "hex": "0x05a6db",
-            "type": "BigNumber",
+            "result": false,
+            "status": "success",
+          },
+          {
+            "result": 370395n,
+            "status": "success",
           },
         ],
         "error": null,
@@ -82,6 +85,34 @@ describe('useContractRead', () => {
   })
 
   describe('configuration', () => {
+    it('allowFailure=false', async () => {
+      const { result, waitFor } = renderHook(() =>
+        useContractReads({ allowFailure: false, contracts }),
+      )
+
+      await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { internal, ...res } = result.current
+      assertType<
+        | [
+            ResolvedConfig['BigIntType'],
+            ResolvedConfig['BigIntType'],
+            boolean,
+            ResolvedConfig['BigIntType'],
+          ]
+        | undefined
+      >(res.data)
+      expect(res.data).toMatchInlineSnapshot(`
+        [
+          2n,
+          1n,
+          false,
+          370395n,
+        ]
+      `)
+    })
+
     it('scopeKey', async () => {
       const { result, waitFor } = renderHook(() => {
         return {
@@ -128,17 +159,20 @@ describe('useContractRead', () => {
         {
           "data": [
             {
-              "hex": "0x02",
-              "type": "BigNumber",
+              "result": 2n,
+              "status": "success",
             },
             {
-              "hex": "0x01",
-              "type": "BigNumber",
+              "result": 1n,
+              "status": "success",
             },
-            false,
             {
-              "hex": "0x05a6db",
-              "type": "BigNumber",
+              "result": false,
+              "status": "success",
+            },
+            {
+              "result": 370395n,
+              "status": "success",
             },
           ],
           "error": null,
@@ -168,10 +202,10 @@ describe('useContractRead', () => {
       const { internal, ...res } = result.current
       assertType<
         | [
-            ResolvedConfig['BigIntType'],
-            ResolvedConfig['BigIntType'],
-            boolean,
-            ResolvedConfig['BigIntType'],
+            MulticallResult<ResolvedConfig['BigIntType']>,
+            MulticallResult<ResolvedConfig['BigIntType']>,
+            MulticallResult<boolean>,
+            MulticallResult<ResolvedConfig['BigIntType']>,
           ]
         | undefined
       >(res.data)
@@ -205,27 +239,30 @@ describe('useContractRead', () => {
         const { data } = await result.current.refetch()
         assertType<
           | [
-              ResolvedConfig['BigIntType'],
-              ResolvedConfig['BigIntType'],
-              boolean,
-              ResolvedConfig['BigIntType'],
+              MulticallResult<ResolvedConfig['BigIntType']>,
+              MulticallResult<ResolvedConfig['BigIntType']>,
+              MulticallResult<boolean>,
+              MulticallResult<ResolvedConfig['BigIntType']>,
             ]
           | undefined
         >(data)
         expect(data).toMatchInlineSnapshot(`
           [
             {
-              "hex": "0x02",
-              "type": "BigNumber",
+              "result": 2n,
+              "status": "success",
             },
             {
-              "hex": "0x01",
-              "type": "BigNumber",
+              "result": 1n,
+              "status": "success",
             },
-            false,
             {
-              "hex": "0x05a6db",
-              "type": "BigNumber",
+              "result": false,
+              "status": "success",
+            },
+            {
+              "result": 370395n,
+              "status": "success",
             },
           ]
         `)

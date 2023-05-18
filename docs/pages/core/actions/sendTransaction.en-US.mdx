@@ -9,6 +9,8 @@ import { Callout } from 'nextra-theme-docs'
 
 Action for sending a transaction.
 
+This is a wrapper around viem's [`sendTransaction`](https://viem.sh/docs/actions/wallet/sendTransaction.html).
+
 ```ts
 import { sendTransaction } from '@wagmi/core'
 ```
@@ -16,11 +18,28 @@ import { sendTransaction } from '@wagmi/core'
 ## Usage
 
 ```ts {6}
+import { sendTransaction } from '@wagmi/core'
+import { parseEther } from 'viem'
+
+const { hash } = await sendTransaction({
+  to: 'moxey.eth',
+  value: parseEther('0.01'),
+})
+```
+
+### Prepared Usage
+
+```ts {6}
 import { sendTransaction, prepareSendTransaction } from '@wagmi/core'
+import { parseEther } from 'viem'
 
 const config = await prepareSendTransaction({
-  request: { to: 'moxey.eth', value: BigNumber.from('10000000000000000') },
+  to: 'moxey.eth',
+  value: parseEther('0.01')
 })
+
+...
+
 const { hash } = await sendTransaction(config)
 ```
 
@@ -28,66 +47,93 @@ const { hash } = await sendTransaction(config)
 
 ```ts
 {
-  hash: `0x${string}`,
-  wait: (confirmations?: number) => Promise<TransactionReceipt>,
+  hash: `0x${string}`
 }
 ```
 
 ## Configuration
 
-### mode
+## Configuration
 
-> This is automatically populated when using [`prepareSendTransaction` action](/core/actions/prepareSendTransaction).
+### chainId (optional)
 
-- `recklesslyUnprepared`: Allow to pass through an adhoc unprepared `request`. Note: This has [UX pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks), it is highly recommended to not use this and instead prepare the request upfront using the `prepareSendTransaction` action.
-- `prepared`: The request has been prepared with parameters required for sending a transaction via the `prepareSendTransaction` action
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the Action will throw an error.
 
-```ts {4}
-import { sendTransaction } from '@wagmi/core'
-
-const { sendTransaction } = await sendTransaction({
-  mode: 'recklesslyUnprepared',
-  request: {
-    to: 'moxey.eth',
-    value: BigNumber.from('10000000000000000'),
-  },
+```ts {2}
+const { hash } = await sendTransaction({
+  chainId: 1,
+  to: 'jxom.eth',
+  value: parseEther('1'),
 })
 ```
 
-### request
+### account (optional)
 
-> This is automatically populated when using [`prepareSendTransaction` action](/core/actions/prepareSendTransaction).
+The Account to send the transaction from.
 
-The request to use when sending the transaction.
-
-```ts {7}
-import { prepareSendTransaction, sendTransaction } from '@wagmi/core'
-
-
-  const config = await prepareSendTransaction({ ... })
-  const { hash } = await sendTransaction({
-    ...config,
-    request: config.request
-  })
-
+```ts {2}
+const { hash } = await sendTransaction({
+  account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+  to: 'jxom.eth',
+  value: parseEther('1'),
+})
 ```
 
-## Reckless Usage
+### gasPrice (optional)
 
-It is possible to use `sendTransaction` without pairing it with `prepareSendTransaction` by using "recklessly unprepared" mode.
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
 
-<Callout>
-  This usage is not recommended. It comes with [UX
-  pitfalls](/core/prepare-hooks#ux-pitfalls-without-prepare-hooks). Only use it
-  as a last resort.
-</Callout>
-
-```ts {4-6}
-import { sendTransaction } from '@wagmi/core'
-
+```ts {4}
 const { hash } = await sendTransaction({
-  mode: 'recklesslyUnprepared',
-  to: 'moxey.eth',
-  value: BigNumber.from('10000000000000000'),
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  gasPrice: parseGwei('20'),
+})
+```
+
+### maxFeePerGas (optional)
+
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const { hash } = await sendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxFeePerGas: parseGwei('20'),
+})
+```
+
+### maxPriorityFeePerGas (optional)
+
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```ts {4}
+const { hash } = await sendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  maxPriorityFeePerGas: parseGwei('20'),
+})
+```
+
+### nonce (optional)
+
+Unique number identifying this transaction.
+
+```ts {4}
+const { hash } = await sendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
+  nonce: 69,
+})
+```
+
+### value (optional)
+
+Value in wei sent with this transaction.
+
+```ts {3}
+const { hash } = await sendTransaction({
+  to: 'jxom.eth',
+  value: parseEther('1'),
 })
 ```

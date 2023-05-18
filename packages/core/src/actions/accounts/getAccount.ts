@@ -1,11 +1,13 @@
-import type { Client, Data } from '../../client'
-import { getClient } from '../../client'
-import type { Provider } from '../../types'
+import type { Config, Data } from '../../config'
+import { getConfig } from '../../config'
+import type { PublicClient } from '../../types'
 
-export type GetAccountResult<TProvider extends Provider = Provider> =
+export type GetAccountResult<
+  TPublicClient extends PublicClient = PublicClient,
+> =
   | {
-      address: NonNullable<Data<TProvider>['account']>
-      connector: NonNullable<Client<TProvider>['connector']>
+      address: NonNullable<Data['account']>
+      connector: NonNullable<Config<TPublicClient>['connector']>
       isConnected: true
       isConnecting: false
       isDisconnected: false
@@ -13,8 +15,8 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
       status: 'connected'
     }
   | {
-      address: Data<TProvider>['account']
-      connector: Client<TProvider>['connector']
+      address: Data['account']
+      connector: Config<TPublicClient>['connector']
       isConnected: boolean
       isConnecting: false
       isDisconnected: false
@@ -22,8 +24,8 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
       status: 'reconnecting'
     }
   | {
-      address: Data<TProvider>['account']
-      connector: Client<TProvider>['connector']
+      address: Data['account']
+      connector: Config<TPublicClient>['connector']
       isConnected: false
       isReconnecting: false
       isConnecting: true
@@ -41,14 +43,14 @@ export type GetAccountResult<TProvider extends Provider = Provider> =
     }
 
 export function getAccount<
-  TProvider extends Provider,
->(): GetAccountResult<TProvider> {
-  const { data, connector, status } = getClient()
+  TPublicClient extends PublicClient,
+>(): GetAccountResult<TPublicClient> {
+  const { data, connector, status } = getConfig()
   switch (status) {
     case 'connected':
       return {
-        address: data?.account as NonNullable<Data<TProvider>['account']>,
-        connector: connector as NonNullable<Client<TProvider>['connector']>,
+        address: data?.account as NonNullable<Data['account']>,
+        connector: connector as NonNullable<Config<TPublicClient>['connector']>,
         isConnected: true,
         isConnecting: false,
         isDisconnected: false,

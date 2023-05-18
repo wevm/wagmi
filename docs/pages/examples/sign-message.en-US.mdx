@@ -22,17 +22,23 @@ Add the `useSignMessage` hook and set up a basic form:
 ```tsx
 import * as React from 'react'
 import { useSignMessage } from 'wagmi'
-import { verifyMessage } from 'ethers/lib/utils'
+import { recoverMessageAddress } from 'viem'
 
 export function SignMessage() {
   const recoveredAddress = React.useRef<string>()
-  const { data, error, isLoading, signMessage } = useSignMessage({
-    onSuccess(data, variables) {
-      // Verify signature when sign message succeeds
-      const address = verifyMessage(variables.message, data)
-      recoveredAddress.current = address
-    },
-  })
+  const { data, error, isLoading, signMessage, variables } = useSignMessage()
+
+  React.useEffect(() => {
+    ;(async () => {
+      if (variables?.message && signMessageData) {
+        const recoveredAddress = await recoverMessageAddress({
+          message: variables?.message,
+          signature: signMessageData,
+        })
+        setRecoveredAddress(recoveredAddress)
+      }
+    })()
+  }, [signMessageData, variables?.message])
 
   return (
     <form

@@ -4,7 +4,9 @@ import { fetchEnsResolver } from '@wagmi/core'
 import type { QueryConfig, QueryFunctionArgs } from '../../types'
 import { useChainId, useQuery } from '../utils'
 
-export type UseEnsResolverArgs = Partial<FetchEnsResolverArgs>
+export type UseEnsResolverArgs = Omit<Partial<FetchEnsResolverArgs>, 'name'> & {
+  name?: FetchEnsResolverArgs['name'] | null
+}
 export type UseEnsResolverConfig = QueryConfig<FetchEnsResolverResult, Error>
 
 type QueryKeyArgs = UseEnsResolverArgs

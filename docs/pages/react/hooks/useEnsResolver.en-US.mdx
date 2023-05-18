@@ -7,6 +7,8 @@ description: 'React Hook for fetching resolver for ENS name.'
 
 Hook for fetching the resolver for ENS name.
 
+This is a wrapper around viem's [`getEnsResolver`](https://viem.sh/docs/ens/actions/getEnsResolver.html).
+
 ```ts
 import { useEnsResolver } from 'wagmi'
 ```
@@ -31,7 +33,7 @@ function App() {
 
 ```tsx
 {
-  data?: EnsResolver
+  data?: Address
   error?: Error
   isIdle: boolean
   isLoading: boolean
@@ -53,7 +55,7 @@ function App() {
 
 ### chainId (optional)
 
-Force a specific chain id for the request. The wagmi `Client`'s ethers `provider` must be set up as a [chain-aware function](/react/client#provider-optional) for this to work correctly.
+Force a specific chain id for the request. The wagmi `Client`'s `publicClient` must be set up as a [chain-aware function](/react/config#publicclient-optional) for this to work correctly.
 
 ```tsx {6}
 import { useEnsResolver } from 'wagmi'

@@ -1,4 +1,3 @@
-import { providers } from 'ethers'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import type { Mock } from 'vitest'
@@ -39,20 +38,7 @@ const avalancheChain: Chain = {
   testnet: false,
 }
 
-const defaultChains = [
-  {
-    ...mainnet,
-    rpcUrls: {
-      ...mainnet.rpcUrls,
-      alchemy: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
-      default: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
-      public: { http: ['https://eth-mainnet.alchemyapi.io/v2'] },
-    },
-  },
-  polygon,
-  optimism,
-  arbitrum,
-]
+const defaultChains = [mainnet, polygon, optimism, arbitrum]
 const defaultChainsWithAvalanche = [...defaultChains, avalancheChain]
 
 function getHandlers({
@@ -132,15 +118,17 @@ describe('configureChains', () => {
 
   describe('single provider', () => {
     describe('alchemy', () => {
-      const { chains, provider } = configureChains(defaultChains, [
-        alchemyProvider({ apiKey: alchemyApiKey }),
-      ])
+      const { chains, publicClient } = configureChains(
+        defaultChains,
+        [alchemyProvider({ apiKey: alchemyApiKey })],
+        { rank: false },
+      )
 
       it('populate chains with Alchemy RPC URLs if all chains support Alchemy', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
           .toMatchInlineSnapshot(`
             [
-              "https://eth-mainnet.alchemyapi.io/v2/apiKey-alchemy",
+              "https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy",
               "https://polygon-mainnet.g.alchemy.com/v2/apiKey-alchemy",
               "https://opt-mainnet.g.alchemy.com/v2/apiKey-alchemy",
               "https://arb-mainnet.g.alchemy.com/v2/apiKey-alchemy",
@@ -148,16 +136,18 @@ describe('configureChains', () => {
           `)
       })
 
-      it('provides an AlchemyProvider instance to provider', async () => {
+      it('sets provider transport to alchemy', async () => {
+        const provider_ = publicClient({ chainId: mainnet.id })
         expect(
-          provider({ chainId: mainnet.id }) instanceof
-            providers.AlchemyProvider,
-        ).toBeTruthy()
+          provider_.transport.transports[0]?.value?.url,
+        ).toMatchInlineSnapshot(
+          '"https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy"',
+        )
       })
 
       defaultChains.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          await provider({ chainId: chain.id }).getBlockNumber()
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(alchemyListener).toBeCalledTimes(1)
         })
       })
@@ -179,9 +169,11 @@ describe('configureChains', () => {
     })
 
     describe('infura', () => {
-      const { chains, provider } = configureChains(defaultChains, [
-        infuraProvider({ apiKey: infuraApiKey }),
-      ])
+      const { chains, publicClient } = configureChains(
+        defaultChains,
+        [infuraProvider({ apiKey: infuraApiKey })],
+        { rank: false },
+      )
 
       it('configures with Infura RPC URL if all chains support Infura', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
@@ -195,15 +187,16 @@ describe('configureChains', () => {
           `)
       })
 
-      it('provides an InfuraProvider instance to provider', async () => {
+      it('sets provider transport to alchemy', async () => {
+        const provider_ = publicClient({ chainId: mainnet.id })
         expect(
-          provider({ chainId: mainnet.id }) instanceof providers.InfuraProvider,
-        ).toBeTruthy()
+          provider_.transport.transports[0]?.value?.url,
+        ).toMatchInlineSnapshot('"https://mainnet.infura.io/v3/apiKey-infura"')
       })
 
       defaultChains.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          await provider({ chainId: chain.id }).getBlockNumber()
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(infuraListener).toBeCalledTimes(1)
         })
       })
@@ -225,15 +218,17 @@ describe('configureChains', () => {
     })
 
     describe('public', () => {
-      const { chains, provider } = configureChains(defaultChainsWithAvalanche, [
-        publicProvider(),
-      ])
+      const { chains, publicClient } = configureChains(
+        defaultChainsWithAvalanche,
+        [publicProvider()],
+        { rank: false },
+      )
 
       it('configures chains with default RPC URL', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
           .toMatchInlineSnapshot(`
             [
-              "https://eth-mainnet.alchemyapi.io/v2",
+              "https://cloudflare-eth.com",
               "https://polygon-rpc.com",
               "https://mainnet.optimism.io",
               "https://arb1.arbitrum.io/rpc",
@@ -242,16 +237,16 @@ describe('configureChains', () => {
           `)
       })
 
-      it('provides a StaticJsonRpcProvider instance', async () => {
+      it('sets provider transport to alchemy', async () => {
+        const provider_ = publicClient({ chainId: mainnet.id })
         expect(
-          provider({ chainId: mainnet.id }) instanceof
-            providers.StaticJsonRpcProvider,
-        ).toBeTruthy()
+          provider_.transport.transports[0]?.value?.url,
+        ).toMatchInlineSnapshot('"https://cloudflare-eth.com"')
       })
 
       defaultChainsWithAvalanche.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          await provider({ chainId: chain.id }).getBlockNumber()
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(publicListener).toBeCalledTimes(1)
         })
       })
@@ -278,13 +273,17 @@ describe('configureChains', () => {
     })
 
     describe('jsonRpc', () => {
-      const { chains, provider } = configureChains(defaultChainsWithAvalanche, [
-        jsonRpcProvider({
-          rpc: (chain) => ({
-            http: `https://${chain.network}.example.com`,
+      const { chains, publicClient } = configureChains(
+        defaultChainsWithAvalanche,
+        [
+          jsonRpcProvider({
+            rpc: (chain) => ({
+              http: `https://${chain.network}.example.com`,
+            }),
           }),
-        }),
-      ])
+        ],
+        { rank: false },
+      )
 
       it('configure chains with provided RPC URLs for JSON RPC provider', async () => {
         expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
@@ -299,36 +298,27 @@ describe('configureChains', () => {
           `)
       })
 
-      it('provides a StaticJsonRpcProvider instance', async () => {
-        expect(provider({ chainId: mainnet.id }).constructor.name).toEqual(
-          'StaticJsonRpcProvider',
-        )
-      })
-
-      it('provides a JsonRpcProvider instance if `static` option is falsy', async () => {
-        const { provider } = configureChains(defaultChainsWithAvalanche, [
-          jsonRpcProvider({
-            rpc: (chain) => ({
-              http: `https://${chain.network}.example.com`,
-            }),
-            static: false,
-          }),
-        ])
-        expect(provider({ chainId: mainnet.id }).constructor.name).toEqual(
-          'JsonRpcProvider',
-        )
+      it('sets provider transport to alchemy', async () => {
+        const provider_ = publicClient({ chainId: mainnet.id })
+        expect(
+          provider_.transport.transports[0]?.value?.url,
+        ).toMatchInlineSnapshot('"https://homestead.example.com"')
       })
 
       defaultChainsWithAvalanche.forEach((chain) => {
         it(`configures provider for ${chain.network}`, async () => {
-          const { provider } = configureChains(defaultChainsWithAvalanche, [
-            jsonRpcProvider({
-              rpc: (chain) => ({
-                http: `https://${chain.network}.example.com`,
+          const { publicClient } = configureChains(
+            defaultChainsWithAvalanche,
+            [
+              jsonRpcProvider({
+                rpc: (chain) => ({
+                  http: `https://${chain.network}.example.com`,
+                }),
               }),
-            }),
-          ])
-          await provider({ chainId: chain.id }).getBlockNumber()
+            ],
+            { rank: false },
+          )
+          await publicClient({ chainId: chain.id }).getBlockNumber()
           expect(jsonRpcListener).toBeCalledTimes(1)
         })
       })
@@ -372,16 +362,20 @@ describe('configureChains', () => {
       avalancheChain,
     ]
 
-    const { chains, provider } = configureChains(defaultChains, [
-      alchemyProvider({ apiKey: alchemyApiKey }),
-      infuraProvider({ apiKey: infuraApiKey }),
-      jsonRpcProvider({
-        rpc: (chain) => {
-          if (chain.id !== avalancheChain.id) return null
-          return { http: chain.rpcUrls.default.http[0]! }
-        },
-      }),
-    ])
+    const { chains, publicClient } = configureChains(
+      defaultChains,
+      [
+        alchemyProvider({ apiKey: alchemyApiKey }),
+        infuraProvider({ apiKey: infuraApiKey }),
+        jsonRpcProvider({
+          rpc: (chain) => {
+            if (chain.id !== avalancheChain.id) return null
+            return { http: chain.rpcUrls.default.http[0]! }
+          },
+        }),
+      ],
+      { rank: false },
+    )
 
     it('configures chains with correct fallbacks', async () => {
       expect(chains.map((chain) => chain.rpcUrls.default.http[0]))
@@ -396,15 +390,23 @@ describe('configureChains', () => {
         `)
     })
 
-    it('provides a FallbackProvider instance', async () => {
+    it('sets provider transports', async () => {
+      const provider_ = publicClient({ chainId: mainnet.id })
       expect(
-        provider({ chainId: mainnet.id }) instanceof providers.FallbackProvider,
-      ).toBeTruthy()
+        provider_.transport.transports.map((x) => x.value?.url),
+      ).toMatchInlineSnapshot(
+        `
+        [
+          "https://eth-mainnet.g.alchemy.com/v2/apiKey-alchemy",
+          "https://mainnet.infura.io/v3/apiKey-infura",
+        ]
+      `,
+      )
     })
 
     it('configures provider with correct fallback', async () => {
       for (const chain of defaultChains) {
-        await provider({ chainId: chain.id }).getBlockNumber()
+        await publicClient({ chainId: chain.id }).getBlockNumber()
       }
       expect(alchemyListener).toBeCalledTimes(2)
       expect(infuraListener).toBeCalledTimes(2)
@@ -434,249 +436,6 @@ describe('configureChains', () => {
 
         You may need to add \`jsonRpcProvider\` to \`configureChains\` with the chain's RPC URLs.
         Read more: https://wagmi.sh/core/providers/jsonRpc"
-      `)
-    })
-  })
-
-  describe('quorum', () => {
-    defaultChains.forEach((chain) => {
-      describe(`targets the quorum value for ${chain.network}`, () => {
-        it('targetQuorum = 1', async () => {
-          const { provider } = configureChains(
-            defaultChains,
-            [
-              alchemyProvider({ apiKey: alchemyApiKey }),
-              infuraProvider({ apiKey: infuraApiKey }),
-              jsonRpcProvider({
-                rpc: (chain) => ({
-                  http: `https://${chain.network}.example.com`,
-                }),
-              }),
-            ],
-            { targetQuorum: 1 },
-          )
-
-          await provider({ chainId: chain.id }).getBlockNumber()
-          expect(alchemyListener).toBeCalledTimes(1)
-          expect(infuraListener).toBeCalledTimes(0)
-          expect(jsonRpcListener).toBeCalledTimes(0)
-        })
-
-        it('targetQuorum = 2', async () => {
-          const { provider } = configureChains(
-            defaultChains,
-            [
-              alchemyProvider({ apiKey: alchemyApiKey }),
-              infuraProvider({ apiKey: infuraApiKey }),
-              jsonRpcProvider({
-                rpc: (chain) => ({
-                  http: `https://${chain.network}.example.com`,
-                }),
-              }),
-            ],
-            { targetQuorum: 2 },
-          )
-
-          await provider({ chainId: chain.id }).getBlockNumber()
-          expect(alchemyListener).toBeCalledTimes(1)
-          expect(infuraListener).toBeCalledTimes(1)
-          expect(jsonRpcListener).toBeCalledTimes(0)
-        })
-
-        it('targetQuorum = 3', async () => {
-          const { provider } = configureChains(
-            defaultChains,
-            [
-              alchemyProvider({ apiKey: alchemyApiKey }),
-              infuraProvider({ apiKey: infuraApiKey }),
-              jsonRpcProvider({
-                rpc: (chain) => ({
-                  http: `https://${chain.network}.example.com`,
-                }),
-              }),
-            ],
-            { targetQuorum: 3 },
-          )
-
-          await provider({ chainId: chain.id }).getBlockNumber()
-          expect(alchemyListener).toBeCalledTimes(1)
-          expect(infuraListener).toBeCalledTimes(1)
-          expect(jsonRpcListener).toBeCalledTimes(1)
-        })
-      })
-
-      it(`sets minimum quorum for ${chain.network}`, async () => {
-        const { provider } = configureChains(
-          defaultChains,
-          [
-            alchemyProvider({ apiKey: alchemyApiKey }),
-            infuraProvider({ apiKey: infuraApiKey }),
-            jsonRpcProvider({
-              rpc: (chain) => ({
-                http: `https://${chain.network}.example.com`,
-              }),
-            }),
-          ],
-          { targetQuorum: 2, minQuorum: 2 },
-        )
-
-        await provider({ chainId: chain.id }).getBlockNumber()
-        expect(alchemyListener).toBeCalledTimes(1)
-        expect(infuraListener).toBeCalledTimes(1)
-        expect(jsonRpcListener).toBeCalledTimes(0)
-      })
-    })
-
-    it('throws if minimum quorum is greater than quorum', () => {
-      expect(() =>
-        configureChains(
-          defaultChains,
-          [
-            alchemyProvider({ apiKey: alchemyApiKey }),
-            infuraProvider({ apiKey: infuraApiKey }),
-            jsonRpcProvider({
-              rpc: (chain) => ({
-                http: `https://${chain.network}.example.com`,
-              }),
-            }),
-          ],
-
-          { targetQuorum: 2, minQuorum: 3 },
-        ),
-      ).toThrowErrorMatchingInlineSnapshot(
-        `"quorum cannot be lower than minQuorum"`,
-      )
-    })
-
-    it('throws if minimum quorum is not met', async () => {
-      const { provider } = configureChains(
-        defaultChains,
-        [
-          alchemyProvider({ apiKey: alchemyApiKey }),
-          infuraProvider({ apiKey: infuraApiKey }),
-          jsonRpcProvider({
-            rpc: (chain) => ({
-              http: `https://${chain.network}.example.com`,
-            }),
-          }),
-        ],
-
-        { targetQuorum: 4, minQuorum: 4 },
-      )
-
-      expect(() =>
-        provider({ chainId: mainnet.id }).getBlockNumber(),
-      ).toThrowError()
-    })
-  })
-
-  describe('fallback config', () => {
-    it('assigns fallback config passed to configureChains', () => {
-      const { provider } = configureChains(
-        defaultChains,
-        [
-          alchemyProvider({
-            apiKey: alchemyApiKey,
-          }),
-          infuraProvider({
-            apiKey: infuraApiKey,
-          }),
-          jsonRpcProvider({
-            rpc: (chain) => ({
-              http: `https://${chain.network}.example.com`,
-            }),
-          }),
-        ],
-        { stallTimeout: 5000 },
-      )
-
-      const fallbackProvider = provider({
-        chainId: mainnet.id,
-      }) as providers.FallbackProvider
-
-      expect(
-        fallbackProvider.providerConfigs.map(
-          ({ priority, stallTimeout, weight }) => ({
-            priority,
-            stallTimeout,
-            weight,
-          }),
-        ),
-      ).toMatchInlineSnapshot(`
-        [
-          {
-            "priority": 0,
-            "stallTimeout": 5000,
-            "weight": 1,
-          },
-          {
-            "priority": 1,
-            "stallTimeout": 5000,
-            "weight": 1,
-          },
-          {
-            "priority": 2,
-            "stallTimeout": 5000,
-            "weight": 1,
-          },
-        ]
-      `)
-    })
-
-    it('assigns fallback config passed to providers', () => {
-      const { provider } = configureChains(defaultChains, [
-        alchemyProvider({
-          apiKey: alchemyApiKey,
-          priority: 1,
-          stallTimeout: 2000,
-          weight: 1,
-        }),
-        infuraProvider({
-          apiKey: infuraApiKey,
-          priority: 2,
-          stallTimeout: 3000,
-          weight: 2,
-        }),
-        jsonRpcProvider({
-          rpc: (chain) => ({
-            http: `https://${chain.network}.example.com`,
-          }),
-          priority: 3,
-          stallTimeout: 5000,
-          weight: 3,
-        }),
-      ])
-
-      const fallbackProvider = provider({
-        chainId: mainnet.id,
-      }) as providers.FallbackProvider
-
-      expect(
-        fallbackProvider.providerConfigs.map(
-          ({ priority, stallTimeout, weight }) => ({
-            priority,
-            stallTimeout,
-            weight,
-          }),
-        ),
-      ).toMatchInlineSnapshot(`
-        [
-          {
-            "priority": 1,
-            "stallTimeout": 2000,
-            "weight": 1,
-          },
-          {
-            "priority": 2,
-            "stallTimeout": 3000,
-            "weight": 2,
-          },
-          {
-            "priority": 3,
-            "stallTimeout": 5000,
-            "weight": 3,
-          },
-        ]
       `)
     })
   })

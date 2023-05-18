@@ -114,7 +114,11 @@ export function serialize(
 ) {
   return JSON.stringify(
     value,
-    createReplacer(replacer, circularReplacer),
+    createReplacer((key, value_) => {
+      const value =
+        typeof value_ === 'bigint' ? `#bigint.${value_.toString()}` : value_
+      return replacer?.(key, value) || value
+    }, circularReplacer),
     indent ?? undefined,
   )
 }
