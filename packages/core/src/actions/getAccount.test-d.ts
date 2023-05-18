@@ -1,7 +1,7 @@
+import { config } from '@wagmi/test'
 import type { Address } from 'viem'
 import { expectTypeOf, test } from 'vitest'
 
-import { config } from '../../test/index.js'
 import type { Connector } from '../config.js'
 import { getAccount } from './getAccount.js'
 

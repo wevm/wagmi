@@ -1,6 +1,6 @@
 import { expect, test, vi } from 'vitest'
 
-import { createWrapper, renderHook } from '../../test/index.js'
+import { createWrapper, renderHook } from '../../test-utils.js'
 import { useConfig } from './useConfig.js'
 
 test('mounts', async () => {

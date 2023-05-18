@@ -1,6 +1,7 @@
+import { testClient } from '@wagmi/test'
 import { expect, test } from 'vitest'
 
-import { renderHook, testClient, waitFor } from '../../test/index.js'
+import { renderHook, waitFor } from '../../test-utils.js'
 import { useBlockNumber } from './useBlockNumber.js'
 
 test('mounts', async () => {
@@ -44,9 +45,9 @@ test('watch', async () => {
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
   expect(result.current.data).toEqual(16280770n)
 
-  await testClient.mine({ blocks: 1 })
+  await testClient.anvil.mine({ blocks: 1 })
   await waitFor(() => expect(result.current.data).toEqual(16280771n))
 
-  await testClient.mine({ blocks: 1 })
+  await testClient.anvil.mine({ blocks: 1 })
   await waitFor(() => expect(result.current.data).toEqual(16280772n))
 })

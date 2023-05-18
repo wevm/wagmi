@@ -1,15 +1,20 @@
 import { fetchLogs } from '@viem/anvil'
 import { afterAll, afterEach } from 'vitest'
 
-import { forkBlockNumber, forkUrl, pool, testChains } from './constants.js'
-import { testClient } from './utils.js'
+import { testChains } from './chains.js'
+import { testClient } from './config.js'
+import { forkBlockNumber, forkUrl, pool } from './constants.js'
 
 afterAll(async () => {
   // If you are using a fork, you can reset your anvil instance to the initial fork block.
-  await testClient.reset({
-    jsonRpcUrl: forkUrl,
-    blockNumber: forkBlockNumber,
-  })
+  await Promise.all(
+    Object.values(testClient).map((client) =>
+      client.reset({
+        jsonRpcUrl: forkUrl,
+        blockNumber: forkBlockNumber,
+      }),
+    ),
+  )
 })
 
 afterEach(async (context) => {

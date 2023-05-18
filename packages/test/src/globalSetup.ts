@@ -1,6 +1,7 @@
 import { startProxy } from '@viem/anvil'
 
-import { forkBlockNumber, forkUrl, testChains } from './constants.js'
+import { testChains } from './chains.js'
+import { forkBlockNumber, forkUrl } from './constants.js'
 
 export default async function () {
   await Promise.all(

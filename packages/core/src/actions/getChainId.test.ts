@@ -1,6 +1,6 @@
+import { config, testChains } from '@wagmi/test'
 import { describe, expect, test } from 'vitest'
 
-import { config, testChains } from '../../test/index.js'
 import { getChainId, watchChainId } from './getChainId.js'
 
 describe('getChainId', () => {

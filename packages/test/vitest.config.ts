@@ -9,15 +9,7 @@ export default defineProject({
         __dirname,
         '../../references/packages/chains/src',
       ),
-      '@wagmi/connectors': path.resolve(
-        __dirname,
-        '../../references/packages/connectors/src',
-      ),
-      '@wagmi/test': path.resolve(__dirname, '../test/src'),
+      '@wagmi/core': path.resolve(__dirname, '../core/src'),
     },
-  },
-  test: {
-    name: '@wagmi/core',
-    testTimeout: 10_000,
   },
 })

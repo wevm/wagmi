@@ -6,37 +6,13 @@ import {
   waitFor as waitFor_,
   type waitForOptions,
 } from '@testing-library/react'
-import { createConfig } from '@wagmi/core'
+import { config } from '@wagmi/test'
 import * as React from 'react'
-import { createTestClient, http } from 'viem'
 
-import { WagmiConfig } from '../src/index.js'
-import { testChains } from './constants.js'
-
-const { anvil, anvilTwo } = testChains
-
-////////////////////////////////////////////////////////////////////////////////
-// anvil.js
-
-export const testClient = createTestClient({
-  chain: anvil,
-  mode: 'anvil',
-  transport: http(),
-})
+import { WagmiConfig } from './src/index.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // config
-
-export const config = createConfig({
-  chains: [anvil, anvilTwo],
-  connectors: [],
-  reconnectOnMount: false,
-  storage: null,
-  transports: {
-    [anvil.id]: http(),
-    [anvilTwo.id]: http(),
-  },
-})
 
 export const queryClient = new QueryClient({
   defaultOptions: {

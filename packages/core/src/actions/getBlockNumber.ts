@@ -17,6 +17,11 @@ export type GetBlockNumberParameters = {
 
 export type GetBlockNumberReturnType = GetBlockNumberReturnType_ | undefined
 
+export type GetBlockNumberError =
+  | RpcError
+  // base
+  | Error
+
 export function getBlockNumber(
   config: Config,
   { chainId }: GetBlockNumberParameters = {},
@@ -54,14 +59,10 @@ export function watchBlockNumber(
 // Query
 
 type GetBlockNumberQueryFnData = NonNullable<GetBlockNumberReturnType> | null
-type GetBlockNumberQueryError =
-  | RpcError
-  // base
-  | Error
 type GetBlockNumberQueryKey = {
   chainId?: number | undefined
 }
-type Options = QueryOptions<GetBlockNumberQueryFnData, GetBlockNumberQueryError>
+type Options = QueryOptions<GetBlockNumberQueryFnData, GetBlockNumberError>
 
 export type GetBlockNumberQueryOptions = Prettify<
   Omit<Options, 'queryFn' | 'queryKey' | 'queryKeyHashFn'> &

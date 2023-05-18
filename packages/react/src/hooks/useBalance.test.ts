@@ -1,8 +1,9 @@
+import { accounts, testChains } from '@wagmi/test'
+import type { Address } from 'viem'
 import { expect, test } from 'vitest'
 
-import { accounts, renderHook, testChains, waitFor } from '../../test/index.js'
+import { renderHook, waitFor } from '../../test-utils.js'
 import { useBalance } from './useBalance.js'
-import type { Address } from 'viem'
 
 const address = accounts[0]
 

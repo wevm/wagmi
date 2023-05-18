@@ -1,12 +1,11 @@
 {
-  "name": "@wagmi/core",
-  "description": "VanillaJS library for Ethereum",
-  "version": "1.0.2",
+  "name": "@wagmi/test",
+  "version": "2.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/wagmi-dev/wagmi.git",
-    "directory": "packages/core"
+    "directory": "packages/test"
   },
   "scripts": {
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
@@ -37,23 +36,18 @@
     "./package.json": "./package.json"
   },
   "peerDependencies": {
-    "typescript": ">=5",
-    "viem": "0.0.0-portable-types-20230513210020"
+    "@wagmi/core": "workspace:*",
+    "@wagmi/chains": "workspace:*",
+    "viem": "0.0.0-portable-types-20230513210020",
+    "typescript": ">=5"
   },
   "peerDependenciesMeta": {
     "typescript": {
       "optional": true
     }
   },
-  "dependencies": {
-    "@tanstack/query-core": "5.0.0-alpha.26",
-    "@tanstack/query-persist-client-core": "5.0.0-alpha.26",
-    "@tanstack/query-sync-storage-persister": "5.0.0-alpha.26",
-    "eventemitter3": "^5.0.1",
-    "zustand": "^4.3.7"
-  },
   "devDependencies": {
-    "@wagmi/test": "workspace:^"
+    "@wagmi/core": "workspace:*"
   },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [
