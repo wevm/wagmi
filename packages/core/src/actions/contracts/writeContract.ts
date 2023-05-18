@@ -74,7 +74,7 @@ export async function writeContract<
 
   let request: WriteContractParameters<TAbi, TFunctionName, Chain, Account>
   if (config.mode === 'prepared') {
-    request = config
+    request = config.request
   } else {
     const { chainId, mode, ...args } = config
     const res = await prepareWriteContract(args as PrepareWriteContractConfig)
