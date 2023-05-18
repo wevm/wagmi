@@ -33,6 +33,7 @@ test('exports', () => {
       "normalizeChainId": [Function],
       "serialize": [Function],
       "watchAccount": [Function],
+      "watchBalance": [Function],
       "watchBlockNumber": [Function],
       "watchChainId": [Function],
     }

@@ -1,3 +1,4 @@
+import type { QueryOptions } from '@tanstack/query-core'
 import {
   type Address,
   BaseError,
@@ -10,8 +11,10 @@ import {
 import { type Config } from '../config.js'
 import { type Prettify, type Unit } from '../types.js'
 import { getUnit } from '../utils/getUnit.js'
-import type { GetBlockNumberError } from './getBlockNumber.js'
-import type { QueryOptions } from '@tanstack/query-core'
+import type {
+  GetBlockNumberError,
+  WatchBlockNumberReturnType,
+} from './getBlockNumber.js'
 
 ///////////////////////////////////////////////////////////////////////////
 // Getter
@@ -67,14 +70,15 @@ export async function getBalance(
 ///////////////////////////////////////////////////////////////////////////
 // Watcher
 
-export type WatchBlockNumberParameters = Prettify<
+export type WatchBalanceParameters = Prettify<
   Omit<GetBalanceParameters, 'blockNumber' | 'blockTag'> & {
     onBalance: (args: GetBalanceReturnType) => void
     onError?: (error: GetBalanceError | GetBlockNumberError) => void
+    syncConnectedChain?: boolean
   }
 >
 
-export type WatchBlockNumberReturnType = () => void
+export type WatchBalanceReturnType = () => void
 
 export function watchBalance(
   config: Config,
@@ -83,31 +87,67 @@ export function watchBalance(
     chainId,
     onBalance,
     onError,
+    syncConnectedChain = config.syncConnectedChain,
     token,
     unit,
-  }: WatchBlockNumberParameters,
-): WatchBlockNumberReturnType {
-  const publicClient = config.getPublicClient({ chainId })
-  return publicClient?.watchBlockNumber({
-    emitOnBegin: false,
-    onBlockNumber: async (blockNumber) => {
-      try {
-        const balance = await getBalance(config, {
-          address,
-          blockNumber,
-          chainId,
-          token,
-          unit,
-        } as GetBalanceParameters)
-        onBalance(balance)
-      } catch (err: unknown) {
-        onError?.(err as GetBlockNumberError)
-      }
-    },
-    poll: true,
-    // TODO: viem `exactOptionalPropertyTypes`
-    ...(onError ? { onError } : {}),
-  })
+  }: WatchBalanceParameters,
+): WatchBalanceReturnType {
+  let unwatch: WatchBlockNumberReturnType | undefined
+
+  const handler = async (blockNumber?: bigint | undefined) => {
+    try {
+      const balance = await getBalance(config, {
+        address,
+        blockNumber,
+        chainId,
+        token,
+        unit,
+      } as GetBalanceParameters)
+      onBalance(balance)
+    } catch (err: unknown) {
+      onError?.(err as GetBlockNumberError)
+    }
+  }
+
+  const listener = ({
+    chainId,
+  }: {
+    chainId?: GetBalanceParameters['chainId']
+  }) => {
+    if (unwatch) unwatch()
+
+    const publicClient = config.getPublicClient({ chainId })
+
+    unwatch = publicClient?.watchBlockNumber({
+      emitOnBegin: false,
+      onBlockNumber: handler,
+      poll: true,
+      // TODO: viem `exactOptionalPropertyTypes`
+      ...(onError ? { onError } : {}),
+    })
+
+    return unwatch
+  }
+
+  // set up listener for block number changes
+  const unlisten = listener({ chainId })
+
+  // set up subscriber for connected chain changes
+  const unsubscribe =
+    syncConnectedChain && !chainId
+      ? config.subscribe(
+          ({ chainId }) => chainId,
+          (chainId) => {
+            handler()
+            return listener({ chainId })
+          },
+        )
+      : undefined
+
+  return () => {
+    unlisten?.()
+    unsubscribe?.()
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////

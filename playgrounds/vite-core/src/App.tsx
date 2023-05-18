@@ -1,10 +1,13 @@
 import {
+  type GetBalanceReturnType,
   type GetBlockNumberReturnType,
   connect,
   disconnect,
   getAccount,
+  getBalance,
   getBlockNumber,
   watchAccount,
+  watchBalance,
   watchBlockNumber,
 } from '@wagmi/core'
 import * as React from 'react'
@@ -16,6 +19,7 @@ function App() {
     <>
       <Account />
       <Connect />
+      <Balance />
       <BlockNumber />
     </>
   )
@@ -68,6 +72,44 @@ function Connect() {
           {connector.name}
         </button>
       ))}
+    </div>
+  )
+}
+
+function Balance() {
+  const [account, setAccount] = React.useState(getAccount(config))
+
+  React.useEffect(() => {
+    watchAccount(config, {
+      onChange(data) {
+        setAccount(data)
+      },
+    })
+  }, [])
+
+  /////////////////////////////////////////////////////////
+
+  const [balance, setBalance] = React.useState<
+    GetBalanceReturnType | undefined
+  >()
+
+  React.useEffect(() => {
+    if (!account.address) return
+    const unwatch = watchBalance(config, {
+      address: account.address,
+      onBalance: (balance) => setBalance(balance),
+    })
+    return () => {
+      console.log('test')
+      unwatch()
+    }
+  }, [account.address, config])
+
+  return (
+    <div>
+      <h2>Balance</h2>
+
+      <div>Balance: {balance?.formatted}</div>
     </div>
   )
 }

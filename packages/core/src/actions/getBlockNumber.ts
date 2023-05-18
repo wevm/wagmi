@@ -37,22 +37,60 @@ export type WatchBlockNumberParameters = {
   chainId?: number | undefined
   onBlockNumber: WatchBlockNumberParameters_['onBlockNumber']
   onError?: WatchBlockNumberParameters_['onError']
+  syncConnectedChain?: boolean
 }
 
 export type WatchBlockNumberReturnType = () => void
 
 export function watchBlockNumber(
   config: Config,
-  { chainId, onBlockNumber, onError }: WatchBlockNumberParameters,
-): WatchBlockNumberReturnType {
-  const publicClient = config.getPublicClient({ chainId })
-  return publicClient?.watchBlockNumber({
-    emitOnBegin: true,
+  {
+    chainId,
     onBlockNumber,
-    poll: true,
-    // TODO: viem `exactOptionalPropertyTypes`
-    ...(onError ? { onError } : {}),
-  })
+    onError,
+    syncConnectedChain = config.syncConnectedChain,
+  }: WatchBlockNumberParameters,
+): WatchBlockNumberReturnType {
+  let unwatch: WatchBlockNumberReturnType | undefined
+
+  const listener = (chainId: number | undefined) => {
+    if (unwatch) unwatch()
+
+    const publicClient = config.getPublicClient({ chainId })
+
+    unwatch = publicClient?.watchBlockNumber({
+      emitOnBegin: true,
+      onBlockNumber,
+      poll: true,
+      // TODO: viem `exactOptionalPropertyTypes`
+      ...(onError ? { onError } : {}),
+    })
+    return unwatch
+  }
+
+  // set up listener for block number changes
+  const unlisten = listener(chainId)
+
+  // set up subscriber for connected chain changes
+  const unsubscribe =
+    syncConnectedChain && !chainId
+      ? config.subscribe(
+          ({ chainId }) => chainId,
+          async (chainId) => {
+            const blockNumber = await getBlockNumber(config, {
+              chainId,
+            })
+            onBlockNumber(blockNumber!, undefined)
+
+            return listener(chainId)
+          },
+        )
+      : undefined
+
+  return () => {
+    unlisten?.()
+    unsubscribe?.()
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////

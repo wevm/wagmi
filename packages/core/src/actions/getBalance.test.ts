@@ -168,6 +168,8 @@ describe('watchBalance', () => {
     unwatch()
   })
 
+  test.todo('args: syncConnectedChain')
+
   test.todo('args: token')
 
   test('args: unit', async () => {

@@ -62,6 +62,7 @@ export type Config<
   readonly reconnectOnMount: boolean
   readonly state: State
   readonly storage: Storage | null
+  readonly syncConnectedChain: boolean
 
   getPublicClient(parameters?: { chainId?: number | undefined }): PublicClient
   reconnect(): Promise<void>
@@ -340,6 +341,7 @@ export function createConfig<
     persister,
     queryClient,
     reconnectOnMount,
+    syncConnectedChain,
     get state() {
       return store.getState()
     },

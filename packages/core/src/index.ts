@@ -38,6 +38,9 @@ export {
   getBalance,
   type GetBalanceQueryOptions,
   getBalanceQueryOptions,
+  type WatchBalanceParameters,
+  type WatchBalanceReturnType,
+  watchBalance,
 } from './actions/getBalance.js'
 
 export {
