@@ -29,3 +29,16 @@ index 91e621bca4d12589af0a4b37fb24f397cf9b682f..ad335d4fcd46d6a71e5acdaef1457a01
 -        walletLinkExtension?: CoinbaseWalletProvider;
 -    }
 -}
+diff --git a/package.json b/package.json
+index a32df713765097bde5c670c7bc261b589282cdff..f7c3d98f762342c71b327816d8b05f20ab55dc7d 100644
+--- a/package.json
++++ b/package.json
+@@ -41,7 +41,7 @@
+     "fix:prettier": "prettier . --write",
+     "release": "./scripts/release.sh"
+   },
+-
++  "sideEffects": false,
+   "dependencies": {
+     "@metamask/safe-event-emitter": "2.0.0",
+     "@solana/web3.js": "^1.70.1",

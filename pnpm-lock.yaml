@@ -2,7 +2,7 @@ lockfileVersion: '6.0'
 
 patchedDependencies:
   '@coinbase/wallet-sdk@3.6.6':
-    hash: oswjbwsc5krsszcy53mcndruxe
+    hash: vdyr3fuw3nqhkn7fysjwpibeh4
     path: patches/@coinbase__wallet-sdk@3.6.6.patch
   '@tanstack/query-core@5.0.0-alpha.26':
     hash: eeh6ipltmljhxdmr2zvloj7oli
@@ -222,7 +222,7 @@ importers:
     dependencies:
       '@coinbase/wallet-sdk':
         specifier: ^3.6.6
-        version: 3.6.6(patch_hash=oswjbwsc5krsszcy53mcndruxe)
+        version: 3.6.6(patch_hash=vdyr3fuw3nqhkn7fysjwpibeh4)
       '@walletconnect/ethereum-provider':
         specifier: ^2.7.2
         version: 2.7.2(patch_hash=d2e6fs45gcpivejxywrl54asvy)(@web3modal/standalone@2.4.1)(lokijs@1.5.12)
@@ -834,7 +834,7 @@ packages:
       prettier: 2.8.7
     dev: true
 
-  /@coinbase/wallet-sdk@3.6.6(patch_hash=oswjbwsc5krsszcy53mcndruxe):
+  /@coinbase/wallet-sdk@3.6.6(patch_hash=vdyr3fuw3nqhkn7fysjwpibeh4):
     resolution: {integrity: sha512-vX+epj/Ttjo7XRwlr3TFUUfW5GTRMvORpERPwiu7z2jl3DSVL4rXLmHt5y6LDPlUVreas2gumdcFbu0fLRG9Jg==}
     engines: {node: '>= 10.0.0'}
     dependencies:
