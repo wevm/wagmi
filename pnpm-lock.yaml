@@ -102,9 +102,15 @@ importers:
       eventemitter3:
         specifier: ^5.0.1
         version: 5.0.1
+      typescript:
+        specifier: '>=5'
+        version: 5.0.4
+      viem:
+        specifier: 0.0.0-portable-types-20230513210020
+        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
       zustand:
         specifier: ^4.3.7
-        version: 4.3.7
+        version: 4.3.7(react@18.2.0)
     devDependencies:
       '@wagmi/test':
         specifier: workspace:^
@@ -127,9 +133,15 @@ importers:
       '@wagmi/core':
         specifier: workspace:*
         version: link:../core
+      typescript:
+        specifier: '>=5'
+        version: 5.0.4
       use-sync-external-store:
         specifier: ^1.2.0
         version: 1.2.0(react@18.2.0)
+      viem:
+        specifier: 0.0.0-portable-types-20230513210020
+        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
     devDependencies:
       '@testing-library/react':
         specifier: ^14.0.0
@@ -154,6 +166,16 @@ importers:
         version: 18.2.0(react@18.2.0)
 
   packages/test:
+    dependencies:
+      '@wagmi/chains':
+        specifier: workspace:*
+        version: link:../../references/packages/chains
+      typescript:
+        specifier: '>=5'
+        version: 5.0.4
+      viem:
+        specifier: 0.0.0-portable-types-20230513210020
+        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
     devDependencies:
       '@wagmi/core':
         specifier: workspace:*
@@ -188,7 +210,7 @@ importers:
         version: 18.2.1
       '@vitejs/plugin-react':
         specifier: ^4.0.0
-        version: 4.0.0(vite@4.3.2)
+        version: 4.0.0(vite@4.3.6)
 
   playgrounds/vite-react:
     dependencies:
@@ -213,9 +235,13 @@ importers:
         version: 18.2.1
       '@vitejs/plugin-react':
         specifier: ^4.0.0
-        version: 4.0.0(vite@4.3.2)
+        version: 4.0.0(vite@4.3.6)
 
   references/packages/chains:
+    dependencies:
+      typescript:
+        specifier: '>=5'
+        version: 5.0.4
     devDependencies:
       '@wagmi/core':
         specifier: ~1.0.2
@@ -231,7 +257,13 @@ importers:
         version: 2.7.2(patch_hash=d2e6fs45gcpivejxywrl54asvy)(@web3modal/standalone@2.4.1)(lokijs@1.5.12)
       '@web3modal/standalone':
         specifier: ^2.4.1
-        version: 2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy)
+        version: 2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy)(react@18.2.0)
+      typescript:
+        specifier: '>=5'
+        version: 5.0.4
+      viem:
+        specifier: 0.0.0-portable-types-20230513210020
+        version: 0.0.0-portable-types-20230513210020(typescript@5.0.4)
     devDependencies:
       '@wagmi/chains':
         specifier: workspace:*
@@ -1879,7 +1911,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@vitejs/plugin-react@4.0.0(vite@4.3.2):
+  /@vitejs/plugin-react@4.0.0(vite@4.3.6):
     resolution: {integrity: sha512-HX0XzMjL3hhOYm+0s95pb0Z7F8O81G7joUHgfDd/9J/ZZf5k4xX6QAMFkKsHFxaHlf6X7GD7+XuaZ66ULiJuhQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -1889,7 +1921,7 @@ packages:
       '@babel/plugin-transform-react-jsx-self': 7.21.0(@babel/core@7.21.8)
       '@babel/plugin-transform-react-jsx-source': 7.19.6(@babel/core@7.21.8)
       react-refresh: 0.14.0
-      vite: 4.3.2(@types/node@18.16.9)
+      vite: 4.3.6(@types/node@18.16.9)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2141,7 +2173,7 @@ packages:
       '@walletconnect/types': 2.7.2(lokijs@1.5.12)
       '@walletconnect/universal-provider': 2.7.2(lokijs@1.5.12)
       '@walletconnect/utils': 2.7.2(lokijs@1.5.12)
-      '@web3modal/standalone': 2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy)
+      '@web3modal/standalone': 2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy)(react@18.2.0)
       events: 3.3.0
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
@@ -2359,29 +2391,29 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@web3modal/core@2.4.1:
+  /@web3modal/core@2.4.1(react@18.2.0):
     resolution: {integrity: sha512-v6Y/eQJSI2YfUTv8rGqjFabqdk3ZPjx6Fe7j5Q8fw0ZWF1YRGM3mySG457qtKQ7D7E1kNKA3BHbaOZ3pgQoG6A==}
     dependencies:
       buffer: 6.0.3
-      valtio: 1.10.5
+      valtio: 1.10.5(react@18.2.0)
     transitivePeerDependencies:
       - react
     dev: false
 
-  /@web3modal/standalone@2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy):
+  /@web3modal/standalone@2.4.1(patch_hash=3feurzjirxgilbrws7ud4fzboy)(react@18.2.0):
     resolution: {integrity: sha512-ZrI5LwWeT9sd8A3FdIX/gBp3ZrzrX882Ln1vJN0LTCmeP2OUsYcW5bPxjv1PcJ1YUBY7Tg4aTgMUnAVTTuqb+w==}
     dependencies:
-      '@web3modal/core': 2.4.1
-      '@web3modal/ui': 2.4.1
+      '@web3modal/core': 2.4.1(react@18.2.0)
+      '@web3modal/ui': 2.4.1(react@18.2.0)
     transitivePeerDependencies:
       - react
     dev: false
     patched: true
 
-  /@web3modal/ui@2.4.1:
+  /@web3modal/ui@2.4.1(react@18.2.0):
     resolution: {integrity: sha512-x1ceyd3mMJsIHs5UUTLvE+6qyCjhyjL6gB/wVmTDbwASHSQIVyshQJ+s7BwIEMP/pbAsYDg+/M8EiUuE+/E/kg==}
     dependencies:
-      '@web3modal/core': 2.4.1
+      '@web3modal/core': 2.4.1(react@18.2.0)
       lit: 2.7.4
       motion: 10.15.5
       qrcode: 1.5.3
@@ -6335,7 +6367,7 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /valtio@1.10.5:
+  /valtio@1.10.5(react@18.2.0):
     resolution: {integrity: sha512-jTp0k63VXf4r5hPoaC6a6LCG4POkVSh629WLi1+d5PlajLsbynTMd7qAgEiOSPxzoX5iNvbN7iZ/k/g29wrNiQ==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
@@ -6345,6 +6377,7 @@ packages:
         optional: true
     dependencies:
       proxy-compare: 2.5.1
+      react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
@@ -6889,7 +6922,7 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zustand@4.3.7:
+  /zustand@4.3.7(react@18.2.0):
     resolution: {integrity: sha512-dY8ERwB9Nd21ellgkBZFhudER8KVlelZm8388B5nDAXhO/+FZDhYMuRnqDgu5SYyRgz/iaf8RKnbUs/cHfOGlQ==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
@@ -6901,5 +6934,6 @@ packages:
       react:
         optional: true
     dependencies:
+      react: 18.2.0
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false

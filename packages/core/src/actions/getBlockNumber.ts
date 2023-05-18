@@ -49,7 +49,7 @@ export function watchBlockNumber(
     chainId,
     onBlockNumber,
     onError,
-    syncConnectedChain = config.syncConnectedChain,
+    syncConnectedChain = config._internal.syncConnectedChain,
   }: WatchBlockNumberParameters,
 ): WatchBlockNumberReturnType {
   let unwatch: WatchBlockNumberReturnType | undefined

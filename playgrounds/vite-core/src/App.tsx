@@ -4,7 +4,6 @@ import {
   connect,
   disconnect,
   getAccount,
-  getBalance,
   getBlockNumber,
   watchAccount,
   watchBalance,

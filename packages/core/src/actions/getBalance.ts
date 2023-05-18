@@ -88,7 +88,7 @@ export function watchBalance(
     chainId,
     onBalance,
     onError,
-    syncConnectedChain = config.syncConnectedChain,
+    syncConnectedChain = config._internal.syncConnectedChain,
     token,
     unit,
   }: WatchBalanceParameters,

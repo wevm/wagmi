@@ -59,10 +59,8 @@ export type Config<
   readonly connectors: readonly Connector[]
   readonly persister: Persister | null
   readonly queryClient: QueryClient
-  readonly reconnectOnMount: boolean
   readonly state: State
   readonly storage: Storage | null
-  readonly syncConnectedChain: boolean
 
   getPublicClient(parameters?: { chainId?: number | undefined }): PublicClient
   reconnect(): Promise<void>
@@ -82,6 +80,9 @@ export type Config<
   }
 
   _internal: {
+    reconnectOnMount: boolean
+    syncConnectedChain: boolean
+
     change(data: EventData<ConnectorEventMap, 'change'>): void
     connect(data: EventData<ConnectorEventMap, 'connect'>): void
     disconnect(data: EventData<ConnectorEventMap, 'disconnect'>): void
@@ -340,8 +341,6 @@ export function createConfig<
     connectors,
     persister,
     queryClient,
-    reconnectOnMount,
-    syncConnectedChain,
     get state() {
       return store.getState()
     },
@@ -421,6 +420,9 @@ export function createConfig<
     subscribe: store.subscribe,
 
     _internal: {
+      reconnectOnMount,
+      syncConnectedChain,
+
       change,
       connect,
       disconnect,

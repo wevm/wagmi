@@ -1,8 +1,7 @@
 import { QueryClientProvider } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import * as React from 'react'
-
 import { type Config } from '@wagmi/core'
+import * as React from 'react'
 
 export const WagmiContext = React.createContext<Config | undefined>(undefined)
 
@@ -15,7 +14,7 @@ export function WagmiConfig({
   value,
 }: React.PropsWithChildren<WagmiConfigProps>) {
   React.useEffect(() => {
-    if (typeof window !== 'undefined' && value.reconnectOnMount)
+    if (typeof window !== 'undefined' && value._internal.reconnectOnMount)
       value.reconnect()
   }, [])
 
