@@ -19,7 +19,8 @@ export async function disconnect(
     connector = connection?.connector
   }
 
-  if (!connector) return
+  // TODO: Throw connector not connected error
+  if (!connector) throw new Error('No connector found')
 
   await connector.disconnect()
   connector.emitter.off('change', config._internal.change)
@@ -50,11 +51,17 @@ export async function disconnect(
 ///////////////////////////////////////////////////////////////////////////
 // Mutation
 
-type DisconnectMutationVariables = { connector?: Connector } | void
-type Options = MutationOptions<void, Error, DisconnectMutationVariables>
+export type DisconnectMutationData = void
+export type DisconnectMutationVariables = { connector?: Connector } | void
+export type DisconnectMutationError = Error
 
 export type DisconnectMutationOptions = Prettify<
   Omit<Options, 'mutationFn' | 'mutationKey'> & DisconnectMutationVariables
+>
+type Options = MutationOptions<
+  DisconnectMutationData,
+  DisconnectMutationError,
+  DisconnectMutationVariables
 >
 
 export const disconnectMutationOptions = (
@@ -64,8 +71,10 @@ export const disconnectMutationOptions = (
   const connector = 'connector' in options ? options.connector : undefined
   return {
     ...options,
-    mutationFn() {
-      return disconnect(config, { connector })
+    mutationFn(variables) {
+      const connector_ =
+        (variables as DisconnectParameters).connector ?? connector
+      return disconnect(config, { connector: connector_ })
     },
     mutationKey: ['disconnect', { connector }],
   } as const satisfies Options

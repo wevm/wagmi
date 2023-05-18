@@ -16,6 +16,10 @@ export {
 export {
   type DisconnectParameters,
   disconnect,
+  // Mutation
+  type DisconnectMutationData,
+  type DisconnectMutationError,
+  type DisconnectMutationVariables,
   type DisconnectMutationOptions,
   disconnectMutationOptions,
 } from './actions/disconnect.js'
