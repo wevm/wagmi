@@ -19,7 +19,7 @@
     "test:ui": "vitest --ui",
     "test:ui:cov": "vite preview --outDir ./coverage",
     "test:update": "vitest --update",
-    "typecheck": "pnpm run --r --parallel typecheck",
+    "typecheck": "pnpm run --r --parallel typecheck && tsc --noEmit",
     "version:update": "pnpm bun scripts/updateVersion.ts"
   },
   "devDependencies": {
