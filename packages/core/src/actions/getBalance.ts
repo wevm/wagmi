@@ -80,6 +80,7 @@ export type WatchBalanceParameters = Prettify<
 
 export type WatchBalanceReturnType = () => void
 
+// TODO: wrap in viem's `observe` to avoid duplicate invocations.
 export function watchBalance(
   config: Config,
   {
@@ -119,7 +120,6 @@ export function watchBalance(
     const publicClient = config.getPublicClient({ chainId })
 
     unwatch = publicClient?.watchBlockNumber({
-      emitOnBegin: false,
       onBlockNumber: handler,
       poll: true,
       // TODO: viem `exactOptionalPropertyTypes`

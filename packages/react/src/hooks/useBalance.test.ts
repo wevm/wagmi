@@ -1,11 +1,16 @@
-import { accounts, testChains } from '@wagmi/test'
-import type { Address } from 'viem'
-import { expect, test } from 'vitest'
+import { accounts, testChains, testClient, wait } from '@wagmi/test'
+import { type Address, parseEther } from 'viem'
+import { beforeEach, expect, test } from 'vitest'
 
 import { renderHook, waitFor } from '../../test-utils.js'
 import { useBalance } from './useBalance.js'
 
 const address = accounts[0]
+
+beforeEach(async () => {
+  await testClient.anvil.setBalance({ address, value: parseEther('10000') })
+  await testClient.anvil.mine({ blocks: 1 })
+})
 
 test('default', async () => {
   const { result } = renderHook(() => useBalance({ address }))
@@ -133,7 +138,45 @@ test('args: unit', async () => {
   `)
 })
 
-test.todo('args: watch')
+test('args: watch', async () => {
+  const { result } = renderHook(() => useBalance({ address, watch: true }))
+
+  await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+  expect(result.current.data).toMatchInlineSnapshot(`
+    {
+      "decimals": 18,
+      "formatted": "10000",
+      "symbol": "ETH",
+      "value": 10000000000000000000000n,
+    }
+  `)
+
+  await testClient.anvil.setBalance({ address, value: parseEther('69') })
+  await testClient.anvil.mine({ blocks: 1 })
+  await wait(100)
+
+  expect(result.current.data).toMatchInlineSnapshot(`
+    {
+      "decimals": 18,
+      "formatted": "10000",
+      "symbol": "ETH",
+      "value": 10000000000000000000000n,
+    }
+  `)
+
+  await testClient.anvil.setBalance({ address, value: parseEther('420') })
+  await testClient.anvil.mine({ blocks: 1 })
+  await wait(100)
+
+  expect(result.current.data).toMatchInlineSnapshot(`
+    {
+      "decimals": 18,
+      "formatted": "69",
+      "symbol": "ETH",
+      "value": 69000000000000000000n,
+    }
+  `)
+})
 
 test('behavior: address: undefined -> defined', async () => {
   let address: Address | undefined = undefined
@@ -178,9 +221,9 @@ test('behavior: address: undefined -> defined', async () => {
     {
       "data": {
         "decimals": 18,
-        "formatted": "10000",
+        "formatted": "420",
         "symbol": "ETH",
-        "value": 10000000000000000000000n,
+        "value": 420000000000000000000n,
       },
       "dataUpdatedAt": 1675209600000,
       "error": null,

@@ -2,11 +2,13 @@ import { useQuery } from '@tanstack/react-query'
 import {
   type GetBalanceQueryOptions,
   getBalanceQueryOptions,
+  watchBalance,
 } from '@wagmi/core'
+import { useEffect } from 'react'
+import type { Address } from 'viem'
 
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
-import type { Address } from 'viem'
 
 export type UseBalanceParameters = Omit<GetBalanceQueryOptions, 'address'> & {
   address?: Address | undefined
@@ -18,8 +20,7 @@ export function useBalance({
   chainId: chainId_,
   token,
   unit,
-  // TODO(jxom): watch
-  watch: _watch,
+  watch,
   ...rest
 }: UseBalanceParameters) {
   const config = useConfig()
@@ -34,6 +35,20 @@ export function useBalance({
         unit,
       } as GetBalanceQueryOptions)
     : undefined
+
+  useEffect(() => {
+    if (!address) return
+    if (!watch) return
+    if (!queryOptions) return
+
+    return watchBalance(config, {
+      address,
+      chainId,
+      onBalance: (balance) =>
+        config.queryClient.setQueryData(queryOptions.queryKey, balance),
+      syncConnectedChain: false,
+    })
+  }, [address, chainId, config, queryOptions, watch])
 
   // TODO: `@tanstack/react-query` `exactOptionalPropertyTypes`
   // @ts-ignore

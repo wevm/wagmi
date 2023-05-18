@@ -13,6 +13,11 @@ export {
 export { useAccount } from './hooks/useAccount.js'
 
 export {
+  type UseBalanceParameters,
+  useBalance,
+} from './hooks/useBalance.js'
+
+export {
   type UseBlockNumberParameters,
   useBlockNumber,
 } from './hooks/useBlockNumber.js'

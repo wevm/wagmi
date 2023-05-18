@@ -42,6 +42,7 @@ export type WatchBlockNumberParameters = {
 
 export type WatchBlockNumberReturnType = () => void
 
+// TODO: wrap in viem's `observe` to avoid duplicate invocations.
 export function watchBlockNumber(
   config: Config,
   {
@@ -59,7 +60,6 @@ export function watchBlockNumber(
     const publicClient = config.getPublicClient({ chainId })
 
     unwatch = publicClient?.watchBlockNumber({
-      emitOnBegin: true,
       onBlockNumber,
       poll: true,
       // TODO: viem `exactOptionalPropertyTypes`

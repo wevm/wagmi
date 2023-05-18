@@ -1,4 +1,10 @@
-import { useAccount, useBlockNumber, useConnect, useDisconnect } from 'wagmi'
+import {
+  useAccount,
+  useBalance,
+  useBlockNumber,
+  useConnect,
+  useDisconnect,
+} from 'wagmi'
 import { optimism } from 'wagmi/chains'
 
 function App() {
@@ -6,6 +12,7 @@ function App() {
     <>
       <Account />
       <Connect />
+      <Balance />
       <BlockNumber />
     </>
   )
@@ -54,6 +61,32 @@ function Connect() {
       ))}
       <div>{status}</div>
       <div>{error?.message}</div>
+    </div>
+  )
+}
+
+function Balance() {
+  const { address, chainId } = useAccount()
+
+  const { data: default_ } = useBalance({ address, watch: true })
+  const { data: account_ } = useBalance({
+    address,
+    chainId,
+    watch: true,
+  })
+  const { data: optimism_ } = useBalance({
+    address,
+    chainId: optimism.id,
+    watch: true,
+  })
+
+  return (
+    <div>
+      <h2>Balance</h2>
+
+      <div>Balance (Default Chain): {default_?.formatted}</div>
+      <div>Balance (Account Chain): {account_?.formatted}</div>
+      <div>Balance (Optimism Chain): {optimism_?.formatted}</div>
     </div>
   )
 }
