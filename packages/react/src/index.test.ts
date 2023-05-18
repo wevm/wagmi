@@ -5,11 +5,13 @@ import * as react from './index.js'
 test('exports', () => {
   expect(react).toMatchInlineSnapshot(`
     {
+      "BaseError": [Function],
       "ChainNotConfiguredError": [Function],
       "ConnectorAlreadyConnectedError": [Function],
       "Emitter": [Function],
       "ProviderNotFoundError": [Function],
       "WagmiConfig": [Function],
+      "WagmiConfigNotFoundError": [Function],
       "WagmiContext": {
         "$$typeof": Symbol(react.context),
         "Consumer": {
@@ -32,7 +34,6 @@ test('exports', () => {
       "createConnector": [Function],
       "createEmitter": [Function],
       "createStorage": [Function],
-      "deepEqual": [Function],
       "deserialize": [Function],
       "noopStorage": {
         "getItem": [Function],
@@ -42,11 +43,11 @@ test('exports', () => {
       "normalizeChainId": [Function],
       "serialize": [Function],
       "useAccount": [Function],
+      "useBalance": [Function],
       "useBlockNumber": [Function],
       "useConfig": [Function],
       "useConnect": [Function],
       "useDisconnect": [Function],
-      "useSyncExternalStoreWithTracked": [Function],
     }
   `)
 })

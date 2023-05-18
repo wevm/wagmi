@@ -5,6 +5,7 @@ import * as core from './index.js'
 test('exports', () => {
   expect(core).toMatchInlineSnapshot(`
     {
+      "BaseError": [Function],
       "ChainNotConfiguredError": [Function],
       "ConnectorAlreadyConnectedError": [Function],
       "Emitter": [Function],
@@ -15,7 +16,6 @@ test('exports', () => {
       "createConnector": [Function],
       "createEmitter": [Function],
       "createStorage": [Function],
-      "deepEqual": [Function],
       "deserialize": [Function],
       "disconnect": [Function],
       "disconnectMutationOptions": [Function],

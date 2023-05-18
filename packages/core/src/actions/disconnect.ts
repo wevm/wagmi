@@ -75,7 +75,7 @@ export const disconnectMutationOptions = (
     ...options,
     mutationFn(variables) {
       const connector_ =
-        (variables as DisconnectParameters).connector ?? connector
+        (variables as DisconnectParameters | undefined)?.connector ?? connector
       return disconnect(config, { connector: connector_ })
     },
     mutationKey: ['disconnect', { connector }],
