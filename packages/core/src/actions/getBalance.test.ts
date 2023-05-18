@@ -47,7 +47,7 @@ describe('getBalance', () => {
     `)
   })
 
-  test('args: chainId', async () => {
+  test('parameters: chainId', async () => {
     await expect(
       getBalance(config, { address, chainId: testChains.anvilTwo.id }),
     ).resolves.toMatchInlineSnapshot(`
@@ -60,9 +60,9 @@ describe('getBalance', () => {
     `)
   })
 
-  test.todo('args: token')
+  test.todo('parameters: token')
 
-  test('args: unit', async () => {
+  test('parameters: unit', async () => {
     await expect(
       getBalance(config, { address, unit: 'wei' }),
     ).resolves.toMatchInlineSnapshot(`
@@ -130,7 +130,7 @@ describe('watchBalance', () => {
     unwatch()
   })
 
-  test('args: chainId', async () => {
+  test('parameters: chainId', async () => {
     const balances: GetBalanceReturnType[] = []
     const unwatch = watchBalance(config, {
       address,
@@ -168,11 +168,11 @@ describe('watchBalance', () => {
     unwatch()
   })
 
-  test.todo('args: syncConnectedChain')
+  test.todo('parameters: syncConnectedChain')
 
-  test.todo('args: token')
+  test.todo('parameters: token')
 
-  test('args: unit', async () => {
+  test('parameters: unit', async () => {
     const balances: GetBalanceReturnType[] = []
     const unwatch = watchBalance(config, {
       address,
@@ -206,7 +206,7 @@ describe('watchBalance', () => {
     unwatch()
   })
 
-  test('args: onError', async () => {
+  test('parameters: onError', async () => {
     let error: Error | undefined = undefined
     const unwatch = watchBalance(config, {
       address: '0x123',
@@ -243,7 +243,7 @@ describe('getBalanceQueryOptions', () => {
     `)
   })
 
-  test('args: chainId', () => {
+  test('parameters: chainId', () => {
     expect(
       getBalanceQueryOptions(config, { address, chainId: testChains.anvil.id }),
     ).toMatchInlineSnapshot(`
@@ -262,9 +262,9 @@ describe('getBalanceQueryOptions', () => {
     `)
   })
 
-  test.todo('args: token')
+  test.todo('parameters: token')
 
-  test('args: unit', () => {
+  test('parameters: unit', () => {
     expect(
       getBalanceQueryOptions(config, {
         address,

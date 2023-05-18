@@ -1,6 +1,9 @@
-import { testChains } from './chains.js'
 import { createConfig } from '@wagmi/core'
 import { createTestClient, http } from 'viem'
+
+import { testChains } from './chains.js'
+import { testConnector } from './connector.js'
+import { accounts } from './constants.js'
 
 const { anvil, anvilTwo } = testChains
 
@@ -19,7 +22,7 @@ export const testClient = {
 
 export const config = createConfig({
   chains: [anvil, anvilTwo],
-  connectors: [],
+  connectors: [testConnector({ accounts })],
   pollingInterval: 100,
   reconnectOnMount: false,
   storage: null,

@@ -74,7 +74,7 @@ export async function getBalance(
 
 export type WatchBalanceParameters = Prettify<
   Omit<GetBalanceParameters, 'blockNumber' | 'blockTag'> & {
-    onBalance: (args: GetBalanceReturnType) => void
+    onBalance: (parameters: GetBalanceReturnType) => void
     onError?: (error: GetBalanceError | GetBlockNumberError) => void
     syncConnectedChain?: boolean
   }

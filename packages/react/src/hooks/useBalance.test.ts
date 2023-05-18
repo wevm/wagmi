@@ -52,7 +52,7 @@ test('default', async () => {
   `)
 })
 
-test('args: chainId', async () => {
+test('parameters: chainId', async () => {
   const { result } = renderHook(() =>
     useBalance({ address, chainId: testChains.anvilTwo.id }),
   )
@@ -94,9 +94,9 @@ test('args: chainId', async () => {
   `)
 })
 
-test.todo('args: token')
+test.todo('parameters: token')
 
-test('args: unit', async () => {
+test('parameters: unit', async () => {
   const { result } = renderHook(() =>
     useBalance({ address, chainId: testChains.anvilTwo.id, unit: 'wei' }),
   )
@@ -138,7 +138,7 @@ test('args: unit', async () => {
   `)
 })
 
-test('args: watch', async () => {
+test('parameters: watch', async () => {
   const { result } = renderHook(() => useBalance({ address, watch: true }))
 
   await waitFor(() => expect(result.current.isSuccess).toBeTruthy())

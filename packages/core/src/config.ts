@@ -22,7 +22,7 @@ import type { OneOf, Prettify } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<
-  TChain extends readonly [Chain, ...(readonly Chain[])],
+  TChain extends readonly [Chain, ...Chain[]],
 > = Prettify<
   {
     connectors?: CreateConnectorFn[]
@@ -50,10 +50,7 @@ export type CreateConfigParameters<
 >
 
 export type Config<
-  TChain extends readonly [Chain, ...(readonly Chain[])] = readonly [
-    Chain,
-    ...(readonly Chain[]),
-  ],
+  TChain extends readonly [Chain, ...Chain[]] = readonly [Chain, ...Chain[]],
 > = {
   readonly chains: TChain
   readonly connectors: readonly Connector[]
@@ -110,7 +107,7 @@ export type Connector = ReturnType<CreateConnectorFn> & {
 }
 
 export function createConfig<
-  const TChain extends readonly [Chain, ...(readonly Chain[])],
+  const TChain extends readonly [Chain, ...Chain[]],
 >({
   queryClient = new QueryClient({
     defaultOptions: {
@@ -149,7 +146,7 @@ export function createConfig<
   // Set up chains, connectors, clients, etc.
   /////////////////////////////////////////////////////////////////////////////////////////////////
 
-  let chains: readonly [Chain, ...(readonly Chain[])]
+  let chains: readonly [Chain, ...Chain[]]
   if ('chains' in rest) chains = rest.chains
   else {
     // TODO: Infer `TChain` from `publicClient`

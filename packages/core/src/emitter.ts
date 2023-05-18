@@ -2,7 +2,7 @@ import { EventEmitter } from 'eventemitter3'
 
 type EventMap = Record<string, object | never>
 type EventKey<T extends EventMap> = string & keyof T
-type EventFn<T extends unknown[] = any[]> = (...args: T) => void
+type EventFn<T extends unknown[] = any[]> = (...parameters: T) => void
 export type EventData<T extends EventMap, K extends keyof T> = (T[K] extends [
   never,
 ]
@@ -12,7 +12,7 @@ export type EventData<T extends EventMap, K extends keyof T> = (T[K] extends [
 }
 
 export class Emitter<T extends EventMap> {
-  private emitter = new EventEmitter()
+  #emitter = new EventEmitter()
 
   constructor(public uid: string) {}
 
@@ -22,7 +22,7 @@ export class Emitter<T extends EventMap> {
       T[K] extends [never] ? [{ uid: string }] : [data: T[K] & { uid: string }]
     >,
   ) {
-    this.emitter.on(eventName, fn as EventFn)
+    this.#emitter.on(eventName, fn as EventFn)
   }
 
   once<K extends EventKey<T>>(
@@ -31,7 +31,7 @@ export class Emitter<T extends EventMap> {
       T[K] extends [never] ? [{ uid: string }] : [data: T[K] & { uid: string }]
     >,
   ) {
-    this.emitter.once(eventName, fn as EventFn)
+    this.#emitter.once(eventName, fn as EventFn)
   }
 
   off<K extends EventKey<T>>(
@@ -40,7 +40,7 @@ export class Emitter<T extends EventMap> {
       T[K] extends [never] ? [{ uid: string }] : [data: T[K] & { uid: string }]
     >,
   ) {
-    this.emitter.off(eventName, fn as EventFn)
+    this.#emitter.off(eventName, fn as EventFn)
   }
 
   emit<K extends EventKey<T>>(
@@ -48,11 +48,11 @@ export class Emitter<T extends EventMap> {
     ...params: T[K] extends [never] ? [] : [data: T[K]]
   ) {
     const data = params[0]
-    this.emitter.emit(eventName, { uid: this.uid, ...data })
+    this.#emitter.emit(eventName, { uid: this.uid, ...data })
   }
 
   listenerCount<K extends EventKey<T>>(eventName: K) {
-    return this.emitter.listenerCount(eventName)
+    return this.#emitter.listenerCount(eventName)
   }
 }
 

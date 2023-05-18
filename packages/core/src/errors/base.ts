@@ -19,28 +19,28 @@ export class BaseError extends Error {
   docsBaseUrl = 'https://wagmi.sh/core'
   version = getVersion()
 
-  constructor(shortMessage: string, args: BaseErrorParameters = {}) {
+  constructor(shortMessage: string, parameters: BaseErrorParameters = {}) {
     super()
 
     const details =
-      args.cause instanceof BaseError
-        ? args.cause.details
-        : args.cause?.message
-        ? args.cause.message
-        : args.details!
+      parameters.cause instanceof BaseError
+        ? parameters.cause.details
+        : parameters.cause?.message
+        ? parameters.cause.message
+        : parameters.details!
     const docsPath =
-      args.cause instanceof BaseError
-        ? args.cause.docsPath || args.docsPath
-        : args.docsPath
+      parameters.cause instanceof BaseError
+        ? parameters.cause.docsPath || parameters.docsPath
+        : parameters.docsPath
 
     this.message = [
       shortMessage || 'An error occurred.',
       '',
-      ...(args.metaMessages ? [...args.metaMessages, ''] : []),
+      ...(parameters.metaMessages ? [...parameters.metaMessages, ''] : []),
       ...(docsPath
         ? [
             `Docs: ${this.docsBaseUrl}${docsPath}.html${
-              args.docsSlug ? `#${args.docsSlug}` : ''
+              parameters.docsSlug ? `#${parameters.docsSlug}` : ''
             }`,
           ]
         : []),
@@ -48,10 +48,10 @@ export class BaseError extends Error {
       `Version: ${this.version}`,
     ].join('\n')
 
-    if (args.cause) this.cause = args.cause
+    if (parameters.cause) this.cause = parameters.cause
     this.details = details
     this.docsPath = docsPath
-    this.metaMessages = args.metaMessages
+    this.metaMessages = parameters.metaMessages
     this.shortMessage = shortMessage
   }
 

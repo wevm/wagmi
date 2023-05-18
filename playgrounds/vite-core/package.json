@@ -14,7 +14,7 @@
     "@wagmi/chains": "workspace:*",
     "@wagmi/connectors": "workspace:*",
     "@wagmi/core": "workspace:*",
-    "viem": "0.0.0-portable-types-20230513210020"
+    "viem": "~0.3"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

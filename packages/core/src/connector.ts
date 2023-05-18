@@ -22,7 +22,7 @@ export type CreateConnectorFn<
   TProperties = unknown,
   TStorageItem extends Record<string, unknown> = {},
 > = (config: {
-  chains: readonly Chain[]
+  chains: readonly [Chain, ...Chain[]]
   emitter: Emitter<ConnectorEventMap>
   storage?: Storage<TStorageItem> | null
 }) => Prettify<

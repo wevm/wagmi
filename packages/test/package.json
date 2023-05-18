@@ -38,8 +38,8 @@
   "peerDependencies": {
     "@wagmi/core": "workspace:*",
     "@wagmi/chains": "workspace:*",
-    "viem": "0.0.0-portable-types-20230513210020",
-    "typescript": ">=5"
+    "typescript": ">=5",
+    "viem": "~0.3"
   },
   "peerDependenciesMeta": {
     "typescript": {
