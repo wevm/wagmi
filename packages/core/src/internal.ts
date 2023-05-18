@@ -2,12 +2,6 @@
 // Types
 
 export {
-  type OmittedQueryOptions,
-  type OmittedMutationOptions,
-  type OmittedMutationResult,
-} from './types/query.js'
-
-export {
   type ExactPartial,
   type Mutable,
   type OneOf,

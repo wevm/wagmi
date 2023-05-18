@@ -7,17 +7,19 @@ import {
   type GetBalanceError,
   type GetBalanceQueryFnData,
   type GetBalanceQueryKey,
+  type OmittedQueryOptions,
   getBalanceQueryOptions,
   watchBalance,
 } from '@wagmi/core'
-import type { OmittedQueryOptions, Prettify } from '@wagmi/core/internal'
+import type { Prettify } from '@wagmi/core/internal'
 import { useEffect } from 'react'
 
+import type { OmittedUseQueryOptions } from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
 export type UseBalanceParameters = Prettify<
-  Omit<Options, OmittedQueryOptions> &
+  Omit<Options, OmittedQueryOptions | OmittedUseQueryOptions> &
     GetBalanceQueryKey & { watch?: boolean | undefined }
 >
 type Options = UseQueryOptions<GetBalanceQueryFnData, GetBalanceError>

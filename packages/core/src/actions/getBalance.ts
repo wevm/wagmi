@@ -9,7 +9,7 @@ import {
 } from 'viem'
 
 import { type Config } from '../config.js'
-import type { OmittedQueryOptions } from '../internal.js'
+import type { OmittedQueryOptions } from '../types/query.js'
 import { type Unit } from '../types/unit.js'
 import { type PartialBy, type Prettify } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'

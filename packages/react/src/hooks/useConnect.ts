@@ -8,14 +8,12 @@ import {
   type ConnectMutationData,
   type ConnectMutationVariables,
   type Connector,
+  type OmittedMutationOptions,
   connectMutationOptions,
 } from '@wagmi/core'
-import type {
-  OmittedMutationOptions,
-  OmittedMutationResult,
-  Prettify,
-} from '@wagmi/core/internal'
+import type { Prettify } from '@wagmi/core/internal'
 
+import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectParameters = Prettify<
@@ -28,7 +26,7 @@ type Options = UseMutationOptions<
 >
 
 export type UseConnectReturnType = Prettify<
-  Omit<Result, OmittedMutationResult> & {
+  Omit<Result, OmittedUseMutationResult> & {
     connect: Result['mutate']
     connectAsync: Result['mutateAsync']
     connectors: readonly Connector[]

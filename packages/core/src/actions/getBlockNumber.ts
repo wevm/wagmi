@@ -6,7 +6,7 @@ import {
 } from 'viem'
 
 import { type Config } from '../config.js'
-import type { OmittedQueryOptions } from '../internal.js'
+import type { OmittedQueryOptions } from '../types/query.js'
 import { type Prettify } from '../types/utils.js'
 
 ///////////////////////////////////////////////////////////////////////////

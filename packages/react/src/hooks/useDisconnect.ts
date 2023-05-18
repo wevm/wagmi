@@ -7,14 +7,12 @@ import {
   type DisconnectError,
   type DisconnectMutationData,
   type DisconnectMutationVariables,
+  type OmittedMutationOptions,
   disconnectMutationOptions,
 } from '@wagmi/core'
-import type {
-  OmittedMutationOptions,
-  OmittedMutationResult,
-  Prettify,
-} from '@wagmi/core/internal'
+import type { Prettify } from '@wagmi/core/internal'
 
+import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseDisconnectParameters = Prettify<
@@ -27,7 +25,7 @@ type Options = UseMutationOptions<
 >
 
 export type UseDisconnectReturnType = Prettify<
-  Omit<Result, OmittedMutationResult> & {
+  Omit<Result, OmittedUseMutationResult> & {
     disconnect: Result['mutate']
     disconnectAsync: Result['mutateAsync']
   }
