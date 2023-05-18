@@ -293,7 +293,7 @@ describe('getBalanceQueryOptions', () => {
       getBalanceQueryOptions(config, {
         address,
         chainId: testChains.anvil.id,
-      }).queryFn(),
+      })?.queryFn(),
     ).toBeDefined()
   })
 })

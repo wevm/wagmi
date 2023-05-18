@@ -1,20 +1,24 @@
 import { mainnet } from '@wagmi/chains'
-import { type Chain, type PartialBy } from '@wagmi/core'
+import { type Chain } from '@wagmi/core'
+import type { PartialBy } from '@wagmi/core/internal'
 
 import { pool } from './constants.js'
 
 export type ForkChain = Chain & { port: number }
 
-export const getForkChain = async ({
+export const getForkChain = ({
   port,
   ...chain
 }: PartialBy<
   Omit<ForkChain, 'rpcUrls'>,
   'name' | 'network' | 'nativeCurrency'
->): Promise<ForkChain> => {
+>) => {
   return {
     ...mainnet, // We are using a mainnet fork for testing.
     ...chain,
+    name: chain.name ?? mainnet.name,
+    nativeCurrency: chain.nativeCurrency ?? mainnet.nativeCurrency,
+    network: chain.network ?? mainnet.network,
     port,
     rpcUrls: {
       // These rpc urls are automatically used in the transports.
@@ -29,12 +33,12 @@ export const getForkChain = async ({
         webSocket: [`ws://127.0.0.1:${port}/${pool}`],
       },
     },
-  }
+  } as const satisfies ForkChain
 }
 
 export const testChains = {
-  anvil: await getForkChain({ id: 123, port: 8545 }),
-  anvilTwo: await getForkChain({
+  anvil: getForkChain({ id: 123, port: 8545 }),
+  anvilTwo: getForkChain({
     id: 456,
     nativeCurrency: { decimals: 18, name: 'wagmi', symbol: 'WAG' },
     port: 8546,

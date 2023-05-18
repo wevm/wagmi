@@ -1,11 +1,14 @@
 import { type MutationOptions } from '@tanstack/query-core'
 
 import { type Config, type Connection, type Connector } from '../config.js'
-import { type Prettify } from '../types.js'
+import type { OmittedMutationOptions } from '../types/query.js'
+import { type Prettify } from '../types/utils.js'
 
 export type DisconnectParameters = {
   connector?: Connector | undefined
 }
+
+export type DisconnectError = Error
 
 export async function disconnect(
   config: Config,
@@ -53,14 +56,13 @@ export async function disconnect(
 
 export type DisconnectMutationData = void
 export type DisconnectMutationVariables = { connector?: Connector } | void
-export type DisconnectMutationError = Error
 
 export type DisconnectMutationOptions = Prettify<
-  Omit<Options, 'mutationFn' | 'mutationKey'> & DisconnectMutationVariables
+  Omit<Options, OmittedMutationOptions> & DisconnectMutationVariables
 >
 type Options = MutationOptions<
   DisconnectMutationData,
-  DisconnectMutationError,
+  DisconnectError,
   DisconnectMutationVariables
 >
 

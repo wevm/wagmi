@@ -11,7 +11,9 @@ async function preconstruct() {
   if (!process.env.SUBMODULE) {
     const referencesNodeModulesPaths = await glob(
       'references/**/node_modules/',
-      { ignore: ['**/node_modules/**/node_modules/**'] },
+      {
+        ignore: ['**/node_modules/**/node_modules/**'],
+      },
     )
     const needsInstall = referencesNodeModulesPaths.includes(
       'references/node_modules',
@@ -34,7 +36,16 @@ async function preconstruct() {
 
   let count = 0
   for (const packagePath of packagePaths) {
+    type Package = {
+      name?: string
+      private?: boolean
+      exports?: Record<
+        string,
+        { types: string; import: string; default: string } | string
+      >
+    }
     const packageFile = (await fs.readJson(packagePath)) as Package
+
     // Skip private packages
     if (packageFile.private) continue
     if (!packageFile.exports) continue
@@ -43,6 +54,7 @@ async function preconstruct() {
     const dir = path.resolve(path.dirname(packagePath))
     const srcDir = path.resolve(path.dirname(packagePath), 'src')
     console.log(`${packageFile.name} — ${path.dirname(packagePath)}`)
+    await fs.emptyDir(path.resolve(dir, 'dist'))
 
     // Link exports to dist locations
     for (const [key, exports] of Object.entries(packageFile.exports)) {
@@ -64,7 +76,6 @@ async function preconstruct() {
         const distFileName = path.basename(value)
         const distFilePath = path.resolve(distDir, distFileName)
         await fs.ensureDir(distDir)
-        await fs.emptyDir(distDir)
 
         if (type === 'default') {
           // TODO: Add CommonJS require hook for completeness, but not really required since things work without it.
@@ -77,13 +88,4 @@ async function preconstruct() {
   }
 
   console.log(`Done. Set up ${count} packages.`)
-}
-
-type Package = {
-  name?: string
-  private?: boolean
-  exports?: Record<
-    string,
-    { types: string; import: string; default: string } | string
-  >
 }

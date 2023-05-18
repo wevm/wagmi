@@ -34,7 +34,17 @@
       "import": "./dist/esm/index.js",
       "default": "./dist/cjs/index.js"
     },
+    "./internal": {
+      "types": "./dist/types/internal.d.ts",
+      "import": "./dist/esm/internal.js",
+      "default": "./dist/cjs/internal.js"
+    },
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "internal": ["./dist/types/internal.d.ts"]
+    }
   },
   "peerDependencies": {
     "typescript": ">=5",
@@ -51,9 +61,6 @@
     "@tanstack/query-sync-storage-persister": "5.0.0-alpha.26",
     "eventemitter3": "^5.0.1",
     "zustand": "^4.3.7"
-  },
-  "devDependencies": {
-    "@wagmi/test": "workspace:^"
   },
   "contributors": ["jxom.eth <j@wagmi.sh>", "awkweb.eth <t@wagmi.sh>"],
   "funding": [

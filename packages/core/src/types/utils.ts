@@ -1,4 +1,15 @@
 /**
+ * Makes all properties of an object optional.
+ *
+ * Compatible with [`exactOptionalPropertyTypes`](https://www.typescriptlang.org/tsconfig#exactOptionalPropertyTypes).
+ *
+ * @param T - Object to make optional.
+ */
+export type ExactPartial<T> = {
+  [K in keyof T]?: T[K] | undefined
+}
+
+/**
  * Removes `readonly` from all properties of an object.
  *
  * @param T - Object to remove `readonly` properties from.
@@ -28,7 +39,7 @@ type KeyofUnion<T> = T extends T ? keyof T : never
  * Makes {@link TKeys} optional in {@link TType} while preserving type inference.
  */
 // s/o trpc (https://github.com/trpc/trpc/blob/main/packages/server/src/types.ts#L6)
-export type PartialBy<TType, TKeys extends keyof TType> = Partial<
+export type PartialBy<TType, TKeys extends keyof TType> = ExactPartial<
   Pick<TType, TKeys>
 > &
   Omit<TType, TKeys>
@@ -44,5 +55,3 @@ export type PartialBy<TType, TKeys extends keyof TType> = Partial<
 export type Prettify<T> = {
   [K in keyof T]: T[K]
 } & {}
-
-export type Unit = 'ether' | 'gwei' | 'wei' | number

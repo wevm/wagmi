@@ -9,7 +9,9 @@ import {
 } from 'viem'
 
 import { type Config } from '../config.js'
-import { type Prettify, type Unit } from '../types.js'
+import type { OmittedQueryOptions } from '../internal.js'
+import { type Unit } from '../types/unit.js'
+import { type PartialBy, type Prettify } from '../types/utils.js'
 import { getUnit } from '../utils/getUnit.js'
 import type {
   GetBlockNumberError,
@@ -153,13 +155,12 @@ export function watchBalance(
 ///////////////////////////////////////////////////////////////////////////
 // Query
 
-type GetBalanceQueryFnData = NonNullable<GetBalanceReturnType> | null
-type Options = QueryOptions<GetBalanceQueryFnData, GetBalanceError>
-
+export type GetBalanceQueryFnData = NonNullable<GetBalanceReturnType> | null
+export type GetBalanceQueryKey = PartialBy<GetBalanceParameters, 'address'>
 export type GetBalanceQueryOptions = Prettify<
-  Omit<Options, 'queryFn' | 'queryKey' | 'queryKeyHashFn'> &
-    GetBalanceParameters
+  Omit<Options, OmittedQueryOptions> & GetBalanceQueryKey
 >
+type Options = QueryOptions<GetBalanceQueryFnData, GetBalanceError>
 
 export const getBalanceQueryOptions = (
   config: Config,
@@ -172,8 +173,9 @@ export const getBalanceQueryOptions = (
     unit,
     ...rest
   }: GetBalanceQueryOptions,
-) =>
-  ({
+) => {
+  if (!address) return
+  return {
     ...rest,
     async queryFn() {
       const balance = await getBalance(config, {
@@ -187,4 +189,5 @@ export const getBalanceQueryOptions = (
       return balance ?? null
     },
     queryKey: ['blockNumber', { address, chainId, token, unit }],
-  }) as const satisfies Options
+  } as const satisfies Options
+}

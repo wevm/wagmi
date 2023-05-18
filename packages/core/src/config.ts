@@ -16,9 +16,9 @@ import { createStore } from 'zustand/vanilla'
 import type { Chain } from './chain.js'
 import { type ConnectorEventMap, type CreateConnectorFn } from './connector.js'
 import { Emitter, type EventData, createEmitter } from './emitter.js'
-import { ChainNotConfiguredError } from './errors.js'
+import { ChainNotConfiguredError } from './errors/config.js'
 import { type Storage, createStorage, noopStorage } from './storage.js'
-import type { OneOf, Prettify } from './types.js'
+import type { OneOf, Prettify } from './types/utils.js'
 import { uid } from './utils/uid.js'
 
 export type CreateConfigParameters<

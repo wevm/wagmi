@@ -6,7 +6,8 @@ import {
 } from 'viem'
 
 import { type Config } from '../config.js'
-import { type Prettify } from '../types.js'
+import type { OmittedQueryOptions } from '../internal.js'
+import { type Prettify } from '../types/utils.js'
 
 ///////////////////////////////////////////////////////////////////////////
 // Getter
@@ -96,16 +97,14 @@ export function watchBlockNumber(
 ///////////////////////////////////////////////////////////////////////////
 // Query
 
-type GetBlockNumberQueryFnData = NonNullable<GetBlockNumberReturnType> | null
-type GetBlockNumberQueryKey = {
-  chainId?: number | undefined
-}
-type Options = QueryOptions<GetBlockNumberQueryFnData, GetBlockNumberError>
+export type GetBlockNumberQueryFnData =
+  NonNullable<GetBlockNumberReturnType> | null
+export type GetBlockNumberQueryKey = GetBlockNumberParameters
 
 export type GetBlockNumberQueryOptions = Prettify<
-  Omit<Options, 'queryFn' | 'queryKey' | 'queryKeyHashFn'> &
-    GetBlockNumberQueryKey
+  Omit<Options, OmittedQueryOptions> & GetBlockNumberQueryKey
 >
+type Options = QueryOptions<GetBlockNumberQueryFnData, GetBlockNumberError>
 
 export const getBlockNumberQueryOptions = (
   config: Config,

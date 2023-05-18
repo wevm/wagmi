@@ -1,19 +1,30 @@
-import { useQuery } from '@tanstack/react-query'
 import {
-  type GetBalanceQueryOptions,
+  type UseQueryOptions,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
+import {
+  type GetBalanceError,
+  type GetBalanceQueryFnData,
+  type GetBalanceQueryKey,
   getBalanceQueryOptions,
   watchBalance,
 } from '@wagmi/core'
+import type { OmittedQueryOptions, Prettify } from '@wagmi/core/internal'
 import { useEffect } from 'react'
-import type { Address } from 'viem'
 
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseBalanceParameters = Omit<GetBalanceQueryOptions, 'address'> & {
-  address?: Address | undefined
-  watch?: boolean | undefined
-}
+export type UseBalanceParameters = Prettify<
+  Omit<Options, OmittedQueryOptions> &
+    GetBalanceQueryKey & { watch?: boolean | undefined }
+>
+type Options = UseQueryOptions<GetBalanceQueryFnData, GetBalanceError>
+
+export type UseBalanceReturnType = Prettify<
+  UseQueryResult<GetBalanceQueryFnData, GetBalanceError>
+>
 
 export function useBalance({
   address,
@@ -22,19 +33,17 @@ export function useBalance({
   unit,
   watch,
   ...rest
-}: UseBalanceParameters) {
+}: UseBalanceParameters): UseBalanceReturnType {
   const config = useConfig()
   const defaultChainId = useChainId()
   const chainId = chainId_ ?? defaultChainId
-  const queryOptions = address
-    ? getBalanceQueryOptions(config, {
-        ...rest,
-        address,
-        chainId,
-        token,
-        unit,
-      } as GetBalanceQueryOptions)
-    : undefined
+  const queryOptions = getBalanceQueryOptions(config, {
+    ...rest,
+    address,
+    chainId,
+    token,
+    unit,
+  })
 
   useEffect(() => {
     if (!address) return

@@ -7,7 +7,7 @@ import {
 import type { Chain } from './chain.js'
 import { Emitter } from './emitter.js'
 import { type Storage } from './storage.js'
-import { type Prettify } from './types.js'
+import { type Prettify } from './types/utils.js'
 
 export type ConnectorEventMap = {
   change: { accounts?: readonly Address[]; chainId?: number }

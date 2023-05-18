@@ -4,26 +4,31 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 import {
+  type ConnectError,
   type ConnectMutationData,
-  type ConnectMutationError,
   type ConnectMutationVariables,
   type Connector,
-  type Prettify,
   connectMutationOptions,
 } from '@wagmi/core'
+import type {
+  OmittedMutationOptions,
+  OmittedMutationResult,
+  Prettify,
+} from '@wagmi/core/internal'
 
 import { useConfig } from './useConfig.js'
 
 export type UseConnectParameters = Prettify<
-  Omit<Options, 'mutationFn' | 'mutationKey'> & ConnectMutationVariables
+  Omit<Options, OmittedMutationOptions> & ConnectMutationVariables
 >
 type Options = UseMutationOptions<
   ConnectMutationData,
-  ConnectMutationError,
+  ConnectError,
   ConnectMutationVariables
 >
+
 export type UseConnectReturnType = Prettify<
-  Omit<Result, 'mutate' | 'mutateAsync'> & {
+  Omit<Result, OmittedMutationResult> & {
     connect: Result['mutate']
     connectAsync: Result['mutateAsync']
     connectors: readonly Connector[]
@@ -31,7 +36,7 @@ export type UseConnectReturnType = Prettify<
 >
 type Result = UseMutationResult<
   ConnectMutationData,
-  ConnectMutationError,
+  ConnectError,
   ConnectMutationVariables
 >
 

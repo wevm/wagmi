@@ -1,4 +1,4 @@
-import { deepEqual } from '@wagmi/core'
+import { deepEqual } from '@wagmi/core/internal'
 import * as React from 'react'
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/shim/with-selector.js'
 

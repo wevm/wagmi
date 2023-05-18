@@ -7,8 +7,9 @@ import {
 
 import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
-import { ConnectorAlreadyConnectedError } from '../errors.js'
-import { type Prettify } from '../types.js'
+import { ConnectorAlreadyConnectedError } from '../errors/config.js'
+import type { OmittedMutationOptions } from '../types/query.js'
+import { type Prettify } from '../types/utils.js'
 
 export type ConnectParameters = {
   /** Chain ID to connect to */
@@ -23,6 +24,15 @@ export type ConnectReturnType = {
   /** Connected chain ID from connector */
   chainId: number
 }
+
+export type ConnectError =
+  // from `connect()`
+  | ConnectorAlreadyConnectedError
+  // from `connector.connect()`
+  | UserRejectedRequestError
+  | ResourceUnavailableRpcError
+  // base
+  | Error
 
 /**
  * Connects to `connector`.
@@ -89,14 +99,6 @@ export async function connect(
 // Mutation
 
 export type ConnectMutationData = ConnectReturnType
-export type ConnectMutationError =
-  // from `connect()`
-  | ConnectorAlreadyConnectedError
-  // from `connector.connect()`
-  | UserRejectedRequestError
-  | ResourceUnavailableRpcError
-  // base
-  | Error
 export type ConnectMutationVariables = {
   /** Chain ID to connect to */
   chainId?: number | undefined
@@ -105,11 +107,11 @@ export type ConnectMutationVariables = {
 }
 
 export type ConnectMutationOptions = Prettify<
-  Omit<Options, 'mutationFn' | 'mutationKey'> & ConnectMutationVariables
+  Omit<Options, OmittedMutationOptions> & ConnectMutationVariables
 >
 type Options = MutationOptions<
   ConnectMutationData,
-  ConnectMutationError,
+  ConnectError,
   ConnectMutationVariables
 >
 

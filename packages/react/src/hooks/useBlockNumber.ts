@@ -1,23 +1,38 @@
-import { useQuery } from '@tanstack/react-query'
 import {
-  type GetBlockNumberQueryOptions,
+  type UseQueryOptions,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
+import {
+  type GetBlockNumberError,
+  type GetBlockNumberQueryFnData,
+  type GetBlockNumberQueryKey,
   getBlockNumberQueryOptions,
   watchBlockNumber,
 } from '@wagmi/core'
+import type { OmittedQueryOptions, Prettify } from '@wagmi/core/internal'
 import * as React from 'react'
 
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
 
-export type UseBlockNumberParameters = GetBlockNumberQueryOptions & {
-  watch?: boolean
-}
+export type UseBlockNumberParameters = Prettify<
+  Omit<Options, OmittedQueryOptions> &
+    GetBlockNumberQueryKey & {
+      watch?: boolean | undefined
+    }
+>
+type Options = UseQueryOptions<GetBlockNumberQueryFnData, GetBlockNumberError>
+
+export type UseBlockNumberReturnType = Prettify<
+  UseQueryResult<GetBlockNumberQueryFnData, GetBlockNumberError>
+>
 
 export function useBlockNumber({
   chainId: chainId_,
   watch,
   ...rest
-}: UseBlockNumberParameters = {}) {
+}: UseBlockNumberParameters = {}): UseBlockNumberReturnType {
   const config = useConfig()
   const defaultChainId = useChainId()
   const chainId = chainId_ ?? defaultChainId

@@ -1,9 +1,10 @@
 import * as React from 'react'
 
 import { WagmiContext } from '../context.js'
+import { WagmiConfigNotFoundError } from '../errors/context.js'
 
 export function useConfig() {
   const config = React.useContext(WagmiContext)
-  if (!config) throw new Error('`useConfig` must be used within `WagmiConfig`.')
+  if (!config) throw new WagmiConfigNotFoundError()
   return config
 }

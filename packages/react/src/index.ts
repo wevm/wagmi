@@ -10,15 +10,24 @@ export {
 ////////////////////////////////////////////////////////////////////////////////
 // Hooks
 
+export { BaseError } from './errors/base.js'
+
+export { WagmiConfigNotFoundError } from './errors/context.js'
+
+////////////////////////////////////////////////////////////////////////////////
+// Hooks
+
 export { useAccount } from './hooks/useAccount.js'
 
 export {
   type UseBalanceParameters,
+  type UseBalanceReturnType,
   useBalance,
 } from './hooks/useBalance.js'
 
 export {
   type UseBlockNumberParameters,
+  type UseBlockNumberReturnType,
   useBlockNumber,
 } from './hooks/useBlockNumber.js'
 
@@ -26,15 +35,15 @@ export { useConfig } from './hooks/useConfig.js'
 
 export {
   type UseConnectParameters,
+  type UseConnectReturnType,
   useConnect,
 } from './hooks/useConnect.js'
 
 export {
   type UseDisconnectParameters,
+  type UseDisconnectReturnType,
   useDisconnect,
 } from './hooks/useDisconnect.js'
-
-export { useSyncExternalStoreWithTracked } from './hooks/useSyncExternalStoreWithTracked.js'
 
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
@@ -65,10 +74,7 @@ export {
   createStorage,
   noopStorage,
   // Utilities
-  deepEqual,
   deserialize,
   normalizeChainId,
   serialize,
-  // Types
-  type Prettify,
 } from '@wagmi/core'
