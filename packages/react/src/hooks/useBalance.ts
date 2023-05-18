@@ -1,15 +1,11 @@
 import {
-  type UseQueryOptions,
-  type UseQueryResult,
-  useQuery,
-} from '@tanstack/react-query'
-import {
   type GetBalanceError,
   type GetBalanceQueryFnData,
   type GetBalanceQueryKey,
+  type GetBalanceQueryParameters,
   type OmittedQueryOptions,
   getBalanceQueryOptions,
-  watchBalance,
+  watchBlockNumber,
 } from '@wagmi/core'
 import type { Prettify } from '@wagmi/core/internal'
 import { useEffect } from 'react'
@@ -17,30 +13,46 @@ import { useEffect } from 'react'
 import type { OmittedUseQueryOptions } from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
+import {
+  type UseQueryParameters,
+  type UseQueryReturnType,
+  useQuery,
+} from './useQuery.js'
 
-export type UseBalanceParameters = Prettify<
-  Omit<Options, OmittedQueryOptions | OmittedUseQueryOptions> &
-    GetBalanceQueryKey & { watch?: boolean | undefined }
+type QueryOptions<TSelectData = GetBalanceQueryFnData> = Omit<
+  UseQueryParameters<
+    GetBalanceQueryFnData,
+    GetBalanceError,
+    TSelectData,
+    GetBalanceQueryKey
+  >,
+  OmittedQueryOptions | OmittedUseQueryOptions
 >
-type Options = UseQueryOptions<GetBalanceQueryFnData, GetBalanceError>
 
-export type UseBalanceReturnType = Prettify<
-  UseQueryResult<GetBalanceQueryFnData, GetBalanceError>
->
+export type UseBalanceParameters<TSelectData = GetBalanceQueryFnData> =
+  Prettify<
+    GetBalanceQueryParameters & {
+      enabled?: boolean
+      query?: QueryOptions<TSelectData>
+      watch?: boolean | undefined
+    }
+  >
+export type UseBalanceReturnType<TSelectData = GetBalanceQueryFnData> =
+  UseQueryReturnType<TSelectData, GetBalanceError>
 
-export function useBalance({
+export function useBalance<TSelectData = GetBalanceQueryFnData>({
   address,
   chainId: chainId_,
+  enabled = true,
+  query,
   token,
   unit,
   watch,
-  ...rest
-}: UseBalanceParameters): UseBalanceReturnType {
+}: UseBalanceParameters<TSelectData>): UseBalanceReturnType<TSelectData> {
   const config = useConfig()
   const defaultChainId = useChainId()
   const chainId = chainId_ ?? defaultChainId
   const queryOptions = getBalanceQueryOptions(config, {
-    ...rest,
     address,
     chainId,
     token,
@@ -48,20 +60,23 @@ export function useBalance({
   })
 
   useEffect(() => {
+    if (!enabled) return
     if (!address) return
     if (!watch) return
-    if (!queryOptions) return
 
-    return watchBalance(config, {
-      address,
+    return watchBlockNumber(config, {
       chainId,
-      onBalance: (balance) =>
-        config.queryClient.setQueryData(queryOptions.queryKey, balance),
+      onBlockNumber: () =>
+        config.queryClient.invalidateQueries({
+          queryKey: queryOptions.queryKey,
+        }),
       syncConnectedChain: false,
     })
-  }, [address, chainId, config, queryOptions, watch])
+  }, [address, chainId, config, queryOptions, enabled, watch])
 
-  // TODO: `@tanstack/react-query` `exactOptionalPropertyTypes`
-  // @ts-ignore
-  return useQuery({ ...queryOptions, enabled: Boolean(queryOptions) })
+  return useQuery({
+    ...queryOptions,
+    ...query,
+    enabled: Boolean(enabled && address),
+  })
 }

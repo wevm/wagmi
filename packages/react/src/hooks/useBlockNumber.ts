@@ -1,12 +1,8 @@
 import {
-  type UseQueryOptions,
-  type UseQueryResult,
-  useQuery,
-} from '@tanstack/react-query'
-import {
   type GetBlockNumberError,
   type GetBlockNumberQueryFnData,
   type GetBlockNumberQueryKey,
+  type GetBlockNumberQueryParameters,
   type OmittedQueryOptions,
   getBlockNumberQueryOptions,
   watchBlockNumber,
@@ -17,30 +13,47 @@ import * as React from 'react'
 import type { OmittedUseQueryOptions } from '../types/query.js'
 import { useChainId } from './useChainId.js'
 import { useConfig } from './useConfig.js'
+import {
+  type UseQueryParameters,
+  type UseQueryReturnType,
+  useQuery,
+} from './useQuery.js'
 
-export type UseBlockNumberParameters = Prettify<
-  Omit<Options, OmittedQueryOptions | OmittedUseQueryOptions> &
-    GetBlockNumberQueryKey & {
+type QueryOptions<TSelectData = GetBlockNumberQueryFnData> = Omit<
+  UseQueryParameters<
+    GetBlockNumberQueryFnData,
+    GetBlockNumberError,
+    TSelectData,
+    GetBlockNumberQueryKey
+  >,
+  OmittedQueryOptions | OmittedUseQueryOptions
+>
+
+export type UseBlockNumberParameters<TSelectData = GetBlockNumberQueryFnData> =
+  Prettify<
+    GetBlockNumberQueryParameters & {
+      enabled?: boolean
+      query?: QueryOptions<TSelectData>
       watch?: boolean | undefined
     }
->
-type Options = UseQueryOptions<GetBlockNumberQueryFnData, GetBlockNumberError>
+  >
+export type UseBlockNumberReturnType<TSelectData = GetBlockNumberQueryFnData> =
+  UseQueryReturnType<TSelectData, GetBlockNumberError>
 
-export type UseBlockNumberReturnType = Prettify<
-  UseQueryResult<GetBlockNumberQueryFnData, GetBlockNumberError>
->
-
-export function useBlockNumber({
+export function useBlockNumber<TSelectData = GetBlockNumberQueryFnData>({
   chainId: chainId_,
+  enabled = true,
+  query,
   watch,
-  ...rest
-}: UseBlockNumberParameters = {}): UseBlockNumberReturnType {
+}: UseBlockNumberParameters<TSelectData> = {}) {
   const config = useConfig()
   const defaultChainId = useChainId()
   const chainId = chainId_ ?? defaultChainId
-  const queryOptions = getBlockNumberQueryOptions(config, { ...rest, chainId })
+  const queryOptions = getBlockNumberQueryOptions(config, { chainId })
+  console.log(queryOptions.queryKey)
 
   React.useEffect(() => {
+    if (!enabled) return
     if (!watch) return
 
     try {
@@ -53,7 +66,9 @@ export function useBlockNumber({
     } catch {}
   }, [chainId, watch])
 
-  // TODO: `@tanstack/react-query` `exactOptionalPropertyTypes`
-  // @ts-ignore
-  return useQuery(queryOptions)
+  return useQuery({
+    ...queryOptions,
+    ...query,
+    enabled,
+  })
 }

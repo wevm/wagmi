@@ -1,3 +1,3 @@
-export type OmittedUseQueryOptions = 'suspense'
+export type OmittedUseQueryOptions = 'enabled' | 'suspense'
 
 export type OmittedUseMutationResult = 'mutate' | 'mutateAsync'

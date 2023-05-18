@@ -16,6 +16,12 @@ beforeEach(async () => {
     address,
     value: parseEther('10000'),
   })
+  await testClient.anvil.mine({ blocks: 1 })
+  await testClient.anvilTwo.setBalance({
+    address,
+    value: parseEther('420'),
+  })
+  await testClient.anvilTwo.mine({ blocks: 1 })
 })
 
 describe('getBalance', () => {
@@ -53,9 +59,9 @@ describe('getBalance', () => {
     ).resolves.toMatchInlineSnapshot(`
       {
         "decimals": 18,
-        "formatted": "10000",
+        "formatted": "420",
         "symbol": "WAG",
-        "value": 10000000000000000000000n,
+        "value": 420000000000000000000n,
       }
     `)
   })
@@ -152,9 +158,9 @@ describe('watchBalance', () => {
       [
         {
           "decimals": 18,
-          "formatted": "10000",
+          "formatted": "420",
           "symbol": "WAG",
-          "value": 10000000000000000000000n,
+          "value": 420000000000000000000n,
         },
         {
           "decimals": 18,
@@ -231,7 +237,7 @@ describe('getBalanceQueryOptions', () => {
       {
         "queryFn": [Function],
         "queryKey": [
-          "blockNumber",
+          "balance",
           {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chainId": undefined,
@@ -250,7 +256,7 @@ describe('getBalanceQueryOptions', () => {
       {
         "queryFn": [Function],
         "queryKey": [
-          "blockNumber",
+          "balance",
           {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chainId": 123,
@@ -276,7 +282,7 @@ describe('getBalanceQueryOptions', () => {
       {
         "queryFn": [Function],
         "queryKey": [
-          "blockNumber",
+          "balance",
           {
             "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
             "chainId": 123,

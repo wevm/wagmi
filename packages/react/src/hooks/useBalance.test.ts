@@ -10,6 +10,8 @@ const address = accounts[0]
 beforeEach(async () => {
   await testClient.anvil.setBalance({ address, value: parseEther('10000') })
   await testClient.anvil.mine({ blocks: 1 })
+  await testClient.anvilTwo.setBalance({ address, value: parseEther('69') })
+  await testClient.anvilTwo.mine({ blocks: 1 })
 })
 
 test('default', async () => {
@@ -63,9 +65,9 @@ test('parameters: chainId', async () => {
     {
       "data": {
         "decimals": 18,
-        "formatted": "10000",
+        "formatted": "69",
         "symbol": "WAG",
-        "value": 10000000000000000000000n,
+        "value": 69000000000000000000n,
       },
       "dataUpdatedAt": 1675209600000,
       "error": null,
@@ -107,9 +109,9 @@ test('parameters: unit', async () => {
     {
       "data": {
         "decimals": 18,
-        "formatted": "10000000000000000000000",
+        "formatted": "69000000000000000000",
         "symbol": "WAG",
-        "value": 10000000000000000000000n,
+        "value": 69000000000000000000n,
       },
       "dataUpdatedAt": 1675209600000,
       "error": null,

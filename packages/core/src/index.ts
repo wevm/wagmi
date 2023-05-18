@@ -47,7 +47,7 @@ export {
   // Query
   type GetBalanceQueryFnData,
   type GetBalanceQueryKey,
-  type GetBalanceQueryOptions,
+  type GetBalanceQueryParameters,
   getBalanceQueryOptions,
 } from './actions/getBalance.js'
 
@@ -64,7 +64,7 @@ export {
   // Query
   type GetBlockNumberQueryFnData,
   type GetBlockNumberQueryKey,
-  type GetBlockNumberQueryOptions,
+  type GetBlockNumberQueryParameters,
   getBlockNumberQueryOptions,
 } from './actions/getBlockNumber.js'
 

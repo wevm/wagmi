@@ -6,8 +6,6 @@ import {
 } from 'viem'
 
 import { type Config } from '../config.js'
-import type { OmittedQueryOptions } from '../types/query.js'
-import { type Prettify } from '../types/utils.js'
 
 ///////////////////////////////////////////////////////////////////////////
 // Getter
@@ -97,25 +95,28 @@ export function watchBlockNumber(
 ///////////////////////////////////////////////////////////////////////////
 // Query
 
+export type GetBlockNumberQueryParameters = GetBlockNumberParameters
+export type GetBlockNumberQueryKey = readonly [
+  'blockNumber',
+  { chainId: GetBlockNumberQueryParameters['chainId'] },
+]
 export type GetBlockNumberQueryFnData =
   NonNullable<GetBlockNumberReturnType> | null
-export type GetBlockNumberQueryKey = GetBlockNumberParameters
-
-export type GetBlockNumberQueryOptions = Prettify<
-  Omit<Options, OmittedQueryOptions> & GetBlockNumberQueryKey
->
-type Options = QueryOptions<GetBlockNumberQueryFnData, GetBlockNumberError>
 
 export const getBlockNumberQueryOptions = (
   config: Config,
-  { chainId, gcTime = 0, ...rest }: GetBlockNumberQueryOptions = {},
+  { chainId }: GetBlockNumberQueryParameters = {},
 ) =>
   ({
-    ...rest,
-    gcTime,
+    gcTime: 0,
     async queryFn() {
       const blockNumber = await getBlockNumber(config, { chainId })
       return blockNumber ?? null
     },
     queryKey: ['blockNumber', { chainId }],
-  }) as const satisfies Options
+  }) as const satisfies QueryOptions<
+    GetBlockNumberQueryFnData,
+    GetBlockNumberError,
+    GetBlockNumberQueryFnData,
+    GetBlockNumberQueryKey
+  >
