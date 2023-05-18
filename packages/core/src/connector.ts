@@ -19,7 +19,7 @@ export type ConnectorEventMap = {
 
 export type CreateConnectorFn<
   TProvider = unknown,
-  TProperties = unknown,
+  TProperties extends Record<string, unknown> = {},
   TStorageItem extends Record<string, unknown> = {},
 > = (config: {
   chains: readonly [Chain, ...Chain[]]
@@ -52,7 +52,7 @@ export type CreateConnectorFn<
 
 export function createConnector<
   TProvider,
-  TProperties,
+  TProperties extends Record<string, unknown> = {},
   TStorageItem extends Record<string, unknown> = {},
 >(fn: CreateConnectorFn<TProvider, TProperties, TStorageItem>) {
   return fn

@@ -1,9 +1,15 @@
-export class ChainNotConfiguredError {
-  name = 'ChainNotConfiguredError'
-  message = 'Chain not configured'
+import { BaseError } from './base.js'
+
+export class ChainNotConfiguredError extends BaseError {
+  override name = 'ChainNotConfiguredError'
+  constructor() {
+    super('Chain not configured.')
+  }
 }
 
-export class ConnectorAlreadyConnectedError {
-  name = 'ConnectorAlreadyConnectedError'
-  message = 'Connector already connected'
+export class ConnectorAlreadyConnectedError extends BaseError {
+  override name = 'ConnectorAlreadyConnectedError'
+  constructor() {
+    super('Connector already connected.')
+  }
 }

@@ -22,15 +22,19 @@ export async function disconnect(
     connector = connection?.connector
   }
 
-  // TODO: Throw connector not connected error
-  if (!connector) throw new Error('No connector found')
+  // TODO: Change to base error
+  if (!connector) throw new Error('No connector found.')
+
+  // TODO: Change to base error
+  const connections = config.state.connections
+  if (!connections.has(connector.uid))
+    throw new Error('Connector not connected.')
 
   await connector.disconnect()
   connector.emitter.off('change', config._internal.change)
   connector.emitter.off('disconnect', config._internal.disconnect)
   connector.emitter.on('connect', config._internal.connect)
 
-  const connections = config.state.connections
   connections.delete(connector.uid)
 
   config.setState((x) => {

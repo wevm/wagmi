@@ -10,6 +10,7 @@ import {
   type CustomTransport,
   type Requests,
   SwitchChainError,
+  UserRejectedRequestError,
   type WalletClient,
   createPublicClient,
   createWalletClient,
@@ -25,27 +26,28 @@ export type TestConnectorParameters = {
   accounts: readonly [Address, ...Address[]]
   features?:
     | {
-        isAuthorized?: boolean
-        shimDisconnect?: boolean
+        failConnect?: boolean
+        reconnect?: boolean
       }
     | undefined
 }
 
 export function testConnector(parameters: TestConnectorParameters) {
   const features = parameters.features ?? {}
-  const shimDisconnect = features.shimDisconnect ?? true
 
   type Provider = WalletClient<CustomTransport, Chain, Account<Address>>
-  type Properties = {}
-  type StorageItem = {}
 
   let connected = false
 
-  return createConnector<Provider, Properties, StorageItem>((config) => ({
+  return createConnector<Provider>((config) => ({
     id: 'test',
     name: 'Test Connector',
     async connect({ chainId } = {}) {
       const provider = await this.getProvider()
+
+      if (features.failConnect)
+        throw new UserRejectedRequestError(new Error('Failed to connect.'))
+
       const accounts = await provider.request({
         method: 'eth_requestAccounts',
       })
@@ -56,12 +58,12 @@ export function testConnector(parameters: TestConnectorParameters) {
         currentChainId = chain.id
       }
 
-      if (shimDisconnect) connected = true
+      connected = true
 
       return { accounts, chainId: currentChainId }
     },
     async disconnect() {
-      if (shimDisconnect) connected = false
+      connected = false
     },
     async getAccounts() {
       const provider = await this.getProvider()
@@ -103,8 +105,8 @@ export function testConnector(parameters: TestConnectorParameters) {
       return fromHex(hexChainId, 'number')
     },
     async isAuthorized() {
-      if (features.isAuthorized === false) return false
-      if (shimDisconnect && !connected) return false
+      if (!features.reconnect) return false
+      if (!connected) return false
       const accounts = await this.getAccounts()
       return !!accounts.length
     },
