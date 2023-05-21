@@ -17,7 +17,7 @@ export { WagmiConfigNotFoundError } from './errors/context.js'
 ////////////////////////////////////////////////////////////////////////////////
 // Hooks
 
-export { useAccount } from './hooks/useAccount.js'
+export { type UseAccountReturnType, useAccount } from './hooks/useAccount.js'
 
 export {
   type UseBalanceParameters,

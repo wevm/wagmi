@@ -9,6 +9,7 @@ import { type Config, type Connector } from '../config.js'
 export type GetAccountReturnType =
   | {
       address: Address
+      addresses: readonly Address[]
       chainId: number
       connector: Connector
       isConnected: true
@@ -19,6 +20,7 @@ export type GetAccountReturnType =
     }
   | {
       address: Address | undefined
+      addresses: readonly Address[] | undefined
       chainId: number | undefined
       connector: Connector | undefined
       isConnected: boolean
@@ -29,6 +31,7 @@ export type GetAccountReturnType =
     }
   | {
       address: Address | undefined
+      addresses: readonly Address[] | undefined
       chainId: number | undefined
       connector: Connector | undefined
       isConnected: false
@@ -39,6 +42,7 @@ export type GetAccountReturnType =
     }
   | {
       address: undefined
+      addresses: undefined
       chainId: undefined
       connector: undefined
       isConnected: false
@@ -51,13 +55,15 @@ export type GetAccountReturnType =
 export function getAccount(config: Config): GetAccountReturnType {
   const uid = config.state.current!
   const connection = config.state.connections.get(uid)
-  const address = connection?.accounts?.[0]
+  const addresses = connection?.accounts
+  const address = addresses?.[0]
   const status = config.state.status
 
   switch (status) {
     case 'connected':
       return {
         address: address!,
+        addresses: addresses!,
         chainId: connection?.chainId!,
         connector: connection?.connector!,
         isConnected: true,
@@ -69,6 +75,7 @@ export function getAccount(config: Config): GetAccountReturnType {
     case 'reconnecting':
       return {
         address,
+        addresses,
         chainId: connection?.chainId,
         connector: connection?.connector,
         isConnected: !!address,
@@ -80,6 +87,7 @@ export function getAccount(config: Config): GetAccountReturnType {
     case 'connecting':
       return {
         address,
+        addresses,
         chainId: connection?.chainId,
         connector: connection?.connector,
         isConnected: false,
@@ -91,6 +99,7 @@ export function getAccount(config: Config): GetAccountReturnType {
     case 'disconnected':
       return {
         address: undefined,
+        addresses: undefined,
         chainId: undefined,
         connector: undefined,
         isConnected: false,
@@ -107,35 +116,15 @@ export function getAccount(config: Config): GetAccountReturnType {
 
 export type WatchAccountParameters = {
   onChange(data: GetAccountReturnType): void
-  selector?(
-    data: Pick<
-      GetAccountReturnType,
-      'address' | 'chainId' | 'connector' | 'status'
-    >,
-  ): any
 }
 
 export type WatchAccountReturnType = () => void
 
 export function watchAccount(
   config: Config,
-  { onChange, selector }: WatchAccountParameters,
+  { onChange }: WatchAccountParameters,
 ): WatchAccountReturnType {
-  const handleChange = () => onChange(getAccount(config))
-  const unsubscribe = config.subscribe(
-    (state) => {
-      const connection = state.connections.get(state.current!)
-      const data = {
-        address: connection?.accounts?.[0],
-        chainId: connection?.chainId,
-        connector: connection?.connector,
-        status: state.status,
-      }
-      if (selector) return selector(data)
-      return data
-    },
-    handleChange,
-    { equalityFn: shallow },
-  )
-  return unsubscribe
+  return config.subscribe(() => getAccount(config), onChange, {
+    equalityFn: shallow,
+  })
 }
