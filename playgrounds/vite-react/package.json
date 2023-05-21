@@ -11,10 +11,11 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "wagmi": "workspace:*",
-    "viem": "~0.3"
+    "viem": "~0.3",
+    "wagmi": "workspace:*"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "5.0.0-alpha.35",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0"

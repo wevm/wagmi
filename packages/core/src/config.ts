@@ -91,7 +91,7 @@ export type State = {
   chainId: number
   connections: Map<string, Connection>
   current: string | undefined
-  status: 'connected' | 'connecting' | 'reconnecting' | 'disconnected'
+  status: 'connected' | 'connecting' | 'disconnected' | 'reconnecting'
 }
 export type PartializedState = Prettify<
   Partial<Pick<State, 'chainId' | 'connections' | 'current' | 'status'>>
@@ -117,9 +117,7 @@ export function createConfig<
         refetchOnWindowFocus: false,
         retry: 0,
       },
-      mutations: {
-        networkMode: 'offlineFirst',
-      },
+      mutations: { networkMode: 'offlineFirst' },
     },
   }),
   reconnectOnMount = true,
