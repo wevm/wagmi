@@ -31,6 +31,7 @@ export type PrepareWriteContractResult<
 > = Omit<SimulateContractReturnType<TAbi, TFunctionName>, 'request'> & {
   request: SimulateContractReturnType<TAbi, TFunctionName>['request'] & {
     chainId?: TChainId
+    gas?: bigint | null
   }
   mode: 'prepared'
 }
@@ -78,13 +79,31 @@ export async function prepareWriteContract<
     accessList,
     blockNumber,
     blockTag,
-    gas,
+    gas: gas_,
     gasPrice,
     maxFeePerGas,
     maxPriorityFeePerGas,
     nonce,
     value,
+    data,
+    to,
   } = getCallParameters(config)
+
+  const gas =
+    typeof gas_ === 'undefined'
+      ? await publicClient.estimateGas({
+          accessList,
+          account: walletClient.account,
+          data,
+          gas: gas_ ?? undefined,
+          gasPrice,
+          maxFeePerGas,
+          maxPriorityFeePerGas,
+          nonce,
+          to,
+          value,
+        })
+      : gas_ || undefined
 
   const { result, request } = await publicClient.simulateContract({
     abi,
