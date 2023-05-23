@@ -237,28 +237,3 @@ const unwatch = await watchMulticall(
   (data) => console.log(data),
 )
 ```
-
-### overrides (optional)
-
-Overrides to pass to function call.
-
-```ts {15}
-import { watchMulticall } from '@wagmi/core'
-
-const unwatch = await watchMulticall(
-  {
-    contracts: [
-      {
-        ...wagmigotchiContract,
-        functionName: 'getAlive',
-      },
-      {
-        ...wagmigotchiContract,
-        functionName: 'getBoredom',
-      },
-    ],
-    overrides: { from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e' },
-  },
-  (data) => console.log(data),
-)
-```

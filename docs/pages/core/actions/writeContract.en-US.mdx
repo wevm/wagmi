@@ -81,7 +81,7 @@ Contract address.
 ```ts {5}
 import { writeContract } from '@wagmi/core'
 
-const { sendTransaction } = await writeContract({
+const { hash } = await writeContract({
   abi: wagmigotchiABI,
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   functionName: 'feed',
@@ -124,7 +124,7 @@ Checks the current chain to make sure it is the same as `chainId`. If `chainId` 
 ```ts {7}
 import { writeContract } from '@wagmi/core'
 
-const { sendTransaction } = await writeContract({
+const { hash } = await writeContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',
@@ -139,11 +139,26 @@ The Account to write to the contract from.
 ```ts {7}
 import { writeContract } from '@wagmi/core'
 
-const { config } = await writeContract({
+const { hash } = await writeContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',
   account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+})
+```
+
+### gas (optional)
+
+Gas limit for transaction execution.
+
+```ts {7}
+import { writeContract } from '@wagmi/core'
+
+const { hash } = await writeContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'feed',
+  gas: 1_000_000n,
 })
 ```
 
@@ -154,7 +169,7 @@ The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https:/
 ```ts {7}
 import { writeContract } from '@wagmi/core'
 
-const { config } = await writeContract({
+const { hash } = await writeContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',
@@ -169,7 +184,7 @@ Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to
 ```ts {7}
 import { writeContract } from '@wagmi/core'
 
-const { config } = await writeContract({
+const { hash } = await writeContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',
@@ -184,7 +199,7 @@ Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https
 ```ts {7}
 import { writeContract } from '@wagmi/core'
 
-const { config } = await writeContract({
+const { hash } = await writeContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',
@@ -199,7 +214,7 @@ Unique number identifying this transaction.
 ```ts {7}
 import { writeContract } from '@wagmi/core'
 
-const { config } = await writeContract({
+const { hash } = await writeContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',
@@ -214,7 +229,7 @@ Value in wei sent with this transaction.
 ```ts {7}
 import { writeContract } from '@wagmi/core'
 
-const { config } = await writeContract({
+const { hash } = await writeContract({
   address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
   abi: wagmigotchiABI,
   functionName: 'feed',

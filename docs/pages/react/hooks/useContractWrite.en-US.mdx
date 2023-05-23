@@ -45,7 +45,7 @@ function App() {
   pitfalls](/react/prepare-hooks#ux-pitfalls-without-prepare-hooks).
 </Callout>
 
-## Dynamic Arguments
+### Dynamic Arguments
 
 It is possible to pass through dynamic arguments through to `write` or `writeAsync`.
 
@@ -124,43 +124,6 @@ function App() {
 
 ## Configuration
 
-### address (optional)
-
-Contract address.
-
-```tsx {5}
-import { useContractWrite } from 'wagmi'
-
-function App() {
-  const { write } = useContractWrite({
-    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    abi: wagmigotchiABI,
-    functionName: 'feed',
-  })
-
-  return <button onClick={() => write()}>Feed</button>
-}
-```
-
-### chainId (optional)
-
-Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
-
-```tsx {6}
-import { useContractWrite } from 'wagmi'
-
-function App() {
-  const { write } = useContractWrite({
-    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
-    chainId: 1,
-    abi: wagmigotchiABI,
-    functionName: 'feed',
-  })
-
-  return <button onClick={() => write()}>Feed</button>
-}
-```
-
 ### abi
 
 Contract ABI.
@@ -176,8 +139,6 @@ function App() {
     abi: wagmigotchiABI,
     functionName: 'feed',
   })
-
-  return <button onClick={() => write()}>Feed</button>
 }
 ```
 
@@ -194,8 +155,39 @@ function App() {
     abi: wagmigotchiABI,
     functionName: 'feed',
   })
+}
+```
 
-  return <button onClick={() => write()}>Feed</button>
+### address (optional)
+
+Contract address.
+
+```tsx {5}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+  })
+}
+```
+
+### chainId (optional)
+
+Checks the current chain to make sure it is the same as `chainId`. If `chainId` is not the current chain, the connector attempts to switch to it before sending the transaction.
+
+```tsx {8}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    chainId: 1,
+  })
 }
 ```
 
@@ -213,16 +205,14 @@ function App() {
     functionName: 'feed',
     args: [],
   })
-
-  return <button onClick={() => write()}>Feed</button>
 }
 ```
 
-### overrides (optional)
+### account (optional)
 
-Overrides to pass to function call. If the function is payable, you can pass a `value` here.
+The Account to write to the contract from.
 
-```tsx {8-11}
+```tsx {8}
 import { useContractWrite } from 'wagmi'
 
 function App() {
@@ -230,13 +220,110 @@ function App() {
     address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
     abi: wagmigotchiABI,
     functionName: 'feed',
-    overrides: {
-      from: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
-      value: parseEther('0.01'),
-    },
+    account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
   })
+}
+```
 
-  return <button onClick={() => write()}>Feed</button>
+### gas (optional)
+
+Gas limit for transaction execution.
+
+```ts {8}
+import { useContractWrite } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    gas: 1_000_000n,
+  })
+}
+```
+
+### gasPrice (optional)
+
+The price (in wei) to pay per gas. Only applies to [Legacy Transactions](https://viem.sh/docs/glossary/terms#legacy-transaction).
+
+```tsx {8}
+import { useContractWrite, parseGwei } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    gasPrice: parseGwei('20'),
+  })
+}
+```
+
+### maxFeePerGas (optional)
+
+Total fee per gas (in wei), inclusive of `maxPriorityFeePerGas`. Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```tsx {8}
+import { useContractWrite, parseGwei } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    maxFeePerGas: parseGwei('20'),
+  })
+}
+```
+
+### maxPriorityFeePerGas (optional)
+
+Max priority fee per gas (in wei). Only applies to [EIP-1559 Transactions](https://viem.sh/docs/glossary/terms#eip-1559-transaction)
+
+```tsx {8}
+import { useContractWrite, parseGwei } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    maxPriorityFeePerGas: parseGwei('20'),
+  })
+}
+```
+
+### nonce (optional)
+
+Unique number identifying this transaction.
+
+```tsx {8}
+import { useContractWrite, parseGwei } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    nonce: 69,
+  })
+}
+```
+
+### value (optional)
+
+Value in wei sent with this transaction.
+
+```tsx {8}
+import { useContractWrite, parseGwei } from 'wagmi'
+
+function App() {
+  const { write } = useContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    value: parseEther('0.1'),
+  })
 }
 ```
 
@@ -244,13 +331,14 @@ function App() {
 
 Function to invoke when an error is thrown while attempting to write.
 
-```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+```tsx {8-10}
+import { useContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = usePrepareContractWrite({ ... })
   const { write } = useContractWrite({
-    ...config,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
     onError(error) {
       console.log('Error', error)
     },
@@ -262,13 +350,14 @@ function App() {
 
 Function fires before the contract write function and is passed same variables the contract write function would receive. Value returned from this function will be passed to both `onError` and `onSettled` functions in event of a failure.
 
-```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+```tsx {8-10}
+import { useContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = usePrepareContractWrite({ ... })
   const { write } = useContractWrite({
-    ...config,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
     onMutate({ args, overrides }) {
       console.log('Mutate', { args, overrides })
     },
@@ -280,13 +369,14 @@ function App() {
 
 Function to invoke when write is settled (either successfully sent, or an error has thrown).
 
-```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+```tsx {8-10}
+import { useContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = usePrepareContractWrite({ ... })
   const { write } = useContractWrite({
-    ...config,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
     onSettled(data, error) {
       console.log('Settled', { data, error })
     },
@@ -298,13 +388,14 @@ function App() {
 
 Function to invoke when write is successful.
 
-```tsx {7-9}
-import { usePrepareContractWrite, useContractWrite } from 'wagmi'
+```tsx {8-10}
+import { useContractWrite } from 'wagmi'
 
 function App() {
-  const { config } = usePrepareContractWrite({ ... })
   const { write } = useContractWrite({
-    ...config,
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
     onSuccess(data) {
       console.log('Success', data)
     },

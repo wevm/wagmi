@@ -166,7 +166,7 @@ function App() {
 }
 ```
 
-### account
+### account (optional)
 
 The Account to write to the contract from.
 
@@ -179,6 +179,23 @@ function App() {
     abi: wagmigotchiABI,
     functionName: 'feed',
     account: '0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266',
+  })
+}
+```
+
+### gas (optional)
+
+Gas limit for transaction execution.
+
+```ts {8}
+import { usePrepareContractWrite } from 'wagmi'
+
+function App() {
+  const { config } = usePrepareContractWrite({
+    address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+    abi: wagmigotchiABI,
+    functionName: 'feed',
+    gas: 1_000_000n,
   })
 }
 ```
