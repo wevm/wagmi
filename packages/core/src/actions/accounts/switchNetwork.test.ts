@@ -100,7 +100,7 @@ describe('switchNetwork', () => {
         "User rejected the request.
 
         Details: Failed to switch chain.
-        Version: viem@0.3.18"
+        Version: viem@0.3.35"
       `)
     })
 

@@ -109,6 +109,22 @@ const data = await readContract({
 })
 ```
 
+### account (optional)
+
+Account sender override.
+
+```ts {3,8}
+import { readContract } from '@wagmi/core'
+
+const { account } = await getWalletClient()
+const data = await readContract({
+  address: '0xecb504d39723b0be0e3a9aa33d646642d1051ee1',
+  abi: wagmigotchiABI,
+  functionName: 'getHunger',
+  account,
+})
+```
+
 ### blockNumber (optional)
 
 The block number to perform the read against.

@@ -21,6 +21,7 @@ export async function readContract<
   TFunctionName extends string,
 >({
   address,
+  account,
   chainId,
   abi,
   args,
@@ -34,6 +35,7 @@ export async function readContract<
   return publicClient.readContract({
     abi,
     address,
+    account,
     functionName,
     args,
     blockNumber,

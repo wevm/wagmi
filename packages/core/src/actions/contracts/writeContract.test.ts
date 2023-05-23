@@ -155,7 +155,7 @@ describe('writeContract', () => {
         Make sure you are using the correct ABI and that the function exists on it.
 
         Docs: https://viem.sh/docs/contract/encodeFunctionData.html
-        Version: viem@0.3.18"
+        Version: viem@0.3.35"
       `)
     })
   })

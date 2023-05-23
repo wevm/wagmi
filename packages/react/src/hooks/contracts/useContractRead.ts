@@ -54,6 +54,7 @@ type QueryKeyConfig = Pick<UseContractReadConfig, 'scopeKey'> & {
 }
 
 function queryKey({
+  account,
   address,
   args,
   blockNumber,
@@ -65,6 +66,7 @@ function queryKey({
   return [
     {
       entity: 'readContract',
+      account,
       address,
       args,
       blockNumber,
@@ -81,11 +83,14 @@ function queryFn<
   TFunctionName extends string,
 >({ abi }: { abi?: Abi | readonly unknown[] }) {
   return async ({
-    queryKey: [{ address, args, blockNumber, blockTag, chainId, functionName }],
+    queryKey: [
+      { account, address, args, blockNumber, blockTag, chainId, functionName },
+    ],
   }: QueryFunctionArgs<typeof queryKey>) => {
     if (!abi) throw new Error('abi is required')
     if (!address) throw new Error('address is required')
     return ((await readContract({
+      account,
       address,
       args,
       blockNumber,
@@ -106,6 +111,7 @@ export function useContractRead<
   {
     abi,
     address,
+    account,
     args,
     blockNumber: blockNumberOverride,
     blockTag,
@@ -142,6 +148,7 @@ export function useContractRead<
   const queryKey_ = React.useMemo(
     () =>
       queryKey({
+        account,
         address,
         args,
         blockNumber: cacheOnBlock ? blockNumber : undefined,
@@ -151,6 +158,7 @@ export function useContractRead<
         scopeKey,
       } as Omit<ReadContractConfig, 'abi'>),
     [
+      account,
       address,
       args,
       blockNumber,
