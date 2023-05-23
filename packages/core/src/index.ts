@@ -9,7 +9,7 @@ export {
   // Mutation
   type ConnectMutationData,
   type ConnectMutationVariables,
-  type ConnectMutationOptions,
+  type ConnectMutationParameters,
   connectMutationOptions,
 } from './actions/connect.js'
 
@@ -20,7 +20,7 @@ export {
   // Mutation
   type DisconnectMutationData,
   type DisconnectMutationVariables,
-  type DisconnectMutationOptions,
+  type DisconnectMutationParameters,
   disconnectMutationOptions,
 } from './actions/disconnect.js'
 
@@ -78,6 +78,17 @@ export {
   watchChainId,
 } from './actions/getChainId.js'
 
+export {
+  type SwitchAccountParameters,
+  type SwitchAccountError,
+  switchAccount,
+  // Mutation
+  type SwitchAccountMutationData,
+  type SwitchAccountMutationVariables,
+  type SwitchAccountMutationParameters,
+  switchAccountMutationOptions,
+} from './actions/switchAccount.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // Chain
 
@@ -122,6 +133,7 @@ export { ProviderNotFoundError } from './errors/connector.js'
 export {
   ChainNotConfiguredError,
   ConnectorAlreadyConnectedError,
+  ConnectorNotFoundError,
 } from './errors/config.js'
 
 ////////////////////////////////////////////////////////////////////////////////

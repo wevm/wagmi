@@ -8,8 +8,7 @@ import {
 import { type Config, type Connector } from '../config.js'
 import { type CreateConnectorFn } from '../connector.js'
 import { ConnectorAlreadyConnectedError } from '../errors/config.js'
-import type { OmittedMutationOptions } from '../types/query.js'
-import { type Prettify } from '../types/utils.js'
+import type { Prettify } from '../internal.js'
 
 export type ConnectParameters = {
   /** Chain ID to connect to */
@@ -98,29 +97,20 @@ export async function connect(
 ///////////////////////////////////////////////////////////////////////////
 // Mutation
 
-export type ConnectMutationData = ConnectReturnType
-export type ConnectMutationVariables = {
+export type ConnectMutationData = Prettify<ConnectReturnType>
+export type ConnectMutationVariables = Prettify<{
   /** Chain ID to connect to */
   chainId?: number | undefined
   /** Connector to connect with */
   connector?: CreateConnectorFn | Connector | undefined
-}
-
-export type ConnectMutationOptions = Prettify<
-  Omit<Options, OmittedMutationOptions> & ConnectMutationVariables
->
-type Options = MutationOptions<
-  ConnectMutationData,
-  ConnectError,
-  ConnectMutationVariables
->
+}>
+export type ConnectMutationParameters = Prettify<ConnectMutationVariables>
 
 export const connectMutationOptions = (
   config: Config,
-  { chainId, connector, ...rest }: ConnectMutationOptions,
+  { chainId, connector }: ConnectMutationParameters,
 ) =>
   ({
-    ...rest,
     mutationFn(variables) {
       const connector_ = variables.connector ?? connector
       if (!connector_) throw new Error('"connector" is required')
@@ -130,4 +120,8 @@ export const connectMutationOptions = (
       })
     },
     mutationKey: ['connect', { connector, chainId }],
-  }) as const satisfies Options
+  }) as const satisfies MutationOptions<
+    ConnectMutationData,
+    ConnectError,
+    ConnectMutationVariables
+  >

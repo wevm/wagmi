@@ -13,3 +13,10 @@ export class ConnectorAlreadyConnectedError extends BaseError {
     super('Connector already connected.')
   }
 }
+
+export class ConnectorNotFoundError extends BaseError {
+  override name = 'ConnectorNotFoundError'
+  constructor() {
+    super('Connector not found.')
+  }
+}

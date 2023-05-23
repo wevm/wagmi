@@ -223,9 +223,9 @@ test('behavior: address: undefined -> defined', async () => {
     {
       "data": {
         "decimals": 18,
-        "formatted": "420",
+        "formatted": "10000",
         "symbol": "ETH",
-        "value": 420000000000000000000n,
+        "value": 10000000000000000000000n,
       },
       "dataUpdatedAt": 1675209600000,
       "error": null,

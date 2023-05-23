@@ -5,6 +5,7 @@ import {
   disconnect,
   getAccount,
   getBlockNumber,
+  switchAccount,
   watchAccount,
   watchBalance,
   watchBlockNumber,
@@ -14,10 +15,16 @@ import * as React from 'react'
 import { config } from './wagmi'
 
 function App() {
+  React.useEffect(() => {
+    if (typeof window !== 'undefined' && config._internal.reconnectOnMount)
+      config.reconnect()
+  }, [])
+
   return (
     <>
       <Account />
       <Connect />
+      <SwitchAccount />
       <Balance />
       <BlockNumber />
     </>
@@ -28,11 +35,14 @@ function Account() {
   const [account, setAccount] = React.useState(getAccount(config))
 
   React.useEffect(() => {
-    watchAccount(config, {
+    const unwatch = watchAccount(config, {
       onChange(data) {
         setAccount(data)
       },
     })
+    return () => {
+      unwatch()
+    }
   }, [])
 
   return (
@@ -57,12 +67,25 @@ function Account() {
 }
 
 function Connect() {
+  const [, rerender] = React.useReducer((count) => count + 1, 0)
+
+  React.useEffect(() => {
+    const unsubscribe = config.subscribe(
+      ({ connections }) => connections,
+      rerender,
+    )
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
   return (
     <div>
       <h2>Connect</h2>
 
       {config.connectors.map((connector) => (
         <button
+          disabled={config.state.connections.has(connector.uid)}
           id={connector.uid}
           key={connector.uid}
           onClick={async () => await connect(config, { connector })}
@@ -75,15 +98,52 @@ function Connect() {
   )
 }
 
+function SwitchAccount() {
+  const [, rerender] = React.useReducer((count) => count + 1, 0)
+
+  React.useEffect(() => {
+    const unsubscribe = config.subscribe(
+      ({ connections, current }) => ({ connections, current }),
+      rerender,
+    )
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
+  return (
+    <div>
+      <h2>SwitchAccount</h2>
+
+      {config.connectors
+        .filter((connector) => config.state.connections.has(connector.uid))
+        .map((connector) => (
+          <button
+            disabled={config.state.current === connector.uid}
+            id={connector.uid}
+            key={connector.uid}
+            onClick={async () => await switchAccount(config, { connector })}
+            type='button'
+          >
+            {connector.name}
+          </button>
+        ))}
+    </div>
+  )
+}
+
 function Balance() {
   const [account, setAccount] = React.useState(getAccount(config))
 
   React.useEffect(() => {
-    watchAccount(config, {
+    const unwatch = watchAccount(config, {
       onChange(data) {
         setAccount(data)
       },
     })
+    return () => {
+      unwatch()
+    }
   }, [])
 
   /////////////////////////////////////////////////////////
@@ -99,7 +159,6 @@ function Balance() {
       onBalance: (balance) => setBalance(balance),
     })
     return () => {
-      console.log('test')
       unwatch()
     }
   }, [account.address, config])

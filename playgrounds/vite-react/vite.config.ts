@@ -1,13 +1,17 @@
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  define: {
-    // `@coinbase-wallet/sdk` hardcodes `process.env`
-    // https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/src/CoinbaseWalletSDK.ts#L15-L17
-    'process.env': {},
+  // `@coinbase-wallet/sdk` hardcodes `process.env` and uses `Buffer`
+  // https://github.com/coinbase/coinbase-wallet-sdk/blob/master/packages/wallet-sdk/src/CoinbaseWalletSDK.ts#L15-L17
+  optimizeDeps: {
+    esbuildOptions: {
+      define: { global: 'globalThis' },
+      plugins: [NodeGlobalsPolyfillPlugin({ process: true, buffer: true })],
+    },
   },
   plugins: [react()],
   resolve: {

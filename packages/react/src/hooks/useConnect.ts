@@ -6,6 +6,7 @@ import {
 import {
   type ConnectError,
   type ConnectMutationData,
+  type ConnectMutationParameters,
   type ConnectMutationVariables,
   type Connector,
   type OmittedMutationOptions,
@@ -17,9 +18,11 @@ import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
 export type UseConnectParameters = Prettify<
-  Omit<Options, OmittedMutationOptions> & ConnectMutationVariables
+  ConnectMutationParameters & {
+    mutation?: Omit<MutationOptions, OmittedMutationOptions>
+  }
 >
-type Options = UseMutationOptions<
+type MutationOptions = UseMutationOptions<
   ConnectMutationData,
   ConnectError,
   ConnectMutationVariables
@@ -38,15 +41,18 @@ type Result = UseMutationResult<
   ConnectMutationVariables
 >
 
-export function useConnect(
-  parameters: UseConnectParameters = {},
-): UseConnectReturnType {
+export function useConnect({
+  chainId,
+  connector,
+  mutation,
+}: UseConnectParameters = {}): UseConnectReturnType {
   const config = useConfig()
-  const { mutate, mutateAsync, ...rest } = useMutation(
-    connectMutationOptions(config, parameters),
+  const { mutate, mutateAsync, ...mutationOptions } = useMutation(
+    connectMutationOptions(config, { chainId, connector }),
   )
   return {
-    ...rest,
+    ...mutationOptions,
+    ...mutation,
     connect: mutate,
     connectAsync: mutateAsync,
     connectors: config.connectors,

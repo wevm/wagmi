@@ -14,7 +14,7 @@ export const config = createConfig({
     coinbaseWallet({ appName: 'Vite React Playground' }),
   ],
   // reconnectOnMount: false,
-  storage: createStorage({ storage: localStorage, key: 'vite-react' }),
+  storage: createStorage({ storage: localStorage, key: 'vite-core' }),
   transports: {
     [mainnet.id]: http(
       'https://eth-mainnet.g.alchemy.com/v2/StF61Ht3J9nXAojZX-b21LVt9l0qDL38',

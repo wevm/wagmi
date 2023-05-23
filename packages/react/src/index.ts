@@ -45,6 +45,12 @@ export {
   useDisconnect,
 } from './hooks/useDisconnect.js'
 
+export {
+  type UseSwitchAccountParameters,
+  type UseSwitchAccountReturnType,
+  useSwitchAccount,
+} from './hooks/useSwitchAccount.js'
+
 ////////////////////////////////////////////////////////////////////////////////
 // @wagmi/core
 

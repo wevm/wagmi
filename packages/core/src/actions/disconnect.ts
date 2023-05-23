@@ -1,14 +1,14 @@
 import { type MutationOptions } from '@tanstack/query-core'
 
 import { type Config, type Connection, type Connector } from '../config.js'
-import type { OmittedMutationOptions } from '../types/query.js'
-import { type Prettify } from '../types/utils.js'
+import type { BaseError } from '../errors/base.js'
+import { ConnectorNotFoundError } from '../errors/config.js'
 
 export type DisconnectParameters = {
   connector?: Connector | undefined
 }
 
-export type DisconnectError = Error
+export type DisconnectError = ConnectorNotFoundError | BaseError | Error
 
 export async function disconnect(
   config: Config,
@@ -22,13 +22,9 @@ export async function disconnect(
     connector = connection?.connector
   }
 
-  // TODO: Change to base error
-  if (!connector) throw new Error('No connector found.')
-
-  // TODO: Change to base error
+  if (!connector) throw new ConnectorNotFoundError()
   const connections = config.state.connections
-  if (!connections.has(connector.uid))
-    throw new Error('Connector not connected.')
+  if (!connections.has(connector.uid)) throw new ConnectorNotFoundError()
 
   await connector.disconnect()
   connector.emitter.off('change', config._internal.change)
@@ -60,19 +56,11 @@ export async function disconnect(
 
 export type DisconnectMutationData = void
 export type DisconnectMutationVariables = { connector?: Connector } | void
-
-export type DisconnectMutationOptions = Prettify<
-  Omit<Options, OmittedMutationOptions> & DisconnectMutationVariables
->
-type Options = MutationOptions<
-  DisconnectMutationData,
-  DisconnectError,
-  DisconnectMutationVariables
->
+export type DisconnectMutationParameters = { connector?: Connector | undefined }
 
 export const disconnectMutationOptions = (
   config: Config,
-  options: DisconnectMutationOptions,
+  options: DisconnectMutationParameters,
 ) => {
   const connector = 'connector' in options ? options.connector : undefined
   return {
@@ -83,5 +71,9 @@ export const disconnectMutationOptions = (
       return disconnect(config, { connector: connector_ })
     },
     mutationKey: ['disconnect', { connector }],
-  } as const satisfies Options
+  } as const satisfies MutationOptions<
+    DisconnectMutationData,
+    DisconnectError,
+    DisconnectMutationVariables
+  >
 }

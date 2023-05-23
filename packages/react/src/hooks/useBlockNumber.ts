@@ -19,6 +19,14 @@ import {
   useQuery,
 } from './useQuery.js'
 
+export type UseBlockNumberParameters<TSelectData = GetBlockNumberQueryFnData> =
+  Prettify<
+    GetBlockNumberQueryParameters & {
+      enabled?: boolean
+      query?: QueryOptions<TSelectData>
+      watch?: boolean | undefined
+    }
+  >
 type QueryOptions<TSelectData = GetBlockNumberQueryFnData> = Omit<
   UseQueryParameters<
     GetBlockNumberQueryFnData,
@@ -29,14 +37,6 @@ type QueryOptions<TSelectData = GetBlockNumberQueryFnData> = Omit<
   OmittedQueryOptions | OmittedUseQueryOptions
 >
 
-export type UseBlockNumberParameters<TSelectData = GetBlockNumberQueryFnData> =
-  Prettify<
-    GetBlockNumberQueryParameters & {
-      enabled?: boolean
-      query?: QueryOptions<TSelectData>
-      watch?: boolean | undefined
-    }
-  >
 export type UseBlockNumberReturnType<TSelectData = GetBlockNumberQueryFnData> =
   UseQueryReturnType<TSelectData, GetBlockNumberError>
 
@@ -50,7 +50,6 @@ export function useBlockNumber<TSelectData = GetBlockNumberQueryFnData>({
   const defaultChainId = useChainId()
   const chainId = chainId_ ?? defaultChainId
   const queryOptions = getBlockNumberQueryOptions(config, { chainId })
-  console.log(queryOptions.queryKey)
 
   React.useEffect(() => {
     if (!enabled) return

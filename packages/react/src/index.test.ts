@@ -48,6 +48,7 @@ test('exports', () => {
       "useConfig": [Function],
       "useConnect": [Function],
       "useDisconnect": [Function],
+      "useSwitchAccount": [Function],
     }
   `)
 })

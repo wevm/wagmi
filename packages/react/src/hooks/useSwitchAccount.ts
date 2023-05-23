@@ -5,57 +5,58 @@ import {
 } from '@tanstack/react-query'
 import {
   type Connector,
-  type DisconnectError,
-  type DisconnectMutationData,
-  type DisconnectMutationParameters,
-  type DisconnectMutationVariables,
   type OmittedMutationOptions,
-  disconnectMutationOptions,
+  type SwitchAccountError,
+  type SwitchAccountMutationData,
+  type SwitchAccountMutationParameters,
+  type SwitchAccountMutationVariables,
+  switchAccountMutationOptions,
 } from '@wagmi/core'
 import type { Prettify } from '@wagmi/core/internal'
 
 import type { OmittedUseMutationResult } from '../types/query.js'
 import { useConfig } from './useConfig.js'
 
-export type UseDisconnectParameters = Prettify<
-  DisconnectMutationParameters & {
+export type UseSwitchAccountParameters = Prettify<
+  SwitchAccountMutationParameters & {
     mutation?: Omit<Options, OmittedMutationOptions>
   }
 >
 type Options = UseMutationOptions<
-  DisconnectMutationData,
-  DisconnectError,
-  DisconnectMutationVariables
+  SwitchAccountMutationData,
+  SwitchAccountError,
+  SwitchAccountMutationVariables
 >
 
-export type UseDisconnectReturnType = Prettify<
+export type UseSwitchAccountReturnType = Prettify<
   Omit<Result, OmittedUseMutationResult> & {
     connectors: readonly Connector[]
-    disconnect: Result['mutate']
-    disconnectAsync: Result['mutateAsync']
+    switchAccount: Result['mutate']
+    switchAccountAsync: Result['mutateAsync']
   }
 >
 type Result = UseMutationResult<
-  DisconnectMutationData,
-  DisconnectError,
-  DisconnectMutationVariables
+  SwitchAccountMutationData,
+  SwitchAccountError,
+  SwitchAccountMutationVariables
 >
 
-export function useDisconnect({
+export function useSwitchAccount({
   connector,
   mutation,
-}: UseDisconnectParameters = {}): UseDisconnectReturnType {
+}: UseSwitchAccountParameters = {}): UseSwitchAccountReturnType {
   const config = useConfig()
   const { mutate, mutateAsync, ...mutationOptions } = useMutation(
-    disconnectMutationOptions(config, { connector }),
+    switchAccountMutationOptions(config, { connector }),
   )
+
   return {
     ...mutationOptions,
     ...mutation,
     connectors: config.connectors.filter((x) =>
       config.state.connections.has(x.uid),
     ),
-    disconnect: mutate,
-    disconnectAsync: mutateAsync,
+    switchAccount: mutate,
+    switchAccountAsync: mutateAsync,
   }
 }

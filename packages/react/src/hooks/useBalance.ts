@@ -19,6 +19,14 @@ import {
   useQuery,
 } from './useQuery.js'
 
+export type UseBalanceParameters<TSelectData = GetBalanceQueryFnData> =
+  Prettify<
+    GetBalanceQueryParameters & {
+      enabled?: boolean
+      query?: QueryOptions<TSelectData>
+      watch?: boolean | undefined
+    }
+  >
 type QueryOptions<TSelectData = GetBalanceQueryFnData> = Omit<
   UseQueryParameters<
     GetBalanceQueryFnData,
@@ -29,14 +37,6 @@ type QueryOptions<TSelectData = GetBalanceQueryFnData> = Omit<
   OmittedQueryOptions | OmittedUseQueryOptions
 >
 
-export type UseBalanceParameters<TSelectData = GetBalanceQueryFnData> =
-  Prettify<
-    GetBalanceQueryParameters & {
-      enabled?: boolean
-      query?: QueryOptions<TSelectData>
-      watch?: boolean | undefined
-    }
-  >
 export type UseBalanceReturnType<TSelectData = GetBalanceQueryFnData> =
   UseQueryReturnType<TSelectData, GetBalanceError>
 

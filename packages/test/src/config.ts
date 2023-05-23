@@ -22,7 +22,12 @@ export const testClient = {
 
 export const config = createConfig({
   chains: [anvil, anvilTwo],
-  connectors: [testConnector({ accounts })],
+  connectors: [
+    testConnector({ accounts }),
+    testConnector({
+      accounts: [...accounts].reverse() as unknown as typeof accounts,
+    }),
+  ],
   pollingInterval: 100,
   reconnectOnMount: false,
   storage: null,
