@@ -160,9 +160,7 @@ When you submit a pull request, GitHub will automatically lint, build, and test 
 
 When adding new features or fixing bugs, we'll need to bump the package versions. We use [Changesets](https://github.com/changesets/changesets) to do this.
 
-> **Note**
->
-> Only changes to the codebase that affect the public API or existing behavior (e.g. bugs) need changesets.
+> **Note** Only changes to the codebase that affect the public API or existing behavior (e.g. bugs) need changesets.
 
 Each changeset defines which packages should be published and whether the change should be a major/minor/patch release, as well as providing release notes that will be added to the changelog upon release.
 

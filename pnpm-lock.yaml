@@ -1,7 +1,7 @@
 lockfileVersion: '6.0'
 
 overrides:
-  viem: 0.0.0-portable-types-20230523145621
+  viem: 0.3.36
 
 patchedDependencies:
   '@coinbase/wallet-sdk@3.6.6':
@@ -85,8 +85,8 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
       viem:
-        specifier: 0.0.0-portable-types-20230523145621
-        version: 0.0.0-portable-types-20230523145621(typescript@5.0.4)
+        specifier: 0.3.36
+        version: 0.3.36(typescript@5.0.4)
       vite:
         specifier: ^4.3.2
         version: 4.3.2(@types/node@18.16.9)
@@ -176,8 +176,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-portable-types-20230523145621
-        version: 0.0.0-portable-types-20230523145621(typescript@5.0.4)
+        specifier: 0.3.36
+        version: 0.3.36(typescript@5.0.4)
     devDependencies:
       '@esbuild-plugins/node-globals-polyfill':
         specifier: ^0.2.3
@@ -201,8 +201,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       viem:
-        specifier: 0.0.0-portable-types-20230523145621
-        version: 0.0.0-portable-types-20230523145621(typescript@5.0.4)
+        specifier: 0.3.36
+        version: 0.3.36(typescript@5.0.4)
       wagmi:
         specifier: workspace:*
         version: link:../../packages/react
@@ -6405,8 +6405,8 @@ packages:
       use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
-  /viem@0.0.0-portable-types-20230523145621(typescript@5.0.4):
-    resolution: {integrity: sha512-oF1VPjBuqqC4ECY4aq5z9+cWQMOnMn2YVYIaa/02xEfr3b7VmWig0qhtRrXITxOHjHKHRQ8lz2VMP+lz8ZUZww==}
+  /viem@0.3.36(typescript@5.0.4):
+    resolution: {integrity: sha512-8wgZyG+Zty6b9ztM5+/1xBZBl/z1/YFtQJZqrvSOUnbrIL7u786XeZXDPyoY6zbR0HTt14k5ATsEPnXnCyDhtg==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 1.0.0
