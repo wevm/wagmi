@@ -2,6 +2,7 @@ import {
   type Address,
   type ProviderConnectInfo,
   type ProviderMessage,
+  type WalletClient,
 } from 'viem'
 
 import type { Chain } from './chain.js'
@@ -38,7 +39,12 @@ export type CreateConnectorFn<
     disconnect(): Promise<void>
     getAccounts(): Promise<readonly Address[]>
     getChainId(): Promise<number>
-    getProvider(parameters?: { chainId?: number }): Promise<TProvider>
+    getProvider(parameters?: {
+      chainId?: number | undefined
+    }): Promise<TProvider>
+    getWalletClient(parameters?: {
+      chainId?: number | undefined
+    }): Promise<WalletClient>
     isAuthorized(): Promise<boolean>
     switchChain?(parameters: { chainId: number }): Promise<Chain>
 

@@ -104,6 +104,9 @@ export function testConnector(parameters: TestConnectorParameters) {
       const hexChainId = await provider.request({ method: 'eth_chainId' })
       return fromHex(hexChainId, 'number')
     },
+    async getWalletClient({ chainId } = {}) {
+      return this.getProvider({ chainId })
+    },
     async isAuthorized() {
       if (!features.reconnect) return false
       if (!connected) return false
