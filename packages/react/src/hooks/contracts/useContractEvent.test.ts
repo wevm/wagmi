@@ -65,9 +65,9 @@ describe('useContractEvent', () => {
         listener(logs) {
           assertType<
             | {
-                from: ResolvedConfig['AddressType']
-                to: ResolvedConfig['AddressType']
-                value: ResolvedConfig['BigIntType']
+                from?: ResolvedConfig['AddressType']
+                to?: ResolvedConfig['AddressType']
+                value?: ResolvedConfig['BigIntType']
               }
             | undefined
           >(logs[0]?.args)
@@ -95,9 +95,9 @@ describe('useContractEvent', () => {
               listener(logs) {
                 assertType<
                   | {
-                      from: ResolvedConfig['AddressType']
-                      to: ResolvedConfig['AddressType']
-                      tokenId: ResolvedConfig['BigIntType']
+                      from?: ResolvedConfig['AddressType']
+                      to?: ResolvedConfig['AddressType']
+                      tokenId?: ResolvedConfig['BigIntType']
                     }
                   | undefined
                 >(logs[0]?.args)
@@ -146,9 +146,9 @@ describe('useContractEvent', () => {
           listener(logs) {
             assertType<
               | {
-                  from: ResolvedConfig['AddressType']
-                  to: ResolvedConfig['AddressType']
-                  value: ResolvedConfig['BigIntType']
+                  from?: ResolvedConfig['AddressType']
+                  to?: ResolvedConfig['AddressType']
+                  value?: ResolvedConfig['BigIntType']
                 }
               | undefined
             >(logs[0]?.args)

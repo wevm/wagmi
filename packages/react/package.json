@@ -110,7 +110,7 @@
   "peerDependencies": {
     "react": ">=17.0.0",
     "typescript": ">=4.9.4",
-    "viem": "~0.3.18"
+    "viem": "~0.3.35"
   },
   "peerDependenciesMeta": {
     "typescript": {
@@ -133,7 +133,7 @@
     "@types/use-sync-external-store": "^0.0.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "viem": "0.3.18"
+    "viem": "0.3.35"
   },
   "keywords": [
     "react",
