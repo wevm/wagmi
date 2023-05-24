@@ -1,5 +1,13 @@
 # @wagmi/core
 
+## 1.0.6
+
+### Patch Changes
+
+- [`ca2e1e96`](https://github.com/wagmi-dev/wagmi/commit/ca2e1e96149b87a7dc42c9db07e1f1ad2bb02c4a) Thanks [@jxom](https://github.com/jxom)! - Updated references.
+
+- [#2401](https://github.com/wagmi-dev/wagmi/pull/2401) [`0f9dc875`](https://github.com/wagmi-dev/wagmi/commit/0f9dc875e90cfdd7a2028e04b7204caf9ea313b2) Thanks [@jxom](https://github.com/jxom)! - Exposed `account` on `readContract`/`useContractRead`.
+
 ## 1.0.5
 
 ### Patch Changes
